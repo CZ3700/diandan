@@ -1,0 +1,47 @@
+P0-04 OCI image evidence
+Captured: 2026-09-03T02:36:53+08:00
+Platform built and inspected: linux/arm64
+
+Pinned build/runtime base:
+  node:24.20.0-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+
+Independent final images:
+  fan-support/storefront:p0-04
+    id: sha256:816da86954d6635921e7720205200ff223709b2841986e55868e8aed39042598
+    user: node
+    workdir: /app/apps/storefront
+    command: node server.js
+    health: http://127.0.0.1:3000/healthz
+    size: 92916269 bytes
+
+  fan-support/admin:p0-04
+    id: sha256:cf53385408015282f8abd8fcdde7e66ae5a3c92e50d7a99ab540bccea5e95bfc
+    user: node
+    workdir: /app/apps/admin
+    command: node server.js
+    health: http://127.0.0.1:3000/healthz
+    size: 92916069 bytes
+
+  fan-support/api:p0-04
+    id: sha256:630d8558a0f5454cd8a2e54bc361f22aab55c54924c9af4a2ad86f1d906829f0
+    user: node
+    workdir: /app
+    command: node dist/main.js
+    health: http://127.0.0.1:3002/healthz
+    size: 84522067 bytes
+
+  fan-support/worker:p0-04
+    id: sha256:2f77bce9db20fd37307fbd7a6cfe9ef56029f7fbc4dc9f262bda87d925d107f2
+    user: node
+    workdir: /app
+    command: node dist/main.js
+    health: http://127.0.0.1:3003/healthz
+    size: 84521901 bytes
+
+Exact external preview images:
+  postgres:18.6-bookworm@sha256:1c59e2c3c818eaa0f0628f695b36e7c9e362d6b219b36a54a32df645cbd7e1af
+  versity/versitygw:v1.7.0@sha256:c4cbd9d9cb8dedbb055ac788dbd02635651b9b1cebac95b095b3217231aa87ad
+  caddy:2.11.4-alpine@sha256:5f5c8640aae01df9654968d946d8f1a56c497f1dd5c5cda4cf95ab7c14d58648
+
+The image IDs are local build outputs, not registry-published digests or
+multi-architecture release attestations.

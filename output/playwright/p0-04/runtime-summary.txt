@@ -1,0 +1,28 @@
+P0-04 local OCI preview runtime evidence
+Captured: 2026-09-03T02:36:53+08:00
+Host Docker: 2 CPUs, 4095107072 bytes memory, overlayfs, Compose 5.1.3
+
+Command:
+  mise exec node@24.20.0 -- corepack pnpm preview:verify
+
+Result: PASS
+  Storefront: https://localhost:3443/
+  Admin: https://localhost:3444/
+  API health: http://localhost:3002/healthz
+  Worker health: http://localhost:3003/healthz
+  PostgreSQL query: 180006:1
+  Object-storage bucket: fan-support-media (signed PUT/HEAD passed)
+
+Running services at capture time:
+  admin          healthy, internal 3000/tcp
+  api            healthy, 127.0.0.1:3002 -> 3002/tcp
+  edge           healthy, 127.0.0.1:3443-3444 -> 3443-3444/tcp
+  object-storage healthy, 127.0.0.1:7070 -> 7070/tcp
+  postgres       healthy, 127.0.0.1:54320 -> 5432/tcp
+  storefront     healthy, internal 3000/tcp
+  worker         healthy, 127.0.0.1:3003 -> 3003/tcp
+
+Scope:
+  This proves a local, ephemeral preview only. PostgreSQL and object-storage
+  data use tmpfs. Caddy uses its local internal CA. This is not staging,
+  production, persistence, backup, multi-architecture, or release evidence.
