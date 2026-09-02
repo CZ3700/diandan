@@ -3,8 +3,8 @@
 > 最后更新：2026-09-02  
 > 当前里程碑：M0 可运行基线  
 > 当前 ACTIVE Phase：Phase 0  
-> 当前任务：`P0-02`（REVIEW；等待真实 GitHub PR/required checks 外部门禁）
-> 下一可领取任务：`P0-03`（READY，Lane A）
+> 当前任务：`P0-03`（IN_PROGRESS，Owner：Codex `/root`）；`P0-02` 保持 REVIEW
+> 下一可领取任务：暂无；`P0-04` 仍依赖 P0-02、P0-03 完成
 
 ## 1. 开工入口
 
@@ -16,15 +16,15 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的任务；当前无 executor，`P0-03` 可领取。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的任务；当前 `/root` 是 P0-03 的唯一 Lane A executor。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
 | PENDING | 45 |
-| READY | 1 |
-| IN_PROGRESS | 0 |
+| READY | 0 |
+| IN_PROGRESS | 1 |
 | BLOCKED | 0 |
 | REVIEW | 1 |
 | DONE | 1 |

@@ -14,7 +14,7 @@
 |:--|:--|:--|:--|:--|:--|
 | P0-01 | DONE | Codex `/root` | 2026-09-02T18:22:00+08:00 | 2026-09-02T19:25:41+08:00 | 根提交 `9234e368e193e967e9e2abd39858f4f3eaf01da9`；两次真实 clean clone、完整门禁和独立验收全绿 |
 | P0-02 | REVIEW | Codex `/root` | 2026-09-02T19:25:41+08:00 | — | 候选 `88efe390c86c8b8e58b371fa196a9ae62c65de99`；独立终审 ACCEPT for REVIEW；仍缺真实 GitHub PR/required checks |
-| P0-03 | READY | — | — | — | P0-01 已完成；当前无 executor，Lane A 可领取 |
+| P0-03 | IN_PROGRESS | Codex `/root` | 2026-09-03T00:02:33+08:00 | — | Lane A；环境 schema、分层、公开 allowlist、`.env.example` 与 fail-closed |
 | P0-04 | PENDING | — | — | — | 依赖 P0-02、P0-03 |
 | P0-05 | PENDING | — | — | — | 依赖 P0-04 |
 
@@ -253,6 +253,20 @@ required-check 外部证据尚未满足，故不得标记 `DONE`。
 | 8 | PASS | Secretlint/preset/yaml 均精确声明并锁入 `pnpm-lock.yaml` |
 | 9 | PASS | scanner 或 Action 升级只需修改 CI/config/checker 边界，不触碰应用包 |
 | 10 | PASS | 当前树、11 组失败 fixture、最终 clean clone 与独立终审全部得到预期结果 |
+
+## P0-03 执行卡
+
+**范围**：在 `packages/config` 建立可序列化、环境无关的配置合同与解析边界，提供环境变量、`.env`、配置文件和默认值的明确优先级；根目录提供不含真实凭据的 `.env.example`；服务端缺少或包含非法必填配置时失败关闭；浏览器只能获得显式公开 allowlist。不得在 config/apps 复制 P1-01 才冻结的 locale 常量。
+
+**本次执行登记**：
+
+- Owner：Codex `/root`
+- 开始：`2026-09-03T00:02:33+08:00`（`2026-09-02T16:02:33Z`）
+- 精确范围：`packages/config` 的 schema、分层合并、服务端解析、公开配置投影与单元测试；根 `.env.example`；必要的精确依赖与 workspace/进度检查更新。
+- 明确不做：P1-01 `SupportedLocale`/业务合同，P0-04 Next/Nest 应用组合根、数据库/对象存储容器与启动脚本，生产域名/市场/币种/支付方式，真实密钥或 Secret Manager 供应商实现。
+- 验证计划：先写并运行失败测试，证明缺少必填项、非法 URL/环境、敏感字段进入公开投影及错误信息泄漏值会被发现；再以最小实现转绿。随后执行包级 test/typecheck/build、`.env.example`/locale/secret 边界检查、完整 `pnpm check`、secret scan、依赖审计与 clean-clone 复验。
+- 并发/所有权：P0-03 是当前唯一 Lane A executor；实现期间独占 `packages/config`、根 `.env.example` 与本任务产生的 lockfile 变更。
+- 风险映射：`R-02`；配置错误不得回显值，秘密字段不得进入公开 DTO、日志、fixture 或提交文件。
 
 ## Phase 退出证据
 
