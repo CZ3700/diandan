@@ -99,6 +99,14 @@ const SERVER_FIELDS = Object.freeze([
   "siteOrigin",
 ] as const);
 const DATABASE_FIELDS = Object.freeze(["databaseUrl"] as const);
+const SERVER_CONFIG_KEYS = Object.freeze([
+  "NODE_ENV",
+  "FAN_SUPPORT_DEPLOYMENT_ENV",
+  "FAN_SUPPORT_SITE_ORIGIN",
+] as const);
+const DATABASE_CONFIG_KEYS = Object.freeze([
+  "FAN_SUPPORT_DATABASE_URL",
+] as const);
 
 function errorFields(
   issues: readonly Readonly<{ path: readonly PropertyKey[] }>[],
@@ -120,7 +128,7 @@ function errorFields(
 export function resolveServerRuntimeConfig(
   sources: RuntimeConfigSources,
 ): ServerRuntimeConfig {
-  const layered = resolveConfigLayers(sources);
+  const layered = resolveConfigLayers(sources, SERVER_CONFIG_KEYS);
   const result = serverRuntimeConfigSchema.safeParse({
     schemaVersion: 1,
     nodeEnvironment: layered.NODE_ENV,
@@ -145,7 +153,7 @@ export function resolveServerRuntimeConfig(
 export function resolveDatabaseRuntimeConfig(
   sources: RuntimeConfigSources,
 ): DatabaseRuntimeConfig {
-  const layered = resolveConfigLayers(sources);
+  const layered = resolveConfigLayers(sources, DATABASE_CONFIG_KEYS);
   const result = databaseRuntimeConfigSchema.safeParse({
     schemaVersion: 1,
     url: layered.FAN_SUPPORT_DATABASE_URL,
@@ -164,10 +172,30 @@ export function resolveDatabaseRuntimeConfig(
 export function toPublicRuntimeConfig(
   config: ServerRuntimeConfig,
 ): PublicRuntimeConfig {
-  return parsePublicRuntimeConfig({
-    schemaVersion: 1,
-    siteOrigin: config.siteOrigin,
-  });
+  let siteOrigin: unknown;
+  try {
+    if (
+      typeof config !== "object" ||
+      config === null ||
+      Array.isArray(config)
+    ) {
+      throw new ConfigValidationError(["siteOrigin"]);
+    }
+
+    const descriptor = Object.getOwnPropertyDescriptor(config, "siteOrigin");
+    if (descriptor === undefined || !("value" in descriptor)) {
+      throw new ConfigValidationError(["siteOrigin"]);
+    }
+    siteOrigin = descriptor.value;
+  } catch {
+    throw new ConfigValidationError(["siteOrigin"]);
+  }
+
+  try {
+    return parsePublicRuntimeConfig({ schemaVersion: 1, siteOrigin });
+  } catch {
+    throw new ConfigValidationError(["siteOrigin"]);
+  }
 }
 
 export { ConfigValidationError } from "./configuration-error.js";

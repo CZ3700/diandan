@@ -8,9 +8,10 @@ const CONFIG_KEYS = Object.freeze([
 ] as const);
 
 type ConfigKey = (typeof CONFIG_KEYS)[number];
-type ConfigLayerName = "configFile" | "dotenv" | "environment";
+type ConfigLayerName = "defaults" | "configFile" | "dotenv" | "environment";
 
 const CONFIG_LAYER_NAMES = Object.freeze([
+  "defaults",
   "configFile",
   "dotenv",
   "environment",
@@ -20,6 +21,7 @@ const CONFIG_LAYER_NAME_SET = new Set<string>(CONFIG_LAYER_NAMES);
 export type ConfigSource = Readonly<Record<string, unknown>>;
 
 export type RuntimeConfigSources = Readonly<{
+  defaults?: ConfigSource;
   configFile?: ConfigSource;
   dotenv?: ConfigSource;
   environment?: ConfigSource;
@@ -34,15 +36,15 @@ function readSourceLayers(sources: RuntimeConfigSources): readonly Readonly<{
   let prototype: object | null;
   let sourceKeys: readonly PropertyKey[];
 
-  if (
-    typeof sources !== "object" ||
-    sources === null ||
-    Array.isArray(sources)
-  ) {
+  if (typeof sources !== "object" || sources === null) {
     throw new ConfigValidationError(["sources"]);
   }
 
   try {
+    if (Array.isArray(sources)) {
+      throw new ConfigValidationError(["sources"]);
+    }
+
     prototype = Object.getPrototypeOf(sources) as object | null;
     sourceKeys = Reflect.ownKeys(sources);
   } catch {
@@ -89,11 +91,15 @@ function readOwnKeys(
   source: ConfigSource,
   layerName: ConfigLayerName,
 ): readonly PropertyKey[] {
-  if (typeof source !== "object" || source === null || Array.isArray(source)) {
+  if (typeof source !== "object" || source === null) {
     throw new ConfigValidationError([layerName]);
   }
 
   try {
+    if (Array.isArray(source)) {
+      throw new ConfigValidationError([layerName]);
+    }
+
     return Reflect.ownKeys(source);
   } catch {
     throw new ConfigValidationError([layerName]);
@@ -141,6 +147,7 @@ function readOwnValue(
 
 export function resolveConfigLayers(
   sources: RuntimeConfigSources,
+  requestedKeys: readonly ConfigKey[],
 ): Readonly<Partial<Record<ConfigKey, unknown>>> {
   const layers = readSourceLayers(sources);
 
@@ -151,7 +158,7 @@ export function resolveConfigLayers(
   }
 
   const resolved: Partial<Record<ConfigKey, unknown>> = {};
-  for (const key of CONFIG_KEYS) {
+  for (const key of requestedKeys) {
     for (const layer of layers) {
       if (layer.source === undefined) {
         continue;

@@ -4,6 +4,7 @@ import { expect, test } from "vitest";
 
 type ConfigSource = Readonly<Record<string, unknown>>;
 type RuntimeConfigSources = Readonly<{
+  defaults?: ConfigSource;
   configFile?: ConfigSource;
   dotenv?: ConfigSource;
   environment?: ConfigSource;
@@ -114,10 +115,16 @@ test("resolves immutable server and database fragments independently", async () 
   expect(Object.isFrozen(databaseConfig)).toBe(true);
 });
 
-test("applies config file, dotenv, and environment precedence", async () => {
+test("applies defaults, config file, dotenv, and environment precedence", async () => {
   const { resolveDatabaseRuntimeConfig, resolveServerRuntimeConfig } =
     await loadServerConfigModule();
   const sources = {
+    defaults: {
+      NODE_ENV: "production",
+      FAN_SUPPORT_DEPLOYMENT_ENV: "production",
+      FAN_SUPPORT_SITE_ORIGIN: "https://defaults.example.invalid",
+      FAN_SUPPORT_DATABASE_URL: "postgresql://database.invalid/from-defaults",
+    },
     configFile: {
       NODE_ENV: "production",
       FAN_SUPPORT_DEPLOYMENT_ENV: "production",
@@ -140,6 +147,109 @@ test("applies config file, dotenv, and environment precedence", async () => {
   );
   expect(resolveDatabaseRuntimeConfig(sources).url).toBe(
     "postgresql://database.invalid/from-environment",
+  );
+});
+
+test.each([
+  [
+    {
+      defaults: {
+        FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/defaults",
+      },
+    },
+    "postgresql://db.invalid/defaults",
+  ],
+  [
+    {
+      defaults: {
+        FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/defaults",
+      },
+      configFile: { FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/file" },
+    },
+    "postgresql://db.invalid/file",
+  ],
+  [
+    {
+      defaults: {
+        FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/defaults",
+      },
+      configFile: { FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/file" },
+      dotenv: { FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/dotenv" },
+    },
+    "postgresql://db.invalid/dotenv",
+  ],
+  [
+    {
+      defaults: {
+        FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/defaults",
+      },
+      configFile: { FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/file" },
+      dotenv: { FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/dotenv" },
+      environment: {
+        FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/environment",
+      },
+    },
+    "postgresql://db.invalid/environment",
+  ],
+] as const)(
+  "selects each adjacent database layer in order for case %#",
+  async (sources, expectedUrl) => {
+    const { resolveDatabaseRuntimeConfig } = await loadServerConfigModule();
+
+    expect(resolveDatabaseRuntimeConfig(sources).url).toBe(expectedUrl);
+  },
+);
+
+test.each([
+  [
+    {
+      defaults: {
+        FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/defaults",
+      },
+      configFile: { FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/file" },
+      dotenv: { FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/dotenv" },
+      environment: { FAN_SUPPORT_DATABASE_URL: undefined },
+    },
+    "postgresql://db.invalid/dotenv",
+  ],
+  [
+    {
+      defaults: {
+        FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/defaults",
+      },
+      configFile: { FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/file" },
+      dotenv: { FAN_SUPPORT_DATABASE_URL: undefined },
+    },
+    "postgresql://db.invalid/file",
+  ],
+  [
+    {
+      defaults: {
+        FAN_SUPPORT_DATABASE_URL: "postgresql://db.invalid/defaults",
+      },
+      configFile: { FAN_SUPPORT_DATABASE_URL: undefined },
+    },
+    "postgresql://db.invalid/defaults",
+  ],
+] as const)(
+  "falls through undefined to the adjacent database layer for case %#",
+  async (sources, expectedUrl) => {
+    const { resolveDatabaseRuntimeConfig } = await loadServerConfigModule();
+
+    expect(resolveDatabaseRuntimeConfig(sources).url).toBe(expectedUrl);
+  },
+);
+
+test("uses explicit safe defaults without weakening missing-config failures", async () => {
+  const { resolveDatabaseRuntimeConfig, resolveServerRuntimeConfig } =
+    await loadServerConfigModule();
+  const defaults = { ...productionEnvironment, ...databaseEnvironment };
+
+  expect(resolveServerRuntimeConfig({ defaults }).siteOrigin).toBe(
+    productionEnvironment.FAN_SUPPORT_SITE_ORIGIN,
+  );
+  expect(resolveDatabaseRuntimeConfig({ defaults }).url).toBe(
+    databaseEnvironment.FAN_SUPPORT_DATABASE_URL,
   );
 });
 
@@ -227,7 +337,7 @@ test("does not leak a rejected secret through any common error rendering", async
   }
 });
 
-test.each(["configFile", "dotenv"] as const)(
+test.each(["defaults", "configFile", "dotenv"] as const)(
   "rejects unknown keys from the explicit %s layer without reflecting them",
   async (layer) => {
     const { resolveServerRuntimeConfig } = await loadServerConfigModule();
@@ -406,6 +516,66 @@ test("normalizes hostile outer proxy failures", async () => {
   }
 });
 
+test("normalizes revoked outer and inner proxies", async () => {
+  const { resolveServerRuntimeConfig } = await loadServerConfigModule();
+  const outer = Proxy.revocable({ environment: productionEnvironment }, {});
+  const inner = Proxy.revocable({ ...productionEnvironment }, {});
+  outer.revoke();
+  inner.revoke();
+
+  expectInvalidConfig(
+    () => resolveServerRuntimeConfig(outer.proxy),
+    ["sources"],
+  );
+  expectInvalidConfig(
+    () => resolveServerRuntimeConfig({ environment: inner.proxy }),
+    ["environment"],
+  );
+});
+
+test("reads only the keys requested by each config fragment", async () => {
+  const { resolveDatabaseRuntimeConfig, resolveServerRuntimeConfig } =
+    await loadServerConfigModule();
+  const serverReads: PropertyKey[] = [];
+  const databaseReads: PropertyKey[] = [];
+  const source = { ...productionEnvironment, ...databaseEnvironment };
+  const serverSource = new Proxy(source, {
+    getOwnPropertyDescriptor(target, key) {
+      serverReads.push(key);
+      if (key === "FAN_SUPPORT_DATABASE_URL") {
+        throw new Error("UNRELATED_DATABASE_VALUE_MUST_NOT_BE_READ");
+      }
+
+      return Reflect.getOwnPropertyDescriptor(target, key);
+    },
+  });
+  const databaseSource = new Proxy(source, {
+    getOwnPropertyDescriptor(target, key) {
+      databaseReads.push(key);
+      if (key !== "FAN_SUPPORT_DATABASE_URL") {
+        throw new Error("UNRELATED_SERVER_VALUE_MUST_NOT_BE_READ");
+      }
+
+      return Reflect.getOwnPropertyDescriptor(target, key);
+    },
+  });
+
+  expect(resolveServerRuntimeConfig({ environment: serverSource })).toEqual({
+    schemaVersion: 1,
+    nodeEnvironment: "production",
+    deploymentEnvironment: "production",
+    siteOrigin: "https://shop.example.invalid",
+  });
+  expect(resolveDatabaseRuntimeConfig({ environment: databaseSource })).toEqual(
+    {
+      schemaVersion: 1,
+      url: databaseEnvironment.FAN_SUPPORT_DATABASE_URL,
+    },
+  );
+  expect(serverReads).not.toContain("FAN_SUPPORT_DATABASE_URL");
+  expect(databaseReads).toEqual(["FAN_SUPPORT_DATABASE_URL"]);
+});
+
 test.each([
   "javascript:alert(1)",
   "data:text/plain,hello",
@@ -545,4 +715,60 @@ test("projects public config through an explicit allowlist", async () => {
   ]);
   expect(Object.isFrozen(publicConfig)).toBe(true);
   expect(JSON.stringify(publicConfig)).not.toContain("must-not-leak");
+});
+
+test("projects only an own data site origin without invoking accessors", async () => {
+  const { toPublicRuntimeConfig } = await loadServerConfigModule();
+  const canary = "PUBLIC_PROJECTOR_GETTER_SECRET_75319";
+  let invoked = false;
+  const accessorConfig = Object.defineProperty(
+    {
+      schemaVersion: 1,
+      nodeEnvironment: "production",
+      deploymentEnvironment: "production",
+    },
+    "siteOrigin",
+    {
+      enumerable: true,
+      get() {
+        invoked = true;
+        throw new Error(canary);
+      },
+    },
+  ) as ServerRuntimeConfig;
+  const inheritedConfig = Object.assign(
+    Object.create({ siteOrigin: "https://shop.example.invalid" }) as object,
+    {
+      schemaVersion: 1,
+      nodeEnvironment: "production",
+      deploymentEnvironment: "production",
+    },
+  ) as ServerRuntimeConfig;
+  const revokedConfig = Proxy.revocable(
+    {
+      schemaVersion: 1 as const,
+      nodeEnvironment: "production" as const,
+      deploymentEnvironment: "production" as const,
+      siteOrigin: "https://shop.example.invalid",
+    },
+    {},
+  );
+  revokedConfig.revoke();
+
+  for (const config of [accessorConfig, inheritedConfig, revokedConfig.proxy]) {
+    const error = captureError(() => toPublicRuntimeConfig(config));
+
+    expect(error.code).toBe("CONFIG_INVALID");
+    expect(error.fields).toEqual(["siteOrigin"]);
+    for (const rendering of [
+      error.message,
+      String(error),
+      JSON.stringify(error),
+      inspect(error),
+      error.stack ?? "",
+    ]) {
+      expect(rendering).not.toContain(canary);
+    }
+  }
+  expect(invoked).toBe(false);
 });
