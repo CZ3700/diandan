@@ -54,6 +54,7 @@ const expectedUnitByDirectory = new Map(
 );
 
 const requiredRootFiles = [
+  ".env.example",
   ".github/workflows/ci.yml",
   ".gitignore",
   ".node-version",

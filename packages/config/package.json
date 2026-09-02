@@ -8,11 +8,22 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./public": {
+      "types": "./dist/public-config.d.ts",
+      "import": "./dist/public-config.js"
+    },
+    "./server": {
+      "types": "./dist/server-config.d.ts",
+      "import": "./dist/server-config.js"
     }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run --config ../../vitest.config.ts --root .",
     "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "zod": "4.5.4"
   }
 }

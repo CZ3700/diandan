@@ -1,1 +1,5 @@
-export const workspacePackageName = "@fan-support/config" as const;
+export {
+  parsePublicRuntimeConfig,
+  publicRuntimeConfigSchema,
+} from "./public-config.js";
+export type { PublicRuntimeConfig } from "./public-config.js";
