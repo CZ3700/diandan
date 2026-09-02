@@ -92,6 +92,7 @@ async function validateObservabilityPackage() {
   }
 
   const expectedDependencies = {
+    "@fan-support/contracts": "workspace:*",
     "@opentelemetry/api": "1.9.1",
     "@opentelemetry/core": "2.11.0",
     "@opentelemetry/resources": "2.11.0",

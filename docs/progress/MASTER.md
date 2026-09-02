@@ -3,7 +3,7 @@
 > 最后更新：2026-09-03
 > 当前里程碑：M1 可信内核 / M2 品牌样板
 > 当前 ACTIVE Phase：Phase 1、Phase 2
-> 当前任务：`P1-01`（Lane A，Codex `/root`，IN_PROGRESS）
+> 当前任务：`P1-01`（Lane A，Codex `/root`，REVIEW）
 > 下一可领取任务：`P2-01`（Lane B）；单个 executor 一次只领取一个
 
 ## 1. 开工入口
@@ -16,7 +16,7 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 `P1-01` 已占用 Lane A，`P2-01` 在 Lane B 为 `READY`。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 `P1-01` 评审中并继续占用 Lane A，`P2-01` 在 Lane B 为 `READY`。
 
 ## 2. 总体状态
 
@@ -24,9 +24,9 @@
 |:--|--:|
 | PENDING | 42 |
 | READY | 1 |
-| IN_PROGRESS | 1 |
+| IN_PROGRESS | 0 |
 | BLOCKED | 0 |
-| REVIEW | 0 |
+| REVIEW | 1 |
 | DONE | 5 |
 | DEFERRED | 0 |
 | **总计** | **49** |

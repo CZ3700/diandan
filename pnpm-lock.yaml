@@ -181,13 +181,25 @@ importers:
 
   packages/content: {}
 
-  packages/contracts: {}
+  packages/contracts:
+    dependencies:
+      zod:
+        specifier: 4.5.4
+        version: 4.5.4
+    devDependencies:
+      '@types/node':
+        specifier: 24.13.3
+        version: 24.13.3
 
   packages/design-tokens: {}
 
   packages/domain: {}
 
-  packages/i18n: {}
+  packages/i18n:
+    dependencies:
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   packages/identity-oidc: {}
 
@@ -209,6 +221,9 @@ importers:
 
   packages/observability:
     dependencies:
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../contracts
       '@opentelemetry/api':
         specifier: 1.9.1
         version: 1.9.1

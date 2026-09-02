@@ -67,6 +67,8 @@ const requiredRootFiles = [
   "pnpm-workspace.yaml",
   "scripts/check-build-artifacts.mjs",
   "scripts/check-ci.mjs",
+  "scripts/check-contracts.mjs",
+  "scripts/generate-contract-artifacts.mjs",
   "scripts/scan-secrets.mjs",
   "tsconfig.base.json",
   "turbo.json",
@@ -78,6 +80,8 @@ const requiredRootScripts = [
   "check",
   "check:artifacts",
   "check:ci",
+  "check:contracts",
+  "contracts:generate",
   "format:check",
   "lint",
   "security:secrets",
@@ -228,6 +232,10 @@ async function validateWorkspace() {
       if (typeof rootManifest.scripts?.[scriptName] !== "string") {
         errors.push(`root package.json is missing script: ${scriptName}`);
       }
+    }
+
+    if (!rootManifest.scripts?.check?.includes("pnpm check:contracts")) {
+      errors.push("root check script must run the contract freshness gate");
     }
   }
 

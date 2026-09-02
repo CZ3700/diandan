@@ -24,3 +24,12 @@ test("keeps the public error envelope strict and canonical", () => {
     }).success,
   ).toBe(false);
 });
+
+test("uses contracts as the only owner of the public error envelope", async () => {
+  const contracts = await import("@fan-support/contracts").catch(
+    () => undefined,
+  );
+
+  expect(contracts, "contracts package must be available").toBeDefined();
+  expect(safeRuntimeErrorSchema).toBe(contracts?.publicErrorEnvelopeSchema);
+});

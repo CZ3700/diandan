@@ -1,16 +1,13 @@
-import { z } from "zod";
+import {
+  publicErrorEnvelopeSchema,
+  type PublicErrorEnvelope,
+} from "@fan-support/contracts";
 
-import { isCanonicalRequestId, resolveRequestId } from "./request-id.js";
+import { resolveRequestId } from "./request-id.js";
 
-export const safeRuntimeErrorSchema = z
-  .strictObject({
-    schemaVersion: z.literal(1),
-    code: z.enum(["NOT_FOUND", "REQUEST_REJECTED", "INTERNAL_ERROR"]),
-    requestId: z.string().refine(isCanonicalRequestId),
-  })
-  .readonly();
+export const safeRuntimeErrorSchema = publicErrorEnvelopeSchema;
 
-export type SafeRuntimeError = Readonly<z.infer<typeof safeRuntimeErrorSchema>>;
+export type SafeRuntimeError = Readonly<PublicErrorEnvelope>;
 
 function codeForStatus(
   statusCode: number,
@@ -28,9 +25,11 @@ export function createSafeRuntimeError(
   statusCode: number,
   requestId: unknown,
 ): SafeRuntimeError {
-  return Object.freeze({
-    schemaVersion: 1,
-    code: codeForStatus(statusCode),
-    requestId: resolveRequestId(requestId),
-  });
+  return Object.freeze(
+    publicErrorEnvelopeSchema.parse({
+      schemaVersion: 1,
+      code: codeForStatus(statusCode),
+      requestId: resolveRequestId(requestId),
+    }),
+  );
 }
