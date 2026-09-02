@@ -13,9 +13,9 @@
 | ID | 状态 | Owner | 开始 | 完成 | 证据/说明 |
 |:--|:--|:--|:--|:--|:--|
 | P0-01 | DONE | Codex `/root` | 2026-09-02T18:22:00+08:00 | 2026-09-02T19:25:41+08:00 | 根提交 `9234e368e193e967e9e2abd39858f4f3eaf01da9`；两次真实 clean clone、完整门禁和独立验收全绿 |
-| P0-02 | REVIEW | Codex `/root` | 2026-09-02T19:25:41+08:00 | — | 候选 `88efe390c86c8b8e58b371fa196a9ae62c65de99`；独立终审 ACCEPT for REVIEW；仍缺真实 GitHub PR/required checks |
+| P0-02 | DONE | Codex `/root` | 2026-09-02T19:25:41+08:00 | 2026-09-03T01:29:52+08:00 | [PR #1](https://github.com/CZ3700/diandan/pull/1) 真实 CI 全绿；`Quality`/`Security` 已绑定 GitHub Actions 并作为 `main` 必需检查 |
 | P0-03 | DONE | Codex `/root` | 2026-09-03T00:02:33+08:00 | 2026-09-03T00:47:13+08:00 | 候选 `ba8b8864605e7181a85f2ffc13ca52087e0726e4`；三路独立复核 ACCEPT |
-| P0-04 | PENDING | — | — | — | 依赖 P0-02、P0-03 |
+| P0-04 | READY | — | — | — | P0-02、P0-03 均已 DONE；Phase 0 ACTIVE 且 Lane D 无 executor |
 | P0-05 | PENDING | — | — | — | 依赖 P0-04 |
 
 ## P0-01 执行卡
@@ -142,15 +142,15 @@
 - Owner：Codex `/root`
 - 开始：`2026-09-02T19:25:41+08:00`（`2026-09-02T11:25:41Z`）
 - 精确范围：CI workflow、Secretlint 配置与锁定依赖、根安全检查命令、CI 结构回归检查、锁文件及进度证据。
-- 明确不做：P0-03 环境 schema、P0-04 应用/数据库/容器、GitHub 仓库创建、远端推送、分支保护或托管平台 secret 配置。
+- 明确不做：P0-03 环境 schema、P0-04 应用/数据库/容器、托管平台 secret 配置。初始实现不创建 GitHub 仓库或改动远端；用户后续提供空远端并授权后，终验仅补齐安全初始化、PR 和分支保护。
 - 验证计划：先以缺少 CI 合同的失败检查建立红灯；随后执行 frozen install、完整 `pnpm check`、依赖审计、全树 secret scan、workflow 结构校验；在一次性临时 clone 中放入纯合成 secret，确认 scanner 非零阻断且输出掩码，随后移除 fixture 和临时 clone；最后执行真实 clean-clone 复验与独立评审。
-- 并发/所有权：实现和本地终审已结束，Lane D 与根配置锁已释放；P0-02 在 REVIEW 等待外部门禁。
+- 并发/所有权：实现、本地终审与远端门禁已结束，Lane D 与根配置锁已释放。
 - 风险映射：`R-02`（凭据泄露、日志回显、过宽 workflow 权限）和 `R-14`（依赖漂移、供应链与构建不可复现）。
 
 **评审候选与实现证据**：
 
 ```text
-状态：REVIEW（不是 DONE）
+状态：DONE（2026-09-03T01:29:52+08:00 真实 PR 与必需检查验收通过）
 实现候选 HEAD：88efe390c86c8b8e58b371fa196a9ae62c65de99
 实现提交：
 - 748f884 ci: add quality and security gates
@@ -219,25 +219,43 @@ TDD/失败路径：
   typecheck/test/build 34/34/34 且 0 cached，30 个 export 被 Node 导入；验证后 working tree
   仍为 0，临时 clone 已移入系统废纸篓。
 
+真实 GitHub 门禁：
+- 远端 `https://github.com/CZ3700/diandan.git` 初始为空；以 P0-01 根提交
+  `9234e368e193e967e9e2abd39858f4f3eaf01da9` 初始化 `main`，以线性后继
+  `5a1c8f9c89b7a8ebf88dcac2055b7eeccca5fefe` 初始化 `codex/p0-ci-baseline`；
+  两次均为新分支推送，无 force/覆盖或改写历史。
+- [PR #1](https://github.com/CZ3700/diandan/pull/1)（`main <- codex/p0-ci-baseline`）触发
+  [CI run 33661119143](https://github.com/CZ3700/diandan/actions/runs/33661119143)，
+  event=`pull_request`、head=`5a1c8f9c89b7a8ebf88dcac2055b7eeccca5fefe`、conclusion=`success`。
+- [Quality job 100351615469](https://github.com/CZ3700/diandan/actions/runs/33661119143/job/100351615469)
+  -> success；[Security job 100351615775](https://github.com/CZ3700/diandan/actions/runs/33661119143/job/100351615775)
+  -> success，两者皆由 GitHub Actions App `15368` 提供。
+- `main` classic branch protection 回读：`strict=true`，必需 checks 精确为
+  `Quality`/`Security` 且 `app_id=15368`，`enforce_admins=true`，
+  `allow_force_pushes=false`、`allow_deletions=false`；PR 回读 `mergeStateStatus=CLEAN`。
+- GitHub 仓库回读 `secret_scanning=enabled` 且
+  `secret_scanning_push_protection=enabled`；Actions 默认 workflow 权限为 `read`。
+- 第一次完整保护请求同时传入 `contexts`/`checks` 被 GitHub 以 422 原子拒绝，
+  回读确认无部分状态；按官方 OpenAPI 与运行时错误定位兼容性差异后，
+  仅提交最小 `contexts` 请求，GitHub 正确自动绑定到 App `15368`。
+
 可持久证据路径：
 - `.github/workflows/ci.yml`
 - `.secretlintrc.json` / `.secretlintignore`
 - `scripts/check-ci.mjs` / `scripts/scan-secrets.mjs` / `scripts/check-workspace.mjs`
 - `package.json` / `pnpm-lock.yaml`
 
-未解决/外部门禁：
-- 当前仓库没有 GitHub remote，因而没有真实 PR run URL，也不能证明 required checks/branch
-  protection 已启用；创建远端后必须让 `Quality` 与 `Security` 在 PR 上成功并设为必需检查，
-  才能从 REVIEW 验收为 DONE。
-- 当前扫描覆盖 clean checkout/working tree，不等于 GitHub 全历史 secret scanning 或 push
-  protection；仓库托管后应开启平台原生能力，不能用其替代本地可复现门禁。
+范围与剩余风险：
+- GitHub 原生 secret scanning 与 push protection 已开启，但平台能力不替代
+  clean checkout/working tree 的本地可复现门禁；全历史告警仍以 GitHub 实际结果为准。
 - 无 UI 变更，浏览器与多语言视觉证据不适用；无部署/发布结论。
 ```
 
 独立评审：Codex `/root/p002_policy_review` 完成策略评审；Codex `/root/p002_final_review`
-对最终候选 `88efe390c86c8b8e58b371fa196a9ae62c65de99` 重新执行 clean clone、全门禁与对抗
-fixture，给出 `ACCEPT for REVIEW` 且未发现剩余代码阻断项。只有上述真实 GitHub PR run 与
-required-check 外部证据尚未满足，故不得标记 `DONE`。
+对最终实现候选 `88efe390c86c8b8e58b371fa196a9ae62c65de99` 重新执行 clean clone、全门禁与对抗
+fixture，给出 `ACCEPT for REVIEW` 且未发现剩余代码阻断项；Codex
+`/root/p002_remote_gate_review` 独立复核远端初始化拓扑、检查上下文和分支保护计划，
+确认无改写历史或遗留阻断。真实 PR 与 required-check 外部门禁已满足，任务验收为 `DONE`。
 
 ### P0-02 S.U.P.E.R 检查
 
@@ -252,7 +270,7 @@ required-check 外部证据尚未满足，故不得标记 `DONE`。
 | 7 | PASS | 无生产域名、密钥或业务常量；官方 registry/action SHA 是经核验的 CI 安全配置 |
 | 8 | PASS | Secretlint/preset/yaml 均精确声明并锁入 `pnpm-lock.yaml` |
 | 9 | PASS | scanner 或 Action 升级只需修改 CI/config/checker 边界，不触碰应用包 |
-| 10 | PASS | 当前树、11 组失败 fixture、最终 clean clone 与独立终审全部得到预期结果 |
+| 10 | PASS | 当前树、11 组失败 fixture、最终 clean clone、独立终审与真实 PR 双检查全部得到预期结果 |
 
 ## P0-03 执行卡
 
@@ -326,7 +344,7 @@ TDD 与失败路径：
 - 无 UI 变化，浏览器尺寸/多语言视觉证据不适用；这不是部署或生产发布证据。
 - P0-04 必须在应用组合根显式选择受信任 defaults，禁止提交生产 tier/site/DB/凭据默认值，
   并增加浏览器包不得导入 `@fan-support/config/server` 的依赖门禁。
-- P0-04 仍依赖 P0-02 完成真实 GitHub PR required checks，当前不得领取。
+- P0-02 真实 GitHub PR required checks 已完成，P0-04 现已 READY，但尚未领取。
 
 独立评审：`/root/p003_security_review` 对最终候选给出 ACCEPT、42 条攻击与 fresh-clone
 验收全绿；`/root/p003_config_design` 给出 ACCEPT；`/root/p003_repo_patterns` 完成 manifest、
