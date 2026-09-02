@@ -16,7 +16,7 @@
 | P0-02 | DONE | Codex `/root` | 2026-09-02T19:25:41+08:00 | 2026-09-03T01:29:52+08:00 | [PR #1](https://github.com/CZ3700/diandan/pull/1) 真实 CI 全绿；`Quality`/`Security` 已绑定 GitHub Actions 并作为 `main` 必需检查 |
 | P0-03 | DONE | Codex `/root` | 2026-09-03T00:02:33+08:00 | 2026-09-03T00:47:13+08:00 | 候选 `ba8b8864605e7181a85f2ffc13ca52087e0726e4`；三路独立复核 ACCEPT |
 | P0-04 | DONE | Codex `/root` | 2026-09-03T01:54:21+08:00 | 2026-09-03T03:16:06+08:00 | [PR #2](https://github.com/CZ3700/diandan/pull/2) Quality/Security 全绿；clean clone 与三路独立复核通过 |
-| P0-05 | IN_PROGRESS | Codex `/root` | 2026-09-03T03:28:17+08:00 | — | 已领取；正在建立 request/trace 关联、结构化日志与错误边界 |
+| P0-05 | REVIEW | Codex `/root` | 2026-09-03T03:28:17+08:00 | — | 实现与本地验收已完成；等待 clean-clone 和最终接受门禁 |
 
 ## P0-01 执行卡
 
@@ -531,6 +531,7 @@ TLS 隔离与静态门禁给出 `ACCEPT for REVIEW`，无代码或证据 blocker
 - 验证计划：先写会因缺少 request ID 传播、日志 allowlist、OTel lifecycle 和错误边界而失败的单元/集成检查；实现后运行 observability 与四应用受影响测试、根 `format/lint/typecheck/test/build`、secret/audit，再以真实 preview 请求证明 storefront→API 关联、故障日志可排查且合成 PII 不泄露，最后 clean clone 复验。
 - 并发/所有权：P0-05 是 W3 唯一 Lane D executor；Codex `/root` 独占 `packages/observability`、四应用观测集成、根 manifest/lockfile、排障文档与本执行卡。子代理仅做读取研究或独立复核，除非另行分配不重叠文件。
 - 风险映射：`R-02`、`R-11`；日志、span attributes、错误对象、测试输出与故障证据均默认 allowlist，禁止完整 PII、留言、token、密钥、raw payment/provider payload 和偶像地址。
+- Review 请求：`2026-09-03T05:23:04+08:00`；三路只读复核覆盖测试/真实 standalone、Next 信号退出设计和最终差异，代码评审当前无 P0/P1 阻断；最终接受仍以候选提交的 clean-clone 为条件。
 
 ## Phase 退出证据
 

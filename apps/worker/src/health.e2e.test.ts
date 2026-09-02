@@ -21,8 +21,21 @@ type RuntimeApplication = Readonly<{
 type BootstrapModule = Readonly<{
   createWorkerApplication: (
     environment: Readonly<Record<string, string | undefined>>,
+    options?: Readonly<{
+      logger: Readonly<{
+        info: () => void;
+        warn: () => void;
+        error: () => void;
+      }>;
+    }>,
   ) => Promise<RuntimeApplication>;
 }>;
+
+const quietLogger = Object.freeze({
+  info: () => {},
+  warn: () => {},
+  error: () => {},
+});
 
 const testDatabaseUrl = [
   "postgresql://",
@@ -60,7 +73,9 @@ async function loadBootstrapModule(): Promise<BootstrapModule> {
 
 test("serves the worker health contract through Fastify", async () => {
   const { createWorkerApplication } = await loadBootstrapModule();
-  const application = await createWorkerApplication(validEnvironment);
+  const application = await createWorkerApplication(validEnvironment, {
+    logger: quietLogger,
+  });
 
   try {
     await application.init();

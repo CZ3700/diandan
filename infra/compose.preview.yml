@@ -51,13 +51,14 @@ services:
 
   storefront:
     profiles: [preview]
-    image: fan-support/storefront:p0-04
+    image: fan-support/storefront:p0-05
     build:
       context: ..
       dockerfile: infra/docker/Dockerfile
       target: storefront
     environment:
       FAN_SUPPORT_DEPLOYMENT_ENV: preview
+      FAN_SUPPORT_INTERNAL_API_ORIGIN: http://api:3002
       FAN_SUPPORT_SITE_ORIGIN: https://localhost:3443
       NODE_ENV: production
     init: true
@@ -77,7 +78,7 @@ services:
 
   admin:
     profiles: [preview]
-    image: fan-support/admin:p0-04
+    image: fan-support/admin:p0-05
     build:
       context: ..
       dockerfile: infra/docker/Dockerfile
@@ -103,7 +104,7 @@ services:
 
   api:
     profiles: [preview]
-    image: fan-support/api:p0-04
+    image: fan-support/api:p0-05
     build:
       context: ..
       dockerfile: infra/docker/Dockerfile
@@ -150,7 +151,7 @@ services:
 
   worker:
     profiles: [preview]
-    image: fan-support/worker:p0-04
+    image: fan-support/worker:p0-05
     build:
       context: ..
       dockerfile: infra/docker/Dockerfile

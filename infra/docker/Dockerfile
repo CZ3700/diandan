@@ -15,6 +15,7 @@ COPY . .
 
 RUN pnpm install --offline --frozen-lockfile
 RUN pnpm --filter @fan-support/config build \
+  && pnpm --filter @fan-support/observability build \
   && pnpm --filter @fan-support/storefront build \
   && pnpm --filter @fan-support/admin build \
   && pnpm --filter @fan-support/api build \

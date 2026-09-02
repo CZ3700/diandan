@@ -33,6 +33,11 @@ type ObjectStorageRuntimeConfig = Readonly<{
   forcePathStyle: boolean;
 }>;
 
+type InternalApiRuntimeConfig = Readonly<{
+  schemaVersion: 1;
+  origin: string;
+}>;
+
 type PublicRuntimeConfig = Readonly<{
   schemaVersion: 1;
   siteOrigin: string;
@@ -49,6 +54,9 @@ type ServerConfigModule = Readonly<{
   resolveObjectStorageRuntimeConfig: (
     sources: RuntimeConfigSources,
   ) => ObjectStorageRuntimeConfig;
+  resolveInternalApiRuntimeConfig: (
+    sources: RuntimeConfigSources,
+  ) => InternalApiRuntimeConfig;
   toPublicRuntimeConfig: (config: ServerRuntimeConfig) => PublicRuntimeConfig;
 }>;
 
@@ -893,6 +901,76 @@ test("projects public config through an explicit allowlist", async () => {
   ]);
   expect(Object.isFrozen(publicConfig)).toBe(true);
   expect(JSON.stringify(publicConfig)).not.toContain("must-not-leak");
+});
+
+test.each(["development", "test", "preview"] as const)(
+  "resolves an HTTP internal API origin for the %s tier",
+  async (deploymentEnvironment) => {
+    const { resolveInternalApiRuntimeConfig } = await loadServerConfigModule();
+
+    expect(
+      resolveInternalApiRuntimeConfig({
+        environment: {
+          FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
+          FAN_SUPPORT_INTERNAL_API_ORIGIN: "http://api:3002",
+        },
+      }),
+    ).toEqual({ schemaVersion: 1, origin: "http://api:3002" });
+  },
+);
+
+test("requires HTTPS for staging and production internal API origins", async () => {
+  const { resolveInternalApiRuntimeConfig } = await loadServerConfigModule();
+
+  for (const deploymentEnvironment of ["staging", "production"] as const) {
+    expectInvalidConfig(
+      () =>
+        resolveInternalApiRuntimeConfig({
+          environment: {
+            FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
+            FAN_SUPPORT_INTERNAL_API_ORIGIN: "http://api:3002",
+          },
+        }),
+      ["internalApiOrigin"],
+    );
+    expect(
+      resolveInternalApiRuntimeConfig({
+        environment: {
+          FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
+          FAN_SUPPORT_INTERNAL_API_ORIGIN: "https://api.example.invalid",
+        },
+      }),
+    ).toEqual({
+      schemaVersion: 1,
+      origin: "https://api.example.invalid",
+    });
+  }
+});
+
+test("fails closed for a missing or ambiguous internal API origin", async () => {
+  const { resolveInternalApiRuntimeConfig } = await loadServerConfigModule();
+
+  for (const origin of [
+    undefined,
+    "http://user:password@api:3002",
+    "http://api:3002/path",
+    "http://api:3002?query=yes",
+    "http://api:3002#fragment",
+    "http://api:3002\\confused",
+  ]) {
+    expectInvalidConfig(
+      () =>
+        resolveInternalApiRuntimeConfig({
+          environment: {
+            FAN_SUPPORT_DEPLOYMENT_ENV: "preview",
+            ...(origin === undefined
+              ? {}
+              : { FAN_SUPPORT_INTERNAL_API_ORIGIN: origin }),
+          },
+        }),
+      ["internalApiOrigin"],
+    );
+  }
 });
 
 test("projects only an own data site origin without invoking accessors", async () => {

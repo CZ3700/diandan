@@ -88,6 +88,28 @@ const databaseRuntimeConfigSchema = z
   })
   .readonly();
 
+const internalApiRuntimeConfigSchema = z
+  .strictObject({
+    schemaVersion: z.literal(1),
+    deploymentEnvironment: deploymentEnvironmentSchema,
+    internalApiOrigin: z.string().refine(isObjectStorageEndpoint),
+  })
+  .superRefine((config, context) => {
+    if (
+      isHttpOrigin(config.internalApiOrigin) &&
+      config.deploymentEnvironment !== "development" &&
+      config.deploymentEnvironment !== "test" &&
+      config.deploymentEnvironment !== "preview"
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["internalApiOrigin"],
+        message: "HTTP is limited to development, test, and preview tiers",
+      });
+    }
+  })
+  .readonly();
+
 function isObjectStorageBucket(value: string): boolean {
   return (
     value.length >= 3 &&
@@ -158,6 +180,10 @@ export type ServerRuntimeConfig = Readonly<
 export type DatabaseRuntimeConfig = Readonly<
   z.infer<typeof databaseRuntimeConfigSchema>
 >;
+export type InternalApiRuntimeConfig = Readonly<{
+  schemaVersion: 1;
+  origin: string;
+}>;
 export type ObjectStorageRuntimeConfig = Readonly<{
   schemaVersion: 1;
   endpoint: string;
@@ -174,6 +200,10 @@ const SERVER_FIELDS = Object.freeze([
   "siteOrigin",
 ] as const);
 const DATABASE_FIELDS = Object.freeze(["databaseUrl"] as const);
+const INTERNAL_API_FIELDS = Object.freeze([
+  "deploymentEnvironment",
+  "internalApiOrigin",
+] as const);
 const OBJECT_STORAGE_FIELDS = Object.freeze([
   "deploymentEnvironment",
   "objectStorageAccessKeyId",
@@ -190,6 +220,10 @@ const SERVER_CONFIG_KEYS = Object.freeze([
 ] as const);
 const DATABASE_CONFIG_KEYS = Object.freeze([
   "FAN_SUPPORT_DATABASE_URL",
+] as const);
+const INTERNAL_API_CONFIG_KEYS = Object.freeze([
+  "FAN_SUPPORT_DEPLOYMENT_ENV",
+  "FAN_SUPPORT_INTERNAL_API_ORIGIN",
 ] as const);
 const OBJECT_STORAGE_CONFIG_KEYS = Object.freeze([
   "FAN_SUPPORT_DEPLOYMENT_ENV",
@@ -259,6 +293,28 @@ export function resolveDatabaseRuntimeConfig(
   return Object.freeze({
     schemaVersion: result.data.schemaVersion,
     url: result.data.url,
+  });
+}
+
+export function resolveInternalApiRuntimeConfig(
+  sources: RuntimeConfigSources,
+): InternalApiRuntimeConfig {
+  const layered = resolveConfigLayers(sources, INTERNAL_API_CONFIG_KEYS);
+  const result = internalApiRuntimeConfigSchema.safeParse({
+    schemaVersion: 1,
+    deploymentEnvironment: layered.FAN_SUPPORT_DEPLOYMENT_ENV,
+    internalApiOrigin: layered.FAN_SUPPORT_INTERNAL_API_ORIGIN,
+  });
+
+  if (!result.success) {
+    throw new ConfigValidationError(
+      errorFields(result.error.issues, INTERNAL_API_FIELDS),
+    );
+  }
+
+  return Object.freeze({
+    schemaVersion: result.data.schemaVersion,
+    origin: result.data.internalApiOrigin,
   });
 }
 

@@ -1,0 +1,35 @@
+P0-05 OCI image evidence
+Captured: 2026-09-03T05:20:05+08:00
+Platform built and inspected: linux/arm64
+
+Independent final images:
+  fan-support/storefront:p0-05
+    id: sha256:c27b59fcee41ee64dd508477247444620afb0e043d019a80a7b3f0efe15582a1
+    user: node
+    workdir: /app/apps/storefront
+    command: node server.js
+    size: 93318415 bytes
+
+  fan-support/admin:p0-05
+    id: sha256:b3ad1c68b285a4d415e9558fa35086eb5f96705f17bd1db40b673edc2699751f
+    user: node
+    workdir: /app/apps/admin
+    command: node server.js
+    size: 93226331 bytes
+
+  fan-support/api:p0-05
+    id: sha256:cebe80e2caaa357af44e1780961389425e283612fd5faf097d6340c3e55eb12b
+    user: node
+    workdir: /app
+    command: node dist/main.js
+    size: 85872777 bytes
+
+  fan-support/worker:p0-05
+    id: sha256:eac339cbd6cf342e12c0d93ba421ec08f83958529d94271bf3faf4e9cf3f1f8e
+    user: node
+    workdir: /app
+    command: node dist/main.js
+    size: 85872669 bytes
+
+The image IDs are local build outputs, not registry-published digests or
+multi-architecture release attestations.

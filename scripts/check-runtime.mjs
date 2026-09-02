@@ -11,22 +11,42 @@ const workspaceRoot = path.resolve(
 
 const appContracts = Object.freeze({
   storefront: {
-    dependencies: ["@fan-support/config", "next", "react", "react-dom"],
+    dependencies: [
+      "@fan-support/config",
+      "@fan-support/observability",
+      "next",
+      "react",
+      "react-dom",
+    ],
     files: [
       "next.config.ts",
       "next-env.d.ts",
+      "src/instrumentation.ts",
+      "src/proxy.ts",
+      "src/app/global-error.tsx",
       "src/app/icon.svg",
       "src/app/layout.tsx",
       "src/app/page.tsx",
       "src/app/healthz/route.ts",
+      "src/app/%5Finternal/observability/route.ts",
+      "src/server/observability-probe.ts",
     ],
     scripts: ["build", "dev", "start", "test", "typecheck"],
   },
   admin: {
-    dependencies: ["@fan-support/config", "next", "react", "react-dom"],
+    dependencies: [
+      "@fan-support/config",
+      "@fan-support/observability",
+      "next",
+      "react",
+      "react-dom",
+    ],
     files: [
       "next.config.ts",
       "next-env.d.ts",
+      "src/instrumentation.ts",
+      "src/proxy.ts",
+      "src/app/global-error.tsx",
       "src/app/icon.svg",
       "src/app/layout.tsx",
       "src/app/page.tsx",
@@ -37,6 +57,7 @@ const appContracts = Object.freeze({
   api: {
     dependencies: [
       "@fan-support/config",
+      "@fan-support/observability",
       "@nestjs/common",
       "@nestjs/core",
       "@nestjs/platform-fastify",
@@ -49,12 +70,14 @@ const appContracts = Object.freeze({
       "src/bootstrap.ts",
       "src/health.controller.ts",
       "src/main.ts",
+      "src/safe-http-exception.filter.ts",
     ],
     scripts: ["build", "dev", "start", "test", "typecheck"],
   },
   worker: {
     dependencies: [
       "@fan-support/config",
+      "@fan-support/observability",
       "@nestjs/common",
       "@nestjs/core",
       "@nestjs/platform-fastify",
@@ -67,6 +90,7 @@ const appContracts = Object.freeze({
       "src/bootstrap.ts",
       "src/health.controller.ts",
       "src/main.ts",
+      "src/safe-http-exception.filter.ts",
     ],
     scripts: ["build", "dev", "start", "test", "typecheck"],
   },
@@ -74,13 +98,16 @@ const appContracts = Object.freeze({
 
 const rootRuntimeFiles = Object.freeze([
   ".dockerignore",
+  "README.md",
   "infra/Caddyfile",
   "infra/compose.preview.yml",
   "infra/docker/Dockerfile",
   "scripts/runtime-preview.mjs",
+  "scripts/check-observability.mjs",
 ]);
 
 const rootRuntimeScripts = Object.freeze([
+  "check:observability",
   "preview:config",
   "preview:down",
   "preview:logs",
@@ -222,6 +249,18 @@ async function validateServerOnlyBoundary(errors) {
   }
 }
 
+async function validateNestFailureBoundary(errors) {
+  for (const app of ["api", "worker"]) {
+    const relativePath = `apps/${app}/src/bootstrap.ts`;
+    const text = await readText(relativePath, errors);
+    if (text !== undefined && !text.includes("abortOnError: false")) {
+      errors.push(
+        `${relativePath} must return Nest initialization failures to the observed runtime`,
+      );
+    }
+  }
+}
+
 async function validateCompose(errors) {
   const relativePath = "infra/compose.preview.yml";
   const text = await readText(relativePath, errors);
@@ -286,6 +325,20 @@ async function validateCompose(errors) {
         `${relativePath} service ${serviceName} needs its own OCI target`,
       );
     }
+    if (service?.image !== `fan-support/${serviceName}:p0-05`) {
+      errors.push(
+        `${relativePath} service ${serviceName} must use the P0-05 preview tag`,
+      );
+    }
+  }
+
+  if (
+    compose?.services?.storefront?.environment
+      ?.FAN_SUPPORT_INTERNAL_API_ORIGIN !== "http://api:3002"
+  ) {
+    errors.push(
+      `${relativePath} storefront must use the explicit preview internal API origin`,
+    );
   }
 
   for (const serviceName of ["api", "worker"]) {
@@ -395,6 +448,23 @@ async function validateDockerfile(errors) {
       `${relativePath} must cache immutable dependencies before copying mutable source`,
     );
   }
+  const observabilityBuild = text.indexOf(
+    "pnpm --filter @fan-support/observability build",
+  );
+  const firstApplicationBuild = Math.min(
+    ...["storefront", "admin", "api", "worker"].map((name) =>
+      text.indexOf(`pnpm --filter @fan-support/${name} build`),
+    ),
+  );
+  if (
+    observabilityBuild < 0 ||
+    firstApplicationBuild < 0 ||
+    observabilityBuild > firstApplicationBuild
+  ) {
+    errors.push(
+      `${relativePath} must build observability before every application`,
+    );
+  }
   const syntaxDirective = text.match(/^# syntax=(.+)$/mu)?.[1];
   if (
     syntaxDirective !== undefined &&
@@ -446,6 +516,23 @@ async function validatePreviewLauncher(errors) {
   if (!text.includes('"openssl"') || !text.includes("https://localhost:7443")) {
     errors.push(
       `${relativePath} must generate ephemeral TLS material and probe S3 through HTTPS`,
+    );
+  }
+  if (
+    !text.includes("/_internal/observability") ||
+    !text.includes("traceparent") ||
+    !text.includes("x-request-id")
+  ) {
+    errors.push(
+      `${relativePath} must verify storefront-to-API request and trace correlation`,
+    );
+  }
+  if (
+    !text.includes("runtime.start_failed") ||
+    !text.includes("runtime.stopped")
+  ) {
+    errors.push(
+      `${relativePath} must verify fixed startup failure and graceful shutdown records`,
     );
   }
   if (
@@ -501,6 +588,7 @@ for (const [name, contract] of Object.entries(appContracts)) {
   await validateApp(name, contract, errors);
 }
 await validateServerOnlyBoundary(errors);
+await validateNestFailureBoundary(errors);
 await validateCompose(errors);
 await validateDockerfile(errors);
 await validateDockerignore(errors);
