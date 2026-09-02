@@ -1,6 +1,16 @@
 import { createHash, createHmac, randomBytes } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { Buffer } from "node:buffer";
+import {
+  chmodSync,
+  copyFileSync,
+  lstatSync,
+  mkdtempSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import https from "node:https";
 import path from "node:path";
 import { fileURLToPath, URL } from "node:url";
@@ -13,6 +23,13 @@ const composeFile = path.join(workspaceRoot, "infra/compose.preview.yml");
 const projectName = "fan-support-preview";
 const bucketName = "fan-support-media";
 const region = "us-east-1";
+const tlsDirectoryPrefix = "fan-support-preview-tls-";
+const tlsParentDirectory = path.join(
+  workspaceRoot,
+  "node_modules",
+  ".cache",
+  "fan-support-preview",
+);
 
 const composePrefix = [
   "compose",
@@ -30,14 +47,175 @@ function createSecrets() {
   });
 }
 
-function composeEnvironment(secrets = createSecrets()) {
+function runOpenSsl(arguments_, workingDirectory) {
+  const result = spawnSync("openssl", arguments_, {
+    cwd: workingDirectory,
+    env: process.env,
+    stdio: "ignore",
+  });
+  if (result.error !== undefined || result.status !== 0) {
+    throw new Error("Cannot generate ephemeral preview TLS material");
+  }
+}
+
+function createTlsDirectory() {
+  mkdirSync(tlsParentDirectory, { mode: 0o700, recursive: true });
+  const parentMetadata = lstatSync(tlsParentDirectory);
+  if (parentMetadata.isSymbolicLink() || !parentMetadata.isDirectory()) {
+    throw new Error("Preview TLS cache root is unsafe");
+  }
+  const directory = mkdtempSync(
+    path.join(tlsParentDirectory, tlsDirectoryPrefix),
+  );
+  chmodSync(directory, 0o700);
+
+  const clientsDirectory = path.join(directory, "clients");
+  const edgeDirectory = path.join(directory, "edge");
+  mkdirSync(clientsDirectory, { mode: 0o755 });
+  mkdirSync(edgeDirectory, { mode: 0o700 });
+
+  const caCertificate = path.join(edgeDirectory, "ca.crt");
+  const caKey = path.join(edgeDirectory, "ca.key");
+  const certificate = path.join(edgeDirectory, "preview.crt");
+  const certificateRequest = path.join(edgeDirectory, "preview.csr");
+  const extensionFile = path.join(edgeDirectory, "preview.ext");
+  const privateKey = path.join(edgeDirectory, "preview.key");
+
+  try {
+    runOpenSsl(
+      [
+        "req",
+        "-x509",
+        "-newkey",
+        "rsa:2048",
+        "-sha256",
+        "-days",
+        "2",
+        "-nodes",
+        "-keyout",
+        caKey,
+        "-out",
+        caCertificate,
+        "-subj",
+        "/CN=Fan Support Local Preview CA",
+        "-addext",
+        "basicConstraints=critical,CA:TRUE",
+        "-addext",
+        "keyUsage=critical,keyCertSign,cRLSign",
+      ],
+      edgeDirectory,
+    );
+    runOpenSsl(
+      [
+        "req",
+        "-new",
+        "-newkey",
+        "rsa:2048",
+        "-nodes",
+        "-keyout",
+        privateKey,
+        "-out",
+        certificateRequest,
+        "-subj",
+        "/CN=edge",
+      ],
+      edgeDirectory,
+    );
+    writeFileSync(
+      extensionFile,
+      [
+        "subjectAltName=DNS:edge,DNS:localhost,IP:127.0.0.1",
+        "basicConstraints=critical,CA:FALSE",
+        "keyUsage=critical,digitalSignature,keyEncipherment",
+        "extendedKeyUsage=serverAuth",
+        "",
+      ].join("\n"),
+      { mode: 0o600 },
+    );
+    runOpenSsl(
+      [
+        "x509",
+        "-req",
+        "-in",
+        certificateRequest,
+        "-CA",
+        caCertificate,
+        "-CAkey",
+        caKey,
+        "-CAcreateserial",
+        "-out",
+        certificate,
+        "-days",
+        "2",
+        "-sha256",
+        "-extfile",
+        extensionFile,
+      ],
+      edgeDirectory,
+    );
+    runOpenSsl(
+      ["verify", "-CAfile", caCertificate, certificate],
+      edgeDirectory,
+    );
+
+    chmodSync(caCertificate, 0o644);
+    chmodSync(certificate, 0o644);
+    chmodSync(privateKey, 0o600);
+    const clientCaCertificate = path.join(clientsDirectory, "ca.crt");
+    copyFileSync(caCertificate, clientCaCertificate);
+    chmodSync(clientCaCertificate, 0o644);
+    for (const temporaryFile of [
+      caKey,
+      certificateRequest,
+      extensionFile,
+      path.join(edgeDirectory, "ca.srl"),
+    ]) {
+      rmSync(temporaryFile, { force: true });
+    }
+    return directory;
+  } catch (error) {
+    rmSync(directory, { force: true, recursive: true });
+    throw error;
+  }
+}
+
+function isManagedTlsDirectory(directory) {
+  if (typeof directory !== "string" || directory === "") {
+    return false;
+  }
+  try {
+    const resolved = path.resolve(directory);
+    const metadata = lstatSync(resolved);
+    return (
+      path.dirname(resolved) === tlsParentDirectory &&
+      path.basename(resolved).startsWith(tlsDirectoryPrefix) &&
+      !metadata.isSymbolicLink() &&
+      metadata.isDirectory()
+    );
+  } catch {
+    return false;
+  }
+}
+
+function removeTlsDirectory(directory) {
+  try {
+    if (isManagedTlsDirectory(directory)) {
+      rmSync(path.resolve(directory), { force: true, recursive: true });
+    }
+  } catch {
+    // A missing or externally changed temp directory needs no further cleanup.
+  }
+}
+
+function composeEnvironment(state = createSecrets()) {
   return {
     ...process.env,
     COMPOSE_PARALLEL_LIMIT: "1",
-    PREVIEW_OBJECT_STORAGE_ACCESS_KEY_ID: secrets.objectStorageAccessKeyId,
+    PREVIEW_OBJECT_STORAGE_ACCESS_KEY_ID: state.objectStorageAccessKeyId,
     PREVIEW_OBJECT_STORAGE_SECRET_ACCESS_KEY:
-      secrets.objectStorageSecretAccessKey,
-    PREVIEW_POSTGRES_PASSWORD: secrets.postgresPassword,
+      state.objectStorageSecretAccessKey,
+    PREVIEW_POSTGRES_PASSWORD: state.postgresPassword,
+    PREVIEW_TLS_DIRECTORY: state.tlsDirectory ?? tlsParentDirectory,
   };
 }
 
@@ -70,7 +248,7 @@ function readEnvironmentValue(entries, name) {
 
 function readContainerEnvironment(serviceName) {
   const containerId = runCompose(
-    ["--profile", "preview", "ps", "--quiet", serviceName],
+    ["--profile", "preview", "ps", "--all", "--quiet", serviceName],
     {
       capture: true,
       failureMessage: `Cannot locate the ${serviceName} preview container`,
@@ -103,9 +281,10 @@ function readContainerEnvironment(serviceName) {
   }
 }
 
-function readRunningSecrets() {
+function readRunningState() {
   const postgresEnvironment = readContainerEnvironment("postgres");
   const storageEnvironment = readContainerEnvironment("object-storage");
+  const edgeEnvironment = readContainerEnvironment("edge");
   const postgresPassword = readEnvironmentValue(
     postgresEnvironment,
     "POSTGRES_PASSWORD",
@@ -118,20 +297,38 @@ function readRunningSecrets() {
     storageEnvironment,
     "ROOT_SECRET_ACCESS_KEY",
   );
+  const tlsDirectory = readEnvironmentValue(
+    edgeEnvironment,
+    "PREVIEW_TLS_DIRECTORY",
+  );
 
   if (
     postgresPassword === undefined ||
     objectStorageAccessKeyId === undefined ||
-    objectStorageSecretAccessKey === undefined
+    objectStorageSecretAccessKey === undefined ||
+    !isManagedTlsDirectory(tlsDirectory)
   ) {
-    throw new Error("Preview credentials are unavailable");
+    throw new Error("Preview runtime state is unavailable");
   }
 
   return Object.freeze({
     postgresPassword,
     objectStorageAccessKeyId,
     objectStorageSecretAccessKey,
+    tlsDirectory,
   });
+}
+
+function tryReadRunningTlsDirectory() {
+  try {
+    const tlsDirectory = readEnvironmentValue(
+      readContainerEnvironment("edge"),
+      "PREVIEW_TLS_DIRECTORY",
+    );
+    return isManagedTlsDirectory(tlsDirectory) ? tlsDirectory : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 function hash(value) {
@@ -184,28 +381,28 @@ function signedS3Headers(method, url, accessKeyId, secretAccessKey) {
   };
 }
 
-async function requestS3(method, secrets) {
-  const url = new URL(`http://127.0.0.1:7070/${bucketName}`);
-  return globalThis.fetch(url, {
-    method,
+async function requestS3(method, state, caCertificate) {
+  const url = new URL(`https://localhost:7443/${bucketName}`);
+  return requestLocalHttps(url, caCertificate, {
     headers: signedS3Headers(
       method,
       url,
-      secrets.objectStorageAccessKeyId,
-      secrets.objectStorageSecretAccessKey,
+      state.objectStorageAccessKeyId,
+      state.objectStorageSecretAccessKey,
     ),
+    method,
   });
 }
 
-async function ensureBucket(secrets) {
-  const createResponse = await requestS3("PUT", secrets);
+async function ensureBucket(state, caCertificate) {
+  const createResponse = await requestS3("PUT", state, caCertificate);
   if (createResponse.status !== 200 && createResponse.status !== 409) {
     throw new Error(
       `Object-storage bucket creation failed with status ${createResponse.status}`,
     );
   }
 
-  const headResponse = await requestS3("HEAD", secrets);
+  const headResponse = await requestS3("HEAD", state, caCertificate);
   if (!headResponse.ok) {
     throw new Error(
       `Object-storage bucket probe failed with status ${headResponse.status}`,
@@ -213,23 +410,35 @@ async function ensureBucket(secrets) {
   }
 }
 
-function requestLocalHttps(url) {
+function requestLocalHttps(url, caCertificate, options = {}) {
   return new Promise((resolve, reject) => {
-    const request = https.get(
+    const request = https.request(
       url,
-      { rejectUnauthorized: false },
+      {
+        ca: caCertificate,
+        headers: options.headers,
+        method: options.method ?? "GET",
+        rejectUnauthorized: true,
+      },
       (response) => {
         const chunks = [];
         response.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
         response.on("end", () => {
           resolve({
             body: Buffer.concat(chunks).toString("utf8"),
+            ok:
+              (response.statusCode ?? 0) >= 200 &&
+              (response.statusCode ?? 0) < 300,
             status: response.statusCode ?? 0,
           });
         });
       },
     );
     request.once("error", reject);
+    request.setTimeout(5_000, () => {
+      request.destroy(new Error("Local HTTPS preview request timed out"));
+    });
+    request.end();
   });
 }
 
@@ -246,26 +455,59 @@ async function expectHealth(url, service) {
   }
 }
 
-async function verifyPreview(secrets) {
-  const storageHealth = await globalThis.fetch(
-    "http://127.0.0.1:7070/_/health",
+function readCaCertificate(tlsDirectory) {
+  try {
+    return readFileSync(path.join(tlsDirectory, "clients", "ca.crt"));
+  } catch {
+    throw new Error("Preview TLS certificate is unavailable");
+  }
+}
+
+function verifyInternalStorageTls(serviceName) {
+  const result = runCompose(
+    [
+      "exec",
+      "--no-TTY",
+      serviceName,
+      "node",
+      "-e",
+      "fetch('https://edge:7443/_/health').then((response)=>{if(!response.ok)process.exit(1);process.stdout.write('ok')}).catch(()=>process.exit(1))",
+    ],
+    {
+      capture: true,
+      failureMessage: `${serviceName} cannot verify the preview S3 TLS edge`,
+    },
+  ).trim();
+  if (result !== "ok") {
+    throw new Error(`${serviceName} returned an invalid S3 TLS probe`);
+  }
+}
+
+async function verifyPreview(state) {
+  const caCertificate = readCaCertificate(state.tlsDirectory);
+  const storageHealth = await requestLocalHttps(
+    "https://localhost:7443/_/health",
+    caCertificate,
   );
   if (!storageHealth.ok) {
     throw new Error(
       `Object-storage health failed with status ${storageHealth.status}`,
     );
   }
-  await ensureBucket(secrets);
+  await ensureBucket(state, caCertificate);
+
+  verifyInternalStorageTls("api");
+  verifyInternalStorageTls("worker");
 
   await expectHealth("http://127.0.0.1:3002/healthz", "api");
   await expectHealth("http://127.0.0.1:3003/healthz", "worker");
 
   const [storefrontPage, adminPage, storefrontHealth, adminHealth] =
     await Promise.all([
-      requestLocalHttps("https://localhost:3443/"),
-      requestLocalHttps("https://localhost:3444/"),
-      requestLocalHttps("https://localhost:3443/healthz"),
-      requestLocalHttps("https://localhost:3444/healthz"),
+      requestLocalHttps("https://localhost:3443/", caCertificate),
+      requestLocalHttps("https://localhost:3444/", caCertificate),
+      requestLocalHttps("https://localhost:3443/healthz", caCertificate),
+      requestLocalHttps("https://localhost:3444/healthz", caCertificate),
     ]);
 
   if (
@@ -314,7 +556,7 @@ async function verifyPreview(secrets) {
   console.log("- API health: http://localhost:3002/healthz");
   console.log("- Worker health: http://localhost:3003/healthz");
   console.log(`- PostgreSQL query: ${databaseProbe}`);
-  console.log(`- Object-storage bucket: ${bucketName}`);
+  console.log(`- Object-storage TLS bucket: ${bucketName}`);
 }
 
 function scrub(text, values) {
@@ -346,51 +588,70 @@ async function main() {
   }
 
   if (command === "up") {
-    const secrets = createSecrets();
-    const environment = composeEnvironment(secrets);
-    runCompose(
-      [
-        "--profile",
-        "preview",
-        "up",
-        "--build",
-        "--detach",
-        "--force-recreate",
-        "--wait",
-        "--wait-timeout",
-        "300",
-      ],
-      { environment, failureMessage: "Preview stack failed to start" },
-    );
-    await verifyPreview(secrets);
+    const previousTlsDirectory = tryReadRunningTlsDirectory();
+    const state = Object.freeze({
+      ...createSecrets(),
+      tlsDirectory: createTlsDirectory(),
+    });
+    const environment = composeEnvironment(state);
+    try {
+      runCompose(
+        [
+          "--profile",
+          "preview",
+          "up",
+          "--build",
+          "--detach",
+          "--force-recreate",
+          "--wait",
+          "--wait-timeout",
+          "300",
+        ],
+        { environment, failureMessage: "Preview stack failed to start" },
+      );
+      await verifyPreview(state);
+    } catch (error) {
+      if (tryReadRunningTlsDirectory() !== state.tlsDirectory) {
+        removeTlsDirectory(state.tlsDirectory);
+      }
+      throw error;
+    }
+    if (
+      previousTlsDirectory !== undefined &&
+      previousTlsDirectory !== state.tlsDirectory
+    ) {
+      removeTlsDirectory(previousTlsDirectory);
+    }
     return;
   }
 
   if (command === "verify") {
-    await verifyPreview(readRunningSecrets());
+    await verifyPreview(readRunningState());
     return;
   }
 
   if (command === "logs") {
-    const secrets = readRunningSecrets();
+    const state = readRunningState();
     const text = runCompose(["--profile", "preview", "logs", "--no-color"], {
       capture: true,
       failureMessage: "Cannot read preview logs",
     });
     process.stdout.write(
       scrub(text, [
-        secrets.postgresPassword,
-        secrets.objectStorageAccessKeyId,
-        secrets.objectStorageSecretAccessKey,
+        state.postgresPassword,
+        state.objectStorageAccessKeyId,
+        state.objectStorageSecretAccessKey,
       ]),
     );
     return;
   }
 
   if (command === "down") {
+    const tlsDirectory = tryReadRunningTlsDirectory();
     runCompose(["--profile", "preview", "down", "--remove-orphans"], {
       failureMessage: "Preview stack failed to stop",
     });
+    removeTlsDirectory(tlsDirectory);
     return;
   }
 

@@ -1,5 +1,5 @@
 P0-04 sanitized container-log excerpts
-Captured: 2026-09-03T02:36:53+08:00
+Captured: 2026-09-03T03:08:43+08:00
 Source command: mise exec node@24.20.0 -- corepack pnpm preview:logs
 
 admin-1        | Next.js 16.3.4
@@ -14,11 +14,14 @@ postgres-1     | starting PostgreSQL 18.6 (Debian 18.6-1.pgdg12+2)
 postgres-1     | database system is ready to accept connections
 object-storage | VersityGW v1.7.0, build 8a3dbcf97d996ea4955426e6b8a76eb96d2cd92a
 object-storage | GET /_/health -> 200
-object-storage | PUT /fan-support-media -> 200
+object-storage | PUT /fan-support-media -> 200/409 (create/idempotent verify)
 object-storage | HEAD /fan-support-media -> 200
-edge-1         | certificate obtained successfully, identifier localhost, issuer local
-edge-1         | HTTPS servers running on :3443 and :3444
+object-storage | unsigned GET /fan-support-media -> 403
+edge-1         | matching localhost certificate already loaded from mounted leaf
+edge-1         | TLS servers running on :3443, :3444, and :7443 (h1/h2/h3)
 
 The preview logger reads current runtime credentials only to replace any exact
 matches with [REDACTED_SECRET] before emitting output. No credential value is
-stored in this evidence file.
+stored in this evidence file. The local QUIC receive-buffer warning, Caddy's
+unused port-80 protocol warnings, and PostgreSQL local-socket trust warning are
+expected local-preview messages rather than staging or production evidence.

@@ -1,6 +1,8 @@
 P0-04 Playwright browser evidence
-Captured: 2026-09-03T02:34:41+08:00 to 2026-09-03T02:35:49+08:00
-Browser context: ignoreHTTPSErrors=true for the local Caddy internal CA
+Captured: 2026-09-03T03:08:24+08:00 to 2026-09-03T03:08:32+08:00
+Browser: Chromium 152.0.7977.65
+Browser context: ignoreHTTPSErrors=true for the launcher-managed ephemeral CA
+Workflow: playwright-cli open + run-code + close with cli.config.json
 
 Storefront https://localhost:3443/
   1440x900 screenshot: storefront-1440x900.png
@@ -12,6 +14,7 @@ Storefront https://localhost:3443/
   Reduced motion: media query matched; document animations = 0
   Health link: {"schemaVersion":1,"service":"storefront","status":"ok"}
   Error state: /p0-04-not-found returned HTTP 404 with visible 404 heading
+  Overflow: 1440/1440 desktop and 390/390 mobile inner/scroll widths
 
 Admin https://localhost:3444/
   1440x900 screenshot: admin-1440x900.png
@@ -23,7 +26,9 @@ Admin https://localhost:3444/
   Reduced motion: media query matched; document animations = 0
   Health link: {"schemaVersion":1,"service":"admin","status":"ok"}
   Error state: /p0-04-not-found returned HTTP 404 with visible 404 heading
+  Overflow: 1440/1440 desktop and 390/390 mobile inner/scroll widths
 
 Visual inspection: all four screenshots have readable content, no clipping,
 no horizontal overflow, and no unexpected overlap. The pages are intentionally
 English-only internal runtime probes; public locale routing begins in later tasks.
+Loading and empty states are not applicable to these synchronous runtime probes.

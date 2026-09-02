@@ -28,8 +28,8 @@ services:
       VGW_IAM_DIR: /data/iam
       VGW_PORT: :7070
       VGW_REGION: us-east-1
-    ports:
-      - "127.0.0.1:7070:7070"
+    expose:
+      - "7070"
     tmpfs:
       - /data/iam
       - /data/s3
@@ -110,23 +110,29 @@ services:
       target: api
     environment:
       FAN_SUPPORT_DATABASE_URL: postgresql://fan_support:${PREVIEW_POSTGRES_PASSWORD:?managed by preview launcher}@postgres:5432/fan_support
-      FAN_SUPPORT_DEPLOYMENT_ENV: test
+      FAN_SUPPORT_DEPLOYMENT_ENV: preview
       FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: ${PREVIEW_OBJECT_STORAGE_ACCESS_KEY_ID:?managed by preview launcher}
       FAN_SUPPORT_OBJECT_STORAGE_BUCKET: fan-support-media
-      FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: http://object-storage:7070
+      FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: https://edge:7443
       FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true"
       FAN_SUPPORT_OBJECT_STORAGE_REGION: us-east-1
       FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: ${PREVIEW_OBJECT_STORAGE_SECRET_ACCESS_KEY:?managed by preview launcher}
       FAN_SUPPORT_SITE_ORIGIN: https://localhost:3443
-      NODE_ENV: test
+      NODE_ENV: production
+      NODE_EXTRA_CA_CERTS: /run/preview-ca/ca.crt
       PORT: "3002"
     ports:
       - "127.0.0.1:3002:3002"
     depends_on:
-      object-storage:
+      edge:
         condition: service_healthy
       postgres:
         condition: service_healthy
+    volumes:
+      - type: bind
+        source: ${PREVIEW_TLS_DIRECTORY:?managed by preview launcher}/clients
+        target: /run/preview-ca
+        read_only: true
     init: true
     healthcheck:
       test:
@@ -151,23 +157,29 @@ services:
       target: worker
     environment:
       FAN_SUPPORT_DATABASE_URL: postgresql://fan_support:${PREVIEW_POSTGRES_PASSWORD:?managed by preview launcher}@postgres:5432/fan_support
-      FAN_SUPPORT_DEPLOYMENT_ENV: test
+      FAN_SUPPORT_DEPLOYMENT_ENV: preview
       FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: ${PREVIEW_OBJECT_STORAGE_ACCESS_KEY_ID:?managed by preview launcher}
       FAN_SUPPORT_OBJECT_STORAGE_BUCKET: fan-support-media
-      FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: http://object-storage:7070
+      FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: https://edge:7443
       FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true"
       FAN_SUPPORT_OBJECT_STORAGE_REGION: us-east-1
       FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: ${PREVIEW_OBJECT_STORAGE_SECRET_ACCESS_KEY:?managed by preview launcher}
       FAN_SUPPORT_SITE_ORIGIN: https://localhost:3443
-      NODE_ENV: test
+      NODE_ENV: production
+      NODE_EXTRA_CA_CERTS: /run/preview-ca/ca.crt
       PORT: "3003"
     ports:
       - "127.0.0.1:3003:3003"
     depends_on:
-      object-storage:
+      edge:
         condition: service_healthy
       postgres:
         condition: service_healthy
+    volumes:
+      - type: bind
+        source: ${PREVIEW_TLS_DIRECTORY:?managed by preview launcher}/clients
+        target: /run/preview-ca
+        read_only: true
     init: true
     healthcheck:
       test:
@@ -186,16 +198,25 @@ services:
   edge:
     profiles: [preview]
     image: caddy:2.11.4-alpine@sha256:5f5c8640aae01df9654968d946d8f1a56c497f1dd5c5cda4cf95ab7c14d58648
+    environment:
+      PREVIEW_TLS_DIRECTORY: ${PREVIEW_TLS_DIRECTORY:?managed by preview launcher}
     ports:
       - "127.0.0.1:3443:3443"
       - "127.0.0.1:3444:3444"
+      - "127.0.0.1:7443:7443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - type: bind
+        source: ${PREVIEW_TLS_DIRECTORY:?managed by preview launcher}/edge
+        target: /run/preview-tls
+        read_only: true
     tmpfs:
       - /config
       - /data
     depends_on:
       admin:
+        condition: service_healthy
+      object-storage:
         condition: service_healthy
       storefront:
         condition: service_healthy
@@ -203,7 +224,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl --fail --insecure --silent https://localhost:3443/ >/dev/null && curl --fail --insecure --silent https://localhost:3444/ >/dev/null",
+          "curl --fail --cacert /run/preview-tls/ca.crt --silent https://localhost:3443/ >/dev/null && curl --fail --cacert /run/preview-tls/ca.crt --silent https://localhost:3444/ >/dev/null && curl --fail --cacert /run/preview-tls/ca.crt --silent https://localhost:7443/_/health >/dev/null",
         ]
       interval: 5s
       timeout: 5s

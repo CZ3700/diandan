@@ -127,6 +127,17 @@ function isExactVersion(value) {
   );
 }
 
+function isReadOnlyBindMount(volume, source, target) {
+  return (
+    volume !== null &&
+    typeof volume === "object" &&
+    volume.type === "bind" &&
+    volume.source === source &&
+    volume.target === target &&
+    volume.read_only === true
+  );
+}
+
 async function validateApp(name, contract, errors) {
   const directory = path.posix.join("apps", name);
   const manifestPath = path.posix.join(directory, "package.json");
@@ -277,6 +288,69 @@ async function validateCompose(errors) {
     }
   }
 
+  for (const serviceName of ["api", "worker"]) {
+    const service = compose?.services?.[serviceName];
+    const volumes = service?.volumes;
+    if (
+      service?.environment?.NODE_ENV !== "production" ||
+      service?.environment?.FAN_SUPPORT_DEPLOYMENT_ENV !== "preview"
+    ) {
+      errors.push(
+        `${relativePath} service ${serviceName} must exercise production/preview config`,
+      );
+    }
+    if (
+      service?.environment?.FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT !==
+        "https://edge:7443" ||
+      service?.environment?.NODE_EXTRA_CA_CERTS !== "/run/preview-ca/ca.crt"
+    ) {
+      errors.push(
+        `${relativePath} service ${serviceName} must trust and use the preview S3 TLS edge`,
+      );
+    }
+    if (
+      !Array.isArray(volumes) ||
+      volumes.length !== 1 ||
+      !isReadOnlyBindMount(
+        volumes[0],
+        "${PREVIEW_TLS_DIRECTORY:?managed by preview launcher}/clients",
+        "/run/preview-ca",
+      )
+    ) {
+      errors.push(
+        `${relativePath} service ${serviceName} must mount only the client CA directory`,
+      );
+    }
+  }
+
+  if (compose?.services?.["object-storage"]?.ports !== undefined) {
+    errors.push(
+      `${relativePath} object storage must be host-accessible only through TLS edge`,
+    );
+  }
+  const edge = compose?.services?.edge;
+  if (edge?.ports?.includes("127.0.0.1:7443:7443") !== true) {
+    errors.push(`${relativePath} edge must publish the preview S3 TLS port`);
+  }
+  const edgeVolumes = edge?.volumes;
+  if (
+    edge?.environment?.PREVIEW_TLS_DIRECTORY === undefined ||
+    !Array.isArray(edgeVolumes) ||
+    edgeVolumes.length !== 2 ||
+    !edgeVolumes.includes("./Caddyfile:/etc/caddy/Caddyfile:ro") ||
+    !edgeVolumes.some((volume) =>
+      isReadOnlyBindMount(
+        volume,
+        "${PREVIEW_TLS_DIRECTORY:?managed by preview launcher}/edge",
+        "/run/preview-tls",
+      ),
+    )
+  ) {
+    errors.push(
+      `${relativePath} edge must retain the managed TLS path and exclusively mount its TLS directory`,
+    );
+  }
+
   for (const serviceName of ["edge", "object-storage", "postgres"]) {
     const image = compose?.services?.[serviceName]?.image;
     if (
@@ -321,6 +395,15 @@ async function validateDockerfile(errors) {
       `${relativePath} must cache immutable dependencies before copying mutable source`,
     );
   }
+  const syntaxDirective = text.match(/^# syntax=(.+)$/mu)?.[1];
+  if (
+    syntaxDirective !== undefined &&
+    !/@sha256:[a-f0-9]{64}$/u.test(syntaxDirective)
+  ) {
+    errors.push(
+      `${relativePath} must not use an unpinned external Dockerfile frontend`,
+    );
+  }
 }
 
 async function validateDockerignore(errors) {
@@ -359,6 +442,42 @@ async function validatePreviewLauncher(errors) {
       `${relativePath} must use PostgreSQL's machine-readable version number for its query probe`,
     );
   }
+
+  if (!text.includes('"openssl"') || !text.includes("https://localhost:7443")) {
+    errors.push(
+      `${relativePath} must generate ephemeral TLS material and probe S3 through HTTPS`,
+    );
+  }
+  if (
+    !/path\.join\(\s*workspaceRoot,\s*"node_modules",\s*"\.cache",\s*"fan-support-preview",?\s*\)/u.test(
+      text,
+    ) ||
+    !/path\.join\(\s*directory,\s*"clients"\s*\)/u.test(text) ||
+    !/path\.join\(\s*directory,\s*"edge"\s*\)/u.test(text)
+  ) {
+    errors.push(
+      `${relativePath} must use a container-shared ignored cache root and separate client/edge TLS mounts`,
+    );
+  }
+}
+
+async function validateCaddyfile(errors) {
+  const relativePath = "infra/Caddyfile";
+  const text = await readText(relativePath, errors);
+  if (text === undefined) {
+    return;
+  }
+
+  if (
+    !text.includes(
+      "tls /run/preview-tls/preview.crt /run/preview-tls/preview.key",
+    ) ||
+    !text.includes("reverse_proxy object-storage:7070")
+  ) {
+    errors.push(
+      `${relativePath} must terminate ephemeral TLS for the internal S3 service`,
+    );
+  }
 }
 
 async function validateRoot(errors) {
@@ -386,6 +505,7 @@ await validateCompose(errors);
 await validateDockerfile(errors);
 await validateDockerignore(errors);
 await validatePreviewLauncher(errors);
+await validateCaddyfile(errors);
 
 if (errors.length > 0) {
   console.error("Runtime contract check failed:");
