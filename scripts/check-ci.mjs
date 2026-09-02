@@ -249,18 +249,16 @@ async function validateCi() {
   if (manifestText !== undefined) {
     try {
       validateManifest(JSON.parse(manifestText), errors);
-    } catch (error) {
-      const detail = error instanceof Error ? error.message : String(error);
-      errors.push(`package.json is not valid JSON: ${detail}`);
+    } catch {
+      errors.push("package.json is not valid JSON");
     }
   }
 
   if (secretlintConfigText !== undefined) {
     try {
       validateSecretlintConfig(JSON.parse(secretlintConfigText), errors);
-    } catch (error) {
-      const detail = error instanceof Error ? error.message : String(error);
-      errors.push(`${secretlintConfigPath} is not valid JSON: ${detail}`);
+    } catch {
+      errors.push(`${secretlintConfigPath} is not valid JSON`);
     }
   }
 
