@@ -117,7 +117,10 @@ async function readJson(relativePath, errors) {
 }
 
 function isExactVersion(value) {
-  return typeof value === "string" && /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(value);
+  return (
+    typeof value === "string" &&
+    /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(value)
+  );
 }
 
 async function validateApp(name, contract, errors) {

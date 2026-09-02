@@ -11,7 +11,9 @@ type RuntimeApplication = Readonly<{
   close: () => Promise<unknown>;
   getHttpAdapter: () => Readonly<{
     getInstance: () => Readonly<{
-      inject: (options: Readonly<{ method: string; url: string }>) => Promise<InjectResponse>;
+      inject: (
+        options: Readonly<{ method: string; url: string }>,
+      ) => Promise<InjectResponse>;
     }>;
   }>;
 }>;

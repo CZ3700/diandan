@@ -11,7 +11,9 @@ type RuntimeApplication = Readonly<{
   close: () => Promise<unknown>;
   getHttpAdapter: () => Readonly<{
     getInstance: () => Readonly<{
-      inject: (options: Readonly<{ method: string; url: string }>) => Promise<InjectResponse>;
+      inject: (
+        options: Readonly<{ method: string; url: string }>,
+      ) => Promise<InjectResponse>;
     }>;
   }>;
 }>;
@@ -75,9 +77,9 @@ test("serves the API health contract through Fastify", async () => {
 test("refuses to create the API when required runtime config is missing", async () => {
   const { createApiApplication } = await loadBootstrapModule();
 
-  await expect(createApiApplication({ NODE_ENV: "test" })).rejects.toMatchObject(
-    {
-      code: "CONFIG_INVALID",
-    },
-  );
+  await expect(
+    createApiApplication({ NODE_ENV: "test" }),
+  ).rejects.toMatchObject({
+    code: "CONFIG_INVALID",
+  });
 });

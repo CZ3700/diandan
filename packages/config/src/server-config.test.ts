@@ -140,8 +140,7 @@ test("resolves immutable server and database fragments independently", async () 
 });
 
 test("resolves an immutable object-storage fragment independently", async () => {
-  const { resolveObjectStorageRuntimeConfig } =
-    await loadServerConfigModule();
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
   const environment: Record<string, unknown> = {
     ...objectStorageEnvironment,
   };
@@ -165,8 +164,7 @@ test("resolves an immutable object-storage fragment independently", async () => 
 });
 
 test("applies config precedence to every object-storage field", async () => {
-  const { resolveObjectStorageRuntimeConfig } =
-    await loadServerConfigModule();
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
 
   const config = resolveObjectStorageRuntimeConfig({
     defaults: {
@@ -191,8 +189,7 @@ test("applies config precedence to every object-storage field", async () => {
 });
 
 test("fails closed when object-storage configuration is missing", async () => {
-  const { resolveObjectStorageRuntimeConfig } =
-    await loadServerConfigModule();
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
 
   expectInvalidConfig(
     () => resolveObjectStorageRuntimeConfig({ environment: {} }),
@@ -209,8 +206,7 @@ test("fails closed when object-storage configuration is missing", async () => {
 });
 
 test("allows an HTTP object-storage endpoint only in development and test", async () => {
-  const { resolveObjectStorageRuntimeConfig } =
-    await loadServerConfigModule();
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
 
   for (const deploymentEnvironment of ["development", "test"] as const) {
     expect(() =>
@@ -252,8 +248,7 @@ test.each([
       "https://user:password@objects.example.invalid",
   },
   {
-    FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT:
-      "https://objects.example.invalid/path",
+    FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "https://objects.example.invalid/path",
   },
   { FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "UPPERCASE_BUCKET" },
   { FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "192.0.2.1" },
@@ -262,8 +257,7 @@ test.each([
   { FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: "short" },
   { FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "yes" },
 ])("rejects invalid object-storage config %#", async (override) => {
-  const { resolveObjectStorageRuntimeConfig } =
-    await loadServerConfigModule();
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
 
   expect(() =>
     resolveObjectStorageRuntimeConfig({
@@ -273,8 +267,7 @@ test.each([
 });
 
 test("does not leak rejected object-storage credentials", async () => {
-  const { resolveObjectStorageRuntimeConfig } =
-    await loadServerConfigModule();
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
   const canary = "DO_NOT_LEAK_OBJECT_STORAGE_SECRET_83017";
   const error = captureError(() =>
     resolveObjectStorageRuntimeConfig({
