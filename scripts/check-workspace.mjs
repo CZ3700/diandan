@@ -58,6 +58,7 @@ const requiredRootFiles = [
   ".gitignore",
   ".node-version",
   ".prettierignore",
+  ".secretlintignore",
   ".secretlintrc.json",
   "eslint.config.mjs",
   "package.json",

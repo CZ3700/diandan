@@ -11,6 +11,7 @@ const workspaceRoot = path.resolve(
 
 const workflowPath = ".github/workflows/ci.yml";
 const secretlintConfigPath = ".secretlintrc.json";
+const secretlintIgnorePath = ".secretlintignore";
 
 const checkoutAction =
   "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1";
@@ -103,6 +104,19 @@ const expectedSecretlintConfig = {
   ],
 };
 
+const expectedSecretlintIgnore = `node_modules/
+.pnpm-store/
+.turbo/
+.next/
+dist/
+coverage/
+*.tsbuildinfo
+*.log
+test-results/
+playwright-report/
+blob-report/
+`;
+
 async function readText(relativePath, errors) {
   try {
     return await readFile(path.join(workspaceRoot, relativePath), "utf8");
@@ -120,15 +134,16 @@ function validateWorkflow(text, errors) {
       strict: true,
       uniqueKeys: true,
     });
-  } catch (error) {
-    const detail = error instanceof Error ? error.message : String(error);
-    errors.push(`${workflowPath} cannot be parsed as YAML: ${detail}`);
+  } catch {
+    errors.push(`${workflowPath} cannot be parsed as YAML`);
     return;
   }
 
   if (document.errors.length > 0 || document.warnings.length > 0) {
     for (const issue of [...document.errors, ...document.warnings]) {
-      errors.push(`${workflowPath} YAML issue: ${issue.message}`);
+      errors.push(
+        `${workflowPath} contains a YAML issue (${issue.code ?? "unknown"})`,
+      );
     }
     return;
   }
@@ -136,26 +151,22 @@ function validateWorkflow(text, errors) {
   let workflow;
   try {
     workflow = document.toJS({ maxAliasCount: 0 });
-  } catch (error) {
-    const detail = error instanceof Error ? error.message : String(error);
-    errors.push(`${workflowPath} cannot resolve to a plain value: ${detail}`);
+  } catch {
+    errors.push(`${workflowPath} cannot resolve to a plain value`);
     return;
   }
 
   try {
     assert.deepStrictEqual(workflow, expectedWorkflow);
-  } catch (error) {
-    const detail = error instanceof Error ? error.message : String(error);
-    errors.push(
-      `${workflowPath} does not match the approved CI policy:\n${detail}`,
-    );
+  } catch {
+    errors.push(`${workflowPath} does not match the approved CI policy`);
   }
 }
 
 function validateManifest(manifest, errors) {
   const requiredScripts = {
     "check:ci": "node ./scripts/check-ci.mjs",
-    "security:secrets": 'secretlint "**/*"',
+    "security:secrets": 'secretlint --no-gitignore "**/*"',
   };
 
   for (const [name, expected] of Object.entries(requiredScripts)) {
@@ -209,12 +220,26 @@ function validateSecretlintConfig(config, errors) {
   }
 }
 
+function validateSecretlintIgnore(text, errors) {
+  if (text !== expectedSecretlintIgnore) {
+    errors.push(
+      `${secretlintIgnorePath} must match the approved generated-artifact ignore list`,
+    );
+  }
+}
+
 async function validateCi() {
   const errors = [];
-  const [workflowText, manifestText, secretlintConfigText] = await Promise.all([
+  const [
+    workflowText,
+    manifestText,
+    secretlintConfigText,
+    secretlintIgnoreText,
+  ] = await Promise.all([
     readText(workflowPath, errors),
     readText("package.json", errors),
     readText(secretlintConfigPath, errors),
+    readText(secretlintIgnorePath, errors),
   ]);
 
   if (workflowText !== undefined) {
@@ -237,6 +262,10 @@ async function validateCi() {
       const detail = error instanceof Error ? error.message : String(error);
       errors.push(`${secretlintConfigPath} is not valid JSON: ${detail}`);
     }
+  }
+
+  if (secretlintIgnoreText !== undefined) {
+    validateSecretlintIgnore(secretlintIgnoreText, errors);
   }
 
   if (errors.length > 0) {
