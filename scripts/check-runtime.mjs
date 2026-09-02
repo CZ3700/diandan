@@ -15,6 +15,7 @@ const appContracts = Object.freeze({
     files: [
       "next.config.ts",
       "next-env.d.ts",
+      "src/app/icon.svg",
       "src/app/layout.tsx",
       "src/app/page.tsx",
       "src/app/healthz/route.ts",
@@ -26,6 +27,7 @@ const appContracts = Object.freeze({
     files: [
       "next.config.ts",
       "next-env.d.ts",
+      "src/app/icon.svg",
       "src/app/layout.tsx",
       "src/app/page.tsx",
       "src/app/healthz/route.ts",
@@ -72,6 +74,7 @@ const appContracts = Object.freeze({
 
 const rootRuntimeFiles = Object.freeze([
   ".dockerignore",
+  "infra/Caddyfile",
   "infra/compose.preview.yml",
   "infra/docker/Dockerfile",
   "scripts/runtime-preview.mjs",
@@ -82,6 +85,7 @@ const rootRuntimeScripts = Object.freeze([
   "preview:down",
   "preview:logs",
   "preview:up",
+  "preview:verify",
 ]);
 
 async function exists(relativePath) {
@@ -193,6 +197,17 @@ async function validateServerOnlyBoundary(errors) {
         `${relativePath} is a client module and must not import server config`,
       );
     }
+
+    if (
+      (relativePath.startsWith("apps/admin/") ||
+        relativePath.startsWith("apps/storefront/")) &&
+      text.includes("@fan-support/config/server") &&
+      !relativePath.includes("/src/server/")
+    ) {
+      errors.push(
+        `${relativePath} may import server config only from src/server`,
+      );
+    }
   }
 }
 
@@ -226,6 +241,7 @@ async function validateCompose(errors) {
   const expectedServices = [
     "admin",
     "api",
+    "edge",
     "object-storage",
     "postgres",
     "storefront",
@@ -245,6 +261,85 @@ async function validateCompose(errors) {
     if (compose?.services?.[serviceName]?.healthcheck === undefined) {
       errors.push(`${relativePath} service ${serviceName} needs a healthcheck`);
     }
+  }
+
+  for (const serviceName of ["admin", "api", "storefront", "worker"]) {
+    const service = compose?.services?.[serviceName];
+    if (service?.profiles?.includes("preview") !== true) {
+      errors.push(
+        `${relativePath} service ${serviceName} needs preview profile`,
+      );
+    }
+    if (service?.build?.target !== serviceName) {
+      errors.push(
+        `${relativePath} service ${serviceName} needs its own OCI target`,
+      );
+    }
+  }
+
+  for (const serviceName of ["edge", "object-storage", "postgres"]) {
+    const image = compose?.services?.[serviceName]?.image;
+    if (
+      typeof image !== "string" ||
+      !/:[^@\s]+@sha256:[a-f0-9]{64}$/u.test(image)
+    ) {
+      errors.push(
+        `${relativePath} service ${serviceName} must pin tag and digest`,
+      );
+    }
+  }
+
+  if (text.toLowerCase().includes("redis")) {
+    errors.push(`${relativePath} must not introduce Redis in the MVP runtime`);
+  }
+}
+
+async function validateDockerfile(errors) {
+  const relativePath = "infra/docker/Dockerfile";
+  const text = await readText(relativePath, errors);
+  if (text === undefined) {
+    return;
+  }
+
+  for (const target of ["admin", "api", "storefront", "worker"]) {
+    if (!new RegExp(`^FROM \\S+ AS ${target}$`, "mu").test(text)) {
+      errors.push(`${relativePath} is missing independent target ${target}`);
+    }
+  }
+  if (
+    !text.includes(
+      "node:24.20.0-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e",
+    )
+  ) {
+    errors.push(`${relativePath} must pin the approved Node image digest`);
+  }
+  if (
+    !text.includes("pnpm fetch --frozen-lockfile") ||
+    !text.includes("pnpm install --offline --frozen-lockfile")
+  ) {
+    errors.push(
+      `${relativePath} must cache immutable dependencies before copying mutable source`,
+    );
+  }
+}
+
+async function validatePreviewLauncher(errors) {
+  const relativePath = "scripts/runtime-preview.mjs";
+  const text = await readText(relativePath, errors);
+  if (text === undefined) {
+    return;
+  }
+
+  if (!text.includes('COMPOSE_PARALLEL_LIMIT: "1"')) {
+    errors.push(
+      `${relativePath} must serialize legacy Compose builds for the supported 4 GiB Docker runtime`,
+    );
+  }
+
+  if (!text.includes("current_setting('server_version_num')")) {
+    errors.push(
+      `${relativePath} must use PostgreSQL's machine-readable version number for its query probe`,
+    );
   }
 }
 
@@ -270,6 +365,8 @@ for (const [name, contract] of Object.entries(appContracts)) {
 }
 await validateServerOnlyBoundary(errors);
 await validateCompose(errors);
+await validateDockerfile(errors);
+await validatePreviewLauncher(errors);
 
 if (errors.length > 0) {
   console.error("Runtime contract check failed:");

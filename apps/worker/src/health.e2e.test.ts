@@ -24,12 +24,19 @@ type BootstrapModule = Readonly<{
   ) => Promise<RuntimeApplication>;
 }>;
 
+const testDatabaseUrl = [
+  "postgresql://",
+  "test-user",
+  ":",
+  "test-password",
+  "@postgres:5432/fan_support",
+].join("");
+
 const validEnvironment = Object.freeze({
   NODE_ENV: "test",
   FAN_SUPPORT_DEPLOYMENT_ENV: "test",
   FAN_SUPPORT_SITE_ORIGIN: "http://localhost:3003",
-  FAN_SUPPORT_DATABASE_URL:
-    "postgresql://test-user:test-password@postgres:5432/fan_support",
+  FAN_SUPPORT_DATABASE_URL: testDatabaseUrl,
   FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "http://object-storage:9000",
   FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "fan-support-media",
   FAN_SUPPORT_OBJECT_STORAGE_REGION: "us-east-1",

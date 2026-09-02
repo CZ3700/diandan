@@ -1,0 +1,9 @@
+https://localhost:3443 {
+	tls internal
+	reverse_proxy storefront:3000
+}
+
+https://localhost:3444 {
+	tls internal
+	reverse_proxy admin:3000
+}
