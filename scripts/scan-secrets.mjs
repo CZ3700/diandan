@@ -28,12 +28,14 @@ function runGit(arguments_) {
 
 function isGeneratedArtifactPath(filePath) {
   const segments = filePath.split("/");
-  return segments.some(
-    (segment) =>
-      ignoredDirectoryNames.has(segment) ||
-      segment.endsWith(".tsbuildinfo") ||
-      segment.endsWith(".log"),
-  );
+  return segments.some((segment) => {
+    const normalizedSegment = segment.toLowerCase();
+    return (
+      ignoredDirectoryNames.has(normalizedSegment) ||
+      normalizedSegment.endsWith(".tsbuildinfo") ||
+      normalizedSegment.endsWith(".log")
+    );
+  });
 }
 
 function isUnapprovedSecretlintPolicy(filePath) {
@@ -41,7 +43,7 @@ function isUnapprovedSecretlintPolicy(filePath) {
     return false;
   }
 
-  const baseName = filePath.split("/").at(-1) ?? "";
+  const baseName = (filePath.split("/").at(-1) ?? "").toLowerCase();
   return (
     baseName.startsWith(".secretlintignore") ||
     baseName.startsWith(".secretlintrc")
