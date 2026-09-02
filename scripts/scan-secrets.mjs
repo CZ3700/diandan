@@ -81,7 +81,7 @@ function rejectIgnoredTrackedFiles(trackedFiles) {
 
 function rejectInlineSuppressions() {
   const suppressionDirective = "secretlint" + "-disable";
-  const result = runGit(["grep", "-I", "-q", "-e", suppressionDirective, "--"]);
+  const result = runGit(["grep", "-q", "-e", suppressionDirective, "--"]);
 
   if (result.error || (result.status !== 0 && result.status !== 1)) {
     console.error(
