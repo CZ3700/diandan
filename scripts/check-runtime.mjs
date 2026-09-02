@@ -323,6 +323,24 @@ async function validateDockerfile(errors) {
   }
 }
 
+async function validateDockerignore(errors) {
+  const relativePath = ".dockerignore";
+  const text = await readText(relativePath, errors);
+  if (text === undefined) {
+    return;
+  }
+
+  const entries = new Set(
+    text
+      .split(/\r?\n/u)
+      .map((entry) => entry.trim())
+      .filter((entry) => entry !== "" && !entry.startsWith("#")),
+  );
+  if (!entries.has("output")) {
+    errors.push(`${relativePath} must exclude local preview evidence`);
+  }
+}
+
 async function validatePreviewLauncher(errors) {
   const relativePath = "scripts/runtime-preview.mjs";
   const text = await readText(relativePath, errors);
@@ -366,6 +384,7 @@ for (const [name, contract] of Object.entries(appContracts)) {
 await validateServerOnlyBoundary(errors);
 await validateCompose(errors);
 await validateDockerfile(errors);
+await validateDockerignore(errors);
 await validatePreviewLauncher(errors);
 
 if (errors.length > 0) {
