@@ -70,6 +70,8 @@
 
 每个任务的验收条件隐含：其列出的 S.U.P.E.R 原则 Quick Check 必须通过；详细 10 项检查见项目 SKILL。
 
+P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字段明确该范围。后续每个 API 实现任务必须同步补入对应 `paths/operation`、认证/RBAC、`Idempotency-Key`、`expectedVersion` 与审计 reason 契约；不得把空 `paths` 误报为完整 API 文档。
+
 ## Phase 0 — 基线与骨架（5）
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
@@ -85,7 +87,7 @@
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
 | P1-01 | P0-01, P0-03 | 在 `contracts` 唯一定义 SupportedLocale schema/type/ordered values/default/native names、LocaleContext、Idol、Gift、PriceBook、Inventory、Cart、SupportIntent、CheckoutQuote/OrderAmount、Payment/ProviderEvent、Order/政策接受/通知语言快照、Refund/Dispute、Fulfillment、错误 envelope 与 schemaVersion；i18n/config/apps 只导入；生成 JSON Schema/OpenAPI | schema snapshot、七 locale 精确集合、仓库无重复 locale 常量、locale/market/currency 分离、兼容/拒绝未知版本测试；OpenAPI 与 Zod 一致性 | R-03, R-14, R-17 |
-| P1-02 | P1-01, P0-04 | 定义自研 content/catalog/pricing/inventory/media/policy 与七语言显式 translation/review schema、source hash/stale/完整度/发布校验及虚构 fixtures | schema/validator tests；缺价格/适用偶像/合格媒体或任一 locale 关键批准译文的内容不能发布 | R-06, R-08, R-17 |
+| P1-02 | P1-01, P0-04 | 定义自研 content/catalog/pricing/inventory/media/policy 与七语言显式 translation/review schema、source hash/stale/完整度/发布校验及虚构 fixtures；明确拆分 base operational status、不可变 revision lifecycle 与 public published view | schema/validator tests；公开 view 不接受 draft/archived；缺价格/适用偶像/合格媒体或任一 locale 关键批准译文的内容不能发布 | R-06, R-08, R-17 |
 | P1-03 | P1-01 | 在纯 `domain` 实现金额、价格 revision、适用关系、库存预占/提交/释放、支付/订单状态机、路由和幂等 | domain 单元/属性测试；不 import Next/Nest/Drizzle/PSP；branch ≥90% | R-01, R-03, R-05, R-06 |
 | P1-04 | P1-01, P1-02, P0-03 | 建立完整 PostgreSQL migrations：内容与 homepage/policy/media translation/review/locale config、商品/价格、inventory balance/ledger/reservation、cart/intent、contact/order/refund/payment、通知 locale、inbox/outbox、履约、RBAC、审计 | 空库 migrate；最近迁移回退/向前修复；translation `(revision, locale)` 唯一/不可变、余额/活动 attempt/退款上限/唯一键/append-only 约束测试 | R-02, R-03, R-06, R-11, R-16, R-17 |
 | P1-05 | P1-01, P1-02, P1-03, P1-04 | 定义 persistence/payment/media/identity/notification/cache-purge/key-management ports；实现 PostgreSQL repositories、S3-compatible/CDN purge、获批 KMS 与 fake adapters | adapter conformance；供应商/Drizzle 对象不越界；fixture 变化能触发失败 | R-02, R-06, R-14 |
