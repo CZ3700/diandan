@@ -14,7 +14,7 @@
 |:--|:--|:--|:--|:--|:--|
 | P0-01 | DONE | Codex `/root` | 2026-09-02T18:22:00+08:00 | 2026-09-02T19:25:41+08:00 | 根提交 `9234e368e193e967e9e2abd39858f4f3eaf01da9`；两次真实 clean clone、完整门禁和独立验收全绿 |
 | P0-02 | REVIEW | Codex `/root` | 2026-09-02T19:25:41+08:00 | — | 候选 `88efe390c86c8b8e58b371fa196a9ae62c65de99`；独立终审 ACCEPT for REVIEW；仍缺真实 GitHub PR/required checks |
-| P0-03 | IN_PROGRESS | Codex `/root` | 2026-09-03T00:02:33+08:00 | — | Lane A；环境 schema、分层、公开 allowlist、`.env.example` 与 fail-closed |
+| P0-03 | DONE | Codex `/root` | 2026-09-03T00:02:33+08:00 | 2026-09-03T00:47:13+08:00 | 候选 `ba8b8864605e7181a85f2ffc13ca52087e0726e4`；三路独立复核 ACCEPT |
 | P0-04 | PENDING | — | — | — | 依赖 P0-02、P0-03 |
 | P0-05 | PENDING | — | — | — | 依赖 P0-04 |
 
@@ -267,6 +267,86 @@ required-check 外部证据尚未满足，故不得标记 `DONE`。
 - 验证计划：先写并运行失败测试，证明缺少必填项、非法 URL/环境、敏感字段进入公开投影及错误信息泄漏值会被发现；再以最小实现转绿。随后执行包级 test/typecheck/build、`.env.example`/locale/secret 边界检查、完整 `pnpm check`、secret scan、依赖审计与 clean-clone 复验。
 - 并发/所有权：P0-03 是当前唯一 Lane A executor；实现期间独占 `packages/config`、根 `.env.example` 与本任务产生的 lockfile 变更。
 - 风险映射：`R-02`；配置错误不得回显值，秘密字段不得进入公开 DTO、日志、fixture 或提交文件。
+
+**完成证据**：
+
+```text
+状态：DONE（2026-09-03T00:47:13+08:00 独立验收通过）
+
+实现候选：ba8b8864605e7181a85f2ffc13ca52087e0726e4
+实现提交：
+- badfa82 feat(config): add fail-closed runtime configuration
+- 022b920 fix(config): harden source container boundary
+- ff52e78 test(config): normalize disguised boundary errors
+- ba8b886 fix(config): enforce least-privilege parsing
+
+合同与边界：
+- `@fan-support/config` 与 `@fan-support/config/public` 运行时只导出公开 parser/schema；
+  `@fan-support/config/server` 独立导出 server/database resolver、公开投影与脱敏错误。
+- 配置优先级为显式 `defaults < configFile < dotenv < environment`；只有 `undefined`
+  表示缺席，空字符串、空白、null 等显式值会遮蔽低层并失败关闭。
+- `defaults` 是组合根传入的最低优先级受信任值，不是包内隐式回退；本包不为 tier、站点、
+  PostgreSQL URL 或凭据提供内置默认值，缺失配置仍失败。
+- server 与 database fragment 共享全局键 allowlist，但只读取各自请求的字段；公开 DTO 通过
+  两字段 allowlist 手工投影，冻结且携带 `schemaVersion: 1`。
+- 外层/内层 source、公开 parser/schema 与 projector 只接受相应 own data property；继承属性、
+  accessor、未知键、prototype-shaped key、hostile/revoked Proxy 均以固定错误归一化，不回显输入。
+- `FAN_SUPPORT_SITE_ORIGIN` 仅接受 canonical HTTPS origin，或 development/test 的 loopback HTTP；
+  数据库 URL 仅接受带主机和数据库路径的 PostgreSQL URL。对象存储配置留给 P0-04。
+
+TDD 与失败路径：
+- 精炼后的首次红灯：`.env.example`、public/server 模块和 subpath 尚不存在，58/58 失败。
+- 外层 source 继承/accessor/unknown/Proxy 攻击加入后 4 条失败；伪装成包内错误的 Proxy
+  加入后 1 条失败；四层/defaults、fragment 最小读取、public/projector/revoked Proxy
+  合并补测后 15 条失败。对应实现后配置包最终 77/77 通过。
+- 独立安全复核自写 42 条攻击断言全部通过；所有 canary 在 message、String、JSON、inspect、
+  stack 与 cause 检查中均未出现。
+
+主门禁：
+- `mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/config test`
+  -> exit 0，4 files、77 tests。
+- config package typecheck/build 与 `eslint packages/config/src --max-warnings=0` -> exit 0。
+- `mise exec node@24.20.0 -- corepack pnpm check` -> exit 0；workspace/CI/format/lint、
+  typecheck/test/build 34/34、artifact smoke 全绿。
+- `mise exec node@24.20.0 -- corepack pnpm security:secrets` -> exit 0；
+  `pnpm audit --registry=https://registry.npmjs.org --audit-level=high` -> exit 0，
+  No known vulnerabilities found。
+- package self-reference 实际导入 `.`, `./public`, `./server` 成功；root/public 运行时键精确一致，
+  server resolver 可用。范围 `rg` 未发现真实凭据或重复 locale 列表。
+- 独立安全 clean clone `/tmp/fan-p003-security.PSe6qM/repo`：frozen install、完整 check、
+  secret scan、audit、三出口 smoke 全绿；34/34/34 且 0 cached，最终 tracked tree clean。
+
+可持久证据路径：
+- `.env.example`
+- `packages/config/package.json` / `packages/config/src/`
+- `scripts/check-workspace.mjs` / `pnpm-lock.yaml`
+- 本执行卡的失败路径、验证结果、S.U.P.E.R 与风险记录
+
+范围与剩余风险：
+- 无 UI 变化，浏览器尺寸/多语言视觉证据不适用；这不是部署或生产发布证据。
+- P0-04 必须在应用组合根显式选择受信任 defaults，禁止提交生产 tier/site/DB/凭据默认值，
+  并增加浏览器包不得导入 `@fan-support/config/server` 的依赖门禁。
+- P0-04 仍依赖 P0-02 完成真实 GitHub PR required checks，当前不得领取。
+
+独立评审：`/root/p003_security_review` 对最终候选给出 ACCEPT、42 条攻击与 fresh-clone
+验收全绿；`/root/p003_config_design` 给出 ACCEPT；`/root/p003_repo_patterns` 完成 manifest、
+lockfile、NodeNext、三出口与 clean-clone 集成复核，无 blocker。
+```
+
+### P0-03 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | layer、URL、public schema、server resolver 与 error 各自单一职责 |
+| 2 | PASS | 读取 own descriptor、分层选择、schema 校验、公开投影分别拆分 |
+| 3 | PASS | source → allowlist/layer → schema → 冻结输出，核心测试无外部服务 |
+| 4 | PASS | workspace 全图检查无循环；config 内依赖方向单向 |
+| 5 | PASS | public/server/database 均有 Zod 或严格类型合同与 `schemaVersion: 1` |
+| 6 | PASS | 成功输出是冻结 plain object，可 JSON 序列化，无 provider 对象 |
+| 7 | PASS | 无生产域名、凭据、locale、市场/币种或供应商硬编码；无包内不安全默认值 |
+| 8 | PASS | 唯一运行时依赖 `zod@4.5.4` 精确声明并锁定 |
+| 9 | PASS | public/server subpath 与 server/database fragment 可独立替换、按需组合 |
+| 10 | PASS | config 77/77；整仓 34/34/34；独立 clean clone 0 cached 全绿 |
 
 ## Phase 退出证据
 
