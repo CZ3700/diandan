@@ -1,0 +1,12 @@
+packages:
+  - apps/*
+  - packages/*
+
+autoInstallPeers: false
+engineStrict: true
+linkWorkspacePackages: true
+preferWorkspacePackages: true
+saveExact: true
+sharedWorkspaceLockfile: true
+strictPeerDependencies: true
+verifyStoreIntegrity: true

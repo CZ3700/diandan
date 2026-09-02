@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>sonnystargroup.com </title>
+    <style>
+        /* 保留你原来的所有样式代码 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        #goBtn {
+            background: linear-gradient(to right, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 18px 60px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px rgba(255, 107, 107, 0.2);
+            width: 100%;
+            max-width: 300px;
+        }
+        #goBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(255, 107, 107, 0.3);
+            background: linear-gradient(to right, #ff5252, #e53935);
+        }
+        #goBtn:active {
+            transform: translateY(1px);
+        }
+        #goBtn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .footer {
+            margin-top: 40px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 40px 20px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            #goBtn {
+                padding: 15px 40px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>欢迎访问Welcome  sonnystargroup.com</h1>
+         
+        <button id="goBtn">进入Enter</button>
+        <div class="footer">
+            <p>© 2026 sonnystargroup.com 保留所有权利</p>
+        </div>
+    </div>
+
+    <script>
+        // ########### 核心新增：版本校验+智能刷新 ###########
+        // 1. 定义当前页面版本号（修改代码时，把这个数字改大即可，比如从1改成2）
+        const currentVersion = 2; 
+        // 2. 检查版本的间隔（单位：秒，建议300秒=5分钟，平衡实时性和性能）
+        const checkInterval = 3600;
+
+        // 3. 版本校验函数：对比本地缓存的版本和当前版本，不一致则刷新
+        function checkVersionUpdate() {
+            // 获取本地缓存的版本（首次访问为null）
+            const cachedVersion = localStorage.getItem('pageVersion');
+            
+            // 如果本地版本和当前版本不一致，刷新页面
+            if (cachedVersion !== String(currentVersion)) {
+                localStorage.setItem('pageVersion', currentVersion);
+                window.location.reload(true); // 强制刷新，忽略缓存
+            }
+        }
+
+        // 4. 页面加载时先校验一次版本
+        checkVersionUpdate();
+        // 5. 定时校验版本（每5分钟检查一次）
+        setInterval(checkVersionUpdate, checkInterval * 1000);
+
+        // ########### 原有逻辑保留 ###########
+        // 强制将非www域名跳转到带www的主域名
+        const currentHost = window.location.hostname;
+        const targetHost = "www.sonnystargroup.com";
+        if (currentHost !== targetHost) {
+            window.location.href = `https://${targetHost}${window.location.pathname}${window.location.search}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const goBtn = document.getElementById('goBtn');
+            goBtn.disabled = false;
+            goBtn.textContent = '进入';
+            
+            goBtn.addEventListener('click', function() {
+                goBtn.disabled = true;
+                goBtn.textContent = '跳转中...';
+                
+                const day = new Date().getDay();
+                // 你修改网址时，改这里即可，同时把上面的currentVersion数字+1
+                const urlMap = {
+                    1: 'https://www.vividlivestar.com/',   // 周一
+                    2: 'https://www.vividlivestar.com/',   // 周二
+                    3: 'https://www.vividlivestar.com/',   // 周三
+                    4: 'https://www.vividlivestar.com/',   // 周四
+                    5: 'https://www.vividlivestar.com/',   // 周五
+                    6: 'https://www.vividlivestar.com/',   // 周六
+                    0: 'https://www.vividlivestar.com/'    // 周日
+                };
+                
+                const targetUrl = urlMap[day] || 'https://www.sonnystargroup.com';
+                window.open(targetUrl, '_blank');
+                
+                setTimeout(() => {
+                    goBtn.disabled = false;
+                    goBtn.textContent = '进入Enter';
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
