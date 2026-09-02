@@ -15,8 +15,8 @@
 | P0-01 | DONE | Codex `/root` | 2026-09-02T18:22:00+08:00 | 2026-09-02T19:25:41+08:00 | 根提交 `9234e368e193e967e9e2abd39858f4f3eaf01da9`；两次真实 clean clone、完整门禁和独立验收全绿 |
 | P0-02 | DONE | Codex `/root` | 2026-09-02T19:25:41+08:00 | 2026-09-03T01:29:52+08:00 | [PR #1](https://github.com/CZ3700/diandan/pull/1) 真实 CI 全绿；`Quality`/`Security` 已绑定 GitHub Actions 并作为 `main` 必需检查 |
 | P0-03 | DONE | Codex `/root` | 2026-09-03T00:02:33+08:00 | 2026-09-03T00:47:13+08:00 | 候选 `ba8b8864605e7181a85f2ffc13ca52087e0726e4`；三路独立复核 ACCEPT |
-| P0-04 | REVIEW | Codex `/root` | 2026-09-03T01:54:21+08:00 | — | 候选 `d4008a9ce35432d609dbfa9639b16f68ef481ed4`；clean clone 与三路独立复核通过 |
-| P0-05 | PENDING | — | — | — | 依赖 P0-04 |
+| P0-04 | DONE | Codex `/root` | 2026-09-03T01:54:21+08:00 | 2026-09-03T03:16:06+08:00 | [PR #2](https://github.com/CZ3700/diandan/pull/2) Quality/Security 全绿；clean clone 与三路独立复核通过 |
+| P0-05 | READY | — | — | — | P0-04 已完成；等待领取 |
 
 ## P0-01 执行卡
 
@@ -383,7 +383,7 @@ lockfile、NodeNext、三出口与 clean-clone 集成复核，无 blocker。
 **评审候选与实现证据**：
 
 ```text
-状态：REVIEW（2026-09-03T03:11:26+08:00）
+状态：DONE（2026-09-03T03:16:06+08:00 远端必需检查与独立验收通过）
 实现候选：d4008a9ce35432d609dbfa9639b16f68ef481ed4
 实现提交：
 - 8a4b921 test: define P0-04 runtime contract
@@ -490,6 +490,17 @@ TDD/失败路径：
 均给出 ACCEPT；`/root/p004_simplify_review` 的两项 checker 清晰度建议已落实；
 `/root/p004_final_acceptance_review` 对候选 SHA、Git/evidence blob、四图、四镜像、7 容器、
 TLS 隔离与静态门禁给出 `ACCEPT for REVIEW`，无代码或证据 blocker。
+
+远端门禁：
+- [PR #2](https://github.com/CZ3700/diandan/pull/2) head
+  `046fb10711d55daf36e19630153a12ad3fbe8fef`，mergeStateStatus=`CLEAN`。
+- [CI run 33672018920](https://github.com/CZ3700/diandan/actions/runs/33672018920) 为
+  pull_request event 且 conclusion=`success`；
+  [Quality job 100387671456](https://github.com/CZ3700/diandan/actions/runs/33672018920/job/100387671456)
+  与 [Security job 100387671203](https://github.com/CZ3700/diandan/actions/runs/33672018920/job/100387671203)
+  均 success。
+- `main` 保护回读：strict=true，必需 checks 精确为 GitHub Actions App `15368` 的
+  Quality/Security，enforce_admins=true，allow_force_pushes=false，allow_deletions=false。
 ```
 
 ### P0-04 S.U.P.E.R 检查
@@ -509,5 +520,5 @@ TLS 隔离与静态门禁给出 `ACCEPT for REVIEW`，无代码或证据 blocker
 
 ## Phase 退出证据
 
-Phase 0 尚未退出：P0-04 当前处于 REVIEW，P0-05 尚未完成；不得把本地 preview 证据视为
+Phase 0 尚未退出：P0-04 已 DONE，P0-05 仅 READY 尚未领取；不得把本地 preview 证据视为
 观测门禁或生产发布证据。
