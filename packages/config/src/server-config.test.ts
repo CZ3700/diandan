@@ -23,6 +23,16 @@ type DatabaseRuntimeConfig = Readonly<{
   url: string;
 }>;
 
+type ObjectStorageRuntimeConfig = Readonly<{
+  schemaVersion: 1;
+  endpoint: string;
+  bucket: string;
+  region: string;
+  accessKeyId: string;
+  secretAccessKey: string;
+  forcePathStyle: boolean;
+}>;
+
 type PublicRuntimeConfig = Readonly<{
   schemaVersion: 1;
   siteOrigin: string;
@@ -36,6 +46,9 @@ type ServerConfigModule = Readonly<{
   resolveDatabaseRuntimeConfig: (
     sources: RuntimeConfigSources,
   ) => DatabaseRuntimeConfig;
+  resolveObjectStorageRuntimeConfig: (
+    sources: RuntimeConfigSources,
+  ) => ObjectStorageRuntimeConfig;
   toPublicRuntimeConfig: (config: ServerRuntimeConfig) => PublicRuntimeConfig;
 }>;
 
@@ -47,6 +60,17 @@ const productionEnvironment = {
 
 const databaseEnvironment = {
   FAN_SUPPORT_DATABASE_URL: "postgresql://database.example.invalid/fan_support",
+} as const;
+
+const objectStorageEnvironment = {
+  FAN_SUPPORT_DEPLOYMENT_ENV: "production",
+  FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "https://objects.example.invalid",
+  FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "fan-support-media",
+  FAN_SUPPORT_OBJECT_STORAGE_REGION: "us-east-1",
+  FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: "TEST_ACCESS_KEY_ID",
+  FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY:
+    "TEST_OBJECT_STORAGE_SECRET_VALUE",
+  FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "false",
 } as const;
 
 async function loadServerConfigModule(): Promise<ServerConfigModule> {
@@ -113,6 +137,167 @@ test("resolves immutable server and database fragments independently", async () 
   });
   expect(Object.isFrozen(serverConfig)).toBe(true);
   expect(Object.isFrozen(databaseConfig)).toBe(true);
+});
+
+test("resolves an immutable object-storage fragment independently", async () => {
+  const { resolveObjectStorageRuntimeConfig } =
+    await loadServerConfigModule();
+  const environment: Record<string, unknown> = {
+    ...objectStorageEnvironment,
+  };
+
+  const objectStorageConfig = resolveObjectStorageRuntimeConfig({
+    environment,
+  });
+  environment["FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY"] =
+    "MUTATED_SECRET_VALUE";
+
+  expect(objectStorageConfig).toEqual({
+    schemaVersion: 1,
+    endpoint: "https://objects.example.invalid",
+    bucket: "fan-support-media",
+    region: "us-east-1",
+    accessKeyId: "TEST_ACCESS_KEY_ID",
+    secretAccessKey: "TEST_OBJECT_STORAGE_SECRET_VALUE",
+    forcePathStyle: false,
+  });
+  expect(Object.isFrozen(objectStorageConfig)).toBe(true);
+});
+
+test("applies config precedence to every object-storage field", async () => {
+  const { resolveObjectStorageRuntimeConfig } =
+    await loadServerConfigModule();
+
+  const config = resolveObjectStorageRuntimeConfig({
+    defaults: {
+      ...objectStorageEnvironment,
+      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "defaults-bucket",
+      FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "false",
+    },
+    configFile: {
+      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "file-bucket",
+    },
+    dotenv: {
+      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "dotenv-bucket",
+      FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true",
+    },
+    environment: {
+      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "environment-bucket",
+    },
+  });
+
+  expect(config.bucket).toBe("environment-bucket");
+  expect(config.forcePathStyle).toBe(true);
+});
+
+test("fails closed when object-storage configuration is missing", async () => {
+  const { resolveObjectStorageRuntimeConfig } =
+    await loadServerConfigModule();
+
+  expectInvalidConfig(
+    () => resolveObjectStorageRuntimeConfig({ environment: {} }),
+    [
+      "deploymentEnvironment",
+      "objectStorageAccessKeyId",
+      "objectStorageBucket",
+      "objectStorageEndpoint",
+      "objectStorageForcePathStyle",
+      "objectStorageRegion",
+      "objectStorageSecretAccessKey",
+    ],
+  );
+});
+
+test("allows an HTTP object-storage endpoint only in development and test", async () => {
+  const { resolveObjectStorageRuntimeConfig } =
+    await loadServerConfigModule();
+
+  for (const deploymentEnvironment of ["development", "test"] as const) {
+    expect(() =>
+      resolveObjectStorageRuntimeConfig({
+        environment: {
+          ...objectStorageEnvironment,
+          FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
+          FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "http://object-storage:9000",
+          FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true",
+        },
+      }),
+    ).not.toThrow();
+  }
+
+  for (const deploymentEnvironment of [
+    "preview",
+    "staging",
+    "production",
+  ] as const) {
+    expectInvalidConfig(
+      () =>
+        resolveObjectStorageRuntimeConfig({
+          environment: {
+            ...objectStorageEnvironment,
+            FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
+            FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT:
+              "http://objects.example.invalid",
+          },
+        }),
+      ["objectStorageEndpoint"],
+    );
+  }
+});
+
+test.each([
+  { FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "file:///tmp/objects" },
+  {
+    FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT:
+      "https://user:password@objects.example.invalid",
+  },
+  {
+    FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT:
+      "https://objects.example.invalid/path",
+  },
+  { FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "UPPERCASE_BUCKET" },
+  { FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "192.0.2.1" },
+  { FAN_SUPPORT_OBJECT_STORAGE_REGION: "region with spaces" },
+  { FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: "  " },
+  { FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: "short" },
+  { FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "yes" },
+])("rejects invalid object-storage config %#", async (override) => {
+  const { resolveObjectStorageRuntimeConfig } =
+    await loadServerConfigModule();
+
+  expect(() =>
+    resolveObjectStorageRuntimeConfig({
+      environment: { ...objectStorageEnvironment, ...override },
+    }),
+  ).toThrowError(/Runtime configuration is invalid/u);
+});
+
+test("does not leak rejected object-storage credentials", async () => {
+  const { resolveObjectStorageRuntimeConfig } =
+    await loadServerConfigModule();
+  const canary = "DO_NOT_LEAK_OBJECT_STORAGE_SECRET_83017";
+  const error = captureError(() =>
+    resolveObjectStorageRuntimeConfig({
+      environment: {
+        ...objectStorageEnvironment,
+        FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: canary,
+        FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "invalid",
+      },
+    }),
+  );
+
+  for (const rendering of [
+    error.message,
+    String(error),
+    JSON.stringify(error),
+    inspect(error),
+    error.stack ?? "",
+  ]) {
+    expect(rendering).not.toContain(canary);
+    expect(rendering).not.toContain(
+      "FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY",
+    );
+  }
 });
 
 test("applies defaults, config file, dotenv, and environment precedence", async () => {
