@@ -10,7 +10,9 @@ import {
   type PublicRuntimeConfig,
 } from "./public-config.js";
 import {
+  isHttpOrigin,
   isLoopbackHttpOrigin,
+  isObjectStorageEndpoint,
   isPostgresUrl,
   isPublicSiteOrigin,
 } from "./url-validation.js";
@@ -86,12 +88,85 @@ const databaseRuntimeConfigSchema = z
   })
   .readonly();
 
+function isObjectStorageBucket(value: string): boolean {
+  return (
+    value.length >= 3 &&
+    value.length <= 63 &&
+    /^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/u.test(value) &&
+    !value.includes("..") &&
+    !/^\d{1,3}(?:\.\d{1,3}){3}$/u.test(value)
+  );
+}
+
+function isObjectStorageRegion(value: string): boolean {
+  return value.length <= 64 && /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/u.test(value);
+}
+
+function hasControlCharacter(value: string): boolean {
+  for (const character of value) {
+    const codePoint = character.codePointAt(0);
+    if (codePoint === undefined || codePoint <= 0x1f || codePoint === 0x7f) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function isCredential(value: string, minimumLength: number): boolean {
+  return (
+    value.length >= minimumLength &&
+    value.length <= 512 &&
+    value.trim() === value &&
+    !hasControlCharacter(value)
+  );
+}
+
+const objectStorageRuntimeConfigSchema = z
+  .strictObject({
+    schemaVersion: z.literal(1),
+    deploymentEnvironment: deploymentEnvironmentSchema,
+    objectStorageEndpoint: z.string().refine(isObjectStorageEndpoint),
+    objectStorageBucket: z.string().refine(isObjectStorageBucket),
+    objectStorageRegion: z.string().refine(isObjectStorageRegion),
+    objectStorageAccessKeyId: z
+      .string()
+      .refine((value) => isCredential(value, 3)),
+    objectStorageSecretAccessKey: z
+      .string()
+      .refine((value) => isCredential(value, 8)),
+    objectStorageForcePathStyle: z.enum(["true", "false"]),
+  })
+  .superRefine((config, context) => {
+    if (
+      isHttpOrigin(config.objectStorageEndpoint) &&
+      config.deploymentEnvironment !== "development" &&
+      config.deploymentEnvironment !== "test"
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageEndpoint"],
+        message: "HTTP is limited to local development and test tiers",
+      });
+    }
+  })
+  .readonly();
+
 export type ServerRuntimeConfig = Readonly<
   z.infer<typeof serverRuntimeConfigSchema>
 >;
 export type DatabaseRuntimeConfig = Readonly<
   z.infer<typeof databaseRuntimeConfigSchema>
 >;
+export type ObjectStorageRuntimeConfig = Readonly<{
+  schemaVersion: 1;
+  endpoint: string;
+  bucket: string;
+  region: string;
+  accessKeyId: string;
+  secretAccessKey: string;
+  forcePathStyle: boolean;
+}>;
 
 const SERVER_FIELDS = Object.freeze([
   "deploymentEnvironment",
@@ -99,6 +174,15 @@ const SERVER_FIELDS = Object.freeze([
   "siteOrigin",
 ] as const);
 const DATABASE_FIELDS = Object.freeze(["databaseUrl"] as const);
+const OBJECT_STORAGE_FIELDS = Object.freeze([
+  "deploymentEnvironment",
+  "objectStorageAccessKeyId",
+  "objectStorageBucket",
+  "objectStorageEndpoint",
+  "objectStorageForcePathStyle",
+  "objectStorageRegion",
+  "objectStorageSecretAccessKey",
+] as const);
 const SERVER_CONFIG_KEYS = Object.freeze([
   "NODE_ENV",
   "FAN_SUPPORT_DEPLOYMENT_ENV",
@@ -106,6 +190,15 @@ const SERVER_CONFIG_KEYS = Object.freeze([
 ] as const);
 const DATABASE_CONFIG_KEYS = Object.freeze([
   "FAN_SUPPORT_DATABASE_URL",
+] as const);
+const OBJECT_STORAGE_CONFIG_KEYS = Object.freeze([
+  "FAN_SUPPORT_DEPLOYMENT_ENV",
+  "FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT",
+  "FAN_SUPPORT_OBJECT_STORAGE_BUCKET",
+  "FAN_SUPPORT_OBJECT_STORAGE_REGION",
+  "FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID",
+  "FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY",
+  "FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE",
 ] as const);
 
 function errorFields(
@@ -166,6 +259,40 @@ export function resolveDatabaseRuntimeConfig(
   return Object.freeze({
     schemaVersion: result.data.schemaVersion,
     url: result.data.url,
+  });
+}
+
+export function resolveObjectStorageRuntimeConfig(
+  sources: RuntimeConfigSources,
+): ObjectStorageRuntimeConfig {
+  const layered = resolveConfigLayers(sources, OBJECT_STORAGE_CONFIG_KEYS);
+  const result = objectStorageRuntimeConfigSchema.safeParse({
+    schemaVersion: 1,
+    deploymentEnvironment: layered.FAN_SUPPORT_DEPLOYMENT_ENV,
+    objectStorageEndpoint: layered.FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT,
+    objectStorageBucket: layered.FAN_SUPPORT_OBJECT_STORAGE_BUCKET,
+    objectStorageRegion: layered.FAN_SUPPORT_OBJECT_STORAGE_REGION,
+    objectStorageAccessKeyId: layered.FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID,
+    objectStorageSecretAccessKey:
+      layered.FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY,
+    objectStorageForcePathStyle:
+      layered.FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE,
+  });
+
+  if (!result.success) {
+    throw new ConfigValidationError(
+      errorFields(result.error.issues, OBJECT_STORAGE_FIELDS),
+    );
+  }
+
+  return Object.freeze({
+    schemaVersion: result.data.schemaVersion,
+    endpoint: result.data.objectStorageEndpoint,
+    bucket: result.data.objectStorageBucket,
+    region: result.data.objectStorageRegion,
+    accessKeyId: result.data.objectStorageAccessKeyId,
+    secretAccessKey: result.data.objectStorageSecretAccessKey,
+    forcePathStyle: result.data.objectStorageForcePathStyle === "true",
   });
 }
 

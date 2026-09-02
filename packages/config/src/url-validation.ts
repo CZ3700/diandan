@@ -81,3 +81,24 @@ export function isPostgresUrl(value: string): boolean {
     return false;
   }
 }
+
+export function isObjectStorageEndpoint(value: string): boolean {
+  const parsed = parseUnambiguousUrl(value);
+
+  return (
+    parsed !== undefined &&
+    parsed.origin === value &&
+    (parsed.protocol === "http:" || parsed.protocol === "https:") &&
+    parsed.username === "" &&
+    parsed.password === "" &&
+    parsed.pathname === "/" &&
+    parsed.search === "" &&
+    parsed.hash === ""
+  );
+}
+
+export function isHttpOrigin(value: string): boolean {
+  const parsed = parseUnambiguousUrl(value);
+
+  return parsed !== undefined && parsed.protocol === "http:";
+}

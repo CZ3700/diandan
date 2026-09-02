@@ -1,0 +1,42 @@
+P0-04 local OCI preview runtime evidence
+Captured: 2026-09-03T03:07:54+08:00
+Host Docker: 2 CPUs, 4095107072 bytes memory, overlayfs, Compose 5.1.3
+Host TLS prerequisite: OpenSSL 3.6.3
+
+Command:
+  mise exec node@24.20.0 -- corepack pnpm preview:verify
+
+Result: PASS
+  Storefront: https://localhost:3443/
+  Admin: https://localhost:3444/
+  API health: http://localhost:3002/healthz
+  Worker health: http://localhost:3003/healthz
+  PostgreSQL query: 180006:1
+  Object-storage TLS bucket: fan-support-media (signed PUT/HEAD passed)
+  API and worker internal CA probes: PASS (https://edge:7443/_/health)
+  Independent state-recovery verify: PASS
+
+Running services at capture time:
+  admin          healthy, internal 3000/tcp
+  api            healthy, 127.0.0.1:3002 -> 3002/tcp
+  edge           healthy, 127.0.0.1:3443-3444 and :7443 TLS
+  object-storage healthy, internal-only 7070/tcp (no host publication)
+  postgres       healthy, 127.0.0.1:54320 -> 5432/tcp
+  storefront     healthy, internal 3000/tcp
+  worker         healthy, 127.0.0.1:3003 -> 3003/tcp
+
+Runtime posture at capture time:
+  API/worker: NODE_ENV=production, deployment=preview
+  Object endpoint: https://edge:7443 with NODE_EXTRA_CA_CERTS
+  Edge mount: CA + leaf certificate + leaf key, read-only
+  API/worker mount: client CA only, read-only; no leaf certificate or key
+  Four application containers: user=node, uid=1000
+  Storefront/admin missing-config image probes: /healthz returned 500
+  Unsigned object-storage GET through the TLS edge: 403
+
+Scope:
+  This proves a local, ephemeral preview only. PostgreSQL and object-storage
+  data use tmpfs. The launcher creates an ephemeral two-day CA and server leaf,
+  validates SAN/EKU, and removes the CA private key immediately after signing.
+  This is not staging, production, persistence, backup, multi-architecture, or
+  release evidence.
