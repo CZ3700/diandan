@@ -3,8 +3,8 @@
 > 最后更新：2026-09-03
 > 当前里程碑：M1 可信内核 / M2 品牌样板
 > 当前 ACTIVE Phase：Phase 1、Phase 2
-> 当前任务：无；Phase 0 已关闭
-> 下一可领取任务：`P1-01`（Lane A）或 `P2-01`（Lane B）；单个 executor 一次只领取一个
+> 当前任务：`P1-01`（Lane A，Codex `/root`，IN_PROGRESS）
+> 下一可领取任务：`P2-01`（Lane B）；单个 executor 一次只领取一个
 
 ## 1. 开工入口
 
@@ -16,15 +16,15 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前无执行中任务，`P1-01` 与 `P2-01` 分别在 Lane A/B 为 `READY`。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 `P1-01` 已占用 Lane A，`P2-01` 在 Lane B 为 `READY`。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
 | PENDING | 42 |
-| READY | 2 |
-| IN_PROGRESS | 0 |
+| READY | 1 |
+| IN_PROGRESS | 1 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
 | DONE | 5 |
@@ -74,7 +74,7 @@
 | 履约 SLA/客服承诺 | OPEN | Phase 3 内容冻结 | 待建运营决策 |
 | 邮件、观测、备份供应商 | OPEN | Phase 4/6 | 待建 ADR |
 
-这些 OPEN 项不阻塞当前 Phase 0 基线任务，但执行者不得自行把 sandbox 假设写成生产结论。
+这些 OPEN 项不阻塞当前 P1-01/P2-01，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
 
