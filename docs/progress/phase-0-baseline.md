@@ -16,7 +16,7 @@
 | P0-02 | DONE | Codex `/root` | 2026-09-02T19:25:41+08:00 | 2026-09-03T01:29:52+08:00 | [PR #1](https://github.com/CZ3700/diandan/pull/1) 真实 CI 全绿；`Quality`/`Security` 已绑定 GitHub Actions 并作为 `main` 必需检查 |
 | P0-03 | DONE | Codex `/root` | 2026-09-03T00:02:33+08:00 | 2026-09-03T00:47:13+08:00 | 候选 `ba8b8864605e7181a85f2ffc13ca52087e0726e4`；三路独立复核 ACCEPT |
 | P0-04 | DONE | Codex `/root` | 2026-09-03T01:54:21+08:00 | 2026-09-03T03:16:06+08:00 | [PR #2](https://github.com/CZ3700/diandan/pull/2) Quality/Security 全绿；clean clone 与三路独立复核通过 |
-| P0-05 | READY | — | — | — | P0-04 已完成；等待领取 |
+| P0-05 | IN_PROGRESS | Codex `/root` | 2026-09-03T03:28:17+08:00 | — | 已领取；正在建立 request/trace 关联、结构化日志与错误边界 |
 
 ## P0-01 执行卡
 
@@ -518,7 +518,20 @@ TLS 隔离与静态门禁给出 `ACCEPT for REVIEW`，无代码或证据 blocker
 | 9 | PASS | 四应用独立 final image；Caddy、VersityGW 与 PostgreSQL 仅在 Compose adapter 边界可替换 |
 | 10 | PASS | 受影响测试、两次完整 check、secret/audit、真实 OCI/health/browser 与 clean clone 全绿 |
 
+## P0-05 执行卡
+
+**范围**：为 storefront、admin、API 和 Worker 建立可替换的可观测基线；实现可传播的 request/trace 关联、只允许安全字段的结构化 stdout 日志、OpenTelemetry 启动/关闭边界、应用错误边界与本地启动/故障排查文档。
+
+**本次执行登记**：
+
+- Owner：Codex `/root`
+- 开始：`2026-09-03T03:28:17+08:00`（`2026-09-02T19:28:17Z`）
+- 精确范围：`packages/observability` 的可序列化合同/过滤/上下文与 OTel 组合边界；四应用 composition root 的初始化、请求关联和受控错误记录；可重复的结构/日志/trace 故障注入检查；本地运行与排障 README。
+- 明确不做：不引入业务 API、数据库 schema/queue 处理、Sentry 或云端 exporter 供应商锁定；不实现 P1-01 合同或 P1-06 outbox/pg-boss；不修改页面视觉与业务路由。
+- 验证计划：先写会因缺少 request ID 传播、日志 allowlist、OTel lifecycle 和错误边界而失败的单元/集成检查；实现后运行 observability 与四应用受影响测试、根 `format/lint/typecheck/test/build`、secret/audit，再以真实 preview 请求证明 storefront→API 关联、故障日志可排查且合成 PII 不泄露，最后 clean clone 复验。
+- 并发/所有权：P0-05 是 W3 唯一 Lane D executor；Codex `/root` 独占 `packages/observability`、四应用观测集成、根 manifest/lockfile、排障文档与本执行卡。子代理仅做读取研究或独立复核，除非另行分配不重叠文件。
+- 风险映射：`R-02`、`R-11`；日志、span attributes、错误对象、测试输出与故障证据均默认 allowlist，禁止完整 PII、留言、token、密钥、raw payment/provider payload 和偶像地址。
+
 ## Phase 退出证据
 
-Phase 0 尚未退出：P0-04 已 DONE，P0-05 仅 READY 尚未领取；不得把本地 preview 证据视为
-观测门禁或生产发布证据。
+Phase 0 尚未退出：P0-05 正在执行；不得把本地 preview 证据视为观测门禁或生产发布证据。
