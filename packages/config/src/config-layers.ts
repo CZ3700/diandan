@@ -10,6 +10,13 @@ const CONFIG_KEYS = Object.freeze([
 type ConfigKey = (typeof CONFIG_KEYS)[number];
 type ConfigLayerName = "configFile" | "dotenv" | "environment";
 
+const CONFIG_LAYER_NAMES = Object.freeze([
+  "configFile",
+  "dotenv",
+  "environment",
+] as const satisfies readonly ConfigLayerName[]);
+const CONFIG_LAYER_NAME_SET = new Set<string>(CONFIG_LAYER_NAMES);
+
 export type ConfigSource = Readonly<Record<string, unknown>>;
 
 export type RuntimeConfigSources = Readonly<{
@@ -19,6 +26,68 @@ export type RuntimeConfigSources = Readonly<{
 }>;
 
 const CONFIG_KEY_SET = new Set<string>(CONFIG_KEYS);
+
+function readSourceLayers(sources: RuntimeConfigSources): readonly Readonly<{
+  name: ConfigLayerName;
+  source: ConfigSource | undefined;
+}>[] {
+  let prototype: object | null;
+  let sourceKeys: readonly PropertyKey[];
+
+  try {
+    if (
+      typeof sources !== "object" ||
+      sources === null ||
+      Array.isArray(sources)
+    ) {
+      throw new ConfigValidationError(["sources"]);
+    }
+
+    prototype = Object.getPrototypeOf(sources) as object | null;
+    sourceKeys = Reflect.ownKeys(sources);
+  } catch (error) {
+    if (error instanceof ConfigValidationError) {
+      throw error;
+    }
+
+    throw new ConfigValidationError(["sources"]);
+  }
+
+  if (prototype !== Object.prototype && prototype !== null) {
+    throw new ConfigValidationError(["sources"]);
+  }
+  if (
+    sourceKeys.some(
+      (key) => typeof key !== "string" || !CONFIG_LAYER_NAME_SET.has(key),
+    )
+  ) {
+    throw new ConfigValidationError(["sources"]);
+  }
+
+  return CONFIG_LAYER_NAMES.map((name) => {
+    let descriptor: PropertyDescriptor | undefined;
+    try {
+      descriptor = Object.getOwnPropertyDescriptor(sources, name);
+    } catch {
+      throw new ConfigValidationError(["sources"]);
+    }
+
+    if (descriptor === undefined) {
+      return { name, source: undefined };
+    }
+    if (!("value" in descriptor)) {
+      throw new ConfigValidationError(["sources"]);
+    }
+
+    return {
+      name,
+      source:
+        descriptor.value === undefined
+          ? undefined
+          : (descriptor.value as ConfigSource),
+    };
+  });
+}
 
 function readOwnKeys(
   source: ConfigSource,
@@ -77,14 +146,7 @@ function readOwnValue(
 export function resolveConfigLayers(
   sources: RuntimeConfigSources,
 ): Readonly<Partial<Record<ConfigKey, unknown>>> {
-  const layers: readonly Readonly<{
-    name: ConfigLayerName;
-    source: ConfigSource | undefined;
-  }>[] = [
-    { name: "configFile", source: sources.configFile },
-    { name: "dotenv", source: sources.dotenv },
-    { name: "environment", source: sources.environment },
-  ];
+  const layers = readSourceLayers(sources);
 
   for (const layer of layers) {
     if (layer.source !== undefined) {

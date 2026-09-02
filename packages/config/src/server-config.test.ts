@@ -305,6 +305,98 @@ test("reads only own properties and rejects prototype-shaped explicit keys", asy
   }
 });
 
+test("rejects inherited outer layer properties", async () => {
+  const { resolveServerRuntimeConfig } = await loadServerConfigModule();
+  const inheritedSources = Object.create({
+    environment: productionEnvironment,
+  }) as RuntimeConfigSources;
+
+  expectInvalidConfig(
+    () => resolveServerRuntimeConfig(inheritedSources),
+    ["sources"],
+  );
+});
+
+test("rejects outer accessors without invoking or reflecting them", async () => {
+  const { resolveServerRuntimeConfig } = await loadServerConfigModule();
+  const canary = "OUTER_GETTER_SECRET_68135";
+  let invoked = false;
+  const sources = Object.defineProperty({}, "environment", {
+    enumerable: true,
+    get() {
+      invoked = true;
+      throw new Error(canary);
+    },
+  }) as RuntimeConfigSources;
+  const error = captureError(() => resolveServerRuntimeConfig(sources));
+
+  expect(error.fields).toEqual(["sources"]);
+  expect(invoked).toBe(false);
+  for (const rendering of [
+    String(error),
+    JSON.stringify(error),
+    inspect(error),
+  ]) {
+    expect(rendering).not.toContain(canary);
+  }
+});
+
+test("rejects unknown and prototype-shaped outer keys without reflection", async () => {
+  const { resolveServerRuntimeConfig } = await loadServerConfigModule();
+  const keyCanary = "UNKNOWN_OUTER_SECRET_KEY_13579";
+  const valueCanary = "UNKNOWN_OUTER_SECRET_VALUE_24680";
+  const unknownSources = {
+    environment: productionEnvironment,
+    [keyCanary]: valueCanary,
+  } as RuntimeConfigSources;
+  const symbolSources = Object.assign(
+    { environment: productionEnvironment },
+    { [Symbol(valueCanary)]: valueCanary },
+  ) as RuntimeConfigSources;
+  const prototypeSources = JSON.parse(
+    `{"environment":{"NODE_ENV":"production","FAN_SUPPORT_DEPLOYMENT_ENV":"production","FAN_SUPPORT_SITE_ORIGIN":"https://shop.example.invalid"},"__proto__":{"secret":"${valueCanary}"}}`,
+  ) as RuntimeConfigSources;
+
+  for (const sources of [unknownSources, symbolSources, prototypeSources]) {
+    const error = captureError(() => resolveServerRuntimeConfig(sources));
+
+    expect(error.fields).toEqual(["sources"]);
+    for (const rendering of [
+      String(error),
+      JSON.stringify(error),
+      inspect(error),
+    ]) {
+      expect(rendering).not.toContain(keyCanary);
+      expect(rendering).not.toContain(valueCanary);
+    }
+  }
+});
+
+test("normalizes hostile outer proxy failures", async () => {
+  const { resolveServerRuntimeConfig } = await loadServerConfigModule();
+  const canary = "OUTER_PROXY_SECRET_86420";
+  const sources = new Proxy(
+    { environment: productionEnvironment },
+    {
+      getOwnPropertyDescriptor() {
+        throw new Error(canary);
+      },
+    },
+  );
+  const error = captureError(() => resolveServerRuntimeConfig(sources));
+
+  expect(error.fields).toEqual(["sources"]);
+  for (const rendering of [
+    error.message,
+    String(error),
+    JSON.stringify(error),
+    inspect(error),
+    error.stack ?? "",
+  ]) {
+    expect(rendering).not.toContain(canary);
+  }
+});
+
 test.each([
   "javascript:alert(1)",
   "data:text/plain,hello",

@@ -101,7 +101,7 @@ const SERVER_FIELDS = Object.freeze([
 const DATABASE_FIELDS = Object.freeze(["databaseUrl"] as const);
 
 function errorFields(
-  issues: readonly z.core.$ZodIssue[],
+  issues: readonly Readonly<{ path: readonly PropertyKey[] }>[],
   allowedFields: readonly string[],
 ): readonly string[] {
   const allowed = new Set(allowedFields);
