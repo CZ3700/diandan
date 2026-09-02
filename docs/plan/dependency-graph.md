@@ -25,7 +25,7 @@ P0-01 → (P0-02 + P0-03) → P0-04 → P0-05 → [Phase 0 Gate]
 [Phase 1 Gate + Phase 2 Gate]
   → P3-01 → (P3-02 + P3-04) → (P3-03 + P3-05) → P3-06 → [Phase 3 Gate]
   → P4-01 → P4-02 → P4-03 → P4-04 → P4-05 → P4-06 → [Phase 4 Gate]
-  → (P5-01 + P5-04) → (P5-02 + P5-03) → (P5-05 + P5-06) → P5-07 → [Phase 5 Gate]
+  → (P5-01 + P5-04) → (P5-02 + P5-03) → (P5-05 + P5-06) → P5-07 → P5-08 → [Phase 5 Gate]
   → P6-01 → P6-02 → P6-03 → P6-04 → P6-05 → P6-06 → [Phase 6 Gate]
   → (P7-01 + P7-04) → P7-02 → P7-03 → P7-05 → P7-06
 ```
@@ -61,18 +61,19 @@ P0-01 → (P0-02 + P0-03) → P0-04 → P0-05 → [Phase 0 Gate]
 | W20 | P5-01、P5-04 | Lane C/A：身份/RBAC 与 payment conformance 分离 |
 | W21 | P5-02、P5-03 | Lane C/A：履约运营与退款/对账分离 |
 | W22 | P5-05、P5-06 | Lane C/D：配置发布与可靠事件运营分离 |
-| W23 | P5-07 | 新 PSP runbook/fake adapter 演练；完成 Phase 5 退出门禁 |
-| W24 | P6-01 | 全量测试、七语言 E2E/SEO/cache 矩阵；Lane D 独占 |
-| W25 | P6-02 | 可访问性验收；Lane D 独占 |
-| W26 | P6-03 | 性能/RUM；Lane D 独占 |
-| W27 | P6-04 | 安全检查；Lane D 独占 |
-| W28 | P6-05 | 故障注入；Lane D 独占 |
-| W29 | P6-06 | 恢复与回退演练；完成 Phase 6 退出门禁 |
-| W30 | P7-01、P7-04 | Lane C/D：正式决策与生产运维准备分离 |
-| W31 | P7-02 | 正式内容导入与双人复核 |
-| W32 | P7-03 | UAT 与真实小额支付/退款 |
-| W33 | P7-05 | 渐进灰度与 go/no-go |
-| W34 | P7-06 | 24/72 小时复盘与归档 |
+| W23 | P5-07 | 新 PSP runbook/fake adapter 演练；Lane D 独占 |
+| W24 | P5-08 | ADR-007 OpenTofu、production-like staging 与 immutable deployment；完成 Phase 5 退出门禁 |
+| W25 | P6-01 | 全量测试、七语言 E2E/SEO/cache 矩阵；Lane D 独占 |
+| W26 | P6-02 | 可访问性验收；Lane D 独占 |
+| W27 | P6-03 | 性能/RUM；Lane D 独占 |
+| W28 | P6-04 | 安全检查；Lane D 独占 |
+| W29 | P6-05 | 故障注入；Lane D 独占 |
+| W30 | P6-06 | 恢复与回退演练；完成 Phase 6 退出门禁 |
+| W31 | P7-01、P7-04 | Lane C/D：正式决策与生产运维准备分离 |
+| W32 | P7-02 | 正式内容导入与双人复核 |
+| W33 | P7-03 | UAT 与真实小额支付/退款 |
+| W34 | P7-05 | 渐进灰度与 go/no-go |
+| W35 | P7-06 | 24/72 小时复盘与归档 |
 
 ## 4. 不可并行冲突
 

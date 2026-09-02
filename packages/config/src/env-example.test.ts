@@ -48,7 +48,14 @@ test("documents every runtime environment variable once", () => {
     "NODE_ENV",
     "FAN_SUPPORT_DEPLOYMENT_ENV",
     "FAN_SUPPORT_SITE_ORIGIN",
+    "FAN_SUPPORT_INTERNAL_API_ORIGIN",
     "FAN_SUPPORT_DATABASE_URL",
+    "FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT",
+    "FAN_SUPPORT_OBJECT_STORAGE_BUCKET",
+    "FAN_SUPPORT_OBJECT_STORAGE_REGION",
+    "FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID",
+    "FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY",
+    "FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE",
   ];
 
   if (keys.length !== new Set(keys).size) {
@@ -74,4 +81,6 @@ test("leaves credential-bearing example values empty", () => {
   const { values } = readExample();
 
   expect(values["FAN_SUPPORT_DATABASE_URL"]).toBe("");
+  expect(values["FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID"]).toBe("");
+  expect(values["FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY"]).toBe("");
 });

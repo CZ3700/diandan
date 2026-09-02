@@ -1,0 +1,31 @@
+P0-05 Playwright browser evidence
+Captured: 2026-09-03T05:02:39+08:00 to 2026-09-03T05:04:43+08:00
+Playwright CLI: 0.1.19
+Browser context: ignoreHTTPSErrors=true for the launcher-managed ephemeral CA
+Workflow: playwright-cli open, snapshot, keyboard, resize, screenshot, reduced-motion, close
+
+Storefront https://localhost:3443/
+  1440x900 screenshot: storefront-1440x900.png
+    SHA-256: 670c6fbdc98ad87f038b1f8f3de709b01d4b8d326d91d6e1dc0caab7bb2c8c67
+  390x844 screenshot: storefront-390x844.png
+    SHA-256: 1780c76b267778b4ac8e07e8ee24718127af0c687464922d0f2fd402a2cd32ce
+  Landing page: title and readiness heading exposed in the accessibility tree
+  Keyboard: first Tab focused "View health response"; Enter opened /healthz
+  Health link: {"schemaVersion":1,"service":"storefront","status":"ok"}
+
+Admin https://localhost:3444/
+  1440x900 screenshot: admin-1440x900.png
+    SHA-256: 9b483393e339090144c551b852fe77f2b8775eaca09b09b0461b0d09f47aef20
+  390x844 screenshot: admin-390x844.png
+    SHA-256: 5cf972c98824d5184dc5554dad89614b7a1dbdee7ad9436889a7156b40cceefd
+  Landing page: title and readiness heading exposed in the accessibility tree
+  Keyboard: first Tab focused "View health response"
+
+Reduced motion: prefers-reduced-motion: reduce matched after emulation; both
+runtime pages remained readable. Visual inspection of all four screenshots found
+no clipping, horizontal overflow, or unexpected overlap. The new global error
+components are covered by deterministic render tests because the preview does not
+expose a production route that deliberately crashes the root layout.
+
+Scope: these are English-only internal runtime probes. Public locale routing and
+localized business pages begin in later tasks.

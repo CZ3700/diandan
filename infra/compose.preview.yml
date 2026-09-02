@@ -1,0 +1,234 @@
+services:
+  postgres:
+    image: postgres:18.6-bookworm@sha256:1c59e2c3c818eaa0f0628f695b36e7c9e362d6b219b36a54a32df645cbd7e1af
+    environment:
+      POSTGRES_DB: fan_support
+      POSTGRES_PASSWORD: ${PREVIEW_POSTGRES_PASSWORD:?managed by preview launcher}
+      POSTGRES_USER: fan_support
+    ports:
+      - "127.0.0.1:54320:5432"
+    tmpfs:
+      - /var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    restart: "no"
+
+  object-storage:
+    image: versity/versitygw:v1.7.0@sha256:c4cbd9d9cb8dedbb055ac788dbd02635651b9b1cebac95b095b3217231aa87ad
+    environment:
+      ROOT_ACCESS_KEY_ID: ${PREVIEW_OBJECT_STORAGE_ACCESS_KEY_ID:?managed by preview launcher}
+      ROOT_SECRET_ACCESS_KEY: ${PREVIEW_OBJECT_STORAGE_SECRET_ACCESS_KEY:?managed by preview launcher}
+      VGW_BACKEND: posix
+      VGW_BACKEND_ARGS: /data/s3
+      VGW_HEALTH: /_/health
+      VGW_IAM_DIR: /data/iam
+      VGW_PORT: :7070
+      VGW_REGION: us-east-1
+    expose:
+      - "7070"
+    tmpfs:
+      - /data/iam
+      - /data/s3
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "-q",
+          "-O",
+          "/dev/null",
+          "http://127.0.0.1:7070/_/health",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    restart: "no"
+
+  storefront:
+    profiles: [preview]
+    image: fan-support/storefront:p0-05
+    build:
+      context: ..
+      dockerfile: infra/docker/Dockerfile
+      target: storefront
+    environment:
+      FAN_SUPPORT_DEPLOYMENT_ENV: preview
+      FAN_SUPPORT_INTERNAL_API_ORIGIN: http://api:3002
+      FAN_SUPPORT_SITE_ORIGIN: https://localhost:3443
+      NODE_ENV: production
+    init: true
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/healthz').then((response)=>{if(!response.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    restart: "no"
+
+  admin:
+    profiles: [preview]
+    image: fan-support/admin:p0-05
+    build:
+      context: ..
+      dockerfile: infra/docker/Dockerfile
+      target: admin
+    environment:
+      FAN_SUPPORT_DEPLOYMENT_ENV: preview
+      FAN_SUPPORT_SITE_ORIGIN: https://localhost:3444
+      NODE_ENV: production
+    init: true
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/healthz').then((response)=>{if(!response.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    restart: "no"
+
+  api:
+    profiles: [preview]
+    image: fan-support/api:p0-05
+    build:
+      context: ..
+      dockerfile: infra/docker/Dockerfile
+      target: api
+    environment:
+      FAN_SUPPORT_DATABASE_URL: postgresql://fan_support:${PREVIEW_POSTGRES_PASSWORD:?managed by preview launcher}@postgres:5432/fan_support
+      FAN_SUPPORT_DEPLOYMENT_ENV: preview
+      FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: ${PREVIEW_OBJECT_STORAGE_ACCESS_KEY_ID:?managed by preview launcher}
+      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: fan-support-media
+      FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: https://edge:7443
+      FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true"
+      FAN_SUPPORT_OBJECT_STORAGE_REGION: us-east-1
+      FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: ${PREVIEW_OBJECT_STORAGE_SECRET_ACCESS_KEY:?managed by preview launcher}
+      FAN_SUPPORT_SITE_ORIGIN: https://localhost:3443
+      NODE_ENV: production
+      NODE_EXTRA_CA_CERTS: /run/preview-ca/ca.crt
+      PORT: "3002"
+    ports:
+      - "127.0.0.1:3002:3002"
+    depends_on:
+      edge:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    volumes:
+      - type: bind
+        source: ${PREVIEW_TLS_DIRECTORY:?managed by preview launcher}/clients
+        target: /run/preview-ca
+        read_only: true
+    init: true
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3002/healthz').then((response)=>{if(!response.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    restart: "no"
+
+  worker:
+    profiles: [preview]
+    image: fan-support/worker:p0-05
+    build:
+      context: ..
+      dockerfile: infra/docker/Dockerfile
+      target: worker
+    environment:
+      FAN_SUPPORT_DATABASE_URL: postgresql://fan_support:${PREVIEW_POSTGRES_PASSWORD:?managed by preview launcher}@postgres:5432/fan_support
+      FAN_SUPPORT_DEPLOYMENT_ENV: preview
+      FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: ${PREVIEW_OBJECT_STORAGE_ACCESS_KEY_ID:?managed by preview launcher}
+      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: fan-support-media
+      FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: https://edge:7443
+      FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true"
+      FAN_SUPPORT_OBJECT_STORAGE_REGION: us-east-1
+      FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: ${PREVIEW_OBJECT_STORAGE_SECRET_ACCESS_KEY:?managed by preview launcher}
+      FAN_SUPPORT_SITE_ORIGIN: https://localhost:3443
+      NODE_ENV: production
+      NODE_EXTRA_CA_CERTS: /run/preview-ca/ca.crt
+      PORT: "3003"
+    ports:
+      - "127.0.0.1:3003:3003"
+    depends_on:
+      edge:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    volumes:
+      - type: bind
+        source: ${PREVIEW_TLS_DIRECTORY:?managed by preview launcher}/clients
+        target: /run/preview-ca
+        read_only: true
+    init: true
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3003/healthz').then((response)=>{if(!response.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    restart: "no"
+
+  edge:
+    profiles: [preview]
+    image: caddy:2.11.4-alpine@sha256:5f5c8640aae01df9654968d946d8f1a56c497f1dd5c5cda4cf95ab7c14d58648
+    environment:
+      PREVIEW_TLS_DIRECTORY: ${PREVIEW_TLS_DIRECTORY:?managed by preview launcher}
+    ports:
+      - "127.0.0.1:3443:3443"
+      - "127.0.0.1:3444:3444"
+      - "127.0.0.1:7443:7443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - type: bind
+        source: ${PREVIEW_TLS_DIRECTORY:?managed by preview launcher}/edge
+        target: /run/preview-tls
+        read_only: true
+    tmpfs:
+      - /config
+      - /data
+    depends_on:
+      admin:
+        condition: service_healthy
+      object-storage:
+        condition: service_healthy
+      storefront:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --cacert /run/preview-tls/ca.crt --silent https://localhost:3443/ >/dev/null && curl --fail --cacert /run/preview-tls/ca.crt --silent https://localhost:3444/ >/dev/null && curl --fail --cacert /run/preview-tls/ca.crt --silent https://localhost:7443/_/health >/dev/null",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    restart: "no"

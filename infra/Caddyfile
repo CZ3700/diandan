@@ -1,0 +1,14 @@
+https://localhost:3443 {
+	tls /run/preview-tls/preview.crt /run/preview-tls/preview.key
+	reverse_proxy storefront:3000
+}
+
+https://localhost:3444 {
+	tls /run/preview-tls/preview.crt /run/preview-tls/preview.key
+	reverse_proxy admin:3000
+}
+
+:7443 {
+	tls /run/preview-tls/preview.crt /run/preview-tls/preview.key
+	reverse_proxy object-storage:7070
+}
