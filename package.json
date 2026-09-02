@@ -17,7 +17,7 @@
     "format": "prettier --write .github .secretlintrc.json apps packages scripts eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
     "format:check": "prettier --check .github .secretlintrc.json apps packages scripts eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
     "lint": "eslint . --max-warnings=0",
-    "security:secrets": "secretlint --no-gitignore \"**/*\"",
+    "security:secrets": "node ./scripts/scan-secrets.mjs",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck"
   },

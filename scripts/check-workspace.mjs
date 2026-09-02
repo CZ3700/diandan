@@ -66,6 +66,7 @@ const requiredRootFiles = [
   "pnpm-workspace.yaml",
   "scripts/check-build-artifacts.mjs",
   "scripts/check-ci.mjs",
+  "scripts/scan-secrets.mjs",
   "tsconfig.base.json",
   "turbo.json",
   "vitest.config.ts",

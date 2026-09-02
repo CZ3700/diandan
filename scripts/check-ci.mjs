@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseDocument } from "yaml";
@@ -10,6 +10,7 @@ const workspaceRoot = path.resolve(
 );
 
 const workflowPath = ".github/workflows/ci.yml";
+const workflowDirectory = ".github/workflows";
 const secretlintConfigPath = ".secretlintrc.json";
 const secretlintIgnorePath = ".secretlintignore";
 
@@ -163,10 +164,32 @@ function validateWorkflow(text, errors) {
   }
 }
 
+async function validateWorkflowDirectory(errors) {
+  let entries;
+  try {
+    entries = await readdir(path.join(workspaceRoot, workflowDirectory), {
+      withFileTypes: true,
+    });
+  } catch {
+    errors.push(`cannot read ${workflowDirectory}`);
+    return;
+  }
+
+  if (
+    entries.length !== 1 ||
+    entries[0]?.name !== "ci.yml" ||
+    !entries[0].isFile()
+  ) {
+    errors.push(
+      `${workflowDirectory} must contain only the regular file ci.yml`,
+    );
+  }
+}
+
 function validateManifest(manifest, errors) {
   const requiredScripts = {
     "check:ci": "node ./scripts/check-ci.mjs",
-    "security:secrets": 'secretlint --no-gitignore "**/*"',
+    "security:secrets": "node ./scripts/scan-secrets.mjs",
   };
 
   for (const [name, expected] of Object.entries(requiredScripts)) {
@@ -230,6 +253,8 @@ function validateSecretlintIgnore(text, errors) {
 
 async function validateCi() {
   const errors = [];
+  await validateWorkflowDirectory(errors);
+
   const [
     workflowText,
     manifestText,
