@@ -15,7 +15,7 @@
 | P0-01 | DONE | Codex `/root` | 2026-09-02T18:22:00+08:00 | 2026-09-02T19:25:41+08:00 | 根提交 `9234e368e193e967e9e2abd39858f4f3eaf01da9`；两次真实 clean clone、完整门禁和独立验收全绿 |
 | P0-02 | DONE | Codex `/root` | 2026-09-02T19:25:41+08:00 | 2026-09-03T01:29:52+08:00 | [PR #1](https://github.com/CZ3700/diandan/pull/1) 真实 CI 全绿；`Quality`/`Security` 已绑定 GitHub Actions 并作为 `main` 必需检查 |
 | P0-03 | DONE | Codex `/root` | 2026-09-03T00:02:33+08:00 | 2026-09-03T00:47:13+08:00 | 候选 `ba8b8864605e7181a85f2ffc13ca52087e0726e4`；三路独立复核 ACCEPT |
-| P0-04 | READY | — | — | — | P0-02、P0-03 均已 DONE；Phase 0 ACTIVE 且 Lane D 无 executor |
+| P0-04 | IN_PROGRESS | Codex `/root` | 2026-09-03T01:54:21+08:00 | — | 建立四应用运行时、PostgreSQL/S3 兼容本地环境与 OCI preview |
 | P0-05 | PENDING | — | — | — | 依赖 P0-04 |
 
 ## P0-01 执行卡
@@ -365,6 +365,20 @@ lockfile、NodeNext、三出口与 clean-clone 集成复核，无 blocker。
 | 8 | PASS | 唯一运行时依赖 `zod@4.5.4` 精确声明并锁定 |
 | 9 | PASS | public/server subpath 与 server/database fragment 可独立替换、按需组合 |
 | 10 | PASS | config 77/77；整仓 34/34/34；独立 clean clone 0 cached 全绿 |
+
+## P0-04 执行卡
+
+**范围**：建立稳定版 Next.js storefront/admin、NestJS + Fastify API/worker、PostgreSQL 与 S3 兼容对象存储的本地环境，并为四应用提供可重复的 OCI 构建、health 和 preview 证据。
+
+**本次执行登记**：
+
+- Owner：Codex `/root`
+- 开始：`2026-09-03T01:54:21+08:00`（`2026-09-02T17:54:21Z`）
+- 精确范围：四个应用的框架组合根与最小 health/readiness 界面；对象存储配置合同；Docker Compose 本地依赖与四应用 preview；独立 OCI 构建定义；可重复的结构、启动、health 和镜像验收脚本。
+- 明确不做：P1 数据库 schema/migration、业务 API 与队列处理；P2/P3 设计系统与业务页面；P1-01 才冻结的 `SupportedLocale` 常量；P0-05 request ID/OTel/结构化日志；生产域名、凭据、云厂商或正式部署结论。
+- 验证计划：先写并运行会因缺少框架/容器合同而失败的可重复检查；再分层运行四应用单元/类型/构建、整仓 `pnpm check`、secret/audit、Compose 配置与真实服务启动、API/worker health、storefront/admin 390×844 与 1440×900 浏览器验证、四个 OCI 镜像构建/预览/日志，最后在 clean clone 重复门禁。
+- 并发/所有权：P0-04 是 W2 唯一 Lane D executor；Codex `/root` 独占 `apps/*`、`infra/`、容器/启动脚本、`packages/config` 的对象存储扩展、根 manifest/lockfile 和本执行卡。子代理只可执行明确的读取/研究/独立复核，或在不重叠文件所有权下实现。
+- 风险映射：`R-14`；框架、PostgreSQL、S3 兼容服务和容器 base image 必须精确锁定并记录支持矩阵，必须用实际构建/health 而不是静态文件存在代替验证。
 
 ## Phase 退出证据
 

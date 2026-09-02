@@ -3,8 +3,8 @@
 > 最后更新：2026-09-03
 > 当前里程碑：M0 可运行基线
 > 当前 ACTIVE Phase：Phase 0
-> 当前任务：无 IN_PROGRESS；`P0-02`、`P0-03` 已 DONE
-> 下一可领取任务：`P0-04` READY
+> 当前任务：`P0-04` IN_PROGRESS（Codex `/root`）
+> 下一可领取任务：暂无；`P0-05` 依赖 P0-04
 
 ## 1. 开工入口
 
@@ -16,15 +16,15 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的任务；当前没有 executor，P0-04 的 P0-02/P0-03 依赖均已 DONE，现为 READY。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的任务；P0-04 已由 Codex `/root` 领取，是当前唯一 executor。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
 | PENDING | 44 |
-| READY | 1 |
-| IN_PROGRESS | 0 |
+| READY | 0 |
+| IN_PROGRESS | 1 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
 | DONE | 3 |
