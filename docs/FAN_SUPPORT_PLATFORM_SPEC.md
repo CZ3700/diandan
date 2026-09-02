@@ -1325,8 +1325,9 @@ Provider：
 5. 实现含七语言用户可见名称/提示的支付配置 `draft → validate → publish → rollback` 与 60 秒传播。
 6. 实现 webhook 重放、死信、`UNKNOWN` 支付和人工待处理队列。
 7. 编写新增 PSP runbook，但首版不为展示能力而接入多余渠道。
+8. 按已批准的生产基础设施 ADR 实现 OpenTofu production modules，并从干净环境建立 production-like staging；四应用使用固定 OCI digest，数据库、对象存储、CDN/WAF、KMS/Secrets、预算和配额具备可重复 smoke。production apply 仍受 Phase 7 灰度门控制。
 
-退出门禁：最小权限角色不能越权；退款和强制变更均有审计；配置可回退；新 adapter 能只通过 port 接入；既有支付不因渠道开关被改路。
+退出门禁：最小权限角色不能越权；退款和强制变更均有审计；配置可回退；新 adapter 能只通过 port 接入；既有支付不因渠道开关被改路；production-like staging 可由 OpenTofu 重复建立且不被误报为 production 发布。
 
 ### Phase 6：质量、安全与韧性加固
 

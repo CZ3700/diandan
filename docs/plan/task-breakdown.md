@@ -1,6 +1,6 @@
 # Task Breakdown
 
-> 总任务数：48  
+> 总任务数：49
 > 状态真相源：`docs/progress/phase-*.md`  
 > 领取规则：所在 Phase 已为 `ACTIVE`、依赖全部 `DONE` 且对应 Lane 当前无 executor 后，任务才可从 `PENDING` 改为 `READY/IN_PROGRESS`。
 
@@ -54,6 +54,7 @@
 | 5 | P5-05 | P0 | L | C | S,U,P,E |
 | 5 | P5-06 | P0 | M | D | S,U,P,E |
 | 5 | P5-07 | P1 | M | D | P,E,R |
+| 5 | P5-08 | P0 | L | D | S,U,P,E,R |
 | 6 | P6-01 | P0 | L | D | S,U,P,R |
 | 6 | P6-02 | P0 | L | D | S,U,R |
 | 6 | P6-03 | P1 | M | D | S,E,R |
@@ -123,7 +124,7 @@
 | P4-05 | P4-04 | 用 endpointId 路由的可信 provider evidence 推进既有 payment/order、关联早到事件、commit/release reservation，并实现保持订单 locale 的查单 token exchange、成功页 | 最终一致；UNMATCHED 可恢复；迟到成功 ON_HOLD；token 安全；公共 DTO 无内部 intent ID；历史本地化快照不漂移 | R-02, R-03, R-06, R-09, R-17 |
 | P4-06 | P4-05, P1-06 | 实现按订单固化 locale 与不可变 templateVersion 的七语言付款/准备/送达事务通知、英文事故 fallback 告警、重试、幂等及过期 reservation/intent/cart/token 清理 | 七语言 subject/preheader/HTML/text/变量与 review manifest 完整；旧版本可重现；每事件只发一次；fallback 可观测；清理与 webhook 无竞态 | R-02, R-11, R-17 |
 
-## Phase 5 — 运营与支付扩展（7）
+## Phase 5 — 运营与支付扩展（8）
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
@@ -134,6 +135,7 @@
 | P5-05 | P5-01, P5-04 | 实现含七语言渠道名称/提示的配置 draft/validate/publish/rollback、差异预览、二次确认和缓存传播 | 缺关键本地化文案、非法/空路由拒绝；发布 ≤60 秒；一分钟内回退；完整审计 | R-04, R-05, R-10, R-17 |
 | P5-06 | P5-01, P1-06, P5-03 | 实现 webhook 查询/安全重放、DLQ、UNKNOWN 支付、通知失败待办 | 重放不重复退款/履约/通知；敏感原文仅受控访问 | R-02, R-03, R-11 |
 | P5-07 | P5-04, P5-05, P5-06 | 编写并演练新增 PSP runbook：代码→沙盒→真实小额→灰度；不实际接多余渠道 | 用 fake adapter 完整跑 conformance/灰度；列出商户资格决策门 | R-04, R-05, R-15 |
+| P5-08 | P0-05, P1-05, P3-06, P4-06, P5-05, P5-06, P5-07 | 按 ADR-007 实现 OpenTofu production modules 与 production-like staging：state/locking、VPC、ECR、ECS/ALB、RDS PostgreSQL、S3、CloudFront/WAF、Route 53/ACM、KMS/Secrets 引用、预算/配额/告警和 immutable digest 部署；production apply 仍由 Phase 7 灰度门控制 | `tofu fmt -check/validate/plan`；干净 staging apply/smoke/re-apply；四镜像 digest、private origin/data、pg-boss、S3/presign/checksum、CDN cache/no-store/purge、WAF、KMS/IAM、预算/配额和回退前置证据 | R-02, R-11, R-14, R-15, R-16, R-17 |
 
 ## Phase 6 — 加固与恢复（6）
 
@@ -144,7 +146,7 @@
 | P6-03 | P3-06, P4-06 | 优化 LCP/INP/CLS、按 locale 字体/消息 bundle、图片、缓存与第三方脚本 | 七语言 Lighthouse/bundle；6 视口；RUM dashboard；达到第 16.2 节 | R-07, R-17 |
 | P6-04 | P5-06 | 做明确范围的安全检查：越权、XSS、CSRF、SSRF、重放、token、secret、依赖、PII | High/Critical=0；修复回归；扫描报告路径 | R-02, R-03, R-09, R-10 |
 | P6-05 | P1-06, P4-06, P5-06 | 故障注入：超时、乱序、重复、队列积压、PSP/邮件/对象存储/DB 短暂失败 | 无丢单/重复扣款；backlog 恢复；UNKNOWN 可对账 | R-03, R-11 |
-| P6-06 | P0-05, P1-04, P5-05, P6-05 | 演练 PITR、对象存储恢复、storefront/admin/api/worker OCI 回退、配置回退和 webhook 重放 | RPO/RTO/15 分钟代码回退有时间戳证据；演练问题已闭环 | R-11, R-16 |
+| P6-06 | P0-05, P1-04, P5-05, P5-08, P6-05 | 演练 PITR、对象存储恢复、storefront/admin/api/worker OCI 回退、配置回退和 webhook 重放 | RPO/RTO/15 分钟代码回退有时间戳证据；演练问题已闭环 | R-11, R-16 |
 
 ## Phase 7 — 上线与灰度（6）
 

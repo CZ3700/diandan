@@ -1,6 +1,6 @@
 # Fan Support Platform
 
-这是全球偶像礼物应援平台的源码单仓库。当前里程碑是可重复的本地运行基线：Storefront、Admin、API、Worker、PostgreSQL 和 S3-compatible 对象存储可在 Docker preview 中启动。产品范围、安全边界和当前任务以 `docs/FAN_SUPPORT_PLATFORM_SPEC.md` 与 `docs/progress/MASTER.md` 为准。
+这是全球偶像礼物应援平台的源码单仓库。Phase 0 可重复本地运行基线已经关闭，Phase 1/2 正在推进可信内核与品牌样板：Storefront、Admin、API、Worker、PostgreSQL 和 S3-compatible 对象存储可在 Docker preview 中启动。产品范围、安全边界和当前任务以 `docs/FAN_SUPPORT_PLATFORM_SPEC.md` 与 `docs/progress/MASTER.md` 为准。
 
 ## 前置条件
 
@@ -81,4 +81,4 @@ mise exec node@24.20.0 -- corepack pnpm preview:down
 
 ## 证据范围
 
-上述结果只是本机 Docker preview 和代码门禁证据，不等于已接入 cloud exporter、错误监控、dashboard 或告警，也不是 staging 验收、production 部署、备份恢复、多架构镜像或正式发布证据。观测、告警和备份供应商仍需通过后续 ADR/决策门确认。
+上述结果只是本机 Docker preview 和代码门禁证据。ADR-007 已选择 AWS 生产基线，但不等于已接入 cloud exporter、错误监控、dashboard 或告警，也不是 AWS apply、staging 验收、production 部署、备份恢复、多架构镜像或正式发布证据；这些仍需 P5-08、Phase 6/7 的实际环境与演练证明。

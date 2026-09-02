@@ -17,7 +17,7 @@
 | P6-03 | PENDING | — | P3-06、P4-06 | 分 locale 字体/消息 bundle/Performance/RUM |
 | P6-04 | PENDING | — | P5-06 | Scoped security checks |
 | P6-05 | PENDING | — | P1-06、P4-06、P5-06 | Fault injection |
-| P6-06 | PENDING | — | P0-05、P1-04、P5-05、P6-05 | Recovery/rollback drill |
+| P6-06 | PENDING | — | P0-05、P1-04、P5-05、P5-08、P6-05 | Recovery/rollback drill |
 
 ## 必须证明
 

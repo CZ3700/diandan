@@ -176,7 +176,7 @@ Do not write “done” without observable evidence. A local pass is not product
 
 ## 8. Archive Trigger
 
-After P7-06 and all 48 tasks are DONE:
+After P7-06 and all 49 tasks are DONE:
 
 1. Create `docs/archives/fan-support-platform-v1/`.
 2. Snapshot the completed analysis, plan, progress and accepted decision records there.

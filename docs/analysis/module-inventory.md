@@ -1,7 +1,7 @@
 # Module Inventory
 
-> 状态：Phase 0 可运行实现基线（更新于 2026-09-03）。
-> 当前边界：四应用、配置、可观测、CI 与本地 OCI preview 已实现；业务领域、迁移和生产 adapter 仍待后续 Phase。Phase 0 退出仍受生产基础设施决策门约束。
+> 状态：Phase 0 已关闭，Phase 1/2 已激活（更新于 2026-09-03）。
+> 当前边界：四应用、配置、可观测、CI 与本地 OCI preview 已实现；ADR-007 已完成 AWS 生产选型但尚未 cloud apply。业务合同、领域、迁移、生产 adapter 与 P5-08 OpenTofu/staging 仍待后续 Phase。
 
 ## 1. 当前仓库资产
 
@@ -118,7 +118,7 @@
 | Single Purpose | PASS（Phase 0） | `config`、observability root/node/fastify、四应用 composition root 与 preview 探针分责；大型验收 harness 保留拆分观察项 |
 | Unidirectional Flow | PASS（Phase 0） | 应用 → config/observability；核心合同不依赖应用，workspace 检查证明 34 units 无循环 |
 | Ports over Implementation | PASS（Phase 0 范围） | 日志、安全错误、请求上下文和 queue carrier 有显式 version/schema/type 与序列化测试；业务 ports 尚未实现 |
-| Environment-Agnostic | PASS（本地基线） | 运行配置经环境注入、日志 stdout、同一代码运行于宿主测试和 OCI；生产供应商仍 OPEN |
+| Environment-Agnostic | PASS（本地基线） | 运行配置经环境注入、日志 stdout、同一代码运行于宿主测试和 OCI；ADR-007 已选 AWS，但 adapter/IaC/cloud apply 仍未实现 |
 | Replaceable Parts | PASS（Phase 0 范围） | observability 通过 `.`, `./node`, `./fastify` 隔离；未来 exporter/provider 可在包内替换，应用不持有 SDK 对象 |
 
 ## 6. Phase 0 验证入口

@@ -1,6 +1,6 @@
 # Phase 2 — 设计系统与交互样板
 
-> 状态：LOCKED  
+> 状态：ACTIVE
 > 任务：6  
 > 解锁条件：Phase 0 退出门禁通过；与 Phase 1 同时激活
 
@@ -12,7 +12,7 @@
 
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
-| P2-01 | PENDING | — | P0-04 | Tokens/分 locale 字体/type/grid/theme |
+| P2-01 | READY | — | P0-04 | Tokens/分 locale 字体/type/grid/theme |
 | P2-02 | PENDING | — | P2-01 | 基础原语 |
 | P2-03 | PENDING | — | P2-02 | Overlay/menu/toast/language-region/focus |
 | P2-04 | PENDING | — | P2-02 | 七语言长文案组合组件与状态 |
@@ -29,4 +29,4 @@
 
 ## Phase 退出证据
 
-尚未解锁。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 2 已激活；P2-01 依赖完成且 Lane B 空闲，状态为 `READY`。其余退出证据尚未取得。

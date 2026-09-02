@@ -11,7 +11,7 @@
 | M2 品牌样板 | Phase 2 | 多脚本高级视觉、组件与三段标志性动效可评审 | 6 视口、七语言长文案、键盘、axe、真实设备 |
 | M3 可浏览 Beta | Phase 3 | 运营能通过自研 Admin 审核/发布七语言偶像与礼物，粉丝能切换浏览 | PostgreSQL/对象存储内容、≤60 秒发布、七语言 SEO/cache/perf |
 | M4 可购买 Alpha | Phase 4 | 七语言测试支付到安全查单/通知完整闭环 | sandbox E2E、订单 locale、重复事件、PII 检查 |
-| M5 可运营 Beta | Phase 5 | 订单、履约、退款、支付规则可审计操作 | RBAC、refund、rollback、replay |
+| M5 可运营 Beta | Phase 5 | 订单、履约、退款、支付规则可审计操作，production-like staging 可重复建立 | RBAC、refund、rollback、replay、OpenTofu plan/apply/smoke |
 | M6 Release Candidate | Phase 6 | 质量、安全、性能和恢复门禁通过 | Release Gate 技术证据包 |
 | M7 Production | Phase 7 | 正式内容、支付与灰度上线 | 签署清单、go/no-go、24/72h 复盘 |
 

@@ -1,8 +1,8 @@
 # Phase 0 — 基线与可运行骨架
 
-> 状态：ACTIVE  
+> 状态：CLOSED
 > 任务：5  
-> Phase 负责人：未分配
+> Phase 负责人：Codex `/root`
 
 ## 目标与退出门禁
 
@@ -581,4 +581,6 @@ TLS 隔离与静态门禁给出 `ACCEPT for REVIEW`，无代码或证据 blocker
 
 ## Phase 退出证据
 
-P0-01～P0-05 均已完成，代码、浏览器、本地 OCI、观测、clean-clone 与 PR CI 门禁已有证据；但 `MASTER.md` 中“容器平台/PostgreSQL/对象存储/CDN/WAF”生产基础设施决策仍为 `OPEN`，最晚门禁正是 Phase 0 退出。ADR-004 只冻结模块边界，不能代替供应商/区域/回退选择。因此 Phase 0 继续保持 `ACTIVE`，Phase 1/2 仍为 `LOCKED`，当前没有可领取任务；不得把本地 preview 证据视为 staging、生产或发布证明。
+状态：`CLOSED`（2026-09-03）。P0-01～P0-05 均已完成，代码、浏览器、本地 OCI、观测、clean-clone 与 PR CI 门禁已有证据；[ADR-007](../decisions/007-americas-aws-production-baseline.md) 已由用户给出的“美洲首发、AWS/Akamai 候选、低运维”范围完成供应商决策，冻结 `us-east-1` 的 AWS 单云 origin、ECS Fargate、RDS PostgreSQL Multi-AZ、S3、CloudFront/WAF 及可迁移边界。任务图同时新增 P5-08，明确承担 OpenTofu production-like staging，避免把选型误作部署。
+
+本次只关闭 Phase 0 的**选型门禁**：没有 AWS 账户 apply、staging、生产、PITR/跨区 restore、真实负载、成本账单或发布证据。上述内容分别由 P5-08、P6-05/P6-06 和 Phase 7 验证。按解锁矩阵，Phase 1 与 Phase 2 同时转为 `ACTIVE`，P1-01 与 P2-01 转为 `READY`。
