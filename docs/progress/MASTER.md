@@ -3,8 +3,8 @@
 > 最后更新：2026-09-03
 > 当前里程碑：M0 可运行基线
 > 当前 ACTIVE Phase：Phase 0
-> 当前任务：`P0-05` REVIEW（Codex `/root`）
-> 下一可领取任务：无；待 P0-05 完成及 Phase 0 基础设施决策门关闭
+> 当前任务：无；`P0-05` 已完成
+> 下一可领取任务：无；待 Phase 0 生产基础设施决策门关闭
 
 ## 1. 开工入口
 
@@ -16,7 +16,7 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的任务；当前 P0-05 正在最终评审，Lane D 仍由 Codex `/root` 独占。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的任务；当前无执行中任务，也没有可领取的 `READY` 任务。
 
 ## 2. 总体状态
 
@@ -26,8 +26,8 @@
 | READY | 0 |
 | IN_PROGRESS | 0 |
 | BLOCKED | 0 |
-| REVIEW | 1 |
-| DONE | 4 |
+| REVIEW | 0 |
+| DONE | 5 |
 | DEFERRED | 0 |
 | **总计** | **48** |
 
@@ -78,7 +78,7 @@
 
 ## 5. 最新证据
 
-已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据并标记 DONE；这些不是 staging、生产或发布证据。
+已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据。P0-05 已取得本地 request/trace、日志隐私、故障/关闭、浏览器、clean-clone 与真实 PR 必需检查证据并标记 DONE；这些都不是 staging、生产或发布证据。
 
 | 日期 | Task | 类型 | 证据 | 结论 |
 |:--|:--|:--|:--|:--|
@@ -89,6 +89,7 @@
 | 2026-09-03 | P0-02 | CI/安全门禁 | Git `88efe390c86c8b8e58b371fa196a9ae62c65de99`、[PR #1](https://github.com/CZ3700/diandan/pull/1)、[run 33661119143](https://github.com/CZ3700/diandan/actions/runs/33661119143)、`.github/workflows/ci.yml`、`scripts/check-ci.mjs`、`scripts/scan-secrets.mjs` | 本地/clean clone 与 11 组对抗 fixture 通过；真实 PR 的 Quality/Security 成功；`main` 严格必需两检查、管理员受约束、禁止强推/删除；GitHub secret scanning/push protection 已开启，任务 DONE |
 | 2026-09-03 | P0-03 | 配置/安全边界 | Git `ba8b8864605e7181a85f2ffc13ca52087e0726e4`、`.env.example`、`packages/config/` | 四层优先级、按 fragment 最小读取、fail-closed、公开 allowlist 与脱敏错误完成；77 tests、42 条独立攻击、0-cached clean clone 全绿，三路复核 ACCEPT，任务 DONE |
 | 2026-09-03 | P0-04 | 运行时/OCI/浏览器 | Git `d4008a9ce35432d609dbfa9639b16f68ef481ed4`、[PR #2](https://github.com/CZ3700/diandan/pull/2)、[run 33672018920](https://github.com/CZ3700/diandan/actions/runs/33672018920)、`infra/`、`output/playwright/p0-04/` | Next storefront/admin、Nest+Fastify API/worker、PostgreSQL、经临时 CA 的 S3-compatible TLS preview 与四独立 OCI image 完成；真实 build/7 healthy/SigV4/browser/clean clone/Quality/Security 全绿，三路复核 ACCEPT，任务 DONE |
+| 2026-09-03 | P0-05 | 可观测/故障/运维 | Git `c337db999fc45f629b5bdfc7dbd9b766ff1c0c8d`、[PR #3](https://github.com/CZ3700/diandan/pull/3)、[run 33685203128](https://github.com/CZ3700/diandan/actions/runs/33685203128)、`packages/observability/`、`output/playwright/p0-05/` | canonical request ID、W3C trace、结构化 allowlist 日志、OTel lifecycle、安全错误边界与排障 README 完成；真实 preview、clean clone 0-cache、Quality/Security 与四路复核全绿，任务 DONE；无 cloud exporter/生产发布结论 |
 
 ## 6. 更新规则
 
