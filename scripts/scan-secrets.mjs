@@ -1,6 +1,15 @@
 import { spawnSync } from "node:child_process";
+import { readdirSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const workspaceRoot = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+);
 
 const ignoredDirectoryNames = new Set([
+  ".git",
   "node_modules",
   ".pnpm-store",
   ".turbo",
@@ -21,6 +30,7 @@ const maxGitOutputBytes = 16 * 1024 * 1024;
 
 function runGit(arguments_) {
   return spawnSync("git", arguments_, {
+    cwd: workspaceRoot,
     encoding: "utf8",
     maxBuffer: maxGitOutputBytes,
   });
@@ -48,6 +58,63 @@ function isUnapprovedSecretlintPolicy(filePath) {
     baseName.startsWith(".secretlintignore") ||
     baseName.startsWith(".secretlintrc")
   );
+}
+
+function shouldSkipDirectory(directoryName) {
+  const normalizedName = directoryName.toLowerCase();
+  return normalizedName !== ".git" && ignoredDirectoryNames.has(normalizedName);
+}
+
+function rejectUnsafeWorkspaceEntries() {
+  const directories = [""];
+  let rejectedCount = 0;
+
+  while (directories.length > 0) {
+    const relativeDirectory = directories.pop();
+    let entries;
+    try {
+      entries = readdirSync(path.join(workspaceRoot, relativeDirectory), {
+        withFileTypes: true,
+      });
+    } catch {
+      console.error("Secret scan refused: cannot inspect the working tree");
+      process.exit(1);
+    }
+
+    for (const entry of entries) {
+      const relativePath = relativeDirectory
+        ? path.posix.join(relativeDirectory, entry.name)
+        : entry.name;
+
+      if (relativePath === ".git") {
+        continue;
+      }
+
+      if (shouldSkipDirectory(entry.name)) {
+        continue;
+      }
+
+      if (
+        entry.name.toLowerCase() === ".git" ||
+        isUnapprovedSecretlintPolicy(relativePath) ||
+        entry.isSymbolicLink()
+      ) {
+        rejectedCount += 1;
+        continue;
+      }
+
+      if (entry.isDirectory()) {
+        directories.push(relativePath);
+      }
+    }
+  }
+
+  if (rejectedCount > 0) {
+    console.error(
+      `Secret scan refused: ${rejectedCount} working-tree entry or entries bypass the approved scan boundary`,
+    );
+    process.exit(1);
+  }
 }
 
 function readTrackedFiles() {
@@ -102,6 +169,7 @@ function runSecretlint() {
   const executable =
     process.platform === "win32" ? "secretlint.cmd" : "secretlint";
   const result = spawnSync(executable, ["--no-gitignore", "**/*"], {
+    cwd: workspaceRoot,
     stdio: "inherit",
   });
 
@@ -113,6 +181,7 @@ function runSecretlint() {
   process.exitCode = result.status;
 }
 
+rejectUnsafeWorkspaceEntries();
 const trackedFiles = readTrackedFiles();
 rejectIgnoredTrackedFiles(trackedFiles);
 rejectInlineSuppressions();
