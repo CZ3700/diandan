@@ -12,9 +12,9 @@
 
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
-| P1-01 | REVIEW | Codex `/root` | 合同、生成产物与 freshness gate 已实现；本地、clean clone、安全与独立复核通过，等待真实 PR CI 退出证据 |
-| P1-02 | PENDING | — | P1-01、P0-04 | 自研 content/catalog/pricing/inventory/media/policy/translation schema/fixtures；拆分 base operational status、immutable revision lifecycle 与 public published view |
-| P1-03 | PENDING | — | P1-01 | 纯 Domain、价格/库存/状态与属性测试 |
+| P1-01 | DONE | Codex `/root` | P0-01、P0-03 | Git `4695a41`、PR #4/run `33693878714`；本地、clean clone、Quality/Security 与三路独立复核全绿 |
+| P1-02 | READY | — | P1-01、P0-04 | 自研 content/catalog/pricing/inventory/media/policy/translation schema/fixtures；拆分 base operational status、immutable revision lifecycle 与 public published view |
+| P1-03 | READY | — | P1-01 | 纯 Domain、价格/库存/状态与属性测试 |
 | P1-04 | PENDING | — | P1-01、P1-02、P0-03 | 完整 migrations、七语言 translation/review、inventory balance、订单金额/退款约束与加密边界 |
 | P1-05 | PENDING | — | P1-01/02/03/04 | Repositories 与 payment/media/identity/notification/cache/KMS ports/adapters |
 | P1-06 | PENDING | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
@@ -36,7 +36,7 @@
 - **本地门禁**：Node `24.20.0`、pnpm `11.25.0` 下 `TURBO_FORCE=true pnpm check` 为 0 cached、typecheck 37/37、test 37/37、build 34/34；`pnpm security:secrets` 与 `pnpm audit --registry=https://registry.npmjs.org --audit-level=high` 退出 0。
 - **独立复核**：artifact/locale ownership 的时区确定性、篡改 freshness、重复 locale、internal OpenAPI 排除与敏感字段 denylist 对抗检查通过；Blocker 0、Major 0。
 - **clean clone**：Git `4695a41` 在全新 clone 中完成 `pnpm install --frozen-lockfile --offline`、0 cached 完整 `pnpm check` 与 secret scan；工作树保持干净。
-- **待取得**：真实 GitHub PR Quality/Security 必需检查。
+- **真实 CI**：[PR #4](https://github.com/CZ3700/diandan/pull/4) 的 [run 33693878714](https://github.com/CZ3700/diandan/actions/runs/33693878714) 中 Quality 与 Security 均成功，merge 状态 `CLEAN`。
 - **剩余边界**：当前 OpenAPI 明示为 schema-components bundle，业务 path/operation 的 RBAC、幂等与 expectedVersion 由对应 API 任务补齐；嵌套的 TranslationSnapshotRef/MediaSnapshot 不得单独作为 API/event/queue 根；catalog base status、revision 发布生命周期与 public published view 由 P1-02 拆分；供应商 host allowlist、webhook 验签与 reconcile 认证属于 P1-05/P1-06；本任务没有 AWS apply、staging、生产发布或真实支付证据。
 
 ## 必须证明
@@ -49,4 +49,4 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01 已进入 `REVIEW`，其余 Phase 1 退出证据尚未取得。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01 已完成并解锁 P1-02/P1-03，其余 Phase 1 退出证据尚未取得。
