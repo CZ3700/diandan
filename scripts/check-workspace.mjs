@@ -54,14 +54,17 @@ const expectedUnitByDirectory = new Map(
 );
 
 const requiredRootFiles = [
+  ".github/workflows/ci.yml",
   ".gitignore",
   ".node-version",
   ".prettierignore",
+  ".secretlintrc.json",
   "eslint.config.mjs",
   "package.json",
   "pnpm-lock.yaml",
   "pnpm-workspace.yaml",
   "scripts/check-build-artifacts.mjs",
+  "scripts/check-ci.mjs",
   "tsconfig.base.json",
   "turbo.json",
   "vitest.config.ts",
@@ -71,8 +74,10 @@ const requiredRootScripts = [
   "build",
   "check",
   "check:artifacts",
+  "check:ci",
   "format:check",
   "lint",
+  "security:secrets",
   "test",
   "typecheck",
 ];
