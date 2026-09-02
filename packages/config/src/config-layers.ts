@@ -34,22 +34,18 @@ function readSourceLayers(sources: RuntimeConfigSources): readonly Readonly<{
   let prototype: object | null;
   let sourceKeys: readonly PropertyKey[];
 
-  try {
-    if (
-      typeof sources !== "object" ||
-      sources === null ||
-      Array.isArray(sources)
-    ) {
-      throw new ConfigValidationError(["sources"]);
-    }
+  if (
+    typeof sources !== "object" ||
+    sources === null ||
+    Array.isArray(sources)
+  ) {
+    throw new ConfigValidationError(["sources"]);
+  }
 
+  try {
     prototype = Object.getPrototypeOf(sources) as object | null;
     sourceKeys = Reflect.ownKeys(sources);
-  } catch (error) {
-    if (error instanceof ConfigValidationError) {
-      throw error;
-    }
-
+  } catch {
     throw new ConfigValidationError(["sources"]);
   }
 

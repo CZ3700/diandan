@@ -28,6 +28,7 @@ type PublicRuntimeConfig = Readonly<{
 }>;
 
 type ServerConfigModule = Readonly<{
+  ConfigValidationError: new (fields: readonly string[]) => Error;
   resolveServerRuntimeConfig: (
     sources: RuntimeConfigSources,
   ) => ServerRuntimeConfig;
@@ -373,27 +374,35 @@ test("rejects unknown and prototype-shaped outer keys without reflection", async
 });
 
 test("normalizes hostile outer proxy failures", async () => {
-  const { resolveServerRuntimeConfig } = await loadServerConfigModule();
+  const { ConfigValidationError, resolveServerRuntimeConfig } =
+    await loadServerConfigModule();
   const canary = "OUTER_PROXY_SECRET_86420";
-  const sources = new Proxy(
-    { environment: productionEnvironment },
-    {
-      getOwnPropertyDescriptor() {
-        throw new Error(canary);
-      },
-    },
-  );
-  const error = captureError(() => resolveServerRuntimeConfig(sources));
+  const hostileErrors = [
+    new Error(canary),
+    new ConfigValidationError([canary]),
+  ];
 
-  expect(error.fields).toEqual(["sources"]);
-  for (const rendering of [
-    error.message,
-    String(error),
-    JSON.stringify(error),
-    inspect(error),
-    error.stack ?? "",
-  ]) {
-    expect(rendering).not.toContain(canary);
+  for (const hostileError of hostileErrors) {
+    const sources = new Proxy(
+      { environment: productionEnvironment },
+      {
+        getPrototypeOf() {
+          throw hostileError;
+        },
+      },
+    );
+    const error = captureError(() => resolveServerRuntimeConfig(sources));
+
+    expect(error.fields).toEqual(["sources"]);
+    for (const rendering of [
+      error.message,
+      String(error),
+      JSON.stringify(error),
+      inspect(error),
+      error.stack ?? "",
+    ]) {
+      expect(rendering).not.toContain(canary);
+    }
   }
 });
 
