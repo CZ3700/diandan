@@ -12,9 +12,9 @@
 
 | ID | 状态 | Owner | 开始 | 完成 | 证据/说明 |
 |:--|:--|:--|:--|:--|:--|
-| P0-01 | REVIEW | Codex `/root` | 2026-09-02T18:22:00+08:00 | — | 2026-09-02T18:51:45+08:00 请求评审；实现与干净目录门禁全绿，但源目录尚非 Git 仓库，不得将 surrogate 证据声称为 clean clone |
-| P0-02 | PENDING | — | — | — | 依赖 P0-01 |
-| P0-03 | PENDING | — | — | — | 依赖 P0-01 |
+| P0-01 | DONE | Codex `/root` | 2026-09-02T18:22:00+08:00 | 2026-09-02T19:25:41+08:00 | 根提交 `9234e368e193e967e9e2abd39858f4f3eaf01da9`；两次真实 clean clone、完整门禁和独立验收全绿 |
+| P0-02 | IN_PROGRESS | Codex `/root` | 2026-09-02T19:25:41+08:00 | — | Lane D；建立 CI、依赖与 secret scan；当前唯一 lockfile executor |
+| P0-03 | READY | — | — | — | P0-01 已完成；Lane A 可领取，但修改根 manifest/lockfile 前须与 P0-02 协调 |
 | P0-04 | PENDING | — | — | — | 依赖 P0-02、P0-03 |
 | P0-05 | PENDING | — | — | — | 依赖 P0-04 |
 
@@ -29,7 +29,7 @@
 - 精确范围：根 pnpm/Turbo/TypeScript/ESLint/Prettier/Vitest 配置；四个应用边界；规范列出的共享包 manifest、最小 source/test；workspace 结构与循环依赖检查；lockfile。
 - 明确不做：Next.js/NestJS 实装、页面/UI、业务合同与 locale 常量、环境 schema、CI、数据库、支付、容器和部署。
 - 验证计划：先运行会因缺少骨架而失败的结构检查；实现后运行 `pnpm install --frozen-lockfile`、`pnpm check`、workspace 循环依赖检查，并在不包含安装/构建产物的干净临时目录重复安装与检查。
-- 已知风险：目录尚非 Git 仓库，无法声称已有 clean clone/PR 证据；以干净目录复验作为本任务实现证据，并在评审记录中保留该差异。关联 `R-15`，避免提前引入 P0-02～P0-04 内容。
+- 已知风险：关联 `R-15`，避免提前引入 P0-02～P0-04 内容；初次基线前发现的研究抓取凭据已在建立 Git 对象库前完成脱敏，P0-02 继续把 secret scan 固化为门禁。
 
 **开始前检查**：
 
@@ -64,7 +64,7 @@
 **完成证据**：
 
 ```text
-状态：REVIEW（不是 DONE）
+状态：DONE（2026-09-02T19:25:41+08:00 独立验收通过）
 
 主门禁：
 - `mise exec node@24.20.0 -- corepack pnpm install --frozen-lockfile`
@@ -78,6 +78,16 @@
 - 独立评审最终副本 `/tmp/fan-p001-final-stable.FlJm3z`：安装/构建产物预检为 0，
   frozen install + `pnpm check` -> exit 0，34/34/34，0 cached，30 个 export 由 Node 导入；
   评审结束后已移入系统废纸篓。
+- Git 根提交 `9234e368e193e967e9e2abd39858f4f3eaf01da9`：299 个文件；
+  `git fsck --full --no-reflogs --unreachable` 无输出，全部 319 个对象可达。
+- 真实 clean clone `/tmp/fan-support-p001-clean-clone.pFPU8m/repo`：安装前生成目录为 0，
+  frozen install + `pnpm check` -> exit 0，34/34/34、0 cached、30 个 export 实际导入；
+  clone 验证后干净并已移入系统废纸篓。
+- 独立验收 clean clone `/tmp/fan-p001-accept-clone.hCHK46/repo`：HEAD/tree 与源仓库一致，
+  安装前生成目录为 0；frozen install + `pnpm check` -> exit 0，clone 最终干净并已移除。
+- 提交前研究证据共 4 个文件 17 处值替换为 `[REDACTED_SECRET]`；JWT、私钥、
+  常见云/支付令牌、Authorization/Cookie/access-token 独立规则均为 0，
+  `@secretlint/quick-start@13.0.5` 全树复扫 exit 0。
 
 失败路径/回归证据：
 - 骨架前首次结构检查按预期失败：34 个目标 workspace manifest 实际为 0。
@@ -100,14 +110,12 @@
 与规范白名单精确一致；无循环；内部依赖必须使用 `workspace:`。
 
 未解决风险：
-- 源目录没有 `.git`，所以尚无字面意义的 clean clone/PR/历史差异证据；
-  这是从 REVIEW 转 DONE 的治理/证据门禁，不是已知实现缺陷。
 - ESLint 10 是当前受支持基线，但 Next 16 当前间接插件 peer 仍可能只覆盖 ESLint 9；
   P0-04 必须当天复验并记录显式决策。
 - 本证据仅覆盖 P0-01 工具链与边界骨架；无 UI 变更，因此没有浏览器证据；
   四应用、PostgreSQL/对象存储、OCI preview 属于 P0-04 和 Phase 0 退出门禁。
 
-评审者：Codex `/root/p001_review`，两轮独立副本复验后无代码级高优先级 blocker。
+评审者：Codex `/root/p001_review`；最终独立 Git 对象、凭据与真实 clean-clone 验收结论 `ACCEPT`，无剩余 blocker。
 ```
 
 ### P0-01 S.U.P.E.R 检查
@@ -124,6 +132,20 @@
 | 8 | PASS | 全部工具依赖在根 manifest 精确声明并锁定 |
 | 9 | PASS | 34 个边界包独立 manifest/source/test/build，尚无级联实现 |
 | 10 | PASS | `pnpm check` 与两份干净副本均通过，34/34 tests |
+
+## P0-02 执行卡
+
+**范围**：建立最小权限、依赖不可变的 GitHub Actions CI，覆盖 frozen install、format、lint、typecheck、unit、build、依赖漏洞扫描和 secret scan；缓存仅按 lockfile；不引入应用框架、业务功能、部署或真实 secret。
+
+**本次执行登记**：
+
+- Owner：Codex `/root`
+- 开始：`2026-09-02T19:25:41+08:00`（`2026-09-02T11:25:41Z`）
+- 精确范围：CI workflow、Secretlint 配置与锁定依赖、根安全检查命令、CI 结构回归检查、锁文件及进度证据。
+- 明确不做：P0-03 环境 schema、P0-04 应用/数据库/容器、GitHub 仓库创建、远端推送、分支保护或托管平台 secret 配置。
+- 验证计划：先以缺少 CI 合同的失败检查建立红灯；随后执行 frozen install、完整 `pnpm check`、依赖审计、全树 secret scan、workflow 结构校验；在一次性临时 clone 中放入纯合成 secret，确认 scanner 非零阻断且输出掩码，随后移除 fixture 和临时 clone；最后执行真实 clean-clone 复验与独立评审。
+- 并发/所有权：P0-02 是当前 Lane D 唯一 executor，也是根 `package.json`/`pnpm-lock.yaml` 唯一 lockfile owner；P0-03 虽为 `READY`，其 executor 在 lockfile 变更前必须协调。
+- 风险映射：`R-02`（凭据泄露、日志回显、过宽 workflow 权限）和 `R-14`（依赖漂移、供应链与构建不可复现）。
 
 ## Phase 退出证据
 
