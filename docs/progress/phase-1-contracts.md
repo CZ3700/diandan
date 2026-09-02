@@ -13,7 +13,7 @@
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
 | P1-01 | DONE | Codex `/root` | P0-01、P0-03 | Git `4695a41`、PR #4/run `33693878714`；本地、clean clone、Quality/Security 与三路独立复核全绿 |
-| P1-02 | READY | — | P1-01、P0-04 | 自研 content/catalog/pricing/inventory/media/policy/translation schema/fixtures；拆分 base operational status、immutable revision lifecycle 与 public published view |
+| P1-02 | IN_PROGRESS | Codex `/root` | P1-01、P0-04 | 自研 content/catalog/pricing/inventory/media/policy/translation schema/fixtures；拆分 base operational status、immutable revision lifecycle 与 public published view |
 | P1-03 | READY | — | P1-01 | 纯 Domain、价格/库存/状态与属性测试 |
 | P1-04 | PENDING | — | P1-01、P1-02、P0-03 | 完整 migrations、七语言 translation/review、inventory balance、订单金额/退款约束与加密边界 |
 | P1-05 | PENDING | — | P1-01/02/03/04 | Repositories 与 payment/media/identity/notification/cache/KMS ports/adapters |
@@ -38,6 +38,15 @@
 - **clean clone**：Git `4695a41` 在全新 clone 中完成 `pnpm install --frozen-lockfile --offline`、0 cached 完整 `pnpm check` 与 secret scan；工作树保持干净。
 - **真实 CI**：[PR #4](https://github.com/CZ3700/diandan/pull/4) 的 [run 33693878714](https://github.com/CZ3700/diandan/actions/runs/33693878714) 中 Quality 与 Security 均成功，merge 状态 `CLEAN`。
 - **剩余边界**：当前 OpenAPI 明示为 schema-components bundle，业务 path/operation 的 RBAC、幂等与 expectedVersion 由对应 API 任务补齐；嵌套的 TranslationSnapshotRef/MediaSnapshot 不得单独作为 API/event/queue 根；catalog base status、revision 发布生命周期与 public published view 由 P1-02 拆分；供应商 host allowlist、webhook 验签与 reconcile 认证属于 P1-05/P1-06；本任务没有 AWS apply、staging、生产发布或真实支付证据。
+
+## P1-02 执行卡
+
+- **Owner / 开始时间**：Codex `/root`，2026-09-03T07:19:20+08:00。
+- **范围**：定义仓库自有的 content、catalog、pricing、inventory、media、policy schema 与全虚构 fixtures；显式建模七语言 translation/review、source hash、stale、完整度和发布校验；拆分 base operational status、不可变 revision lifecycle 与只含已发布内容的 public view。
+- **非目标**：不建立数据库 migration/repository，不实现业务 API、Admin/Storefront UI、对象上传处理、库存状态机或生产内容；不引入真实偶像资料、地址、授权不明媒体或云资源。
+- **测试先行计划**：先写失败测试覆盖精确七语言包、source hash 不匹配派生 stale、自审拒绝、机器导入只能进入 `DRAFT`、缺价格/适用偶像/合格媒体/任一 locale 必填或关键 `APPROVED` 译文时发布失败，以及 public view 拒绝 draft/archived/internal-only 字段，再实现最小 schema、validator 与 fixtures。
+- **验证计划**：运行受影响包测试与 artifact freshness，随后执行 format、lint、typecheck、完整 `pnpm check`、secret scan、clean-clone frozen install/check，并做独立内容合同、隐私和发布门复核。
+- **风险护栏**：对应 R-06/R-08/R-17；不得用通用 `entity_type + entity_id + JSON` 翻译袋，不得从 locale 推导 market/currency；已发布 revision/internal ID/source hash 保持不可变，公开 DTO 不泄露审核身份、内部对象 key、偶像隐私或未发布内容。
 
 ## 必须证明
 
