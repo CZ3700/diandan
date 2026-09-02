@@ -13,8 +13,8 @@
 | ID | 状态 | Owner | 开始 | 完成 | 证据/说明 |
 |:--|:--|:--|:--|:--|:--|
 | P0-01 | DONE | Codex `/root` | 2026-09-02T18:22:00+08:00 | 2026-09-02T19:25:41+08:00 | 根提交 `9234e368e193e967e9e2abd39858f4f3eaf01da9`；两次真实 clean clone、完整门禁和独立验收全绿 |
-| P0-02 | IN_PROGRESS | Codex `/root` | 2026-09-02T19:25:41+08:00 | — | Lane D；建立 CI、依赖与 secret scan；当前唯一 lockfile executor |
-| P0-03 | READY | — | — | — | P0-01 已完成；Lane A 可领取，但修改根 manifest/lockfile 前须与 P0-02 协调 |
+| P0-02 | REVIEW | Codex `/root` | 2026-09-02T19:25:41+08:00 | — | 候选 `88efe390c86c8b8e58b371fa196a9ae62c65de99`；独立终审 ACCEPT for REVIEW；仍缺真实 GitHub PR/required checks |
+| P0-03 | READY | — | — | — | P0-01 已完成；当前无 executor，Lane A 可领取 |
 | P0-04 | PENDING | — | — | — | 依赖 P0-02、P0-03 |
 | P0-05 | PENDING | — | — | — | 依赖 P0-04 |
 
@@ -144,8 +144,115 @@
 - 精确范围：CI workflow、Secretlint 配置与锁定依赖、根安全检查命令、CI 结构回归检查、锁文件及进度证据。
 - 明确不做：P0-03 环境 schema、P0-04 应用/数据库/容器、GitHub 仓库创建、远端推送、分支保护或托管平台 secret 配置。
 - 验证计划：先以缺少 CI 合同的失败检查建立红灯；随后执行 frozen install、完整 `pnpm check`、依赖审计、全树 secret scan、workflow 结构校验；在一次性临时 clone 中放入纯合成 secret，确认 scanner 非零阻断且输出掩码，随后移除 fixture 和临时 clone；最后执行真实 clean-clone 复验与独立评审。
-- 并发/所有权：P0-02 是当前 Lane D 唯一 executor，也是根 `package.json`/`pnpm-lock.yaml` 唯一 lockfile owner；P0-03 虽为 `READY`，其 executor 在 lockfile 变更前必须协调。
+- 并发/所有权：实现和本地终审已结束，Lane D 与根配置锁已释放；P0-02 在 REVIEW 等待外部门禁。
 - 风险映射：`R-02`（凭据泄露、日志回显、过宽 workflow 权限）和 `R-14`（依赖漂移、供应链与构建不可复现）。
+
+**评审候选与实现证据**：
+
+```text
+状态：REVIEW（不是 DONE）
+实现候选 HEAD：88efe390c86c8b8e58b371fa196a9ae62c65de99
+实现提交：
+- 748f884 ci: add quality and security gates
+- bad50a2 ci: close secret scan bypasses
+- 9782cb7 ci: redact policy parse failures
+- 82493de ci: block scanner policy bypasses
+- c14cbc3 ci: normalize ignored path matching
+- 23afb73 ci: detect binary scanner suppressions
+- 88efe39 ci: reject untracked scanner policies
+
+CI 合同：
+- `.github/workflows/ci.yml` 仅监听 `pull_request` 与 main push；全局权限只有
+  `contents: read`，禁用 checkout 凭据持久化，设置 concurrency cancel 与 20 分钟超时。
+- `quality` 与 `security` 并行；两者固定 `ubuntu-24.04`、Node 24.20.0、
+  pnpm 11.25.0，pnpm store cache key 使用 `pnpm-lock.yaml`。
+- quality：显式 frozen install + `pnpm check`。
+- security：显式 frozen install + npm 官方 registry 的 high audit + Secretlint。
+- 2026-09-02 核验官方 tag：checkout v7.0.1 固定完整 SHA
+  `3d3c42e5aac5ba805825da76410c181273ba90b1`；pnpm/setup v2.1.0 固定完整 SHA
+  `703c52620218391530e48b9e8870d5c0082e1b9b`。
+
+可重复策略检查：
+- `scripts/check-ci.mjs` 使用精确锁定的 `yaml@2.9.0` 语义解析 workflow，按完整对象校验
+  trigger、权限、job、step、不可变 action、缓存和失败语义；workflow 目录只允许一个常规
+  `ci.yml`，额外文件、key、step 或 action 均拒绝。
+- Secretlint 13.0.5 与 recommend preset 精确锁定；配置必须 exact match，禁止 disabled、
+  allowMessageIds 或宽泛 allows；`--no-gitignore` 覆盖被强制跟踪的 `.env`，
+  `.secretlintignore` 只忽略精确列出的生成物。
+- `scripts/scan-secrets.mjs` 先失败关闭：拒绝落入 ignore 的 tracked path、嵌套且大小写变体的
+  tracked/untracked Secretlint policy、inline suppression（含 NUL/二进制文本）、`.GIT`
+  路径与非生成目录 symlink；Git 与 scanner cwd 固定为仓库根。
+- CI/YAML/JSON 策略错误只输出通用错误，不回显实际对象或输入片段。
+
+TDD/失败路径：
+- 首次 `node scripts/check-ci.mjs` 因 workflow、Secretlint 配置、脚本和依赖缺失
+  -> exit 1；最小实现后 -> exit 0。
+- 旧检查器对错层级 workflow 和 `disabled: true` 配置误放行 -> 两者 exit 0；
+  改为 YAML 语义解析与 exact deep-equal 后 -> 两者 exit 1。
+- 默认 Secretlint 对 force-add 的合成 `.env` 凭据误放行 -> exit 0；改为
+  `--no-gitignore` 后同一类 fixture -> exit 1，输出含掩码且不含原值；fixture 删除并提交后
+  -> exit 0，临时 clone 干净且已移入系统废纸篓。
+- workflow 含合成敏感字面量时，旧 assertion diff 会回显 -> 修复后策略仍 exit 1 且原值不在输出；
+  malformed JSON 同样只输出通用错误。
+- 旧策略对额外 workflow、tracked `*.log`、嵌套 tracked policy、inline suppression、大小写
+  `.LOG`/`DIST` 与 NUL/二进制 suppression 分别误放行 -> 对应语义目录检查、tracked-path
+  guard、policy/directive guard、大小写归一和二进制内容检查加入后均 exit 1。
+- 修复前，未跟踪嵌套 `.secretlintignore` 可屏蔽 tracked secret，Linux 上可提交的嵌套
+  `.GIT/fixture.txt` 也落入 scanner 默认 ignore；最终 working-tree traversal 与 `.git` segment
+  guard 后，两类 fixture 均 exit 1 且不回显合成 secret。
+- 最终临时对抗套件逐项验证 force-tracked `.env`、`.LOG`、`DIST`、tracked/untracked/大写
+  policy、文本/二进制 inline suppression、`.GIT`、外部 symlink 和额外 workflow 共 11 条拒绝
+  路径全部 exit 1/raw absent；无 fixture 的 scan 与 CI contract 均 exit 0。
+
+主门禁：
+- `mise exec node@24.20.0 -- corepack pnpm install --frozen-lockfile`
+  -> exit 0，lockfile 无变化。
+- `mise exec node@24.20.0 -- corepack pnpm check`
+  -> exit 0；workspace/CI policy/format/lint/typecheck/test/build/artifact smoke 全绿，
+     clean clone 中 typecheck/test/build 34/34/34、0 cached，30 个 export 被 Node 导入。
+- `mise exec node@24.20.0 -- corepack pnpm security:secrets`
+  -> exit 0；wrapper 完成边界 guard 后执行 `secretlint --no-gitignore "**/*"`。
+- `mise exec node@24.20.0 -- corepack pnpm audit --registry=https://registry.npmjs.org --audit-level=high`
+  -> exit 0，No known vulnerabilities found；registry 网络/endpoint 错误不会 fail-open。
+- 最终真实 clone `/tmp/fan-p002-final-clean.DL0Qfj/repo`：HEAD 为候选完整 SHA，安装前
+  生成目录 0、working tree 0；重复 frozen install、完整 check、secret scan 与 audit 全绿，
+  typecheck/test/build 34/34/34 且 0 cached，30 个 export 被 Node 导入；验证后 working tree
+  仍为 0，临时 clone 已移入系统废纸篓。
+
+可持久证据路径：
+- `.github/workflows/ci.yml`
+- `.secretlintrc.json` / `.secretlintignore`
+- `scripts/check-ci.mjs` / `scripts/scan-secrets.mjs` / `scripts/check-workspace.mjs`
+- `package.json` / `pnpm-lock.yaml`
+
+未解决/外部门禁：
+- 当前仓库没有 GitHub remote，因而没有真实 PR run URL，也不能证明 required checks/branch
+  protection 已启用；创建远端后必须让 `Quality` 与 `Security` 在 PR 上成功并设为必需检查，
+  才能从 REVIEW 验收为 DONE。
+- 当前扫描覆盖 clean checkout/working tree，不等于 GitHub 全历史 secret scanning 或 push
+  protection；仓库托管后应开启平台原生能力，不能用其替代本地可复现门禁。
+- 无 UI 变更，浏览器与多语言视觉证据不适用；无部署/发布结论。
+```
+
+独立评审：Codex `/root/p002_policy_review` 完成策略评审；Codex `/root/p002_final_review`
+对最终候选 `88efe390c86c8b8e58b371fa196a9ae62c65de99` 重新执行 clean clone、全门禁与对抗
+fixture，给出 `ACCEPT for REVIEW` 且未发现剩余代码阻断项。只有上述真实 GitHub PR run 与
+required-check 外部证据尚未满足，故不得标记 `DONE`。
+
+### P0-02 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | workflow、Secretlint 配置、CI policy checker 与 scanner wrapper 各自单一职责 |
+| 2 | PASS | checker/scan 按读取、语义 policy、tracked boundary、working-tree boundary 和执行拆分 |
+| 3 | PASS | 输入文件 → 语义解析 → 纯数据比较 → 错误输出，无反向依赖 |
+| 4 | PASS | 未新增 workspace 依赖边，完整依赖图仍无循环 |
+| 5 | PASS | workflow/Secretlint policy 由 YAML/JSON 与 exact expected objects 明确定义 |
+| 6 | PASS | 校验边界只处理可序列化 YAML/JSON/plain JS 数据 |
+| 7 | PASS | 无生产域名、密钥或业务常量；官方 registry/action SHA 是经核验的 CI 安全配置 |
+| 8 | PASS | Secretlint/preset/yaml 均精确声明并锁入 `pnpm-lock.yaml` |
+| 9 | PASS | scanner 或 Action 升级只需修改 CI/config/checker 边界，不触碰应用包 |
+| 10 | PASS | 当前树、11 组失败 fixture、最终 clean clone 与独立终审全部得到预期结果 |
 
 ## Phase 退出证据
 

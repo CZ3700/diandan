@@ -3,8 +3,8 @@
 > 最后更新：2026-09-02  
 > 当前里程碑：M0 可运行基线  
 > 当前 ACTIVE Phase：Phase 0  
-> 当前任务：`P0-02`（IN_PROGRESS，Owner：Codex `/root`）
-> 下一可领取任务：`P0-03`（READY，Lane A）；修改根 manifest/lockfile 前必须与 P0-02 唯一 lockfile owner 协调
+> 当前任务：`P0-02`（REVIEW；等待真实 GitHub PR/required checks 外部门禁）
+> 下一可领取任务：`P0-03`（READY，Lane A）
 
 ## 1. 开工入口
 
@@ -16,7 +16,7 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的任务；当前 `/root` 已领取 `P0-02`。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的任务；当前无 executor，`P0-03` 可领取。
 
 ## 2. 总体状态
 
@@ -24,9 +24,9 @@
 |:--|--:|
 | PENDING | 45 |
 | READY | 1 |
-| IN_PROGRESS | 1 |
+| IN_PROGRESS | 0 |
 | BLOCKED | 0 |
-| REVIEW | 0 |
+| REVIEW | 1 |
 | DONE | 1 |
 | DEFERRED | 0 |
 | **总计** | **48** |
@@ -78,7 +78,7 @@
 
 ## 5. 最新证据
 
-已有 P0-01 工具链/边界骨架的真实 clean-clone 与独立验收证据；尚无浏览器或部署证据。
+已有 P0-01 工具链/边界骨架的真实 clean-clone 与独立验收证据；P0-02 CI/security 候选已完成本地 clean-clone 门禁，尚无 GitHub PR、浏览器或部署证据。
 
 | 日期 | Task | 类型 | 证据 | 结论 |
 |:--|:--|:--|:--|:--|
@@ -86,6 +86,7 @@
 | 2026-09-02 | ARCH | 可视化 | `docs/fan-support-platform-architecture.drawio` | 已同步 Storefront/Admin/API/Worker、PostgreSQL 真相源与可替换外部 Port |
 | 2026-09-02 | RESEARCH | 浏览器研究 | `research/` | 只作为参考站背景，不等于本项目实现 |
 | 2026-09-02 | P0-01 | 实现/测试/验收 | Git `9234e368e193e967e9e2abd39858f4f3eaf01da9`、`package.json`、`pnpm-lock.yaml`、`apps/`、`packages/`、`scripts/check-*.mjs`、`phase-0-baseline.md` | 两次真实 clean clone、frozen install、完整 check、Git 对象与凭据复扫全绿；独立评审 ACCEPT，任务 DONE |
+| 2026-09-02 | P0-02 | CI/安全门禁 | Git `88efe390c86c8b8e58b371fa196a9ae62c65de99`、`.github/workflows/ci.yml`、`.secretlintrc.json`、`.secretlintignore`、`scripts/check-ci.mjs`、`scripts/scan-secrets.mjs` | 本地/clean clone 的 quality、audit、secret scan 与 11 组对抗 fixture 全部得到预期结果，独立终审 ACCEPT for REVIEW；无 GitHub remote/PR run，保持 REVIEW |
 
 ## 6. 更新规则
 
