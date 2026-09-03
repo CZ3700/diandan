@@ -12,6 +12,24 @@ export {
   type PostgresPersistenceOptions,
 } from "./postgres-persistence.js";
 export {
+  createReliableEventRepositories,
+  type ReliableEventRepositoryDependencies,
+  type ReliableEventRepositorySet,
+  type WebhookInboxPublisher,
+} from "./reliable-event-repositories.js";
+export {
+  createPgBossReliableEventQueue,
+  PgBossReliableEventQueueError,
+  RELIABLE_EVENT_QUEUE_NAMES,
+  type PgBossReliableEventQueue,
+  type PgBossReliableEventQueueErrorCode,
+  type PgBossReliableEventQueueOptions,
+  type ReliableEventQueueExecutionContext,
+  type ReliableEventQueueHandlers,
+  type ReliableEventQueueInfrastructureNotice,
+  type ReliableEventQueueTransaction,
+} from "./pg-boss-queue.js";
+export {
   assertCatalogMatches,
   captureDatabaseCatalog,
   DatabaseCatalogError,

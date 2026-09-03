@@ -4,6 +4,7 @@ import * as contracts from "./index.js";
 
 type SchemaLike = Readonly<{
   safeParse(value: unknown): Readonly<{ success: boolean }>;
+  meta(): Readonly<Record<string, unknown>> | undefined;
 }>;
 
 const contractExports = contracts as Record<string, unknown>;
@@ -117,6 +118,19 @@ const OUTBOX_EVENT = {
   },
 } as const;
 
+test("publishes cross-field reliable-event invariants for generated contract consumers", () => {
+  for (const schemaName of [
+    "recordVerifiedWebhookReceiptCommandSchema",
+    "recordWebhookProcessingAttemptCommandSchema",
+    "loadOutboxDispatchContextResponseSchema",
+    "recordOutboxDispatchAttemptCommandSchema",
+  ]) {
+    expect(schema(schemaName).meta()).toMatchObject({
+      "x-runtime-invariants": expect.any(Array),
+    });
+  }
+});
+
 test("loads only an eligible secret-free endpoint descriptor", () => {
   const commandSchema = schema("loadPaymentWebhookEndpointCommandSchema");
   const responseSchema = schema("loadPaymentWebhookEndpointResponseSchema");
@@ -164,6 +178,17 @@ test("loads only an eligible secret-free endpoint descriptor", () => {
       lifecycle: { status: "RETIRED", retiredAt: NOW },
     }).success,
   ).toBe(false);
+  expect(
+    descriptorSchema.safeParse({
+      ...ENDPOINT,
+      lifecycle: {
+        status: "ROTATION_OVERLAP",
+        activeFrom: "2026-09-03T00:00:00.000002Z",
+        overlapStartedAt: "2026-09-03T00:00:00.000001Z",
+        retiredAt: "2026-09-03T01:00:00.000001Z",
+      },
+    }).success,
+  ).toBe(false);
 });
 
 test("records one verified receipt atomically and distinguishes replay from conflict", () => {
@@ -198,6 +223,18 @@ test("records one verified receipt atomically and distinguishes replay from conf
   } as const;
 
   expect(commandSchema.safeParse(command).success).toBe(true);
+  expect(
+    commandSchema.safeParse({
+      ...command,
+      association: {
+        schemaVersion: 1,
+        associationId: IDS.association,
+        status: "MATCHED",
+        paymentAttemptId: IDS.paymentAttempt,
+        reasonCode: "PAYMENT_ATTEMPT_MATCHED",
+      },
+    }).success,
+  ).toBe(false);
   for (const value of [
     {
       decision: "NEW",
@@ -240,6 +277,38 @@ test("records one verified receipt atomically and distinguishes replay from conf
       webhookPayload: {
         ...command.webhookPayload,
         retentionExpiresAt: "2026-09-11T00:00:00.001Z",
+      },
+    }).success,
+  ).toBe(false);
+  expect(
+    commandSchema.safeParse({
+      ...command,
+      endpoint: {
+        ...ENDPOINT,
+        lifecycle: {
+          status: "ROTATION_OVERLAP",
+          activeFrom: "2026-09-03T00:00:00.000Z",
+          overlapStartedAt: "2026-09-03T23:00:00.000Z",
+          retiredAt: NOW,
+        },
+      },
+    }).success,
+  ).toBe(false);
+  expect(
+    commandSchema.safeParse({
+      ...command,
+      candidate: {
+        ...CANDIDATE,
+        occurredAt: "2026-09-03T23:59:59.1234567Z",
+      },
+    }).success,
+  ).toBe(false);
+  expect(
+    commandSchema.safeParse({
+      ...command,
+      candidate: {
+        ...CANDIDATE,
+        occurredAt: "2026-09-04T00:00:00.000001Z",
       },
     }).success,
   ).toBe(false);
@@ -356,6 +425,19 @@ test("records bounded webhook attempts and idempotent database effects", () => {
   expect(
     attemptSchema.safeParse({ ...attempt, finishedAt: "2026-09-03T23:59:59Z" })
       .success,
+  ).toBe(false);
+  expect(
+    attemptSchema.safeParse({
+      ...attempt,
+      startedAt: "2026-09-04T00:00:00.0000001Z",
+    }).success,
+  ).toBe(false);
+  expect(
+    attemptSchema.safeParse({
+      ...attempt,
+      startedAt: "2026-09-04T00:00:00.000002Z",
+      finishedAt: "2026-09-04T00:00:00.000001Z",
+    }).success,
   ).toBe(false);
 
   expect(effectSchema.safeParse(effect).success).toBe(true);
@@ -497,6 +579,19 @@ test("records outbox attempts and database-local effect receipts", () => {
   expect(
     attemptSchema.safeParse({ ...attempt, outcome: "DEAD_LETTER" }).success,
   ).toBe(false);
+  expect(
+    attemptSchema.safeParse({
+      ...attempt,
+      finishedAt: "2026-09-04T00:00:01.0000001Z",
+    }).success,
+  ).toBe(false);
+  expect(
+    attemptSchema.safeParse({
+      ...attempt,
+      startedAt: "2026-09-04T00:00:00.000002Z",
+      finishedAt: "2026-09-04T00:00:00.000001Z",
+    }).success,
+  ).toBe(false);
 
   expect(effectSchema.safeParse(effect).success).toBe(true);
   for (const decision of ["RECORDED", "REPLAY"] as const) {
@@ -514,6 +609,180 @@ test("records outbox attempts and database-local effect receipts", () => {
         },
       }).success,
     ).toBe(true);
+  }
+});
+
+test("binds every outbox context to its authoritative primary and secondary subjects", () => {
+  const responseSchema = schema("loadOutboxDispatchContextResponseSchema");
+  const common = {
+    schemaVersion: 1,
+    eventId: IDS.outboxEvent,
+    occurredAt: NOW,
+    correlationId: IDS.correlation,
+    requestId: IDS.request,
+  } as const;
+  const fixtures = [
+    {
+      event: {
+        ...common,
+        eventType: "CART_ITEM_ADDED",
+        aggregateId: IDS.subject,
+        payload: { cartId: IDS.subject, cartItemId: IDS.association },
+      },
+      primary: IDS.subject,
+      secondary: IDS.association,
+    },
+    {
+      event: {
+        ...common,
+        eventType: "CONTENT_PUBLICATION_CHANGED",
+        aggregateId: IDS.subject,
+        locale: "en",
+        payload: { contentPublicationId: IDS.subject },
+      },
+      primary: IDS.subject,
+      secondary: IDS.association,
+    },
+    {
+      event: OUTBOX_EVENT,
+      primary: IDS.paymentAttempt,
+      secondary: IDS.order,
+    },
+    {
+      event: {
+        ...common,
+        eventType: "ORDER_PAYMENT_CONFIRMED",
+        aggregateId: IDS.order,
+        payload: {
+          orderId: IDS.order,
+          paymentAttemptId: IDS.paymentAttempt,
+        },
+      },
+      primary: IDS.order,
+      secondary: IDS.paymentAttempt,
+    },
+    {
+      event: {
+        ...common,
+        eventType: "REFUND_STATUS_CHANGED",
+        aggregateId: IDS.subject,
+        payload: {
+          refundId: IDS.subject,
+          orderId: IDS.order,
+          status: "SUCCEEDED",
+        },
+      },
+      primary: IDS.subject,
+      secondary: IDS.order,
+    },
+    {
+      event: {
+        ...common,
+        eventType: "DISPUTE_STATUS_CHANGED",
+        aggregateId: IDS.subject,
+        payload: { disputeId: IDS.subject, orderId: IDS.order, status: "OPEN" },
+      },
+      primary: IDS.subject,
+      secondary: IDS.order,
+    },
+    {
+      event: {
+        ...common,
+        eventType: "FULFILLMENT_STATUS_CHANGED",
+        aggregateId: IDS.subject,
+        payload: {
+          fulfillmentId: IDS.subject,
+          orderId: IDS.order,
+          status: "PREPARING",
+        },
+      },
+      primary: IDS.subject,
+      secondary: IDS.order,
+    },
+    {
+      event: {
+        ...common,
+        eventType: "NOTIFICATION_REQUESTED",
+        aggregateId: IDS.subject,
+        payload: {
+          notificationDeliveryId: IDS.subject,
+          orderId: IDS.order,
+        },
+      },
+      primary: IDS.subject,
+      secondary: IDS.order,
+    },
+    {
+      event: {
+        ...common,
+        eventType: "PAYMENT_CONFIG_PUBLISHED",
+        aggregateId: IDS.subject,
+        payload: {
+          paymentConfigVersionId: IDS.subject,
+          paymentConfigPublicationId: IDS.association,
+        },
+      },
+      primary: IDS.association,
+      secondary: undefined,
+    },
+    {
+      event: {
+        ...common,
+        eventType: "PRICE_BOOK_PUBLISHED",
+        aggregateId: IDS.subject,
+        payload: {
+          priceBookPublicationId: IDS.association,
+          priceBookId: IDS.subject,
+          priceBookRevision: 3,
+          market: "AMERICAS",
+          currency: "USD",
+        },
+      },
+      primary: IDS.association,
+      secondary: IDS.subject,
+    },
+  ] as const;
+
+  for (const fixture of fixtures) {
+    const value = {
+      decision: "READY",
+      outboxEventId: IDS.outboxEvent,
+      consumerKey: OUTBOX_JOB.consumerKey,
+      event: fixture.event,
+      aggregateVersion: 1,
+      primarySubjectId: fixture.primary,
+      ...(fixture.secondary === undefined
+        ? {}
+        : { secondarySubjectId: fixture.secondary }),
+      nextAttemptNumber: 1,
+    };
+    const response = {
+      schemaVersion: 1,
+      operation: "LOAD_OUTBOX_DISPATCH_CONTEXT",
+      outcome: "SUCCESS",
+      value,
+    };
+    expect(responseSchema.safeParse(response).success).toBe(true);
+    expect(
+      responseSchema.safeParse({
+        ...response,
+        value: { ...value, primarySubjectId: IDS.endpoint },
+      }).success,
+    ).toBe(false);
+    expect(
+      responseSchema.safeParse({
+        ...response,
+        value: {
+          ...value,
+          secondarySubjectId:
+            fixture.event.eventType === "CONTENT_PUBLICATION_CHANGED"
+              ? undefined
+              : fixture.secondary === undefined
+                ? IDS.endpoint
+                : IDS.providerEvent,
+        },
+      }).success,
+    ).toBe(false);
   }
 });
 

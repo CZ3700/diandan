@@ -23,7 +23,8 @@
   "dependencies": {
     "@fan-support/persistence-port": "workspace:*",
     "drizzle-orm": "0.45.2",
-    "pg": "8.23.0"
+    "pg": "8.23.0",
+    "pg-boss": "12.30.0"
   },
   "devDependencies": {
     "@fan-support/contracts": "workspace:*",

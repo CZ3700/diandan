@@ -59,6 +59,62 @@ const effectKeySchema = z
   .max(128)
   .regex(/^[A-Z][A-Z0-9_:-]{0,127}$/u);
 
+function fractionalSecondDigits(timestamp: string): number {
+  return /\.(\d+)(?:Z|[+-]\d{2}:\d{2})$/u.exec(timestamp)?.[1]?.length ?? 0;
+}
+
+/** PostgreSQL is the business truth source and persists timestamps to microseconds. */
+const postgresTimestampSchema = portTimestampSchema.refine(
+  (timestamp) => fractionalSecondDigits(timestamp) <= 6,
+  { message: "database-bound timestamps support at most 6 fractional digits" },
+);
+
+function compareTimestampInstants(
+  left: string,
+  right: string,
+  rightSecondOffset = 0,
+): number | undefined {
+  const parse = (
+    timestamp: string,
+  ): Readonly<{ seconds: number; fraction: string }> | undefined => {
+    const match =
+      /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.(\d+))?(Z|[+-]\d{2}:\d{2})$/u.exec(
+        timestamp,
+      );
+    if (match === null || match[1] === undefined || match[3] === undefined) {
+      return undefined;
+    }
+    const milliseconds = Date.parse(`${match[1]}.000${match[3]}`);
+    if (!Number.isFinite(milliseconds)) {
+      return undefined;
+    }
+    return {
+      seconds: Math.floor(milliseconds / 1_000),
+      fraction: (match[2] ?? "").replace(/0+$/u, ""),
+    };
+  };
+  const leftInstant = parse(left);
+  const rightInstant = parse(right);
+  if (leftInstant === undefined || rightInstant === undefined) {
+    return undefined;
+  }
+  const adjustedRightSeconds = rightInstant.seconds + rightSecondOffset;
+  if (leftInstant.seconds !== adjustedRightSeconds) {
+    return leftInstant.seconds < adjustedRightSeconds ? -1 : 1;
+  }
+  const width = Math.max(
+    leftInstant.fraction.length,
+    rightInstant.fraction.length,
+  );
+  const leftFraction = leftInstant.fraction.padEnd(width, "0");
+  const rightFraction = rightInstant.fraction.padEnd(width, "0");
+  return leftFraction === rightFraction
+    ? 0
+    : leftFraction < rightFraction
+      ? -1
+      : 1;
+}
+
 const endpointLifecycleSchema = z
   .discriminatedUnion("status", [
     z.strictObject({
@@ -76,10 +132,12 @@ const endpointLifecycleSchema = z
     if (lifecycle.status !== "ROTATION_OVERLAP") {
       return;
     }
-    const activeFromMs = Date.parse(lifecycle.activeFrom);
-    const overlapStartedAtMs = Date.parse(lifecycle.overlapStartedAt);
-    const retiredAtMs = Date.parse(lifecycle.retiredAt);
-    if (overlapStartedAtMs < activeFromMs) {
+    if (
+      (compareTimestampInstants(
+        lifecycle.overlapStartedAt,
+        lifecycle.activeFrom,
+      ) ?? -1) < 0
+    ) {
       context.addIssue({
         code: "custom",
         path: ["overlapStartedAt"],
@@ -87,8 +145,15 @@ const endpointLifecycleSchema = z
       });
     }
     if (
-      retiredAtMs <= overlapStartedAtMs ||
-      retiredAtMs > overlapStartedAtMs + 24 * 60 * 60 * 1_000
+      (compareTimestampInstants(
+        lifecycle.retiredAt,
+        lifecycle.overlapStartedAt,
+      ) ?? 0) <= 0 ||
+      (compareTimestampInstants(
+        lifecycle.retiredAt,
+        lifecycle.overlapStartedAt,
+        24 * 60 * 60,
+      ) ?? 1) > 0
     ) {
       context.addIssue({
         code: "custom",
@@ -96,6 +161,12 @@ const endpointLifecycleSchema = z
         message: "rotation overlap must be positive and at most 24 hours",
       });
     }
+  })
+  .meta({
+    "x-runtime-invariants": [
+      "rotation overlap starts no earlier than endpoint activation",
+      "rotation overlap retirement is after overlap start and no more than 24 hours later",
+    ],
   });
 
 /** Secret-free descriptor returned by the persistence boundary. */
@@ -171,6 +242,37 @@ export const recordVerifiedWebhookReceiptCommandSchema = z
     job: webhookInboxJobSchema,
   })
   .superRefine((command, context) => {
+    if (fractionalSecondDigits(command.candidate.occurredAt) > 6) {
+      context.addIssue({
+        code: "custom",
+        path: ["candidate", "occurredAt"],
+        message:
+          "provider event time must preserve PostgreSQL microsecond precision without truncation",
+      });
+    }
+    if (
+      (compareTimestampInstants(
+        command.candidate.occurredAt,
+        command.receivedAt,
+      ) ?? 1) > 0
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["candidate", "occurredAt"],
+        message: "provider event time cannot be after webhook receipt time",
+      });
+    }
+    if (
+      command.association.status === "MATCHED" &&
+      command.candidate.transaction !== undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["association", "status"],
+        message:
+          "P1-06 webhook ingress cannot match transaction evidence without the same-transaction payment ledger contract",
+      });
+    }
     if (command.job.webhookInboxId !== command.webhookInboxId) {
       context.addIssue({
         code: "custom",
@@ -179,11 +281,17 @@ export const recordVerifiedWebhookReceiptCommandSchema = z
       });
     }
 
-    const receivedAtMs = Date.parse(command.receivedAt);
-    const signatureTimestampMs = Date.parse(command.signatureTimestamp);
     if (
-      signatureTimestampMs < receivedAtMs - 10 * 60 * 1_000 ||
-      signatureTimestampMs > receivedAtMs + 5 * 60 * 1_000
+      (compareTimestampInstants(
+        command.signatureTimestamp,
+        command.receivedAt,
+        -10 * 60,
+      ) ?? -1) < 0 ||
+      (compareTimestampInstants(
+        command.signatureTimestamp,
+        command.receivedAt,
+        5 * 60,
+      ) ?? 1) > 0
     ) {
       context.addIssue({
         code: "custom",
@@ -192,12 +300,16 @@ export const recordVerifiedWebhookReceiptCommandSchema = z
       });
     }
 
-    const retentionExpiresAtMs = Date.parse(
-      command.webhookPayload.retentionExpiresAt,
-    );
     if (
-      retentionExpiresAtMs <= receivedAtMs ||
-      retentionExpiresAtMs > receivedAtMs + 7 * 24 * 60 * 60 * 1_000
+      (compareTimestampInstants(
+        command.webhookPayload.retentionExpiresAt,
+        command.receivedAt,
+      ) ?? 0) <= 0 ||
+      (compareTimestampInstants(
+        command.webhookPayload.retentionExpiresAt,
+        command.receivedAt,
+        7 * 24 * 60 * 60,
+      ) ?? 1) > 0
     ) {
       context.addIssue({
         code: "custom",
@@ -207,8 +319,12 @@ export const recordVerifiedWebhookReceiptCommandSchema = z
       });
     }
 
-    const activeFromMs = Date.parse(command.endpoint.lifecycle.activeFrom);
-    if (receivedAtMs < activeFromMs) {
+    if (
+      (compareTimestampInstants(
+        command.receivedAt,
+        command.endpoint.lifecycle.activeFrom,
+      ) ?? -1) < 0
+    ) {
       context.addIssue({
         code: "custom",
         path: ["endpoint", "lifecycle", "activeFrom"],
@@ -217,7 +333,10 @@ export const recordVerifiedWebhookReceiptCommandSchema = z
     }
     if (
       command.endpoint.lifecycle.status === "ROTATION_OVERLAP" &&
-      receivedAtMs > Date.parse(command.endpoint.lifecycle.retiredAt)
+      (compareTimestampInstants(
+        command.receivedAt,
+        command.endpoint.lifecycle.retiredAt,
+      ) ?? 0) >= 0
     ) {
       context.addIssue({
         code: "custom",
@@ -225,6 +344,16 @@ export const recordVerifiedWebhookReceiptCommandSchema = z
         message: "endpoint rotation overlap has expired",
       });
     }
+  })
+  .meta({
+    "x-runtime-invariants": [
+      "provider event occurredAt has at most six fractional digits and is not after receivedAt",
+      "P1-06 ingress rejects MATCHED transaction evidence until a same-transaction payment ledger contract exists",
+      "job webhookInboxId equals the recorded webhook inbox ID",
+      "signatureTimestamp is within 10 minutes before through 5 minutes after receivedAt",
+      "payload retention expires after receivedAt and no more than 7 days later",
+      "receivedAt falls inside the endpoint active half-open lifecycle window",
+    ],
   });
 
 export const recordVerifiedWebhookReceiptResponseSchema = z.strictObject({
@@ -291,6 +420,11 @@ export const loadWebhookProcessingContextResponseSchema = z
         message: "processing context must carry matching webhook evidence",
       });
     }
+  })
+  .meta({
+    "x-runtime-invariants": [
+      "READY processing context carries VERIFIED_WEBHOOK evidence for its webhookInboxId",
+    ],
   });
 
 const webhookProcessingAttemptBaseShape = {
@@ -299,8 +433,8 @@ const webhookProcessingAttemptBaseShape = {
   processingAttemptId: webhookProcessingAttemptIdSchema,
   webhookInboxId: webhookInboxIdSchema,
   attemptNumber: positiveVersionSchema,
-  startedAt: portTimestampSchema,
-  finishedAt: portTimestampSchema,
+  startedAt: postgresTimestampSchema,
+  finishedAt: postgresTimestampSchema,
 } as const;
 
 export const recordWebhookProcessingAttemptCommandSchema = z
@@ -321,13 +455,22 @@ export const recordWebhookProcessingAttemptCommandSchema = z
     }),
   ])
   .superRefine((command, context) => {
-    if (Date.parse(command.finishedAt) < Date.parse(command.startedAt)) {
+    if (
+      (compareTimestampInstants(command.finishedAt, command.startedAt) ?? -1) <
+      0
+    ) {
       context.addIssue({
         code: "custom",
         path: ["finishedAt"],
         message: "attempt cannot finish before it starts",
       });
     }
+  })
+  .meta({
+    "x-runtime-invariants": [
+      "attempt timestamps have at most six fractional digits",
+      "finishedAt is not before startedAt",
+    ],
   });
 
 export const recordWebhookProcessingAttemptResponseSchema = z.strictObject({
@@ -394,6 +537,11 @@ export const listReadyOutboxEventsResponseSchema = z
       }
       seen.add(key);
     });
+  })
+  .meta({
+    "x-runtime-invariants": [
+      "jobs are unique by outboxEventId and consumerKey",
+    ],
   });
 
 export const loadOutboxDispatchContextCommandSchema = z.strictObject({
@@ -439,13 +587,77 @@ export const loadOutboxDispatchContextResponseSchema = z
         message: "dispatch context must identify the canonical outbox event",
       });
     }
-    if (response.value.primarySubjectId !== response.value.event.aggregateId) {
+    const event = response.value.event;
+    let expectedPrimarySubjectId: string;
+    let expectedSecondarySubjectId: string | undefined;
+    let requiresContentRevisionSubject = false;
+    switch (event.eventType) {
+      case "CART_ITEM_ADDED":
+        expectedPrimarySubjectId = event.payload.cartId;
+        expectedSecondarySubjectId = event.payload.cartItemId;
+        break;
+      case "CONTENT_PUBLICATION_CHANGED":
+        expectedPrimarySubjectId = event.payload.contentPublicationId;
+        requiresContentRevisionSubject = true;
+        break;
+      case "PAYMENT_STATUS_CHANGED":
+        expectedPrimarySubjectId = event.payload.paymentAttemptId;
+        expectedSecondarySubjectId = event.payload.orderId;
+        break;
+      case "ORDER_PAYMENT_CONFIRMED":
+        expectedPrimarySubjectId = event.payload.orderId;
+        expectedSecondarySubjectId = event.payload.paymentAttemptId;
+        break;
+      case "REFUND_STATUS_CHANGED":
+        expectedPrimarySubjectId = event.payload.refundId;
+        expectedSecondarySubjectId = event.payload.orderId;
+        break;
+      case "DISPUTE_STATUS_CHANGED":
+        expectedPrimarySubjectId = event.payload.disputeId;
+        expectedSecondarySubjectId = event.payload.orderId;
+        break;
+      case "FULFILLMENT_STATUS_CHANGED":
+        expectedPrimarySubjectId = event.payload.fulfillmentId;
+        expectedSecondarySubjectId = event.payload.orderId;
+        break;
+      case "NOTIFICATION_REQUESTED":
+        expectedPrimarySubjectId = event.payload.notificationDeliveryId;
+        expectedSecondarySubjectId = event.payload.orderId;
+        break;
+      case "PAYMENT_CONFIG_PUBLISHED":
+        expectedPrimarySubjectId = event.payload.paymentConfigPublicationId;
+        break;
+      case "PRICE_BOOK_PUBLISHED":
+        expectedPrimarySubjectId = event.payload.priceBookPublicationId;
+        expectedSecondarySubjectId = event.payload.priceBookId;
+        break;
+    }
+    if (response.value.primarySubjectId !== expectedPrimarySubjectId) {
       context.addIssue({
         code: "custom",
         path: ["value", "primarySubjectId"],
-        message: "primary subject must match the event aggregate",
+        message: "primary subject must match the authoritative event subject",
       });
     }
+    if (
+      (requiresContentRevisionSubject &&
+        response.value.secondarySubjectId === undefined) ||
+      (!requiresContentRevisionSubject &&
+        response.value.secondarySubjectId !== expectedSecondarySubjectId)
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["value", "secondarySubjectId"],
+        message: "secondary subject must match the authoritative event subject",
+      });
+    }
+  })
+  .meta({
+    "x-runtime-invariants": [
+      "READY outboxEventId equals the canonical event eventId",
+      "READY primary and secondary subjects match the authoritative mapping for eventType",
+      "CONTENT_PUBLICATION_CHANGED requires an explicit content revision secondary subject",
+    ],
   });
 
 const outboxDispatchAttemptBaseShape = {
@@ -455,8 +667,8 @@ const outboxDispatchAttemptBaseShape = {
   outboxEventId: eventIdSchema,
   consumerKey: reliableEventConsumerKeySchema,
   attemptNumber: positiveVersionSchema,
-  startedAt: portTimestampSchema,
-  finishedAt: portTimestampSchema,
+  startedAt: postgresTimestampSchema,
+  finishedAt: postgresTimestampSchema,
 } as const;
 
 export const recordOutboxDispatchAttemptCommandSchema = z
@@ -477,13 +689,22 @@ export const recordOutboxDispatchAttemptCommandSchema = z
     }),
   ])
   .superRefine((command, context) => {
-    if (Date.parse(command.finishedAt) < Date.parse(command.startedAt)) {
+    if (
+      (compareTimestampInstants(command.finishedAt, command.startedAt) ?? -1) <
+      0
+    ) {
       context.addIssue({
         code: "custom",
         path: ["finishedAt"],
         message: "attempt cannot finish before it starts",
       });
     }
+  })
+  .meta({
+    "x-runtime-invariants": [
+      "attempt timestamps have at most six fractional digits",
+      "finishedAt is not before startedAt",
+    ],
   });
 
 export const recordOutboxDispatchAttemptResponseSchema = z.strictObject({
@@ -558,6 +779,12 @@ export const purgeExpiredWebhookPayloadsResponseSchema = z
         message: "purged count must match the returned identifiers",
       });
     }
+  })
+  .meta({
+    "x-runtime-invariants": [
+      "purged payload identifiers are unique",
+      "purgedCount equals the number of returned payload identifiers",
+    ],
   });
 
 export const reliableEventPersistenceOperationSchema = z.enum([

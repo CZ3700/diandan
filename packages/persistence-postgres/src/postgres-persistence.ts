@@ -1,5 +1,7 @@
 import type {
   JsonValue,
+  ReliableEventTransactionManager,
+  ReliableEventTransactionRepositories,
   TransactionOptions,
   TransactionManager,
   TransactionRepositories,
@@ -18,6 +20,10 @@ import { createInventoryRepository } from "./inventory-repository.js";
 import { createOutboxRepository } from "./outbox-repository.js";
 import { createPostgresQueryLayer } from "./query-layer.js";
 import {
+  createReliableEventRepositories,
+  type WebhookInboxPublisher,
+} from "./reliable-event-repositories.js";
+import {
   createPersistenceTransactionFailureError,
   createTransactionRunner,
   type TransactionClient,
@@ -29,6 +35,7 @@ import {
 
 export interface PostgresPersistence {
   readonly transactionManager: TransactionManager;
+  readonly reliableEventTransactionManager: ReliableEventTransactionManager;
   close(): Promise<void>;
 }
 
@@ -38,6 +45,7 @@ export type PostgresPersistenceOptions = Readonly<{
   onInfrastructureFailure?: (
     failure: PersistenceFailureNotice,
   ) => void | Promise<void>;
+  publishWebhookInbox?: WebhookInboxPublisher;
 }>;
 
 export interface ManagedPersistencePool {
@@ -78,9 +86,14 @@ function isPersistenceOptions(
   }
   const record = value as Readonly<Record<string, unknown>>;
   return (
-    Object.keys(record).every((key) => key === "onInfrastructureFailure") &&
+    Object.keys(record).every(
+      (key) =>
+        key === "onInfrastructureFailure" || key === "publishWebhookInbox",
+    ) &&
     (record["onInfrastructureFailure"] === undefined ||
-      typeof record["onInfrastructureFailure"] === "function")
+      typeof record["onInfrastructureFailure"] === "function") &&
+    (record["publishWebhookInbox"] === undefined ||
+      typeof record["publishWebhookInbox"] === "function")
   );
 }
 
@@ -131,6 +144,28 @@ export function createPostgresPersistenceWithPoolFactory(
       };
     },
   });
+  const publishWebhookInbox: WebhookInboxPublisher =
+    options?.publishWebhookInbox ??
+    (async () => {
+      throw createPersistenceTransactionFailureError({
+        code: "CONFIGURATION_ERROR",
+        recovery: "NONE",
+      });
+    });
+  const reliableEventRunner =
+    createTransactionRunner<ReliableEventTransactionRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, transactionScope) => {
+        const database = createPostgresQueryLayer(client as NodePgClient);
+        return {
+          ...createReliableEventRepositories(client, {
+            transactionScope,
+            publishWebhookInbox,
+          }),
+          outbox: createOutboxRepository(database, transactionScope),
+        };
+      },
+    });
   let lifecycle: "OPEN" | "CLOSING" | "CLOSED" = "OPEN";
   let closePromise: Promise<void> | undefined;
 
@@ -153,6 +188,30 @@ export function createPostgresPersistenceWithPoolFactory(
         });
       }
       return runner.run(parsedOptions.data, work);
+    },
+  };
+
+  const reliableEventTransactionManager: ReliableEventTransactionManager = {
+    async runInReliableEventTransaction<Result extends JsonValue>(
+      options: TransactionOptions,
+      work: (
+        repositories: ReliableEventTransactionRepositories,
+      ) => Promise<Result>,
+    ): Promise<Result> {
+      if (lifecycle !== "OPEN") {
+        throw createPersistenceTransactionFailureError({
+          code: "CONFIGURATION_ERROR",
+          recovery: "NONE",
+        });
+      }
+      const parsedOptions = transactionOptionsSchema.safeParse(options);
+      if (!parsedOptions.success) {
+        throw createPersistenceTransactionFailureError({
+          code: "INVALID_COMMAND",
+          recovery: "NONE",
+        });
+      }
+      return reliableEventRunner.run(parsedOptions.data, work);
     },
   };
 
@@ -191,6 +250,7 @@ export function createPostgresPersistenceWithPoolFactory(
 
   return {
     transactionManager,
+    reliableEventTransactionManager,
     close,
   };
 }

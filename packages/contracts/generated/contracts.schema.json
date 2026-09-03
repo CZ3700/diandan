@@ -46314,6 +46314,10 @@
               ],
               "type": "object"
             }
+          ],
+          "x-runtime-invariants": [
+            "rotation overlap starts no earlier than endpoint activation",
+            "rotation overlap retirement is after overlap start and no more than 24 hours later"
           ]
         },
         "providerAccountId": {
@@ -73222,6 +73226,10 @@
                       ],
                       "type": "object"
                     }
+                  ],
+                  "x-runtime-invariants": [
+                    "rotation overlap starts no earlier than endpoint activation",
+                    "rotation overlap retirement is after overlap start and no more than 24 hours later"
                   ]
                 },
                 "providerAccountId": {
@@ -73405,7 +73413,15 @@
             "candidate",
             "job"
           ],
-          "type": "object"
+          "type": "object",
+          "x-runtime-invariants": [
+            "provider event occurredAt has at most six fractional digits and is not after receivedAt",
+            "P1-06 ingress rejects MATCHED transaction evidence until a same-transaction payment ledger contract exists",
+            "job webhookInboxId equals the recorded webhook inbox ID",
+            "signatureTimestamp is within 10 minutes before through 5 minutes after receivedAt",
+            "payload retention expires after receivedAt and no more than 7 days later",
+            "receivedAt falls inside the endpoint active half-open lifecycle window"
+          ]
         },
         {
           "additionalProperties": false,
@@ -73606,6 +73622,10 @@
               ],
               "type": "object"
             }
+          ],
+          "x-runtime-invariants": [
+            "attempt timestamps have at most six fractional digits",
+            "finishedAt is not before startedAt"
           ]
         },
         {
@@ -73939,6 +73959,10 @@
               ],
               "type": "object"
             }
+          ],
+          "x-runtime-invariants": [
+            "attempt timestamps have at most six fractional digits",
+            "finishedAt is not before startedAt"
           ]
         },
         {
@@ -74128,6 +74152,10 @@
                               ],
                               "type": "object"
                             }
+                          ],
+                          "x-runtime-invariants": [
+                            "rotation overlap starts no earlier than endpoint activation",
+                            "rotation overlap retirement is after overlap start and no more than 24 hours later"
                           ]
                         },
                         "providerAccountId": {
@@ -74956,7 +74984,10 @@
             "outcome",
             "value"
           ],
-          "type": "object"
+          "type": "object",
+          "x-runtime-invariants": [
+            "READY processing context carries VERIFIED_WEBHOOK evidence for its webhookInboxId"
+          ]
         },
         {
           "additionalProperties": false,
@@ -75171,7 +75202,10 @@
             "outcome",
             "value"
           ],
-          "type": "object"
+          "type": "object",
+          "x-runtime-invariants": [
+            "jobs are unique by outboxEventId and consumerKey"
+          ]
         },
         {
           "additionalProperties": false,
@@ -76130,7 +76164,12 @@
             "outcome",
             "value"
           ],
-          "type": "object"
+          "type": "object",
+          "x-runtime-invariants": [
+            "READY outboxEventId equals the canonical event eventId",
+            "READY primary and secondary subjects match the authoritative mapping for eventType",
+            "CONTENT_PUBLICATION_CHANGED requires an explicit content revision secondary subject"
+          ]
         },
         {
           "additionalProperties": false,
@@ -76309,7 +76348,11 @@
             "outcome",
             "value"
           ],
-          "type": "object"
+          "type": "object",
+          "x-runtime-invariants": [
+            "purged payload identifiers are unique",
+            "purgedCount equals the number of returned payload identifiers"
+          ]
         }
       ]
     },
