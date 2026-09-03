@@ -15,8 +15,8 @@
 | P1-01 | DONE | Codex `/root` | P0-01、P0-03 | Git `4695a41`、PR #4/run `33693878714`；本地、clean clone、Quality/Security 与三路独立复核全绿 |
 | P1-02 | DONE | Codex `/root` | P1-01、P0-04 | Git `6daea69`、PR #5/run `33707017702`；本地、clean clone、Quality/Security 与两路独立验收全绿 |
 | P1-03 | DONE | Codex `/root` | P1-01 | Git `49a8756`、PR #6/run `33720394020`；本地/clean clone、Quality/Security 与三路独立复核全绿 |
-| P1-04 | IN_PROGRESS | Codex `/root` | P1-01、P1-02、P0-03 | 2026-09-03T14:38:05+08:00 领取；完整 migrations、七语言 translation/review、inventory balance、订单金额/退款约束与加密边界 |
-| P1-05 | PENDING | — | P1-01/02/03/04 | Repositories 与 payment/media/identity/notification/cache/KMS ports/adapters |
+| P1-04 | DONE | Codex `/root` | P1-01、P1-02、P0-03 | Git `827ada4`、PR #7/run `33739482625`；PG18、clean clone、Quality/Security 与两路独立终验全绿 |
+| P1-05 | READY | — | P1-01/02/03/04 | Repositories 与 payment/media/identity/notification/cache/KMS ports/adapters |
 | P1-06 | PENDING | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
 
 ## P1-01 执行卡
@@ -90,6 +90,20 @@
 - **验证计划**：在真实 PostgreSQL 容器执行空库 up/down/up、catalog/schema drift、事务/并发和对抗约束测试；再运行受影响包测试、format、lint、typecheck、build、完整 0-cache `pnpm check`、secret/audit、clean-clone frozen install/check，并安排迁移、交易一致性与隐私边界独立复核。
 - **风险护栏**：对应 R-02/R-03/R-06/R-11/R-16/R-17；敏感留言、显示名、邮箱和履约资料只允许密文/摘要/密钥版本进入数据库，主密钥与明文禁止进入 migration、fixture、日志、队列或测试输出；金额仅安全整数 minor unit；locale 不推导 market/currency；外部副作用只留下 inbox/outbox 持久边界。
 
+### DONE 证据（2026-09-03）
+
+- **实现与权威源**：`database/migrations/0001..0006` 以显式 up/down SQL 覆盖 foundation/RBAC、内容/商品/七语言审核发布、库存/购物车/加密 intent、订单/履约、支付/退款/争议/inbox/outbox 与 publication heads；SHA-256 `manifest.json` 和 PostgreSQL catalog snapshot 由仓库脚本确定性生成，`@fan-support/persistence-postgres` 分离 manifest、runner、catalog 与 ephemeral PG 职责。
+- **数据库不变量**：真实 PostgreSQL 18 空库 `up → down → up` 通过，共 6 个 migration、108 张表；translation/review 唯一与发布后不可变、价格有效区间、库存余额/ledger/reservation、活动 payment attempt、订单金额/退款占用上限、幂等键、可信 authority evidence、固定 `search_path`、no-truncate 与 append-only 均有对抗测试。
+- **可靠事件与隐私**：inbox/webhook endpoint 生命周期、单 ACTIVE/有限 overlap、服务器时间锚、7 天 raw payload TTL、outbox provenance 与单一业务证据受约束；留言、显示名、邮箱和履约资料只允许 ciphertext/DEK/key version/HMAC，公共元数据、outbox、audit 与 fixture 不含明文或通用自由 payload。
+- **带数据升级/回退**：`0005 → 0006 → 0005 → 0006` 在 PostgreSQL 18 保留既有 content/payment publication、audit 与 outbox，最终为 2 条 publication、8 条 outbox、1 条 migration audit；不可由 0005 表达的 price publication 历史会 fail closed，不静默丢失数据。
+- **TDD/回归**：contracts 16 files / 82 tests、domain 22 files / 160 tests、persistence-postgres 14 files / 80 tests 全绿；数据库对抗 harness 覆盖 2 个并发、5 个 evidence、7 个 aggregate behavior、15 个 append-only、11 个幂等数据最小化、17 个 metadata boundary、20 个 webhook lifecycle、7 个 authority evidence 及 tamper 场景。
+- **本地与 clean clone**：Node `24.20.0`、pnpm `11.25.0` 下完整 `pnpm check` 通过（typecheck 37/37、test 37/37、build 34/34）；全新 clone 完成 frozen offline install 与 `TURBO_FORCE=true` 0-cache 同门禁，随后 secret scan、官方 npm registry high-level audit 和干净工作树检查均退出 0。
+- **S.U.P.E.R 10/10**：migration、manifest、runner、catalog 和 harness 职责分离；依赖单向且 workspace 无循环；跨模块事件/支付/幂等/媒体边界复用 Zod/schemaVersion 并可序列化；无生产 URL/key/path/locale 特判；`pg`、types 与 contracts 依赖显式声明；migration source、command executor 与 ephemeral PG 可独立替换；全部门禁通过。
+- **独立复核**：冻结提交 `827ada4d2e7f821307c761addec65864aedf1a74` 的迁移/总体验收与隐私/安全终验均 `ACCEPT`、Blocker 0；独立复跑 manifest、contracts 82/82、domain 160/160、persistence 80/80、PG18 round-trip/constraints/data-bearing upgrade、secret scan 与工作树冻结检查全绿。
+- **非阻断后续**：P1-05/P5 实现 repository/管理命令时继续收窄 order/fulfillment event 的 authority shape（非 ADMIN 明确不带 audit、ADMIN 不带无关 provider evidence），并冻结 endpoint 直接 `ACTIVE → RETIRED` 时 `retired_at` 代表实际退役时刻还是预定边界；现有约束未发现可绕过的权限或支付最终态路径。
+- **真实 CI**：[PR #7](https://github.com/CZ3700/diandan/pull/7) 的 [run 33739482625](https://github.com/CZ3700/diandan/actions/runs/33739482625) 中 Quality 与 Security 均成功，叠加基线为 `codex/p1-03-domain`，实现提交可合并。
+- **剩余边界**：本任务只证明 schema/migration 与本地 ephemeral PostgreSQL 行为；repository/Application Saga、真实 KMS、PSP raw-body 验签、pg-boss worker、AWS apply、staging、PITR、真实支付及 production 发布分别留给 P1-05/P1-06/P5/P6/P7，不在本任务证据范围。
+
 ## 必须证明
 
 - Domain 无 Next.js、NestJS、Drizzle 或供应商 SDK。
@@ -100,4 +114,4 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02、P1-03 已完成，P1-04 为 `READY`，其余 Phase 1 退出证据尚未取得。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02、P1-03、P1-04 已完成，P1-05 为 `READY`，其余 Phase 1 退出证据尚未取得。
