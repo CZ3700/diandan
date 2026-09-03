@@ -151,10 +151,15 @@ export function createReceivePaymentWebhook(
       return persistenceFailure(error);
     }
 
-    const verifier = dependencies.verifierForEndpoint(
-      endpoint.adapterKey,
-      endpoint.endpointId,
-    );
+    let verifier: PaymentWebhookVerifier | undefined;
+    try {
+      verifier = dependencies.verifierForEndpoint(
+        endpoint.adapterKey,
+        endpoint.endpointId,
+      );
+    } catch {
+      return failure("CONFIGURATION_ERROR");
+    }
     if (verifier === undefined) {
       return failure("CONFIGURATION_ERROR");
     }

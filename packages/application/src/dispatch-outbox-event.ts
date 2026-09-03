@@ -156,7 +156,19 @@ export function createDispatchOutboxEvent(
     if (context.decision === "ALREADY_DISPATCHED") {
       return;
     }
-    const consumer = dependencies.consumerForKey(safeJob.consumerKey);
+    let consumer: OutboxConsumer | undefined;
+    try {
+      consumer = dependencies.consumerForKey(safeJob.consumerKey);
+    } catch {
+      await recordFailureAttempt(
+        dependencies,
+        safeJob,
+        safeDelivery,
+        startedAt,
+        "HANDLER_EXECUTION_FAILED",
+      );
+      throw new ReliableEventProcessingError("HANDLER_EXECUTION_FAILED");
+    }
     if (consumer === undefined) {
       await recordFailureAttempt(
         dependencies,

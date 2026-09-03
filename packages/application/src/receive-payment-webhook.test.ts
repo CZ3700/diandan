@@ -347,3 +347,21 @@ test("fails closed when no deployed verifier is registered for the endpoint", as
   expect(harness.encryptEnvelope).not.toHaveBeenCalled();
   expect(harness.recordReceipt).not.toHaveBeenCalled();
 });
+
+test("contains a failing verifier registry without reflecting its error", async () => {
+  const harness = createHarness();
+  const canary = "PRIVATE_VERIFIER_REGISTRY_FAILURE_41067";
+  harness.verifierForEndpoint.mockImplementationOnce(() => {
+    throw new Error(canary);
+  });
+
+  const result = await harness.receive(COMMAND);
+
+  expect(result).toMatchObject({
+    outcome: "FAILURE",
+    error: { code: "CONFIGURATION_ERROR", recovery: "NONE" },
+  });
+  expect(JSON.stringify(result)).not.toContain(canary);
+  expect(harness.encryptEnvelope).not.toHaveBeenCalled();
+  expect(harness.recordReceipt).not.toHaveBeenCalled();
+});

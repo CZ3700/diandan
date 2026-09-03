@@ -61,6 +61,7 @@ function createHarness(
   options: Readonly<{
     alreadyDispatched?: boolean;
     dispatchFailure?: unknown;
+    registryFailure?: unknown;
     registered?: boolean;
   }> = {},
 ) {
@@ -127,14 +128,17 @@ function createHarness(
     effectKey: "NOTIFICATION:SEND",
     subjectId: IDS.order,
   }));
-  const consumerForKey = vi.fn(() =>
-    options.registered === false
+  const consumerForKey = vi.fn(() => {
+    if (options.registryFailure !== undefined) {
+      throw options.registryFailure;
+    }
+    return options.registered === false
       ? undefined
       : {
           effect,
           dispatch,
-        },
-  );
+        };
+  });
   const generatedIds = [
     IDS.effect,
     IDS.attempt,
@@ -238,6 +242,24 @@ test("dead-letters the final attempt when no production consumer is registered",
     expect.objectContaining({
       outcome: "DEAD_LETTER",
       errorCode: "HANDLER_NOT_REGISTERED",
+    }),
+  );
+});
+
+test("contains a failing consumer registry and records a safe retry", async () => {
+  const canary = "PRIVATE_CONSUMER_REGISTRY_FAILURE_19824";
+  const harness = createHarness({ registryFailure: new Error(canary) });
+
+  const failure = await harness.run(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "HANDLER_EXECUTION_FAILED" });
+  expect(String(failure)).not.toContain(canary);
+  expect(harness.dispatch).not.toHaveBeenCalled();
+  expect(harness.recordAttempt).toHaveBeenCalledWith(
+    expect.objectContaining({
+      outcome: "RETRYABLE_FAILURE",
+      errorCode: "HANDLER_EXECUTION_FAILED",
     }),
   );
 });
