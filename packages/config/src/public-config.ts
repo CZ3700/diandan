@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { isPublicSiteOrigin } from "./url-validation.js";
+import { isSupportedBrowserSiteOrigin } from "./url-validation.js";
 
 const PUBLIC_CONFIG_KEYS = Object.freeze([
   "schemaVersion",
@@ -56,7 +56,7 @@ function copyOwnPublicConfig(input: unknown): unknown {
 
 const publicRuntimeConfigObjectSchema = z.strictObject({
   schemaVersion: z.literal(1),
-  siteOrigin: z.string().refine(isPublicSiteOrigin),
+  siteOrigin: z.string().refine(isSupportedBrowserSiteOrigin),
 });
 
 export const publicRuntimeConfigSchema = z

@@ -61,7 +61,12 @@ const notificationLocaleBaseShape = {
     .min(1)
     .max(128)
     .regex(/^[A-Za-z0-9][A-Za-z0-9._:-]*$/u),
-  contentRevisionIds: z.array(contentRevisionIdSchema),
+  contentRevisionIds: z
+    .array(contentRevisionIdSchema)
+    .max(64)
+    .refine((ids) => new Set(ids).size === ids.length, {
+      message: "notification content revision IDs must be unique",
+    }),
 } as const;
 const directNotificationLocaleSchemas = SUPPORTED_LOCALES.map((locale) =>
   z.strictObject({

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "synthetic": true,
+  "provider": "s3-compatible",
+  "scenario": "inspect-source-object",
+  "request": {
+    "storageClass": "SOURCE",
+    "objectKey": "fixtures/media/source-image.jpg"
+  },
+  "expected": {
+    "checksumSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "byteSize": 1024,
+    "mimeType": "image/jpeg",
+    "revisionToken": "68b329da9893e34099c7d8ad5cb9c940"
+  }
+}

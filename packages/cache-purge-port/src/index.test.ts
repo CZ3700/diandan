@@ -1,7 +1,9 @@
 import { expect, test } from "vitest";
 
-import { workspacePackageName } from "./index.js";
+import * as cachePurgePort from "./index.js";
 
-test("exposes the cache-purge-port workspace boundary", () => {
-  expect(workspacePackageName).toBe("@fan-support/cache-purge-port");
+test("exports canonical cache purge command and response schemas", () => {
+  const exports = cachePurgePort as Record<string, unknown>;
+  expect(exports["cachePurgePortCommandSchema"]).toBeDefined();
+  expect(exports["cachePurgePortResponseSchema"]).toBeDefined();
 });

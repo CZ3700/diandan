@@ -65,8 +65,15 @@ const requiredRootFiles = [
   "package.json",
   "pnpm-lock.yaml",
   "pnpm-workspace.yaml",
+  "provider-fixtures/manifest.json",
+  "provider-fixtures/identity-oidc.v1.json",
+  "provider-fixtures/media-s3.v1.json",
+  "provider-fixtures/notification.v1.json",
+  "provider-fixtures/payment-fake.v1.json",
   "database/migrations/manifest.json",
   "database/schema/expected-catalog.json",
+  "scripts/check-adapter-boundaries.mjs",
+  "scripts/check-adapter-boundaries.test.mjs",
   "scripts/check-build-artifacts.mjs",
   "scripts/check-ci.mjs",
   "scripts/check-contracts.mjs",
@@ -80,6 +87,7 @@ const requiredRootFiles = [
 const requiredRootScripts = [
   "build",
   "check",
+  "check:adapter-boundaries",
   "check:artifacts",
   "check:ci",
   "check:contracts",
@@ -89,6 +97,7 @@ const requiredRootScripts = [
   "security:secrets",
   "test",
   "test:postgres",
+  "test:s3",
   "typecheck",
 ];
 
@@ -242,6 +251,9 @@ async function validateWorkspace() {
     }
     if (!rootManifest.scripts?.check?.includes("pnpm test:postgres")) {
       errors.push("root check script must run the PostgreSQL migration gate");
+    }
+    if (!rootManifest.scripts?.check?.includes("pnpm test:s3")) {
+      errors.push("root check script must run the S3 adapter integration gate");
     }
   }
 

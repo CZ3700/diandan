@@ -355,10 +355,16 @@ async function validateCompose(errors) {
     if (
       service?.environment?.FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT !==
         "https://edge:7443" ||
+      service?.environment?.FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT !==
+        "https://localhost:7443" ||
+      service?.environment?.FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN !==
+        "https://localhost:7444" ||
+      service?.environment?.FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES !==
+        "10485760" ||
       service?.environment?.NODE_EXTRA_CA_CERTS !== "/run/preview-ca/ca.crt"
     ) {
       errors.push(
-        `${relativePath} service ${serviceName} must trust and use the preview S3 TLS edge`,
+        `${relativePath} service ${serviceName} must trust the preview S3 TLS edge, expose its browser-reachable presign origin, and enforce the preview upload limit`,
       );
     }
     if (
@@ -384,6 +390,11 @@ async function validateCompose(errors) {
   const edge = compose?.services?.edge;
   if (edge?.ports?.includes("127.0.0.1:7443:7443") !== true) {
     errors.push(`${relativePath} edge must publish the preview S3 TLS port`);
+  }
+  if (edge?.ports?.includes("127.0.0.1:7444:7444") !== true) {
+    errors.push(
+      `${relativePath} edge must publish the derivative-only public media TLS port`,
+    );
   }
   const edgeVolumes = edge?.volumes;
   if (
@@ -448,21 +459,15 @@ async function validateDockerfile(errors) {
       `${relativePath} must cache immutable dependencies before copying mutable source`,
     );
   }
-  const observabilityBuild = text.indexOf(
-    "pnpm --filter @fan-support/observability build",
-  );
-  const firstApplicationBuild = Math.min(
-    ...["storefront", "admin", "api", "worker"].map((name) =>
-      text.indexOf(`pnpm --filter @fan-support/${name} build`),
-    ),
-  );
   if (
-    observabilityBuild < 0 ||
-    firstApplicationBuild < 0 ||
-    observabilityBuild > firstApplicationBuild
+    !text.includes("pnpm turbo run build") ||
+    !text.includes("--concurrency=1") ||
+    !["admin", "api", "storefront", "worker"].every((target) =>
+      text.includes(`--filter=@fan-support/${target}`),
+    )
   ) {
     errors.push(
-      `${relativePath} must build observability before every application`,
+      `${relativePath} must use the workspace build graph serially for every shipped app so 4 GiB clean builds include transitive packages`,
     );
   }
   const syntaxDirective = text.match(/^# syntax=(.+)$/mu)?.[1];
@@ -519,6 +524,55 @@ async function validatePreviewLauncher(errors) {
     );
   }
   if (
+    !text.includes('"fan-support-media-source"') ||
+    !text.includes('"fan-support-media-derivative"') ||
+    /["']fan-support-media["']/u.test(text) ||
+    !/requestS3\(\s*"PUT",\s*bucketName,/u.test(text) ||
+    !/requestS3\(\s*"HEAD",\s*bucketName,/u.test(text) ||
+    !/for\s*\(const bucketName of bucketNames\)[\s\S]*?await ensureBucket\(\s*bucketName,/u.test(
+      text,
+    ) ||
+    !text.includes("Object-storage TLS buckets:")
+  ) {
+    errors.push(
+      `${relativePath} must create and HEAD-probe the exact source and derivative buckets without the legacy single bucket`,
+    );
+  }
+  if (
+    !text.includes("configureBucketCors") ||
+    !text.includes("https://localhost:3443") ||
+    !text.includes("https://localhost:3444") ||
+    !text.includes("<AllowedMethod>PUT</AllowedMethod>") ||
+    !text.includes("<AllowedMethod>GET</AllowedMethod>") ||
+    !text.includes("<AllowedMethod>HEAD</AllowedMethod>") ||
+    !text.includes("<AllowedHeader>content-type</AllowedHeader>") ||
+    !text.includes("<AllowedHeader>if-none-match</AllowedHeader>") ||
+    !text.includes("<AllowedHeader>x-amz-checksum-sha256</AllowedHeader>") ||
+    !/for\s*\(const bucketName of bucketNames\)[\s\S]*?await configureBucketCors\(\s*bucketName,/u.test(
+      text,
+    )
+  ) {
+    errors.push(
+      `${relativePath} must configure exact preview origins, methods, and signed upload headers as bucket CORS`,
+    );
+  }
+  if (
+    !text.includes('"s3:GetObject"') ||
+    !text.includes("https://localhost:7444/") ||
+    !text.includes("Public derivative media:") ||
+    !text.includes("Source media anonymous access: denied") ||
+    !text.includes("Encoded source-bucket escape attempts: denied") ||
+    !text.includes("/%2e%2e/") ||
+    !text.includes("/%252e%252e/") ||
+    !text.includes("/..%2f") ||
+    !text.includes("Anonymous derivative write: denied and absent") ||
+    !text.includes("Anonymous derivative listing: denied")
+  ) {
+    errors.push(
+      `${relativePath} must configure derivative-only anonymous reads and verify public derivative content while source content stays private`,
+    );
+  }
+  if (
     !text.includes("/_internal/observability") ||
     !text.includes("traceparent") ||
     !text.includes("x-request-id")
@@ -563,6 +617,17 @@ async function validateCaddyfile(errors) {
   ) {
     errors.push(
       `${relativePath} must terminate ephemeral TLS for the internal S3 service`,
+    );
+  }
+  if (
+    !text.includes(":7444 {") ||
+    !text.includes(
+      "rewrite * /fan-support-media-derivative{http.request.uri.path}",
+    ) ||
+    !text.includes("reverse_proxy object-storage:7070")
+  ) {
+    errors.push(
+      `${relativePath} must expose a derivative-only public media origin on TLS port 7444`,
     );
   }
 }

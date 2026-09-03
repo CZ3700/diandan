@@ -16,10 +16,12 @@
     "migrations:manifest": "pnpm run build && node ./scripts/migration-manifest.mjs",
     "migrations:manifest:check": "pnpm run build && node ./scripts/migration-manifest.mjs --check",
     "test": "vitest run --config ../../vitest.config.ts --root .",
-    "test:postgres": "pnpm --filter @fan-support/contracts build && pnpm run build && node ./scripts/migration-manifest.mjs --check && node ./scripts/postgres-integration.mjs && node ./scripts/postgres-constraints.mjs && node ./scripts/postgres-publication-upgrade.mjs",
+    "test:postgres": "pnpm --filter @fan-support/contracts build && pnpm run build && node ./scripts/migration-manifest.mjs --check && node ./scripts/postgres-integration.mjs && node ./scripts/postgres-key-version-upgrade.mjs && node ./scripts/postgres-media-object-key-upgrade.mjs && node ./scripts/postgres-outbox-status-upgrade.mjs && node ./scripts/postgres-constraints.mjs && node ./scripts/postgres-publication-upgrade.mjs && node ./scripts/postgres-repositories.mjs",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@fan-support/persistence-port": "workspace:*",
+    "drizzle-orm": "0.45.2",
     "pg": "8.23.0"
   },
   "devDependencies": {

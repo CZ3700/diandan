@@ -1,6 +1,12 @@
 import type { z } from "zod";
 
 import {
+  cachePurgePortCommandSchema,
+  cachePurgePortErrorSchema,
+  cachePurgePortResponseSchema,
+} from "./cache-purge-port-contracts.js";
+
+import {
   cartGiftContextSchema,
   cartSchema,
   checkoutQuoteSchema,
@@ -72,6 +78,16 @@ import {
   notificationLocaleSnapshotSchema,
 } from "./fulfillment-notification.js";
 import {
+  identityPortCommandSchema,
+  identityPortErrorSchema,
+  identityPortResponseSchema,
+} from "./identity-port-contracts.js";
+import {
+  keyManagementPortCommandSchema,
+  keyManagementPortErrorSchema,
+  keyManagementPortResponseSchema,
+} from "./key-management-port-contracts.js";
+import {
   decideIdempotencyInputSchema,
   disputeTransitionCommandSchema,
   disputeTransitionDecisionSchema,
@@ -116,6 +132,16 @@ import {
   translationSnapshotRefSchema,
 } from "./order.js";
 import {
+  mediaPortCommandSchema,
+  mediaPortErrorSchema,
+  mediaPortResponseSchema,
+} from "./media-port-contracts.js";
+import {
+  notificationPortCommandSchema,
+  notificationPortErrorSchema,
+  notificationPortResponseSchema,
+} from "./notification-port-contracts.js";
+import {
   disputeSchema,
   paymentActionSchema,
   paymentAttemptSchema,
@@ -125,6 +151,18 @@ import {
   publicPaymentAttemptViewSchema,
   refundSchema,
 } from "./payment.js";
+import {
+  paymentPortCommandSchema,
+  paymentPortErrorSchema,
+  paymentPortResponseSchema,
+} from "./payment-port-contracts.js";
+import {
+  persistencePortCommandSchema,
+  persistencePortErrorSchema,
+  persistencePortResponseSchema,
+  persistenceTransactionFailureSchema,
+  transactionOptionsSchema,
+} from "./persistence-port-contracts.js";
 
 export type ContractAudience = "public-http" | "admin-http" | "internal";
 
@@ -639,6 +677,121 @@ const registrations = [
     name: "LatePaymentSuccessDecision",
     audience: "internal",
     schema: latePaymentSuccessDecisionSchema,
+  },
+  {
+    name: "PaymentPortCommand",
+    audience: "internal",
+    schema: paymentPortCommandSchema,
+  },
+  {
+    name: "PaymentPortResponse",
+    audience: "internal",
+    schema: paymentPortResponseSchema,
+  },
+  {
+    name: "PaymentPortError",
+    audience: "internal",
+    schema: paymentPortErrorSchema,
+  },
+  {
+    name: "MediaPortCommand",
+    audience: "internal",
+    schema: mediaPortCommandSchema,
+  },
+  {
+    name: "MediaPortResponse",
+    audience: "internal",
+    schema: mediaPortResponseSchema,
+  },
+  {
+    name: "MediaPortError",
+    audience: "internal",
+    schema: mediaPortErrorSchema,
+  },
+  {
+    name: "IdentityPortCommand",
+    audience: "internal",
+    schema: identityPortCommandSchema,
+  },
+  {
+    name: "IdentityPortResponse",
+    audience: "internal",
+    schema: identityPortResponseSchema,
+  },
+  {
+    name: "IdentityPortError",
+    audience: "internal",
+    schema: identityPortErrorSchema,
+  },
+  {
+    name: "NotificationPortCommand",
+    audience: "internal",
+    schema: notificationPortCommandSchema,
+  },
+  {
+    name: "NotificationPortResponse",
+    audience: "internal",
+    schema: notificationPortResponseSchema,
+  },
+  {
+    name: "NotificationPortError",
+    audience: "internal",
+    schema: notificationPortErrorSchema,
+  },
+  {
+    name: "CachePurgePortCommand",
+    audience: "internal",
+    schema: cachePurgePortCommandSchema,
+  },
+  {
+    name: "CachePurgePortResponse",
+    audience: "internal",
+    schema: cachePurgePortResponseSchema,
+  },
+  {
+    name: "CachePurgePortError",
+    audience: "internal",
+    schema: cachePurgePortErrorSchema,
+  },
+  {
+    name: "KeyManagementPortCommand",
+    audience: "internal",
+    schema: keyManagementPortCommandSchema,
+  },
+  {
+    name: "KeyManagementPortResponse",
+    audience: "internal",
+    schema: keyManagementPortResponseSchema,
+  },
+  {
+    name: "KeyManagementPortError",
+    audience: "internal",
+    schema: keyManagementPortErrorSchema,
+  },
+  {
+    name: "PersistencePortCommand",
+    audience: "internal",
+    schema: persistencePortCommandSchema,
+  },
+  {
+    name: "PersistencePortResponse",
+    audience: "internal",
+    schema: persistencePortResponseSchema,
+  },
+  {
+    name: "PersistencePortError",
+    audience: "internal",
+    schema: persistencePortErrorSchema,
+  },
+  {
+    name: "PersistenceTransactionFailure",
+    audience: "internal",
+    schema: persistenceTransactionFailureSchema,
+  },
+  {
+    name: "TransactionOptions",
+    audience: "internal",
+    schema: transactionOptionsSchema,
   },
   {
     name: "PublicErrorEnvelope",

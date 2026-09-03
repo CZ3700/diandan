@@ -1,6 +1,16 @@
 export const workspacePackageName =
   "@fan-support/persistence-postgres" as const;
 
+export type {
+  PostgresConnectionConfig,
+  PostgresTlsConfig,
+} from "./connection-config.js";
+export {
+  createPostgresPersistence,
+  type PersistenceFailureNotice,
+  type PostgresPersistence,
+  type PostgresPersistenceOptions,
+} from "./postgres-persistence.js";
 export {
   assertCatalogMatches,
   captureDatabaseCatalog,

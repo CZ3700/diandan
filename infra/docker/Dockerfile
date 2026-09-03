@@ -14,12 +14,12 @@ RUN pnpm fetch --frozen-lockfile
 COPY . .
 
 RUN pnpm install --offline --frozen-lockfile
-RUN pnpm --filter @fan-support/config build \
-  && pnpm --filter @fan-support/observability build \
-  && pnpm --filter @fan-support/storefront build \
-  && pnpm --filter @fan-support/admin build \
-  && pnpm --filter @fan-support/api build \
-  && pnpm --filter @fan-support/worker build
+RUN pnpm turbo run build \
+  --filter=@fan-support/admin \
+  --filter=@fan-support/api \
+  --filter=@fan-support/storefront \
+  --filter=@fan-support/worker \
+  --concurrency=1
 RUN pnpm --filter @fan-support/api --prod deploy --legacy /runtime/api \
   && pnpm --filter @fan-support/worker --prod deploy --legacy /runtime/worker
 

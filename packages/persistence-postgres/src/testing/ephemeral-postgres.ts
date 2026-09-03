@@ -2,7 +2,9 @@ import { execFile } from "node:child_process";
 import { randomBytes, randomUUID } from "node:crypto";
 import { setTimeout as delay } from "node:timers/promises";
 
-import { Client, type ClientConfig } from "pg";
+import { Client } from "pg";
+
+import type { PostgresConnectionConfig } from "../connection-config.js";
 
 const postgresImage =
   "postgres:18.6-bookworm@sha256:1c59e2c3c818eaa0f0628f695b36e7c9e362d6b219b36a54a32df645cbd7e1af";
@@ -48,7 +50,9 @@ const defaultDockerExecutor: DockerCommandExecutor = {
     }),
 };
 
-type ReadinessProbe = (clientConfig: ClientConfig) => Promise<boolean>;
+type ReadinessProbe = (
+  clientConfig: PostgresConnectionConfig,
+) => Promise<boolean>;
 
 const defaultReadinessProbe: ReadinessProbe = async (clientConfig) => {
   const client = new Client({
@@ -109,7 +113,7 @@ function parseLabels(output: string): Readonly<Record<string, unknown>> {
 }
 
 async function waitUntilReady(
-  clientConfig: ClientConfig,
+  clientConfig: PostgresConnectionConfig,
   readinessProbe: ReadinessProbe,
 ): Promise<void> {
   const deadline = Date.now() + 30_000;
@@ -146,7 +150,7 @@ async function removeOwnedContainer(
 }
 
 export async function withEphemeralPostgres<Result>(
-  operation: (clientConfig: ClientConfig) => Promise<Result>,
+  operation: (clientConfig: PostgresConnectionConfig) => Promise<Result>,
   options: Readonly<{
     docker?: DockerCommandExecutor;
     readinessProbe?: ReadinessProbe;
@@ -194,7 +198,7 @@ export async function withEphemeralPostgres<Result>(
     );
     started = true;
     const portResult = await docker.run(["port", containerName, "5432/tcp"]);
-    const clientConfig: ClientConfig = {
+    const clientConfig: PostgresConnectionConfig = {
       host: "127.0.0.1",
       port: parseLoopbackPort(portResult.stdout),
       user: databaseUser,

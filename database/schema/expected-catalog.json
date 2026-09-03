@@ -143,7 +143,7 @@
     {
       "domain": "media_object_key",
       "name": "media_object_key_check",
-      "definition": "CHECK (length(VALUE) >= 1 AND length(VALUE) <= 1024 AND VALUE ~ '^[A-Za-z0-9][A-Za-z0-9._/-]*$'::text AND VALUE !~ '(^|/)\\.\\.(/|$)'::text)"
+      "definition": "CHECK (length(VALUE) >= 1 AND length(VALUE) <= 1024 AND VALUE ~ '^[A-Za-z0-9][A-Za-z0-9._/-]*$'::text AND VALUE !~ '(^|/)\\.{1,2}(/|$)'::text AND VALUE !~ '//|/$'::text)"
     },
     {
       "domain": "minor_amount",
@@ -8367,6 +8367,16 @@
       "generation": ""
     },
     {
+      "table": "outbox_events",
+      "position": 20,
+      "name": "payload_status",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "payment_attempt_events",
       "position": 1,
       "name": "id",
@@ -8730,7 +8740,7 @@
       "table": "payment_attempts",
       "position": 24,
       "name": "action_key_version",
-      "dataType": "positive_version",
+      "dataType": "text",
       "notNull": false,
       "defaultExpression": null,
       "identity": "",
@@ -12900,7 +12910,7 @@
       "table": "webhook_payloads",
       "position": 5,
       "name": "encryption_key_version",
-      "dataType": "positive_version",
+      "dataType": "text",
       "notNull": false,
       "defaultExpression": null,
       "identity": "",
@@ -23384,6 +23394,14 @@
     },
     {
       "table": "outbox_events",
+      "name": "outbox_events_payload_status_check",
+      "kind": "CHECK",
+      "definition": "CHECK (event_type = 'PAYMENT_STATUS_CHANGED'::text AND payload_status IS NOT NULL AND (payload_status = ANY (ARRAY['CREATED'::text, 'REQUIRES_ACTION'::text, 'PROCESSING'::text, 'SUCCEEDED'::text, 'FAILED'::text, 'CANCELED'::text, 'EXPIRED'::text, 'UNKNOWN'::text])) OR event_type = 'REFUND_STATUS_CHANGED'::text AND payload_status IS NOT NULL AND (payload_status = ANY (ARRAY['REQUESTED'::text, 'SUBMITTING'::text, 'PROCESSING'::text, 'SUCCEEDED'::text, 'FAILED'::text, 'UNKNOWN'::text])) OR event_type = 'DISPUTE_STATUS_CHANGED'::text AND payload_status IS NOT NULL AND (payload_status = ANY (ARRAY['NONE'::text, 'OPEN'::text, 'WON'::text, 'LOST'::text])) OR event_type = 'FULFILLMENT_STATUS_CHANGED'::text AND payload_status IS NOT NULL AND (payload_status = ANY (ARRAY['PENDING'::text, 'PREPARING'::text, 'DELIVERED'::text, 'ON_HOLD'::text, 'CANCELED'::text])) OR (event_type <> ALL (ARRAY['PAYMENT_STATUS_CHANGED'::text, 'REFUND_STATUS_CHANGED'::text, 'DISPUTE_STATUS_CHANGED'::text, 'FULFILLMENT_STATUS_CHANGED'::text])) AND payload_status IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "outbox_events",
       "name": "outbox_events_pkey",
       "kind": "PRIMARY_KEY",
       "definition": "PRIMARY KEY (id)",
@@ -23437,6 +23455,14 @@
       "definition": "CHECK (trace_id IS NULL OR trace_id ~ '^[0-9a-f]{32}$'::text)",
       "deferrable": false,
       "initiallyDeferred": false
+    },
+    {
+      "table": "outbox_events",
+      "name": "outbox_payload_status_authority_trigger",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
     },
     {
       "table": "outbox_events",
@@ -23619,6 +23645,14 @@
       "name": "payment_attempts_action_encrypted_data_key_check",
       "kind": "CHECK",
       "definition": "CHECK (action_encrypted_data_key IS NULL OR octet_length(action_encrypted_data_key) >= 16)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_attempts",
+      "name": "payment_attempts_action_key_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action_key_version IS NULL OR action_key_version ~ '^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$'::text)",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -29648,6 +29682,14 @@
     },
     {
       "table": "webhook_payloads",
+      "name": "webhook_payloads_encryption_key_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (encryption_key_version IS NULL OR encryption_key_version ~ '^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "webhook_payloads",
       "name": "webhook_payloads_id_hash_unique",
       "kind": "UNIQUE",
       "definition": "UNIQUE (id, payload_sha256)",
@@ -33727,6 +33769,18 @@
     },
     {
       "table": "outbox_events",
+      "name": "outbox_payload_status_authority_trigger",
+      "definition": "CREATE CONSTRAINT TRIGGER outbox_payload_status_authority_trigger AFTER INSERT ON outbox_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_outbox_payload_status_authority()",
+      "enabled": "O"
+    },
+    {
+      "table": "outbox_events",
+      "name": "outbox_payload_status_derivation_trigger",
+      "definition": "CREATE TRIGGER outbox_payload_status_derivation_trigger BEFORE INSERT ON outbox_events FOR EACH ROW EXECUTE FUNCTION derive_outbox_payload_status()",
+      "enabled": "O"
+    },
+    {
+      "table": "outbox_events",
       "name": "publication_outbox_source_consistency_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER publication_outbox_source_consistency_trigger AFTER INSERT ON outbox_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_publication_outbox_source()",
       "enabled": "O"
@@ -34706,6 +34760,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_outbox_event_authority()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  source_count integer;\nBEGIN\n  CASE NEW.event_type\n    WHEN 'CART_ITEM_ADDED' THEN\n      SELECT count(*) INTO source_count\n      FROM public.carts cart\n      JOIN public.cart_items item ON item.cart_id = cart.id\n      WHERE cart.id = NEW.aggregate_id\n        AND cart.id = NEW.primary_subject_id\n        AND item.id = NEW.secondary_subject_id\n        AND cart.version = NEW.aggregate_version\n        AND item.request_id = NEW.request_id\n        AND item.correlation_id = NEW.correlation_id\n        AND item.created_at = NEW.occurred_at\n        AND cart.presentation_locale = NEW.locale\n        AND cart.market = NEW.market\n        AND cart.currency = NEW.currency;\n    WHEN 'PAYMENT_STATUS_CHANGED' THEN\n      SELECT count(*) INTO source_count\n      FROM public.payment_attempts attempt\n      JOIN public.orders order_row ON order_row.id = attempt.order_id\n      JOIN public.payment_attempt_events event\n        ON event.payment_attempt_id = attempt.id\n       AND event.sequence = attempt.version\n       AND event.to_status = attempt.status\n       AND event.evidence_kind = attempt.status_evidence_kind\n       AND event.provider_event_id IS NOT DISTINCT FROM attempt.provider_event_id\n       AND event.audit_log_id IS NOT DISTINCT FROM attempt.evidence_audit_log_id\n       AND event.request_id = NEW.request_id\n       AND event.correlation_id = NEW.correlation_id\n       AND event.occurred_at = NEW.occurred_at\n      WHERE attempt.id = NEW.aggregate_id\n        AND attempt.id = NEW.primary_subject_id\n        AND order_row.id = NEW.secondary_subject_id\n        AND attempt.version = NEW.aggregate_version\n        AND attempt.requested_locale = NEW.locale\n        AND order_row.market = NEW.market\n        AND attempt.currency = NEW.currency;\n    WHEN 'ORDER_PAYMENT_CONFIRMED' THEN\n      SELECT count(*) INTO source_count\n      FROM public.orders order_row\n      JOIN public.payment_attempts attempt\n        ON attempt.id = order_row.current_payment_attempt_id\n       AND attempt.order_id = order_row.id\n      JOIN public.payment_attempt_events payment_event\n        ON payment_event.payment_attempt_id = attempt.id\n       AND payment_event.sequence = attempt.version\n       AND payment_event.to_status = 'SUCCEEDED'\n      JOIN public.order_events order_event\n        ON order_event.order_id = order_row.id\n       AND order_event.sequence = order_row.version\n       AND order_event.event_type IN ('PAYMENT_STATUS_CHANGED', 'LATE_PAYMENT_RECOVERED')\n       AND order_event.to_payment_status = 'PAID'\n       AND order_event.to_payment_attempt_id = attempt.id\n       AND order_event.provider_event_id = attempt.provider_event_id\n       AND order_event.request_id = NEW.request_id\n       AND order_event.correlation_id = NEW.correlation_id\n       AND order_event.occurred_at = NEW.occurred_at\n      WHERE order_row.id = NEW.aggregate_id\n        AND order_row.id = NEW.primary_subject_id\n        AND attempt.id = NEW.secondary_subject_id\n        AND order_row.version = NEW.aggregate_version\n        AND order_row.order_status = 'OPEN'\n        AND order_row.payment_status = 'PAID'\n        AND attempt.status = 'SUCCEEDED'\n        AND order_row.presentation_locale = NEW.locale\n        AND order_row.market = NEW.market\n        AND order_row.currency = NEW.currency;\n    WHEN 'REFUND_STATUS_CHANGED' THEN\n      SELECT count(*) INTO source_count\n      FROM public.refunds refund\n      JOIN public.orders order_row ON order_row.id = refund.order_id\n      JOIN public.refund_events event\n        ON event.refund_id = refund.id\n       AND event.sequence = refund.version\n       AND event.to_status = refund.status\n       AND event.evidence_kind = refund.status_evidence_kind\n       AND event.provider_event_id IS NOT DISTINCT FROM refund.provider_event_id\n       AND event.audit_log_id IS NOT DISTINCT FROM refund.evidence_audit_log_id\n       AND event.request_id = NEW.request_id\n       AND event.correlation_id = NEW.correlation_id\n       AND event.occurred_at = NEW.occurred_at\n      WHERE refund.id = NEW.aggregate_id\n        AND refund.id = NEW.primary_subject_id\n        AND order_row.id = NEW.secondary_subject_id\n        AND refund.version = NEW.aggregate_version\n        AND order_row.presentation_locale = NEW.locale\n        AND order_row.market = NEW.market\n        AND refund.currency = NEW.currency;\n    WHEN 'DISPUTE_STATUS_CHANGED' THEN\n      SELECT count(*) INTO source_count\n      FROM public.disputes dispute\n      JOIN public.orders order_row ON order_row.id = dispute.order_id\n      JOIN public.dispute_events event\n        ON event.dispute_id = dispute.id\n       AND event.sequence = dispute.version\n       AND event.to_status = dispute.status\n       AND event.evidence_kind = dispute.status_evidence_kind\n       AND event.provider_event_id IS NOT DISTINCT FROM dispute.provider_event_id\n       AND event.audit_log_id IS NOT DISTINCT FROM dispute.evidence_audit_log_id\n       AND event.request_id = NEW.request_id\n       AND event.correlation_id = NEW.correlation_id\n       AND event.occurred_at = NEW.occurred_at\n      WHERE dispute.id = NEW.aggregate_id\n        AND dispute.id = NEW.primary_subject_id\n        AND order_row.id = NEW.secondary_subject_id\n        AND dispute.version = NEW.aggregate_version\n        AND order_row.presentation_locale = NEW.locale\n        AND order_row.market = NEW.market\n        AND dispute.currency = NEW.currency;\n    WHEN 'FULFILLMENT_STATUS_CHANGED' THEN\n      SELECT count(*) INTO source_count\n      FROM public.fulfillments fulfillment\n      JOIN public.orders order_row ON order_row.id = fulfillment.order_id\n      JOIN public.fulfillment_events event\n        ON event.fulfillment_id = fulfillment.id\n       AND event.order_id = order_row.id\n       AND event.sequence = fulfillment.version\n       AND event.to_status = fulfillment.status\n       AND event.request_id = NEW.request_id\n       AND event.correlation_id = NEW.correlation_id\n       AND event.occurred_at = NEW.occurred_at\n      WHERE fulfillment.id = NEW.aggregate_id\n        AND fulfillment.id = NEW.primary_subject_id\n        AND order_row.id = NEW.secondary_subject_id\n        AND fulfillment.version = NEW.aggregate_version\n        AND order_row.presentation_locale = NEW.locale\n        AND order_row.market = NEW.market\n        AND order_row.currency = NEW.currency;\n    WHEN 'NOTIFICATION_REQUESTED' THEN\n      SELECT count(*) INTO source_count\n      FROM public.notification_deliveries delivery\n      JOIN public.orders order_row ON order_row.id = delivery.order_id\n      WHERE delivery.id = NEW.aggregate_id\n        AND delivery.id = NEW.primary_subject_id\n        AND order_row.id = NEW.secondary_subject_id\n        AND delivery.version = NEW.aggregate_version\n        AND delivery.status = 'REQUESTED'\n        AND delivery.attempt_count = 0\n        AND delivery.request_id = NEW.request_id\n        AND delivery.correlation_id = NEW.correlation_id\n        AND delivery.created_at = NEW.occurred_at\n        AND delivery.resolved_locale = NEW.locale\n        AND order_row.market = NEW.market\n        AND order_row.currency = NEW.currency;\n    WHEN 'CONTENT_PUBLICATION_CHANGED', 'PAYMENT_CONFIG_PUBLISHED', 'PRICE_BOOK_PUBLISHED' THEN\n      -- Migration 0006 installs typed publication-source checks after those\n      -- publication heads and price books exist.\n      RETURN NULL;\n    ELSE\n      source_count := 0;\n  END CASE;\n\n  IF source_count <> 1 THEN\n    RAISE EXCEPTION 'outbox event has no exact authoritative source'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
+      "name": "assert_outbox_payload_status_authority",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_outbox_payload_status_authority()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  source_count integer;\nBEGIN\n  CASE NEW.event_type\n    WHEN 'PAYMENT_STATUS_CHANGED' THEN\n      SELECT count(*) INTO source_count\n      FROM public.payment_attempt_events event\n      WHERE event.payment_attempt_id = NEW.aggregate_id\n        AND event.sequence = NEW.aggregate_version\n        AND event.to_status = NEW.payload_status;\n    WHEN 'REFUND_STATUS_CHANGED' THEN\n      SELECT count(*) INTO source_count\n      FROM public.refund_events event\n      WHERE event.refund_id = NEW.aggregate_id\n        AND event.sequence = NEW.aggregate_version\n        AND event.to_status = NEW.payload_status;\n    WHEN 'DISPUTE_STATUS_CHANGED' THEN\n      SELECT count(*) INTO source_count\n      FROM public.dispute_events event\n      WHERE event.dispute_id = NEW.aggregate_id\n        AND event.sequence = NEW.aggregate_version\n        AND event.to_status = NEW.payload_status;\n    WHEN 'FULFILLMENT_STATUS_CHANGED' THEN\n      SELECT count(*) INTO source_count\n      FROM public.fulfillment_events event\n      WHERE event.fulfillment_id = NEW.aggregate_id\n        AND event.sequence = NEW.aggregate_version\n        AND event.to_status = NEW.payload_status;\n    ELSE\n      RETURN NULL;\n  END CASE;\n\n  IF source_count <> 1 THEN\n    RAISE EXCEPTION 'outbox payload status has no exact authoritative event'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
+    },
+    {
       "name": "assert_payment_attempt_evidence_and_event",
       "identityArguments": "",
       "resultType": "trigger",
@@ -34884,6 +34948,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_translation_package(translation_table regclass, parent_column text, parent_id uuid, review_table regclass, review_translation_column text)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  english_hash sha256_hex;\n  translation_count integer;\n  approved_count integer;\n  lineage_count integer;\nBEGIN\n  EXECUTE format(\n    'SELECT source_hash FROM %s WHERE %I = $1 AND locale = ''en''',\n    translation_table,\n    parent_column\n  ) INTO english_hash USING parent_id;\n\n  IF english_hash IS NULL THEN\n    RAISE EXCEPTION 'publication requires an English translation row'\n      USING ERRCODE = '23514';\n  END IF;\n\n  EXECUTE format(\n    'SELECT count(*), '\n    'count(*) FILTER (WHERE latest.status = ''APPROVED''), '\n    'count(*) FILTER (WHERE t.translated_from_source_hash = $2) '\n    'FROM %s t '\n    'LEFT JOIN LATERAL ('\n    '  SELECT r.status FROM %s r '\n    '  WHERE r.%I = t.id ORDER BY r.sequence DESC LIMIT 1'\n    ') latest ON true '\n    'WHERE t.%I = $1',\n    translation_table,\n    review_table,\n    review_translation_column,\n    parent_column\n  ) INTO translation_count, approved_count, lineage_count\n    USING parent_id, english_hash;\n\n  IF translation_count <> 7 OR approved_count <> 7 OR lineage_count <> 7 THEN\n    RAISE EXCEPTION 'publication requires seven approved translations with current English lineage'\n      USING ERRCODE = '23514';\n  END IF;\nEND;\n$function$"
+    },
+    {
+      "name": "derive_outbox_payload_status",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.derive_outbox_payload_status()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.payload_status IS NULL THEN\n    CASE NEW.event_type\n      WHEN 'PAYMENT_STATUS_CHANGED' THEN\n        SELECT event.to_status INTO NEW.payload_status\n        FROM public.payment_attempt_events event\n        WHERE event.payment_attempt_id = NEW.aggregate_id\n          AND event.sequence = NEW.aggregate_version;\n      WHEN 'REFUND_STATUS_CHANGED' THEN\n        SELECT event.to_status INTO NEW.payload_status\n        FROM public.refund_events event\n        WHERE event.refund_id = NEW.aggregate_id\n          AND event.sequence = NEW.aggregate_version;\n      WHEN 'DISPUTE_STATUS_CHANGED' THEN\n        SELECT event.to_status INTO NEW.payload_status\n        FROM public.dispute_events event\n        WHERE event.dispute_id = NEW.aggregate_id\n          AND event.sequence = NEW.aggregate_version;\n      WHEN 'FULFILLMENT_STATUS_CHANGED' THEN\n        SELECT event.to_status INTO NEW.payload_status\n        FROM public.fulfillment_events event\n        WHERE event.fulfillment_id = NEW.aggregate_id\n          AND event.sequence = NEW.aggregate_version;\n      ELSE\n        NULL;\n    END CASE;\n  END IF;\n\n  RETURN NEW;\nEND;\n$function$"
     },
     {
       "name": "guard_append_only",

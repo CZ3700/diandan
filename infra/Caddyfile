@@ -12,3 +12,9 @@ https://localhost:3444 {
 	tls /run/preview-tls/preview.crt /run/preview-tls/preview.key
 	reverse_proxy object-storage:7070
 }
+
+:7444 {
+	tls /run/preview-tls/preview.crt /run/preview-tls/preview.key
+	rewrite * /fan-support-media-derivative{http.request.uri.path}
+	reverse_proxy object-storage:7070
+}

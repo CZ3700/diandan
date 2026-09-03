@@ -30,7 +30,42 @@ const nextFailureProbeContainerNames = Object.freeze({
   admin: "fan-support-preview-p0-05-admin-fatal-probe",
   storefront: "fan-support-preview-p0-05-storefront-fatal-probe",
 });
-const bucketName = "fan-support-media";
+const sourceBucketName = "fan-support-media-source";
+const derivativeBucketName = "fan-support-media-derivative";
+const bucketNames = Object.freeze([sourceBucketName, derivativeBucketName]);
+const previewBrowserOrigins = Object.freeze([
+  "https://localhost:3443",
+  "https://localhost:3444",
+]);
+const previewBucketCorsConfiguration = [
+  '<?xml version="1.0" encoding="UTF-8"?>',
+  '<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">',
+  "<CORSRule>",
+  ...previewBrowserOrigins.map(
+    (origin) => `<AllowedOrigin>${origin}</AllowedOrigin>`,
+  ),
+  "<AllowedMethod>PUT</AllowedMethod>",
+  "<AllowedMethod>GET</AllowedMethod>",
+  "<AllowedMethod>HEAD</AllowedMethod>",
+  "<AllowedHeader>content-type</AllowedHeader>",
+  "<AllowedHeader>if-none-match</AllowedHeader>",
+  "<AllowedHeader>x-amz-checksum-sha256</AllowedHeader>",
+  "<MaxAgeSeconds>300</MaxAgeSeconds>",
+  "</CORSRule>",
+  "</CORSConfiguration>",
+].join("");
+const publicDerivativeObject = Object.freeze({
+  body: "fan-support-preview-public-derivative-v1\n",
+  key: "preview/runtime/public-derivative.txt",
+});
+const privateSourceObject = Object.freeze({
+  body: "fan-support-preview-private-source-v1\n",
+  key: "preview/runtime/private-source.txt",
+});
+const rejectedAnonymousDerivativeObject = Object.freeze({
+  body: "fan-support-preview-rejected-anonymous-write-v1\n",
+  key: "preview/runtime/rejected-anonymous-write.txt",
+});
 const region = "us-east-1";
 const applicationLogKeys = new Set([
   "durationMs",
@@ -562,11 +597,23 @@ function hmac(key, value) {
   return createHmac("sha256", key).update(value).digest();
 }
 
-function signedS3Headers(method, url, accessKeyId, secretAccessKey) {
+function canonicalS3Query(url) {
+  return [...url.searchParams.entries()]
+    .map(([key, value]) => [encodeURIComponent(key), encodeURIComponent(value)])
+    .sort(([leftKey, leftValue], [rightKey, rightValue]) =>
+      leftKey === rightKey
+        ? leftValue.localeCompare(rightValue)
+        : leftKey.localeCompare(rightKey),
+    )
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+}
+
+function signedS3Headers(method, url, accessKeyId, secretAccessKey, payload) {
   const now = new Date();
   const iso = now.toISOString().replace(/[:-]|\.\d{3}/gu, "");
   const date = iso.slice(0, 8);
-  const payloadHash = hash("");
+  const payloadHash = hash(payload);
   const canonicalHeaders = [
     `host:${url.host}`,
     `x-amz-content-sha256:${payloadHash}`,
@@ -577,7 +624,7 @@ function signedS3Headers(method, url, accessKeyId, secretAccessKey) {
   const canonicalRequest = [
     method,
     url.pathname,
-    "",
+    canonicalS3Query(url),
     canonicalHeaders,
     signedHeaders,
     payloadHash,
@@ -604,64 +651,261 @@ function signedS3Headers(method, url, accessKeyId, secretAccessKey) {
   };
 }
 
-async function requestS3(method, state, caCertificate) {
-  const url = new URL(`https://localhost:7443/${bucketName}`);
+function encodeObjectKey(objectKey) {
+  return objectKey.split("/").map(encodeURIComponent).join("/");
+}
+
+async function requestS3(
+  method,
+  bucketName,
+  state,
+  caCertificate,
+  options = {},
+) {
+  const objectPath =
+    options.objectKey === undefined
+      ? ""
+      : `/${encodeObjectKey(options.objectKey)}`;
+  const url = new URL(`https://localhost:7443/${bucketName}${objectPath}`);
+  for (const [key, value] of Object.entries(options.query ?? {})) {
+    url.searchParams.set(key, value);
+  }
+  const body = options.body ?? "";
   return requestLocalHttps(url, caCertificate, {
-    headers: signedS3Headers(
-      method,
-      url,
-      state.objectStorageAccessKeyId,
-      state.objectStorageSecretAccessKey,
-    ),
+    body,
+    headers: {
+      ...signedS3Headers(
+        method,
+        url,
+        state.objectStorageAccessKeyId,
+        state.objectStorageSecretAccessKey,
+        body,
+      ),
+      "content-length": String(Buffer.byteLength(body)),
+      ...options.headers,
+    },
     method,
   });
 }
 
-async function ensureBucket(state, caCertificate) {
-  const createResponse = await requestS3("PUT", state, caCertificate);
+async function ensureBucket(bucketName, state, caCertificate) {
+  const createResponse = await requestS3(
+    "PUT",
+    bucketName,
+    state,
+    caCertificate,
+  );
   if (createResponse.status !== 200 && createResponse.status !== 409) {
     throw new Error(
-      `Object-storage bucket creation failed with status ${createResponse.status}`,
+      `Object-storage bucket ${bucketName} creation failed with status ${createResponse.status}`,
     );
   }
 
-  const headResponse = await requestS3("HEAD", state, caCertificate);
+  const headResponse = await requestS3(
+    "HEAD",
+    bucketName,
+    state,
+    caCertificate,
+  );
   if (!headResponse.ok) {
     throw new Error(
-      `Object-storage bucket probe failed with status ${headResponse.status}`,
+      `Object-storage bucket ${bucketName} probe failed with status ${headResponse.status}`,
     );
   }
 }
 
+async function configureBucketCors(bucketName, state, caCertificate) {
+  const response = await requestS3("PUT", bucketName, state, caCertificate, {
+    body: previewBucketCorsConfiguration,
+    headers: {
+      "content-md5": createHash("md5")
+        .update(previewBucketCorsConfiguration)
+        .digest("base64"),
+      "content-type": "application/xml",
+    },
+    query: { cors: "" },
+  });
+  if (!response.ok) {
+    throw new Error(
+      `Object-storage bucket ${bucketName} CORS configuration failed with status ${response.status}`,
+    );
+  }
+}
+
+async function configureDerivativePublicRead(state, caCertificate) {
+  const policy = JSON.stringify({
+    Version: "2012-10-17",
+    Statement: [
+      {
+        Sid: "AllowAnonymousDerivativeReads",
+        Effect: "Allow",
+        Principal: "*",
+        Action: "s3:GetObject",
+        Resource: `arn:aws:s3:::${derivativeBucketName}/*`,
+      },
+    ],
+  });
+  const response = await requestS3(
+    "PUT",
+    derivativeBucketName,
+    state,
+    caCertificate,
+    { body: policy, query: { policy: "" } },
+  );
+  if (!response.ok) {
+    throw new Error(
+      `Derivative bucket policy failed with status ${response.status}`,
+    );
+  }
+}
+
+async function putPreviewObject(bucketName, object, state, caCertificate) {
+  const response = await requestS3("PUT", bucketName, state, caCertificate, {
+    body: object.body,
+    objectKey: object.key,
+  });
+  if (!response.ok) {
+    throw new Error(
+      `Preview object upload failed with status ${response.status}`,
+    );
+  }
+}
+
+async function verifyPublicMediaBoundary(state, caCertificate) {
+  await configureDerivativePublicRead(state, caCertificate);
+  await putPreviewObject(
+    derivativeBucketName,
+    publicDerivativeObject,
+    state,
+    caCertificate,
+  );
+  await putPreviewObject(
+    sourceBucketName,
+    privateSourceObject,
+    state,
+    caCertificate,
+  );
+
+  const publicUrl = new URL(
+    publicDerivativeObject.key,
+    "https://localhost:7444/",
+  );
+  const publicResponse = await requestLocalHttps(publicUrl, caCertificate);
+  if (
+    !publicResponse.ok ||
+    publicResponse.body !== publicDerivativeObject.body
+  ) {
+    throw new Error(
+      `Public derivative media verification failed with status ${publicResponse.status}`,
+    );
+  }
+
+  const privateSourceUrl = new URL(
+    `/${sourceBucketName}/${encodeObjectKey(privateSourceObject.key)}`,
+    "https://localhost:7443/",
+  );
+  const privateResponse = await requestLocalHttps(
+    privateSourceUrl,
+    caCertificate,
+  );
+  if (privateResponse.status !== 403) {
+    throw new Error(
+      `Source media anonymous access returned status ${privateResponse.status}`,
+    );
+  }
+
+  const encodedSourceEscapePaths = [
+    `/%2e%2e/${sourceBucketName}/${encodeObjectKey(privateSourceObject.key)}`,
+    `/%252e%252e/${sourceBucketName}/${encodeObjectKey(privateSourceObject.key)}`,
+    `/..%2f${sourceBucketName}/${encodeObjectKey(privateSourceObject.key)}`,
+  ];
+  for (const requestPath of encodedSourceEscapePaths) {
+    const response = await requestLocalHttps(
+      {
+        hostname: "localhost",
+        path: requestPath,
+        port: 7444,
+        protocol: "https:",
+      },
+      caCertificate,
+    );
+    if (response.ok || response.body === privateSourceObject.body) {
+      throw new Error("Encoded source-bucket escape attempt was not denied");
+    }
+  }
+
+  const anonymousWriteUrl = new URL(
+    rejectedAnonymousDerivativeObject.key,
+    "https://localhost:7444/",
+  );
+  const anonymousWriteResponse = await requestLocalHttps(
+    anonymousWriteUrl,
+    caCertificate,
+    {
+      body: rejectedAnonymousDerivativeObject.body,
+      method: "PUT",
+    },
+  );
+  if (anonymousWriteResponse.status !== 403) {
+    throw new Error(
+      `Anonymous derivative write returned status ${anonymousWriteResponse.status}`,
+    );
+  }
+  const rejectedObjectProbe = await requestLocalHttps(
+    anonymousWriteUrl,
+    caCertificate,
+  );
+  if (rejectedObjectProbe.status !== 404) {
+    throw new Error(
+      `Rejected anonymous derivative object probe returned status ${rejectedObjectProbe.status}`,
+    );
+  }
+
+  const anonymousListUrl = new URL("https://localhost:7444/");
+  anonymousListUrl.searchParams.set("list-type", "2");
+  const anonymousListResponse = await requestLocalHttps(
+    anonymousListUrl,
+    caCertificate,
+  );
+  if (anonymousListResponse.status !== 403) {
+    throw new Error(
+      `Anonymous derivative listing returned status ${anonymousListResponse.status}`,
+    );
+  }
+
+  return Object.freeze({ publicUrl: publicUrl.href });
+}
+
 function requestLocalHttps(url, caCertificate, options = {}) {
   return new Promise((resolve, reject) => {
-    const request = https.request(
-      url,
-      {
-        ca: caCertificate,
-        headers: options.headers,
-        method: options.method ?? "GET",
-        rejectUnauthorized: true,
-      },
-      (response) => {
-        const chunks = [];
-        response.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
-        response.on("end", () => {
-          resolve({
-            body: Buffer.concat(chunks).toString("utf8"),
-            ok:
-              (response.statusCode ?? 0) >= 200 &&
-              (response.statusCode ?? 0) < 300,
-            status: response.statusCode ?? 0,
-          });
+    const requestOptions = {
+      ca: caCertificate,
+      headers: options.headers,
+      method: options.method ?? "GET",
+      rejectUnauthorized: true,
+    };
+    const handleResponse = (response) => {
+      const chunks = [];
+      response.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
+      response.on("end", () => {
+        resolve({
+          body: Buffer.concat(chunks).toString("utf8"),
+          ok:
+            (response.statusCode ?? 0) >= 200 &&
+            (response.statusCode ?? 0) < 300,
+          status: response.statusCode ?? 0,
         });
-      },
-    );
+      });
+    };
+    const request =
+      typeof url === "object" && !(url instanceof URL)
+        ? https.request({ ...url, ...requestOptions }, handleResponse)
+        : https.request(url, requestOptions, handleResponse);
     request.once("error", reject);
     request.setTimeout(5_000, () => {
       request.destroy(new Error("Local HTTPS preview request timed out"));
     });
-    request.end();
+    request.end(options.body);
   });
 }
 
@@ -1140,11 +1384,45 @@ async function verifySafeNextRuntimeFailure(state, serviceName, signal) {
   }
 }
 
+async function readWorkerShutdownRecords(since, environment) {
+  const deadline = Date.now() + 5_000;
+  let records = [];
+
+  while (Date.now() < deadline) {
+    const text = runCompose(
+      [
+        "--profile",
+        "preview",
+        "logs",
+        "--no-color",
+        "--since",
+        since,
+        "worker",
+      ],
+      {
+        capture: true,
+        environment,
+        failureMessage: "Cannot inspect Worker shutdown logs",
+      },
+    );
+    records = parseApplicationLogRecords(text).filter(
+      (record) =>
+        record.service === "worker" && record.event === "runtime.stopped",
+    );
+    if (records.length > 0) {
+      return records;
+    }
+    await new Promise((resolve) => globalThis.setTimeout(resolve, 100));
+  }
+
+  return records;
+}
+
 async function verifyGracefulWorkerShutdown(state) {
   const environment = composeEnvironment(state);
-  const since = new Date().toISOString();
   const originalContainerId = readServiceContainerId("worker", environment);
   const originalState = readContainerState(originalContainerId);
+  const since = originalState.StartedAt;
   let shutdownVerified = false;
 
   try {
@@ -1167,26 +1445,7 @@ async function verifyGracefulWorkerShutdown(state) {
     ) {
       throw new Error("Worker did not exit cleanly after SIGTERM");
     }
-    const text = runCompose(
-      [
-        "--profile",
-        "preview",
-        "logs",
-        "--no-color",
-        "--since",
-        since,
-        "worker",
-      ],
-      {
-        capture: true,
-        environment,
-        failureMessage: "Cannot inspect Worker shutdown logs",
-      },
-    );
-    const records = parseApplicationLogRecords(text).filter(
-      (record) =>
-        record.service === "worker" && record.event === "runtime.stopped",
-    );
+    const records = await readWorkerShutdownRecords(since, environment);
     if (
       records.length !== 1 ||
       records[0]?.level !== "info" ||
@@ -1204,7 +1463,6 @@ async function verifyGracefulWorkerShutdown(state) {
 
   let recoveryVerified = false;
   try {
-    const restartSince = new Date().toISOString();
     runCompose(
       [
         "--profile",
@@ -1240,7 +1498,7 @@ async function verifyGracefulWorkerShutdown(state) {
         "logs",
         "--no-color",
         "--since",
-        restartSince,
+        restartedState.StartedAt,
         "worker",
       ],
       {
@@ -1317,7 +1575,11 @@ async function verifyPreview(state) {
       `Object-storage health failed with status ${storageHealth.status}`,
     );
   }
-  await ensureBucket(state, caCertificate);
+  for (const bucketName of bucketNames) {
+    await ensureBucket(bucketName, state, caCertificate);
+    await configureBucketCors(bucketName, state, caCertificate);
+  }
+  const publicMedia = await verifyPublicMediaBoundary(state, caCertificate);
 
   verifyInternalStorageTls("api");
   verifyInternalStorageTls("worker");
@@ -1397,7 +1659,12 @@ async function verifyPreview(state) {
     "- Worker shutdown: graceful stop, single record, and recovery verified",
   );
   console.log(`- PostgreSQL query: ${databaseProbe}`);
-  console.log(`- Object-storage TLS bucket: ${bucketName}`);
+  console.log(`- Object-storage TLS buckets: ${bucketNames.join(", ")}`);
+  console.log(`- Public derivative media: ${publicMedia.publicUrl}`);
+  console.log("- Source media anonymous access: denied");
+  console.log("- Encoded source-bucket escape attempts: denied");
+  console.log("- Anonymous derivative write: denied and absent");
+  console.log("- Anonymous derivative listing: denied");
 }
 
 function scrub(text, values) {

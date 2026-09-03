@@ -35,10 +35,14 @@ test("keeps object keys and provider references opaque at the database boundary"
   const foundation = await migration("0001_foundation-security.up.sql");
   const content = await migration("0002_content-catalog.up.sql");
   const orders = await migration("0004_orders-fulfillment.up.sql");
+  const mediaObjectKeyUpgrade = await migration(
+    "0008_media-object-key-segments.up.sql",
+  );
 
   expect(foundation).toContain("CREATE DOMAIN media_object_key AS text");
   expect(foundation).toContain("VALUE ~ '^[A-Za-z0-9][A-Za-z0-9._/-]*$'");
   expect(foundation).toContain("VALUE !~ '(^|/)\\.\\.(/|$)'");
+  expect(mediaObjectKeyUpgrade).toContain("VALUE !~ '(^|/)\\.{1,2}(/|$)'");
   expect(content.match(/object_key media_object_key NOT NULL/g)).toHaveLength(
     2,
   );
@@ -92,6 +96,11 @@ test("pins safety domains in the committed PostgreSQL catalog", async () => {
       "utf8",
     ),
   ) as Readonly<{
+    domainConstraints: readonly Readonly<{
+      domain: string;
+      name: string;
+      definition: string;
+    }>[];
     columns: readonly Readonly<{
       table: string;
       name: string;
@@ -125,4 +134,12 @@ test("pins safety domains in the committed PostgreSQL catalog", async () => {
       expect.objectContaining({ table, name, dataType }),
     );
   }
+
+  expect(catalog.domainConstraints).toContainEqual(
+    expect.objectContaining({
+      domain: "media_object_key",
+      name: "media_object_key_check",
+      definition: expect.stringContaining("(^|/)\\.{1,2}(/|$)"),
+    }),
+  );
 });

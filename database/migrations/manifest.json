@@ -60,6 +60,36 @@
         "up": "8e41e79536add4cdf33ec39e13284875b8f779bade8b81c16fefaeb5cf531dfc",
         "down": "a299d1049c9feb66add18c5e05033ec74f8fc30eecdce056736539eda332a004"
       }
+    },
+    {
+      "version": "0007",
+      "name": "payment-encryption-key-versions",
+      "up": "database/migrations/0007_payment-encryption-key-versions.up.sql",
+      "down": "database/migrations/0007_payment-encryption-key-versions.down.sql",
+      "sha256": {
+        "up": "adc29d08c40bef3ff62c4912ea9360d0a3cfdb8a070b2a41f735a081a899168b",
+        "down": "231f9bc001afa7b35fad9b6cc2f7d04006596a5af77ec905412feeeea89234f9"
+      }
+    },
+    {
+      "version": "0008",
+      "name": "media-object-key-segments",
+      "up": "database/migrations/0008_media-object-key-segments.up.sql",
+      "down": "database/migrations/0008_media-object-key-segments.down.sql",
+      "sha256": {
+        "up": "fc65a995b95ce74b860347024c543d78c0f07bf172d0c7a4e49b899d5e5484e4",
+        "down": "130e10744b078e8b292ec0969ceeaf750df396ac9d7eb86cd47fcbf0bdb17c7d"
+      }
+    },
+    {
+      "version": "0009",
+      "name": "outbox-status-payload",
+      "up": "database/migrations/0009_outbox-status-payload.up.sql",
+      "down": "database/migrations/0009_outbox-status-payload.down.sql",
+      "sha256": {
+        "up": "7d69093002098d2db69c90b3bffa3f3f5a7dc917d97d3bf4ab7bf0be111405cb",
+        "down": "bfe89b7f89a7b78a742a7cd25413b3f7e40b49601d893f697daf8c18d22826a4"
+      }
     }
   ]
 }

@@ -14,10 +14,21 @@ import {
   isLoopbackHttpOrigin,
   isObjectStorageEndpoint,
   isPostgresUrl,
+  isPreviewSiteOrigin,
+  isPublicMediaOrigin,
   isPublicSiteOrigin,
+  isSupportedBrowserSiteOrigin,
 } from "./url-validation.js";
 
 const nodeEnvironmentSchema = z.enum(["development", "test", "production"]);
+const DEFAULT_OBJECT_STORAGE_MAX_UPLOAD_BYTES = 10 * 1_024 * 1_024;
+const PREVIEW_INTERNAL_API_ORIGIN = "http://api:3002";
+const PREVIEW_OBJECT_STORAGE_ENDPOINT = "https://edge:7443";
+const PREVIEW_OBJECT_STORAGE_PRESIGN_ENDPOINT = "https://localhost:7443";
+const PREVIEW_PUBLIC_MEDIA_ORIGIN = "https://localhost:7444";
+const PREVIEW_SOURCE_BUCKET = "fan-support-media-source";
+const PREVIEW_DERIVATIVE_BUCKET = "fan-support-media-derivative";
+const PREVIEW_OBJECT_STORAGE_REGION = "us-east-1";
 
 export const deploymentEnvironmentSchema = z.enum([
   "development",
@@ -48,7 +59,7 @@ const serverRuntimeConfigSchema = z
     schemaVersion: z.literal(1),
     nodeEnvironment: nodeEnvironmentSchema,
     deploymentEnvironment: deploymentEnvironmentSchema,
-    siteOrigin: z.string().refine(isPublicSiteOrigin),
+    siteOrigin: z.string().refine(isSupportedBrowserSiteOrigin),
   })
   .superRefine((config, context) => {
     if (
@@ -67,15 +78,23 @@ const serverRuntimeConfigSchema = z
       });
     }
 
-    if (
+    const allowsLoopbackHttp =
       isLoopbackHttpOrigin(config.siteOrigin) &&
-      config.deploymentEnvironment !== "development" &&
-      config.deploymentEnvironment !== "test"
-    ) {
+      (config.deploymentEnvironment === "development" ||
+        config.deploymentEnvironment === "test");
+    const allowsPreviewHttps =
+      config.deploymentEnvironment === "preview" &&
+      isPreviewSiteOrigin(config.siteOrigin);
+    const allowsPublicHttps =
+      config.deploymentEnvironment !== "preview" &&
+      isPublicSiteOrigin(config.siteOrigin) &&
+      !isLoopbackHttpOrigin(config.siteOrigin);
+
+    if (!allowsLoopbackHttp && !allowsPreviewHttps && !allowsPublicHttps) {
       context.addIssue({
         code: "custom",
         path: ["siteOrigin"],
-        message: "HTTP is limited to local development and test tiers",
+        message: "site origin is incompatible with the deployment tier",
       });
     }
   })
@@ -95,6 +114,17 @@ const internalApiRuntimeConfigSchema = z
     internalApiOrigin: z.string().refine(isObjectStorageEndpoint),
   })
   .superRefine((config, context) => {
+    if (
+      config.deploymentEnvironment === "preview" &&
+      config.internalApiOrigin !== PREVIEW_INTERNAL_API_ORIGIN
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["internalApiOrigin"],
+        message: "preview requires the exact local API origin",
+      });
+      return;
+    }
     if (
       isHttpOrigin(config.internalApiOrigin) &&
       config.deploymentEnvironment !== "development" &&
@@ -144,31 +174,261 @@ function isCredential(value: string, minimumLength: number): boolean {
   );
 }
 
+function parseMaxUploadBytes(value: unknown): unknown {
+  if (value === undefined || value === "") {
+    return DEFAULT_OBJECT_STORAGE_MAX_UPLOAD_BYTES;
+  }
+  if (typeof value !== "string" || !/^[1-9][0-9]{0,15}$/u.test(value)) {
+    return value;
+  }
+  const parsed = Number(value);
+  return Number.isSafeInteger(parsed) ? parsed : value;
+}
+
+function isHttpsObjectStorageEndpoint(value: string): boolean {
+  return isObjectStorageEndpoint(value) && !isHttpOrigin(value);
+}
+
 const objectStorageRuntimeConfigSchema = z
   .strictObject({
     schemaVersion: z.literal(1),
     deploymentEnvironment: deploymentEnvironmentSchema,
-    objectStorageEndpoint: z.string().refine(isObjectStorageEndpoint),
-    objectStorageBucket: z.string().refine(isObjectStorageBucket),
+    objectStorageAuthMode: z.enum(["static", "ambient"]),
+    objectStorageEndpoint: z.preprocess(
+      (value) => (value === "" ? undefined : value),
+      z.string().refine(isHttpsObjectStorageEndpoint).optional(),
+    ),
+    objectStoragePresignEndpoint: z.preprocess(
+      (value) => (value === "" ? undefined : value),
+      z.string().refine(isHttpsObjectStorageEndpoint).optional(),
+    ),
+    objectStorageSourceBucket: z.string().refine(isObjectStorageBucket),
+    objectStorageDerivativeBucket: z.string().refine(isObjectStorageBucket),
+    objectStoragePublicMediaOrigin: z.string(),
+    objectStorageMaxUploadBytes: z.preprocess(
+      parseMaxUploadBytes,
+      z.number().int().positive().max(Number.MAX_SAFE_INTEGER),
+    ),
     objectStorageRegion: z.string().refine(isObjectStorageRegion),
-    objectStorageAccessKeyId: z
-      .string()
-      .refine((value) => isCredential(value, 3)),
-    objectStorageSecretAccessKey: z
-      .string()
-      .refine((value) => isCredential(value, 8)),
-    objectStorageForcePathStyle: z.enum(["true", "false"]),
+    objectStorageAccessKeyId: z.preprocess(
+      (value) => (value === "" ? undefined : value),
+      z
+        .string()
+        .refine((value) => isCredential(value, 3))
+        .optional(),
+    ),
+    objectStorageSecretAccessKey: z.preprocess(
+      (value) => (value === "" ? undefined : value),
+      z
+        .string()
+        .refine((value) => isCredential(value, 8))
+        .optional(),
+    ),
+    objectStorageForcePathStyle: z.preprocess(
+      (value) => (value === "" ? undefined : value),
+      z.enum(["true", "false"]).optional(),
+    ),
   })
   .superRefine((config, context) => {
+    const isPreview = config.deploymentEnvironment === "preview";
+    const staticTier =
+      config.deploymentEnvironment === "development" ||
+      config.deploymentEnvironment === "test" ||
+      isPreview;
+
     if (
-      isHttpOrigin(config.objectStorageEndpoint) &&
-      config.deploymentEnvironment !== "development" &&
-      config.deploymentEnvironment !== "test"
+      (isPreview &&
+        config.objectStoragePublicMediaOrigin !==
+          PREVIEW_PUBLIC_MEDIA_ORIGIN) ||
+      (!isPreview &&
+        !isPublicMediaOrigin(config.objectStoragePublicMediaOrigin))
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStoragePublicMediaOrigin"],
+        message: "must use a public origin outside the exact local preview",
+      });
+    }
+
+    if (
+      isPreview &&
+      config.objectStorageEndpoint !== PREVIEW_OBJECT_STORAGE_ENDPOINT
     ) {
       context.addIssue({
         code: "custom",
         path: ["objectStorageEndpoint"],
-        message: "HTTP is limited to local development and test tiers",
+        message: "preview requires the exact local service endpoint",
+      });
+    }
+    if (
+      isPreview &&
+      config.objectStoragePresignEndpoint !==
+        PREVIEW_OBJECT_STORAGE_PRESIGN_ENDPOINT
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStoragePresignEndpoint"],
+        message: "preview requires the exact browser presign endpoint",
+      });
+    }
+    if (
+      isPreview &&
+      config.objectStorageSourceBucket !== PREVIEW_SOURCE_BUCKET
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageSourceBucket"],
+        message: "preview requires the local source bucket",
+      });
+    }
+    if (
+      isPreview &&
+      config.objectStorageDerivativeBucket !== PREVIEW_DERIVATIVE_BUCKET
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageDerivativeBucket"],
+        message: "preview requires the local derivative bucket",
+      });
+    }
+    if (
+      isPreview &&
+      config.objectStorageRegion !== PREVIEW_OBJECT_STORAGE_REGION
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageRegion"],
+        message: "preview requires the local object-storage region",
+      });
+    }
+    if (isPreview && config.objectStorageForcePathStyle !== "true") {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageForcePathStyle"],
+        message: "preview requires path-style addressing",
+      });
+    }
+
+    if (
+      (staticTier && config.objectStorageAuthMode !== "static") ||
+      (!staticTier && config.objectStorageAuthMode !== "ambient")
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageAuthMode"],
+        message: "incompatible object-storage authentication mode",
+      });
+    }
+
+    if (
+      config.objectStorageSourceBucket === config.objectStorageDerivativeBucket
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageDerivativeBucket"],
+        message: "source and derivative buckets must be isolated",
+      });
+    }
+
+    if (
+      config.objectStorageAuthMode === "static" &&
+      config.objectStorageEndpoint === undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageEndpoint"],
+        message: "required for static authentication",
+      });
+    }
+    if (
+      config.objectStorageAuthMode === "static" &&
+      config.objectStoragePresignEndpoint === undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStoragePresignEndpoint"],
+        message: "required for static authentication",
+      });
+    }
+    if (
+      config.objectStorageAuthMode === "static" &&
+      config.objectStorageAccessKeyId === undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageAccessKeyId"],
+        message: "required for static authentication",
+      });
+    }
+    if (
+      config.objectStorageAuthMode === "static" &&
+      config.objectStorageSecretAccessKey === undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageSecretAccessKey"],
+        message: "required for static authentication",
+      });
+    }
+    if (
+      config.objectStorageAuthMode === "static" &&
+      config.objectStorageForcePathStyle === undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageForcePathStyle"],
+        message: "required for static authentication",
+      });
+    }
+    if (
+      config.objectStorageAuthMode === "ambient" &&
+      config.objectStorageEndpoint !== undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageEndpoint"],
+        message: "endpoint overrides are forbidden for ambient AWS auth",
+      });
+    }
+    if (
+      config.objectStorageAuthMode === "ambient" &&
+      config.objectStoragePresignEndpoint !== undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStoragePresignEndpoint"],
+        message:
+          "presign endpoint overrides are forbidden for ambient AWS auth",
+      });
+    }
+    if (
+      config.objectStorageAuthMode === "ambient" &&
+      config.objectStorageAccessKeyId !== undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageAccessKeyId"],
+        message: "static credentials are forbidden for ambient AWS auth",
+      });
+    }
+    if (
+      config.objectStorageAuthMode === "ambient" &&
+      config.objectStorageSecretAccessKey !== undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageSecretAccessKey"],
+        message: "static credentials are forbidden for ambient AWS auth",
+      });
+    }
+    if (
+      config.objectStorageAuthMode === "ambient" &&
+      config.objectStorageForcePathStyle === "true"
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["objectStorageForcePathStyle"],
+        message: "path-style addressing is forbidden for ambient AWS auth",
       });
     }
   })
@@ -184,15 +444,35 @@ export type InternalApiRuntimeConfig = Readonly<{
   schemaVersion: 1;
   origin: string;
 }>;
-export type ObjectStorageRuntimeConfig = Readonly<{
+type StaticObjectStorageRuntimeConfig = Readonly<{
   schemaVersion: 1;
-  endpoint: string;
-  bucket: string;
+  sourceBucket: string;
+  derivativeBucket: string;
+  publicMediaOrigin: string;
+  allowPreviewLoopbackPublicOrigin?: true;
+  maxUploadBytes: number;
   region: string;
-  accessKeyId: string;
-  secretAccessKey: string;
-  forcePathStyle: boolean;
+  authentication: Readonly<{
+    mode: "static";
+    endpoint: string;
+    presignEndpoint: string;
+    accessKeyId: string;
+    secretAccessKey: string;
+    forcePathStyle: boolean;
+  }>;
 }>;
+type AmbientObjectStorageRuntimeConfig = Readonly<{
+  schemaVersion: 1;
+  sourceBucket: string;
+  derivativeBucket: string;
+  publicMediaOrigin: string;
+  allowPreviewLoopbackPublicOrigin?: true;
+  maxUploadBytes: number;
+  region: string;
+  authentication: Readonly<{ mode: "ambient" }>;
+}>;
+export type ObjectStorageRuntimeConfig =
+  StaticObjectStorageRuntimeConfig | AmbientObjectStorageRuntimeConfig;
 
 const SERVER_FIELDS = Object.freeze([
   "deploymentEnvironment",
@@ -207,11 +487,16 @@ const INTERNAL_API_FIELDS = Object.freeze([
 const OBJECT_STORAGE_FIELDS = Object.freeze([
   "deploymentEnvironment",
   "objectStorageAccessKeyId",
-  "objectStorageBucket",
+  "objectStorageAuthMode",
+  "objectStorageDerivativeBucket",
   "objectStorageEndpoint",
   "objectStorageForcePathStyle",
+  "objectStoragePresignEndpoint",
+  "objectStoragePublicMediaOrigin",
+  "objectStorageMaxUploadBytes",
   "objectStorageRegion",
   "objectStorageSecretAccessKey",
+  "objectStorageSourceBucket",
 ] as const);
 const SERVER_CONFIG_KEYS = Object.freeze([
   "NODE_ENV",
@@ -227,8 +512,13 @@ const INTERNAL_API_CONFIG_KEYS = Object.freeze([
 ] as const);
 const OBJECT_STORAGE_CONFIG_KEYS = Object.freeze([
   "FAN_SUPPORT_DEPLOYMENT_ENV",
+  "FAN_SUPPORT_OBJECT_STORAGE_AUTH_MODE",
   "FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT",
-  "FAN_SUPPORT_OBJECT_STORAGE_BUCKET",
+  "FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT",
+  "FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET",
+  "FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET",
+  "FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN",
+  "FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES",
   "FAN_SUPPORT_OBJECT_STORAGE_REGION",
   "FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID",
   "FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY",
@@ -325,8 +615,17 @@ export function resolveObjectStorageRuntimeConfig(
   const result = objectStorageRuntimeConfigSchema.safeParse({
     schemaVersion: 1,
     deploymentEnvironment: layered.FAN_SUPPORT_DEPLOYMENT_ENV,
+    objectStorageAuthMode: layered.FAN_SUPPORT_OBJECT_STORAGE_AUTH_MODE,
     objectStorageEndpoint: layered.FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT,
-    objectStorageBucket: layered.FAN_SUPPORT_OBJECT_STORAGE_BUCKET,
+    objectStoragePresignEndpoint:
+      layered.FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT,
+    objectStorageSourceBucket: layered.FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET,
+    objectStorageDerivativeBucket:
+      layered.FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET,
+    objectStoragePublicMediaOrigin:
+      layered.FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN,
+    objectStorageMaxUploadBytes:
+      layered.FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES,
     objectStorageRegion: layered.FAN_SUPPORT_OBJECT_STORAGE_REGION,
     objectStorageAccessKeyId: layered.FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID,
     objectStorageSecretAccessKey:
@@ -341,14 +640,39 @@ export function resolveObjectStorageRuntimeConfig(
     );
   }
 
+  if (result.data.objectStorageAuthMode === "ambient") {
+    const authentication = Object.freeze({ mode: "ambient" as const });
+    return Object.freeze({
+      schemaVersion: result.data.schemaVersion,
+      sourceBucket: result.data.objectStorageSourceBucket,
+      derivativeBucket: result.data.objectStorageDerivativeBucket,
+      publicMediaOrigin: result.data.objectStoragePublicMediaOrigin,
+      maxUploadBytes: result.data.objectStorageMaxUploadBytes,
+      region: result.data.objectStorageRegion,
+      authentication,
+    });
+  }
+
+  const authentication = Object.freeze({
+    mode: "static" as const,
+    endpoint: result.data.objectStorageEndpoint as string,
+    presignEndpoint: result.data.objectStoragePresignEndpoint as string,
+    accessKeyId: result.data.objectStorageAccessKeyId as string,
+    secretAccessKey: result.data.objectStorageSecretAccessKey as string,
+    forcePathStyle: result.data.objectStorageForcePathStyle === "true",
+  });
   return Object.freeze({
     schemaVersion: result.data.schemaVersion,
-    endpoint: result.data.objectStorageEndpoint,
-    bucket: result.data.objectStorageBucket,
+    sourceBucket: result.data.objectStorageSourceBucket,
+    derivativeBucket: result.data.objectStorageDerivativeBucket,
+    publicMediaOrigin: result.data.objectStoragePublicMediaOrigin,
+    ...(result.data.deploymentEnvironment === "preview" &&
+    result.data.objectStoragePublicMediaOrigin === PREVIEW_PUBLIC_MEDIA_ORIGIN
+      ? { allowPreviewLoopbackPublicOrigin: true as const }
+      : {}),
+    maxUploadBytes: result.data.objectStorageMaxUploadBytes,
     region: result.data.objectStorageRegion,
-    accessKeyId: result.data.objectStorageAccessKeyId,
-    secretAccessKey: result.data.objectStorageSecretAccessKey,
-    forcePathStyle: result.data.objectStorageForcePathStyle === "true",
+    authentication,
   });
 }
 

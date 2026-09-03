@@ -23,15 +23,37 @@ type DatabaseRuntimeConfig = Readonly<{
   url: string;
 }>;
 
-type ObjectStorageRuntimeConfig = Readonly<{
+type StaticObjectStorageRuntimeConfig = Readonly<{
   schemaVersion: 1;
-  endpoint: string;
-  bucket: string;
+  sourceBucket: string;
+  derivativeBucket: string;
+  publicMediaOrigin: string;
+  allowPreviewLoopbackPublicOrigin?: true;
+  maxUploadBytes: number;
   region: string;
-  accessKeyId: string;
-  secretAccessKey: string;
-  forcePathStyle: boolean;
+  authentication: Readonly<{
+    mode: "static";
+    endpoint: string;
+    presignEndpoint: string;
+    accessKeyId: string;
+    secretAccessKey: string;
+    forcePathStyle: boolean;
+  }>;
 }>;
+
+type AmbientObjectStorageRuntimeConfig = Readonly<{
+  schemaVersion: 1;
+  sourceBucket: string;
+  derivativeBucket: string;
+  publicMediaOrigin: string;
+  allowPreviewLoopbackPublicOrigin?: true;
+  maxUploadBytes: number;
+  region: string;
+  authentication: Readonly<{ mode: "ambient" }>;
+}>;
+
+type ObjectStorageRuntimeConfig =
+  StaticObjectStorageRuntimeConfig | AmbientObjectStorageRuntimeConfig;
 
 type InternalApiRuntimeConfig = Readonly<{
   schemaVersion: 1;
@@ -71,14 +93,41 @@ const databaseEnvironment = {
 } as const;
 
 const objectStorageEnvironment = {
-  FAN_SUPPORT_DEPLOYMENT_ENV: "production",
+  FAN_SUPPORT_DEPLOYMENT_ENV: "development",
+  FAN_SUPPORT_OBJECT_STORAGE_AUTH_MODE: "static",
   FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "https://objects.example.invalid",
-  FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "fan-support-media",
+  FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT:
+    "https://browser-objects.example.invalid",
+  FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: "fan-support-media-source",
+  FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: "fan-support-media-derivative",
+  FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN:
+    "https://media.example.invalid",
+  FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "12582912",
   FAN_SUPPORT_OBJECT_STORAGE_REGION: "us-east-1",
   FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: "TEST_ACCESS_KEY_ID",
   FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY:
     "TEST_OBJECT_STORAGE_SECRET_VALUE",
   FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "false",
+} as const;
+
+const previewObjectStorageEnvironment = {
+  ...objectStorageEnvironment,
+  FAN_SUPPORT_DEPLOYMENT_ENV: "preview",
+  FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "https://edge:7443",
+  FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT: "https://localhost:7443",
+  FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN: "https://localhost:7444",
+  FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true",
+} as const;
+
+const ambientObjectStorageEnvironment = {
+  FAN_SUPPORT_DEPLOYMENT_ENV: "production",
+  FAN_SUPPORT_OBJECT_STORAGE_AUTH_MODE: "ambient",
+  FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: "fan-support-media-source",
+  FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: "fan-support-media-derivative",
+  FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN:
+    "https://media.example.invalid",
+  FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "12582912",
+  FAN_SUPPORT_OBJECT_STORAGE_REGION: "us-east-1",
 } as const;
 
 async function loadServerConfigModule(): Promise<ServerConfigModule> {
@@ -161,14 +210,34 @@ test("resolves an immutable object-storage fragment independently", async () => 
 
   expect(objectStorageConfig).toEqual({
     schemaVersion: 1,
-    endpoint: "https://objects.example.invalid",
-    bucket: "fan-support-media",
+    sourceBucket: "fan-support-media-source",
+    derivativeBucket: "fan-support-media-derivative",
+    publicMediaOrigin: "https://media.example.invalid",
+    maxUploadBytes: 12_582_912,
     region: "us-east-1",
-    accessKeyId: "TEST_ACCESS_KEY_ID",
-    secretAccessKey: "TEST_OBJECT_STORAGE_SECRET_VALUE",
-    forcePathStyle: false,
+    authentication: {
+      mode: "static",
+      endpoint: "https://objects.example.invalid",
+      presignEndpoint: "https://browser-objects.example.invalid",
+      accessKeyId: "TEST_ACCESS_KEY_ID",
+      secretAccessKey: "TEST_OBJECT_STORAGE_SECRET_VALUE",
+      forcePathStyle: false,
+    },
   });
   expect(Object.isFrozen(objectStorageConfig)).toBe(true);
+  expect(Object.isFrozen(objectStorageConfig.authentication)).toBe(true);
+});
+
+test("uses the config-owned upload limit default when no deployment override is provided", async () => {
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
+  const environment: Record<string, unknown> = {
+    ...objectStorageEnvironment,
+  };
+  delete environment["FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES"];
+
+  expect(
+    resolveObjectStorageRuntimeConfig({ environment }).maxUploadBytes,
+  ).toBe(10_485_760);
 });
 
 test("applies config precedence to every object-storage field", async () => {
@@ -177,24 +246,95 @@ test("applies config precedence to every object-storage field", async () => {
   const config = resolveObjectStorageRuntimeConfig({
     defaults: {
       ...objectStorageEnvironment,
-      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "defaults-bucket",
+      FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: "defaults-source",
+      FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: "defaults-derivative",
+      FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN:
+        "https://defaults-media.example.invalid",
+      FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "1048576",
+      FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT:
+        "https://defaults-objects.example.invalid",
       FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "false",
     },
     configFile: {
-      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "file-bucket",
+      FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: "file-source",
+      FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: "file-derivative",
+      FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN:
+        "https://file-media.example.invalid",
+      FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "2097152",
+      FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT:
+        "https://file-objects.example.invalid",
     },
     dotenv: {
-      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "dotenv-bucket",
+      FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: "dotenv-source",
+      FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: "dotenv-derivative",
+      FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN:
+        "https://dotenv-media.example.invalid",
+      FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "4194304",
+      FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT:
+        "https://dotenv-objects.example.invalid",
       FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true",
     },
     environment: {
-      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "environment-bucket",
+      FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: "environment-source",
+      FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: "environment-derivative",
+      FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN:
+        "https://environment-media.example.invalid",
+      FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "8388608",
+      FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT:
+        "https://environment-objects.example.invalid",
     },
   });
 
-  expect(config.bucket).toBe("environment-bucket");
-  expect(config.forcePathStyle).toBe(true);
+  expect(config.sourceBucket).toBe("environment-source");
+  expect(config.derivativeBucket).toBe("environment-derivative");
+  expect(config.publicMediaOrigin).toBe(
+    "https://environment-media.example.invalid",
+  );
+  expect(config.maxUploadBytes).toBe(8_388_608);
+  expect(config.authentication).toMatchObject({
+    mode: "static",
+    presignEndpoint: "https://environment-objects.example.invalid",
+    forcePathStyle: true,
+  });
 });
+
+test.each(["staging", "production"] as const)(
+  "uses ambient AWS credentials without endpoint overrides in %s",
+  async (deploymentEnvironment) => {
+    const { resolveObjectStorageRuntimeConfig } =
+      await loadServerConfigModule();
+
+    const config = resolveObjectStorageRuntimeConfig({
+      environment: {
+        FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
+        FAN_SUPPORT_OBJECT_STORAGE_AUTH_MODE: "ambient",
+        FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: "fan-support-media-source",
+        FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET:
+          "fan-support-media-derivative",
+        FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN:
+          "https://media.example.invalid",
+        FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "12582912",
+        FAN_SUPPORT_OBJECT_STORAGE_REGION: "us-east-1",
+      },
+    });
+
+    expect(config).toEqual({
+      schemaVersion: 1,
+      sourceBucket: "fan-support-media-source",
+      derivativeBucket: "fan-support-media-derivative",
+      publicMediaOrigin: "https://media.example.invalid",
+      maxUploadBytes: 12_582_912,
+      region: "us-east-1",
+      authentication: { mode: "ambient" },
+    });
+    expect(Object.isFrozen(config)).toBe(true);
+    expect(Object.isFrozen(config.authentication)).toBe(true);
+    expect(config.authentication).not.toHaveProperty("endpoint");
+    expect(config.authentication).not.toHaveProperty("presignEndpoint");
+    expect(config.authentication).not.toHaveProperty("accessKeyId");
+    expect(config.authentication).not.toHaveProperty("secretAccessKey");
+  },
+);
 
 test("fails closed when object-storage configuration is missing", async () => {
   const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
@@ -203,17 +343,16 @@ test("fails closed when object-storage configuration is missing", async () => {
     () => resolveObjectStorageRuntimeConfig({ environment: {} }),
     [
       "deploymentEnvironment",
-      "objectStorageAccessKeyId",
-      "objectStorageBucket",
-      "objectStorageEndpoint",
-      "objectStorageForcePathStyle",
+      "objectStorageAuthMode",
+      "objectStorageDerivativeBucket",
+      "objectStoragePublicMediaOrigin",
       "objectStorageRegion",
-      "objectStorageSecretAccessKey",
+      "objectStorageSourceBucket",
     ],
   );
 });
 
-test("allows an HTTP object-storage endpoint only in development and test", async () => {
+test("allows HTTPS static S3-compatible configuration in development and test", async () => {
   const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
 
   for (const deploymentEnvironment of ["development", "test"] as const) {
@@ -222,32 +361,319 @@ test("allows an HTTP object-storage endpoint only in development and test", asyn
         environment: {
           ...objectStorageEnvironment,
           FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
-          FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "http://object-storage:9000",
           FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true",
         },
       }),
     ).not.toThrow();
   }
+});
 
-  for (const deploymentEnvironment of [
-    "preview",
-    "staging",
-    "production",
-  ] as const) {
+test("allows only the exact local object-storage topology in preview", async () => {
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
+
+  expect(
+    resolveObjectStorageRuntimeConfig({
+      environment: previewObjectStorageEnvironment,
+    }),
+  ).toMatchObject({
+    publicMediaOrigin: "https://localhost:7444",
+    allowPreviewLoopbackPublicOrigin: true,
+    authentication: {
+      mode: "static",
+      endpoint: "https://edge:7443",
+      presignEndpoint: "https://localhost:7443",
+      forcePathStyle: true,
+    },
+  });
+});
+
+test("rejects a public object-storage topology mislabeled as preview", async () => {
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
+
+  expectInvalidConfig(
+    () =>
+      resolveObjectStorageRuntimeConfig({
+        environment: {
+          ...objectStorageEnvironment,
+          FAN_SUPPORT_DEPLOYMENT_ENV: "preview",
+        },
+      }),
+    [
+      "objectStorageEndpoint",
+      "objectStorageForcePathStyle",
+      "objectStoragePresignEndpoint",
+      "objectStoragePublicMediaOrigin",
+    ],
+  );
+});
+
+test.each(["development", "test", "preview"] as const)(
+  "rejects HTTP service and presign endpoints in the %s tier",
+  async (deploymentEnvironment) => {
+    const { resolveObjectStorageRuntimeConfig } =
+      await loadServerConfigModule();
+
+    for (const [environmentKey, field] of [
+      ["FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT", "objectStorageEndpoint"],
+      [
+        "FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT",
+        "objectStoragePresignEndpoint",
+      ],
+    ] as const) {
+      expectInvalidConfig(
+        () =>
+          resolveObjectStorageRuntimeConfig({
+            environment: {
+              ...(deploymentEnvironment === "preview"
+                ? previewObjectStorageEnvironment
+                : objectStorageEnvironment),
+              FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
+              [environmentKey]: "http://objects.example.invalid",
+            },
+          }),
+        [field],
+      );
+    }
+  },
+);
+
+test("requires a browser-reachable presign endpoint for static authentication", async () => {
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
+
+  expectInvalidConfig(
+    () =>
+      resolveObjectStorageRuntimeConfig({
+        environment: {
+          ...objectStorageEnvironment,
+          FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT: undefined,
+        },
+      }),
+    ["objectStoragePresignEndpoint"],
+  );
+});
+
+test.each(["development", "test", "preview"] as const)(
+  "rejects ambient object-storage auth in the %s tier",
+  async (deploymentEnvironment) => {
+    const { resolveObjectStorageRuntimeConfig } =
+      await loadServerConfigModule();
+
+    expectInvalidConfig(
+      () =>
+        resolveObjectStorageRuntimeConfig({
+          environment: {
+            ...ambientObjectStorageEnvironment,
+            FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
+          },
+        }),
+      deploymentEnvironment === "preview"
+        ? [
+            "objectStorageAuthMode",
+            "objectStorageEndpoint",
+            "objectStorageForcePathStyle",
+            "objectStoragePresignEndpoint",
+            "objectStoragePublicMediaOrigin",
+          ]
+        : ["objectStorageAuthMode"],
+    );
+  },
+);
+
+test.each(["staging", "production"] as const)(
+  "rejects static object-storage auth in the %s tier",
+  async (deploymentEnvironment) => {
+    const { resolveObjectStorageRuntimeConfig } =
+      await loadServerConfigModule();
+
     expectInvalidConfig(
       () =>
         resolveObjectStorageRuntimeConfig({
           environment: {
             ...objectStorageEnvironment,
             FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
-            FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT:
-              "http://objects.example.invalid",
           },
         }),
-      ["objectStorageEndpoint"],
+      ["objectStorageAuthMode"],
     );
-  }
+  },
+);
+
+test.each([
+  [
+    "FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT",
+    "https://objects.example.invalid",
+    "objectStorageEndpoint",
+  ],
+  [
+    "FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT",
+    "https://browser-objects.example.invalid",
+    "objectStoragePresignEndpoint",
+  ],
+  [
+    "FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID",
+    "TEST_ACCESS_KEY_ID",
+    "objectStorageAccessKeyId",
+  ],
+  [
+    "FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY",
+    "TEST_OBJECT_STORAGE_SECRET_VALUE",
+    "objectStorageSecretAccessKey",
+  ],
+  [
+    "FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE",
+    "true",
+    "objectStorageForcePathStyle",
+  ],
+] as const)(
+  "rejects %s when production uses ambient AWS credentials",
+  async (environmentKey, value, field) => {
+    const { resolveObjectStorageRuntimeConfig } =
+      await loadServerConfigModule();
+
+    expectInvalidConfig(
+      () =>
+        resolveObjectStorageRuntimeConfig({
+          environment: {
+            ...ambientObjectStorageEnvironment,
+            [environmentKey]: value,
+          },
+        }),
+      [field],
+    );
+  },
+);
+
+test("accepts explicit forcePathStyle=false with ambient AWS credentials", async () => {
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
+
+  expect(
+    resolveObjectStorageRuntimeConfig({
+      environment: {
+        ...ambientObjectStorageEnvironment,
+        FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "false",
+      },
+    }),
+  ).toEqual({
+    schemaVersion: 1,
+    sourceBucket: "fan-support-media-source",
+    derivativeBucket: "fan-support-media-derivative",
+    publicMediaOrigin: "https://media.example.invalid",
+    maxUploadBytes: 12_582_912,
+    region: "us-east-1",
+    authentication: { mode: "ambient" },
+  });
 });
+
+test("treats blank ambient-only values as unset", async () => {
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
+
+  expect(
+    resolveObjectStorageRuntimeConfig({
+      environment: {
+        ...ambientObjectStorageEnvironment,
+        FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "",
+        FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT: "",
+        FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: "",
+        FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: "",
+        FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "",
+      },
+    }),
+  ).toEqual({
+    schemaVersion: 1,
+    sourceBucket: "fan-support-media-source",
+    derivativeBucket: "fan-support-media-derivative",
+    publicMediaOrigin: "https://media.example.invalid",
+    maxUploadBytes: 12_582_912,
+    region: "us-east-1",
+    authentication: { mode: "ambient" },
+  });
+});
+
+test("requires isolated source and derivative buckets", async () => {
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
+
+  expectInvalidConfig(
+    () =>
+      resolveObjectStorageRuntimeConfig({
+        environment: {
+          ...objectStorageEnvironment,
+          FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET:
+            objectStorageEnvironment.FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET,
+        },
+      }),
+    ["objectStorageDerivativeBucket"],
+  );
+});
+
+test("allows only the exact local derivative origin used by preview", async () => {
+  const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
+
+  expect(
+    resolveObjectStorageRuntimeConfig({
+      environment: {
+        ...previewObjectStorageEnvironment,
+      },
+    }),
+  ).toMatchObject({
+    publicMediaOrigin: "https://localhost:7444",
+    allowPreviewLoopbackPublicOrigin: true,
+  });
+});
+
+test.each(["staging", "production"] as const)(
+  "rejects the local preview media origin in %s",
+  async (deploymentEnvironment) => {
+    const { resolveObjectStorageRuntimeConfig } =
+      await loadServerConfigModule();
+    expectInvalidConfig(
+      () =>
+        resolveObjectStorageRuntimeConfig({
+          environment: {
+            ...ambientObjectStorageEnvironment,
+            FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
+            FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN:
+              "https://localhost:7444",
+          },
+        }),
+      ["objectStoragePublicMediaOrigin"],
+    );
+  },
+);
+
+test.each([
+  "http://media.example.invalid",
+  "https://user:password@media.example.invalid",
+  "https://media.example.invalid/path",
+  "https://media.example.invalid?variant=source",
+  "https://media.example.invalid#fragment",
+  "https://localhost",
+  "https://media.localhost",
+  "https://127.0.0.1",
+  "https://10.0.0.1",
+  "https://172.16.0.1",
+  "https://192.168.0.1",
+  "https://169.254.1.1",
+  "https://[::1]",
+  "https://[fc00::1]",
+  "https://[fe80::1]",
+] as const)(
+  "rejects unsafe public media origin %s",
+  async (publicMediaOrigin) => {
+    const { resolveObjectStorageRuntimeConfig } =
+      await loadServerConfigModule();
+
+    expectInvalidConfig(
+      () =>
+        resolveObjectStorageRuntimeConfig({
+          environment: {
+            ...objectStorageEnvironment,
+            FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN: publicMediaOrigin,
+          },
+        }),
+      ["objectStoragePublicMediaOrigin"],
+    );
+  },
+);
 
 test.each([
   { FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "file:///tmp/objects" },
@@ -258,12 +684,19 @@ test.each([
   {
     FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "https://objects.example.invalid/path",
   },
-  { FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "UPPERCASE_BUCKET" },
-  { FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "192.0.2.1" },
+  {
+    FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT:
+      "https://browser-objects.example.invalid/path",
+  },
+  { FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: "UPPERCASE_BUCKET" },
+  { FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: "192.0.2.1" },
   { FAN_SUPPORT_OBJECT_STORAGE_REGION: "region with spaces" },
   { FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: "  " },
   { FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: "short" },
   { FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "yes" },
+  { FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "0" },
+  { FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "1.5" },
+  { FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "9007199254740992" },
 ])("rejects invalid object-storage config %#", async (override) => {
   const { resolveObjectStorageRuntimeConfig } = await loadServerConfigModule();
 
@@ -830,6 +1263,57 @@ test.each(["preview", "staging", "production"] as const)(
   },
 );
 
+test.each(["https://localhost:3443", "https://localhost:3444"] as const)(
+  "allows only an exact HTTPS loopback origin in preview: %s",
+  async (siteOrigin) => {
+    const { resolveServerRuntimeConfig } = await loadServerConfigModule();
+
+    expect(() =>
+      resolveServerRuntimeConfig({
+        environment: {
+          NODE_ENV: "production",
+          FAN_SUPPORT_DEPLOYMENT_ENV: "preview",
+          FAN_SUPPORT_SITE_ORIGIN: siteOrigin,
+        },
+      }),
+    ).not.toThrow();
+  },
+);
+
+test.each([
+  ["preview", "https://shop.example.invalid"],
+  ["preview", "https://localhost:3445"],
+  ["staging", "https://localhost:3443"],
+  ["production", "https://localhost:3444"],
+  ["production", "https://127.0.0.1:443"],
+  ["production", "https://10.0.0.8"],
+  ["production", "https://169.254.169.254"],
+  ["production", "https://192.168.1.8"],
+  ["production", "https://100.64.0.1"],
+  ["production", "https://198.18.0.1"],
+  ["production", "https://224.0.0.1"],
+  ["production", "https://[::1]"],
+  ["production", "https://[fd00::1]"],
+  ["production", "https://[ff02::1]"],
+] as const)(
+  "rejects an HTTPS site origin incompatible with %s: %s",
+  async (deploymentEnvironment, siteOrigin) => {
+    const { resolveServerRuntimeConfig } = await loadServerConfigModule();
+
+    expectInvalidConfig(
+      () =>
+        resolveServerRuntimeConfig({
+          environment: {
+            NODE_ENV: "production",
+            FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
+            FAN_SUPPORT_SITE_ORIGIN: siteOrigin,
+          },
+        }),
+      ["siteOrigin"],
+    );
+  },
+);
+
 test.each([
   ["development", "test"],
   ["test", "development"],
@@ -846,7 +1330,10 @@ test.each([
           environment: {
             NODE_ENV: nodeEnvironment,
             FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
-            FAN_SUPPORT_SITE_ORIGIN: "https://shop.example.invalid",
+            FAN_SUPPORT_SITE_ORIGIN:
+              deploymentEnvironment === "preview"
+                ? "https://localhost:3443"
+                : "https://shop.example.invalid",
           },
         }),
       ["deploymentEnvironment", "nodeEnvironment"],
@@ -903,6 +1390,23 @@ test("projects public config through an explicit allowlist", async () => {
   expect(JSON.stringify(publicConfig)).not.toContain("must-not-leak");
 });
 
+test("projects an exact preview origin into browser runtime config", async () => {
+  const { resolveServerRuntimeConfig, toPublicRuntimeConfig } =
+    await loadServerConfigModule();
+  const serverConfig = resolveServerRuntimeConfig({
+    environment: {
+      NODE_ENV: "production",
+      FAN_SUPPORT_DEPLOYMENT_ENV: "preview",
+      FAN_SUPPORT_SITE_ORIGIN: "https://localhost:3443",
+    },
+  });
+
+  expect(toPublicRuntimeConfig(serverConfig)).toEqual({
+    schemaVersion: 1,
+    siteOrigin: "https://localhost:3443",
+  });
+});
+
 test.each(["development", "test", "preview"] as const)(
   "resolves an HTTP internal API origin for the %s tier",
   async (deploymentEnvironment) => {
@@ -916,6 +1420,24 @@ test.each(["development", "test", "preview"] as const)(
         },
       }),
     ).toEqual({ schemaVersion: 1, origin: "http://api:3002" });
+  },
+);
+
+test.each(["https://api.example.invalid", "http://other-api:3002"] as const)(
+  "rejects a non-preview internal API origin in preview: %s",
+  async (internalApiOrigin) => {
+    const { resolveInternalApiRuntimeConfig } = await loadServerConfigModule();
+
+    expectInvalidConfig(
+      () =>
+        resolveInternalApiRuntimeConfig({
+          environment: {
+            FAN_SUPPORT_DEPLOYMENT_ENV: "preview",
+            FAN_SUPPORT_INTERNAL_API_ORIGIN: internalApiOrigin,
+          },
+        }),
+      ["internalApiOrigin"],
+    );
   },
 );
 

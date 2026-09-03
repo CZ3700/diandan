@@ -26,6 +26,9 @@ const expectedMigrationVersions = [
   "0004",
   "0005",
   "0006",
+  "0007",
+  "0008",
+  "0009",
 ];
 const lockObservationTimeoutMs = 10_000;
 
@@ -528,13 +531,15 @@ async function seedUnknownPaymentSuccessScenario(client, scenario) {
     INSERT INTO outbox_events (
       id, event_type, aggregate_type, aggregate_id, aggregate_version,
       primary_subject_id, secondary_subject_id, locale, market, currency,
-      idempotency_key, correlation_id, request_id, occurred_at, available_at
+      idempotency_key, correlation_id, request_id, occurred_at, available_at,
+      payload_status
     ) VALUES (
       '${scenario.createdStatusOutbox}', 'PAYMENT_STATUS_CHANGED',
       'PAYMENT_ATTEMPT', '${scenario.attempt}', 1, '${scenario.attempt}',
       '${scenario.order}', 'en', 'US', 'USD',
       'payment-created:${scenario.attempt}', '${scenario.correlation}',
-      '${scenario.request}', transaction_timestamp(), transaction_timestamp()
+      '${scenario.request}', transaction_timestamp(), transaction_timestamp(),
+      'CREATED'
     );
   `);
 
@@ -843,11 +848,12 @@ async function transitionPaymentAttemptToUnknown(client, scenario) {
     `INSERT INTO outbox_events (
        id, event_type, aggregate_type, aggregate_id, aggregate_version,
        primary_subject_id, secondary_subject_id, locale, market, currency,
-       idempotency_key, correlation_id, request_id, occurred_at, available_at
+       idempotency_key, correlation_id, request_id, occurred_at, available_at,
+       payload_status
      ) VALUES (
        $1, 'PAYMENT_STATUS_CHANGED', 'PAYMENT_ATTEMPT', $2, 2,
        $2, $3, 'en', 'US', 'USD', $4, $5, $6,
-       transaction_timestamp(), transaction_timestamp()
+       transaction_timestamp(), transaction_timestamp(), 'UNKNOWN'
      )`,
     [
       scenario.unknownStatusOutbox,
@@ -956,7 +962,7 @@ async function applyUnknownPaymentSuccess(
        payload_sha256, status, retention_expires_at
      ) VALUES (
        $1, decode(repeat('ab', 16), 'hex'), decode(repeat('cd', 16), 'hex'),
-       1, $2, 'RETAINED', transaction_timestamp() + interval '7 days'
+       'constraint-envelope-v1', $2, 'RETAINED', transaction_timestamp() + interval '7 days'
      )`,
     [scenario.webhookPayload, payloadHash],
   );
@@ -1092,11 +1098,12 @@ async function applyUnknownPaymentSuccess(
         `INSERT INTO outbox_events (
            id, event_type, aggregate_type, aggregate_id, aggregate_version,
            primary_subject_id, secondary_subject_id, locale, market, currency,
-           idempotency_key, correlation_id, request_id, occurred_at, available_at
+           idempotency_key, correlation_id, request_id, occurred_at, available_at,
+           payload_status
          ) VALUES (
            $1, 'FULFILLMENT_STATUS_CHANGED', 'FULFILLMENT', $2, 2,
            $2, $3, 'en', 'US', 'USD', $4, $5, $6,
-           transaction_timestamp(), transaction_timestamp()
+           transaction_timestamp(), transaction_timestamp(), 'ON_HOLD'
          )`,
         [
           transitionIds.fulfillmentOutbox,
@@ -1178,17 +1185,18 @@ async function applyUnknownPaymentSuccess(
     `INSERT INTO outbox_events (
        id, event_type, aggregate_type, aggregate_id, aggregate_version,
        primary_subject_id, secondary_subject_id, locale, market, currency,
-       idempotency_key, correlation_id, request_id, occurred_at, available_at
+       idempotency_key, correlation_id, request_id, occurred_at, available_at,
+       payload_status
      ) VALUES
        (
          $1, 'PAYMENT_STATUS_CHANGED', 'PAYMENT_ATTEMPT', $2, 3,
          $2, $3, 'en', 'US', 'USD', $4, $5, $6,
-         transaction_timestamp(), transaction_timestamp()
+         transaction_timestamp(), transaction_timestamp(), 'SUCCEEDED'
        ),
        (
          $7, 'ORDER_PAYMENT_CONFIRMED', 'ORDER', $3, 4,
          $3, $2, 'en', 'US', 'USD', $8, $5, $6,
-         transaction_timestamp(), transaction_timestamp()
+         transaction_timestamp(), transaction_timestamp(), NULL
        )`,
     [
       scenario.statusOutbox,
@@ -1255,17 +1263,18 @@ async function applyPaymentSuccess(client, scenario, { includeLateAudit }) {
     `INSERT INTO outbox_events (
        id, event_type, aggregate_type, aggregate_id, aggregate_version,
        primary_subject_id, secondary_subject_id, locale, market, currency,
-       idempotency_key, correlation_id, request_id, occurred_at, available_at
+       idempotency_key, correlation_id, request_id, occurred_at, available_at,
+       payload_status
      ) VALUES
        (
          $1, 'PAYMENT_STATUS_CHANGED', 'PAYMENT_ATTEMPT', $2, 2,
          $2, $3, 'en', 'US', 'USD', $4, $5, $6,
-         transaction_timestamp(), transaction_timestamp()
+         transaction_timestamp(), transaction_timestamp(), 'SUCCEEDED'
        ),
        (
          $7, 'ORDER_PAYMENT_CONFIRMED', 'ORDER', $3, 2,
          $3, $2, 'en', 'US', 'USD', $8, $5, $6,
-         transaction_timestamp(), transaction_timestamp()
+         transaction_timestamp(), transaction_timestamp(), NULL
        )`,
     [
       scenario.statusOutbox,
@@ -1678,7 +1687,7 @@ async function seedConstraintFixtures(client) {
       payload_sha256, status, retention_expires_at
     ) VALUES (
       '${ids.webhookPayload}', decode(repeat('40', 16), 'hex'),
-      decode(repeat('41', 16), 'hex'), 1, repeat('4', 64), 'RETAINED',
+      decode(repeat('41', 16), 'hex'), 'constraint-envelope-v1', repeat('4', 64), 'RETAINED',
       transaction_timestamp() + interval '1 day'
     );
 
@@ -1695,14 +1704,15 @@ async function seedConstraintFixtures(client) {
     INSERT INTO outbox_events (
       id, event_type, aggregate_type, aggregate_id, aggregate_version,
       primary_subject_id, secondary_subject_id, locale, market, currency,
-      idempotency_key, correlation_id, request_id, occurred_at, available_at
+      idempotency_key, correlation_id, request_id, occurred_at, available_at,
+      payload_status
     ) VALUES (
       '${ids.seededOutbox}', 'PAYMENT_STATUS_CHANGED', 'PAYMENT_ATTEMPT',
       '${ids.capturedAttempt}', 1, '${ids.capturedAttempt}', '${ids.capturedOrder}',
       'en', 'US', 'USD', 'constraint-outbox-seed',
       '10000000-0000-4000-8000-000000000170',
       '10000000-0000-4000-8000-000000000171',
-      transaction_timestamp(), transaction_timestamp()
+      transaction_timestamp(), transaction_timestamp(), 'CREATED'
     );
 
     INSERT INTO refunds (
@@ -1841,14 +1851,15 @@ async function assertSourceOutboxProvenanceMismatchRejected(client) {
         `INSERT INTO outbox_events (
            id, event_type, aggregate_type, aggregate_id, aggregate_version,
            primary_subject_id, secondary_subject_id, locale, market, currency,
-           idempotency_key, correlation_id, request_id, occurred_at, available_at
+           idempotency_key, correlation_id, request_id, occurred_at, available_at,
+           payload_status
          ) VALUES (
            '51000000-0000-4000-8000-000000000004',
            'PAYMENT_STATUS_CHANGED', 'PAYMENT_ATTEMPT', $1, 1, $1, $2,
            'en', 'US', 'USD', 'provenance-source-mismatch',
            '51000000-0000-4000-8000-000000000005',
            '51000000-0000-4000-8000-000000000002',
-           transaction_timestamp(), transaction_timestamp()
+           transaction_timestamp(), transaction_timestamp(), 'CREATED'
          )`,
         [ids.shadowAttempt, ids.shadowOrder],
       );
@@ -1888,14 +1899,15 @@ async function assertOutboxSourceProvenanceMismatchRejected(client) {
         `INSERT INTO outbox_events (
            id, event_type, aggregate_type, aggregate_id, aggregate_version,
            primary_subject_id, secondary_subject_id, locale, market, currency,
-           idempotency_key, correlation_id, request_id, occurred_at, available_at
+           idempotency_key, correlation_id, request_id, occurred_at, available_at,
+           payload_status
          ) VALUES (
            '52000000-0000-4000-8000-000000000004',
            'PAYMENT_STATUS_CHANGED', 'PAYMENT_ATTEMPT', $1, 1, $1, $2,
            'en', 'US', 'USD', 'provenance-outbox-mismatch',
            '52000000-0000-4000-8000-000000000005',
            '52000000-0000-4000-8000-000000000002',
-           transaction_timestamp(), transaction_timestamp()
+           transaction_timestamp(), transaction_timestamp(), 'CREATED'
          )`,
         [ids.shadowAttempt, ids.shadowOrder],
       );
@@ -1927,13 +1939,14 @@ async function insertCreatedAttemptEvidence(client) {
     `INSERT INTO outbox_events (
        id, event_type, aggregate_type, aggregate_id, aggregate_version,
        primary_subject_id, secondary_subject_id, locale, market, currency,
-       idempotency_key, correlation_id, request_id, occurred_at, available_at
+       idempotency_key, correlation_id, request_id, occurred_at, available_at,
+       payload_status
      ) VALUES (
        $1, 'PAYMENT_STATUS_CHANGED', 'PAYMENT_ATTEMPT', $2, 1,
        $2, $3, 'en', 'US', 'USD', $4,
        '20000000-0000-4000-8000-000000000040',
        '20000000-0000-4000-8000-000000000041',
-       transaction_timestamp(), transaction_timestamp()
+       transaction_timestamp(), transaction_timestamp(), 'CREATED'
      )`,
     [
       ids.activeAttemptOutboxA,
@@ -2074,13 +2087,14 @@ async function insertRequestedRefundEvidence(client, amountMinor) {
     `INSERT INTO outbox_events (
        id, event_type, aggregate_type, aggregate_id, aggregate_version,
        primary_subject_id, secondary_subject_id, locale, market, currency,
-       idempotency_key, correlation_id, request_id, occurred_at, available_at
+       idempotency_key, correlation_id, request_id, occurred_at, available_at,
+       payload_status
      ) VALUES (
        $1, 'REFUND_STATUS_CHANGED', 'REFUND', $2, 1, $2, $3,
        'en', 'US', 'USD', $4,
        '30000000-0000-4000-8000-000000000050',
        '30000000-0000-4000-8000-000000000051',
-       transaction_timestamp(), transaction_timestamp()
+       transaction_timestamp(), transaction_timestamp(), 'REQUESTED'
      )`,
     [
       ids.refundOutboxA,
@@ -2173,7 +2187,7 @@ async function assertWebhookPayloadDigestBinding(client) {
            payload_sha256, status, retention_expires_at
          ) VALUES (
            '${ids.mismatchWebhookPayload}', decode(repeat('42', 16), 'hex'),
-           decode(repeat('43', 16), 'hex'), 1, repeat('4', 64), 'RETAINED',
+           decode(repeat('43', 16), 'hex'), 'constraint-envelope-v1', repeat('4', 64), 'RETAINED',
            transaction_timestamp() + interval '1 day'
          )`,
       );
@@ -2296,21 +2310,22 @@ async function assertLateSuccessRequiresAtomicAggregatePlan(client) {
         `INSERT INTO outbox_events (
            id, event_type, aggregate_type, aggregate_id, aggregate_version,
            primary_subject_id, secondary_subject_id, locale, market, currency,
-           idempotency_key, correlation_id, request_id, occurred_at, available_at
+           idempotency_key, correlation_id, request_id, occurred_at, available_at,
+           payload_status
          ) VALUES
            (
              $1, 'PAYMENT_STATUS_CHANGED', 'PAYMENT_ATTEMPT', $2, 2,
              $2, $3, 'en', 'US', 'USD', $4,
              '50000000-0000-4000-8000-000000000060',
              '50000000-0000-4000-8000-000000000061',
-             transaction_timestamp(), transaction_timestamp()
+             transaction_timestamp(), transaction_timestamp(), 'SUCCEEDED'
            ),
            (
              $5, 'ORDER_PAYMENT_CONFIRMED', 'ORDER', $3, 1,
              $3, $2, 'en', 'US', 'USD', $6,
              '50000000-0000-4000-8000-000000000062',
              '50000000-0000-4000-8000-000000000063',
-             transaction_timestamp(), transaction_timestamp()
+             transaction_timestamp(), transaction_timestamp(), NULL
            )`,
         [
           ids.lateSuccessStatusOutbox,
@@ -2854,13 +2869,14 @@ async function assertRefundProviderAmountBinding(client) {
         `INSERT INTO outbox_events (
            id, event_type, aggregate_type, aggregate_id, aggregate_version,
            primary_subject_id, secondary_subject_id, locale, market, currency,
-           idempotency_key, correlation_id, request_id, occurred_at, available_at
+           idempotency_key, correlation_id, request_id, occurred_at, available_at,
+           payload_status
          ) VALUES (
            $1, 'REFUND_STATUS_CHANGED', 'REFUND', $2, 3, $2, $3,
            'en', 'US', 'USD', $4,
            '40000000-0000-4000-8000-000000000084',
            '40000000-0000-4000-8000-000000000085',
-           transaction_timestamp(), transaction_timestamp()
+           transaction_timestamp(), transaction_timestamp(), 'SUCCEEDED'
          )`,
         [
           ids.mismatchRefundOutbox,
@@ -2913,13 +2929,14 @@ async function assertDisputeProviderAmountBinding(client) {
         `INSERT INTO outbox_events (
            id, event_type, aggregate_type, aggregate_id, aggregate_version,
            primary_subject_id, secondary_subject_id, locale, market, currency,
-           idempotency_key, correlation_id, request_id, occurred_at, available_at
+           idempotency_key, correlation_id, request_id, occurred_at, available_at,
+           payload_status
          ) VALUES (
            $1, 'DISPUTE_STATUS_CHANGED', 'DISPUTE', $2, 2, $2, $3,
            'en', 'US', 'USD', $4,
            '40000000-0000-4000-8000-000000000086',
            '40000000-0000-4000-8000-000000000087',
-           transaction_timestamp(), transaction_timestamp()
+           transaction_timestamp(), transaction_timestamp(), 'WON'
          )`,
         [
           ids.mismatchDisputeOutbox,
@@ -3641,7 +3658,7 @@ async function assertWebhookEndpointLifecycleAndRetention(client) {
          payload_sha256, status, retention_expires_at, created_at
        ) VALUES (
          '${testId(offset)}', decode(repeat('70', 16), 'hex'),
-         decode(repeat('71', 16), 'hex'), 1, repeat('7', 64), 'RETAINED',
+         decode(repeat('71', 16), 'hex'), 'constraint-envelope-v1', repeat('7', 64), 'RETAINED',
          ${retention}, ${createdAt}
        )`,
       {
@@ -3680,7 +3697,7 @@ async function assertWebhookEndpointLifecycleAndRetention(client) {
              id, payload_ciphertext, encrypted_data_key, encryption_key_version,
              payload_sha256, status, retention_expires_at
            ) VALUES ($1, decode(repeat('72', 16), 'hex'),
-             decode(repeat('73', 16), 'hex'), 1, repeat('8', 64), 'RETAINED',
+             decode(repeat('73', 16), 'hex'), 'constraint-envelope-v1', repeat('8', 64), 'RETAINED',
              transaction_timestamp() + interval '1 day')`,
           [testId(offset)],
         );
@@ -3716,7 +3733,7 @@ async function assertWebhookEndpointLifecycleAndRetention(client) {
          id, payload_ciphertext, encrypted_data_key, encryption_key_version,
          payload_sha256, status, retention_expires_at
        ) VALUES ($1, decode(repeat('74', 16), 'hex'),
-         decode(repeat('75', 16), 'hex'), 1, repeat('9', 64), 'RETAINED',
+         decode(repeat('75', 16), 'hex'), 'constraint-envelope-v1', repeat('9', 64), 'RETAINED',
          transaction_timestamp() + interval '1 day')`,
       [purgePayload],
     );
@@ -3833,7 +3850,7 @@ async function assertWebhookEndpointLifecycleAndRetention(client) {
            id, payload_ciphertext, encrypted_data_key, encryption_key_version,
            payload_sha256, status, retention_expires_at
          ) VALUES ($1, decode(repeat('76', 16), 'hex'),
-           decode(repeat('77', 16), 'hex'), 1, repeat('a', 64), 'RETAINED',
+           decode(repeat('77', 16), 'hex'), 'constraint-envelope-v1', repeat('a', 64), 'RETAINED',
            transaction_timestamp() + interval '1 day')`,
         [testId(103)],
       );
@@ -3860,7 +3877,7 @@ async function assertWebhookEndpointLifecycleAndRetention(client) {
          id, payload_ciphertext, encrypted_data_key, encryption_key_version,
          payload_sha256, status, retention_expires_at
        ) VALUES ($1, decode(repeat('78', 16), 'hex'),
-         decode(repeat('79', 16), 'hex'), 1, repeat('b', 64), 'RETAINED',
+         decode(repeat('79', 16), 'hex'), 'constraint-envelope-v1', repeat('b', 64), 'RETAINED',
          transaction_timestamp() + interval '1 day')`,
       [testId(105)],
     );
@@ -3929,6 +3946,7 @@ async function assertMetadataBoundaryDomains(client) {
     "supporter@example.com",
     '{"message":"private"}',
     "media/private gift.webp",
+    "derivatives/./asset.webp",
     "media/../private.webp",
     "/media/private.webp",
   ];
@@ -4050,12 +4068,12 @@ async function runConstraintHarness(clientConfig) {
   const migrationResult = await runMigrations({
     clientConfig,
     workspaceRoot,
-    command: { direction: "up", targetVersion: "0006" },
+    command: { direction: "up", targetVersion: "0009" },
   });
   assertEqual(
     migrationResult.appliedVersions.join(","),
     expectedMigrationVersions.join(","),
-    "fresh database did not apply migrations 0001 through 0006",
+    "fresh database did not apply migrations 0001 through 0009",
   );
 
   const observer = new Client({

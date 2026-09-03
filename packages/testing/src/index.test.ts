@@ -1,7 +1,14 @@
 import { expect, test } from "vitest";
 
-import { workspacePackageName } from "./index.js";
+import * as testing from "./index.js";
 
-test("exposes the testing workspace boundary", () => {
-  expect(workspacePackageName).toBe("@fan-support/testing");
+test("exports framework-neutral adapter conformance runners", () => {
+  const exports = testing as Record<string, unknown>;
+  expect(exports["runPaymentProviderConformance"]).toBeTypeOf("function");
+  expect(exports["runMediaStorageConformance"]).toBeTypeOf("function");
+  expect(exports["runIdentityProviderConformance"]).toBeTypeOf("function");
+  expect(exports["runNotificationProviderConformance"]).toBeTypeOf("function");
+  expect(exports["runCachePurgeConformance"]).toBeTypeOf("function");
+  expect(exports["runKeyManagementConformance"]).toBeTypeOf("function");
+  expect(exports["runPersistenceConformance"]).toBeTypeOf("function");
 });

@@ -113,11 +113,16 @@ services:
       FAN_SUPPORT_DATABASE_URL: postgresql://fan_support:${PREVIEW_POSTGRES_PASSWORD:?managed by preview launcher}@postgres:5432/fan_support
       FAN_SUPPORT_DEPLOYMENT_ENV: preview
       FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: ${PREVIEW_OBJECT_STORAGE_ACCESS_KEY_ID:?managed by preview launcher}
-      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: fan-support-media
+      FAN_SUPPORT_OBJECT_STORAGE_AUTH_MODE: static
+      FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: fan-support-media-derivative
       FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: https://edge:7443
       FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true"
+      FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "10485760"
+      FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT: https://localhost:7443
+      FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN: https://localhost:7444
       FAN_SUPPORT_OBJECT_STORAGE_REGION: us-east-1
       FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: ${PREVIEW_OBJECT_STORAGE_SECRET_ACCESS_KEY:?managed by preview launcher}
+      FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: fan-support-media-source
       FAN_SUPPORT_SITE_ORIGIN: https://localhost:3443
       NODE_ENV: production
       NODE_EXTRA_CA_CERTS: /run/preview-ca/ca.crt
@@ -160,11 +165,16 @@ services:
       FAN_SUPPORT_DATABASE_URL: postgresql://fan_support:${PREVIEW_POSTGRES_PASSWORD:?managed by preview launcher}@postgres:5432/fan_support
       FAN_SUPPORT_DEPLOYMENT_ENV: preview
       FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: ${PREVIEW_OBJECT_STORAGE_ACCESS_KEY_ID:?managed by preview launcher}
-      FAN_SUPPORT_OBJECT_STORAGE_BUCKET: fan-support-media
+      FAN_SUPPORT_OBJECT_STORAGE_AUTH_MODE: static
+      FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: fan-support-media-derivative
       FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: https://edge:7443
       FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true"
+      FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "10485760"
+      FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT: https://localhost:7443
+      FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN: https://localhost:7444
       FAN_SUPPORT_OBJECT_STORAGE_REGION: us-east-1
       FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: ${PREVIEW_OBJECT_STORAGE_SECRET_ACCESS_KEY:?managed by preview launcher}
+      FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: fan-support-media-source
       FAN_SUPPORT_SITE_ORIGIN: https://localhost:3443
       NODE_ENV: production
       NODE_EXTRA_CA_CERTS: /run/preview-ca/ca.crt
@@ -205,6 +215,7 @@ services:
       - "127.0.0.1:3443:3443"
       - "127.0.0.1:3444:3444"
       - "127.0.0.1:7443:7443"
+      - "127.0.0.1:7444:7444"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - type: bind

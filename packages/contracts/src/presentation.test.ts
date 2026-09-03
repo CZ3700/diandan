@@ -71,6 +71,7 @@ test("rejects fragments and non-public literal media hosts", () => {
   for (const unsafeUrl of [
     "https://media.example.invalid/object.webp#access-token",
     "https://localhost/object.webp",
+    "https://localhost:7445/object.webp",
     "https://localhost./object.webp",
     "https://preview.localhost/object.webp",
     "https://127.0.0.1/object.webp",
@@ -80,16 +81,39 @@ test("rejects fragments and non-public literal media hosts", () => {
     "https://172.31.255.255/object.webp",
     "https://192.168.1.1/object.webp",
     "https://169.254.169.254/latest/meta-data",
+    "https://100.64.0.1/object.webp",
+    "https://198.18.0.1/object.webp",
+    "https://224.0.0.1/object.webp",
     "https://[::1]/object.webp",
     "https://[fc00::1]/object.webp",
     "https://[fd12:3456:789a::1]/object.webp",
     "https://[fe80::1]/object.webp",
+    "https://[ff02::1]/object.webp",
+    "https://[2001:db8::1]/object.webp",
     "https://[::ffff:127.0.0.1]/object.webp",
     "https://[::ffff:10.0.0.1]/object.webp",
   ]) {
     expect(publicMediaUrlSchema.safeParse(unsafeUrl).success, unsafeUrl).toBe(
       false,
     );
+  }
+});
+
+test("allows only the fixed local preview media origin", () => {
+  expect(
+    publicMediaUrlSchema.safeParse(
+      "https://localhost:7444/derivatives/asset-1/hero.webp",
+    ).success,
+  ).toBe(true);
+  for (const unsafePreviewVariant of [
+    "https://localhost:7445/derivatives/asset-1/hero.webp",
+    "https://127.0.0.1:7444/derivatives/asset-1/hero.webp",
+    "https://10.0.0.1:7444/derivatives/asset-1/hero.webp",
+  ]) {
+    expect(
+      publicMediaUrlSchema.safeParse(unsafePreviewVariant).success,
+      unsafePreviewVariant,
+    ).toBe(false);
   }
 });
 
