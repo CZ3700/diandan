@@ -6,7 +6,7 @@ import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 
-import { Client } from "pg";
+import { Client, Pool } from "pg";
 
 import {
   createDispatchOutboxEvent,
@@ -15,6 +15,7 @@ import {
   createReceivePaymentWebhook,
 } from "../../application/dist/index.js";
 import { createFakePaymentWebhookVerifier } from "../../payment-fake/dist/index.js";
+import { parsePersistenceTransactionFailure } from "../../persistence-port/dist/index.js";
 import {
   createPgBossReliableEventQueue,
   createPostgresPersistence,
@@ -23,6 +24,7 @@ import {
   runMigrations,
   withEphemeralPostgres,
 } from "../dist/index.js";
+import { createPostgresPersistenceWithPoolFactory } from "../dist/postgres-persistence.js";
 
 const workspaceRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -143,6 +145,254 @@ async function tableCounts(client) {
        (SELECT count(*)::integer FROM provider_event_associations) AS associations,
        (SELECT count(*)::integer FROM ${queueSchema}.job) AS queue_jobs`,
   );
+}
+
+async function webhookEventCounts(client, providerEventId) {
+  return queryScalar(
+    client,
+    `SELECT
+       (SELECT count(*)::integer
+          FROM webhook_payloads payload
+          JOIN webhook_inbox inbox ON inbox.webhook_payload_id = payload.id
+         WHERE inbox.provider_event_id = $1) AS payloads,
+       (SELECT count(*)::integer
+          FROM webhook_inbox
+         WHERE provider_event_id = $1) AS inbox,
+       (SELECT count(*)::integer
+          FROM provider_events
+         WHERE provider_event_id = $1) AS events,
+       (SELECT count(*)::integer
+          FROM provider_event_associations association
+          JOIN provider_events event ON event.id = association.provider_event_id
+         WHERE event.provider_event_id = $1) AS associations,
+       (SELECT count(*)::integer
+          FROM ${queueSchema}.job job
+          JOIN webhook_inbox inbox ON inbox.id = job.id
+         WHERE inbox.provider_event_id = $1
+           AND job.name = $2
+           AND job.data->>'webhookInboxId' = inbox.id::text) AS queue_jobs`,
+    [providerEventId, RELIABLE_EVENT_QUEUE_NAMES.webhookInbox],
+  );
+}
+
+const safeReceiptSuccessCodes = new Set(["ACCEPTED_NEW", "ACCEPTED_REPLAY"]);
+const safeReceiptFailureCodes = new Set([
+  "INVALID_REQUEST",
+  "ENDPOINT_UNAVAILABLE",
+  "INVALID_SIGNATURE",
+  "EVENT_OUTSIDE_TOLERANCE",
+  "UNSUPPORTED_EVENT",
+  "IDEMPOTENCY_CONFLICT",
+  "TEMPORARY_UNAVAILABLE",
+  "CONFIGURATION_ERROR",
+]);
+const safeReceiptRecoveries = new Set(["NONE", "RETRY_SAME_COMMAND"]);
+
+function safeReceiptOutcome(result) {
+  if (
+    typeof result === "object" &&
+    result !== null &&
+    result.outcome === "SUCCESS" &&
+    typeof result.value === "object" &&
+    result.value !== null &&
+    safeReceiptSuccessCodes.has(result.value.decision)
+  ) {
+    return {
+      outcome: "SUCCESS",
+      code: result.value.decision,
+      recovery: "NONE",
+    };
+  }
+  if (
+    typeof result === "object" &&
+    result !== null &&
+    result.outcome === "FAILURE" &&
+    typeof result.error === "object" &&
+    result.error !== null &&
+    safeReceiptFailureCodes.has(result.error.code) &&
+    safeReceiptRecoveries.has(result.error.recovery)
+  ) {
+    return {
+      outcome: "FAILURE",
+      code: result.error.code,
+      recovery: result.error.recovery,
+    };
+  }
+  return {
+    outcome: "FAILURE",
+    code: "MALFORMED_RESULT",
+    recovery: "NONE",
+  };
+}
+
+function concurrentReceiptDistribution(results) {
+  const counts = new Map();
+  for (const result of results) {
+    const outcome = safeReceiptOutcome(result);
+    const key = `${outcome.outcome}\u0000${outcome.code}\u0000${outcome.recovery}`;
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, count]) => {
+      const [outcome, code, recovery] = key.split("\u0000");
+      return { outcome, code, recovery, count };
+    });
+}
+
+function concurrentReceiptDiagnostic(results) {
+  return JSON.stringify(concurrentReceiptDistribution(results));
+}
+
+function assertConcurrentReceipt(condition, results) {
+  if (!condition) {
+    fail(concurrentReceiptDiagnostic(results));
+  }
+}
+
+function assertConcurrentReceiptDiagnosticIsSafe(results) {
+  const distribution = concurrentReceiptDistribution(results);
+  const safe = distribution.every(
+    (entry) =>
+      JSON.stringify(Object.keys(entry)) ===
+        JSON.stringify(["outcome", "code", "recovery", "count"]) &&
+      [entry.outcome, entry.code, entry.recovery].every(
+        (value) =>
+          typeof value === "string" && /^[A-Z][A-Z0-9_]{0,63}$/u.test(value),
+      ) &&
+      Number.isInteger(entry.count) &&
+      entry.count > 0,
+  );
+  assert(safe, "concurrent receipt diagnostic was not strictly redacted");
+}
+
+function createControlledSerializablePersistence({
+  clientConfig,
+  publishWebhookInbox,
+}) {
+  let releaseSnapshot;
+  const snapshotRelease = new Promise((resolve) => {
+    releaseSnapshot = resolve;
+  });
+  const state = {
+    snapshotObserved: false,
+    inboxInsertBlocked: false,
+    snapshotReleased: false,
+    collisionConstraint: "NOT_OBSERVED",
+    failureStatement: "NOT_OBSERVED",
+  };
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    clientConfig,
+    { publishWebhookInbox },
+    (normalizedConfig) => {
+      const pool = new Pool(normalizedConfig);
+      return {
+        connect: async () => {
+          const client = await pool.connect();
+          return {
+            query: async (text, values = []) => {
+              const statement = typeof text === "string" ? text : "";
+              const isInboxInsert = statement.includes(
+                "reliable-event:insert-webhook-inbox",
+              );
+              const isPayloadInsert = statement.includes(
+                "reliable-event:insert-webhook-payload",
+              );
+              const isProviderEventLoad = statement.includes(
+                "reliable-event:load-provider-event",
+              );
+              // Keep the SERIALIZABLE snapshot stale, but let the unrelated
+              // payload write finish so SSI cannot preempt the target unique
+              // constraint before this controlled inbox collision.
+              if (
+                state.snapshotObserved &&
+                !state.inboxInsertBlocked &&
+                isInboxInsert
+              ) {
+                state.inboxInsertBlocked = true;
+                await snapshotRelease;
+              }
+              let result;
+              try {
+                result = await client.query(text, values);
+              } catch (error) {
+                if (isInboxInsert) {
+                  state.failureStatement = "INSERT_WEBHOOK_INBOX";
+                } else if (isPayloadInsert) {
+                  state.failureStatement = "INSERT_WEBHOOK_PAYLOAD";
+                } else {
+                  state.failureStatement = "OTHER";
+                }
+                if (isInboxInsert) {
+                  state.collisionConstraint =
+                    typeof error === "object" &&
+                    error !== null &&
+                    "constraint" in error &&
+                    error.constraint === "webhook_inbox_provider_event_unique"
+                      ? "webhook_inbox_provider_event_unique"
+                      : "UNRECOGNIZED_CONSTRAINT";
+                }
+                throw error;
+              }
+              if (
+                !state.snapshotObserved &&
+                isProviderEventLoad &&
+                Array.isArray(result.rows) &&
+                result.rows.length === 0
+              ) {
+                state.snapshotObserved = true;
+              }
+              return result;
+            },
+            release: (destroy = false) => client.release(destroy),
+          };
+        },
+        end: () => pool.end(),
+        on: (_event, listener) => {
+          pool.on("error", listener);
+        },
+        off: (_event, listener) => {
+          pool.off("error", listener);
+        },
+      };
+    },
+  );
+  return {
+    persistence,
+    state,
+    releaseSnapshot: () => {
+      if (!state.snapshotReleased) {
+        state.snapshotReleased = true;
+        releaseSnapshot();
+      }
+    },
+  };
+}
+
+function capturePersistenceFailures(persistence, failures) {
+  return {
+    reliableEventTransactionManager: {
+      runInReliableEventTransaction: async (options, work) => {
+        try {
+          return await persistence.reliableEventTransactionManager.runInReliableEventTransaction(
+            options,
+            work,
+          );
+        } catch (error) {
+          const parsed = parsePersistenceTransactionFailure(error);
+          failures.push(
+            parsed === undefined
+              ? { code: "UNPARSEABLE_FAILURE", recovery: "NONE" }
+              : {
+                  code: parsed.error.code,
+                  recovery: parsed.error.recovery,
+                },
+          );
+          throw error;
+        }
+      },
+    },
+  };
 }
 
 async function waitUntil(label, predicate, timeoutMs = waitTimeoutMs) {
@@ -266,6 +516,63 @@ function createReceiveHarness(persistence, encryptedInputs) {
   });
 }
 
+async function assertOutsideToleranceScenarios({
+  client,
+  encryptedInputs,
+  receive,
+  receivedAt,
+}) {
+  const baseline = await tableCounts(client);
+  const encryptedBefore = encryptedInputs.length;
+  const receivedAtMs = Date.parse(receivedAt);
+  const scenarios = [
+    {
+      eventId: "expired-signature-event",
+      signatureAt: new Date(
+        receivedAtMs - 10 * 60 * 1_000 - 1_000,
+      ).toISOString(),
+    },
+    {
+      eventId: "future-signature-event",
+      signatureAt: new Date(
+        receivedAtMs + 5 * 60 * 1_000 + 1_000,
+      ).toISOString(),
+    },
+  ];
+  for (const scenario of scenarios) {
+    const body = paymentBody({ eventId: scenario.eventId });
+    const result = await receive(
+      commandFor(body, receivedAt, signedHeaders(body, scenario.signatureAt)),
+    );
+    assertEqual(
+      result.outcome,
+      "FAILURE",
+      "an outside-tolerance signature was accepted",
+    );
+    assertEqual(
+      result.error.code,
+      "EVENT_OUTSIDE_TOLERANCE",
+      "an outside-tolerance signature returned the wrong stable error",
+    );
+    assertEqual(
+      result.error.recovery,
+      "NONE",
+      "an outside-tolerance signature was made retryable",
+    );
+    assertEqual(
+      encryptedInputs.length,
+      encryptedBefore,
+      "an outside-tolerance signature reached envelope encryption",
+    );
+    assertEqual(
+      JSON.stringify(await tableCounts(client)),
+      JSON.stringify(baseline),
+      "an outside-tolerance signature changed durable cardinality",
+    );
+  }
+  return scenarios.length;
+}
+
 async function assertIngressAndReceiptScenarios({
   client,
   persistence,
@@ -321,6 +628,12 @@ async function assertIngressAndReceiptScenarios({
     0,
     "an unauthenticated webhook reached envelope encryption",
   );
+  const outsideToleranceScenarios = await assertOutsideToleranceScenarios({
+    client,
+    encryptedInputs,
+    receive,
+    receivedAt,
+  });
 
   const semanticEventId = "semantic-replay-event";
   const exactRawBody = paymentBody({ eventId: semanticEventId });
@@ -410,39 +723,42 @@ async function assertIngressAndReceiptScenarios({
       receive(commandFor(concurrentBody, receivedAt)),
     ),
   );
-  assertEqual(
-    concurrentResults.filter(
-      (result) =>
-        result.outcome === "SUCCESS" &&
-        result.value.decision === "ACCEPTED_NEW",
-    ).length,
-    1,
-    "concurrent receipt did not elect exactly one new event",
+  const concurrentOutcomes = concurrentResults.map(safeReceiptOutcome);
+  assertConcurrentReceiptDiagnosticIsSafe(concurrentResults);
+  assertConcurrentReceipt(
+    concurrentOutcomes.filter(
+      (outcome) =>
+        outcome.outcome === "SUCCESS" && outcome.code === "ACCEPTED_NEW",
+    ).length === 1,
+    concurrentResults,
   );
-  assert(
-    concurrentResults.every(
-      (result) =>
-        result.outcome === "SUCCESS" ||
-        (result.error.code === "TEMPORARY_UNAVAILABLE" &&
-          result.error.recovery === "RETRY_SAME_COMMAND"),
+  assertConcurrentReceipt(
+    concurrentOutcomes.every(
+      (outcome) =>
+        outcome.outcome === "SUCCESS" ||
+        (outcome.code === "TEMPORARY_UNAVAILABLE" &&
+          outcome.recovery === "RETRY_SAME_COMMAND"),
     ),
-    "concurrent receipt returned a non-retryable race failure",
+    concurrentResults,
   );
   const convergedResults = [];
   for (const result of concurrentResults) {
+    const outcome = safeReceiptOutcome(result);
     convergedResults.push(
-      result.outcome === "SUCCESS"
+      outcome.outcome === "SUCCESS"
         ? result
         : await receive(commandFor(concurrentBody, receivedAt)),
     );
   }
-  assert(
-    convergedResults.every(
-      (result) =>
-        result.outcome === "SUCCESS" &&
-        ["ACCEPTED_NEW", "ACCEPTED_REPLAY"].includes(result.value.decision),
+  const convergedOutcomes = convergedResults.map(safeReceiptOutcome);
+  assertConcurrentReceiptDiagnosticIsSafe(convergedResults);
+  assertConcurrentReceipt(
+    convergedOutcomes.every(
+      (outcome) =>
+        outcome.outcome === "SUCCESS" &&
+        safeReceiptSuccessCodes.has(outcome.code),
     ),
-    "retryable concurrent receipts did not converge to NEW/REPLAY",
+    convergedResults,
   );
   const concurrentCounts = await queryScalar(
     client,
@@ -457,20 +773,11 @@ async function assertIngressAndReceiptScenarios({
            AND job.data->>'webhookInboxId' = inbox.id::text) AS jobs`,
     [concurrentEventId, RELIABLE_EVENT_QUEUE_NAMES.webhookInbox],
   );
-  assertEqual(
-    concurrentCounts.inbox,
-    1,
-    "concurrent receipt duplicated inbox rows",
-  );
-  assertEqual(
-    concurrentCounts.events,
-    1,
-    "concurrent receipt duplicated events",
-  );
-  assertEqual(
-    concurrentCounts.jobs,
-    1,
-    "concurrent receipt duplicated queue jobs",
+  assertConcurrentReceipt(
+    concurrentCounts.inbox === 1 &&
+      concurrentCounts.events === 1 &&
+      concurrentCounts.jobs === 1,
+    convergedResults,
   );
 
   const dlqEventId = "finite-retry-dead-letter-event";
@@ -483,7 +790,156 @@ async function assertIngressAndReceiptScenarios({
     "DLQ fixture was not new",
   );
 
-  return { concurrentEventId, dlqEventId, semanticEventId };
+  return {
+    concurrentEventId,
+    concurrentReceiptDiagnosticsSafe: true,
+    dlqEventId,
+    outsideToleranceScenarios,
+    semanticEventId,
+  };
+}
+
+async function assertControlledSerializableReceiptRace({
+  client,
+  clientConfig,
+  persistence,
+  queue,
+  receivedAt,
+}) {
+  const controlled = createControlledSerializablePersistence({
+    clientConfig,
+    publishWebhookInbox: (transaction, job) =>
+      queue.publishWebhookInbox(transaction, job),
+  });
+  const capturedFailures = [];
+  const loserReceive = createReceiveHarness(
+    capturePersistenceFailures(controlled.persistence, capturedFailures),
+    [],
+  );
+  const winnerReceive = createReceiveHarness(persistence, []);
+  const providerEventId = "controlled-stale-snapshot-event";
+  const body = paymentBody({ eventId: providerEventId });
+  const command = commandFor(body, receivedAt);
+  let loserPromise;
+  try {
+    const before = await webhookEventCounts(client, providerEventId);
+    assert(
+      Object.values(before).every((value) => value === 0),
+      "controlled receipt fixture was not isolated",
+    );
+
+    let loserSettled = false;
+    loserPromise = loserReceive(command).finally(() => {
+      loserSettled = true;
+    });
+    await waitUntil(
+      "controlled SERIALIZABLE stale snapshot",
+      () => {
+        if (loserSettled && !controlled.state.inboxInsertBlocked) {
+          fail("controlled receipt did not reach its blocked inbox insert");
+        }
+        return (
+          controlled.state.snapshotObserved &&
+          controlled.state.inboxInsertBlocked
+        );
+      },
+      30_000,
+    );
+
+    let winnerResult;
+    let orchestrationFailure;
+    try {
+      winnerResult = await winnerReceive(command);
+    } catch (error) {
+      orchestrationFailure = error;
+    } finally {
+      controlled.releaseSnapshot();
+    }
+    const loserResult = await loserPromise;
+    if (orchestrationFailure !== undefined) {
+      throw orchestrationFailure;
+    }
+
+    assertEqual(
+      winnerResult.outcome,
+      "SUCCESS",
+      "controlled race winner did not succeed",
+    );
+    assertEqual(
+      winnerResult.value.decision,
+      "ACCEPTED_NEW",
+      "controlled race winner was not new",
+    );
+    assertEqual(
+      controlled.state.collisionConstraint,
+      "webhook_inbox_provider_event_unique",
+      "controlled race did not reach the provider-event uniqueness boundary",
+    );
+    assertEqual(
+      controlled.state.failureStatement,
+      "INSERT_WEBHOOK_INBOX",
+      "controlled race failed outside the inbox uniqueness write",
+    );
+    assertEqual(
+      JSON.stringify(capturedFailures),
+      JSON.stringify([
+        {
+          code: "TRANSACTION_ABORTED",
+          recovery: "RETRY_SAME_COMMAND",
+        },
+      ]),
+      "controlled race did not use the repository retry mapping",
+    );
+    assertEqual(
+      loserResult.outcome,
+      "FAILURE",
+      "controlled race loser unexpectedly succeeded",
+    );
+    assertEqual(
+      loserResult.error.code,
+      "TEMPORARY_UNAVAILABLE",
+      "controlled race loser returned the wrong public error",
+    );
+    assertEqual(
+      loserResult.error.recovery,
+      "RETRY_SAME_COMMAND",
+      "controlled race loser was not safely retryable",
+    );
+
+    const retryResult = await loserReceive(command);
+    assertEqual(
+      retryResult.outcome,
+      "SUCCESS",
+      "controlled race retry did not succeed",
+    );
+    assertEqual(
+      retryResult.value.decision,
+      "ACCEPTED_REPLAY",
+      "controlled race retry did not converge to replay",
+    );
+    assertEqual(
+      retryResult.value.webhookInboxId,
+      winnerResult.value.webhookInboxId,
+      "controlled race retry returned a different inbox identity",
+    );
+    assertEqual(
+      retryResult.value.providerEventRowId,
+      winnerResult.value.providerEventRowId,
+      "controlled race retry returned a different event identity",
+    );
+    const after = await webhookEventCounts(client, providerEventId);
+    assert(
+      Object.values(after).every((value) => value === 1),
+      "controlled race did not converge to one durable row and job",
+    );
+    return 1;
+  } finally {
+    controlled.releaseSnapshot();
+    if (loserPromise !== undefined) {
+      await loserPromise.catch(() => undefined);
+    }
+    await controlled.persistence.close().catch(() => undefined);
+  }
 }
 
 async function assertPublishRollback({
@@ -910,6 +1366,15 @@ async function runHarness(clientConfig) {
       persistence,
       receivedAt,
     });
+    phase = "controlled-serializable-race";
+    const controlledSerializableRace =
+      await assertControlledSerializableReceiptRace({
+        client,
+        clientConfig,
+        persistence,
+        queue: provisionQueue,
+        receivedAt,
+      });
     phase = "publish-rollback";
     await assertPublishRollback({
       client,
@@ -934,8 +1399,12 @@ async function runHarness(clientConfig) {
     });
     return {
       concurrentReceipts: 10,
+      concurrentReceiptDiagnosticsSafe:
+        ingress.concurrentReceiptDiagnosticsSafe,
+      controlledSerializableRace,
       workers: 2,
       maxAttempts: 6,
+      outsideToleranceScenarios: ingress.outsideToleranceScenarios,
     };
   } catch (error) {
     if (error instanceof ReliableEventHarnessError) {
@@ -965,7 +1434,22 @@ const startedAt = Date.now();
 try {
   const result = await withEphemeralPostgres(async (clientConfig) => {
     try {
-      return await runHarness(clientConfig);
+      const evidence = await runHarness(clientConfig);
+      assertEqual(
+        JSON.stringify({
+          outsideToleranceScenarios: evidence.outsideToleranceScenarios,
+          concurrentReceiptDiagnosticsSafe:
+            evidence.concurrentReceiptDiagnosticsSafe,
+          controlledSerializableRace: evidence.controlledSerializableRace,
+        }),
+        JSON.stringify({
+          outsideToleranceScenarios: 2,
+          concurrentReceiptDiagnosticsSafe: true,
+          controlledSerializableRace: 1,
+        }),
+        "the reliable-event gate did not prove every terminal review scenario",
+      );
+      return evidence;
     } catch (error) {
       if (error instanceof ReliableEventHarnessError) {
         throw new EphemeralPostgresError(error.message);
@@ -976,7 +1460,7 @@ try {
     }
   });
   console.log(
-    `PostgreSQL reliable-event gate passed (${result.concurrentReceipts} concurrent receipts, ${result.workers} VERIFY workers, ${result.maxAttempts} finite attempts, ${Date.now() - startedAt} ms).`,
+    `PostgreSQL reliable-event gate passed (${result.outsideToleranceScenarios} outside-tolerance rejections, ${result.concurrentReceipts} concurrent receipts with redacted diagnostics, ${result.controlledSerializableRace} controlled SERIALIZABLE race, ${result.workers} VERIFY workers, ${result.maxAttempts} finite attempts, ${Date.now() - startedAt} ms).`,
   );
 } catch (error) {
   const message =
