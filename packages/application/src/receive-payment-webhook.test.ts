@@ -414,25 +414,28 @@ test.each([
     label: "provider event",
     identity: { providerEventId: "fake-event/payment/succeeded/other" },
   },
-])("rejects a replay response bound to a different $label", async ({ identity }) => {
-  const harness = createHarness({ receiptDecision: "REPLAY" });
-  harness.recordReceipt.mockResolvedValueOnce(
-    success("RECORD_VERIFIED_WEBHOOK_RECEIPT", {
-      decision: "REPLAY",
-      webhookInboxId: IDS.alternateWebhookInbox,
-      providerEventRowId: IDS.alternateProviderEvent,
-      providerAccountId: ENDPOINT.providerAccountId,
-      environment: ENDPOINT.environment,
-      providerEventId: CANDIDATE.providerEventId,
-      ...identity,
-    }),
-  );
+])(
+  "rejects a replay response bound to a different $label",
+  async ({ identity }) => {
+    const harness = createHarness({ receiptDecision: "REPLAY" });
+    harness.recordReceipt.mockResolvedValueOnce(
+      success("RECORD_VERIFIED_WEBHOOK_RECEIPT", {
+        decision: "REPLAY",
+        webhookInboxId: IDS.alternateWebhookInbox,
+        providerEventRowId: IDS.alternateProviderEvent,
+        providerAccountId: ENDPOINT.providerAccountId,
+        environment: ENDPOINT.environment,
+        providerEventId: CANDIDATE.providerEventId,
+        ...identity,
+      }),
+    );
 
-  await expect(harness.receive(COMMAND)).resolves.toMatchObject({
-    outcome: "FAILURE",
-    error: { code: "CONFIGURATION_ERROR", recovery: "NONE" },
-  });
-});
+    await expect(harness.receive(COMMAND)).resolves.toMatchObject({
+      outcome: "FAILURE",
+      error: { code: "CONFIGURATION_ERROR", recovery: "NONE" },
+    });
+  },
+);
 
 test("fails closed when no deployed verifier is registered for the endpoint", async () => {
   const harness = createHarness();
