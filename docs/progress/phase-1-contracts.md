@@ -14,8 +14,8 @@
 |:--|:--|:--|:--|:--|
 | P1-01 | DONE | Codex `/root` | P0-01、P0-03 | Git `4695a41`、PR #4/run `33693878714`；本地、clean clone、Quality/Security 与三路独立复核全绿 |
 | P1-02 | DONE | Codex `/root` | P1-01、P0-04 | Git `6daea69`、PR #5/run `33707017702`；本地、clean clone、Quality/Security 与两路独立验收全绿 |
-| P1-03 | READY | — | P1-01 | 纯 Domain、价格/库存/状态与属性测试 |
-| P1-04 | READY | — | P1-01、P1-02、P0-03 | 完整 migrations、七语言 translation/review、inventory balance、订单金额/退款约束与加密边界 |
+| P1-03 | IN_PROGRESS | Codex `/root` | P1-01 | 纯 Domain、价格/库存/状态机/路由/幂等与可复现属性测试；开始时间 `2026-09-03T10:24:33+08:00` |
+| P1-04 | PENDING | — | P1-01、P1-02、P0-03 | 依赖已完成，但与 P1-03 同属 Lane A，等待该 Lane 释放；完整 migrations、七语言 translation/review、inventory balance、订单金额/退款约束与加密边界 |
 | P1-05 | PENDING | — | P1-01/02/03/04 | Repositories 与 payment/media/identity/notification/cache/KMS ports/adapters |
 | P1-06 | PENDING | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
 
@@ -59,6 +59,15 @@
 - **独立复核**：领域/对抗复核与隔离验收均为 ACCEPT；Blocker 0、Should 0，复跑 contracts 43/43、content 62/62、两包 typecheck/build、artifact freshness 与 `git diff --check` 全绿。
 - **真实 CI**：[PR #5](https://github.com/CZ3700/diandan/pull/5) 的 [run 33707017702](https://github.com/CZ3700/diandan/actions/runs/33707017702) 中 Quality 与 Security 均成功，merge 状态 `CLEAN`。
 - **证据范围**：本任务仅为纯合同、validator、projection 与 fixtures，不包含数据库 migration/repository、真实对象存储、业务 API/UI、PostgreSQL、PSP、AWS apply、staging 或 production 证据；媒体 objectKey 与真实存储绑定留给 P1-05，库存复合唯一/rollback 事务链留给 P1-04，关键政策 fallback 留给 P3-05。
+
+## P1-03 执行卡
+
+- **Owner / 开始时间**：Codex `/root`，2026-09-03T10:24:33+08:00。
+- **范围**：在 `@fan-support/domain` 以纯 TypeScript 实现金额安全算术与快照校验、价格 revision/有效区间选择、礼物变体适用关系、库存预占/提交/释放/过期规则、支付/订单/退款/争议/履约正交状态机、确定性支付路由与幂等决策；跨模块输入输出复用 `@fan-support/contracts` 的可序列化 schema/type。
+- **非目标**：不建立 PostgreSQL migration、行锁或 repository，不调用 PSP/网络/文件系统，不实现 webhook inbox/outbox、业务 API、应用层 Saga 或 UI；不根据 locale 推导 market/currency/provider，不宣称已证明数据库并发或真实支付。
+- **测试先行计划**：先写失败的 example + property tests；金额覆盖 `MAX_SAFE_INTEGER` 边界和守恒，价格选择覆盖时间边界/重叠拒绝，库存覆盖守恒与非法重复迁移，状态机覆盖非法跳转/可信证据/迟到成功，路由覆盖相同输入+规则版本确定性和 attempt 已固化后不可改路，幂等覆盖同 key 同 hash 重放与不同 hash 冲突；固定 seed 并输出可复现失败信息。
+- **验证计划**：受影响 domain 单元/属性测试、branch coverage ≥90%、禁止框架/ORM/PSP/网络依赖扫描、format/lint/typecheck/build、完整 0-cache `pnpm check`、secret/audit、clean-clone frozen install/check，以及独立领域/状态机/属性测试复核。
+- **风险护栏**：对应 R-01/R-03/R-05/R-06；所有金额只用安全整数 minor unit；浏览器/adapter 输入视为未验证；`UNKNOWN` 不自动重扣/改路；状态跃迁显式 fail closed；库存函数只返回事务计划/结果，不伪造数据库行锁与并发保证。
 
 ## 必须证明
 
