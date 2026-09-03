@@ -1,8 +1,8 @@
 # 全球偶像礼物应援平台：产品、设计与工程约束
 
 > 文档状态：开发基线（Authoritative）  
-> 版本：2.1.0  
-> 日期：2026-09-02  
+> 版本：2.1.1
+> 日期：2026-09-04
 > 面向：Codex、Claude Code、产品设计、前端、后端、测试与运营  
 > 目标：让执行代理无需重新解释需求，即可按阶段实现、验证和交付第一版平台。
 
@@ -977,16 +977,20 @@ DRAFT → VALIDATED → PUBLISHED → SUPERSEDED → ARCHIVED
 interface PaymentProvider {
   getCapabilities(context: CheckoutContext): Promise<PaymentCapability[]>;
   createPayment(command: CreatePaymentCommand): Promise<PaymentAction>;
-  verifyAndParseWebhook(
-    rawBody: Uint8Array,
-    headers: Record<string, string>
-  ): Promise<ProviderEvent>;
   getPayment(externalReference: string): Promise<PaymentSnapshot>;
   cancel(command: CancelPaymentCommand): Promise<CancelResult>;
   refund(command: RefundCommand): Promise<RefundResult>;
   reconcile(externalReference: string): Promise<PaymentSnapshot>;
 }
+
+interface PaymentWebhookVerifier {
+  verifyPaymentWebhook(
+    command: PaymentWebhookVerificationCommand
+  ): Promise<PaymentWebhookVerificationResponse>;
+}
 ```
+
+Webhook 验签必须通过独立的 endpoint-scoped `PaymentWebhookVerifier` 产生尚未成为业务证据的 candidate；只有 candidate、加密原文、inbox/provider event 与 ID-only job 在同一数据库事务持久化成功后，才可形成可信 provider evidence 并返回 ACK。冻结的 v1 `VERIFY_AND_PARSE_WEBHOOK` schema/type 仅保留给历史数据解码与 TEST-only fake conformance，不属于当前 `PaymentProvider`、生产 conformance 或生产调用面。
 
 `PaymentAction` 是可序列化判别联合，只允许 `REDIRECT | PROVIDER_HOSTED_IFRAME | PROVIDER_COMPONENT | QR_CODE | WAIT`；任何敏感字段都由 PSP 页面/组件直接接收。
 
@@ -1437,7 +1441,7 @@ Provider：
 - `docs/双站调研与类似平台技术架构规划.md`：参考站产品与技术研究；只作背景，不覆盖当前精简范围。
 - `research/mxcheer/`、`research/sonnystar/`：参考站浏览器证据。
 - `research/tech/`：技术指纹与复现记录。
-- `docs/fan-support-platform-architecture.drawio`：全源码自研架构图；其中通用 i18n 边界由本 2.1.0 规范定义，发生冲突时仍以本规范为准。
+- `docs/fan-support-platform-architecture.drawio`：全源码自研架构图；其中通用 i18n 边界由本 2.1.1 规范定义，发生冲突时仍以本规范为准。
 
 ### 23.2 实现时优先核对的官方资料
 

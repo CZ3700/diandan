@@ -63,6 +63,36 @@ class RecordingPool implements ManagedPersistencePool {
   }
 }
 
+class TransactionClientStub implements TransactionClient {
+  public readonly queries: string[] = [];
+  public released = false;
+
+  public async query(text: string): Promise<unknown> {
+    this.queries.push(text);
+    return /^commit$/iu.test(text.trim())
+      ? { command: "COMMIT" }
+      : { rows: [] };
+  }
+
+  public release(): void {
+    this.released = true;
+  }
+}
+
+class TransactionPool implements ManagedPersistencePool {
+  public readonly client = new TransactionClientStub();
+
+  public async connect(): Promise<TransactionClient> {
+    return this.client;
+  }
+
+  public async end(): Promise<void> {}
+
+  public on(): void {}
+
+  public off(): void {}
+}
+
 test("rejects invalid transaction options before acquiring a connection", async () => {
   const persistence = createPostgresPersistence({
     host: "invalid.invalid",
@@ -93,6 +123,98 @@ test("rejects invalid transaction options before acquiring a connection", async 
       recovery: "NONE",
     });
     expect(callbackInvoked).toBe(false);
+  } finally {
+    await persistence.close();
+  }
+});
+
+test("adds a reliable-event manager without changing legacy repository keys", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    {
+      publishWebhookInbox: async () => undefined,
+    },
+    () => pool,
+  );
+
+  try {
+    await expect(
+      persistence.transactionManager.runInTransaction(
+        { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+        async (repositories) => Object.keys(repositories).sort(),
+      ),
+    ).resolves.toEqual(["idempotency", "inventory", "outbox"]);
+    await expect(
+      persistence.reliableEventTransactionManager.runInReliableEventTransaction(
+        { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+        async (repositories) => Object.keys(repositories).sort(),
+      ),
+    ).resolves.toEqual([
+      "outbox",
+      "outboxDispatch",
+      "paymentWebhookEndpoints",
+      "verifiedWebhookReceipts",
+      "webhookPayloadRetention",
+      "webhookProcessing",
+    ]);
+  } finally {
+    await persistence.close();
+  }
+  expect(pool.client.released).toBe(true);
+});
+
+test("rejects invalid reliable-event transaction options before acquiring a connection", async () => {
+  const pool = new RecordingPool(Promise.resolve());
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    { publishWebhookInbox: async () => undefined },
+    () => pool,
+  );
+  try {
+    const failure = await persistence.reliableEventTransactionManager
+      .runInReliableEventTransaction(
+        { schemaVersion: 2, isolationLevel: "READ_COMMITTED" } as never,
+        async () => null,
+      )
+      .catch((error: unknown) => error);
+    expect(failure).toBeInstanceOf(PersistenceTransactionFailureError);
+    expect(failure).toMatchObject({
+      code: "INVALID_COMMAND",
+      recovery: "NONE",
+    });
+    expect(pool.connectCalls).toBe(0);
+  } finally {
+    await persistence.close();
+  }
+});
+
+test("tracks an invalid reliable-event operation even when the callback forgets to await it", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    { publishWebhookInbox: async () => undefined },
+    () => pool,
+  );
+  try {
+    const failure = await persistence.reliableEventTransactionManager
+      .runInReliableEventTransaction(
+        { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+        async (repositories) => {
+          void repositories.paymentWebhookEndpoints
+            .load({ schemaVersion: 2 } as never)
+            .catch(() => undefined);
+          return null;
+        },
+      )
+      .catch((error: unknown) => error);
+    expect(failure).toBeInstanceOf(PersistenceTransactionFailureError);
+    expect(failure).toMatchObject({
+      code: "INVALID_COMMAND",
+      recovery: "NONE",
+    });
+    expect(pool.client.queries).toContain("ROLLBACK");
+    expect(pool.client.queries).not.toContain("COMMIT");
   } finally {
     await persistence.close();
   }

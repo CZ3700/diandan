@@ -163,6 +163,29 @@ import {
   persistenceTransactionFailureSchema,
   transactionOptionsSchema,
 } from "./persistence-port-contracts.js";
+import {
+  encryptedWebhookPayloadSchema,
+  paymentWebhookEndpointDescriptorSchema,
+  reliableEventPersistenceCommandSchema,
+  reliableEventPersistenceResponseSchema,
+} from "./reliable-event-persistence-contracts.js";
+import {
+  outboxDispatchJobSchema,
+  paymentWebhookAcceptedResponseSchema,
+  paymentWebhookEndpointPreflightCommandSchema,
+  paymentWebhookEndpointPreflightResultSchema,
+  paymentWebhookVerificationCommandSchema,
+  paymentWebhookVerificationErrorSchema,
+  paymentWebhookVerificationResponseSchema,
+  queuePropagationCarrierSchema,
+  receivePaymentWebhookCommandSchema,
+  receivePaymentWebhookErrorSchema,
+  receivePaymentWebhookResponseSchema,
+  reliableEventDeliveryContextSchema,
+  reliableEventJobSchema,
+  verifiedWebhookEventCandidateSchema,
+  webhookInboxJobSchema,
+} from "./reliable-events.js";
 
 export type ContractAudience = "public-http" | "admin-http" | "internal";
 
@@ -692,6 +715,101 @@ const registrations = [
     name: "PaymentPortError",
     audience: "internal",
     schema: paymentPortErrorSchema,
+  },
+  {
+    name: "VerifiedWebhookEventCandidate",
+    audience: "internal",
+    schema: verifiedWebhookEventCandidateSchema,
+  },
+  {
+    name: "PaymentWebhookVerificationCommand",
+    audience: "internal",
+    schema: paymentWebhookVerificationCommandSchema,
+  },
+  {
+    name: "PaymentWebhookVerificationResponse",
+    audience: "internal",
+    schema: paymentWebhookVerificationResponseSchema,
+  },
+  {
+    name: "PaymentWebhookVerificationError",
+    audience: "internal",
+    schema: paymentWebhookVerificationErrorSchema,
+  },
+  {
+    name: "PaymentWebhookEndpointPreflightCommand",
+    audience: "internal",
+    schema: paymentWebhookEndpointPreflightCommandSchema,
+  },
+  {
+    name: "PaymentWebhookEndpointPreflightResult",
+    audience: "internal",
+    schema: paymentWebhookEndpointPreflightResultSchema,
+  },
+  {
+    name: "QueuePropagationCarrier",
+    audience: "internal",
+    schema: queuePropagationCarrierSchema,
+  },
+  {
+    name: "WebhookInboxJob",
+    audience: "internal",
+    schema: webhookInboxJobSchema,
+  },
+  {
+    name: "OutboxDispatchJob",
+    audience: "internal",
+    schema: outboxDispatchJobSchema,
+  },
+  {
+    name: "ReliableEventJob",
+    audience: "internal",
+    schema: reliableEventJobSchema,
+  },
+  {
+    name: "ReceivePaymentWebhookCommand",
+    audience: "internal",
+    schema: receivePaymentWebhookCommandSchema,
+  },
+  {
+    name: "ReceivePaymentWebhookResponse",
+    audience: "internal",
+    schema: receivePaymentWebhookResponseSchema,
+  },
+  {
+    name: "ReceivePaymentWebhookError",
+    audience: "internal",
+    schema: receivePaymentWebhookErrorSchema,
+  },
+  {
+    name: "PaymentWebhookAcceptedResponse",
+    audience: "public-http",
+    schema: paymentWebhookAcceptedResponseSchema,
+  },
+  {
+    name: "ReliableEventDeliveryContext",
+    audience: "internal",
+    schema: reliableEventDeliveryContextSchema,
+  },
+  {
+    name: "PaymentWebhookEndpointDescriptor",
+    audience: "internal",
+    schema: paymentWebhookEndpointDescriptorSchema,
+  },
+  {
+    name: "EncryptedWebhookPayload",
+    audience: "internal",
+    schema: encryptedWebhookPayloadSchema,
+  },
+  {
+    name: "ReliableEventPersistenceCommand",
+    audience: "internal",
+    schema: reliableEventPersistenceCommandSchema,
+  },
+  {
+    name: "ReliableEventPersistenceResponse",
+    audience: "internal",
+    schema: reliableEventPersistenceResponseSchema,
   },
   {
     name: "MediaPortCommand",

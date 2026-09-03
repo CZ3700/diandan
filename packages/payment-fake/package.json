@@ -6,10 +6,12 @@
   "sideEffects": false,
   "dependencies": {
     "@fan-support/contracts": "workspace:*",
-    "@fan-support/payment-port": "workspace:*"
+    "@fan-support/payment-port": "workspace:*",
+    "zod": "4.5.4"
   },
   "devDependencies": {
-    "@fan-support/testing": "workspace:*"
+    "@fan-support/testing": "workspace:*",
+    "@types/node": "24.13.3"
   },
   "exports": {
     ".": {

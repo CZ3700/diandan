@@ -6,6 +6,10 @@ import {
   type TextMapSetter,
 } from "@opentelemetry/api";
 import { W3CTraceContextPropagator } from "@opentelemetry/core";
+import {
+  queuePropagationCarrierSchema,
+  type QueuePropagationCarrier,
+} from "@fan-support/contracts";
 
 import { createPropagationHeaders } from "./request-context.js";
 import { isCanonicalRequestId, REQUEST_ID_HEADER } from "./request-id.js";
@@ -17,15 +21,7 @@ const CARRIER_KEYS = Object.freeze([
 ] as const);
 const CARRIER_KEY_SET = new Set<PropertyKey>(CARRIER_KEYS);
 const TRACE_HEADER_KEYS = Object.freeze(["traceparent"] as const);
-const CANONICAL_TRACEPARENT_PATTERN =
-  /^00-(?!0{32}-)[0-9a-f]{32}-(?!0{16}-)[0-9a-f]{16}-[0-9a-f]{2}$/u;
 const traceContextPropagator = new W3CTraceContextPropagator();
-
-export type QueuePropagationCarrier = Readonly<{
-  schemaVersion: 1;
-  requestId: string;
-  traceparent: string;
-}>;
 
 function readPlainCarrier(
   value: unknown,
@@ -96,31 +92,27 @@ export function createQueuePropagationCarrier():
     return undefined;
   }
 
-  return Object.freeze({
-    schemaVersion: 1 as const,
-    requestId,
-    traceparent,
-  });
+  return Object.freeze(
+    queuePropagationCarrierSchema.parse({
+      schemaVersion: 1,
+      requestId,
+      traceparent,
+    }),
+  );
 }
 
 export function parseQueuePropagationCarrier(
   value: unknown,
 ): Readonly<Record<string, string>> | undefined {
   const carrier = readPlainCarrier(value);
-  if (
-    carrier === undefined ||
-    carrier.schemaVersion !== 1 ||
-    typeof carrier.requestId !== "string" ||
-    !isCanonicalRequestId(carrier.requestId) ||
-    typeof carrier.traceparent !== "string" ||
-    !CANONICAL_TRACEPARENT_PATTERN.test(carrier.traceparent)
-  ) {
+  const parsedCarrier = queuePropagationCarrierSchema.safeParse(carrier);
+  if (!parsedCarrier.success) {
     return undefined;
   }
 
   const extracted = traceContextPropagator.extract(
     ROOT_CONTEXT,
-    carrier,
+    parsedCarrier.data,
     traceHeaderGetter,
   );
   const spanContext = trace.getSpanContext(extracted);
@@ -129,7 +121,7 @@ export function parseQueuePropagationCarrier(
   }
 
   const headers: Record<string, string> = {
-    [REQUEST_ID_HEADER]: carrier.requestId,
+    [REQUEST_ID_HEADER]: parsedCarrier.data.requestId,
   };
   traceContextPropagator.inject(extracted, headers, traceHeaderSetter);
   if (headers["traceparent"] === undefined) {

@@ -1,6 +1,6 @@
 # Phase 1 — 合同、领域与数据真相源
 
-> 状态：ACTIVE
+> 状态：CLOSED
 > 任务：6  
 > 解锁条件：Phase 0 退出门禁通过；与 Phase 2 同时激活
 
@@ -17,7 +17,7 @@
 | P1-03 | DONE | Codex `/root` | P1-01 | Git `49a8756`、PR #6/run `33720394020`；本地/clean clone、Quality/Security 与三路独立复核全绿 |
 | P1-04 | DONE | Codex `/root` | P1-01、P1-02、P0-03 | Git `827ada4`、PR #7/run `33739482625`；PG18、clean clone、Quality/Security 与两路独立终验全绿 |
 | P1-05 | DONE | Codex `/root` | P1-01/02/03/04 | Git `233d11b`、PR #8/run `33785418111`；本地、clean clone、Quality/Security 与独立终审全绿 |
-| P1-06 | READY | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
+| P1-06 | DONE | Codex `/root` | P1-04、P1-05 | Git `02ee108`、PR #9/run `33808236380`；真实 PG/pg-boss、clean clone、Quality/Security 与独立终审全绿 |
 
 ## P1-01 执行卡
 
@@ -129,6 +129,46 @@
 - **独立终审**：数据库 URL/query、结构化 socket host、公共 HTTPS/private IP、staging/production internal origin 四项 Major 均复核为 RESOLVED；identity/notification fake 终审 `ACCEPT`（Blocker 0、Major 0），唯一 Should 的非法 notification runtime options 测试已补齐为 12/12 通过。
 - **浏览器与证据范围**：`output/playwright/p1-05/` 记录 preview CORS/配置的浏览器侧证据；本任务没有真实 PSP/OIDC/邮件供应商、AWS apply、staging、production、PITR 或真实支付结论，webhook raw-body 验签、inbox/outbox 消费、pg-boss retry/DLQ 明确留给 P1-06。
 
+## P1-06 执行卡
+
+- **Owner / 开始时间**：Codex `/root`，2026-09-04T01:46:14+08:00。
+- **输入与范围**：复用 P1-04 的 webhook endpoint/payload/inbox/provider-event/association/effect/outbox/attempt 表及 P1-05 的 payment、persistence、key-management ports；合同先行定义 endpoint-scoped verified webhook candidate、raw-body signature metadata、ID-only inbox/outbox queue envelope 与持久化命令，再实现 TEST-only raw-byte verifier、Application ingress/processor、PostgreSQL repositories、pg-boss adapter、有限 retry/DLQ、outbox relay，以及 API/Worker composition/lifecycle。
+- **输出边界**：合法事件只在原始字节验签通过后进入 PostgreSQL；重复/并发/乱序事件可恢复，同 provider event identity 的冲突 fail closed；handler 内 repository 操作、effect receipt 与 outbox append 共享同一事务边界，job 只携带 `schemaVersion`、内部 ID 和安全 trace carrier；本任务以 test-only outbox handler 证明 effect/outbox 原子提交与回滚，不冒充 P4-05 尚未实现的真实 payment/order mutation；提交后 ACK，重投仍只有一次数据库副作用。
+- **非目标**：不接真实 PSP/邮件供应商，不实现 payment/order/reservation 的业务状态推进（留给 P4-05）、Admin 查询/人工重放（P5-06）、通知编排、AWS apply/staging/production、真实支付或 Redis；浏览器回跳仍不能确认付款。pg-boss 内部 schema 不成为 public 业务真相源。
+- **测试先行计划**：先写失败合同/fixture 和真实 PostgreSQL 测试，覆盖 invalid/expired/future/tampered signature 零持久化、exact raw bytes（空白变化签名失败）、endpoint/key rotation 绑定、相同 ID 同/异 payload、乱序不同事件、10 次并发重复仅一份 inbox/provider event/effect/job、receipt/enqueue 原子回滚、commit-before-ACK 崩溃重投、有限 retry→DLQ、未注册 handler fail closed，以及 raw payload/secret/header/PII 不进入日志、queue、outbox 或测试输出；reviewed provider fixture 只允许显式虚构内容与 TEST-only 签名材料。
+- **迁移策略**：禁止回改 0005/0006/0009；优先复用现有唯一键、append-only trigger 与 effect receipt。只有新的失败数据库测试证明现有 schema 无法表达必要不变量时，才新增最小前向 migration；pg-boss 使用精确锁版和独立 schema。
+- **验证计划**：受影响 contracts/ports/application/adapters/API/Worker 测试与 artifact freshness；真实 PostgreSQL 18 + 真实 pg-boss schema/双 worker/故障窗集成；provider/ORM/queue 类型边界和依赖图；format、lint、typecheck、build、完整 0-cache `pnpm check`、secret/high audit、fresh clean clone、独立支付/可靠事件复核及真实 PR Quality/Security。
+- **风险护栏**：对应 R-03/R-11；验签必须先于 provider JSON 解析，`endpointId` 先映射 account/environment/key reference，secret 明文不进入 Application/合同/日志；外部网络副作用只能宣称 at-least-once + 稳定 provider idempotency key，不能伪造跨数据库/网络 exactly-once；未注册生产 handler 不得以 no-op 标记成功。
+- **Review 请求**：2026-09-04T05:38:55+08:00；候选实现已完成 raw-body ingress、verified candidate、durable receipt、inbox/outbox、pg-boss worker/retry/DLQ、API/Worker lifecycle 与真实 PostgreSQL 事务门禁；终审先发现 queue carrier 未恢复消费上下文及 effect/outbox 真实原子性证据不足，均以失败测试复现后修复，再提交最终验收。
+
+### DONE 证据（2026-09-04）
+
+- **合同与 API 边界**：`POST /api/v1/webhooks/payments/{endpointId}` 在读取 body 前用 lowercase RFC4122 v4 endpoint 做 preflight，只接受受限签名 header 和原始 bytes；验签、account/environment/key/time identity 全部通过后才 hash、加密并持久化。公共 ACK 固定为 `{schemaVersion: 1, status: "accepted"}`，不暴露 raw body、header/signature、provider account、inbox 或 receipt identity；合同 artifact 与 OpenAPI path 已同步。
+- **持久化与幂等**：Application 只依赖 versioned persistence/payment/key-management ports；PostgreSQL 使用 SERIALIZABLE receipt transaction、endpoint 事务内复核、provider event/inbox 唯一约束、encrypted payload、effect receipt 与 outbox provenance。合法 replay 绑定原 account/environment/eventId，identity 或 payload 冲突 fail closed；提交前失败不 ACK，提交后重投返回稳定 replay。
+- **队列与 Worker**：`pg-boss@12.30.0` 固定 schema 40、独立 `pgboss` schema、VERIFY 模式、每次 batch 1、本地 concurrency 4、最多 6 次 attempt、有限 backoff 与专用 DLQ；webhook/outbox job 为 strict ID-only envelope。未注册 handler 不是成功 no-op，而是有限重试后进入 DLQ；maintenance list/purge、outbox relay 与 shutdown 均有有界生命周期和安全 notice。
+- **关联与隐私**：API 只把 `schemaVersion/requestId/traceparent` 写入 queue carrier；Worker 在业务 handler 前重新解析并恢复同一 requestId/traceId、创建新 child span，未知字段、baggage、tracestate 或非法 trace 均 fail closed。raw payload 仅允许以 KeyManagement envelope 返回的 ciphertext/encrypted DEK/digest 落库并可按 TTL purge；本任务未接真实 KMS。日志、queue、outbox、公开响应与测试输出不含真实 secret、生产 raw payload 或 PII；reviewed provider fixture 仅含显式虚构 raw body 与 TEST-only 签名材料。
+- **真实事务/并发证据**：真实 PostgreSQL 18 + pg-boss 覆盖 2 个时间窗外拒绝且加密/DB/queue 零变化、10 路并发 receipt 的严格脱敏诊断、受控 SERIALIZABLE 唯一约束竞态与同命令重试收敛、双 VERIFY worker、commit-before-ACK 重投、最多 6 次 retry→DLQ。test-only handler 在同一 repository transaction 内 append 严格 versioned outbox：并发与合法语义 replay 各恰好 1 条；永久失败每次在 append 后抛错，最终 effect/outbox 为 0，失败 attempt 独立保存为 5 RETRYABLE + 1 DEAD_LETTER。
+- **TDD 轨迹**：合同、API、Application、queue、Worker 与 PostgreSQL 场景均先观察缺失实现的失败；终审补强的两个明确 red 为 `runWithQueueContext` 0 次调用，以及并发事件 outbox `0 != 1`，最小修复后对应 focused/真实集成门禁转绿。0005/0006/0009 migration 未回改，也未新增 Redis 或供应商 SDK。
+- **本地完整门禁**：Node `24.20.0` / pnpm `11.25.0` 下 `TURBO_FORCE=true pnpm check` exit 0；workspace 4 apps/30 packages/34 units 无循环，合同 fresh，真实 PostgreSQL 9 migrations/108 tables、S3-compatible TLS、Prettier/ESLint、typecheck `49/49`、test `49/49`、build `34/34`、adapter/artifact checks 全绿，可靠事件门禁耗时 `114483 ms`。`pnpm security:secrets` 与官方 registry `pnpm audit --audit-level=high` 均 exit 0、无已知 high 漏洞。
+- **clean clone / 真实 CI**：冻结实现提交 `02ee10846a3b960e6f0d7bceb0b2d269f972a0aa` 在 `/tmp/fan-support-p106-final.UWHssl/repo` 完成 frozen offline install、0-cache 完整门禁、secret/high audit 与干净工作树检查；其中可靠事件门禁耗时 `94502 ms`。[PR #9](https://github.com/CZ3700/diandan/pull/9) 的 [run 33808236380](https://github.com/CZ3700/diandan/actions/runs/33808236380) 对同一 SHA 执行 Quality/Security 均成功，PR merge 状态 `CLEAN`。
+- **独立终审**：首轮 requirements 审查报告 Blocker 0、Major 1、Minor 1，并促成 queue consumer context 恢复和真实 effect/outbox 原子性补强；修复后安全/隐私及最终增量复核均 `ACCEPT`，Blocker 0、Major 0。raw/signature/secret/PII sink、生产 fake/no-op、identity binding、事务/重试、合同兼容与生成物均已独立检查。
+- **剩余范围**：生产 composition 在真实 PSP verifier/KMS/业务 handler 未部署时安全拒绝，不代表 production-ready；真实 PSP/Secret Manager、小额支付、payment/order/reservation 状态推进、人工重放/对账、AWS apply、staging、PITR、告警和灰度仍由 P4-P7 承担。外部投递只保证 at-least-once + 稳定幂等键。两个非阻断制品/观测卫生项留待部署加固：为 workspace production deploy 统一收窄 package `files` allowlist，以及用专用 messaging consumer span 替代当前内部 `/jobs/*` context bridge，避免未来 exporter 污染 HTTP 指标。
+
+### P1-06 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | raw ingress、preflight、receipt、inbox processor、outbox dispatcher、maintenance、queue adapter 与 runtime composition 各有单一职责 |
+| 2 | PASS | 原始字节读取、验签、事务 receipt、业务处理、relay/purge 与 lifecycle 由独立函数组合；终审后的 context wrapper 只负责恢复安全 carrier |
+| 3 | PASS | Route → Application → Port → PostgreSQL/pg-boss adapter 单向，Domain 与 Application 不依赖 Nest/Fastify/Drizzle/供应商 SDK |
+| 4 | PASS | 最终 workspace 检查覆盖 4 apps/30 packages/34 units，无 dependency cycle |
+| 5 | PASS | API、verified candidate、receipt、persistence command/response、event 与 queue envelope 均由 strict Zod + `schemaVersion` 定义 |
+| 6 | PASS | 跨模块 I/O 为 plain serializable DTO；queue 只有内部 ID、correlationId 与三字段 propagation，不携带 provider/ORM/KMS 对象 |
+| 7 | PASS | 数据库、endpoint/account/key reference、时间与运行环境均注入；无生产域名、secret、locale/market/currency/provider 特判 |
+| 8 | PASS | `pg-boss@12.30.0`、`pg@8.23.0` 及 workspace contracts/ports 均显式声明并经 frozen lockfile/high audit 验证 |
+| 9 | PASS | verifier、KMS、persistence、queue、handler 与 outbox consumer 通过 ports/factories 注入；替换实现不改 Application/Domain |
+| 10 | PASS | focused、完整本地、真实 PG/pg-boss/S3、clean clone、secret/audit、独立终审与真实 PR Quality/Security 全部通过 |
+
 ## 必须证明
 
 - Domain 无 Next.js、NestJS、Drizzle 或供应商 SDK。
@@ -139,4 +179,4 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02、P1-03、P1-04、P1-05 已完成，P1-06 为 `READY`，Phase 1 退出证据尚未全部取得。
+状态：`CLOSED`（2026-09-04）。P1-01～P1-06 均为 `DONE`；合同、内容/发布、纯领域规则、9 migration/108-table PostgreSQL 真相源、versioned ports/adapters 及 raw-body webhook/inbox/outbox/pg-boss retry-DLQ 已取得本地、真实集成、fresh clean clone、独立终审与 PR Quality/Security 证据。Phase 2 继续为唯一 `ACTIVE` Phase；Phase 3 必须等待 Phase 2 退出门禁，不因 Phase 1 完成而提前解锁。

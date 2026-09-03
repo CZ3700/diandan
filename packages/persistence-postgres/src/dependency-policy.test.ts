@@ -24,6 +24,16 @@ test("depends on the supplier-free persistence port boundary", async () => {
   );
 });
 
+test("declares every workspace package imported by the runtime adapter", async () => {
+  const manifest = JSON.parse(
+    await readFile(new URL("../package.json", import.meta.url), "utf8"),
+  ) as Readonly<{
+    dependencies?: Readonly<Record<string, string>>;
+  }>;
+
+  expect(manifest.dependencies?.["@fan-support/contracts"]).toBe("workspace:*");
+});
+
 test("keeps the repository harness in the PostgreSQL integration gate", async () => {
   const manifest = JSON.parse(
     await readFile(new URL("../package.json", import.meta.url), "utf8"),

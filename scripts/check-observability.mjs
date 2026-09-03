@@ -179,7 +179,11 @@ async function validateApplicationContracts() {
   for (const app of ["api", "worker"]) {
     const mainPath = `apps/${app}/src/main.ts`;
     const main = await readText(mainPath);
-    requireText(mainPath, main, [
+    const lifecyclePath =
+      app === "api" ? "apps/api/src/process-runtime.ts" : mainPath;
+    const lifecycle =
+      lifecyclePath === mainPath ? main : await readText(lifecyclePath);
+    requireText(lifecyclePath, lifecycle, [
       "createRuntimeFatalHandler",
       "createRuntimeShutdownHandler",
       "createRuntimeShutdownCoordinator",
@@ -191,22 +195,28 @@ async function validateApplicationContracts() {
       "attachRuntime",
     ]);
     if (
-      main !== undefined &&
-      main.indexOf('process.once("SIGTERM"') >
-        main.indexOf("launchObservedRuntime({")
+      lifecycle !== undefined &&
+      lifecycle.indexOf('process.once("SIGTERM"') >
+        lifecycle.indexOf("launchObservedRuntime({")
     ) {
       errors.push(
-        `${mainPath} must register shutdown signals before runtime startup`,
+        `${lifecyclePath} must register shutdown signals before runtime startup`,
       );
     }
     if (
-      main !== undefined &&
-      main.indexOf('process.on("unhandledRejection"') >
-        main.indexOf("launchObservedRuntime({")
+      lifecycle !== undefined &&
+      lifecycle.indexOf('process.on("unhandledRejection"') >
+        lifecycle.indexOf("launchObservedRuntime({")
     ) {
       errors.push(
-        `${mainPath} must register fatal error handlers before runtime startup`,
+        `${lifecyclePath} must register fatal error handlers before runtime startup`,
       );
+    }
+    if (app === "api") {
+      requireText(mainPath, main, [
+        "createProductionApiApplication",
+        "startApiProcessRuntime",
+      ]);
     }
   }
 

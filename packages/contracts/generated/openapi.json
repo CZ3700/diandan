@@ -1,5 +1,21 @@
 {
   "components": {
+    "headers": {
+      "RequestId": {
+        "description": "Canonical request identifier for support and tracing.",
+        "schema": {
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "RetryAfter": {
+        "description": "Minimum whole seconds to wait before retrying the same request.",
+        "schema": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      }
+    },
     "schemas": {
       "CartGiftContext": {
         "anyOf": [
@@ -3901,6 +3917,25 @@
           "schemaVersion",
           "attemptId",
           "state"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "PaymentWebhookAcceptedResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "status": {
+            "const": "accepted",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "status"
         ],
         "type": "object",
         "x-fan-support-audience": "public-http"
@@ -10630,6 +10665,20 @@
         ],
         "x-fan-support-audience": "admin-http"
       }
+    },
+    "securitySchemes": {
+      "PaymentWebhookSignature": {
+        "description": "Provider signature calculated over the exact request bytes; required together with PaymentWebhookTimestamp.",
+        "in": "header",
+        "name": "X-Fan-Support-Signature",
+        "type": "apiKey"
+      },
+      "PaymentWebhookTimestamp": {
+        "description": "Provider signature timestamp used for replay-window validation; required together with PaymentWebhookSignature.",
+        "in": "header",
+        "name": "X-Fan-Support-Timestamp",
+        "type": "apiKey"
+      }
     }
   },
   "info": {
@@ -10637,6 +10686,176 @@
     "version": "1.0.0"
   },
   "openapi": "3.1.0",
-  "paths": {},
-  "x-fan-support-document-kind": "schema-components"
+  "paths": {
+    "/api/v1/webhooks/payments/{endpointId}": {
+      "post": {
+        "description": "Authenticates the endpoint and both signature headers before accepting the exact, unparsed request bytes for durable processing.",
+        "operationId": "receivePaymentWebhook",
+        "parameters": [
+          {
+            "description": "Opaque, non-secret UUID that selects the configured webhook endpoint before the body is read.",
+            "in": "path",
+            "name": "endpointId",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/*+json": {
+              "schema": {
+                "description": "Exact request bytes before parsing, decoding, normalization, or re-serialization.",
+                "format": "binary",
+                "maxLength": 49152,
+                "type": "string"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "description": "Exact request bytes before parsing, decoding, normalization, or re-serialization.",
+                "format": "binary",
+                "maxLength": 49152,
+                "type": "string"
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "description": "Exact request bytes before parsing, decoding, normalization, or re-serialization.",
+                "format": "binary",
+                "maxLength": 49152,
+                "type": "string"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "description": "Exact request bytes before parsing, decoding, normalization, or re-serialization.",
+                "format": "binary",
+                "maxLength": 49152,
+                "type": "string"
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "description": "Exact request bytes before parsing, decoding, normalization, or re-serialization.",
+                "format": "binary",
+                "maxLength": 49152,
+                "type": "string"
+              }
+            }
+          },
+          "description": "Exact request bytes used for signature verification. The decoded HTTP body must be at most 49152 bytes; parsing or re-serialization before verification is forbidden.",
+          "required": true,
+          "x-fan-support-body-handling": "exact-raw-bytes",
+          "x-fan-support-max-body-bytes": 49152
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentWebhookAcceptedResponse"
+                }
+              }
+            },
+            "description": "The durable receipt was accepted or safely replayed; downstream business processing may still be pending.",
+            "headers": {
+              "X-Request-ID": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicErrorEnvelope"
+                }
+              }
+            },
+            "description": "The endpoint identifier, required authentication headers, payload, signature, timestamp, or normalized event was invalid.",
+            "headers": {
+              "X-Request-ID": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicErrorEnvelope"
+                }
+              }
+            },
+            "description": "The webhook endpoint is unavailable.",
+            "headers": {
+              "X-Request-ID": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicErrorEnvelope"
+                }
+              }
+            },
+            "description": "The event conflicts with an earlier receipt using the same idempotency identity.",
+            "headers": {
+              "X-Request-ID": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicErrorEnvelope"
+                }
+              }
+            },
+            "description": "The exact request body exceeds 49152 bytes.",
+            "headers": {
+              "X-Request-ID": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicErrorEnvelope"
+                }
+              }
+            },
+            "description": "The webhook endpoint is temporarily unavailable. Retry-After is present when retrying the same request is safe.",
+            "headers": {
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              },
+              "X-Request-ID": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "PaymentWebhookSignature": [],
+            "PaymentWebhookTimestamp": []
+          }
+        ],
+        "summary": "Receive a payment provider webhook"
+      }
+    }
+  },
+  "x-fan-support-document-kind": "implemented-paths-and-schema-components"
 }

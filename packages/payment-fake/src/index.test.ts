@@ -9,6 +9,7 @@ import {
 import {
   deterministicPortFixtures,
   loadReviewedProviderFixtureBundle,
+  runLegacyWebhookParserConformance,
   runPaymentProviderConformance,
 } from "@fan-support/testing";
 
@@ -31,7 +32,11 @@ test("passes the shared provider conformance suite", async () => {
   const report = await runPaymentProviderConformance(provider);
 
   expect(report.passed).toBe(true);
-  expect(report.cases).toHaveLength(16);
+  expect(report.cases).toHaveLength(15);
+
+  const legacyReport = await runLegacyWebhookParserConformance(provider);
+  expect(legacyReport.passed).toBe(true);
+  expect(legacyReport.cases).toHaveLength(1);
 });
 
 test("matches the reviewed payment provider fixture", async () => {

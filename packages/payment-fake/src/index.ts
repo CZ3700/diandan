@@ -9,6 +9,7 @@ import {
   type GetPaymentCapabilitiesResponse,
   type GetPaymentCommand,
   type GetPaymentResponse,
+  type LegacyWebhookParser,
   type PaymentProvider,
   type ReconcilePaymentCommand,
   type ReconcilePaymentResponse,
@@ -106,7 +107,7 @@ function failure<Response>(
 
 export function createFakePaymentProvider(
   options: FakePaymentProviderOptions = {},
-): PaymentProvider {
+): PaymentProvider & LegacyWebhookParser {
   const now = options.now ?? "2026-09-03T00:00:00.000Z";
   const forcedProviderLocale = options.providerLocale;
   const reconcilePaymentStatus = options.reconcilePaymentStatus ?? "SUCCEEDED";
@@ -533,3 +534,8 @@ export function createFakePaymentProvider(
 }
 
 export const workspacePackageName = "@fan-support/payment-fake" as const;
+
+export {
+  createFakePaymentWebhookVerifier,
+  type FakePaymentWebhookVerifierOptions,
+} from "./webhook.js";

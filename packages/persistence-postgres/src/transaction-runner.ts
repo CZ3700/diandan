@@ -12,7 +12,7 @@ type TransactionFailure = Omit<
 >;
 
 export interface TransactionClient {
-  query(text: string): Promise<unknown>;
+  query(text: string, values?: unknown[]): Promise<unknown>;
   release(destroy?: boolean): void;
 }
 

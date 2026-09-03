@@ -30,6 +30,7 @@ import {
 import {
   paymentPortResponseSchema,
   paymentPortResponseMatchesCommand,
+  type LegacyWebhookParser,
   type PaymentProvider,
 } from "@fan-support/payment-port";
 import {
@@ -585,19 +586,6 @@ export function runPaymentProviderConformance(
       invoke: () => provider.createPayment(fixtures.createPayment),
     },
     {
-      name: "verify-and-parse-webhook",
-      command: fixtures.verifyAndParseWebhook,
-      responseSchema: paymentPortResponseSchema,
-      acceptsResponse: (response) =>
-        paymentPortResponseMatchesCommand(
-          fixtures.verifyAndParseWebhook,
-          response,
-        ) &&
-        (succeeds(response) || failsWith(response, "UNSUPPORTED_EVENT")),
-      invoke: () =>
-        provider.verifyAndParseWebhook(fixtures.verifyAndParseWebhook),
-    },
-    {
       name: "get-payment",
       command: fixtures.getPayment,
       responseSchema: paymentPortResponseSchema,
@@ -750,6 +738,27 @@ export function runPaymentProviderConformance(
           response,
         ),
       invoke: () => provider.reconcileRefund(fixtures.capturedReconcileRefund),
+    },
+  ]);
+}
+
+/** Verifies that the frozen v1 parser remains decode-compatible and fail-closed. */
+export function runLegacyWebhookParserConformance(
+  parser: LegacyWebhookParser,
+  fixtures: DeterministicPortFixtures["payment"] = deterministicPortFixtures.payment,
+): Promise<ConformanceReport> {
+  return runSuite("legacy-webhook-parser-v1", [
+    {
+      name: "rejects-legacy-webhook-ingress",
+      command: fixtures.verifyAndParseWebhook,
+      responseSchema: paymentPortResponseSchema,
+      acceptsResponse: (response) =>
+        paymentPortResponseMatchesCommand(
+          fixtures.verifyAndParseWebhook,
+          response,
+        ) && failsWith(response, "UNSUPPORTED_EVENT"),
+      invoke: () =>
+        parser.verifyAndParseWebhook(fixtures.verifyAndParseWebhook),
     },
   ]);
 }
