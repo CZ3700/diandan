@@ -25,6 +25,7 @@ import {
   type SupportedLocale,
   supportedLocaleSchema,
 } from "./locale.js";
+import { mediaObjectKeySchema } from "./media-content.js";
 import { orderPaymentStatusSchema } from "./payment.js";
 import { publicMediaViewSchema, slugSchema } from "./presentation.js";
 import { schemaVersionSchema } from "./versioning.js";
@@ -76,11 +77,7 @@ export const translationSnapshotRefSchema = z.union(
 export const mediaSnapshotSchema = z.strictObject({
   assetId: mediaAssetIdSchema,
   checksum: z.string().regex(/^[a-f0-9]{64}$/u),
-  objectKey: z
-    .string()
-    .min(1)
-    .max(1_024)
-    .regex(/^(?!\/)(?!.*(?:^|\/)\.\.(?:\/|$))[A-Za-z0-9._/-]+$/u),
+  objectKey: mediaObjectKeySchema,
   metadataRevisionId: mediaMetadataRevisionIdSchema,
   alt: z.string().min(1).max(300),
   altTranslation: translationSnapshotRefSchema,

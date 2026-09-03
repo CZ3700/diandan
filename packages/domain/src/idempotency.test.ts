@@ -9,11 +9,13 @@ import { decideIdempotency } from "./idempotency.js";
 
 const request = {
   schemaVersion: 1 as const,
-  actor: "cart:opaque-actor",
+  actor: `actor-ref:v1:guest:${"a".repeat(64)}`,
   operation: "checkout.create",
   key: idempotencyKeySchema.parse("idempotency-key-0001"),
-  canonicalRequestHash: "sha256:request-a",
+  canonicalRequestHash: "b".repeat(64),
 };
+const safeResultRef =
+  "result-ref:v1:4f847525-ed50-44db-b2cb-319977b397e0" as const;
 
 test("replays the safe result for the same live scope, key, and hash", () => {
   expect(
@@ -24,7 +26,7 @@ test("replays the safe result for the same live scope, key, and hash", () => {
       existingRecord: {
         ...request,
         status: "SUCCEEDED",
-        safeResultRef: "order:public-safe-reference",
+        safeResultRef,
         expiresAt: "2026-09-03T04:00:00.000Z",
       },
     }),
@@ -32,7 +34,7 @@ test("replays the safe result for the same live scope, key, and hash", () => {
     schemaVersion: 1,
     kind: "REPLAY",
     status: "SUCCEEDED",
-    safeResultRef: "order:public-safe-reference",
+    safeResultRef,
   });
 });
 
@@ -41,7 +43,7 @@ test("conflicts on the same live scope and key with a different hash", () => {
     decideIdempotency({
       schemaVersion: 1,
       evaluatedAt: "2026-09-03T03:00:00.000Z",
-      request: { ...request, canonicalRequestHash: "sha256:request-b" },
+      request: { ...request, canonicalRequestHash: "c".repeat(64) },
       existingRecord: {
         ...request,
         status: "IN_PROGRESS",
@@ -55,7 +57,7 @@ test("allows a new execution when no matching live record exists or expiry is re
   const expiredRecord = {
     ...request,
     status: "FAILED" as const,
-    safeResultRef: "failure:safe-reference",
+    safeResultRef: "error-ref:v1:REQUEST_REJECTED",
     expiresAt: "2026-09-03T03:00:00.000Z",
   };
   expect(
@@ -80,7 +82,7 @@ test("rejects records carrying raw request or PII fields", () => {
   const unsafeRecord = {
     ...request,
     status: "SUCCEEDED" as const,
-    safeResultRef: "order:public-safe-reference",
+    safeResultRef,
     expiresAt: "2026-09-03T04:00:00.000Z",
     rawRequest: { fanMessage: "private-message" },
     email: "fan@example.invalid",

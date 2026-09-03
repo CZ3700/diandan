@@ -65,6 +65,8 @@ const requiredRootFiles = [
   "package.json",
   "pnpm-lock.yaml",
   "pnpm-workspace.yaml",
+  "database/migrations/manifest.json",
+  "database/schema/expected-catalog.json",
   "scripts/check-build-artifacts.mjs",
   "scripts/check-ci.mjs",
   "scripts/check-contracts.mjs",
@@ -86,6 +88,7 @@ const requiredRootScripts = [
   "lint",
   "security:secrets",
   "test",
+  "test:postgres",
   "typecheck",
 ];
 
@@ -236,6 +239,9 @@ async function validateWorkspace() {
 
     if (!rootManifest.scripts?.check?.includes("pnpm check:contracts")) {
       errors.push("root check script must run the contract freshness gate");
+    }
+    if (!rootManifest.scripts?.check?.includes("pnpm test:postgres")) {
+      errors.push("root check script must run the PostgreSQL migration gate");
     }
   }
 

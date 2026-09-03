@@ -7541,15 +7541,11 @@
                   "additionalProperties": false,
                   "properties": {
                     "actor": {
-                      "maxLength": 256,
-                      "minLength": 1,
-                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                      "pattern": "^actor-ref:v1:(guest|admin|system|worker):([a-f0-9]{64}|[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$",
                       "type": "string"
                     },
                     "canonicalRequestHash": {
-                      "maxLength": 256,
-                      "minLength": 1,
-                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                      "pattern": "^[a-f0-9]{64}$",
                       "type": "string"
                     },
                     "expiresAt": {
@@ -7565,8 +7561,8 @@
                     },
                     "operation": {
                       "maxLength": 128,
-                      "minLength": 1,
-                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                      "minLength": 2,
+                      "pattern": "^[a-z][a-z0-9._:-]{1,127}$",
                       "type": "string"
                     },
                     "schemaVersion": {
@@ -7593,15 +7589,11 @@
                   "additionalProperties": false,
                   "properties": {
                     "actor": {
-                      "maxLength": 256,
-                      "minLength": 1,
-                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                      "pattern": "^actor-ref:v1:(guest|admin|system|worker):([a-f0-9]{64}|[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$",
                       "type": "string"
                     },
                     "canonicalRequestHash": {
-                      "maxLength": 256,
-                      "minLength": 1,
-                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                      "pattern": "^[a-f0-9]{64}$",
                       "type": "string"
                     },
                     "expiresAt": {
@@ -7617,15 +7609,21 @@
                     },
                     "operation": {
                       "maxLength": 128,
-                      "minLength": 1,
-                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                      "minLength": 2,
+                      "pattern": "^[a-z][a-z0-9._:-]{1,127}$",
                       "type": "string"
                     },
                     "safeResultRef": {
-                      "maxLength": 512,
-                      "minLength": 1,
-                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
-                      "type": "string"
+                      "anyOf": [
+                        {
+                          "pattern": "^result-ref:v1:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                          "type": "string"
+                        },
+                        {
+                          "pattern": "^error-ref:v1:(NOT_FOUND|REQUEST_REJECTED|VALIDATION_FAILED|UNAUTHORIZED|FORBIDDEN|CONFLICT|IDEMPOTENCY_CONFLICT|STALE_VERSION|RATE_LIMITED|PAYMENT_UNAVAILABLE|INTERNAL_ERROR)$",
+                          "type": "string"
+                        }
+                      ]
                     },
                     "schemaVersion": {
                       "const": 1,
@@ -7652,15 +7650,11 @@
                   "additionalProperties": false,
                   "properties": {
                     "actor": {
-                      "maxLength": 256,
-                      "minLength": 1,
-                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                      "pattern": "^actor-ref:v1:(guest|admin|system|worker):([a-f0-9]{64}|[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$",
                       "type": "string"
                     },
                     "canonicalRequestHash": {
-                      "maxLength": 256,
-                      "minLength": 1,
-                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                      "pattern": "^[a-f0-9]{64}$",
                       "type": "string"
                     },
                     "expiresAt": {
@@ -7676,15 +7670,21 @@
                     },
                     "operation": {
                       "maxLength": 128,
-                      "minLength": 1,
-                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                      "minLength": 2,
+                      "pattern": "^[a-z][a-z0-9._:-]{1,127}$",
                       "type": "string"
                     },
                     "safeResultRef": {
-                      "maxLength": 512,
-                      "minLength": 1,
-                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
-                      "type": "string"
+                      "anyOf": [
+                        {
+                          "pattern": "^result-ref:v1:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                          "type": "string"
+                        },
+                        {
+                          "pattern": "^error-ref:v1:(NOT_FOUND|REQUEST_REJECTED|VALIDATION_FAILED|UNAUTHORIZED|FORBIDDEN|CONFLICT|IDEMPOTENCY_CONFLICT|STALE_VERSION|RATE_LIMITED|PAYMENT_UNAVAILABLE|INTERNAL_ERROR)$",
+                          "type": "string"
+                        }
+                      ]
                     },
                     "schemaVersion": {
                       "const": 1,
@@ -7718,15 +7718,11 @@
           "additionalProperties": false,
           "properties": {
             "actor": {
-              "maxLength": 256,
-              "minLength": 1,
-              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+              "pattern": "^actor-ref:v1:(guest|admin|system|worker):([a-f0-9]{64}|[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$",
               "type": "string"
             },
             "canonicalRequestHash": {
-              "maxLength": 256,
-              "minLength": 1,
-              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+              "pattern": "^[a-f0-9]{64}$",
               "type": "string"
             },
             "key": {
@@ -7737,8 +7733,8 @@
             },
             "operation": {
               "maxLength": 128,
-              "minLength": 1,
-              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+              "minLength": 2,
+              "pattern": "^[a-z][a-z0-9._:-]{1,127}$",
               "type": "string"
             },
             "schemaVersion": {
@@ -7988,6 +7984,33 @@
                             "UNKNOWN"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -8156,6 +8179,33 @@
                             "UNKNOWN"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -8322,6 +8372,33 @@
                             "LOST"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -9423,6 +9500,527 @@
               "required": [
                 "notificationDeliveryId",
                 "orderId"
+              ],
+              "type": "object"
+            },
+            "requestId": {
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "traceId": {
+              "pattern": "^[0-9a-f]{32}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "eventId",
+            "occurredAt",
+            "correlationId",
+            "requestId",
+            "eventType",
+            "aggregateId",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "aggregateId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "causationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "correlationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventType": {
+              "const": "CONTENT_PUBLICATION_CHANGED",
+              "type": "string"
+            },
+            "locale": {
+              "enum": [
+                "en",
+                "zh-CN",
+                "th",
+                "vi",
+                "ja",
+                "es",
+                "pt"
+              ],
+              "type": "string"
+            },
+            "occurredAt": {
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "contentPublicationId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "contentPublicationId"
+              ],
+              "type": "object"
+            },
+            "requestId": {
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "traceId": {
+              "pattern": "^[0-9a-f]{32}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "eventId",
+            "occurredAt",
+            "correlationId",
+            "requestId",
+            "eventType",
+            "aggregateId",
+            "locale",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "aggregateId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "causationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "correlationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventType": {
+              "const": "PAYMENT_STATUS_CHANGED",
+              "type": "string"
+            },
+            "occurredAt": {
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "orderId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "paymentAttemptId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "CREATED",
+                    "REQUIRES_ACTION",
+                    "PROCESSING",
+                    "SUCCEEDED",
+                    "FAILED",
+                    "CANCELED",
+                    "EXPIRED",
+                    "UNKNOWN"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "paymentAttemptId",
+                "orderId",
+                "status"
+              ],
+              "type": "object"
+            },
+            "requestId": {
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "traceId": {
+              "pattern": "^[0-9a-f]{32}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "eventId",
+            "occurredAt",
+            "correlationId",
+            "requestId",
+            "eventType",
+            "aggregateId",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "aggregateId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "causationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "correlationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventType": {
+              "const": "REFUND_STATUS_CHANGED",
+              "type": "string"
+            },
+            "occurredAt": {
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "orderId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "refundId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "REQUESTED",
+                    "SUBMITTING",
+                    "PROCESSING",
+                    "SUCCEEDED",
+                    "FAILED",
+                    "UNKNOWN"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "refundId",
+                "orderId",
+                "status"
+              ],
+              "type": "object"
+            },
+            "requestId": {
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "traceId": {
+              "pattern": "^[0-9a-f]{32}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "eventId",
+            "occurredAt",
+            "correlationId",
+            "requestId",
+            "eventType",
+            "aggregateId",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "aggregateId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "causationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "correlationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventType": {
+              "const": "DISPUTE_STATUS_CHANGED",
+              "type": "string"
+            },
+            "occurredAt": {
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "disputeId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "orderId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "NONE",
+                    "OPEN",
+                    "WON",
+                    "LOST"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "disputeId",
+                "orderId",
+                "status"
+              ],
+              "type": "object"
+            },
+            "requestId": {
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "traceId": {
+              "pattern": "^[0-9a-f]{32}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "eventId",
+            "occurredAt",
+            "correlationId",
+            "requestId",
+            "eventType",
+            "aggregateId",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "aggregateId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "causationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "correlationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventType": {
+              "const": "PAYMENT_CONFIG_PUBLISHED",
+              "type": "string"
+            },
+            "occurredAt": {
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "paymentConfigPublicationId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "paymentConfigVersionId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "paymentConfigVersionId",
+                "paymentConfigPublicationId"
+              ],
+              "type": "object"
+            },
+            "requestId": {
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "traceId": {
+              "pattern": "^[0-9a-f]{32}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "eventId",
+            "occurredAt",
+            "correlationId",
+            "requestId",
+            "eventType",
+            "aggregateId",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "aggregateId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "causationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "correlationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "eventType": {
+              "const": "PRICE_BOOK_PUBLISHED",
+              "type": "string"
+            },
+            "occurredAt": {
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "currency": {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                "market": {
+                  "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                  "type": "string"
+                },
+                "priceBookId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "priceBookPublicationId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "priceBookRevision": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "priceBookPublicationId",
+                "priceBookId",
+                "priceBookRevision",
+                "market",
+                "currency"
               ],
               "type": "object"
             },
@@ -18780,10 +19378,16 @@
               "type": "string"
             },
             "safeResultRef": {
-              "maxLength": 512,
-              "minLength": 1,
-              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
-              "type": "string"
+              "anyOf": [
+                {
+                  "pattern": "^result-ref:v1:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                  "type": "string"
+                },
+                {
+                  "pattern": "^error-ref:v1:(NOT_FOUND|REQUEST_REJECTED|VALIDATION_FAILED|UNAUTHORIZED|FORBIDDEN|CONFLICT|IDEMPOTENCY_CONFLICT|STALE_VERSION|RATE_LIMITED|PAYMENT_UNAVAILABLE|INTERNAL_ERROR)$",
+                  "type": "string"
+                }
+              ]
             },
             "schemaVersion": {
               "const": 1,
@@ -22951,7 +23555,7 @@
             "objectKey": {
               "maxLength": 1024,
               "minLength": 1,
-              "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.\\.(?:\\/|$))[A-Za-z0-9._/-]+$",
+              "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.\\.(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
               "type": "string"
             }
           },
@@ -23778,7 +24382,7 @@
             "objectKey": {
               "maxLength": 1024,
               "minLength": 1,
-              "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.\\.(?:\\/|$))[A-Za-z0-9._/-]+$",
+              "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.\\.(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
               "type": "string"
             }
           },
@@ -26354,6 +26958,33 @@
                         "UNKNOWN"
                       ],
                       "type": "string"
+                    },
+                    "transaction": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "providerReference": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                          "type": "string"
+                        },
+                        "type": {
+                          "enum": [
+                            "AUTHORIZATION",
+                            "CAPTURE",
+                            "VOID",
+                            "REFUND",
+                            "CHARGEBACK",
+                            "ADJUSTMENT"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "providerReference"
+                      ],
+                      "type": "object"
                     }
                   },
                   "required": [
@@ -26522,6 +27153,33 @@
                         "UNKNOWN"
                       ],
                       "type": "string"
+                    },
+                    "transaction": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "providerReference": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                          "type": "string"
+                        },
+                        "type": {
+                          "enum": [
+                            "AUTHORIZATION",
+                            "CAPTURE",
+                            "VOID",
+                            "REFUND",
+                            "CHARGEBACK",
+                            "ADJUSTMENT"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "providerReference"
+                      ],
+                      "type": "object"
                     }
                   },
                   "required": [
@@ -26688,6 +27346,33 @@
                         "LOST"
                       ],
                       "type": "string"
+                    },
+                    "transaction": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "providerReference": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                          "type": "string"
+                        },
+                        "type": {
+                          "enum": [
+                            "AUTHORIZATION",
+                            "CAPTURE",
+                            "VOID",
+                            "REFUND",
+                            "CHARGEBACK",
+                            "ADJUSTMENT"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "providerReference"
+                      ],
+                      "type": "object"
                     }
                   },
                   "required": [
@@ -29776,7 +30461,7 @@
         "objectKey": {
           "maxLength": 1024,
           "minLength": 1,
-          "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.\\.(?:\\/|$))[A-Za-z0-9._/-]+$",
+          "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.\\.(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
           "type": "string"
         }
       },
@@ -31789,7 +32474,7 @@
                   "objectKey": {
                     "maxLength": 1024,
                     "minLength": 1,
-                    "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.\\.(?:\\/|$))[A-Za-z0-9._/-]+$",
+                    "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.\\.(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
                     "type": "string"
                   }
                 },
@@ -32616,7 +33301,7 @@
                   "objectKey": {
                     "maxLength": 1024,
                     "minLength": 1,
-                    "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.\\.(?:\\/|$))[A-Za-z0-9._/-]+$",
+                    "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.\\.(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
                     "type": "string"
                   }
                 },
@@ -33649,6 +34334,33 @@
                             "UNKNOWN"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -33817,6 +34529,33 @@
                             "UNKNOWN"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -33983,6 +34722,33 @@
                             "LOST"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -34889,6 +35655,33 @@
                             "UNKNOWN"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -35057,6 +35850,33 @@
                             "UNKNOWN"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -35223,6 +36043,33 @@
                             "LOST"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -37388,6 +38235,33 @@
                             "UNKNOWN"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -37556,6 +38430,33 @@
                             "UNKNOWN"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -37722,6 +38623,33 @@
                             "LOST"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -40947,6 +41875,33 @@
                 "UNKNOWN"
               ],
               "type": "string"
+            },
+            "transaction": {
+              "additionalProperties": false,
+              "properties": {
+                "providerReference": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "AUTHORIZATION",
+                    "CAPTURE",
+                    "VOID",
+                    "REFUND",
+                    "CHARGEBACK",
+                    "ADJUSTMENT"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "providerReference"
+              ],
+              "type": "object"
             }
           },
           "required": [
@@ -41115,6 +42070,33 @@
                 "UNKNOWN"
               ],
               "type": "string"
+            },
+            "transaction": {
+              "additionalProperties": false,
+              "properties": {
+                "providerReference": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "AUTHORIZATION",
+                    "CAPTURE",
+                    "VOID",
+                    "REFUND",
+                    "CHARGEBACK",
+                    "ADJUSTMENT"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "providerReference"
+              ],
+              "type": "object"
             }
           },
           "required": [
@@ -41281,6 +42263,33 @@
                 "LOST"
               ],
               "type": "string"
+            },
+            "transaction": {
+              "additionalProperties": false,
+              "properties": {
+                "providerReference": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "AUTHORIZATION",
+                    "CAPTURE",
+                    "VOID",
+                    "REFUND",
+                    "CHARGEBACK",
+                    "ADJUSTMENT"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "providerReference"
+              ],
+              "type": "object"
             }
           },
           "required": [
@@ -59154,6 +60163,33 @@
                             "UNKNOWN"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -59322,6 +60358,33 @@
                             "UNKNOWN"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [
@@ -59488,6 +60551,33 @@
                             "LOST"
                           ],
                           "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK",
+                                "ADJUSTMENT"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
                         }
                       },
                       "required": [

@@ -15,6 +15,7 @@ import {
 } from "./catalog-content.js";
 import { inventoryReservationSchema } from "./catalog.js";
 import { contentTimestampSchema } from "./content-lifecycle.js";
+import { publicErrorCodeSchema } from "./envelopes.js";
 import {
   adminIdentityIdSchema,
   auditLogIdSchema,
@@ -75,11 +76,6 @@ const safeIntegerSchema = z
   .int()
   .min(Number.MIN_SAFE_INTEGER)
   .max(Number.MAX_SAFE_INTEGER);
-const controlledReferenceSchema = z
-  .string()
-  .min(1)
-  .max(512)
-  .regex(/^[A-Za-z0-9][A-Za-z0-9._:/-]*$/u);
 const paymentMethodSchema = z
   .string()
   .min(1)
@@ -222,10 +218,25 @@ export type SelectPaymentRouteInput = z.infer<
 >;
 export type PaymentRouteDecision = z.infer<typeof paymentRouteDecisionSchema>;
 
-const idempotencyActorSchema = controlledReferenceSchema.max(256);
-const idempotencyOperationSchema = controlledReferenceSchema.max(128);
-const canonicalRequestHashSchema = controlledReferenceSchema.max(256);
-const safeResultRefSchema = controlledReferenceSchema.max(512);
+const idempotencyActorSchema = z
+  .string()
+  .regex(
+    /^actor-ref:v1:(guest|admin|system|worker):([a-f0-9]{64}|[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$/u,
+  );
+const idempotencyOperationSchema = z
+  .string()
+  .min(2)
+  .max(128)
+  .regex(/^[a-z][a-z0-9._:-]{1,127}$/u);
+const canonicalRequestHashSchema = z.string().regex(/^[a-f0-9]{64}$/u);
+const safeResultRefSchema = z.union([
+  z
+    .string()
+    .regex(
+      /^result-ref:v1:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u,
+    ),
+  z.templateLiteral(["error-ref:v1:", publicErrorCodeSchema]),
+]);
 
 const idempotencyRequestShape = {
   schemaVersion: schemaVersionSchema,

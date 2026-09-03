@@ -10,6 +10,9 @@ export const cartIdSchema = z.uuid().brand<"CartId">();
 export const supportIntentIdSchema = z.uuid().brand<"SupportIntentId">();
 export const priceIdSchema = z.uuid().brand<"PriceId">();
 export const priceBookIdSchema = z.uuid().brand<"PriceBookId">();
+export const priceBookPublicationIdSchema = z
+  .uuid()
+  .brand<"PriceBookPublicationId">();
 export const checkoutQuoteIdSchema = z.uuid().brand<"CheckoutQuoteId">();
 export const checkoutSessionIdSchema = z.uuid().brand<"CheckoutSessionId">();
 export const inventoryReservationIdSchema = z
@@ -29,6 +32,12 @@ export const paymentAttemptIdSchema = z.uuid().brand<"PaymentAttemptId">();
 export const paymentCapabilityIdSchema = z
   .uuid()
   .brand<"PaymentCapabilityId">();
+export const paymentConfigVersionIdSchema = z
+  .uuid()
+  .brand<"PaymentConfigVersionId">();
+export const paymentConfigPublicationIdSchema = z
+  .uuid()
+  .brand<"PaymentConfigPublicationId">();
 export const providerAccountIdSchema = z.uuid().brand<"ProviderAccountId">();
 export const refundIdSchema = z.uuid().brand<"RefundId">();
 export const disputeIdSchema = z.uuid().brand<"DisputeId">();
@@ -97,6 +106,8 @@ export const providerRefundReferenceSchema =
   providerReferenceSchema.brand<"ProviderRefundReference">();
 export const providerDisputeReferenceSchema =
   providerReferenceSchema.brand<"ProviderDisputeReference">();
+export const providerTransactionReferenceSchema =
+  providerReferenceSchema.brand<"ProviderTransactionReference">();
 export const providerClientTokenSchema = z
   .string()
   .min(16)
@@ -126,6 +137,9 @@ export type CartId = z.infer<typeof cartIdSchema>;
 export type SupportIntentId = z.infer<typeof supportIntentIdSchema>;
 export type PriceId = z.infer<typeof priceIdSchema>;
 export type PriceBookId = z.infer<typeof priceBookIdSchema>;
+export type PriceBookPublicationId = z.infer<
+  typeof priceBookPublicationIdSchema
+>;
 export type CheckoutQuoteId = z.infer<typeof checkoutQuoteIdSchema>;
 export type CheckoutSessionId = z.infer<typeof checkoutSessionIdSchema>;
 export type InventoryReservationId = z.infer<
@@ -141,6 +155,12 @@ export type PublicOrderId = z.infer<typeof publicOrderIdSchema>;
 export type OrderItemId = z.infer<typeof orderItemIdSchema>;
 export type PaymentAttemptId = z.infer<typeof paymentAttemptIdSchema>;
 export type PaymentCapabilityId = z.infer<typeof paymentCapabilityIdSchema>;
+export type PaymentConfigVersionId = z.infer<
+  typeof paymentConfigVersionIdSchema
+>;
+export type PaymentConfigPublicationId = z.infer<
+  typeof paymentConfigPublicationIdSchema
+>;
 export type ProviderAccountId = z.infer<typeof providerAccountIdSchema>;
 export type RefundId = z.infer<typeof refundIdSchema>;
 export type DisputeId = z.infer<typeof disputeIdSchema>;
@@ -189,6 +209,9 @@ export type ProviderRefundReference = z.infer<
 >;
 export type ProviderDisputeReference = z.infer<
   typeof providerDisputeReferenceSchema
+>;
+export type ProviderTransactionReference = z.infer<
+  typeof providerTransactionReferenceSchema
 >;
 export type ProviderClientToken = z.infer<typeof providerClientTokenSchema>;
 export type PaymentReturnState = z.infer<typeof paymentReturnStateSchema>;

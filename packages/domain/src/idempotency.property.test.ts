@@ -7,22 +7,21 @@ import { decideIdempotency, type IdempotencyRecord } from "./idempotency.js";
 import { PROPERTY_PARAMETERS } from "./test-support/property-parameters.js";
 
 test("same hash replays, different hash conflicts, and expired records execute", () => {
-  const safeText = fc
-    .array(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789"), {
-      minLength: 1,
-      maxLength: 32,
+  const sha256Hex = fc
+    .array(fc.constantFrom(..."abcdef0123456789"), {
+      minLength: 64,
+      maxLength: 64,
     })
     .map((characters) => characters.join(""));
   fc.assert(
     fc.property(
-      safeText,
-      safeText,
+      sha256Hex,
       fc.constantFrom("IN_PROGRESS", "SUCCEEDED", "FAILED"),
-      (hash, suffix, status) => {
-        const canonicalRequestHash = `sha256:${hash}`;
+      (canonicalRequestHash, status) => {
+        const differentHash = `${canonicalRequestHash[0] === "a" ? "b" : "a"}${canonicalRequestHash.slice(1)}`;
         const request = {
           schemaVersion: 1 as const,
-          actor: "actor:test",
+          actor: `actor-ref:v1:guest:${"a".repeat(64)}`,
           operation: "operation.test",
           key: idempotencyKeySchema.parse("idempotency-key-0001"),
           canonicalRequestHash,
@@ -37,7 +36,7 @@ test("same hash replays, different hash conflicts, and expired records execute",
             : {
                 ...request,
                 status,
-                safeResultRef: "result:safe",
+                safeResultRef: "error-ref:v1:REQUEST_REJECTED",
                 expiresAt: "2026-09-03T04:00:00.000Z",
               };
         const live = {
@@ -53,7 +52,7 @@ test("same hash replays, different hash conflicts, and expired records execute",
             ...live,
             request: {
               ...request,
-              canonicalRequestHash: `${canonicalRequestHash}:${suffix}:different`,
+              canonicalRequestHash: differentHash,
             },
           }).kind,
         ).toBe("CONFLICT");

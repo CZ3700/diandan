@@ -23,6 +23,7 @@ import {
   providerEventReferenceSchema,
   providerIdempotencyKeySchema,
   providerRefundReferenceSchema,
+  providerTransactionReferenceSchema,
   refundIdSchema,
   webhookInboxIdSchema,
 } from "./identifiers.js";
@@ -316,6 +317,19 @@ const providerEventBaseShape = {
   evidence: providerEvidenceSchema,
   occurredAt: timestampSchema,
   association: providerEventAssociationSchema,
+  transaction: z
+    .strictObject({
+      type: z.enum([
+        "AUTHORIZATION",
+        "CAPTURE",
+        "VOID",
+        "REFUND",
+        "CHARGEBACK",
+        "ADJUSTMENT",
+      ]),
+      providerReference: providerTransactionReferenceSchema,
+    })
+    .optional(),
 } as const;
 
 /**
@@ -349,6 +363,53 @@ export const providerEventSchema = z
       currency: currencySchema,
     }),
   ])
+  .superRefine((event, refinement) => {
+    const transaction = event.transaction;
+    if (transaction === undefined) {
+      return;
+    }
+
+    const compatible = (() => {
+      switch (transaction.type) {
+        case "AUTHORIZATION":
+          return (
+            event.eventType === "PAYMENT_STATUS" &&
+            ["PROCESSING", "SUCCEEDED"].includes(event.status)
+          );
+        case "CAPTURE":
+          return (
+            event.eventType === "PAYMENT_STATUS" && event.status === "SUCCEEDED"
+          );
+        case "VOID":
+          return (
+            event.eventType === "PAYMENT_STATUS" && event.status === "CANCELED"
+          );
+        case "REFUND":
+          return (
+            event.eventType === "REFUND_STATUS" && event.status === "SUCCEEDED"
+          );
+        case "CHARGEBACK":
+          return (
+            event.eventType === "DISPUTE_STATUS" &&
+            ["OPEN", "LOST"].includes(event.status)
+          );
+        case "ADJUSTMENT":
+          return (
+            event.eventType === "PAYMENT_STATUS" &&
+            event.status === "SUCCEEDED" &&
+            event.evidence.kind === "AUTHENTICATED_RECONCILE"
+          );
+      }
+    })();
+
+    if (!compatible) {
+      refinement.addIssue({
+        code: "custom",
+        path: ["transaction", "type"],
+        message: "provider transaction type does not match normalized evidence",
+      });
+    }
+  })
   .brand<"VerifiedProviderEvent">();
 
 export type ProviderEvent = z.infer<typeof providerEventSchema>;

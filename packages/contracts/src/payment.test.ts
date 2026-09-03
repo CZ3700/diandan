@@ -143,6 +143,37 @@ test("separates verified normalized provider evidence from browser return and pu
     JSON.parse(JSON.stringify(providerEventSchema.parse(providerEvent))),
   ).toEqual(providerEvent);
 
+  const captureEvent = {
+    ...providerEvent,
+    transaction: {
+      type: "CAPTURE",
+      providerReference: "txn_capture_01",
+    },
+  };
+  expect(providerEventSchema.safeParse(captureEvent).success).toBe(true);
+  expect(
+    providerEventSchema.safeParse({
+      ...captureEvent,
+      transaction: { ...captureEvent.transaction, type: "VOID" },
+    }).success,
+  ).toBe(false);
+  expect(
+    providerEventSchema.safeParse({
+      ...captureEvent,
+      transaction: { ...captureEvent.transaction, type: "ADJUSTMENT" },
+    }).success,
+  ).toBe(false);
+  expect(
+    providerEventSchema.safeParse({
+      ...captureEvent,
+      evidence: {
+        kind: "AUTHENTICATED_RECONCILE",
+        auditLogId: "7a54d978-31e2-4af5-af72-c948ed4a1fcc",
+      },
+      transaction: { ...captureEvent.transaction, type: "ADJUSTMENT" },
+    }).success,
+  ).toBe(true);
+
   const unmatchedProviderEvent = {
     ...providerEvent,
     association: {

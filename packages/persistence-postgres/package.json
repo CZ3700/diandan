@@ -12,7 +12,18 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "migrations:catalog": "pnpm run build && node ./scripts/migration-manifest.mjs --check && node ./scripts/postgres-integration.mjs --write-catalog",
+    "migrations:manifest": "pnpm run build && node ./scripts/migration-manifest.mjs",
+    "migrations:manifest:check": "pnpm run build && node ./scripts/migration-manifest.mjs --check",
     "test": "vitest run --config ../../vitest.config.ts --root .",
+    "test:postgres": "pnpm --filter @fan-support/contracts build && pnpm run build && node ./scripts/migration-manifest.mjs --check && node ./scripts/postgres-integration.mjs && node ./scripts/postgres-constraints.mjs && node ./scripts/postgres-publication-upgrade.mjs",
     "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "pg": "8.23.0"
+  },
+  "devDependencies": {
+    "@fan-support/contracts": "workspace:*",
+    "@types/pg": "8.23.1"
   }
 }

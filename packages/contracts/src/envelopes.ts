@@ -1,15 +1,25 @@
 import { z } from "zod";
 
+import { currencySchema, marketSchema } from "./commerce.js";
 import {
   cartIdSchema,
   cartItemIdSchema,
+  contentPublicationIdSchema,
+  disputeIdSchema,
   eventIdSchema,
   fulfillmentIdSchema,
   notificationDeliveryIdSchema,
   orderIdSchema,
   paymentAttemptIdSchema,
+  paymentConfigPublicationIdSchema,
+  paymentConfigVersionIdSchema,
+  priceBookIdSchema,
+  priceBookPublicationIdSchema,
+  refundIdSchema,
 } from "./identifiers.js";
-import { fulfillmentStatusSchema } from "./order.js";
+import { supportedLocaleSchema } from "./locale.js";
+import { disputeStatusSchema, fulfillmentStatusSchema } from "./order.js";
+import { paymentAttemptStatusSchema, refundStatusSchema } from "./payment.js";
 import { schemaVersionSchema } from "./versioning.js";
 
 export const canonicalRequestIdSchema = z
@@ -83,6 +93,12 @@ const eventEnvelopeBaseShape = {
     .optional(),
 } as const;
 
+const eventAggregateVersionSchema = z
+  .number()
+  .int()
+  .positive()
+  .max(Number.MAX_SAFE_INTEGER);
+
 export const eventEnvelopeSchema = z
   .discriminatedUnion("eventType", [
     z.strictObject({
@@ -122,6 +138,66 @@ export const eventEnvelopeSchema = z
         orderId: orderIdSchema,
       }),
     }),
+    z.strictObject({
+      ...eventEnvelopeBaseShape,
+      eventType: z.literal("CONTENT_PUBLICATION_CHANGED"),
+      aggregateId: contentPublicationIdSchema,
+      locale: supportedLocaleSchema,
+      payload: z.strictObject({
+        contentPublicationId: contentPublicationIdSchema,
+      }),
+    }),
+    z.strictObject({
+      ...eventEnvelopeBaseShape,
+      eventType: z.literal("PAYMENT_STATUS_CHANGED"),
+      aggregateId: paymentAttemptIdSchema,
+      payload: z.strictObject({
+        paymentAttemptId: paymentAttemptIdSchema,
+        orderId: orderIdSchema,
+        status: paymentAttemptStatusSchema,
+      }),
+    }),
+    z.strictObject({
+      ...eventEnvelopeBaseShape,
+      eventType: z.literal("REFUND_STATUS_CHANGED"),
+      aggregateId: refundIdSchema,
+      payload: z.strictObject({
+        refundId: refundIdSchema,
+        orderId: orderIdSchema,
+        status: refundStatusSchema,
+      }),
+    }),
+    z.strictObject({
+      ...eventEnvelopeBaseShape,
+      eventType: z.literal("DISPUTE_STATUS_CHANGED"),
+      aggregateId: disputeIdSchema,
+      payload: z.strictObject({
+        disputeId: disputeIdSchema,
+        orderId: orderIdSchema,
+        status: disputeStatusSchema,
+      }),
+    }),
+    z.strictObject({
+      ...eventEnvelopeBaseShape,
+      eventType: z.literal("PAYMENT_CONFIG_PUBLISHED"),
+      aggregateId: paymentConfigVersionIdSchema,
+      payload: z.strictObject({
+        paymentConfigVersionId: paymentConfigVersionIdSchema,
+        paymentConfigPublicationId: paymentConfigPublicationIdSchema,
+      }),
+    }),
+    z.strictObject({
+      ...eventEnvelopeBaseShape,
+      eventType: z.literal("PRICE_BOOK_PUBLISHED"),
+      aggregateId: priceBookIdSchema,
+      payload: z.strictObject({
+        priceBookPublicationId: priceBookPublicationIdSchema,
+        priceBookId: priceBookIdSchema,
+        priceBookRevision: eventAggregateVersionSchema,
+        market: marketSchema,
+        currency: currencySchema,
+      }),
+    }),
   ])
   .superRefine((event, refinement) => {
     let expectedAggregateId: string;
@@ -137,6 +213,24 @@ export const eventEnvelopeSchema = z
         break;
       case "NOTIFICATION_REQUESTED":
         expectedAggregateId = event.payload.notificationDeliveryId;
+        break;
+      case "CONTENT_PUBLICATION_CHANGED":
+        expectedAggregateId = event.payload.contentPublicationId;
+        break;
+      case "PAYMENT_STATUS_CHANGED":
+        expectedAggregateId = event.payload.paymentAttemptId;
+        break;
+      case "REFUND_STATUS_CHANGED":
+        expectedAggregateId = event.payload.refundId;
+        break;
+      case "DISPUTE_STATUS_CHANGED":
+        expectedAggregateId = event.payload.disputeId;
+        break;
+      case "PAYMENT_CONFIG_PUBLISHED":
+        expectedAggregateId = event.payload.paymentConfigVersionId;
+        break;
+      case "PRICE_BOOK_PUBLISHED":
+        expectedAggregateId = event.payload.priceBookId;
         break;
     }
     if (event.aggregateId !== expectedAggregateId) {
