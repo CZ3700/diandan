@@ -17,7 +17,8 @@
     "migrations:manifest": "pnpm run build:with-dependencies && node ./scripts/migration-manifest.mjs",
     "migrations:manifest:check": "pnpm run build:with-dependencies && node ./scripts/migration-manifest.mjs --check",
     "test": "vitest run --config ../../vitest.config.ts --root .",
-    "test:postgres": "pnpm run build:with-dependencies && node ./scripts/migration-manifest.mjs --check && node ./scripts/postgres-integration.mjs && node ./scripts/postgres-key-version-upgrade.mjs && node ./scripts/postgres-media-object-key-upgrade.mjs && node ./scripts/postgres-outbox-status-upgrade.mjs && node ./scripts/postgres-constraints.mjs && node ./scripts/postgres-publication-upgrade.mjs && node ./scripts/postgres-repositories.mjs",
+    "test:postgres": "pnpm run build:with-dependencies && node ./scripts/migration-manifest.mjs --check && node ./scripts/postgres-integration.mjs && node ./scripts/postgres-key-version-upgrade.mjs && node ./scripts/postgres-media-object-key-upgrade.mjs && node ./scripts/postgres-outbox-status-upgrade.mjs && node ./scripts/postgres-constraints.mjs && node ./scripts/postgres-publication-upgrade.mjs && node ./scripts/postgres-repositories.mjs && node ./scripts/postgres-reliable-events.mjs",
+    "test:postgres:reliable-events": "pnpm run build:with-dependencies && node ./scripts/postgres-reliable-events.mjs",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
@@ -27,7 +28,9 @@
     "pg-boss": "12.30.0"
   },
   "devDependencies": {
+    "@fan-support/application": "workspace:*",
     "@fan-support/contracts": "workspace:*",
+    "@fan-support/payment-fake": "workspace:*",
     "@types/pg": "8.23.1"
   }
 }
