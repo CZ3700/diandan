@@ -111,6 +111,9 @@ function createHarness(
             decision: options.receiptDecision ?? "NEW",
             webhookInboxId: IDS.webhookInbox,
             providerEventRowId: IDS.providerEvent,
+            providerAccountId: ENDPOINT.providerAccountId,
+            environment: ENDPOINT.environment,
+            providerEventId: CANDIDATE.providerEventId,
             ...(options.receiptDecision === "REPLAY"
               ? {}
               : { jobEnqueued: true }),
@@ -364,6 +367,9 @@ test("rejects a schema-valid new receipt response bound to different proposed ro
       decision: "NEW",
       webhookInboxId: IDS.alternateWebhookInbox,
       providerEventRowId: IDS.alternateProviderEvent,
+      providerAccountId: ENDPOINT.providerAccountId,
+      environment: ENDPOINT.environment,
+      providerEventId: CANDIDATE.providerEventId,
       jobEnqueued: true,
     }),
   );
@@ -382,6 +388,9 @@ test("accepts a replay that returns the previously persisted row identities", as
       decision: "REPLAY",
       webhookInboxId: IDS.alternateWebhookInbox,
       providerEventRowId: IDS.alternateProviderEvent,
+      providerAccountId: ENDPOINT.providerAccountId,
+      environment: ENDPOINT.environment,
+      providerEventId: CANDIDATE.providerEventId,
     }),
   );
 
@@ -392,6 +401,36 @@ test("accepts a replay that returns the previously persisted row identities", as
       webhookInboxId: IDS.alternateWebhookInbox,
       providerEventRowId: IDS.alternateProviderEvent,
     },
+  });
+});
+
+test.each([
+  {
+    label: "provider account",
+    identity: { providerAccountId: IDS.alternateEndpoint },
+  },
+  { label: "environment", identity: { environment: "LIVE" } },
+  {
+    label: "provider event",
+    identity: { providerEventId: "fake-event/payment/succeeded/other" },
+  },
+])("rejects a replay response bound to a different $label", async ({ identity }) => {
+  const harness = createHarness({ receiptDecision: "REPLAY" });
+  harness.recordReceipt.mockResolvedValueOnce(
+    success("RECORD_VERIFIED_WEBHOOK_RECEIPT", {
+      decision: "REPLAY",
+      webhookInboxId: IDS.alternateWebhookInbox,
+      providerEventRowId: IDS.alternateProviderEvent,
+      providerAccountId: ENDPOINT.providerAccountId,
+      environment: ENDPOINT.environment,
+      providerEventId: CANDIDATE.providerEventId,
+      ...identity,
+    }),
+  );
+
+  await expect(harness.receive(COMMAND)).resolves.toMatchObject({
+    outcome: "FAILURE",
+    error: { code: "CONFIGURATION_ERROR", recovery: "NONE" },
   });
 });
 

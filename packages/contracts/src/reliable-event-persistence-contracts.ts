@@ -16,6 +16,7 @@ import {
   providerAccountIdSchema,
   providerEventAssociationIdSchema,
   providerEventIdSchema,
+  providerEventReferenceSchema,
   webhookEffectIdSchema,
   webhookInboxIdSchema,
   webhookPayloadIdSchema,
@@ -58,6 +59,11 @@ const effectKeySchema = z
   .min(1)
   .max(128)
   .regex(/^[A-Z][A-Z0-9_:-]{0,127}$/u);
+const receiptProviderEventIdentityShape = {
+  providerAccountId: providerAccountIdSchema,
+  environment: paymentEnvironmentSchema,
+  providerEventId: providerEventReferenceSchema,
+} as const;
 
 function fractionalSecondDigits(timestamp: string): number {
   return /\.(\d+)(?:Z|[+-]\d{2}:\d{2})$/u.exec(timestamp)?.[1]?.length ?? 0;
@@ -364,12 +370,14 @@ export const recordVerifiedWebhookReceiptResponseSchema = z.strictObject({
       decision: z.literal("NEW"),
       webhookInboxId: webhookInboxIdSchema,
       providerEventRowId: providerEventIdSchema,
+      ...receiptProviderEventIdentityShape,
       jobEnqueued: z.literal(true),
     }),
     z.strictObject({
       decision: z.literal("REPLAY"),
       webhookInboxId: webhookInboxIdSchema,
       providerEventRowId: providerEventIdSchema,
+      ...receiptProviderEventIdentityShape,
     }),
     z.strictObject({
       decision: z.literal("CONFLICT"),

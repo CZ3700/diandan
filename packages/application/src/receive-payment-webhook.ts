@@ -298,6 +298,16 @@ export function createReceivePaymentWebhook(
         return failure("IDEMPOTENCY_CONFLICT");
       }
       if (
+        parsedReceipt.data.value.providerAccountId !==
+          receiptCommand.data.endpoint.providerAccountId ||
+        parsedReceipt.data.value.environment !==
+          receiptCommand.data.endpoint.environment ||
+        parsedReceipt.data.value.providerEventId !==
+          receiptCommand.data.candidate.providerEventId
+      ) {
+        return failure("CONFIGURATION_ERROR");
+      }
+      if (
         parsedReceipt.data.value.decision === "NEW" &&
         (parsedReceipt.data.value.webhookInboxId !==
           receiptCommand.data.webhookInboxId ||

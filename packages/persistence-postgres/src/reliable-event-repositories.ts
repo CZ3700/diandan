@@ -553,6 +553,9 @@ function receiptReplayResponse(
             decision: "REPLAY",
             webhookInboxId: requiredString(row, "webhook_inbox_id"),
             providerEventRowId: requiredString(row, "provider_event_row_id"),
+            providerAccountId: requiredString(row, "provider_account_id"),
+            environment: requiredString(row, "environment"),
+            providerEventId: requiredString(row, "provider_event_reference"),
           },
         }
       : {
@@ -766,6 +769,9 @@ async function insertVerifiedReceipt(
       decision: "NEW",
       webhookInboxId: command.webhookInboxId,
       providerEventRowId: command.providerEventRowId,
+      providerAccountId: command.endpoint.providerAccountId,
+      environment: command.endpoint.environment,
+      providerEventId: command.candidate.providerEventId,
       jobEnqueued: true,
     },
   });

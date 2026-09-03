@@ -240,12 +240,18 @@ test("records one verified receipt atomically and distinguishes replay from conf
       decision: "NEW",
       webhookInboxId: IDS.webhookInbox,
       providerEventRowId: IDS.providerEvent,
+      providerAccountId: ENDPOINT.providerAccountId,
+      environment: ENDPOINT.environment,
+      providerEventId: CANDIDATE.providerEventId,
       jobEnqueued: true,
     },
     {
       decision: "REPLAY",
       webhookInboxId: IDS.webhookInbox,
       providerEventRowId: IDS.providerEvent,
+      providerAccountId: ENDPOINT.providerAccountId,
+      environment: ENDPOINT.environment,
+      providerEventId: CANDIDATE.providerEventId,
     },
     { decision: "CONFLICT", conflictCode: "PROVIDER_EVENT_IDENTITY_MISMATCH" },
   ]) {
@@ -258,6 +264,19 @@ test("records one verified receipt atomically and distinguishes replay from conf
       }).success,
     ).toBe(true);
   }
+
+  expect(
+    responseSchema.safeParse({
+      schemaVersion: 1,
+      operation: command.operation,
+      outcome: "SUCCESS",
+      value: {
+        decision: "REPLAY",
+        webhookInboxId: IDS.webhookInbox,
+        providerEventRowId: IDS.providerEvent,
+      },
+    }).success,
+  ).toBe(false);
 
   expect(
     commandSchema.safeParse({

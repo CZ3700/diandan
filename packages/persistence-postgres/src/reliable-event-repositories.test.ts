@@ -320,6 +320,9 @@ test("writes and publishes a new receipt atomically on the same client", async (
       decision: "NEW",
       webhookInboxId: IDS.inbox,
       providerEventRowId: IDS.providerEvent,
+      providerAccountId: ENDPOINT.providerAccountId,
+      environment: ENDPOINT.environment,
+      providerEventId: CANDIDATE.providerEventId,
       jobEnqueued: true,
     },
   });
@@ -373,7 +376,14 @@ test("replays equal provider semantics despite a different raw digest and confli
   });
   await expect(
     replayRepositories.verifiedWebhookReceipts.record(replayCommand),
-  ).resolves.toMatchObject({ value: { decision: "REPLAY" } });
+  ).resolves.toMatchObject({
+    value: {
+      decision: "REPLAY",
+      providerAccountId: ENDPOINT.providerAccountId,
+      environment: ENDPOINT.environment,
+      providerEventId: CANDIDATE.providerEventId,
+    },
+  });
   expect(replayPublisher).not.toHaveBeenCalled();
   replayClient.expectComplete();
 
@@ -510,7 +520,14 @@ test("turns a concurrent identity collision into replay and rolls back a failed 
   );
   await expect(
     concurrentRepositories.verifiedWebhookReceipts.record(RECEIPT),
-  ).resolves.toMatchObject({ value: { decision: "REPLAY" } });
+  ).resolves.toMatchObject({
+    value: {
+      decision: "REPLAY",
+      providerAccountId: ENDPOINT.providerAccountId,
+      environment: ENDPOINT.environment,
+      providerEventId: CANDIDATE.providerEventId,
+    },
+  });
   expect(concurrentPublisher).not.toHaveBeenCalled();
   expect(
     concurrentClient.calls.some((call) =>
