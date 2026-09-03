@@ -10,15 +10,15 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "check": "node ./scripts/check-workspace.mjs && node --test ./scripts/check-domain-boundaries.test.mjs && node ./scripts/check-domain-boundaries.mjs && node ./scripts/check-ci.mjs && node ./scripts/check-runtime.mjs && node ./scripts/check-observability.mjs && corepack pnpm check:contracts && prettier --check README.md .github .secretlintrc.json apps packages scripts infra/compose.preview.yml eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts && eslint . --max-warnings=0 && turbo run typecheck --output-logs=errors-only && turbo run test --output-logs=errors-only && turbo run build --output-logs=errors-only && node ./scripts/check-build-artifacts.mjs",
+    "check": "node ./scripts/check-workspace.mjs && node --test ./scripts/check-domain-boundaries.test.mjs && node ./scripts/check-domain-boundaries.mjs && node ./scripts/check-ci.mjs && node ./scripts/check-runtime.mjs && node ./scripts/check-observability.mjs && corepack pnpm check:contracts && corepack pnpm test:postgres && prettier --check README.md .github .secretlintrc.json apps packages scripts infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts && eslint . --max-warnings=0 && turbo run typecheck --output-logs=errors-only && turbo run test --output-logs=errors-only && turbo run build --output-logs=errors-only && node ./scripts/check-build-artifacts.mjs",
     "check:artifacts": "node ./scripts/check-build-artifacts.mjs",
     "check:ci": "node ./scripts/check-ci.mjs",
     "check:contracts": "corepack pnpm --filter @fan-support/contracts build && node ./scripts/check-contracts.mjs",
     "check:observability": "node ./scripts/check-observability.mjs",
     "check:runtime": "node ./scripts/check-runtime.mjs",
     "check:workspace": "node ./scripts/check-workspace.mjs",
-    "format": "prettier --write README.md .github .secretlintrc.json apps packages scripts infra/compose.preview.yml eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
-    "format:check": "prettier --check README.md .github .secretlintrc.json apps packages scripts infra/compose.preview.yml eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
+    "format": "prettier --write README.md .github .secretlintrc.json apps packages scripts infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
+    "format:check": "prettier --check README.md .github .secretlintrc.json apps packages scripts infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
     "contracts:generate": "corepack pnpm --filter @fan-support/contracts build && node ./scripts/generate-contract-artifacts.mjs",
     "lint": "eslint . --max-warnings=0",
     "preview:config": "node ./scripts/runtime-preview.mjs config",
@@ -28,6 +28,7 @@
     "preview:verify": "node ./scripts/runtime-preview.mjs verify",
     "security:secrets": "node ./scripts/scan-secrets.mjs",
     "test": "turbo run test",
+    "test:postgres": "corepack pnpm --filter @fan-support/persistence-postgres test:postgres",
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {

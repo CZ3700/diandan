@@ -1,7 +1,15 @@
 import { expect, test } from "vitest";
 
-import { workspacePackageName } from "./index.js";
+import * as persistencePostgres from "./index.js";
 
 test("exposes the persistence-postgres workspace boundary", () => {
-  expect(workspacePackageName).toBe("@fan-support/persistence-postgres");
+  expect(persistencePostgres.workspacePackageName).toBe(
+    "@fan-support/persistence-postgres",
+  );
+});
+
+test("does not expose the session-level migration helper", () => {
+  expect(
+    Object.hasOwn(persistencePostgres, "runMigrationCommandOnSession"),
+  ).toBe(false);
 });

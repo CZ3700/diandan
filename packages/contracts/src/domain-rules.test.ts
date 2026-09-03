@@ -11,6 +11,7 @@ import {
   giftEligibilityDecisionSchema,
   giftEligibilityInputSchema,
   idempotencyDecisionSchema,
+  idempotencyRequestIdentitySchema,
   idempotencyRecordSchema,
   inventoryReservationCreationDecisionSchema,
   inventoryReservationCreationInputSchema,
@@ -338,10 +339,10 @@ describe("payment-routing domain contracts", () => {
 describe("idempotency domain contracts", () => {
   const request = {
     schemaVersion: 1,
-    actor: "cart:opaque-actor",
+    actor: `actor-ref:v1:guest:${"a".repeat(64)}`,
     operation: "checkout.create",
     key: "idempotency-key-0001",
-    canonicalRequestHash: "sha256:request-a",
+    canonicalRequestHash: "b".repeat(64),
   } as const;
 
   test("models in-progress and finished records without raw payloads", () => {
@@ -356,7 +357,7 @@ describe("idempotency domain contracts", () => {
       idempotencyRecordSchema.safeParse({
         ...request,
         status: "SUCCEEDED",
-        safeResultRef: "order:public-safe-reference",
+        safeResultRef: "result-ref:v1:4f847525-ed50-44db-b2cb-319977b397e0",
         expiresAt: "2026-09-03T04:00:00Z",
         rawRequest: { fanMessage: "private" },
       }).success,
@@ -380,6 +381,37 @@ describe("idempotency domain contracts", () => {
         existingRecord: null,
       }).success,
     ).toBe(false);
+    for (const unsafeReference of [
+      "cart:opaque-actor",
+      "fan@example.invalid",
+      '{"fanMessage":"private"}',
+    ]) {
+      expect(
+        idempotencyRequestIdentitySchema.safeParse({
+          ...request,
+          actor: unsafeReference,
+        }).success,
+      ).toBe(false);
+    }
+    expect(
+      idempotencyRequestIdentitySchema.safeParse({
+        ...request,
+        canonicalRequestHash: "sha256:request-a",
+      }).success,
+    ).toBe(false);
+    for (const unsafeOperation of [
+      "x",
+      "Checkout.create",
+      "checkout/create",
+      "checkout create",
+    ]) {
+      expect(
+        idempotencyRequestIdentitySchema.safeParse({
+          ...request,
+          operation: unsafeOperation,
+        }).success,
+      ).toBe(false);
+    }
   });
 
   test("accepts replay and fail-closed invalid-input decisions", () => {
@@ -388,7 +420,7 @@ describe("idempotency domain contracts", () => {
         schemaVersion: 1,
         kind: "REPLAY",
         status: "SUCCEEDED",
-        safeResultRef: "order:public-safe-reference",
+        safeResultRef: "error-ref:v1:REQUEST_REJECTED",
       }).success,
     ).toBe(true);
     expect(

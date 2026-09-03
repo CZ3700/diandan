@@ -92,6 +92,12 @@ test("keeps immutable internal snapshots separate from public order items", asyn
       .success,
   ).toBe(true);
   expect(
+    (order?.internalOrderItemSnapshotSchema as Schema).safeParse({
+      ...internalItem,
+      idolPortrait: { ...internalItem.idolPortrait, objectKey: ".hidden.webp" },
+    }).success,
+  ).toBe(false);
+  expect(
     (order?.publicOrderItemViewSchema as Schema).safeParse(internalItem)
       .success,
   ).toBe(false);

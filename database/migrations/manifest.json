@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "migrations": [
+    {
+      "version": "0001",
+      "name": "foundation-security",
+      "up": "database/migrations/0001_foundation-security.up.sql",
+      "down": "database/migrations/0001_foundation-security.down.sql",
+      "sha256": {
+        "up": "031946426e54c8b569c0f9c26606ca745b5355f957828abc8fb434d1e086759c",
+        "down": "0cb74a20963759606f1226d468e0dc40bec54ed332fa8a5e6f6f58fea381c7c8"
+      }
+    },
+    {
+      "version": "0002",
+      "name": "content-catalog",
+      "up": "database/migrations/0002_content-catalog.up.sql",
+      "down": "database/migrations/0002_content-catalog.down.sql",
+      "sha256": {
+        "up": "af470915b35b21665c4161afb5b76fe40f37065c5b60ed25699ebdde900a243a",
+        "down": "1b8a8e8ec1eee0d2afc4c979b3a6c9463f42ad8e642fb7cc2cdb483e271dfdc6"
+      }
+    },
+    {
+      "version": "0003",
+      "name": "inventory-cart-private-data",
+      "up": "database/migrations/0003_inventory-cart-private-data.up.sql",
+      "down": "database/migrations/0003_inventory-cart-private-data.down.sql",
+      "sha256": {
+        "up": "c6dd6bca8ec23f0503d68ba534fb7074eeb5223e56d1d6fed225f707f7f27d8d",
+        "down": "3f1f186adb53a9c1dd35f610ebac9fa363521f13f7884755a14bf09174481332"
+      }
+    },
+    {
+      "version": "0004",
+      "name": "orders-fulfillment",
+      "up": "database/migrations/0004_orders-fulfillment.up.sql",
+      "down": "database/migrations/0004_orders-fulfillment.down.sql",
+      "sha256": {
+        "up": "d0b6238a69f4cf2e94fc09785921b373fb8ce0904d1c534b80ad920541750867",
+        "down": "b0845dc9a86d2ed382cf9cf06175f55576dfcf2d65af9921eb2be30306438f0c"
+      }
+    },
+    {
+      "version": "0005",
+      "name": "payments-reliable-events",
+      "up": "database/migrations/0005_payments-reliable-events.up.sql",
+      "down": "database/migrations/0005_payments-reliable-events.down.sql",
+      "sha256": {
+        "up": "826cfa3f144db085b22e58227fc3378a95ae02558709e39e4c379c96ae1d4c67",
+        "down": "9b712badfcb7b3e239c426299305bf7bc1995c19d1264fb627fb75a88f21f932"
+      }
+    },
+    {
+      "version": "0006",
+      "name": "publication-heads-outbox",
+      "up": "database/migrations/0006_publication-heads-outbox.up.sql",
+      "down": "database/migrations/0006_publication-heads-outbox.down.sql",
+      "sha256": {
+        "up": "8e41e79536add4cdf33ec39e13284875b8f779bade8b81c16fefaeb5cf531dfc",
+        "down": "a299d1049c9feb66add18c5e05033ec74f8fc30eecdce056736539eda332a004"
+      }
+    }
+  ]
+}
