@@ -39,6 +39,42 @@ async function writePackageManifest(
   );
 }
 
+async function writeInnerPackageFixture(root, directoryName, source = "") {
+  await writePackageManifest(
+    root,
+    directoryName,
+    `@fan-support/${directoryName}`,
+  );
+  await write(root, `packages/${directoryName}/src/index.ts`, source);
+  await write(
+    root,
+    `packages/${directoryName}/dist/index.d.ts`,
+    "export declare const fixture: true;\n",
+  );
+}
+
+async function writeAdapterPackageFixture(root, directoryName, source = "") {
+  await writePackageManifest(
+    root,
+    directoryName,
+    `@fan-support/${directoryName}`,
+    {
+      exports: {
+        ".": {
+          types: "./dist/index.d.ts",
+          import: "./dist/index.js",
+        },
+      },
+    },
+  );
+  await write(root, `packages/${directoryName}/src/index.ts`, source);
+  await write(
+    root,
+    `packages/${directoryName}/dist/index.d.ts`,
+    "export declare const fixture: true;\n",
+  );
+}
+
 async function fixture() {
   const root = await mkdtemp(path.join(os.tmpdir(), "adapter-boundary-"));
   await write(
@@ -116,6 +152,128 @@ test("accepts pure inner layers and ignores private adapter declarations", async
   context.after(() => rm(root, { recursive: true, force: true }));
 
   assert.deepEqual(await validateAdapterBoundaries(root), []);
+});
+
+test("allows the frozen webhook parser only in compatibility packages", async (context) => {
+  const validateAdapterBoundaries = await loadValidator();
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+
+  await writeInnerPackageFixture(
+    root,
+    "contracts",
+    'export type VerifyAndParseWebhookCommand = { operation: "VERIFY_AND_PARSE_WEBHOOK" };\n',
+  );
+  await writeInnerPackageFixture(
+    root,
+    "payment-port",
+    'export interface LegacyWebhookParser { verifyAndParseWebhook(command: unknown): Promise<unknown>; }\nexport const LEGACY_WEBHOOK_PARSER_OPERATIONS = ["VERIFY_AND_PARSE_WEBHOOK"] as const;\n',
+  );
+  await writeAdapterPackageFixture(
+    root,
+    "payment-fake",
+    'export const fake = { verifyAndParseWebhook: async () => ({ operation: "VERIFY_AND_PARSE_WEBHOOK" }) };\n',
+  );
+  await writeInnerPackageFixture(
+    root,
+    "testing",
+    'export type VerifyAndParseWebhookResponse = { operation: "VERIFY_AND_PARSE_WEBHOOK" };\n',
+  );
+
+  const errors = await validateAdapterBoundaries(root);
+  assert.ok(
+    !errors.some((error) => error.includes("legacy webhook surface")),
+    `expected compatibility packages to remain allowed: ${errors.join(" | ")}`,
+  );
+});
+
+test("allows the current webhook verifier path in production code", async (context) => {
+  const validateAdapterBoundaries = await loadValidator();
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+
+  await writeInnerPackageFixture(
+    root,
+    "payment-port",
+    "export interface PaymentWebhookVerifier { verifyPaymentWebhook(command: unknown): Promise<unknown>; }\n",
+  );
+  await writeInnerPackageFixture(
+    root,
+    "application",
+    'import type { PaymentWebhookVerifier } from "@fan-support/payment-port";\nexport const operation = "VERIFY_PAYMENT_WEBHOOK";\nexport type Verifier = PaymentWebhookVerifier;\n',
+  );
+  await write(
+    root,
+    "apps/api/src/payment-webhook.ts",
+    'export const operation = "VERIFY_PAYMENT_WEBHOOK";\nexport const verifyPaymentWebhook = async () => undefined;\n',
+  );
+  await write(
+    root,
+    "packages/media-s3/src/current-webhook.ts",
+    'import type { PaymentWebhookVerifier } from "@fan-support/payment-port";\nexport type Verifier = PaymentWebhookVerifier;\n',
+  );
+
+  const errors = await validateAdapterBoundaries(root);
+  assert.ok(
+    !errors.some((error) => error.includes("legacy webhook surface")),
+    `expected the current verifier path to remain allowed: ${errors.join(" | ")}`,
+  );
+});
+
+test("rejects legacy webhook imports and calls from production code", async (context) => {
+  const validateAdapterBoundaries = await loadValidator();
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+
+  await writeInnerPackageFixture(
+    root,
+    "payment-port",
+    "export interface LegacyWebhookParser {}\nexport type VerifyAndParseWebhookCommand = unknown;\n",
+  );
+  await writeInnerPackageFixture(
+    root,
+    "application",
+    'import { LEGACY_WEBHOOK_PARSER_OPERATIONS, type VerifyAndParseWebhookCommand, type VerifyAndParseWebhookResponse } from "@fan-support/payment-port";\nexport type Command = VerifyAndParseWebhookCommand;\nexport type Response = VerifyAndParseWebhookResponse;\nexport const operations = LEGACY_WEBHOOK_PARSER_OPERATIONS;\n',
+  );
+  await write(
+    root,
+    "apps/api/src/legacy-webhook.ts",
+    'import type { LegacyWebhookParser } from "@fan-support/payment-port";\nexport const invoke = (parser: LegacyWebhookParser) => parser.verifyAndParseWebhook({ operation: "VERIFY_AND_PARSE_WEBHOOK" });\n',
+  );
+  await write(
+    root,
+    "packages/media-s3/src/legacy-webhook.ts",
+    'export const invoke = (parser: Record<string, Function>) => parser["verifyAndParseWebhook"]({ operation: "VERIFY_AND_PARSE_WEBHOOK" });\n',
+  );
+
+  const errors = await validateAdapterBoundaries(root);
+  for (const relativePath of [
+    "apps/api/src/legacy-webhook.ts",
+    "packages/application/src/index.ts",
+    "packages/media-s3/src/legacy-webhook.ts",
+  ]) {
+    assert.ok(
+      errors.some(
+        (error) =>
+          error.includes(relativePath) &&
+          error.includes("legacy webhook surface"),
+      ),
+      `expected legacy webhook usage in ${relativePath} to be rejected: ${errors.join(" | ")}`,
+    );
+  }
+  for (const token of [
+    "LEGACY_WEBHOOK_PARSER_OPERATIONS",
+    "LegacyWebhookParser",
+    "VERIFY_AND_PARSE_WEBHOOK",
+    "VerifyAndParseWebhookCommand",
+    "VerifyAndParseWebhookResponse",
+    "verifyAndParseWebhook",
+  ]) {
+    assert.ok(
+      errors.some((error) => error.includes(`legacy webhook surface ${token}`)),
+      `expected legacy webhook token ${token} to be rejected: ${errors.join(" | ")}`,
+    );
+  }
 });
 
 test("rejects provider imports from inner-layer source", async (context) => {

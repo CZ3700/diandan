@@ -16,6 +16,20 @@ const adapterPackageNames = new Set([
   "payment-fake",
   "persistence-postgres",
 ]);
+const legacyWebhookCompatibilityRoots = new Set([
+  "packages/contracts",
+  "packages/payment-fake",
+  "packages/payment-port",
+  "packages/testing",
+]);
+const forbiddenLegacyWebhookTokens = new Set([
+  "LEGACY_WEBHOOK_PARSER_OPERATIONS",
+  "LegacyWebhookParser",
+  "VERIFY_AND_PARSE_WEBHOOK",
+  "VerifyAndParseWebhookCommand",
+  "VerifyAndParseWebhookResponse",
+  "verifyAndParseWebhook",
+]);
 
 const portableExternalDependencies = new Set([
   "entities",
@@ -210,6 +224,81 @@ function collectModuleSpecifiers(sourceFile) {
 
   visit(sourceFile);
   return [...new Set(specifiers)];
+}
+
+function workspaceUnitPath(relativePath) {
+  const [parentDirectory, unitName] = relativePath.split("/");
+  return parentDirectory === undefined || unitName === undefined
+    ? undefined
+    : `${parentDirectory}/${unitName}`;
+}
+
+function inspectLegacyWebhookSyntax(sourceFile, relativePath, errors) {
+  const unitPath = workspaceUnitPath(relativePath);
+  if (unitPath !== undefined && legacyWebhookCompatibilityRoots.has(unitPath)) {
+    return;
+  }
+
+  const reportedTokens = new Set();
+  function visit(node) {
+    const token =
+      ts.isIdentifier(node) ||
+      ts.isStringLiteral(node) ||
+      ts.isNoSubstitutionTemplateLiteral(node)
+        ? node.text
+        : undefined;
+    if (
+      token !== undefined &&
+      forbiddenLegacyWebhookTokens.has(token) &&
+      !reportedTokens.has(token)
+    ) {
+      reportedTokens.add(token);
+      const location = sourceFile.getLineAndCharacterOfPosition(
+        node.getStart(sourceFile),
+      );
+      errors.push(
+        `${relativePath}:${location.line + 1}:${location.character + 1} uses forbidden legacy webhook surface ${token}`,
+      );
+    }
+    ts.forEachChild(node, visit);
+  }
+
+  visit(sourceFile);
+}
+
+async function validateLegacyWebhookBoundary(workspaceRoot, errors) {
+  for (const parentDirectory of ["apps", "packages"]) {
+    const absoluteParent = path.join(workspaceRoot, parentDirectory);
+    let entries;
+    try {
+      entries = await readdir(absoluteParent, { withFileTypes: true });
+    } catch {
+      continue;
+    }
+
+    for (const entry of entries) {
+      if (!entry.isDirectory()) {
+        continue;
+      }
+      const sourceDirectory = path.join(absoluteParent, entry.name, "src");
+      if (!(await pathExists(sourceDirectory))) {
+        continue;
+      }
+      const sourceFiles = await walkFiles(sourceDirectory, (name) =>
+        /\.[cm]?[jt]sx?$/u.test(name),
+      );
+      for (const sourcePath of sourceFiles) {
+        const relativePath = toWorkspacePath(workspaceRoot, sourcePath);
+        const sourceFile = ts.createSourceFile(
+          sourcePath,
+          await readFile(sourcePath, "utf8"),
+          ts.ScriptTarget.Latest,
+          true,
+        );
+        inspectLegacyWebhookSyntax(sourceFile, relativePath, errors);
+      }
+    }
+  }
 }
 
 async function inspectProviderImports(
@@ -755,6 +844,7 @@ export async function validateAdapterBoundaries(
 ) {
   const errors = [];
   await validateCheckWiring(workspaceRoot, errors);
+  await validateLegacyWebhookBoundary(workspaceRoot, errors);
 
   const packagesDirectory = path.join(workspaceRoot, "packages");
   let entries;
@@ -823,7 +913,7 @@ if (
     process.exitCode = 1;
   } else {
     console.log(
-      "Adapter boundary validation passed: inner layers are provider-free and adapter public declarations are portable.",
+      "Adapter boundary validation passed: inner layers are provider-free, adapter public declarations are portable, and legacy webhook parsing stays in compatibility packages.",
     );
   }
 }
