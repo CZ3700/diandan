@@ -3,8 +3,8 @@
 > 最后更新：2026-09-04
 > 当前里程碑：M1 可信内核 / M2 品牌样板
 > 当前 ACTIVE Phase：Phase 1、Phase 2
-> 当前任务：`P1-05`（Lane A，Codex `/root`，`REVIEW`）；Lane B/C/D 无 executor
-> 下一可领取任务：`P2-01`（Lane B）；单个 executor 一次只领取一个
+> 当前任务：无；Lane A/B/C/D 均无 executor
+> 下一可领取任务：`P1-06`（Lane A）或 `P2-01`（Lane B）；单个 executor 一次只领取一个
 
 ## 1. 开工入口
 
@@ -16,18 +16,18 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 Lane A 由 `P1-05` 占用且处于 `REVIEW`，Lane B/C/D 空闲，`P2-01` 为 `READY`。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 Lane A/B/C/D 均空闲，`P1-06` 与 `P2-01` 为 `READY`。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 38 |
-| READY | 1 |
+| PENDING | 37 |
+| READY | 2 |
 | IN_PROGRESS | 0 |
 | BLOCKED | 0 |
-| REVIEW | 1 |
-| DONE | 9 |
+| REVIEW | 0 |
+| DONE | 10 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -78,7 +78,7 @@
 
 ## 5. 最新证据
 
-已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据。P0-05 已取得本地 request/trace、日志隐私、故障/关闭、浏览器、clean-clone 与真实 PR 必需检查证据并标记 DONE。P1-01 已取得 v1 合同、确定性 artifact、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-02 已取得自研内容/商品/价格/库存/媒体/政策合同、七语言发布门、公开投影、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-03 已取得纯 domain 合同/实现、本地与 clean-clone 0-cache 门禁、三路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-04 已取得 6 个 versioned migration/108 表 catalog、真实 PG18 空库与带数据升降级、并发/隐私/authority/append-only 对抗约束、clean clone、两路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-05 已在 2026-09-04 进入 `REVIEW`：本地 `pnpm check`、`pnpm security:secrets`、官方 registry high-level audit、真实 PostgreSQL migration/repository 集成和真实 S3 TLS integration 全绿；本轮把 fake identity/notification adapters 落入各自 adapter 包，并保持 `@fan-support/testing` 为不反向依赖外层 adapter 的独立 conformance/fixture 基准，同时将公网 `publicHttpsUrlSchema` 与 media grant 的无凭据 HTTPS transport URL 分离，避免对支付/身份公网 root 的收紧误伤本地 TLS presign。该任务尚待 fresh clean-clone 与真实 GitHub PR Quality/Security，故未标记 `DONE`，P1-06 仍保持 `PENDING`。ADR-007 已关闭生产基础设施**选型**门并补入 P5-08 IaC/staging 任务；这些仍都不是 AWS apply、staging、生产、恢复或发布证据。
+已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据。P0-05 已取得本地 request/trace、日志隐私、故障/关闭、浏览器、clean-clone 与真实 PR 必需检查证据并标记 DONE。P1-01 已取得 v1 合同、确定性 artifact、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-02 已取得自研内容/商品/价格/库存/媒体/政策合同、七语言发布门、公开投影、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-03 已取得纯 domain 合同/实现、本地与 clean-clone 0-cache 门禁、三路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-04 已取得 6 个 versioned migration/108 表 catalog、真实 PG18 空库与带数据升降级、并发/隐私/authority/append-only 对抗约束、clean clone、两路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-05 已取得七类 versioned ports/conformance、PostgreSQL repositories/transactions、S3-compatible media、CloudFront purge、KMS、TEST-only fake adapters、9 migrations/108 tables、真实 PG/S3 TLS、浏览器、fresh clean-clone、独立终审与 [PR #8](https://github.com/CZ3700/diandan/pull/8) 的真实 Quality/Security；CI 动态 import 超时根因亦在不放宽 5 秒行为门禁的前提下修复，任务已标记 `DONE` 并解锁 `P1-06`。ADR-007 已关闭生产基础设施**选型**门并补入 P5-08 IaC/staging 任务；这些仍都不是 AWS apply、staging、生产、恢复或发布证据。
 
 | 日期 | Task | 类型 | 证据 | 结论 |
 |:--|:--|:--|:--|:--|
@@ -95,6 +95,7 @@
 | 2026-09-03 | P1-02 | 内容/发布合同 | Git `6daea6928a69d59e999f3916c02b5e27583e2e17`、[PR #5](https://github.com/CZ3700/diandan/pull/5)、[run 33707017702](https://github.com/CZ3700/diandan/actions/runs/33707017702)、`packages/content/`、`packages/contracts/src/content.ts` | 自研内容/商品/价格/库存/媒体/政策模型、精确七语言审核与发布门、双 hero、严格公开投影和虚构 fixtures 完成；clean clone 0-cache、Quality/Security 与两路复核全绿，任务 DONE；DB/repository/真实存储与云发布不在本任务证据范围 |
 | 2026-09-03 | P1-03 | 纯领域规则 | Git `49a8756852f3083a04184a1334743622ff423636`、[PR #6](https://github.com/CZ3700/diandan/pull/6)、[run 33720394020](https://github.com/CZ3700/diandan/actions/runs/33720394020)、`packages/domain/`、`packages/contracts/src/domain-rules.ts` | 32 个 internal/versioned contract roots、17 个纯 domain 入口、160 项领域测试与 96.16% branch coverage；本地/clean clone 0-cache、secret/audit、Quality/Security 与三路复核全绿，任务 DONE；数据库并发与真实 PSP/云发布证据不在本任务范围 |
 | 2026-09-03 | P1-04 | PostgreSQL schema/migrations | Git `827ada4d2e7f821307c761addec65864aedf1a74`、[PR #7](https://github.com/CZ3700/diandan/pull/7)、[run 33739482625](https://github.com/CZ3700/diandan/actions/runs/33739482625)、`database/`、`packages/persistence-postgres/` | 6 个迁移/108 表、空库与带数据 up/down/up、并发/authority/隐私/webhook/append-only 对抗约束完成；clean clone 0-cache、secret/audit、Quality/Security 与两路独立终验全绿，任务 DONE；repository、真实 KMS/PSP/AWS/staging/PITR/production 不在本任务证据范围 |
+| 2026-09-04 | P1-05 | Ports/repositories/adapters | Git `233d11b922df485f4e448ad71cf11612a9a1f77d`、[PR #8](https://github.com/CZ3700/diandan/pull/8)、[run 33785418111](https://github.com/CZ3700/diandan/actions/runs/33785418111)、`packages/*-port/`、`packages/persistence-postgres/`、`packages/media-s3/` | 七类 versioned port/conformance、事务/repository、真实 PG18 与 TLS S3-compatible 集成、CloudFront/KMS/TEST-only fake 完成；fresh clean clone、secret/audit、Quality/Security 与独立终审全绿，任务 DONE；真实供应商/AWS apply/staging/production 与 webhook worker 不在本任务范围 |
 
 ## 6. 更新规则
 

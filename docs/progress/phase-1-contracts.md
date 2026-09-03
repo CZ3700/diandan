@@ -16,8 +16,8 @@
 | P1-02 | DONE | Codex `/root` | P1-01、P0-04 | Git `6daea69`、PR #5/run `33707017702`；本地、clean clone、Quality/Security 与两路独立验收全绿 |
 | P1-03 | DONE | Codex `/root` | P1-01 | Git `49a8756`、PR #6/run `33720394020`；本地/clean clone、Quality/Security 与三路独立复核全绿 |
 | P1-04 | DONE | Codex `/root` | P1-01、P1-02、P0-03 | Git `827ada4`、PR #7/run `33739482625`；PG18、clean clone、Quality/Security 与两路独立终验全绿 |
-| P1-05 | REVIEW | Codex `/root` | P1-01/02/03/04 | 2026-09-04T01:10:49+08:00 请求评审；本地 `pnpm check`/secret/audit 全绿，待 clean-clone 与 GitHub Quality/Security |
-| P1-06 | PENDING | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
+| P1-05 | DONE | Codex `/root` | P1-01/02/03/04 | Git `233d11b`、PR #8/run `33785418111`；本地、clean clone、Quality/Security 与独立终审全绿 |
+| P1-06 | READY | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
 
 ## P1-01 执行卡
 
@@ -114,15 +114,20 @@
 - **风险护栏**：对应 R-02/R-06/R-14；repository 必须在同一事务内锁定并更新 canonical balance/reservation/ledger/幂等结果，不信任调用方金额或库存；留言、邮箱、地址与 key plaintext 不得进入通用 DTO、对象 metadata、日志或 fake fixture；依赖精确锁版，provider/AWS/Drizzle/`pg` 类型不得逃出 adapter，配置与 key reference 必须注入且 fail closed。
 - **Review 请求**：2026-09-04T01:10:49+08:00；fake identity/notification adapters 已落入各自 adapter 包，`@fan-support/testing` 保持 inner-layer、框架中立的独立 conformance/fixture 基准，支付/身份公共 HTTPS root 收紧为公网限定，media grant URL 保持无凭据 HTTPS 以支持本地 TLS presign 集成；当前请求评审基于本地完整门禁，clean-clone 与 GitHub Quality/Security 结果待补入最终 DONE 证据。
 
-### REVIEW 证据（2026-09-04）
+### DONE 证据（2026-09-04）
 
+- **Ports 与替换边界**：persistence/payment/media/identity/notification/cache-purge/key-management 均有独立 workspace port、严格 `schemaVersion: 1` Zod command/response 与共享 conformance；provider/ORM 类型越界扫描含 22 个自测并在 build 后复扫公开声明，inner layer 无供应商依赖或循环。
+- **PostgreSQL adapter**：transaction manager、savepoint、幂等、outbox、inventory 与 repository 只通过 port 暴露可序列化结果；真实 PostgreSQL 18 上 9 个 migration/108 tables、空库 round-trip、0007/0008/0009 带数据升级、约束/publication/repository 集成全绿。
+- **媒体与 AWS adapter**：S3-compatible source/derivative key、checksum、字节上限、immutable PUT、条件删除、HTTPS signed grant 与精确 preview CORS 在真实 TLS emulator 中通过；CloudFront purge 与 KMS adapter 使用注入配置/引用，AWS SDK 对象和 key plaintext 不越界。
 - **实现补强**：`packages/identity-oidc` 与 `packages/notification-provider` 现在各自提供显式 `environment: "TEST"` 的确定性 fake adapter，拒绝 preview/staging/production 组合；`packages/testing` 保留独立、框架中立的 conformance runner 与参考 fake/fixture，不反向依赖外层 adapter，从而避免依赖环并让 adapter 行为由独立基准校验。
 - **边界收紧**：`packages/contracts/src/presentation.ts` 将公网 `publicHttpsUrlSchema` 与仅要求 HTTPS/无凭据的 transport URL 分离；支付 return/cancel、OIDC issuer/redirect 继续拒绝 localhost/私网/保留地址，media upload/download grant 恢复允许本地 TLS presign 端点，不放宽公开媒体 URL 与公开回跳根约束。
 - **配置与连接 fail-closed**：`packages/config` 新增对 staging/production `internalApiOrigin` 的公网 HTTPS 限定；`packages/persistence-postgres` 明确拒绝带 query 的 PostgreSQL URL、Unix socket/路径式 host 与非网络结构 host，避免绕过预期的连接边界。
 - **TDD/回归**：adapter 包以共享 conformance 和 reviewed fixture 驱动 TEST-only fake 实现；一次尝试让 inner-layer `testing` 反向复用 adapter 暴露依赖环后已撤回，最终保持 `adapter devDependency → testing` 的单向关系。另以 contracts 回归证明 localhost HTTPS media grant 仍被允许，红灯复现 `media-s3` 集成失败后以 transport URL schema 修复转绿；终审提出的非法 notification `now/outcome` 测试缺口也已补齐并通过。
 - **本地验证**：2026-09-04 在 Node `24.20.0` / pnpm `11.25.0` 下完成 `node ./scripts/check-workspace.mjs`、受影响包 tests/typecheck、`pnpm check:contracts`、`TURBO_FORCE=true pnpm check`、`pnpm security:secrets` 与 `pnpm audit --registry=https://registry.npmjs.org --audit-level=high`；结果为 workspace 4 apps/30 packages/34 units 无循环、typecheck 46/46、test 46/46、build 34/34、真实 PostgreSQL 9 migrations/108 tables、真实 S3 TLS integration、Prettier/ESLint、adapter/artifact checks 与 high-level audit 全绿。
-- **CI 根因修复**：PR #8 run `33784019993` 的 Quality 两次稳定暴露 worker health E2E 在默认 5 秒内超时；日志显示 bootstrap transform/import 在 Turbo + Vitest 并发下占去约 5–6 秒，而本地隔离同包约 0.4 秒且路径无外部 I/O。API/Worker health/observability E2E 已统一改为顶层静态导入，把 runner 模块加载移出行为计时，同时保留原 5 秒约束并让 import 错误直接失败；修复后本地完整 0-cache 门禁全绿，待新 SHA 的真实 CI 复验。
-- **剩余 acceptance**：尚未补入本次候选 SHA 的 fresh clean-clone frozen install/check 和 GitHub PR Quality/Security run；在这些远端/隔离证据完成前，P1-05 保持 `REVIEW`，不提前解锁 P1-06。
+- **CI 根因修复**：PR #8 run `33784019993` 的 Quality 两次稳定暴露 worker health E2E 在默认 5 秒内超时；日志显示 bootstrap transform/import 在 Turbo + Vitest 并发下占去约 5–6 秒，而本地隔离同包约 0.4 秒且路径无外部 I/O。API/Worker health/observability E2E 已统一改为顶层静态导入，把 runner 模块加载移出行为计时，同时保留原 5 秒约束并让 import 错误直接失败；修复后的本地完整 0-cache 门禁及 run `33785418111` 均全绿。
+- **clean clone / 真实 CI**：冻结提交 `233d11b922df485f4e448ad71cf11612a9a1f77d` 在 fresh clone 完成 frozen offline install、0-cache 完整门禁、secret/high audit 与干净工作树检查；[PR #8](https://github.com/CZ3700/diandan/pull/8) 的 [run 33785418111](https://github.com/CZ3700/diandan/actions/runs/33785418111) 中 Quality/Security 均成功，merge 状态 `CLEAN`。
+- **独立终审**：数据库 URL/query、结构化 socket host、公共 HTTPS/private IP、staging/production internal origin 四项 Major 均复核为 RESOLVED；identity/notification fake 终审 `ACCEPT`（Blocker 0、Major 0），唯一 Should 的非法 notification runtime options 测试已补齐为 12/12 通过。
+- **浏览器与证据范围**：`output/playwright/p1-05/` 记录 preview CORS/配置的浏览器侧证据；本任务没有真实 PSP/OIDC/邮件供应商、AWS apply、staging、production、PITR 或真实支付结论，webhook raw-body 验签、inbox/outbox 消费、pg-boss retry/DLQ 明确留给 P1-06。
 
 ## 必须证明
 
@@ -134,4 +139,4 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02、P1-03、P1-04 已完成，P1-05 为 `REVIEW`，其余 Phase 1 退出证据尚未取得。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02、P1-03、P1-04、P1-05 已完成，P1-06 为 `READY`，Phase 1 退出证据尚未全部取得。
