@@ -1,12 +1,15 @@
 import { Buffer } from "node:buffer";
 
 import { expect, test } from "vitest";
+import { z } from "zod";
 
 import * as contracts from "./index.js";
 
 type SchemaLike = Readonly<{
   safeParse(value: unknown): Readonly<{ success: boolean }>;
 }>;
+
+type JsonObject = Record<string, unknown>;
 
 const contractExports = contracts as Record<string, unknown>;
 
@@ -48,6 +51,48 @@ const receiveCommand = {
     traceparent: `00-${"a".repeat(32)}-${"b".repeat(16)}-01`,
   },
 } as const;
+
+test("defines strict versioned endpoint preflight command and result contracts", () => {
+  const commandSchema = schema("paymentWebhookEndpointPreflightCommandSchema");
+  const resultSchema = schema("paymentWebhookEndpointPreflightResultSchema");
+  const command = {
+    schemaVersion: 1,
+    endpointId,
+    receivedAt: "2026-09-04T00:00:00.000Z",
+  } as const;
+
+  expect(commandSchema.safeParse(command).success).toBe(true);
+  expect(
+    commandSchema.safeParse({ ...command, unexpected: "field" }).success,
+  ).toBe(false);
+  expect(
+    commandSchema.safeParse({ ...command, schemaVersion: 2 }).success,
+  ).toBe(false);
+  expect(
+    commandSchema.safeParse({
+      ...command,
+      endpointId: "A0000000-0000-4000-8000-000000000011",
+    }).success,
+  ).toBe(false);
+
+  for (const outcome of [
+    "ELIGIBLE",
+    "UNAVAILABLE",
+    "INVALID_REQUEST",
+    "TEMPORARY_UNAVAILABLE",
+  ]) {
+    expect(resultSchema.safeParse({ schemaVersion: 1, outcome }).success).toBe(
+      true,
+    );
+  }
+  expect(
+    resultSchema.safeParse({
+      schemaVersion: 1,
+      outcome: "ELIGIBLE",
+      endpointId,
+    }).success,
+  ).toBe(false);
+});
 
 const verifierResponse = {
   schemaVersion: 1,
@@ -289,6 +334,63 @@ test("bounds exact webhook bytes, headers and key identity", () => {
   ]) {
     expect(commandSchema.safeParse(invalid).success).toBe(false);
   }
+});
+
+test("publishes executable JSON Schema parity for safe webhook headers", () => {
+  const headersSchema = contractExports[
+    "paymentWebhookHeadersSchema"
+  ] as z.ZodType;
+  const jsonSchema = z.toJSONSchema(headersSchema, {
+    target: "draft-2020-12",
+    unrepresentable: "throw",
+  }) as JsonObject;
+  const propertyNames = jsonSchema["propertyNames"] as JsonObject;
+  const headerValues = jsonSchema["additionalProperties"] as JsonObject;
+  const forbiddenCredentialNames = [
+    "authorization",
+    "cookie",
+    "proxy-authorization",
+    "set-cookie",
+  ];
+
+  expect(jsonSchema["maxProperties"]).toBe(64);
+  expect(propertyNames["not"]).toEqual({
+    enum: forbiddenCredentialNames,
+  });
+  expect(headerValues["pattern"]).toBe("^[^\\u0000-\\u001F\\u007F]*$");
+  expect(jsonSchema["x-runtime-invariants"]).toEqual([
+    "sum(utf8ByteLength(name) + utf8ByteLength(value) + 4) across all headers must be <= 32768 bytes",
+  ]);
+
+  const maximumFieldCount = Object.fromEntries(
+    Array.from({ length: 64 }, (_, index) => [`x-${index}`, "v"]),
+  );
+  expect(headersSchema.safeParse(maximumFieldCount).success).toBe(true);
+  expect(
+    headersSchema.safeParse({ ...maximumFieldCount, "x-over-limit": "v" })
+      .success,
+  ).toBe(false);
+
+  for (const name of forbiddenCredentialNames) {
+    expect(headersSchema.safeParse({ [name]: "secret" }).success).toBe(false);
+  }
+  for (const value of ["nul\u0000", "unit-separator\u001f", "delete\u007f"]) {
+    expect(headersSchema.safeParse({ "x-test": value }).success).toBe(false);
+  }
+
+  const headersAtByteLimit = {
+    "x-0": "v".repeat(8_192),
+    "x-1": "v".repeat(8_192),
+    "x-2": "v".repeat(8_192),
+    "x-3": "v".repeat(8_164),
+  };
+  expect(headersSchema.safeParse(headersAtByteLimit).success).toBe(true);
+  expect(
+    headersSchema.safeParse({
+      ...headersAtByteLimit,
+      "x-3": `${headersAtByteLimit["x-3"]}v`,
+    }).success,
+  ).toBe(false);
 });
 
 test("rejects provider DTO leakage and impossible normalized transactions", () => {

@@ -1,6 +1,9 @@
 import { readFile } from "node:fs/promises";
 
 import { expect, test } from "vitest";
+import { z } from "zod";
+
+import { paymentWebhookEndpointIdSchema } from "./identifiers.js";
 
 type JsonObject = Record<string, unknown>;
 
@@ -286,12 +289,20 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
   });
 
   const parameters = operation["parameters"] as JsonObject[];
+  const generatedEndpointIdSchema = Object.fromEntries(
+    Object.entries(
+      z.toJSONSchema(paymentWebhookEndpointIdSchema, {
+        target: "draft-2020-12",
+        unrepresentable: "throw",
+      }),
+    ).filter(([key]) => key !== "$schema"),
+  );
   expect(parameters).toEqual([
     expect.objectContaining({
       name: "endpointId",
       in: "path",
       required: true,
-      schema: expect.objectContaining({ type: "string", format: "uuid" }),
+      schema: generatedEndpointIdSchema,
     }),
   ]);
 

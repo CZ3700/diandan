@@ -28,6 +28,19 @@ import {
 } from "./port-common.js";
 import { schemaVersionSchema } from "./versioning.js";
 
+const FORBIDDEN_PAYMENT_WEBHOOK_HEADER_NAMES = [
+  "authorization",
+  "cookie",
+  "proxy-authorization",
+  "set-cookie",
+] as const;
+const PAYMENT_WEBHOOK_HEADER_VALUE_JSON_SCHEMA_PATTERN =
+  "^[^\\u0000-\\u001F\\u007F]*$";
+const PAYMENT_WEBHOOK_HEADER_MAX_FIELDS = 64;
+const PAYMENT_WEBHOOK_HEADER_MAX_ENCODED_BYTES = 32_768;
+const PAYMENT_WEBHOOK_HEADER_ENCODED_SIZE_INVARIANT =
+  "sum(utf8ByteLength(name) + utf8ByteLength(value) + 4) across all headers must be <= 32768 bytes";
+
 export const verificationKeyReferenceHashSchema = z
   .string()
   .length(64)
@@ -40,22 +53,21 @@ export const paymentWebhookHeadersSchema = z
       .string()
       .min(1)
       .max(128)
-      .regex(/^[!#$%&'*+.^_`|~0-9a-z-]+$/u),
+      .regex(/^[!#$%&'*+.^_`|~0-9a-z-]+$/u)
+      .meta({
+        not: { enum: [...FORBIDDEN_PAYMENT_WEBHOOK_HEADER_NAMES] },
+      }),
     z
       .string()
       .max(8_192)
       .refine((value) => !containsC0OrDelControlCharacter(value), {
         message: "webhook header values must not contain control characters",
-      }),
+      })
+      .meta({ pattern: PAYMENT_WEBHOOK_HEADER_VALUE_JSON_SCHEMA_PATTERN }),
   )
   .superRefine((headers, context) => {
     const entries = Object.entries(headers);
-    for (const forbiddenName of [
-      "authorization",
-      "cookie",
-      "proxy-authorization",
-      "set-cookie",
-    ]) {
+    for (const forbiddenName of FORBIDDEN_PAYMENT_WEBHOOK_HEADER_NAMES) {
       if (Object.hasOwn(headers, forbiddenName)) {
         context.addIssue({
           code: "custom",
@@ -65,7 +77,7 @@ export const paymentWebhookHeadersSchema = z
         });
       }
     }
-    if (entries.length > 64) {
+    if (entries.length > PAYMENT_WEBHOOK_HEADER_MAX_FIELDS) {
       context.addIssue({
         code: "custom",
         message: "webhook headers must contain at most 64 fields",
@@ -79,12 +91,16 @@ export const paymentWebhookHeadersSchema = z
         4,
       0,
     );
-    if (encodedBytes > 32_768) {
+    if (encodedBytes > PAYMENT_WEBHOOK_HEADER_MAX_ENCODED_BYTES) {
       context.addIssue({
         code: "custom",
         message: "webhook headers must not exceed 32 KiB",
       });
     }
+  })
+  .meta({
+    maxProperties: PAYMENT_WEBHOOK_HEADER_MAX_FIELDS,
+    "x-runtime-invariants": [PAYMENT_WEBHOOK_HEADER_ENCODED_SIZE_INVARIANT],
   });
 
 const providerTransactionSchema = z.strictObject({
@@ -271,6 +287,22 @@ export const queuePropagationCarrierSchema = z.strictObject({
     .regex(/^00-(?!0{32}-)[0-9a-f]{32}-(?!0{16}-)[0-9a-f]{16}-[0-9a-f]{2}$/u),
 });
 
+export const paymentWebhookEndpointPreflightCommandSchema = z.strictObject({
+  schemaVersion: schemaVersionSchema,
+  endpointId: paymentWebhookEndpointIdSchema,
+  receivedAt: portTimestampSchema,
+});
+
+export const paymentWebhookEndpointPreflightResultSchema = z.strictObject({
+  schemaVersion: schemaVersionSchema,
+  outcome: z.enum([
+    "ELIGIBLE",
+    "UNAVAILABLE",
+    "INVALID_REQUEST",
+    "TEMPORARY_UNAVAILABLE",
+  ]),
+});
+
 export const receivePaymentWebhookCommandSchema = z.strictObject({
   schemaVersion: schemaVersionSchema,
   operation: z.literal("RECEIVE_PAYMENT_WEBHOOK"),
@@ -396,6 +428,12 @@ export type PaymentWebhookVerificationError = z.infer<
 >;
 export type QueuePropagationCarrier = z.infer<
   typeof queuePropagationCarrierSchema
+>;
+export type PaymentWebhookEndpointPreflightCommand = z.infer<
+  typeof paymentWebhookEndpointPreflightCommandSchema
+>;
+export type PaymentWebhookEndpointPreflightResult = z.infer<
+  typeof paymentWebhookEndpointPreflightResultSchema
 >;
 export type ReceivePaymentWebhookCommand = z.infer<
   typeof receivePaymentWebhookCommandSchema

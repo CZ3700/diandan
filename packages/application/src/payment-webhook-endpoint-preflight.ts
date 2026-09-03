@@ -1,30 +1,36 @@
 import {
-  loadPaymentWebhookEndpointCommandSchema,
   loadPaymentWebhookEndpointResponseSchema,
+  paymentWebhookEndpointPreflightCommandSchema,
+  paymentWebhookEndpointPreflightResultSchema,
+  type PaymentWebhookEndpointPreflightResult,
 } from "@fan-support/contracts";
 import type { ReliableEventTransactionManager } from "@fan-support/persistence-port";
 
-const preflightCommandSchema = loadPaymentWebhookEndpointCommandSchema.omit({
-  operation: true,
-});
-
-export type PaymentWebhookEndpointPreflightResult = Readonly<{
-  schemaVersion: 1;
-  outcome:
-    "ELIGIBLE" | "UNAVAILABLE" | "INVALID_REQUEST" | "TEMPORARY_UNAVAILABLE";
-}>;
+export type { PaymentWebhookEndpointPreflightResult } from "@fan-support/contracts";
 
 export type PaymentWebhookEndpointPreflightDependencies = Readonly<{
   transactionManager: ReliableEventTransactionManager;
 }>;
 
+function preflightResult(
+  outcome: PaymentWebhookEndpointPreflightResult["outcome"],
+): PaymentWebhookEndpointPreflightResult {
+  return Object.freeze(
+    paymentWebhookEndpointPreflightResultSchema.parse({
+      schemaVersion: 1,
+      outcome,
+    }),
+  );
+}
+
 export function createPaymentWebhookEndpointPreflight(
   dependencies: PaymentWebhookEndpointPreflightDependencies,
 ): (command: unknown) => Promise<PaymentWebhookEndpointPreflightResult> {
   return async (command) => {
-    const parsedCommand = preflightCommandSchema.safeParse(command);
+    const parsedCommand =
+      paymentWebhookEndpointPreflightCommandSchema.safeParse(command);
     if (!parsedCommand.success) {
-      return Object.freeze({ schemaVersion: 1, outcome: "INVALID_REQUEST" });
+      return preflightResult("INVALID_REQUEST");
     }
     try {
       const result =
@@ -40,29 +46,17 @@ export function createPaymentWebhookEndpointPreflight(
         );
       const parsed = loadPaymentWebhookEndpointResponseSchema.safeParse(result);
       if (!parsed.success) {
-        return Object.freeze({
-          schemaVersion: 1,
-          outcome: "TEMPORARY_UNAVAILABLE",
-        });
+        return preflightResult("TEMPORARY_UNAVAILABLE");
       }
       if (
         parsed.data.value.decision === "ELIGIBLE" &&
         parsed.data.value.endpoint.endpointId !== parsedCommand.data.endpointId
       ) {
-        return Object.freeze({
-          schemaVersion: 1,
-          outcome: "TEMPORARY_UNAVAILABLE",
-        });
+        return preflightResult("TEMPORARY_UNAVAILABLE");
       }
-      return Object.freeze({
-        schemaVersion: 1,
-        outcome: parsed.data.value.decision,
-      });
+      return preflightResult(parsed.data.value.decision);
     } catch {
-      return Object.freeze({
-        schemaVersion: 1,
-        outcome: "TEMPORARY_UNAVAILABLE",
-      });
+      return preflightResult("TEMPORARY_UNAVAILABLE");
     }
   };
 }

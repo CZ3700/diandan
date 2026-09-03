@@ -46270,7 +46270,7 @@
         },
         "endpointId": {
           "format": "uuid",
-          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
           "type": "string"
         },
         "environment": {
@@ -46365,12 +46365,60 @@
       ],
       "type": "object"
     },
+    "PaymentWebhookEndpointPreflightCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "endpointId": {
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+          "type": "string"
+        },
+        "receivedAt": {
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "endpointId",
+        "receivedAt"
+      ],
+      "type": "object"
+    },
+    "PaymentWebhookEndpointPreflightResult": {
+      "additionalProperties": false,
+      "properties": {
+        "outcome": {
+          "enum": [
+            "ELIGIBLE",
+            "UNAVAILABLE",
+            "INVALID_REQUEST",
+            "TEMPORARY_UNAVAILABLE"
+          ],
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "outcome"
+      ],
+      "type": "object"
+    },
     "PaymentWebhookVerificationCommand": {
       "additionalProperties": false,
       "properties": {
         "endpointId": {
           "format": "uuid",
-          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
           "type": "string"
         },
         "environment": {
@@ -46383,15 +46431,28 @@
         "headers": {
           "additionalProperties": {
             "maxLength": 8192,
+            "pattern": "^[^\\u0000-\\u001F\\u007F]*$",
             "type": "string"
           },
+          "maxProperties": 64,
           "propertyNames": {
             "maxLength": 128,
             "minLength": 1,
+            "not": {
+              "enum": [
+                "authorization",
+                "cookie",
+                "proxy-authorization",
+                "set-cookie"
+              ]
+            },
             "pattern": "^[!#$%&'*+.^_`|~0-9a-z-]+$",
             "type": "string"
           },
-          "type": "object"
+          "type": "object",
+          "x-runtime-invariants": [
+            "sum(utf8ByteLength(name) + utf8ByteLength(value) + 4) across all headers must be <= 32768 bytes"
+          ]
         },
         "operation": {
           "const": "VERIFY_PAYMENT_WEBHOOK",
@@ -46779,7 +46840,7 @@
                 },
                 "endpointId": {
                   "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
                   "type": "string"
                 },
                 "environment": {
@@ -69753,21 +69814,34 @@
         },
         "endpointId": {
           "format": "uuid",
-          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
           "type": "string"
         },
         "headers": {
           "additionalProperties": {
             "maxLength": 8192,
+            "pattern": "^[^\\u0000-\\u001F\\u007F]*$",
             "type": "string"
           },
+          "maxProperties": 64,
           "propertyNames": {
             "maxLength": 128,
             "minLength": 1,
+            "not": {
+              "enum": [
+                "authorization",
+                "cookie",
+                "proxy-authorization",
+                "set-cookie"
+              ]
+            },
             "pattern": "^[!#$%&'*+.^_`|~0-9a-z-]+$",
             "type": "string"
           },
-          "type": "object"
+          "type": "object",
+          "x-runtime-invariants": [
+            "sum(utf8ByteLength(name) + utf8ByteLength(value) + 4) across all headers must be <= 32768 bytes"
+          ]
         },
         "operation": {
           "const": "RECEIVE_PAYMENT_WEBHOOK",
@@ -72793,7 +72867,7 @@
           "properties": {
             "endpointId": {
               "format": "uuid",
-              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
               "type": "string"
             },
             "operation": {
@@ -73182,7 +73256,7 @@
                 },
                 "endpointId": {
                   "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
                   "type": "string"
                 },
                 "environment": {
@@ -74108,7 +74182,7 @@
                         },
                         "endpointId": {
                           "format": "uuid",
-                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
                           "type": "string"
                         },
                         "environment": {
@@ -74258,9 +74332,27 @@
                       "const": "NEW",
                       "type": "string"
                     },
+                    "environment": {
+                      "enum": [
+                        "TEST",
+                        "LIVE"
+                      ],
+                      "type": "string"
+                    },
                     "jobEnqueued": {
                       "const": true,
                       "type": "boolean"
+                    },
+                    "providerAccountId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "providerEventId": {
+                      "maxLength": 256,
+                      "minLength": 1,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                      "type": "string"
                     },
                     "providerEventRowId": {
                       "format": "uuid",
@@ -74277,6 +74369,9 @@
                     "decision",
                     "webhookInboxId",
                     "providerEventRowId",
+                    "providerAccountId",
+                    "environment",
+                    "providerEventId",
                     "jobEnqueued"
                   ],
                   "type": "object"
@@ -74286,6 +74381,24 @@
                   "properties": {
                     "decision": {
                       "const": "REPLAY",
+                      "type": "string"
+                    },
+                    "environment": {
+                      "enum": [
+                        "TEST",
+                        "LIVE"
+                      ],
+                      "type": "string"
+                    },
+                    "providerAccountId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "providerEventId": {
+                      "maxLength": 256,
+                      "minLength": 1,
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
                       "type": "string"
                     },
                     "providerEventRowId": {
@@ -74302,7 +74415,10 @@
                   "required": [
                     "decision",
                     "webhookInboxId",
-                    "providerEventRowId"
+                    "providerEventRowId",
+                    "providerAccountId",
+                    "environment",
+                    "providerEventId"
                   ],
                   "type": "object"
                 },

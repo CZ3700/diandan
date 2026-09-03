@@ -7,6 +7,7 @@ import {
   idolIdSchema,
   merchantReferenceSchema,
   orderAccessTokenSchema,
+  paymentWebhookEndpointIdSchema,
   paymentReturnStateSchema,
   providerClientTokenSchema,
   providerEventReferenceSchema,
@@ -20,6 +21,25 @@ import {
   type ProviderClientToken,
   type ProviderEventReference,
 } from "./identifiers.js";
+
+test("accepts only lowercase RFC 4122 version 4 webhook endpoint IDs", () => {
+  expect(
+    paymentWebhookEndpointIdSchema.safeParse(
+      "a0000000-0000-4000-8000-000000000011",
+    ).success,
+  ).toBe(true);
+
+  for (const invalid of [
+    "A0000000-0000-4000-8000-000000000011",
+    "a0000000-0000-1000-8000-000000000011",
+    "00000000-0000-0000-0000-000000000000",
+    "ffffffff-ffff-ffff-ffff-ffffffffffff",
+  ]) {
+    expect(paymentWebhookEndpointIdSchema.safeParse(invalid).success).toBe(
+      false,
+    );
+  }
+});
 
 test("defines bounded opaque tokens and provider references", async () => {
   const identifiers = await import("./identifiers.js");

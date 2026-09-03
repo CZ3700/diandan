@@ -68,6 +68,8 @@ test("registers reliable-event wire roots as internal versioned contracts", asyn
     "PaymentWebhookVerificationCommand",
     "PaymentWebhookVerificationResponse",
     "PaymentWebhookVerificationError",
+    "PaymentWebhookEndpointPreflightCommand",
+    "PaymentWebhookEndpointPreflightResult",
     "QueuePropagationCarrier",
     "WebhookInboxJob",
     "OutboxDispatchJob",

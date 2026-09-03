@@ -6,11 +6,15 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import {
   paymentWebhookEndpointIdSchema,
   paymentWebhookAcceptedResponseSchema,
+  paymentWebhookEndpointPreflightCommandSchema,
+  paymentWebhookEndpointPreflightResultSchema,
   paymentWebhookHeadersSchema,
   portBase64Schema,
   portTimestampSchema,
   receivePaymentWebhookCommandSchema,
   receivePaymentWebhookResponseSchema,
+  type PaymentWebhookEndpointPreflightCommand,
+  type PaymentWebhookEndpointPreflightResult,
   type ReceivePaymentWebhookCommand,
   type ReceivePaymentWebhookError,
   type ReceivePaymentWebhookResponse,
@@ -47,23 +51,15 @@ const PAYMENT_WEBHOOK_ACCEPTED_RESPONSE = Object.freeze(
 
 export type PaymentWebhookReceiveCommand = ReceivePaymentWebhookCommand;
 export type PaymentWebhookReceiveResult = ReceivePaymentWebhookResponse;
+export type {
+  PaymentWebhookEndpointPreflightCommand,
+  PaymentWebhookEndpointPreflightResult,
+} from "@fan-support/contracts";
 
 export type PaymentWebhookReceiver = Readonly<{
   receive: (
     command: PaymentWebhookReceiveCommand,
   ) => Promise<PaymentWebhookReceiveResult>;
-}>;
-
-export type PaymentWebhookEndpointPreflightCommand = Readonly<{
-  schemaVersion: 1;
-  endpointId: ReceivePaymentWebhookCommand["endpointId"];
-  receivedAt: ReceivePaymentWebhookCommand["receivedAt"];
-}>;
-
-export type PaymentWebhookEndpointPreflightResult = Readonly<{
-  schemaVersion: 1;
-  outcome:
-    "ELIGIBLE" | "UNAVAILABLE" | "INVALID_REQUEST" | "TEMPORARY_UNAVAILABLE";
 }>;
 
 export type PaymentWebhookEndpointPreflight = (
@@ -113,50 +109,6 @@ function resolveVerificationHeaderNames(value: unknown): readonly string[] {
     return Object.freeze(names);
   } catch {
     throw new Error("Payment webhook header allowlist is invalid");
-  }
-}
-
-const ENDPOINT_PREFLIGHT_OUTCOMES = new Set<
-  PaymentWebhookEndpointPreflightResult["outcome"]
->(["ELIGIBLE", "UNAVAILABLE", "INVALID_REQUEST", "TEMPORARY_UNAVAILABLE"]);
-
-function parseEndpointPreflightResult(
-  value: unknown,
-): PaymentWebhookEndpointPreflightResult["outcome"] | undefined {
-  try {
-    if (typeof value !== "object" || value === null || Array.isArray(value)) {
-      return undefined;
-    }
-    const prototype = Object.getPrototypeOf(value) as object | null;
-    const keys = Reflect.ownKeys(value);
-    if (
-      (prototype !== Object.prototype && prototype !== null) ||
-      keys.length !== 2 ||
-      keys.some((key) => key !== "schemaVersion" && key !== "outcome")
-    ) {
-      return undefined;
-    }
-    const schemaVersion = Object.getOwnPropertyDescriptor(
-      value,
-      "schemaVersion",
-    );
-    const outcome = Object.getOwnPropertyDescriptor(value, "outcome");
-    if (
-      schemaVersion === undefined ||
-      !("value" in schemaVersion) ||
-      schemaVersion.value !== 1 ||
-      outcome === undefined ||
-      !("value" in outcome) ||
-      typeof outcome.value !== "string" ||
-      !ENDPOINT_PREFLIGHT_OUTCOMES.has(
-        outcome.value as PaymentWebhookEndpointPreflightResult["outcome"],
-      )
-    ) {
-      return undefined;
-    }
-    return outcome.value as PaymentWebhookEndpointPreflightResult["outcome"];
-  } catch {
-    return undefined;
   }
 }
 
@@ -269,18 +221,28 @@ export function registerPaymentWebhookRoute(
             return sendSafeError(reply, 503);
           }
 
-          let outcome:
-            PaymentWebhookEndpointPreflightResult["outcome"] | undefined;
+          const preflightCommand =
+            paymentWebhookEndpointPreflightCommandSchema.safeParse({
+              schemaVersion: 1,
+              endpointId: endpoint.data,
+              receivedAt,
+            });
+          if (!preflightCommand.success) {
+            return sendSafeError(reply, 503);
+          }
+
+          let outcome: PaymentWebhookEndpointPreflightResult["outcome"];
           try {
-            outcome = parseEndpointPreflightResult(
-              await options.endpointPreflight(
-                Object.freeze({
-                  schemaVersion: 1,
-                  endpointId: endpoint.data,
-                  receivedAt,
-                }),
-              ),
-            );
+            const result =
+              paymentWebhookEndpointPreflightResultSchema.safeParse(
+                await options.endpointPreflight(
+                  Object.freeze(preflightCommand.data),
+                ),
+              );
+            if (!result.success) {
+              return sendSafeError(reply, 503);
+            }
+            outcome = result.data.outcome;
           } catch {
             return sendSafeError(reply, 503);
           }

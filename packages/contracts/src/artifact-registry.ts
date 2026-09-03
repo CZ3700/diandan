@@ -172,6 +172,8 @@ import {
 import {
   outboxDispatchJobSchema,
   paymentWebhookAcceptedResponseSchema,
+  paymentWebhookEndpointPreflightCommandSchema,
+  paymentWebhookEndpointPreflightResultSchema,
   paymentWebhookVerificationCommandSchema,
   paymentWebhookVerificationErrorSchema,
   paymentWebhookVerificationResponseSchema,
@@ -733,6 +735,16 @@ const registrations = [
     name: "PaymentWebhookVerificationError",
     audience: "internal",
     schema: paymentWebhookVerificationErrorSchema,
+  },
+  {
+    name: "PaymentWebhookEndpointPreflightCommand",
+    audience: "internal",
+    schema: paymentWebhookEndpointPreflightCommandSchema,
+  },
+  {
+    name: "PaymentWebhookEndpointPreflightResult",
+    audience: "internal",
+    schema: paymentWebhookEndpointPreflightResultSchema,
   },
   {
     name: "QueuePropagationCarrier",

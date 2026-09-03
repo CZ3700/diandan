@@ -3,6 +3,8 @@ import { Buffer } from "node:buffer";
 import Fastify, { type FastifyInstance } from "fastify";
 import {
   receivePaymentWebhookResponseSchema,
+  type PaymentWebhookEndpointPreflightCommand,
+  type PaymentWebhookEndpointPreflightResult,
   type ReceivePaymentWebhookCommand,
   type ReceivePaymentWebhookResponse,
 } from "@fan-support/contracts";
@@ -17,18 +19,8 @@ type Receiver = Readonly<{
 }>;
 
 type EndpointPreflight = (
-  command: Readonly<{
-    schemaVersion: 1;
-    endpointId: string;
-    receivedAt: string;
-  }>,
-) => Promise<
-  Readonly<{
-    schemaVersion: 1;
-    outcome:
-      "ELIGIBLE" | "UNAVAILABLE" | "INVALID_REQUEST" | "TEMPORARY_UNAVAILABLE";
-  }>
->;
+  command: PaymentWebhookEndpointPreflightCommand,
+) => Promise<PaymentWebhookEndpointPreflightResult>;
 
 type RouteModule = Readonly<{
   registerPaymentWebhookRoute: (
@@ -62,6 +54,67 @@ const acceptedResponse = receivePaymentWebhookResponseSchema.parse({
 
 const eligibleEndpointPreflight: EndpointPreflight = () =>
   Promise.resolve(Object.freeze({ schemaVersion: 1, outcome: "ELIGIBLE" }));
+
+test("rejects noncanonical webhook endpoint IDs before preflight", async () => {
+  const routeModule = await loadRouteModule();
+  expect(routeModule).toBeDefined();
+  if (routeModule === undefined) {
+    return;
+  }
+
+  const telemetry = startNodeTelemetry({ service: "api" });
+  const application = Fastify({ logger: false });
+  registerFastifyObservability(application, {
+    service: "api",
+    logger: { info: () => {}, warn: () => {}, error: () => {} },
+  });
+  let preflightCalls = 0;
+  let receiverCalls = 0;
+  routeModule.registerPaymentWebhookRoute(application, {
+    endpointPreflight: () => {
+      preflightCalls += 1;
+      return Promise.resolve({ schemaVersion: 1, outcome: "ELIGIBLE" });
+    },
+    receiver: {
+      receive: () => {
+        receiverCalls += 1;
+        return Promise.resolve(acceptedResponse);
+      },
+    },
+  });
+
+  try {
+    await application.ready();
+    const invalidEndpointIds = [
+      "A0000000-0000-4000-8000-000000000011",
+      "a0000000-0000-1000-8000-000000000011",
+      "00000000-0000-0000-0000-000000000000",
+      "ffffffff-ffff-ffff-ffff-ffffffffffff",
+    ];
+    const responses = await Promise.all(
+      invalidEndpointIds.map((invalidEndpointId, index) =>
+        application.inject({
+          method: "POST",
+          url: `/api/v1/webhooks/payments/${invalidEndpointId}`,
+          headers: {
+            "content-type": "application/json",
+            "x-request-id": `30000000-0000-4000-8000-${String(index + 20).padStart(12, "0")}`,
+          },
+          payload: "{}",
+        }),
+      ),
+    );
+
+    expect(responses.map((response) => response.statusCode)).toEqual([
+      400, 400, 400, 400,
+    ]);
+    expect(preflightCalls).toBe(0);
+    expect(receiverCalls).toBe(0);
+  } finally {
+    await application.close();
+    await telemetry.shutdown();
+  }
+});
 
 test("keeps supported provider payload bytes exact inside a scoped parser", async () => {
   const routeModule = await loadRouteModule();

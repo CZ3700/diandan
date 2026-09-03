@@ -71,7 +71,11 @@ export const customerContactIdSchema = z.uuid().brand<"CustomerContactId">();
 export const contentRevisionIdSchema = z.uuid().brand<"ContentRevisionId">();
 export const eventIdSchema = z.uuid().brand<"EventId">();
 export const paymentWebhookEndpointIdSchema = z
-  .uuid()
+  .string()
+  .regex(
+    /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u,
+  )
+  .meta({ format: "uuid" })
   .brand<"PaymentWebhookEndpointId">();
 export const webhookPayloadIdSchema = z.uuid().brand<"WebhookPayloadId">();
 export const webhookInboxIdSchema = z.uuid().brand<"WebhookInboxId">();

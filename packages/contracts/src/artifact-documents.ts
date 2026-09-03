@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { contractArtifactRegistry } from "./artifact-registry.js";
+import { paymentWebhookEndpointIdSchema } from "./identifiers.js";
 
 type JsonObject = Record<string, unknown>;
 
@@ -60,7 +61,7 @@ function paymentWebhookPath(): JsonObject {
           required: true,
           description:
             "Opaque, non-secret UUID that selects the configured webhook endpoint before the body is read.",
-          schema: { type: "string", format: "uuid" },
+          schema: renderSchema(paymentWebhookEndpointIdSchema),
         },
       ],
       requestBody: {
