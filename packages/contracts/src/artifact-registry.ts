@@ -71,6 +71,40 @@ import {
   notificationCommandSchema,
   notificationLocaleSnapshotSchema,
 } from "./fulfillment-notification.js";
+import {
+  decideIdempotencyInputSchema,
+  disputeTransitionCommandSchema,
+  disputeTransitionDecisionSchema,
+  fulfillmentTransitionCommandSchema,
+  fulfillmentTransitionDecisionSchema,
+  giftEligibilityDecisionSchema,
+  giftEligibilityInputSchema,
+  idempotencyDecisionSchema,
+  inventoryReservationCreationDecisionSchema,
+  inventoryReservationCreationInputSchema,
+  inventoryReservationTransitionDecisionSchema,
+  inventoryReservationTransitionInputSchema,
+  latePaymentSuccessCommandSchema,
+  latePaymentSuccessDecisionSchema,
+  lineAmountCalculationDecisionSchema,
+  lineAmountCalculationInputSchema,
+  orderAmountCalculationDecisionSchema,
+  orderAmountCalculationInputSchema,
+  orderLifecycleTransitionCommandSchema,
+  orderLifecycleTransitionDecisionSchema,
+  orderPaymentTransitionCommandSchema,
+  orderPaymentTransitionDecisionSchema,
+  paymentAttemptTransitionCommandSchema,
+  paymentAttemptTransitionDecisionSchema,
+  paymentRouteDecisionSchema,
+  priceSelectionDecisionSchema,
+  priceSelectionInputSchema,
+  refundCapacityDecisionSchema,
+  refundCapacityInputSchema,
+  refundTransitionCommandSchema,
+  refundTransitionDecisionSchema,
+  selectPaymentRouteInputSchema,
+} from "./domain-rules.js";
 import { localeContextSchema, supportedLocaleSchema } from "./locale.js";
 import {
   internalOrderItemSnapshotSchema,
@@ -442,6 +476,169 @@ const registrations = [
     name: "NotificationCommand",
     audience: "internal",
     schema: notificationCommandSchema,
+  },
+  // Application and queue adapters exchange only these versioned roots with
+  // the pure commerce-domain functions. Embedded rule/state schemas remain
+  // implementation details of their owning input or decision.
+  {
+    name: "SelectPaymentRouteInput",
+    audience: "internal",
+    schema: selectPaymentRouteInputSchema,
+  },
+  {
+    name: "PaymentRouteDecision",
+    audience: "internal",
+    schema: paymentRouteDecisionSchema,
+  },
+  {
+    name: "DecideIdempotencyInput",
+    audience: "internal",
+    schema: decideIdempotencyInputSchema,
+  },
+  {
+    name: "IdempotencyDecision",
+    audience: "internal",
+    schema: idempotencyDecisionSchema,
+  },
+  {
+    name: "LineAmountCalculationInput",
+    audience: "internal",
+    schema: lineAmountCalculationInputSchema,
+  },
+  {
+    name: "LineAmountCalculationDecision",
+    audience: "internal",
+    schema: lineAmountCalculationDecisionSchema,
+  },
+  {
+    name: "OrderAmountCalculationInput",
+    audience: "internal",
+    schema: orderAmountCalculationInputSchema,
+  },
+  {
+    name: "OrderAmountCalculationDecision",
+    audience: "internal",
+    schema: orderAmountCalculationDecisionSchema,
+  },
+  {
+    name: "PriceSelectionInput",
+    audience: "internal",
+    schema: priceSelectionInputSchema,
+  },
+  {
+    name: "PriceSelectionDecision",
+    audience: "internal",
+    schema: priceSelectionDecisionSchema,
+  },
+  {
+    name: "GiftEligibilityInput",
+    audience: "internal",
+    schema: giftEligibilityInputSchema,
+  },
+  {
+    name: "GiftEligibilityDecision",
+    audience: "internal",
+    schema: giftEligibilityDecisionSchema,
+  },
+  {
+    name: "InventoryReservationCreationInput",
+    audience: "internal",
+    schema: inventoryReservationCreationInputSchema,
+  },
+  {
+    name: "InventoryReservationCreationDecision",
+    audience: "internal",
+    schema: inventoryReservationCreationDecisionSchema,
+  },
+  {
+    name: "InventoryReservationTransitionInput",
+    audience: "internal",
+    schema: inventoryReservationTransitionInputSchema,
+  },
+  {
+    name: "InventoryReservationTransitionDecision",
+    audience: "internal",
+    schema: inventoryReservationTransitionDecisionSchema,
+  },
+  {
+    name: "RefundCapacityInput",
+    audience: "internal",
+    schema: refundCapacityInputSchema,
+  },
+  {
+    name: "RefundCapacityDecision",
+    audience: "internal",
+    schema: refundCapacityDecisionSchema,
+  },
+  {
+    name: "PaymentAttemptTransitionCommand",
+    audience: "internal",
+    schema: paymentAttemptTransitionCommandSchema,
+  },
+  {
+    name: "PaymentAttemptTransitionDecision",
+    audience: "internal",
+    schema: paymentAttemptTransitionDecisionSchema,
+  },
+  {
+    name: "OrderLifecycleTransitionCommand",
+    audience: "internal",
+    schema: orderLifecycleTransitionCommandSchema,
+  },
+  {
+    name: "OrderLifecycleTransitionDecision",
+    audience: "internal",
+    schema: orderLifecycleTransitionDecisionSchema,
+  },
+  {
+    name: "OrderPaymentTransitionCommand",
+    audience: "internal",
+    schema: orderPaymentTransitionCommandSchema,
+  },
+  {
+    name: "OrderPaymentTransitionDecision",
+    audience: "internal",
+    schema: orderPaymentTransitionDecisionSchema,
+  },
+  {
+    name: "RefundTransitionCommand",
+    audience: "internal",
+    schema: refundTransitionCommandSchema,
+  },
+  {
+    name: "RefundTransitionDecision",
+    audience: "internal",
+    schema: refundTransitionDecisionSchema,
+  },
+  {
+    name: "DisputeTransitionCommand",
+    audience: "internal",
+    schema: disputeTransitionCommandSchema,
+  },
+  {
+    name: "DisputeTransitionDecision",
+    audience: "internal",
+    schema: disputeTransitionDecisionSchema,
+  },
+  {
+    name: "FulfillmentTransitionCommand",
+    audience: "internal",
+    schema: fulfillmentTransitionCommandSchema,
+  },
+  {
+    name: "FulfillmentTransitionDecision",
+    audience: "internal",
+    schema: fulfillmentTransitionDecisionSchema,
+  },
+  {
+    name: "LatePaymentSuccessCommand",
+    audience: "internal",
+    schema: latePaymentSuccessCommandSchema,
+  },
+  {
+    name: "LatePaymentSuccessDecision",
+    audience: "internal",
+    schema: latePaymentSuccessDecisionSchema,
   },
   {
     name: "PublicErrorEnvelope",
