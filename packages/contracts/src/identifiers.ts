@@ -70,6 +70,9 @@ export const notificationDeliveryIdSchema = z
 export const customerContactIdSchema = z.uuid().brand<"CustomerContactId">();
 export const contentRevisionIdSchema = z.uuid().brand<"ContentRevisionId">();
 export const eventIdSchema = z.uuid().brand<"EventId">();
+export const paymentWebhookEndpointIdSchema = z
+  .uuid()
+  .brand<"PaymentWebhookEndpointId">();
 export const webhookInboxIdSchema = z.uuid().brand<"WebhookInboxId">();
 export const auditLogIdSchema = z.uuid().brand<"AuditLogId">();
 export const adminIdentityIdSchema = z.uuid().brand<"AdminIdentityId">();
@@ -187,6 +190,9 @@ export type NotificationDeliveryId = z.infer<
 export type CustomerContactId = z.infer<typeof customerContactIdSchema>;
 export type ContentRevisionId = z.infer<typeof contentRevisionIdSchema>;
 export type EventId = z.infer<typeof eventIdSchema>;
+export type PaymentWebhookEndpointId = z.infer<
+  typeof paymentWebhookEndpointIdSchema
+>;
 export type WebhookInboxId = z.infer<typeof webhookInboxIdSchema>;
 export type AuditLogId = z.infer<typeof auditLogIdSchema>;
 export type AdminIdentityId = z.infer<typeof adminIdentityIdSchema>;

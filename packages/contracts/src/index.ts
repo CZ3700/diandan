@@ -19,4 +19,5 @@ export * from "./payment-port-contracts.js";
 export * from "./persistence-port-contracts.js";
 export * from "./port-common.js";
 export * from "./presentation.js";
+export * from "./reliable-events.js";
 export * from "./versioning.js";

@@ -39751,6 +39751,67 @@
         "public PAID confirmation is rejected in favor of the aggregate late-success planner"
       ]
     },
+    "OutboxDispatchJob": {
+      "additionalProperties": false,
+      "properties": {
+        "consumerKey": {
+          "maxLength": 64,
+          "minLength": 2,
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "correlationId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "jobType": {
+          "const": "DISPATCH_OUTBOX_EVENT",
+          "type": "string"
+        },
+        "outboxEventId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "propagation": {
+          "additionalProperties": false,
+          "properties": {
+            "requestId": {
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "traceparent": {
+              "pattern": "^00-(?!0{32}-)[0-9a-f]{32}-(?!0{16}-)[0-9a-f]{16}-[0-9a-f]{2}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "requestId",
+            "traceparent"
+          ],
+          "type": "object"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "jobType",
+        "outboxEventId",
+        "consumerKey",
+        "correlationId",
+        "propagation"
+      ],
+      "type": "object"
+    },
     "PaymentAction": {
       "oneOf": [
         {
@@ -46117,6 +46178,534 @@
             "schemaVersion",
             "kind",
             "reason"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "PaymentWebhookVerificationCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "endpointId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "environment": {
+          "enum": [
+            "TEST",
+            "LIVE"
+          ],
+          "type": "string"
+        },
+        "headers": {
+          "additionalProperties": {
+            "maxLength": 8192,
+            "type": "string"
+          },
+          "propertyNames": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[!#$%&'*+.^_`|~0-9a-z-]+$",
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "operation": {
+          "const": "VERIFY_PAYMENT_WEBHOOK",
+          "type": "string"
+        },
+        "providerAccountId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "rawBodyBase64": {
+          "maxLength": 65536,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "type": "string"
+        },
+        "receivedAt": {
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "verificationKeyReferenceHash": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "operation",
+        "endpointId",
+        "providerAccountId",
+        "environment",
+        "verificationKeyReferenceHash",
+        "rawBodyBase64",
+        "headers",
+        "receivedAt"
+      ],
+      "type": "object"
+    },
+    "PaymentWebhookVerificationError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "INVALID_COMMAND",
+            "INVALID_SIGNATURE",
+            "EVENT_OUTSIDE_TOLERANCE",
+            "UNSUPPORTED_EVENT",
+            "TEMPORARY_UNAVAILABLE",
+            "CONFIGURATION_ERROR",
+            "MALFORMED_PROVIDER_RESPONSE",
+            "UNEXPECTED_ADAPTER_FAILURE"
+          ],
+          "type": "string"
+        },
+        "recovery": {
+          "enum": [
+            "NONE",
+            "RETRY_SAME_COMMAND",
+            "RECONCILE_REQUIRED",
+            "RESTART_AUTHORIZATION"
+          ],
+          "type": "string"
+        },
+        "retryAfterMs": {
+          "maximum": 86400000,
+          "minimum": 100,
+          "type": "integer"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "recovery",
+        "code"
+      ],
+      "type": "object"
+    },
+    "PaymentWebhookVerificationResponse": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "operation": {
+              "const": "VERIFY_PAYMENT_WEBHOOK",
+              "type": "string"
+            },
+            "outcome": {
+              "const": "SUCCESS",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "value": {
+              "additionalProperties": false,
+              "properties": {
+                "candidate": {
+                  "oneOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "amountMinor": {
+                          "maximum": 9007199254740991,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "currency": {
+                          "pattern": "^[A-Z]{3}$",
+                          "type": "string"
+                        },
+                        "eventType": {
+                          "const": "PAYMENT_STATUS",
+                          "type": "string"
+                        },
+                        "externalReference": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                          "type": "string"
+                        },
+                        "occurredAt": {
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                          "type": "string"
+                        },
+                        "providerEventId": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                          "type": "string"
+                        },
+                        "schemaVersion": {
+                          "const": 1,
+                          "type": "number"
+                        },
+                        "status": {
+                          "enum": [
+                            "CREATED",
+                            "REQUIRES_ACTION",
+                            "PROCESSING",
+                            "SUCCEEDED",
+                            "FAILED",
+                            "CANCELED",
+                            "EXPIRED",
+                            "UNKNOWN"
+                          ],
+                          "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "schemaVersion",
+                        "providerEventId",
+                        "occurredAt",
+                        "externalReference",
+                        "eventType",
+                        "status",
+                        "amountMinor",
+                        "currency"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "amountMinor": {
+                          "maximum": 9007199254740991,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "currency": {
+                          "pattern": "^[A-Z]{3}$",
+                          "type": "string"
+                        },
+                        "eventType": {
+                          "const": "REFUND_STATUS",
+                          "type": "string"
+                        },
+                        "externalReference": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                          "type": "string"
+                        },
+                        "occurredAt": {
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                          "type": "string"
+                        },
+                        "providerEventId": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                          "type": "string"
+                        },
+                        "refundReference": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                          "type": "string"
+                        },
+                        "schemaVersion": {
+                          "const": 1,
+                          "type": "number"
+                        },
+                        "status": {
+                          "enum": [
+                            "REQUESTED",
+                            "SUBMITTING",
+                            "PROCESSING",
+                            "SUCCEEDED",
+                            "FAILED",
+                            "UNKNOWN"
+                          ],
+                          "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "schemaVersion",
+                        "providerEventId",
+                        "occurredAt",
+                        "externalReference",
+                        "eventType",
+                        "refundReference",
+                        "status",
+                        "amountMinor",
+                        "currency"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "amountMinor": {
+                          "maximum": 9007199254740991,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "currency": {
+                          "pattern": "^[A-Z]{3}$",
+                          "type": "string"
+                        },
+                        "disputeReference": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                          "type": "string"
+                        },
+                        "eventType": {
+                          "const": "DISPUTE_STATUS",
+                          "type": "string"
+                        },
+                        "externalReference": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                          "type": "string"
+                        },
+                        "occurredAt": {
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                          "type": "string"
+                        },
+                        "providerEventId": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                          "type": "string"
+                        },
+                        "schemaVersion": {
+                          "const": 1,
+                          "type": "number"
+                        },
+                        "status": {
+                          "enum": [
+                            "OPEN",
+                            "WON",
+                            "LOST"
+                          ],
+                          "type": "string"
+                        },
+                        "transaction": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "providerReference": {
+                              "maxLength": 256,
+                              "minLength": 1,
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                              "type": "string"
+                            },
+                            "type": {
+                              "enum": [
+                                "AUTHORIZATION",
+                                "CAPTURE",
+                                "VOID",
+                                "REFUND",
+                                "CHARGEBACK"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "providerReference"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "schemaVersion",
+                        "providerEventId",
+                        "occurredAt",
+                        "externalReference",
+                        "eventType",
+                        "disputeReference",
+                        "status",
+                        "amountMinor",
+                        "currency"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "endpointId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "environment": {
+                  "enum": [
+                    "TEST",
+                    "LIVE"
+                  ],
+                  "type": "string"
+                },
+                "providerAccountId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "signatureTimestamp": {
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                  "type": "string"
+                },
+                "verificationKeyReferenceHash": {
+                  "maxLength": 64,
+                  "minLength": 64,
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "endpointId",
+                "providerAccountId",
+                "environment",
+                "verificationKeyReferenceHash",
+                "signatureTimestamp",
+                "candidate"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "operation",
+            "outcome",
+            "value"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "error": {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "enum": [
+                    "INVALID_COMMAND",
+                    "INVALID_SIGNATURE",
+                    "EVENT_OUTSIDE_TOLERANCE",
+                    "UNSUPPORTED_EVENT",
+                    "TEMPORARY_UNAVAILABLE",
+                    "CONFIGURATION_ERROR",
+                    "MALFORMED_PROVIDER_RESPONSE",
+                    "UNEXPECTED_ADAPTER_FAILURE"
+                  ],
+                  "type": "string"
+                },
+                "recovery": {
+                  "enum": [
+                    "NONE",
+                    "RETRY_SAME_COMMAND",
+                    "RECONCILE_REQUIRED",
+                    "RESTART_AUTHORIZATION"
+                  ],
+                  "type": "string"
+                },
+                "retryAfterMs": {
+                  "maximum": 86400000,
+                  "minimum": 100,
+                  "type": "integer"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "recovery",
+                "code"
+              ],
+              "type": "object"
+            },
+            "operation": {
+              "const": "VERIFY_PAYMENT_WEBHOOK",
+              "type": "string"
+            },
+            "outcome": {
+              "const": "FAILURE",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "operation",
+            "outcome",
+            "error"
           ],
           "type": "object"
         }
@@ -68949,6 +69538,29 @@
       ],
       "type": "object"
     },
+    "QueuePropagationCarrier": {
+      "additionalProperties": false,
+      "properties": {
+        "requestId": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "traceparent": {
+          "pattern": "^00-(?!0{32}-)[0-9a-f]{32}-(?!0{16}-)[0-9a-f]{16}-[0-9a-f]{2}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requestId",
+        "traceparent"
+      ],
+      "type": "object"
+    },
     "Refund": {
       "additionalProperties": false,
       "properties": {
@@ -71595,6 +72207,125 @@
       "x-runtime-invariants": [
         "decision, from/to edge, reasonCode, and ordered effects must match the refund transition matrix",
         "only APPLIED REFUND_SUBMISSION_STARTED carries AVAILABLE capacity bound to all IDs and expected versions"
+      ]
+    },
+    "ReliableEventJob": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "correlationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "jobType": {
+              "const": "PROCESS_WEBHOOK_INBOX",
+              "type": "string"
+            },
+            "propagation": {
+              "additionalProperties": false,
+              "properties": {
+                "requestId": {
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "traceparent": {
+                  "pattern": "^00-(?!0{32}-)[0-9a-f]{32}-(?!0{16}-)[0-9a-f]{16}-[0-9a-f]{2}$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "requestId",
+                "traceparent"
+              ],
+              "type": "object"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "webhookInboxId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "jobType",
+            "webhookInboxId",
+            "correlationId",
+            "propagation"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "consumerKey": {
+              "maxLength": 64,
+              "minLength": 2,
+              "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            "correlationId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "jobType": {
+              "const": "DISPATCH_OUTBOX_EVENT",
+              "type": "string"
+            },
+            "outboxEventId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "propagation": {
+              "additionalProperties": false,
+              "properties": {
+                "requestId": {
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "traceparent": {
+                  "pattern": "^00-(?!0{32}-)[0-9a-f]{32}-(?!0{16}-)[0-9a-f]{16}-[0-9a-f]{2}$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "requestId",
+                "traceparent"
+              ],
+              "type": "object"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "jobType",
+            "outboxEventId",
+            "consumerKey",
+            "correlationId",
+            "propagation"
+          ],
+          "type": "object"
+        }
       ]
     },
     "SelectPaymentRouteInput": {
@@ -75113,6 +75844,338 @@
           "type": "object"
         }
       ]
+    },
+    "VerifiedWebhookEventCandidate": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "amountMinor": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "currency": {
+              "pattern": "^[A-Z]{3}$",
+              "type": "string"
+            },
+            "eventType": {
+              "const": "PAYMENT_STATUS",
+              "type": "string"
+            },
+            "externalReference": {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+              "type": "string"
+            },
+            "occurredAt": {
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+              "type": "string"
+            },
+            "providerEventId": {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "status": {
+              "enum": [
+                "CREATED",
+                "REQUIRES_ACTION",
+                "PROCESSING",
+                "SUCCEEDED",
+                "FAILED",
+                "CANCELED",
+                "EXPIRED",
+                "UNKNOWN"
+              ],
+              "type": "string"
+            },
+            "transaction": {
+              "additionalProperties": false,
+              "properties": {
+                "providerReference": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "AUTHORIZATION",
+                    "CAPTURE",
+                    "VOID",
+                    "REFUND",
+                    "CHARGEBACK"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "providerReference"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "providerEventId",
+            "occurredAt",
+            "externalReference",
+            "eventType",
+            "status",
+            "amountMinor",
+            "currency"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "amountMinor": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "currency": {
+              "pattern": "^[A-Z]{3}$",
+              "type": "string"
+            },
+            "eventType": {
+              "const": "REFUND_STATUS",
+              "type": "string"
+            },
+            "externalReference": {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+              "type": "string"
+            },
+            "occurredAt": {
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+              "type": "string"
+            },
+            "providerEventId": {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+              "type": "string"
+            },
+            "refundReference": {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "status": {
+              "enum": [
+                "REQUESTED",
+                "SUBMITTING",
+                "PROCESSING",
+                "SUCCEEDED",
+                "FAILED",
+                "UNKNOWN"
+              ],
+              "type": "string"
+            },
+            "transaction": {
+              "additionalProperties": false,
+              "properties": {
+                "providerReference": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "AUTHORIZATION",
+                    "CAPTURE",
+                    "VOID",
+                    "REFUND",
+                    "CHARGEBACK"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "providerReference"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "providerEventId",
+            "occurredAt",
+            "externalReference",
+            "eventType",
+            "refundReference",
+            "status",
+            "amountMinor",
+            "currency"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "amountMinor": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "currency": {
+              "pattern": "^[A-Z]{3}$",
+              "type": "string"
+            },
+            "disputeReference": {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+              "type": "string"
+            },
+            "eventType": {
+              "const": "DISPUTE_STATUS",
+              "type": "string"
+            },
+            "externalReference": {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+              "type": "string"
+            },
+            "occurredAt": {
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+              "type": "string"
+            },
+            "providerEventId": {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "status": {
+              "enum": [
+                "OPEN",
+                "WON",
+                "LOST"
+              ],
+              "type": "string"
+            },
+            "transaction": {
+              "additionalProperties": false,
+              "properties": {
+                "providerReference": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "AUTHORIZATION",
+                    "CAPTURE",
+                    "VOID",
+                    "REFUND",
+                    "CHARGEBACK"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "providerReference"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "providerEventId",
+            "occurredAt",
+            "externalReference",
+            "eventType",
+            "disputeReference",
+            "status",
+            "amountMinor",
+            "currency"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "WebhookInboxJob": {
+      "additionalProperties": false,
+      "properties": {
+        "correlationId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "jobType": {
+          "const": "PROCESS_WEBHOOK_INBOX",
+          "type": "string"
+        },
+        "propagation": {
+          "additionalProperties": false,
+          "properties": {
+            "requestId": {
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "traceparent": {
+              "pattern": "^00-(?!0{32}-)[0-9a-f]{32}-(?!0{16}-)[0-9a-f]{16}-[0-9a-f]{2}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "requestId",
+            "traceparent"
+          ],
+          "type": "object"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "webhookInboxId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "jobType",
+        "webhookInboxId",
+        "correlationId",
+        "propagation"
+      ],
+      "type": "object"
     }
   },
   "$schema": "https://json-schema.org/draft/2020-12/schema",

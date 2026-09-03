@@ -25,7 +25,7 @@ export {
   createQueuePropagationCarrier,
   parseQueuePropagationCarrier,
 } from "./propagation-carrier.js";
-export type { QueuePropagationCarrier } from "./propagation-carrier.js";
+export type { QueuePropagationCarrier } from "@fan-support/contracts";
 export {
   createRuntimeFatalHandler,
   createRuntimeShutdownHandler,

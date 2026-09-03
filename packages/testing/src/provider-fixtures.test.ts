@@ -43,6 +43,7 @@ describe("versioned provider fixture integrity", () => {
       "media-s3.v1.json",
       "notification.v1.json",
       "payment-fake.v1.json",
+      "payment-webhook-fake.v1.json",
     ]);
     expect(JSON.stringify(bundle)).not.toMatch(
       /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}|fanMessage|displayName|shippingAddress|apiToken|cardNumber|cvv|\bpan\b/iu,
@@ -182,6 +183,24 @@ describe("versioned provider fixture integrity", () => {
       currency: deterministicPortFixtures.payment.createPayment.currency,
       requestedLocale:
         deterministicPortFixtures.payment.createPayment.requestedLocale,
+    });
+  });
+
+  test("keeps reviewed webhook fixtures synthetic and free of key material", async () => {
+    const bundle = await loadProviderFixtureBundle(fixtureDirectory);
+    const fixture = (bundle.fixtures as Readonly<Record<string, unknown>>)[
+      "payment-webhook-fake.v1.json"
+    ];
+
+    expect(fixture).toBeDefined();
+    expect(JSON.stringify(fixture)).not.toMatch(
+      /verificationSecret|secretValue|signatureValue|privateKey/iu,
+    );
+    expect(fixture).toMatchObject({
+      schemaVersion: 1,
+      synthetic: true,
+      provider: "fake-payment-webhook",
+      repeatCount: 10,
     });
   });
 

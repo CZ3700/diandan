@@ -7,6 +7,8 @@ import type {
   GetPaymentCapabilitiesResponse,
   GetPaymentCommand,
   GetPaymentResponse,
+  PaymentWebhookVerificationCommand,
+  PaymentWebhookVerificationResponse,
   ReconcilePaymentCommand,
   ReconcilePaymentResponse,
   ReconcileRefundCommand,
@@ -24,6 +26,12 @@ export {
   paymentPortOperationSchema,
   paymentPortResponseSchema,
   paymentPortResponseMatchesCommand,
+  paymentWebhookVerificationCommandSchema,
+  paymentWebhookVerificationErrorCodeSchema,
+  paymentWebhookVerificationErrorSchema,
+  paymentWebhookVerificationResponseMatchesCommand,
+  paymentWebhookVerificationResponseSchema,
+  verifiedWebhookEventCandidateSchema,
 } from "@fan-support/contracts";
 export type {
   CancelPaymentCommand,
@@ -38,6 +46,9 @@ export type {
   PaymentPortError,
   PaymentPortFailure,
   PaymentPortResponse,
+  PaymentWebhookVerificationCommand,
+  PaymentWebhookVerificationError,
+  PaymentWebhookVerificationResponse,
   ReconcilePaymentCommand,
   ReconcilePaymentResponse,
   ReconcileRefundCommand,
@@ -46,6 +57,7 @@ export type {
   RefundPaymentResponse,
   VerifyAndParseWebhookCommand,
   VerifyAndParseWebhookResponse,
+  VerifiedWebhookEventCandidate,
 } from "@fan-support/contracts";
 
 export const PAYMENT_PROVIDER_OPERATIONS = [
@@ -59,11 +71,16 @@ export const PAYMENT_PROVIDER_OPERATIONS = [
   "RECONCILE_REFUND",
 ] as const;
 
+export const PAYMENT_WEBHOOK_VERIFIER_OPERATIONS = [
+  "VERIFY_PAYMENT_WEBHOOK",
+] as const;
+
 export interface PaymentProvider {
   getCapabilities(
     command: GetPaymentCapabilitiesCommand,
   ): Promise<GetPaymentCapabilitiesResponse>;
   createPayment(command: CreatePaymentCommand): Promise<CreatePaymentResponse>;
+  /** @deprecated P1-06 uses PaymentWebhookVerifier before persistence. */
   verifyAndParseWebhook(
     command: VerifyAndParseWebhookCommand,
   ): Promise<VerifyAndParseWebhookResponse>;
@@ -76,6 +93,13 @@ export interface PaymentProvider {
   reconcileRefund(
     command: ReconcileRefundCommand,
   ): Promise<ReconcileRefundResponse>;
+}
+
+/** Endpoint-scoped raw webhook verification, separate from persistence. */
+export interface PaymentWebhookVerifier {
+  verifyPaymentWebhook(
+    command: PaymentWebhookVerificationCommand,
+  ): Promise<PaymentWebhookVerificationResponse>;
 }
 
 export const workspacePackageName = "@fan-support/payment-port" as const;

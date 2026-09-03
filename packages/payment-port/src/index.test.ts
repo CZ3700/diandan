@@ -17,3 +17,14 @@ test("exports all eight normalized payment provider operations", () => {
     "RECONCILE_REFUND",
   ]);
 });
+
+test("adds the raw webhook verifier as a companion without changing the provider", () => {
+  const exports = paymentPort as Record<string, unknown>;
+
+  expect(exports["PAYMENT_WEBHOOK_VERIFIER_OPERATIONS"]).toEqual([
+    "VERIFY_PAYMENT_WEBHOOK",
+  ]);
+  expect(exports["paymentWebhookVerificationCommandSchema"]).toBeDefined();
+  expect(exports["paymentWebhookVerificationResponseSchema"]).toBeDefined();
+  expect(exports["verifiedWebhookEventCandidateSchema"]).toBeDefined();
+});

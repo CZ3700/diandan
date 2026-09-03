@@ -163,6 +163,16 @@ import {
   persistenceTransactionFailureSchema,
   transactionOptionsSchema,
 } from "./persistence-port-contracts.js";
+import {
+  outboxDispatchJobSchema,
+  paymentWebhookVerificationCommandSchema,
+  paymentWebhookVerificationErrorSchema,
+  paymentWebhookVerificationResponseSchema,
+  queuePropagationCarrierSchema,
+  reliableEventJobSchema,
+  verifiedWebhookEventCandidateSchema,
+  webhookInboxJobSchema,
+} from "./reliable-events.js";
 
 export type ContractAudience = "public-http" | "admin-http" | "internal";
 
@@ -692,6 +702,46 @@ const registrations = [
     name: "PaymentPortError",
     audience: "internal",
     schema: paymentPortErrorSchema,
+  },
+  {
+    name: "VerifiedWebhookEventCandidate",
+    audience: "internal",
+    schema: verifiedWebhookEventCandidateSchema,
+  },
+  {
+    name: "PaymentWebhookVerificationCommand",
+    audience: "internal",
+    schema: paymentWebhookVerificationCommandSchema,
+  },
+  {
+    name: "PaymentWebhookVerificationResponse",
+    audience: "internal",
+    schema: paymentWebhookVerificationResponseSchema,
+  },
+  {
+    name: "PaymentWebhookVerificationError",
+    audience: "internal",
+    schema: paymentWebhookVerificationErrorSchema,
+  },
+  {
+    name: "QueuePropagationCarrier",
+    audience: "internal",
+    schema: queuePropagationCarrierSchema,
+  },
+  {
+    name: "WebhookInboxJob",
+    audience: "internal",
+    schema: webhookInboxJobSchema,
+  },
+  {
+    name: "OutboxDispatchJob",
+    audience: "internal",
+    schema: outboxDispatchJobSchema,
+  },
+  {
+    name: "ReliableEventJob",
+    audience: "internal",
+    schema: reliableEventJobSchema,
   },
   {
     name: "MediaPortCommand",

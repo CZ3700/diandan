@@ -533,3 +533,8 @@ export function createFakePaymentProvider(
 }
 
 export const workspacePackageName = "@fan-support/payment-fake" as const;
+
+export {
+  createFakePaymentWebhookVerifier,
+  type FakePaymentWebhookVerifierOptions,
+} from "./webhook.js";

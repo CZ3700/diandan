@@ -6,8 +6,13 @@ import { TextDecoder } from "node:util";
 
 import { z } from "zod";
 
+import {
+  containsC0OrDelControlCharacter,
+  verifiedWebhookEventCandidateSchema,
+} from "@fan-support/contracts";
+
 export const PROVIDER_FIXTURE_MANIFEST_SHA256 =
-  "18b6fcc294a6a327bae846b9231f8946dc085c215fc7497382f1a4fbef1be59f" as const;
+  "cce824819becdb39ee5b22f43a45145b125b2ee4d76bf99dca319396caad25f2" as const;
 
 const MAX_MANIFEST_BYTES = 4 * 1_024;
 const MAX_FIXTURE_BYTES = 8 * 1_024;
@@ -16,6 +21,7 @@ const FIXTURE_PATHS = [
   "media-s3.v1.json",
   "notification.v1.json",
   "payment-fake.v1.json",
+  "payment-webhook-fake.v1.json",
 ] as const;
 const EXPECTED_DIRECTORY_FILES = [...FIXTURE_PATHS, "manifest.json"].sort();
 
@@ -191,11 +197,71 @@ const paymentFixtureSchema = z.strictObject({
   }),
 });
 
+const paymentWebhookDeliverySchema = z.strictObject({
+  rawBody: z
+    .string()
+    .min(2)
+    .max(4_096)
+    .refine((value) => !containsC0OrDelControlCharacter(value)),
+  expected: verifiedWebhookEventCandidateSchema,
+});
+
+const paymentWebhookFixtureSchema = z
+  .strictObject({
+    ...syntheticFixtureSchema,
+    provider: z.literal("fake-payment-webhook"),
+    scenario: z.literal("duplicate-and-out-of-order-delivery"),
+    signature: z.strictObject({
+      algorithm: z.literal("HMAC_SHA256"),
+      timestampHeader: z.literal("x-fake-webhook-timestamp"),
+      signatureHeader: z.literal("x-fake-webhook-signature"),
+    }),
+    repeatCount: z.literal(10),
+    deliveries: z.tuple([
+      paymentWebhookDeliverySchema,
+      paymentWebhookDeliverySchema,
+    ]),
+  })
+  .superRefine((fixture, context) => {
+    const [later, earlier] = fixture.deliveries;
+    if (
+      Date.parse(later.expected.occurredAt) <=
+      Date.parse(earlier.expected.occurredAt)
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["deliveries"],
+        message:
+          "fixture delivery order must be later event before earlier event",
+      });
+    }
+    for (const [index, delivery] of fixture.deliveries.entries()) {
+      try {
+        const payload = JSON.parse(delivery.rawBody) as unknown;
+        if (
+          typeof payload !== "object" ||
+          payload === null ||
+          !("event_id" in payload) ||
+          payload.event_id !== delivery.expected.providerEventId
+        ) {
+          throw new TypeError("event identity mismatch");
+        }
+      } catch {
+        context.addIssue({
+          code: "custom",
+          path: ["deliveries", index, "rawBody"],
+          message: "raw webhook fixture must match its expected event identity",
+        });
+      }
+    }
+  });
+
 const providerFixtureSchemas = {
   "identity-oidc.v1.json": identityFixtureSchema,
   "media-s3.v1.json": mediaFixtureSchema,
   "notification.v1.json": notificationFixtureSchema,
   "payment-fake.v1.json": paymentFixtureSchema,
+  "payment-webhook-fake.v1.json": paymentWebhookFixtureSchema,
 } as const;
 
 export type IdentityProviderFixture = z.infer<typeof identityFixtureSchema>;
@@ -204,18 +270,23 @@ export type NotificationProviderFixture = z.infer<
   typeof notificationFixtureSchema
 >;
 export type PaymentProviderFixture = z.infer<typeof paymentFixtureSchema>;
+export type PaymentWebhookProviderFixture = z.infer<
+  typeof paymentWebhookFixtureSchema
+>;
 export type ProviderFixturePath = (typeof FIXTURE_PATHS)[number];
 export type ProviderFixtureDocument =
   | IdentityProviderFixture
   | MediaProviderFixture
   | NotificationProviderFixture
-  | PaymentProviderFixture;
+  | PaymentProviderFixture
+  | PaymentWebhookProviderFixture;
 
 export type ProviderFixtureDocuments = Readonly<{
   "identity-oidc.v1.json": IdentityProviderFixture;
   "media-s3.v1.json": MediaProviderFixture;
   "notification.v1.json": NotificationProviderFixture;
   "payment-fake.v1.json": PaymentProviderFixture;
+  "payment-webhook-fake.v1.json": PaymentWebhookProviderFixture;
 }>;
 
 export type ProviderFixtureBundle = Readonly<{
@@ -384,6 +455,9 @@ async function loadVerifiedProviderFixtureBundle(
       "media-s3.v1.json": await loadFixture("media-s3.v1.json"),
       "notification.v1.json": await loadFixture("notification.v1.json"),
       "payment-fake.v1.json": await loadFixture("payment-fake.v1.json"),
+      "payment-webhook-fake.v1.json": await loadFixture(
+        "payment-webhook-fake.v1.json",
+      ),
     },
   });
 }
