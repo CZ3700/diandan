@@ -45,7 +45,32 @@ const fixture = Object.freeze({
   outboxSecondarySubjectId: "71000000-0000-4000-8000-000000000008",
   requestId: "71000000-0000-4000-8000-000000000009",
   correlationId: "71000000-0000-4000-8000-000000000010",
+  webhookOutboxGiftVariantId: "71000000-0000-4000-8000-000000000011",
+  webhookOutboxPriceId: "71000000-0000-4000-8000-000000000012",
   verificationKeyReferenceHash: "7".repeat(64),
+});
+const webhookOutboxFixtures = Object.freeze({
+  semanticReplay: Object.freeze({
+    providerEventId: "semantic-replay-event",
+    cartId: "72000000-0000-4000-8000-000000000001",
+    cartItemId: "72000000-0000-4000-8000-000000000002",
+    outboxEventId: "72000000-0000-4000-8000-000000000003",
+    idempotencyKey: "p106-webhook-semantic-replay-v1",
+  }),
+  concurrent: Object.freeze({
+    providerEventId: "ten-way-concurrent-event",
+    cartId: "72000000-0000-4000-8000-000000000011",
+    cartItemId: "72000000-0000-4000-8000-000000000012",
+    outboxEventId: "72000000-0000-4000-8000-000000000013",
+    idempotencyKey: "p106-webhook-concurrent-v1",
+  }),
+  deadLetter: Object.freeze({
+    providerEventId: "finite-retry-dead-letter-event",
+    cartId: "72000000-0000-4000-8000-000000000021",
+    cartItemId: "72000000-0000-4000-8000-000000000022",
+    outboxEventId: "72000000-0000-4000-8000-000000000023",
+    idempotencyKey: "p106-webhook-dead-letter-v1",
+  }),
 });
 const verificationSecret = Buffer.from(
   "p106-test-only-webhook-secret-32b",
@@ -104,6 +129,39 @@ function paymentBody({ eventId, status = "processing", spacing = 0 }) {
     },
   };
   return Buffer.from(JSON.stringify(value, null, spacing), "utf8");
+}
+
+function webhookOutboxFixtureFor(providerEventId) {
+  return Object.values(webhookOutboxFixtures).find(
+    (candidate) => candidate.providerEventId === providerEventId,
+  );
+}
+
+function webhookOutboxCommand(context, outboxFixture) {
+  return {
+    schemaVersion: 1,
+    operation: "APPEND_OUTBOX_EVENT",
+    event: {
+      schemaVersion: 1,
+      eventId: outboxFixture.outboxEventId,
+      occurredAt: context.event.occurredAt,
+      correlationId: fixture.correlationId,
+      requestId: fixture.requestId,
+      eventType: "CART_ITEM_ADDED",
+      aggregateId: outboxFixture.cartId,
+      payload: {
+        cartId: outboxFixture.cartId,
+        cartItemId: outboxFixture.cartItemId,
+      },
+    },
+    aggregateVersion: 1,
+    primarySubjectId: outboxFixture.cartId,
+    secondarySubjectId: outboxFixture.cartItemId,
+    market: "US",
+    currency: "USD",
+    idempotencyKey: outboxFixture.idempotencyKey,
+    availableAt: context.event.occurredAt,
+  };
 }
 
 function commandFor(
@@ -172,6 +230,51 @@ async function webhookEventCounts(client, providerEventId) {
            AND job.name = $2
            AND job.data->>'webhookInboxId' = inbox.id::text) AS queue_jobs`,
     [providerEventId, RELIABLE_EVENT_QUEUE_NAMES.webhookInbox],
+  );
+}
+
+async function webhookOutboxCounts(client, outboxFixture) {
+  return queryScalar(
+    client,
+    `SELECT
+       count(*)::integer AS candidates,
+       count(*) FILTER (
+         WHERE id = $1
+           AND event_type = 'CART_ITEM_ADDED'
+           AND aggregate_type = 'CART'
+           AND aggregate_id = $2
+           AND aggregate_version = 1
+           AND primary_subject_id = $2
+           AND secondary_subject_id = $3
+           AND idempotency_key = $4
+           AND locale = 'en'
+           AND market = 'US'
+           AND currency = 'USD'
+           AND request_id = $5
+           AND correlation_id = $6
+           AND causation_id IS NULL
+           AND trace_id IS NULL
+           AND occurred_at = $7
+           AND available_at = $7
+           AND payload_status IS NULL
+           AND schema_version = 1
+       )::integer AS exact
+       FROM outbox_events
+      WHERE id = $1
+         OR idempotency_key = $4
+         OR (event_type = 'CART_ITEM_ADDED'
+             AND aggregate_type = 'CART'
+             AND aggregate_id = $2
+             AND aggregate_version = 1)`,
+    [
+      outboxFixture.outboxEventId,
+      outboxFixture.cartId,
+      outboxFixture.cartItemId,
+      outboxFixture.idempotencyKey,
+      fixture.requestId,
+      fixture.correlationId,
+      fixtureOccurredAt,
+    ],
   );
 }
 
@@ -452,6 +555,35 @@ async function seedConfiguration(client, receivedAt) {
         fixture.endpointAuditId,
       ],
     );
+    for (const [index, outboxFixture] of Object.values(
+      webhookOutboxFixtures,
+    ).entries()) {
+      await client.query(
+        `INSERT INTO carts (
+           id, token_digest, token_pepper_version, presentation_locale,
+           market, currency, status, version, expires_at
+         ) VALUES ($1, $2, 'p106-webhook-outbox-v1', 'en', 'US', 'USD',
+                   'ACTIVE', 1, $3::timestamptz + interval '1 day')`,
+        [outboxFixture.cartId, Buffer.alloc(32, 0x72 + index), receivedAt],
+      );
+      await client.query(
+        `INSERT INTO cart_items (
+           id, cart_id, gift_variant_id, observed_price_id, quantity,
+           display_mode, has_fan_message, request_id, correlation_id,
+           created_at, updated_at
+         ) VALUES ($1, $2, $3, $4, 1, 'anonymous', false, $5, $6,
+                   $7::timestamptz, $7::timestamptz)`,
+        [
+          outboxFixture.cartItemId,
+          outboxFixture.cartId,
+          fixture.webhookOutboxGiftVariantId,
+          fixture.webhookOutboxPriceId,
+          fixture.requestId,
+          fixture.correlationId,
+          fixtureOccurredAt,
+        ],
+      );
+    }
     await client.query(
       `INSERT INTO outbox_events (
          id, event_type, aggregate_type, aggregate_id, aggregate_version,
@@ -635,7 +767,7 @@ async function assertIngressAndReceiptScenarios({
     receivedAt,
   });
 
-  const semanticEventId = "semantic-replay-event";
+  const semanticEventId = webhookOutboxFixtures.semanticReplay.providerEventId;
   const exactRawBody = paymentBody({ eventId: semanticEventId });
   const exactResult = await receive(commandFor(exactRawBody, receivedAt));
   assertEqual(exactResult.outcome, "SUCCESS", "valid webhook receipt failed");
@@ -716,7 +848,7 @@ async function assertIngressAndReceiptScenarios({
     );
   }
 
-  const concurrentEventId = "ten-way-concurrent-event";
+  const concurrentEventId = webhookOutboxFixtures.concurrent.providerEventId;
   const concurrentBody = paymentBody({ eventId: concurrentEventId });
   const concurrentResults = await Promise.all(
     Array.from({ length: 10 }, () =>
@@ -780,7 +912,7 @@ async function assertIngressAndReceiptScenarios({
     convergedResults,
   );
 
-  const dlqEventId = "finite-retry-dead-letter-event";
+  const dlqEventId = webhookOutboxFixtures.deadLetter.providerEventId;
   const dlqBody = paymentBody({ eventId: dlqEventId });
   const dlqResult = await receive(commandFor(dlqBody, receivedAt));
   assertEqual(dlqResult.outcome, "SUCCESS", "DLQ fixture receipt failed");
@@ -1070,8 +1202,26 @@ function createWorkerHandlers(persistence, dlqEventId, state) {
         effectKey: "P106_WEBHOOK_EFFECT",
         subjectId: context.providerEventRowId,
       }),
-      handle: async (context) => {
+      handle: async (context, repositories) => {
+        const outboxFixture = webhookOutboxFixtureFor(
+          context.event.providerEventId,
+        );
+        if (outboxFixture !== undefined) {
+          const appended = await repositories.outbox.append(
+            webhookOutboxCommand(context, outboxFixture),
+          );
+          if (
+            appended.schemaVersion !== 1 ||
+            appended.operation !== "APPEND_OUTBOX_EVENT" ||
+            appended.outcome !== "SUCCESS" ||
+            appended.value.appended !== true ||
+            appended.value.eventId !== outboxFixture.outboxEventId
+          ) {
+            throw new Error("test-only webhook outbox append failed");
+          }
+        }
         if (context.event.providerEventId === dlqEventId) {
+          state.outboxAppendsBeforeFailure += 1;
           throw new Error("test-only permanent handler failure");
         }
         state.webhookHandlerCalls.set(
@@ -1146,6 +1296,7 @@ async function assertWorkersAndDlq({
 }) {
   const state = {
     webhookHandlerCalls: new Map(),
+    outboxAppendsBeforeFailure: 0,
     externalDispatches: 0,
     outboxWrapperInvocations: 0,
     postCommitFailureInjected: false,
@@ -1286,6 +1437,89 @@ async function assertWorkersAndDlq({
     outboxCounts.successes,
     1,
     "outbox success attempt was duplicated",
+  );
+  for (const outboxFixture of [
+    webhookOutboxFixtures.concurrent,
+    webhookOutboxFixtures.semanticReplay,
+  ]) {
+    const counts = await webhookOutboxCounts(client, outboxFixture);
+    assertEqual(
+      counts.candidates,
+      1,
+      `${outboxFixture.providerEventId} did not commit exactly one outbox candidate`,
+    );
+    assertEqual(
+      counts.exact,
+      1,
+      `${outboxFixture.providerEventId} outbox metadata was not exact and versioned`,
+    );
+  }
+  const rolledBackFailure = await queryScalar(
+    client,
+    `SELECT
+       (SELECT count(*)::integer
+          FROM webhook_effects effect
+          JOIN webhook_inbox inbox ON inbox.id = effect.webhook_inbox_id
+         WHERE inbox.provider_event_id = $1) AS effects,
+       (SELECT count(*)::integer
+          FROM webhook_processing_attempts attempt
+          JOIN webhook_inbox inbox ON inbox.id = attempt.webhook_inbox_id
+         WHERE inbox.provider_event_id = $1) AS attempts,
+       (SELECT count(*)::integer
+          FROM webhook_processing_attempts attempt
+          JOIN webhook_inbox inbox ON inbox.id = attempt.webhook_inbox_id
+         WHERE inbox.provider_event_id = $1
+           AND attempt.outcome = 'SUCCEEDED') AS successes,
+       (SELECT count(*)::integer
+          FROM webhook_processing_attempts attempt
+          JOIN webhook_inbox inbox ON inbox.id = attempt.webhook_inbox_id
+         WHERE inbox.provider_event_id = $1
+           AND attempt.outcome = 'RETRYABLE_FAILURE') AS retryable_failures,
+       (SELECT count(*)::integer
+          FROM webhook_processing_attempts attempt
+          JOIN webhook_inbox inbox ON inbox.id = attempt.webhook_inbox_id
+         WHERE inbox.provider_event_id = $1
+           AND attempt.outcome = 'DEAD_LETTER') AS dead_letters`,
+    [dlqEventId],
+  );
+  const deadLetterOutbox = await webhookOutboxCounts(
+    client,
+    webhookOutboxFixtures.deadLetter,
+  );
+  assertEqual(
+    state.outboxAppendsBeforeFailure,
+    6,
+    "the permanent failure did not occur after each transactional outbox append",
+  );
+  assertEqual(
+    rolledBackFailure.effects,
+    0,
+    "a failed webhook handler committed its effect receipt",
+  );
+  assertEqual(
+    deadLetterOutbox.candidates,
+    0,
+    "a failed webhook handler committed its outbox event",
+  );
+  assertEqual(
+    rolledBackFailure.attempts,
+    6,
+    "failed webhook attempts were not committed independently",
+  );
+  assertEqual(
+    rolledBackFailure.successes,
+    0,
+    "a failed webhook handler committed a successful attempt",
+  );
+  assertEqual(
+    rolledBackFailure.retryable_failures,
+    5,
+    "retryable failure attempts were not committed independently",
+  );
+  assertEqual(
+    rolledBackFailure.dead_letters,
+    1,
+    "the final independently committed attempt was not dead-lettered",
   );
   const concurrentEffects = await queryScalar(
     client,
