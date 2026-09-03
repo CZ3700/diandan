@@ -3,6 +3,7 @@ export const workspacePackageName = "@fan-support/contracts" as const;
 export * from "./catalog.js";
 export * from "./commerce.js";
 export * from "./content.js";
+export * from "./domain-rules.js";
 export * from "./envelopes.js";
 export * from "./fulfillment-notification.js";
 export * from "./identifiers.js";
