@@ -9,8 +9,28 @@ import type {
   BeginIdempotencyResponse,
   CompleteIdempotencyCommand,
   CompleteIdempotencyResponse,
+  ListReadyOutboxEventsCommand,
+  ListReadyOutboxEventsResponse,
   LoadInventoryForUpdateCommand,
   LoadInventoryForUpdateResponse,
+  LoadOutboxDispatchContextCommand,
+  LoadOutboxDispatchContextResponse,
+  LoadPaymentWebhookEndpointCommand,
+  LoadPaymentWebhookEndpointResponse,
+  LoadWebhookProcessingContextCommand,
+  LoadWebhookProcessingContextResponse,
+  PurgeExpiredWebhookPayloadsCommand,
+  PurgeExpiredWebhookPayloadsResponse,
+  RecordOutboxDispatchAttemptCommand,
+  RecordOutboxDispatchAttemptResponse,
+  RecordOutboxEffectCommand,
+  RecordOutboxEffectResponse,
+  RecordVerifiedWebhookReceiptCommand,
+  RecordVerifiedWebhookReceiptResponse,
+  RecordWebhookEffectCommand,
+  RecordWebhookEffectResponse,
+  RecordWebhookProcessingAttemptCommand,
+  RecordWebhookProcessingAttemptResponse,
   TransactionOptions,
   PersistenceTransactionFailure,
 } from "@fan-support/contracts";
@@ -18,13 +38,39 @@ import type {
 import { persistenceTransactionFailureSchema } from "@fan-support/contracts";
 
 export {
+  encryptedWebhookPayloadSchema,
+  listReadyOutboxEventsCommandSchema,
+  listReadyOutboxEventsResponseSchema,
+  loadOutboxDispatchContextCommandSchema,
+  loadOutboxDispatchContextResponseSchema,
+  loadPaymentWebhookEndpointCommandSchema,
+  loadPaymentWebhookEndpointResponseSchema,
+  loadWebhookProcessingContextCommandSchema,
+  loadWebhookProcessingContextResponseSchema,
+  paymentWebhookEndpointDescriptorSchema,
   persistencePortCommandSchema,
   persistencePortErrorCodeSchema,
   persistencePortErrorSchema,
   persistencePortOperationSchema,
   persistencePortResponseSchema,
   persistenceTransactionFailureSchema,
+  purgeExpiredWebhookPayloadsCommandSchema,
+  purgeExpiredWebhookPayloadsResponseSchema,
+  recordOutboxDispatchAttemptCommandSchema,
+  recordOutboxDispatchAttemptResponseSchema,
+  recordOutboxEffectCommandSchema,
+  recordOutboxEffectResponseSchema,
+  recordVerifiedWebhookReceiptCommandSchema,
+  recordVerifiedWebhookReceiptResponseSchema,
+  recordWebhookEffectCommandSchema,
+  recordWebhookEffectResponseSchema,
+  recordWebhookProcessingAttemptCommandSchema,
+  recordWebhookProcessingAttemptResponseSchema,
+  reliableEventPersistenceCommandSchema,
+  reliableEventPersistenceOperationSchema,
+  reliableEventPersistenceResponseSchema,
   transactionOptionsSchema,
+  verifiedWebhookAssociationSchema,
 } from "@fan-support/contracts";
 export type {
   AppendOutboxEventCommand,
@@ -37,14 +83,40 @@ export type {
   BeginIdempotencyResponse,
   CompleteIdempotencyCommand,
   CompleteIdempotencyResponse,
+  EncryptedWebhookPayload,
+  ListReadyOutboxEventsCommand,
+  ListReadyOutboxEventsResponse,
   LoadInventoryForUpdateCommand,
   LoadInventoryForUpdateResponse,
+  LoadOutboxDispatchContextCommand,
+  LoadOutboxDispatchContextResponse,
+  LoadPaymentWebhookEndpointCommand,
+  LoadPaymentWebhookEndpointResponse,
+  LoadWebhookProcessingContextCommand,
+  LoadWebhookProcessingContextResponse,
+  PaymentWebhookEndpointDescriptor,
   PersistencePortCommand,
   PersistencePortError,
   PersistencePortFailure,
   PersistencePortResponse,
   PersistenceTransactionFailure,
+  PurgeExpiredWebhookPayloadsCommand,
+  PurgeExpiredWebhookPayloadsResponse,
+  RecordOutboxDispatchAttemptCommand,
+  RecordOutboxDispatchAttemptResponse,
+  RecordOutboxEffectCommand,
+  RecordOutboxEffectResponse,
+  RecordVerifiedWebhookReceiptCommand,
+  RecordVerifiedWebhookReceiptResponse,
+  RecordWebhookEffectCommand,
+  RecordWebhookEffectResponse,
+  RecordWebhookProcessingAttemptCommand,
+  RecordWebhookProcessingAttemptResponse,
+  ReliableEventPersistenceCommand,
+  ReliableEventPersistenceOperation,
+  ReliableEventPersistenceResponse,
   TransactionOptions,
+  VerifiedWebhookAssociation,
 } from "@fan-support/contracts";
 
 function freezeTransactionFailure(
@@ -129,6 +201,60 @@ export type TransactionRepositories = Readonly<{
   inventory: InventoryRepository;
 }>;
 
+export interface PaymentWebhookEndpointRepository {
+  load(
+    command: LoadPaymentWebhookEndpointCommand,
+  ): Promise<LoadPaymentWebhookEndpointResponse>;
+}
+
+export interface VerifiedWebhookReceiptRepository {
+  record(
+    command: RecordVerifiedWebhookReceiptCommand,
+  ): Promise<RecordVerifiedWebhookReceiptResponse>;
+}
+
+export interface WebhookProcessingRepository {
+  loadContext(
+    command: LoadWebhookProcessingContextCommand,
+  ): Promise<LoadWebhookProcessingContextResponse>;
+  recordAttempt(
+    command: RecordWebhookProcessingAttemptCommand,
+  ): Promise<RecordWebhookProcessingAttemptResponse>;
+  recordEffect(
+    command: RecordWebhookEffectCommand,
+  ): Promise<RecordWebhookEffectResponse>;
+}
+
+export interface OutboxDispatchRepository {
+  listReady(
+    command: ListReadyOutboxEventsCommand,
+  ): Promise<ListReadyOutboxEventsResponse>;
+  loadContext(
+    command: LoadOutboxDispatchContextCommand,
+  ): Promise<LoadOutboxDispatchContextResponse>;
+  recordAttempt(
+    command: RecordOutboxDispatchAttemptCommand,
+  ): Promise<RecordOutboxDispatchAttemptResponse>;
+  recordEffect(
+    command: RecordOutboxEffectCommand,
+  ): Promise<RecordOutboxEffectResponse>;
+}
+
+export interface WebhookPayloadRetentionRepository {
+  purgeExpired(
+    command: PurgeExpiredWebhookPayloadsCommand,
+  ): Promise<PurgeExpiredWebhookPayloadsResponse>;
+}
+
+export type ReliableEventTransactionRepositories = Readonly<{
+  paymentWebhookEndpoints: PaymentWebhookEndpointRepository;
+  verifiedWebhookReceipts: VerifiedWebhookReceiptRepository;
+  webhookProcessing: WebhookProcessingRepository;
+  outbox: OutboxRepository;
+  outboxDispatch: OutboxDispatchRepository;
+  webhookPayloadRetention: WebhookPayloadRetentionRepository;
+}>;
+
 export type JsonValue =
   | null
   | boolean
@@ -147,6 +273,19 @@ export interface TransactionManager {
   runInTransaction<Result extends JsonValue>(
     options: TransactionOptions,
     work: (repositories: TransactionRepositories) => Promise<Result>,
+  ): Promise<Result>;
+}
+
+export interface ReliableEventTransactionManager {
+  /**
+   * Uses the same success and failure semantics as runInTransaction while
+   * exposing the additive reliable-event repositories.
+   */
+  runInReliableEventTransaction<Result extends JsonValue>(
+    options: TransactionOptions,
+    work: (
+      repositories: ReliableEventTransactionRepositories,
+    ) => Promise<Result>,
   ): Promise<Result>;
 }
 

@@ -164,11 +164,21 @@ import {
   transactionOptionsSchema,
 } from "./persistence-port-contracts.js";
 import {
+  encryptedWebhookPayloadSchema,
+  paymentWebhookEndpointDescriptorSchema,
+  reliableEventPersistenceCommandSchema,
+  reliableEventPersistenceResponseSchema,
+} from "./reliable-event-persistence-contracts.js";
+import {
   outboxDispatchJobSchema,
   paymentWebhookVerificationCommandSchema,
   paymentWebhookVerificationErrorSchema,
   paymentWebhookVerificationResponseSchema,
   queuePropagationCarrierSchema,
+  receivePaymentWebhookCommandSchema,
+  receivePaymentWebhookErrorSchema,
+  receivePaymentWebhookResponseSchema,
+  reliableEventDeliveryContextSchema,
   reliableEventJobSchema,
   verifiedWebhookEventCandidateSchema,
   webhookInboxJobSchema,
@@ -742,6 +752,46 @@ const registrations = [
     name: "ReliableEventJob",
     audience: "internal",
     schema: reliableEventJobSchema,
+  },
+  {
+    name: "ReceivePaymentWebhookCommand",
+    audience: "internal",
+    schema: receivePaymentWebhookCommandSchema,
+  },
+  {
+    name: "ReceivePaymentWebhookResponse",
+    audience: "internal",
+    schema: receivePaymentWebhookResponseSchema,
+  },
+  {
+    name: "ReceivePaymentWebhookError",
+    audience: "internal",
+    schema: receivePaymentWebhookErrorSchema,
+  },
+  {
+    name: "ReliableEventDeliveryContext",
+    audience: "internal",
+    schema: reliableEventDeliveryContextSchema,
+  },
+  {
+    name: "PaymentWebhookEndpointDescriptor",
+    audience: "internal",
+    schema: paymentWebhookEndpointDescriptorSchema,
+  },
+  {
+    name: "EncryptedWebhookPayload",
+    audience: "internal",
+    schema: encryptedWebhookPayloadSchema,
+  },
+  {
+    name: "ReliableEventPersistenceCommand",
+    audience: "internal",
+    schema: reliableEventPersistenceCommandSchema,
+  },
+  {
+    name: "ReliableEventPersistenceResponse",
+    audience: "internal",
+    schema: reliableEventPersistenceResponseSchema,
   },
   {
     name: "MediaPortCommand",

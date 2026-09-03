@@ -7,6 +7,7 @@ import {
   externalPaymentReferenceSchema,
   paymentWebhookEndpointIdSchema,
   providerAccountIdSchema,
+  providerEventIdSchema,
   providerDisputeReferenceSchema,
   providerEventReferenceSchema,
   providerRefundReferenceSchema,
@@ -270,6 +271,62 @@ export const queuePropagationCarrierSchema = z.strictObject({
     .regex(/^00-(?!0{32}-)[0-9a-f]{32}-(?!0{16}-)[0-9a-f]{16}-[0-9a-f]{2}$/u),
 });
 
+export const receivePaymentWebhookCommandSchema = z.strictObject({
+  schemaVersion: schemaVersionSchema,
+  operation: z.literal("RECEIVE_PAYMENT_WEBHOOK"),
+  endpointId: paymentWebhookEndpointIdSchema,
+  rawBodyBase64: portBase64Schema,
+  headers: paymentWebhookHeadersSchema,
+  receivedAt: portTimestampSchema,
+  correlationId: z.uuid(),
+  propagation: queuePropagationCarrierSchema,
+});
+
+export const receivePaymentWebhookErrorCodeSchema = z.enum([
+  "INVALID_REQUEST",
+  "ENDPOINT_UNAVAILABLE",
+  "INVALID_SIGNATURE",
+  "EVENT_OUTSIDE_TOLERANCE",
+  "UNSUPPORTED_EVENT",
+  "IDEMPOTENCY_CONFLICT",
+  "TEMPORARY_UNAVAILABLE",
+  "CONFIGURATION_ERROR",
+]);
+
+export const receivePaymentWebhookErrorSchema = z
+  .strictObject({
+    ...portErrorBaseShape,
+    code: receivePaymentWebhookErrorCodeSchema,
+  })
+  .superRefine((error, context) =>
+    validatePortErrorPolicy(error, context, {
+      retryableCodes: ["TEMPORARY_UNAVAILABLE"],
+    }),
+  );
+
+const receivePaymentWebhookSuccessSchema = z.strictObject({
+  schemaVersion: schemaVersionSchema,
+  operation: z.literal("RECEIVE_PAYMENT_WEBHOOK"),
+  outcome: z.literal("SUCCESS"),
+  value: z.strictObject({
+    decision: z.enum(["ACCEPTED_NEW", "ACCEPTED_REPLAY"]),
+    webhookInboxId: webhookInboxIdSchema,
+    providerEventRowId: providerEventIdSchema,
+  }),
+});
+
+const receivePaymentWebhookFailureSchema = z.strictObject({
+  schemaVersion: schemaVersionSchema,
+  operation: z.literal("RECEIVE_PAYMENT_WEBHOOK"),
+  outcome: z.literal("FAILURE"),
+  error: receivePaymentWebhookErrorSchema,
+});
+
+export const receivePaymentWebhookResponseSchema = z.union([
+  receivePaymentWebhookSuccessSchema,
+  receivePaymentWebhookFailureSchema,
+]);
+
 export const webhookInboxJobSchema = z.strictObject({
   schemaVersion: schemaVersionSchema,
   jobType: z.literal("PROCESS_WEBHOOK_INBOX"),
@@ -278,15 +335,34 @@ export const webhookInboxJobSchema = z.strictObject({
   propagation: queuePropagationCarrierSchema,
 });
 
+export const reliableEventConsumerKeySchema = z
+  .string()
+  .min(2)
+  .max(64)
+  .regex(/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/u);
+
+export const reliableEventDeliveryContextSchema = z
+  .strictObject({
+    schemaVersion: schemaVersionSchema,
+    jobId: z.uuid(),
+    attemptNumber: z.number().int().min(1).max(6),
+    maxAttempts: z.number().int().min(1).max(6),
+  })
+  .superRefine((context, refinement) => {
+    if (context.attemptNumber > context.maxAttempts) {
+      refinement.addIssue({
+        code: "custom",
+        path: ["attemptNumber"],
+        message: "attempt number cannot exceed the configured maximum",
+      });
+    }
+  });
+
 export const outboxDispatchJobSchema = z.strictObject({
   schemaVersion: schemaVersionSchema,
   jobType: z.literal("DISPATCH_OUTBOX_EVENT"),
   outboxEventId: eventIdSchema,
-  consumerKey: z
-    .string()
-    .min(2)
-    .max(64)
-    .regex(/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/u),
+  consumerKey: reliableEventConsumerKeySchema,
   correlationId: z.uuid(),
   propagation: queuePropagationCarrierSchema,
 });
@@ -310,6 +386,18 @@ export type PaymentWebhookVerificationError = z.infer<
 >;
 export type QueuePropagationCarrier = z.infer<
   typeof queuePropagationCarrierSchema
+>;
+export type ReceivePaymentWebhookCommand = z.infer<
+  typeof receivePaymentWebhookCommandSchema
+>;
+export type ReceivePaymentWebhookResponse = z.infer<
+  typeof receivePaymentWebhookResponseSchema
+>;
+export type ReceivePaymentWebhookError = z.infer<
+  typeof receivePaymentWebhookErrorSchema
+>;
+export type ReliableEventDeliveryContext = z.infer<
+  typeof reliableEventDeliveryContextSchema
 >;
 export type WebhookInboxJob = z.infer<typeof webhookInboxJobSchema>;
 export type OutboxDispatchJob = z.infer<typeof outboxDispatchJobSchema>;

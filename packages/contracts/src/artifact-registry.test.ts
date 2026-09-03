@@ -72,6 +72,14 @@ test("registers reliable-event wire roots as internal versioned contracts", asyn
     "WebhookInboxJob",
     "OutboxDispatchJob",
     "ReliableEventJob",
+    "ReceivePaymentWebhookCommand",
+    "ReceivePaymentWebhookResponse",
+    "ReceivePaymentWebhookError",
+    "ReliableEventDeliveryContext",
+    "PaymentWebhookEndpointDescriptor",
+    "EncryptedWebhookPayload",
+    "ReliableEventPersistenceCommand",
+    "ReliableEventPersistenceResponse",
   ]) {
     expect(registrationsByName.get(name), `${name} must be registered`).toEqual(
       expect.objectContaining({

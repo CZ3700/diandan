@@ -34,6 +34,21 @@ const verifierCommand = {
   receivedAt: "2026-09-04T00:00:00.000Z",
 } as const;
 
+const receiveCommand = {
+  schemaVersion: 1,
+  operation: "RECEIVE_PAYMENT_WEBHOOK",
+  endpointId,
+  rawBodyBase64: "e30",
+  headers: { "x-fake-signature": "fixture-signature" },
+  receivedAt: "2026-09-04T00:00:00.000Z",
+  correlationId: "10000000-0000-4000-8000-000000000017",
+  propagation: {
+    schemaVersion: 1,
+    requestId: "10000000-0000-4000-8000-000000000016",
+    traceparent: `00-${"a".repeat(32)}-${"b".repeat(16)}-01`,
+  },
+} as const;
+
 const verifierResponse = {
   schemaVersion: 1,
   operation: "VERIFY_PAYMENT_WEBHOOK",
@@ -91,6 +106,92 @@ test("defines an endpoint-scoped verifier that returns only a normalized candida
             externalReference: "fixture-payment-1",
           },
         },
+      },
+    }).success,
+  ).toBe(false);
+});
+
+test("defines one strict route-to-application webhook ingress command", () => {
+  const commandSchema = schema("receivePaymentWebhookCommandSchema");
+  const responseSchema = schema("receivePaymentWebhookResponseSchema");
+
+  expect(commandSchema.safeParse(receiveCommand).success).toBe(true);
+  for (const forbidden of [
+    { providerAccountId },
+    { environment: "TEST" },
+    { verificationSecret: "do-not-cross-the-route" },
+    { webhookInboxId },
+  ]) {
+    expect(
+      commandSchema.safeParse({ ...receiveCommand, ...forbidden }).success,
+    ).toBe(false);
+  }
+  expect(
+    commandSchema.safeParse({ ...receiveCommand, schemaVersion: 2 }).success,
+  ).toBe(false);
+  expect(
+    commandSchema.safeParse({
+      ...receiveCommand,
+      headers: { authorization: "Bearer secret" },
+    }).success,
+  ).toBe(false);
+
+  for (const decision of ["ACCEPTED_NEW", "ACCEPTED_REPLAY"] as const) {
+    expect(
+      responseSchema.safeParse({
+        schemaVersion: 1,
+        operation: receiveCommand.operation,
+        outcome: "SUCCESS",
+        value: {
+          decision,
+          webhookInboxId,
+          providerEventRowId: "10000000-0000-4000-8000-000000000018",
+        },
+      }).success,
+    ).toBe(true);
+  }
+
+  for (const code of [
+    "INVALID_REQUEST",
+    "ENDPOINT_UNAVAILABLE",
+    "INVALID_SIGNATURE",
+    "EVENT_OUTSIDE_TOLERANCE",
+    "UNSUPPORTED_EVENT",
+    "IDEMPOTENCY_CONFLICT",
+    "CONFIGURATION_ERROR",
+  ]) {
+    expect(
+      responseSchema.safeParse({
+        schemaVersion: 1,
+        operation: receiveCommand.operation,
+        outcome: "FAILURE",
+        error: { schemaVersion: 1, code, recovery: "NONE" },
+      }).success,
+    ).toBe(true);
+  }
+  expect(
+    responseSchema.safeParse({
+      schemaVersion: 1,
+      operation: receiveCommand.operation,
+      outcome: "FAILURE",
+      error: {
+        schemaVersion: 1,
+        code: "TEMPORARY_UNAVAILABLE",
+        recovery: "RETRY_SAME_COMMAND",
+        retryAfterMs: 1_000,
+      },
+    }).success,
+  ).toBe(true);
+  expect(
+    responseSchema.safeParse({
+      schemaVersion: 1,
+      operation: receiveCommand.operation,
+      outcome: "FAILURE",
+      error: {
+        schemaVersion: 1,
+        code: "INVALID_SIGNATURE",
+        recovery: "RETRY_SAME_COMMAND",
+        retryAfterMs: 1_000,
       },
     }).success,
   ).toBe(false);
@@ -279,5 +380,26 @@ test("defines strict ID-only queue envelopes with safe propagation context", () 
       ...inboxJob,
       propagation: { ...propagation, baggage: "private=value" },
     }).success,
+  ).toBe(false);
+});
+
+test("normalizes queue delivery attempts without exposing queue internals", () => {
+  const deliveryContextSchema = schema("reliableEventDeliveryContextSchema");
+  const context = {
+    schemaVersion: 1,
+    jobId: "10000000-0000-4000-8000-000000000019",
+    attemptNumber: 2,
+    maxAttempts: 6,
+  };
+
+  expect(deliveryContextSchema.safeParse(context).success).toBe(true);
+  expect(
+    deliveryContextSchema.safeParse({ ...context, attemptNumber: 7 }).success,
+  ).toBe(false);
+  expect(
+    deliveryContextSchema.safeParse({ ...context, maxAttempts: 7 }).success,
+  ).toBe(false);
+  expect(
+    deliveryContextSchema.safeParse({ ...context, retryCount: 1 }).success,
   ).toBe(false);
 });

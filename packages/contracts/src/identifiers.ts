@@ -73,7 +73,22 @@ export const eventIdSchema = z.uuid().brand<"EventId">();
 export const paymentWebhookEndpointIdSchema = z
   .uuid()
   .brand<"PaymentWebhookEndpointId">();
+export const webhookPayloadIdSchema = z.uuid().brand<"WebhookPayloadId">();
 export const webhookInboxIdSchema = z.uuid().brand<"WebhookInboxId">();
+export const providerEventIdSchema = z.uuid().brand<"ProviderEventId">();
+export const providerEventAssociationIdSchema = z
+  .uuid()
+  .brand<"ProviderEventAssociationId">();
+export const webhookProcessingAttemptIdSchema = z
+  .uuid()
+  .brand<"WebhookProcessingAttemptId">();
+export const webhookEffectIdSchema = z.uuid().brand<"WebhookEffectId">();
+export const outboxDispatchAttemptIdSchema = z
+  .uuid()
+  .brand<"OutboxDispatchAttemptId">();
+export const outboxEffectReceiptIdSchema = z
+  .uuid()
+  .brand<"OutboxEffectReceiptId">();
 export const auditLogIdSchema = z.uuid().brand<"AuditLogId">();
 export const adminIdentityIdSchema = z.uuid().brand<"AdminIdentityId">();
 export const moderationEvidenceIdSchema = z
@@ -193,7 +208,20 @@ export type EventId = z.infer<typeof eventIdSchema>;
 export type PaymentWebhookEndpointId = z.infer<
   typeof paymentWebhookEndpointIdSchema
 >;
+export type WebhookPayloadId = z.infer<typeof webhookPayloadIdSchema>;
 export type WebhookInboxId = z.infer<typeof webhookInboxIdSchema>;
+export type ProviderEventId = z.infer<typeof providerEventIdSchema>;
+export type ProviderEventAssociationId = z.infer<
+  typeof providerEventAssociationIdSchema
+>;
+export type WebhookProcessingAttemptId = z.infer<
+  typeof webhookProcessingAttemptIdSchema
+>;
+export type WebhookEffectId = z.infer<typeof webhookEffectIdSchema>;
+export type OutboxDispatchAttemptId = z.infer<
+  typeof outboxDispatchAttemptIdSchema
+>;
+export type OutboxEffectReceiptId = z.infer<typeof outboxEffectReceiptIdSchema>;
 export type AuditLogId = z.infer<typeof auditLogIdSchema>;
 export type AdminIdentityId = z.infer<typeof adminIdentityIdSchema>;
 export type ModerationEvidenceId = z.infer<typeof moderationEvidenceIdSchema>;
