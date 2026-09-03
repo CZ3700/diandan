@@ -14,7 +14,7 @@
 |:--|:--|:--|:--|:--|
 | P1-01 | DONE | Codex `/root` | P0-01、P0-03 | Git `4695a41`、PR #4/run `33693878714`；本地、clean clone、Quality/Security 与三路独立复核全绿 |
 | P1-02 | DONE | Codex `/root` | P1-01、P0-04 | Git `6daea69`、PR #5/run `33707017702`；本地、clean clone、Quality/Security 与两路独立验收全绿 |
-| P1-03 | IN_PROGRESS | Codex `/root` | P1-01 | 纯 Domain、价格/库存/状态机/路由/幂等与可复现属性测试；开始时间 `2026-09-03T10:24:33+08:00` |
+| P1-03 | REVIEW | Codex `/root` | P1-01 | Git `49a8756`；本地/clean clone/三路独立复核全绿，等待真实 PR 必需 CI |
 | P1-04 | PENDING | — | P1-01、P1-02、P0-03 | 依赖已完成，但与 P1-03 同属 Lane A，等待该 Lane 释放；完整 migrations、七语言 translation/review、inventory balance、订单金额/退款约束与加密边界 |
 | P1-05 | PENDING | — | P1-01/02/03/04 | Repositories 与 payment/media/identity/notification/cache/KMS ports/adapters |
 | P1-06 | PENDING | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
@@ -69,6 +69,18 @@
 - **验证计划**：受影响 domain 单元/属性测试、branch coverage ≥90%、禁止框架/ORM/PSP/网络依赖扫描、format/lint/typecheck/build、完整 0-cache `pnpm check`、secret/audit、clean-clone frozen install/check，以及独立领域/状态机/属性测试复核。
 - **风险护栏**：对应 R-01/R-03/R-05/R-06；所有金额只用安全整数 minor unit；浏览器/adapter 输入视为未验证；`UNKNOWN` 不自动重扣/改路；状态跃迁显式 fail closed；库存函数只返回事务计划/结果，不伪造数据库行锁与并发保证。
 
+### REVIEW 证据（2026-09-03）
+
+- **实现**：Git `49a8756852f3083a04184a1334743622ff423636` 在 `@fan-support/contracts` 注册 32 个 internal/versioned domain-rule roots，在 `@fan-support/domain` 仅公开 17 个纯决策入口；覆盖安全整数金额/快照、价格选择、礼物适用、库存 reservation plan、幂等、版本化支付路由、支付/订单/退款/争议/履约状态机及聚合迟到支付成功计划。
+- **安全边界**：所有公开 wrapper 先解析 `unknown` 并绑定持久化 subject ID/version；PSP 成功统一进入 aggregate late-success planner；退款容量绑定当前 `SUCCEEDED` capture 与完整版本集合，跨币种、跨订单/attempt、超额、`UNPAID/PENDING` 和 `REFUNDED` 非终态 mutation 均 fail closed；高权限 authority 与 provider evidence 的认证前提已进入发布后的 `.d.ts`。
+- **TDD/属性测试**：金额溢出、半开价格区间、库存守恒/重放、路由确定性、幂等冲突、非法/终态跃迁、证据篡改、迟到成功、退款/争议/履约三实体绑定等均先有失败用例；固定 seed `0x5eed0103`。最终 contracts 16 files / 82 tests，domain 22 files / 160 tests；coverage statements 96.11%、branches 96.16%、functions 97.19%、lines 96.23%。
+- **本地门禁**：Node `24.20.0`、pnpm `11.25.0` 下 `TURBO_FORCE=true pnpm check` 为 0 cached：typecheck 37/37、test 37/37、build 34/34；domain boundary scanner 自测 8/8 且真实扫描通过，artifact freshness、Prettier、ESLint、30 个 package export、`git diff --check`、secret scan 与官方 registry high-level audit 全绿。
+- **S.U.P.E.R 10/10**：模块职责单一、纯输入→决策输出、无反向依赖/循环、跨模块 I/O 由 Zod/schemaVersion 定义并可序列化、无硬编码生产配置、新依赖已显式声明、领域实现可替换且全测通过；`domain-rules.ts`/`state-machine-commands.ts` 后续按子域拆分是非阻断维护项，本任务避免高风险重构。
+- **独立复核**：领域正确性、安全与最终验收均 `ACCEPT`；最终 Blocker 0。安全复核 Should 0；验收唯一 Should 为后续大文件拆分。独立对抗覆盖退款跨币种、所有 authority、全额退款终态重放/冲突、迟到成功五类 subject、库存 identity、包子路径封锁及 malformed totality。
+- **clean clone**：提交 `49a8756852f3083a04184a1334743622ff423636` 在全新 clone 完成 `pnpm install --frozen-lockfile --offline`、0-cache 完整 `pnpm check` 与 `pnpm security:secrets`；工作树干净。
+- **待完成门禁**：尚待叠加 PR 的真实 GitHub Quality/Security 必需检查；取得并回填 PR/run 证据前保持 `REVIEW`，不释放 Lane A。
+- **剩余边界**：PostgreSQL migration/约束/行锁/CAS、完整退款集合的同事务读取与原子落库属于 P1-04/P1-05；webhook 验签、inbox/outbox 与 reconcile 认证属于 P1-06；本任务没有 PostgreSQL 并发、对象存储、PSP sandbox/真实小额支付、AWS apply、staging 或 production 证据。
+
 ## 必须证明
 
 - Domain 无 Next.js、NestJS、Drizzle 或供应商 SDK。
@@ -79,4 +91,4 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02 已完成，P1-03、P1-04 为 `READY`，其余 Phase 1 退出证据尚未取得。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02 已完成，P1-03 为 `REVIEW`，P1-04 等待其释放 Lane A，其余 Phase 1 退出证据尚未取得。
