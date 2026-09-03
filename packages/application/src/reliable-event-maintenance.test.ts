@@ -9,6 +9,7 @@ import {
 
 const IDS = {
   outbox: "50000000-0000-4000-8000-000000000001",
+  alternateOutbox: "50000000-0000-4000-8000-000000000005",
   payload: "50000000-0000-4000-8000-000000000002",
   request: "50000000-0000-4000-8000-000000000003",
   correlation: "50000000-0000-4000-8000-000000000004",
@@ -94,6 +95,83 @@ test("rejects a queue projection that contains payload or sensitive extensions",
 
   expect(failure).toBeInstanceOf(ReliableEventProcessingError);
   expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
+});
+
+test.each([
+  {
+    label: "a different consumer",
+    command: { consumerKey: "notification-provider", limit: 100 },
+    job: { consumerKey: "cache-purge-cdn", propagation: PROPAGATION },
+  },
+  {
+    label: "different propagation",
+    command: { consumerKey: "notification-provider", limit: 100 },
+    job: {
+      consumerKey: "notification-provider",
+      propagation: {
+        ...PROPAGATION,
+        requestId: "50000000-0000-4000-8000-000000000009",
+      },
+    },
+  },
+])("rejects queue jobs bound to $label", async ({ command, job }) => {
+  const projectedJob = {
+    schemaVersion: 1,
+    jobType: "DISPATCH_OUTBOX_EVENT",
+    outboxEventId: IDS.outbox,
+    correlationId: IDS.correlation,
+    ...job,
+  } as const;
+  const useCase = createListReadyOutboxJobs({
+    transactionManager: managerWith({
+      outboxDispatch: {
+        listReady: async () =>
+          success("LIST_READY_OUTBOX_EVENTS", { jobs: [projectedJob] }),
+      },
+    }),
+  });
+
+  await expect(
+    useCase({
+      schemaVersion: 1,
+      operation: "LIST_READY_OUTBOX_EVENTS",
+      availableAtOrBefore: "2026-09-04T00:00:00.000Z",
+      propagation: PROPAGATION,
+      ...command,
+    }),
+  ).rejects.toMatchObject({ code: "PERSISTENCE_FAILURE" });
+});
+
+test("rejects a queue projection larger than the requested limit", async () => {
+  const job = {
+    schemaVersion: 1,
+    jobType: "DISPATCH_OUTBOX_EVENT",
+    outboxEventId: IDS.outbox,
+    consumerKey: "notification-provider",
+    correlationId: IDS.correlation,
+    propagation: PROPAGATION,
+  } as const;
+  const useCase = createListReadyOutboxJobs({
+    transactionManager: managerWith({
+      outboxDispatch: {
+        listReady: async () =>
+          success("LIST_READY_OUTBOX_EVENTS", {
+            jobs: [job, { ...job, outboxEventId: IDS.alternateOutbox }],
+          }),
+      },
+    }),
+  });
+
+  await expect(
+    useCase({
+      schemaVersion: 1,
+      operation: "LIST_READY_OUTBOX_EVENTS",
+      consumerKey: job.consumerKey,
+      availableAtOrBefore: "2026-09-04T00:00:00.000Z",
+      limit: 1,
+      propagation: PROPAGATION,
+    }),
+  ).rejects.toMatchObject({ code: "PERSISTENCE_FAILURE" });
 });
 
 test("purges expired webhook envelopes while returning identifiers only", async () => {

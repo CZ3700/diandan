@@ -38,7 +38,21 @@ export function createListReadyOutboxJobs(
           if (!parsed.success) {
             throw persistenceFailure();
           }
-          return parsed.data.value.jobs;
+          const jobs = parsed.data.value.jobs;
+          const propagation = parsedCommand.data.propagation;
+          const responseMatchesCommand =
+            jobs.length <= parsedCommand.data.limit &&
+            jobs.every(
+              (job) =>
+                job.consumerKey === parsedCommand.data.consumerKey &&
+                job.propagation.schemaVersion === propagation.schemaVersion &&
+                job.propagation.requestId === propagation.requestId &&
+                job.propagation.traceparent === propagation.traceparent,
+            );
+          if (!responseMatchesCommand) {
+            throw persistenceFailure();
+          }
+          return jobs;
         },
       );
     } catch (error: unknown) {

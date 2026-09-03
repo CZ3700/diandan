@@ -6,7 +6,10 @@ import { createPaymentWebhookEndpointPreflight } from "./payment-webhook-endpoin
 const endpointId = "60000000-0000-4000-8000-000000000001";
 const receivedAt = "2026-09-04T00:00:00.000Z";
 
-function createHarness(decision: "ELIGIBLE" | "UNAVAILABLE") {
+function createHarness(
+  decision: "ELIGIBLE" | "UNAVAILABLE",
+  returnedEndpointId = endpointId,
+) {
   const load = vi.fn(async () => ({
     schemaVersion: 1,
     operation: "LOAD_PAYMENT_WEBHOOK_ENDPOINT",
@@ -18,7 +21,7 @@ function createHarness(decision: "ELIGIBLE" | "UNAVAILABLE") {
             decision,
             endpoint: {
               schemaVersion: 1,
-              endpointId,
+              endpointId: returnedEndpointId,
               providerAccountId: "60000000-0000-4000-8000-000000000002",
               environment: "TEST",
               adapterKey: "fake_psp",
@@ -62,6 +65,20 @@ test("returns only a secret-free availability decision", async () => {
   await expect(
     harness.check({ schemaVersion: 1, endpointId, receivedAt }),
   ).resolves.toEqual({ schemaVersion: 1, outcome: "UNAVAILABLE" });
+});
+
+test("fails closed when persistence returns a different eligible endpoint", async () => {
+  const harness = createHarness(
+    "ELIGIBLE",
+    "60000000-0000-4000-8000-000000000009",
+  );
+
+  await expect(
+    harness.check({ schemaVersion: 1, endpointId, receivedAt }),
+  ).resolves.toEqual({
+    schemaVersion: 1,
+    outcome: "TEMPORARY_UNAVAILABLE",
+  });
 });
 
 test("fails malformed preflight input before opening a transaction", async () => {

@@ -45,6 +45,15 @@ export function createPaymentWebhookEndpointPreflight(
           outcome: "TEMPORARY_UNAVAILABLE",
         });
       }
+      if (
+        parsed.data.value.decision === "ELIGIBLE" &&
+        parsed.data.value.endpoint.endpointId !== parsedCommand.data.endpointId
+      ) {
+        return Object.freeze({
+          schemaVersion: 1,
+          outcome: "TEMPORARY_UNAVAILABLE",
+        });
+      }
       return Object.freeze({
         schemaVersion: 1,
         outcome: parsed.data.value.decision,
