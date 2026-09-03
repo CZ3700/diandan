@@ -17,7 +17,7 @@
 | P1-03 | DONE | Codex `/root` | P1-01 | Git `49a8756`、PR #6/run `33720394020`；本地/clean clone、Quality/Security 与三路独立复核全绿 |
 | P1-04 | DONE | Codex `/root` | P1-01、P1-02、P0-03 | Git `827ada4`、PR #7/run `33739482625`；PG18、clean clone、Quality/Security 与两路独立终验全绿 |
 | P1-05 | DONE | Codex `/root` | P1-01/02/03/04 | Git `233d11b`、PR #8/run `33785418111`；本地、clean clone、Quality/Security 与独立终审全绿 |
-| P1-06 | READY | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
+| P1-06 | IN_PROGRESS | Codex `/root` | P1-04、P1-05 | 2026-09-04T01:46:14+08:00；raw-body 验签、inbox/outbox、pg-boss retry/DLQ |
 
 ## P1-01 执行卡
 
@@ -129,6 +129,17 @@
 - **独立终审**：数据库 URL/query、结构化 socket host、公共 HTTPS/private IP、staging/production internal origin 四项 Major 均复核为 RESOLVED；identity/notification fake 终审 `ACCEPT`（Blocker 0、Major 0），唯一 Should 的非法 notification runtime options 测试已补齐为 12/12 通过。
 - **浏览器与证据范围**：`output/playwright/p1-05/` 记录 preview CORS/配置的浏览器侧证据；本任务没有真实 PSP/OIDC/邮件供应商、AWS apply、staging、production、PITR 或真实支付结论，webhook raw-body 验签、inbox/outbox 消费、pg-boss retry/DLQ 明确留给 P1-06。
 
+## P1-06 执行卡
+
+- **Owner / 开始时间**：Codex `/root`，2026-09-04T01:46:14+08:00。
+- **输入与范围**：复用 P1-04 的 webhook endpoint/payload/inbox/provider-event/association/effect/outbox/attempt 表及 P1-05 的 payment、persistence、key-management ports；合同先行定义 endpoint-scoped verified webhook candidate、raw-body signature metadata、ID-only inbox/outbox queue envelope 与持久化命令，再实现 TEST-only raw-byte verifier、Application ingress/processor、PostgreSQL repositories、pg-boss adapter、有限 retry/DLQ、outbox relay，以及 API/Worker composition/lifecycle。
+- **输出边界**：合法事件只在原始字节验签通过后进入 PostgreSQL；重复/并发/乱序事件可恢复，同 provider event identity 的冲突 fail closed；业务 mutation、effect receipt 与 outbox append 同事务，job 只携带 `schemaVersion`、内部 ID 和安全 trace carrier；提交后 ACK，重投仍只有一次数据库业务副作用。
+- **非目标**：不接真实 PSP/邮件供应商，不实现 payment/order/reservation 的业务状态推进（留给 P4-05）、Admin 查询/人工重放（P5-06）、通知编排、AWS apply/staging/production、真实支付或 Redis；浏览器回跳仍不能确认付款。pg-boss 内部 schema 不成为 public 业务真相源。
+- **测试先行计划**：先写失败合同/fixture 和真实 PostgreSQL 测试，覆盖 invalid/expired/future/tampered signature 零持久化、exact raw bytes（空白变化签名失败）、endpoint/key rotation 绑定、相同 ID 同/异 payload、乱序不同事件、10 次并发重复仅一份 inbox/provider event/effect/job、receipt/enqueue 原子回滚、commit-before-ACK 崩溃重投、有限 retry→DLQ、未注册 handler fail closed，以及 raw payload/secret/header/PII 不进入日志、queue、outbox 或 fixture。
+- **迁移策略**：禁止回改 0005/0006/0009；优先复用现有唯一键、append-only trigger 与 effect receipt。只有新的失败数据库测试证明现有 schema 无法表达必要不变量时，才新增最小前向 migration；pg-boss 使用精确锁版和独立 schema。
+- **验证计划**：受影响 contracts/ports/application/adapters/API/Worker 测试与 artifact freshness；真实 PostgreSQL 18 + 真实 pg-boss schema/双 worker/故障窗集成；provider/ORM/queue 类型边界和依赖图；format、lint、typecheck、build、完整 0-cache `pnpm check`、secret/high audit、fresh clean clone、独立支付/可靠事件复核及真实 PR Quality/Security。
+- **风险护栏**：对应 R-03/R-11；验签必须先于 provider JSON 解析，`endpointId` 先映射 account/environment/key reference，secret 明文不进入 Application/合同/日志；外部网络副作用只能宣称 at-least-once + 稳定 provider idempotency key，不能伪造跨数据库/网络 exactly-once；未注册生产 handler 不得以 no-op 标记成功。
+
 ## 必须证明
 
 - Domain 无 Next.js、NestJS、Drizzle 或供应商 SDK。
@@ -139,4 +150,4 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02、P1-03、P1-04、P1-05 已完成，P1-06 为 `READY`，Phase 1 退出证据尚未全部取得。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02、P1-03、P1-04、P1-05 已完成，P1-06 为 `IN_PROGRESS`，Phase 1 退出证据尚未全部取得。

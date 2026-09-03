@@ -3,8 +3,8 @@
 > 最后更新：2026-09-04
 > 当前里程碑：M1 可信内核 / M2 品牌样板
 > 当前 ACTIVE Phase：Phase 1、Phase 2
-> 当前任务：无；Lane A/B/C/D 均无 executor
-> 下一可领取任务：`P1-06`（Lane A）或 `P2-01`（Lane B）；单个 executor 一次只领取一个
+> 当前任务：`P1-06`（Lane A，Codex `/root`，`IN_PROGRESS`）；Lane B/C/D 无 executor
+> 下一可领取任务：`P2-01`（Lane B）；单个 executor 一次只领取一个
 
 ## 1. 开工入口
 
@@ -16,15 +16,15 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 Lane A/B/C/D 均空闲，`P1-06` 与 `P2-01` 为 `READY`。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 Lane A 由 `P1-06` 占用，Lane B/C/D 空闲，`P2-01` 为 `READY`。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
 | PENDING | 37 |
-| READY | 2 |
-| IN_PROGRESS | 0 |
+| READY | 1 |
+| IN_PROGRESS | 1 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
 | DONE | 10 |
@@ -78,7 +78,7 @@
 
 ## 5. 最新证据
 
-已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据。P0-05 已取得本地 request/trace、日志隐私、故障/关闭、浏览器、clean-clone 与真实 PR 必需检查证据并标记 DONE。P1-01 已取得 v1 合同、确定性 artifact、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-02 已取得自研内容/商品/价格/库存/媒体/政策合同、七语言发布门、公开投影、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-03 已取得纯 domain 合同/实现、本地与 clean-clone 0-cache 门禁、三路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-04 已取得 6 个 versioned migration/108 表 catalog、真实 PG18 空库与带数据升降级、并发/隐私/authority/append-only 对抗约束、clean clone、两路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-05 已取得七类 versioned ports/conformance、PostgreSQL repositories/transactions、S3-compatible media、CloudFront purge、KMS、TEST-only fake adapters、9 migrations/108 tables、真实 PG/S3 TLS、浏览器、fresh clean-clone、独立终审与 [PR #8](https://github.com/CZ3700/diandan/pull/8) 的真实 Quality/Security；CI 动态 import 超时根因亦在不放宽 5 秒行为门禁的前提下修复，任务已标记 `DONE` 并解锁 `P1-06`。ADR-007 已关闭生产基础设施**选型**门并补入 P5-08 IaC/staging 任务；这些仍都不是 AWS apply、staging、生产、恢复或发布证据。
+已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据。P0-05 已取得本地 request/trace、日志隐私、故障/关闭、浏览器、clean-clone 与真实 PR 必需检查证据并标记 DONE。P1-01 已取得 v1 合同、确定性 artifact、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-02 已取得自研内容/商品/价格/库存/媒体/政策合同、七语言发布门、公开投影、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-03 已取得纯 domain 合同/实现、本地与 clean-clone 0-cache 门禁、三路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-04 已取得 6 个 versioned migration/108 表 catalog、真实 PG18 空库与带数据升降级、并发/隐私/authority/append-only 对抗约束、clean clone、两路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-05 已取得七类 versioned ports/conformance、PostgreSQL repositories/transactions、S3-compatible media、CloudFront purge、KMS、TEST-only fake adapters、9 migrations/108 tables、真实 PG/S3 TLS、浏览器、fresh clean-clone、独立终审与 [PR #8](https://github.com/CZ3700/diandan/pull/8) 的真实 Quality/Security；CI 动态 import 超时根因亦在不放宽 5 秒行为门禁的前提下修复，任务已标记 `DONE` 并解锁 `P1-06`。P1-06 已于 2026-09-04T01:46:14+08:00 领取，先冻结 raw-body verified candidate、ID-only queue 与持久化合同，再实现 inbox/outbox、pg-boss retry/DLQ 和唯一副作用骨架。ADR-007 已关闭生产基础设施**选型**门并补入 P5-08 IaC/staging 任务；这些仍都不是 AWS apply、staging、生产、恢复或发布证据。
 
 | 日期 | Task | 类型 | 证据 | 结论 |
 |:--|:--|:--|:--|:--|
