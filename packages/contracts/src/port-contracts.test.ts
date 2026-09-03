@@ -159,6 +159,42 @@ describe("versioned adapter port contracts", () => {
     ).toBe(false);
   });
 
+  test("allows credentialless localhost HTTPS media grants without weakening public URL roots", () => {
+    const responseSchema = schema("mediaPortResponseSchema");
+    const uploadGrant = {
+      schemaVersion: 1,
+      operation: "CREATE_UPLOAD_GRANT",
+      outcome: "SUCCESS",
+      value: {
+        storageClass: "SOURCE",
+        objectKey: "source/asset-1/original.jpg",
+        checksumSha256: "a".repeat(64),
+        byteSize: 12,
+        mimeType: "image/jpeg",
+        method: "PUT",
+        url: "https://localhost:9443/private-source/source/asset-1/original.jpg?X-Amz-SignedHeaders=host",
+        headers: { "content-type": "image/jpeg" },
+        expiresAt: "2026-09-03T00:15:00.000Z",
+      },
+    };
+    const downloadGrant = {
+      schemaVersion: 1,
+      operation: "CREATE_DOWNLOAD_GRANT",
+      outcome: "SUCCESS",
+      value: {
+        storageClass: "SOURCE",
+        objectKey: "source/asset-1/original.jpg",
+        method: "GET",
+        url: "https://localhost:9443/private-source/source/asset-1/original.jpg?X-Amz-SignedHeaders=host",
+        headers: {},
+        expiresAt: "2026-09-03T00:15:00.000Z",
+      },
+    };
+
+    expect(responseSchema.safeParse(uploadGrant).success).toBe(true);
+    expect(responseSchema.safeParse(downloadGrant).success).toBe(true);
+  });
+
   test("rejects media object keys that URL resolution would normalize", () => {
     const commandSchema = schema("mediaPortCommandSchema");
     for (const objectKey of [
@@ -983,6 +1019,65 @@ describe("versioned adapter port contracts", () => {
     expect(
       urlSchema.safeParse(`${prefix}${"a".repeat(8_193 - prefix.length)}`)
         .success,
+    ).toBe(false);
+  });
+
+  test("rejects non-public payment and identity destinations at port roots", () => {
+    const paymentCommandSchema = schema("paymentPortCommandSchema");
+    const identityCommandSchema = schema("identityPortCommandSchema");
+    const payment = {
+      schemaVersion: 1,
+      operation: "CREATE_PAYMENT",
+      providerAccountId: "10000000-0000-4000-8000-000000000001",
+      environment: "TEST",
+      attemptId: "10000000-0000-4000-8000-000000000002",
+      orderId: "10000000-0000-4000-8000-000000000003",
+      paymentMethod: "fixture_card",
+      amountMinor: 2_500,
+      currency: "USD",
+      requestedLocale: "en",
+      merchantReference: "10000000-0000-4000-8000-000000000002",
+      providerIdempotencyKey: "10000000-0000-4000-8000-000000000002",
+      returnUrl: "https://store.example.invalid/payment/return",
+      cancelUrl: "https://store.example.invalid/payment/cancel",
+    };
+    const identity = {
+      schemaVersion: 1,
+      operation: "CREATE_AUTHORIZATION_REQUEST",
+      issuer: "https://identity.example.invalid",
+      clientId: "fan-support-admin",
+      redirectUri: "https://admin.example.invalid/oidc/callback",
+      state: "s".repeat(43),
+      nonce: "n".repeat(43),
+      codeChallenge: "DwBzhbb51LfusnSGBa_hqYSgo7-j8BTQnip4TOnlzRo",
+      requestedAt: "2026-09-03T00:00:00.000Z",
+    };
+
+    expect(paymentCommandSchema.safeParse(payment).success).toBe(true);
+    expect(identityCommandSchema.safeParse(identity).success).toBe(true);
+    expect(
+      paymentCommandSchema.safeParse({
+        ...payment,
+        returnUrl: "https://127.0.0.1/payment/return",
+      }).success,
+    ).toBe(false);
+    expect(
+      paymentCommandSchema.safeParse({
+        ...payment,
+        cancelUrl: "https://169.254.169.254/payment/cancel",
+      }).success,
+    ).toBe(false);
+    expect(
+      identityCommandSchema.safeParse({
+        ...identity,
+        issuer: "https://127.0.0.1",
+      }).success,
+    ).toBe(false);
+    expect(
+      identityCommandSchema.safeParse({
+        ...identity,
+        redirectUri: "https://169.254.169.254/oidc/callback",
+      }).success,
     ).toBe(false);
   });
 });

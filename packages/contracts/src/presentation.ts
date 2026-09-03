@@ -7,12 +7,14 @@ export const slugSchema = z
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u)
   .brand<"Slug">();
 
-export const publicHttpsUrlSchema = z
+const httpsUrlSchema = z
   .url({ protocol: /^https$/u })
   .max(8_192)
   .regex(/^https:\/\/(?![^/?#]*@)/u)
-  .meta({ format: "uri" })
-  .brand<"PublicHttpsUrl">();
+  .meta({ format: "uri" });
+
+export const credentiallessHttpsUrlSchema =
+  httpsUrlSchema.brand<"CredentiallessHttpsUrl">();
 
 const publicMediaFormats = new Set(["avif", "webp", "jpeg"]);
 // This is the single TLS origin exposed by the local Docker preview. It is not
@@ -131,6 +133,32 @@ function isBlockedIpLiteral(hostname: string): boolean {
   );
 }
 
+function isSafePublicHttpsUrl(value: string): boolean {
+  try {
+    const hostname = new URL(value).hostname.toLowerCase().replace(/\.$/u, "");
+    return (
+      hostname !== "localhost" &&
+      !hostname.endsWith(".localhost") &&
+      !isBlockedIpLiteral(hostname)
+    );
+  } catch {
+    return false;
+  }
+}
+
+export const publicHttpsUrlSchema = credentiallessHttpsUrlSchema
+  .refine(
+    isSafePublicHttpsUrl,
+    "public HTTPS URL must not use localhost or a non-public IP literal",
+  )
+  .meta({
+    format: "uri",
+    "x-runtime-invariants": [
+      "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected",
+    ],
+  })
+  .brand<"PublicHttpsUrl">();
+
 function hasSafePublicMediaQueryParameters(url: URL): boolean {
   const seen = new Set<string>();
   for (const [key, value] of url.searchParams) {
@@ -182,7 +210,7 @@ function isSafePublicMediaUrl(value: string): boolean {
   }
 }
 
-export const publicMediaUrlSchema = publicHttpsUrlSchema
+export const publicMediaUrlSchema = httpsUrlSchema
   .refine(
     isSafePublicMediaUrl,
     "public media URL must use a public host without credentials or fragments and only supported transformation parameters",

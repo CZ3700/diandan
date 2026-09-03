@@ -3665,7 +3665,10 @@
                 "format": "uri",
                 "maxLength": 8192,
                 "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                "type": "string"
+                "type": "string",
+                "x-runtime-invariants": [
+                  "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                ]
               }
             },
             "required": [
@@ -3690,7 +3693,10 @@
                 "format": "uri",
                 "maxLength": 8192,
                 "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                "type": "string"
+                "type": "string",
+                "x-runtime-invariants": [
+                  "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                ]
               }
             },
             "required": [
@@ -5355,7 +5361,10 @@
                         "format": "uri",
                         "maxLength": 8192,
                         "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                        "type": "string"
+                        "type": "string",
+                        "x-runtime-invariants": [
+                          "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                        ]
                       }
                     },
                     "required": [
@@ -5380,7 +5389,10 @@
                         "format": "uri",
                         "maxLength": 8192,
                         "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                        "type": "string"
+                        "type": "string",
+                        "x-runtime-invariants": [
+                          "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                        ]
                       }
                     },
                     "required": [

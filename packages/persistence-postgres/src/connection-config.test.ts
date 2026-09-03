@@ -80,6 +80,25 @@ describe("PostgreSQL connection configuration", () => {
     expect(reads).toBe(0);
   });
 
+  test.each([
+    "/tmp/pg-sock",
+    "../tmp/pg-sock",
+    "database.internal/socket",
+    "database.internal\\socket",
+    " database.internal",
+    "database.internal ",
+  ])("rejects a non-network structured host: %s", (host) => {
+    expect(
+      normalizePostgresConnectionConfig({
+        host,
+        port: 5432,
+        database: "fan_support",
+        user: "fan_support",
+        password: "fixture-password",
+      }),
+    ).toBeUndefined();
+  });
+
   test("passes a copied mTLS key to node-postgres without freezing its driver object", () => {
     const sourceTls = {
       rejectUnauthorized: true,

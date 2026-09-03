@@ -1,3 +1,5 @@
+import { isIP } from "node:net";
+
 export type PostgresTlsConfig = Readonly<{
   rejectUnauthorized?: boolean;
   ca?: string;
@@ -99,6 +101,27 @@ function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
+function isExplicitNetworkHost(value: unknown): value is string {
+  if (
+    !isNonEmptyString(value) ||
+    value !== value.trim() ||
+    value.length > 253
+  ) {
+    return false;
+  }
+  if (isIP(value) !== 0) {
+    return true;
+  }
+
+  const labels = value.split(".");
+  return labels.every(
+    (label) =>
+      label.length >= 1 &&
+      label.length <= 63 &&
+      /^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$/u.test(label),
+  );
+}
+
 function isOptionalNonNegativeInteger(value: unknown): boolean {
   return (
     value === undefined ||
@@ -191,6 +214,9 @@ function parseExplicitConnectionString(value: unknown):
     const host = parsed.hostname.startsWith("[")
       ? parsed.hostname.slice(1, -1)
       : parsed.hostname;
+    if (!isExplicitNetworkHost(host)) {
+      return undefined;
+    }
     return Object.freeze({ host, port, database, user, password });
   } catch {
     return undefined;
@@ -240,7 +266,7 @@ export function normalizePostgresConnectionConfig(
     }
     identity = parseExplicitConnectionString(record["connectionString"]);
   } else if (
-    isNonEmptyString(record["host"]) &&
+    isExplicitNetworkHost(record["host"]) &&
     typeof record["port"] === "number" &&
     Number.isInteger(record["port"]) &&
     record["port"] >= 1 &&

@@ -9,7 +9,10 @@ import {
   portTimestampSchema,
   validatePortErrorPolicy,
 } from "./port-common.js";
-import { publicHttpsUrlSchema, publicMediaUrlSchema } from "./presentation.js";
+import {
+  credentiallessHttpsUrlSchema,
+  publicMediaUrlSchema,
+} from "./presentation.js";
 import { schemaVersionSchema } from "./versioning.js";
 
 export const mediaStorageClassSchema = z.enum(["SOURCE", "DERIVATIVE"]);
@@ -153,7 +156,7 @@ const uploadSuccessSchema = z.strictObject({
     byteSize: byteSizeSchema,
     mimeType: mediaMimeTypeSchema,
     method: z.literal("PUT"),
-    url: publicHttpsUrlSchema,
+    url: credentiallessHttpsUrlSchema,
     headers: headerMapSchema,
     expiresAt: portTimestampSchema,
   }),
@@ -178,7 +181,7 @@ const downloadSuccessSchema = z.strictObject({
   value: z.strictObject({
     ...mediaObjectIdentityShape,
     method: z.literal("GET"),
-    url: publicHttpsUrlSchema,
+    url: credentiallessHttpsUrlSchema,
     headers: headerMapSchema,
     expiresAt: portTimestampSchema,
   }),

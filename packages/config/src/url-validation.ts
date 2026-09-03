@@ -198,6 +198,7 @@ export function isPostgresUrl(value: string): boolean {
     parsed === undefined ||
     (parsed.protocol !== "postgres:" && parsed.protocol !== "postgresql:") ||
     parsed.hostname === "" ||
+    parsed.search !== "" ||
     parsed.hash !== "" ||
     parsed.pathname.length <= 1
   ) {

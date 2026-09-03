@@ -19721,7 +19721,10 @@
               "format": "uri",
               "maxLength": 8192,
               "pattern": "^https:\\/\\/(?![^/?#]*@)",
-              "type": "string"
+              "type": "string",
+              "x-runtime-invariants": [
+                "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+              ]
             },
             "nonce": {
               "maxLength": 512,
@@ -19737,7 +19740,10 @@
               "format": "uri",
               "maxLength": 8192,
               "pattern": "^https:\\/\\/(?![^/?#]*@)",
-              "type": "string"
+              "type": "string",
+              "x-runtime-invariants": [
+                "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+              ]
             },
             "requestedAt": {
               "format": "date-time",
@@ -19797,7 +19803,10 @@
               "format": "uri",
               "maxLength": 8192,
               "pattern": "^https:\\/\\/(?![^/?#]*@)",
-              "type": "string"
+              "type": "string",
+              "x-runtime-invariants": [
+                "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+              ]
             },
             "nonce": {
               "maxLength": 512,
@@ -19818,7 +19827,10 @@
               "format": "uri",
               "maxLength": 8192,
               "pattern": "^https:\\/\\/(?![^/?#]*@)",
-              "type": "string"
+              "type": "string",
+              "x-runtime-invariants": [
+                "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+              ]
             },
             "schemaVersion": {
               "const": 1,
@@ -19919,7 +19931,10 @@
                   "format": "uri",
                   "maxLength": 8192,
                   "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                  "type": "string"
+                  "type": "string",
+                  "x-runtime-invariants": [
+                    "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                  ]
                 },
                 "expiresAt": {
                   "format": "date-time",
@@ -19979,7 +19994,10 @@
                       "format": "uri",
                       "maxLength": 8192,
                       "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                      "type": "string"
+                      "type": "string",
+                      "x-runtime-invariants": [
+                        "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                      ]
                     },
                     "mfa": {
                       "type": "boolean"
@@ -39750,7 +39768,10 @@
               "format": "uri",
               "maxLength": 8192,
               "pattern": "^https:\\/\\/(?![^/?#]*@)",
-              "type": "string"
+              "type": "string",
+              "x-runtime-invariants": [
+                "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+              ]
             }
           },
           "required": [
@@ -39775,7 +39796,10 @@
               "format": "uri",
               "maxLength": 8192,
               "pattern": "^https:\\/\\/(?![^/?#]*@)",
-              "type": "string"
+              "type": "string",
+              "x-runtime-invariants": [
+                "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+              ]
             }
           },
           "required": [
@@ -40022,7 +40046,10 @@
                       "format": "uri",
                       "maxLength": 8192,
                       "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                      "type": "string"
+                      "type": "string",
+                      "x-runtime-invariants": [
+                        "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                      ]
                     }
                   },
                   "required": [
@@ -40047,7 +40074,10 @@
                       "format": "uri",
                       "maxLength": 8192,
                       "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                      "type": "string"
+                      "type": "string",
+                      "x-runtime-invariants": [
+                        "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                      ]
                     }
                   },
                   "required": [
@@ -42506,7 +42536,10 @@
               "format": "uri",
               "maxLength": 8192,
               "pattern": "^https:\\/\\/(?![^/?#]*@)",
-              "type": "string"
+              "type": "string",
+              "x-runtime-invariants": [
+                "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+              ]
             },
             "currency": {
               "pattern": "^[A-Z]{3}$",
@@ -42565,7 +42598,10 @@
               "format": "uri",
               "maxLength": 8192,
               "pattern": "^https:\\/\\/(?![^/?#]*@)",
-              "type": "string"
+              "type": "string",
+              "x-runtime-invariants": [
+                "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+              ]
             },
             "schemaVersion": {
               "const": 1,
@@ -43195,7 +43231,10 @@
                           "format": "uri",
                           "maxLength": 8192,
                           "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                          "type": "string"
+                          "type": "string",
+                          "x-runtime-invariants": [
+                            "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                          ]
                         }
                       },
                       "required": [
@@ -43220,7 +43259,10 @@
                           "format": "uri",
                           "maxLength": 8192,
                           "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                          "type": "string"
+                          "type": "string",
+                          "x-runtime-invariants": [
+                            "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                          ]
                         }
                       },
                       "required": [
@@ -44052,7 +44094,10 @@
                           "format": "uri",
                           "maxLength": 8192,
                           "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                          "type": "string"
+                          "type": "string",
+                          "x-runtime-invariants": [
+                            "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                          ]
                         }
                       },
                       "required": [
@@ -44077,7 +44122,10 @@
                           "format": "uri",
                           "maxLength": 8192,
                           "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                          "type": "string"
+                          "type": "string",
+                          "x-runtime-invariants": [
+                            "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                          ]
                         }
                       },
                       "required": [
@@ -44281,7 +44329,10 @@
                           "format": "uri",
                           "maxLength": 8192,
                           "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                          "type": "string"
+                          "type": "string",
+                          "x-runtime-invariants": [
+                            "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                          ]
                         }
                       },
                       "required": [
@@ -44306,7 +44357,10 @@
                           "format": "uri",
                           "maxLength": 8192,
                           "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                          "type": "string"
+                          "type": "string",
+                          "x-runtime-invariants": [
+                            "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                          ]
                         }
                       },
                       "required": [
@@ -53524,7 +53578,10 @@
                       "format": "uri",
                       "maxLength": 8192,
                       "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                      "type": "string"
+                      "type": "string",
+                      "x-runtime-invariants": [
+                        "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                      ]
                     }
                   },
                   "required": [
@@ -53549,7 +53606,10 @@
                       "format": "uri",
                       "maxLength": 8192,
                       "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                      "type": "string"
+                      "type": "string",
+                      "x-runtime-invariants": [
+                        "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                      ]
                     }
                   },
                   "required": [

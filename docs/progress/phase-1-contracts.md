@@ -16,7 +16,7 @@
 | P1-02 | DONE | Codex `/root` | P1-01、P0-04 | Git `6daea69`、PR #5/run `33707017702`；本地、clean clone、Quality/Security 与两路独立验收全绿 |
 | P1-03 | DONE | Codex `/root` | P1-01 | Git `49a8756`、PR #6/run `33720394020`；本地/clean clone、Quality/Security 与三路独立复核全绿 |
 | P1-04 | DONE | Codex `/root` | P1-01、P1-02、P0-03 | Git `827ada4`、PR #7/run `33739482625`；PG18、clean clone、Quality/Security 与两路独立终验全绿 |
-| P1-05 | IN_PROGRESS | Codex `/root` | P1-01/02/03/04 | 2026-09-03T18:04:01+08:00 领取；versioned ports、PostgreSQL repositories、S3/CDN/KMS 与 fake adapters |
+| P1-05 | REVIEW | Codex `/root` | P1-01/02/03/04 | 2026-09-04T01:10:49+08:00 请求评审；本地 `pnpm check`/secret/audit 全绿，待 clean-clone 与 GitHub Quality/Security |
 | P1-06 | PENDING | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
 
 ## P1-01 执行卡
@@ -112,6 +112,16 @@
 - **测试先行计划**：先为每类 port 写共享 conformance 和恶意 fixture，观察 skeleton/fake/PostgreSQL/S3/CDN/KMS adapter 因缺失行为而失败；重点覆盖 unknown schemaVersion、供应商 DTO 隔离、事务原子性/回滚、乐观版本冲突、行锁库存、append-only/idempotency、对象 key/checksum/私有 metadata、locale 与 market/currency 分离、密钥明文不落库/日志，以及 fake fixture 变更会触发失败，再写最小实现逐项转绿。
 - **验证计划**：运行各 port/adapter 单元与 conformance、真实 PostgreSQL 18 repository 集成和 S3-compatible emulator 集成；检查 dependency graph、无 supplier/ORM 类型越界、无 PII/secret fixture；再跑 format、lint、typecheck、build、完整 0-cache `pnpm check`、secret/high audit、clean-clone frozen install/check、真实 PR Quality/Security，并安排 repository 事务、adapter 替换性与隐私安全独立复核。
 - **风险护栏**：对应 R-02/R-06/R-14；repository 必须在同一事务内锁定并更新 canonical balance/reservation/ledger/幂等结果，不信任调用方金额或库存；留言、邮箱、地址与 key plaintext 不得进入通用 DTO、对象 metadata、日志或 fake fixture；依赖精确锁版，provider/AWS/Drizzle/`pg` 类型不得逃出 adapter，配置与 key reference 必须注入且 fail closed。
+- **Review 请求**：2026-09-04T01:10:49+08:00；fake identity/notification adapters 已落入各自 adapter 包并由 `@fan-support/testing` 复用，支付/身份公共 HTTPS root 收紧为公网限定，media grant URL 保持无凭据 HTTPS 以支持本地 TLS presign 集成；当前请求评审基于本地完整门禁，clean-clone 与 GitHub Quality/Security 结果待补入最终 DONE 证据。
+
+### REVIEW 证据（2026-09-04）
+
+- **实现补强**：`packages/identity-oidc` 与 `packages/notification-provider` 现在各自提供显式 `environment: "TEST"` 的确定性 fake adapter，拒绝 preview/staging/production 组合；`packages/testing/src/fakes.ts` 收敛为对 adapter 包的规范重导出，消除第二份行为源。
+- **边界收紧**：`packages/contracts/src/presentation.ts` 将公网 `publicHttpsUrlSchema` 与仅要求 HTTPS/无凭据的 transport URL 分离；支付 return/cancel、OIDC issuer/redirect 继续拒绝 localhost/私网/保留地址，media upload/download grant 恢复允许本地 TLS presign 端点，不放宽公开媒体 URL 与公开回跳根约束。
+- **配置与连接 fail-closed**：`packages/config` 新增对 staging/production `internalApiOrigin` 的公网 HTTPS 限定；`packages/persistence-postgres` 明确拒绝带 query 的 PostgreSQL URL、Unix socket/路径式 host 与非网络结构 host，避免绕过预期的连接边界。
+- **TDD/回归**：先新增 `packages/testing/src/index.test.ts` 约束“testing 导出的 fake 必须直接复用 adapter 包”，观察红灯暴露 workspace 依赖缺口；随后将 adapter 包测试本地化、testing 重导出与依赖图收敛为无循环，再新增 contracts 回归证明 localhost HTTPS media grant 仍被允许，红灯复现 `media-s3` 集成失败后以 transport URL schema 修复转绿。
+- **本地验证**：2026-09-04 在 Node `24.20.0` / pnpm `11.25.0` 下完成 `node ./scripts/check-workspace.mjs`、受影响包 tests/typecheck、`pnpm check:contracts`、`TURBO_FORCE=true pnpm check`、`pnpm security:secrets` 与 `pnpm audit --registry=https://registry.npmjs.org --audit-level=high`；结果为 workspace 4 apps/30 packages/34 units 无循环、typecheck 46/46、test 46/46、build 34/34、真实 PostgreSQL 9 migrations/108 tables、真实 S3 TLS integration、Prettier/ESLint、adapter/artifact checks 与 high-level audit 全绿。
+- **剩余 acceptance**：尚未补入本次候选 SHA 的 fresh clean-clone frozen install/check 和 GitHub PR Quality/Security run；在这些远端/隔离证据完成前，P1-05 保持 `REVIEW`，不提前解锁 P1-06。
 
 ## 必须证明
 
@@ -123,4 +133,4 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02、P1-03、P1-04 已完成，P1-05 为 `READY`，其余 Phase 1 退出证据尚未取得。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02、P1-03、P1-04 已完成，P1-05 为 `REVIEW`，其余 Phase 1 退出证据尚未取得。

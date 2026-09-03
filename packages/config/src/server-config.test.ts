@@ -1346,6 +1346,8 @@ test.each([
   "postgresql:///fan_support",
   "postgresql://database.invalid",
   "postgresql://database.invalid/",
+  "postgresql://user:pass@database.invalid/fan_support?host=%2Ftmp%2Fpg",
+  "postgresql://user:pass@database.invalid/fan_support?sslmode=no-verify",
   "postgresql://database.invalid/fan_support#fragment",
   " postgresql://database.invalid/fan_support",
   "postgresql://database.invalid/fan_support\n",
@@ -1468,6 +1470,34 @@ test("requires HTTPS for staging and production internal API origins", async () 
     });
   }
 });
+
+test.each([
+  "https://localhost",
+  "https://api.localhost",
+  "https://127.0.0.1",
+  "https://169.254.169.254",
+  "https://10.0.0.1",
+  "https://[::1]",
+  "https://[fe80::1]",
+] as const)(
+  "rejects a non-public HTTPS internal API origin outside local tiers: %s",
+  async (internalApiOrigin) => {
+    const { resolveInternalApiRuntimeConfig } = await loadServerConfigModule();
+
+    for (const deploymentEnvironment of ["staging", "production"] as const) {
+      expectInvalidConfig(
+        () =>
+          resolveInternalApiRuntimeConfig({
+            environment: {
+              FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
+              FAN_SUPPORT_INTERNAL_API_ORIGIN: internalApiOrigin,
+            },
+          }),
+        ["internalApiOrigin"],
+      );
+    }
+  },
+);
 
 test("fails closed for a missing or ambiguous internal API origin", async () => {
   const { resolveInternalApiRuntimeConfig } = await loadServerConfigModule();

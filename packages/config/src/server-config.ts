@@ -126,6 +126,19 @@ const internalApiRuntimeConfigSchema = z
       return;
     }
     if (
+      (config.deploymentEnvironment === "staging" ||
+        config.deploymentEnvironment === "production") &&
+      !isPublicSiteOrigin(config.internalApiOrigin)
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["internalApiOrigin"],
+        message:
+          "staging and production require a canonical public HTTPS API origin",
+      });
+      return;
+    }
+    if (
       isHttpOrigin(config.internalApiOrigin) &&
       config.deploymentEnvironment !== "development" &&
       config.deploymentEnvironment !== "test" &&

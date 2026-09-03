@@ -171,7 +171,7 @@ test("rejects malformed public media URLs without throwing", () => {
   }
 });
 
-test("keeps generic HTTPS URLs separate from public media credential policy", () => {
+test("keeps public HTTPS URLs separate from public media credential policy", () => {
   const paymentCallback =
     "https://payments.example.invalid/return?signature=provider-signature";
   const azureSas =
@@ -179,11 +179,6 @@ test("keeps generic HTTPS URLs separate from public media credential policy", ()
 
   expect(publicHttpsUrlSchema.safeParse(paymentCallback).success).toBe(true);
   expect(publicHttpsUrlSchema.safeParse(azureSas).success).toBe(true);
-  expect(
-    publicHttpsUrlSchema.safeParse(
-      "https://127.0.0.1/callback?signature=test#provider-state",
-    ).success,
-  ).toBe(true);
   expect(publicMediaUrlSchema.safeParse(paymentCallback).success).toBe(false);
   expect(publicMediaUrlSchema.safeParse(azureSas).success).toBe(false);
 
@@ -197,4 +192,18 @@ test("keeps generic HTTPS URLs separate from public media credential policy", ()
       "https://user:password@payments.example.invalid/return",
     ).success,
   ).toBe(false);
+});
+
+test.each([
+  "https://localhost/callback",
+  "https://login.localhost/callback",
+  "https://127.0.0.1/callback?signature=test#provider-state",
+  "https://169.254.169.254/callback",
+  "https://10.0.0.1/callback",
+  "https://192.168.0.1/callback",
+  "https://[::1]/callback",
+  "https://[fe80::1]/callback",
+  "https://[fc00::1]/callback",
+] as const)("rejects a non-public HTTPS URL: %s", (url) => {
+  expect(publicHttpsUrlSchema.safeParse(url).success).toBe(false);
 });

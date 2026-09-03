@@ -238,7 +238,18 @@ importers:
         specifier: workspace:*
         version: link:../contracts
 
-  packages/identity-oidc: {}
+  packages/identity-oidc:
+    dependencies:
+      '@fan-support/identity-port':
+        specifier: workspace:*
+        version: link:../identity-port
+    devDependencies:
+      '@fan-support/testing':
+        specifier: workspace:*
+        version: link:../testing
+      '@types/node':
+        specifier: 24.13.3
+        version: 24.13.3
 
   packages/identity-port:
     dependencies:
@@ -295,7 +306,15 @@ importers:
         specifier: workspace:*
         version: link:../contracts
 
-  packages/notification-provider: {}
+  packages/notification-provider:
+    dependencies:
+      '@fan-support/notification-port':
+        specifier: workspace:*
+        version: link:../notification-port
+    devDependencies:
+      '@fan-support/testing':
+        specifier: workspace:*
+        version: link:../testing
 
   packages/observability:
     dependencies:
