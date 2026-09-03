@@ -81,7 +81,8 @@ function success(operation: string, value: unknown) {
 function createHarness(
   options: Readonly<{
     endpointDecision?: "ELIGIBLE" | "UNAVAILABLE";
-    verificationOutcome?: "SUCCESS" | "INVALID_SIGNATURE";
+    verificationOutcome?:
+      "SUCCESS" | "INVALID_SIGNATURE" | "MALFORMED_PROVIDER_RESPONSE";
     receiptDecision?: "NEW" | "REPLAY" | "CONFLICT";
   }> = {},
 ) {
@@ -131,14 +132,15 @@ function createHarness(
     async (command: unknown): Promise<PaymentWebhookVerificationResponse> => {
       void command;
       return paymentWebhookVerificationResponseSchema.parse(
-        options.verificationOutcome === "INVALID_SIGNATURE"
+        options.verificationOutcome === "INVALID_SIGNATURE" ||
+          options.verificationOutcome === "MALFORMED_PROVIDER_RESPONSE"
           ? {
               schemaVersion: 1,
               operation: "VERIFY_PAYMENT_WEBHOOK",
               outcome: "FAILURE",
               error: {
                 schemaVersion: 1,
-                code: "INVALID_SIGNATURE",
+                code: options.verificationOutcome,
                 recovery: "NONE",
               },
             }
@@ -285,6 +287,19 @@ test("rejects an invalid signature before encryption or any receipt write", asyn
   expect(harness.encryptEnvelope).not.toHaveBeenCalled();
   expect(harness.recordReceipt).not.toHaveBeenCalled();
   expect(harness.runInReliableEventTransaction).toHaveBeenCalledTimes(1);
+});
+
+test("treats an authenticated malformed provider payload as a non-retryable request error", async () => {
+  const harness = createHarness({
+    verificationOutcome: "MALFORMED_PROVIDER_RESPONSE",
+  });
+
+  await expect(harness.receive(COMMAND)).resolves.toMatchObject({
+    outcome: "FAILURE",
+    error: { code: "INVALID_REQUEST", recovery: "NONE" },
+  });
+  expect(harness.encryptEnvelope).not.toHaveBeenCalled();
+  expect(harness.recordReceipt).not.toHaveBeenCalled();
 });
 
 test("rejects malformed input and unavailable endpoints before invoking a verifier", async () => {

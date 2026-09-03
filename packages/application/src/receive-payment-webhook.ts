@@ -85,6 +85,8 @@ function verifierFailure(code: string): ReceivePaymentWebhookResponse {
       return failure("EVENT_OUTSIDE_TOLERANCE");
     case "UNSUPPORTED_EVENT":
       return failure("UNSUPPORTED_EVENT");
+    case "MALFORMED_PROVIDER_RESPONSE":
+      return failure("INVALID_REQUEST");
     case "TEMPORARY_UNAVAILABLE":
     case "UNEXPECTED_ADAPTER_FAILURE":
       return failure("TEMPORARY_UNAVAILABLE");
