@@ -21,9 +21,48 @@ export const workerNestApplicationOptions = Object.freeze({
   logger: false,
 }) satisfies Readonly<NestApplicationOptions>;
 
+export type WorkerLifecycleResource = Readonly<{
+  start(): Promise<void>;
+  stop(): Promise<void>;
+}>;
+
+export type CreateWorkerApplicationOptions = Readonly<{
+  logger?: StructuredLogger;
+  reliableEventsRuntime?: WorkerLifecycleResource;
+}>;
+
+function registerReliableEventsLifecycle(
+  adapter: FastifyAdapter,
+  runtime: WorkerLifecycleResource | undefined,
+): void {
+  if (runtime === undefined) {
+    return;
+  }
+  let stopPromise: Promise<void> | undefined;
+  const stop = (): Promise<void> => {
+    stopPromise ??= runtime.stop();
+    return stopPromise;
+  };
+  adapter.getInstance().addHook("onReady", async () => {
+    try {
+      await runtime.start();
+    } catch {
+      await stop().catch(() => undefined);
+      throw new Error("Worker reliable events failed to start");
+    }
+  });
+  adapter.getInstance().addHook("onClose", async () => {
+    try {
+      await stop();
+    } catch {
+      throw new Error("Worker reliable events failed to stop");
+    }
+  });
+}
+
 export async function createWorkerApplication(
   environment: Readonly<Record<string, string | undefined>> = process.env,
-  options: Readonly<{ logger?: StructuredLogger }> = {},
+  options: CreateWorkerApplicationOptions = {},
 ): Promise<NestFastifyApplication> {
   assertWorkerRuntimeConfig(environment);
   const logger =
@@ -33,6 +72,7 @@ export async function createWorkerApplication(
     service: "worker",
     logger,
   });
+  registerReliableEventsLifecycle(adapter, options.reliableEventsRuntime);
 
   const application = await NestFactory.create<NestFastifyApplication>(
     AppModule,

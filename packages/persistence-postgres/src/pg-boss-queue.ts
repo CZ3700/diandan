@@ -93,7 +93,7 @@ export type QueueEngineDatabase = Readonly<{
 
 export type QueueEngineSendOptions = Readonly<{
   id: string;
-  db: QueueEngineDatabase;
+  db?: QueueEngineDatabase;
 }>;
 
 export type QueueEngineWorkOptions = Readonly<{
@@ -177,10 +177,7 @@ export interface PgBossReliableEventQueue {
     transaction: ReliableEventQueueTransaction,
     job: unknown,
   ): Promise<void>;
-  publishOutboxDispatch(
-    transaction: ReliableEventQueueTransaction,
-    job: unknown,
-  ): Promise<void>;
+  publishOutboxDispatch(job: unknown): Promise<void>;
 }
 
 export type PgBossReliableEventQueueErrorCode =
@@ -269,16 +266,22 @@ function createDefaultQueueEngine(
             })),
           ),
       ),
-    send: (name, data, sendOptions) =>
-      boss.send(name, data, {
+    send: (name, data, sendOptions) => {
+      const database = sendOptions.db;
+      return boss.send(name, data, {
         id: sendOptions.id,
-        db: {
-          executeSql: async (text, values) => {
-            const result = await sendOptions.db.executeSql(text, values);
-            return { rows: [...result.rows] };
-          },
-        },
-      }),
+        ...(database === undefined
+          ? {}
+          : {
+              db: {
+                executeSql: async (text, values) => {
+                  const result = await database.executeSql(text, values);
+                  return { rows: [...result.rows] };
+                },
+              },
+            }),
+      });
+    },
   };
 }
 
@@ -662,17 +665,16 @@ export function createPgBossReliableEventQueueWithFactory(
         parsed.data.webhookInboxId,
       );
     },
-    publishOutboxDispatch: async (transaction, job) => {
+    publishOutboxDispatch: async (job) => {
       requireRunning();
       const parsed = outboxDispatchJobSchema.safeParse(job);
       if (!parsed.success) {
         throw new PgBossReliableEventQueueError("INVALID_JOB");
       }
-      await sendInTransaction(
-        transaction,
+      await engine.send(
         RELIABLE_EVENT_QUEUE_NAMES.outboxDispatch,
         parsed.data,
-        outboxQueueJobId(parsed.data),
+        { id: outboxQueueJobId(parsed.data) },
       );
     },
   };

@@ -319,6 +319,10 @@ describe("pg-boss reliable event queue adapter", () => {
     const statements: Array<readonly [string, readonly unknown[] | undefined]> =
       [];
     engine.sendHook = async ({ db }) => {
+      expect(db).toBeDefined();
+      if (db === undefined) {
+        return;
+      }
       await db.executeSql("SELECT queue_insert($1)", [webhookInboxId]);
     };
     const transaction = {
@@ -348,13 +352,10 @@ describe("pg-boss reliable event queue adapter", () => {
   test("derives stable consumer-scoped UUIDs for outbox jobs", async () => {
     const { engine, queue } = createHarness();
     await queue.start();
-    const transaction = {
-      query: async () => ({ rows: [] }),
-    };
 
-    await queue.publishOutboxDispatch(transaction, outboxJob);
-    await queue.publishOutboxDispatch(transaction, outboxJob);
-    await queue.publishOutboxDispatch(transaction, {
+    await queue.publishOutboxDispatch(outboxJob);
+    await queue.publishOutboxDispatch(outboxJob);
+    await queue.publishOutboxDispatch({
       ...outboxJob,
       consumerKey: "email-delivery",
     });
@@ -364,6 +365,9 @@ describe("pg-boss reliable event queue adapter", () => {
     expect(ids[0]).not.toBe(ids[2]);
     expect(ids[0]).toMatch(
       /^[0-9a-f]{8}-[0-9a-f]{4}-8[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u,
+    );
+    expect(engine.sendCalls.map(({ options }) => Object.keys(options))).toEqual(
+      [["id"], ["id"], ["id"]],
     );
   });
 
@@ -495,6 +499,10 @@ describe("pg-boss reliable event queue adapter", () => {
     const { engine, queue } = createHarness();
     await queue.start();
     engine.sendHook = async ({ db }) => {
+      expect(db).toBeDefined();
+      if (db === undefined) {
+        return;
+      }
       await db.executeSql("SELECT queue_insert($1)", [webhookInboxId]);
     };
 
