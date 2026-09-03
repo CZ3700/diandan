@@ -69,6 +69,7 @@ function createHarness(
     handlerFailure?: unknown;
     invalidEffect?: boolean;
     registered?: boolean;
+    registryFailure?: unknown;
   }> = {},
 ) {
   const loadContext = vi.fn(async () =>
@@ -127,14 +128,17 @@ function createHarness(
     effectKey: "P1_06:CANONICAL_EVENT",
     subjectId: options.invalidEffect ? "not-a-uuid" : IDS.providerEvent,
   }));
-  const handlerForEvent = vi.fn(() =>
-    options.registered === false
+  const handlerForEvent = vi.fn(() => {
+    if (options.registryFailure !== undefined) {
+      throw options.registryFailure;
+    }
+    return options.registered === false
       ? undefined
       : {
           effect,
           handle,
-        },
-  );
+        };
+  });
   const generatedIds = [
     IDS.effect,
     IDS.processingAttempt,
@@ -239,6 +243,24 @@ test("records terminal failure on the final delivery and rejects unregistered ha
     expect.objectContaining({
       outcome: "DEAD_LETTER",
       errorCode: "HANDLER_NOT_REGISTERED",
+    }),
+  );
+});
+
+test("contains a failing handler registry and records a safe retry", async () => {
+  const canary = "PRIVATE_HANDLER_REGISTRY_FAILURE_69213";
+  const harness = createHarness({ registryFailure: new Error(canary) });
+
+  const failure = await harness.process(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "HANDLER_EXECUTION_FAILED" });
+  expect(String(failure)).not.toContain(canary);
+  expect(harness.handle).not.toHaveBeenCalled();
+  expect(harness.recordAttempt).toHaveBeenCalledWith(
+    expect.objectContaining({
+      outcome: "RETRYABLE_FAILURE",
+      errorCode: "HANDLER_EXECUTION_FAILED",
     }),
   );
 });

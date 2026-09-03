@@ -162,7 +162,12 @@ export function createProcessWebhookInbox(
             return { decision: "ALREADY_PROCESSED" } as const;
           }
           const context = parsedContext.data.value;
-          const handler = dependencies.handlerForEvent(context.event.eventType);
+          let handler: WebhookInboxHandler | undefined;
+          try {
+            handler = dependencies.handlerForEvent(context.event.eventType);
+          } catch {
+            throw new HandlerExecutionFailure("HANDLER_EXECUTION_FAILED");
+          }
           if (handler === undefined) {
             throw new HandlerExecutionFailure("HANDLER_NOT_REGISTERED");
           }
