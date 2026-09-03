@@ -13,13 +13,17 @@ import {
   queuePropagationCarrierSchema,
   type QueuePropagationCarrier,
 } from "@fan-support/contracts";
+import type { StructuredLogger } from "@fan-support/observability";
 import {
   createPgBossReliableEventQueue,
   createPostgresPersistence,
+  type PersistenceFailureNotice,
+  type ReliableEventQueueInfrastructureNotice,
 } from "@fan-support/persistence-postgres";
 
 import {
   createReliableEventsWorkerRuntime,
+  type ReliableEventsWorkerNotice,
   type ReliableEventsWorkerRuntime,
 } from "./reliable-events-runtime.js";
 
@@ -50,6 +54,7 @@ export type WorkerReliableEventsCompositionFactories = Readonly<{
 export type WorkerReliableEventsCompositionOptions = Readonly<{
   bindings?: Partial<WorkerReliableEventsBindings>;
   factories?: Partial<WorkerReliableEventsCompositionFactories>;
+  logger?: StructuredLogger;
 }>;
 
 export type WorkerReliableEventsComposition = Readonly<{
@@ -77,6 +82,38 @@ function createMaintenancePropagation(): QueuePropagationCarrier {
   });
 }
 
+function reportQueueNotice(
+  logger: StructuredLogger,
+  notice: ReliableEventQueueInfrastructureNotice,
+): void {
+  const fields = { errorCode: notice.code, outcome: "failure" } as const;
+  if (notice.severity === "ERROR") {
+    logger.error("reliable_events.queue_notice", fields);
+  } else {
+    logger.warn("reliable_events.queue_notice", fields);
+  }
+}
+
+function reportPersistenceFailure(
+  logger: StructuredLogger,
+  failure: PersistenceFailureNotice,
+): void {
+  logger.error("reliable_events.persistence_failure", {
+    errorCode: failure.code,
+    outcome: "failure",
+  });
+}
+
+function reportWorkerNotice(
+  logger: StructuredLogger,
+  notice: ReliableEventsWorkerNotice,
+): void {
+  logger.warn("reliable_events.worker_notice", {
+    errorCode: notice.code,
+    outcome: "failure",
+  });
+}
+
 const defaultBindings: WorkerReliableEventsBindings = Object.freeze({
   handlerForEvent: () => undefined,
   consumerForKey: () => undefined,
@@ -98,6 +135,7 @@ export function createWorkerReliableEventsComposition(
   options: WorkerReliableEventsCompositionOptions = {},
 ): WorkerReliableEventsComposition {
   const database = resolveDatabaseRuntimeConfig({ environment });
+  const logger = options.logger;
   const suppliedFactories = options.factories;
   const factories: WorkerReliableEventsCompositionFactories = {
     createQueue: suppliedFactories?.createQueue ?? defaultFactories.createQueue,
@@ -129,11 +167,23 @@ export function createWorkerReliableEventsComposition(
     schema: QUEUE_SCHEMA,
     managementMode: "VERIFY",
     localConcurrency: LOCAL_CONCURRENCY,
+    ...(logger === undefined
+      ? {}
+      : {
+          onInfrastructureNotice: (notice) => reportQueueNotice(logger, notice),
+        }),
   });
-  const persistence = factories.createPersistence({
+  const persistenceConfig = {
     connectionString: database.url,
     application_name: "fan-support-worker",
-  });
+  } as const;
+  const persistence =
+    logger === undefined
+      ? factories.createPersistence(persistenceConfig)
+      : factories.createPersistence(persistenceConfig, {
+          onInfrastructureFailure: (failure) =>
+            reportPersistenceFailure(logger, failure),
+        });
   const transactionManager = persistence.reliableEventTransactionManager;
   const runtime: ReliableEventsWorkerRuntime = factories.createRuntime({
     schemaVersion: 1,
@@ -159,6 +209,11 @@ export function createWorkerReliableEventsComposition(
     createPropagation: factories.createPropagation,
     intervalMs: MAINTENANCE_INTERVAL_MS,
     batchSize: MAINTENANCE_BATCH_SIZE,
+    ...(logger === undefined
+      ? {}
+      : {
+          onNotice: (notice) => reportWorkerNotice(logger, notice),
+        }),
   });
   let stopPromise: Promise<void> | undefined;
 

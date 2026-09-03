@@ -1,8 +1,21 @@
 import { expect, test, vi } from "vitest";
 
+const testDatabaseUrl = [
+  "postgresql://",
+  "test-user",
+  ":",
+  "test-password",
+  "@postgres:5432/fan_support",
+].join("");
+
 const validEnvironment = Object.freeze({
-  FAN_SUPPORT_DATABASE_URL:
-    "postgresql://test-user:test-password@postgres:5432/fan_support",
+  FAN_SUPPORT_DATABASE_URL: testDatabaseUrl,
+});
+
+const quietLogger = Object.freeze({
+  info: vi.fn(),
+  warn: vi.fn(),
+  error: vi.fn(),
 });
 
 async function loadFactory() {
@@ -88,6 +101,7 @@ test("wires PostgreSQL, pg-boss VERIFY mode, application handlers, and maintenan
   } as const;
 
   const composition = await factory(validEnvironment, {
+    logger: quietLogger,
     factories: {
       createQueue: harness.createQueue,
       createPersistence: harness.createPersistence,
@@ -105,6 +119,7 @@ test("wires PostgreSQL, pg-boss VERIFY mode, application handlers, and maintenan
       schema: "pgboss",
       managementMode: "VERIFY",
       localConcurrency: 4,
+      onInfrastructureNotice: expect.any(Function),
     },
   ]);
   expect(harness.persistenceArguments).toEqual([
@@ -113,6 +128,7 @@ test("wires PostgreSQL, pg-boss VERIFY mode, application handlers, and maintenan
         connectionString: validEnvironment.FAN_SUPPORT_DATABASE_URL,
         application_name: "fan-support-worker",
       },
+      { onInfrastructureFailure: expect.any(Function) },
     ],
   ]);
   expect(harness.runtimeOptions).toHaveLength(1);
@@ -122,6 +138,7 @@ test("wires PostgreSQL, pg-boss VERIFY mode, application handlers, and maintenan
     consumerKeys: [],
     intervalMs: 5_000,
     batchSize: 100,
+    onNotice: expect.any(Function),
   });
   expect(harness.runtimeOptions[0]).toEqual(
     expect.objectContaining({

@@ -68,6 +68,7 @@ async function start(): Promise<void> {
         ]);
         const reliableEventsRuntime = createWorkerReliableEventsComposition(
           process.env,
+          { logger },
         );
         return createWorkerApplication(process.env, {
           logger,
