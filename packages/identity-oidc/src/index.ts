@@ -86,6 +86,35 @@ export function createFakeIdentityProvider(
     options.principalSubject ?? DEFAULT_PRINCIPAL_SUBJECT;
   const mfa = options.mfa ?? true;
   const authorizationCode = options.authorizationCode;
+  const principalProbe = identityPortResponseSchema.safeParse({
+    schemaVersion: 1,
+    operation: "EXCHANGE_AUTHORIZATION_CODE",
+    outcome: "SUCCESS",
+    value: {
+      principal: {
+        issuer: "https://identity.example.invalid",
+        subject: principalSubject,
+        authenticatedAt: now,
+        mfa,
+      },
+    },
+  });
+  const authorizationCodeProbe = identityPortCommandSchema.safeParse({
+    schemaVersion: 1,
+    operation: "EXCHANGE_AUTHORIZATION_CODE",
+    issuer: "https://identity.example.invalid",
+    clientId: "fixture-client",
+    redirectUri: "https://admin.example.invalid/oidc/callback",
+    code: authorizationCode ?? "fixture-code",
+    state: "s".repeat(43),
+    expectedState: "s".repeat(43),
+    nonce: "n".repeat(43),
+    codeVerifier: "A".repeat(43),
+    receivedAt: DEFAULT_NOW,
+  });
+  if (!principalProbe.success || !authorizationCodeProbe.success) {
+    throw new TypeError("fake identity provider configuration is invalid");
+  }
   const consumedAuthorizationCodes = new Set<string>();
   const authorizationRequests = new Map<string, AuthorizationRequest>();
 
@@ -132,9 +161,27 @@ export function createFakeIdentityProvider(
         code_challenge: parsed.data.codeChallenge,
         code_challenge_method: "S256",
       }).toString();
-      const expiresAt = new Date(
-        Date.parse(parsed.data.requestedAt) + 300_000,
-      ).toISOString();
+      let expiresAt: string;
+      try {
+        expiresAt = new Date(
+          Date.parse(parsed.data.requestedAt) + 300_000,
+        ).toISOString();
+      } catch {
+        return failure("CREATE_AUTHORIZATION_REQUEST", "INVALID_COMMAND");
+      }
+      const response = {
+        schemaVersion: 1,
+        operation: "CREATE_AUTHORIZATION_REQUEST",
+        outcome: "SUCCESS",
+        value: {
+          authorizationUrl: authorizationUrl.toString(),
+          state: parsed.data.state,
+          expiresAt,
+        },
+      } as const;
+      if (!identityPortResponseSchema.safeParse(response).success) {
+        return failure("CREATE_AUTHORIZATION_REQUEST", "INVALID_COMMAND");
+      }
       authorizationRequests.set(parsed.data.state, {
         fingerprint,
         issuer: parsed.data.issuer,
@@ -149,16 +196,7 @@ export function createFakeIdentityProvider(
           deterministicAuthorizationCode(parsed.data.state),
         consumed: false,
       });
-      return parsedResponse({
-        schemaVersion: 1,
-        operation: "CREATE_AUTHORIZATION_REQUEST",
-        outcome: "SUCCESS",
-        value: {
-          authorizationUrl: authorizationUrl.toString(),
-          state: parsed.data.state,
-          expiresAt,
-        },
-      });
+      return parsedResponse(response);
     },
 
     async exchangeAuthorizationCode(

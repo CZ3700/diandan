@@ -108,14 +108,17 @@ test.each([
   ["principal", { principalSubject: "" }],
   ["MFA flag", { mfa: "true" }],
   ["authorization code", { authorizationCode: "" }],
-] as const)("rejects an invalid runtime %s at construction", (_label, invalid) => {
-  expect(() =>
-    identityOidc.createFakeIdentityProvider({
-      environment: "TEST",
-      ...invalid,
-    } as identityOidc.FakeIdentityProviderOptions),
-  ).toThrow(/configuration/u);
-});
+] as const)(
+  "rejects an invalid runtime %s at construction",
+  (_label, invalid) => {
+    expect(() =>
+      identityOidc.createFakeIdentityProvider({
+        environment: "TEST",
+        ...invalid,
+      } as identityOidc.FakeIdentityProviderOptions),
+    ).toThrow(/configuration/u);
+  },
+);
 
 test("passes the shared identity provider conformance suite", async () => {
   const report = await runIdentityProviderConformance(
