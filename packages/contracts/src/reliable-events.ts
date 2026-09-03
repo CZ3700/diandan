@@ -327,6 +327,16 @@ export const receivePaymentWebhookResponseSchema = z.union([
   receivePaymentWebhookFailureSchema,
 ]);
 
+/**
+ * Public acknowledgement intentionally omits inbox, provider-event and
+ * processing details. Acceptance confirms durable receipt, not completion of
+ * downstream business effects.
+ */
+export const paymentWebhookAcceptedResponseSchema = z.strictObject({
+  schemaVersion: schemaVersionSchema,
+  status: z.literal("accepted"),
+});
+
 export const webhookInboxJobSchema = z.strictObject({
   schemaVersion: schemaVersionSchema,
   jobType: z.literal("PROCESS_WEBHOOK_INBOX"),
@@ -395,6 +405,9 @@ export type ReceivePaymentWebhookResponse = z.infer<
 >;
 export type ReceivePaymentWebhookError = z.infer<
   typeof receivePaymentWebhookErrorSchema
+>;
+export type PaymentWebhookAcceptedResponse = z.infer<
+  typeof paymentWebhookAcceptedResponseSchema
 >;
 export type ReliableEventDeliveryContext = z.infer<
   typeof reliableEventDeliveryContextSchema

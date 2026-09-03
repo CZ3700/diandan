@@ -128,9 +128,13 @@ test("renders deterministic JSON Schema and OpenAPI documents from one registry"
   );
   expect(documents.openapi["openapi"]).toBe("3.1.0");
   expect(documents.openapi["x-fan-support-document-kind"]).toBe(
-    "schema-components",
+    "implemented-paths-and-schema-components",
   );
-  expect(documents.openapi["paths"]).toEqual({});
+  expect(
+    (documents.openapi["paths"] as JsonObject)[
+      "/api/v1/webhooks/payments/{endpointId}"
+    ],
+  ).toBeDefined();
   expect(registry).toBeDefined();
   expect(
     new Set(registry?.contractArtifactRegistry.map(({ name }) => name)).size,
@@ -245,6 +249,123 @@ test("renders deterministic JSON Schema and OpenAPI documents from one registry"
   expect(firstRender).toEqual(secondRender);
   expect(firstRender?.jsonSchema.endsWith("\n")).toBe(true);
   expect(firstRender?.openapi.endsWith("\n")).toBe(true);
+});
+
+test("documents the exact raw payment webhook HTTP boundary", async () => {
+  const { createContractArtifactDocuments } =
+    await import("./artifact-documents.js");
+  const { openapi } = createContractArtifactDocuments();
+  const components = openapi["components"] as JsonObject;
+  const schemas = components["schemas"] as JsonObject;
+  const securitySchemes = components["securitySchemes"] as JsonObject;
+  const paths = openapi["paths"] as JsonObject;
+  const path = paths["/api/v1/webhooks/payments/{endpointId}"] as JsonObject;
+  const operation = path["post"] as JsonObject;
+
+  expect(Object.keys(paths)).toEqual([
+    "/api/v1/webhooks/payments/{endpointId}",
+  ]);
+  expect(operation["operationId"]).toBe("receivePaymentWebhook");
+  expect(operation["security"]).toEqual([
+    {
+      PaymentWebhookSignature: [],
+      PaymentWebhookTimestamp: [],
+    },
+  ]);
+  expect(securitySchemes).toEqual({
+    PaymentWebhookSignature: expect.objectContaining({
+      type: "apiKey",
+      in: "header",
+      name: "X-Fan-Support-Signature",
+    }),
+    PaymentWebhookTimestamp: expect.objectContaining({
+      type: "apiKey",
+      in: "header",
+      name: "X-Fan-Support-Timestamp",
+    }),
+  });
+
+  const parameters = operation["parameters"] as JsonObject[];
+  expect(parameters).toEqual([
+    expect.objectContaining({
+      name: "endpointId",
+      in: "path",
+      required: true,
+      schema: expect.objectContaining({ type: "string", format: "uuid" }),
+    }),
+  ]);
+
+  const requestBody = operation["requestBody"] as JsonObject;
+  expect(requestBody["required"]).toBe(true);
+  expect(requestBody["x-fan-support-max-body-bytes"]).toBe(49_152);
+  expect(requestBody["x-fan-support-body-handling"]).toBe("exact-raw-bytes");
+  const requestContent = requestBody["content"] as JsonObject;
+  expect(Object.keys(requestContent).sort()).toEqual(
+    [
+      "application/*+json",
+      "application/json",
+      "application/octet-stream",
+      "application/x-www-form-urlencoded",
+      "text/plain",
+    ].sort(),
+  );
+  for (const mediaType of Object.values(requestContent) as JsonObject[]) {
+    expect(mediaType["schema"]).toEqual(
+      expect.objectContaining({
+        type: "string",
+        format: "binary",
+        maxLength: 49_152,
+      }),
+    );
+  }
+
+  const responses = operation["responses"] as JsonObject;
+  expect(Object.keys(responses).sort()).toEqual(
+    ["202", "400", "404", "409", "413", "503"].sort(),
+  );
+  const accepted = responses["202"] as JsonObject;
+  expect(
+    (
+      ((accepted["content"] as JsonObject)["application/json"] as JsonObject)[
+        "schema"
+      ] as JsonObject
+    )["$ref"],
+  ).toBe("#/components/schemas/PaymentWebhookAcceptedResponse");
+  for (const status of ["400", "404", "409", "413", "503"]) {
+    const response = responses[status] as JsonObject;
+    expect(
+      (
+        ((response["content"] as JsonObject)["application/json"] as JsonObject)[
+          "schema"
+        ] as JsonObject
+      )["$ref"],
+    ).toBe("#/components/schemas/PublicErrorEnvelope");
+    expect((response["headers"] as JsonObject)["X-Request-ID"]).toBeDefined();
+  }
+  expect((accepted["headers"] as JsonObject)["X-Request-ID"]).toBeDefined();
+  expect(
+    ((responses["503"] as JsonObject)["headers"] as JsonObject)["Retry-After"],
+  ).toBeDefined();
+  for (const status of ["202", "400", "404", "409", "413"]) {
+    expect(
+      ((responses[status] as JsonObject)["headers"] as JsonObject)[
+        "Retry-After"
+      ],
+    ).toBeUndefined();
+  }
+
+  expect(schemas["PaymentWebhookAcceptedResponse"]).toBeDefined();
+  const publicDocument = JSON.stringify(openapi);
+  for (const forbidden of [
+    "ReceivePaymentWebhookCommand",
+    "rawBodyBase64",
+    "providerAccountId",
+    "verificationKeyReferenceHash",
+    "webhookInboxId",
+    "providerEventRowId",
+  ]) {
+    expect(publicDocument).not.toContain(forbidden);
+  }
 });
 
 test("marks every registered top-level contract with an explicit version policy", async () => {

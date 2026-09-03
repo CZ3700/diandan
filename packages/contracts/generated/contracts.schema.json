@@ -46241,6 +46241,24 @@
         }
       ]
     },
+    "PaymentWebhookAcceptedResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "status": {
+          "const": "accepted",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "status"
+      ],
+      "type": "object"
+    },
     "PaymentWebhookEndpointDescriptor": {
       "additionalProperties": false,
       "properties": {

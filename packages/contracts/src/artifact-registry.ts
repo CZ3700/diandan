@@ -171,6 +171,7 @@ import {
 } from "./reliable-event-persistence-contracts.js";
 import {
   outboxDispatchJobSchema,
+  paymentWebhookAcceptedResponseSchema,
   paymentWebhookVerificationCommandSchema,
   paymentWebhookVerificationErrorSchema,
   paymentWebhookVerificationResponseSchema,
@@ -767,6 +768,11 @@ const registrations = [
     name: "ReceivePaymentWebhookError",
     audience: "internal",
     schema: receivePaymentWebhookErrorSchema,
+  },
+  {
+    name: "PaymentWebhookAcceptedResponse",
+    audience: "public-http",
+    schema: paymentWebhookAcceptedResponseSchema,
   },
   {
     name: "ReliableEventDeliveryContext",

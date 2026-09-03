@@ -89,3 +89,27 @@ test("registers reliable-event wire roots as internal versioned contracts", asyn
     );
   }
 });
+
+test("registers only the safe webhook receipt as a public HTTP contract", async () => {
+  const { contractArtifactRegistry } = await import("./artifact-registry.js");
+  const registrationsByName = new Map(
+    contractArtifactRegistry.map((registration) => [
+      registration.name,
+      registration,
+    ]),
+  );
+
+  expect(registrationsByName.get("PaymentWebhookAcceptedResponse")).toEqual(
+    expect.objectContaining({
+      audience: "public-http",
+      versionedRoot: true,
+    }),
+  );
+  for (const internalName of [
+    "ReceivePaymentWebhookCommand",
+    "ReceivePaymentWebhookResponse",
+    "PaymentWebhookVerificationCommand",
+  ]) {
+    expect(registrationsByName.get(internalName)?.audience).toBe("internal");
+  }
+});

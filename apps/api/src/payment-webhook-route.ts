@@ -5,6 +5,7 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
 import {
   paymentWebhookEndpointIdSchema,
+  paymentWebhookAcceptedResponseSchema,
   paymentWebhookHeadersSchema,
   portBase64Schema,
   portTimestampSchema,
@@ -37,6 +38,12 @@ const EXACT_RAW_CONTENT_TYPES = Object.freeze([
 ]);
 const STRUCTURED_JSON_CONTENT_TYPE =
   /^application\/[!#$%&'*+\-.^_`|~0-9a-z]+\+json(?:\s*;|$)/iu;
+const PAYMENT_WEBHOOK_ACCEPTED_RESPONSE = Object.freeze(
+  paymentWebhookAcceptedResponseSchema.parse({
+    schemaVersion: 1,
+    status: "accepted",
+  }),
+);
 
 export type PaymentWebhookReceiveCommand = ReceivePaymentWebhookCommand;
 export type PaymentWebhookReceiveResult = ReceivePaymentWebhookResponse;
@@ -337,9 +344,7 @@ export function registerPaymentWebhookRoute(
           }
 
           if (result.data.outcome === "SUCCESS") {
-            return reply
-              .code(202)
-              .send(Object.freeze({ schemaVersion: 1, status: "accepted" }));
+            return reply.code(202).send(PAYMENT_WEBHOOK_ACCEPTED_RESPONSE);
           }
           const statusCode = statusForReceiveFailure(result.data.error.code);
           if (result.data.error.code === "TEMPORARY_UNAVAILABLE") {

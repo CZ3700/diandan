@@ -197,6 +197,22 @@ test("defines one strict route-to-application webhook ingress command", () => {
   ).toBe(false);
 });
 
+test("defines a strict public webhook accepted response without internal receipt data", () => {
+  const acceptedSchema = schema("paymentWebhookAcceptedResponseSchema");
+  const accepted = { schemaVersion: 1, status: "accepted" } as const;
+
+  expect(acceptedSchema.safeParse(accepted).success).toBe(true);
+  for (const invalid of [
+    { ...accepted, schemaVersion: 2 },
+    { ...accepted, status: "processed" },
+    { ...accepted, webhookInboxId },
+    { ...accepted, providerAccountId },
+    { ...accepted, rawBodyBase64: "e30" },
+  ]) {
+    expect(acceptedSchema.safeParse(invalid).success).toBe(false);
+  }
+});
+
 test("binds verifier success to the endpoint, account, environment, key and time window", () => {
   const matcher = contractExports[
     "paymentWebhookVerificationResponseMatchesCommand"
