@@ -15,7 +15,7 @@
 | P1-01 | DONE | Codex `/root` | P0-01、P0-03 | Git `4695a41`、PR #4/run `33693878714`；本地、clean clone、Quality/Security 与三路独立复核全绿 |
 | P1-02 | DONE | Codex `/root` | P1-01、P0-04 | Git `6daea69`、PR #5/run `33707017702`；本地、clean clone、Quality/Security 与两路独立验收全绿 |
 | P1-03 | DONE | Codex `/root` | P1-01 | Git `49a8756`、PR #6/run `33720394020`；本地/clean clone、Quality/Security 与三路独立复核全绿 |
-| P1-04 | READY | — | P1-01、P1-02、P0-03 | Lane A 已释放；完整 migrations、七语言 translation/review、inventory balance、订单金额/退款约束与加密边界 |
+| P1-04 | IN_PROGRESS | Codex `/root` | P1-01、P1-02、P0-03 | 2026-09-03T14:38:05+08:00 领取；完整 migrations、七语言 translation/review、inventory balance、订单金额/退款约束与加密边界 |
 | P1-05 | PENDING | — | P1-01/02/03/04 | Repositories 与 payment/media/identity/notification/cache/KMS ports/adapters |
 | P1-06 | PENDING | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
 
@@ -80,6 +80,15 @@
 - **clean clone**：提交 `49a8756852f3083a04184a1334743622ff423636` 在全新 clone 完成 `pnpm install --frozen-lockfile --offline`、0-cache 完整 `pnpm check` 与 `pnpm security:secrets`；工作树干净。
 - **真实 CI**：[PR #6](https://github.com/CZ3700/diandan/pull/6) 的 [run 33720394020](https://github.com/CZ3700/diandan/actions/runs/33720394020) 中 Quality 与 Security 均成功，叠加基线为 `codex/p1-02-content-contracts`，merge 状态 `CLEAN`。
 - **剩余边界**：PostgreSQL migration/约束/行锁/CAS、完整退款集合的同事务读取与原子落库属于 P1-04/P1-05；webhook 验签、inbox/outbox 与 reconcile 认证属于 P1-06；本任务没有 PostgreSQL 并发、对象存储、PSP sandbox/真实小额支付、AWS apply、staging 或 production 证据。
+
+## P1-04 执行卡
+
+- **Owner / 开始时间**：Codex `/root`，2026-09-03T14:38:05+08:00。
+- **范围**：建立版本化显式 PostgreSQL migrations 与 schema 检查，覆盖内容/首页/政策/媒体显式七语言 translation/review/locale config、商品/价格、inventory balance/ledger/reservation、cart/support intent、contact/order/refund/payment、通知 locale、inbox/outbox、履约、RBAC 和 append-only 审计；数据库 catalog 与已评审 SQL migration 为权威。
+- **非目标**：不实现 Drizzle repository、业务 API/Application Saga、PSP adapter/webhook 验签、pg-boss worker、Admin/Storefront UI、真实 KMS 加解密或生产云 apply；不把 migration 测试冒充生产恢复、并发压测或真实支付证据。
+- **测试先行计划**：先写可重复失败的 migration harness 与约束集成测试，证明空库迁移、最近一版回退/重前进、精确七 locale、translation `(revision, locale)` 唯一与 published 不可变、价格区间、库存余额/活动预占、单一非终态 attempt、订单金额/退款上限、关键幂等唯一键及 ledger/inbox/outbox/audit append-only；观察预期失败后再补最小 SQL。
+- **验证计划**：在真实 PostgreSQL 容器执行空库 up/down/up、catalog/schema drift、事务/并发和对抗约束测试；再运行受影响包测试、format、lint、typecheck、build、完整 0-cache `pnpm check`、secret/audit、clean-clone frozen install/check，并安排迁移、交易一致性与隐私边界独立复核。
+- **风险护栏**：对应 R-02/R-03/R-06/R-11/R-16/R-17；敏感留言、显示名、邮箱和履约资料只允许密文/摘要/密钥版本进入数据库，主密钥与明文禁止进入 migration、fixture、日志、队列或测试输出；金额仅安全整数 minor unit；locale 不推导 market/currency；外部副作用只留下 inbox/outbox 持久边界。
 
 ## 必须证明
 
