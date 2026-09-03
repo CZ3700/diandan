@@ -12,8 +12,9 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "build:with-dependencies": "pnpm turbo run build --filter @fan-support/media-s3 --concurrency=1",
     "test": "vitest run --config ../../vitest.config.ts --root .",
-    "test:s3": "tsc -p tsconfig.build.json && node scripts/s3-integration.mjs",
+    "test:s3": "pnpm run build:with-dependencies && node scripts/s3-integration.mjs",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
