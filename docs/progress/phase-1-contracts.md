@@ -13,7 +13,7 @@
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
 | P1-01 | DONE | Codex `/root` | P0-01、P0-03 | Git `4695a41`、PR #4/run `33693878714`；本地、clean clone、Quality/Security 与三路独立复核全绿 |
-| P1-02 | IN_PROGRESS | Codex `/root` | P1-01、P0-04 | 自研 content/catalog/pricing/inventory/media/policy/translation schema/fixtures；拆分 base operational status、immutable revision lifecycle 与 public published view |
+| P1-02 | REVIEW | Codex `/root` | P1-01、P0-04 | Git `6daea69`；自研 content/catalog/pricing/inventory/media/policy/translation schema、发布门、公开投影与全虚构 fixtures 已实现，本地/clean-clone/两路独立验收全绿，等待真实 PR CI |
 | P1-03 | READY | — | P1-01 | 纯 Domain、价格/库存/状态与属性测试 |
 | P1-04 | PENDING | — | P1-01、P1-02、P0-03 | 完整 migrations、七语言 translation/review、inventory balance、订单金额/退款约束与加密边界 |
 | P1-05 | PENDING | — | P1-01/02/03/04 | Repositories 与 payment/media/identity/notification/cache/KMS ports/adapters |
@@ -47,6 +47,17 @@
 - **测试先行计划**：先写失败测试覆盖精确七语言包、source hash 不匹配派生 stale、自审拒绝、机器导入只能进入 `DRAFT`、缺价格/适用偶像/合格媒体/任一 locale 必填或关键 `APPROVED` 译文时发布失败，以及 public view 拒绝 draft/archived/internal-only 字段，再实现最小 schema、validator 与 fixtures。
 - **验证计划**：运行受影响包测试与 artifact freshness，随后执行 format、lint、typecheck、完整 `pnpm check`、secret scan、clean-clone frozen install/check，并做独立内容合同、隐私和发布门复核。
 - **风险护栏**：对应 R-06/R-08/R-17；不得用通用 `entity_type + entity_id + JSON` 翻译袋，不得从 locale 推导 market/currency；已发布 revision/internal ID/source hash 保持不可变，公开 DTO 不泄露审核身份、内部对象 key、偶像隐私或未发布内容。
+
+### REVIEW 证据（2026-09-03）
+
+- **实现**：`packages/contracts/src/content*.ts`、`catalog-content.ts`、`media-content.ts`、`pricing-inventory-content.ts`、`publication.ts` 与 `packages/content/src/` 定义 base/revision/translation/review/publication/public projection；四类内容对象、价格/适用关系/库存与全虚构 fixtures 均由仓库源码拥有，不引入 CMS、商城 SaaS、Redis 或供应商 SDK。
+- **发布门**：Idol/Gift/Homepage/Policy 均验证 immutable lifecycle、current pointer、PUBLISH/ROLLBACK、精确七语言、英文 source lineage、独立审核与 content hash；Gift 还验证有效 price book revision、适用偶像、可售 variant、库存关联；Homepage 必须绑定不同的桌面 16:9 与移动 4:5 hero。
+- **媒体与公开边界**：发布与公开投影两侧均复验 READY/rights、source/derivative 尺寸与比例、AVIF/WebP/JPEG、presentation kind、alt 可见性、重复引用和排序；公开 DTO 只返回 CDN URL、尺寸、焦点及已批准本地化字段，不返回 object key、审核身份、source hash、草稿或归档内容。
+- **TDD/回归**：`@fan-support/contracts` 14 files / 43 tests、`@fan-support/content` 7 files / 62 tests 全绿；覆盖 stale/tamper、错误 parent、重发 current revision、无可售 variant、缺价格/适用关系/库存/媒体/locale、Unicode/HTML 实体空白、双 hero、公开 DTO 完整性等对抗场景。
+- **本地门禁**：Node `24.20.0`、pnpm `11.25.0` 下 `TURBO_FORCE=true pnpm check` 为 0 cached：typecheck 37/37、test 37/37、build 34/34；artifact freshness、Prettier、ESLint、30 个 package export 均通过；`pnpm security:secrets`、high-level audit 与 `git diff --check` 退出 0。
+- **clean clone**：Git `6daea6928a69d59e999f3916c02b5e27583e2e17` 在全新 clone 完成 `pnpm install --frozen-lockfile --offline`、0-cache 完整 `pnpm check` 与 secret scan。
+- **独立复核**：领域/对抗复核与隔离验收均为 ACCEPT；Blocker 0、Should 0，复跑 contracts 43/43、content 62/62、两包 typecheck/build、artifact freshness 与 `git diff --check` 全绿。
+- **证据范围**：本任务仅为纯合同、validator、projection 与 fixtures，不包含数据库 migration/repository、真实对象存储、业务 API/UI、PostgreSQL、PSP、AWS apply、staging 或 production 证据；媒体 objectKey 与真实存储绑定留给 P1-05，库存复合唯一/rollback 事务链留给 P1-04，关键政策 fallback 留给 P3-05。
 
 ## 必须证明
 
