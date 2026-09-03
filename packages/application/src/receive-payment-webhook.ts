@@ -147,6 +147,9 @@ export function createReceivePaymentWebhook(
         return failure("ENDPOINT_UNAVAILABLE");
       }
       endpoint = parsedEndpoint.data.value.endpoint;
+      if (endpoint.endpointId !== input.endpointId) {
+        return failure("CONFIGURATION_ERROR");
+      }
     } catch (error: unknown) {
       return persistenceFailure(error);
     }
@@ -293,6 +296,15 @@ export function createReceivePaymentWebhook(
       }
       if (parsedReceipt.data.value.decision === "CONFLICT") {
         return failure("IDEMPOTENCY_CONFLICT");
+      }
+      if (
+        parsedReceipt.data.value.decision === "NEW" &&
+        (parsedReceipt.data.value.webhookInboxId !==
+          receiptCommand.data.webhookInboxId ||
+          parsedReceipt.data.value.providerEventRowId !==
+            receiptCommand.data.providerEventRowId)
+      ) {
+        return failure("CONFIGURATION_ERROR");
       }
       return response({
         schemaVersion: 1,

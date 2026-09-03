@@ -16,6 +16,9 @@ const IDS = {
   request: "30000000-0000-4000-8000-000000000007",
   correlation: "30000000-0000-4000-8000-000000000008",
   queueJob: "30000000-0000-4000-8000-000000000009",
+  alternateInbox: "30000000-0000-4000-8000-000000000010",
+  alternateProcessingAttempt: "30000000-0000-4000-8000-000000000011",
+  alternateSubject: "30000000-0000-4000-8000-000000000012",
 } as const;
 
 const JOB = {
@@ -210,6 +213,103 @@ test("acknowledges a commit-before-queue-ack redelivery without repeating the ha
   expect(harness.handlerForEvent).not.toHaveBeenCalled();
   expect(harness.recordEffect).not.toHaveBeenCalled();
   expect(harness.recordAttempt).not.toHaveBeenCalled();
+});
+
+test("rejects a ready context bound to another webhook job before invoking a handler", async () => {
+  const harness = createHarness();
+  harness.loadContext.mockResolvedValueOnce(
+    success("LOAD_WEBHOOK_PROCESSING_CONTEXT", {
+      decision: "READY",
+      webhookInboxId: IDS.alternateInbox,
+      providerEventRowId: IDS.providerEvent,
+      event: {
+        ...EVENT,
+        evidence: {
+          kind: "VERIFIED_WEBHOOK",
+          webhookInboxId: IDS.alternateInbox,
+        },
+      },
+      nextAttemptNumber: 1,
+    }),
+  );
+
+  const failure = await harness.process(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
+  expect(harness.handlerForEvent).not.toHaveBeenCalled();
+  expect(harness.recordEffect).not.toHaveBeenCalled();
+  expect(harness.recordAttempt).not.toHaveBeenCalled();
+});
+
+test("does not acknowledge an already-processed response bound to another webhook job", async () => {
+  const harness = createHarness();
+  harness.loadContext.mockResolvedValueOnce(
+    success("LOAD_WEBHOOK_PROCESSING_CONTEXT", {
+      decision: "ALREADY_PROCESSED",
+      webhookInboxId: IDS.alternateInbox,
+      providerEventRowId: IDS.providerEvent,
+    }),
+  );
+
+  const failure = await harness.process(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
+  expect(harness.handlerForEvent).not.toHaveBeenCalled();
+});
+
+test("rejects an effect response bound to another command before invoking the handler", async () => {
+  const harness = createHarness();
+  harness.recordEffect.mockResolvedValueOnce(
+    success("RECORD_WEBHOOK_EFFECT", {
+      decision: "RECORDED",
+      webhookInboxId: IDS.inbox,
+      effectKey: "P1_06:CANONICAL_EVENT",
+      subjectId: IDS.alternateSubject,
+    }),
+  );
+
+  const failure = await harness.process(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
+  expect(harness.handle).not.toHaveBeenCalled();
+  expect(harness.recordAttempt).not.toHaveBeenCalled();
+});
+
+test("rejects a success-attempt response bound to another command", async () => {
+  const harness = createHarness();
+  harness.recordAttempt.mockResolvedValueOnce(
+    success("RECORD_WEBHOOK_PROCESSING_ATTEMPT", {
+      decision: "RECORDED",
+      processingAttemptId: IDS.alternateProcessingAttempt,
+      webhookInboxId: IDS.inbox,
+      attemptNumber: 1,
+    }),
+  );
+
+  const failure = await harness.process(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
+});
+
+test("rejects a failure-attempt response bound to another command", async () => {
+  const harness = createHarness({ registered: false });
+  harness.recordAttempt.mockResolvedValueOnce(
+    success("RECORD_WEBHOOK_PROCESSING_ATTEMPT", {
+      decision: "RECORDED",
+      processingAttemptId: IDS.alternateProcessingAttempt,
+      webhookInboxId: IDS.inbox,
+      attemptNumber: 1,
+    }),
+  );
+
+  const failure = await harness.process(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
 });
 
 test("rolls a private handler failure back, records only a safe retry attempt, and rethrows a safe error", async () => {

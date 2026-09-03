@@ -66,6 +66,48 @@ function persistenceFailure(): ReliableEventProcessingError {
   return new ReliableEventProcessingError("PERSISTENCE_FAILURE");
 }
 
+function contextMatchesJob(
+  context: LoadWebhookProcessingContextResponse["value"],
+  job: WebhookInboxJob,
+): boolean {
+  return context.webhookInboxId === job.webhookInboxId;
+}
+
+function effectResponseMatchesCommand(
+  response: unknown,
+  command: Readonly<{
+    webhookInboxId: string;
+    effectKey: string;
+    subjectId: string;
+  }>,
+): boolean {
+  const parsed = recordWebhookEffectResponseSchema.safeParse(response);
+  return (
+    parsed.success &&
+    parsed.data.value.webhookInboxId === command.webhookInboxId &&
+    parsed.data.value.effectKey === command.effectKey &&
+    parsed.data.value.subjectId === command.subjectId
+  );
+}
+
+function attemptResponseMatchesCommand(
+  response: unknown,
+  command: Readonly<{
+    processingAttemptId: string;
+    webhookInboxId: string;
+    attemptNumber: number;
+  }>,
+): boolean {
+  const parsed =
+    recordWebhookProcessingAttemptResponseSchema.safeParse(response);
+  return (
+    parsed.success &&
+    parsed.data.value.processingAttemptId === command.processingAttemptId &&
+    parsed.data.value.webhookInboxId === command.webhookInboxId &&
+    parsed.data.value.attemptNumber === command.attemptNumber
+  );
+}
+
 async function recordFailureAttempt(
   dependencies: ProcessWebhookInboxDependencies,
   job: WebhookInboxJob,
@@ -85,6 +127,9 @@ async function recordFailureAttempt(
         const parsedContext =
           loadWebhookProcessingContextResponseSchema.safeParse(contextResult);
         if (!parsedContext.success) {
+          throw persistenceFailure();
+        }
+        if (!contextMatchesJob(parsedContext.data.value, job)) {
           throw persistenceFailure();
         }
         if (parsedContext.data.value.decision === "ALREADY_PROCESSED") {
@@ -113,8 +158,7 @@ async function recordFailureAttempt(
             attemptCommand.data,
           );
         if (
-          !recordWebhookProcessingAttemptResponseSchema.safeParse(attemptResult)
-            .success
+          !attemptResponseMatchesCommand(attemptResult, attemptCommand.data)
         ) {
           throw persistenceFailure();
         }
@@ -158,6 +202,9 @@ export function createProcessWebhookInbox(
           if (!parsedContext.success) {
             throw persistenceFailure();
           }
+          if (!contextMatchesJob(parsedContext.data.value, safeJob)) {
+            throw persistenceFailure();
+          }
           if (parsedContext.data.value.decision === "ALREADY_PROCESSED") {
             return { decision: "ALREADY_PROCESSED" } as const;
           }
@@ -197,12 +244,12 @@ export function createProcessWebhookInbox(
             await repositories.webhookProcessing.recordEffect(
               effectCommand.data,
             );
-          const parsedEffect =
-            recordWebhookEffectResponseSchema.safeParse(effectResult);
-          if (!parsedEffect.success) {
+          if (!effectResponseMatchesCommand(effectResult, effectCommand.data)) {
             throw persistenceFailure();
           }
-          if (parsedEffect.data.value.decision === "RECORDED") {
+          const parsedEffect =
+            recordWebhookEffectResponseSchema.parse(effectResult);
+          if (parsedEffect.value.decision === "RECORDED") {
             try {
               await handler.handle(context, repositories);
             } catch {
@@ -229,9 +276,7 @@ export function createProcessWebhookInbox(
               attemptCommand.data,
             );
           if (
-            !recordWebhookProcessingAttemptResponseSchema.safeParse(
-              attemptResult,
-            ).success
+            !attemptResponseMatchesCommand(attemptResult, attemptCommand.data)
           ) {
             throw persistenceFailure();
           }

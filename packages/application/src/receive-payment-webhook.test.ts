@@ -22,6 +22,9 @@ const IDS = {
   association: "20000000-0000-4000-8000-000000000006",
   request: "20000000-0000-4000-8000-000000000007",
   correlation: "20000000-0000-4000-8000-000000000008",
+  alternateEndpoint: "20000000-0000-4000-8000-000000000009",
+  alternateWebhookInbox: "20000000-0000-4000-8000-000000000010",
+  alternateProviderEvent: "20000000-0000-4000-8000-000000000011",
 } as const;
 
 const NOW = "2026-09-04T00:00:00.000Z";
@@ -322,6 +325,24 @@ test("rejects malformed input and unavailable endpoints before invoking a verifi
   expect(unavailable.recordReceipt).not.toHaveBeenCalled();
 });
 
+test("rejects an eligible endpoint descriptor that belongs to another request", async () => {
+  const harness = createHarness();
+  harness.loadEndpoint.mockResolvedValueOnce(
+    success("LOAD_PAYMENT_WEBHOOK_ENDPOINT", {
+      decision: "ELIGIBLE",
+      endpoint: { ...ENDPOINT, endpointId: IDS.alternateEndpoint },
+    }),
+  );
+
+  await expect(harness.receive(COMMAND)).resolves.toMatchObject({
+    outcome: "FAILURE",
+    error: { code: "CONFIGURATION_ERROR", recovery: "NONE" },
+  });
+  expect(harness.verifierForEndpoint).not.toHaveBeenCalled();
+  expect(harness.encryptEnvelope).not.toHaveBeenCalled();
+  expect(harness.recordReceipt).not.toHaveBeenCalled();
+});
+
 test("maps semantic replay to success and identity mismatch to a closed conflict", async () => {
   const replay = createHarness({ receiptDecision: "REPLAY" });
   await expect(replay.receive(COMMAND)).resolves.toMatchObject({
@@ -333,6 +354,44 @@ test("maps semantic replay to success and identity mismatch to a closed conflict
   await expect(conflict.receive(COMMAND)).resolves.toMatchObject({
     outcome: "FAILURE",
     error: { code: "IDEMPOTENCY_CONFLICT", recovery: "NONE" },
+  });
+});
+
+test("rejects a schema-valid new receipt response bound to different proposed rows", async () => {
+  const harness = createHarness();
+  harness.recordReceipt.mockResolvedValueOnce(
+    success("RECORD_VERIFIED_WEBHOOK_RECEIPT", {
+      decision: "NEW",
+      webhookInboxId: IDS.alternateWebhookInbox,
+      providerEventRowId: IDS.alternateProviderEvent,
+      jobEnqueued: true,
+    }),
+  );
+
+  await expect(harness.receive(COMMAND)).resolves.toMatchObject({
+    outcome: "FAILURE",
+    error: { code: "CONFIGURATION_ERROR", recovery: "NONE" },
+  });
+  expect(harness.recordReceipt).toHaveBeenCalledTimes(1);
+});
+
+test("accepts a replay that returns the previously persisted row identities", async () => {
+  const harness = createHarness({ receiptDecision: "REPLAY" });
+  harness.recordReceipt.mockResolvedValueOnce(
+    success("RECORD_VERIFIED_WEBHOOK_RECEIPT", {
+      decision: "REPLAY",
+      webhookInboxId: IDS.alternateWebhookInbox,
+      providerEventRowId: IDS.alternateProviderEvent,
+    }),
+  );
+
+  await expect(harness.receive(COMMAND)).resolves.toMatchObject({
+    outcome: "SUCCESS",
+    value: {
+      decision: "ACCEPTED_REPLAY",
+      webhookInboxId: IDS.alternateWebhookInbox,
+      providerEventRowId: IDS.alternateProviderEvent,
+    },
   });
 });
 

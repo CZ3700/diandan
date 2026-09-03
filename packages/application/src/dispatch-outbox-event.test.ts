@@ -15,6 +15,9 @@ const IDS = {
   queueJob: "40000000-0000-4000-8000-000000000006",
   effect: "40000000-0000-4000-8000-000000000007",
   attempt: "40000000-0000-4000-8000-000000000008",
+  alternateOutbox: "40000000-0000-4000-8000-000000000009",
+  alternateAttempt: "40000000-0000-4000-8000-000000000010",
+  alternateSubject: "40000000-0000-4000-8000-000000000011",
 } as const;
 
 const JOB = {
@@ -209,6 +212,181 @@ test("acks an already dispatched redelivery without another external call", asyn
   expect(harness.consumerForKey).not.toHaveBeenCalled();
   expect(harness.dispatch).not.toHaveBeenCalled();
   expect(harness.recordEffect).not.toHaveBeenCalled();
+});
+
+test("rejects a ready context bound to another outbox job before dispatch", async () => {
+  const harness = createHarness();
+  harness.loadContext.mockResolvedValueOnce(
+    success("LOAD_OUTBOX_DISPATCH_CONTEXT", {
+      decision: "READY",
+      outboxEventId: IDS.alternateOutbox,
+      consumerKey: JOB.consumerKey,
+      event: { ...EVENT, eventId: IDS.alternateOutbox },
+      aggregateVersion: 1,
+      primarySubjectId: IDS.paymentAttempt,
+      secondarySubjectId: IDS.order,
+      market: "AMERICAS",
+      currency: "USD",
+      nextAttemptNumber: 1,
+    }),
+  );
+
+  const failure = await harness.run(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
+  expect(harness.consumerForKey).not.toHaveBeenCalled();
+  expect(harness.dispatch).not.toHaveBeenCalled();
+});
+
+test("does not acknowledge an already-dispatched response bound to another consumer", async () => {
+  const harness = createHarness();
+  harness.loadContext.mockResolvedValueOnce(
+    success("LOAD_OUTBOX_DISPATCH_CONTEXT", {
+      decision: "ALREADY_DISPATCHED",
+      outboxEventId: IDS.outbox,
+      consumerKey: "another-consumer",
+    }),
+  );
+
+  const failure = await harness.run(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
+  expect(harness.consumerForKey).not.toHaveBeenCalled();
+});
+
+test("rejects a mismatched failure-path reload before recording an attempt", async () => {
+  const harness = createHarness({ registered: false });
+  harness.loadContext.mockResolvedValueOnce(
+    success("LOAD_OUTBOX_DISPATCH_CONTEXT", {
+      decision: "READY",
+      outboxEventId: IDS.outbox,
+      consumerKey: JOB.consumerKey,
+      event: EVENT,
+      aggregateVersion: 1,
+      primarySubjectId: IDS.paymentAttempt,
+      secondarySubjectId: IDS.order,
+      market: "AMERICAS",
+      currency: "USD",
+      nextAttemptNumber: 1,
+    }),
+  );
+  harness.loadContext.mockResolvedValueOnce(
+    success("LOAD_OUTBOX_DISPATCH_CONTEXT", {
+      decision: "READY",
+      outboxEventId: IDS.outbox,
+      consumerKey: "another-consumer",
+      event: EVENT,
+      aggregateVersion: 1,
+      primarySubjectId: IDS.paymentAttempt,
+      secondarySubjectId: IDS.order,
+      market: "AMERICAS",
+      currency: "USD",
+      nextAttemptNumber: 1,
+    }),
+  );
+
+  const failure = await harness.run(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
+  expect(harness.recordAttempt).not.toHaveBeenCalled();
+});
+
+test("rejects a mismatched post-dispatch reload before recording state", async () => {
+  const harness = createHarness();
+  harness.loadContext.mockResolvedValueOnce(
+    success("LOAD_OUTBOX_DISPATCH_CONTEXT", {
+      decision: "READY",
+      outboxEventId: IDS.outbox,
+      consumerKey: JOB.consumerKey,
+      event: EVENT,
+      aggregateVersion: 1,
+      primarySubjectId: IDS.paymentAttempt,
+      secondarySubjectId: IDS.order,
+      market: "AMERICAS",
+      currency: "USD",
+      nextAttemptNumber: 1,
+    }),
+  );
+  harness.loadContext.mockResolvedValueOnce(
+    success("LOAD_OUTBOX_DISPATCH_CONTEXT", {
+      decision: "READY",
+      outboxEventId: IDS.alternateOutbox,
+      consumerKey: JOB.consumerKey,
+      event: { ...EVENT, eventId: IDS.alternateOutbox },
+      aggregateVersion: 1,
+      primarySubjectId: IDS.paymentAttempt,
+      secondarySubjectId: IDS.order,
+      market: "AMERICAS",
+      currency: "USD",
+      nextAttemptNumber: 1,
+    }),
+  );
+
+  const failure = await harness.run(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
+  expect(harness.dispatch).toHaveBeenCalledTimes(1);
+  expect(harness.recordEffect).not.toHaveBeenCalled();
+  expect(harness.recordAttempt).not.toHaveBeenCalled();
+});
+
+test("rejects an effect response bound to another command", async () => {
+  const harness = createHarness();
+  harness.recordEffect.mockResolvedValueOnce(
+    success("RECORD_OUTBOX_EFFECT", {
+      decision: "RECORDED",
+      outboxEventId: IDS.outbox,
+      consumerKey: JOB.consumerKey,
+      effectKey: "NOTIFICATION:SEND",
+      subjectId: IDS.alternateSubject,
+    }),
+  );
+
+  const failure = await harness.run(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
+  expect(harness.recordAttempt).not.toHaveBeenCalled();
+});
+
+test("rejects a success-attempt response bound to another command", async () => {
+  const harness = createHarness();
+  harness.recordAttempt.mockResolvedValueOnce(
+    success("RECORD_OUTBOX_DISPATCH_ATTEMPT", {
+      decision: "RECORDED",
+      dispatchAttemptId: IDS.alternateAttempt,
+      outboxEventId: IDS.outbox,
+      consumerKey: JOB.consumerKey,
+      attemptNumber: 1,
+    }),
+  );
+
+  const failure = await harness.run(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
+});
+
+test("rejects a failure-attempt response bound to another command", async () => {
+  const harness = createHarness({ registered: false });
+  harness.recordAttempt.mockResolvedValueOnce(
+    success("RECORD_OUTBOX_DISPATCH_ATTEMPT", {
+      decision: "RECORDED",
+      dispatchAttemptId: IDS.alternateAttempt,
+      outboxEventId: IDS.outbox,
+      consumerKey: JOB.consumerKey,
+      attemptNumber: 1,
+    }),
+  );
+
+  const failure = await harness.run(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
 });
 
 test("records a safe retryable attempt when the external consumer fails", async () => {

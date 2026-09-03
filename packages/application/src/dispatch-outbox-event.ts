@@ -45,6 +45,54 @@ function persistenceFailure(): ReliableEventProcessingError {
   return new ReliableEventProcessingError("PERSISTENCE_FAILURE");
 }
 
+function contextMatchesJob(
+  context: LoadOutboxDispatchContextResponse["value"],
+  job: OutboxDispatchJob,
+): boolean {
+  return (
+    context.outboxEventId === job.outboxEventId &&
+    context.consumerKey === job.consumerKey
+  );
+}
+
+function effectResponseMatchesCommand(
+  response: unknown,
+  command: Readonly<{
+    outboxEventId: string;
+    consumerKey: string;
+    effectKey: string;
+    subjectId: string;
+  }>,
+): boolean {
+  const parsed = recordOutboxEffectResponseSchema.safeParse(response);
+  return (
+    parsed.success &&
+    parsed.data.value.outboxEventId === command.outboxEventId &&
+    parsed.data.value.consumerKey === command.consumerKey &&
+    parsed.data.value.effectKey === command.effectKey &&
+    parsed.data.value.subjectId === command.subjectId
+  );
+}
+
+function attemptResponseMatchesCommand(
+  response: unknown,
+  command: Readonly<{
+    dispatchAttemptId: string;
+    outboxEventId: string;
+    consumerKey: string;
+    attemptNumber: number;
+  }>,
+): boolean {
+  const parsed = recordOutboxDispatchAttemptResponseSchema.safeParse(response);
+  return (
+    parsed.success &&
+    parsed.data.value.dispatchAttemptId === command.dispatchAttemptId &&
+    parsed.data.value.outboxEventId === command.outboxEventId &&
+    parsed.data.value.consumerKey === command.consumerKey &&
+    parsed.data.value.attemptNumber === command.attemptNumber
+  );
+}
+
 async function loadContext(
   dependencies: DispatchOutboxEventDependencies,
   job: OutboxDispatchJob,
@@ -63,6 +111,9 @@ async function loadContext(
           const parsed =
             loadOutboxDispatchContextResponseSchema.safeParse(result);
           if (!parsed.success) {
+            throw persistenceFailure();
+          }
+          if (!contextMatchesJob(parsed.data.value, job)) {
             throw persistenceFailure();
           }
           return parsed.data.value as unknown as JsonValue;
@@ -99,6 +150,9 @@ async function recordFailureAttempt(
         if (!parsed.success) {
           throw persistenceFailure();
         }
+        if (!contextMatchesJob(parsed.data.value, job)) {
+          throw persistenceFailure();
+        }
         if (parsed.data.value.decision === "ALREADY_DISPATCHED") {
           return { decision: "ALREADY_DISPATCHED" } as const;
         }
@@ -123,9 +177,7 @@ async function recordFailureAttempt(
         const recorded = await repositories.outboxDispatch.recordAttempt(
           attempt.data,
         );
-        if (
-          !recordOutboxDispatchAttemptResponseSchema.safeParse(recorded).success
-        ) {
+        if (!attemptResponseMatchesCommand(recorded, attempt.data)) {
           throw persistenceFailure();
         }
         return { decision: "FAILURE_RECORDED" } as const;
@@ -239,15 +291,16 @@ export function createDispatchOutboxEvent(
           if (!parsedLatest.success) {
             throw persistenceFailure();
           }
+          if (!contextMatchesJob(parsedLatest.data.value, safeJob)) {
+            throw persistenceFailure();
+          }
           if (parsedLatest.data.value.decision === "ALREADY_DISPATCHED") {
             return { decision: "ALREADY_DISPATCHED" } as const;
           }
           const effectResult = await repositories.outboxDispatch.recordEffect(
             effectCommand.data,
           );
-          if (
-            !recordOutboxEffectResponseSchema.safeParse(effectResult).success
-          ) {
+          if (!effectResponseMatchesCommand(effectResult, effectCommand.data)) {
             throw persistenceFailure();
           }
 
@@ -268,10 +321,7 @@ export function createDispatchOutboxEvent(
           const attemptResult = await repositories.outboxDispatch.recordAttempt(
             attempt.data,
           );
-          if (
-            !recordOutboxDispatchAttemptResponseSchema.safeParse(attemptResult)
-              .success
-          ) {
+          if (!attemptResponseMatchesCommand(attemptResult, attempt.data)) {
             throw persistenceFailure();
           }
           return { decision: "DISPATCHED" } as const;
