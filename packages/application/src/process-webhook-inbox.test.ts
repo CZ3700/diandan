@@ -67,6 +67,7 @@ function createHarness(
   options: Readonly<{
     alreadyProcessed?: boolean;
     handlerFailure?: unknown;
+    invalidEffect?: boolean;
     registered?: boolean;
   }> = {},
 ) {
@@ -124,7 +125,7 @@ function createHarness(
   });
   const effect = vi.fn(() => ({
     effectKey: "P1_06:CANONICAL_EVENT",
-    subjectId: IDS.providerEvent,
+    subjectId: options.invalidEffect ? "not-a-uuid" : IDS.providerEvent,
   }));
   const handlerForEvent = vi.fn(() =>
     options.registered === false
@@ -238,6 +239,23 @@ test("records terminal failure on the final delivery and rejects unregistered ha
     expect.objectContaining({
       outcome: "DEAD_LETTER",
       errorCode: "HANDLER_NOT_REGISTERED",
+    }),
+  );
+});
+
+test("records a safe handler failure when derived effect identity is invalid", async () => {
+  const harness = createHarness({ invalidEffect: true });
+
+  const failure = await harness.process(JOB, DELIVERY).catch((error) => error);
+
+  expect(failure).toBeInstanceOf(ReliableEventProcessingError);
+  expect(failure).toMatchObject({ code: "HANDLER_EXECUTION_FAILED" });
+  expect(harness.handle).not.toHaveBeenCalled();
+  expect(harness.recordEffect).not.toHaveBeenCalled();
+  expect(harness.recordAttempt).toHaveBeenCalledWith(
+    expect.objectContaining({
+      outcome: "RETRYABLE_FAILURE",
+      errorCode: "HANDLER_EXECUTION_FAILED",
     }),
   );
 });

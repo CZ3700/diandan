@@ -188,8 +188,9 @@ export function createReceivePaymentWebhook(
     ) {
       return failure("CONFIGURATION_ERROR");
     }
-    if (verification.outcome === "FAILURE") {
-      return verifierFailure(verification.error.code);
+    const verifiedResponse = parsedVerification.data;
+    if (verifiedResponse.outcome === "FAILURE") {
+      return verifierFailure(verifiedResponse.error.code);
     }
 
     let webhookPayloadId: string;
@@ -223,11 +224,17 @@ export function createReceivePaymentWebhook(
     } catch {
       return failure("TEMPORARY_UNAVAILABLE");
     }
-    if (!keyManagementPortResponseSchema.safeParse(encrypted).success) {
+    const parsedEncrypted =
+      keyManagementPortResponseSchema.safeParse(encrypted);
+    if (
+      !parsedEncrypted.success ||
+      parsedEncrypted.data.operation !== "ENCRYPT_ENVELOPE"
+    ) {
       return failure("CONFIGURATION_ERROR");
     }
-    if (encrypted.outcome === "FAILURE") {
-      return keyManagementFailure(encrypted.error.code);
+    const encryptedResponse = parsedEncrypted.data;
+    if (encryptedResponse.outcome === "FAILURE") {
+      return keyManagementFailure(encryptedResponse.error.code);
     }
 
     try {
@@ -239,10 +246,10 @@ export function createReceivePaymentWebhook(
           webhookPayload: {
             schemaVersion: 1,
             webhookPayloadId,
-            ciphertext: encrypted.value.ciphertext,
-            encryptedDataKey: encrypted.value.encryptedDataKey,
-            encryptionKeyVersion: encrypted.value.keyVersion,
-            algorithm: encrypted.value.algorithm,
+            ciphertext: encryptedResponse.value.ciphertext,
+            encryptedDataKey: encryptedResponse.value.encryptedDataKey,
+            encryptionKeyVersion: encryptedResponse.value.keyVersion,
+            algorithm: encryptedResponse.value.algorithm,
             payloadSha256,
             retentionExpiresAt,
           },
@@ -254,9 +261,9 @@ export function createReceivePaymentWebhook(
             status: "UNMATCHED",
             reasonCode: "PAYMENT_ATTEMPT_ASSOCIATION_DEFERRED",
           },
-          signatureTimestamp: verification.value.signatureTimestamp,
+          signatureTimestamp: verifiedResponse.value.signatureTimestamp,
           receivedAt: input.receivedAt,
-          candidate: verification.value.candidate,
+          candidate: verifiedResponse.value.candidate,
           job: {
             schemaVersion: 1,
             jobType: "PROCESS_WEBHOOK_INBOX",

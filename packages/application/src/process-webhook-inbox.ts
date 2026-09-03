@@ -186,7 +186,7 @@ export function createProcessWebhookInbox(
             subjectId: effectIdentity.subjectId,
           });
           if (!effectCommand.success) {
-            throw persistenceFailure();
+            throw new HandlerExecutionFailure("HANDLER_EXECUTION_FAILED");
           }
           const effectResult =
             await repositories.webhookProcessing.recordEffect(
