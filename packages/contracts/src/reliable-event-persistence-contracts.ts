@@ -108,11 +108,10 @@ function compareTimestampInstants(
   );
   const leftFraction = leftInstant.fraction.padEnd(width, "0");
   const rightFraction = rightInstant.fraction.padEnd(width, "0");
-  return leftFraction === rightFraction
-    ? 0
-    : leftFraction < rightFraction
-      ? -1
-      : 1;
+  if (leftFraction === rightFraction) {
+    return 0;
+  }
+  return leftFraction < rightFraction ? -1 : 1;
 }
 
 const endpointLifecycleSchema = z

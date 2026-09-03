@@ -150,29 +150,31 @@ function requiredBoolean(row: QueryRow, key: string): boolean {
   return value;
 }
 
-function positiveInteger(row: QueryRow, key: string): number {
+function integer(row: QueryRow, key: string): number {
   const value = row[key];
-  const parsed =
-    typeof value === "number"
-      ? value
-      : typeof value === "string" && /^\d+$/u.test(value)
-        ? Number(value)
-        : Number.NaN;
-  if (!Number.isSafeInteger(parsed) || parsed < 1) {
+  if (typeof value === "number" && Number.isSafeInteger(value)) {
+    return value;
+  }
+  if (typeof value === "string" && /^\d+$/u.test(value)) {
+    const parsed = Number(value);
+    if (Number.isSafeInteger(parsed)) {
+      return parsed;
+    }
+  }
+  throw failure("INTEGRITY_VIOLATION");
+}
+
+function positiveInteger(row: QueryRow, key: string): number {
+  const parsed = integer(row, key);
+  if (parsed < 1) {
     throw failure("INTEGRITY_VIOLATION");
   }
   return parsed;
 }
 
 function nonnegativeInteger(row: QueryRow, key: string): number {
-  const value = row[key];
-  const parsed =
-    typeof value === "number"
-      ? value
-      : typeof value === "string" && /^\d+$/u.test(value)
-        ? Number(value)
-        : Number.NaN;
-  if (!Number.isSafeInteger(parsed) || parsed < 0) {
+  const parsed = integer(row, key);
+  if (parsed < 0) {
     throw failure("INTEGRITY_VIOLATION");
   }
   return parsed;
@@ -224,11 +226,10 @@ function compareTimestamps(left: string, right: string): number | undefined {
   );
   const leftFraction = leftInstant.fraction.padEnd(width, "0");
   const rightFraction = rightInstant.fraction.padEnd(width, "0");
-  return leftFraction === rightFraction
-    ? 0
-    : leftFraction < rightFraction
-      ? -1
-      : 1;
+  if (leftFraction === rightFraction) {
+    return 0;
+  }
+  return leftFraction < rightFraction ? -1 : 1;
 }
 
 function timestampsEqual(left: string, right: string): boolean {
@@ -372,20 +373,21 @@ async function loadEndpointDescriptor(
     throw failure("INTEGRITY_VIOLATION");
   }
   const status = requiredString(row, "status");
-  const lifecycle =
-    status === "ACTIVE"
-      ? { status, activeFrom: timestamp(row, "active_from") }
-      : status === "ROTATION_OVERLAP"
-        ? {
-            status,
-            activeFrom: timestamp(row, "active_from"),
-            overlapStartedAt: timestamp(row, "overlap_started_at"),
-            retiredAt: timestamp(row, "retired_at"),
-          }
-        : undefined;
-  if (lifecycle === undefined) {
-    throw failure("INTEGRITY_VIOLATION");
-  }
+  const lifecycle = (() => {
+    switch (status) {
+      case "ACTIVE":
+        return { status, activeFrom: timestamp(row, "active_from") };
+      case "ROTATION_OVERLAP":
+        return {
+          status,
+          activeFrom: timestamp(row, "active_from"),
+          overlapStartedAt: timestamp(row, "overlap_started_at"),
+          retiredAt: timestamp(row, "retired_at"),
+        };
+      default:
+        throw failure("INTEGRITY_VIOLATION");
+    }
+  })();
   const parsed = paymentWebhookEndpointDescriptorSchema.safeParse({
     schemaVersion: 1,
     endpointId: requiredString(row, "endpoint_id"),
@@ -791,28 +793,26 @@ function providerEventFromRow(row: QueryRow): ProviderEvent {
     amountMinor: nonnegativeInteger(row, "amount_minor"),
     currency: requiredString(row, "currency"),
   };
-  const input =
-    eventType === "PAYMENT_STATUS"
-      ? { ...common, eventType }
-      : eventType === "REFUND_STATUS"
-        ? {
-            ...common,
-            eventType,
-            refundReference: requiredString(row, "provider_refund_reference"),
-          }
-        : eventType === "DISPUTE_STATUS"
-          ? {
-              ...common,
-              eventType,
-              disputeReference: requiredString(
-                row,
-                "provider_dispute_reference",
-              ),
-            }
-          : undefined;
-  if (input === undefined) {
-    throw failure("INTEGRITY_VIOLATION");
-  }
+  const input = (() => {
+    switch (eventType) {
+      case "PAYMENT_STATUS":
+        return { ...common, eventType };
+      case "REFUND_STATUS":
+        return {
+          ...common,
+          eventType,
+          refundReference: requiredString(row, "provider_refund_reference"),
+        };
+      case "DISPUTE_STATUS":
+        return {
+          ...common,
+          eventType,
+          disputeReference: requiredString(row, "provider_dispute_reference"),
+        };
+      default:
+        throw failure("INTEGRITY_VIOLATION");
+    }
+  })();
   const parsed = loadWebhookProcessingContextResponseSchema.safeParse({
     schemaVersion: 1,
     operation: "LOAD_WEBHOOK_PROCESSING_CONTEXT",
@@ -955,6 +955,8 @@ function outboxEventFromRow(row: QueryRow): EventEnvelope {
         throw failure("INTEGRITY_VIOLATION");
     }
   })();
+  const market = nullableString(row, "market");
+  const currency = nullableString(row, "currency");
   const parsed = loadOutboxDispatchContextResponseSchema.safeParse({
     schemaVersion: 1,
     operation: "LOAD_OUTBOX_DISPATCH_CONTEXT",
@@ -967,12 +969,8 @@ function outboxEventFromRow(row: QueryRow): EventEnvelope {
       aggregateVersion: positiveInteger(row, "aggregate_version"),
       primarySubjectId,
       ...(secondarySubjectId === null ? {} : { secondarySubjectId }),
-      ...(nullableString(row, "market") === null
-        ? {}
-        : { market: requiredString(row, "market") }),
-      ...(nullableString(row, "currency") === null
-        ? {}
-        : { currency: requiredString(row, "currency") }),
+      ...(market === null ? {} : { market }),
+      ...(currency === null ? {} : { currency }),
       nextAttemptNumber: positiveInteger(row, "next_attempt_number"),
     },
   });
