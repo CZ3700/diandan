@@ -15,6 +15,9 @@ const eventSchema = z.enum([
   "next.request.failed",
   "next.runtime.failed",
   "observability.invalid_event",
+  "reliable_events.persistence_failure",
+  "reliable_events.queue_notice",
+  "reliable_events.worker_notice",
   "runtime.fatal_error",
   "runtime.start_failed",
   "runtime.started",
@@ -45,6 +48,17 @@ const errorCodeSchema = z.enum([
   "SHUTDOWN_FAILED",
   "STARTUP_FAILED",
   "UPSTREAM_UNAVAILABLE",
+  "ALREADY_EXISTS",
+  "CONFIGURATION_ERROR",
+  "INTEGRITY_VIOLATION",
+  "MAINTENANCE_CONTEXT_UNAVAILABLE",
+  "OUTBOX_RELAY_FAILED",
+  "PAYLOAD_PURGE_FAILED",
+  "QUEUE_ENGINE_ERROR",
+  "QUEUE_ENGINE_WARNING",
+  "TEMPORARY_UNAVAILABLE",
+  "TRANSACTION_ABORTED",
+  "UNEXPECTED_ADAPTER_FAILURE",
 ]);
 
 export const structuredLogRecordSchema = z

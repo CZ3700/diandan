@@ -4,6 +4,7 @@ type LogFields = Readonly<Record<string, unknown>>;
 
 type StructuredLogger = Readonly<{
   info: (event: string, fields?: LogFields) => void;
+  warn: (event: string, fields?: LogFields) => void;
   error: (event: string, fields?: LogFields) => void;
 }>;
 
@@ -80,6 +81,44 @@ test("writes a versioned JSON line containing only validated fields", async () =
     outcome: "success",
   });
   expect(lines[0]).not.toContain("must-not-be-logged");
+});
+
+test("preserves allowlisted reliable-event infrastructure signals", async () => {
+  const { createStructuredLogger } = await loadLoggingModule();
+  const lines: string[] = [];
+  const logger = createStructuredLogger({
+    service: "worker",
+    now: () => new Date("2026-09-04T04:00:00.000Z"),
+    write: (line) => lines.push(line),
+  });
+
+  logger.warn("reliable_events.queue_notice", {
+    errorCode: "QUEUE_ENGINE_WARNING",
+    outcome: "failure",
+  });
+  logger.error("reliable_events.persistence_failure", {
+    errorCode: "TEMPORARY_UNAVAILABLE",
+    outcome: "failure",
+  });
+  logger.warn("reliable_events.worker_notice", {
+    errorCode: "PAYLOAD_PURGE_FAILED",
+    outcome: "failure",
+  });
+
+  expect(lines.map((line) => JSON.parse(line) as unknown)).toEqual([
+    expect.objectContaining({
+      event: "reliable_events.queue_notice",
+      errorCode: "QUEUE_ENGINE_WARNING",
+    }),
+    expect.objectContaining({
+      event: "reliable_events.persistence_failure",
+      errorCode: "TEMPORARY_UNAVAILABLE",
+    }),
+    expect.objectContaining({
+      event: "reliable_events.worker_notice",
+      errorCode: "PAYLOAD_PURGE_FAILED",
+    }),
+  ]);
 });
 
 test("does not inspect or serialize hostile and nested values", async () => {
