@@ -16,7 +16,7 @@
 | P1-02 | DONE | Codex `/root` | P1-01、P0-04 | Git `6daea69`、PR #5/run `33707017702`；本地、clean clone、Quality/Security 与两路独立验收全绿 |
 | P1-03 | DONE | Codex `/root` | P1-01 | Git `49a8756`、PR #6/run `33720394020`；本地/clean clone、Quality/Security 与三路独立复核全绿 |
 | P1-04 | DONE | Codex `/root` | P1-01、P1-02、P0-03 | Git `827ada4`、PR #7/run `33739482625`；PG18、clean clone、Quality/Security 与两路独立终验全绿 |
-| P1-05 | READY | — | P1-01/02/03/04 | Repositories 与 payment/media/identity/notification/cache/KMS ports/adapters |
+| P1-05 | IN_PROGRESS | Codex `/root` | P1-01/02/03/04 | 2026-09-03T18:04:01+08:00 领取；versioned ports、PostgreSQL repositories、S3/CDN/KMS 与 fake adapters |
 | P1-06 | PENDING | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
 
 ## P1-01 执行卡
@@ -103,6 +103,15 @@
 - **非阻断后续**：P1-05/P5 实现 repository/管理命令时继续收窄 order/fulfillment event 的 authority shape（非 ADMIN 明确不带 audit、ADMIN 不带无关 provider evidence），并冻结 endpoint 直接 `ACTIVE → RETIRED` 时 `retired_at` 代表实际退役时刻还是预定边界；现有约束未发现可绕过的权限或支付最终态路径。
 - **真实 CI**：[PR #7](https://github.com/CZ3700/diandan/pull/7) 的 [run 33739482625](https://github.com/CZ3700/diandan/actions/runs/33739482625) 中 Quality 与 Security 均成功，叠加基线为 `codex/p1-03-domain`，实现提交可合并。
 - **剩余边界**：本任务只证明 schema/migration 与本地 ephemeral PostgreSQL 行为；repository/Application Saga、真实 KMS、PSP raw-body 验签、pg-boss worker、AWS apply、staging、PITR、真实支付及 production 发布分别留给 P1-05/P1-06/P5/P6/P7，不在本任务证据范围。
+
+## P1-05 执行卡
+
+- **Owner / 开始时间**：Codex `/root`，2026-09-03T18:04:01+08:00。
+- **范围**：为 persistence、payment、media、identity、notification、cache-purge 与 key-management 定义严格、可序列化、versioned ports 和共享 adapter conformance；实现基于 P1-04 权威 schema 的 PostgreSQL transaction/repositories、S3-compatible 媒体 adapter、AWS CDN purge/KMS adapter，以及不接触真实供应商或凭据的确定性 fake adapters。PostgreSQL/供应商对象只存在于 adapter 内，application/domain 只依赖 ports。
+- **非目标**：不实现业务 API、Application checkout/payment Saga、webhook raw-body 验签与 pg-boss worker、真实 PSP/OIDC/邮件供应商接入、Admin/Storefront UI、AWS apply、staging、真实 KMS key/PSP sandbox 或 production 发布；不修改 P1-04 migration 权威结构，除非先用失败的 repository 集成测试证明存在不可兼容缺口并走显式向前 migration。
+- **测试先行计划**：先为每类 port 写共享 conformance 和恶意 fixture，观察 skeleton/fake/PostgreSQL/S3/CDN/KMS adapter 因缺失行为而失败；重点覆盖 unknown schemaVersion、供应商 DTO 隔离、事务原子性/回滚、乐观版本冲突、行锁库存、append-only/idempotency、对象 key/checksum/私有 metadata、locale 与 market/currency 分离、密钥明文不落库/日志，以及 fake fixture 变更会触发失败，再写最小实现逐项转绿。
+- **验证计划**：运行各 port/adapter 单元与 conformance、真实 PostgreSQL 18 repository 集成和 S3-compatible emulator 集成；检查 dependency graph、无 supplier/ORM 类型越界、无 PII/secret fixture；再跑 format、lint、typecheck、build、完整 0-cache `pnpm check`、secret/high audit、clean-clone frozen install/check、真实 PR Quality/Security，并安排 repository 事务、adapter 替换性与隐私安全独立复核。
+- **风险护栏**：对应 R-02/R-06/R-14；repository 必须在同一事务内锁定并更新 canonical balance/reservation/ledger/幂等结果，不信任调用方金额或库存；留言、邮箱、地址与 key plaintext 不得进入通用 DTO、对象 metadata、日志或 fake fixture；依赖精确锁版，provider/AWS/Drizzle/`pg` 类型不得逃出 adapter，配置与 key reference 必须注入且 fail closed。
 
 ## 必须证明
 
