@@ -11,9 +11,15 @@ import {
 import { resolveDatabaseRuntimeConfig } from "@fan-support/config/server";
 import {
   queuePropagationCarrierSchema,
+  type OutboxDispatchJob,
   type QueuePropagationCarrier,
+  type WebhookInboxJob,
 } from "@fan-support/contracts";
-import type { StructuredLogger } from "@fan-support/observability";
+import {
+  parseQueuePropagationCarrier,
+  type StructuredLogger,
+} from "@fan-support/observability";
+import { runWithServerRequest } from "@fan-support/observability/node";
 import {
   createPgBossReliableEventQueue,
   createPostgresPersistence,
@@ -63,10 +69,51 @@ export type WorkerReliableEventsComposition = Readonly<{
 }>;
 
 export class WorkerReliableEventsCompositionError extends Error {
-  public constructor(public readonly code: "STOP_FAILED") {
+  public constructor(
+    public readonly code: "INVALID_PROPAGATION" | "STOP_FAILED",
+  ) {
     super("Worker reliable-events composition failed");
     this.name = "WorkerReliableEventsCompositionError";
   }
+}
+
+const discardLogger: StructuredLogger = Object.freeze({
+  info: () => undefined,
+  warn: () => undefined,
+  error: () => undefined,
+});
+
+function runWithObservedQueueContext(
+  job: WebhookInboxJob | OutboxDispatchJob,
+  logger: StructuredLogger,
+  handler: () => Promise<void>,
+): Promise<void> {
+  let headers: Readonly<Record<string, string>> | undefined;
+  try {
+    headers = parseQueuePropagationCarrier(job.propagation);
+  } catch {
+    headers = undefined;
+  }
+  if (headers === undefined) {
+    return Promise.reject(
+      new WorkerReliableEventsCompositionError("INVALID_PROPAGATION"),
+    );
+  }
+
+  const route =
+    job.jobType === "PROCESS_WEBHOOK_INBOX"
+      ? "/jobs/payment-webhook-inbox"
+      : "/jobs/outbox-dispatch";
+  return runWithServerRequest(
+    {
+      service: "worker",
+      method: "POST",
+      route,
+      headers,
+      logger,
+    },
+    handler,
+  );
 }
 
 function nonzeroHex(bytes: number): string {
@@ -136,6 +183,7 @@ export function createWorkerReliableEventsComposition(
 ): WorkerReliableEventsComposition {
   const database = resolveDatabaseRuntimeConfig({ environment });
   const logger = options.logger;
+  const contextLogger = logger ?? discardLogger;
   const suppliedFactories = options.factories;
   const factories: WorkerReliableEventsCompositionFactories = {
     createQueue: suppliedFactories?.createQueue ?? defaultFactories.createQueue,
@@ -200,6 +248,8 @@ export function createWorkerReliableEventsComposition(
       createId: factories.createId,
       now: factories.now,
     }),
+    runWithQueueContext: (job, handler) =>
+      runWithObservedQueueContext(job, contextLogger, handler),
     listReadyOutboxJobs: createListReadyOutboxJobs({ transactionManager }),
     purgeExpiredWebhookPayloads: createPurgeExpiredWebhookPayloads({
       transactionManager,

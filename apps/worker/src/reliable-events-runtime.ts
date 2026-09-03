@@ -46,6 +46,10 @@ export type ReliableEventsWorkerRuntimeOptions = Readonly<{
     job: OutboxDispatchJob,
     context: ReliableEventDeliveryContext,
   ): Promise<void>;
+  runWithQueueContext(
+    job: WebhookInboxJob | OutboxDispatchJob,
+    handler: () => Promise<void>,
+  ): Promise<void>;
   listReadyOutboxJobs(command: unknown): Promise<readonly OutboxDispatchJob[]>;
   purgeExpiredWebhookPayloads(command: unknown): Promise<unknown>;
   consumerKeys: readonly string[];
@@ -93,6 +97,7 @@ function validateOptions(options: ReliableEventsWorkerRuntimeOptions): void {
     typeof options.queue.publishOutboxDispatch !== "function" ||
     typeof options.processWebhookInbox !== "function" ||
     typeof options.dispatchOutboxEvent !== "function" ||
+    typeof options.runWithQueueContext !== "function" ||
     typeof options.listReadyOutboxJobs !== "function" ||
     typeof options.purgeExpiredWebhookPayloads !== "function" ||
     !Array.isArray(consumers) ||
@@ -229,8 +234,14 @@ export function createReliableEventsWorkerRuntime(
     startPromise = (async () => {
       try {
         await options.queue.start({
-          processWebhookInbox: options.processWebhookInbox,
-          dispatchOutboxEvent: options.dispatchOutboxEvent,
+          processWebhookInbox: (job, context) =>
+            options.runWithQueueContext(job, () =>
+              options.processWebhookInbox(job, context),
+            ),
+          dispatchOutboxEvent: (job, context) =>
+            options.runWithQueueContext(job, () =>
+              options.dispatchOutboxEvent(job, context),
+            ),
         });
         scheduled = schedule(() => {
           void runMaintenanceOnce();

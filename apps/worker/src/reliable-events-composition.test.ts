@@ -1,4 +1,8 @@
 import { expect, test, vi } from "vitest";
+import {
+  currentRequestContext,
+  startNodeTelemetry,
+} from "@fan-support/observability/node";
 
 const testDatabaseUrl = [
   "postgresql://",
@@ -144,6 +148,7 @@ test("wires PostgreSQL, pg-boss VERIFY mode, application handlers, and maintenan
     expect.objectContaining({
       processWebhookInbox: expect.any(Function),
       dispatchOutboxEvent: expect.any(Function),
+      runWithQueueContext: expect.any(Function),
       listReadyOutboxJobs: expect.any(Function),
       purgeExpiredWebhookPayloads: expect.any(Function),
       now: expect.any(Function),
@@ -185,4 +190,106 @@ test("closes persistence even when queue shutdown fails and exposes only a safe 
   expect(failure).toMatchObject({ code: "STOP_FAILED" });
   expect(String(failure)).not.toContain(canary);
   expect(harness.persistence.close).toHaveBeenCalledTimes(1);
+});
+
+test("restores allowlisted queue propagation into a child worker span and rejects unsafe carriers", async () => {
+  const factory = await loadFactory();
+  expect(factory).toBeDefined();
+  if (factory === undefined) {
+    return;
+  }
+  const telemetry = startNodeTelemetry({ service: "worker" });
+  const harness = createHarness();
+  const logger = Object.freeze({
+    info: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+  });
+  const requestId = "30000000-0000-4000-8000-000000000003";
+  const traceId = "a".repeat(32);
+  const parentSpanId = "b".repeat(16);
+  const job = Object.freeze({
+    schemaVersion: 1,
+    jobType: "PROCESS_WEBHOOK_INBOX",
+    webhookInboxId: "10000000-0000-4000-8000-000000000003",
+    correlationId: "20000000-0000-4000-8000-000000000003",
+    propagation: Object.freeze({
+      schemaVersion: 1,
+      requestId,
+      traceparent: `00-${traceId}-${parentSpanId}-01`,
+    }),
+  });
+
+  try {
+    await factory(validEnvironment, {
+      logger,
+      factories: {
+        createQueue: harness.createQueue,
+        createPersistence: harness.createPersistence,
+        createRuntime: harness.createRuntime,
+      },
+    });
+    const runtimeOptions = harness.runtimeOptions[0] as Readonly<{
+      runWithQueueContext(
+        candidate: unknown,
+        handler: () => Promise<void>,
+      ): Promise<void>;
+    }>;
+    let observed = currentRequestContext();
+
+    await runtimeOptions.runWithQueueContext(job, async () => {
+      observed = currentRequestContext();
+    });
+
+    expect(observed).toMatchObject({ requestId, traceId });
+    expect(observed?.spanId).not.toBe(parentSpanId);
+    expect(logger.info).toHaveBeenCalledWith(
+      "http.request.completed",
+      expect.objectContaining({
+        requestId,
+        traceId,
+        httpRoute: "/jobs/payment-webhook-inbox",
+      }),
+    );
+
+    await runtimeOptions.runWithQueueContext(
+      {
+        schemaVersion: 1,
+        jobType: "DISPATCH_OUTBOX_EVENT",
+        outboxEventId: "10000000-0000-4000-8000-000000000004",
+        consumerKey: "notification-provider",
+        correlationId: "20000000-0000-4000-8000-000000000004",
+        propagation: job.propagation,
+      },
+      async () => undefined,
+    );
+    expect(logger.info).toHaveBeenLastCalledWith(
+      "http.request.completed",
+      expect.objectContaining({
+        requestId,
+        traceId,
+        httpRoute: "/jobs/outbox-dispatch",
+      }),
+    );
+
+    const canary = "PRIVATE_QUEUE_BAGGAGE_99123";
+    const handler = vi.fn(async () => undefined);
+    const failure = await runtimeOptions
+      .runWithQueueContext(
+        {
+          ...job,
+          propagation: { ...job.propagation, baggage: canary },
+        },
+        handler,
+      )
+      .catch((error) => error);
+
+    expect(failure).toMatchObject({ code: "INVALID_PROPAGATION" });
+    expect(String(failure)).not.toContain(canary);
+    expect(handler).not.toHaveBeenCalled();
+    expect(JSON.stringify(logger.info.mock.calls)).not.toContain(canary);
+    expect(JSON.stringify(logger.error.mock.calls)).not.toContain(canary);
+  } finally {
+    await telemetry.shutdown();
+  }
 });

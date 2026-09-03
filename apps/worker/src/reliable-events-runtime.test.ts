@@ -13,6 +13,14 @@ const outboxJob = Object.freeze({
   }),
 });
 
+const webhookInboxJob = Object.freeze({
+  schemaVersion: 1 as const,
+  jobType: "PROCESS_WEBHOOK_INBOX" as const,
+  webhookInboxId: "10000000-0000-4000-8000-000000000002",
+  correlationId: "20000000-0000-4000-8000-000000000002",
+  propagation: outboxJob.propagation,
+});
+
 async function loadRuntimeFactory() {
   const module = (await import("./reliable-events-runtime.js").catch(
     () => undefined,
@@ -41,6 +49,9 @@ function createHarness() {
   };
   const processWebhookInbox = vi.fn(async () => undefined);
   const dispatchOutboxEvent = vi.fn(async () => undefined);
+  const runWithQueueContext = vi.fn(
+    async (_job: unknown, handler: () => Promise<void>) => handler(),
+  );
   const listReadyOutboxJobs = vi.fn(async () => [outboxJob]);
   const purgeExpiredWebhookPayloads = vi.fn(async () => ({
     purgedPayloadIds: [],
@@ -52,6 +63,7 @@ function createHarness() {
     queue,
     processWebhookInbox,
     dispatchOutboxEvent,
+    runWithQueueContext,
     listReadyOutboxJobs,
     purgeExpiredWebhookPayloads,
     consumerKeys: ["notification-provider"],
@@ -78,6 +90,7 @@ function createHarness() {
     processWebhookInbox,
     purgeExpiredWebhookPayloads,
     queue,
+    runWithQueueContext,
     scheduledTick: () => scheduledTick,
   };
 }
@@ -98,15 +111,23 @@ test("starts queue handlers and relays ID-only outbox jobs on a scheduled tick",
     processWebhookInbox(job: unknown, delivery: unknown): Promise<void>;
     dispatchOutboxEvent(job: unknown, delivery: unknown): Promise<void>;
   }>;
-  await registered.processWebhookInbox({ id: "inbox" }, { attemptNumber: 1 });
-  await registered.dispatchOutboxEvent({ id: "outbox" }, { attemptNumber: 1 });
-  expect(harness.processWebhookInbox).toHaveBeenCalledWith(
-    { id: "inbox" },
-    { attemptNumber: 1 },
+  await registered.processWebhookInbox(webhookInboxJob, { attemptNumber: 1 });
+  await registered.dispatchOutboxEvent(outboxJob, { attemptNumber: 1 });
+  expect(harness.processWebhookInbox).toHaveBeenCalledWith(webhookInboxJob, {
+    attemptNumber: 1,
+  });
+  expect(harness.dispatchOutboxEvent).toHaveBeenCalledWith(outboxJob, {
+    attemptNumber: 1,
+  });
+  expect(harness.runWithQueueContext).toHaveBeenNthCalledWith(
+    1,
+    webhookInboxJob,
+    expect.any(Function),
   );
-  expect(harness.dispatchOutboxEvent).toHaveBeenCalledWith(
-    { id: "outbox" },
-    { attemptNumber: 1 },
+  expect(harness.runWithQueueContext).toHaveBeenNthCalledWith(
+    2,
+    outboxJob,
+    expect.any(Function),
   );
 
   harness.scheduledTick()?.();
