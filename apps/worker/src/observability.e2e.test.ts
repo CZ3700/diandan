@@ -2,36 +2,7 @@ import { createStructuredLogger } from "@fan-support/observability";
 import { startNodeTelemetry } from "@fan-support/observability/node";
 import { expect, test } from "vitest";
 
-type InjectResponse = Readonly<{
-  statusCode: number;
-  headers: Readonly<Record<string, string | string[] | undefined>>;
-  json: () => unknown;
-}>;
-
-type RuntimeApplication = Readonly<{
-  init: () => Promise<unknown>;
-  close: () => Promise<unknown>;
-  getHttpAdapter: () => Readonly<{
-    getInstance: () => Readonly<{
-      inject: (
-        options: Readonly<{
-          method: string;
-          url: string;
-          headers?: Readonly<Record<string, string>>;
-        }>,
-      ) => Promise<InjectResponse>;
-    }>;
-  }>;
-}>;
-
-type BootstrapModule = Readonly<{
-  createWorkerApplication: (
-    environment: Readonly<Record<string, string | undefined>>,
-    options: Readonly<{
-      logger: ReturnType<typeof createStructuredLogger>;
-    }>,
-  ) => Promise<RuntimeApplication>;
-}>;
+import { createWorkerApplication } from "./bootstrap.js";
 
 const testDatabaseUrl = [
   "postgresql://",
@@ -67,8 +38,6 @@ test("correlates Worker HTTP requests without logging private headers", async ()
     service: "worker",
     write: (line) => lines.push(line),
   });
-  const { createWorkerApplication } =
-    (await import("./bootstrap.js")) as BootstrapModule;
   const application = await createWorkerApplication(validEnvironment, {
     logger,
   });

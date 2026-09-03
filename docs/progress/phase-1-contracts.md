@@ -121,6 +121,7 @@
 - **配置与连接 fail-closed**：`packages/config` 新增对 staging/production `internalApiOrigin` 的公网 HTTPS 限定；`packages/persistence-postgres` 明确拒绝带 query 的 PostgreSQL URL、Unix socket/路径式 host 与非网络结构 host，避免绕过预期的连接边界。
 - **TDD/回归**：adapter 包以共享 conformance 和 reviewed fixture 驱动 TEST-only fake 实现；一次尝试让 inner-layer `testing` 反向复用 adapter 暴露依赖环后已撤回，最终保持 `adapter devDependency → testing` 的单向关系。另以 contracts 回归证明 localhost HTTPS media grant 仍被允许，红灯复现 `media-s3` 集成失败后以 transport URL schema 修复转绿；终审提出的非法 notification `now/outcome` 测试缺口也已补齐并通过。
 - **本地验证**：2026-09-04 在 Node `24.20.0` / pnpm `11.25.0` 下完成 `node ./scripts/check-workspace.mjs`、受影响包 tests/typecheck、`pnpm check:contracts`、`TURBO_FORCE=true pnpm check`、`pnpm security:secrets` 与 `pnpm audit --registry=https://registry.npmjs.org --audit-level=high`；结果为 workspace 4 apps/30 packages/34 units 无循环、typecheck 46/46、test 46/46、build 34/34、真实 PostgreSQL 9 migrations/108 tables、真实 S3 TLS integration、Prettier/ESLint、adapter/artifact checks 与 high-level audit 全绿。
+- **CI 根因修复**：PR #8 run `33784019993` 的 Quality 两次稳定暴露 worker health E2E 在默认 5 秒内超时；日志显示 bootstrap transform/import 在 Turbo + Vitest 并发下占去约 5–6 秒，而本地隔离同包约 0.4 秒且路径无外部 I/O。API/Worker health/observability E2E 已统一改为顶层静态导入，把 runner 模块加载移出行为计时，同时保留原 5 秒约束并让 import 错误直接失败；修复后本地完整 0-cache 门禁全绿，待新 SHA 的真实 CI 复验。
 - **剩余 acceptance**：尚未补入本次候选 SHA 的 fresh clean-clone frozen install/check 和 GitHub PR Quality/Security run；在这些远端/隔离证据完成前，P1-05 保持 `REVIEW`，不提前解锁 P1-06。
 
 ## 必须证明

@@ -1,35 +1,6 @@
 import { expect, test } from "vitest";
 
-type InjectResponse = Readonly<{
-  statusCode: number;
-  headers: Readonly<Record<string, string | string[] | undefined>>;
-  json: () => unknown;
-}>;
-
-type RuntimeApplication = Readonly<{
-  init: () => Promise<unknown>;
-  close: () => Promise<unknown>;
-  getHttpAdapter: () => Readonly<{
-    getInstance: () => Readonly<{
-      inject: (
-        options: Readonly<{ method: string; url: string }>,
-      ) => Promise<InjectResponse>;
-    }>;
-  }>;
-}>;
-
-type BootstrapModule = Readonly<{
-  createApiApplication: (
-    environment: Readonly<Record<string, string | undefined>>,
-    options?: Readonly<{
-      logger: Readonly<{
-        info: () => void;
-        warn: () => void;
-        error: () => void;
-      }>;
-    }>,
-  ) => Promise<RuntimeApplication>;
-}>;
+import { createApiApplication } from "./bootstrap.js";
 
 const quietLogger = Object.freeze({
   info: () => {},
@@ -64,20 +35,7 @@ const validEnvironment = Object.freeze({
   FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true",
 });
 
-async function loadBootstrapModule(): Promise<BootstrapModule> {
-  let loaded: unknown;
-  try {
-    loaded = await import("./bootstrap.js");
-  } catch {
-    loaded = undefined;
-  }
-
-  expect(loaded, "API bootstrap module must exist").toBeDefined();
-  return loaded as BootstrapModule;
-}
-
 test("serves the API health contract through Fastify", async () => {
-  const { createApiApplication } = await loadBootstrapModule();
   const application = await createApiApplication(validEnvironment, {
     logger: quietLogger,
   });
@@ -102,8 +60,6 @@ test("serves the API health contract through Fastify", async () => {
 });
 
 test("refuses to create the API when required runtime config is missing", async () => {
-  const { createApiApplication } = await loadBootstrapModule();
-
   await expect(
     createApiApplication({ NODE_ENV: "test" }),
   ).rejects.toMatchObject({
