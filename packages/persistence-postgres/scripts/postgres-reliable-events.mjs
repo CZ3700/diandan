@@ -140,7 +140,8 @@ async function tableCounts(client) {
        (SELECT count(*)::integer FROM webhook_payloads) AS payloads,
        (SELECT count(*)::integer FROM webhook_inbox) AS inbox,
        (SELECT count(*)::integer FROM provider_events) AS events,
-       (SELECT count(*)::integer FROM provider_event_associations) AS associations`,
+       (SELECT count(*)::integer FROM provider_event_associations) AS associations,
+       (SELECT count(*)::integer FROM ${queueSchema}.job) AS queue_jobs`,
   );
 }
 
@@ -377,6 +378,30 @@ async function assertIngressAndReceiptScenarios({
     "IDEMPOTENCY_CONFLICT",
     "changed provider semantics returned the wrong stable error",
   );
+  const semanticCounts = await queryScalar(
+    client,
+    `SELECT
+       (SELECT count(*)::integer FROM webhook_payloads payload
+         JOIN webhook_inbox inbox ON inbox.webhook_payload_id = payload.id
+        WHERE inbox.provider_event_id = $1) AS payloads,
+       (SELECT count(*)::integer FROM webhook_inbox
+        WHERE provider_event_id = $1) AS inbox,
+       (SELECT count(*)::integer FROM provider_events
+        WHERE provider_event_id = $1) AS events,
+       (SELECT count(*)::integer FROM ${queueSchema}.job job
+         JOIN webhook_inbox inbox ON inbox.id = job.id
+        WHERE inbox.provider_event_id = $1
+          AND job.name = $2
+          AND job.data->>'webhookInboxId' = inbox.id::text) AS jobs`,
+    [semanticEventId, RELIABLE_EVENT_QUEUE_NAMES.webhookInbox],
+  );
+  for (const value of Object.values(semanticCounts)) {
+    assertEqual(
+      value,
+      1,
+      "semantic replay or conflict changed durable cardinality",
+    );
+  }
 
   const concurrentEventId = "ten-way-concurrent-event";
   const concurrentBody = paymentBody({ eventId: concurrentEventId });
@@ -427,8 +452,10 @@ async function assertIngressAndReceiptScenarios({
        (SELECT count(*)::integer
           FROM ${queueSchema}.job job
           JOIN webhook_inbox inbox ON inbox.id = job.id
-         WHERE inbox.provider_event_id = $1) AS jobs`,
-    [concurrentEventId],
+         WHERE inbox.provider_event_id = $1
+           AND job.name = $2
+           AND job.data->>'webhookInboxId' = inbox.id::text) AS jobs`,
+    [concurrentEventId, RELIABLE_EVENT_QUEUE_NAMES.webhookInbox],
   );
   assertEqual(
     concurrentCounts.inbox,
@@ -456,7 +483,7 @@ async function assertIngressAndReceiptScenarios({
     "DLQ fixture was not new",
   );
 
-  return { concurrentEventId, dlqEventId };
+  return { concurrentEventId, dlqEventId, semanticEventId };
 }
 
 async function assertPublishRollback({
@@ -591,7 +618,11 @@ function createWorkerHandlers(persistence, dlqEventId, state) {
         if (context.event.providerEventId === dlqEventId) {
           throw new Error("test-only permanent handler failure");
         }
-        state.webhookEffects += 1;
+        state.webhookHandlerCalls.set(
+          context.event.providerEventId,
+          (state.webhookHandlerCalls.get(context.event.providerEventId) ?? 0) +
+            1,
+        );
       },
     }),
     createId: randomUUID,
@@ -622,6 +653,9 @@ function createWorkerHandlers(persistence, dlqEventId, state) {
   return {
     processWebhookInbox: processWebhook,
     dispatchOutboxEvent: async (job, context) => {
+      if (job.outboxEventId === fixture.outboxEventId) {
+        state.outboxWrapperInvocations += 1;
+      }
       try {
         await dispatchOutbox(job, context);
       } catch (error) {
@@ -652,10 +686,12 @@ async function assertWorkersAndDlq({
   connection,
   concurrentEventId,
   dlqEventId,
+  semanticEventId,
 }) {
   const state = {
-    webhookEffects: 0,
+    webhookHandlerCalls: new Map(),
     externalDispatches: 0,
+    outboxWrapperInvocations: 0,
     postCommitFailureInjected: false,
     outboxErrorCodes: new Set(),
   };
@@ -669,6 +705,7 @@ async function assertWorkersAndDlq({
       localConcurrency: 1,
     }),
   );
+  let processingFailure;
   try {
     await Promise.all(workers.map((worker) => worker.start(handlers)));
     try {
@@ -682,10 +719,27 @@ async function assertWorkersAndDlq({
                WHERE outbox_event_id = $1 AND consumer_key = $2) AS effects,
              (SELECT count(*)::integer FROM outbox_dispatch_attempts
                WHERE outbox_event_id = $1 AND consumer_key = $2
-                 AND outcome = 'SUCCEEDED') AS successes`,
-            [fixture.outboxEventId, consumerKey],
+                 AND outcome = 'SUCCEEDED') AS successes,
+             (SELECT state::text FROM ${queueSchema}.job
+               WHERE name = $3 AND data->>'outboxEventId' = $1::text
+               LIMIT 1) AS queue_state,
+             (SELECT retry_count::integer FROM ${queueSchema}.job
+               WHERE name = $3 AND data->>'outboxEventId' = $1::text
+               LIMIT 1) AS retry_count`,
+            [
+              fixture.outboxEventId,
+              consumerKey,
+              RELIABLE_EVENT_QUEUE_NAMES.outboxDispatch,
+            ],
           );
-          return row.effects === 1 && row.successes === 1;
+          return (
+            row.effects === 1 &&
+            row.successes === 1 &&
+            row.queue_state === "completed" &&
+            row.retry_count === 1 &&
+            state.postCommitFailureInjected &&
+            state.outboxWrapperInvocations === 2
+          );
         },
         60_000,
       );
@@ -703,12 +757,13 @@ async function assertWorkersAndDlq({
         [fixture.outboxEventId, consumerKey],
       );
       const queueRows = await client.query(
-        `SELECT state::text AS state FROM ${queueSchema}.job
+        `SELECT state::text AS state, retry_count::integer AS retry_count
+           FROM ${queueSchema}.job
           WHERE name = $1 ORDER BY created_on`,
         [RELIABLE_EVENT_QUEUE_NAMES.outboxDispatch],
       );
       fail(
-        `outbox replay diagnostic (effects=${diagnostic.effects}, attempts=${diagnostic.attempts}, dispatches=${state.externalDispatches}, errors=${[...state.outboxErrorCodes].join(",") || "none"}, states=${queueRows.rows.map((row) => row.state).join(",") || "none"})`,
+        `outbox replay diagnostic (effects=${diagnostic.effects}, attempts=${diagnostic.attempts}, dispatches=${state.externalDispatches}, wrappers=${state.outboxWrapperInvocations}, injected=${String(state.postCommitFailureInjected)}, errors=${[...state.outboxErrorCodes].join(",") || "none"}, states=${queueRows.rows.map((row) => `${row.state}:${row.retry_count}`).join(",") || "none"})`,
       );
     }
     await waitUntil("webhook retry dead letter", async () => {
@@ -734,9 +789,27 @@ async function assertWorkersAndDlq({
       );
       return row.attempts === 6 && row.dead_letters === 1 && row.dlq_jobs === 1;
     });
-  } finally {
-    await Promise.all(workers.map((worker) => worker.stop()));
+  } catch (error) {
+    processingFailure = error;
   }
+  const stopResults = await Promise.allSettled(
+    workers.map((worker) => worker.stop()),
+  );
+  if (processingFailure !== undefined) {
+    throw processingFailure;
+  }
+  if (stopResults.some((result) => result.status === "rejected")) {
+    fail("one or more VERIFY workers failed to stop cleanly");
+  }
+  assertEqual(
+    state.outboxWrapperInvocations,
+    2,
+    "post-commit outbox job was not redelivered exactly once",
+  );
+  assert(
+    state.postCommitFailureInjected,
+    "post-commit pre-ACK failure was not injected",
+  );
   assertEqual(
     state.externalDispatches,
     1,
@@ -779,6 +852,21 @@ async function assertWorkersAndDlq({
     concurrentEffects.successes,
     1,
     "ten-way webhook replay duplicated the success attempt",
+  );
+  assertEqual(
+    state.webhookHandlerCalls.get(concurrentEventId),
+    1,
+    "ten-way webhook replay did not execute one business handler action",
+  );
+  assertEqual(
+    state.webhookHandlerCalls.get(semanticEventId),
+    1,
+    "semantic replay did not execute one business handler action",
+  );
+  assertEqual(
+    state.webhookHandlerCalls.get(dlqEventId) ?? 0,
+    0,
+    "dead-lettered webhook executed a business handler action",
   );
 }
 
@@ -842,6 +930,7 @@ async function runHarness(clientConfig) {
       connection,
       concurrentEventId: ingress.concurrentEventId,
       dlqEventId: ingress.dlqEventId,
+      semanticEventId: ingress.semanticEventId,
     });
     return {
       concurrentReceipts: 10,
