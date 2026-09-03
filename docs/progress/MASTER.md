@@ -3,8 +3,8 @@
 > 最后更新：2026-09-03
 > 当前里程碑：M1 可信内核 / M2 品牌样板
 > 当前 ACTIVE Phase：Phase 1、Phase 2
-> 当前任务：`P1-02`（Lane C，Codex `/root`，REVIEW）
-> 下一可领取任务：`P1-03`（Lane A）或 `P2-01`（Lane B）；单个 executor 一次只领取一个
+> 当前任务：无
+> 下一可领取任务：优先 `P1-03`（Lane A）或并行 `P2-01`（Lane B）；`P1-04` 也已 READY，但与 P1-03 同属 Lane A；单个 executor 一次只领取一个
 
 ## 1. 开工入口
 
@@ -16,18 +16,18 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 Lane C 已由 `P1-02` 占用，Lane A/B 空闲，`P1-03`、`P2-01` 为 `READY`。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 Lane A/B/C/D 均无 executor，`P1-03`、`P1-04`、`P2-01` 为 `READY`，其中 `P1-03` 与 `P1-04` 同属 Lane A，不得同时领取。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 40 |
-| READY | 2 |
+| PENDING | 39 |
+| READY | 3 |
 | IN_PROGRESS | 0 |
 | BLOCKED | 0 |
-| REVIEW | 1 |
-| DONE | 6 |
+| REVIEW | 0 |
+| DONE | 7 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -74,11 +74,11 @@
 | 履约 SLA/客服承诺 | OPEN | Phase 3 内容冻结 | 待建运营决策 |
 | 邮件、观测、备份供应商 | OPEN | Phase 4/6 | 待建 ADR |
 
-这些 OPEN 项不阻塞当前 P1-02/P1-03/P2-01，但执行者不得自行把 sandbox 假设写成生产结论。
+这些 OPEN 项不阻塞当前 P1-03/P1-04/P2-01，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
 
-已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据。P0-05 已取得本地 request/trace、日志隐私、故障/关闭、浏览器、clean-clone 与真实 PR 必需检查证据并标记 DONE。P1-01 已取得 v1 合同、确定性 artifact、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。ADR-007 已关闭生产基础设施**选型**门并补入 P5-08 IaC/staging 任务；这些仍都不是 AWS apply、staging、生产、恢复或发布证据。
+已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据。P0-05 已取得本地 request/trace、日志隐私、故障/关闭、浏览器、clean-clone 与真实 PR 必需检查证据并标记 DONE。P1-01 已取得 v1 合同、确定性 artifact、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-02 已取得自研内容/商品/价格/库存/媒体/政策合同、七语言发布门、公开投影、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。ADR-007 已关闭生产基础设施**选型**门并补入 P5-08 IaC/staging 任务；这些仍都不是 AWS apply、staging、生产、恢复或发布证据。
 
 | 日期 | Task | 类型 | 证据 | 结论 |
 |:--|:--|:--|:--|:--|
@@ -92,6 +92,7 @@
 | 2026-09-03 | P0-05 | 可观测/故障/运维 | Git `c337db999fc45f629b5bdfc7dbd9b766ff1c0c8d`、[PR #3](https://github.com/CZ3700/diandan/pull/3)、[run 33685203128](https://github.com/CZ3700/diandan/actions/runs/33685203128)、`packages/observability/`、`output/playwright/p0-05/` | canonical request ID、W3C trace、结构化 allowlist 日志、OTel lifecycle、安全错误边界与排障 README 完成；真实 preview、clean clone 0-cache、Quality/Security 与四路复核全绿，任务 DONE；无 cloud exporter/生产发布结论 |
 | 2026-09-03 | INFRA | 决策/Phase 门禁 | ADR-007、AWS/Akamai 官方能力与价格资料、`P5-08` | 选择 `us-east-1` AWS 单云 origin（ECS Fargate/RDS PostgreSQL Multi-AZ/S3/CloudFront/WAF），保留 Akamai edge 退出路径；Phase 0 CLOSED，Phase 1/2 ACTIVE；尚无 cloud apply 或恢复证据 |
 | 2026-09-03 | P1-01 | v1 跨模块合同 | Git `4695a4121131f664d5b70ce9b77f21dc50bf25cf`、[PR #4](https://github.com/CZ3700/diandan/pull/4)、[run 33693878714](https://github.com/CZ3700/diandan/actions/runs/33693878714)、`packages/contracts/` | 34 个 versioned/embedded-policy 合同、JSON Schema/OpenAPI components、七语言唯一 owner、隐私/金额/早到 webhook/兼容门禁完成；clean clone 0-cache、Quality/Security 与三路复核全绿，任务 DONE；API paths 与 provider authenticity 留给对应后续任务 |
+| 2026-09-03 | P1-02 | 内容/发布合同 | Git `6daea6928a69d59e999f3916c02b5e27583e2e17`、[PR #5](https://github.com/CZ3700/diandan/pull/5)、[run 33707017702](https://github.com/CZ3700/diandan/actions/runs/33707017702)、`packages/content/`、`packages/contracts/src/content.ts` | 自研内容/商品/价格/库存/媒体/政策模型、精确七语言审核与发布门、双 hero、严格公开投影和虚构 fixtures 完成；clean clone 0-cache、Quality/Security 与两路复核全绿，任务 DONE；DB/repository/真实存储与云发布不在本任务证据范围 |
 
 ## 6. 更新规则
 

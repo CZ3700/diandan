@@ -13,9 +13,9 @@
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
 | P1-01 | DONE | Codex `/root` | P0-01、P0-03 | Git `4695a41`、PR #4/run `33693878714`；本地、clean clone、Quality/Security 与三路独立复核全绿 |
-| P1-02 | REVIEW | Codex `/root` | P1-01、P0-04 | Git `6daea69`；自研 content/catalog/pricing/inventory/media/policy/translation schema、发布门、公开投影与全虚构 fixtures 已实现，本地/clean-clone/两路独立验收全绿，等待真实 PR CI |
+| P1-02 | DONE | Codex `/root` | P1-01、P0-04 | Git `6daea69`、PR #5/run `33707017702`；本地、clean clone、Quality/Security 与两路独立验收全绿 |
 | P1-03 | READY | — | P1-01 | 纯 Domain、价格/库存/状态与属性测试 |
-| P1-04 | PENDING | — | P1-01、P1-02、P0-03 | 完整 migrations、七语言 translation/review、inventory balance、订单金额/退款约束与加密边界 |
+| P1-04 | READY | — | P1-01、P1-02、P0-03 | 完整 migrations、七语言 translation/review、inventory balance、订单金额/退款约束与加密边界 |
 | P1-05 | PENDING | — | P1-01/02/03/04 | Repositories 与 payment/media/identity/notification/cache/KMS ports/adapters |
 | P1-06 | PENDING | — | P1-04、P1-05 | Inbox/outbox/worker/webhook |
 
@@ -28,7 +28,7 @@
 - **验证计划**：受影响包测试、契约生成 freshness/仓库重复 locale 检查、format、lint、typecheck、完整 `pnpm check`、secret scan、clean-clone frozen install/check，以及独立契约/安全评审。
 - **风险护栏**：私密留言和完整显示名不得进入公共 DTO、日志、事件元数据或浏览器持久化；金额使用整数 minor unit；未知 `schemaVersion` 必须 fail closed；供应商 SDK 类型不得进入合同。
 
-### REVIEW 证据（2026-09-03）
+### DONE 证据（2026-09-03）
 
 - **实现**：`packages/contracts/src/` 唯一定义 34 个注册合同，覆盖 locale、catalog、cart/support intent、quote/amount、payment/provider evidence、order/policy/notification snapshot、refund/dispute、fulfillment、事件与公开错误；`packages/i18n` 与 `packages/observability` 复用 canonical owner。
 - **产物**：`packages/contracts/generated/contracts.schema.json`（JSON Schema 2020-12）与 `openapi.json`（OpenAPI 3.1）由同一 registry 确定性生成；20 个 HTTP 合同进入 OpenAPI，14 个 internal 合同被排除。
@@ -57,6 +57,7 @@
 - **本地门禁**：Node `24.20.0`、pnpm `11.25.0` 下 `TURBO_FORCE=true pnpm check` 为 0 cached：typecheck 37/37、test 37/37、build 34/34；artifact freshness、Prettier、ESLint、30 个 package export 均通过；`pnpm security:secrets`、high-level audit 与 `git diff --check` 退出 0。
 - **clean clone**：Git `6daea6928a69d59e999f3916c02b5e27583e2e17` 在全新 clone 完成 `pnpm install --frozen-lockfile --offline`、0-cache 完整 `pnpm check` 与 secret scan。
 - **独立复核**：领域/对抗复核与隔离验收均为 ACCEPT；Blocker 0、Should 0，复跑 contracts 43/43、content 62/62、两包 typecheck/build、artifact freshness 与 `git diff --check` 全绿。
+- **真实 CI**：[PR #5](https://github.com/CZ3700/diandan/pull/5) 的 [run 33707017702](https://github.com/CZ3700/diandan/actions/runs/33707017702) 中 Quality 与 Security 均成功，merge 状态 `CLEAN`。
 - **证据范围**：本任务仅为纯合同、validator、projection 与 fixtures，不包含数据库 migration/repository、真实对象存储、业务 API/UI、PostgreSQL、PSP、AWS apply、staging 或 production 证据；媒体 objectKey 与真实存储绑定留给 P1-05，库存复合唯一/rollback 事务链留给 P1-04，关键政策 fallback 留给 P3-05。
 
 ## 必须证明
@@ -69,4 +70,4 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01 已完成并解锁 P1-02/P1-03，其余 Phase 1 退出证据尚未取得。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已激活；P1-01、P1-02 已完成，P1-03、P1-04 为 `READY`，其余 Phase 1 退出证据尚未取得。
