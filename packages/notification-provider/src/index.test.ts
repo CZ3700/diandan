@@ -73,6 +73,21 @@ describe("test-only deterministic notification provider", () => {
     }
   });
 
+  test("rejects malformed runtime options at construction", () => {
+    expect(() =>
+      notificationProvider.createFakeNotificationProvider({
+        environment: "TEST",
+        now: "not-a-timestamp",
+      }),
+    ).toThrow(/now is invalid/u);
+    expect(() =>
+      notificationProvider.createFakeNotificationProvider({
+        environment: "TEST",
+        outcome: "DELIVERED",
+      } as never),
+    ).toThrow(/outcome is invalid/u);
+  });
+
   test("matches the reviewed accepted-email fixture", async () => {
     const response = await notificationProvider
       .createFakeNotificationProvider(testOnlyOptions)
