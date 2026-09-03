@@ -1,7 +1,9 @@
-import { createProductionApiApplication } from "./production-application.js";
 import { startApiProcessRuntime } from "./process-runtime.js";
 
 await startApiProcessRuntime({
-  createApplication: (logger) =>
-    createProductionApiApplication(process.env, { logger }),
+  createApplication: async (logger) => {
+    const { createProductionApiApplication } =
+      await import("./production-application.js");
+    return createProductionApiApplication(process.env, { logger });
+  },
 });
