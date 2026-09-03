@@ -75,6 +75,10 @@ type EventEnvelope = Extract<
 >["event"];
 
 const operationQueues = new WeakMap<TransactionClient, OperationQueue>();
+const concurrentReceiptConstraints = new Set([
+  "webhook_inbox_provider_event_unique",
+  "provider_events_provider_event_unique",
+]);
 
 function failure(
   code:
@@ -95,6 +99,22 @@ function normalizeFailure(error: unknown): PersistenceTransactionFailureError {
   return error instanceof PersistenceTransactionFailureError
     ? error
     : persistenceTransactionFailureFromPostgres(error);
+}
+
+function postgresConstraint(error: unknown): string | undefined {
+  if (typeof error !== "object" || error === null) {
+    return undefined;
+  }
+  try {
+    const descriptor = Object.getOwnPropertyDescriptor(error, "constraint");
+    return descriptor !== undefined &&
+      "value" in descriptor &&
+      typeof descriptor.value === "string"
+      ? descriptor.value
+      : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 function readRows(result: unknown): readonly QueryRow[] {
@@ -725,6 +745,13 @@ async function insertVerifiedReceipt(
       command.candidate.occurredAt,
     );
     if (existing === undefined) {
+      if (concurrentReceiptConstraints.has(postgresConstraint(error) ?? "")) {
+        throw createPersistenceTransactionFailureError({
+          code: "TRANSACTION_ABORTED",
+          recovery: "RETRY_SAME_COMMAND",
+          retryAfterMs: 250,
+        });
+      }
       throw error;
     }
     return receiptReplayResponse(existing, command);

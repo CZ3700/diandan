@@ -493,7 +493,10 @@ test("turns a concurrent identity collision into replay and rolls back a failed 
     },
     {
       marker: "reliable-event:insert-webhook-inbox",
-      error: { code: "23505" },
+      error: {
+        code: "23505",
+        constraint: "webhook_inbox_provider_event_unique",
+      },
     },
     {
       marker: "reliable-event:load-provider-event",
@@ -515,6 +518,48 @@ test("turns a concurrent identity collision into replay and rolls back a failed 
     ),
   ).toBe(true);
   concurrentClient.expectComplete();
+
+  const staleSnapshotClient = new ScriptedClient([
+    { marker: "reliable-event:load-endpoint", rows: [ENDPOINT_ROW] },
+    { marker: "reliable-event:load-provider-event", rows: [] },
+    {
+      marker: "reliable-event:insert-webhook-payload",
+      rows: [{ id: IDS.payload }],
+    },
+    {
+      marker: "reliable-event:insert-webhook-inbox",
+      error: {
+        code: "23505",
+        constraint: "webhook_inbox_provider_event_unique",
+      },
+    },
+    { marker: "reliable-event:load-provider-event", rows: [] },
+  ]);
+  const { repositories: staleSnapshotRepositories } =
+    await createRepositories(staleSnapshotClient);
+  await expect(
+    staleSnapshotRepositories.verifiedWebhookReceipts.record(RECEIPT),
+  ).rejects.toMatchObject({
+    code: "TRANSACTION_ABORTED",
+    recovery: "RETRY_SAME_COMMAND",
+  });
+  staleSnapshotClient.expectComplete();
+
+  const unrelatedCollisionClient = new ScriptedClient([
+    { marker: "reliable-event:load-endpoint", rows: [ENDPOINT_ROW] },
+    { marker: "reliable-event:load-provider-event", rows: [] },
+    {
+      marker: "reliable-event:insert-webhook-payload",
+      error: { code: "23505", constraint: "webhook_payloads_pkey" },
+    },
+    { marker: "reliable-event:load-provider-event", rows: [] },
+  ]);
+  const { repositories: unrelatedCollisionRepositories } =
+    await createRepositories(unrelatedCollisionClient);
+  await expect(
+    unrelatedCollisionRepositories.verifiedWebhookReceipts.record(RECEIPT),
+  ).rejects.toMatchObject({ code: "ALREADY_EXISTS", recovery: "NONE" });
+  unrelatedCollisionClient.expectComplete();
 
   const publishFailureClient = new ScriptedClient([
     { marker: "reliable-event:load-endpoint", rows: [ENDPOINT_ROW] },
