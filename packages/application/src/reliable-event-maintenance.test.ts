@@ -201,6 +201,30 @@ test("purges expired webhook envelopes while returning identifiers only", async 
   expect(purgeExpired).toHaveBeenCalledWith(command);
 });
 
+test("rejects a purge result larger than the requested limit", async () => {
+  const useCase = createPurgeExpiredWebhookPayloads({
+    transactionManager: managerWith({
+      webhookPayloadRetention: {
+        purgeExpired: async () =>
+          success("PURGE_EXPIRED_WEBHOOK_PAYLOADS", {
+            purgedPayloadIds: [IDS.payload, IDS.alternateOutbox],
+            purgedCount: 2,
+          }),
+      },
+    }),
+  });
+
+  await expect(
+    useCase({
+      schemaVersion: 1,
+      operation: "PURGE_EXPIRED_WEBHOOK_PAYLOADS",
+      expiredAtOrBefore: "2026-09-04T00:00:00.000Z",
+      purgedAt: "2026-09-04T00:00:00.000Z",
+      limit: 1,
+    }),
+  ).rejects.toMatchObject({ code: "PERSISTENCE_FAILURE" });
+});
+
 test("rejects invalid maintenance commands before opening a transaction", async () => {
   const transactionManager = managerWith({});
   const list = createListReadyOutboxJobs({ transactionManager });

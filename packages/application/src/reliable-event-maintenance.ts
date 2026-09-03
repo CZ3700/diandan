@@ -88,6 +88,9 @@ export function createPurgeExpiredWebhookPayloads(
           if (!parsed.success) {
             throw persistenceFailure();
           }
+          if (parsed.data.value.purgedCount > parsedCommand.data.limit) {
+            throw persistenceFailure();
+          }
           return parsed.data.value;
         },
       );
