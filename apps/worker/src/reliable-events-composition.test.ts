@@ -1,0 +1,171 @@
+import { expect, test, vi } from "vitest";
+
+const validEnvironment = Object.freeze({
+  FAN_SUPPORT_DATABASE_URL:
+    "postgresql://test-user:test-password@postgres:5432/fan_support",
+});
+
+async function loadFactory() {
+  const module = (await import("./reliable-events-composition.js").catch(
+    () => undefined,
+  )) as
+    | Readonly<{
+        createWorkerReliableEventsComposition?: (
+          environment: Readonly<Record<string, string | undefined>>,
+          options?: unknown,
+        ) => Promise<
+          Readonly<{ start(): Promise<void>; stop(): Promise<void> }>
+        >;
+      }>
+    | undefined;
+  return module?.createWorkerReliableEventsComposition;
+}
+
+function createHarness() {
+  const queue = Object.freeze({
+    start: vi.fn(async () => undefined),
+    stop: vi.fn(async () => undefined),
+    publishWebhookInbox: vi.fn(async () => undefined),
+    publishOutboxDispatch: vi.fn(async () => undefined),
+  });
+  const transactionManager = Object.freeze({
+    runInReliableEventTransaction: vi.fn(async () => {
+      throw new Error("transaction should not run in this wiring test");
+    }),
+  });
+  const persistence = Object.freeze({
+    transactionManager: Object.freeze({}),
+    reliableEventTransactionManager: transactionManager,
+    close: vi.fn(async () => undefined),
+  });
+  const runtime = Object.freeze({
+    start: vi.fn(async () => undefined),
+    stop: vi.fn(async () => undefined),
+    runMaintenanceOnce: vi.fn(async () => undefined),
+  });
+  const runtimeOptions: unknown[] = [];
+  const queueOptions: unknown[] = [];
+  const persistenceArguments: unknown[][] = [];
+  const createQueue = vi.fn((options: unknown) => {
+    queueOptions.push(options);
+    return queue;
+  });
+  const createPersistence = vi.fn((...arguments_: unknown[]) => {
+    persistenceArguments.push(arguments_);
+    return persistence;
+  });
+  const createRuntime = vi.fn((options: unknown) => {
+    runtimeOptions.push(options);
+    return runtime;
+  });
+  return {
+    createPersistence,
+    createQueue,
+    createRuntime,
+    persistence,
+    persistenceArguments,
+    queue,
+    queueOptions,
+    runtime,
+    runtimeOptions,
+  };
+}
+
+test("wires PostgreSQL, pg-boss VERIFY mode, application handlers, and maintenance", async () => {
+  const factory = await loadFactory();
+  expect(
+    factory,
+    "the Worker reliable-events composition must exist",
+  ).toBeDefined();
+  if (factory === undefined) {
+    return;
+  }
+  const harness = createHarness();
+  const propagation = {
+    schemaVersion: 1,
+    requestId: "30000000-0000-4000-8000-000000000001",
+    traceparent: `00-${"a".repeat(32)}-${"b".repeat(16)}-01`,
+  } as const;
+
+  const composition = await factory(validEnvironment, {
+    factories: {
+      createQueue: harness.createQueue,
+      createPersistence: harness.createPersistence,
+      createRuntime: harness.createRuntime,
+      createId: () => "30000000-0000-4000-8000-000000000002",
+      now: () => "2026-09-04T04:00:00.000Z",
+      createPropagation: () => propagation,
+    },
+  });
+
+  expect(harness.queueOptions).toEqual([
+    {
+      schemaVersion: 1,
+      connectionString: validEnvironment.FAN_SUPPORT_DATABASE_URL,
+      schema: "pgboss",
+      managementMode: "VERIFY",
+      localConcurrency: 4,
+    },
+  ]);
+  expect(harness.persistenceArguments).toEqual([
+    [
+      {
+        connectionString: validEnvironment.FAN_SUPPORT_DATABASE_URL,
+        application_name: "fan-support-worker",
+      },
+    ],
+  ]);
+  expect(harness.runtimeOptions).toHaveLength(1);
+  expect(harness.runtimeOptions[0]).toMatchObject({
+    schemaVersion: 1,
+    queue: harness.queue,
+    consumerKeys: [],
+    intervalMs: 5_000,
+    batchSize: 100,
+  });
+  expect(harness.runtimeOptions[0]).toEqual(
+    expect.objectContaining({
+      processWebhookInbox: expect.any(Function),
+      dispatchOutboxEvent: expect.any(Function),
+      listReadyOutboxJobs: expect.any(Function),
+      purgeExpiredWebhookPayloads: expect.any(Function),
+      now: expect.any(Function),
+      createPropagation: expect.any(Function),
+    }),
+  );
+
+  await composition.start();
+  await composition.stop();
+  await composition.stop();
+  expect(harness.runtime.start).toHaveBeenCalledTimes(1);
+  expect(harness.runtime.stop).toHaveBeenCalledTimes(1);
+  expect(harness.persistence.close).toHaveBeenCalledTimes(1);
+  expect(harness.runtime.stop.mock.invocationCallOrder[0]).toBeLessThan(
+    harness.persistence.close.mock.invocationCallOrder[0] ??
+      Number.MAX_SAFE_INTEGER,
+  );
+});
+
+test("closes persistence even when queue shutdown fails and exposes only a safe error", async () => {
+  const factory = await loadFactory();
+  expect(factory).toBeDefined();
+  if (factory === undefined) {
+    return;
+  }
+  const harness = createHarness();
+  const canary = "PRIVATE_QUEUE_STOP_FAILURE_21698";
+  harness.runtime.stop.mockRejectedValueOnce(new Error(canary));
+  const composition = await factory(validEnvironment, {
+    factories: {
+      createQueue: harness.createQueue,
+      createPersistence: harness.createPersistence,
+      createRuntime: harness.createRuntime,
+    },
+  });
+
+  const failure = await composition.stop().catch((error) => error);
+
+  expect(failure).toMatchObject({ code: "STOP_FAILED" });
+  expect(String(failure)).not.toContain(canary);
+  expect(harness.persistence.close).toHaveBeenCalledTimes(1);
+});

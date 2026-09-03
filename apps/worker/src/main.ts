@@ -59,8 +59,20 @@ async function start(): Promise<void> {
       logger,
       startTelemetry: () => startNodeTelemetry({ service: "worker" }),
       createApplication: async () => {
-        const { createWorkerApplication } = await import("./bootstrap.js");
-        return createWorkerApplication(process.env, { logger });
+        const [
+          { createWorkerApplication },
+          { createWorkerReliableEventsComposition },
+        ] = await Promise.all([
+          import("./bootstrap.js"),
+          import("./reliable-events-composition.js"),
+        ]);
+        const reliableEventsRuntime = createWorkerReliableEventsComposition(
+          process.env,
+        );
+        return createWorkerApplication(process.env, {
+          logger,
+          reliableEventsRuntime,
+        });
       },
     });
     await shutdownCoordinator.attachRuntime(runtime);
