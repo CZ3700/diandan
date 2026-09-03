@@ -17,6 +17,7 @@ const ENDPOINT_ID = "10000000-0000-4000-8000-000000000001";
 const PROVIDER_ACCOUNT_ID = "10000000-0000-4000-8000-000000000002";
 const WEBHOOK_INBOX_ID = "10000000-0000-4000-8000-000000000003";
 const PROVIDER_EVENT_ROW_ID = "10000000-0000-4000-8000-000000000004";
+const PROVIDER_EVENT_REFERENCE = "fake-event/payment/succeeded/1";
 const REQUEST_ID = "10000000-0000-4000-8000-000000000005";
 const CORRELATION_ID = "10000000-0000-4000-8000-000000000006";
 
@@ -88,6 +89,9 @@ function createRepositories() {
           decision: "NEW",
           webhookInboxId: WEBHOOK_INBOX_ID,
           providerEventRowId: PROVIDER_EVENT_ROW_ID,
+          providerAccountId: PROVIDER_ACCOUNT_ID,
+          environment: "TEST",
+          providerEventId: PROVIDER_EVENT_REFERENCE,
           jobEnqueued: true,
         });
       }),
@@ -296,7 +300,7 @@ test("fails closed when a verifier is injected without a production key manager"
               signatureTimestamp: NOW,
               candidate: {
                 schemaVersion: 1,
-                providerEventId: "fake-event/payment/succeeded/1",
+                providerEventId: PROVIDER_EVENT_REFERENCE,
                 occurredAt: "2026-09-04T02:59:59.000Z",
                 externalReference: "fake-payment/1",
                 eventType: "PAYMENT_STATUS",
@@ -359,7 +363,7 @@ test("hashes the decoded raw bytes before persisting verified webhook evidence",
               signatureTimestamp: NOW,
               candidate: {
                 schemaVersion: 1,
-                providerEventId: "fake-event/payment/succeeded/1",
+                providerEventId: PROVIDER_EVENT_REFERENCE,
                 occurredAt: "2026-09-04T02:59:59.000Z",
                 externalReference: "fake-payment/1",
                 eventType: "PAYMENT_STATUS",
