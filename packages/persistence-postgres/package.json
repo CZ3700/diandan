@@ -22,6 +22,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@fan-support/contracts": "workspace:*",
     "@fan-support/persistence-port": "workspace:*",
     "drizzle-orm": "0.45.2",
     "pg": "8.23.0",
@@ -29,7 +30,6 @@
   },
   "devDependencies": {
     "@fan-support/application": "workspace:*",
-    "@fan-support/contracts": "workspace:*",
     "@fan-support/payment-fake": "workspace:*",
     "@types/pg": "8.23.1"
   }

@@ -411,6 +411,9 @@ importers:
 
   packages/persistence-postgres:
     dependencies:
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../contracts
       '@fan-support/persistence-port':
         specifier: workspace:*
         version: link:../persistence-port
@@ -427,9 +430,6 @@ importers:
       '@fan-support/application':
         specifier: workspace:*
         version: link:../application
-      '@fan-support/contracts':
-        specifier: workspace:*
-        version: link:../contracts
       '@fan-support/payment-fake':
         specifier: workspace:*
         version: link:../payment-fake
