@@ -86,10 +86,11 @@ function attemptResponseMatchesCommand(
   const parsed = recordOutboxDispatchAttemptResponseSchema.safeParse(response);
   return (
     parsed.success &&
-    parsed.data.value.dispatchAttemptId === command.dispatchAttemptId &&
     parsed.data.value.outboxEventId === command.outboxEventId &&
     parsed.data.value.consumerKey === command.consumerKey &&
-    parsed.data.value.attemptNumber === command.attemptNumber
+    parsed.data.value.attemptNumber === command.attemptNumber &&
+    (parsed.data.value.decision === "REPLAY" ||
+      parsed.data.value.dispatchAttemptId === command.dispatchAttemptId)
   );
 }
 

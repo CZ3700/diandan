@@ -102,9 +102,10 @@ function attemptResponseMatchesCommand(
     recordWebhookProcessingAttemptResponseSchema.safeParse(response);
   return (
     parsed.success &&
-    parsed.data.value.processingAttemptId === command.processingAttemptId &&
     parsed.data.value.webhookInboxId === command.webhookInboxId &&
-    parsed.data.value.attemptNumber === command.attemptNumber
+    parsed.data.value.attemptNumber === command.attemptNumber &&
+    (parsed.data.value.decision === "REPLAY" ||
+      parsed.data.value.processingAttemptId === command.processingAttemptId)
   );
 }
 

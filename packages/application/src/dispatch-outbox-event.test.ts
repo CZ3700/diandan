@@ -371,6 +371,21 @@ test("rejects a success-attempt response bound to another command", async () => 
   expect(failure).toMatchObject({ code: "PERSISTENCE_FAILURE" });
 });
 
+test("accepts an attempt replay that returns the previously persisted attempt id", async () => {
+  const harness = createHarness();
+  harness.recordAttempt.mockResolvedValueOnce(
+    success("RECORD_OUTBOX_DISPATCH_ATTEMPT", {
+      decision: "REPLAY",
+      dispatchAttemptId: IDS.alternateAttempt,
+      outboxEventId: IDS.outbox,
+      consumerKey: JOB.consumerKey,
+      attemptNumber: 1,
+    }),
+  );
+
+  await expect(harness.run(JOB, DELIVERY)).resolves.toBeUndefined();
+});
+
 test("rejects a failure-attempt response bound to another command", async () => {
   const harness = createHarness({ registered: false });
   harness.recordAttempt.mockResolvedValueOnce(
