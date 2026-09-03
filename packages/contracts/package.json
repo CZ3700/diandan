@@ -16,6 +16,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "entities": "8.0.0",
     "zod": "4.5.4"
   },
   "devDependencies": {

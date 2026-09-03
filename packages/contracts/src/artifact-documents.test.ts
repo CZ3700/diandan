@@ -74,6 +74,53 @@ test("renders deterministic JSON Schema and OpenAPI documents from one registry"
     "NotificationCommand",
     "PublicErrorEnvelope",
     "EventEnvelope",
+    "PublishedIdolView",
+    "PublishedGiftView",
+    "IdolBase",
+    "IdolRevision",
+    "IdolRevisionTranslation",
+    "IdolRevisionMedia",
+    "GiftBase",
+    "GiftRevision",
+    "GiftRevisionTranslation",
+    "GiftVariantDefinition",
+    "GiftVariantIdolEligibility",
+    "GiftRevisionMedia",
+    "HomepageRevision",
+    "HomepageRevisionTranslation",
+    "HomepageSlot",
+    "PublishedHomepageView",
+    "PolicyRevision",
+    "PolicyRevisionTranslation",
+    "PublishedPolicyView",
+    "MediaAsset",
+    "MediaVariant",
+    "MediaMetadataRevision",
+    "MediaMetadataRevisionTranslation",
+    "PublishedMediaView",
+    "PriceBookRevision",
+    "Price",
+    "InventoryLocation",
+    "InventoryItem",
+    "InventoryBalance",
+    "InventoryLedgerEntry",
+    "GiftPublicationCandidate",
+    "IdolPublicationCandidate",
+    "HomepagePublicationCandidate",
+    "PolicyPublicationCandidate",
+    "ContentPublicationCandidate",
+    "TranslationApprovalEvidence",
+    "TranslationPublicationManifestEntry",
+    "ContentPublication",
+    "PublicRevisionSelection",
+    "PublicMediaProjectionSource",
+    "IdolPublicProjectionSource",
+    "GiftPublicProjectionSource",
+    "HomepagePublicProjectionSource",
+    "PolicyPublicProjectionSource",
+    "PublicationValidationReport",
+    "TranslationImportPackage",
+    "TranslationImportValidationReport",
   ];
 
   expect(Object.keys(jsonDefinitions).sort()).toEqual(
@@ -125,6 +172,47 @@ test("renders deterministic JSON Schema and OpenAPI documents from one registry"
   ]) {
     expect(renderedOpenapi).not.toContain(forbiddenField);
   }
+
+  for (const publicViewName of [
+    "PublishedIdolView",
+    "PublishedGiftView",
+    "PublishedHomepageView",
+    "PublishedPolicyView",
+    "PublishedMediaView",
+  ]) {
+    const publicView = JSON.stringify(openapiComponents[publicViewName]);
+    for (const internalField of [
+      "draftRevisionId",
+      "publishedRevisionId",
+      "objectKey",
+      "checksumSha256",
+      "sourceHash",
+      "translatedFromSourceHash",
+      "editorId",
+      "reviewerId",
+      "importBatchId",
+      "processingErrorCode",
+      "rightsReference",
+      "onHand",
+      "reserved",
+    ]) {
+      expect(publicView).not.toContain(`"${internalField}"`);
+    }
+  }
+
+  for (const publicCatalogName of ["PublishedIdolView", "PublishedGiftView"]) {
+    const schema = openapiComponents[publicCatalogName] as JsonObject;
+    const status = (schema["properties"] as JsonObject)["status"] as JsonObject;
+    expect(status["enum"]).toEqual(["active", "paused"]);
+  }
+
+  expect(openapiComponents["Idol"]).toBeUndefined();
+  expect(openapiComponents["Gift"]).toBeUndefined();
+  expect(openapiComponents["PriceBook"]).toBeUndefined();
+  expect(jsonDefinitions["Idol"]).toBeDefined();
+  expect(jsonDefinitions["Gift"]).toBeDefined();
+  expect(jsonDefinitions["PriceBook"]).toBeDefined();
+  expect(openapiComponents["PriceBookRevision"]).toBeDefined();
 
   const publicError = jsonDefinitions["PublicErrorEnvelope"] as JsonObject;
   expect(publicError["additionalProperties"]).toBe(false);

@@ -10,6 +10,8 @@
   "exclude": [
     "dist",
     "node_modules",
+    "src/fixtures.ts",
+    "src/model-fixtures.ts",
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
     "src/**/*.spec.ts",

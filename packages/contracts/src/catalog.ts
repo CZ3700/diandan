@@ -20,11 +20,16 @@ const timestampSchema = z.iso.datetime({ offset: true });
 const positiveVersionSchema = z.number().int().positive();
 // Base-row operational status from spec 9.2/9.3. Immutable revision
 // publication lifecycle and public published projections are owned by P1-02.
-const catalogOperationalStatusSchema = z.enum([
+export const catalogOperationalStatusSchema = z.enum([
   "draft",
   "active",
   "paused",
   "archived",
+]);
+
+export const publicCatalogOperationalStatusSchema = z.enum([
+  "active",
+  "paused",
 ]);
 
 export const idolSchema = z.strictObject({

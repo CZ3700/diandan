@@ -116,6 +116,20 @@ test("defines strict server-owned catalog, offer, price-book, and reservation vi
   expect(
     (catalog?.priceBookSchema as Schema).safeParse(validatedPriceBook).success,
   ).toBe(true);
+  for (const status of ["draft", "archived"] as const) {
+    expect(
+      (catalog?.idolSchema as Schema).safeParse({ ...idol, status }).success,
+    ).toBe(true);
+    expect(
+      (catalog?.giftSchema as Schema).safeParse({ ...gift, status }).success,
+    ).toBe(true);
+  }
+  expect(
+    (catalog?.giftSchema as Schema).safeParse({
+      ...gift,
+      variants: [{ ...gift.variants[0], status: "archived" }],
+    }).success,
+  ).toBe(true);
 
   for (const forbiddenField of [
     { fulfillmentAddress: "private address" },
