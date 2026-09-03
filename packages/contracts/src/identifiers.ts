@@ -1,7 +1,9 @@
 import { z } from "zod";
 
 export const idolIdSchema = z.uuid().brand<"IdolId">();
+export const idolRevisionIdSchema = z.uuid().brand<"IdolRevisionId">();
 export const giftIdSchema = z.uuid().brand<"GiftId">();
+export const giftRevisionIdSchema = z.uuid().brand<"GiftRevisionId">();
 export const giftVariantIdSchema = z.uuid().brand<"GiftVariantId">();
 export const cartItemIdSchema = z.uuid().brand<"CartItemId">();
 export const cartIdSchema = z.uuid().brand<"CartId">();
@@ -16,6 +18,10 @@ export const inventoryReservationIdSchema = z
 export const inventoryLocationIdSchema = z
   .uuid()
   .brand<"InventoryLocationId">();
+export const inventoryItemIdSchema = z.uuid().brand<"InventoryItemId">();
+export const inventoryLedgerEntryIdSchema = z
+  .uuid()
+  .brand<"InventoryLedgerEntryId">();
 export const orderIdSchema = z.uuid().brand<"OrderId">();
 export const publicOrderIdSchema = z.uuid().brand<"PublicOrderId">();
 export const orderItemIdSchema = z.uuid().brand<"OrderItemId">();
@@ -27,16 +33,27 @@ export const providerAccountIdSchema = z.uuid().brand<"ProviderAccountId">();
 export const refundIdSchema = z.uuid().brand<"RefundId">();
 export const disputeIdSchema = z.uuid().brand<"DisputeId">();
 export const mediaAssetIdSchema = z.uuid().brand<"MediaAssetId">();
+export const mediaVariantIdSchema = z.uuid().brand<"MediaVariantId">();
 export const mediaMetadataRevisionIdSchema = z
   .uuid()
   .brand<"MediaMetadataRevisionId">();
 export const translationRevisionIdSchema = z
   .uuid()
   .brand<"TranslationRevisionId">();
+export const translationApprovalIdSchema = z
+  .uuid()
+  .brand<"TranslationApprovalId">();
 export const policyRevisionIdSchema = z.uuid().brand<"PolicyRevisionId">();
 export const policyTranslationRevisionIdSchema = z
   .uuid()
   .brand<"PolicyTranslationRevisionId">();
+export const homepageRevisionIdSchema = z.uuid().brand<"HomepageRevisionId">();
+export const homepageTranslationRevisionIdSchema = z
+  .uuid()
+  .brand<"HomepageTranslationRevisionId">();
+export const contentPublicationIdSchema = z
+  .uuid()
+  .brand<"ContentPublicationId">();
 export const fulfillmentIdSchema = z.uuid().brand<"FulfillmentId">();
 export const notificationDeliveryIdSchema = z
   .uuid()
@@ -100,7 +117,9 @@ export const idempotencyKeySchema = z
   .brand<"IdempotencyKey">();
 
 export type IdolId = z.infer<typeof idolIdSchema>;
+export type IdolRevisionId = z.infer<typeof idolRevisionIdSchema>;
 export type GiftId = z.infer<typeof giftIdSchema>;
+export type GiftRevisionId = z.infer<typeof giftRevisionIdSchema>;
 export type GiftVariantId = z.infer<typeof giftVariantIdSchema>;
 export type CartItemId = z.infer<typeof cartItemIdSchema>;
 export type CartId = z.infer<typeof cartIdSchema>;
@@ -113,6 +132,10 @@ export type InventoryReservationId = z.infer<
   typeof inventoryReservationIdSchema
 >;
 export type InventoryLocationId = z.infer<typeof inventoryLocationIdSchema>;
+export type InventoryItemId = z.infer<typeof inventoryItemIdSchema>;
+export type InventoryLedgerEntryId = z.infer<
+  typeof inventoryLedgerEntryIdSchema
+>;
 export type OrderId = z.infer<typeof orderIdSchema>;
 export type PublicOrderId = z.infer<typeof publicOrderIdSchema>;
 export type OrderItemId = z.infer<typeof orderItemIdSchema>;
@@ -122,14 +145,21 @@ export type ProviderAccountId = z.infer<typeof providerAccountIdSchema>;
 export type RefundId = z.infer<typeof refundIdSchema>;
 export type DisputeId = z.infer<typeof disputeIdSchema>;
 export type MediaAssetId = z.infer<typeof mediaAssetIdSchema>;
+export type MediaVariantId = z.infer<typeof mediaVariantIdSchema>;
 export type MediaMetadataRevisionId = z.infer<
   typeof mediaMetadataRevisionIdSchema
 >;
 export type TranslationRevisionId = z.infer<typeof translationRevisionIdSchema>;
+export type TranslationApprovalId = z.infer<typeof translationApprovalIdSchema>;
 export type PolicyRevisionId = z.infer<typeof policyRevisionIdSchema>;
 export type PolicyTranslationRevisionId = z.infer<
   typeof policyTranslationRevisionIdSchema
 >;
+export type HomepageRevisionId = z.infer<typeof homepageRevisionIdSchema>;
+export type HomepageTranslationRevisionId = z.infer<
+  typeof homepageTranslationRevisionIdSchema
+>;
+export type ContentPublicationId = z.infer<typeof contentPublicationIdSchema>;
 export type FulfillmentId = z.infer<typeof fulfillmentIdSchema>;
 export type NotificationDeliveryId = z.infer<
   typeof notificationDeliveryIdSchema
