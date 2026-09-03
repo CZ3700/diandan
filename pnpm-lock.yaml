@@ -78,12 +78,21 @@ importers:
 
   apps/api:
     dependencies:
+      '@fan-support/application':
+        specifier: workspace:*
+        version: link:../../packages/application
       '@fan-support/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       '@fan-support/observability':
         specifier: workspace:*
         version: link:../../packages/observability
+      '@fan-support/persistence-postgres':
+        specifier: workspace:*
+        version: link:../../packages/persistence-postgres
       '@nestjs/common':
         specifier: 12.0.1
         version: 12.0.1(reflect-metadata@0.2.2)(rxjs@7.8.2)(supports-color@10.2.2)
@@ -137,12 +146,21 @@ importers:
 
   apps/worker:
     dependencies:
+      '@fan-support/application':
+        specifier: workspace:*
+        version: link:../../packages/application
       '@fan-support/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       '@fan-support/observability':
         specifier: workspace:*
         version: link:../../packages/observability
+      '@fan-support/persistence-postgres':
+        specifier: workspace:*
+        version: link:../../packages/persistence-postgres
       '@nestjs/common':
         specifier: 12.0.1
         version: 12.0.1(reflect-metadata@0.2.2)(rxjs@7.8.2)(supports-color@10.2.2)
@@ -166,7 +184,20 @@ importers:
         specifier: 4.23.13
         version: 4.23.13
 
-  packages/application: {}
+  packages/application:
+    dependencies:
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@fan-support/key-management-port':
+        specifier: workspace:*
+        version: link:../key-management-port
+      '@fan-support/payment-port':
+        specifier: workspace:*
+        version: link:../payment-port
+      '@fan-support/persistence-port':
+        specifier: workspace:*
+        version: link:../persistence-port
 
   packages/cache-purge-cdn:
     dependencies:
@@ -389,10 +420,19 @@ importers:
       pg:
         specifier: 8.23.0
         version: 8.23.0
+      pg-boss:
+        specifier: 12.30.0
+        version: 12.30.0
     devDependencies:
+      '@fan-support/application':
+        specifier: workspace:*
+        version: link:../application
       '@fan-support/contracts':
         specifier: workspace:*
         version: link:../contracts
+      '@fan-support/payment-fake':
+        specifier: workspace:*
+        version: link:../payment-fake
       '@types/pg':
         specifier: 8.23.1
         version: 8.23.1
@@ -1613,6 +1653,10 @@ packages:
     resolution: {integrity: sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==}
     engines: {node: '>=18'}
 
+  cron-parser@5.10.0:
+    resolution: {integrity: sha512-izNAxJyRWUP8ljBoDSub5WyrVOUlT4SLGShswE7eoRBpp6QUsSycYxLBMJlbshgPBMcPT/nrfgjNY2918ayv2A==}
+    engines: {node: '>=18'}
+
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
@@ -2110,6 +2154,10 @@ packages:
     resolution: {integrity: sha512-4pfM1Ff0x50o0tQwb5ucw/RzNyD0/YJME6IVcStalZuMWxdt3sR3huStTtxz4PUmvZfRguvDejasvQ2kifR11g==}
     engines: {node: 20 || >=22}
 
+  luxon@3.7.2:
+    resolution: {integrity: sha512-vtEhXh/gNjI9Yg1u4jX/0YVPMvxzHuGgCm6tC5kZyb08yjGWGnqAjGJvcXbqQR2P3MyMEFnRbpcdFS6PBcLqew==}
+    engines: {node: '>=12'}
+
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
@@ -2164,6 +2212,10 @@ packages:
       sass:
         optional: true
 
+  non-error@0.1.0:
+    resolution: {integrity: sha512-TMB1uHiGsHRGv1uYclfhivcnf0/PdFp2pNqRxXjncaAsjYMoisaQJI+SSZCqRq+VliwRTC8tsMQfmrWjDMhkPQ==}
+    engines: {node: '>=20'}
+
   normalize-package-data@8.0.0:
     resolution: {integrity: sha512-RWk+PI433eESQ7ounYxIp67CYuVsS1uYSonX3kA6ps/3LWfjVQa/ptEg6Y3T6uAMq1mWpX9PQ+qx+QaHpsc7gQ==}
     engines: {node: ^20.17.0 || >=22.9.0}
@@ -2209,6 +2261,11 @@ packages:
 
   pathe@2.0.3:
     resolution: {integrity: sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==}
+
+  pg-boss@12.30.0:
+    resolution: {integrity: sha512-ke4Rr/uMJGwqt7DwKoWS9aa6XFlK43C0fMw1Ma0CoJrVxWSjE7ZwFLwz60dGQODESDA2+yq/B474pOH4n3d3CQ==}
+    engines: {node: '>=22.12.0'}
+    hasBin: true
 
   pg-cloudflare@1.4.0:
     resolution: {integrity: sha512-Vo7z/6rrQYxpNRylp4Tlob2elzbh+N/MOQbxFVWCxS7oEx6jF53GTJFxK2WWpKuBRkmiin4Mt+xofFDjx09R0A==}
@@ -2399,6 +2456,10 @@ packages:
     resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
     engines: {node: '>=10'}
     hasBin: true
+
+  serialize-error@13.0.1:
+    resolution: {integrity: sha512-bBZaRwLH9PN5HbLCjPId4dP5bNGEtumcErgOX952IsvOhVPrm3/AeK1y0UHA/QaPG701eg0yEnOKsCOC6X/kaA==}
+    engines: {node: '>=20'}
 
   server-only@0.0.1:
     resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
@@ -3864,6 +3925,10 @@ snapshots:
 
   cookie@1.1.1: {}
 
+  cron-parser@5.10.0:
+    dependencies:
+      luxon: 3.7.2
+
   cross-spawn@7.0.6:
     dependencies:
       path-key: 3.1.1
@@ -4269,6 +4334,8 @@ snapshots:
 
   lru-cache@11.5.2: {}
 
+  luxon@3.7.2: {}
+
   magic-string@0.30.21:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.6.0
@@ -4326,6 +4393,8 @@ snapshots:
       - '@types/node'
       - babel-plugin-macros
 
+  non-error@0.1.0: {}
+
   normalize-package-data@8.0.0:
     dependencies:
       hosted-git-info: 9.0.3
@@ -4368,6 +4437,14 @@ snapshots:
   path-to-regexp@8.4.2: {}
 
   pathe@2.0.3: {}
+
+  pg-boss@12.30.0:
+    dependencies:
+      cron-parser: 5.10.0
+      pg: 8.23.0
+      serialize-error: 13.0.1
+    transitivePeerDependencies:
+      - pg-native
 
   pg-cloudflare@1.4.0:
     optional: true
@@ -4563,6 +4640,11 @@ snapshots:
   secure-json-parse@4.1.0: {}
 
   semver@7.8.5: {}
+
+  serialize-error@13.0.1:
+    dependencies:
+      non-error: 0.1.0
+      type-fest: 5.9.0
 
   server-only@0.0.1: {}
 
