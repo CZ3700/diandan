@@ -14,5 +14,11 @@
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run --config ../../vitest.config.ts --root .",
     "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@fan-support/contracts": "workspace:*",
+    "@fan-support/key-management-port": "workspace:*",
+    "@fan-support/payment-port": "workspace:*",
+    "@fan-support/persistence-port": "workspace:*"
   }
 }

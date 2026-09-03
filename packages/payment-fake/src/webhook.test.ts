@@ -86,8 +86,8 @@ function command(
     verificationKeyReferenceHash: keyReferenceHash,
     rawBodyBase64: Buffer.from(bytes).toString("base64url"),
     headers: {
-      "x-fake-webhook-signature": signature(bytes),
-      "x-fake-webhook-timestamp": signatureTimestamp,
+      "x-fan-support-signature": signature(bytes),
+      "x-fan-support-timestamp": signatureTimestamp,
     },
     receivedAt,
     ...overrides,
@@ -130,15 +130,15 @@ test("verifies exact raw bytes and returns a persistence-free candidate", async 
   ).toBe(true);
   expect(JSON.stringify(input)).toBe(snapshot);
   expect(JSON.stringify(response)).not.toContain(secret.toString("utf8"));
-  expect(JSON.stringify(response)).not.toContain("x-fake-webhook-signature");
+  expect(JSON.stringify(response)).not.toContain("x-fan-support-signature");
 });
 
 test("authenticates before parsing provider JSON", async () => {
   const malformed = Buffer.from("{not-json", "utf8");
   const invalidSignature = command(malformed, {
     headers: {
-      "x-fake-webhook-signature": `v1=${"0".repeat(64)}`,
-      "x-fake-webhook-timestamp": signatureTimestamp,
+      "x-fan-support-signature": `v1=${"0".repeat(64)}`,
+      "x-fan-support-timestamp": signatureTimestamp,
     },
   });
   const validSignature = command(malformed);
@@ -173,8 +173,8 @@ test("rejects byte-level tampering and JSON whitespace changes", async () => {
       verifier().verifyPaymentWebhook(
         command(bytes, {
           headers: {
-            "x-fake-webhook-signature": originalSignature,
-            "x-fake-webhook-timestamp": signatureTimestamp,
+            "x-fan-support-signature": originalSignature,
+            "x-fan-support-timestamp": signatureTimestamp,
           },
         }),
       ),
@@ -192,8 +192,8 @@ test("rejects expired and future signatures only after they authenticate", async
       verifier().verifyPaymentWebhook(
         command(bytes, {
           headers: {
-            "x-fake-webhook-signature": signature(bytes, timestamp),
-            "x-fake-webhook-timestamp": timestamp,
+            "x-fan-support-signature": signature(bytes, timestamp),
+            "x-fan-support-timestamp": timestamp,
           },
         }),
       ),
@@ -245,8 +245,8 @@ test("does not confuse a signature made with another secret for a parse error", 
     verifier().verifyPaymentWebhook(
       command(bytes, {
         headers: {
-          "x-fake-webhook-signature": wrongSecretSignature,
-          "x-fake-webhook-timestamp": signatureTimestamp,
+          "x-fan-support-signature": wrongSecretSignature,
+          "x-fan-support-timestamp": signatureTimestamp,
         },
       }),
     ),

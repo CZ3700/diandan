@@ -12,7 +12,7 @@ import {
 } from "@fan-support/contracts";
 
 export const PROVIDER_FIXTURE_MANIFEST_SHA256 =
-  "cce824819becdb39ee5b22f43a45145b125b2ee4d76bf99dca319396caad25f2" as const;
+  "25afb7c4e2f9cf52dbb2922c91716d920b8a3a6c92a36b28ee9705d03ed5c6b1" as const;
 
 const MAX_MANIFEST_BYTES = 4 * 1_024;
 const MAX_FIXTURE_BYTES = 8 * 1_024;
@@ -213,8 +213,8 @@ const paymentWebhookFixtureSchema = z
     scenario: z.literal("duplicate-and-out-of-order-delivery"),
     signature: z.strictObject({
       algorithm: z.literal("HMAC_SHA256"),
-      timestampHeader: z.literal("x-fake-webhook-timestamp"),
-      signatureHeader: z.literal("x-fake-webhook-signature"),
+      timestampHeader: z.literal("x-fan-support-timestamp"),
+      signatureHeader: z.literal("x-fan-support-signature"),
     }),
     repeatCount: z.literal(10),
     deliveries: z.tuple([

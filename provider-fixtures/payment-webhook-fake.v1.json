@@ -5,8 +5,8 @@
   "scenario": "duplicate-and-out-of-order-delivery",
   "signature": {
     "algorithm": "HMAC_SHA256",
-    "timestampHeader": "x-fake-webhook-timestamp",
-    "signatureHeader": "x-fake-webhook-signature"
+    "timestampHeader": "x-fan-support-timestamp",
+    "signatureHeader": "x-fan-support-signature"
   },
   "repeatCount": 10,
   "deliveries": [

@@ -19,8 +19,8 @@ import {
   type VerifiedWebhookEventCandidate,
 } from "@fan-support/payment-port";
 
-const SIGNATURE_HEADER = "x-fake-webhook-signature";
-const TIMESTAMP_HEADER = "x-fake-webhook-timestamp";
+const SIGNATURE_HEADER = "x-fan-support-signature";
+const TIMESTAMP_HEADER = "x-fan-support-timestamp";
 const MAX_PAST_SKEW_MS = 10 * 60 * 1_000;
 const MAX_FUTURE_SKEW_MS = 5 * 60 * 1_000;
 
