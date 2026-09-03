@@ -49,18 +49,28 @@ export type CartGiftContext = z.infer<typeof cartGiftContextSchema>;
 
 const positiveVersionSchema = z.number().int().positive();
 const timestampSchema = z.iso.datetime({ offset: true });
-const encryptedValueSchema = z
+export const MAX_ENVELOPE_PLAINTEXT_BYTES = 49_152;
+const AES_GCM_ENVELOPE_OVERHEAD_BYTES = 12 + 16;
+const MAX_ENCRYPTED_VALUE_PAYLOAD_CHARACTERS = Math.ceil(
+  ((MAX_ENVELOPE_PLAINTEXT_BYTES + AES_GCM_ENVELOPE_OVERHEAD_BYTES) * 4) / 3,
+);
+export const encryptedValueSchema = z
   .string()
   .min(39)
-  .max(16_391)
-  .regex(/^enc:v1:[A-Za-z0-9_-]{32,16384}$/u)
+  .max("enc:v1:".length + MAX_ENCRYPTED_VALUE_PAYLOAD_CHARACTERS)
+  .regex(
+    new RegExp(
+      `^enc:v1:[A-Za-z0-9_-]{32,${MAX_ENCRYPTED_VALUE_PAYLOAD_CHARACTERS}}$`,
+      "u",
+    ),
+  )
   .brand<"EncryptedValue">();
 const internalCodeSchema = z
   .string()
   .min(1)
   .max(128)
   .regex(/^[A-Z][A-Z0-9_]*$/u);
-const keyVersionSchema = z
+export const keyVersionSchema = z
   .string()
   .min(1)
   .max(128)

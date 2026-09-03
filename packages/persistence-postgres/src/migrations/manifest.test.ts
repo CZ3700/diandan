@@ -151,6 +151,8 @@ describe("loadMigrationManifest", () => {
     "BEGIN TRANSACTION;\nSELECT 1;\n",
     "START TRANSACTION ISOLATION LEVEL SERIALIZABLE;\nSELECT 1;\n",
     "COMMIT AND CHAIN;\n",
+    "END AND CHAIN;\n",
+    "ABORT AND CHAIN;\n",
     "ROLLBACK AND CHAIN;\n",
     "SAVEPOINT migration_step;\n",
     "RELEASE SAVEPOINT migration_step;\n",
@@ -161,6 +163,47 @@ describe("loadMigrationManifest", () => {
       workspaceRoot,
       upSql,
       "DROP TABLE example;\n",
+    );
+
+    await expect(loadMigrationManifest({ workspaceRoot })).rejects.toThrow(
+      "must not contain transaction control",
+    );
+  });
+
+  test("does not let a backslash in a standard string conceal transaction control", async () => {
+    const workspaceRoot = await createWorkspace();
+    await writeSingleMigrationManifest(
+      workspaceRoot,
+      String.raw`SELECT '\'; ROLLBACK;
+`,
+      "DROP TABLE example;\n",
+    );
+
+    await expect(loadMigrationManifest({ workspaceRoot })).rejects.toThrow(
+      "must not contain transaction control",
+    );
+  });
+
+  test("treats a carriage return as the end of a SQL line comment", async () => {
+    const workspaceRoot = await createWorkspace();
+    await writeSingleMigrationManifest(
+      workspaceRoot,
+      "SELECT 1; -- comment\rROLLBACK;\n",
+      "DROP TABLE example;\n",
+    );
+
+    await expect(loadMigrationManifest({ workspaceRoot })).rejects.toThrow(
+      "must not contain transaction control",
+    );
+  });
+
+  test("does not mistake a non-ASCII typed string suffix for an escape prefix", async () => {
+    const workspaceRoot = await createWorkspace();
+    await writeSingleMigrationManifest(
+      workspaceRoot,
+      String.raw`CREATE DOMAIN ée AS text; SELECT ée'\'; ROLLBACK;
+`,
+      "DROP DOMAIN ée;\n",
     );
 
     await expect(loadMigrationManifest({ workspaceRoot })).rejects.toThrow(

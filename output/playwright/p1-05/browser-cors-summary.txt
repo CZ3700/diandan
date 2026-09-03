@@ -1,0 +1,25 @@
+P1-05 real-browser S3 CORS evidence
+Captured: 2026-09-03T21:12:18+08:00
+Playwright CLI: 0.1.19
+Browser context: ignoreHTTPSErrors=true for the launcher-managed ephemeral preview CA
+
+Storefront origin https://localhost:3443
+  Signed source-object PUT status: 200
+  Browser fetch result: ok=true
+  Network Access-Control-Allow-Origin: https://localhost:3443
+  ETag visible to browser: true
+
+Admin origin https://localhost:3444
+  Signed source-object PUT status: 200
+  Browser fetch result: ok=true
+  Network Access-Control-Allow-Origin: https://localhost:3444
+  ETag visible to browser: true
+
+Each upload used a unique object key, exact body byte count, SHA-256 checksum,
+Content-Type, If-None-Match, and the adapter-produced short-lived signed URL.
+The signed URLs and preview credentials were kept out of command output and
+this artifact. The committed S3 integration test separately proves hostile
+origins are rejected and exact preflight headers are returned.
+
+Scope: local preview browser evidence against the S3-compatible emulator; this
+is not AWS, staging, or production evidence.

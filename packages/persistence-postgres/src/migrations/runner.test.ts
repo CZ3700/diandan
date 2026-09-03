@@ -14,20 +14,29 @@ import {
 
 const postgresClientMock = vi.hoisted(() => ({
   calls: [] as Array<Readonly<{ text: string; values: readonly unknown[] }>>,
+  constructedWith: [] as unknown[],
+  connectFailure: false,
   connectCount: 0,
   endCount: 0,
 }));
 
 vi.mock("pg", () => ({
   Client: class MockPostgresClient {
+    public constructor(config: unknown) {
+      postgresClientMock.constructedWith.push(config);
+    }
+
     public async connect(): Promise<void> {
       postgresClientMock.connectCount += 1;
+      if (postgresClientMock.connectFailure) {
+        throw new Error("synthetic connection failure");
+      }
     }
 
     public async query(
       text: string,
       values: readonly unknown[] = [],
-    ): Promise<Readonly<{ rows: readonly unknown[] }>> {
+    ): Promise<Readonly<{ rows: readonly unknown[]; command?: string }>> {
       postgresClientMock.calls.push({ text, values });
       if (text.includes("FROM public.schema_migrations")) {
         return { rows: [] };
@@ -38,7 +47,10 @@ vi.mock("pg", () => ({
       if (text.includes("pg_advisory_unlock")) {
         return { rows: [{ unlocked: true }] };
       }
-      return { rows: [] };
+      return {
+        rows: [],
+        ...(text === "COMMIT" ? { command: "COMMIT" } : {}),
+      };
     }
 
     public async end(): Promise<void> {
@@ -91,6 +103,8 @@ async function createMigrationWorkspace(options?: {
 
 beforeEach(() => {
   postgresClientMock.calls.length = 0;
+  postgresClientMock.constructedWith.length = 0;
+  postgresClientMock.connectFailure = false;
   postgresClientMock.connectCount = 0;
   postgresClientMock.endCount = 0;
 });
@@ -117,6 +131,14 @@ const migration: LoadedMigration = {
   },
 };
 
+const validClientConfig = {
+  host: "database.internal",
+  port: 5432,
+  database: "fan_support_test",
+  user: "fan_support_test",
+  password: "fixture-password",
+} as const;
+
 class EmptyDatabaseSession implements MigrationDatabaseSession {
   public readonly calls: Array<
     Readonly<{ text: string; values: readonly unknown[] }>
@@ -125,7 +147,7 @@ class EmptyDatabaseSession implements MigrationDatabaseSession {
   public async query(
     text: string,
     values: readonly unknown[] = [],
-  ): Promise<Readonly<{ rows: readonly unknown[] }>> {
+  ): Promise<Readonly<{ rows: readonly unknown[]; command?: string }>> {
     this.calls.push({ text, values });
     if (text.includes("FROM public.schema_migrations")) {
       return { rows: [] };
@@ -136,7 +158,10 @@ class EmptyDatabaseSession implements MigrationDatabaseSession {
     if (text.includes("pg_advisory_unlock")) {
       return { rows: [{ unlocked: true }] };
     }
-    return { rows: [] };
+    return {
+      rows: [],
+      ...(text === "COMMIT" ? { command: "COMMIT" } : {}),
+    };
   }
 }
 
@@ -151,7 +176,7 @@ class HistoryDatabaseSession extends EmptyDatabaseSession {
   public override async query(
     text: string,
     values: readonly unknown[] = [],
-  ): Promise<Readonly<{ rows: readonly unknown[] }>> {
+  ): Promise<Readonly<{ rows: readonly unknown[]; command?: string }>> {
     this.calls.push({ text, values });
     if (text.includes("FROM public.schema_migrations")) {
       return { rows: this.history };
@@ -165,7 +190,10 @@ class HistoryDatabaseSession extends EmptyDatabaseSession {
     if (text.includes("pg_advisory_unlock")) {
       return { rows: [{ unlocked: this.unlockResult }] };
     }
-    return { rows: [] };
+    return {
+      rows: [],
+      ...(text === "COMMIT" ? { command: "COMMIT" } : {}),
+    };
   }
 }
 
@@ -173,7 +201,7 @@ class FailingMigrationSession extends EmptyDatabaseSession {
   public override async query(
     text: string,
     values: readonly unknown[] = [],
-  ): Promise<Readonly<{ rows: readonly unknown[] }>> {
+  ): Promise<Readonly<{ rows: readonly unknown[]; command?: string }>> {
     this.calls.push({ text, values });
     if (text.includes("FROM public.schema_migrations")) {
       return { rows: [] };
@@ -187,7 +215,39 @@ class FailingMigrationSession extends EmptyDatabaseSession {
     if (text.includes("pg_advisory_unlock")) {
       return { rows: [{ unlocked: true }] };
     }
-    return { rows: [] };
+    return {
+      rows: [],
+      ...(text === "COMMIT" ? { command: "COMMIT" } : {}),
+    };
+  }
+}
+
+class AmbiguousCommitSession extends EmptyDatabaseSession {
+  public committed = false;
+
+  public override async query(
+    text: string,
+    values: readonly unknown[] = [],
+  ): Promise<Readonly<{ rows: readonly unknown[]; command?: string }>> {
+    if (text === "COMMIT") {
+      this.calls.push({ text, values });
+      this.committed = true;
+      throw new Error("commit response was lost");
+    }
+    return super.query(text, values);
+  }
+}
+
+class ResolvedRollbackCommitSession extends EmptyDatabaseSession {
+  public override async query(
+    text: string,
+    values: readonly unknown[] = [],
+  ): Promise<Readonly<{ rows: readonly unknown[]; command?: string }>> {
+    if (text === "COMMIT") {
+      this.calls.push({ text, values });
+      return { rows: [], command: "ROLLBACK" };
+    }
+    return super.query(text, values);
   }
 }
 
@@ -206,7 +266,8 @@ describe("runMigrationCommandOnSession", () => {
     });
 
     const statements = session.calls.map(({ text }) => text);
-    expect(statements[0]).toContain("pg_try_advisory_lock");
+    expect(statements[0]).toBe("SET search_path = pg_catalog, public");
+    expect(statements[1]).toContain("pg_try_advisory_lock");
     expect(statements).toContain("BEGIN");
     expect(statements).toContain(migration.up.sql);
     expect(statements.some((text) => text.includes("INSERT INTO"))).toBe(true);
@@ -343,6 +404,24 @@ describe("runMigrationCommandOnSession", () => {
     expect(session.calls.map(({ text }) => text)).toContain("ROLLBACK");
     expect(session.calls.map(({ text }) => text)).not.toContain("COMMIT");
   });
+
+  test("requires reconciliation when a COMMIT response is lost", async () => {
+    const session = new AmbiguousCommitSession();
+
+    await expect(
+      runMigrationCommandOnSession(session, [migration], { direction: "up" }),
+    ).rejects.toThrow("commit outcome is unknown; reconciliation required");
+    expect(session.committed).toBe(true);
+    expect(session.calls.map(({ text }) => text)).toContain("ROLLBACK");
+  });
+
+  test("does not report success when PostgreSQL resolves COMMIT as ROLLBACK", async () => {
+    const session = new ResolvedRollbackCommitSession();
+
+    await expect(
+      runMigrationCommandOnSession(session, [migration], { direction: "up" }),
+    ).rejects.toThrow("transaction aborted before commit");
+  });
 });
 
 describe("runMigrations", () => {
@@ -350,21 +429,30 @@ describe("runMigrations", () => {
     const { workspaceRoot } = await createMigrationWorkspace({
       declaredUpHash: "f".repeat(64),
     });
-    const forgedMigration: LoadedMigration = {
-      ...migration,
-      up: { ...migration.up, sql: "SELECT 'forged';\n" },
-    };
 
     await expect(
       runMigrations({
-        clientConfig: {},
+        clientConfig: validClientConfig,
         workspaceRoot,
         command: { direction: "up" },
-        migrations: [forgedMigration],
-      } as unknown as Parameters<typeof runMigrations>[0]),
+      }),
     ).rejects.toThrow("checksum does not match");
     expect(postgresClientMock.connectCount).toBe(0);
     expect(postgresClientMock.calls).toEqual([]);
+  });
+
+  test("rejects unknown top-level options before loading or connecting", async () => {
+    const { workspaceRoot } = await createMigrationWorkspace();
+
+    await expect(
+      runMigrations({
+        clientConfig: validClientConfig,
+        workspaceRoot,
+        command: { direction: "up" },
+        migrations: [migration],
+      } as unknown as Parameters<typeof runMigrations>[0]),
+    ).rejects.toThrow("migration configuration is invalid");
+    expect(postgresClientMock.constructedWith).toEqual([]);
   });
 
   test("executes SQL loaded from the workspace without caller migrations", async () => {
@@ -372,7 +460,7 @@ describe("runMigrations", () => {
 
     await expect(
       runMigrations({
-        clientConfig: {},
+        clientConfig: validClientConfig,
         workspaceRoot,
         command: { direction: "up" },
       } as unknown as Parameters<typeof runMigrations>[0]),
@@ -386,5 +474,81 @@ describe("runMigrations", () => {
     expect(postgresClientMock.connectCount).toBe(1);
     expect(postgresClientMock.endCount).toBe(1);
     expect(postgresClientMock.calls.map(({ text }) => text)).toContain(upSql);
+    expect(postgresClientMock.calls[0]?.text).toBe(
+      "SET search_path = pg_catalog, public",
+    );
+    expect(postgresClientMock.constructedWith).toEqual([
+      expect.objectContaining({
+        host: "database.internal",
+        port: 5432,
+        ssl: false,
+        sslnegotiation: "postgres",
+        options: "-c search_path=pg_catalog,public",
+        client_encoding: "UTF8",
+        replication: "false",
+      }),
+    ]);
+  });
+
+  test.each([
+    { label: "empty", clientConfig: {} },
+    {
+      label: "mixed identity",
+      clientConfig: {
+        ...validClientConfig,
+        connectionString:
+          "postgresql://user:pass@database.internal/fan_support_test",
+      },
+    },
+    {
+      label: "query override",
+      clientConfig: {
+        connectionString:
+          "postgresql://user:pass@database.internal/fan_support_test?host=%2Ftmp%2Fpg&user=evil",
+      },
+    },
+  ])(
+    "rejects $label connection config before constructing a client",
+    async ({ clientConfig }) => {
+      const { workspaceRoot } = await createMigrationWorkspace();
+
+      await expect(
+        runMigrations({
+          clientConfig,
+          workspaceRoot,
+          command: { direction: "up" },
+        } as Parameters<typeof runMigrations>[0]),
+      ).rejects.toThrow("migration configuration is invalid");
+      expect(postgresClientMock.constructedWith).toEqual([]);
+      expect(postgresClientMock.connectCount).toBe(0);
+    },
+  );
+
+  test("rejects an unknown migration direction before any database access", async () => {
+    const { workspaceRoot } = await createMigrationWorkspace();
+
+    await expect(
+      runMigrations({
+        clientConfig: validClientConfig,
+        workspaceRoot,
+        command: { direction: "typo", confirmVersion: "0001" },
+      } as unknown as Parameters<typeof runMigrations>[0]),
+    ).rejects.toThrow("migration command is invalid");
+    expect(postgresClientMock.constructedWith).toEqual([]);
+  });
+
+  test("closes a client whose connection attempt fails", async () => {
+    const { workspaceRoot } = await createMigrationWorkspace();
+    postgresClientMock.connectFailure = true;
+
+    await expect(
+      runMigrations({
+        clientConfig: validClientConfig,
+        workspaceRoot,
+        command: { direction: "up" },
+      }),
+    ).rejects.toThrow("database connection failed");
+    expect(postgresClientMock.connectCount).toBe(1);
+    expect(postgresClientMock.endCount).toBe(1);
   });
 });

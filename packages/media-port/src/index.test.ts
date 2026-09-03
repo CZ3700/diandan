@@ -1,7 +1,10 @@
 import { expect, test } from "vitest";
 
-import { workspacePackageName } from "./index.js";
+import * as mediaPort from "./index.js";
 
-test("exposes the media-port workspace boundary", () => {
-  expect(workspacePackageName).toBe("@fan-support/media-port");
+test("exports the strict media storage command boundary", () => {
+  const exports = mediaPort as Record<string, unknown>;
+  expect(exports["MediaStoragePort"]).toBeUndefined();
+  expect(exports["mediaPortCommandSchema"]).toBeDefined();
+  expect(exports["mediaPortResponseSchema"]).toBeDefined();
 });

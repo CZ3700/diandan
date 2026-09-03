@@ -71,6 +71,7 @@ test("rejects fragments and non-public literal media hosts", () => {
   for (const unsafeUrl of [
     "https://media.example.invalid/object.webp#access-token",
     "https://localhost/object.webp",
+    "https://localhost:7445/object.webp",
     "https://localhost./object.webp",
     "https://preview.localhost/object.webp",
     "https://127.0.0.1/object.webp",
@@ -80,16 +81,39 @@ test("rejects fragments and non-public literal media hosts", () => {
     "https://172.31.255.255/object.webp",
     "https://192.168.1.1/object.webp",
     "https://169.254.169.254/latest/meta-data",
+    "https://100.64.0.1/object.webp",
+    "https://198.18.0.1/object.webp",
+    "https://224.0.0.1/object.webp",
     "https://[::1]/object.webp",
     "https://[fc00::1]/object.webp",
     "https://[fd12:3456:789a::1]/object.webp",
     "https://[fe80::1]/object.webp",
+    "https://[ff02::1]/object.webp",
+    "https://[2001:db8::1]/object.webp",
     "https://[::ffff:127.0.0.1]/object.webp",
     "https://[::ffff:10.0.0.1]/object.webp",
   ]) {
     expect(publicMediaUrlSchema.safeParse(unsafeUrl).success, unsafeUrl).toBe(
       false,
     );
+  }
+});
+
+test("allows only the fixed local preview media origin", () => {
+  expect(
+    publicMediaUrlSchema.safeParse(
+      "https://localhost:7444/derivatives/asset-1/hero.webp",
+    ).success,
+  ).toBe(true);
+  for (const unsafePreviewVariant of [
+    "https://localhost:7445/derivatives/asset-1/hero.webp",
+    "https://127.0.0.1:7444/derivatives/asset-1/hero.webp",
+    "https://10.0.0.1:7444/derivatives/asset-1/hero.webp",
+  ]) {
+    expect(
+      publicMediaUrlSchema.safeParse(unsafePreviewVariant).success,
+      unsafePreviewVariant,
+    ).toBe(false);
   }
 });
 
@@ -147,7 +171,7 @@ test("rejects malformed public media URLs without throwing", () => {
   }
 });
 
-test("keeps generic HTTPS URLs separate from public media credential policy", () => {
+test("keeps public HTTPS URLs separate from public media credential policy", () => {
   const paymentCallback =
     "https://payments.example.invalid/return?signature=provider-signature";
   const azureSas =
@@ -155,11 +179,6 @@ test("keeps generic HTTPS URLs separate from public media credential policy", ()
 
   expect(publicHttpsUrlSchema.safeParse(paymentCallback).success).toBe(true);
   expect(publicHttpsUrlSchema.safeParse(azureSas).success).toBe(true);
-  expect(
-    publicHttpsUrlSchema.safeParse(
-      "https://127.0.0.1/callback?signature=test#provider-state",
-    ).success,
-  ).toBe(true);
   expect(publicMediaUrlSchema.safeParse(paymentCallback).success).toBe(false);
   expect(publicMediaUrlSchema.safeParse(azureSas).success).toBe(false);
 
@@ -173,4 +192,18 @@ test("keeps generic HTTPS URLs separate from public media credential policy", ()
       "https://user:password@payments.example.invalid/return",
     ).success,
   ).toBe(false);
+});
+
+test.each([
+  "https://localhost/callback",
+  "https://login.localhost/callback",
+  "https://127.0.0.1/callback?signature=test#provider-state",
+  "https://169.254.169.254/callback",
+  "https://10.0.0.1/callback",
+  "https://192.168.0.1/callback",
+  "https://[::1]/callback",
+  "https://[fe80::1]/callback",
+  "https://[fc00::1]/callback",
+] as const)("rejects a non-public HTTPS URL: %s", (url) => {
+  expect(publicHttpsUrlSchema.safeParse(url).success).toBe(false);
 });

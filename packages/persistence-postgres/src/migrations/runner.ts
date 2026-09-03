@@ -1,11 +1,16 @@
-import { Client, type ClientConfig } from "pg";
+import { Client } from "pg";
 
+import {
+  normalizePostgresConnectionConfig,
+  type PostgresConnectionConfig,
+} from "../connection-config.js";
 import { loadMigrationManifest, type LoadedMigration } from "./manifest.js";
 
 const migrationLockNamespace = "fan-support-platform:migrations:v1";
 const migrationLockWaitMilliseconds = 15_000;
 const initialMigrationLockBackoffMilliseconds = 25;
 const maximumMigrationLockBackoffMilliseconds = 500;
+const migrationVersionPattern = /^\d{4}$/u;
 
 const createHistoryTableSql = `
 CREATE TABLE IF NOT EXISTS public.schema_migrations (
@@ -46,7 +51,7 @@ export interface MigrationDatabaseSession {
   query(
     text: string,
     values?: readonly unknown[],
-  ): Promise<Readonly<{ rows: readonly unknown[] }>>;
+  ): Promise<Readonly<{ rows: readonly unknown[]; command?: string }>>;
 }
 
 export class MigrationExecutionError extends Error {
@@ -58,6 +63,86 @@ export class MigrationExecutionError extends Error {
 
 function isRecord(value: unknown): value is Readonly<Record<string, unknown>> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function hasExactKeys(
+  value: Readonly<Record<string, unknown>>,
+  expected: readonly string[],
+): boolean {
+  const keys = Object.keys(value).sort();
+  const sortedExpected = [...expected].sort();
+  return (
+    keys.length === sortedExpected.length &&
+    keys.every((key, index) => key === sortedExpected[index])
+  );
+}
+
+function copyOwnDataRecord(
+  value: unknown,
+): Readonly<Record<string, unknown>> | undefined {
+  if (!isRecord(value)) {
+    return undefined;
+  }
+  try {
+    const prototype = Object.getPrototypeOf(value) as object | null;
+    if (prototype !== Object.prototype && prototype !== null) {
+      return undefined;
+    }
+    const output: Record<string, unknown> = {};
+    for (const key of Reflect.ownKeys(value)) {
+      if (typeof key !== "string") {
+        return undefined;
+      }
+      const descriptor = Object.getOwnPropertyDescriptor(value, key);
+      if (
+        descriptor === undefined ||
+        !("value" in descriptor) ||
+        !descriptor.enumerable
+      ) {
+        return undefined;
+      }
+      output[key] = descriptor.value;
+    }
+    return output;
+  } catch {
+    return undefined;
+  }
+}
+
+function parseMigrationCommand(value: unknown): MigrationCommand | undefined {
+  const record = copyOwnDataRecord(value);
+  if (record === undefined) {
+    return undefined;
+  }
+  if (record["direction"] === "up") {
+    if (
+      (!hasExactKeys(record, ["direction"]) &&
+        !hasExactKeys(record, ["direction", "targetVersion"])) ||
+      (record["targetVersion"] !== undefined &&
+        (typeof record["targetVersion"] !== "string" ||
+          !migrationVersionPattern.test(record["targetVersion"])))
+    ) {
+      return undefined;
+    }
+    return Object.freeze({
+      direction: "up" as const,
+      ...(record["targetVersion"] === undefined
+        ? {}
+        : { targetVersion: record["targetVersion"] as string }),
+    });
+  }
+  if (
+    record["direction"] !== "down" ||
+    !hasExactKeys(record, ["direction", "confirmVersion"]) ||
+    typeof record["confirmVersion"] !== "string" ||
+    !migrationVersionPattern.test(record["confirmVersion"])
+  ) {
+    return undefined;
+  }
+  return Object.freeze({
+    direction: "down" as const,
+    confirmVersion: record["confirmVersion"],
+  });
 }
 
 function wait(milliseconds: number): Promise<void> {
@@ -197,7 +282,6 @@ async function executeTransaction(
 
   try {
     await operation();
-    await session.query("COMMIT");
   } catch {
     try {
       await session.query("ROLLBACK");
@@ -208,6 +292,35 @@ async function executeTransaction(
     }
     throw new MigrationExecutionError(failureMessage);
   }
+
+  let commitResult: Readonly<{
+    rows: readonly unknown[];
+    command?: string;
+  }>;
+  try {
+    commitResult = await session.query("COMMIT");
+  } catch {
+    try {
+      await session.query("ROLLBACK");
+    } catch {
+      // A failed COMMIT response is ambiguous regardless of rollback outcome.
+    }
+    throw new MigrationExecutionError(
+      `${failureMessage}: commit outcome is unknown; reconciliation required`,
+    );
+  }
+
+  if (commitResult.command === "COMMIT") {
+    return;
+  }
+  if (commitResult.command === "ROLLBACK") {
+    throw new MigrationExecutionError(
+      `${failureMessage}: transaction aborted before commit`,
+    );
+  }
+  throw new MigrationExecutionError(
+    `${failureMessage}: commit outcome is unknown; reconciliation required`,
+  );
 }
 
 async function applyMigration(
@@ -347,12 +460,23 @@ export async function runMigrationCommandOnSession(
   migrations: readonly LoadedMigration[],
   command: MigrationCommand,
 ): Promise<MigrationCommandResult> {
+  const parsedCommand = parseMigrationCommand(command);
+  if (parsedCommand === undefined) {
+    throw new MigrationExecutionError("migration command is invalid");
+  }
+  try {
+    await session.query("SET search_path = pg_catalog, public");
+  } catch {
+    throw new MigrationExecutionError(
+      "could not establish a safe migration session",
+    );
+  }
   await acquireMigrationLock(session);
 
   let result: MigrationCommandResult | undefined;
   let failure: MigrationExecutionError | undefined;
   try {
-    result = await executeLockedCommand(session, migrations, command);
+    result = await executeLockedCommand(session, migrations, parsedCommand);
   } catch (error: unknown) {
     failure =
       error instanceof MigrationExecutionError
@@ -392,18 +516,50 @@ export async function runMigrationCommandOnSession(
 
 export async function runMigrations(
   options: Readonly<{
-    clientConfig: ClientConfig;
+    clientConfig: PostgresConnectionConfig;
     workspaceRoot: string;
     command: MigrationCommand;
   }>,
 ): Promise<MigrationCommandResult> {
+  const runtimeOptions = copyOwnDataRecord(options);
+  if (
+    runtimeOptions === undefined ||
+    !hasExactKeys(runtimeOptions, ["clientConfig", "workspaceRoot", "command"])
+  ) {
+    throw new MigrationExecutionError("migration configuration is invalid");
+  }
+  const clientConfig = normalizePostgresConnectionConfig(
+    runtimeOptions["clientConfig"],
+  );
+  const workspaceRoot = runtimeOptions["workspaceRoot"];
+  if (
+    clientConfig === undefined ||
+    typeof workspaceRoot !== "string" ||
+    workspaceRoot.trim() === ""
+  ) {
+    throw new MigrationExecutionError("migration configuration is invalid");
+  }
+  const command = parseMigrationCommand(runtimeOptions["command"]);
+  if (command === undefined) {
+    throw new MigrationExecutionError("migration command is invalid");
+  }
   const migrations = await loadMigrationManifest({
-    workspaceRoot: options.workspaceRoot,
+    workspaceRoot,
   });
-  const client = new Client(options.clientConfig);
+  let client: Client;
+  try {
+    client = new Client(clientConfig);
+  } catch {
+    throw new MigrationExecutionError("migration configuration is invalid");
+  }
   try {
     await client.connect();
   } catch {
+    try {
+      await client.end();
+    } catch {
+      // A failed connection still receives a best-effort local teardown.
+    }
     throw new MigrationExecutionError("database connection failed");
   }
 
@@ -411,14 +567,13 @@ export async function runMigrations(
     const session: MigrationDatabaseSession = {
       query: async (text, values = []) => {
         const queryResult = await client.query(text, [...values]);
-        return { rows: queryResult.rows as readonly unknown[] };
+        return {
+          rows: queryResult.rows as readonly unknown[],
+          command: queryResult.command,
+        };
       },
     };
-    return await runMigrationCommandOnSession(
-      session,
-      migrations,
-      options.command,
-    );
+    return await runMigrationCommandOnSession(session, migrations, command);
   } finally {
     try {
       await client.end();

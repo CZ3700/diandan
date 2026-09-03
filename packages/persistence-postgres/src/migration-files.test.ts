@@ -49,6 +49,9 @@ describe("PostgreSQL migration manifest", () => {
       "0004_orders-fulfillment.up.sql",
       "0005_payments-reliable-events.up.sql",
       "0006_publication-heads-outbox.up.sql",
+      "0007_payment-encryption-key-versions.up.sql",
+      "0008_media-object-key-segments.up.sql",
+      "0009_outbox-status-payload.up.sql",
     ];
 
     for (const migrationFile of migrationFiles) {
@@ -550,6 +553,141 @@ describe("PostgreSQL migration manifest", () => {
     );
     expect(paymentMigration).toContain(
       "provider transaction type does not match normalized evidence",
+    );
+  });
+
+  test("widens payment encryption key versions without weakening their contract", async () => {
+    const migrationUp = await readWorkspaceFile(
+      "database/migrations/0007_payment-encryption-key-versions.up.sql",
+    );
+    const migrationDown = await readWorkspaceFile(
+      "database/migrations/0007_payment-encryption-key-versions.down.sql",
+    );
+    const keyVersionPattern = "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$";
+
+    for (const migration of [migrationUp, migrationDown]) {
+      expect(migration).toContain(
+        "LOCK TABLE public.payment_attempts, public.webhook_payloads IN ACCESS EXCLUSIVE MODE",
+      );
+    }
+
+    for (const [table, column, constraint] of [
+      [
+        "payment_attempts",
+        "action_key_version",
+        "payment_attempts_action_key_version_check",
+      ],
+      [
+        "webhook_payloads",
+        "encryption_key_version",
+        "webhook_payloads_encryption_key_version_check",
+      ],
+    ] as const) {
+      expect(migrationUp).toContain(`ALTER TABLE public.${table}`);
+      expect(migrationUp).toContain(
+        `ALTER COLUMN ${column} TYPE text USING ${column}::text`,
+      );
+      expect(migrationUp).toContain(`CONSTRAINT ${constraint}`);
+      expect(migrationUp).toContain(keyVersionPattern);
+      expect(migrationDown).toContain(`DROP CONSTRAINT ${constraint}`);
+      expect(migrationDown).toContain(
+        `ALTER COLUMN ${column} TYPE public.positive_version`,
+      );
+    }
+
+    expect(migrationDown).toContain(
+      "migration 0007 cannot be reverted while non-numeric payment encryption key versions exist",
+    );
+    expect(migrationDown).toContain("9007199254740991");
+    expect(migrationDown).toContain("^[1-9][0-9]{0,15}$");
+  });
+
+  test("aligns the media object-key domain with contract path-segment rules", async () => {
+    const migrationUp = await readWorkspaceFile(
+      "database/migrations/0008_media-object-key-segments.up.sql",
+    );
+    const migrationDown = await readWorkspaceFile(
+      "database/migrations/0008_media-object-key-segments.down.sql",
+    );
+    const lockStatement =
+      "LOCK TABLE public.media_assets, public.media_variants, public.order_items IN ACCESS EXCLUSIVE MODE";
+
+    expect(migrationUp).toContain(lockStatement);
+    expect(migrationDown).toContain(lockStatement);
+    expect(migrationUp).toContain(
+      "migration 0008 cannot be applied while non-canonical media object keys exist",
+    );
+    for (const reference of [
+      "public.media_assets",
+      "public.media_variants",
+      "idol_portrait_object_key",
+      "gift_image_object_key",
+    ]) {
+      expect(migrationUp).toContain(reference);
+    }
+    expect(migrationUp).toContain("VALUE !~ '(^|/)\\.{1,2}(/|$)'");
+    expect(migrationUp).toContain("VALUE !~ '//|/$'");
+    expect(migrationDown).toContain("VALUE !~ '(^|/)\\.\\.(/|$)'");
+    expect(migrationDown).not.toContain("\\.{1,2}");
+  });
+
+  test("persists only the typed status payload required to replay state events", async () => {
+    const migrationUp = await readWorkspaceFile(
+      "database/migrations/0009_outbox-status-payload.up.sql",
+    );
+    const migrationDown = await readWorkspaceFile(
+      "database/migrations/0009_outbox-status-payload.down.sql",
+    );
+
+    expect(migrationUp).toContain(
+      "LOCK TABLE public.outbox_events, public.payment_attempt_events, public.refund_events, public.dispute_events, public.fulfillment_events IN ACCESS EXCLUSIVE MODE",
+    );
+    expect(migrationUp).toContain("ADD COLUMN payload_status text");
+    expect(migrationUp).toContain(
+      "migration 0009 cannot backfill an outbox status without authoritative event history",
+    );
+    for (const table of [
+      "public.payment_attempt_events",
+      "public.refund_events",
+      "public.dispute_events",
+      "public.fulfillment_events",
+    ]) {
+      expect(migrationUp).toContain(table);
+    }
+    expect(migrationUp).toContain(
+      "DISABLE TRIGGER outbox_events_append_only_trigger",
+    );
+    expect(migrationUp).toContain(
+      "ENABLE TRIGGER outbox_events_append_only_trigger",
+    );
+    expect(migrationUp).toContain(
+      "CONSTRAINT outbox_events_payload_status_check",
+    );
+    expect(migrationUp).toContain(
+      "CREATE FUNCTION public.assert_outbox_payload_status_authority()",
+    );
+    expect(migrationUp).toContain(
+      "CREATE CONSTRAINT TRIGGER outbox_payload_status_authority_trigger",
+    );
+    expect(migrationUp).toContain("event.to_status = NEW.payload_status");
+    for (const eventType of [
+      "PAYMENT_STATUS_CHANGED",
+      "REFUND_STATUS_CHANGED",
+      "DISPUTE_STATUS_CHANGED",
+      "FULFILLMENT_STATUS_CHANGED",
+    ]) {
+      expect(migrationUp).toContain(`event_type = '${eventType}'`);
+    }
+    expect(migrationUp).toContain("payload_status IS NULL");
+    expect(migrationDown).toContain(
+      "DROP CONSTRAINT outbox_events_payload_status_check",
+    );
+    expect(migrationDown).toContain("DROP COLUMN payload_status");
+    expect(migrationDown).toContain(
+      "DROP TRIGGER outbox_payload_status_authority_trigger",
+    );
+    expect(migrationDown).toContain(
+      "DROP FUNCTION public.assert_outbox_payload_status_authority()",
     );
   });
 

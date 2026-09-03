@@ -30,7 +30,8 @@ export const mediaObjectKeySchema = z
   .string()
   .min(1)
   .max(1_024)
-  .regex(/^(?!\/)(?!.*(?:^|\/)\.\.(?:\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$/u)
+  .regex(/^(?!\/)(?!.*(?:^|\/)\.{1,2}(?:\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$/u)
+  .refine((value) => !value.includes("//") && !value.endsWith("/"))
   .brand<"MediaObjectKey">();
 
 export const mediaAssetSchema = z.strictObject({

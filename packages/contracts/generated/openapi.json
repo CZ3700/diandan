@@ -3663,8 +3663,12 @@
               },
               "url": {
                 "format": "uri",
+                "maxLength": 8192,
                 "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                "type": "string"
+                "type": "string",
+                "x-runtime-invariants": [
+                  "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                ]
               }
             },
             "required": [
@@ -3687,8 +3691,12 @@
               },
               "url": {
                 "format": "uri",
+                "maxLength": 8192,
                 "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                "type": "string"
+                "type": "string",
+                "x-runtime-invariants": [
+                  "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                ]
               }
             },
             "required": [
@@ -3801,6 +3809,7 @@
               ],
               "type": "string"
             },
+            "maxItems": 5,
             "minItems": 1,
             "type": "array"
           },
@@ -4437,10 +4446,12 @@
                             },
                             "url": {
                               "format": "uri",
+                              "maxLength": 8192,
                               "pattern": "^https:\\/\\/(?![^/?#]*@)",
                               "type": "string",
                               "x-runtime-invariants": [
-                                "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                                "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                                 "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                                 "storage and CDN signing credentials are rejected"
                               ]
@@ -4575,10 +4586,12 @@
                             },
                             "url": {
                               "format": "uri",
+                              "maxLength": 8192,
                               "pattern": "^https:\\/\\/(?![^/?#]*@)",
                               "type": "string",
                               "x-runtime-invariants": [
-                                "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                                "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                                 "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                                 "storage and CDN signing credentials are rejected"
                               ]
@@ -4854,10 +4867,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -4905,10 +4920,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -5095,10 +5112,12 @@
                         },
                         "url": {
                           "format": "uri",
+                          "maxLength": 8192,
                           "pattern": "^https:\\/\\/(?![^/?#]*@)",
                           "type": "string",
                           "x-runtime-invariants": [
-                            "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                            "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                            "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                             "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                             "storage and CDN signing credentials are rejected"
                           ]
@@ -5146,10 +5165,12 @@
                         },
                         "url": {
                           "format": "uri",
+                          "maxLength": 8192,
                           "pattern": "^https:\\/\\/(?![^/?#]*@)",
                           "type": "string",
                           "x-runtime-invariants": [
-                            "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                            "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                            "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                             "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                             "storage and CDN signing credentials are rejected"
                           ]
@@ -5338,8 +5359,12 @@
                       },
                       "url": {
                         "format": "uri",
+                        "maxLength": 8192,
                         "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                        "type": "string"
+                        "type": "string",
+                        "x-runtime-invariants": [
+                          "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                        ]
                       }
                     },
                     "required": [
@@ -5362,8 +5387,12 @@
                       },
                       "url": {
                         "format": "uri",
+                        "maxLength": 8192,
                         "pattern": "^https:\\/\\/(?![^/?#]*@)",
-                        "type": "string"
+                        "type": "string",
+                        "x-runtime-invariants": [
+                          "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected"
+                        ]
                       }
                     },
                     "required": [
@@ -5966,10 +5995,12 @@
                     },
                     "url": {
                       "format": "uri",
+                      "maxLength": 8192,
                       "pattern": "^https:\\/\\/(?![^/?#]*@)",
                       "type": "string",
                       "x-runtime-invariants": [
-                        "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                        "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                        "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                         "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                         "storage and CDN signing credentials are rejected"
                       ]
@@ -6033,10 +6064,12 @@
                     },
                     "url": {
                       "format": "uri",
+                      "maxLength": 8192,
                       "pattern": "^https:\\/\\/(?![^/?#]*@)",
                       "type": "string",
                       "x-runtime-invariants": [
-                        "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                        "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                        "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                         "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                         "storage and CDN signing credentials are rejected"
                       ]
@@ -6539,10 +6572,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -6606,10 +6641,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -6807,10 +6844,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -6874,10 +6913,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -6946,10 +6987,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -7013,10 +7056,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -7754,10 +7799,12 @@
                     },
                     "url": {
                       "format": "uri",
+                      "maxLength": 8192,
                       "pattern": "^https:\\/\\/(?![^/?#]*@)",
                       "type": "string",
                       "x-runtime-invariants": [
-                        "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                        "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                        "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                         "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                         "storage and CDN signing credentials are rejected"
                       ]
@@ -7821,10 +7868,12 @@
                     },
                     "url": {
                       "format": "uri",
+                      "maxLength": 8192,
                       "pattern": "^https:\\/\\/(?![^/?#]*@)",
                       "type": "string",
                       "x-runtime-invariants": [
-                        "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                        "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                        "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                         "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                         "storage and CDN signing credentials are rejected"
                       ]
@@ -7902,10 +7951,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -7969,10 +8020,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -8041,10 +8094,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -8108,10 +8163,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -8612,10 +8669,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -8679,10 +8738,12 @@
                   },
                   "url": {
                     "format": "uri",
+                    "maxLength": 8192,
                     "pattern": "^https:\\/\\/(?![^/?#]*@)",
                     "type": "string",
                     "x-runtime-invariants": [
-                      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                       "storage and CDN signing credentials are rejected"
                     ]
@@ -8808,10 +8869,12 @@
               },
               "url": {
                 "format": "uri",
+                "maxLength": 8192,
                 "pattern": "^https:\\/\\/(?![^/?#]*@)",
                 "type": "string",
                 "x-runtime-invariants": [
-                  "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                  "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                  "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                   "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                   "storage and CDN signing credentials are rejected"
                 ]
@@ -8875,10 +8938,12 @@
               },
               "url": {
                 "format": "uri",
+                "maxLength": 8192,
                 "pattern": "^https:\\/\\/(?![^/?#]*@)",
                 "type": "string",
                 "x-runtime-invariants": [
-                  "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+                  "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                  "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
                   "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
                   "storage and CDN signing credentials are rejected"
                 ]

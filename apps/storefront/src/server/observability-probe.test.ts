@@ -47,7 +47,7 @@ function runtimeEnvironment(
 ): Environment {
   return Object.freeze({
     FAN_SUPPORT_DEPLOYMENT_ENV: deploymentEnvironment,
-    FAN_SUPPORT_INTERNAL_API_ORIGIN: "https://api.preview.example.invalid",
+    FAN_SUPPORT_INTERNAL_API_ORIGIN: "http://api:3002",
   });
 }
 
@@ -175,7 +175,7 @@ test("propagates only W3C trace context and the local request ID", async () => {
 
   expect(fetcher).toHaveBeenCalledOnce();
   const [url, init] = fetcher.mock.calls[0] ?? [];
-  expect(url).toBe("https://api.preview.example.invalid/healthz");
+  expect(url).toBe("http://api:3002/healthz");
   const propagatedHeaders = new Headers(init?.headers);
   expect([...propagatedHeaders.keys()].sort()).toEqual([
     "traceparent",

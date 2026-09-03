@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "synthetic": true,
+  "provider": "fake-notification",
+  "scenario": "accepted-email-delivery",
+  "request": {
+    "channel": "EMAIL",
+    "templateKey": "order.payment.confirmed",
+    "templateVersion": "fixture-v1"
+  },
+  "expected": {
+    "status": "ACCEPTED",
+    "providerReference": "fake-notification/10000000-0000-4000-8000-000000000007",
+    "acceptedAt": "2026-09-03T00:00:00.000Z"
+  }
+}

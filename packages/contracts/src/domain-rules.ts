@@ -218,18 +218,18 @@ export type SelectPaymentRouteInput = z.infer<
 >;
 export type PaymentRouteDecision = z.infer<typeof paymentRouteDecisionSchema>;
 
-const idempotencyActorSchema = z
+export const idempotencyActorSchema = z
   .string()
   .regex(
     /^actor-ref:v1:(guest|admin|system|worker):([a-f0-9]{64}|[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$/u,
   );
-const idempotencyOperationSchema = z
+export const idempotencyOperationSchema = z
   .string()
   .min(2)
   .max(128)
   .regex(/^[a-z][a-z0-9._:-]{1,127}$/u);
-const canonicalRequestHashSchema = z.string().regex(/^[a-f0-9]{64}$/u);
-const safeResultRefSchema = z.union([
+export const canonicalRequestHashSchema = z.string().regex(/^[a-f0-9]{64}$/u);
+export const safeResultRefSchema = z.union([
   z
     .string()
     .regex(
@@ -493,7 +493,7 @@ export const inventoryReservationCreationInputSchema = z.strictObject({
   evaluatedAt: contentTimestampSchema,
 });
 
-const inventoryReservationCreationApplySchema = z
+export const inventoryReservationCreationApplySchema = z
   .strictObject({
     schemaVersion: schemaVersionSchema,
     kind: z.literal("APPLY"),
@@ -611,7 +611,7 @@ export const inventoryReservationTransitionInputSchema = z.strictObject({
   evaluatedAt: contentTimestampSchema,
 });
 
-const inventoryReservationTransitionApplySchema = z
+export const inventoryReservationTransitionApplySchema = z
   .strictObject({
     schemaVersion: schemaVersionSchema,
     kind: z.literal("APPLY"),
@@ -792,11 +792,17 @@ export type InventoryReservationCreationInput = z.infer<
 export type InventoryReservationCreationDecision = z.infer<
   typeof inventoryReservationCreationDecisionSchema
 >;
+export type InventoryReservationCreationApplyDecision = z.infer<
+  typeof inventoryReservationCreationApplySchema
+>;
 export type InventoryReservationTransitionInput = z.infer<
   typeof inventoryReservationTransitionInputSchema
 >;
 export type InventoryReservationTransitionDecision = z.infer<
   typeof inventoryReservationTransitionDecisionSchema
+>;
+export type InventoryReservationTransitionApplyDecision = z.infer<
+  typeof inventoryReservationTransitionApplySchema
 >;
 
 const transitionCodeSchema = z

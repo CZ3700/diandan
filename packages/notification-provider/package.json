@@ -4,6 +4,12 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
+  "dependencies": {
+    "@fan-support/notification-port": "workspace:*"
+  },
+  "devDependencies": {
+    "@fan-support/testing": "workspace:*"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

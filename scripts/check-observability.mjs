@@ -272,18 +272,31 @@ async function validateDockerfile() {
   const observabilityBuild = executableText.indexOf(
     "pnpm --filter @fan-support/observability build",
   );
-  if (observabilityBuild < 0) {
-    errors.push(`${relativePath} must build @fan-support/observability`);
+  const explicitAppBuilds = ["storefront", "admin", "api", "worker"].map(
+    (app) => executableText.indexOf(`pnpm --filter @fan-support/${app} build`),
+  );
+  const usesOrderedExplicitBuilds =
+    observabilityBuild >= 0 &&
+    explicitAppBuilds.every(
+      (appBuild) => appBuild >= 0 && observabilityBuild < appBuild,
+    );
+  if (usesOrderedExplicitBuilds) {
     return;
   }
 
-  for (const app of ["storefront", "admin", "api", "worker"]) {
-    const appBuild = executableText.indexOf(
-      `pnpm --filter @fan-support/${app} build`,
+  const turboConfig = await readJson("turbo.json");
+  const buildDependencies = turboConfig?.tasks?.build?.dependsOn;
+  const usesDependencyAwareTurboBuild =
+    executableText.includes("pnpm turbo run build") &&
+    ["storefront", "admin", "api", "worker"].every((app) =>
+      executableText.includes(`--filter=@fan-support/${app}`),
+    ) &&
+    Array.isArray(buildDependencies) &&
+    buildDependencies.includes("^build");
+  if (!usesDependencyAwareTurboBuild) {
+    errors.push(
+      `${relativePath} must build @fan-support/observability before every app, directly or through Turbo's dependency graph`,
     );
-    if (appBuild < 0 || observabilityBuild > appBuild) {
-      errors.push(`${relativePath} must build observability before ${app}`);
-    }
   }
 }
 

@@ -1,7 +1,9 @@
 import { expect, test } from "vitest";
 
-import { workspacePackageName } from "./index.js";
+import * as identityPort from "./index.js";
 
-test("exposes the identity-port workspace boundary", () => {
-  expect(workspacePackageName).toBe("@fan-support/identity-port");
+test("exports provider-neutral OIDC command and response schemas", () => {
+  const exports = identityPort as Record<string, unknown>;
+  expect(exports["identityPortCommandSchema"]).toBeDefined();
+  expect(exports["identityPortResponseSchema"]).toBeDefined();
 });

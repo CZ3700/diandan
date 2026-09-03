@@ -2,36 +2,7 @@ import { createStructuredLogger } from "@fan-support/observability";
 import { startNodeTelemetry } from "@fan-support/observability/node";
 import { expect, test } from "vitest";
 
-type InjectResponse = Readonly<{
-  statusCode: number;
-  headers: Readonly<Record<string, string | string[] | undefined>>;
-  json: () => unknown;
-}>;
-
-type RuntimeApplication = Readonly<{
-  init: () => Promise<unknown>;
-  close: () => Promise<unknown>;
-  getHttpAdapter: () => Readonly<{
-    getInstance: () => Readonly<{
-      inject: (
-        options: Readonly<{
-          method: string;
-          url: string;
-          headers?: Readonly<Record<string, string>>;
-        }>,
-      ) => Promise<InjectResponse>;
-    }>;
-  }>;
-}>;
-
-type BootstrapModule = Readonly<{
-  createApiApplication: (
-    environment: Readonly<Record<string, string | undefined>>,
-    options: Readonly<{
-      logger: ReturnType<typeof createStructuredLogger>;
-    }>,
-  ) => Promise<RuntimeApplication>;
-}>;
+import { createApiApplication } from "./bootstrap.js";
 
 const testDatabaseUrl = [
   "postgresql://",
@@ -46,18 +17,19 @@ const validEnvironment = Object.freeze({
   FAN_SUPPORT_DEPLOYMENT_ENV: "test",
   FAN_SUPPORT_SITE_ORIGIN: "http://localhost:3002",
   FAN_SUPPORT_DATABASE_URL: testDatabaseUrl,
-  FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "http://object-storage:9000",
-  FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "fan-support-media",
+  FAN_SUPPORT_OBJECT_STORAGE_AUTH_MODE: "static",
+  FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "https://object-storage:9000",
+  FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT: "https://object-storage:9000",
+  FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: "fan-support-media-source",
+  FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: "fan-support-media-derivative",
+  FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN:
+    "https://media.example.invalid",
   FAN_SUPPORT_OBJECT_STORAGE_REGION: "us-east-1",
   FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: "TEST_ACCESS_KEY_ID",
   FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY:
     "TEST_OBJECT_STORAGE_SECRET_VALUE",
   FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true",
 });
-
-async function loadBootstrapModule(): Promise<BootstrapModule> {
-  return (await import("./bootstrap.js")) as BootstrapModule;
-}
 
 test("correlates a safe request ID and W3C trace through Fastify", async () => {
   const telemetry = startNodeTelemetry({ service: "api" });
@@ -66,8 +38,9 @@ test("correlates a safe request ID and W3C trace through Fastify", async () => {
     service: "api",
     write: (line) => lines.push(line),
   });
-  const { createApiApplication } = await loadBootstrapModule();
-  const application = await createApiApplication(validEnvironment, { logger });
+  const application = await createApiApplication(validEnvironment, {
+    logger,
+  });
   const requestId = "52a3f5cf-eb74-462b-9832-5ee86715c33b";
   const traceId = "2af7651916cd43dd8448eb211c80319c";
 
@@ -111,8 +84,9 @@ test("replaces an invalid ID and keeps unmatched request data out of errors and 
     service: "api",
     write: (line) => lines.push(line),
   });
-  const { createApiApplication } = await loadBootstrapModule();
-  const application = await createApiApplication(validEnvironment, { logger });
+  const application = await createApiApplication(validEnvironment, {
+    logger,
+  });
   const emailCanary = ["private", "@example.invalid"].join("");
   const tokenCanary = ["ORDER", "_TOKEN", "_CANARY_31872"].join("");
 

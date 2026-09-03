@@ -2,36 +2,7 @@ import { createStructuredLogger } from "@fan-support/observability";
 import { startNodeTelemetry } from "@fan-support/observability/node";
 import { expect, test } from "vitest";
 
-type InjectResponse = Readonly<{
-  statusCode: number;
-  headers: Readonly<Record<string, string | string[] | undefined>>;
-  json: () => unknown;
-}>;
-
-type RuntimeApplication = Readonly<{
-  init: () => Promise<unknown>;
-  close: () => Promise<unknown>;
-  getHttpAdapter: () => Readonly<{
-    getInstance: () => Readonly<{
-      inject: (
-        options: Readonly<{
-          method: string;
-          url: string;
-          headers?: Readonly<Record<string, string>>;
-        }>,
-      ) => Promise<InjectResponse>;
-    }>;
-  }>;
-}>;
-
-type BootstrapModule = Readonly<{
-  createWorkerApplication: (
-    environment: Readonly<Record<string, string | undefined>>,
-    options: Readonly<{
-      logger: ReturnType<typeof createStructuredLogger>;
-    }>,
-  ) => Promise<RuntimeApplication>;
-}>;
+import { createWorkerApplication } from "./bootstrap.js";
 
 const testDatabaseUrl = [
   "postgresql://",
@@ -46,8 +17,13 @@ const validEnvironment = Object.freeze({
   FAN_SUPPORT_DEPLOYMENT_ENV: "test",
   FAN_SUPPORT_SITE_ORIGIN: "http://localhost:3003",
   FAN_SUPPORT_DATABASE_URL: testDatabaseUrl,
-  FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "http://object-storage:9000",
-  FAN_SUPPORT_OBJECT_STORAGE_BUCKET: "fan-support-media",
+  FAN_SUPPORT_OBJECT_STORAGE_AUTH_MODE: "static",
+  FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "https://object-storage:9000",
+  FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT: "https://object-storage:9000",
+  FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: "fan-support-media-source",
+  FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: "fan-support-media-derivative",
+  FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN:
+    "https://media.example.invalid",
   FAN_SUPPORT_OBJECT_STORAGE_REGION: "us-east-1",
   FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: "TEST_ACCESS_KEY_ID",
   FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY:
@@ -62,8 +38,6 @@ test("correlates Worker HTTP requests without logging private headers", async ()
     service: "worker",
     write: (line) => lines.push(line),
   });
-  const { createWorkerApplication } =
-    (await import("./bootstrap.js")) as BootstrapModule;
   const application = await createWorkerApplication(validEnvironment, {
     logger,
   });

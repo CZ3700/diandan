@@ -8,8 +8,24 @@ const sha256Pattern = /^[a-f0-9]{64}$/u;
 const versionPattern = /^\d{4}$/u;
 const namePattern = /^[a-z][a-z0-9-]*$/u;
 const dollarQuoteDelimiterPattern = /^\$(?:[A-Za-z_][A-Za-z0-9_]*)?\$/u;
-const sqlWordStartPattern = /[A-Za-z_]/u;
-const sqlWordPartPattern = /[A-Za-z0-9_$]/u;
+const asciiSqlWordStartPattern = /[A-Za-z_]/u;
+const asciiSqlWordPartPattern = /[A-Za-z0-9_$]/u;
+
+function isSqlWordStart(character: string): boolean {
+  const codePoint = character.codePointAt(0);
+  return (
+    asciiSqlWordStartPattern.test(character) ||
+    (codePoint !== undefined && codePoint >= 0x80)
+  );
+}
+
+function isSqlWordPart(character: string): boolean {
+  const codePoint = character.codePointAt(0);
+  return (
+    asciiSqlWordPartPattern.test(character) ||
+    (codePoint !== undefined && codePoint >= 0x80)
+  );
+}
 
 type JsonRecord = Readonly<Record<string, unknown>>;
 
@@ -190,6 +206,8 @@ function startsTransactionControl(words: readonly string[]): boolean {
   return (
     first === "BEGIN" ||
     first === "COMMIT" ||
+    first === "END" ||
+    first === "ABORT" ||
     first === "ROLLBACK" ||
     first === "SAVEPOINT" ||
     first === "RELEASE" ||
@@ -213,7 +231,14 @@ function containsTransactionControl(sql: string): boolean {
     const nextCharacter = sql[index + 1];
 
     if (character === "-" && nextCharacter === "-") {
-      const lineEnd = sql.indexOf("\n", index + 2);
+      const newlineIndex = sql.indexOf("\n", index + 2);
+      const carriageReturnIndex = sql.indexOf("\r", index + 2);
+      const lineEnd =
+        newlineIndex === -1
+          ? carriageReturnIndex
+          : carriageReturnIndex === -1
+            ? newlineIndex
+            : Math.min(newlineIndex, carriageReturnIndex);
       index = lineEnd === -1 ? sql.length : lineEnd + 1;
       continue;
     }
@@ -236,9 +261,14 @@ function containsTransactionControl(sql: string): boolean {
     }
 
     if (character === "'") {
+      const prefix = sql[index - 1];
+      const beforePrefix = sql[index - 2];
+      const backslashEscapes =
+        (prefix === "E" || prefix === "e") &&
+        (beforePrefix === undefined || !isSqlWordPart(beforePrefix));
       index += 1;
       while (index < sql.length) {
-        if (sql[index] === "\\") {
+        if (backslashEscapes && sql[index] === "\\") {
           index += 2;
         } else if (sql[index] === "'" && sql[index + 1] === "'") {
           index += 2;
@@ -285,10 +315,10 @@ function containsTransactionControl(sql: string): boolean {
       continue;
     }
 
-    if (character !== undefined && sqlWordStartPattern.test(character)) {
+    if (character !== undefined && isSqlWordStart(character)) {
       const wordStart = index;
       index += 1;
-      while (index < sql.length && sqlWordPartPattern.test(sql[index] ?? "")) {
+      while (index < sql.length && isSqlWordPart(sql[index] ?? "")) {
         index += 1;
       }
       if (leadingWords.length < 2) {

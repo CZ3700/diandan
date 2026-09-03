@@ -33,12 +33,12 @@ import { schemaVersionSchema } from "./versioning.js";
 
 const timestampSchema = z.iso.datetime({ offset: true });
 const positiveVersionSchema = z.number().int().positive();
-const paymentMethodSchema = z
+export const paymentMethodSchema = z
   .string()
   .min(1)
   .max(64)
   .regex(/^[a-z0-9][a-z0-9_-]*$/u);
-const paymentEnvironmentSchema = z.enum(["TEST", "LIVE"]);
+export const paymentEnvironmentSchema = z.enum(["TEST", "LIVE"]);
 
 export const paymentAttemptStatusSchema = z.enum([
   "CREATED",
@@ -128,7 +128,13 @@ export const paymentCapabilitySchema = z
     currency: currencySchema,
     minimumAmountMinor: minorAmountSchema,
     maximumAmountMinor: minorAmountSchema,
-    actionTypes: z.array(paymentActionTypeSchema).min(1),
+    actionTypes: z
+      .array(paymentActionTypeSchema)
+      .min(1)
+      .max(5)
+      .refine((actions) => new Set(actions).size === actions.length, {
+        message: "payment capability action types must be unique",
+      }),
     available: z.boolean(),
   })
   .refine(

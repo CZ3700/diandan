@@ -7,23 +7,40 @@ export const slugSchema = z
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u)
   .brand<"Slug">();
 
-export const publicHttpsUrlSchema = z
+const httpsUrlSchema = z
   .url({ protocol: /^https$/u })
+  .max(8_192)
   .regex(/^https:\/\/(?![^/?#]*@)/u)
-  .meta({ format: "uri" })
-  .brand<"PublicHttpsUrl">();
+  .meta({ format: "uri" });
+
+export const credentiallessHttpsUrlSchema =
+  httpsUrlSchema.brand<"CredentiallessHttpsUrl">();
 
 const publicMediaFormats = new Set(["avif", "webp", "jpeg"]);
+// This is the single TLS origin exposed by the local Docker preview. It is not
+// a production capability and every other localhost/private literal stays blocked.
+const localPreviewMediaOrigin = "https://localhost:7444";
 
 function isBlockedIpv4Address(octets: readonly number[]): boolean {
-  const [first, second] = octets;
+  const [first, second, third] = octets;
   return (
     first === 0 ||
     first === 10 ||
+    (first === 100 && second !== undefined && second >= 64 && second <= 127) ||
     first === 127 ||
     (first === 169 && second === 254) ||
     (first === 172 && second !== undefined && second >= 16 && second <= 31) ||
-    (first === 192 && second === 168)
+    (first === 192 && second === 0 && third === 0) ||
+    (first === 192 && second === 0 && third === 2) ||
+    (first === 192 && second === 31 && third === 196) ||
+    (first === 192 && second === 52 && third === 193) ||
+    (first === 192 && second === 88 && third === 99) ||
+    (first === 192 && second === 168) ||
+    (first === 192 && second === 175 && third === 48) ||
+    (first === 198 && (second === 18 || second === 19)) ||
+    (first === 198 && second === 51 && third === 100) ||
+    (first === 203 && second === 0 && third === 113) ||
+    (first !== undefined && first >= 224)
   );
 }
 
@@ -84,6 +101,13 @@ function isBlockedIpLiteral(hostname: string): boolean {
     (ipv6[7] === 0 || ipv6[7] === 1);
   const isUniqueLocal = first !== undefined && (first & 0xfe00) === 0xfc00;
   const isLinkLocal = first !== undefined && (first & 0xffc0) === 0xfe80;
+  const isGlobalUnicast =
+    first !== undefined && first >= 0x2000 && first <= 0x3fff;
+  const isDocumentation = first === 0x2001 && ipv6[1] === 0x0db8;
+  const isBenchmarking =
+    first === 0x2001 && ipv6[1] === 0x0002 && ipv6[2] === 0;
+  const isTeredo = first === 0x2001 && ipv6[1] === 0;
+  const isDeprecatedSixToFour = first === 0x2002;
   const isIpv4Embedded =
     ipv6.slice(0, 5).every((segment) => segment === 0) &&
     (ipv6[5] === 0 || ipv6[5] === 0xffff);
@@ -100,9 +124,40 @@ function isBlockedIpLiteral(hostname: string): boolean {
     isUnspecifiedOrLoopback ||
     isUniqueLocal ||
     isLinkLocal ||
+    !isGlobalUnicast ||
+    isDocumentation ||
+    isBenchmarking ||
+    isTeredo ||
+    isDeprecatedSixToFour ||
     (embeddedIpv4 !== undefined && isBlockedIpv4Address(embeddedIpv4))
   );
 }
+
+function isSafePublicHttpsUrl(value: string): boolean {
+  try {
+    const hostname = new URL(value).hostname.toLowerCase().replace(/\.$/u, "");
+    return (
+      hostname !== "localhost" &&
+      !hostname.endsWith(".localhost") &&
+      !isBlockedIpLiteral(hostname)
+    );
+  } catch {
+    return false;
+  }
+}
+
+export const publicHttpsUrlSchema = credentiallessHttpsUrlSchema
+  .refine(
+    isSafePublicHttpsUrl,
+    "public HTTPS URL must not use localhost or a non-public IP literal",
+  )
+  .meta({
+    format: "uri",
+    "x-runtime-invariants": [
+      "userinfo, localhost, private, loopback, link-local, documentation, benchmarking, multicast, and reserved IP literals are rejected",
+    ],
+  })
+  .brand<"PublicHttpsUrl">();
 
 function hasSafePublicMediaQueryParameters(url: URL): boolean {
   const seen = new Set<string>();
@@ -137,13 +192,15 @@ function isSafePublicMediaUrl(value: string): boolean {
   try {
     const url = new URL(value);
     const hostname = url.hostname.toLowerCase().replace(/\.$/u, "");
+    const isFixedLocalPreview = url.origin === localPreviewMediaOrigin;
     if (
       value.includes("#") ||
       url.username !== "" ||
       url.password !== "" ||
-      hostname === "localhost" ||
-      hostname.endsWith(".localhost") ||
-      isBlockedIpLiteral(hostname)
+      (!isFixedLocalPreview &&
+        (hostname === "localhost" ||
+          hostname.endsWith(".localhost") ||
+          isBlockedIpLiteral(hostname)))
     ) {
       return false;
     }
@@ -153,7 +210,7 @@ function isSafePublicMediaUrl(value: string): boolean {
   }
 }
 
-export const publicMediaUrlSchema = publicHttpsUrlSchema
+export const publicMediaUrlSchema = httpsUrlSchema
   .refine(
     isSafePublicMediaUrl,
     "public media URL must use a public host without credentials or fragments and only supported transformation parameters",
@@ -161,7 +218,8 @@ export const publicMediaUrlSchema = publicHttpsUrlSchema
   .meta({
     format: "uri",
     "x-runtime-invariants": [
-      "userinfo, fragments, localhost, and private, loopback, or link-local IP literals are rejected",
+      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
       "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
       "storage and CDN signing credentials are rejected",
     ],

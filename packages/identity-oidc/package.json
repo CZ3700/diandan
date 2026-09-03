@@ -4,6 +4,13 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
+  "dependencies": {
+    "@fan-support/identity-port": "workspace:*"
+  },
+  "devDependencies": {
+    "@fan-support/testing": "workspace:*",
+    "@types/node": "24.13.3"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

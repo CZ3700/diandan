@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "synthetic": true,
+  "provider": "fixture-oidc",
+  "scenario": "verified-admin-principal",
+  "issuer": "https://identity.example.invalid",
+  "authorizationEndpoint": "https://identity.example.invalid/authorize",
+  "principal": {
+    "subject": "fixture-admin-subject",
+    "authenticatedAt": "2026-09-03T00:00:00.000Z",
+    "mfa": true
+  },
+  "expected": {
+    "stateBound": true,
+    "nonceBound": true,
+    "issuerBound": true,
+    "clientIdBound": true,
+    "redirectUriBound": true,
+    "receivedAtBound": true
+  }
+}
