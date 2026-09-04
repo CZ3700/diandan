@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "sideEffects": [
+    "./styles/interactions.css",
     "./styles/primitives.css"
   ],
   "exports": {
@@ -15,6 +16,11 @@
       "types": "./dist/client.d.ts",
       "import": "./dist/client.js"
     },
+    "./interactions": {
+      "types": "./dist/interactions.d.ts",
+      "import": "./dist/interactions.js"
+    },
+    "./interactions.css": "./styles/interactions.css",
     "./primitives.css": "./styles/primitives.css"
   },
   "scripts": {
@@ -23,6 +29,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@base-ui/react": "1.7.0",
     "@fan-support/contracts": "workspace:*",
     "class-variance-authority": "0.7.1"
   },
