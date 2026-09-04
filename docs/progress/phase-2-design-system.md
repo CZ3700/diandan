@@ -16,7 +16,7 @@
 | P2-02 | DONE | Codex `/root` | P2-01 | Git `9f33dad` + evidence `d40a79b`、PR #11/run `33835758064`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
 | P2-03 | DONE | Codex `/root` | P2-02 | 实现 `0f86e6c` + evidence `ef6e16a` + CI 稳定化 `f6e19c9`；[PR #12](https://github.com/CZ3700/diandan/pull/12)/run `33874955057`、本地、浏览器、fresh clone 与两路独立终审全绿 |
 | P2-04 | DONE | Codex `/root` | P2-02 | 六个组合组件、内部八语言展示页、16 场景/10 axe/18 截图、全仓门禁与独立终审通过 |
-| P2-05 | READY | — | P2-03、P2-04 | 依赖完成且 Lane B 已释放；可领取三段标志性动效 |
+| P2-05 | IN_PROGRESS | Codex `/root` | P2-03、P2-04 | 已领取；按测试先行实现三段标志性动效与 reduced-motion 等价状态 |
 | P2-06 | PENDING | — | P2-04、P2-05 | 人工品牌样板批准 |
 
 ## 必须证明
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01、P2-02 与 P2-03 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-04 已通过本地产品代码、浏览器与独立终验并释放 Lane B，P2-05 现为 `READY`。Phase 2 的 P2-05/P2-06、真实设备动效性能与完整人工品牌批准尚未取得，Phase 3 继续锁定。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01、P2-02 与 P2-03 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-04 已通过本地产品代码、浏览器与独立终验并释放 Lane B，P2-05 已由 Codex `/root` 领取并进入实现。Phase 2 的 P2-05/P2-06、真实设备动效性能与完整人工品牌批准尚未取得，Phase 3 继续锁定。
 
 ## P2-01 执行卡
 
@@ -239,3 +239,20 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 | 8 | PASS | 未新增依赖；React/CVA/Base UI/axe/Playwright 均沿用现有显式 manifest/lockfile，官方 high audit 无已知漏洞 |
 | 9 | PASS | server composite、client interaction、媒体状态叶子、Storefront adapter 与证据 runner 可分别替换，不触及 commerce/domain/provider |
 | 10 | PASS | focused 80+102+11+10 tests、16 场景浏览器、完整 PG/S3/format/lint/typecheck/test/build、secret/audit 与独立终审全部通过 |
+
+## P2-05 执行卡
+
+**本次执行登记**：
+
+- Owner：Codex `/root`
+- 开始：`2026-09-04T23:36:03+08:00`（`2026-09-04T15:36:03Z`）
+- 输入：P2-01 已冻结的 motion/design tokens，P2-02 的可访问原语，P2-03 的 overlay/live-region/输入方式边界，以及 P2-04 的 Hero、IdolPortrait、GiftTile 等稳定布局组合组件与八 locale 内部展示页。
+- 精确输出：在 `packages/ui` 增加独立、source-owned 的客户端 motion 入口与 token-only 样式，实现主海报进入、偶像切换、加购确认/成功三类标志性动效；在 Storefront 既有 dev/test/preview-only、noindex 树中提供可重复交互样板，不新增公开业务页面。
+- 动效命题：主海报以克制的透明度和轻位移建立人物存在感，总时长 600–900 ms；偶像主视觉在 360 ms 内解释上下文切换并保持焦点、滚动和稳定尺寸；加购在 220–320 ms 内以可中断反馈确认动作，成功闭环不超过 900 ms 且结束后静止。
+- 等价状态：键盘触发和 `prefers-reduced-motion: reduce` 直接进入清晰最终状态，取消位移、视差和自动序列但保留选中、计数、文本/live-region 等非颜色唯一反馈；触摸不依赖 hover，不增加滚动劫持、自动轮播、持续漂浮或输入延迟。
+- 性能边界：预定动效优先 CSS，仅动画 `transform`、`opacity` 等合成友好属性；不引入第二套重型动效框架，不动画布局尺寸，不使用 `transition: all`、夸张弹跳或持续动画。主视觉媒体继续固定尺寸与裁切，交互时不改变文档布局。
+- 明确不做：不新增真实购物车/订单状态机、支付成功判定、API、数据库、migration、内容发布、正式品牌/Logo/肖像或 P2-06 人工批准；按用户要求，本阶段不实施或验收 AWS/Akamai、部署、云资源、staging、production 与运维。
+- TDD 计划：先写失败测试锁定精确导出、时长上限、允许属性、稳定布局、输入方式、焦点/滚动保持、重复快速触发、live-region、成功静态终态及 reduced-motion 零位移；确认 RED 后逐段最小实现并收敛重复。
+- 浏览器与质量计划：production build 在 preview gate 下覆盖 390×844 与 1440×900，并抽查六基准视口、320 CSS px、七 locale + `en-XA`、触摸、键盘、快速重复触发、reduced-motion、axe、CLS/long-task/帧间隔、横向溢出与 console/page/request 错误；证据写入 `output/playwright/p2-05/`。真机录屏/帧率只有在可识别的物理移动设备上取得才计入通过，否则明确保留门禁，不以桌面设备模拟替代。
+- 风险映射：`R-07` 以严格时长、合成属性、无布局动画、输入方式降级、reduced-motion、浏览器性能探针与独立复核控制；真实设备掉帧时优先删减动效。
+- 并发/所有权：P2-05 是唯一 Lane B executor；Codex `/root` 对 `packages/ui` motion API/样式/测试、Storefront 内部样板、静态/browser gate 及最终状态负责。子代理只做只读架构审计、测试矩阵或独立复核，不形成第二 Lane executor。
