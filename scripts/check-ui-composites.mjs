@@ -44,12 +44,22 @@ const EXPECTED_PACKAGE_EXPORTS = Object.freeze({
     import: "./dist/interactions.js",
   }),
   "./interactions.css": "./styles/interactions.css",
+  "./motion": Object.freeze({
+    types: "./dist/motion.d.ts",
+    import: "./dist/motion.js",
+  }),
+  "./motion-client": Object.freeze({
+    types: "./dist/motion-client.d.ts",
+    import: "./dist/motion-client.js",
+  }),
+  "./motion.css": "./styles/motion.css",
   "./primitives.css": "./styles/primitives.css",
 });
 
 const EXPECTED_SIDE_EFFECTS = Object.freeze([
   "./styles/composites.css",
   "./styles/interactions.css",
+  "./styles/motion.css",
   "./styles/primitives.css",
 ]);
 

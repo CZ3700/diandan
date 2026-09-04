@@ -72,6 +72,18 @@ const REVIEWED_P2_04_PACKAGE_EXPORTS = Object.freeze({
   "./composites.css": "./styles/composites.css",
 });
 
+const REVIEWED_P2_05_PACKAGE_EXPORTS = Object.freeze({
+  "./motion": Object.freeze({
+    types: "./dist/motion.d.ts",
+    import: "./dist/motion.js",
+  }),
+  "./motion-client": Object.freeze({
+    types: "./dist/motion-client.d.ts",
+    import: "./dist/motion-client.js",
+  }),
+  "./motion.css": "./styles/motion.css",
+});
+
 const REVIEWED_P2_03_DEPENDENCIES = Object.freeze({
   "@base-ui/react": "1.7.0",
 });
@@ -239,7 +251,8 @@ function validatePackageExports(manifest, errors) {
     if (
       !(subpath in PACKAGE_EXPORTS) &&
       !(subpath in REVIEWED_P2_03_PACKAGE_EXPORTS) &&
-      !(subpath in REVIEWED_P2_04_PACKAGE_EXPORTS)
+      !(subpath in REVIEWED_P2_04_PACKAGE_EXPORTS) &&
+      !(subpath in REVIEWED_P2_05_PACKAGE_EXPORTS)
     ) {
       errors.push(`@fan-support/ui has unexpected public export ${subpath}`);
     }
@@ -302,6 +315,7 @@ function validateManifest(uiManifest, appManifests, errors) {
     ...(uiManifest?.exports?.["./interactions.css"]
       ? ["./styles/interactions.css"]
       : []),
+    ...(uiManifest?.exports?.["./motion.css"] ? ["./styles/motion.css"] : []),
     "./styles/primitives.css",
   ];
   if (
