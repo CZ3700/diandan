@@ -484,9 +484,691 @@ function validateCanonicalLocaleSource(
   }
 }
 
+function unwrapExpression(expression) {
+  let current = expression;
+  while (ts.isParenthesizedExpression(current)) {
+    current = current.expression;
+  }
+  return current;
+}
+
+function expressionPath(expression) {
+  const current = unwrapExpression(expression);
+  if (ts.isIdentifier(current)) {
+    return [current.text];
+  }
+  if (ts.isPropertyAccessExpression(current)) {
+    const parent = expressionPath(current.expression);
+    return parent === undefined ? undefined : [...parent, current.name.text];
+  }
+  return undefined;
+}
+
+function pathMatches(expression, expected) {
+  const actual = expressionPath(expression);
+  return (
+    actual !== undefined &&
+    actual.length === expected.length &&
+    actual.every((part, index) => part === expected[index])
+  );
+}
+
+function callExpressionFromStatement(statement) {
+  if (!ts.isExpressionStatement(statement)) {
+    return undefined;
+  }
+  const expression = unwrapExpression(statement.expression);
+  return ts.isCallExpression(expression) ? expression : undefined;
+}
+
+function directNamedFunctionLike(container, name) {
+  const matches = [];
+  for (const statement of container.statements ?? []) {
+    if (ts.isFunctionDeclaration(statement) && statement.name?.text === name) {
+      matches.push(statement);
+      continue;
+    }
+    if (!ts.isVariableStatement(statement)) {
+      continue;
+    }
+    for (const declaration of statement.declarationList.declarations) {
+      if (
+        ts.isIdentifier(declaration.name) &&
+        declaration.name.text === name &&
+        declaration.initializer !== undefined &&
+        (ts.isArrowFunction(declaration.initializer) ||
+          ts.isFunctionExpression(declaration.initializer))
+      ) {
+        matches.push(declaration.initializer);
+      }
+    }
+  }
+  return matches.length === 1 ? matches[0] : undefined;
+}
+
+function conjunctionLeaves(expression) {
+  const current = unwrapExpression(expression);
+  if (
+    ts.isBinaryExpression(current) &&
+    current.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken
+  ) {
+    return [
+      ...conjunctionLeaves(current.left),
+      ...conjunctionLeaves(current.right),
+    ];
+  }
+  return [current];
+}
+
+function isNegatedIdentifier(expression, name) {
+  const current = unwrapExpression(expression);
+  return (
+    ts.isPrefixUnaryExpression(current) &&
+    current.operator === ts.SyntaxKind.ExclamationToken &&
+    ts.isIdentifier(unwrapExpression(current.operand)) &&
+    unwrapExpression(current.operand).text === name
+  );
+}
+
+function isStrictStringComparison(expression, path, value) {
+  const current = unwrapExpression(expression);
+  return (
+    ts.isBinaryExpression(current) &&
+    current.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken &&
+    pathMatches(current.left, path) &&
+    ts.isStringLiteralLike(unwrapExpression(current.right)) &&
+    unwrapExpression(current.right).text === value
+  );
+}
+
+function isZeroArgumentCallStatement(statement, path) {
+  const call = callExpressionFromStatement(statement);
+  return (
+    call !== undefined &&
+    call.arguments.length === 0 &&
+    pathMatches(call.expression, path)
+  );
+}
+
+function hasOrderedTouchDismissalCancellation(handler, setterName) {
+  if (
+    handler === undefined ||
+    handler.body === undefined ||
+    !ts.isBlock(handler.body) ||
+    handler.parameters.length !== 2 ||
+    !ts.isIdentifier(handler.parameters[0].name) ||
+    !ts.isIdentifier(handler.parameters[1].name)
+  ) {
+    return false;
+  }
+  const nextOpenName = handler.parameters[0].name.text;
+  const detailsName = handler.parameters[1].name.text;
+  const statements = [...handler.body.statements];
+  if (statements.length !== 2) {
+    return false;
+  }
+  const hasMatchingIf = (() => {
+    const statement = statements[0];
+    if (
+      !ts.isIfStatement(statement) ||
+      statement.elseStatement !== undefined ||
+      !ts.isBlock(statement.thenStatement)
+    ) {
+      return false;
+    }
+    const leaves = conjunctionLeaves(statement.expression);
+    const hasExactCondition =
+      leaves.length === 3 &&
+      leaves.filter((leaf) => isNegatedIdentifier(leaf, nextOpenName))
+        .length === 1 &&
+      leaves.filter((leaf) =>
+        isStrictStringComparison(
+          leaf,
+          [detailsName, "reason"],
+          "outside-press",
+        ),
+      ).length === 1 &&
+      leaves.filter((leaf) =>
+        isStrictStringComparison(
+          leaf,
+          [detailsName, "event", "type"],
+          "touchmove",
+        ),
+      ).length === 1;
+    const branch = [...statement.thenStatement.statements];
+    return (
+      hasExactCondition &&
+      branch.length === 2 &&
+      isZeroArgumentCallStatement(branch[0], [detailsName, "cancel"]) &&
+      ts.isReturnStatement(branch[1]) &&
+      branch[1].expression === undefined
+    );
+  })();
+  if (!hasMatchingIf) {
+    return false;
+  }
+
+  const setterCalls = [];
+  const visitSetterCalls = (node) => {
+    if (
+      ts.isCallExpression(node) &&
+      pathMatches(node.expression, [setterName])
+    ) {
+      setterCalls.push(node);
+    }
+    ts.forEachChild(node, visitSetterCalls);
+  };
+  visitSetterCalls(handler.body);
+  if (
+    setterCalls.length !== 1 ||
+    setterCalls[0].arguments.length !== 1 ||
+    !pathMatches(setterCalls[0].arguments[0], [nextOpenName])
+  ) {
+    return false;
+  }
+  const setterStatementIndex = statements.findIndex((statement) => {
+    const call = callExpressionFromStatement(statement);
+    return call === setterCalls[0];
+  });
+  return setterStatementIndex === 1;
+}
+
+function isFalseKeyword(expression) {
+  return unwrapExpression(expression).kind === ts.SyntaxKind.FalseKeyword;
+}
+
+function isBareReturn(statement) {
+  return ts.isReturnStatement(statement) && statement.expression === undefined;
+}
+
+function isClosedEffectGuard(statement, openName) {
+  if (
+    !ts.isIfStatement(statement) ||
+    statement.elseStatement !== undefined ||
+    !isNegatedIdentifier(statement.expression, openName)
+  ) {
+    return false;
+  }
+  const branch = statement.thenStatement;
+  return ts.isBlock(branch)
+    ? branch.statements.length === 1 && isBareReturn(branch.statements[0])
+    : isBareReturn(branch);
+}
+
+function propertyNameText(name) {
+  return ts.isIdentifier(name) || ts.isStringLiteralLike(name)
+    ? name.text
+    : undefined;
+}
+
+function hasPassiveFalseOptions(expression) {
+  const current = unwrapExpression(expression);
+  if (!ts.isObjectLiteralExpression(current)) {
+    return false;
+  }
+  const properties = new Map();
+  for (const property of current.properties) {
+    if (!ts.isPropertyAssignment(property)) {
+      return false;
+    }
+    const name = propertyNameText(property.name);
+    if (name === undefined || properties.has(name)) {
+      return false;
+    }
+    properties.set(name, property.initializer);
+  }
+  return (
+    (properties.size === 1 || properties.size === 2) &&
+    properties.has("passive") &&
+    isFalseKeyword(properties.get("passive")) &&
+    [...properties.keys()].every(
+      (name) => name === "passive" || name === "capture",
+    ) &&
+    (!properties.has("capture") || isFalseKeyword(properties.get("capture")))
+  );
+}
+
+function functionBody(functionLike) {
+  return functionLike?.body !== undefined && ts.isBlock(functionLike.body)
+    ? functionLike.body
+    : undefined;
+}
+
+function singleConstDeclaration(statement) {
+  if (
+    !ts.isVariableStatement(statement) ||
+    (statement.declarationList.flags & ts.NodeFlags.Const) === 0 ||
+    statement.declarationList.declarations.length !== 1
+  ) {
+    return undefined;
+  }
+  const declaration = statement.declarationList.declarations[0];
+  return ts.isIdentifier(declaration.name) &&
+    declaration.initializer !== undefined
+    ? declaration
+    : undefined;
+}
+
+function directConstDeclaration(container, name) {
+  if (name === undefined) {
+    return undefined;
+  }
+  const matches = (container.statements ?? [])
+    .map(singleConstDeclaration)
+    .filter((declaration) => declaration?.name.text === name);
+  return matches.length === 1 ? matches[0] : undefined;
+}
+
+function bindingIdentifiers(name, identifiers = []) {
+  if (ts.isIdentifier(name)) {
+    identifiers.push(name.text);
+    return identifiers;
+  }
+  if (ts.isObjectBindingPattern(name) || ts.isArrayBindingPattern(name)) {
+    for (const element of name.elements) {
+      if (ts.isBindingElement(element)) {
+        bindingIdentifiers(element.name, identifiers);
+      }
+    }
+  }
+  return identifiers;
+}
+
+function hasSafeRuntimeBindings(sourceFile) {
+  const protectedGlobals = new Set(["document", "Element", "Set", "Symbol"]);
+  const requiredReactImports = new Set(["useEffect", "useRef"]);
+  const foundReactImports = new Set();
+  let invalid = false;
+
+  const checkBinding = (name) => {
+    if (protectedGlobals.has(name) || requiredReactImports.has(name)) {
+      invalid = true;
+    }
+  };
+  const visit = (node) => {
+    if (invalid) {
+      return;
+    }
+    if (ts.isImportDeclaration(node)) {
+      const moduleName = ts.isStringLiteralLike(node.moduleSpecifier)
+        ? node.moduleSpecifier.text
+        : undefined;
+      const clause = node.importClause;
+      if (clause?.name !== undefined) {
+        checkBinding(clause.name.text);
+      }
+      const namedBindings = clause?.namedBindings;
+      if (namedBindings !== undefined && ts.isNamespaceImport(namedBindings)) {
+        checkBinding(namedBindings.name.text);
+      }
+      if (namedBindings !== undefined && ts.isNamedImports(namedBindings)) {
+        for (const specifier of namedBindings.elements) {
+          const localName = specifier.name.text;
+          const importedName = (specifier.propertyName ?? specifier.name).text;
+          if (protectedGlobals.has(localName)) {
+            invalid = true;
+          }
+          if (requiredReactImports.has(localName)) {
+            if (
+              moduleName !== "react" ||
+              importedName !== localName ||
+              clause?.isTypeOnly === true ||
+              specifier.isTypeOnly
+            ) {
+              invalid = true;
+            } else {
+              foundReactImports.add(localName);
+            }
+          }
+        }
+      }
+      return;
+    }
+
+    let declarationName;
+    if (ts.isVariableDeclaration(node) || ts.isParameter(node)) {
+      declarationName = node.name;
+    } else if (
+      ts.isFunctionDeclaration(node) ||
+      ts.isFunctionExpression(node) ||
+      ts.isClassDeclaration(node) ||
+      ts.isClassExpression(node) ||
+      ts.isEnumDeclaration(node) ||
+      ts.isModuleDeclaration(node) ||
+      ts.isImportEqualsDeclaration(node)
+    ) {
+      declarationName = node.name;
+    }
+    if (declarationName !== undefined) {
+      for (const name of bindingIdentifiers(declarationName)) {
+        checkBinding(name);
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceFile);
+  return (
+    !invalid &&
+    [...requiredReactImports].every((name) => foundReactImports.has(name))
+  );
+}
+
+function hasPopupAwareTouchCallback(callback) {
+  const body = functionBody(callback);
+  if (
+    body === undefined ||
+    callback.parameters.length !== 1 ||
+    !ts.isIdentifier(callback.parameters[0].name) ||
+    body.statements.length !== 2 ||
+    !ts.isVariableStatement(body.statements[0]) ||
+    !ts.isIfStatement(body.statements[1])
+  ) {
+    return false;
+  }
+  const eventName = callback.parameters[0].name.text;
+  const declarations = body.statements[0].declarationList.declarations;
+  if (
+    declarations.length !== 1 ||
+    !ts.isIdentifier(declarations[0].name) ||
+    declarations[0].initializer === undefined
+  ) {
+    return false;
+  }
+  const insideName = declarations[0].name.text;
+  const someCall = unwrapExpression(declarations[0].initializer);
+  if (
+    !ts.isCallExpression(someCall) ||
+    someCall.arguments.length !== 1 ||
+    !ts.isPropertyAccessExpression(someCall.expression) ||
+    someCall.expression.name.text !== "some"
+  ) {
+    return false;
+  }
+  const composedPathCall = unwrapExpression(someCall.expression.expression);
+  const predicate = unwrapExpression(someCall.arguments[0]);
+  if (
+    !ts.isCallExpression(composedPathCall) ||
+    composedPathCall.arguments.length !== 0 ||
+    !pathMatches(composedPathCall.expression, [eventName, "composedPath"]) ||
+    (!ts.isArrowFunction(predicate) && !ts.isFunctionExpression(predicate)) ||
+    predicate.modifiers?.some(
+      (modifier) => modifier.kind === ts.SyntaxKind.AsyncKeyword,
+    ) ||
+    predicate.asteriskToken !== undefined ||
+    predicate.parameters.length !== 1 ||
+    !ts.isIdentifier(predicate.parameters[0].name) ||
+    ts.isBlock(predicate.body)
+  ) {
+    return false;
+  }
+  const targetName = predicate.parameters[0].name.text;
+  const predicateLeaves = conjunctionLeaves(predicate.body);
+  const isElementGuard = (leaf) =>
+    ts.isBinaryExpression(leaf) &&
+    leaf.operatorToken.kind === ts.SyntaxKind.InstanceOfKeyword &&
+    pathMatches(leaf.left, [targetName]) &&
+    pathMatches(leaf.right, ["Element"]);
+  const isPopupMatch = (leaf) => {
+    const call = unwrapExpression(leaf);
+    return (
+      ts.isCallExpression(call) &&
+      call.arguments.length === 1 &&
+      pathMatches(call.expression, [targetName, "classList", "contains"]) &&
+      ts.isStringLiteralLike(unwrapExpression(call.arguments[0])) &&
+      unwrapExpression(call.arguments[0]).text === "fs-menu__popup"
+    );
+  };
+  const hasSafePredicate =
+    predicateLeaves.length === 2 &&
+    isElementGuard(predicateLeaves[0]) &&
+    isPopupMatch(predicateLeaves[1]);
+  const prevention = body.statements[1];
+  const preventionStatement = ts.isBlock(prevention.thenStatement)
+    ? prevention.thenStatement.statements[0]
+    : prevention.thenStatement;
+  return (
+    hasSafePredicate &&
+    prevention.elseStatement === undefined &&
+    isNegatedIdentifier(prevention.expression, insideName) &&
+    (ts.isBlock(prevention.thenStatement)
+      ? prevention.thenStatement.statements.length === 1
+      : true) &&
+    isZeroArgumentCallStatement(preventionStatement, [
+      eventName,
+      "preventDefault",
+    ])
+  );
+}
+
+function hasBoundTouchScrollPrevention(sourceFile, menuFunction, openName) {
+  const menuBody = functionBody(menuFunction);
+  const lockHook = directNamedFunctionLike(sourceFile, "useMenuScrollLock");
+  const lockBody = functionBody(lockHook);
+  if (
+    menuBody === undefined ||
+    lockBody === undefined ||
+    !hasSafeRuntimeBindings(sourceFile) ||
+    lockHook.parameters.length !== 1 ||
+    !ts.isIdentifier(lockHook.parameters[0].name) ||
+    lockBody.statements.length !== 2
+  ) {
+    return false;
+  }
+
+  const menuHookCalls = menuBody.statements
+    .map(callExpressionFromStatement)
+    .filter(
+      (call) =>
+        call !== undefined &&
+        pathMatches(call.expression, ["useMenuScrollLock"]) &&
+        call.arguments.length === 1 &&
+        pathMatches(call.arguments[0], [openName]),
+    );
+  if (menuHookCalls.length !== 1) {
+    return false;
+  }
+
+  const hookOpenName = lockHook.parameters[0].name.text;
+  const lockDeclaration = singleConstDeclaration(lockBody.statements[0]);
+  const lockInitializer =
+    lockDeclaration === undefined
+      ? undefined
+      : unwrapExpression(lockDeclaration.initializer);
+  const symbolInitializer =
+    lockInitializer !== undefined &&
+    ts.isCallExpression(lockInitializer) &&
+    pathMatches(lockInitializer.expression, ["useRef"]) &&
+    lockInitializer.arguments.length === 1
+      ? unwrapExpression(lockInitializer.arguments[0])
+      : undefined;
+  if (
+    lockDeclaration === undefined ||
+    symbolInitializer === undefined ||
+    !ts.isCallExpression(symbolInitializer) ||
+    !pathMatches(symbolInitializer.expression, ["Symbol"]) ||
+    symbolInitializer.arguments.length !== 1 ||
+    !ts.isStringLiteralLike(unwrapExpression(symbolInitializer.arguments[0])) ||
+    unwrapExpression(symbolInitializer.arguments[0]).text !== "menu-scroll-lock"
+  ) {
+    return false;
+  }
+  const lockName = lockDeclaration.name.text;
+  const effect = callExpressionFromStatement(lockBody.statements[1]);
+  if (
+    effect === undefined ||
+    !pathMatches(effect.expression, ["useEffect"]) ||
+    effect.arguments.length !== 2
+  ) {
+    return false;
+  }
+  const callback = unwrapExpression(effect.arguments[0]);
+  const dependencies = unwrapExpression(effect.arguments[1]);
+  if (
+    (!ts.isArrowFunction(callback) && !ts.isFunctionExpression(callback)) ||
+    !ts.isBlock(callback.body) ||
+    !ts.isArrayLiteralExpression(dependencies) ||
+    dependencies.elements.length !== 1 ||
+    !pathMatches(dependencies.elements[0], [hookOpenName])
+  ) {
+    return false;
+  }
+  const effectBody = callback.body;
+  if (
+    effectBody.statements.length !== 8 ||
+    !isClosedEffectGuard(effectBody.statements[0], hookOpenName)
+  ) {
+    return false;
+  }
+
+  const rootDeclaration = singleConstDeclaration(effectBody.statements[1]);
+  const tokenDeclaration = singleConstDeclaration(effectBody.statements[2]);
+  const listenerDeclaration = singleConstDeclaration(effectBody.statements[3]);
+  if (
+    rootDeclaration === undefined ||
+    !pathMatches(rootDeclaration.initializer, [
+      "document",
+      "documentElement",
+    ]) ||
+    tokenDeclaration === undefined ||
+    !pathMatches(tokenDeclaration.initializer, [lockName, "current"]) ||
+    listenerDeclaration === undefined
+  ) {
+    return false;
+  }
+  const rootName = rootDeclaration.name.text;
+  const tokenName = tokenDeclaration.name.text;
+  const listenerName = listenerDeclaration.name.text;
+  const listener = unwrapExpression(listenerDeclaration.initializer);
+  if (!hasPopupAwareTouchCallback(listener)) {
+    return false;
+  }
+
+  const addLock = callExpressionFromStatement(effectBody.statements[4]);
+  const setMarker = callExpressionFromStatement(effectBody.statements[5]);
+  const addListener = callExpressionFromStatement(effectBody.statements[6]);
+  const addLockPath =
+    addLock === undefined ? undefined : expressionPath(addLock.expression);
+  const lockSetName =
+    addLockPath?.length === 2 && addLockPath[1] === "add"
+      ? addLockPath[0]
+      : undefined;
+  const attributePath =
+    setMarker?.arguments[0] === undefined
+      ? undefined
+      : expressionPath(setMarker.arguments[0]);
+  const attributeName =
+    attributePath?.length === 1 ? attributePath[0] : undefined;
+  const lockSetDeclaration = directConstDeclaration(sourceFile, lockSetName);
+  const lockSetInitializer =
+    lockSetDeclaration === undefined
+      ? undefined
+      : unwrapExpression(lockSetDeclaration.initializer);
+  const attributeDeclaration = directConstDeclaration(
+    sourceFile,
+    attributeName,
+  );
+  const attributeInitializer =
+    attributeDeclaration === undefined
+      ? undefined
+      : unwrapExpression(attributeDeclaration.initializer);
+  if (
+    lockSetName === undefined ||
+    lockSetInitializer === undefined ||
+    !ts.isNewExpression(lockSetInitializer) ||
+    !pathMatches(lockSetInitializer.expression, ["Set"]) ||
+    (lockSetInitializer.arguments?.length ?? 0) !== 0 ||
+    attributeName === undefined ||
+    attributeInitializer === undefined ||
+    !ts.isStringLiteralLike(attributeInitializer) ||
+    attributeInitializer.text !== "data-fs-menu-scroll-lock" ||
+    addLock === undefined ||
+    !pathMatches(addLock.expression, [lockSetName, "add"]) ||
+    addLock.arguments.length !== 1 ||
+    !pathMatches(addLock.arguments[0], [tokenName]) ||
+    setMarker === undefined ||
+    !pathMatches(setMarker.expression, [rootName, "setAttribute"]) ||
+    setMarker.arguments.length !== 2 ||
+    !pathMatches(setMarker.arguments[0], [attributeName]) ||
+    !ts.isStringLiteralLike(unwrapExpression(setMarker.arguments[1])) ||
+    unwrapExpression(setMarker.arguments[1]).text !== "" ||
+    addListener === undefined ||
+    !pathMatches(addListener.expression, ["document", "addEventListener"]) ||
+    addListener.arguments.length !== 3 ||
+    !ts.isStringLiteralLike(unwrapExpression(addListener.arguments[0])) ||
+    unwrapExpression(addListener.arguments[0]).text !== "touchmove" ||
+    !pathMatches(addListener.arguments[1], [listenerName]) ||
+    !hasPassiveFalseOptions(addListener.arguments[2])
+  ) {
+    return false;
+  }
+
+  const cleanupReturn = effectBody.statements[7];
+  if (
+    !ts.isReturnStatement(cleanupReturn) ||
+    cleanupReturn.expression === undefined
+  ) {
+    return false;
+  }
+  const cleanup = unwrapExpression(cleanupReturn.expression);
+  const cleanupBody =
+    (ts.isArrowFunction(cleanup) || ts.isFunctionExpression(cleanup)) &&
+    cleanup.parameters.length === 0 &&
+    ts.isBlock(cleanup.body)
+      ? cleanup.body
+      : undefined;
+  if (cleanupBody === undefined || cleanupBody.statements.length !== 3) {
+    return false;
+  }
+  const removeListener = callExpressionFromStatement(cleanupBody.statements[0]);
+  const deleteLock = callExpressionFromStatement(cleanupBody.statements[1]);
+  const removeMarkerIf = cleanupBody.statements[2];
+  if (
+    removeListener === undefined ||
+    !pathMatches(removeListener.expression, [
+      "document",
+      "removeEventListener",
+    ]) ||
+    (removeListener.arguments.length !== 2 &&
+      removeListener.arguments.length !== 3) ||
+    !ts.isStringLiteralLike(unwrapExpression(removeListener.arguments[0])) ||
+    unwrapExpression(removeListener.arguments[0]).text !== "touchmove" ||
+    !pathMatches(removeListener.arguments[1], [listenerName]) ||
+    (removeListener.arguments.length === 3 &&
+      !isFalseKeyword(removeListener.arguments[2])) ||
+    deleteLock === undefined ||
+    !pathMatches(deleteLock.expression, [lockSetName, "delete"]) ||
+    deleteLock.arguments.length !== 1 ||
+    !pathMatches(deleteLock.arguments[0], [tokenName]) ||
+    !ts.isIfStatement(removeMarkerIf) ||
+    removeMarkerIf.elseStatement !== undefined ||
+    !ts.isBlock(removeMarkerIf.thenStatement) ||
+    removeMarkerIf.thenStatement.statements.length !== 1
+  ) {
+    return false;
+  }
+  const lastLockCondition = unwrapExpression(removeMarkerIf.expression);
+  const removeMarker = callExpressionFromStatement(
+    removeMarkerIf.thenStatement.statements[0],
+  );
+  return (
+    ts.isBinaryExpression(lastLockCondition) &&
+    lastLockCondition.operatorToken.kind ===
+      ts.SyntaxKind.EqualsEqualsEqualsToken &&
+    pathMatches(lastLockCondition.left, [lockSetName, "size"]) &&
+    ts.isNumericLiteral(unwrapExpression(lastLockCondition.right)) &&
+    unwrapExpression(lastLockCondition.right).text === "0" &&
+    removeMarker !== undefined &&
+    pathMatches(removeMarker.expression, [rootName, "removeAttribute"]) &&
+    removeMarker.arguments.length === 1 &&
+    pathMatches(removeMarker.arguments[0], [attributeName])
+  );
+}
+
 function validateMenuScrollLock(source, css, errors) {
   if (source !== undefined) {
     const sourceFile = parseSource(source, MENU_PATH);
+    const menuFunction = directNamedFunctionLike(sourceFile, "Menu");
+    const menuBody = functionBody(menuFunction);
     const rootTag = source.match(/<MenuPrimitive\.Root\b([\s\S]*?)>/u)?.[1];
     const openName = rootTag?.match(
       /\bopen=\{\s*([A-Za-z_$][\w$]*)\s*\}/u,
@@ -503,30 +1185,17 @@ function validateMenuScrollLock(source, css, errors) {
     const openChangeHandler = rootTag?.match(
       /\bonOpenChange=\{\s*([A-Za-z_$][\w$]*)\s*\}/u,
     )?.[1];
-    let openChangeHandlerSource = "";
-    if (openChangeHandler !== undefined) {
-      const visitOpenChangeHandler = (node) => {
-        if (
-          (ts.isFunctionDeclaration(node) &&
-            node.name?.text === openChangeHandler) ||
-          (ts.isVariableDeclaration(node) &&
-            ts.isIdentifier(node.name) &&
-            node.name.text === openChangeHandler)
-        ) {
-          openChangeHandlerSource = node.getText(sourceFile);
-          return;
-        }
-        ts.forEachChild(node, visitOpenChangeHandler);
-      };
-      visitOpenChangeHandler(sourceFile);
-    }
+    const openChangeFunction =
+      menuBody !== undefined && openChangeHandler !== undefined
+        ? directNamedFunctionLike(menuBody, openChangeHandler)
+        : undefined;
+    const hasOrderedCancellation =
+      openSetter !== undefined &&
+      hasOrderedTouchDismissalCancellation(openChangeFunction, openSetter);
     const hasControlledChange =
       openSetter !== undefined &&
       openChangeHandler !== undefined &&
-      (openChangeHandler === openSetter ||
-        new RegExp(`\\b${openSetter}\\s*\\(`, "u").test(
-          openChangeHandlerSource,
-        ));
+      hasOrderedCancellation;
     const openDrivesEffect =
       openName !== undefined &&
       /\buseEffect\s*\(/u.test(source) &&
@@ -540,83 +1209,20 @@ function validateMenuScrollLock(source, css, errors) {
       errors.push("Menu must use a controlled open state for scroll locking");
     }
 
-    if (
-      !openChangeHandlerSource.includes(
-        'eventDetails.reason === "outside-press"',
-      ) ||
-      !openChangeHandlerSource.includes(
-        'eventDetails.event.type === "touchmove"',
-      ) ||
-      !/\beventDetails\.cancel\s*\(\s*\)/u.test(openChangeHandlerSource)
-    ) {
+    if (!hasOrderedCancellation) {
       errors.push(
         "Menu must cancel touchmove outside dismissal while scroll lock is active",
       );
     }
 
-    const hasOutsideTouchPrevention =
-      /\bdocument\.addEventListener\s*\(\s*["']touchmove["']\s*,\s*preventOutsideTouchScroll\s*,\s*\{\s*passive\s*:\s*false\s*,?\s*\}\s*\)/u.test(
-        source,
-      ) &&
-      /\bdocument\.removeEventListener\s*\(\s*["']touchmove["']\s*,\s*preventOutsideTouchScroll\s*\)/u.test(
-        source,
-      ) &&
-      /\bevent\s*\.\s*composedPath\s*\(\s*\)/u.test(source) &&
-      /\bclassList\.contains\s*\(\s*["']fs-menu__popup["']\s*\)/u.test(
-        source,
-      ) &&
-      /\bif\s*\(\s*!\s*insidePopup\s*\)/u.test(source) &&
-      /\bevent\.preventDefault\s*\(\s*\)/u.test(source);
-    if (!hasOutsideTouchPrevention) {
+    const hasBoundScrollLifecycle =
+      openName !== undefined &&
+      hasBoundTouchScrollPrevention(sourceFile, menuFunction, openName);
+    if (!hasBoundScrollLifecycle) {
       errors.push(
         "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
       );
-    }
-
-    let hasSharedReferenceTracking = false;
-    const numericCounter = source.match(
-      /\blet\s+([A-Za-z_$][\w$]*(?:count|locks?)[A-Za-z_$\d]*)\s*=\s*0\s*;/iu,
-    )?.[1];
-    if (numericCounter !== undefined) {
-      const escapedCounter = numericCounter.replace(
-        /[.*+?^${}()|[\]\\]/gu,
-        "\\$&",
-      );
-      const increments = new RegExp(
-        `(?:${escapedCounter}\\s*\\+=\\s*1|${escapedCounter}\\+\\+)`,
-        "u",
-      ).test(source);
-      const decrements = new RegExp(
-        `(?:${escapedCounter}\\s*-=\\s*1|${escapedCounter}--|${escapedCounter}\\s*=\\s*Math\\.max\\([\\s\\S]*?${escapedCounter}\\s*-\\s*1)`,
-        "u",
-      ).test(source);
-      hasSharedReferenceTracking = increments && decrements;
-    }
-
-    const lockSet = source.match(
-      /\bconst\s+([A-Za-z_$][\w$]*)\s*=\s*new\s+Set(?:<[^>]+>)?\s*\(/u,
-    )?.[1];
-    if (lockSet !== undefined) {
-      const escapedSet = lockSet.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
-      hasSharedReferenceTracking =
-        new RegExp(`${escapedSet}\\.add\\s*\\(`, "u").test(source) &&
-        new RegExp(`${escapedSet}\\.delete\\s*\\(`, "u").test(source) &&
-        new RegExp(`${escapedSet}\\.size\\s*===?\\s*0`, "u").test(source);
-    }
-
-    if (!hasSharedReferenceTracking) {
       errors.push("Menu scroll lock must use a shared reference count");
-    }
-
-    if (
-      !source.includes('"data-fs-menu-scroll-lock"') ||
-      !source.includes("document.documentElement") ||
-      !/\.setAttribute\s*\([\s\S]*?MENU_SCROLL_LOCK_ATTRIBUTE/u.test(source) ||
-      !/\.removeAttribute\s*\([\s\S]*?MENU_SCROLL_LOCK_ATTRIBUTE/u.test(
-        source,
-      ) ||
-      !/return\s*\(\s*\)\s*=>/u.test(source)
-    ) {
       errors.push(
         "Menu scroll lock must set and remove data-fs-menu-scroll-lock on documentElement",
       );

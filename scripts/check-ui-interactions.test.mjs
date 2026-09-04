@@ -110,26 +110,33 @@ export type { ToastController, ToastMessage, ToastProviderProps } from "./toast.
     "packages/ui/src/menu.tsx",
     `"use client";
 import { Menu as MenuPrimitive, type MenuRootChangeEventDetails } from "@base-ui/react/menu";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "./icon.js";
 const MENU_SCROLL_LOCK_ATTRIBUTE = "data-fs-menu-scroll-lock";
-let menuScrollLockCount = 0;
-function acquireMenuScrollLock() {
-  const root = document.documentElement;
-  const preventOutsideTouchScroll = (event: TouchEvent) => {
-    const insidePopup = event.composedPath().some(
-      (target) => target instanceof Element && target.classList.contains("fs-menu__popup"),
-    );
-    if (!insidePopup) event.preventDefault();
-  };
-  menuScrollLockCount += 1;
-  root.setAttribute(MENU_SCROLL_LOCK_ATTRIBUTE, "");
-  document.addEventListener("touchmove", preventOutsideTouchScroll, { passive: false });
-  return () => {
-    document.removeEventListener("touchmove", preventOutsideTouchScroll);
-    menuScrollLockCount = Math.max(0, menuScrollLockCount - 1);
-    if (menuScrollLockCount === 0) root.removeAttribute(MENU_SCROLL_LOCK_ATTRIBUTE);
-  };
+const activeMenuScrollLocks = new Set<symbol>();
+function useMenuScrollLock(open: boolean) {
+  const lock = useRef(Symbol("menu-scroll-lock"));
+  useEffect(() => {
+    if (!open) return;
+    const root = document.documentElement;
+    const currentLock = lock.current;
+    const preventOutsideTouchScroll = (event: TouchEvent) => {
+      const insidePopup = event.composedPath().some(
+        (target) => target instanceof Element && target.classList.contains("fs-menu__popup"),
+      );
+      if (!insidePopup) event.preventDefault();
+    };
+    activeMenuScrollLocks.add(currentLock);
+    root.setAttribute(MENU_SCROLL_LOCK_ATTRIBUTE, "");
+    document.addEventListener("touchmove", preventOutsideTouchScroll, { passive: false });
+    return () => {
+      document.removeEventListener("touchmove", preventOutsideTouchScroll);
+      activeMenuScrollLocks.delete(currentLock);
+      if (activeMenuScrollLocks.size === 0) {
+        root.removeAttribute(MENU_SCROLL_LOCK_ATTRIBUTE);
+      }
+    };
+  }, [open]);
 }
 export function Menu() {
   const [open, setOpen] = useState(false);
@@ -140,10 +147,7 @@ export function Menu() {
     }
     setOpen(nextOpen);
   };
-  useEffect(() => {
-    if (!open) return;
-    return acquireMenuScrollLock();
-  }, [open]);
+  useMenuScrollLock(open);
   return <MenuPrimitive.Root open={open} onOpenChange={handleOpenChange}>
     <Icon decorative name="chevron-down" />
     <MenuPrimitive.RadioItemIndicator keepMounted>
@@ -692,8 +696,8 @@ test("requires stable, bounded menu layout and scroll locking", async (context) 
   await replace(
     root,
     "packages/ui/src/menu.tsx",
-    "let menuScrollLockCount = 0;",
-    "let menuWasLocked = false;",
+    "const activeMenuScrollLocks = new Set<symbol>();",
+    "const menuWasLocked = false;",
   );
   await replace(
     root,
@@ -770,6 +774,347 @@ test("requires stable, bounded menu layout and scroll locking", async (context) 
   );
   includesError(errors, "menu popup must use overflow: auto");
   includesError(errors, "unchecked Menu indicator must remain visually hidden");
+});
+
+test("binds touch scroll prevention and cancellation to the live handlers", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "const preventOutsideTouchScroll = (event: TouchEvent) => {",
+    `const preventOutsideTouchScroll = (_event: TouchEvent) => {};
+    const deadTouchProof = (event: TouchEvent) => {`,
+  );
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    `const handleOpenChange = (nextOpen: boolean, eventDetails: MenuRootChangeEventDetails) => {
+    if (!nextOpen && eventDetails.reason === "outside-press" && eventDetails.event.type === "touchmove") {
+      eventDetails.cancel();
+      return;
+    }
+    setOpen(nextOpen);
+  };`,
+    `const handleOpenChange = (nextOpen: boolean, eventDetails: MenuRootChangeEventDetails) => {
+    setOpen(nextOpen);
+    if (!nextOpen && eventDetails.reason === "outside-press" && eventDetails.event.type === "touchmove") {
+      eventDetails.cancel();
+      return;
+    }
+  };`,
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu must cancel touchmove outside dismissal while scroll lock is active",
+  );
+  includesError(
+    errors,
+    "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
+  );
+});
+
+test("rejects unreachable touch scroll prevention and cancellation", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "useEffect(() => {\n    if (!open) return;",
+    "useEffect(() => {\n    return;\n    if (!open) return;",
+  );
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    `const handleOpenChange = (nextOpen: boolean, eventDetails: MenuRootChangeEventDetails) => {
+    if (!nextOpen && eventDetails.reason === "outside-press" && eventDetails.event.type === "touchmove") {`,
+    `const handleOpenChange = (nextOpen: boolean, eventDetails: MenuRootChangeEventDetails) => {
+    return;
+    if (!nextOpen && eventDetails.reason === "outside-press" && eventDetails.event.type === "touchmove") {`,
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu must cancel touchmove outside dismissal while scroll lock is active",
+  );
+  includesError(
+    errors,
+    "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
+  );
+});
+
+test("requires the touch scroll effect to return while closed", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "if (!open) return;",
+    "if (!open) { void 0; }",
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
+  );
+});
+
+test("requires reachable touch listener cleanup", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    `return () => {
+      document.removeEventListener("touchmove", preventOutsideTouchScroll);`,
+    `return () => {
+      return;
+      document.removeEventListener("touchmove", preventOutsideTouchScroll);`,
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
+  );
+});
+
+test("rejects cleanup that exits before releasing the scroll marker", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    `document.removeEventListener("touchmove", preventOutsideTouchScroll);
+      activeMenuScrollLocks.delete(currentLock);`,
+    `document.removeEventListener("touchmove", preventOutsideTouchScroll);
+      return;
+      activeMenuScrollLocks.delete(currentLock);`,
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
+  );
+});
+
+test("requires a stable touch listener identity", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "const preventOutsideTouchScroll = (event: TouchEvent) => {",
+    "let preventOutsideTouchScroll = (event: TouchEvent) => {",
+  );
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    `    };
+    activeMenuScrollLocks.add(currentLock);`,
+    `    };
+    preventOutsideTouchScroll = () => {};
+    activeMenuScrollLocks.add(currentLock);`,
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
+  );
+});
+
+test("rejects cleanup parameters that can shadow the registered listener", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "return () => {",
+    "return (preventOutsideTouchScroll = () => {}) => {",
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
+  );
+});
+
+test("rejects one-shot or abortable touch listeners", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "{ passive: false });",
+    "{ passive: false, once: true });",
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
+  );
+});
+
+test("requires the scroll lock Set to be shared at module scope", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "const activeMenuScrollLocks = new Set<symbol>();\nfunction useMenuScrollLock(open: boolean) {",
+    "function useMenuScrollLock(open: boolean) {\n  const activeMenuScrollLocks = new Set<symbol>();",
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(errors, "Menu scroll lock must use a shared reference count");
+});
+
+test("binds the same scroll lock token to add and delete", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "activeMenuScrollLocks.add(currentLock);",
+    'activeMenuScrollLocks.add(Symbol("other"));',
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(errors, "Menu scroll lock must use a shared reference count");
+});
+
+test("binds the scroll marker to documentElement", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "const root = document.documentElement;",
+    "const root = document.body;\n    void document.documentElement;",
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu scroll lock must set and remove data-fs-menu-scroll-lock on documentElement",
+  );
+});
+
+test("removes the scroll marker only after the last lock", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    `if (activeMenuScrollLocks.size === 0) {
+        root.removeAttribute(MENU_SCROLL_LOCK_ATTRIBUTE);
+      }`,
+    `if (activeMenuScrollLocks.size > 0) {
+        root.removeAttribute(MENU_SCROLL_LOCK_ATTRIBUTE);
+      }
+      void (activeMenuScrollLocks.size === 0);`,
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu scroll lock must set and remove data-fs-menu-scroll-lock on documentElement",
+  );
+});
+
+test("allows local callback renames without weakening the touch guard", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "const insidePopup =",
+    "const eventTargetsPopup =",
+  );
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "if (!insidePopup)",
+    "if (!eventTargetsPopup)",
+  );
+
+  assert.deepEqual(await validateUiInteractions(root), []);
+});
+
+test("requires the Element guard before accessing classList", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    '(target) => target instanceof Element && target.classList.contains("fs-menu__popup")',
+    '(target) => target.classList.contains("fs-menu__popup") && target instanceof Element',
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
+  );
+});
+
+test("rejects async Array.some predicates in the touch guard", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "(target) => target instanceof Element",
+    "async (target) => target instanceof Element",
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
+  );
+});
+
+test("rejects a shadowed Symbol used for scroll lock identity", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    'import { Icon } from "./icon.js";',
+    `import { Icon } from "./icon.js";
+const Symbol = globalThis.Symbol.for;`,
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(errors, "Menu scroll lock must use a shared reference count");
+});
+
+test("rejects a shadowed document used for the scroll marker root", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    'import { Icon } from "./icon.js";',
+    `import { Icon } from "./icon.js";
+const document = {
+  addEventListener: globalThis.document.addEventListener.bind(globalThis.document),
+  documentElement: globalThis.document.body,
+  removeEventListener: globalThis.document.removeEventListener.bind(globalThis.document),
+};`,
+  );
+
+  const errors = await validateUiInteractions(root);
+  includesError(
+    errors,
+    "Menu scroll lock must set and remove data-fs-menu-scroll-lock on documentElement",
+  );
+});
+
+test("allows unrelated module constants and Sets", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    'const MENU_SCROLL_LOCK_ATTRIBUTE = "data-fs-menu-scroll-lock";',
+    `const UNUSED_MARKER = "data-fs-menu-scroll-lock";
+const unrelatedValues = new Set<string>();
+const MENU_SCROLL_LOCK_ATTRIBUTE = "data-fs-menu-scroll-lock";`,
+  );
+
+  assert.deepEqual(await validateUiInteractions(root), []);
 });
 
 test("requires the interaction lab to set and restore the portal language", async (context) => {
