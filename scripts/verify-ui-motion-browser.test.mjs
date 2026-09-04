@@ -33,6 +33,7 @@ async function loadRunner() {
     "assessMotionEvidenceShape",
     "assessMotionPerformance",
     "assessReducedMotionEvidence",
+    "assessRuntimeFontEvidence",
     "acquireMotionEvidenceLock",
     "collectMotionSourceFingerprint",
     "createMotionEvidenceReadme",
@@ -207,6 +208,39 @@ function validPerformance(width) {
     },
     raf: { maxFrameDeltaMs: 17, p95FrameDeltaMs: 16.7, sampleCount: 24 },
     rawLayoutShift: 0,
+  };
+}
+
+function validRuntimeFonts(locale) {
+  const families =
+    locale === "ja"
+      ? ["Noto Sans JP Variable"]
+      : locale === "zh-CN"
+        ? ["Noto Sans SC Variable"]
+        : locale === "th"
+          ? ["Noto Sans Thai Variable"]
+          : ["Manrope Variable", "Noto Sans Variable"];
+  return {
+    computed: {
+      fontFamily: `"${families[0]}", system-ui, sans-serif`,
+      primaryFamily: families[0],
+    },
+    cssom: {
+      displays: ["optional"],
+      families,
+      fontFaces: families.length,
+      importantDescriptors: 0,
+      imports: 0,
+      styleSheets: 1,
+      unreadableStyleSheets: [],
+    },
+    fontFaceSet: {
+      displays: ["optional"],
+      faceCount: families.length,
+      families,
+      statuses: ["loaded", "unloaded"],
+    },
+    source: "document.fonts + CSSOM + computedStyle",
   };
 }
 
@@ -443,6 +477,7 @@ function validResults(matrix) {
       id: entry.id,
       locale: entry.locale,
       performance: validPerformance(entry.viewport.width),
+      runtimeFonts: validRuntimeFonts(entry.locale),
       screenshot: entry.screenshot,
       viewport: entry.viewport,
     };
@@ -651,6 +686,7 @@ test("enforces motion duration, latest-wins and user-state budgets", async () =>
   slow.motionChecks.hero.mobile.timing.maxEndTimeMs = 1_000;
   slow.motionChecks.hero.mobile.frameStates[2].contentOpacity = "0";
   slow.motionChecks.success.remainingAnimations = 1;
+  slow.scenarioResults[0].runtimeFonts.cssom.displays = ["swap"];
   const errors = assessMotionEvidenceShape(slow).join("\n");
   assert.match(errors, /mouse.*360/u);
   assert.match(errors, /mouse.*focus/u);
@@ -668,6 +704,7 @@ test("enforces motion duration, latest-wins and user-state budgets", async () =>
   assert.match(errors, /total|end time|timing/iu);
   assert.match(errors, /visual change|no-op|identity/iu);
   assert.match(errors, /interrupt|reset/iu);
+  assert.match(errors, /runtime CSSOM.*optional/iu);
 });
 
 test("fails closed when any hero frame field is missing or non-finite", async () => {
@@ -727,6 +764,62 @@ test("blocks layout shift, overflow, clipping, long tasks and poor rAF pacing", 
   ]) {
     assert.match(errors, new RegExp(expected, "iu"));
   }
+});
+
+test("requires the runtime font set to use optional and match the locale profile", async () => {
+  const { assessRuntimeFontEvidence } = await loadRunner();
+  assert.deepEqual(
+    assessRuntimeFontEvidence(validRuntimeFonts("en"), "en"),
+    [],
+  );
+  assert.deepEqual(
+    assessRuntimeFontEvidence(validRuntimeFonts("en-XA"), "en-XA"),
+    [],
+  );
+
+  const swapping = validRuntimeFonts("ja");
+  swapping.fontFaceSet.displays.push("swap");
+  assert.match(
+    assessRuntimeFontEvidence(swapping, "ja").join("\n"),
+    /runtime.*optional|swap/iu,
+  );
+
+  const wrongProfile = validRuntimeFonts("th");
+  wrongProfile.cssom.families = ["Manrope Variable"];
+  assert.match(
+    assessRuntimeFontEvidence(wrongProfile, "th").join("\n"),
+    /Noto Sans Thai Variable/iu,
+  );
+
+  const empty = validRuntimeFonts("vi");
+  empty.fontFaceSet.faceCount = 0;
+  assert.match(
+    assessRuntimeFontEvidence(empty, "vi").join("\n"),
+    /font face|face count/iu,
+  );
+
+  for (const unsettledStatus of ["error", "loading"]) {
+    const unsettled = validRuntimeFonts("en");
+    unsettled.fontFaceSet.statuses = ["loaded", unsettledStatus];
+    assert.match(
+      assessRuntimeFontEvidence(unsettled, "en").join("\n"),
+      /status|loaded|unloaded/iu,
+    );
+  }
+
+  const neverLoaded = validRuntimeFonts("en");
+  neverLoaded.fontFaceSet.statuses = ["unloaded"];
+  assert.match(
+    assessRuntimeFontEvidence(neverLoaded, "en").join("\n"),
+    /loaded/iu,
+  );
+
+  const forgedComputed = validRuntimeFonts("en");
+  forgedComputed.computed.fontFamily = "system-ui, sans-serif";
+  assert.match(
+    assessRuntimeFontEvidence(forgedComputed, "en").join("\n"),
+    /computed.*Manrope Variable/iu,
+  );
 });
 
 test("requires 390 and 1440 reduced-motion evidence with no movement", async () => {
@@ -918,7 +1011,109 @@ test("requires every production font face to use the no-swap policy", async (con
 
   await writeFile(
     path.join(chunks, "fonts.css"),
+    validCss.replaceAll(
+      "font-display:optional",
+      "font-display:optional!important",
+    ),
+  );
+  await assert.rejects(
+    validateBuiltFontPolicy(root),
+    /font-display.*important/iu,
+  );
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    validCss.replaceAll(";font-display", "!important;font-display"),
+  );
+  await assert.rejects(
+    validateBuiltFontPolicy(root),
+    /font-family.*important/iu,
+  );
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    validCss.replaceAll("@font-face{", "@font-face bogus{"),
+  );
+  await assert.rejects(validateBuiltFontPolicy(root), /prelude/iu);
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    `@import url('/rogue.css');${validCss}`,
+  );
+  await assert.rejects(validateBuiltFontPolicy(root), /@import/iu);
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    `@im\\70 ort url('/rogue.css');${validCss}`,
+  );
+  await assert.rejects(validateBuiltFontPolicy(root), /@import/iu);
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    `@import/**/url('/rogue.css');${validCss}`,
+  );
+  await assert.rejects(validateBuiltFontPolicy(root), /@import/iu);
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    `@im\\70 ort/**/url('/rogue.css');${validCss}`,
+  );
+  await assert.rejects(validateBuiltFontPolicy(root), /@import/iu);
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    `@im\\70 ort'/rogue.css';${validCss}`,
+  );
+  await assert.rejects(validateBuiltFontPolicy(root), /@import/iu);
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    `@import'/rogue.css';${validCss}`,
+  );
+  await assert.rejects(validateBuiltFontPolicy(root), /@import/iu);
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    validCss.replaceAll("@font-face{", "@font-face/**/bogus{"),
+  );
+  await assert.rejects(validateBuiltFontPolicy(root), /prelude/iu);
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
     `${validCss}@font-face{font-family:'Rogue';font-display:swap;src:local('{}'),url(rogue.woff2)}`,
+  );
+  await assert.rejects(
+    validateBuiltFontPolicy(root),
+    /font-display.*optional/iu,
+  );
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    `${validCss}@font\\-face{font-family:Rogue;font-display:swap;src:url(rogue.woff2)}`,
+  );
+  await assert.rejects(
+    validateBuiltFontPolicy(root),
+    /font-display.*optional/iu,
+  );
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    `${validCss}@font-face{font-family:Rogue;font-display:optional;font-\\64 isplay:swap;src:url(rogue.woff2)}`,
+  );
+  await assert.rejects(
+    validateBuiltFontPolicy(root),
+    /font-display.*optional/iu,
+  );
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    `${validCss}@font-face{font-family:'Manrope Variable';font-\\66 amily:Rogue;font-display:optional;src:url(rogue.woff2)}`,
+  );
+  await assert.rejects(validateBuiltFontPolicy(root), /font-family/iu);
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    `${validCss}@font\\-face/**/{font-family:Rogue;font-display:swap;src:url(rogue.woff2)}`,
   );
   await assert.rejects(
     validateBuiltFontPolicy(root),

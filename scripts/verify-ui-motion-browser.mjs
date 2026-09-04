@@ -1,4 +1,4 @@
-/* global AbortSignal, HTMLImageElement, HTMLElement, MutationObserver, PerformanceObserver, clearTimeout, document, fetch, getComputedStyle, matchMedia, performance, requestAnimationFrame, setTimeout, window */
+/* global AbortSignal, CSSRule, HTMLImageElement, HTMLElement, MutationObserver, PerformanceObserver, clearTimeout, document, fetch, getComputedStyle, matchMedia, performance, requestAnimationFrame, setTimeout, window */
 
 import { createHash, randomUUID } from "node:crypto";
 import { Buffer } from "node:buffer";
@@ -54,6 +54,16 @@ const expectedFontFamilies = Object.freeze([
   "Noto Sans Thai Variable",
   "Noto Sans Variable",
 ]);
+const expectedRuntimeFontFamiliesByLocale = Object.freeze({
+  en: Object.freeze(["Manrope Variable", "Noto Sans Variable"]),
+  "en-XA": Object.freeze(["Manrope Variable", "Noto Sans Variable"]),
+  es: Object.freeze(["Manrope Variable", "Noto Sans Variable"]),
+  ja: Object.freeze(["Noto Sans JP Variable"]),
+  pt: Object.freeze(["Manrope Variable", "Noto Sans Variable"]),
+  th: Object.freeze(["Noto Sans Thai Variable"]),
+  vi: Object.freeze(["Manrope Variable", "Noto Sans Variable"]),
+  "zh-CN": Object.freeze(["Noto Sans SC Variable"]),
+});
 
 const sourceFingerprintPathspec = Object.freeze([
   ".node-version",
@@ -565,6 +575,120 @@ function finite(value) {
 
 function approximatelyZero(value, tolerance = 0.001) {
   return finite(value) && Math.abs(value) <= tolerance;
+}
+
+function hasExactUniqueStrings(value, expected) {
+  return (
+    Array.isArray(value) &&
+    value.every((entry) => typeof entry === "string" && entry.length > 0) &&
+    new Set(value).size === value.length &&
+    JSON.stringify(value) === JSON.stringify([...expected].sort())
+  );
+}
+
+function primaryFontFamilyFromStack(value) {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+  return value
+    .split(",", 1)[0]
+    .trim()
+    .replace(/^(['"])(.*)\1$/u, "$2")
+    .trim();
+}
+
+export function assessRuntimeFontEvidence(evidence, locale) {
+  const errors = [];
+  const expectedFamilies = expectedRuntimeFontFamiliesByLocale[locale];
+  if (expectedFamilies === undefined) {
+    return [
+      `runtime font evidence has no canonical profile for ${String(locale)}`,
+    ];
+  }
+  if (!isRecord(evidence)) {
+    return ["runtime font evidence must be an object"];
+  }
+  if (evidence.source !== "document.fonts + CSSOM + computedStyle") {
+    errors.push(
+      "runtime font evidence must combine document.fonts, CSSOM and computedStyle",
+    );
+  }
+
+  const fontFaceSet = evidence.fontFaceSet;
+  if (
+    !isRecord(fontFaceSet) ||
+    !Number.isSafeInteger(fontFaceSet.faceCount) ||
+    fontFaceSet.faceCount < expectedFamilies.length
+  ) {
+    errors.push("runtime document.fonts face count must be non-zero");
+  }
+  if (!hasExactUniqueStrings(fontFaceSet?.displays, ["optional"])) {
+    errors.push("runtime document.fonts faces must all use display optional");
+  }
+  if (!hasExactUniqueStrings(fontFaceSet?.families, expectedFamilies)) {
+    errors.push(
+      `runtime document.fonts families must match ${expectedFamilies.join(", ")}`,
+    );
+  }
+  if (
+    !Array.isArray(fontFaceSet?.statuses) ||
+    fontFaceSet.statuses.length < 1 ||
+    new Set(fontFaceSet.statuses).size !== fontFaceSet.statuses.length ||
+    !fontFaceSet.statuses.includes("loaded") ||
+    fontFaceSet.statuses.some(
+      (status) => !["loaded", "unloaded"].includes(status),
+    )
+  ) {
+    errors.push(
+      "runtime document.fonts statuses must be settled to loaded or unloaded and include a loaded face",
+    );
+  }
+
+  const cssom = evidence.cssom;
+  if (
+    !isRecord(cssom) ||
+    !Number.isSafeInteger(cssom.fontFaces) ||
+    cssom.fontFaces < expectedFamilies.length ||
+    !Number.isSafeInteger(cssom.styleSheets) ||
+    cssom.styleSheets < 1
+  ) {
+    errors.push(
+      "runtime CSSOM must contain readable font faces and stylesheets",
+    );
+  }
+  if (!hasExactUniqueStrings(cssom?.displays, ["optional"])) {
+    errors.push("runtime CSSOM font faces must all use display optional");
+  }
+  if (!hasExactUniqueStrings(cssom?.families, expectedFamilies)) {
+    errors.push(
+      `runtime CSSOM font families must match ${expectedFamilies.join(", ")}`,
+    );
+  }
+  if (cssom?.importantDescriptors !== 0) {
+    errors.push("runtime CSSOM font descriptors must not use !important");
+  }
+  if (
+    !Number.isSafeInteger(cssom?.imports) ||
+    cssom.imports < 0 ||
+    !Array.isArray(cssom?.unreadableStyleSheets) ||
+    cssom.unreadableStyleSheets.length > 0
+  ) {
+    errors.push("runtime CSSOM must read every stylesheet and imported sheet");
+  }
+
+  const computed = evidence.computed;
+  if (
+    !isRecord(computed) ||
+    typeof computed.fontFamily !== "string" ||
+    computed.fontFamily.length === 0 ||
+    computed.primaryFamily !== expectedFamilies[0] ||
+    primaryFontFamilyFromStack(computed.fontFamily) !== expectedFamilies[0]
+  ) {
+    errors.push(
+      `runtime computed font stack must start with ${expectedFamilies[0]}`,
+    );
+  }
+  return errors;
 }
 
 export function assessMotionPerformance(metrics, expectedWidth) {
@@ -1155,6 +1279,11 @@ export function assessMotionEvidenceShape(results) {
         ).map((error) => `${entry.id}: ${error}`),
       );
       errors.push(
+        ...assessRuntimeFontEvidence(result.runtimeFonts, entry.locale).map(
+          (error) => `${entry.id}: ${error}`,
+        ),
+      );
+      errors.push(
         ...diagnosticsErrors(result.diagnostics).map(
           (error) => `${entry.id}: ${error}`,
         ),
@@ -1493,6 +1622,7 @@ export function createMotionEvidenceReadme({
     `- Screenshots: ${String(screenshots.length)}`,
     `- Axe scans: ${String(axeSummaries.length)}; critical/serious blocking findings: ${String(axeSummaries.reduce((total, scan) => total + (scan.blocking?.length ?? 0), 0))}`,
     `- Font loading: ${String(fontLoadingPolicy?.fontFaces ?? 0)} production font faces use ${String(fontLoadingPolicy?.strategy ?? "unknown")}; verified families: ${String(fontLoadingPolicy?.verifiedFamilies?.length ?? 0)}/${String(expectedFontFamilies.length)}`,
+    `- Runtime font sets: ${String(scenarioResults.filter((result) => assessRuntimeFontEvidence(result?.runtimeFonts, result?.locale).length === 0).length)}/${String(motionScenarioMatrix.length)} locale scenarios prove document.fonts, CSSOM and computed-stack parity`,
     `- Source fingerprint: ${String(git?.before?.sourceFingerprint ?? "unknown")} (${String(git?.before?.sourceFingerprintAlgorithm ?? sourceFingerprintAlgorithm)})`,
     "- Physical device evidence: false",
     "",
@@ -2471,6 +2601,120 @@ async function listCssFiles(directory) {
   return nested.flat().sort();
 }
 
+function decodeCssIdentifier(
+  source,
+  { offset = 0, returnCursor = false, stopAtRuleBoundary = false } = {},
+) {
+  let decoded = "";
+  let cursor = offset;
+  while (cursor < source.length) {
+    const character = source[cursor];
+    if (stopAtRuleBoundary && source.startsWith("/*", cursor)) {
+      break;
+    }
+    if (
+      stopAtRuleBoundary &&
+      (/\s/u.test(character) || character === "{" || character === ";")
+    ) {
+      break;
+    }
+    if (/\s/u.test(character)) {
+      return undefined;
+    }
+    if (
+      stopAtRuleBoundary &&
+      character.codePointAt(0) <= 0x7f &&
+      !/[a-z0-9_-]/iu.test(character) &&
+      character !== "\\"
+    ) {
+      break;
+    }
+    if (character !== "\\") {
+      decoded += character;
+      cursor += 1;
+      continue;
+    }
+
+    cursor += 1;
+    const escaped = source[cursor];
+    if (escaped === undefined || escaped === "\n" || escaped === "\r") {
+      return undefined;
+    }
+    if (/[\da-f]/iu.test(escaped)) {
+      let hex = "";
+      while (
+        cursor < source.length &&
+        hex.length < 6 &&
+        /[\da-f]/iu.test(source[cursor])
+      ) {
+        hex += source[cursor];
+        cursor += 1;
+      }
+      const codePoint = Number.parseInt(hex, 16);
+      decoded +=
+        codePoint === 0 ||
+        codePoint > 0x10ffff ||
+        (codePoint >= 0xd800 && codePoint <= 0xdfff)
+          ? "\uFFFD"
+          : String.fromCodePoint(codePoint);
+      if (/\s/u.test(source[cursor] ?? "")) {
+        if (source[cursor] === "\r" && source[cursor + 1] === "\n") {
+          cursor += 1;
+        }
+        cursor += 1;
+      }
+      continue;
+    }
+    decoded += escaped;
+    cursor += 1;
+  }
+  const value = decoded.toLowerCase();
+  return returnCursor ? { cursor, value } : value;
+}
+
+function inspectAtRuleHeader(atRule) {
+  const literalName = atRule.name.trim().toLowerCase();
+  if (literalName === "font-face" || literalName === "import") {
+    return {
+      hasPrelude: atRule.params.trim().length > 0,
+      name: literalName,
+    };
+  }
+  const source = atRule.toString().trimStart();
+  if (!source.startsWith("@")) {
+    return undefined;
+  }
+  const identifier = decodeCssIdentifier(source, {
+    offset: 1,
+    returnCursor: true,
+    stopAtRuleBoundary: true,
+  });
+  if (identifier === undefined || typeof identifier === "string") {
+    return undefined;
+  }
+  let cursor = identifier.cursor;
+  while (cursor < source.length) {
+    if (/\s/u.test(source[cursor] ?? "")) {
+      cursor += 1;
+      continue;
+    }
+    if (source.startsWith("/*", cursor)) {
+      const commentEnd = source.indexOf("*/", cursor + 2);
+      if (commentEnd === -1) {
+        return undefined;
+      }
+      cursor = commentEnd + 2;
+      continue;
+    }
+    break;
+  }
+  const boundary = source[cursor];
+  return {
+    hasPrelude: boundary !== undefined && boundary !== "{" && boundary !== ";",
+    name: identifier.value,
+  };
+}
+
 export async function validateBuiltFontPolicy(storefrontRoot) {
   const staticRoot = path.join(storefrontRoot, ".next/static");
   const cssFiles = await listCssFiles(staticRoot);
@@ -2490,30 +2734,56 @@ export async function validateBuiltFontPolicy(storefrontRoot) {
         { cause: error },
       );
     }
-    stylesheet.walkAtRules(/^font-face$/iu, (fontFace) => {
+    stylesheet.walkAtRules((fontFace) => {
+      const header = inspectAtRuleHeader(fontFace);
+      invariant(
+        header?.name !== "import",
+        `${path.relative(storefrontRoot, cssFile)} production CSS must not contain @import`,
+      );
+      if (header?.name !== "font-face") {
+        return;
+      }
+      invariant(
+        !header.hasPrelude,
+        `${path.relative(storefrontRoot, cssFile)} @font-face must not contain a prelude`,
+      );
       fontFaces += 1;
       const displays = [];
-      let family;
+      const families = [];
       for (const node of fontFace.nodes ?? []) {
         if (node.type !== "decl") {
           continue;
         }
-        const property = node.prop.trim().toLowerCase();
+        const property = decodeCssIdentifier(node.prop.trim());
         if (property === "font-display") {
+          invariant(
+            !node.important,
+            `${path.relative(storefrontRoot, cssFile)} @font-face font-display must not use !important`,
+          );
           displays.push(node.value.trim().toLowerCase());
         } else if (property === "font-family") {
-          family = node.value
-            .trim()
-            .replace(/^(['"])(.*)\1$/u, "$2")
-            .trim();
+          invariant(
+            !node.important,
+            `${path.relative(storefrontRoot, cssFile)} @font-face font-family must not use !important`,
+          );
+          families.push(
+            node.value
+              .trim()
+              .replace(/^(['"])(.*)\1$/u, "$2")
+              .trim(),
+          );
         }
       }
       invariant(
         displays.length === 1 && displays[0] === "optional",
         `${path.relative(storefrontRoot, cssFile)} @font-face must use exactly one font-display: optional descriptor`,
       );
-      if (family !== undefined && expectedFontFamilies.includes(family)) {
-        verifiedFamilies.add(family);
+      invariant(
+        families.length === 1,
+        `${path.relative(storefrontRoot, cssFile)} @font-face must use exactly one font-family descriptor`,
+      );
+      if (expectedFontFamilies.includes(families[0])) {
+        verifiedFamilies.add(families[0]);
       }
     });
   }
@@ -2768,6 +3038,134 @@ async function settleMotionPage(page, locale) {
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(850);
   return url;
+}
+
+async function collectRuntimeFontEvidence(page) {
+  return page.evaluate(() => {
+    const normalizeFamily = (value) =>
+      String(value)
+        .trim()
+        .replace(/^(['"])(.*)\1$/u, "$2")
+        .trim();
+    const uniqueSorted = (values) => [...new Set(values)].sort();
+    const faces = [...document.fonts];
+    const styleSheets = new Set([
+      ...document.styleSheets,
+      ...(document.adoptedStyleSheets ?? []),
+    ]);
+    const pendingRoots = [document];
+    while (pendingRoots.length > 0) {
+      const root = pendingRoots.pop();
+      for (const element of root?.querySelectorAll?.("*") ?? []) {
+        const shadowRoot = element.shadowRoot;
+        if (shadowRoot === null) {
+          continue;
+        }
+        pendingRoots.push(shadowRoot);
+        for (const sheet of shadowRoot.adoptedStyleSheets ?? []) {
+          styleSheets.add(sheet);
+        }
+        for (const owner of shadowRoot.querySelectorAll(
+          'style, link[rel="stylesheet"]',
+        )) {
+          if (owner.sheet !== null) {
+            styleSheets.add(owner.sheet);
+          }
+        }
+      }
+    }
+
+    const cssomDisplays = [];
+    const cssomFamilies = [];
+    const unreadableStyleSheets = [];
+    const visitedStyleSheets = new Set();
+    let fontFaces = 0;
+    let importantDescriptors = 0;
+    let imports = 0;
+    const visitRules = (rules, label) => {
+      for (const rule of rules) {
+        if (rule.type === CSSRule.FONT_FACE_RULE) {
+          fontFaces += 1;
+          const display = rule.style
+            .getPropertyValue("font-display")
+            .trim()
+            .toLowerCase();
+          const family = normalizeFamily(
+            rule.style.getPropertyValue("font-family"),
+          );
+          cssomDisplays.push(display);
+          cssomFamilies.push(family);
+          if (
+            rule.style.getPropertyPriority("font-display") !== "" ||
+            rule.style.getPropertyPriority("font-family") !== ""
+          ) {
+            importantDescriptors += 1;
+          }
+          continue;
+        }
+        if (rule.type === CSSRule.IMPORT_RULE) {
+          imports += 1;
+          if (rule.styleSheet === null) {
+            unreadableStyleSheets.push(`${label} -> unresolved @import`);
+          } else {
+            visitStyleSheet(rule.styleSheet);
+          }
+          continue;
+        }
+        if (!("cssRules" in rule)) {
+          continue;
+        }
+        try {
+          visitRules(rule.cssRules, `${label} -> grouped rule`);
+        } catch {
+          unreadableStyleSheets.push(`${label} -> unreadable grouped rule`);
+        }
+      }
+    };
+    const visitStyleSheet = (sheet) => {
+      if (visitedStyleSheets.has(sheet)) {
+        return;
+      }
+      visitedStyleSheets.add(sheet);
+      const label = sheet.href ?? "inline/adopted stylesheet";
+      try {
+        visitRules(sheet.cssRules, label);
+      } catch {
+        unreadableStyleSheets.push(label);
+      }
+    };
+    for (const sheet of styleSheets) {
+      visitStyleSheet(sheet);
+    }
+
+    const specimen = document.querySelector('main[data-ui-motion="v1"]');
+    const fontFamily =
+      specimen === null ? "" : getComputedStyle(specimen).fontFamily;
+    const primaryFamily = normalizeFamily(fontFamily.split(",", 1)[0] ?? "");
+    return {
+      computed: { fontFamily, primaryFamily },
+      cssom: {
+        displays: uniqueSorted(cssomDisplays),
+        families: uniqueSorted(cssomFamilies),
+        fontFaces,
+        importantDescriptors,
+        imports,
+        styleSheets: visitedStyleSheets.size,
+        unreadableStyleSheets: uniqueSorted(unreadableStyleSheets),
+      },
+      fontFaceSet: {
+        displays: uniqueSorted(
+          faces.map((face) => String(face.display).trim().toLowerCase()),
+        ),
+        faceCount: faces.length,
+        families: uniqueSorted(
+          faces.map((face) => normalizeFamily(face.family)),
+        ),
+        statuses: uniqueSorted(faces.map((face) => String(face.status))),
+      },
+      source: "document.fonts + CSSOM + computedStyle",
+    };
+  });
 }
 
 async function installPerformanceObservers(context) {
@@ -3034,6 +3432,7 @@ async function runScenario({ AxeBuilder, browser, candidate, entry, origin }) {
   const diagnostics = await observePage(page, context, origin);
   try {
     const url = await settleMotionPage(page, entry.locale);
+    const runtimeFonts = await collectRuntimeFontEvidence(page);
     const interactionFallback = await beginPerformanceWindow(page);
     const performanceEvidence = await collectPerformance(
       page,
@@ -3069,6 +3468,7 @@ async function runScenario({ AxeBuilder, browser, candidate, entry, origin }) {
     );
     const errors = [
       ...assessMotionPerformance(performanceEvidence, entry.viewport.width),
+      ...assessRuntimeFontEvidence(runtimeFonts, entry.locale),
       ...diagnosticsErrors(diagnostics),
       ...axeSummaries.flatMap((summary) =>
         summary.blocking.map(
@@ -3088,6 +3488,7 @@ async function runScenario({ AxeBuilder, browser, candidate, entry, origin }) {
         id: entry.id,
         locale: entry.locale,
         performance: performanceEvidence,
+        runtimeFonts,
         screenshot: entry.screenshot,
         viewport: entry.viewport,
       },
@@ -4335,8 +4736,11 @@ async function runReducedMotion({ browser, candidate, origin, viewport }) {
   try {
     await settleMotionPage(page, "en");
     const root = page.locator('[data-motion-fixture="true"]');
+    await page
+      .locator(".fs-motion-idol__option")
+      .nth(1)
+      .scrollIntoViewIfNeeded();
     const before = await root.evaluate((element) => {
-      window.scrollTo(0, 0);
       const rect = element.getBoundingClientRect();
       return {
         documentRect: {

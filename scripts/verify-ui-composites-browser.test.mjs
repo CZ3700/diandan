@@ -247,8 +247,16 @@ test("keeps the composite source fingerprint stable across Git state", async (co
   context.after(() => rm(root, { force: true, recursive: true }));
   await mkdir(path.join(root, "packages/ui/src"), { recursive: true });
   await mkdir(path.join(root, "packages/domain"), { recursive: true });
+  await mkdir(
+    path.join(root, "apps/storefront/postcss-font-display-optional"),
+    { recursive: true },
+  );
   await mkdir(path.join(root, "output/playwright/p2-04"), { recursive: true });
   await writeFile(path.join(root, "packages/ui/src/hero.tsx"), "hero-v1\n");
+  await writeFile(
+    path.join(root, "apps/storefront/postcss-font-display-optional/index.cjs"),
+    "policy-v1\n",
+  );
   await writeFile(path.join(root, "packages/domain/index.ts"), "domain-v1\n");
   await writeFile(
     path.join(root, "output/playwright/p2-04/README.md"),
@@ -275,9 +283,16 @@ test("keeps the composite source fingerprint stable across Git state", async (co
   await writeFile(path.join(root, "packages/domain/index.ts"), "domain-v2\n");
   assert.deepEqual(await collectCompositeSourceFingerprint(root), initial);
 
+  await writeFile(
+    path.join(root, "apps/storefront/postcss-font-display-optional/index.cjs"),
+    "policy-v2\n",
+  );
+  const policyChanged = await collectCompositeSourceFingerprint(root);
+  assert.notEqual(policyChanged.digest, initial.digest);
+
   await writeFile(path.join(root, "packages/ui/src/hero.tsx"), "hero-v2\n");
   const changed = await collectCompositeSourceFingerprint(root);
-  assert.notEqual(changed.digest, initial.digest);
+  assert.notEqual(changed.digest, policyChanged.digest);
   await runGit(root, ["add", "packages/ui/src/hero.tsx"]);
   await runGit(root, [
     "-c",

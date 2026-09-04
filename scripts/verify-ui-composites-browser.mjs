@@ -57,6 +57,7 @@ const sourceFingerprintPathspec = Object.freeze([
   "packages/ui",
   "apps/storefront/next.config.ts",
   "apps/storefront/package.json",
+  "apps/storefront/postcss-font-display-optional",
   "apps/storefront/postcss.config.mjs",
   "apps/storefront/tsconfig.build.json",
   "apps/storefront/tsconfig.json",
