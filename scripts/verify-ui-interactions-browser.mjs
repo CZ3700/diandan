@@ -451,6 +451,14 @@ export function classifyOverlayFocus(focus) {
   return "outside";
 }
 
+export function matchesActiveMenuItem(item, expectedText) {
+  return (
+    item?.role === "menuitemradio" &&
+    item?.text === expectedText &&
+    expectedText !== ""
+  );
+}
+
 export function assessInteractionMeasurements(metrics) {
   const errors = [];
   const documentMetrics = metrics?.document;
@@ -2469,13 +2477,22 @@ async function runOverlayOutsideCheck(page, kind) {
   return { passed: true, point, scrollLock, scrollReleased };
 }
 
-async function activeMenuItemText(page) {
-  return page.evaluate(() => {
-    const active = document.activeElement;
-    return active?.getAttribute("role") === "menuitemradio"
-      ? (active.textContent?.trim() ?? "")
-      : "";
-  });
+async function waitForActiveMenuItem(page, expectedText) {
+  const deadline = Date.now() + 500;
+  do {
+    const item = await page.evaluate(() => {
+      const active = document.activeElement;
+      return {
+        role: active?.getAttribute("role") ?? null,
+        text: active?.textContent?.trim() ?? "",
+      };
+    });
+    if (matchesActiveMenuItem(item, expectedText)) {
+      return item.text;
+    }
+    await page.waitForTimeout(10);
+  } while (Date.now() < deadline);
+  throw new Error("Menu focus did not reach expected item: " + expectedText);
 }
 
 async function runMenuCheck(page) {
@@ -2489,20 +2506,23 @@ async function runMenuCheck(page) {
   await waitForSurfaceMotion(popup);
   const items = popup.locator('[role="menuitemradio"]');
   invariant((await items.count()) === 3, "menu must expose three radio items");
+  const [expectedFirst = "", expectedSecond = "", expectedDisabled = ""] = (
+    await items.allTextContents()
+  ).map((text) => text.trim());
   invariant(
     (await items.nth(2).getAttribute("aria-disabled")) === "true",
     "menu fixture disabled item must expose aria-disabled=true",
   );
   const scrollLock = await collectScrollLockProof(page);
-  const first = await activeMenuItemText(page);
+  const first = await waitForActiveMenuItem(page, expectedFirst);
   await page.keyboard.press("ArrowDown");
-  const second = await activeMenuItemText(page);
+  const second = await waitForActiveMenuItem(page, expectedSecond);
   invariant(
     second !== "" && second !== first,
     "ArrowDown must move to next item",
   );
   await page.keyboard.press("ArrowDown");
-  const disabled = await activeMenuItemText(page);
+  const disabled = await waitForActiveMenuItem(page, expectedDisabled);
   invariant(
     disabled !== "" && disabled !== first && disabled !== second,
     "ArrowDown must allow focus on the disabled item",
@@ -2516,22 +2536,22 @@ async function runMenuCheck(page) {
   );
   await page.keyboard.press("ArrowDown");
   invariant(
-    (await activeMenuItemText(page)) === first,
+    (await waitForActiveMenuItem(page, first)) === first,
     "ArrowDown must loop from the disabled final item",
   );
   await page.keyboard.press("End");
   invariant(
-    (await activeMenuItemText(page)) === disabled,
+    (await waitForActiveMenuItem(page, disabled)) === disabled,
     "End must focus the final item, including when disabled",
   );
   await page.keyboard.press("Home");
   invariant(
-    (await activeMenuItemText(page)) === first,
+    (await waitForActiveMenuItem(page, first)) === first,
     "Home must focus the first item",
   );
   await page.keyboard.type("compa");
   invariant(
-    (await activeMenuItemText(page)) === second,
+    (await waitForActiveMenuItem(page, second)) === second,
     "typeahead must focus Compact",
   );
   await page.keyboard.press("Escape");
@@ -2624,9 +2644,18 @@ async function runRtlCheck(page) {
   await page.keyboard.press("ArrowDown");
   await waitForSurfaceMotion(menuPopup);
   await assertFocusInside(page, menuSelector, "RTL Menu");
-  const firstActiveItem = await activeMenuItemText(page);
+  const rtlItemTexts = (
+    await menuPopup.locator('[role="menuitemradio"]').allTextContents()
+  ).map((text) => text.trim());
+  const firstActiveItem = await waitForActiveMenuItem(
+    page,
+    rtlItemTexts[0] ?? "",
+  );
   await page.keyboard.press("ArrowDown");
-  const secondActiveItem = await activeMenuItemText(page);
+  const secondActiveItem = await waitForActiveMenuItem(
+    page,
+    rtlItemTexts[1] ?? "",
+  );
   invariant(
     firstActiveItem !== "" &&
       secondActiveItem !== "" &&

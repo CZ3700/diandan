@@ -18,6 +18,7 @@ async function loadRunner() {
     "createInteractionTextRootSelector",
     "createInteractionScenarioMatrix",
     "isSafeRelativeArtifactPath",
+    "matchesActiveMenuItem",
     "validateEvidenceBundle",
     "validateInteractionScenarioMatrix",
   ]) {
@@ -347,6 +348,32 @@ test("overlay focus classification permits only popup focus or its transient ins
   ]) {
     assert.equal(classifyOverlayFocus(state), "outside");
   }
+});
+
+test("active Menu item matching waits for the requested radio item", async () => {
+  const { matchesActiveMenuItem } = await loadRunner();
+
+  assert.equal(
+    matchesActiveMenuItem(
+      { role: "menuitemradio", text: "Comfortable" },
+      "Comfortable",
+    ),
+    true,
+  );
+  assert.equal(
+    matchesActiveMenuItem(
+      { role: "menuitemradio", text: "Unavailable" },
+      "Comfortable",
+    ),
+    false,
+  );
+  assert.equal(
+    matchesActiveMenuItem(
+      { role: "button", text: "Comfortable" },
+      "Comfortable",
+    ),
+    false,
+  );
 });
 
 function validNativeMeasurement({ dpr, innerHeight, innerWidth }) {
