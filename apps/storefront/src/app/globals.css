@@ -1,4 +1,6 @@
+@import "tailwindcss" source(none);
 @import "@fan-support/design-tokens/foundations.css";
+@import "@fan-support/ui/primitives.css";
 
 * {
   box-sizing: border-box;

@@ -58,6 +58,18 @@ const reviewedAssetDependenciesByPackage = new Map([
     ]),
   ],
 ]);
+const reviewedPortableDependenciesByPackage = new Map([
+  [
+    "packages/ui",
+    new Set([
+      "@types/react",
+      "@types/react-dom",
+      "class-variance-authority",
+      "react",
+      "react-dom",
+    ]),
+  ],
+]);
 const builtinModuleSpecifiers = new Set(
   builtinModules.flatMap((specifier) => [
     specifier,
@@ -91,14 +103,27 @@ function isReviewedPortableModule(specifier, workspacePackageNames) {
   );
 }
 
+function isReviewedPackagePortableDependency(packagePath, specifier) {
+  if (packagePath === undefined) {
+    return false;
+  }
+  return (
+    reviewedPortableDependenciesByPackage
+      .get(packagePath)
+      ?.has(packageNameFromSpecifier(specifier)) === true
+  );
+}
+
 function isForbiddenProvider(
   specifier,
   workspacePackageNames,
   rejectWorkspaceAdapters,
+  packagePath,
 ) {
   return (
     (rejectWorkspaceAdapters && isKnownAdapterModuleSpecifier(specifier)) ||
-    !isReviewedPortableModule(specifier, workspacePackageNames)
+    (!isReviewedPortableModule(specifier, workspacePackageNames) &&
+      !isReviewedPackagePortableDependency(packagePath, specifier))
   );
 }
 
@@ -326,6 +351,7 @@ async function inspectProviderImports(
   errors,
   workspacePackageNames,
   rejectWorkspaceAdapters = false,
+  packagePath,
 ) {
   const relativePath = toWorkspacePath(workspaceRoot, absolutePath);
   const sourceFile = ts.createSourceFile(
@@ -341,6 +367,7 @@ async function inspectProviderImports(
         specifier,
         workspacePackageNames,
         rejectWorkspaceAdapters,
+        packagePath,
       )
     ) {
       errors.push(
@@ -420,7 +447,12 @@ async function validateInnerLayerPackage(
     for (const [dependency, version] of Object.entries(dependencies)) {
       if (
         !isReviewedPackageAssetDependency(packagePath, dependency) &&
-        isForbiddenProvider(dependency, workspacePackageNames, true)
+        isForbiddenProvider(
+          dependency,
+          workspacePackageNames,
+          true,
+          packagePath,
+        )
       ) {
         errors.push(
           `${packagePath}/package.json declares forbidden provider dependency ${dependency} in ${section}`,
@@ -437,6 +469,7 @@ async function validateInnerLayerPackage(
           aliasTarget.packageName,
           workspacePackageNames,
           true,
+          packagePath,
         )
       ) {
         errors.push(
@@ -459,6 +492,7 @@ async function validateInnerLayerPackage(
         errors,
         workspacePackageNames,
         true,
+        packagePath,
       );
       inspectInnerLayerFilesystemImports(
         workspaceRoot,
@@ -493,6 +527,7 @@ async function validateInnerLayerPackage(
       errors,
       workspacePackageNames,
       true,
+      packagePath,
     );
     inspectInnerLayerFilesystemImports(
       workspaceRoot,

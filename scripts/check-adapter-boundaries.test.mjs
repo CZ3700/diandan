@@ -450,6 +450,93 @@ test("allows only the reviewed font assets in the design-token package", async (
   );
 });
 
+test("allows React and CVA only in the reviewed ui package", async (context) => {
+  const validateAdapterBoundaries = await loadValidator();
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  await writeInnerPackageFixture(
+    root,
+    "ui",
+    'import { cva } from "class-variance-authority";\nimport type { ReactNode } from "react";\nexport const className = cva("control");\nexport type Content = ReactNode;\n',
+  );
+  await writePackageManifest(root, "ui", "@fan-support/ui", {
+    dependencies: { "class-variance-authority": "0.7.1" },
+    devDependencies: {
+      "@types/react": "19.2.18",
+      "@types/react-dom": "19.2.5",
+      "react-dom": "19.2.8",
+    },
+    peerDependencies: { react: "19.2.8" },
+  });
+  await write(
+    root,
+    "packages/ui/dist/index.d.ts",
+    'import type { ReactNode } from "react";\nexport declare const className: (props?: unknown) => string;\nexport type Content = ReactNode;\n',
+  );
+
+  const errors = await validateAdapterBoundaries(root);
+  assert.ok(
+    !errors.some((error) =>
+      [
+        "@types/react",
+        "@types/react-dom",
+        "class-variance-authority",
+        "react",
+        "react-dom",
+      ].some((dependency) => error.includes(dependency)),
+    ),
+    `expected reviewed ui dependencies to remain scoped: ${errors.join(" | ")}`,
+  );
+});
+
+test("keeps the ui portability exception package-scoped and provider-free", async (context) => {
+  const validateAdapterBoundaries = await loadValidator();
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  await writePackageManifest(root, "domain", "@fan-support/domain", {
+    dependencies: {
+      "class-variance-authority": "0.7.1",
+      react: "19.2.8",
+    },
+  });
+  await write(
+    root,
+    "packages/domain/src/ui-leak.ts",
+    'import { cva } from "class-variance-authority";\nimport { createElement } from "react";\nexport const leak = createElement("div", { className: cva("leak")() });\n',
+  );
+  await writeInnerPackageFixture(
+    root,
+    "ui",
+    'import Link from "next/link";\nimport type { MediaAdapter } from "@fan-support/media-s3";\nexport type Leak = MediaAdapter;\nexport const link = Link;\n',
+  );
+  await writePackageManifest(root, "ui", "@fan-support/ui", {
+    dependencies: {
+      "@fan-support/media-s3": "workspace:*",
+      next: "16.3.4",
+      react: "19.2.8",
+    },
+  });
+
+  const errors = await validateAdapterBoundaries(root);
+  for (const dependency of ["class-variance-authority", "react"]) {
+    assert.ok(
+      errors.some(
+        (error) =>
+          error.includes("packages/domain/") && error.includes(dependency),
+      ),
+      `expected ${dependency} to remain forbidden outside packages/ui: ${errors.join(" | ")}`,
+    );
+  }
+  for (const dependency of ["next", "@fan-support/media-s3"]) {
+    assert.ok(
+      errors.some(
+        (error) => error.includes("packages/ui/") && error.includes(dependency),
+      ),
+      `expected ${dependency} to remain forbidden inside packages/ui: ${errors.join(" | ")}`,
+    );
+  }
+});
+
 test("rejects font-package scope expansion and alias bypasses", async (context) => {
   const validateAdapterBoundaries = await loadValidator();
   const root = await fixture();

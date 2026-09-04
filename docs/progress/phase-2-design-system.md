@@ -13,7 +13,7 @@
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
 | P2-01 | DONE | Codex `/root` | P0-04 | Git `f578208`、PR #10/run `33821542072`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
-| P2-02 | IN_PROGRESS | Codex `/root` | P2-01 | 基础原语；Lane B 由本任务独占 |
+| P2-02 | REVIEW | Codex `/root` | P2-01 | 八类基础原语、内部 fixture 与本地浏览器证据完成；等待冻结提交、clean clone 与真实 PR CI |
 | P2-03 | PENDING | — | P2-02 | Overlay/menu/toast/language-region/focus |
 | P2-04 | PENDING | — | P2-02 | 七语言长文案组合组件与状态 |
 | P2-05 | PENDING | — | P2-03、P2-04 | 三段标志性动效 |
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01 已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；Lane B 已释放，直接依赖 P2-02 改为 `READY`。Phase 2 其余任务及完整退出门禁尚未取得，Phase 3 继续锁定。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01 已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-02 已进入 `REVIEW`，Lane B 在 clean clone 与真实 PR CI 通过前仍不释放。Phase 2 其余任务及完整退出门禁尚未取得，Phase 3 继续锁定。
 
 ## P2-01 执行卡
 
@@ -103,4 +103,16 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 - TDD 与验证计划：先写失败测试锁定原语语义、类型/状态组合、金额最小单位与 locale 格式化、媒体 alt/fallback、Field 关联/错误、Quantity 边界、无关键翻译文本固定高度/ellipsis、token-only 样式、RTL/pseudo 结构；逐个见红后最小实现并复跑。随后运行受影响 test/typecheck/build、静态边界检查、format/lint、整仓 0-cache check 与 secret scan。
 - 浏览器计划：production build 在 preview gate 下覆盖 390×844 与 1440×900，并抽查六基准视口、320 CSS px、键盘 Tab/Enter/Space/箭头、hover/focus/disabled/loading、RTL 结构、reduced-motion、axe critical/serious、无横向溢出/裁切、console/page/request 错误；证据写入 `output/playwright/p2-02/`。
 - 风险映射：`R-07` 以合成友好微交互、reduced-motion 与稳定 loading 尺寸控制；`R-17` 以 canonical locale 导入、`Intl` 格式化、多脚本/伪语言/RTL 验收和 locale 与 market/currency 零推导控制。
-- 并发/所有权：P2-02 是唯一 Lane B executor；Codex `/root` 独占 `packages/ui`、Storefront 原语 fixture、相关样式/测试及必要 manifest/lockfile。子代理仅做只读审计、测试矩阵建议和独立复核，不修改这些边界。
+- 并发/所有权：P2-02 是唯一 Lane B executor；Codex `/root` 对 `packages/ui`、Storefront 原语 fixture、相关样式/测试及必要 manifest/lockfile 负最终责任。其下受控子代理只在 `/root` 分派的互不重叠文件内实现并回报 RED/GREEN 证据，不形成第二 Lane executor；最终集成、复核与状态变更仍由 `/root` 完成。
+
+**Review 请求（2026-09-04T11:40:00+08:00）**：
+
+- **八类原语**：`@fan-support/ui` 已实现 Button、Link、Icon、Media、Price、Status、Field、Quantity；服务端入口只导出无客户端状态的六类原语，`./client` 以 `use client` 隔离 Media/Quantity，`./primitives.css` 显式承载 token-only 样式。React/CVA 例外被限制在 UI 包，adapter 边界对 npm alias、跨包扩散与 declaration 泄漏继续 fail closed。
+- **语义与精度**：Button loading 保留文字布局 footprint 并使用绝对定位 spinner；Link 补齐新窗口安全 rel；Icon 强制 decorative/informative 二选一；Price 直接消费 branded integer minor units，以 BigInt 保持 `Number.MAX_SAFE_INTEGER` 末位精度并只按显式 locale/currency 展示；Field 关联 label/hint/error；Quantity 以安全整数和 BigInt step lattice 限制边界、键盘与直接输入。
+- **媒体与浏览器边界**：Media 强制有效尺寸及 informative alt/decorative 选择，错误 fallback 保持 aspect ratio，并以 `src/srcSet/sizes` 组成资源身份避免换源后残留错误。根入口在 `react-server` conditions 下可加载，客户端状态未泄漏到 RSC 图。
+- **内部 fixture**：Storefront 在既有 `/_internal/design-foundations/{locale}/primitives` 下覆盖七个正式 locale 与 `en-XA`，沿用 noindex 与 dev/test/preview gate；staging/production 返回 404。样板只证明原语，不新增公开业务路由、组合组件、正式品牌/肖像、市场/币种/支付推导、API、数据库、migration 或 OpenAPI 变更。
+- **TDD 与静态门禁**：UI `10 files / 50 tests`、Storefront `11 / 56`、Admin `6 / 22`、UI primitives `42/42`、design foundations `21/21`、adapter boundaries `29/29`、browser helper `19/19` 全绿；UI typecheck/build、focused Prettier/ESLint 与 `git diff --check` 通过。
+- **浏览器候选证据**：`output/playwright/p2-02/` 的本地候选由 production standalone build 生成，记录 13 个确定性场景、6 次 axe（critical/serious 0）、3 个环境 gate 与 15 张截图；覆盖六基准视口、320 px `en-XA`/长葡语、键盘、hover/focus/disabled/loading、Field/Quantity、Media fallback、RTL 与 390/1440 reduced-motion，未发现横向溢出、裁切、replacement glyph、外链资源或 console/page/request 错误。
+- **真实 200% zoom**：安装版 Google Chrome `152.0.7977.82` 使用隔离临时 profile 的 HostZoomMap；outer window 保持 `1710×929`，CSS viewport `1710×842→855×421`、DPR `2→4`、`visualViewport.scale=1`、detected `200%`。截图只用 CDP `Page.captureScreenshot` 读取真实合成表面，不调用 Emulation/device metrics/page scale；两张 PNG 均为完整 `3420×1684`，右上 `PT` marker 经显隐像素差验证，临时 profile 已删除，15/15 SHA-256 匹配。
+- **评审修复**：首轮浏览器独立复核指出 request firewall 时序、axe artifact 路径、候选替换完整性、loading footprint、reduced-motion 覆盖与真实 zoom 截图裁切；均以失败测试复现后修复。当前等待最终只读复核回信。
+- **剩余门禁**：提交前仍需冻结全量 0-cache `pnpm check`，随后以 clean worktree 重生浏览器证据、fresh clean-clone 验收并取得真实 PR Quality/Security；完成前保持 `REVIEW`，不提前解锁 P2-03/P2-04，也不宣称 staging、production、正式品牌批准或真实设备性能。
