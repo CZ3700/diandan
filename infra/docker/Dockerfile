@@ -32,6 +32,7 @@ WORKDIR /app
 
 COPY --from=builder --chown=node:node /workspace/apps/storefront/.next/standalone ./
 COPY --from=builder --chown=node:node /workspace/apps/storefront/.next/static ./apps/storefront/.next/static
+COPY --from=builder --chown=node:node /workspace/packages/design-tokens/THIRD_PARTY_NOTICES.md /app/THIRD_PARTY_NOTICES.md
 
 USER node
 WORKDIR /app/apps/storefront
@@ -49,6 +50,7 @@ WORKDIR /app
 
 COPY --from=builder --chown=node:node /workspace/apps/admin/.next/standalone ./
 COPY --from=builder --chown=node:node /workspace/apps/admin/.next/static ./apps/admin/.next/static
+COPY --from=builder --chown=node:node /workspace/packages/design-tokens/THIRD_PARTY_NOTICES.md /app/THIRD_PARTY_NOTICES.md
 
 USER node
 WORKDIR /app/apps/admin

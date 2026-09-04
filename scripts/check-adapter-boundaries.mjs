@@ -46,6 +46,18 @@ const portableScopedDependencies = new Set([
   "@opentelemetry/semantic-conventions",
   "@types/node",
 ]);
+const reviewedAssetDependenciesByPackage = new Map([
+  [
+    "packages/design-tokens",
+    new Set([
+      "@fontsource-variable/manrope",
+      "@fontsource-variable/noto-sans",
+      "@fontsource-variable/noto-sans-jp",
+      "@fontsource-variable/noto-sans-sc",
+      "@fontsource-variable/noto-sans-thai",
+    ]),
+  ],
+]);
 const builtinModuleSpecifiers = new Set(
   builtinModules.flatMap((specifier) => [
     specifier,
@@ -87,6 +99,13 @@ function isForbiddenProvider(
   return (
     (rejectWorkspaceAdapters && isKnownAdapterModuleSpecifier(specifier)) ||
     !isReviewedPortableModule(specifier, workspacePackageNames)
+  );
+}
+
+function isReviewedPackageAssetDependency(packagePath, dependency) {
+  return (
+    reviewedAssetDependenciesByPackage.get(packagePath)?.has(dependency) ===
+    true
   );
 }
 
@@ -399,7 +418,10 @@ async function validateInnerLayerPackage(
       continue;
     }
     for (const [dependency, version] of Object.entries(dependencies)) {
-      if (isForbiddenProvider(dependency, workspacePackageNames, true)) {
+      if (
+        !isReviewedPackageAssetDependency(packagePath, dependency) &&
+        isForbiddenProvider(dependency, workspacePackageNames, true)
+      ) {
         errors.push(
           `${packagePath}/package.json declares forbidden provider dependency ${dependency} in ${section}`,
         );

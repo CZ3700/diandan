@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-03T23:53:42.147Z",
+  "browser": "chromium 152.0.7977.82",
+  "target": {
+    "build": "production",
+    "deploymentEnvironment": "preview",
+    "origin": "http://127.0.0.1:3101"
+  },
+  "capturePolicy": "Abort before writing a screenshot unless HTTP status, specimen marker, locale scope, font, overflow, text, external-resource and browser-diagnostic assertions pass.",
+  "routes": [
+    {
+      "locale": "en",
+      "viewport": "360x800",
+      "status": 200,
+      "fontProfile": "latin",
+      "fontResources": ["manrope", "noto-sans"],
+      "headingFontSize": "46.7px",
+      "headingLineHeight": "44.832px",
+      "screenshot": "viewports/360x800-en.png"
+    },
+    {
+      "locale": "vi",
+      "viewport": "390x844",
+      "status": 200,
+      "fontProfile": "vietnamese",
+      "fontResources": ["manrope", "noto-sans"],
+      "headingFontSize": "48.725px",
+      "headingLineHeight": "56.0337px",
+      "screenshot": "viewports/390x844-vi.png"
+    },
+    {
+      "locale": "th",
+      "viewport": "768x1024",
+      "status": 200,
+      "fontProfile": "thai",
+      "fontResources": ["noto-sans-thai"],
+      "headingFontSize": "74.24px",
+      "headingLineHeight": "85.376px",
+      "screenshot": "viewports/768x1024-th.png"
+    },
+    {
+      "locale": "zh-CN",
+      "viewport": "1024x768",
+      "status": 200,
+      "fontProfile": "simplified-chinese",
+      "fontResources": ["noto-sans-sc"],
+      "headingFontSize": "91.52px",
+      "headingLineHeight": "105.248px",
+      "screenshot": "viewports/1024x768-zh-CN.png"
+    },
+    {
+      "locale": "ja",
+      "viewport": "1440x900",
+      "status": 200,
+      "fontProfile": "japanese",
+      "fontResources": ["noto-sans-jp"],
+      "headingFontSize": "119.6px",
+      "headingLineHeight": "137.54px",
+      "screenshot": "viewports/1440x900-ja.png"
+    },
+    {
+      "locale": "es",
+      "viewport": "1920x1080",
+      "status": 200,
+      "fontProfile": "latin",
+      "fontResources": ["manrope", "noto-sans"],
+      "headingFontSize": "120px",
+      "headingLineHeight": "115.2px",
+      "screenshot": "viewports/1920x1080-es.png"
+    },
+    {
+      "locale": "pt",
+      "viewport": "390x844",
+      "status": 200,
+      "fontProfile": "latin",
+      "fontResources": ["manrope", "noto-sans"],
+      "screenshot": "scripts/390x844-pt-long.png"
+    },
+    {
+      "locale": "en-XA",
+      "viewport": "390x844",
+      "status": 200,
+      "fontProfile": "latin",
+      "fontResources": ["manrope", "noto-sans"],
+      "screenshot": "scripts/390x844-en-XA.png"
+    }
+  ],
+  "routeAssertions": {
+    "title": "Design foundations · Internal specimen",
+    "htmlLang": "en",
+    "localizedLangCount": 1,
+    "mainLang": null,
+    "robots": "noindex, nofollow",
+    "designFoundations": "v1",
+    "accent": "#6888bd",
+    "accentFallback": false,
+    "fontsLoaded": true,
+    "horizontalOverflow": false,
+    "clippedElements": 0,
+    "replacementGlyph": false,
+    "externalResources": 0,
+    "consoleWarningsOrErrors": 0,
+    "pageErrors": 0,
+    "requestFailures": 0
+  },
+  "narrow": [
+    { "locale": "pt", "viewport": "320x800", "status": 200 },
+    { "locale": "en-XA", "viewport": "320x800", "status": 200 },
+    { "locale": "th", "viewport": "320x800", "status": 200 },
+    { "locale": "vi", "viewport": "320x800", "status": 200 }
+  ],
+  "narrowAssertions": {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "bodyScrollWidth": 320,
+    "replacementGlyph": false,
+    "browserDiagnostics": 0
+  },
+  "focus": {
+    "target": "Runtime health",
+    "href": "/healthz",
+    "outline": "3px solid",
+    "outlineOffset": "4px",
+    "browserDiagnostics": 0
+  },
+  "reducedMotion": [
+    {
+      "viewport": "390x844",
+      "status": 200,
+      "effectiveDurations": ["0s", "0s", "0s", "0s"],
+      "scrollBehavior": "auto",
+      "screenshot": "reduced-motion/390x844-en-reduce.png"
+    },
+    {
+      "viewport": "1440x900",
+      "status": 200,
+      "effectiveDurations": ["0s", "0s", "0s", "0s"],
+      "scrollBehavior": "auto",
+      "screenshot": "reduced-motion/1440x900-en-reduce.png"
+    }
+  ],
+  "realChromeZoom": {
+    "capturedAt": "2026-09-04T08:13:00+08:00",
+    "browser": "Google Chrome 152.0.7977.82",
+    "zoomPercent": 200,
+    "zoomLevel": 3.8017840169239308,
+    "method": "Chrome HostZoomMap default zoom preference loaded from an isolated profile before navigation; no CDP device-metrics or page-scale emulation.",
+    "baseline": {
+      "devicePixelRatio": 2,
+      "innerWidth": 1710,
+      "innerHeight": 842,
+      "outerWidth": 1710,
+      "outerHeight": 929
+    },
+    "zoomed": {
+      "locale": "es",
+      "devicePixelRatio": 4,
+      "innerWidth": 855,
+      "innerHeight": 421,
+      "outerWidth": 1710,
+      "outerHeight": 929,
+      "clientWidth": 855,
+      "scrollWidth": 855,
+      "bodyScrollWidth": 855,
+      "fontsLoaded": true,
+      "horizontalOverflow": false,
+      "clippedElements": 0,
+      "replacementGlyph": false,
+      "screenshot": "zoom/855x421-es-chrome-200-percent.png",
+      "physicalScreenshot": "3420x1684"
+    }
+  },
+  "rootPages": [
+    {
+      "app": "storefront",
+      "viewport": "390x844",
+      "status": 200,
+      "cardWidth": 358
+    },
+    {
+      "app": "storefront",
+      "viewport": "1440x900",
+      "status": 200,
+      "cardWidth": 1200
+    },
+    { "app": "admin", "viewport": "390x844", "status": 200, "cardWidth": 358 },
+    { "app": "admin", "viewport": "1440x900", "status": 200, "cardWidth": 1200 }
+  ],
+  "rootPageAssertions": {
+    "horizontalOverflow": false,
+    "replacementGlyph": false,
+    "backgroundColor": "rgb(10, 10, 12)",
+    "color": "rgb(246, 243, 238)",
+    "browserDiagnostics": 0
+  },
+  "environmentGate": [
+    {
+      "deploymentEnvironment": "preview",
+      "healthStatus": 200,
+      "specimenStatus": 200
+    },
+    {
+      "deploymentEnvironment": "staging",
+      "healthStatus": 200,
+      "specimenStatus": 404
+    },
+    {
+      "deploymentEnvironment": "production",
+      "healthStatus": 200,
+      "specimenStatus": 404
+    }
+  ]
+}
