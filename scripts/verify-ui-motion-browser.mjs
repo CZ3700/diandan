@@ -1362,6 +1362,7 @@ export function assessMotionEvidenceShape(results) {
   );
   if (
     idol?.mouse?.firstFrame?.coverage !== true ||
+    !hasIdolFirstFrameCoverage(idol?.mouse?.firstFrame) ||
     !finite(idol?.mouse?.firstFrame?.activeOpacity) ||
     idol.mouse.firstFrame.activeOpacity > 0.01 ||
     !finite(idol?.mouse?.firstFrame?.outgoingOpacity) ||

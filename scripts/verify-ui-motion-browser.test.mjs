@@ -356,9 +356,14 @@ function validMotionChecks() {
       mouse: {
         durationMs: 300,
         firstFrame: {
+          activeLayout: { height: 500, left: 0, top: 0, width: 400 },
           activeOpacity: 0,
+          activeRect: { height: 503, left: 8, top: -2, width: 402 },
           coverage: true,
+          outgoingLayout: { height: 500, left: 0, top: 0, width: 400 },
           outgoingOpacity: 1,
+          outgoingRect: { height: 500, left: 20, top: 40, width: 400 },
+          visualRect: { height: 500, left: 20, top: 40, width: 400 },
         },
         focusPreserved: true,
         mode: "spatial",
@@ -706,6 +711,13 @@ test("enforces motion duration, latest-wins and user-state budgets", async () =>
   assert.match(errors, /visual change|no-op|identity/iu);
   assert.match(errors, /interrupt|reset/iu);
   assert.match(errors, /runtime CSSOM.*optional/iu);
+
+  const forgedCoverage = validResults(createMotionScenarioMatrix());
+  delete forgedCoverage.motionChecks.idolSwitch.mouse.firstFrame.activeLayout;
+  assert.match(
+    assessMotionEvidenceShape(forgedCoverage).join("\n"),
+    /first frame.*coverage/iu,
+  );
 });
 
 test("fails closed when any hero frame field is missing or non-finite", async () => {
