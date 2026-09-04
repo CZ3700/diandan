@@ -16,7 +16,7 @@
 | P2-02 | DONE | Codex `/root` | P2-01 | Git `9f33dad` + evidence `d40a79b`、PR #11/run `33835758064`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
 | P2-03 | DONE | Codex `/root` | P2-02 | 实现 `0f86e6c` + evidence `ef6e16a` + CI 稳定化 `f6e19c9`；[PR #12](https://github.com/CZ3700/diandan/pull/12)/run `33874955057`、本地、浏览器、fresh clone 与两路独立终审全绿 |
 | P2-04 | DONE | Codex `/root` | P2-02 | 六个组合组件、内部八语言展示页、16 场景/10 axe/18 截图、全仓门禁与独立终审通过 |
-| P2-05 | IN_PROGRESS | Codex `/root` | P2-03、P2-04 | 已领取；按测试先行实现三段标志性动效与 reduced-motion 等价状态 |
+| P2-05 | REVIEW | Codex `/root` | P2-03、P2-04 | 产品代码、本地生产构建与浏览器证据完成；等待真实移动设备录屏/帧率门禁 |
 | P2-06 | PENDING | — | P2-04、P2-05 | 人工品牌样板批准 |
 
 ## 必须证明
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01、P2-02 与 P2-03 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-04 已通过本地产品代码、浏览器与独立终验并释放 Lane B，P2-05 已由 Codex `/root` 领取并进入实现。Phase 2 的 P2-05/P2-06、真实设备动效性能与完整人工品牌批准尚未取得，Phase 3 继续锁定。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01、P2-02 与 P2-03 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-04 已通过本地产品代码、浏览器与独立终验。P2-05 的产品代码、桌面生产构建浏览器矩阵、fresh clean-clone 与独立复核已完成并进入 `REVIEW`，但真实移动设备录屏/帧率仍是任务硬门禁。P2-06 继续等待 P2-05 `DONE`，Phase 3 继续锁定。
 
 ## P2-01 执行卡
 
@@ -212,7 +212,7 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 - **响应式与状态稳定**：Hero 的 loading/ready 使用同一 4:5/16:9 媒体比例并共享窄屏长文案预留；真实切换在全部 16 场景比较根尺寸、文档坐标、下游锚点与整页高度，误差阈值 1 CSS px。独立复核额外抽样 320/390/436/600/767/768/968/1000/1023/1024/1440px，差值全部为 0；767px 葡语与 1023px `en-XA` 已成为永久前一像素门禁。
 - **图片失败与媒体**：五个带媒体组件均由浏览器真实 `error`/decode 事件进入本地化 fallback；Hero ready→failure 保持根尺寸和下游位置、fallback 不覆盖正文，响应式 art direction、focal point、无边框方角与媒体比例均有运行时断言。三个虚构内部素材及生成 brief/使用边界记录在 `apps/storefront/public/ui-composites/README.md`，不代表正式品牌或肖像批准。
 - **多语言与可访问性**：七个公开 locale 加内部 `en-XA` 的 noindex preview 页面覆盖 CJK、Thai、Vietnamese、最长西/葡语与完整伪本地化；16/16 浏览器场景、18/18 截图、10 次 axe（critical/serious 0）、键盘、touch、hover、RTL、390/1440 reduced motion、安装版 Chrome 原生 200% zoom 均通过。preview 路由为 200，staging/production 模式为 404，均仅是本地生产构建关闭策略证明。
-- **TDD 与静态门禁**：UI `14 files / 80 tests`、Storefront `15 / 102`、browser runner `11/11`、composite checker `10/10` 全绿；checker 对精确出口、RSC 图、依赖/CSS 边界、八个 locale route、物理方向/裁切规则与持久证据做 fail-closed 校验。浏览器证据以 `p2-04-render-inputs-v1` 内容指纹 `beac9df29fbaff97f088b13f7bf92a929f302534946597377944843def7c5c03` 绑定当前渲染输入，提交前/后 Git 状态不会误判新鲜度。
+- **TDD 与静态门禁**：UI `14 files / 80 tests`、Storefront `15 / 102`、browser runner `11/11`、composite checker `10/10` 全绿；checker 对精确出口、RSC 图、依赖/CSS 边界、八个 locale route、物理方向/裁切规则与持久证据做 fail-closed 校验。2026-09-05 在全局字体加载策略收敛后重新生成浏览器证据，`p2-04-render-inputs-v1` 当前内容指纹为 `0509535d326e069ae0f127a862fb7edae423365f82d77b6905bbf8f9df7fd605`，提交前/后 Git 状态不会误判新鲜度。
 - **完整本地门禁**：Node `24.20.0` 下 `pnpm check` exit 0；workspace 4 apps/30 packages/34 units 无环、合同/设计/primitive/interaction/composite/domain/adapter/runtime/observability 全绿，真实 PostgreSQL reliable-event 与 TLS S3-compatible 集成通过，Prettier/ESLint、typecheck `51/51`、test `51/51`、build `34/34`、adapter/artifact 全绿。`pnpm security:secrets` exit 0；切换至 npm 官方 registry 的 `pnpm audit --audit-level high` 返回 `No known vulnerabilities found`；React server 条件下精确六导出可加载。
 - **独立终审**：首轮终审先后拦截 CartLine 小计/双媒体尺寸、伪本地化漏项、图片失败与证据假绿、Hero 状态位移及断点采样空档；均补 RED/浏览器复现与 fail-closed 门禁后，最终结论 `ACCEPT`，当前无 P1/P2。
 - **范围与剩余风险**：本任务完成的是可复用产品组件代码和本地生产构建证据；没有新增公开业务页面、真实购物车/订单/API/数据库、部署、AWS/Akamai apply、staging/production、正式品牌/肖像批准或真实移动设备性能结论。三段标志性动效、真实设备录屏/性能与 motion 人工批准进入 P2-05/P2-06。
@@ -256,3 +256,34 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 - 浏览器与质量计划：production build 在 preview gate 下覆盖 390×844 与 1440×900，并抽查六基准视口、320 CSS px、七 locale + `en-XA`、触摸、键盘、快速重复触发、reduced-motion、axe、CLS/long-task/帧间隔、横向溢出与 console/page/request 错误；证据写入 `output/playwright/p2-05/`。真机录屏/帧率只有在可识别的物理移动设备上取得才计入通过，否则明确保留门禁，不以桌面设备模拟替代。
 - 风险映射：`R-07` 以严格时长、合成属性、无布局动画、输入方式降级、reduced-motion、浏览器性能探针与独立复核控制；真实设备掉帧时优先删减动效。
 - 并发/所有权：P2-05 是唯一 Lane B executor；Codex `/root` 对 `packages/ui` motion API/样式/测试、Storefront 内部样板、静态/browser gate 及最终状态负责。子代理只做只读架构审计、测试矩阵或独立复核，不形成第二 Lane executor。
+
+### P2-05 实现与验证结果（2026-09-05）
+
+- **源码产物**：`@fan-support/ui/motion` 保持 server-compatible，只导出 `HeroEntrance`、`SuccessReveal`；`@fan-support/ui/motion-client` 以独立 `use client` 边界导出 `IdolSwitcher`、`AddToCartConfirmation`；`./motion.css` 为唯一显式样式入口。Storefront 新增七公开 locale + `en-XA` 的 internal/noindex motion fixture、本地虚构人物素材与受控 replay/error 状态，没有新增公开业务路由或支付权威。
+- **主海报与成功终态**：Hero 使用一次性 `opacity + transform` 进入，总时长 720 ms，不延迟首个 CTA；Success 只在调用方明确传入 `confirmed` 时运行 720 ms，结束后无残留 animation。两者不推导订单或支付状态。
+- **偶像切换**：鼠标使用 360 ms 空间过渡，触控只做 220 ms opacity，键盘/辅助技术即时切换；焦点和滚动位置保持。新媒体必须 decode 成功或显示可见 fallback 后才释放旧层；快速 A→B→A、连续 10 次触发与 decode reject 均执行 latest-wins，不出现空白帧。首帧证据比较未变换 layout boxes，并验证可见 outgoing rect 覆盖 visual container，不把预备态的刻意 transform 误判为布局缺口。
+- **加购反馈**：受控 `idle/pending/confirmed/error` 状态以 220 ms 反馈，pending 阻止重复提交且保留按钮焦点；计数、可见文本和单一稳定 live region 同步，错误可恢复。fixture 只证明 UI 协议，不拥有真实购物车。
+- **Reduced motion**：390×844 与 1440×900 下 hero/idol/add/success 的 animation、transition、transform 均归零，scroll behavior 为 `auto`；选中、计数、确认、错误、成功和 live-region 状态仍完整可见。
+- **字体与 CLS 根因修复**：首次冷启动矩阵发现 Fontsource `font-display: swap` 导致英语/日语等页面发生真实换行位移。Storefront 私有 PostCSS adapter 现只把 `@font-face` 内 `swap` 改为 `optional`；生产构建的 10 个 CSS chunk、242 个 face、5 个预期 family 全部由 AST 门禁验证。静态校验拒绝重复/escaped descriptor、`!important`、非法 prelude、escaped `@import` 等绕过；每个 locale 又以 `document.fonts`、递归 CSSOM 和 computed font stack 证明实际运行 face 全为 `optional`、当前 profile 精确且至少一个 face 已加载。8/8 场景的 CLS 与 raw layout shift 都为 0。
+- **浏览器证据**：`output/playwright/p2-05/` 由 Google Chrome `152.0.7977.82` 对真实 production build 生成；8/8 locale/viewport 场景、22/22 PNG、3 个 axe 原始扫描均通过，critical/serious 阻断为 0。另覆盖 hero start/mid/end、mouse/touch/keyboard、慢图/decode failure、rapid reverse、加购中断/错误/确认、成功静止与 reduced-motion；JS transfer `138475 B`，rAF p95 `16.7–16.8 ms`，均明确为本地桌面代理而非 field INP 或真机性能。
+- **全局视觉回归**：字体策略改变后重新生成并通过 `output/playwright/p2-02/`、`p2-03/`、`p2-04/` 的生产构建矩阵；P2-04 新指纹为 `0509535d326e069ae0f127a862fb7edae423365f82d77b6905bbf8f9df7fd605`。P2-01 的历史截图继续保留，其旧 `document.fonts.ready` 结论不单独承担当前 no-swap/CLS 证明；该语义由 P2-05 的 production CSS + runtime font + cold-load CLS 证据接续。
+- **Focused 与整仓门禁**：UI `17 files / 94 tests`、Storefront `16 / 113`、motion runner `40/40`、motion checker `12/12`、design/font checker `24/24` 全绿。当前工作树 `TURBO_FORCE=true pnpm check` exit 0：workspace 4 apps/30 packages/34 units 无环、合同/领域/adapter/runtime/observability、真实 PostgreSQL 9 migrations/108 tables/可靠事件、TLS S3-compatible、Prettier/ESLint 全绿，typecheck `51/51`、test `51/51`、build `34/34` 且 0 cached。
+- **Fresh clone 与供应链**：全新 clone 使用 Node `24.20.0`、pnpm `11.25.0` 完成 offline frozen install，复用 `433/433`、下载 0；随后完整 0-cache check 与 secret scan 再次通过。当前工作树 secret scan exit 0，npm 官方 registry `pnpm audit --audit-level=high` 返回 `No known vulnerabilities found`。
+- **独立复核**：产品实现、证据 runner、字体 runtime gate 与 code-simplifier 收尾均得到独立 `ACCEPT`；对抗复核拦截并修复了 CSS parser 绕过、证据 schema 缺项、崩溃/锁恢复、offscreen focus scroll 与 transform 后 rect 误判，最新结论无剩余 P1/P2。
+- **真实设备门禁**：`adb` 与 `idevice_id` 不可用，`xcrun xctrace list devices` 只列本机和模拟器，`system_profiler SPUSBDataType -json` 为空；因此没有伪造真机录屏/帧率。P2-05 按最低验收保持 `REVIEW`，唯一解除条件是在可识别的物理移动设备上完成主海报、偶像切换、加购/成功和 reduced-motion 录屏/帧率复核；不通过则先删减动效。
+- **范围边界**：按用户要求，部署、AWS/Akamai、云资源、staging、production 与运维全部暂缓，且不构成本次产品代码阻断；本地 preview/staging/production gate 仅验证 internal route 开关。P2-06 不会在 P2-05 `DONE` 前领取，Phase 3 继续锁定。
+
+### P2-05 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | Hero、Success、Idol、Add、motion policy、Storefront fixture、字体 adapter 与 browser/checker 各自职责单一 |
+| 2 | PASS | activation mode、latest-wins、媒体 readiness、字体 AST/runtime 证明与证据 shape 均拆为可独立测试的纯函数或局部状态机 |
+| 3 | PASS | Browser/Route → Storefront fixture → UI motion/composite → primitive/tokens 单向；无 UI→app、domain→adapter 或 provider 反向依赖 |
+| 4 | PASS | workspace 4 apps/30 packages/34 units 无环；server/client 导出图、React server condition 与 adapter boundary 全绿 |
+| 5 | PASS | motion props/状态使用严格 TypeScript union；跨入口导出精确冻结，证据 `schemaVersion: 1` 与 canonical locale matrix fail closed |
+| 6 | PASS | server motion 输入可序列化；DOM/ref/event/decode 状态只存在 client leaf；fixture 不把留言、显示名或支付数据写入日志/证据 |
+| 7 | PASS | 无生产域名、密钥、正式品牌、真实偶像 ID 或 locale→market/currency/payment 特判；内部素材与路由均有显式 preview 边界 |
+| 8 | PASS | 未新增重型 motion 依赖；本地 PostCSS adapter 显式锁入 manifest/lockfile，offline frozen install、secret 与官方 high audit 全绿 |
+| 9 | PASS | CSS motion、React client controller、server wrapper、Storefront adapter、媒体 readiness 和字体构建 adapter 均可在边界内替换 |
+| 10 | REVIEW | focused、8 场景/22 图片/3 axe、本地与 fresh-clone 全量门禁、供应链和独立复核已通过；真实物理移动设备录屏/帧率尚未取得，故任务不标 `DONE` |
