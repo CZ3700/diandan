@@ -786,17 +786,20 @@ function hasScrollLockProof(proof) {
   );
 }
 
-function hasScrollReleaseProof(proof) {
+export function isScrollReleaseMeasurement(proof) {
   return (
     isRecord(proof) &&
     proof.attributeRemoved === true &&
-    proof.released === true &&
     typeof proof.bodyOverflow === "string" &&
     typeof proof.documentOverflow === "string" &&
     ![proof.bodyOverflow, proof.documentOverflow].some((value) =>
       ["hidden", "clip"].includes(value),
     )
   );
+}
+
+function hasScrollReleaseProof(proof) {
+  return isScrollReleaseMeasurement(proof) && proof.released === true;
 }
 
 function hasTouchScrollProof(proof) {
@@ -2399,6 +2402,26 @@ async function collectScrollLockProof(page) {
 }
 
 async function collectScrollReleaseProof(page, label) {
+  try {
+    await page.waitForFunction(
+      () => {
+        const bodyOverflow = getComputedStyle(document.body).overflow;
+        const documentOverflow = getComputedStyle(
+          document.documentElement,
+        ).overflow;
+        return (
+          !document.documentElement.hasAttribute("data-fs-menu-scroll-lock") &&
+          ![bodyOverflow, documentOverflow].some((value) =>
+            ["hidden", "clip"].includes(value),
+          )
+        );
+      },
+      undefined,
+      { timeout: 1_000 },
+    );
+  } catch {
+    throw new Error(label + " must restore document scrolling within 1000ms");
+  }
   const proof = await page.evaluate(() => {
     const bodyOverflow = getComputedStyle(document.body).overflow;
     const documentOverflow = getComputedStyle(
@@ -2416,10 +2439,9 @@ async function collectScrollReleaseProof(page, label) {
     };
   });
   invariant(
-    proof.attributeRemoved,
-    label + " must remove the Menu lock marker",
+    isScrollReleaseMeasurement(proof),
+    label + " must remove every document scroll lock",
   );
-  invariant(proof.released, label + " must restore document scrolling");
   return proof;
 }
 

@@ -19,6 +19,7 @@ async function loadRunner() {
     "createInteractionTextRootSelector",
     "createInteractionScenarioMatrix",
     "isSafeRelativeArtifactPath",
+    "isScrollReleaseMeasurement",
     "matchesActiveMenuItem",
     "validateEvidenceBundle",
     "validateInteractionScenarioMatrix",
@@ -386,6 +387,35 @@ test("active Menu item matching waits for the requested radio item", async () =>
       { role: "button", text: "Comfortable" },
       "Comfortable",
     ),
+    false,
+  );
+});
+
+test("scroll release measurement waits for both menu and modal locks", async () => {
+  const { isScrollReleaseMeasurement } = await loadRunner();
+
+  assert.equal(
+    isScrollReleaseMeasurement({
+      attributeRemoved: true,
+      bodyOverflow: "visible",
+      documentOverflow: "visible",
+    }),
+    true,
+  );
+  assert.equal(
+    isScrollReleaseMeasurement({
+      attributeRemoved: false,
+      bodyOverflow: "visible",
+      documentOverflow: "visible",
+    }),
+    false,
+  );
+  assert.equal(
+    isScrollReleaseMeasurement({
+      attributeRemoved: true,
+      bodyOverflow: "hidden",
+      documentOverflow: "visible",
+    }),
     false,
   );
 });
