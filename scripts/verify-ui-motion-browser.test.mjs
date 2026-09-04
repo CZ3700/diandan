@@ -550,7 +550,16 @@ function validResults(matrix) {
     scenarioResults,
     schemaVersion: 1,
     screenshots: [],
-    versions: { browser: "Google Chrome 140" },
+    versions: {
+      axe: "4.13.0",
+      browser: "Google Chrome 152.0.7977.82",
+      next: "16.3.4",
+      node: "v24.20.0",
+      playwright: "1.62.1",
+      pnpm: "11.25.0",
+      postcss: "8.5.26",
+      react: "19.2.8",
+    },
   };
 }
 
@@ -1208,6 +1217,31 @@ test("README is explicit that desktop emulation is not physical-device proof", a
   assert.match(readme, /real mobile-device recording/iu);
   assert.match(readme, /production build/iu);
   assert.match(readme, /verify-ui-motion-browser\.mjs/u);
+});
+
+test("binds persisted evidence to the exact browser toolchain manifest", async () => {
+  const { assessMotionEvidenceShape, createMotionScenarioMatrix } =
+    await loadRunner();
+  const missing = validResults(createMotionScenarioMatrix());
+  delete missing.versions.postcss;
+  assert.match(
+    assessMotionEvidenceShape(missing).join("\n"),
+    /toolchain|postcss|version/iu,
+  );
+
+  const forged = validResults(createMotionScenarioMatrix());
+  forged.versions.postcss = "8.5.25";
+  assert.match(
+    assessMotionEvidenceShape(forged).join("\n"),
+    /toolchain|postcss|version/iu,
+  );
+
+  const expanded = validResults(createMotionScenarioMatrix());
+  expanded.versions.unreviewed = "1.0.0";
+  assert.match(
+    assessMotionEvidenceShape(expanded).join("\n"),
+    /toolchain|version/iu,
+  );
 });
 
 test("fully decodes PNG chunks, CRCs, IDAT scanlines and filters", async () => {

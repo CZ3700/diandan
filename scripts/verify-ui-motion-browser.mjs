@@ -3,6 +3,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import { Buffer } from "node:buffer";
 import { once } from "node:events";
+import { readFileSync } from "node:fs";
 import {
   access,
   cp,
@@ -32,6 +33,27 @@ import {
 
 const scriptPath = fileURLToPath(import.meta.url);
 const defaultWorkspaceRoot = path.resolve(path.dirname(scriptPath), "..");
+const rootManifest = JSON.parse(
+  readFileSync(path.join(defaultWorkspaceRoot, "package.json"), "utf8"),
+);
+const storefrontManifest = JSON.parse(
+  readFileSync(
+    path.join(defaultWorkspaceRoot, "apps/storefront/package.json"),
+    "utf8",
+  ),
+);
+const expectedToolchainVersions = Object.freeze({
+  axe: rootManifest.devDependencies["@axe-core/playwright"],
+  next: storefrontManifest.dependencies.next,
+  node: `v${readFileSync(path.join(defaultWorkspaceRoot, ".node-version"), "utf8").trim()}`,
+  playwright: rootManifest.devDependencies["@playwright/test"],
+  pnpm: String(rootManifest.packageManager).replace(/^pnpm@/u, ""),
+  postcss: rootManifest.devDependencies.postcss,
+  react: storefrontManifest.dependencies.react,
+});
+const expectedToolchainVersionKeys = Object.freeze(
+  ["browser", ...Object.keys(expectedToolchainVersions)].sort(),
+);
 const evidenceRelativePath = "output/playwright/p2-05";
 const routeSuffix = "/motion";
 const rerunCommand =
@@ -1251,6 +1273,23 @@ export function assessMotionEvidenceShape(results) {
   ) {
     errors.push(
       "motion evidence must prove the production no-swap font loading policy",
+    );
+  }
+  const versionKeys = isRecord(results.versions)
+    ? Object.keys(results.versions).sort()
+    : [];
+  if (
+    JSON.stringify(versionKeys) !==
+      JSON.stringify(expectedToolchainVersionKeys) ||
+    !/^Google Chrome \d+(?:\.\d+){0,3}$/u.test(
+      String(results.versions?.browser ?? ""),
+    ) ||
+    Object.entries(expectedToolchainVersions).some(
+      ([name, version]) => results.versions?.[name] !== version,
+    )
+  ) {
+    errors.push(
+      "motion evidence browser toolchain versions must match the exact project manifests",
     );
   }
   if (
