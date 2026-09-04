@@ -1,0 +1,4192 @@
+{
+  "axeSummaries": [
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 50,
+        "incomplete": 0,
+        "passes": 39,
+        "violations": 0
+      },
+      "artifact": "axe-results/default-mobile.json",
+      "id": "default-mobile",
+      "scenarioId": "viewport-390x844-vi"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 50,
+        "incomplete": 0,
+        "passes": 39,
+        "violations": 0
+      },
+      "artifact": "axe-results/default-desktop.json",
+      "id": "default-desktop",
+      "scenarioId": "viewport-1440x900-ja"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 50,
+        "incomplete": 0,
+        "passes": 39,
+        "violations": 0
+      },
+      "artifact": "axe-results/pseudo-320.json",
+      "id": "pseudo-320",
+      "scenarioId": "stress-320x800-en-xa"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 75,
+        "incomplete": 0,
+        "passes": 13,
+        "violations": 0
+      },
+      "artifact": "axe-results/error.json",
+      "id": "error",
+      "scenarioId": "interaction-390x844-en"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 80,
+        "incomplete": 0,
+        "passes": 8,
+        "violations": 0
+      },
+      "artifact": "axe-results/loading.json",
+      "id": "loading",
+      "scenarioId": "interaction-390x844-en"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 67,
+        "incomplete": 0,
+        "passes": 21,
+        "violations": 0
+      },
+      "artifact": "axe-results/rtl.json",
+      "id": "rtl",
+      "scenarioId": "rtl-390x844-en"
+    }
+  ],
+  "generatedAt": "2026-09-04T04:02:04.076Z",
+  "git": {
+    "dirty": false,
+    "sha": "9f33dad482798a58e108d0c8c0495a878cf375c7",
+    "status": []
+  },
+  "launch": {
+    "browserChannel": "chrome",
+    "browserEngine": "chromium",
+    "headless": true,
+    "nativeZoomHeaded": true,
+    "nativeZoomProfile": "isolated temporary profile",
+    "productionBuild": true,
+    "server": "Next.js standalone"
+  },
+  "matrix": [
+    {
+      "axe": [],
+      "group": "baseline",
+      "id": "viewport-360x800-en",
+      "locale": "en",
+      "screenshot": "viewports/360x800-en.png",
+      "viewport": {
+        "height": 800,
+        "width": 360
+      },
+      "checks": []
+    },
+    {
+      "axe": [
+        {
+          "id": "default-mobile"
+        }
+      ],
+      "group": "baseline",
+      "id": "viewport-390x844-vi",
+      "locale": "vi",
+      "screenshot": "viewports/390x844-vi.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "checks": []
+    },
+    {
+      "axe": [],
+      "group": "baseline",
+      "id": "viewport-768x1024-th",
+      "locale": "th",
+      "screenshot": "viewports/768x1024-th.png",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "checks": []
+    },
+    {
+      "axe": [],
+      "group": "baseline",
+      "id": "viewport-1024x768-zh-cn",
+      "locale": "zh-CN",
+      "screenshot": "viewports/1024x768-zh-CN.png",
+      "viewport": {
+        "height": 768,
+        "width": 1024
+      },
+      "checks": []
+    },
+    {
+      "axe": [
+        {
+          "id": "default-desktop"
+        }
+      ],
+      "group": "baseline",
+      "id": "viewport-1440x900-ja",
+      "locale": "ja",
+      "screenshot": "viewports/1440x900-ja.png",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "checks": []
+    },
+    {
+      "axe": [],
+      "group": "baseline",
+      "id": "viewport-1920x1080-es",
+      "locale": "es",
+      "screenshot": "viewports/1920x1080-es.png",
+      "viewport": {
+        "height": 1080,
+        "width": 1920
+      },
+      "checks": []
+    },
+    {
+      "axe": [
+        {
+          "id": "pseudo-320"
+        }
+      ],
+      "group": "stress",
+      "id": "stress-320x800-en-xa",
+      "locale": "en-XA",
+      "screenshot": "stress/320x800-en-XA.png",
+      "viewport": {
+        "height": 800,
+        "width": 320
+      },
+      "checks": []
+    },
+    {
+      "axe": [],
+      "group": "stress",
+      "id": "stress-320x800-pt",
+      "locale": "pt",
+      "screenshot": "stress/320x800-pt-long.png",
+      "viewport": {
+        "height": 800,
+        "width": 320
+      },
+      "checks": []
+    },
+    {
+      "axe": [
+        {
+          "id": "error",
+          "include": "[data-media-state=\"error\"]"
+        },
+        {
+          "id": "loading",
+          "include": "[data-loading=\"true\"]"
+        }
+      ],
+      "checks": [
+        "keyboard",
+        "disabled",
+        "loading",
+        "field",
+        "quantity",
+        "media-error"
+      ],
+      "group": "interaction",
+      "id": "interaction-390x844-en",
+      "locale": "en",
+      "screenshot": "interactions/390x844-en-keyboard.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "axe": [],
+      "checks": [
+        "hover"
+      ],
+      "group": "hover",
+      "id": "hover-1440x900-en",
+      "locale": "en",
+      "screenshot": "interactions/1440x900-en-hover.png",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    {
+      "axe": [
+        {
+          "id": "rtl",
+          "include": "[data-rtl-probe=\"true\"]"
+        }
+      ],
+      "checks": [
+        "rtl-quantity"
+      ],
+      "group": "rtl",
+      "id": "rtl-390x844-en",
+      "locale": "en",
+      "screenshot": "rtl/390x844-en-rtl.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "axe": [],
+      "group": "reduced-motion",
+      "id": "reduced-motion-390x844-en",
+      "locale": "en",
+      "reducedMotion": true,
+      "screenshot": "reduced-motion/390x844-en-reduce.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "checks": []
+    },
+    {
+      "axe": [],
+      "group": "reduced-motion",
+      "id": "reduced-motion-1440x900-en",
+      "locale": "en",
+      "reducedMotion": true,
+      "screenshot": "reduced-motion/1440x900-en-reduce.png",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "checks": []
+    }
+  ],
+  "nativeZoom": {
+    "baseline": {
+      "devicePixelRatio": 2,
+      "innerHeight": 842,
+      "innerWidth": 1710,
+      "outerHeight": 929,
+      "outerWidth": 1710,
+      "screen": {
+        "availHeight": 1001,
+        "availWidth": 1710,
+        "height": 1107,
+        "width": 1710
+      },
+      "visualViewport": {
+        "height": 842,
+        "offsetLeft": 0,
+        "offsetTop": 0,
+        "scale": 1,
+        "width": 1710
+      },
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/pt/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "fixtureUrl": "/_internal/design-foundations/pt/primitives",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "Consultar todos os detalhes de preparação e entrega do presente",
+            "selector": "a.fs-link",
+            "width": 593.0625
+          },
+          {
+            "height": 54.796875,
+            "label": "Continuar com este presente de apoio cuidadosamente preparado",
+            "selector": "button.fs-button",
+            "width": 609.21875
+          },
+          {
+            "height": 54.796875,
+            "label": "Ação indisponível",
+            "selector": "button.fs-button",
+            "width": 187.4375
+          },
+          {
+            "height": 54.796875,
+            "label": "Preparando o pagamento seguro",
+            "selector": "button.fs-button",
+            "width": 317.3984375
+          },
+          {
+            "height": 54.796875,
+            "label": "Mostrar a alternativa quando a imagem falhar",
+            "selector": "button.fs-button",
+            "width": 1440
+          },
+          {
+            "height": 54.796875,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 708
+          },
+          {
+            "height": 77.59375,
+            "label": "Diminuir a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 77.59375,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 610
+          },
+          {
+            "height": 77.59375,
+            "label": "Aumentar a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "Diminuir a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 1342
+          },
+          {
+            "height": 48,
+            "label": "Aumentar a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1710,
+          "clientWidth": 1710,
+          "scrollWidth": 1710
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "primitiveCounts": {
+        "button": 4,
+        "link": 2,
+        "icon": 5,
+        "media": 2,
+        "price": 1,
+        "status": 1,
+        "field": 1,
+        "quantity": 2
+      },
+      "screenshot": "zoom/google-chrome-baseline-pt.png",
+      "screenshotEvidence": {
+        "bytes": 212260,
+        "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+        "localeMarker": {
+          "changedFromHidden": true,
+          "height": 39,
+          "text": "pt",
+          "width": 36,
+          "x": 3114,
+          "y": 32
+        },
+        "path": "zoom/google-chrome-baseline-pt.png",
+        "pixelHeight": 1684,
+        "pixelWidth": 3420,
+        "sha256": "4da4d189fc1c04c2d0588c9e8b7a607587b9995b9877ad3dff74040cf7eeb918"
+      }
+    },
+    "browser": "Google Chrome 152.0.7977.82",
+    "detectedPercent": 200,
+    "method": "Chrome HostZoomMap default zoom preference loaded from an isolated temporary profile before navigation; no device-metrics, page-scale, or viewport emulation",
+    "preference": {
+      "baselineZoomLevel": 0,
+      "zoomLevel": 3.8017840169239308
+    },
+    "profileRemoved": true,
+    "screenshots": [
+      {
+        "bytes": 212260,
+        "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+        "localeMarker": {
+          "changedFromHidden": true,
+          "height": 39,
+          "text": "pt",
+          "width": 36,
+          "x": 3114,
+          "y": 32
+        },
+        "path": "zoom/google-chrome-baseline-pt.png",
+        "pixelHeight": 1684,
+        "pixelWidth": 3420,
+        "sha256": "4da4d189fc1c04c2d0588c9e8b7a607587b9995b9877ad3dff74040cf7eeb918"
+      },
+      {
+        "bytes": 227366,
+        "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+        "localeMarker": {
+          "changedFromHidden": true,
+          "height": 77,
+          "text": "pt",
+          "width": 72,
+          "x": 3252,
+          "y": 64
+        },
+        "path": "zoom/google-chrome-200-percent-pt.png",
+        "pixelHeight": 1684,
+        "pixelWidth": 3420,
+        "sha256": "8ee038c737ed3c2e7c0ce88dafdb2cd9cd302e7b6a5fec62b2ce1faeb23e4b68"
+      }
+    ],
+    "zoomPercent": 200,
+    "zoomed": {
+      "devicePixelRatio": 4,
+      "innerHeight": 421,
+      "innerWidth": 855,
+      "outerHeight": 929,
+      "outerWidth": 1710,
+      "screen": {
+        "availHeight": 1001,
+        "availWidth": 1710,
+        "height": 1107,
+        "width": 1710
+      },
+      "visualViewport": {
+        "height": 421,
+        "offsetLeft": 0,
+        "offsetTop": 0,
+        "scale": 1,
+        "width": 855
+      },
+      "checks": {
+        "tabOrder": [
+          {
+            "className": "fs-link fs-link--standalone",
+            "loading": null,
+            "testId": null
+          },
+          {
+            "className": "fs-button fs-button--standard fs-button--primary",
+            "loading": null,
+            "testId": "primary-action"
+          },
+          {
+            "disabled": false,
+            "loading": null,
+            "testId": "media-error-trigger"
+          }
+        ],
+        "keyboard": {
+          "activationCount": 2,
+          "focusStyle": {
+            "outlineColor": "rgb(216, 178, 110)",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "focusVisible": true,
+            "viewportHeight": 421,
+            "viewportWidth": 855,
+            "x": 24,
+            "y": 183.93359375
+          }
+        },
+        "disabled": {
+          "disabled": true,
+          "skippedByTab": true
+        },
+        "loading": {
+          "ariaBusy": true,
+          "disabled": true,
+          "layout": {
+            "button": {
+              "height": 53.3125,
+              "width": 302.75390625,
+              "x": 24,
+              "y": 253.24609375
+            },
+            "label": {
+              "display": "block",
+              "height": 27.3125,
+              "opacity": 0,
+              "position": "static",
+              "width": 268.75390625,
+              "x": 41,
+              "y": 266.24609375
+            },
+            "spinner": {
+              "position": "absolute"
+            }
+          },
+          "skippedByTab": true
+        },
+        "field": {
+          "describedBy": [
+            "primitive-display-name-hint",
+            "primitive-display-name-error"
+          ],
+          "invalid": true,
+          "labelAssociated": true
+        },
+        "quantity": {
+          "arrowDown": 2,
+          "arrowUp": 3,
+          "end": 5,
+          "home": 1,
+          "semantics": "number spinbutton"
+        },
+        "mediaError": {
+          "accessibleFallback": true,
+          "browserDecodeFailed": true,
+          "frameAfter": [
+            {
+              "height": 480,
+              "width": 384
+            },
+            {
+              "height": 480,
+              "width": 384
+            }
+          ],
+          "frameBefore": [
+            {
+              "height": 480,
+              "width": 384
+            },
+            {
+              "height": 480,
+              "width": 384
+            }
+          ],
+          "initialSrc": "/ui-primitives-media.svg",
+          "requestedSrc": "data:image/png;base64,SGVsbG8=",
+          "sourceChanged": true,
+          "triggerClicked": true
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/pt/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          }
+        ]
+      },
+      "fixtureUrl": "/_internal/design-foundations/pt/primitives",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "Consultar todos os detalhes de preparação e entrega do presente",
+            "selector": "a.fs-link",
+            "width": 563.66015625
+          },
+          {
+            "height": 53.3125,
+            "label": "Continuar com este presente de apoio cuidadosamente preparado",
+            "selector": "button.fs-button",
+            "width": 579.5
+          },
+          {
+            "height": 53.3125,
+            "label": "Ação indisponível",
+            "selector": "button.fs-button",
+            "width": 179.5078125
+          },
+          {
+            "height": 53.3125,
+            "label": "Preparando o pagamento seguro",
+            "selector": "button.fs-button",
+            "width": 302.75390625
+          },
+          {
+            "height": 53.3125,
+            "label": "Mostrar a alternativa quando a imagem falhar",
+            "selector": "button.fs-button",
+            "width": 807
+          },
+          {
+            "height": 53.3125,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 391.5
+          },
+          {
+            "height": 86.45703125,
+            "label": "Diminuir a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 86.45703125,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 293.5
+          },
+          {
+            "height": 86.45703125,
+            "label": "Aumentar a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "Diminuir a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 709
+          },
+          {
+            "height": 48,
+            "label": "Aumentar a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 855,
+          "clientWidth": 855,
+          "scrollWidth": 855
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "primitiveCounts": {
+        "button": 4,
+        "link": 2,
+        "icon": 5,
+        "media": 2,
+        "price": 1,
+        "status": 1,
+        "field": 1,
+        "quantity": 2
+      },
+      "screenshot": "zoom/google-chrome-200-percent-pt.png",
+      "screenshotEvidence": {
+        "bytes": 227366,
+        "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+        "localeMarker": {
+          "changedFromHidden": true,
+          "height": 77,
+          "text": "pt",
+          "width": 72,
+          "x": 3252,
+          "y": 64
+        },
+        "path": "zoom/google-chrome-200-percent-pt.png",
+        "pixelHeight": 1684,
+        "pixelWidth": 3420,
+        "sha256": "8ee038c737ed3c2e7c0ce88dafdb2cd9cd302e7b6a5fec62b2ce1faeb23e4b68"
+      }
+    }
+  },
+  "rerunCommand": "mise exec node@24.20.0 -- node scripts/verify-ui-primitives-browser.mjs",
+  "result": "passed",
+  "runtimeGates": [
+    {
+      "environment": "preview",
+      "fixtureStatus": 200,
+      "healthStatus": 200,
+      "origin": "http://127.0.0.1:49781"
+    },
+    {
+      "environment": "staging",
+      "fixtureStatus": 404,
+      "healthStatus": 200,
+      "origin": "http://127.0.0.1:50002"
+    },
+    {
+      "environment": "production",
+      "fixtureStatus": 404,
+      "healthStatus": 200,
+      "origin": "http://127.0.0.1:50011"
+    }
+  ],
+  "scenarioResults": [
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/en/primitives",
+      "group": "baseline",
+      "id": "viewport-360x800-en",
+      "locale": "en",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 67.4375,
+            "label": "Review preparation and delivery details",
+            "selector": "a.fs-link",
+            "width": 328
+          },
+          {
+            "height": 51.71875,
+            "label": "Continue with support gift",
+            "selector": "button.fs-button",
+            "width": 240.59375
+          },
+          {
+            "height": 51.71875,
+            "label": "Unavailable action",
+            "selector": "button.fs-button",
+            "width": 177.84375
+          },
+          {
+            "height": 51.71875,
+            "label": "Preparing secure checkout",
+            "selector": "button.fs-button",
+            "width": 243.8125
+          },
+          {
+            "height": 51.71875,
+            "label": "Show the image error fallback",
+            "selector": "button.fs-button",
+            "width": 328
+          },
+          {
+            "height": 51.71875,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 328
+          },
+          {
+            "height": 48,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 230
+          },
+          {
+            "height": 48,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 230
+          },
+          {
+            "height": 48,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 360,
+          "clientWidth": 360,
+          "scrollWidth": 360
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/360x800-en.png",
+      "viewport": {
+        "height": 800,
+        "width": 360
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/vi/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/vi/primitives",
+      "group": "baseline",
+      "id": "viewport-390x844-vi",
+      "locale": "vi",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "Xem chi tiết chuẩn bị và giao quà",
+            "selector": "a.fs-link",
+            "width": 277.15625
+          },
+          {
+            "height": 51.8125,
+            "label": "Tiếp tục với món quà ủng hộ",
+            "selector": "button.fs-button",
+            "width": 251.234375
+          },
+          {
+            "height": 51.8125,
+            "label": "Thao tác chưa khả dụng",
+            "selector": "button.fs-button",
+            "width": 218.609375
+          },
+          {
+            "height": 51.8125,
+            "label": "Đang chuẩn bị thanh toán an toàn",
+            "selector": "button.fs-button",
+            "width": 295.203125
+          },
+          {
+            "height": 77.625,
+            "label": "Hiển thị nội dung thay thế khi hình ảnh bị lỗi",
+            "selector": "button.fs-button",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 358
+          },
+          {
+            "height": 48,
+            "label": "Giảm số lượng",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 260
+          },
+          {
+            "height": 48,
+            "label": "Tăng số lượng",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "Giảm số lượng",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 260
+          },
+          {
+            "height": 48,
+            "label": "Tăng số lượng",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 390,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/390x844-vi.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/th/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/0s0u4lh658hwz.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/th/primitives",
+      "group": "baseline",
+      "id": "viewport-768x1024-th",
+      "locale": "th",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "ตรวจสอบรายละเอียดการจัดเตรียมและการจัดส่ง",
+            "selector": "a.fs-link",
+            "width": 359.625
+          },
+          {
+            "height": 53.015625,
+            "label": "ดำเนินการส่งของขวัญสนับสนุนต่อ",
+            "selector": "button.fs-button",
+            "width": 275
+          },
+          {
+            "height": 53.015625,
+            "label": "ยังไม่สามารถดำเนินการนี้ได้",
+            "selector": "button.fs-button",
+            "width": 225.484375
+          },
+          {
+            "height": 53.015625,
+            "label": "กำลังเตรียมการชำระเงินที่ปลอดภัย",
+            "selector": "button.fs-button",
+            "width": 276.90625
+          },
+          {
+            "height": 53.015625,
+            "label": "แสดงข้อความสำรองเมื่อรูปภาพผิดพลาด",
+            "selector": "button.fs-button",
+            "width": 720
+          },
+          {
+            "height": 53.015625,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 348
+          },
+          {
+            "height": 76.703125,
+            "label": "ลดจำนวน",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 76.703125,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 250
+          },
+          {
+            "height": 76.703125,
+            "label": "เพิ่มจำนวน",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "ลดจำนวน",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 622
+          },
+          {
+            "height": 48,
+            "label": "เพิ่มจำนวน",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 768,
+          "clientWidth": 768,
+          "scrollWidth": 768
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/768x1024-th.png",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/zh-CN/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2u8d4e3i0-wk3.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-103-wght-normal.15048xq57o46q.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/zh-CN/primitives",
+      "group": "baseline",
+      "id": "viewport-1024x768-zh-cn",
+      "locale": "zh-CN",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "查看礼物准备与送达说明",
+            "selector": "a.fs-link",
+            "width": 215.40625
+          },
+          {
+            "height": 53.84375,
+            "label": "继续提交应援礼物",
+            "selector": "button.fs-button",
+            "width": 173.203125
+          },
+          {
+            "height": 53.84375,
+            "label": "暂不可用的操作",
+            "selector": "button.fs-button",
+            "width": 155.8125
+          },
+          {
+            "height": 53.84375,
+            "label": "正在准备安全结账",
+            "selector": "button.fs-button",
+            "width": 173.203125
+          },
+          {
+            "height": 53.84375,
+            "label": "显示图片失败后的替代内容",
+            "selector": "button.fs-button",
+            "width": 928
+          },
+          {
+            "height": 53.84375,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 452
+          },
+          {
+            "height": 77.109375,
+            "label": "减少数量",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 77.109375,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 354
+          },
+          {
+            "height": 77.109375,
+            "label": "增加数量",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "减少数量",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 830
+          },
+          {
+            "height": 48,
+            "label": "增加数量",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1024,
+          "clientWidth": 1024,
+          "scrollWidth": 1024
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/1024x768-zh-CN.png",
+      "viewport": {
+        "height": 768,
+        "width": 1024
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/ja/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1gq0gydlex491.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-98-wght-normal.42fiv0zkxjijw.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/ja/primitives",
+      "group": "baseline",
+      "id": "viewport-1440x900-ja",
+      "locale": "ja",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "準備と配送の詳細を確認する",
+            "selector": "a.fs-link",
+            "width": 258
+          },
+          {
+            "height": 54.796875,
+            "label": "応援ギフトの手続きを続ける",
+            "selector": "button.fs-button",
+            "width": 268
+          },
+          {
+            "height": 54.796875,
+            "label": "現在利用できない操作",
+            "selector": "button.fs-button",
+            "width": 214
+          },
+          {
+            "height": 54.796875,
+            "label": "安全な決済を準備しています",
+            "selector": "button.fs-button",
+            "width": 267.46875
+          },
+          {
+            "height": 54.796875,
+            "label": "画像エラー時の代替表示を確認する",
+            "selector": "button.fs-button",
+            "width": 1344
+          },
+          {
+            "height": 54.796875,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 660
+          },
+          {
+            "height": 77.59375,
+            "label": "数量を減らす",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 77.59375,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 562
+          },
+          {
+            "height": 77.59375,
+            "label": "数量を増やす",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "数量を減らす",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 1246
+          },
+          {
+            "height": 48,
+            "label": "数量を増やす",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1440,
+          "clientWidth": 1440,
+          "scrollWidth": 1440
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/1440x900-ja.png",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/es/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/es/primitives",
+      "group": "baseline",
+      "id": "viewport-1920x1080-es",
+      "locale": "es",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "Consultar todos los detalles de preparación y entrega del regalo",
+            "selector": "a.fs-link",
+            "width": 578.53125
+          },
+          {
+            "height": 54.796875,
+            "label": "Continuar con este regalo de apoyo cuidadosamente preparado",
+            "selector": "button.fs-button",
+            "width": 585.4375
+          },
+          {
+            "height": 54.796875,
+            "label": "Acción no disponible",
+            "selector": "button.fs-button",
+            "width": 214.515625
+          },
+          {
+            "height": 54.796875,
+            "label": "Preparando el pago seguro",
+            "selector": "button.fs-button",
+            "width": 266.625
+          },
+          {
+            "height": 54.796875,
+            "label": "Mostrar la alternativa cuando falla la imagen",
+            "selector": "button.fs-button",
+            "width": 1440
+          },
+          {
+            "height": 54.796875,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 708
+          },
+          {
+            "height": 77.59375,
+            "label": "Disminuir la cantidad",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 77.59375,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 610
+          },
+          {
+            "height": 77.59375,
+            "label": "Aumentar la cantidad",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "Disminuir la cantidad",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 1342
+          },
+          {
+            "height": 48,
+            "label": "Aumentar la cantidad",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1920,
+          "clientWidth": 1920,
+          "scrollWidth": 1920
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/1920x1080-es.png",
+      "viewport": {
+        "height": 1080,
+        "width": 1920
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/en-XA/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/en-XA/primitives",
+      "group": "stress",
+      "id": "stress-320x800-en-xa",
+      "locale": "en-XA",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 67.1875,
+            "label": "[!! Rëvïëŵ àļļ přëpàřàţïöñ àñđ đëļïvëřÿ đëţàïļš !!]",
+            "selector": "a.fs-link",
+            "width": 288
+          },
+          {
+            "height": 77.1875,
+            "label": "[!! Çöñţïñüë ŵïţħ à đëļïbëřàţëļÿ ëxpàñđëđ àçţïöñ ļàbëļ !!]",
+            "selector": "button.fs-button",
+            "width": 288
+          },
+          {
+            "height": 51.59375,
+            "label": "[!! Üñàvàïļàbļë àçţïöñ !!]",
+            "selector": "button.fs-button",
+            "width": 220.140625
+          },
+          {
+            "height": 51.59375,
+            "label": "[!! Přëpàřïñğ šëçüřë çħëçköüţ !!]",
+            "selector": "button.fs-button",
+            "width": 286.109375
+          },
+          {
+            "height": 77.1875,
+            "label": "[!! Sħöŵ ţħë ëxpàñđëđ ïɱàğë ëřřöř fàļļbàçk !!]",
+            "selector": "button.fs-button",
+            "width": 288
+          },
+          {
+            "height": 51.59375,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 288
+          },
+          {
+            "height": 48,
+            "label": "[!! Đëçřëàšë ğïfţ qüàñţïţÿ !!]",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 190
+          },
+          {
+            "height": 48,
+            "label": "[!! Ïñçřëàšë ğïfţ qüàñţïţÿ !!]",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "[!! Đëçřëàšë ğïfţ qüàñţïţÿ !!]",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 190
+          },
+          {
+            "height": 48,
+            "label": "[!! Ïñçřëàšë ğïfţ qüàñţïţÿ !!]",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 320,
+          "clientWidth": 320,
+          "scrollWidth": 320
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": false,
+      "screenshot": "stress/320x800-en-XA.png",
+      "viewport": {
+        "height": 800,
+        "width": 320
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/pt/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/pt/primitives",
+      "group": "stress",
+      "id": "stress-320x800-pt",
+      "locale": "pt",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 67.1875,
+            "label": "Consultar todos os detalhes de preparação e entrega do presente",
+            "selector": "a.fs-link",
+            "width": 288
+          },
+          {
+            "height": 102.78125,
+            "label": "Continuar com este presente de apoio cuidadosamente preparado",
+            "selector": "button.fs-button",
+            "width": 288
+          },
+          {
+            "height": 51.59375,
+            "label": "Ação indisponível",
+            "selector": "button.fs-button",
+            "width": 170.390625
+          },
+          {
+            "height": 51.59375,
+            "label": "Preparando o pagamento seguro",
+            "selector": "button.fs-button",
+            "width": 285.90625
+          },
+          {
+            "height": 77.1875,
+            "label": "Mostrar a alternativa quando a imagem falhar",
+            "selector": "button.fs-button",
+            "width": 288
+          },
+          {
+            "height": 51.59375,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 288
+          },
+          {
+            "height": 48,
+            "label": "Diminuir a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 190
+          },
+          {
+            "height": 48,
+            "label": "Aumentar a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "Diminuir a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 190
+          },
+          {
+            "height": 48,
+            "label": "Aumentar a quantidade",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 320,
+          "clientWidth": 320,
+          "scrollWidth": 320
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": false,
+      "screenshot": "stress/320x800-pt-long.png",
+      "viewport": {
+        "height": 800,
+        "width": 320
+      }
+    },
+    {
+      "checks": {
+        "tabOrder": [
+          {
+            "className": "fs-link fs-link--standalone",
+            "loading": null,
+            "testId": null
+          },
+          {
+            "className": "fs-button fs-button--standard fs-button--primary",
+            "loading": null,
+            "testId": "primary-action"
+          },
+          {
+            "disabled": false,
+            "loading": null,
+            "testId": "media-error-trigger"
+          }
+        ],
+        "keyboard": {
+          "activationCount": 2,
+          "focusStyle": {
+            "outlineColor": "rgb(216, 178, 110)",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "focusVisible": true,
+            "viewportHeight": 844,
+            "viewportWidth": 390,
+            "x": 16,
+            "y": 11.53125
+          }
+        },
+        "disabled": {
+          "disabled": true,
+          "skippedByTab": true
+        },
+        "loading": {
+          "ariaBusy": true,
+          "disabled": true,
+          "layout": {
+            "button": {
+              "height": 51.8125,
+              "width": 244.609375,
+              "x": 16,
+              "y": 147.15625
+            },
+            "label": {
+              "display": "block",
+              "height": 25.8125,
+              "opacity": 0,
+              "position": "static",
+              "width": 210.609375,
+              "x": 33,
+              "y": 160.15625
+            },
+            "spinner": {
+              "position": "absolute"
+            }
+          },
+          "skippedByTab": true
+        },
+        "field": {
+          "describedBy": [
+            "primitive-display-name-hint",
+            "primitive-display-name-error"
+          ],
+          "invalid": true,
+          "labelAssociated": true
+        },
+        "quantity": {
+          "arrowDown": 2,
+          "arrowUp": 3,
+          "end": 5,
+          "home": 1,
+          "semantics": "number spinbutton"
+        },
+        "mediaError": {
+          "accessibleFallback": true,
+          "browserDecodeFailed": true,
+          "frameAfter": [
+            {
+              "height": 447.5,
+              "width": 358
+            },
+            {
+              "height": 447.5,
+              "width": 358
+            }
+          ],
+          "frameBefore": [
+            {
+              "height": 447.5,
+              "width": 358
+            },
+            {
+              "height": 447.5,
+              "width": 358
+            }
+          ],
+          "initialSrc": "/ui-primitives-media.svg",
+          "requestedSrc": "data:image/png;base64,SGVsbG8=",
+          "sourceChanged": true,
+          "triggerClicked": true
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/en/primitives",
+      "group": "interaction",
+      "id": "interaction-390x844-en",
+      "locale": "en",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "Review preparation and delivery details",
+            "selector": "a.fs-link",
+            "width": 330.046875
+          },
+          {
+            "height": 51.8125,
+            "label": "Continue with support gift",
+            "selector": "button.fs-button",
+            "width": 241.359375
+          },
+          {
+            "height": 51.8125,
+            "label": "Unavailable action",
+            "selector": "button.fs-button",
+            "width": 178.375
+          },
+          {
+            "height": 51.8125,
+            "label": "Preparing secure checkout",
+            "selector": "button.fs-button",
+            "width": 244.609375
+          },
+          {
+            "height": 51.8125,
+            "label": "Show the image error fallback",
+            "selector": "button.fs-button",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 358
+          },
+          {
+            "height": 48,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 260
+          },
+          {
+            "height": 48,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 260
+          },
+          {
+            "height": 48,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 390,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": false,
+      "screenshot": "interactions/390x844-en-keyboard.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "checks": {
+        "hover": {
+          "buttonAfter": "rgba(0, 0, 0, 0.24) 0px 16px 48px 0px",
+          "buttonBefore": "none",
+          "fieldAfter": "rgb(216, 178, 110)",
+          "fieldBefore": "rgb(170, 166, 160)",
+          "linkAfter": "rgb(246, 243, 238)",
+          "linkBefore": "rgb(216, 178, 110)"
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/en/primitives",
+      "group": "hover",
+      "id": "hover-1440x900-en",
+      "locale": "en",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(216, 178, 110)",
+            "label": "Field",
+            "ratio": 9.35472781535663,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "Review preparation and delivery details",
+            "selector": "a.fs-link",
+            "width": 365.328125
+          },
+          {
+            "height": 54.796875,
+            "label": "Continue with support gift",
+            "selector": "button.fs-button",
+            "width": 265.25
+          },
+          {
+            "height": 54.796875,
+            "label": "Unavailable action",
+            "selector": "button.fs-button",
+            "width": 195.015625
+          },
+          {
+            "height": 54.796875,
+            "label": "Preparing secure checkout",
+            "selector": "button.fs-button",
+            "width": 268.875
+          },
+          {
+            "height": 54.796875,
+            "label": "Show the image error fallback",
+            "selector": "button.fs-button",
+            "width": 1344
+          },
+          {
+            "height": 54.796875,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 660
+          },
+          {
+            "height": 77.59375,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 77.59375,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 562
+          },
+          {
+            "height": 77.59375,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 1246
+          },
+          {
+            "height": 48,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1440,
+          "clientWidth": 1440,
+          "scrollWidth": 1440
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": false,
+      "screenshot": "interactions/1440x900-en-hover.png",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    {
+      "checks": {
+        "rtlQuantity": {
+          "actionOrder": [
+            "decrease",
+            "true",
+            "increase"
+          ],
+          "controlsDirection": "ltr",
+          "probeDirection": "rtl",
+          "arrowDown": 2,
+          "arrowUp": 3
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/en/primitives",
+      "group": "rtl",
+      "id": "rtl-390x844-en",
+      "locale": "en",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "Review preparation and delivery details",
+            "selector": "a.fs-link",
+            "width": 330.046875
+          },
+          {
+            "height": 51.8125,
+            "label": "Continue with support gift",
+            "selector": "button.fs-button",
+            "width": 241.359375
+          },
+          {
+            "height": 51.8125,
+            "label": "Unavailable action",
+            "selector": "button.fs-button",
+            "width": 178.375
+          },
+          {
+            "height": 51.8125,
+            "label": "Preparing secure checkout",
+            "selector": "button.fs-button",
+            "width": 244.609375
+          },
+          {
+            "height": 51.8125,
+            "label": "Show the image error fallback",
+            "selector": "button.fs-button",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 358
+          },
+          {
+            "height": 48,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 260
+          },
+          {
+            "height": 48,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 260
+          },
+          {
+            "height": 48,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 390,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": false,
+      "screenshot": "rtl/390x844-en-rtl.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "checks": {
+        "reducedMotion": {
+          "buttonTransitionDuration": "0s",
+          "fieldTransitionDuration": "0s",
+          "linkTransitionDuration": "0s",
+          "quantityButtonTransitionDuration": "0s",
+          "scrollBehavior": "auto",
+          "spinnerAnimationName": "none",
+          "activeTransform": "none",
+          "mediaQuery": true
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/en/primitives",
+      "group": "reduced-motion",
+      "id": "reduced-motion-390x844-en",
+      "locale": "en",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "Review preparation and delivery details",
+            "selector": "a.fs-link",
+            "width": 330.046875
+          },
+          {
+            "height": 51.8125,
+            "label": "Continue with support gift",
+            "selector": "button.fs-button",
+            "width": 241.359375
+          },
+          {
+            "height": 51.8125,
+            "label": "Unavailable action",
+            "selector": "button.fs-button",
+            "width": 178.375
+          },
+          {
+            "height": 51.8125,
+            "label": "Preparing secure checkout",
+            "selector": "button.fs-button",
+            "width": 244.609375
+          },
+          {
+            "height": 51.8125,
+            "label": "Show the image error fallback",
+            "selector": "button.fs-button",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 358
+          },
+          {
+            "height": 48,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 260
+          },
+          {
+            "height": 48,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 260
+          },
+          {
+            "height": 48,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 390,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": true,
+      "screenshot": "reduced-motion/390x844-en-reduce.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "checks": {
+        "reducedMotion": {
+          "buttonTransitionDuration": "0s",
+          "fieldTransitionDuration": "0s",
+          "linkTransitionDuration": "0s",
+          "quantityButtonTransitionDuration": "0s",
+          "scrollBehavior": "auto",
+          "spinnerAnimationName": "none",
+          "activeTransform": "none",
+          "mediaQuery": true
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/en/primitives",
+      "group": "reduced-motion",
+      "id": "reduced-motion-1440x900-en",
+      "locale": "en",
+      "metrics": {
+        "clippedText": [],
+        "contrastChecks": [
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Field",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(18, 18, 22)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Quantity",
+            "ratio": 7.715871706131314,
+            "required": 3
+          },
+          {
+            "background": "rgb(25, 25, 31)",
+            "border": "rgb(170, 166, 160)",
+            "label": "Secondary Button",
+            "ratio": 7.225051646098149,
+            "required": 3
+          }
+        ],
+        "controls": [
+          {
+            "height": 48,
+            "label": "Review preparation and delivery details",
+            "selector": "a.fs-link",
+            "width": 365.328125
+          },
+          {
+            "height": 54.796875,
+            "label": "Continue with support gift",
+            "selector": "button.fs-button",
+            "width": 265.25
+          },
+          {
+            "height": 54.796875,
+            "label": "Unavailable action",
+            "selector": "button.fs-button",
+            "width": 195.015625
+          },
+          {
+            "height": 54.796875,
+            "label": "Preparing secure checkout",
+            "selector": "button.fs-button",
+            "width": 268.875
+          },
+          {
+            "height": 54.796875,
+            "label": "Show the image error fallback",
+            "selector": "button.fs-button",
+            "width": 1344
+          },
+          {
+            "height": 54.796875,
+            "label": "",
+            "selector": "#primitive-display-name",
+            "width": 660
+          },
+          {
+            "height": 77.59375,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 77.59375,
+            "label": "",
+            "selector": "#primitive-quantity",
+            "width": 562
+          },
+          {
+            "height": 77.59375,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "Decrease quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          },
+          {
+            "height": 48,
+            "label": "",
+            "selector": "#rtl-primitive-quantity",
+            "width": 1246
+          },
+          {
+            "height": 48,
+            "label": "Increase quantity",
+            "selector": "button.fs-quantity__button",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1440,
+          "clientWidth": 1440,
+          "scrollWidth": 1440
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0
+      },
+      "reducedMotion": true,
+      "screenshot": "reduced-motion/1440x900-en-reduce.png",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    }
+  ],
+  "schemaVersion": 1,
+  "screenshots": [
+    {
+      "path": "viewports/360x800-en.png",
+      "sha256": "ed19d750390deb86103f8423346581dafdbe7622b5006ee407085e61b96dfe6a"
+    },
+    {
+      "path": "viewports/390x844-vi.png",
+      "sha256": "910d20658382f0713c325d5e46c3bb9108f65f5ea9e6ec6211af65cc2c73636a"
+    },
+    {
+      "path": "viewports/768x1024-th.png",
+      "sha256": "3db8fe25feae30c687b59f2a85f1e79a83d28598b137b9157932271b7ede5bef"
+    },
+    {
+      "path": "viewports/1024x768-zh-CN.png",
+      "sha256": "454fa35f7407f561eda42f39fbdc600976d09d35a9108b8c2c65e074fd0108d1"
+    },
+    {
+      "path": "viewports/1440x900-ja.png",
+      "sha256": "6048e37c8aad79042c30082d1d12b24b14bebf2e4021feee19487a6f4ce5bae4"
+    },
+    {
+      "path": "viewports/1920x1080-es.png",
+      "sha256": "bcb3f1e6a9a64f57f4a7209684fc637909ecf624d8903c3e053e6b80533710f4"
+    },
+    {
+      "path": "stress/320x800-en-XA.png",
+      "sha256": "5a50cb9189bb1f89ebf533de706049edc22873021f2b5261744bfa8121adae80"
+    },
+    {
+      "path": "stress/320x800-pt-long.png",
+      "sha256": "bdd22600addb08ce27dbee54127f8118816aceb5b960e57ce4e653da7ddeab5a"
+    },
+    {
+      "path": "interactions/390x844-en-keyboard.png",
+      "sha256": "7cfdd4a9a39afd77e777de7008ef92b2cacde4a03e9e160c10d0bbb28bc90b1e"
+    },
+    {
+      "path": "interactions/1440x900-en-hover.png",
+      "sha256": "300c65c3b3b7b2153466c89cea820be0624c86c9a75375368b2d79e9959b3c8f"
+    },
+    {
+      "path": "rtl/390x844-en-rtl.png",
+      "sha256": "62171d6a2699ee4ad342a85bcb1e56ca09b81bbc46a6814808c97faa3f3966a6"
+    },
+    {
+      "path": "reduced-motion/390x844-en-reduce.png",
+      "sha256": "13f75d4b53f2c70a32b9965fd9c58359d7704b4261850e1c8c0a8b41c0336405"
+    },
+    {
+      "path": "reduced-motion/1440x900-en-reduce.png",
+      "sha256": "fd9d86091e9f3d08fc46ed4a361073aa0333864a2bb60fe9150f1c6196edf2aa"
+    },
+    {
+      "bytes": 212260,
+      "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+      "localeMarker": {
+        "changedFromHidden": true,
+        "height": 39,
+        "text": "pt",
+        "width": 36,
+        "x": 3114,
+        "y": 32
+      },
+      "path": "zoom/google-chrome-baseline-pt.png",
+      "pixelHeight": 1684,
+      "pixelWidth": 3420,
+      "sha256": "4da4d189fc1c04c2d0588c9e8b7a607587b9995b9877ad3dff74040cf7eeb918"
+    },
+    {
+      "bytes": 227366,
+      "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+      "localeMarker": {
+        "changedFromHidden": true,
+        "height": 77,
+        "text": "pt",
+        "width": 72,
+        "x": 3252,
+        "y": 64
+      },
+      "path": "zoom/google-chrome-200-percent-pt.png",
+      "pixelHeight": 1684,
+      "pixelWidth": 3420,
+      "sha256": "8ee038c737ed3c2e7c0ce88dafdb2cd9cd302e7b6a5fec62b2ce1faeb23e4b68"
+    }
+  ],
+  "versions": {
+    "axe": "4.13.0",
+    "browser": "Google Chrome 152.0.7977.82",
+    "next": "16.3.4",
+    "node": "v24.20.0",
+    "playwright": "1.62.1",
+    "pnpm": "11.25.0",
+    "react": "19.2.8"
+  }
+}

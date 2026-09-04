@@ -13,9 +13,9 @@
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
 | P2-01 | DONE | Codex `/root` | P0-04 | Git `f578208`、PR #10/run `33821542072`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
-| P2-02 | READY | — | P2-01 | 基础原语；Lane B 已释放，可领取 |
-| P2-03 | PENDING | — | P2-02 | Overlay/menu/toast/language-region/focus |
-| P2-04 | PENDING | — | P2-02 | 七语言长文案组合组件与状态 |
+| P2-02 | DONE | Codex `/root` | P2-01 | Git `9f33dad` + evidence `d40a79b`、PR #11/run `33835758064`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
+| P2-03 | READY | — | P2-02 | 下一 Lane B 任务：Overlay/menu/toast/language-region/focus |
+| P2-04 | PENDING | — | P2-02 | 依赖已满足；与 P2-03 同属 Lane B，待前序释放后再转 READY |
 | P2-05 | PENDING | — | P2-03、P2-04 | 三段标志性动效 |
 | P2-06 | PENDING | — | P2-04、P2-05 | 人工品牌样板批准 |
 
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01 已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；Lane B 已释放，直接依赖 P2-02 改为 `READY`。Phase 2 其余任务及完整退出门禁尚未取得，Phase 3 继续锁定。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01 与 P2-02 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-03 是唯一 `READY` 的 Lane B 后继任务，P2-04 保持 `PENDING` 以维持单 Lane 单领取入口。Phase 2 其余任务及完整退出门禁尚未取得，Phase 3 继续锁定。
 
 ## P2-01 执行卡
 
@@ -87,3 +87,59 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 | 8 | PASS | Fontsource/OFL 依赖精确 `5.3.0`、workspace 依赖显式声明，frozen offline install 与 CI audit 通过 |
 | 9 | PASS | 字体 profile、accent 输入、部署环境和 token 消费边界可替换；新增 locale 会由 exhaustive/static gates 阻断遗漏 |
 | 10 | PASS | focused、本地 0-cache、真实 PG/S3、六视口/320/zoom/keyboard/reduce、clean clone、secret/audit、独立终验与 PR Quality/Security 全部通过 |
+
+## P2-02 执行卡
+
+**本次执行登记**：
+
+- Owner：Codex `/root`
+- 开始：`2026-09-04T09:57:36+08:00`（`2026-09-04T01:57:36Z`）
+- 输入：P2-01 已冻结的共享 design tokens、locale 字体/主题/网格与内部 preview gate；P1-01 的 canonical `SupportedLocale`、金额与展示语言合同。
+- 精确输出：在 `packages/ui` 实现 Button、Link、Icon、Media、Price、Status、Field、Quantity 八类框架内基础原语及其类型化 API、样式和测试；Storefront 增加仅供 dev/test/preview、noindex 的原语验收 fixture，用真实交互证明各状态而不伪装为业务页面。
+- 视觉命题：把电影感深色画册的克制材质落实到可复用控件；排版、边界、触控尺度与单一 accent 建立高级感，状态语义保持清晰可信。
+- 内容计划：内部 fixture 按动作、导航/图标、媒体、金额/状态、表单/数量分区，使用英语、CJK、泰语、越南语、最长西/葡语和 `en-XA` 压力文案；每区只证明原语行为，不加入 Hero、商品卡、购物车行或订单时间线。
+- 交互命题：hover/focus/active 只用克制的颜色、透明度与轻微 transform；loading 保持尺寸并提供可访问状态；reduced motion 取消位移和旋转但保留非动态反馈。
+- 明确不做：P2-03 的 Dialog/Drawer/Toast/Menu/Language/Region/focus-trap，P2-04 的 Hero/IdolPortrait/GiftTile/IdolContext/CartLine/OrderTimeline 与正式组件展示页，P2-05 标志性动效，公开 `/:locale` 页面、正式品牌/Logo/肖像、业务 API、数据库、市场、币种或支付逻辑。
+- TDD 与验证计划：先写失败测试锁定原语语义、类型/状态组合、金额最小单位与 locale 格式化、媒体 alt/fallback、Field 关联/错误、Quantity 边界、无关键翻译文本固定高度/ellipsis、token-only 样式、RTL/pseudo 结构；逐个见红后最小实现并复跑。随后运行受影响 test/typecheck/build、静态边界检查、format/lint、整仓 0-cache check 与 secret scan。
+- 浏览器计划：production build 在 preview gate 下覆盖 390×844 与 1440×900，并抽查六基准视口、320 CSS px、键盘 Tab/Enter/Space/箭头、hover/focus/disabled/loading、RTL 结构、reduced-motion、axe critical/serious、无横向溢出/裁切、console/page/request 错误；证据写入 `output/playwright/p2-02/`。
+- 风险映射：`R-07` 以合成友好微交互、reduced-motion 与稳定 loading 尺寸控制；`R-17` 以 canonical locale 导入、`Intl` 格式化、多脚本/伪语言/RTL 验收和 locale 与 market/currency 零推导控制。
+- 并发/所有权：P2-02 是唯一 Lane B executor；Codex `/root` 对 `packages/ui`、Storefront 原语 fixture、相关样式/测试及必要 manifest/lockfile 负最终责任。其下受控子代理只在 `/root` 分派的互不重叠文件内实现并回报 RED/GREEN 证据，不形成第二 Lane executor；最终集成、复核与状态变更仍由 `/root` 完成。
+
+**Review 请求（2026-09-04T11:40:00+08:00）**：
+
+- **八类原语**：`@fan-support/ui` 已实现 Button、Link、Icon、Media、Price、Status、Field、Quantity；服务端入口只导出无客户端状态的六类原语，`./client` 以 `use client` 隔离 Media/Quantity，`./primitives.css` 显式承载 token-only 样式。React/CVA 例外被限制在 UI 包，adapter 边界对 npm alias、跨包扩散与 declaration 泄漏继续 fail closed。
+- **语义与精度**：Button loading 保留文字布局 footprint 并使用绝对定位 spinner；Link 补齐新窗口安全 rel；Icon 强制 decorative/informative 二选一；Price 直接消费 branded integer minor units，以 BigInt 保持 `Number.MAX_SAFE_INTEGER` 末位精度并只按显式 locale/currency 展示；Field 关联 label/hint/error；Quantity 以安全整数和 BigInt step lattice 限制边界、键盘与直接输入。
+- **媒体与浏览器边界**：Media 强制有效尺寸及 informative alt/decorative 选择，错误 fallback 保持 aspect ratio，并以 `src/srcSet/sizes` 组成资源身份避免换源后残留错误。根入口在 `react-server` conditions 下可加载，客户端状态未泄漏到 RSC 图。
+- **内部 fixture**：Storefront 在既有 `/_internal/design-foundations/{locale}/primitives` 下覆盖七个正式 locale 与 `en-XA`，沿用 noindex 与 dev/test/preview gate；staging/production 返回 404。样板只证明原语，不新增公开业务路由、组合组件、正式品牌/肖像、市场/币种/支付推导、API、数据库、migration 或 OpenAPI 变更。
+- **TDD 与静态门禁**：UI `10 files / 50 tests`、Storefront `11 / 56`、Admin `6 / 22`、UI primitives `42/42`、design foundations `21/21`、adapter boundaries `29/29`、browser helper `19/19` 全绿；UI typecheck/build、focused Prettier/ESLint 与 `git diff --check` 通过。
+- **浏览器候选证据**：`output/playwright/p2-02/` 的本地候选由 production standalone build 生成，记录 13 个确定性场景、6 次 axe（critical/serious 0）、3 个环境 gate 与 15 张截图；覆盖六基准视口、320 px `en-XA`/长葡语、键盘、hover/focus/disabled/loading、Field/Quantity、Media fallback、RTL 与 390/1440 reduced-motion，未发现横向溢出、裁切、replacement glyph、外链资源或 console/page/request 错误。
+- **真实 200% zoom**：安装版 Google Chrome `152.0.7977.82` 使用隔离临时 profile 的 HostZoomMap；outer window 保持 `1710×929`，CSS viewport `1710×842→855×421`、DPR `2→4`、`visualViewport.scale=1`、detected `200%`。截图只用 CDP `Page.captureScreenshot` 读取真实合成表面，不调用 Emulation/device metrics/page scale；两张 PNG 均为完整 `3420×1684`，右上 `PT` marker 经显隐像素差验证，临时 profile 已删除，15/15 SHA-256 匹配。
+- **评审修复**：首轮浏览器独立复核指出 request firewall 时序、axe artifact 路径、候选替换完整性、loading footprint、reduced-motion 覆盖与真实 zoom 截图裁切；均以失败测试复现后修复。最终两路只读复核确认真实 Media 解码失败链、跨平台证据路径校验、13/6/3/15 矩阵、零 console 豁免与完整 200% zoom 截图，结论均为 `ACCEPT`、blocker 0。
+- **完成门禁**：实现提交 `9f33dad482798a58e108d0c8c0495a878cf375c7` 后从 clean worktree 重生浏览器证据并以 `d40a79bd3fb93a884ffd8613c58f84902ae6ca41` 固化；fresh clean-clone 完整验收与 [PR #11](https://github.com/CZ3700/diandan/pull/11) [run 33835758064](https://github.com/CZ3700/diandan/actions/runs/33835758064) Quality/Security 均成功。任务不宣称 AWS apply、staging、production、正式品牌批准或真实设备性能。
+
+### DONE 证据（2026-09-04）
+
+- **原语与入口边界**：`@fan-support/ui` 精确提供 Button、Link、Icon、Media、Price、Status、Field、Quantity；root 仅导出六个 server-compatible 原语，`./client` 只导出 Media/Quantity，`./primitives.css` 为显式样式入口。实际 Storefront consumer 在 `react-server` conditions 下导入成功，客户端状态未泄漏到 RSC 图。
+- **语义、金额与交互**：Price 以 branded integer minor units + BigInt 在 `Number.MAX_SAFE_INTEGER` 边界仍保留最小单位精度；Button loading 保持布局 footprint；Link、Icon、Media、Field、Quantity 分别锁定安全 rel、装饰/信息语义、资源身份/fallback、label/hint/error 和安全整数 step lattice。键盘、focus-visible、hover、disabled、loading、RTL、direct input 与 reduced-motion 均有测试和浏览器证据。
+- **样式与内部 fixture**：Storefront/Admin 共享 token-only primitives CSS 与 Tailwind/PostCSS 管线；交互目标最小 48 px，非文本边界对比不低于 3:1，不固定或省略关键翻译文本。`/_internal/design-foundations/{locale}/primitives` 覆盖七个公开 locale 与内部 `en-XA`，带 `noindex,nofollow`，preview 为 200，staging/production 为 404 且 `/healthz` 仍为 200。
+- **TDD / 对抗门禁**：UI `10 files / 50 tests`、Storefront `11 / 56`、Admin `6 / 22`、UI primitives static `42/42`、design foundations `21/21`、adapter boundaries `29/29`、browser runner helpers `19/19` 全绿；覆盖 RSC/client 图、精确 exports、依赖 allowlist、CSS/token/RTL/reduced-motion、候选证据原子替换、manifest/hashes 与 POSIX/Windows/NUL/traversal 路径攻击。
+- **浏览器证据**：`output/playwright/p2-02/` 基于 clean 实现 SHA `9f33dad482798a58e108d0c8c0495a878cf375c7` 生成，`git.dirty=false`。生产 standalone build 完成 13 个场景、6 份 axe artifact（critical/serious 0）、3 个环境 gate 与 15 张 PNG；覆盖六标准视口、320 px `en-XA`/最长葡语、390/1440 键盘/hover/reduced-motion、RTL、Field/Quantity 与真实 Media error fallback，场景错误、console/page/request/http/external-resource 错误均为 0，15/15 SHA-256 匹配。
+- **真实 Media 与 200% zoom**：测试从用户可见按钮点击开始，React 把 `src` 切到合法 data URL 但无效 PNG，浏览器原生 decode error 触发 fallback；`triggerClicked/sourceChanged/browserDecodeFailed=true`，前后 frame 尺寸稳定且无 console 豁免。Google Chrome `152.0.7977.82` 使用隔离 HostZoomMap profile，outer `1710×929` 不变、CSS viewport `1710×842→855×421`、DPR `2→4`、detected `200%`；无 Emulation/device metrics/page scale，两张 CDP compositor PNG 均为完整 `3420×1684`，右侧 `PT` marker 可验证，profile 已删除。
+- **本地与 clean clone**：Node `24.20.0` / pnpm `11.25.0` 下先在实现工作树执行强制 0-cache `pnpm check`；随后 evidence SHA `d40a79bd3fb93a884ffd8613c58f84902ae6ca41` 在 `/tmp/p2-02-clean-clone.WN5vUK` detached checkout，offline frozen install 复用 `423/423`、下载 0，`TURBO_FORCE=true pnpm check` 退出 0：真实 PostgreSQL 9 migrations/108 tables、可靠事件、S3-compatible、Prettier/ESLint、typecheck `51/51`、test `51/51`、build `34/34`、adapter/artifact 均全绿且 0 cached；secret scan、runner `19/19`、证据 JSON、15/15 hashes 与 `git diff --check` 通过，最终工作树为空。
+- **真实 CI**：[PR #11](https://github.com/CZ3700/diandan/pull/11) 基于 `codex/p2-01-design-foundations`；evidence head `d40a79bd3fb93a884ffd8613c58f84902ae6ca41` 的 [run 33835758064](https://github.com/CZ3700/diandan/actions/runs/33835758064) Quality 成功。Security 首次仅因 npm advisory POST 三次外部超时失败，没有漏洞结论；保持 `--audit-level=high` 原样重跑后 audit 与 secret scan 成功，该 evidence 快照最终 Quality/Security 均绿色且当时 PR merge state 为 CLEAN。后续 progress-only 提交不改产品实现或冻结证据，仍须由 PR 当前 HEAD 的必需检查复验。
+- **独立终验与边界**：产品/架构、浏览器 runner 与代码收敛复核均 `ACCEPT`、blocker 0；最终复核特别确认 Media 不是 synthetic event、Windows 路径不绕过 validator、缩放截图不裁切。本任务没有 migration、OpenAPI、公开业务路由、overlay/composite、支付或生产基础设施改动；正式品牌/摄影、真实移动设备性能、AWS apply、staging/production 和 Phase 2 人工批准仍属于后续门禁。
+
+### P2-02 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | 八类原语、server/client 入口、样式、fixture copy、静态 gate 与浏览器 runner 各自职责单一 |
+| 2 | PASS | 金额格式化、Icon 语义、Media identity、Quantity lattice、路径校验与证据组装拆为小型纯函数/局部状态机 |
+| 3 | PASS | Browser/Route → UI primitive → React/contracts/design-tokens 单向；UI 不回依赖 Storefront/Admin、数据库或 provider adapter |
+| 4 | PASS | workspace 为 4 apps/30 packages/34 units、0 dependency cycles；server graph 动态/静态 reachability 与 emitted declarations 均有门禁 |
+| 5 | PASS | 对外 props/type exports 明确，金额/locale 复用 canonical contracts；本任务无新增跨模块 API/event/queue schema |
+| 6 | PASS | primitive props 与跨包输入为可序列化值；客户端事件/DOM ref 不进入 root server-compatible 入口或业务合同 |
+| 7 | PASS | fixture origin、端口与环境由 runner 临时注入；无生产域名、路径、secret、正式品牌值或 locale→market/currency/payment 特判 |
+| 8 | PASS | React/CVA/Tailwind/PostCSS/axe/Playwright 均显式锁入 manifest/lockfile，UI 依赖 allowlist、offline frozen install 与 CI high audit 通过 |
+| 9 | PASS | server/client/CSS 子路径、typed props 与资源 identity 允许替换单个原语或渲染层，不要求修改 commerce/domain/provider 层 |
+| 10 | PASS | focused、本地 0-cache、真实 PG/S3、浏览器/axe/zoom、clean clone、secret/high audit、独立终验与 PR Quality/Security 全部通过 |
