@@ -14,8 +14,8 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-09-04T15:26:58.681Z",
-    "url": "http://127.0.0.1:62640/_internal/design-foundations/en-XA/components",
+    "timestamp": "2026-09-04T18:33:03.688Z",
+    "url": "http://127.0.0.1:57381/_internal/design-foundations/en-XA/components",
     "toolOptions": {
       "reporter": "v1"
     },
@@ -18450,12 +18450,19 @@
                   "contrastRatio": 0,
                   "fontSize": "12.0pt (16px)",
                   "fontWeight": "normal",
-                  "messageKey": "elmPartiallyObscuring",
+                  "messageKey": "bgGradient",
                   "expectedContrastRatio": "4.5:1"
                 },
-                "relatedNodes": [],
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"fs-hero__scrim\" aria-hidden=\"true\"></div>",
+                    "target": [
+                      ".ui-composites-specimen-module__QIxlda__heroFrame > .fs-hero[data-text-tone=\"light\"][data-fs-composite=\"hero\"] > .fs-hero__scrim[aria-hidden=\"true\"]"
+                    ]
+                  }
+                ],
                 "impact": "serious",
-                "message": "Element's background color could not be determined because it partially overlaps other elements"
+                "message": "Element's background color could not be determined due to a background gradient"
               }
             ],
             "all": [],
@@ -18465,7 +18472,7 @@
             "target": [
               ".ui-composites-specimen-module__QIxlda__heroFrame > .fs-hero[data-text-tone=\"light\"][data-fs-composite=\"hero\"] > .fs-hero__content > .fs-hero__description"
             ],
-            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
           },
           {
             "any": [

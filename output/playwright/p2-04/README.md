@@ -1,6 +1,6 @@
 # P2-04 UI composite browser verification
 
-Generated: 2026-09-04T15:27:17.893Z
+Generated: 2026-09-04T18:33:18.465Z
 
 ## Outcome
 
@@ -8,7 +8,7 @@ Generated: 2026-09-04T15:27:17.893Z
 - Screenshots: 18
 - Axe scans: 10; critical/serious blocking findings: 0
 - Native Chrome zoom: 200.0% detected for requested 200%
-- Source fingerprint: beac9df29fbaff97f088b13f7bf92a929f302534946597377944843def7c5c03 (p2-04-render-inputs-v1)
+- Source fingerprint: 0509535d326e069ae0f127a862fb7edae423365f82d77b6905bbf8f9df7fd605 (p2-04-render-inputs-v1)
 
 ## Runtime gates
 
@@ -18,24 +18,24 @@ Generated: 2026-09-04T15:27:17.893Z
 
 ## Screenshots
 
-- viewports/360x800-en.png (08bf4abfa4f5131b6ff8b40375139f4825e83b03d812f360c188c87416245b86)
-- viewports/390x844-vi.png (465cccbf08d6e42ba9a92c8dd414b069ebda1948920702a2d6d1bce9c74f8da7)
-- viewports/768x1024-th.png (3a375143292eaca1b010e15f89a6e72ffcf8a0d072d33e0ebb85df32ea4a9cb9)
-- viewports/1024x768-zh-CN.png (bc28ed32c45e17974665e2977a3ee5241f810e360478d0812088a09c196ba301)
-- viewports/1440x900-ja.png (8baab1ad2a8844cc42a679653ccddbae233a6656846a4843bcaacb10f7a2d4c3)
-- viewports/1920x1080-es.png (9ee49a9bc4934ddcf996d2f042fc6d6e79b96ec5ec8d43ae5a98c33307a88ac5)
-- responsive/767x900-pt.png (70c0b101962a8b781487c7178974648b669fa05ef97eee3d08b40b938eeb6263)
-- responsive/1023x900-en-XA.png (4ed1fe8fe1698fd1ed0b4bc7f3f0b452e5f07fb7b85c8d8d709056b035ba88b5)
-- stress/320x800-en-XA.png (5da52e8d4995d7dab9352b2675234d49816cabc606dd2b56b6962836c7fcf9ad)
-- stress/320x800-pt-long.png (10708d066d68fc364c9593ff20bb104b8f67721bc8450b7f60bc0d808b74ab42)
-- states/390x844-en.png (a19593097ac2c358e070899885e04fb8b11c4efdbd3ba814057312e7154d3079)
-- interactions/1440x900-en-hover.png (4623e6193e2302a3bdfb6fd4fd3138bed6359a80265ef20e9a9836e32ff66862)
-- rtl/390x844-en.png (bdab96d95651618fcd6fa1b49afdc49ae86bb35f53f6970fe032862bf7dc6b6a)
-- rtl/1440x900-en.png (45a352bcf82df0a1b1d910f71bc002b85ca319f8634914b8b7eda59abc509d49)
-- reduced-motion/390x844-en.png (37fbabf45ce7f80539fbaf1b0bda8614ffb438ad571a8f64a06e6a7eab68802c)
-- reduced-motion/1440x900-en.png (5879c6eeb1816d75fc6a54bf9c385b8db7136247370084f35b15c212712737ee)
-- zoom/google-chrome-baseline-pt.png (b4ee6e35a9b81973f63bca2507fcb1adebcbfa3724fb04e676a95ab5ed254eed)
-- zoom/google-chrome-200-percent-pt.png (b32881c7429c0689d0fc523496c9411b4743fba81c9952f88c3a41c6ed5de540)
+- viewports/360x800-en.png (deb21036e29bfe7ee2bbf44d0f3f7b370c254d2578f8969663f530ea0c934a53)
+- viewports/390x844-vi.png (7ca8e3f970b92e167227aaa12ce17954abd4435ee42d27df2e782cada15ce927)
+- viewports/768x1024-th.png (addd8f241ba7111c1b0dad09bac60796a597c469fe57b56b578869e2649cbfe2)
+- viewports/1024x768-zh-CN.png (f3eebfb7354acc273ab176d464b4b66f4ecdc7e62847c43269f1ae5886bdf082)
+- viewports/1440x900-ja.png (b0e55f70f0e388c1f99c0408610c8237ef60dbb3a3b3566922f02d6759dbdad6)
+- viewports/1920x1080-es.png (fa7bbe23c814a29d82b90f7540ab97f9f61509136602299ac59529da17344f1b)
+- responsive/767x900-pt.png (7fa3a9bfc36ad6c86f863a1700cbe9eee9d0b8e99e2308f894f96125861a37c0)
+- responsive/1023x900-en-XA.png (254ed9b83579e7195ae33775fe0ec6057daba757bf21f67daf9962473428e0cc)
+- stress/320x800-en-XA.png (04cf774bef3028761619750de1121e4994d831bcc293a6e4072c273d6812a27d)
+- stress/320x800-pt-long.png (fd76ed9610e64738e650525e44e45e359b6cb6cc42da150ea0e4c2fc4e832ac7)
+- states/390x844-en.png (a9808eb97f0220a2482ead07aad087e7da16c6832fe578dd43f5666220361b5f)
+- interactions/1440x900-en-hover.png (e94aa7a2a7719ea7bcf7627baf697cccca1db0a931fc187e00ed038e1b438094)
+- rtl/390x844-en.png (39936c3e84aedeb7f93d774b00c497ca5693dbdad5aaf8d44e67d79e76a781cd)
+- rtl/1440x900-en.png (908ae7b3a52a280cce443286e2517137c5335c9f15fa081d38847fea8bdf35a9)
+- reduced-motion/390x844-en.png (d6be4c23036ab6eb37dbda81d2c6d6d5069d71763265de17fa7007499c692b7a)
+- reduced-motion/1440x900-en.png (76024aeffb42410fa9a71ec19e4844eaaea8b53cf79b85e0a915915e87ebb35b)
+- zoom/google-chrome-baseline-pt.png (8f905c8969f182c1461aa4d02f360733a8b8d50595c2334a73fa75970abcf02f)
+- zoom/google-chrome-200-percent-pt.png (c437ddae5d8b0ba8129f3c39da28404b9af822bdc24b5f7f741328f2a53b99a2)
 
 Rerun: `mise exec node@24.20.0 -- node scripts/verify-ui-composites-browser.mjs`
 

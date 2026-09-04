@@ -14,8 +14,8 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-09-04T15:26:53.560Z",
-    "url": "http://127.0.0.1:62640/_internal/design-foundations/ja/components",
+    "timestamp": "2026-09-04T18:32:58.460Z",
+    "url": "http://127.0.0.1:57381/_internal/design-foundations/ja/components",
     "toolOptions": {
       "reporter": "v1"
     },
@@ -7782,6 +7782,31 @@
             "html": "<p>しばらくしてからもう一度お試しください。</p>",
             "target": [
               ".fs-hero--state.fs-hero[data-fs-composite=\"hero\"] > .fs-composite-state--error.fs-composite-state[data-state-kind=\"error\"] > p"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#d8b26e",
+                  "bgColor": "#121216",
+                  "contrastRatio": 9.35,
+                  "fontSize": "13.5pt (18px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 9.35"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a class=\"fs-link fs-link--standalone\" href=\"#state-gallery\">応援ギフトを選ぶ</a>",
+            "target": [
+              ".fs-hero--state.fs-hero[data-fs-composite=\"hero\"] > .fs-composite-state--error.fs-composite-state[data-state-kind=\"error\"] > a[href$=\"#state-gallery\"]"
             ]
           },
           {
@@ -18448,38 +18473,6 @@
               ".ui-composites-specimen-module__QIxlda__heroFrame > .fs-hero[data-text-tone=\"light\"][data-fs-composite=\"hero\"] > .fs-hero__content > .fs-hero__description"
             ],
             "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "contrastRatio": 0,
-                  "fontSize": "13.5pt (18px)",
-                  "fontWeight": "bold",
-                  "messageKey": "elmPartiallyObscured",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [
-                  {
-                    "html": "<div class=\"fs-composite-state fs-composite-state--error\" data-state-kind=\"error\"><span class=\"fs-status fs-status--danger\">このセクションを表示できません</span><p>しばらくしてからもう一度お試しください。</p><a class=\"fs-link fs-link--standalone\" href=\"#state-gallery\">応援ギフトを選ぶ</a></div>",
-                    "target": [
-                      ".fs-hero--state.fs-hero[data-fs-composite=\"hero\"] > .fs-composite-state--error.fs-composite-state[data-state-kind=\"error\"]"
-                    ]
-                  }
-                ],
-                "impact": "serious",
-                "message": "Element's background color could not be determined because it's partially obscured by another element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": "serious",
-            "html": "<a class=\"fs-link fs-link--standalone\" href=\"#state-gallery\">応援ギフトを選ぶ</a>",
-            "target": [
-              ".fs-hero--state.fs-hero[data-fs-composite=\"hero\"] > .fs-composite-state--error.fs-composite-state[data-state-kind=\"error\"] > a[href$=\"#state-gallery\"]"
-            ],
-            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
           },
           {
             "any": [
