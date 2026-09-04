@@ -80,6 +80,14 @@ const expectedLaunchProvenance = Object.freeze({
   productionBuild: true,
   server: "Next.js standalone",
 });
+const axeExclusionPolicy = Object.freeze([
+  Object.freeze({
+    rationale:
+      "Base UI focus guards are aria-hidden sentinels that immediately redirect focus; component focus containment is verified separately",
+    selector: "[data-base-ui-focus-guard]",
+    upstream: "https://github.com/mui/base-ui/issues/4845",
+  }),
+]);
 const requiredAxeIds = Object.freeze([
   "base-desktop",
   "base-mobile",
@@ -99,6 +107,10 @@ const requiredBaselineCases = Object.freeze([
   Object.freeze([1440, 900, "ja"]),
   Object.freeze([1920, 1080, "es"]),
 ]);
+
+export function createAxeExclusionPolicy() {
+  return axeExclusionPolicy.map((entry) => ({ ...entry }));
+}
 
 function axeScan(id, state = "default") {
   return Object.freeze({ id, state });
@@ -972,6 +984,14 @@ export function validateEvidenceBundle(evidence) {
   ) {
     errors.push("launch provenance must describe the production Chrome run");
   }
+  if (
+    JSON.stringify(evidence.axeExclusions) !==
+    JSON.stringify(createAxeExclusionPolicy())
+  ) {
+    errors.push(
+      "axe exclusion policy must contain only the exact audited Base UI focus guard selector",
+    );
+  }
   const matrixErrors = validateInteractionScenarioMatrix(evidence.matrix);
   errors.push(...matrixErrors.map((error) => "evidence matrix: " + error));
   if (
@@ -1479,6 +1499,7 @@ export function validateEvidenceBundle(evidence) {
 }
 
 export function createEvidenceReadme({
+  axeExclusions = [],
   axeSummaries = [],
   generatedAt,
   git,
@@ -1575,6 +1596,20 @@ export function createEvidenceReadme({
         tick +
         scan.artifact +
         tick,
+    );
+  }
+  lines.push("", "## axe exclusions", "");
+  for (const exclusion of axeExclusions) {
+    lines.push(
+      "- " +
+        tick +
+        exclusion.selector +
+        tick +
+        ": " +
+        exclusion.rationale +
+        " ([upstream](" +
+        exclusion.upstream +
+        "))",
     );
   }
   lines.push(
@@ -2169,6 +2204,40 @@ async function outsidePointForPopup(page, selector) {
       }) ?? null
     );
   }, selector);
+}
+
+async function releaseToastHoverPause(page, viewport) {
+  const pointerReleasePoint = await outsidePointForPopup(
+    page,
+    ".fs-toast__viewport",
+  );
+  invariant(
+    pointerReleasePoint !== null,
+    "Toast timeout check needs a pointer position outside its viewport",
+  );
+  await page.mouse.move(pointerReleasePoint.x, pointerReleasePoint.y);
+  await page.waitForFunction(
+    () =>
+      document
+        .querySelector(".fs-toast__viewport")
+        ?.hasAttribute("data-expanded") === false,
+    undefined,
+    { timeout: 1_000 },
+  );
+  const pointerOutsideViewport = await viewport.evaluate((element, point) => {
+    const bounds = element.getBoundingClientRect();
+    return (
+      point.x < bounds.left ||
+      point.x > bounds.right ||
+      point.y < bounds.top ||
+      point.y > bounds.bottom
+    );
+  }, pointerReleasePoint);
+  invariant(
+    pointerOutsideViewport,
+    "Toast pointer must leave the viewport before timeout verification",
+  );
+  return pointerOutsideViewport;
 }
 
 async function collectInteractionMeasurements(page) {
@@ -2913,6 +2982,7 @@ async function runToastCheck(page) {
     await toast.locator(".fs-toast__description").textContent()
   )?.trim();
   invariant(title !== "" && description !== "", "toast copy must be rendered");
+  await releaseToastHoverPause(page, viewport);
   await toast.waitFor({ state: "detached", timeout: 8_000 });
   invariant(
     await trigger.evaluate((element) => element === document.activeElement),
@@ -2962,36 +3032,7 @@ async function runToastCheck(page) {
     ),
     "creating a limited Toast stack must not steal focus",
   );
-  const pointerReleasePoint = await outsidePointForPopup(
-    page,
-    ".fs-toast__viewport",
-  );
-  invariant(
-    pointerReleasePoint !== null,
-    "Toast timeout check needs a pointer position outside its viewport",
-  );
-  await page.mouse.move(pointerReleasePoint.x, pointerReleasePoint.y);
-  await page.waitForFunction(
-    () =>
-      document
-        .querySelector(".fs-toast__viewport")
-        ?.hasAttribute("data-expanded") === false,
-    undefined,
-    { timeout: 1_000 },
-  );
-  const pointerOutsideViewport = await viewport.evaluate((element, point) => {
-    const bounds = element.getBoundingClientRect();
-    return (
-      point.x < bounds.left ||
-      point.x > bounds.right ||
-      point.y < bounds.top ||
-      point.y > bounds.bottom
-    );
-  }, pointerReleasePoint);
-  invariant(
-    pointerOutsideViewport,
-    "Toast pointer must leave the viewport before timeout verification",
-  );
+  const pointerOutsideViewport = await releaseToastHoverPause(page, viewport);
   await page.waitForFunction(
     () => document.querySelectorAll(".fs-toast").length === 0,
     undefined,
@@ -3328,6 +3369,7 @@ async function writeAxeResult(candidate, scenarioId, scan, axeResult) {
     outputPath,
     JSON.stringify(
       {
+        exclusions: createAxeExclusionPolicy(),
         result: axeResult,
         scan: { id: scan.id, scenarioId, state: scan.state },
         schemaVersion: 1,
@@ -3429,7 +3471,11 @@ async function runScenario({
       const closeState = await openEvidenceState(page, scan.state);
       let axeResult;
       try {
-        axeResult = await new AxeBuilder({ page }).analyze();
+        const axeBuilder = new AxeBuilder({ page });
+        for (const { selector } of createAxeExclusionPolicy()) {
+          axeBuilder.exclude(selector);
+        }
+        axeResult = await axeBuilder.analyze();
       } finally {
         await closeState();
       }
@@ -4092,6 +4138,8 @@ async function validateEvidenceCandidate(candidate) {
     }
     invariant(
       artifact?.schemaVersion === 1 &&
+        JSON.stringify(artifact?.exclusions) ===
+          JSON.stringify(createAxeExclusionPolicy()) &&
         artifact?.scan?.id === summary.id &&
         artifact?.scan?.scenarioId === summary.scenarioId &&
         artifact?.scan?.state === summary.state,
@@ -4256,6 +4304,7 @@ export async function runUiInteractionsBrowserVerification({
     git.rechecked = true;
     const generatedAt = new Date().toISOString();
     const evidence = {
+      axeExclusions: createAxeExclusionPolicy(),
       axeSummaries: browserResult.axeSummaries,
       generatedAt,
       git,

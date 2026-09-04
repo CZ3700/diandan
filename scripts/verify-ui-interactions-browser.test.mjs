@@ -14,6 +14,7 @@ async function loadRunner() {
     "assessReducedMotionMeasurements",
     "classifyBrowserResource",
     "classifyOverlayFocus",
+    "createAxeExclusionPolicy",
     "createEvidenceReadme",
     "createInteractionTextRootSelector",
     "createInteractionScenarioMatrix",
@@ -151,6 +152,19 @@ test("scenario validation fails closed for missing, duplicate, and unsafe eviden
   ]) {
     assert.equal(isSafeRelativeArtifactPath(value, ".png"), false, value);
   }
+});
+
+test("axe excludes only Base UI transient focus sentinels", async () => {
+  const { createAxeExclusionPolicy } = await loadRunner();
+
+  assert.deepEqual(createAxeExclusionPolicy(), [
+    {
+      rationale:
+        "Base UI focus guards are aria-hidden sentinels that immediately redirect focus; component focus containment is verified separately",
+      selector: "[data-base-ui-focus-guard]",
+      upstream: "https://github.com/mui/base-ui/issues/4845",
+    },
+  ]);
 });
 
 test("page measurement assessment rejects overflow, clipping, small targets, and missing fonts", async () => {
@@ -576,7 +590,8 @@ function validRtlCheck() {
 }
 
 async function createValidEvidence() {
-  const { createInteractionScenarioMatrix } = await loadRunner();
+  const { createAxeExclusionPolicy, createInteractionScenarioMatrix } =
+    await loadRunner();
   const matrix = createInteractionScenarioMatrix();
   const axeSummaries = matrix.flatMap((scenario) =>
     scenario.axe.map(({ id, state }) => ({
@@ -675,6 +690,7 @@ async function createValidEvidence() {
   ];
   const nativeScreenshots = nativePaths.map(validNativeScreenshot);
   return {
+    axeExclusions: createAxeExclusionPolicy(),
     axeSummaries,
     generatedAt: "2026-09-04T09:00:00.000Z",
     git: { dirty: false, rechecked: true, sha: "a".repeat(40), status: [] },
@@ -962,6 +978,14 @@ test("evidence validator accepts a complete proof and rejects tampering", async 
     ),
   );
 
+  const broadenedAxeExclusion = globalThis.structuredClone(valid);
+  broadenedAxeExclusion.axeExclusions[0].selector = "[aria-hidden]";
+  assert.ok(
+    validateEvidenceBundle(broadenedAxeExclusion).some((error) =>
+      error.includes("axe exclusion policy"),
+    ),
+  );
+
   const missingMeasurementInventory = globalThis.structuredClone(valid);
   delete missingMeasurementInventory.scenarioResults[0].metrics.surfaces;
   assert.ok(
@@ -1225,5 +1249,6 @@ test("README clearly scopes the production-build evidence", async () => {
   assert.match(readme, /all 8 preview locales/u);
   assert.match(readme, /clean checkout rechecked after run: true/u);
   assert.match(readme, /200%/u);
+  assert.match(readme, /Base UI focus guards/u);
   assert.match(readme, /not staging or production deployment evidence/u);
 });
