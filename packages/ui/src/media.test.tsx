@@ -64,6 +64,34 @@ describe("Media", () => {
     expect(markup).toContain("portrait-400.avif 400w");
   });
 
+  test("maps a bounded focal point to native object positioning", () => {
+    const alternative = resolveMediaAlternative({ alt: "Portrait" });
+    const markup = renderToStaticMarkup(
+      <MediaFrame
+        alternative={alternative}
+        failed={false}
+        focalPoint={{ x: 1, y: 0 }}
+        height={5}
+        src="https://media.example.test/portrait.avif"
+        width={4}
+      />,
+    );
+
+    expect(markup).toContain("object-position:100% 0%");
+    expect(() =>
+      renderToStaticMarkup(
+        <MediaFrame
+          alternative={alternative}
+          failed={false}
+          focalPoint={{ x: 1.01, y: 0.5 }}
+          height={5}
+          src="https://media.example.test/portrait.avif"
+          width={4}
+        />,
+      ),
+    ).toThrow(/between 0 and 1/u);
+  });
+
   test("uses an explicit empty alternative for decorative media", () => {
     const markup = renderToStaticMarkup(
       <Media

@@ -15,8 +15,8 @@
 | P2-01 | DONE | Codex `/root` | P0-04 | Git `f578208`、PR #10/run `33821542072`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
 | P2-02 | DONE | Codex `/root` | P2-01 | Git `9f33dad` + evidence `d40a79b`、PR #11/run `33835758064`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
 | P2-03 | DONE | Codex `/root` | P2-02 | 实现 `0f86e6c` + evidence `ef6e16a` + CI 稳定化 `f6e19c9`；[PR #12](https://github.com/CZ3700/diandan/pull/12)/run `33874955057`、本地、浏览器、fresh clone 与两路独立终审全绿 |
-| P2-04 | IN_PROGRESS | Codex `/root` | P2-02 | `2026-09-04T21:16:55+08:00` 领取；组合组件、内部展示页与多语言/全状态浏览器证据 |
-| P2-05 | PENDING | — | P2-03、P2-04 | 三段标志性动效 |
+| P2-04 | DONE | Codex `/root` | P2-02 | 六个组合组件、内部八语言展示页、16 场景/10 axe/18 截图、全仓门禁与独立终审通过 |
+| P2-05 | READY | — | P2-03、P2-04 | 依赖完成且 Lane B 已释放；可领取三段标志性动效 |
 | P2-06 | PENDING | — | P2-04、P2-05 | 人工品牌样板批准 |
 
 ## 必须证明
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01、P2-02 与 P2-03 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-04 已领取为唯一 Lane B executor。Phase 2 的 P2-04/P2-05/P2-06 及完整退出门禁尚未取得，Phase 3 继续锁定。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01、P2-02 与 P2-03 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-04 已通过本地产品代码、浏览器与独立终验并释放 Lane B，P2-05 现为 `READY`。Phase 2 的 P2-05/P2-06、真实设备动效性能与完整人工品牌批准尚未取得，Phase 3 继续锁定。
 
 ## P2-01 执行卡
 
@@ -204,3 +204,38 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 - 浏览器与质量计划：扩展现有确定性 production-build runner，覆盖 360×800、390×844、768×1024、1024×768、1440×900、1920×1080、320 CSS px、原生 200% zoom、键盘、touch/hover、RTL 结构、reduced-motion、axe critical/serious、横向溢出/裁切、图片失败与六组件全状态；证据写入 `output/playwright/p2-04/`。随后运行受影响 tests、format/lint/typecheck/build、全仓 0-cache check、secret/high audit、fresh clean-clone、独立复核与真实 PR Quality/Security。
 - 风险映射：`R-07` 以稳定布局、合成友好微交互与 reduced-motion 控制；`R-08` 以结构化组件、固定媒体比例、信息性 alt 与图片错误降级控制；`R-17` 以 canonical locale、`Intl` 金额/文本和多脚本/pseudo 验收控制。
 - 并发/所有权：P2-04 是唯一 Lane B executor；Codex `/root` 对 `packages/ui` 组合 API/样式/测试、Storefront 内部展示页、静态/browser gate 及必要 manifest 负最终责任。子代理只做只读模式研究、测试矩阵或最终独立复核，不形成第二 Lane executor。
+
+**Review 请求（2026-09-04T23:30:58+08:00）**：
+
+- **组合组件与边界**：`@fan-support/ui/composites` 精确导出 Hero、IdolPortrait、GiftTile、IdolContext、CartLine、OrderTimeline 六个 server-compatible 组件；唯一交互组合 `InteractiveCartLine` 留在 `./composites-client`。共享 Media frame 被拆为无状态服务端渲染层与最小 runtime-error 客户端叶子，没有把 `use client`、Next、数据库或 provider 反向带入组合入口。
+- **交易与隐私语义**：CartLine 同时保留 80px 礼物图和 40px 偶像头像，数量变化以 branded integer minor amount 重算小计；键盘与触摸均证明增量、删除和恢复。公开 DOM 只包含 `data-private-message=present/none`，不含留言正文、完整显示名或内部 intent 标识。
+- **响应式与状态稳定**：Hero 的 loading/ready 使用同一 4:5/16:9 媒体比例并共享窄屏长文案预留；真实切换在全部 16 场景比较根尺寸、文档坐标、下游锚点与整页高度，误差阈值 1 CSS px。独立复核额外抽样 320/390/436/600/767/768/968/1000/1023/1024/1440px，差值全部为 0；767px 葡语与 1023px `en-XA` 已成为永久前一像素门禁。
+- **图片失败与媒体**：五个带媒体组件均由浏览器真实 `error`/decode 事件进入本地化 fallback；Hero ready→failure 保持根尺寸和下游位置、fallback 不覆盖正文，响应式 art direction、focal point、无边框方角与媒体比例均有运行时断言。三个虚构内部素材及生成 brief/使用边界记录在 `apps/storefront/public/ui-composites/README.md`，不代表正式品牌或肖像批准。
+- **多语言与可访问性**：七个公开 locale 加内部 `en-XA` 的 noindex preview 页面覆盖 CJK、Thai、Vietnamese、最长西/葡语与完整伪本地化；16/16 浏览器场景、18/18 截图、10 次 axe（critical/serious 0）、键盘、touch、hover、RTL、390/1440 reduced motion、安装版 Chrome 原生 200% zoom 均通过。preview 路由为 200，staging/production 模式为 404，均仅是本地生产构建关闭策略证明。
+- **TDD 与静态门禁**：UI `14 files / 80 tests`、Storefront `15 / 102`、browser runner `11/11`、composite checker `10/10` 全绿；checker 对精确出口、RSC 图、依赖/CSS 边界、八个 locale route、物理方向/裁切规则与持久证据做 fail-closed 校验。浏览器证据以 `p2-04-render-inputs-v1` 内容指纹 `beac9df29fbaff97f088b13f7bf92a929f302534946597377944843def7c5c03` 绑定当前渲染输入，提交前/后 Git 状态不会误判新鲜度。
+- **完整本地门禁**：Node `24.20.0` 下 `pnpm check` exit 0；workspace 4 apps/30 packages/34 units 无环、合同/设计/primitive/interaction/composite/domain/adapter/runtime/observability 全绿，真实 PostgreSQL reliable-event 与 TLS S3-compatible 集成通过，Prettier/ESLint、typecheck `51/51`、test `51/51`、build `34/34`、adapter/artifact 全绿。`pnpm security:secrets` exit 0；切换至 npm 官方 registry 的 `pnpm audit --audit-level high` 返回 `No known vulnerabilities found`；React server 条件下精确六导出可加载。
+- **独立终审**：首轮终审先后拦截 CartLine 小计/双媒体尺寸、伪本地化漏项、图片失败与证据假绿、Hero 状态位移及断点采样空档；均补 RED/浏览器复现与 fail-closed 门禁后，最终结论 `ACCEPT`，当前无 P1/P2。
+- **范围与剩余风险**：本任务完成的是可复用产品组件代码和本地生产构建证据；没有新增公开业务页面、真实购物车/订单/API/数据库、部署、AWS/Akamai apply、staging/production、正式品牌/肖像批准或真实移动设备性能结论。三段标志性动效、真实设备录屏/性能与 motion 人工批准进入 P2-05/P2-06。
+
+### DONE 证据（2026-09-04）
+
+- **源码产物**：六个类型化组合组件、交互 CartLine 客户端入口、token-only 组合样式、八 locale 内部展示页、完整状态/图片失败/隐私 fixture 与三张虚构内部图片均由仓库源码拥有；未引入业务 SaaS、运行时远程素材或新增第三方依赖。
+- **可重复证据**：`output/playwright/p2-04/` 保存 `browser-results.json`、README、18 张带 SHA-256 的 PNG 与 10 份 axe 原始结果；`mise exec node@24.20.0 -- corepack pnpm verify:ui-composites:browser` 和 `check:ui-composites` 均 exit 0，当前内容指纹与持久证据一致。
+- **关键回归门**：16 个场景覆盖六基准视口、320px `en-XA`/葡语、767/1023 前一像素、390/1440 RTL/reduced-motion、键盘/触摸/hover/全状态/真实 decode failure/原生 200% zoom；Hero loading→ready 与 ready→failure 在根、锚点和文档高度上均无位移。
+- **质量与安全**：UI 80/80、Storefront 102/102、runner 11/11、checker 10/10、完整 `pnpm check`、secret scan、npm 官方源 high audit、精确 React server 导出与 `git diff --check` 全绿；独立实现终审 `ACCEPT`，无剩余 P1/P2。
+- **结论边界**：P2-04 标记 `DONE` 并只解锁 P2-05；本地证据不冒充 cloud/staging/production、真实设备性能、正式品牌审批或发布证据。
+
+### P2-04 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | 六个组合、media frame、runtime error leaf、CartLine demo、Hero transition/failure demo、copy 与 checker/runner 各自职责单一 |
+| 2 | PASS | 展示组件只做 props→语义 DOM；金额派生、媒体失败、状态切换、证据采集/验证均拆为独立小函数或边界 |
+| 3 | PASS | Route/Browser → Storefront fixture → UI composite → primitive/contracts 单向；无 UI→app、domain→adapter 或 provider 反向依赖 |
+| 4 | PASS | `check-workspace` 验证 4 apps/30 packages/34 units 且 0 dependency cycles；RSC/客户端图分别 fail closed |
+| 5 | PASS | 金额/locale 复用 canonical contracts；组合 props 以严格 TypeScript 判别联合定义，公开出口精确冻结 |
+| 6 | PASS | server 组合输入为可序列化 string/number/plain object；事件回调只存在显式 client 入口，不跨 RSC 传输 |
+| 7 | PASS | 无生产域名、密钥、正式品牌、偶像 ID 或 locale→market/currency/payment 特判；内部路由/素材均有显式 preview 边界 |
+| 8 | PASS | 未新增依赖；React/CVA/Base UI/axe/Playwright 均沿用现有显式 manifest/lockfile，官方 high audit 无已知漏洞 |
+| 9 | PASS | server composite、client interaction、媒体状态叶子、Storefront adapter 与证据 runner 可分别替换，不触及 commerce/domain/provider |
+| 10 | PASS | focused 80+102+11+10 tests、16 场景浏览器、完整 PG/S3/format/lint/typecheck/test/build、secret/audit 与独立终审全部通过 |

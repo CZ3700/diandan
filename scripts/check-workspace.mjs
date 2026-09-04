@@ -79,6 +79,10 @@ const requiredRootFiles = [
   "scripts/check-contracts.mjs",
   "scripts/check-design-foundations.mjs",
   "scripts/check-design-foundations.test.mjs",
+  "scripts/check-ui-composites.mjs",
+  "scripts/check-ui-composites.test.mjs",
+  "scripts/verify-ui-composites-browser.mjs",
+  "scripts/verify-ui-composites-browser.test.mjs",
   "scripts/generate-contract-artifacts.mjs",
   "scripts/scan-secrets.mjs",
   "packages/design-tokens/THIRD_PARTY_NOTICES.md",
@@ -95,6 +99,7 @@ const requiredRootScripts = [
   "check:ci",
   "check:contracts",
   "check:design-foundations",
+  "check:ui-composites",
   "contracts:generate",
   "format:check",
   "lint",
@@ -103,6 +108,7 @@ const requiredRootScripts = [
   "test:postgres",
   "test:s3",
   "typecheck",
+  "verify:ui-composites:browser",
 ];
 
 const requiredUnitFiles = [

@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "sideEffects": [
+    "./styles/composites.css",
     "./styles/interactions.css",
     "./styles/primitives.css"
   ],
@@ -16,6 +17,15 @@
       "types": "./dist/client.d.ts",
       "import": "./dist/client.js"
     },
+    "./composites": {
+      "types": "./dist/composites.d.ts",
+      "import": "./dist/composites.js"
+    },
+    "./composites-client": {
+      "types": "./dist/composites-client.d.ts",
+      "import": "./dist/composites-client.js"
+    },
+    "./composites.css": "./styles/composites.css",
     "./interactions": {
       "types": "./dist/interactions.d.ts",
       "import": "./dist/interactions.js"

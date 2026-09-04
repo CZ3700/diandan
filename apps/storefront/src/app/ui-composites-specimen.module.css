@@ -1,0 +1,217 @@
+.specimen {
+  min-inline-size: var(--layout-min-width);
+  min-block-size: 100svh;
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-family: var(--font-ui);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-leading);
+  overflow-wrap: anywhere;
+}
+
+.masthead,
+.footer,
+.intro,
+.section,
+.imageFailure {
+  max-inline-size: var(--layout-canvas-max);
+  margin-inline: auto;
+  padding-inline: var(--layout-gutter);
+}
+
+.imageFailure [data-hero-failure-demo],
+.imageFailure [data-hero-transition-demo] {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.imageFailure [data-hero-failure-trigger="true"],
+.imageFailure [data-hero-transition-trigger="true"] {
+  justify-self: start;
+}
+
+.masthead,
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-4);
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--type-label-size);
+  font-weight: 700;
+  letter-spacing: var(--type-label-tracking);
+  text-transform: uppercase;
+}
+
+.masthead {
+  border-block-end: var(--border-width) solid var(--color-border);
+}
+
+.masthead p,
+.footer p,
+.intro p,
+.sectionHeading p {
+  margin: 0;
+}
+
+.intro {
+  display: grid;
+  padding-block: var(--space-12);
+  gap: var(--space-4);
+}
+
+.title,
+.sectionHeading h2 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.title {
+  font-size: var(--type-heading-size);
+  font-weight: 700;
+  line-height: var(--type-heading-leading);
+}
+
+.intro > p:last-child {
+  max-inline-size: var(--layout-reading-max);
+  color: var(--color-text-muted);
+}
+
+.eyebrow,
+.stateLabel {
+  color: var(--idol-accent);
+  font-size: var(--type-label-size);
+  font-weight: 700;
+  letter-spacing: var(--type-label-tracking);
+  text-transform: uppercase;
+}
+
+.heroFrame {
+  inline-size: 100%;
+  max-inline-size: var(--layout-canvas-max);
+  margin-inline: auto;
+}
+
+.section,
+.imageFailure {
+  display: grid;
+  padding-block: var(--space-16);
+  gap: var(--space-8);
+  border-block-end: var(--border-width) solid var(--color-border);
+}
+
+.sectionHeading {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.sectionHeading h2 {
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-leading);
+}
+
+.sectionHeading p {
+  max-inline-size: var(--layout-reading-max);
+  color: var(--color-text-muted);
+}
+
+.catalogGrid,
+.contextGrid,
+.commerceGrid,
+.stateGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+}
+
+.contextGrid {
+  padding-block-start: var(--space-4);
+}
+
+.commerceGrid > *,
+.stateCell {
+  min-inline-size: 0;
+}
+
+.stateGrid {
+  gap: var(--space-4);
+}
+
+.stateCell {
+  display: grid;
+  align-content: start;
+  padding: var(--space-3);
+  gap: var(--space-2);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+}
+
+.stateLabel {
+  margin: 0;
+}
+
+.stateCell [data-fs-composite="hero"] {
+  min-block-size: auto;
+}
+
+.stateCell [data-fs-composite="hero"] :global(.fs-composite-state) {
+  min-block-size: 0;
+}
+
+.stateCell :global(.fs-composite-state) {
+  min-block-size: calc(var(--space-32) + var(--space-16));
+}
+
+:global(.fs-cart-line-demo__removed) {
+  display: grid;
+  min-block-size: calc(var(--space-32) * 2);
+  place-content: center;
+  justify-items: start;
+  padding: var(--space-6);
+  gap: var(--space-4);
+  border-block-end: var(--border-width) solid var(--color-border);
+}
+
+:global(.fs-cart-line-demo__removed p) {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.footer {
+  border-block-start: var(--border-width) solid var(--color-border);
+}
+
+@media (min-width: 48rem) {
+  .intro {
+    padding-block: var(--space-16);
+  }
+
+  .catalogGrid,
+  .contextGrid,
+  .commerceGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stateGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .catalogGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .stateGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .specimen {
+    scroll-behavior: auto;
+  }
+}

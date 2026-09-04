@@ -60,6 +60,18 @@ const REVIEWED_P2_03_PACKAGE_EXPORTS = Object.freeze({
   "./interactions.css": "./styles/interactions.css",
 });
 
+const REVIEWED_P2_04_PACKAGE_EXPORTS = Object.freeze({
+  "./composites": Object.freeze({
+    types: "./dist/composites.d.ts",
+    import: "./dist/composites.js",
+  }),
+  "./composites-client": Object.freeze({
+    types: "./dist/composites-client.d.ts",
+    import: "./dist/composites-client.js",
+  }),
+  "./composites.css": "./styles/composites.css",
+});
+
 const REVIEWED_P2_03_DEPENDENCIES = Object.freeze({
   "@base-ui/react": "1.7.0",
 });
@@ -194,9 +206,10 @@ function validatePackageExports(manifest, errors) {
     }
   }
 
-  for (const [subpath, expected] of Object.entries(
-    REVIEWED_P2_03_PACKAGE_EXPORTS,
-  )) {
+  for (const [subpath, expected] of Object.entries({
+    ...REVIEWED_P2_03_PACKAGE_EXPORTS,
+    ...REVIEWED_P2_04_PACKAGE_EXPORTS,
+  })) {
     const actual = exports[subpath];
     if (actual === undefined) {
       continue;
@@ -225,7 +238,8 @@ function validatePackageExports(manifest, errors) {
   for (const subpath of Object.keys(exports)) {
     if (
       !(subpath in PACKAGE_EXPORTS) &&
-      !(subpath in REVIEWED_P2_03_PACKAGE_EXPORTS)
+      !(subpath in REVIEWED_P2_03_PACKAGE_EXPORTS) &&
+      !(subpath in REVIEWED_P2_04_PACKAGE_EXPORTS)
     ) {
       errors.push(`@fan-support/ui has unexpected public export ${subpath}`);
     }
@@ -281,16 +295,23 @@ function validateManifest(uiManifest, appManifests, errors) {
   }
 
   const sideEffects = uiManifest?.sideEffects;
-  const expectedSideEffects = uiManifest?.exports?.["./interactions.css"]
-    ? ["./styles/interactions.css", "./styles/primitives.css"]
-    : ["./styles/primitives.css"];
+  const expectedSideEffects = [
+    ...(uiManifest?.exports?.["./composites.css"]
+      ? ["./styles/composites.css"]
+      : []),
+    ...(uiManifest?.exports?.["./interactions.css"]
+      ? ["./styles/interactions.css"]
+      : []),
+    "./styles/primitives.css",
+  ];
   if (
     !Array.isArray(sideEffects) ||
     sideEffects.length !== expectedSideEffects.length ||
-    expectedSideEffects.some((value, index) => sideEffects[index] !== value)
+    new Set(sideEffects).size !== sideEffects.length ||
+    expectedSideEffects.some((value) => !sideEffects.includes(value))
   ) {
     errors.push(
-      "@fan-support/ui sideEffects must explicitly list ./styles/primitives.css and any exported interaction CSS",
+      "@fan-support/ui sideEffects must explicitly list ./styles/primitives.css and each exported UI CSS file exactly once",
     );
   }
 
