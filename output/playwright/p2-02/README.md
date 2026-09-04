@@ -1,0 +1,82 @@
+# P2-02 UI primitive browser verification
+
+Generated at 2026-09-04T04:02:04.076Z.
+
+## Provenance
+
+- Git SHA: `9f33dad482798a58e108d0c8c0495a878cf375c7`
+- dirty: false
+- Node `v24.20.0`
+- pnpm `11.25.0`
+- Next.js `16.3.4`
+- React `19.2.8`
+- Playwright `1.62.1`
+- axe `4.13.0`
+- Browser `Google Chrome 152.0.7977.82`
+
+## Re-run
+
+```sh
+mise exec node@24.20.0 -- node scripts/verify-ui-primitives-browser.mjs
+```
+
+## Runtime gates
+
+- preview: fixture 200, healthz 200
+- staging: fixture 404, healthz 200
+- production: fixture 404, healthz 200
+
+## Native Google Chrome zoom
+
+- Method: Chrome HostZoomMap default zoom preference loaded from an isolated temporary profile before navigation; no device-metrics, page-scale, or viewport emulation.
+- Zoom: 200%.
+- Baseline CSS viewport 1710×842; zoomed CSS viewport 855×421.
+- DPR 2 → 4; outer window 1710×929 → 1710×929.
+- The isolated temporary profile was removed: true.
+
+## Scenario results
+
+- `viewport-360x800-en`: PASS
+- `viewport-390x844-vi`: PASS
+- `viewport-768x1024-th`: PASS
+- `viewport-1024x768-zh-cn`: PASS
+- `viewport-1440x900-ja`: PASS
+- `viewport-1920x1080-es`: PASS
+- `stress-320x800-en-xa`: PASS
+- `stress-320x800-pt`: PASS
+- `interaction-390x844-en`: PASS
+- `hover-1440x900-en`: PASS
+- `rtl-390x844-en`: PASS
+- `reduced-motion-390x844-en`: PASS
+- `reduced-motion-1440x900-en`: PASS
+
+## axe results
+
+- `default-mobile`: critical/serious 0, full result `axe-results/default-mobile.json`
+- `default-desktop`: critical/serious 0, full result `axe-results/default-desktop.json`
+- `pseudo-320`: critical/serious 0, full result `axe-results/pseudo-320.json`
+- `error`: critical/serious 0, full result `axe-results/error.json`
+- `loading`: critical/serious 0, full result `axe-results/loading.json`
+- `rtl`: critical/serious 0, full result `axe-results/rtl.json`
+
+## Screenshot SHA-256
+
+| Evidence | SHA-256 |
+|:--|:--|
+| `viewports/360x800-en.png` | `ed19d750390deb86103f8423346581dafdbe7622b5006ee407085e61b96dfe6a` |
+| `viewports/390x844-vi.png` | `910d20658382f0713c325d5e46c3bb9108f65f5ea9e6ec6211af65cc2c73636a` |
+| `viewports/768x1024-th.png` | `3db8fe25feae30c687b59f2a85f1e79a83d28598b137b9157932271b7ede5bef` |
+| `viewports/1024x768-zh-CN.png` | `454fa35f7407f561eda42f39fbdc600976d09d35a9108b8c2c65e074fd0108d1` |
+| `viewports/1440x900-ja.png` | `6048e37c8aad79042c30082d1d12b24b14bebf2e4021feee19487a6f4ce5bae4` |
+| `viewports/1920x1080-es.png` | `bcb3f1e6a9a64f57f4a7209684fc637909ecf624d8903c3e053e6b80533710f4` |
+| `stress/320x800-en-XA.png` | `5a50cb9189bb1f89ebf533de706049edc22873021f2b5261744bfa8121adae80` |
+| `stress/320x800-pt-long.png` | `bdd22600addb08ce27dbee54127f8118816aceb5b960e57ce4e653da7ddeab5a` |
+| `interactions/390x844-en-keyboard.png` | `7cfdd4a9a39afd77e777de7008ef92b2cacde4a03e9e160c10d0bbb28bc90b1e` |
+| `interactions/1440x900-en-hover.png` | `300c65c3b3b7b2153466c89cea820be0624c86c9a75375368b2d79e9959b3c8f` |
+| `rtl/390x844-en-rtl.png` | `62171d6a2699ee4ad342a85bcb1e56ca09b81bbc46a6814808c97faa3f3966a6` |
+| `reduced-motion/390x844-en-reduce.png` | `13f75d4b53f2c70a32b9965fd9c58359d7704b4261850e1c8c0a8b41c0336405` |
+| `reduced-motion/1440x900-en-reduce.png` | `fd9d86091e9f3d08fc46ed4a361073aa0333864a2bb60fe9150f1c6196edf2aa` |
+| `zoom/google-chrome-baseline-pt.png` | `4da4d189fc1c04c2d0588c9e8b7a607587b9995b9877ad3dff74040cf7eeb918` |
+| `zoom/google-chrome-200-percent-pt.png` | `8ee038c737ed3c2e7c0ce88dafdb2cd9cd302e7b6a5fec62b2ce1faeb23e4b68` |
+
+This is local production-build evidence under the preview gate. It is not staging, production deployment, formal brand approval, or real-device performance evidence.
