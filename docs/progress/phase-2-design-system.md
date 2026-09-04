@@ -15,7 +15,7 @@
 | P2-01 | DONE | Codex `/root` | P0-04 | Git `f578208`、PR #10/run `33821542072`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
 | P2-02 | DONE | Codex `/root` | P2-01 | Git `9f33dad` + evidence `d40a79b`、PR #11/run `33835758064`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
 | P2-03 | DONE | Codex `/root` | P2-02 | 实现 `0f86e6c` + evidence `ef6e16a` + CI 稳定化 `f6e19c9`；[PR #12](https://github.com/CZ3700/diandan/pull/12)/run `33874955057`、本地、浏览器、fresh clone 与两路独立终审全绿 |
-| P2-04 | READY | — | P2-02 | 依赖已满足且 Lane B 已由 P2-03 释放，可由下一 executor 领取 |
+| P2-04 | IN_PROGRESS | Codex `/root` | P2-02 | `2026-09-04T21:16:55+08:00` 领取；组合组件、内部展示页与多语言/全状态浏览器证据 |
 | P2-05 | PENDING | — | P2-03、P2-04 | 三段标志性动效 |
 | P2-06 | PENDING | — | P2-04、P2-05 | 人工品牌样板批准 |
 
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01、P2-02 与 P2-03 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-03 已释放 Lane B，P2-04 现为唯一 `READY` 任务。Phase 2 的 P2-04/P2-05/P2-06 及完整退出门禁尚未取得，Phase 3 继续锁定。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01、P2-02 与 P2-03 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-04 已领取为唯一 Lane B executor。Phase 2 的 P2-04/P2-05/P2-06 及完整退出门禁尚未取得，Phase 3 继续锁定。
 
 ## P2-01 执行卡
 
@@ -186,3 +186,21 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 | 8 | PASS | Base UI/axe/Playwright/React 等均显式锁入 manifest/lockfile，offline frozen install、allowlist 与官方 high audit 通过 |
 | 9 | PASS | source-owned typed UI 与 Storefront adapter 边界允许替换 headless/render/route adapter，不触及 commerce/domain/provider 层 |
 | 10 | PASS | focused、本地 0-cache、真实 PG/S3、13 场景/8 axe/15 图片/原生 zoom、fresh clone、secret/audit、两路独立终审与 PR #12 根因修复 head `f6e19c9` Quality/Security 全部通过 |
+
+## P2-04 执行卡
+
+**本次执行登记**：
+
+- Owner：Codex `/root`
+- 开始：`2026-09-04T21:16:55+08:00`（`2026-09-04T13:16:55Z`）
+- 输入：P2-01 已冻结的 token/字体/网格/媒体策略，P2-02 已验证的 Button/Link/Icon/Media/Price/Status/Quantity 原语与 server/client/CSS 边界，以及 P1 已冻结的 locale、金额、内容投影和订单状态合同。
+- 精确输出：在 `packages/ui` 实现可替换、类型化、默认 server-compatible 的 Hero、IdolPortrait、GiftTile、IdolContext、CartLine 和 OrderTimeline 组合组件；在 Storefront 既有 dev/test/preview-only、noindex 树下建立七公开 locale + `en-XA` 的组件展示页，完整呈现 loading/empty/error/图片失败/可用与不可用状态。
+- 视觉命题：人物摄影和礼物媒体先行的编辑式画册，用大比例裁切、安静留白、精确字阶与单一金色焦点建立精品感；只在礼物、人物和购物车行这些真实交互对象上使用容器，不做通用卡片墙。
+- 内容计划：展示页以 Hero 建立人物存在感，以 IdolPortrait/GiftTile/IdolContext 证明选择与归属，以 CartLine/OrderTimeline 证明交易上下文与履约可扫读性；文案覆盖 CJK、Thai、Vietnamese、最长 Spanish/Portuguese 与 pseudo-locale，只使用虚构、可再分发的内部素材。
+- 交互命题：焦点和 hover 只使用已冻结的微交互来表达可操作性，Quantity 和操作按钮保持键盘/触摸等价；组合组件不自带业务状态机或连续动画，主海报、偶像切换和加购/成功动效保留给 P2-05。
+- 明确不做：不新增公开 `/:locale` 业务页面、真实购物车/订单业务状态、API/数据库/migration、内容发布、正式品牌/Logo/肖像、P2-05 标志性动效、P2-06 人工品牌冻结，也不将部署、云资源或运维验收作为当前产品代码门禁。
+- 合同与架构计划：组合组件只接收可序列化展示值和显式回调，复用 canonical `SupportedLocale`、branded minor amount 与现有原语；不读 Next.js、数据库、provider 或全局市场状态，不从 locale 推导 market/currency/payment。组件状态使用显式判别联合或穷尽映射，新增入口不污染已冻结的 server-compatible root 与 client 入口。
+- TDD 计划：先写失败测试锁定六个组件的可访问语义、精确导出、媒体比例/fallback、偶像归属、金额与数量、时间线当前/完成状态、loading/empty/error 和多脚本断行；每组确认 RED 后做最小实现，再收敛重复。
+- 浏览器与质量计划：扩展现有确定性 production-build runner，覆盖 360×800、390×844、768×1024、1024×768、1440×900、1920×1080、320 CSS px、原生 200% zoom、键盘、touch/hover、RTL 结构、reduced-motion、axe critical/serious、横向溢出/裁切、图片失败与六组件全状态；证据写入 `output/playwright/p2-04/`。随后运行受影响 tests、format/lint/typecheck/build、全仓 0-cache check、secret/high audit、fresh clean-clone、独立复核与真实 PR Quality/Security。
+- 风险映射：`R-07` 以稳定布局、合成友好微交互与 reduced-motion 控制；`R-08` 以结构化组件、固定媒体比例、信息性 alt 与图片错误降级控制；`R-17` 以 canonical locale、`Intl` 金额/文本和多脚本/pseudo 验收控制。
+- 并发/所有权：P2-04 是唯一 Lane B executor；Codex `/root` 对 `packages/ui` 组合 API/样式/测试、Storefront 内部展示页、静态/browser gate 及必要 manifest 负最终责任。子代理只做只读模式研究、测试矩阵或最终独立复核，不形成第二 Lane executor。
