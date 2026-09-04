@@ -450,17 +450,20 @@ test("allows only the reviewed font assets in the design-token package", async (
   );
 });
 
-test("allows React and CVA only in the reviewed ui package", async (context) => {
+test("allows React, CVA and Base UI only in the reviewed ui package", async (context) => {
   const validateAdapterBoundaries = await loadValidator();
   const root = await fixture();
   context.after(() => rm(root, { recursive: true, force: true }));
   await writeInnerPackageFixture(
     root,
     "ui",
-    'import { cva } from "class-variance-authority";\nimport type { ReactNode } from "react";\nexport const className = cva("control");\nexport type Content = ReactNode;\n',
+    'import { Dialog } from "@base-ui/react/dialog";\nimport { cva } from "class-variance-authority";\nimport type { ReactNode } from "react";\nexport const className = cva("control");\nexport const DialogRoot = Dialog.Root;\nexport type Content = ReactNode;\n',
   );
   await writePackageManifest(root, "ui", "@fan-support/ui", {
-    dependencies: { "class-variance-authority": "0.7.1" },
+    dependencies: {
+      "@base-ui/react": "1.7.0",
+      "class-variance-authority": "0.7.1",
+    },
     devDependencies: {
       "@types/react": "19.2.18",
       "@types/react-dom": "19.2.5",
@@ -478,6 +481,7 @@ test("allows React and CVA only in the reviewed ui package", async (context) => 
   assert.ok(
     !errors.some((error) =>
       [
+        "@base-ui/react",
         "@types/react",
         "@types/react-dom",
         "class-variance-authority",
@@ -495,6 +499,7 @@ test("keeps the ui portability exception package-scoped and provider-free", asyn
   context.after(() => rm(root, { recursive: true, force: true }));
   await writePackageManifest(root, "domain", "@fan-support/domain", {
     dependencies: {
+      "@base-ui/react": "1.7.0",
       "class-variance-authority": "0.7.1",
       react: "19.2.8",
     },
@@ -502,7 +507,7 @@ test("keeps the ui portability exception package-scoped and provider-free", asyn
   await write(
     root,
     "packages/domain/src/ui-leak.ts",
-    'import { cva } from "class-variance-authority";\nimport { createElement } from "react";\nexport const leak = createElement("div", { className: cva("leak")() });\n',
+    'import { Dialog } from "@base-ui/react/dialog";\nimport { cva } from "class-variance-authority";\nimport { createElement } from "react";\nexport const leak = createElement(Dialog.Root, { className: cva("leak")() });\n',
   );
   await writeInnerPackageFixture(
     root,
@@ -518,7 +523,11 @@ test("keeps the ui portability exception package-scoped and provider-free", asyn
   });
 
   const errors = await validateAdapterBoundaries(root);
-  for (const dependency of ["class-variance-authority", "react"]) {
+  for (const dependency of [
+    "@base-ui/react",
+    "class-variance-authority",
+    "react",
+  ]) {
     assert.ok(
       errors.some(
         (error) =>

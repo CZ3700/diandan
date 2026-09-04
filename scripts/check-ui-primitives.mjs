@@ -52,6 +52,18 @@ const PACKAGE_EXPORTS = Object.freeze({
   "./primitives.css": "./styles/primitives.css",
 });
 
+const REVIEWED_P2_03_PACKAGE_EXPORTS = Object.freeze({
+  "./interactions": Object.freeze({
+    types: "./dist/interactions.d.ts",
+    import: "./dist/interactions.js",
+  }),
+  "./interactions.css": "./styles/interactions.css",
+});
+
+const REVIEWED_P2_03_DEPENDENCIES = Object.freeze({
+  "@base-ui/react": "1.7.0",
+});
+
 const DEPENDENCY_ALLOWLIST = Object.freeze({
   dependencies: Object.freeze({
     "@fan-support/contracts": "workspace:*",
@@ -182,8 +194,39 @@ function validatePackageExports(manifest, errors) {
     }
   }
 
+  for (const [subpath, expected] of Object.entries(
+    REVIEWED_P2_03_PACKAGE_EXPORTS,
+  )) {
+    const actual = exports[subpath];
+    if (actual === undefined) {
+      continue;
+    }
+    if (typeof expected === "string") {
+      if (actual !== expected) {
+        errors.push(
+          `@fan-support/ui must declare exact package export ${subpath} -> ${expected}`,
+        );
+      }
+      continue;
+    }
+    if (
+      actual === null ||
+      typeof actual !== "object" ||
+      Array.isArray(actual) ||
+      !sameKeys(actual, expected) ||
+      Object.entries(expected).some(([key, value]) => actual[key] !== value)
+    ) {
+      errors.push(
+        `@fan-support/ui must declare exact package export ${subpath}`,
+      );
+    }
+  }
+
   for (const subpath of Object.keys(exports)) {
-    if (!(subpath in PACKAGE_EXPORTS)) {
+    if (
+      !(subpath in PACKAGE_EXPORTS) &&
+      !(subpath in REVIEWED_P2_03_PACKAGE_EXPORTS)
+    ) {
       errors.push(`@fan-support/ui has unexpected public export ${subpath}`);
     }
   }
@@ -229,17 +272,25 @@ function validateDependencySection(manifest, section, expected, errors) {
 function validateManifest(uiManifest, appManifests, errors) {
   validatePackageExports(uiManifest, errors);
   for (const [section, expected] of Object.entries(DEPENDENCY_ALLOWLIST)) {
-    validateDependencySection(uiManifest, section, expected, errors);
+    const reviewedExpected =
+      section === "dependencies" &&
+      uiManifest?.dependencies?.["@base-ui/react"] !== undefined
+        ? { ...expected, ...REVIEWED_P2_03_DEPENDENCIES }
+        : expected;
+    validateDependencySection(uiManifest, section, reviewedExpected, errors);
   }
 
   const sideEffects = uiManifest?.sideEffects;
+  const expectedSideEffects = uiManifest?.exports?.["./interactions.css"]
+    ? ["./styles/interactions.css", "./styles/primitives.css"]
+    : ["./styles/primitives.css"];
   if (
     !Array.isArray(sideEffects) ||
-    sideEffects.length !== 1 ||
-    sideEffects[0] !== "./styles/primitives.css"
+    sideEffects.length !== expectedSideEffects.length ||
+    expectedSideEffects.some((value, index) => sideEffects[index] !== value)
   ) {
     errors.push(
-      "@fan-support/ui sideEffects must explicitly list ./styles/primitives.css",
+      "@fan-support/ui sideEffects must explicitly list ./styles/primitives.css and any exported interaction CSS",
     );
   }
 
@@ -584,6 +635,9 @@ async function validateProductionDependencies(workspaceRoot, errors) {
       Object.keys(section),
     ),
   );
+  for (const dependency of Object.keys(REVIEWED_P2_03_DEPENDENCIES)) {
+    allowed.add(dependency);
+  }
   for (const absolutePath of await listUiProductionSources(workspaceRoot)) {
     const relativePath = path.relative(workspaceRoot, absolutePath);
     const source = await readFile(absolutePath, "utf8");

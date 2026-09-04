@@ -62,6 +62,7 @@ const reviewedPortableDependenciesByPackage = new Map([
   [
     "packages/ui",
     new Set([
+      "@base-ui/react",
       "@types/react",
       "@types/react-dom",
       "class-variance-authority",

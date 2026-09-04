@@ -14,8 +14,8 @@
 |:--|:--|:--|:--|:--|
 | P2-01 | DONE | Codex `/root` | P0-04 | Git `f578208`、PR #10/run `33821542072`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
 | P2-02 | DONE | Codex `/root` | P2-01 | Git `9f33dad` + evidence `d40a79b`、PR #11/run `33835758064`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
-| P2-03 | READY | — | P2-02 | 下一 Lane B 任务：Overlay/menu/toast/language-region/focus |
-| P2-04 | PENDING | — | P2-02 | 依赖已满足；与 P2-03 同属 Lane B，待前序释放后再转 READY |
+| P2-03 | DONE | Codex `/root` | P2-02 | 实现 `0f86e6c` + evidence `ef6e16a` + CI 稳定化 `f6e19c9`；[PR #12](https://github.com/CZ3700/diandan/pull/12)/run `33874955057`、本地、浏览器、fresh clone 与两路独立终审全绿 |
+| P2-04 | READY | — | P2-02 | 依赖已满足且 Lane B 已由 P2-03 释放，可由下一 executor 领取 |
 | P2-05 | PENDING | — | P2-03、P2-04 | 三段标志性动效 |
 | P2-06 | PENDING | — | P2-04、P2-05 | 人工品牌样板批准 |
 
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01 与 P2-02 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-03 是唯一 `READY` 的 Lane B 后继任务，P2-04 保持 `PENDING` 以维持单 Lane 单领取入口。Phase 2 其余任务及完整退出门禁尚未取得，Phase 3 继续锁定。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01、P2-02 与 P2-03 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-03 已释放 Lane B，P2-04 现为唯一 `READY` 任务。Phase 2 的 P2-04/P2-05/P2-06 及完整退出门禁尚未取得，Phase 3 继续锁定。
 
 ## P2-01 执行卡
 
@@ -143,3 +143,46 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 | 8 | PASS | React/CVA/Tailwind/PostCSS/axe/Playwright 均显式锁入 manifest/lockfile，UI 依赖 allowlist、offline frozen install 与 CI high audit 通过 |
 | 9 | PASS | server/client/CSS 子路径、typed props 与资源 identity 允许替换单个原语或渲染层，不要求修改 commerce/domain/provider 层 |
 | 10 | PASS | focused、本地 0-cache、真实 PG/S3、浏览器/axe/zoom、clean clone、secret/high audit、独立终验与 PR Quality/Security 全部通过 |
+
+## P2-03 执行卡
+
+**本次执行登记**：
+
+- Owner：Codex `/root`
+- 开始：`2026-09-04T17:40:07+08:00`（`2026-09-04T09:40:07Z`）
+- 输入：P2-02 已冻结的八类 UI 原语、server/client/CSS 入口、preview-only 多语言 fixture 与浏览器证据；P1-01 唯一拥有的 `SupportedLocale`、native names 和 locale/market/currency 分离合同。
+- 精确输出：在 `packages/ui` 实现可替换、类型化的 Dialog/Drawer、Menu 与 Toast/live-region 原语；实现互不耦合的 Language 与 Region 控件；在 Storefront 外层实现仅改变展示 locale 的 URL 与 `site_locale` cookie 适配，并以内部 dev/test/preview fixture 验证焦点、滚动、宣告及上下文保持。
+- 视觉命题：延续电影感深色画册，以安静的遮罩、清晰的层级和单一金色焦点建立“临时工作面”，避免玻璃拟态堆叠或通用 SaaS 弹窗感。
+- 内容计划：内部 fixture 分为 modal/drawer、menu、toast、language、region 五个单一职责工作区；使用英语、CJK、泰语、越南语、最长西/葡语与 `en-XA` 压力文案，只证明交互原语，不伪装成导航、购物车或结账业务页。
+- 交互命题：overlay 以 `opacity + transform` 在 280–360 ms 内建立层级并在 reduced motion 下移除位移；Menu 以即时方向键/字母导航解释选择范围；Toast 只对有意义的状态变化宣告一次，关闭与超时不抢焦点。
+- 明确不做：P2-04 的 Hero/IdolPortrait/GiftTile/IdolContext/CartLine/OrderTimeline，P2-05 标志性业务动效，真实购物车抽屉，公开 `/:locale` 页面或导航，动态内容/API/数据库/迁移，真实市场/国家/币种/支付能力推导，正式品牌/Logo/肖像或生产 cookie/domain 配置。
+- 合同与架构计划：UI 层只接收可序列化的受控状态、候选项和回调；Language 只消费 canonical locale/native name，Region 只展示调用方明确传入的 region/market/currency 标签，两者绝不互推。URL 替换与 cookie 写入由 Storefront adapter 负责，UI 不导入 Next.js、config、数据库或 provider 对象；任何新增 headless 依赖必须锁版并受 adapter-boundary allowlist 约束。
+- TDD 计划：先写失败测试锁定 Dialog/Drawer 的语义、focus trap/return、ESC、outside dismissal 与背景滚动；Menu 的 roving focus、方向键/Home/End/typeahead/ESC；Toast 的 live region、去重、超时/手动关闭与不抢焦点；Language/Region 的独立状态、URL/query/hash 保持、非法 locale 拒绝和 cookie 最小属性。逐项确认 RED 后只做最小实现，再收敛重复逻辑。
+- 浏览器与质量计划：production standalone build 在 preview gate 下覆盖 390×844、1440×900、六基准视口、320 CSS px、真实 200% zoom、键盘、touch/pointer、RTL 结构、reduced-motion、axe critical/serious、焦点留存、body scroll lock、读屏宣告、route/query/hash 与模拟 cart/market/currency/amount/payment-attempt 不变；证据写入 `output/playwright/p2-03/`。最后运行受影响 tests、format/lint/typecheck/build、全仓 0-cache check、secret/high audit、fresh clean-clone、独立复核与真实 PR Quality/Security。
+- 风险映射：`R-07` 以合成友好 presence、确定性生命周期、reduced-motion 和真实浏览器交互控制；`R-17` 以 canonical locale、整路径替换测试、cookie schema、Language/Region 物理与数据分离，以及切换前后交易上下文深相等控制。
+- 并发/所有权：P2-03 是唯一 Lane B executor；Codex `/root` 对 `packages/ui` overlay/control API、Storefront locale adapter/内部 fixture、相关样式/测试及必要 manifest/lockfile 负最终责任。子代理只做只读研究、测试矩阵设计或最终独立复核，不形成第二 Lane executor。
+
+**完成验收快照（2026-09-04）**：
+
+- **实现与边界**：实现提交 `92d8215` 提供 source-owned、Base UI `1.7.0` 锁版的 Dialog/Drawer/Menu/Toast/live-region、Language/Region 控件、Storefront locale URL/cookie adapter 与八语言内部 fixture；`068ecf8` 修复 touchmove 外部拖动导致菜单关闭并继续滚动页面的问题；`0f86e6c` 将菜单共享锁、同一 token、`documentElement` marker、listener identity/顺序/cleanup、outside touch cancellation 绑定到同一 AST 生命周期，并以专项结构变异防止 dead-code、阴影绑定和异步 predicate 假绿；`f6e19c9` 将交互入口的首次重型导入移到 Vitest 收集阶段，避免冷 CI 资源竞争计入单个测试的 5 秒时限。未把交互值重新暴露到 server-compatible root/client 旧入口，也未引入业务 API、数据库或 provider 依赖。
+- **交互与 locale 证据**：Dialog/Drawer 的 forward/backward focus trap、ESC/outside close、focus return 和 scroll release；Menu 的 Arrow/Home/End/typeahead、disabled、ESC、touch scroll lock、popup 内滚动与普通 outside tap；Toast 的 live announcement、去重、hover pause/release、timeout/manual close 与不抢焦点均由真实浏览器断言。Language 只替换 canonical locale path 与 host-only `site_locale` cookie，region/market/currency、query/hash、amount/cart/payment-attempt 深相等保持；Region 只回传调用方显式值。
+- **浏览器证据**：clean source HEAD `0f86e6c16e9f44bd3c9096e2d8d02a9a3e7aa1b8` 生成 `output/playwright/p2-03/` 并由 `ef6e16a0870b5e230b796f9905649398bfce0859` 固化；13/13 场景和 15/15 SHA-256 图片通过，覆盖 360×800、390×844、768×1024、1024×768、1440×900、1920×1080、320 CSS px、CJK/Thai/Vietnamese/最长西葡语/`en-XA`、RTL、touch 与 reduced motion。原生 Google Chrome `152.0.7977.82` 的隔离 profile 证明 200% zoom：CSS viewport `1710×842 → 855×421`、DPR `2 → 4`，profile 已清理；touch 菜单页面滚动保持 `64 → 64`，关闭后 root/body overflow 与 marker 均释放。
+- **axe 人工判读**：8/8 原始 artifact 的 critical/serious **violations** 为 0；唯一 exclusion 精确为 `[data-base-ui-focus-guard]`，理由与 Base UI 上游 [#4845](https://github.com/mui/base-ui/issues/4845) 对齐，并另由 focus containment/return 断言覆盖。原始结果没有被隐藏：Menu 留有 1 个 moderate `region` violation（portal menu 不属于 landmark）及 1 个 `aria-controls` critical incomplete，但 artifact 中 trigger 的目标 ID 与实际 `role=menu` popup ID 精确存在；Dialog/Drawer/Toast 的 `aria-hidden-focus` 和 Dialog overlap contrast 均为 axe 无法自动判定的 incomplete，结合 DOM、键盘、焦点与生命周期证据由两路独立终审接受，不把 incomplete 误写成自动通过。
+- **本地与 fresh clone**：Node `24.20.0` / pnpm `11.25.0` 下当前工作树 `TURBO_FORCE=true pnpm check` 退出 0；在 CI 稳定化后额外获得 UI package `57/57`、连续 `10/10` 重复运行，全仓 0-cache typecheck `51/51`、test `51/51`、build `34/34` 通过。此前 evidence HEAD `ef6e16a0870b5e230b796f9905649398bfce0859` 在 `/tmp/p203-fresh-clone.GE4FyJ/repo` detached checkout，offline frozen install 复用 `432/432`、下载 0，0-cache 全仓 check 再次退出 0：真实 PostgreSQL 9 migrations/108 tables、可靠事件并发、TLS S3-compatible、Prettier/ESLint、adapter/artifact 均通过。`pnpm security:secrets`、专项 checker/runner `51/51`、证据 JSON 与 15/15 hashes、`git diff --check` 均通过；显式使用官方 registry 的 `pnpm audit --audit-level=high` 返回 `No known vulnerabilities found`。
+- **独立终审**：实现/对抗终审与代码收敛终审均 `ACCEPT`、P1/P2 blocker 0；审查期间发现的 dead-code token 拼接、touch cancel 乱序、不可达 listener/cleanup、非共享 Set/token/root/size 解绑、callback 短路逆序、async predicate、`Symbol`/`document` 阴影以及无关 Set 误报均先形成 RED fixture，再修至 GREEN。刻意严格的 AST 形态会让未来等价重构需要同步更新门禁，这是已接受的维护成本。
+- **真实 CI 与范围**：[PR #12](https://github.com/CZ3700/diandan/pull/12) 基于 `codex/p2-02-ui-primitives`；review head `42649cbaefbfcceb9b5656af84f603116471e368` 的 [run 33873226040](https://github.com/CZ3700/diandan/actions/runs/33873226040) 执行 Quality `5m38s` 与 Security `30s`，两项均成功。后续仅改两份进度文档的 head `849d7efc6c208f6a2621e4d3376d505f112e999e` 在 [run 33873981827](https://github.com/CZ3700/diandan/actions/runs/33873981827) 暴露首测动态导入 `5038ms` 超过 Vitest `5000ms` 默认时限；断言未失败且后续六例均通过，独立复核确认是冷 transform 与全仓并发共同触发的阈值型 flake。根因修复 head `f6e19c948e124436ec423e3607c889f7254b1c24` 的 [run 33874955057](https://github.com/CZ3700/diandan/actions/runs/33874955057) 在同样冷 CI 下 Quality `5m49s` 与 Security `21s` 均成功，未放宽 timeout 或降低并发。P2-03 因而保持 `DONE` 并释放 Lane B。preview/staging/production 只是本地 production-build 配置闭合验证：preview fixture 200、staging/production fixture 404、三者 healthz 200；不宣称真实云 staging/production、AWS apply、正式品牌批准或真实设备性能。
+
+### P2-03 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | overlay、menu、toast、selection controls、locale adapter、内部 fixture、静态 gate 与浏览器 runner 各自职责单一 |
+| 2 | PASS | overlay focus、menu lock、toast lifecycle、locale URL/cookie、measurement/evidence 校验均拆为局部函数；终审收敛后无 P1/P2 复杂度问题 |
+| 3 | PASS | Browser/Storefront adapter → UI → React/contracts/design-tokens 单向；UI 不反向依赖 Next.js、数据库或 provider |
+| 4 | PASS | 全仓 workspace 4 apps/30 packages/34 units 且无 dependency cycle；server/client 导出图和 adapter boundary 门禁全绿 |
+| 5 | PASS | 对外 props/type exports 明确；locale 复用 canonical `SupportedLocale`，region/market/currency 由调用方显式传入；本任务无 API/event/queue schema |
+| 6 | PASS | 跨包 props/options/cookie projection 可序列化；回调、DOM event/ref 仅停留在 client UI/Storefront adapter 内部 |
+| 7 | PASS | fixture origin/port/environment 临时注入；cookie host-only；无生产域名、secret、正式品牌值或 locale→market/currency/payment 特判 |
+| 8 | PASS | Base UI/axe/Playwright/React 等均显式锁入 manifest/lockfile，offline frozen install、allowlist 与官方 high audit 通过 |
+| 9 | PASS | source-owned typed UI 与 Storefront adapter 边界允许替换 headless/render/route adapter，不触及 commerce/domain/provider 层 |
+| 10 | PASS | focused、本地 0-cache、真实 PG/S3、13 场景/8 axe/15 图片/原生 zoom、fresh clone、secret/audit、两路独立终审与 PR #12 根因修复 head `f6e19c9` Quality/Security 全部通过 |

@@ -1,0 +1,2771 @@
+{
+  "axeExclusions": [
+    {
+      "rationale": "Base UI focus guards are aria-hidden sentinels that immediately redirect focus; component focus containment is verified separately",
+      "selector": "[data-base-ui-focus-guard]",
+      "upstream": "https://github.com/mui/base-ui/issues/4845"
+    }
+  ],
+  "axeSummaries": [
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 54,
+        "incomplete": 0,
+        "passes": 35,
+        "violations": 0
+      },
+      "artifact": "axe-results/base-mobile.json",
+      "id": "base-mobile",
+      "scenarioId": "viewport-390x844-vi",
+      "state": "default"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 54,
+        "incomplete": 0,
+        "passes": 35,
+        "violations": 0
+      },
+      "artifact": "axe-results/base-desktop.json",
+      "id": "base-desktop",
+      "scenarioId": "viewport-1440x900-ja",
+      "state": "default"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 54,
+        "incomplete": 0,
+        "passes": 35,
+        "violations": 0
+      },
+      "artifact": "axe-results/pseudo-320.json",
+      "id": "pseudo-320",
+      "scenarioId": "stress-320x800-en-xa",
+      "state": "default"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 55,
+        "incomplete": 2,
+        "passes": 34,
+        "violations": 0
+      },
+      "artifact": "axe-results/dialog.json",
+      "id": "dialog",
+      "scenarioId": "interaction-390x844-en-to-ja",
+      "state": "dialog"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 55,
+        "incomplete": 1,
+        "passes": 34,
+        "violations": 0
+      },
+      "artifact": "axe-results/drawer.json",
+      "id": "drawer",
+      "scenarioId": "interaction-390x844-en-to-ja",
+      "state": "drawer"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 51,
+        "incomplete": 1,
+        "passes": 38,
+        "violations": 1
+      },
+      "artifact": "axe-results/menu.json",
+      "id": "menu",
+      "scenarioId": "interaction-390x844-en-to-ja",
+      "state": "menu"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 1,
+        "passes": 36,
+        "violations": 0
+      },
+      "artifact": "axe-results/toast.json",
+      "id": "toast",
+      "scenarioId": "interaction-390x844-en-to-ja",
+      "state": "toast"
+    },
+    {
+      "blocking": [],
+      "counts": {
+        "inapplicable": 54,
+        "incomplete": 0,
+        "passes": 35,
+        "violations": 0
+      },
+      "artifact": "axe-results/reduced-motion.json",
+      "id": "reduced-motion",
+      "scenarioId": "reduced-motion-390x844-en",
+      "state": "default"
+    }
+  ],
+  "generatedAt": "2026-09-04T12:23:38.303Z",
+  "git": {
+    "dirty": false,
+    "sha": "0f86e6c16e9f44bd3c9096e2d8d02a9a3e7aa1b8",
+    "status": [],
+    "rechecked": true
+  },
+  "launch": {
+    "browserChannel": "chrome",
+    "browserEngine": "chromium",
+    "headless": true,
+    "nativeZoomHeaded": true,
+    "nativeZoomProfile": "isolated temporary profile",
+    "productionBuild": true,
+    "server": "Next.js standalone"
+  },
+  "matrix": [
+    {
+      "axe": [],
+      "group": "baseline",
+      "id": "viewport-360x800-en",
+      "locale": "en",
+      "screenshot": "viewports/360x800-en.png",
+      "viewport": {
+        "height": 800,
+        "width": 360
+      },
+      "checks": []
+    },
+    {
+      "axe": [
+        {
+          "id": "base-mobile",
+          "state": "default"
+        }
+      ],
+      "group": "baseline",
+      "id": "viewport-390x844-vi",
+      "locale": "vi",
+      "screenshot": "viewports/390x844-vi-drawer.png",
+      "screenshotState": "drawer",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "checks": []
+    },
+    {
+      "axe": [],
+      "group": "baseline",
+      "id": "viewport-768x1024-th",
+      "locale": "th",
+      "screenshot": "viewports/768x1024-th-menu.png",
+      "screenshotState": "menu",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "checks": []
+    },
+    {
+      "axe": [],
+      "group": "baseline",
+      "id": "viewport-1024x768-zh-cn",
+      "locale": "zh-CN",
+      "screenshot": "viewports/1024x768-zh-CN.png",
+      "viewport": {
+        "height": 768,
+        "width": 1024
+      },
+      "checks": []
+    },
+    {
+      "axe": [
+        {
+          "id": "base-desktop",
+          "state": "default"
+        }
+      ],
+      "checks": [
+        "drawer-outside"
+      ],
+      "group": "baseline",
+      "id": "viewport-1440x900-ja",
+      "locale": "ja",
+      "screenshot": "viewports/1440x900-ja-dialog.png",
+      "screenshotState": "dialog",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    {
+      "axe": [],
+      "group": "baseline",
+      "id": "viewport-1920x1080-es",
+      "locale": "es",
+      "screenshot": "viewports/1920x1080-es.png",
+      "viewport": {
+        "height": 1080,
+        "width": 1920
+      },
+      "checks": []
+    },
+    {
+      "axe": [
+        {
+          "id": "pseudo-320",
+          "state": "default"
+        }
+      ],
+      "group": "stress",
+      "id": "stress-320x800-en-xa",
+      "locale": "en-XA",
+      "screenshot": "stress/320x800-en-XA-menu.png",
+      "screenshotState": "menu",
+      "viewport": {
+        "height": 800,
+        "width": 320
+      },
+      "checks": []
+    },
+    {
+      "axe": [],
+      "group": "stress",
+      "id": "stress-320x800-pt",
+      "locale": "pt",
+      "screenshot": "stress/320x800-pt-long.png",
+      "viewport": {
+        "height": 800,
+        "width": 320
+      },
+      "checks": []
+    },
+    {
+      "axe": [
+        {
+          "id": "dialog",
+          "state": "dialog"
+        },
+        {
+          "id": "drawer",
+          "state": "drawer"
+        },
+        {
+          "id": "menu",
+          "state": "menu"
+        },
+        {
+          "id": "toast",
+          "state": "toast"
+        }
+      ],
+      "checks": [
+        "dialog",
+        "drawer",
+        "menu",
+        "toast",
+        "locale-region"
+      ],
+      "group": "interaction",
+      "id": "interaction-390x844-en-to-ja",
+      "locale": "en",
+      "screenshot": "interactions/390x844-ja-after-isolation.png",
+      "screenshotState": "toast",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "axe": [],
+      "checks": [
+        "touch-menu"
+      ],
+      "group": "touch",
+      "hasTouch": true,
+      "id": "touch-menu-390x844-en",
+      "isMobile": true,
+      "locale": "en",
+      "screenshot": "interactions/390x844-en-touch-menu.png",
+      "screenshotState": "touch-menu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "axe": [],
+      "checks": [
+        "rtl"
+      ],
+      "direction": "rtl",
+      "group": "direction",
+      "id": "rtl-1440x900-en",
+      "locale": "en",
+      "screenshot": "rtl/1440x900-en-menu.png",
+      "screenshotState": "menu",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    {
+      "axe": [
+        {
+          "id": "reduced-motion",
+          "state": "default"
+        }
+      ],
+      "group": "reduced-motion",
+      "id": "reduced-motion-390x844-en",
+      "locale": "en",
+      "reducedMotion": true,
+      "screenshot": "reduced-motion/390x844-en-dialog.png",
+      "screenshotState": "dialog",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "checks": []
+    },
+    {
+      "axe": [],
+      "group": "reduced-motion",
+      "id": "reduced-motion-1440x900-pt",
+      "locale": "pt",
+      "reducedMotion": true,
+      "screenshot": "reduced-motion/1440x900-pt-drawer.png",
+      "screenshotState": "drawer",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "checks": []
+    }
+  ],
+  "nativeZoom": {
+    "baseline": {
+      "devicePixelRatio": 2,
+      "innerHeight": 842,
+      "innerWidth": 1710,
+      "outerHeight": 929,
+      "outerWidth": 1710,
+      "screen": {
+        "availHeight": 1001,
+        "availWidth": 1710,
+        "height": 1107,
+        "width": 1710
+      },
+      "visualViewport": {
+        "height": 842,
+        "offsetLeft": 0,
+        "offsetTop": 0,
+        "scale": 1,
+        "width": 1710
+      },
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/pt/interactions",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 54.796875,
+            "label": "Abrir a caixa de diálogo",
+            "width": 1440
+          },
+          {
+            "height": 54.796875,
+            "label": "Abrir o painel lateral",
+            "width": 1440
+          },
+          {
+            "height": 69.9921875,
+            "label": "Densidade da visualizaçãoConfortável",
+            "width": 1440
+          },
+          {
+            "height": 54.796875,
+            "label": "Criar uma notificação",
+            "width": 221.5859375
+          },
+          {
+            "height": 54.796875,
+            "label": "Create four unique notifications",
+            "width": 313.8125
+          },
+          {
+            "height": 69.9921875,
+            "label": "IdiomaPortuguês",
+            "width": 320
+          },
+          {
+            "height": 93.1875,
+            "label": "RegiãoUnited StatesMarket: Americas · Currency: USD",
+            "width": 320
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1710,
+          "clientWidth": 1710,
+          "scrollWidth": 1710
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [],
+        "viewportHeight": 842,
+        "viewportWidth": 1710
+      },
+      "screenshot": "zoom/google-chrome-baseline-pt.png",
+      "screenshotEvidence": {
+        "bytes": 160860,
+        "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+        "localeMarker": {
+          "changedFromHidden": true,
+          "height": 39,
+          "text": "pt",
+          "width": 36,
+          "x": 3114,
+          "y": 32
+        },
+        "path": "zoom/google-chrome-baseline-pt.png",
+        "pixelHeight": 1684,
+        "pixelWidth": 3420,
+        "sha256": "679907dd714248587c0c0ed5bb93e88b2f6bf2197b59eb5a4703627589cd29ff"
+      }
+    },
+    "browser": "Google Chrome 152.0.7977.82",
+    "detectedPercent": 200,
+    "method": "Chrome HostZoomMap default zoom preference loaded from an isolated temporary profile; no device-metrics, page-scale, or viewport emulation",
+    "preference": {
+      "baselineZoomLevel": 0,
+      "zoomLevel": 3.8017840169239308
+    },
+    "profileRemoved": true,
+    "screenshots": [
+      {
+        "bytes": 160860,
+        "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+        "localeMarker": {
+          "changedFromHidden": true,
+          "height": 39,
+          "text": "pt",
+          "width": 36,
+          "x": 3114,
+          "y": 32
+        },
+        "path": "zoom/google-chrome-baseline-pt.png",
+        "pixelHeight": 1684,
+        "pixelWidth": 3420,
+        "sha256": "679907dd714248587c0c0ed5bb93e88b2f6bf2197b59eb5a4703627589cd29ff"
+      },
+      {
+        "bytes": 242235,
+        "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+        "localeMarker": {
+          "changedFromHidden": true,
+          "height": 77,
+          "text": "pt",
+          "width": 72,
+          "x": 3252,
+          "y": 64
+        },
+        "path": "zoom/google-chrome-200-percent-pt.png",
+        "pixelHeight": 1684,
+        "pixelWidth": 3420,
+        "sha256": "604555b369c475e18b2b93ce75462d1394e58354cb75c8e8e8bc7caf48becabf"
+      }
+    ],
+    "zoomPercent": 200,
+    "zoomed": {
+      "devicePixelRatio": 4,
+      "innerHeight": 421,
+      "innerWidth": 855,
+      "outerHeight": 929,
+      "outerWidth": 1710,
+      "screen": {
+        "availHeight": 1001,
+        "availWidth": 1710,
+        "height": 1107,
+        "width": 1710
+      },
+      "visualViewport": {
+        "height": 421,
+        "offsetLeft": 0,
+        "offsetTop": 0,
+        "scale": 1,
+        "width": 855
+      },
+      "checks": {
+        "dialog": {
+          "backwardTrap": true,
+          "closeMethod": "outside",
+          "escapeRestoredFocus": true,
+          "focusableCount": 3,
+          "forwardTrap": true,
+          "passed": true,
+          "scrollLock": {
+            "bodyOverflow": "hidden",
+            "documentOverflow": "visible",
+            "maxScroll": 1390,
+            "scrollY": 325.5,
+            "afterScrollY": 325.5,
+            "delta": 600,
+            "styleLocked": true
+          },
+          "scrollReleasedAfterEscape": {
+            "attributeRemoved": true,
+            "bodyOverflow": "visible",
+            "documentOverflow": "visible",
+            "released": true
+          },
+          "scrollReleasedAfterSecondaryClose": {
+            "attributeRemoved": true,
+            "bodyOverflow": "visible",
+            "documentOverflow": "visible",
+            "released": true
+          },
+          "secondaryCloseRestoredFocus": true
+        },
+        "menu": {
+          "arrowNavigation": [
+            "Confortável",
+            "Compacta",
+            "Indisponível",
+            "Confortável"
+          ],
+          "disabledActivationBlocked": true,
+          "disabledAria": true,
+          "disabledFocusable": true,
+          "escapeRestoredFocus": true,
+          "homeEnd": true,
+          "passed": true,
+          "scrollLock": {
+            "bodyOverflow": "hidden",
+            "documentOverflow": "hidden",
+            "maxScroll": 1390,
+            "scrollY": 784,
+            "afterScrollY": 784,
+            "delta": 600,
+            "styleLocked": true
+          },
+          "scrollReleased": {
+            "attributeRemoved": true,
+            "bodyOverflow": "visible",
+            "documentOverflow": "visible",
+            "released": true
+          },
+          "typeahead": "Compacta"
+        },
+        "languageMenu": {
+          "itemCount": 7,
+          "metrics": {
+            "clippedText": [],
+            "controls": [
+              {
+                "height": 53.3125,
+                "label": "Abrir a caixa de diálogo",
+                "width": 807
+              },
+              {
+                "height": 53.3125,
+                "label": "Abrir o painel lateral",
+                "width": 807
+              },
+              {
+                "height": 68.51171875,
+                "label": "Densidade da visualizaçãoConfortável",
+                "width": 807
+              },
+              {
+                "height": 53.3125,
+                "label": "Criar uma notificação",
+                "width": 211.89453125
+              },
+              {
+                "height": 53.3125,
+                "label": "Create four unique notifications",
+                "width": 299.35546875
+              },
+              {
+                "height": 68.51171875,
+                "label": "IdiomaPortuguês",
+                "width": 320
+              },
+              {
+                "height": 91.7109375,
+                "label": "RegiãoUnited StatesMarket: Americas · Currency: USD",
+                "width": 320
+              },
+              {
+                "height": 48,
+                "label": "English",
+                "width": 302
+              },
+              {
+                "height": 48,
+                "label": "简体中文",
+                "width": 302
+              },
+              {
+                "height": 48,
+                "label": "ไทย",
+                "width": 302
+              },
+              {
+                "height": 48,
+                "label": "Tiếng Việt",
+                "width": 302
+              },
+              {
+                "height": 48,
+                "label": "日本語",
+                "width": 302
+              },
+              {
+                "height": 48,
+                "label": "Español",
+                "width": 302
+              },
+              {
+                "height": 48,
+                "label": "Português",
+                "width": 302
+              }
+            ],
+            "document": {
+              "bodyScrollWidth": 855,
+              "clientWidth": 855,
+              "scrollWidth": 855
+            },
+            "fontsStatus": "loaded",
+            "replacementGlyphs": 0,
+            "surfaces": [
+              {
+                "bottom": 415.99609375,
+                "clientHeight": 161,
+                "label": "fs-menu__popup",
+                "left": 24,
+                "overflowY": "auto",
+                "right": 344,
+                "scrollHeight": 352,
+                "top": 252.75,
+                "viewportHeight": 421,
+                "viewportWidth": 855
+              }
+            ],
+            "viewportHeight": 421,
+            "viewportWidth": 855
+          },
+          "passed": true
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/pt/interactions",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 53.3125,
+            "label": "Abrir a caixa de diálogo",
+            "width": 807
+          },
+          {
+            "height": 53.3125,
+            "label": "Abrir o painel lateral",
+            "width": 807
+          },
+          {
+            "height": 68.51171875,
+            "label": "Densidade da visualizaçãoConfortável",
+            "width": 807
+          },
+          {
+            "height": 53.3125,
+            "label": "Criar uma notificação",
+            "width": 211.89453125
+          },
+          {
+            "height": 53.3125,
+            "label": "Create four unique notifications",
+            "width": 299.35546875
+          },
+          {
+            "height": 68.51171875,
+            "label": "IdiomaPortuguês",
+            "width": 320
+          },
+          {
+            "height": 91.7109375,
+            "label": "RegiãoUnited StatesMarket: Americas · Currency: USD",
+            "width": 320
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 855,
+          "clientWidth": 855,
+          "scrollWidth": 855
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [],
+        "viewportHeight": 421,
+        "viewportWidth": 855
+      },
+      "screenshot": "zoom/google-chrome-200-percent-pt.png",
+      "screenshotEvidence": {
+        "bytes": 242235,
+        "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+        "localeMarker": {
+          "changedFromHidden": true,
+          "height": 77,
+          "text": "pt",
+          "width": 72,
+          "x": 3252,
+          "y": 64
+        },
+        "path": "zoom/google-chrome-200-percent-pt.png",
+        "pixelHeight": 1684,
+        "pixelWidth": 3420,
+        "sha256": "604555b369c475e18b2b93ce75462d1394e58354cb75c8e8e8bc7caf48becabf"
+      }
+    }
+  },
+  "rerunCommand": "mise exec node@24.20.0 -- node scripts/verify-ui-interactions-browser.mjs",
+  "result": "passed",
+  "runtimeGates": [
+    {
+      "environment": "preview",
+      "fixtures": [
+        {
+          "containsFixtureMarker": true,
+          "locale": "en",
+          "status": 200
+        },
+        {
+          "containsFixtureMarker": true,
+          "locale": "en-XA",
+          "status": 200
+        },
+        {
+          "containsFixtureMarker": true,
+          "locale": "es",
+          "status": 200
+        },
+        {
+          "containsFixtureMarker": true,
+          "locale": "ja",
+          "status": 200
+        },
+        {
+          "containsFixtureMarker": true,
+          "locale": "pt",
+          "status": 200
+        },
+        {
+          "containsFixtureMarker": true,
+          "locale": "th",
+          "status": 200
+        },
+        {
+          "containsFixtureMarker": true,
+          "locale": "vi",
+          "status": 200
+        },
+        {
+          "containsFixtureMarker": true,
+          "locale": "zh-CN",
+          "status": 200
+        }
+      ],
+      "fixtureStatus": 200,
+      "healthStatus": 200,
+      "origin": "http://127.0.0.1:50206"
+    },
+    {
+      "environment": "staging",
+      "fixtures": [
+        {
+          "containsFixtureMarker": false,
+          "locale": "en",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "en-XA",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "es",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "ja",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "pt",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "th",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "vi",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "zh-CN",
+          "status": 404
+        }
+      ],
+      "fixtureStatus": 404,
+      "healthStatus": 200,
+      "origin": "http://127.0.0.1:50420"
+    },
+    {
+      "environment": "production",
+      "fixtures": [
+        {
+          "containsFixtureMarker": false,
+          "locale": "en",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "en-XA",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "es",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "ja",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "pt",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "th",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "vi",
+          "status": 404
+        },
+        {
+          "containsFixtureMarker": false,
+          "locale": "zh-CN",
+          "status": 404
+        }
+      ],
+      "fixtureStatus": 404,
+      "healthStatus": 200,
+      "origin": "http://127.0.0.1:50434"
+    }
+  ],
+  "scenarioResults": [
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "en",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/en/interactions",
+      "group": "baseline",
+      "id": "viewport-360x800-en",
+      "locale": "en",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 51.71875,
+            "label": "Open dialog",
+            "width": 328
+          },
+          {
+            "height": 51.71875,
+            "label": "Open drawer",
+            "width": 328
+          },
+          {
+            "height": 66.90625,
+            "label": "Preview densityComfortable",
+            "width": 328
+          },
+          {
+            "height": 51.71875,
+            "label": "Create notification",
+            "width": 182.375
+          },
+          {
+            "height": 51.71875,
+            "label": "Create four unique notifications",
+            "width": 283.96875
+          },
+          {
+            "height": 66.90625,
+            "label": "LanguageEnglish",
+            "width": 320
+          },
+          {
+            "height": 90.09375,
+            "label": "RegionUnited StatesMarket: Americas · Currency: USD",
+            "width": 320
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 360,
+          "clientWidth": 360,
+          "scrollWidth": 360
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [],
+        "viewportHeight": 800,
+        "viewportWidth": 360
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/360x800-en.png",
+      "viewport": {
+        "height": 800,
+        "width": 360
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "vi",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/vi/interactions",
+      "group": "baseline",
+      "id": "viewport-390x844-vi",
+      "locale": "vi",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 51.8125,
+            "label": "Mở hộp thoại",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "Mở ngăn",
+            "width": 358
+          },
+          {
+            "height": 67,
+            "label": "Mật độ xem trướcThoải mái",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "Tạo thông báo",
+            "width": 145.859375
+          },
+          {
+            "height": 51.8125,
+            "label": "Create four unique notifications",
+            "width": 284.90625
+          },
+          {
+            "height": 67,
+            "label": "Ngôn ngữTiếng Việt",
+            "width": 320
+          },
+          {
+            "height": 90.1875,
+            "label": "Khu vựcUnited StatesMarket: Americas · Currency: USD",
+            "width": 320
+          },
+          {
+            "height": 48,
+            "label": "Đóng",
+            "width": 48
+          },
+          {
+            "height": 51.8125,
+            "label": "Thoải mái",
+            "width": 340
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 390,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [
+          {
+            "bottom": 844,
+            "clientHeight": 842,
+            "label": "fs-drawer__popup",
+            "left": 0,
+            "overflowY": "auto",
+            "right": 390,
+            "scrollHeight": 842,
+            "top": 0,
+            "viewportHeight": 844,
+            "viewportWidth": 390
+          }
+        ],
+        "viewportHeight": 844,
+        "viewportWidth": 390
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/390x844-vi-drawer.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "checks": {
+        "portalLanguage": {
+          "inheritedLanguage": "th",
+          "passed": true
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "th",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/th/interactions",
+      "group": "baseline",
+      "id": "viewport-768x1024-th",
+      "locale": "th",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 53.015625,
+            "label": "เปิดกล่องโต้ตอบ",
+            "width": 720
+          },
+          {
+            "height": 53.015625,
+            "label": "เปิดแผง",
+            "width": 720
+          },
+          {
+            "height": 68.203125,
+            "label": "ความหนาแน่นของตัวอย่างสบาย",
+            "width": 720
+          },
+          {
+            "height": 53.015625,
+            "label": "สร้างการแจ้งเตือน",
+            "width": 163.921875
+          },
+          {
+            "height": 53.015625,
+            "label": "Create four unique notifications",
+            "width": 304.671875
+          },
+          {
+            "height": 68.203125,
+            "label": "ภาษาไทย",
+            "width": 320
+          },
+          {
+            "height": 91.390625,
+            "label": "ภูมิภาคUnited StatesMarket: Americas · Currency: USD",
+            "width": 320
+          },
+          {
+            "height": 48,
+            "label": "สบาย",
+            "width": 702
+          },
+          {
+            "height": 48,
+            "label": "กะทัดรัด",
+            "width": 702
+          },
+          {
+            "height": 48,
+            "label": "ยังไม่พร้อม",
+            "width": 702
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 768,
+          "clientWidth": 768,
+          "scrollWidth": 768
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [
+          {
+            "bottom": 876,
+            "clientHeight": 160,
+            "label": "fs-menu__popup",
+            "left": 24,
+            "overflowY": "auto",
+            "right": 744,
+            "scrollHeight": 160,
+            "top": 714,
+            "viewportHeight": 1024,
+            "viewportWidth": 768
+          }
+        ],
+        "viewportHeight": 1024,
+        "viewportWidth": 768
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/768x1024-th-menu.png",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "zh-CN",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/zh-CN/interactions",
+      "group": "baseline",
+      "id": "viewport-1024x768-zh-cn",
+      "locale": "zh-CN",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 53.84375,
+            "label": "打开对话框",
+            "width": 928
+          },
+          {
+            "height": 53.84375,
+            "label": "打开抽屉",
+            "width": 928
+          },
+          {
+            "height": 69.03125,
+            "label": "预览密度舒适",
+            "width": 928
+          },
+          {
+            "height": 53.84375,
+            "label": "创建通知",
+            "width": 103.609375
+          },
+          {
+            "height": 53.84375,
+            "label": "Create four unique notifications",
+            "width": 304.625
+          },
+          {
+            "height": 69.03125,
+            "label": "语言简体中文",
+            "width": 320
+          },
+          {
+            "height": 92.21875,
+            "label": "地区United StatesMarket: Americas · Currency: USD",
+            "width": 320
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1024,
+          "clientWidth": 1024,
+          "scrollWidth": 1024
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [],
+        "viewportHeight": 768,
+        "viewportWidth": 1024
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/1024x768-zh-CN.png",
+      "viewport": {
+        "height": 768,
+        "width": 1024
+      }
+    },
+    {
+      "checks": {
+        "drawerOutside": {
+          "passed": true,
+          "point": {
+            "x": 2,
+            "y": 2
+          },
+          "scrollLock": {
+            "bodyOverflow": "hidden",
+            "documentOverflow": "visible",
+            "maxScroll": 816,
+            "scrollY": 0,
+            "afterScrollY": 0,
+            "delta": 600,
+            "styleLocked": true
+          },
+          "scrollReleased": {
+            "attributeRemoved": true,
+            "bodyOverflow": "visible",
+            "documentOverflow": "visible",
+            "released": true
+          }
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "ja",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/ja/interactions",
+      "group": "baseline",
+      "id": "viewport-1440x900-ja",
+      "locale": "ja",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 54.796875,
+            "label": "ダイアログを開く",
+            "width": 1344
+          },
+          {
+            "height": 54.796875,
+            "label": "ドロワーを開く",
+            "width": 1344
+          },
+          {
+            "height": 69.984375,
+            "label": "表示密度ゆったり",
+            "width": 1344
+          },
+          {
+            "height": 54.796875,
+            "label": "通知を作成",
+            "width": 124
+          },
+          {
+            "height": 54.796875,
+            "label": "Create four unique notifications",
+            "width": 313.96875
+          },
+          {
+            "height": 69.984375,
+            "label": "言語日本語",
+            "width": 320
+          },
+          {
+            "height": 93.171875,
+            "label": "地域United StatesMarket: Americas · Currency: USD",
+            "width": 320
+          },
+          {
+            "height": 48,
+            "label": "閉じる",
+            "width": 48
+          },
+          {
+            "height": 54.796875,
+            "label": "コンパクト",
+            "width": 124
+          },
+          {
+            "height": 54.796875,
+            "label": "ゆったり",
+            "width": 106
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1440,
+          "clientWidth": 1440,
+          "scrollWidth": 1440
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [
+          {
+            "bottom": 577.234375,
+            "clientHeight": 252,
+            "label": "fs-dialog__popup",
+            "left": 395.140625,
+            "overflowY": "auto",
+            "right": 1044.859375,
+            "scrollHeight": 252,
+            "top": 322.765625,
+            "viewportHeight": 900,
+            "viewportWidth": 1440
+          }
+        ],
+        "viewportHeight": 900,
+        "viewportWidth": 1440
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/1440x900-ja-dialog.png",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "es",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/es/interactions",
+      "group": "baseline",
+      "id": "viewport-1920x1080-es",
+      "locale": "es",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 54.796875,
+            "label": "Abrir el cuadro de diálogo",
+            "width": 1440
+          },
+          {
+            "height": 54.796875,
+            "label": "Abrir el panel lateral",
+            "width": 1440
+          },
+          {
+            "height": 69.984375,
+            "label": "Densidad de la vista previaCómoda",
+            "width": 1440
+          },
+          {
+            "height": 54.796875,
+            "label": "Crear una notificación",
+            "width": 227.921875
+          },
+          {
+            "height": 54.796875,
+            "label": "Create four unique notifications",
+            "width": 313.8125
+          },
+          {
+            "height": 69.984375,
+            "label": "IdiomaEspañol",
+            "width": 320
+          },
+          {
+            "height": 93.171875,
+            "label": "RegiónUnited StatesMarket: Americas · Currency: USD",
+            "width": 320
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1920,
+          "clientWidth": 1920,
+          "scrollWidth": 1920
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [],
+        "viewportHeight": 1080,
+        "viewportWidth": 1920
+      },
+      "reducedMotion": false,
+      "screenshot": "viewports/1920x1080-es.png",
+      "viewport": {
+        "height": 1080,
+        "width": 1920
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "en-XA",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/en-XA/interactions",
+      "group": "stress",
+      "id": "stress-320x800-en-xa",
+      "locale": "en-XA",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 51.59375,
+            "label": "[!! Öpëñ đïàļöğ !!]",
+            "width": 288
+          },
+          {
+            "height": 51.59375,
+            "label": "[!! Öpëñ đřàŵëř !!]",
+            "width": 288
+          },
+          {
+            "height": 66.78125,
+            "label": "[!! Přëvïëŵ đëñšïţÿ !!][!! Çöɱföřţàbļë !!]",
+            "width": 288
+          },
+          {
+            "height": 51.59375,
+            "label": "[!! Çřëàţë ñöţïfïçàţïöñ !!]",
+            "width": 225.375
+          },
+          {
+            "height": 51.59375,
+            "label": "Create four unique notifications",
+            "width": 282.734375
+          },
+          {
+            "height": 66.78125,
+            "label": "[!! Ļàñğüàğë !!]English",
+            "width": 288
+          },
+          {
+            "height": 89.96875,
+            "label": "[!! Rëğïöñ !!]United StatesMarket: Americas · Currency: USD",
+            "width": 288
+          },
+          {
+            "height": 48,
+            "label": "[!! Çöɱföřţàbļë !!]",
+            "width": 270
+          },
+          {
+            "height": 48,
+            "label": "[!! Çöɱpàçţ !!]",
+            "width": 270
+          },
+          {
+            "height": 48,
+            "label": "[!! Üñàvàïļàbļë !!]",
+            "width": 270
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 320,
+          "clientWidth": 320,
+          "scrollWidth": 320
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [
+          {
+            "bottom": 603,
+            "clientHeight": 160,
+            "label": "fs-menu__popup",
+            "left": 16,
+            "overflowY": "auto",
+            "right": 304,
+            "scrollHeight": 160,
+            "top": 441,
+            "viewportHeight": 800,
+            "viewportWidth": 320
+          }
+        ],
+        "viewportHeight": 800,
+        "viewportWidth": 320
+      },
+      "reducedMotion": false,
+      "screenshot": "stress/320x800-en-XA-menu.png",
+      "viewport": {
+        "height": 800,
+        "width": 320
+      }
+    },
+    {
+      "checks": {},
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "pt",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/pt/interactions",
+      "group": "stress",
+      "id": "stress-320x800-pt",
+      "locale": "pt",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 51.59375,
+            "label": "Abrir a caixa de diálogo",
+            "width": 288
+          },
+          {
+            "height": 51.59375,
+            "label": "Abrir o painel lateral",
+            "width": 288
+          },
+          {
+            "height": 66.78125,
+            "label": "Densidade da visualizaçãoConfortável",
+            "width": 288
+          },
+          {
+            "height": 51.59375,
+            "label": "Criar uma notificação",
+            "width": 200.75
+          },
+          {
+            "height": 51.59375,
+            "label": "Create four unique notifications",
+            "width": 282.734375
+          },
+          {
+            "height": 66.78125,
+            "label": "IdiomaPortuguês",
+            "width": 288
+          },
+          {
+            "height": 89.96875,
+            "label": "RegiãoUnited StatesMarket: Americas · Currency: USD",
+            "width": 288
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 320,
+          "clientWidth": 320,
+          "scrollWidth": 320
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [],
+        "viewportHeight": 800,
+        "viewportWidth": 320
+      },
+      "reducedMotion": false,
+      "screenshot": "stress/320x800-pt-long.png",
+      "viewport": {
+        "height": 800,
+        "width": 320
+      }
+    },
+    {
+      "checks": {
+        "dialog": {
+          "backwardTrap": true,
+          "closeMethod": "outside",
+          "escapeRestoredFocus": true,
+          "focusableCount": 3,
+          "forwardTrap": true,
+          "passed": true,
+          "scrollLock": {
+            "bodyOverflow": "hidden",
+            "documentOverflow": "visible",
+            "maxScroll": 1041,
+            "scrollY": 0,
+            "afterScrollY": 0,
+            "delta": 600,
+            "styleLocked": true
+          },
+          "scrollReleasedAfterEscape": {
+            "attributeRemoved": true,
+            "bodyOverflow": "visible",
+            "documentOverflow": "visible",
+            "released": true
+          },
+          "scrollReleasedAfterSecondaryClose": {
+            "attributeRemoved": true,
+            "bodyOverflow": "visible",
+            "documentOverflow": "visible",
+            "released": true
+          },
+          "secondaryCloseRestoredFocus": true
+        },
+        "drawer": {
+          "backwardTrap": true,
+          "closeMethod": "button",
+          "escapeRestoredFocus": true,
+          "focusableCount": 2,
+          "forwardTrap": true,
+          "passed": true,
+          "scrollLock": {
+            "bodyOverflow": "hidden",
+            "documentOverflow": "visible",
+            "maxScroll": 1041,
+            "scrollY": 0,
+            "afterScrollY": 0,
+            "delta": 600,
+            "styleLocked": true
+          },
+          "scrollReleasedAfterEscape": {
+            "attributeRemoved": true,
+            "bodyOverflow": "visible",
+            "documentOverflow": "visible",
+            "released": true
+          },
+          "scrollReleasedAfterSecondaryClose": {
+            "attributeRemoved": true,
+            "bodyOverflow": "visible",
+            "documentOverflow": "visible",
+            "released": true
+          },
+          "secondaryCloseRestoredFocus": true
+        },
+        "menu": {
+          "arrowNavigation": [
+            "Comfortable",
+            "Compact",
+            "Unavailable",
+            "Comfortable"
+          ],
+          "disabledActivationBlocked": true,
+          "disabledAria": true,
+          "disabledFocusable": true,
+          "escapeRestoredFocus": true,
+          "homeEnd": true,
+          "passed": true,
+          "scrollLock": {
+            "bodyOverflow": "hidden",
+            "documentOverflow": "hidden",
+            "maxScroll": 1041,
+            "scrollY": 64,
+            "afterScrollY": 64,
+            "delta": 600,
+            "styleLocked": true
+          },
+          "scrollReleased": {
+            "attributeRemoved": true,
+            "bodyOverflow": "visible",
+            "documentOverflow": "visible",
+            "released": true
+          },
+          "typeahead": "Compact"
+        },
+        "toast": {
+          "announcementMutationCount": 0,
+          "countAfterStableIdUpsert": 1,
+          "focusStayedOnTrigger": true,
+          "hoverPauseReleased": true,
+          "keyboardManualDismissed": true,
+          "limitedAfterLimit": 1,
+          "live": "polite",
+          "passed": true,
+          "pointerOutsideViewport": true,
+          "role": "dialog",
+          "timeoutDismissed": true,
+          "totalAfterLimit": 4,
+          "visibleAfterLimit": 3
+        },
+        "localeRegion": {
+          "businessRequests": 0,
+          "passed": true,
+          "preservedOpaqueQuery": true,
+          "preservedTransactionContext": true
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "ja",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/en/interactions",
+      "group": "interaction",
+      "id": "interaction-390x844-en-to-ja",
+      "locale": "en",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 51.8125,
+            "label": "ダイアログを開く",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "ドロワーを開く",
+            "width": 358
+          },
+          {
+            "height": 67,
+            "label": "表示密度ゆったり",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "通知を作成",
+            "width": 114.703125
+          },
+          {
+            "height": 51.8125,
+            "label": "Create four unique notifications",
+            "width": 285.03125
+          },
+          {
+            "height": 67,
+            "label": "言語日本語",
+            "width": 320
+          },
+          {
+            "height": 90.1875,
+            "label": "地域BrasilMarket: Brazil · Currency: BRL",
+            "width": 320
+          },
+          {
+            "height": 48,
+            "label": "通知を閉じる",
+            "width": 48
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 390,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [
+          {
+            "bottom": 828,
+            "clientHeight": 113,
+            "label": "fs-toast",
+            "left": 16,
+            "overflowY": "visible",
+            "right": 374,
+            "scrollHeight": 113,
+            "top": 712.5625,
+            "viewportHeight": 844,
+            "viewportWidth": 390
+          }
+        ],
+        "viewportHeight": 844,
+        "viewportWidth": 390
+      },
+      "reducedMotion": false,
+      "screenshot": "interactions/390x844-ja-after-isolation.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "checks": {
+        "touchMenu": {
+          "closeRestoredFocus": true,
+          "passed": true,
+          "scrollReleased": {
+            "attributeRemoved": true,
+            "bodyOverflow": "visible",
+            "documentOverflow": "visible",
+            "released": true
+          },
+          "touch": {
+            "afterScrollY": 64,
+            "beforeScrollY": 64
+          },
+          "wheel": {
+            "bodyOverflow": "hidden",
+            "documentOverflow": "hidden",
+            "maxScroll": 1041,
+            "scrollY": 64,
+            "afterScrollY": 64,
+            "delta": 600,
+            "styleLocked": true
+          }
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "en",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/en/interactions",
+      "group": "touch",
+      "id": "touch-menu-390x844-en",
+      "locale": "en",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 51.8125,
+            "label": "Open dialog",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "Open drawer",
+            "width": 358
+          },
+          {
+            "height": 67,
+            "label": "Preview densityComfortable",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "Create notification",
+            "width": 182.921875
+          },
+          {
+            "height": 51.8125,
+            "label": "Create four unique notifications",
+            "width": 284.90625
+          },
+          {
+            "height": 67,
+            "label": "LanguageEnglish",
+            "width": 320
+          },
+          {
+            "height": 90.1875,
+            "label": "RegionUnited StatesMarket: Americas · Currency: USD",
+            "width": 320
+          },
+          {
+            "height": 48,
+            "label": "Comfortable",
+            "width": 340
+          },
+          {
+            "height": 48,
+            "label": "Compact",
+            "width": 340
+          },
+          {
+            "height": 48,
+            "label": "Unavailable",
+            "width": 340
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 390,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [
+          {
+            "bottom": 769,
+            "clientHeight": 160,
+            "label": "fs-menu__popup",
+            "left": 16,
+            "overflowY": "auto",
+            "right": 374,
+            "scrollHeight": 160,
+            "top": 607,
+            "viewportHeight": 844,
+            "viewportWidth": 390
+          }
+        ],
+        "viewportHeight": 844,
+        "viewportWidth": 390
+      },
+      "reducedMotion": false,
+      "screenshot": "interactions/390x844-en-touch-menu.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "checks": {
+        "rtl": {
+          "direction": "rtl",
+          "drawer": {
+            "dataSide": "inline-end",
+            "direction": "rtl",
+            "edgeGap": 0,
+            "focusVisible": true,
+            "left": 0,
+            "oppositeGap": 984,
+            "right": 456,
+            "viewportWidth": 1440,
+            "width": 456,
+            "escapeRestoredFocus": true,
+            "focusInside": true,
+            "inlineEndPhysicalSide": "left",
+            "metrics": {
+              "clippedText": [],
+              "controls": [
+                {
+                  "height": 54.796875,
+                  "label": "Open dialog",
+                  "width": 1344
+                },
+                {
+                  "height": 54.796875,
+                  "label": "Open drawer",
+                  "width": 1344
+                },
+                {
+                  "height": 69.984375,
+                  "label": "Preview densityComfortable",
+                  "width": 1344
+                },
+                {
+                  "height": 54.796875,
+                  "label": "Create notification",
+                  "width": 200.09375
+                },
+                {
+                  "height": 54.796875,
+                  "label": "Create four unique notifications",
+                  "width": 313.8125
+                },
+                {
+                  "height": 69.984375,
+                  "label": "LanguageEnglish",
+                  "width": 320
+                },
+                {
+                  "height": 93.171875,
+                  "label": "RegionUnited StatesMarket: Americas · Currency: USD",
+                  "width": 320
+                },
+                {
+                  "height": 48,
+                  "label": "Close",
+                  "width": 48
+                },
+                {
+                  "height": 54.796875,
+                  "label": "Comfortable",
+                  "width": 406
+                }
+              ],
+              "document": {
+                "bodyScrollWidth": 1440,
+                "clientWidth": 1440,
+                "scrollWidth": 1440
+              },
+              "fontsStatus": "loaded",
+              "replacementGlyphs": 0,
+              "surfaces": [
+                {
+                  "bottom": 900,
+                  "clientHeight": 898,
+                  "label": "fs-drawer__popup",
+                  "left": 0,
+                  "overflowY": "auto",
+                  "right": 456,
+                  "scrollHeight": 898,
+                  "top": 0,
+                  "viewportHeight": 900,
+                  "viewportWidth": 1440
+                }
+              ],
+              "viewportHeight": 900,
+              "viewportWidth": 1440
+            },
+            "scrollLock": {
+              "bodyOverflow": "hidden",
+              "documentOverflow": "visible",
+              "maxScroll": 810,
+              "scrollY": 0,
+              "afterScrollY": 0,
+              "delta": 600,
+              "styleLocked": true
+            },
+            "scrollReleased": {
+              "attributeRemoved": true,
+              "bodyOverflow": "visible",
+              "documentOverflow": "visible",
+              "released": true
+            }
+          },
+          "menu": {
+            "alignmentDelta": 0,
+            "activeHighlighted": true,
+            "activeItemDirection": "rtl",
+            "focusVisible": true,
+            "direction": "rtl",
+            "highlightInsetInlineStart": "0px",
+            "highlightLeft": "1323px",
+            "highlightLogicalRail": true,
+            "highlightPhysicalSide": "right",
+            "highlightRight": "0px",
+            "indicatorCenterX": 1359,
+            "indicatorCount": 3,
+            "indicatorInlineStart": true,
+            "itemCount": 3,
+            "copyCenterX": 704,
+            "popupRight": 1392,
+            "popupStartAligned": true,
+            "selectedIndicatorVisible": true,
+            "uncheckedIndicatorCount": 2,
+            "uncheckedIndicatorsHidden": true,
+            "triggerRight": 1392,
+            "activeItemMoved": true,
+            "escapeRestoredFocus": true,
+            "focusInside": true,
+            "indicatorPhysicalSide": "right",
+            "metrics": {
+              "clippedText": [],
+              "controls": [
+                {
+                  "height": 54.796875,
+                  "label": "Open dialog",
+                  "width": 1344
+                },
+                {
+                  "height": 54.796875,
+                  "label": "Open drawer",
+                  "width": 1344
+                },
+                {
+                  "height": 69.984375,
+                  "label": "Preview densityComfortable",
+                  "width": 1344
+                },
+                {
+                  "height": 54.796875,
+                  "label": "Create notification",
+                  "width": 200.09375
+                },
+                {
+                  "height": 54.796875,
+                  "label": "Create four unique notifications",
+                  "width": 313.8125
+                },
+                {
+                  "height": 69.984375,
+                  "label": "LanguageEnglish",
+                  "width": 320
+                },
+                {
+                  "height": 93.171875,
+                  "label": "RegionUnited StatesMarket: Americas · Currency: USD",
+                  "width": 320
+                },
+                {
+                  "height": 48,
+                  "label": "Comfortable",
+                  "width": 1326
+                },
+                {
+                  "height": 48,
+                  "label": "Compact",
+                  "width": 1326
+                },
+                {
+                  "height": 48,
+                  "label": "Unavailable",
+                  "width": 1326
+                }
+              ],
+              "document": {
+                "bodyScrollWidth": 1440,
+                "clientWidth": 1440,
+                "scrollWidth": 1440
+              },
+              "fontsStatus": "loaded",
+              "replacementGlyphs": 0,
+              "surfaces": [
+                {
+                  "bottom": 655,
+                  "clientHeight": 160,
+                  "label": "fs-menu__popup",
+                  "left": 48,
+                  "overflowY": "auto",
+                  "right": 1392,
+                  "scrollHeight": 160,
+                  "top": 493,
+                  "viewportHeight": 900,
+                  "viewportWidth": 1440
+                }
+              ],
+              "viewportHeight": 900,
+              "viewportWidth": 1440
+            },
+            "scrollLock": {
+              "bodyOverflow": "hidden",
+              "documentOverflow": "hidden",
+              "maxScroll": 810,
+              "scrollY": 519,
+              "afterScrollY": 519,
+              "delta": 600,
+              "styleLocked": true
+            },
+            "scrollReleased": {
+              "attributeRemoved": true,
+              "bodyOverflow": "visible",
+              "documentOverflow": "visible",
+              "released": true
+            }
+          },
+          "passed": true
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "rtl",
+      "documentLanguage": "en",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/en/interactions",
+      "group": "direction",
+      "id": "rtl-1440x900-en",
+      "locale": "en",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 54.796875,
+            "label": "Open dialog",
+            "width": 1344
+          },
+          {
+            "height": 54.796875,
+            "label": "Open drawer",
+            "width": 1344
+          },
+          {
+            "height": 69.984375,
+            "label": "Preview densityComfortable",
+            "width": 1344
+          },
+          {
+            "height": 54.796875,
+            "label": "Create notification",
+            "width": 200.09375
+          },
+          {
+            "height": 54.796875,
+            "label": "Create four unique notifications",
+            "width": 313.8125
+          },
+          {
+            "height": 69.984375,
+            "label": "LanguageEnglish",
+            "width": 320
+          },
+          {
+            "height": 93.171875,
+            "label": "RegionUnited StatesMarket: Americas · Currency: USD",
+            "width": 320
+          },
+          {
+            "height": 48,
+            "label": "Comfortable",
+            "width": 1326
+          },
+          {
+            "height": 48,
+            "label": "Compact",
+            "width": 1326
+          },
+          {
+            "height": 48,
+            "label": "Unavailable",
+            "width": 1326
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1440,
+          "clientWidth": 1440,
+          "scrollWidth": 1440
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [
+          {
+            "bottom": 655,
+            "clientHeight": 160,
+            "label": "fs-menu__popup",
+            "left": 48,
+            "overflowY": "auto",
+            "right": 1392,
+            "scrollHeight": 160,
+            "top": 493,
+            "viewportHeight": 900,
+            "viewportWidth": 1440
+          }
+        ],
+        "viewportHeight": 900,
+        "viewportWidth": 1440
+      },
+      "reducedMotion": false,
+      "screenshot": "rtl/1440x900-en-menu.png",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    {
+      "checks": {
+        "reducedMotion": {
+          "matches": true,
+          "styles": [
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "dialog-trigger",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "dialog-backdrop",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "dialog",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s",
+              "startingTransform": "none"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "drawer-trigger",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "drawer-backdrop",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "drawer",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s",
+              "startingTransform": "none"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "menu-trigger",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "menu",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s",
+              "startingTransform": "none"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "toast-trigger",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "toast",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s",
+              "startingTransform": "none"
+            }
+          ],
+          "passed": true
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "en",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/en/interactions",
+      "group": "reduced-motion",
+      "id": "reduced-motion-390x844-en",
+      "locale": "en",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 51.8125,
+            "label": "Open dialog",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "Open drawer",
+            "width": 358
+          },
+          {
+            "height": 67,
+            "label": "Preview densityComfortable",
+            "width": 358
+          },
+          {
+            "height": 51.8125,
+            "label": "Create notification",
+            "width": 182.921875
+          },
+          {
+            "height": 51.8125,
+            "label": "Create four unique notifications",
+            "width": 284.90625
+          },
+          {
+            "height": 67,
+            "label": "LanguageEnglish",
+            "width": 320
+          },
+          {
+            "height": 90.1875,
+            "label": "RegionUnited StatesMarket: Americas · Currency: USD",
+            "width": 320
+          },
+          {
+            "height": 48,
+            "label": "Close",
+            "width": 48
+          },
+          {
+            "height": 51.8125,
+            "label": "Compact",
+            "width": 105.9375
+          },
+          {
+            "height": 51.8125,
+            "label": "Comfortable",
+            "width": 133.09375
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 390,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [
+          {
+            "bottom": 569.578125,
+            "clientHeight": 293,
+            "label": "fs-dialog__popup",
+            "left": 16,
+            "overflowY": "auto",
+            "right": 374,
+            "scrollHeight": 293,
+            "top": 274.421875,
+            "viewportHeight": 844,
+            "viewportWidth": 390
+          }
+        ],
+        "viewportHeight": 844,
+        "viewportWidth": 390
+      },
+      "reducedMotion": true,
+      "screenshot": "reduced-motion/390x844-en-dialog.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "checks": {
+        "reducedMotion": {
+          "matches": true,
+          "styles": [
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "dialog-trigger",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "dialog-backdrop",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "dialog",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s",
+              "startingTransform": "none"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "drawer-trigger",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "drawer-backdrop",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "drawer",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s",
+              "startingTransform": "none"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "menu-trigger",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "menu",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s",
+              "startingTransform": "none"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "toast-trigger",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s"
+            },
+            {
+              "animationDelay": "0s",
+              "animationDuration": "0s",
+              "label": "toast",
+              "transitionDelay": "0s",
+              "transitionDuration": "0s",
+              "startingTransform": "none"
+            }
+          ],
+          "passed": true
+        }
+      },
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      "documentDirection": "",
+      "documentLanguage": "pt",
+      "errors": [],
+      "fixtureUrl": "http://127.0.0.1:50206/_internal/design-foundations/pt/interactions",
+      "group": "reduced-motion",
+      "id": "reduced-motion-1440x900-pt",
+      "locale": "pt",
+      "metrics": {
+        "clippedText": [],
+        "controls": [
+          {
+            "height": 54.796875,
+            "label": "Abrir a caixa de diálogo",
+            "width": 1344
+          },
+          {
+            "height": 54.796875,
+            "label": "Abrir o painel lateral",
+            "width": 1344
+          },
+          {
+            "height": 69.984375,
+            "label": "Densidade da visualizaçãoConfortável",
+            "width": 1344
+          },
+          {
+            "height": 54.796875,
+            "label": "Criar uma notificação",
+            "width": 221.59375
+          },
+          {
+            "height": 54.796875,
+            "label": "Create four unique notifications",
+            "width": 313.8125
+          },
+          {
+            "height": 69.984375,
+            "label": "IdiomaPortuguês",
+            "width": 320
+          },
+          {
+            "height": 93.171875,
+            "label": "RegiãoUnited StatesMarket: Americas · Currency: USD",
+            "width": 320
+          },
+          {
+            "height": 48,
+            "label": "Fechar",
+            "width": 48
+          },
+          {
+            "height": 54.796875,
+            "label": "Confortável",
+            "width": 406
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 1440,
+          "clientWidth": 1440,
+          "scrollWidth": 1440
+        },
+        "fontsStatus": "loaded",
+        "replacementGlyphs": 0,
+        "surfaces": [
+          {
+            "bottom": 900,
+            "clientHeight": 898,
+            "label": "fs-drawer__popup",
+            "left": 984,
+            "overflowY": "auto",
+            "right": 1440,
+            "scrollHeight": 898,
+            "top": 0,
+            "viewportHeight": 900,
+            "viewportWidth": 1440
+          }
+        ],
+        "viewportHeight": 900,
+        "viewportWidth": 1440
+      },
+      "reducedMotion": true,
+      "screenshot": "reduced-motion/1440x900-pt-drawer.png",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    }
+  ],
+  "schemaVersion": 1,
+  "screenshots": [
+    {
+      "bytes": 92735,
+      "path": "viewports/360x800-en.png",
+      "pixelHeight": 1920,
+      "pixelWidth": 360,
+      "sha256": "558955d39406b19e2ddcb6df90accaa21e9b374e2bf02e31f783a6c44cccf340"
+    },
+    {
+      "bytes": 74933,
+      "path": "viewports/390x844-vi-drawer.png",
+      "pixelHeight": 1930,
+      "pixelWidth": 390,
+      "sha256": "f59d0dcad638d01c66cc7cbab1bb02132483b898000ea619591859c718829308"
+    },
+    {
+      "bytes": 96873,
+      "path": "viewports/768x1024-th-menu.png",
+      "pixelHeight": 1765,
+      "pixelWidth": 768,
+      "sha256": "8cb9c298dec9a4b4e4d1dfa2d582a062cbb478c45110a1afa5c35ef792cabdd4"
+    },
+    {
+      "bytes": 112343,
+      "path": "viewports/1024x768-zh-CN.png",
+      "pixelHeight": 1776,
+      "pixelWidth": 1024,
+      "sha256": "5eff1775a9385908df44e85dc06ff1b6ae6febb4267864f8595a7bf22ddf93bd"
+    },
+    {
+      "bytes": 140151,
+      "path": "viewports/1440x900-ja-dialog.png",
+      "pixelHeight": 1716,
+      "pixelWidth": 1440,
+      "sha256": "fb74b8e39d80b0742766e7ce7fb1d1975c2b93b52083fdd453257da19a69a933"
+    },
+    {
+      "bytes": 127965,
+      "path": "viewports/1920x1080-es.png",
+      "pixelHeight": 1779,
+      "pixelWidth": 1920,
+      "sha256": "3f5f8e6b89627f9cbe28a5125ceb74d47ea54c3d0a5a5aab0fd989b3225d91a4"
+    },
+    {
+      "bytes": 110165,
+      "path": "stress/320x800-en-XA-menu.png",
+      "pixelHeight": 2243,
+      "pixelWidth": 320,
+      "sha256": "7f8028dd39ae212830461e0893af53cee8346aaeee53145471d6d37037808e8b"
+    },
+    {
+      "bytes": 105222,
+      "path": "stress/320x800-pt-long.png",
+      "pixelHeight": 2303,
+      "pixelWidth": 320,
+      "sha256": "c7921ea72910e309c4206d528d77be8f2fa3fb7cbab7d530e2c7733f85a43c9b"
+    },
+    {
+      "bytes": 107430,
+      "path": "interactions/390x844-ja-after-isolation.png",
+      "pixelHeight": 1891,
+      "pixelWidth": 390,
+      "sha256": "e26c97d2311258e8c067a96e504cf8d61a25dbbd5195ab8748bdc1a2c52a8ab4"
+    },
+    {
+      "bytes": 96250,
+      "path": "interactions/390x844-en-touch-menu.png",
+      "pixelHeight": 1885,
+      "pixelWidth": 390,
+      "sha256": "a93f26beedb147a9a125df27567c9c403a833fd525782dadbfc4269b0e882698"
+    },
+    {
+      "bytes": 117298,
+      "path": "rtl/1440x900-en-menu.png",
+      "pixelHeight": 1710,
+      "pixelWidth": 1440,
+      "sha256": "8ccc5672c668093a5aba0686d7dcf5d81efec06dbc403c98ab76ef2edc814d17"
+    },
+    {
+      "bytes": 103342,
+      "path": "reduced-motion/390x844-en-dialog.png",
+      "pixelHeight": 1885,
+      "pixelWidth": 390,
+      "sha256": "31e9d6a280dd645617bd91672c8d59afa001937c1e71b292f5d33013e9ba3d71"
+    },
+    {
+      "bytes": 149556,
+      "path": "reduced-motion/1440x900-pt-drawer.png",
+      "pixelHeight": 1777,
+      "pixelWidth": 1440,
+      "sha256": "7a980dda6fce61b22a5c4d98fbdca45abe0de2de14901ddf45cee404edcccf04"
+    },
+    {
+      "bytes": 160860,
+      "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+      "localeMarker": {
+        "changedFromHidden": true,
+        "height": 39,
+        "text": "pt",
+        "width": 36,
+        "x": 3114,
+        "y": 32
+      },
+      "path": "zoom/google-chrome-baseline-pt.png",
+      "pixelHeight": 1684,
+      "pixelWidth": 3420,
+      "sha256": "679907dd714248587c0c0ed5bb93e88b2f6bf2197b59eb5a4703627589cd29ff"
+    },
+    {
+      "bytes": 242235,
+      "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
+      "localeMarker": {
+        "changedFromHidden": true,
+        "height": 77,
+        "text": "pt",
+        "width": 72,
+        "x": 3252,
+        "y": 64
+      },
+      "path": "zoom/google-chrome-200-percent-pt.png",
+      "pixelHeight": 1684,
+      "pixelWidth": 3420,
+      "sha256": "604555b369c475e18b2b93ce75462d1394e58354cb75c8e8e8bc7caf48becabf"
+    }
+  ],
+  "versions": {
+    "axe": "4.13.0",
+    "browser": "Google Chrome 152.0.7977.82",
+    "next": "16.3.4",
+    "node": "v24.20.0",
+    "playwright": "1.62.1",
+    "pnpm": "11.25.0",
+    "react": "19.2.8"
+  }
+}

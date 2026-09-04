@@ -374,6 +374,32 @@ test("accepts the frozen UI primitive package and nested preview fixture", async
   assert.deepEqual(await validateUiPrimitives(root), []);
 });
 
+test("accepts the reviewed P2-03 client-only interaction package additions", async (context) => {
+  const { root, validateUiPrimitives } = await validateFixture(context);
+  const manifestPath = "packages/ui/package.json";
+  const manifest = JSON.parse(
+    await readFile(path.join(root, manifestPath), "utf8"),
+  );
+  manifest.dependencies["@base-ui/react"] = "1.7.0";
+  manifest.exports["./interactions"] = {
+    types: "./dist/interactions.d.ts",
+    import: "./dist/interactions.js",
+  };
+  manifest.exports["./interactions.css"] = "./styles/interactions.css";
+  manifest.sideEffects = [
+    "./styles/interactions.css",
+    "./styles/primitives.css",
+  ];
+  await write(root, manifestPath, JSON.stringify(manifest));
+  await write(
+    root,
+    "packages/ui/src/overlay.tsx",
+    '"use client";\nimport { Dialog } from "@base-ui/react/dialog";\nexport const Overlay = Dialog.Root;\n',
+  );
+
+  assert.deepEqual(await validateUiPrimitives(root), []);
+});
+
 test("requires exact root, client, and CSS package exports", async (context) => {
   const { root, validateUiPrimitives } = await validateFixture(context);
   const manifestPath = "packages/ui/package.json";
