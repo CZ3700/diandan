@@ -605,10 +605,12 @@ async function createValidEvidence() {
               announcementMutationCount: 0,
               countAfterStableIdUpsert: 1,
               focusStayedOnTrigger: true,
+              hoverPauseReleased: true,
               keyboardManualDismissed: true,
               limitedAfterLimit: 1,
               live: "polite",
               passed: true,
+              pointerOutsideViewport: true,
               role: "dialog",
               timeoutDismissed: true,
               totalAfterLimit: 4,
@@ -928,6 +930,16 @@ test("evidence validator accepts a complete proof and rejects tampering", async 
   ).checks.toast.timeoutDismissed;
   assert.ok(
     validateEvidenceBundle(missingToastLifecycle).some((error) =>
+      error.includes("Toast lifecycle proof"),
+    ),
+  );
+
+  const pausedToastTimeout = globalThis.structuredClone(valid);
+  delete pausedToastTimeout.scenarioResults.find(
+    ({ id }) => id === "interaction-390x844-en-to-ja",
+  ).checks.toast.hoverPauseReleased;
+  assert.ok(
+    validateEvidenceBundle(pausedToastTimeout).some((error) =>
       error.includes("Toast lifecycle proof"),
     ),
   );

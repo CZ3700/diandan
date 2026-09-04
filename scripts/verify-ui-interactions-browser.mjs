@@ -1095,7 +1095,9 @@ export function validateEvidenceBundle(evidence) {
     toast?.announcementMutationCount !== 0 ||
     toast?.countAfterStableIdUpsert !== 1 ||
     toast?.focusStayedOnTrigger !== true ||
+    toast?.hoverPauseReleased !== true ||
     toast?.keyboardManualDismissed !== true ||
+    toast?.pointerOutsideViewport !== true ||
     toast?.timeoutDismissed !== true ||
     toast?.live !== "polite" ||
     toast?.role !== "dialog"
@@ -2960,6 +2962,36 @@ async function runToastCheck(page) {
     ),
     "creating a limited Toast stack must not steal focus",
   );
+  const pointerReleasePoint = await outsidePointForPopup(
+    page,
+    ".fs-toast__viewport",
+  );
+  invariant(
+    pointerReleasePoint !== null,
+    "Toast timeout check needs a pointer position outside its viewport",
+  );
+  await page.mouse.move(pointerReleasePoint.x, pointerReleasePoint.y);
+  await page.waitForFunction(
+    () =>
+      document
+        .querySelector(".fs-toast__viewport")
+        ?.hasAttribute("data-expanded") === false,
+    undefined,
+    { timeout: 1_000 },
+  );
+  const pointerOutsideViewport = await viewport.evaluate((element, point) => {
+    const bounds = element.getBoundingClientRect();
+    return (
+      point.x < bounds.left ||
+      point.x > bounds.right ||
+      point.y < bounds.top ||
+      point.y > bounds.bottom
+    );
+  }, pointerReleasePoint);
+  invariant(
+    pointerOutsideViewport,
+    "Toast pointer must leave the viewport before timeout verification",
+  );
   await page.waitForFunction(
     () => document.querySelectorAll(".fs-toast").length === 0,
     undefined,
@@ -2969,10 +3001,12 @@ async function runToastCheck(page) {
     announcementMutationCount,
     countAfterStableIdUpsert: 1,
     focusStayedOnTrigger: true,
+    hoverPauseReleased: true,
     keyboardManualDismissed: true,
     limitedAfterLimit,
     live: "polite",
     passed: true,
+    pointerOutsideViewport,
     role: "dialog",
     timeoutDismissed: true,
     totalAfterLimit,
