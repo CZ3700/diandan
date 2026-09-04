@@ -73,10 +73,10 @@
       "scenarioId": "rtl-390x844-en"
     }
   ],
-  "generatedAt": "2026-09-04T04:02:04.076Z",
+  "generatedAt": "2026-09-04T18:33:55.168Z",
   "git": {
     "dirty": false,
-    "sha": "9f33dad482798a58e108d0c8c0495a878cf375c7",
+    "sha": "c4c20ecfc77f30a0964dacac231d194897b4b02e",
     "status": []
   },
   "launch": {
@@ -293,7 +293,7 @@
       "outerHeight": 929,
       "outerWidth": 1710,
       "screen": {
-        "availHeight": 1001,
+        "availHeight": 1000,
         "availWidth": 1710,
         "height": 1107,
         "width": 1710
@@ -317,85 +317,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/pt/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/pt/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -430,25 +436,25 @@
             "height": 48,
             "label": "Consultar todos os detalhes de preparação e entrega do presente",
             "selector": "a.fs-link",
-            "width": 593.0625
+            "width": 584.9140625
           },
           {
             "height": 54.796875,
             "label": "Continuar com este presente de apoio cuidadosamente preparado",
             "selector": "button.fs-button",
-            "width": 609.21875
+            "width": 600.5546875
           },
           {
             "height": 54.796875,
             "label": "Ação indisponível",
             "selector": "button.fs-button",
-            "width": 187.4375
+            "width": 184.53125
           },
           {
             "height": 54.796875,
             "label": "Preparando o pagamento seguro",
             "selector": "button.fs-button",
-            "width": 317.3984375
+            "width": 314.8828125
           },
           {
             "height": 54.796875,
@@ -519,20 +525,20 @@
       },
       "screenshot": "zoom/google-chrome-baseline-pt.png",
       "screenshotEvidence": {
-        "bytes": 212260,
+        "bytes": 200741,
         "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
         "localeMarker": {
           "changedFromHidden": true,
           "height": 39,
           "text": "pt",
-          "width": 36,
-          "x": 3114,
+          "width": 38,
+          "x": 3112,
           "y": 32
         },
         "path": "zoom/google-chrome-baseline-pt.png",
         "pixelHeight": 1684,
         "pixelWidth": 3420,
-        "sha256": "4da4d189fc1c04c2d0588c9e8b7a607587b9995b9877ad3dff74040cf7eeb918"
+        "sha256": "3fab0eb04b73ae153f30392a4650de9817546158ebe4af335fadeb33db7681a6"
       }
     },
     "browser": "Google Chrome 152.0.7977.82",
@@ -545,36 +551,36 @@
     "profileRemoved": true,
     "screenshots": [
       {
-        "bytes": 212260,
+        "bytes": 200741,
         "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
         "localeMarker": {
           "changedFromHidden": true,
           "height": 39,
           "text": "pt",
-          "width": 36,
-          "x": 3114,
+          "width": 38,
+          "x": 3112,
           "y": 32
         },
         "path": "zoom/google-chrome-baseline-pt.png",
         "pixelHeight": 1684,
         "pixelWidth": 3420,
-        "sha256": "4da4d189fc1c04c2d0588c9e8b7a607587b9995b9877ad3dff74040cf7eeb918"
+        "sha256": "3fab0eb04b73ae153f30392a4650de9817546158ebe4af335fadeb33db7681a6"
       },
       {
-        "bytes": 227366,
+        "bytes": 216516,
         "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
         "localeMarker": {
           "changedFromHidden": true,
           "height": 77,
           "text": "pt",
-          "width": 72,
-          "x": 3252,
+          "width": 76,
+          "x": 3248,
           "y": 64
         },
         "path": "zoom/google-chrome-200-percent-pt.png",
         "pixelHeight": 1684,
         "pixelWidth": 3420,
-        "sha256": "8ee038c737ed3c2e7c0ce88dafdb2cd9cd302e7b6a5fec62b2ce1faeb23e4b68"
+        "sha256": "029f517cc1fda59d49c29e98e9c412e9b2c6e5fdb537a868db3750e1cd775115"
       }
     ],
     "zoomPercent": 200,
@@ -585,7 +591,7 @@
       "outerHeight": 929,
       "outerWidth": 1710,
       "screen": {
-        "availHeight": 1001,
+        "availHeight": 1000,
         "availWidth": 1710,
         "height": 1107,
         "width": 1710
@@ -638,7 +644,7 @@
           "layout": {
             "button": {
               "height": 53.3125,
-              "width": 302.75390625,
+              "width": 301.05859375,
               "x": 24,
               "y": 253.24609375
             },
@@ -647,7 +653,7 @@
               "height": 27.3125,
               "opacity": 0,
               "position": "static",
-              "width": 268.75390625,
+              "width": 267.05859375,
               "x": 41,
               "y": 266.24609375
             },
@@ -712,79 +718,85 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/pt/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/pt/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           }
         ]
       },
@@ -819,25 +831,25 @@
             "height": 48,
             "label": "Consultar todos os detalhes de preparação e entrega do presente",
             "selector": "a.fs-link",
-            "width": 563.66015625
+            "width": 557.453125
           },
           {
             "height": 53.3125,
             "label": "Continuar com este presente de apoio cuidadosamente preparado",
             "selector": "button.fs-button",
-            "width": 579.5
+            "width": 572.69921875
           },
           {
             "height": 53.3125,
             "label": "Ação indisponível",
             "selector": "button.fs-button",
-            "width": 179.5078125
+            "width": 177.09375
           },
           {
             "height": 53.3125,
             "label": "Preparando o pagamento seguro",
             "selector": "button.fs-button",
-            "width": 302.75390625
+            "width": 301.05859375
           },
           {
             "height": 53.3125,
@@ -908,20 +920,20 @@
       },
       "screenshot": "zoom/google-chrome-200-percent-pt.png",
       "screenshotEvidence": {
-        "bytes": 227366,
+        "bytes": 216516,
         "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
         "localeMarker": {
           "changedFromHidden": true,
           "height": 77,
           "text": "pt",
-          "width": 72,
-          "x": 3252,
+          "width": 76,
+          "x": 3248,
           "y": 64
         },
         "path": "zoom/google-chrome-200-percent-pt.png",
         "pixelHeight": 1684,
         "pixelWidth": 3420,
-        "sha256": "8ee038c737ed3c2e7c0ce88dafdb2cd9cd302e7b6a5fec62b2ce1faeb23e4b68"
+        "sha256": "029f517cc1fda59d49c29e98e9c412e9b2c6e5fdb537a868db3750e1cd775115"
       }
     }
   },
@@ -932,19 +944,19 @@
       "environment": "preview",
       "fixtureStatus": 200,
       "healthStatus": 200,
-      "origin": "http://127.0.0.1:49781"
+      "origin": "http://127.0.0.1:57716"
     },
     {
       "environment": "staging",
       "fixtureStatus": 404,
       "healthStatus": 200,
-      "origin": "http://127.0.0.1:50002"
+      "origin": "http://127.0.0.1:57950"
     },
     {
       "environment": "production",
       "fixtureStatus": 404,
       "healthStatus": 200,
-      "origin": "http://127.0.0.1:50011"
+      "origin": "http://127.0.0.1:57959"
     }
   ],
   "scenarioResults": [
@@ -961,85 +973,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/en/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -1084,19 +1102,19 @@
             "height": 51.71875,
             "label": "Continue with support gift",
             "selector": "button.fs-button",
-            "width": 240.59375
+            "width": 238.265625
           },
           {
             "height": 51.71875,
             "label": "Unavailable action",
             "selector": "button.fs-button",
-            "width": 177.84375
+            "width": 176.546875
           },
           {
             "height": 51.71875,
             "label": "Preparing secure checkout",
             "selector": "button.fs-button",
-            "width": 243.8125
+            "width": 242.875
           },
           {
             "height": 51.71875,
@@ -1175,97 +1193,115 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/vi/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/vi/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -1304,25 +1340,25 @@
             "height": 48,
             "label": "Xem chi tiết chuẩn bị và giao quà",
             "selector": "a.fs-link",
-            "width": 277.15625
+            "width": 277.96875
           },
           {
             "height": 51.8125,
             "label": "Tiếp tục với món quà ủng hộ",
             "selector": "button.fs-button",
-            "width": 251.234375
+            "width": 251.796875
           },
           {
             "height": 51.8125,
             "label": "Thao tác chưa khả dụng",
             "selector": "button.fs-button",
-            "width": 218.609375
+            "width": 219.59375
           },
           {
             "height": 51.8125,
             "label": "Đang chuẩn bị thanh toán an toàn",
             "selector": "button.fs-button",
-            "width": 295.203125
+            "width": 294.4375
           },
           {
             "height": 77.625,
@@ -1401,91 +1437,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/th/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/th/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/0s0u4lh658hwz.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2lg-l7asikrc3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -1524,25 +1560,25 @@
             "height": 48,
             "label": "ตรวจสอบรายละเอียดการจัดเตรียมและการจัดส่ง",
             "selector": "a.fs-link",
-            "width": 359.625
+            "width": 358.28125
           },
           {
             "height": 53.015625,
             "label": "ดำเนินการส่งของขวัญสนับสนุนต่อ",
             "selector": "button.fs-button",
-            "width": 275
+            "width": 268.71875
           },
           {
             "height": 53.015625,
             "label": "ยังไม่สามารถดำเนินการนี้ได้",
             "selector": "button.fs-button",
-            "width": 225.484375
+            "width": 229.484375
           },
           {
             "height": 53.015625,
             "label": "กำลังเตรียมการชำระเงินที่ปลอดภัย",
             "selector": "button.fs-button",
-            "width": 276.90625
+            "width": 276.078125
           },
           {
             "height": 53.015625,
@@ -1621,163 +1657,163 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/zh-CN/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/zh-CN/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2u8d4e3i0-wk3.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/0jyq8zfmzj_l3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-103-wght-normal.15048xq57o46q.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-103-wght-normal.15048xq57o46q.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -1913,193 +1949,205 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/ja/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/ja/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1gq0gydlex491.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/107x49qjcs-lo.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-98-wght-normal.42fiv0zkxjijw.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-98-wght-normal.42fiv0zkxjijw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-118-wght-normal.0oiz-9fhkq7v6.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-jp-86-wght-normal.14rmjw1_q1pcr.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -2144,7 +2192,7 @@
             "height": 54.796875,
             "label": "応援ギフトの手続きを続ける",
             "selector": "button.fs-button",
-            "width": 268
+            "width": 267.46875
           },
           {
             "height": 54.796875,
@@ -2156,7 +2204,7 @@
             "height": 54.796875,
             "label": "安全な決済を準備しています",
             "selector": "button.fs-button",
-            "width": 267.46875
+            "width": 267.109375
           },
           {
             "height": 54.796875,
@@ -2235,85 +2283,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/es/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/es/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -2352,25 +2406,25 @@
             "height": 48,
             "label": "Consultar todos los detalles de preparación y entrega del regalo",
             "selector": "a.fs-link",
-            "width": 578.53125
+            "width": 570.984375
           },
           {
             "height": 54.796875,
             "label": "Continuar con este regalo de apoyo cuidadosamente preparado",
             "selector": "button.fs-button",
-            "width": 585.4375
+            "width": 577.421875
           },
           {
             "height": 54.796875,
             "label": "Acción no disponible",
             "selector": "button.fs-button",
-            "width": 214.515625
+            "width": 211.75
           },
           {
             "height": 54.796875,
             "label": "Preparando el pago seguro",
             "selector": "button.fs-button",
-            "width": 266.625
+            "width": 264.921875
           },
           {
             "height": 54.796875,
@@ -2449,97 +2503,115 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/en-XA/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/en-XA/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -2590,13 +2662,13 @@
             "height": 51.59375,
             "label": "[!! Üñàvàïļàbļë àçţïöñ !!]",
             "selector": "button.fs-button",
-            "width": 220.140625
+            "width": 218.25
           },
           {
             "height": 51.59375,
             "label": "[!! Přëpàřïñğ šëçüřë çħëçköüţ !!]",
             "selector": "button.fs-button",
-            "width": 286.109375
+            "width": 285.09375
           },
           {
             "height": 77.1875,
@@ -2675,85 +2747,85 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/pt/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/pt/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -2918,7 +2990,7 @@
           "layout": {
             "button": {
               "height": 51.8125,
-              "width": 244.609375,
+              "width": 243.515625,
               "x": 16,
               "y": 147.15625
             },
@@ -2927,7 +2999,7 @@
               "height": 25.8125,
               "opacity": 0,
               "position": "static",
-              "width": 210.609375,
+              "width": 209.515625,
               "x": 33,
               "y": 160.15625
             },
@@ -2992,85 +3064,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/en/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -3109,25 +3187,25 @@
             "height": 48,
             "label": "Review preparation and delivery details",
             "selector": "a.fs-link",
-            "width": 330.046875
+            "width": 330.5
           },
           {
             "height": 51.8125,
             "label": "Continue with support gift",
             "selector": "button.fs-button",
-            "width": 241.359375
+            "width": 238.875
           },
           {
             "height": 51.8125,
             "label": "Unavailable action",
             "selector": "button.fs-button",
-            "width": 178.375
+            "width": 176.984375
           },
           {
             "height": 51.8125,
             "label": "Preparing secure checkout",
             "selector": "button.fs-button",
-            "width": 244.609375
+            "width": 243.515625
           },
           {
             "height": 51.8125,
@@ -3215,85 +3293,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/en/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -3332,25 +3416,25 @@
             "height": 48,
             "label": "Review preparation and delivery details",
             "selector": "a.fs-link",
-            "width": 365.328125
+            "width": 361.25
           },
           {
             "height": 54.796875,
             "label": "Continue with support gift",
             "selector": "button.fs-button",
-            "width": 265.25
+            "width": 259.453125
           },
           {
             "height": 54.796875,
             "label": "Unavailable action",
             "selector": "button.fs-button",
-            "width": 195.015625
+            "width": 191.40625
           },
           {
             "height": 54.796875,
             "label": "Preparing secure checkout",
             "selector": "button.fs-button",
-            "width": 268.875
+            "width": 264.6875
           },
           {
             "height": 54.796875,
@@ -3441,85 +3525,85 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/en/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -3666,85 +3750,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/en/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:57716/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -3783,25 +3873,25 @@
             "height": 48,
             "label": "Review preparation and delivery details",
             "selector": "a.fs-link",
-            "width": 330.046875
+            "width": 330.5
           },
           {
             "height": 51.8125,
             "label": "Continue with support gift",
             "selector": "button.fs-button",
-            "width": 241.359375
+            "width": 238.875
           },
           {
             "height": 51.8125,
             "label": "Unavailable action",
             "selector": "button.fs-button",
-            "width": 178.375
+            "width": 176.984375
           },
           {
             "height": 51.8125,
             "label": "Preparing secure checkout",
             "selector": "button.fs-button",
-            "width": 244.609375
+            "width": 243.515625
           },
           {
             "height": 51.8125,
@@ -3891,85 +3981,85 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49781/_internal/design-foundations/en/primitives"
+            "url": "http://127.0.0.1:57716/_internal/design-foundations/en/primitives"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2tr7776gzqg4l.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/19onjts7yuslr.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3hglsjcd07m5w.css"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3hglsjcd07m5w.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/15hv9vdij6ce3.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/04wpbdddatabz.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/turbopack-1cfrcgmgqgjrl.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49781/_next/static/chunks/1o6ht7xwgmzf8.js"
+            "url": "http://127.0.0.1:57716/_next/static/chunks/3_em346ykiyg3.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49781/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:57716/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49781/ui-primitives-media.svg"
+            "url": "http://127.0.0.1:57716/ui-primitives-media.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49781/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:57716/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -4097,11 +4187,11 @@
   "screenshots": [
     {
       "path": "viewports/360x800-en.png",
-      "sha256": "ed19d750390deb86103f8423346581dafdbe7622b5006ee407085e61b96dfe6a"
+      "sha256": "7a458596d7fd46a06cb01762b79b306451972b4628806be2a001da5dbe3f8f9a"
     },
     {
       "path": "viewports/390x844-vi.png",
-      "sha256": "910d20658382f0713c325d5e46c3bb9108f65f5ea9e6ec6211af65cc2c73636a"
+      "sha256": "7b3b1d0e5198087ae8973bcaaffc00b20aa584807c6a8cb9727cf5ca3cbf202a"
     },
     {
       "path": "viewports/768x1024-th.png",
@@ -4117,11 +4207,11 @@
     },
     {
       "path": "viewports/1920x1080-es.png",
-      "sha256": "bcb3f1e6a9a64f57f4a7209684fc637909ecf624d8903c3e053e6b80533710f4"
+      "sha256": "8f5d6c40c7b1df813321419616dd8db7dc6ddf3e3903aa77500248889404d16f"
     },
     {
       "path": "stress/320x800-en-XA.png",
-      "sha256": "5a50cb9189bb1f89ebf533de706049edc22873021f2b5261744bfa8121adae80"
+      "sha256": "d2b4612b1996c2ddbc9395c4d4d392a5742adadb94022b2c9b93c95324cadf29"
     },
     {
       "path": "stress/320x800-pt-long.png",
@@ -4129,11 +4219,11 @@
     },
     {
       "path": "interactions/390x844-en-keyboard.png",
-      "sha256": "7cfdd4a9a39afd77e777de7008ef92b2cacde4a03e9e160c10d0bbb28bc90b1e"
+      "sha256": "ffc9e2d8d33c5a6bc010f53af1036c465b32b1ea03de893f812609ba1d74f2d6"
     },
     {
       "path": "interactions/1440x900-en-hover.png",
-      "sha256": "300c65c3b3b7b2153466c89cea820be0624c86c9a75375368b2d79e9959b3c8f"
+      "sha256": "cda8a973fc6001882344e673caed679ce729b00ff3f67d0fe73b476411a04941"
     },
     {
       "path": "rtl/390x844-en-rtl.png",
@@ -4141,43 +4231,43 @@
     },
     {
       "path": "reduced-motion/390x844-en-reduce.png",
-      "sha256": "13f75d4b53f2c70a32b9965fd9c58359d7704b4261850e1c8c0a8b41c0336405"
+      "sha256": "e2ca4d910b97a16347203ad93b59032a7d05432f9bf4d32985b30534f38003de"
     },
     {
       "path": "reduced-motion/1440x900-en-reduce.png",
-      "sha256": "fd9d86091e9f3d08fc46ed4a361073aa0333864a2bb60fe9150f1c6196edf2aa"
+      "sha256": "2c9593ac3166b118491a8a2e4fad23d654d65f836baa2e5f3a672478289fbfc4"
     },
     {
-      "bytes": 212260,
+      "bytes": 200741,
       "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
       "localeMarker": {
         "changedFromHidden": true,
         "height": 39,
         "text": "pt",
-        "width": 36,
-        "x": 3114,
+        "width": 38,
+        "x": 3112,
         "y": 32
       },
       "path": "zoom/google-chrome-baseline-pt.png",
       "pixelHeight": 1684,
       "pixelWidth": 3420,
-      "sha256": "4da4d189fc1c04c2d0588c9e8b7a607587b9995b9877ad3dff74040cf7eeb918"
+      "sha256": "3fab0eb04b73ae153f30392a4650de9817546158ebe4af335fadeb33db7681a6"
     },
     {
-      "bytes": 227366,
+      "bytes": 216516,
       "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
       "localeMarker": {
         "changedFromHidden": true,
         "height": 77,
         "text": "pt",
-        "width": 72,
-        "x": 3252,
+        "width": 76,
+        "x": 3248,
         "y": 64
       },
       "path": "zoom/google-chrome-200-percent-pt.png",
       "pixelHeight": 1684,
       "pixelWidth": 3420,
-      "sha256": "8ee038c737ed3c2e7c0ce88dafdb2cd9cd302e7b6a5fec62b2ce1faeb23e4b68"
+      "sha256": "029f517cc1fda59d49c29e98e9c412e9b2c6e5fdb537a868db3750e1cd775115"
     }
   ],
   "versions": {
