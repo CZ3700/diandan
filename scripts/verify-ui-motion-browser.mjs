@@ -691,6 +691,32 @@ export function assessRuntimeFontEvidence(evidence, locale) {
   return errors;
 }
 
+function hasFiniteRect(rect) {
+  return (
+    isRecord(rect) &&
+    [rect.height, rect.left, rect.top, rect.width].every(finite)
+  );
+}
+
+function matchingRect(left, right, tolerance = 1) {
+  return (
+    hasFiniteRect(left) &&
+    hasFiniteRect(right) &&
+    Math.abs(left.left - right.left) <= tolerance &&
+    Math.abs(left.top - right.top) <= tolerance &&
+    Math.abs(left.width - right.width) <= tolerance &&
+    Math.abs(left.height - right.height) <= tolerance
+  );
+}
+
+export function hasIdolFirstFrameCoverage(proof) {
+  return (
+    isRecord(proof) &&
+    matchingRect(proof.activeLayout, proof.outgoingLayout) &&
+    matchingRect(proof.outgoingRect, proof.visualRect)
+  );
+}
+
 export function assessMotionPerformance(metrics, expectedWidth) {
   const errors = [];
   if (!isRecord(metrics)) {
@@ -1342,7 +1368,7 @@ export function assessMotionEvidenceShape(results) {
     idol.mouse.firstFrame.outgoingOpacity < 0.99
   ) {
     errors.push(
-      "idol switch first frame must preserve outgoing coverage while active starts transparent",
+      `idol switch first frame must preserve outgoing coverage while active starts transparent; measured ${JSON.stringify(idol?.mouse?.firstFrame ?? null)}`,
     );
   }
   if (
@@ -4123,35 +4149,67 @@ async function runMouseAndKeyboardMotion({ browser, candidate, origin }) {
       undefined,
       { polling: 10 },
     );
-    const firstFrame = await panel.evaluate((element) => {
+    const firstFrameMeasurement = await panel.evaluate((element) => {
       const active = element.querySelector(
         '.fs-motion-idol__media-layer[data-layer="active"]',
       );
       const outgoing = element.querySelector(
         '.fs-motion-idol__media-layer[data-layer="outgoing"]',
       );
+      const visual = element.querySelector(".fs-motion-idol__visual");
       if (
         !(active instanceof HTMLElement) ||
-        !(outgoing instanceof HTMLElement)
+        !(outgoing instanceof HTMLElement) ||
+        !(visual instanceof HTMLElement)
       ) {
         return null;
       }
       const activeRect = active.getBoundingClientRect();
       const outgoingRect = outgoing.getBoundingClientRect();
+      const visualRect = visual.getBoundingClientRect();
       return {
+        activeLayout: {
+          height: active.offsetHeight,
+          left: active.offsetLeft,
+          top: active.offsetTop,
+          width: active.offsetWidth,
+        },
         activeOpacity: Number(getComputedStyle(active).opacity),
-        coverage:
-          Math.abs(activeRect.left - outgoingRect.left) <= 1 &&
-          Math.abs(activeRect.top - outgoingRect.top) <= 1 &&
-          Math.abs(activeRect.width - outgoingRect.width) <= 1 &&
-          Math.abs(activeRect.height - outgoingRect.height) <= 1,
+        activeRect: {
+          height: activeRect.height,
+          left: activeRect.left,
+          top: activeRect.top,
+          width: activeRect.width,
+        },
+        outgoingLayout: {
+          height: outgoing.offsetHeight,
+          left: outgoing.offsetLeft,
+          top: outgoing.offsetTop,
+          width: outgoing.offsetWidth,
+        },
         outgoingOpacity: Number(getComputedStyle(outgoing).opacity),
+        outgoingRect: {
+          height: outgoingRect.height,
+          left: outgoingRect.left,
+          top: outgoingRect.top,
+          width: outgoingRect.width,
+        },
+        visualRect: {
+          height: visualRect.height,
+          left: visualRect.left,
+          top: visualRect.top,
+          width: visualRect.width,
+        },
       };
     });
     invariant(
-      firstFrame !== null,
+      firstFrameMeasurement !== null,
       "idol switch prepare frame must be measurable",
     );
+    const firstFrame = {
+      ...firstFrameMeasurement,
+      coverage: hasIdolFirstFrameCoverage(firstFrameMeasurement),
+    };
     const mouseFocusPreserved = await page.evaluate(
       () =>
         document.activeElement?.matches(".fs-motion-idol__radio:checked") ===

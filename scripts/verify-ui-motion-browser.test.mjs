@@ -40,6 +40,7 @@ async function loadRunner() {
     "createMotionScenarioMatrix",
     "createMotionScreenshotPaths",
     "createMotionEvidenceCleanup",
+    "hasIdolFirstFrameCoverage",
     "installMotionSignalCleanup",
     "normalizeMotionWorkspaceStatus",
     "recoverMotionEvidenceSwap",
@@ -820,6 +821,26 @@ test("requires the runtime font set to use optional and match the locale profile
     assessRuntimeFontEvidence(forgedComputed, "en").join("\n"),
     /computed.*Manrope Variable/iu,
   );
+});
+
+test("measures idol first-frame coverage from layout boxes, not the intentional active transform", async () => {
+  const { hasIdolFirstFrameCoverage } = await loadRunner();
+  const proof = {
+    activeLayout: { height: 1_038, left: 0, top: 0, width: 830 },
+    activeRect: { height: 1_043, left: 15, top: -3, width: 834 },
+    outgoingLayout: { height: 1_038, left: 0, top: 0, width: 830 },
+    outgoingRect: { height: 1_038, left: 48, top: 490, width: 830 },
+    visualRect: { height: 1_038, left: 48, top: 490, width: 830 },
+  };
+  assert.equal(hasIdolFirstFrameCoverage(proof), true);
+
+  const clipped = structuredClone(proof);
+  clipped.outgoingRect.width -= 2;
+  assert.equal(hasIdolFirstFrameCoverage(clipped), false);
+
+  const mismatchedLayout = structuredClone(proof);
+  mismatchedLayout.activeLayout.height -= 2;
+  assert.equal(hasIdolFirstFrameCoverage(mismatchedLayout), false);
 });
 
 test("requires 390 and 1440 reduced-motion evidence with no movement", async () => {
