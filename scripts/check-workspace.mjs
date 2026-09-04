@@ -77,8 +77,11 @@ const requiredRootFiles = [
   "scripts/check-build-artifacts.mjs",
   "scripts/check-ci.mjs",
   "scripts/check-contracts.mjs",
+  "scripts/check-design-foundations.mjs",
+  "scripts/check-design-foundations.test.mjs",
   "scripts/generate-contract-artifacts.mjs",
   "scripts/scan-secrets.mjs",
+  "packages/design-tokens/THIRD_PARTY_NOTICES.md",
   "tsconfig.base.json",
   "turbo.json",
   "vitest.config.ts",
@@ -91,6 +94,7 @@ const requiredRootScripts = [
   "check:artifacts",
   "check:ci",
   "check:contracts",
+  "check:design-foundations",
   "contracts:generate",
   "format:check",
   "lint",
@@ -248,6 +252,11 @@ async function validateWorkspace() {
 
     if (!rootManifest.scripts?.check?.includes("pnpm check:contracts")) {
       errors.push("root check script must run the contract freshness gate");
+    }
+    if (
+      !rootManifest.scripts?.check?.includes("pnpm check:design-foundations")
+    ) {
+      errors.push("root check script must run the design foundation gate");
     }
     if (!rootManifest.scripts?.check?.includes("pnpm test:postgres")) {
       errors.push("root check script must run the PostgreSQL migration gate");

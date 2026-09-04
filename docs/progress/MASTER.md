@@ -3,7 +3,7 @@
 > 最后更新：2026-09-04
 > 当前里程碑：M2 品牌样板（M1 可信内核已完成）
 > 当前 ACTIVE Phase：Phase 2
-> 当前任务：`P2-01`（Lane B，Codex `/root`）；Lane A/C/D 无 executor
+> 当前任务：`P2-01`（REVIEW，Lane B，Codex `/root`）；Lane A/C/D 无 executor
 > 下一可领取任务：无；P2-02 等待 P2-01 完成
 
 ## 1. 开工入口
@@ -24,9 +24,9 @@
 |:--|--:|
 | PENDING | 37 |
 | READY | 0 |
-| IN_PROGRESS | 1 |
+| IN_PROGRESS | 0 |
 | BLOCKED | 0 |
-| REVIEW | 0 |
+| REVIEW | 1 |
 | DONE | 11 |
 | DEFERRED | 0 |
 | **总计** | **49** |

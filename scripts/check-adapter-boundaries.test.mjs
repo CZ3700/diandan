@@ -423,6 +423,81 @@ test("rejects provider dependencies declared by inner packages", async (context)
   );
 });
 
+test("allows only the reviewed font assets in the design-token package", async (context) => {
+  const validateAdapterBoundaries = await loadValidator();
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  await writeInnerPackageFixture(root, "design-tokens");
+  await writePackageManifest(
+    root,
+    "design-tokens",
+    "@fan-support/design-tokens",
+    {
+      dependencies: {
+        "@fontsource-variable/manrope": "5.3.0",
+        "@fontsource-variable/noto-sans": "5.3.0",
+        "@fontsource-variable/noto-sans-jp": "5.3.0",
+        "@fontsource-variable/noto-sans-sc": "5.3.0",
+        "@fontsource-variable/noto-sans-thai": "5.3.0",
+      },
+    },
+  );
+
+  const errors = await validateAdapterBoundaries(root);
+  assert.ok(
+    !errors.some((error) => error.includes("@fontsource-variable/")),
+    `expected reviewed design-token font assets to remain allowed: ${errors.join(" | ")}`,
+  );
+});
+
+test("rejects font-package scope expansion and alias bypasses", async (context) => {
+  const validateAdapterBoundaries = await loadValidator();
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  await writeInnerPackageFixture(root, "design-tokens");
+  await writePackageManifest(
+    root,
+    "design-tokens",
+    "@fan-support/design-tokens",
+    {
+      dependencies: {
+        "@fontsource-variable/rogue": "5.3.0",
+        zod: "npm:@fontsource-variable/rogue@5.3.0",
+      },
+    },
+  );
+  await writePackageManifest(root, "domain", "@fan-support/domain", {
+    dependencies: { "@fontsource-variable/manrope": "5.3.0" },
+  });
+
+  const errors = await validateAdapterBoundaries(root);
+  assert.ok(
+    errors.some(
+      (error) =>
+        error.includes("packages/design-tokens/package.json") &&
+        error.includes("forbidden provider dependency") &&
+        error.includes("@fontsource-variable/rogue"),
+    ),
+    `expected unreviewed font package to fail closed: ${errors.join(" | ")}`,
+  );
+  assert.ok(
+    errors.some(
+      (error) =>
+        error.includes("npm alias target") &&
+        error.includes("@fontsource-variable/rogue"),
+    ),
+    `expected font npm alias target to fail closed: ${errors.join(" | ")}`,
+  );
+  assert.ok(
+    errors.some(
+      (error) =>
+        error.includes("packages/domain/package.json") &&
+        error.includes("@fontsource-variable/manrope"),
+    ),
+    `expected the font exception to stay scoped to design-tokens: ${errors.join(" | ")}`,
+  );
+});
+
 test("rejects known adapter imports and dependencies from inner-layer packages", async (context) => {
   const validateAdapterBoundaries = await loadValidator();
   const root = await fixture();

@@ -3,16 +3,35 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "./styles/**/*.css"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./foundations.css": "./styles/foundations.css",
+    "./fonts/japanese.css": "./styles/fonts/japanese.css",
+    "./fonts/latin.css": "./styles/fonts/latin.css",
+    "./fonts/simplified-chinese.css": "./styles/fonts/simplified-chinese.css",
+    "./fonts/thai.css": "./styles/fonts/thai.css",
+    "./fonts/vietnamese.css": "./styles/fonts/vietnamese.css"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run --config ../../vitest.config.ts --root .",
     "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@fan-support/contracts": "workspace:*",
+    "@fontsource-variable/manrope": "5.3.0",
+    "@fontsource-variable/noto-sans": "5.3.0",
+    "@fontsource-variable/noto-sans-jp": "5.3.0",
+    "@fontsource-variable/noto-sans-sc": "5.3.0",
+    "@fontsource-variable/noto-sans-thai": "5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3"
   }
 }
