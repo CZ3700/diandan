@@ -2,21 +2,10 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test, vi } from "vitest";
 
 import type { SupportedLocale } from "@fan-support/contracts";
-
-async function loadInteractions() {
-  const loaded = await import("./interactions.js");
-
-  expect(
-    loaded,
-    "the dedicated client interaction entry must exist",
-  ).toBeDefined();
-  return loaded;
-}
+import * as interactions from "./interactions.js";
 
 describe("interaction entry", () => {
-  test("exports only the approved interactive primitives", async () => {
-    const interactions = await loadInteractions();
-
+  test("exports only the approved interactive primitives", () => {
     expect(Object.keys(interactions).sort()).toEqual([
       "Dialog",
       "Drawer",
@@ -41,8 +30,8 @@ describe("LiveRegion", () => {
     ["assertive", "alert", "assertive"],
   ] as const)(
     "renders an atomic %s announcement without a focus target",
-    async (politeness, role, ariaLive) => {
-      const { LiveRegion } = await loadInteractions();
+    (politeness, role, ariaLive) => {
+      const { LiveRegion } = interactions;
       const markup = renderToStaticMarkup(
         <LiveRegion message="Selection updated" politeness={politeness} />,
       );
@@ -57,8 +46,8 @@ describe("LiveRegion", () => {
 });
 
 describe("overlay contracts", () => {
-  test("requires accessible trigger, title, description, and close copy", async () => {
-    const { Dialog } = await loadInteractions();
+  test("requires accessible trigger, title, description, and close copy", () => {
+    const { Dialog } = interactions;
     const base = {
       closeLabel: "Close",
       description: "A focused decision",
@@ -76,8 +65,8 @@ describe("overlay contracts", () => {
 });
 
 describe("selection controls", () => {
-  test("renders the canonical native language name without deriving region", async () => {
-    const { LanguageControl } = await loadInteractions();
+  test("renders the canonical native language name without deriving region", () => {
+    const { LanguageControl } = interactions;
     const onValueChange = vi.fn<(locale: SupportedLocale) => void>();
     const markup = renderToStaticMarkup(
       <LanguageControl
@@ -95,8 +84,8 @@ describe("selection controls", () => {
     expect(markup).not.toContain("currency");
   });
 
-  test("renders caller-owned region copy without deriving locale or currency", async () => {
-    const { RegionControl } = await loadInteractions();
+  test("renders caller-owned region copy without deriving locale or currency", () => {
+    const { RegionControl } = interactions;
     const markup = renderToStaticMarkup(
       <RegionControl
         label="Region"
@@ -123,8 +112,8 @@ describe("selection controls", () => {
     expect(markup).not.toContain("English");
   });
 
-  test("rejects duplicate, empty, or missing selected options", async () => {
-    const { RegionControl } = await loadInteractions();
+  test("rejects duplicate, empty, or missing selected options", () => {
+    const { RegionControl } = interactions;
     const base = {
       label: "Region",
       onValueChange: vi.fn(),
