@@ -1,0 +1,428 @@
+{
+  "addToCart": {
+    "buttonFocused": true,
+    "stateDelayMs": 48.19999980926514,
+    "liveAnnouncement": true,
+    "pendingObserved": true,
+    "countDelta": 1,
+    "interruption": {
+      "countStableOnError": true,
+      "errorLive": true,
+      "pendingObserved": true,
+      "resetToIdle": true
+    },
+    "timing": {
+      "items": [
+        {
+          "activeDurationMs": 220,
+          "delayMs": 0,
+          "durationMs": 220,
+          "endDelayMs": 0,
+          "endTimeMs": 220,
+          "iterations": 1,
+          "property": "box-shadow"
+        },
+        {
+          "activeDurationMs": 220,
+          "delayMs": 0,
+          "durationMs": 220,
+          "endDelayMs": 0,
+          "endTimeMs": 220,
+          "iterations": 1,
+          "property": "opacity"
+        },
+        {
+          "activeDurationMs": 220,
+          "delayMs": 0,
+          "durationMs": 220,
+          "endDelayMs": 0,
+          "endTimeMs": 220,
+          "iterations": 1,
+          "property": "opacity"
+        }
+      ],
+      "maxActiveDurationMs": 220,
+      "maxEndTimeMs": 220
+    },
+    "visualDurationMs": 220,
+    "visualFrames": {
+      "end": {
+        "actionOpacity": 0,
+        "confirmedOpacity": 1
+      },
+      "start": {
+        "actionOpacity": 1,
+        "confirmedOpacity": 0
+      }
+    }
+  },
+  "hero": {
+    "desktop": {
+      "durationMs": 720,
+      "frameStates": [
+        {
+          "name": "start",
+          "contentOpacity": "0",
+          "contentTransform": "matrix(1, 0, 0, 1, 0, 12)",
+          "mediaOpacity": "0.72",
+          "mediaTransform": "matrix(1.018, 0, 0, 1.018, 0, 0)",
+          "rect": {
+            "height": 810,
+            "left": 0,
+            "top": 232.96875,
+            "width": 1440
+          }
+        },
+        {
+          "name": "mid",
+          "contentOpacity": "0.961383",
+          "contentTransform": "matrix(1, 0, 0, 1, 0, 0.463409)",
+          "mediaOpacity": "0.989187",
+          "mediaTransform": "matrix(1.0007, 0, 0, 1.0007, 0, 0)",
+          "rect": {
+            "height": 810,
+            "left": 0,
+            "top": 232.96875,
+            "width": 1440
+          }
+        },
+        {
+          "name": "end",
+          "contentOpacity": "1",
+          "contentTransform": "none",
+          "mediaOpacity": "1",
+          "mediaTransform": "none",
+          "rect": {
+            "height": 810,
+            "left": 0,
+            "top": 232.96875,
+            "width": 1440
+          }
+        }
+      ],
+      "frames": [
+        "start",
+        "mid",
+        "end"
+      ],
+      "layoutShift": 0,
+      "timing": {
+        "items": [
+          {
+            "activeDurationMs": 720,
+            "delayMs": 0,
+            "durationMs": 720,
+            "endDelayMs": 0,
+            "endTimeMs": 720,
+            "iterations": 1,
+            "property": "fs-motion-hero-media-enter"
+          },
+          {
+            "activeDurationMs": 720,
+            "delayMs": 0,
+            "durationMs": 720,
+            "endDelayMs": 0,
+            "endTimeMs": 720,
+            "iterations": 1,
+            "property": "fs-motion-hero-copy-enter"
+          }
+        ],
+        "maxActiveDurationMs": 720,
+        "maxEndTimeMs": 720
+      }
+    },
+    "mobile": {
+      "durationMs": 720,
+      "frameStates": [
+        {
+          "name": "start",
+          "contentOpacity": "0",
+          "contentTransform": "matrix(1, 0, 0, 1, 0, 12)",
+          "mediaOpacity": "0.72",
+          "mediaTransform": "matrix(1.018, 0, 0, 1.018, 0, 0)",
+          "rect": {
+            "height": 544,
+            "left": 0,
+            "top": 226.1875,
+            "width": 390
+          }
+        },
+        {
+          "name": "mid",
+          "contentOpacity": "0.961383",
+          "contentTransform": "matrix(1, 0, 0, 1, 0, 0.463409)",
+          "mediaOpacity": "0.989187",
+          "mediaTransform": "matrix(1.0007, 0, 0, 1.0007, 0, 0)",
+          "rect": {
+            "height": 544,
+            "left": 0,
+            "top": 226.1875,
+            "width": 390
+          }
+        },
+        {
+          "name": "end",
+          "contentOpacity": "1",
+          "contentTransform": "none",
+          "mediaOpacity": "1",
+          "mediaTransform": "none",
+          "rect": {
+            "height": 544,
+            "left": 0,
+            "top": 226.1875,
+            "width": 390
+          }
+        }
+      ],
+      "frames": [
+        "start",
+        "mid",
+        "end"
+      ],
+      "layoutShift": 0,
+      "timing": {
+        "items": [
+          {
+            "activeDurationMs": 720,
+            "delayMs": 0,
+            "durationMs": 720,
+            "endDelayMs": 0,
+            "endTimeMs": 720,
+            "iterations": 1,
+            "property": "fs-motion-hero-media-enter"
+          },
+          {
+            "activeDurationMs": 720,
+            "delayMs": 0,
+            "durationMs": 720,
+            "endDelayMs": 0,
+            "endTimeMs": 720,
+            "iterations": 1,
+            "property": "fs-motion-hero-copy-enter"
+          }
+        ],
+        "maxActiveDurationMs": 720,
+        "maxEndTimeMs": 720
+      }
+    }
+  },
+  "idolSwitch": {
+    "keyboard": {
+      "animationMs": 0,
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "transitionMs": 0,
+      "durationMs": 0,
+      "focusPreserved": true,
+      "mode": "instant"
+    },
+    "latestWins": {
+      "attempts": 10,
+      "cleared": true,
+      "outgoingCount": 0,
+      "selected": "mira-vale"
+    },
+    "rapidReverse": {
+      "activeOpacity": 1,
+      "activeReady": true,
+      "activeVisible": true,
+      "blankFrame": false,
+      "cancelled": true,
+      "outgoingCount": 0,
+      "selected": "mira-vale"
+    },
+    "mouse": {
+      "durationMs": 360,
+      "firstFrame": {
+        "activeLayout": {
+          "height": 1038,
+          "left": 48,
+          "top": 1304,
+          "width": 830
+        },
+        "activeOpacity": 0,
+        "activeRect": {
+          "height": 1042.6875,
+          "left": 62.524993896484375,
+          "top": 487.734375,
+          "width": 834.1500244140625
+        },
+        "outgoingLayout": {
+          "height": 1038,
+          "left": 48,
+          "top": 1304,
+          "width": 830
+        },
+        "outgoingOpacity": 1,
+        "outgoingRect": {
+          "height": 1037.5,
+          "left": 48,
+          "top": 490.328125,
+          "width": 830
+        },
+        "visualRect": {
+          "height": 1037.5,
+          "left": 48,
+          "top": 490.328125,
+          "width": 830
+        },
+        "coverage": true
+      },
+      "focusPreserved": true,
+      "mode": "spatial",
+      "timing": {
+        "items": [
+          {
+            "activeDurationMs": 360,
+            "delayMs": 0,
+            "durationMs": 360,
+            "endDelayMs": 0,
+            "endTimeMs": 360,
+            "iterations": 1,
+            "property": "opacity"
+          },
+          {
+            "activeDurationMs": 360,
+            "delayMs": 0,
+            "durationMs": 360,
+            "endDelayMs": 0,
+            "endTimeMs": 360,
+            "iterations": 1,
+            "property": "transform"
+          },
+          {
+            "activeDurationMs": 360,
+            "delayMs": 0,
+            "durationMs": 360,
+            "endDelayMs": 0,
+            "endTimeMs": 360,
+            "iterations": 1,
+            "property": "opacity"
+          },
+          {
+            "activeDurationMs": 360,
+            "delayMs": 0,
+            "durationMs": 360,
+            "endDelayMs": 0,
+            "endTimeMs": 360,
+            "iterations": 1,
+            "property": "transform"
+          }
+        ],
+        "maxActiveDurationMs": 360,
+        "maxEndTimeMs": 360
+      },
+      "visualFrames": {
+        "end": {
+          "activeOpacity": 1,
+          "outgoingOpacity": 0
+        },
+        "start": {
+          "activeOpacity": 0,
+          "outgoingOpacity": 1
+        }
+      }
+    },
+    "scrollPreserved": true,
+    "activeImage": {
+      "blockedWhileLoading": true,
+      "complete": true,
+      "decodeResolvedBeforeExit": true,
+      "fallbackVisible": false,
+      "naturalWidth": 1122
+    },
+    "decodeRejectionFallback": {
+      "activeVisible": true,
+      "blankFrame": false,
+      "decodeRejected": true,
+      "fallbackVisible": true,
+      "outgoingCount": 0,
+      "outgoingRetainedBeforeError": true,
+      "prepareAfterReject": true,
+      "prepareBeforeReject": true,
+      "settledAfterFallback": true
+    },
+    "touch": {
+      "durationMs": 220,
+      "mode": "opacity",
+      "timing": {
+        "items": [
+          {
+            "activeDurationMs": 220,
+            "delayMs": 0,
+            "durationMs": 220,
+            "endDelayMs": 0,
+            "endTimeMs": 220,
+            "iterations": 1,
+            "property": "opacity"
+          },
+          {
+            "activeDurationMs": 220,
+            "delayMs": 0,
+            "durationMs": 220,
+            "endDelayMs": 0,
+            "endTimeMs": 220,
+            "iterations": 1,
+            "property": "opacity"
+          }
+        ],
+        "maxActiveDurationMs": 220,
+        "maxEndTimeMs": 220
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "transitionProperties": [
+        "opacity"
+      ],
+      "visualFrames": {
+        "end": {
+          "activeOpacity": 1,
+          "outgoingOpacity": 0
+        },
+        "start": {
+          "activeOpacity": 0,
+          "outgoingOpacity": 1
+        }
+      }
+    }
+  },
+  "success": {
+    "durationMs": 720,
+    "remainingAnimations": 0,
+    "statusClear": true,
+    "timing": {
+      "items": [
+        {
+          "activeDurationMs": 720,
+          "delayMs": 0,
+          "durationMs": 720,
+          "endDelayMs": 0,
+          "endTimeMs": 720,
+          "iterations": 1,
+          "property": "fs-motion-success-marker"
+        },
+        {
+          "activeDurationMs": 720,
+          "delayMs": 0,
+          "durationMs": 720,
+          "endDelayMs": 0,
+          "endTimeMs": 720,
+          "iterations": 1,
+          "property": "fs-motion-success-copy"
+        }
+      ],
+      "maxActiveDurationMs": 720,
+      "maxEndTimeMs": 720
+    },
+    "visualFrames": {
+      "end": {
+        "bodyOpacity": 1,
+        "markerOpacity": 1,
+        "markerTransform": "none"
+      },
+      "start": {
+        "bodyOpacity": 0,
+        "markerOpacity": 0,
+        "markerTransform": "matrix(0.96, 0, 0, 0.96, 0, 8)"
+      }
+    }
+  }
+}
