@@ -3,8 +3,8 @@
 > 最后更新：2026-09-04
 > 当前里程碑：M2 品牌样板（M1 可信内核已完成）
 > 当前 ACTIVE Phase：Phase 2
-> 当前任务：无在执行任务；Lane B 已由完成的 `P2-02` 释放
-> 下一可领取任务：`P2-03`（READY，Lane B）
+> 当前任务：`P2-03`（IN_PROGRESS，Codex `/root`，Lane B）
+> 下一可领取任务：无；P2-04 与当前任务同属 Lane B
 
 ## 1. 开工入口
 
@@ -16,15 +16,15 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前唯一可领取任务为 `P2-03`。P2-04 虽已满足直接依赖，但与 P2-03 同属 Lane B，保持 `PENDING` 以维持单一领取入口。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 P2-03 已由 Codex `/root` 领取并独占 Lane B，没有其他可领取任务。P2-04 虽已满足直接依赖，但必须等待 Lane B 释放。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
 | PENDING | 35 |
-| READY | 1 |
-| IN_PROGRESS | 0 |
+| READY | 0 |
+| IN_PROGRESS | 1 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
 | DONE | 13 |
@@ -78,7 +78,7 @@
 
 ## 5. 最新证据
 
-已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据。P0-05 已取得本地 request/trace、日志隐私、故障/关闭、浏览器、clean-clone 与真实 PR 必需检查证据并标记 DONE。P1-01 已取得 v1 合同、确定性 artifact、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-02 已取得自研内容/商品/价格/库存/媒体/政策合同、七语言发布门、公开投影、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-03 已取得纯 domain 合同/实现、本地与 clean-clone 0-cache 门禁、三路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-04 已取得 6 个 versioned migration/108 表 catalog、真实 PG18 空库与带数据升降级、并发/隐私/authority/append-only 对抗约束、clean clone、两路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-05 已取得七类 versioned ports/conformance、PostgreSQL repositories/transactions、S3-compatible media、CloudFront purge、KMS、TEST-only fake adapters、9 migrations/108 tables、真实 PG/S3 TLS、浏览器、fresh clean-clone、独立终审与 [PR #8](https://github.com/CZ3700/diandan/pull/8) 的真实 Quality/Security，任务已标记 `DONE`。P1-06 已取得 raw-body 验签、durable receipt、inbox/outbox、ID-only pg-boss retry/DLQ、Worker trace 恢复、真实事务并发/回滚、fresh clean-clone、独立终审与 [PR #9](https://github.com/CZ3700/diandan/pull/9) 的真实 Quality/Security，任务已标记 `DONE`，Phase 1 `CLOSED`。P2-01 已取得共享 design tokens、五类按 script/locale 分包的自托管字体、对比安全 accent、响应式主题/网格、六视口/320/真实 200% zoom/键盘/reduced-motion、fresh clean-clone、独立终验与 [PR #10](https://github.com/CZ3700/diandan/pull/10) 的真实 Quality/Security，任务已标记 `DONE`；P2-02 已取得八类原语、精确 server/client/CSS 出口、13 场景/6 axe/3 环境 gate/15 截图、真实 Media decode fallback、Chrome 原生 200% zoom、fresh clean-clone、独立终验与 [PR #11](https://github.com/CZ3700/diandan/pull/11) 的真实 Quality/Security，任务已标记 `DONE`，P2-03 成为唯一 `READY` 任务。Phase 2 仍为唯一 `ACTIVE` Phase，Phase 3 继续等待其退出门禁。ADR-007 已关闭生产基础设施**选型**门并补入 P5-08 IaC/staging 任务；这些仍都不是 AWS apply、staging、生产、恢复或发布证据。
+已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据。P0-05 已取得本地 request/trace、日志隐私、故障/关闭、浏览器、clean-clone 与真实 PR 必需检查证据并标记 DONE。P1-01 已取得 v1 合同、确定性 artifact、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-02 已取得自研内容/商品/价格/库存/媒体/政策合同、七语言发布门、公开投影、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-03 已取得纯 domain 合同/实现、本地与 clean-clone 0-cache 门禁、三路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-04 已取得 6 个 versioned migration/108 表 catalog、真实 PG18 空库与带数据升降级、并发/隐私/authority/append-only 对抗约束、clean clone、两路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-05 已取得七类 versioned ports/conformance、PostgreSQL repositories/transactions、S3-compatible media、CloudFront purge、KMS、TEST-only fake adapters、9 migrations/108 tables、真实 PG/S3 TLS、浏览器、fresh clean-clone、独立终审与 [PR #8](https://github.com/CZ3700/diandan/pull/8) 的真实 Quality/Security，任务已标记 `DONE`。P1-06 已取得 raw-body 验签、durable receipt、inbox/outbox、ID-only pg-boss retry/DLQ、Worker trace 恢复、真实事务并发/回滚、fresh clean-clone、独立终审与 [PR #9](https://github.com/CZ3700/diandan/pull/9) 的真实 Quality/Security，任务已标记 `DONE`，Phase 1 `CLOSED`。P2-01 已取得共享 design tokens、五类按 script/locale 分包的自托管字体、对比安全 accent、响应式主题/网格、六视口/320/真实 200% zoom/键盘/reduced-motion、fresh clean-clone、独立终验与 [PR #10](https://github.com/CZ3700/diandan/pull/10) 的真实 Quality/Security，任务已标记 `DONE`；P2-02 已取得八类原语、精确 server/client/CSS 出口、13 场景/6 axe/3 环境 gate/15 截图、真实 Media decode fallback、Chrome 原生 200% zoom、fresh clean-clone、独立终验与 [PR #11](https://github.com/CZ3700/diandan/pull/11) 的真实 Quality/Security，任务已标记 `DONE`。P2-03 现由 Codex `/root` 领取并独占 Lane B，P2-04 继续等待。Phase 2 仍为唯一 `ACTIVE` Phase，Phase 3 继续等待其退出门禁。ADR-007 已关闭生产基础设施**选型**门并补入 P5-08 IaC/staging 任务；这些仍都不是 AWS apply、staging、生产、恢复或发布证据。
 
 | 日期 | Task | 类型 | 证据 | 结论 |
 |:--|:--|:--|:--|:--|
