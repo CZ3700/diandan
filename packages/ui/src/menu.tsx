@@ -1,6 +1,9 @@
 "use client";
 
-import { Menu as MenuPrimitive } from "@base-ui/react/menu";
+import {
+  Menu as MenuPrimitive,
+  type MenuRootChangeEventDetails,
+} from "@base-ui/react/menu";
 import { useEffect, useRef, useState, type ReactElement } from "react";
 
 import { Icon } from "./icon.js";
@@ -32,10 +35,26 @@ function useMenuScrollLock(open: boolean): void {
 
     const root = document.documentElement;
     const currentLock = lock.current;
+    const preventOutsideTouchScroll = (event: TouchEvent) => {
+      const insidePopup = event
+        .composedPath()
+        .some(
+          (target) =>
+            target instanceof Element &&
+            target.classList.contains("fs-menu__popup"),
+        );
+      if (!insidePopup) {
+        event.preventDefault();
+      }
+    };
     activeMenuScrollLocks.add(currentLock);
     root.setAttribute(MENU_SCROLL_LOCK_ATTRIBUTE, "");
+    document.addEventListener("touchmove", preventOutsideTouchScroll, {
+      passive: false,
+    });
 
     return () => {
+      document.removeEventListener("touchmove", preventOutsideTouchScroll);
       activeMenuScrollLocks.delete(currentLock);
       if (activeMenuScrollLocks.size === 0) {
         root.removeAttribute(MENU_SCROLL_LOCK_ATTRIBUTE);
@@ -84,9 +103,28 @@ export function Menu<Value extends string>({
   const [open, setOpen] = useState(false);
   useMenuScrollLock(open);
   const selected = validateOptions(label, options, value);
+  const handleOpenChange = (
+    nextOpen: boolean,
+    eventDetails: MenuRootChangeEventDetails,
+  ) => {
+    if (
+      !nextOpen &&
+      eventDetails.reason === "outside-press" &&
+      eventDetails.event.type === "touchmove"
+    ) {
+      eventDetails.cancel();
+      return;
+    }
+    setOpen(nextOpen);
+  };
 
   return (
-    <MenuPrimitive.Root loopFocus modal onOpenChange={setOpen} open={open}>
+    <MenuPrimitive.Root
+      loopFocus
+      modal
+      onOpenChange={handleOpenChange}
+      open={open}
+    >
       <MenuPrimitive.Trigger className="fs-menu__trigger">
         <span className="fs-menu__trigger-copy">
           <span className="fs-menu__label">{label}</span>

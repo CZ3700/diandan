@@ -486,6 +486,7 @@ function validateCanonicalLocaleSource(
 
 function validateMenuScrollLock(source, css, errors) {
   if (source !== undefined) {
+    const sourceFile = parseSource(source, MENU_PATH);
     const rootTag = source.match(/<MenuPrimitive\.Root\b([\s\S]*?)>/u)?.[1];
     const openName = rootTag?.match(
       /\bopen=\{\s*([A-Za-z_$][\w$]*)\s*\}/u,
@@ -499,11 +500,33 @@ function validateMenuScrollLock(source, css, errors) {
               "u",
             ),
           )?.[1];
+    const openChangeHandler = rootTag?.match(
+      /\bonOpenChange=\{\s*([A-Za-z_$][\w$]*)\s*\}/u,
+    )?.[1];
+    let openChangeHandlerSource = "";
+    if (openChangeHandler !== undefined) {
+      const visitOpenChangeHandler = (node) => {
+        if (
+          (ts.isFunctionDeclaration(node) &&
+            node.name?.text === openChangeHandler) ||
+          (ts.isVariableDeclaration(node) &&
+            ts.isIdentifier(node.name) &&
+            node.name.text === openChangeHandler)
+        ) {
+          openChangeHandlerSource = node.getText(sourceFile);
+          return;
+        }
+        ts.forEachChild(node, visitOpenChangeHandler);
+      };
+      visitOpenChangeHandler(sourceFile);
+    }
     const hasControlledChange =
       openSetter !== undefined &&
-      new RegExp(`\\bonOpenChange=\\{\\s*${openSetter}\\s*\\}`, "u").test(
-        rootTag ?? "",
-      );
+      openChangeHandler !== undefined &&
+      (openChangeHandler === openSetter ||
+        new RegExp(`\\b${openSetter}\\s*\\(`, "u").test(
+          openChangeHandlerSource,
+        ));
     const openDrivesEffect =
       openName !== undefined &&
       /\buseEffect\s*\(/u.test(source) &&
@@ -515,6 +538,39 @@ function validateMenuScrollLock(source, css, errors) {
 
     if (!hasControlledChange || !openDrivesEffect) {
       errors.push("Menu must use a controlled open state for scroll locking");
+    }
+
+    if (
+      !openChangeHandlerSource.includes(
+        'eventDetails.reason === "outside-press"',
+      ) ||
+      !openChangeHandlerSource.includes(
+        'eventDetails.event.type === "touchmove"',
+      ) ||
+      !/\beventDetails\.cancel\s*\(\s*\)/u.test(openChangeHandlerSource)
+    ) {
+      errors.push(
+        "Menu must cancel touchmove outside dismissal while scroll lock is active",
+      );
+    }
+
+    const hasOutsideTouchPrevention =
+      /\bdocument\.addEventListener\s*\(\s*["']touchmove["']\s*,\s*preventOutsideTouchScroll\s*,\s*\{\s*passive\s*:\s*false\s*,?\s*\}\s*\)/u.test(
+        source,
+      ) &&
+      /\bdocument\.removeEventListener\s*\(\s*["']touchmove["']\s*,\s*preventOutsideTouchScroll\s*\)/u.test(
+        source,
+      ) &&
+      /\bevent\s*\.\s*composedPath\s*\(\s*\)/u.test(source) &&
+      /\bclassList\.contains\s*\(\s*["']fs-menu__popup["']\s*\)/u.test(
+        source,
+      ) &&
+      /\bif\s*\(\s*!\s*insidePopup\s*\)/u.test(source) &&
+      /\bevent\.preventDefault\s*\(\s*\)/u.test(source);
+    if (!hasOutsideTouchPrevention) {
+      errors.push(
+        "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
+      );
     }
 
     let hasSharedReferenceTracking = false;
@@ -566,7 +622,6 @@ function validateMenuScrollLock(source, css, errors) {
       );
     }
 
-    const sourceFile = parseSource(source, MENU_PATH);
     let indicatorCount = 0;
     let mountedIndicatorCount = 0;
     const visitIndicator = (node) => {

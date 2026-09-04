@@ -109,27 +109,42 @@ export type { ToastController, ToastMessage, ToastProviderProps } from "./toast.
     root,
     "packages/ui/src/menu.tsx",
     `"use client";
-import { Menu as MenuPrimitive } from "@base-ui/react/menu";
+import { Menu as MenuPrimitive, type MenuRootChangeEventDetails } from "@base-ui/react/menu";
 import { useEffect, useState } from "react";
 import { Icon } from "./icon.js";
 const MENU_SCROLL_LOCK_ATTRIBUTE = "data-fs-menu-scroll-lock";
 let menuScrollLockCount = 0;
 function acquireMenuScrollLock() {
   const root = document.documentElement;
+  const preventOutsideTouchScroll = (event: TouchEvent) => {
+    const insidePopup = event.composedPath().some(
+      (target) => target instanceof Element && target.classList.contains("fs-menu__popup"),
+    );
+    if (!insidePopup) event.preventDefault();
+  };
   menuScrollLockCount += 1;
   root.setAttribute(MENU_SCROLL_LOCK_ATTRIBUTE, "");
+  document.addEventListener("touchmove", preventOutsideTouchScroll, { passive: false });
   return () => {
+    document.removeEventListener("touchmove", preventOutsideTouchScroll);
     menuScrollLockCount = Math.max(0, menuScrollLockCount - 1);
     if (menuScrollLockCount === 0) root.removeAttribute(MENU_SCROLL_LOCK_ATTRIBUTE);
   };
 }
 export function Menu() {
   const [open, setOpen] = useState(false);
+  const handleOpenChange = (nextOpen: boolean, eventDetails: MenuRootChangeEventDetails) => {
+    if (!nextOpen && eventDetails.reason === "outside-press" && eventDetails.event.type === "touchmove") {
+      eventDetails.cancel();
+      return;
+    }
+    setOpen(nextOpen);
+  };
   useEffect(() => {
     if (!open) return;
     return acquireMenuScrollLock();
   }, [open]);
-  return <MenuPrimitive.Root open={open} onOpenChange={setOpen}>
+  return <MenuPrimitive.Root open={open} onOpenChange={handleOpenChange}>
     <Icon decorative name="chevron-down" />
     <MenuPrimitive.RadioItemIndicator keepMounted>
       <Icon decorative name="check" />
@@ -671,7 +686,7 @@ test("requires stable, bounded menu layout and scroll locking", async (context) 
   await replace(
     root,
     "packages/ui/src/menu.tsx",
-    "open={open} onOpenChange={setOpen}",
+    "open={open} onOpenChange={handleOpenChange}",
     "defaultOpen={open}",
   );
   await replace(
@@ -685,6 +700,18 @@ test("requires stable, bounded menu layout and scroll locking", async (context) 
     "packages/ui/src/menu.tsx",
     "root.removeAttribute(MENU_SCROLL_LOCK_ATTRIBUTE);",
     "root.toggleAttribute(MENU_SCROLL_LOCK_ATTRIBUTE);",
+  );
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    'eventDetails.event.type === "touchmove"',
+    'eventDetails.event.type === "touchend"',
+  );
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "event.preventDefault();",
+    "event.stopPropagation();",
   );
   await replace(
     root,
@@ -720,6 +747,14 @@ test("requires stable, bounded menu layout and scroll locking", async (context) 
   includesError(
     errors,
     "Menu scroll lock must set and remove data-fs-menu-scroll-lock on documentElement",
+  );
+  includesError(
+    errors,
+    "Menu must cancel touchmove outside dismissal while scroll lock is active",
+  );
+  includesError(
+    errors,
+    "Menu scroll lock must prevent outside touchmove without blocking popup scrolling",
   );
   includesError(
     errors,
