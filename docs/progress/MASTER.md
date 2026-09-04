@@ -3,8 +3,8 @@
 > 最后更新：2026-09-04
 > 当前里程碑：M2 品牌样板（M1 可信内核已完成）
 > 当前 ACTIVE Phase：Phase 2
-> 当前任务：`P2-01`（REVIEW，Lane B，Codex `/root`）；Lane A/C/D 无 executor
-> 下一可领取任务：无；P2-02 等待 P2-01 完成
+> 当前任务：无 executor；Lane A/B/C/D 均空闲
+> 下一可领取任务：`P2-02`（READY，Lane B）
 
 ## 1. 开工入口
 
@@ -16,18 +16,18 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 `P2-01` 已由 Codex `/root` 领取，Lane B 占用，其余任务尚不可领取。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；当前 P2-01 已完成并释放 Lane B，只有 `P2-02` 可领取。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 37 |
-| READY | 0 |
+| PENDING | 36 |
+| READY | 1 |
 | IN_PROGRESS | 0 |
 | BLOCKED | 0 |
-| REVIEW | 1 |
-| DONE | 11 |
+| REVIEW | 0 |
+| DONE | 12 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -74,11 +74,11 @@
 | 履约 SLA/客服承诺 | OPEN | Phase 3 内容冻结 | 待建运营决策 |
 | 邮件、观测、备份供应商 | OPEN | Phase 4/6 | 待建 ADR |
 
-这些 OPEN 项不阻塞当前 P2-01，但执行者不得自行把 sandbox 假设写成生产结论。
+这些 OPEN 项不阻塞当前 P2-02，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
 
-已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据。P0-05 已取得本地 request/trace、日志隐私、故障/关闭、浏览器、clean-clone 与真实 PR 必需检查证据并标记 DONE。P1-01 已取得 v1 合同、确定性 artifact、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-02 已取得自研内容/商品/价格/库存/媒体/政策合同、七语言发布门、公开投影、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-03 已取得纯 domain 合同/实现、本地与 clean-clone 0-cache 门禁、三路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-04 已取得 6 个 versioned migration/108 表 catalog、真实 PG18 空库与带数据升降级、并发/隐私/authority/append-only 对抗约束、clean clone、两路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-05 已取得七类 versioned ports/conformance、PostgreSQL repositories/transactions、S3-compatible media、CloudFront purge、KMS、TEST-only fake adapters、9 migrations/108 tables、真实 PG/S3 TLS、浏览器、fresh clean-clone、独立终审与 [PR #8](https://github.com/CZ3700/diandan/pull/8) 的真实 Quality/Security，任务已标记 `DONE`。P1-06 已取得 raw-body 验签、durable receipt、inbox/outbox、ID-only pg-boss retry/DLQ、Worker trace 恢复、真实事务并发/回滚、fresh clean-clone、独立终审与 [PR #9](https://github.com/CZ3700/diandan/pull/9) 的真实 Quality/Security，任务已标记 `DONE`，Phase 1 `CLOSED`；Phase 2 仍为唯一 `ACTIVE` Phase，Phase 3 继续等待其退出门禁。ADR-007 已关闭生产基础设施**选型**门并补入 P5-08 IaC/staging 任务；这些仍都不是 AWS apply、staging、生产、恢复或发布证据。
+已有 P0-01 工具链/边界骨架与 P0-03 配置边界的真实 clean-clone、独立验收证据；P0-02 的本地门禁、真实 GitHub PR CI、必需检查与平台 secret protection 均已取得可回读证据。P0-04 已取得本地四应用 UI、四个 OCI 镜像、PostgreSQL/S3-compatible TLS preview、clean-clone、独立验收与真实 PR 必需检查证据。P0-05 已取得本地 request/trace、日志隐私、故障/关闭、浏览器、clean-clone 与真实 PR 必需检查证据并标记 DONE。P1-01 已取得 v1 合同、确定性 artifact、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-02 已取得自研内容/商品/价格/库存/媒体/政策合同、七语言发布门、公开投影、clean-clone、对抗复核与真实 PR 必需检查证据并标记 DONE。P1-03 已取得纯 domain 合同/实现、本地与 clean-clone 0-cache 门禁、三路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-04 已取得 6 个 versioned migration/108 表 catalog、真实 PG18 空库与带数据升降级、并发/隐私/authority/append-only 对抗约束、clean clone、两路独立 ACCEPT 及真实 PR Quality/Security，已标记 DONE。P1-05 已取得七类 versioned ports/conformance、PostgreSQL repositories/transactions、S3-compatible media、CloudFront purge、KMS、TEST-only fake adapters、9 migrations/108 tables、真实 PG/S3 TLS、浏览器、fresh clean-clone、独立终审与 [PR #8](https://github.com/CZ3700/diandan/pull/8) 的真实 Quality/Security，任务已标记 `DONE`。P1-06 已取得 raw-body 验签、durable receipt、inbox/outbox、ID-only pg-boss retry/DLQ、Worker trace 恢复、真实事务并发/回滚、fresh clean-clone、独立终审与 [PR #9](https://github.com/CZ3700/diandan/pull/9) 的真实 Quality/Security，任务已标记 `DONE`，Phase 1 `CLOSED`。P2-01 已取得共享 design tokens、五类按 script/locale 分包的自托管字体、对比安全 accent、响应式主题/网格、六视口/320/真实 200% zoom/键盘/reduced-motion、fresh clean-clone、独立终验与 [PR #10](https://github.com/CZ3700/diandan/pull/10) 的真实 Quality/Security，任务已标记 `DONE`，P2-02 为唯一 `READY`。Phase 2 仍为唯一 `ACTIVE` Phase，Phase 3 继续等待其退出门禁。ADR-007 已关闭生产基础设施**选型**门并补入 P5-08 IaC/staging 任务；这些仍都不是 AWS apply、staging、生产、恢复或发布证据。
 
 | 日期 | Task | 类型 | 证据 | 结论 |
 |:--|:--|:--|:--|:--|
@@ -97,6 +97,7 @@
 | 2026-09-03 | P1-04 | PostgreSQL schema/migrations | Git `827ada4d2e7f821307c761addec65864aedf1a74`、[PR #7](https://github.com/CZ3700/diandan/pull/7)、[run 33739482625](https://github.com/CZ3700/diandan/actions/runs/33739482625)、`database/`、`packages/persistence-postgres/` | 6 个迁移/108 表、空库与带数据 up/down/up、并发/authority/隐私/webhook/append-only 对抗约束完成；clean clone 0-cache、secret/audit、Quality/Security 与两路独立终验全绿，任务 DONE；repository、真实 KMS/PSP/AWS/staging/PITR/production 不在本任务证据范围 |
 | 2026-09-04 | P1-05 | Ports/repositories/adapters | Git `233d11b922df485f4e448ad71cf11612a9a1f77d`、[PR #8](https://github.com/CZ3700/diandan/pull/8)、[run 33785418111](https://github.com/CZ3700/diandan/actions/runs/33785418111)、`packages/*-port/`、`packages/persistence-postgres/`、`packages/media-s3/` | 七类 versioned port/conformance、事务/repository、真实 PG18 与 TLS S3-compatible 集成、CloudFront/KMS/TEST-only fake 完成；fresh clean clone、secret/audit、Quality/Security 与独立终审全绿，任务 DONE；真实供应商/AWS apply/staging/production 与 webhook worker 不在本任务范围 |
 | 2026-09-04 | P1-06 | Webhook/inbox/outbox/worker | Git `02ee10846a3b960e6f0d7bceb0b2d269f972a0aa`、[PR #9](https://github.com/CZ3700/diandan/pull/9)、[run 33808236380](https://github.com/CZ3700/diandan/actions/runs/33808236380)、`packages/contracts/`、`packages/application/`、`packages/persistence-postgres/`、`apps/api/`、`apps/worker/` | raw-body 先验签、加密 durable receipt、inbox/outbox、pg-boss 6-attempt/DLQ、queue trace 恢复及真实 PG 原子并发/回滚完成；fresh clean clone、secret/audit、Quality/Security 与独立终审全绿，任务 DONE、Phase 1 CLOSED；真实 PSP/KMS、业务状态推进、AWS/staging/production 不在本任务范围 |
+| 2026-09-04 | P2-01 | Design tokens/fonts/theme/grid | Git `f578208fc05822426bc3d83e362f35ebe29460ee`、[PR #10](https://github.com/CZ3700/diandan/pull/10)、[run 33821542072](https://github.com/CZ3700/diandan/actions/runs/33821542072)、`packages/design-tokens/`、`output/playwright/p2-01/` | schemaVersion 1 tokens/CSS、五类 locale 字体分包/OFL、对比安全 accent、preview-only specimen 与 21 项静态门禁完成；六视口/320/真实 Chrome 200% zoom/键盘/reduce、fresh clean clone、secret/audit、Quality/Security 与独立终验全绿，任务 DONE；正式品牌、axe/读屏、全脚本全条件与真实设备性能仍属后续门禁 |
 
 ## 6. 更新规则
 

@@ -12,8 +12,8 @@
 
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
-| P2-01 | REVIEW | Codex `/root` | P0-04 | Tokens/分 locale 字体/type/grid/theme 已完成；本地、浏览器与独立复核通过，待 clean clone/PR CI |
-| P2-02 | PENDING | — | P2-01 | 基础原语 |
+| P2-01 | DONE | Codex `/root` | P0-04 | Git `f578208`、PR #10/run `33821542072`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
+| P2-02 | READY | — | P2-01 | 基础原语；Lane B 已释放，可领取 |
 | P2-03 | PENDING | — | P2-02 | Overlay/menu/toast/language-region/focus |
 | P2-04 | PENDING | — | P2-02 | 七语言长文案组合组件与状态 |
 | P2-05 | PENDING | — | P2-03、P2-04 | 三段标志性动效 |
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase；P2-01 依赖完成且已由 Codex `/root` 领取，Lane B 当前占用。其余退出证据尚未取得。
+Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01 已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；Lane B 已释放，直接依赖 P2-02 改为 `READY`。Phase 2 其余任务及完整退出门禁尚未取得，Phase 3 继续锁定。
 
 ## P2-01 执行卡
 
@@ -58,3 +58,32 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 - **独立复核**：架构/代码复核 Blocker 0；视觉、断行、根页面与真实 zoom 人工抽查接受。完整的 all-script × all-condition 无障碍矩阵、axe 与真实设备性能属于 P2-06/P6-02 后续门禁，本任务不提前宣称完成。
 - **环境限制**：尝试实际构建含字体 notice 的 OCI image 时，Docker VM 因 `ENOSPC` 终止；未清理或覆盖用户的约 59 GB 既有镜像。该步骤不是 P2-01 最低门禁，Dockerfile copy 路径已由 21 项静态门禁验证；真实 image build 留作有可用 Docker 空间时复验。
 - **非阻断维护项**：设计静态检查有意锁定当前 `SUPPORTED_LOCALES.map` + exhaustive switch AST 形状，后续若重构映射写法应同步放宽 parser 并保持缺 locale 必失败；本次不为减少行数引入高风险重构。
+
+### DONE 证据（2026-09-04）
+
+- **Tokens / 主题 / 布局**：`@fan-support/design-tokens` 以冻结、可序列化、`schemaVersion: 1` 的同源对象/CSS variables 定义颜色、语义色、流体排版、间距、容器、响应式网格、焦点与 motion；Storefront/Admin 共用深色基础主题。运行时只允许覆盖 `--idol-accent`，并分别按正文、大文本、非文本阈值检查对比度，不安全或非法值回退为 `#6888bd`。
+- **字体与 locale 边界**：精确锁定 Fontsource `5.3.0`，自托管 Manrope、Noto Sans、Noto Sans Thai、Noto Sans SC、Noto Sans JP 并提交 OFL/第三方 notice；五个 route-group/font CSS 入口按 Latin/Vietnamese/Thai/SC/JP profile 拆包。完整映射只从 canonical `SUPPORTED_LOCALES` 派生，穷尽 switch + `never` guard 令新增 locale 必须显式处理，不从 locale 推导 market/currency/payment。
+- **内部样板与关闭策略**：生产构建中的 `/_internal/design-foundations/{locale}` 只在 dev/test/preview 开放，且带 `noindex,nofollow`；preview 200，staging/production 404 且 `/healthz` 仍为 200。样板覆盖七个正式 locale 与内部 `en-XA`，没有新增公开 `/:locale` 业务页面、P2-02 原语、正式品牌/肖像、API、数据库或支付逻辑。
+- **TDD / 对抗门禁**：design-token 17 tests、Storefront 52 tests、design-foundation static gate 21 tests、adapter-boundary 27 tests 全绿；覆盖 token/CSS 同源、非法 token/schema、散落品牌值、字体 profile 完整性与唯一性、字形/越南语附标/多脚本断行、accent 对比回退、视口网格、环境 fail-closed、错误依赖位置和 npm alias 绕过。
+- **浏览器验证**：`output/playwright/p2-01/` 的 15 张 PNG 与 README SHA-256 全部匹配。Playwright Chromium 152 对生产构建完成 360×800、390×844、768×1024、1024×768、1440×900、1920×1080 六标准视口、七 locale + `en-XA`、320 px stress、键盘 focus、reduced-motion、Storefront/Admin root 与环境关闭检查；HTTP/font/lang/noindex/overflow/clipping/replacement glyph/外链资源/console/page/request assertions 均通过。
+- **真实 200% page zoom**：安装版 Google Chrome 152 使用隔离 profile 的 HostZoomMap 默认 zoom，未调用 CDP device metrics/page scale；DPR `2→4`、CSS viewport `1710×842→855×421`、outer window 保持 `1710×929`、`visualViewport.scale=1`，西班牙语长标题自然换行，`clientWidth=scrollWidth=bodyScrollWidth=855`、detected clipping 0。证据 PNG 为 `3420×1684` physical pixels，用户日常 Chrome profile 未被修改。
+- **本地完整门禁**：Node `24.20.0` / pnpm `11.25.0` 下 `TURBO_FORCE=true pnpm check` exit 0；workspace 4 apps/30 packages/34 units 无环、contract fresh、真实 PostgreSQL 9 migrations/108 tables、可靠事件/pg-boss/S3-compatible、Prettier/ESLint、adapter/artifact 全绿，typecheck `50/50`、test `50/50`、build `34/34` 且 0 cached。`pnpm security:secrets` 退出 0。
+- **Clean clone**：冻结实现提交 `f578208fc05822426bc3d83e362f35ebe29460ee` 在 `/tmp/p201-acceptance-jHSRWV/repo` 完成 offline frozen install（35 workspaces、401 reused、0 downloaded）、0-cache 完整 `pnpm check`（约 175 秒）、secret scan、15/15 图片哈希/JSON 检查与 `git diff --check`；最终工作树为空。
+- **真实 CI**：[PR #10](https://github.com/CZ3700/diandan/pull/10) 的 [run 33821542072](https://github.com/CZ3700/diandan/actions/runs/33821542072) 对同一实现 SHA 执行 Quality 成功；Security 前两次由 npm 官方 advisory POST 外部超时而无漏洞结论，第三次只重跑失败项后 audit 与 secret scan 成功，最终 Quality/Security 均绿色，未放宽 fail-closed 门禁。
+- **独立终验**：架构/代码与 fresh-clone 验收均 `ACCEPT`，实现 blocker 0；独立复跑 design/domain/adapter、完整 check、secret、浏览器 JSON/15 张截图哈希并人工检查多脚本与 zoom。首轮指出的 README 旧哈希/缺 zoom 证据已修复，旧伪缩放截图未进入提交。
+- **边界与残余**：正式品牌、Logo、摄影与最终字体批准属于 P2-06；all-script × all-condition、axe、读屏和真实设备性能属于后续 Phase 2/P6-02，不提前宣称完成。实际 OCI build 因 Docker VM `ENOSPC` 未完成，未删除用户约 59 GB 的既有镜像；Docker notice copy 已由 21 项静态门禁验证，待空间可用时补真实 image 回读。静态 parser 对当前 AST 形状较严格是非阻断维护债，未来调整必须保留 canonical locale 缺项必失败。
+
+### P2-01 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | tokens、font profiles、accent policy、Storefront resolver、内部 specimen 与静态 gate 职责分离 |
+| 2 | PASS | token 数据、CSS 序列化、字体映射、copy factory 与 accent 解析均为小型纯函数/冻结数据组合 |
+| 3 | PASS | Browser/Route → Storefront helper → contracts/design-tokens 单向；design-tokens 不依赖 Next、Nest、ORM 或供应商 SDK |
+| 4 | PASS | workspace 检查为 4 apps/30 packages/34 units、0 dependency cycles；字体包只允许出现在 design-tokens 外层资源包 |
+| 5 | PASS | 共享 token root 有 `schemaVersion: 1`；locale 唯一合同复用 contracts，静态/运行时输入均严格验证 |
+| 6 | PASS | 跨包 token/font profile 为可序列化 plain data；CSS 入口只承载资源声明，不暴露浏览器/框架对象 |
+| 7 | PASS | origin/deployment environment 注入并 fail closed；无生产域名、secret、真实品牌素材或 locale→market/currency/payment 特判 |
+| 8 | PASS | Fontsource/OFL 依赖精确 `5.3.0`、workspace 依赖显式声明，frozen offline install 与 CI audit 通过 |
+| 9 | PASS | 字体 profile、accent 输入、部署环境和 token 消费边界可替换；新增 locale 会由 exhaustive/static gates 阻断遗漏 |
+| 10 | PASS | focused、本地 0-cache、真实 PG/S3、六视口/320/zoom/keyboard/reduce、clean clone、secret/audit、独立终验与 PR Quality/Security 全部通过 |
