@@ -13,6 +13,7 @@ async function loadRunner() {
     "assessInteractionMeasurements",
     "assessReducedMotionMeasurements",
     "classifyBrowserResource",
+    "classifyOverlayFocus",
     "createEvidenceReadme",
     "createInteractionTextRootSelector",
     "createInteractionScenarioMatrix",
@@ -311,6 +312,41 @@ test("request classification allows only same-origin or embedded resources", asy
     allowed: false,
     reason: "embedded-credentials",
   });
+});
+
+test("overlay focus classification permits only popup focus or its transient inside guard", async () => {
+  const { classifyOverlayFocus } = await loadRunner();
+
+  assert.equal(
+    classifyOverlayFocus({
+      baseUiFocusGuard: false,
+      focusGuardType: null,
+      popupContainsActive: true,
+    }),
+    "inside",
+  );
+  assert.equal(
+    classifyOverlayFocus({
+      baseUiFocusGuard: true,
+      focusGuardType: "inside",
+      popupContainsActive: false,
+    }),
+    "transient-inside-guard",
+  );
+  for (const state of [
+    {
+      baseUiFocusGuard: false,
+      focusGuardType: null,
+      popupContainsActive: false,
+    },
+    {
+      baseUiFocusGuard: true,
+      focusGuardType: "outside",
+      popupContainsActive: false,
+    },
+  ]) {
+    assert.equal(classifyOverlayFocus(state), "outside");
+  }
 });
 
 function validNativeMeasurement({ dpr, innerHeight, innerWidth }) {

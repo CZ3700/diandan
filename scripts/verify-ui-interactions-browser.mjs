@@ -441,6 +441,16 @@ export function classifyBrowserResource(resourceUrl, expectedOrigin) {
     : { allowed: false, reason: "external-origin" };
 }
 
+export function classifyOverlayFocus(focus) {
+  if (focus?.popupContainsActive === true) {
+    return "inside";
+  }
+  if (focus?.baseUiFocusGuard === true && focus?.focusGuardType === "inside") {
+    return "transient-inside-guard";
+  }
+  return "outside";
+}
+
 export function assessInteractionMeasurements(metrics) {
   const errors = [];
   const documentMetrics = metrics?.document;
@@ -2335,11 +2345,35 @@ async function collectScrollReleaseProof(page, label) {
 }
 
 async function assertFocusInside(page, selector, label) {
-  const inside = await page.evaluate((popupSelector) => {
+  const focus = await page.evaluate((popupSelector) => {
     const popup = document.querySelector(popupSelector);
-    return popup?.contains(document.activeElement) === true;
+    const activeElement = document.activeElement;
+    return {
+      baseUiFocusGuard:
+        activeElement instanceof HTMLElement &&
+        activeElement.hasAttribute("data-base-ui-focus-guard"),
+      focusGuardType:
+        activeElement instanceof HTMLElement
+          ? activeElement.getAttribute("data-type")
+          : null,
+      popupContainsActive: popup?.contains(activeElement) === true,
+    };
   }, selector);
-  invariant(inside, label + " must keep focus inside its popup");
+  const focusLocation = classifyOverlayFocus(focus);
+  invariant(
+    focusLocation !== "outside",
+    label + " must keep focus inside its popup",
+  );
+  if (focusLocation === "transient-inside-guard") {
+    await page.waitForFunction(
+      (popupSelector) =>
+        document
+          .querySelector(popupSelector)
+          ?.contains(document.activeElement) === true,
+      selector,
+      { timeout: 500 },
+    );
+  }
 }
 
 async function runOverlayCheck(page, kind) {
