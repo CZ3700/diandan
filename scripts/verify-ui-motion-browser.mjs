@@ -9,6 +9,7 @@ import {
   lstat,
   mkdir,
   mkdtemp,
+  readdir,
   readFile,
   realpath,
   rename,
@@ -20,6 +21,8 @@ import path from "node:path";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { inflateSync } from "node:zlib";
+
+import postcss from "postcss";
 
 import {
   isSafeRelativeArtifactPath,
@@ -44,6 +47,13 @@ const previewLocales = Object.freeze([
   "vi",
   "zh-CN",
 ]);
+const expectedFontFamilies = Object.freeze([
+  "Manrope Variable",
+  "Noto Sans JP Variable",
+  "Noto Sans SC Variable",
+  "Noto Sans Thai Variable",
+  "Noto Sans Variable",
+]);
 
 const sourceFingerprintPathspec = Object.freeze([
   ".node-version",
@@ -59,6 +69,7 @@ const sourceFingerprintPathspec = Object.freeze([
   "packages/ui",
   "apps/storefront/next.config.ts",
   "apps/storefront/package.json",
+  "apps/storefront/postcss-font-display-optional",
   "apps/storefront/postcss.config.mjs",
   "apps/storefront/tsconfig.build.json",
   "apps/storefront/tsconfig.json",
@@ -1080,6 +1091,19 @@ export function assessMotionEvidenceShape(results) {
     );
   }
   if (
+    results.fontLoadingPolicy?.strategy !== "optional" ||
+    !Number.isSafeInteger(results.fontLoadingPolicy?.cssFiles) ||
+    results.fontLoadingPolicy.cssFiles < 1 ||
+    !Number.isSafeInteger(results.fontLoadingPolicy?.fontFaces) ||
+    results.fontLoadingPolicy.fontFaces < expectedFontFamilies.length ||
+    JSON.stringify(results.fontLoadingPolicy?.verifiedFamilies) !==
+      JSON.stringify([...expectedFontFamilies].sort())
+  ) {
+    errors.push(
+      "motion evidence must prove the production no-swap font loading policy",
+    );
+  }
+  if (
     !Array.isArray(results.runtimeGates) ||
     results.runtimeGates.length !== 3
   ) {
@@ -1450,6 +1474,7 @@ export function assessCurrentMotionEvidence(results, currentFingerprint) {
 
 export function createMotionEvidenceReadme({
   axeSummaries = [],
+  fontLoadingPolicy,
   generatedAt,
   git,
   remainingGate,
@@ -1467,6 +1492,7 @@ export function createMotionEvidenceReadme({
     `- Locale scenarios: ${String(scenarioResults.length)}/8`,
     `- Screenshots: ${String(screenshots.length)}`,
     `- Axe scans: ${String(axeSummaries.length)}; critical/serious blocking findings: ${String(axeSummaries.reduce((total, scan) => total + (scan.blocking?.length ?? 0), 0))}`,
+    `- Font loading: ${String(fontLoadingPolicy?.fontFaces ?? 0)} production font faces use ${String(fontLoadingPolicy?.strategy ?? "unknown")}; verified families: ${String(fontLoadingPolicy?.verifiedFamilies?.length ?? 0)}/${String(expectedFontFamilies.length)}`,
     `- Source fingerprint: ${String(git?.before?.sourceFingerprint ?? "unknown")} (${String(git?.before?.sourceFingerprintAlgorithm ?? sourceFingerprintAlgorithm)})`,
     "- Physical device evidence: false",
     "",
@@ -2370,7 +2396,7 @@ async function readPackageJson(absolutePath) {
 }
 
 async function collectVersions(workspaceRoot) {
-  const [root, storefront, playwright, axe, next, react, pnpm] =
+  const [root, storefront, playwright, axe, next, react, postcssPackage, pnpm] =
     await Promise.all([
       readPackageJson(path.join(workspaceRoot, "package.json")),
       readPackageJson(path.join(workspaceRoot, "apps/storefront/package.json")),
@@ -2395,6 +2421,9 @@ async function collectVersions(workspaceRoot) {
           "apps/storefront/node_modules/react/package.json",
         ),
       ),
+      readPackageJson(
+        path.join(workspaceRoot, "node_modules/postcss/package.json"),
+      ),
       captureCommand("corepack", ["pnpm", "--version"], workspaceRoot),
     ]);
   const expectedNode = (
@@ -2412,7 +2441,8 @@ async function collectVersions(workspaceRoot) {
     playwright.version === root.devDependencies["@playwright/test"] &&
       axe.version === root.devDependencies["@axe-core/playwright"] &&
       next.version === storefront.dependencies.next &&
-      react.version === storefront.dependencies.react,
+      react.version === storefront.dependencies.react &&
+      postcssPackage.version === root.devDependencies.postcss,
     "browser toolchain versions must match exact manifests",
   );
   return {
@@ -2422,7 +2452,85 @@ async function collectVersions(workspaceRoot) {
     node: process.version,
     playwright: playwright.version,
     pnpm,
+    postcss: postcssPackage.version,
     react: react.version,
+  };
+}
+
+async function listCssFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const nested = await Promise.all(
+    entries.map(async (entry) => {
+      const target = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        return listCssFiles(target);
+      }
+      return entry.isFile() && entry.name.endsWith(".css") ? [target] : [];
+    }),
+  );
+  return nested.flat().sort();
+}
+
+export async function validateBuiltFontPolicy(storefrontRoot) {
+  const staticRoot = path.join(storefrontRoot, ".next/static");
+  const cssFiles = await listCssFiles(staticRoot);
+  invariant(cssFiles.length > 0, "production build contains no CSS chunks");
+
+  let fontFaces = 0;
+  const verifiedFamilies = new Set();
+  for (const cssFile of cssFiles) {
+    const source = await readFile(cssFile, "utf8");
+    let stylesheet;
+    try {
+      stylesheet = postcss.parse(source, { from: cssFile });
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : String(error);
+      throw new Error(
+        `${path.relative(storefrontRoot, cssFile)} must be valid production CSS: ${detail}`,
+        { cause: error },
+      );
+    }
+    stylesheet.walkAtRules(/^font-face$/iu, (fontFace) => {
+      fontFaces += 1;
+      const displays = [];
+      let family;
+      for (const node of fontFace.nodes ?? []) {
+        if (node.type !== "decl") {
+          continue;
+        }
+        const property = node.prop.trim().toLowerCase();
+        if (property === "font-display") {
+          displays.push(node.value.trim().toLowerCase());
+        } else if (property === "font-family") {
+          family = node.value
+            .trim()
+            .replace(/^(['"])(.*)\1$/u, "$2")
+            .trim();
+        }
+      }
+      invariant(
+        displays.length === 1 && displays[0] === "optional",
+        `${path.relative(storefrontRoot, cssFile)} @font-face must use exactly one font-display: optional descriptor`,
+      );
+      if (family !== undefined && expectedFontFamilies.includes(family)) {
+        verifiedFamilies.add(family);
+      }
+    });
+  }
+
+  invariant(fontFaces > 0, "production build contains no font faces");
+  for (const family of expectedFontFamilies) {
+    invariant(
+      verifiedFamilies.has(family),
+      `production build is missing the ${family} font profile`,
+    );
+  }
+
+  return {
+    cssFiles: cssFiles.length,
+    fontFaces,
+    strategy: "optional",
+    verifiedFamilies: [...verifiedFamilies].sort(),
   };
 }
 
@@ -2453,6 +2561,7 @@ async function prepareProductionBuild(workspaceRoot, candidate, registry) {
     },
   );
   const storefrontRoot = path.join(workspaceRoot, "apps/storefront");
+  const fontLoadingPolicy = await validateBuiltFontPolicy(storefrontRoot);
   const standalone = path.join(
     storefrontRoot,
     ".next/standalone/apps/storefront",
@@ -2472,7 +2581,7 @@ async function prepareProductionBuild(workspaceRoot, candidate, registry) {
   await cp(path.join(storefrontRoot, "public"), publicTarget, {
     recursive: true,
   });
-  return standalone;
+  return { fontLoadingPolicy, standalone };
 }
 
 async function reservePort() {
@@ -4611,7 +4720,7 @@ export async function runUiMotionBrowserVerification({
       collectVersions(workspaceRoot),
       collectGit(workspaceRoot),
     ]);
-    const standalone = await prepareProductionBuild(
+    const { fontLoadingPolicy, standalone } = await prepareProductionBuild(
       workspaceRoot,
       candidate,
       resources,
@@ -4665,6 +4774,7 @@ export async function runUiMotionBrowserVerification({
     );
     const evidence = {
       axeSummaries: browserEvidence.axeSummaries,
+      fontLoadingPolicy,
       generatedAt: new Date().toISOString(),
       git: { after: gitAfter, before: gitBefore },
       launch: {

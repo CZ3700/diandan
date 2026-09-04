@@ -42,6 +42,7 @@ async function loadRunner() {
     "installMotionSignalCleanup",
     "normalizeMotionWorkspaceStatus",
     "recoverMotionEvidenceSwap",
+    "validateBuiltFontPolicy",
     "validateMotionEvidenceCandidate",
     "validateMotionScenarioMatrix",
   ]) {
@@ -448,6 +449,18 @@ function validResults(matrix) {
   });
   return {
     axeSummaries: scenarioResults.flatMap((result) => result.axeSummaries),
+    fontLoadingPolicy: {
+      cssFiles: 4,
+      fontFaces: 242,
+      strategy: "optional",
+      verifiedFamilies: [
+        "Manrope Variable",
+        "Noto Sans JP Variable",
+        "Noto Sans SC Variable",
+        "Noto Sans Thai Variable",
+        "Noto Sans Variable",
+      ],
+    },
     generatedAt: "2026-09-05T00:00:00.000Z",
     git: {
       after: {
@@ -858,6 +871,58 @@ test("binds the fingerprint to motion render inputs but not generated evidence",
   assert.notEqual(
     (await collectMotionSourceFingerprint(root)).digest,
     publicChanged.digest,
+  );
+});
+
+test("requires every production font face to use the no-swap policy", async (context) => {
+  const { validateBuiltFontPolicy } = await loadRunner();
+  const root = await mkdtemp(path.join(os.tmpdir(), "p2-05-font-policy-"));
+  context.after(() => rm(root, { force: true, recursive: true }));
+  const chunks = path.join(root, ".next/static/chunks");
+  await mkdir(chunks, { recursive: true });
+  const validCss = [
+    "Manrope Variable",
+    "Noto Sans Variable",
+    "Noto Sans JP Variable",
+    "Noto Sans SC Variable",
+    "Noto Sans Thai Variable",
+  ]
+    .map(
+      (family, index) =>
+        `@font-face{font-family:'${family}';font-display:optional;src:url(font-${String(index)}.woff2) format('woff2')}`,
+    )
+    .join("");
+  await writeFile(path.join(chunks, "fonts.css"), validCss);
+
+  assert.deepEqual(await validateBuiltFontPolicy(root), {
+    cssFiles: 1,
+    fontFaces: 5,
+    strategy: "optional",
+    verifiedFamilies: [
+      "Manrope Variable",
+      "Noto Sans JP Variable",
+      "Noto Sans SC Variable",
+      "Noto Sans Thai Variable",
+      "Noto Sans Variable",
+    ],
+  });
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    "@font-face{font-family:'Manrope Variable';font-display:swap;src:url(font.woff2)}",
+  );
+  await assert.rejects(
+    validateBuiltFontPolicy(root),
+    /font-display.*optional/iu,
+  );
+
+  await writeFile(
+    path.join(chunks, "fonts.css"),
+    `${validCss}@font-face{font-family:'Rogue';font-display:swap;src:local('{}'),url(rogue.woff2)}`,
+  );
+  await assert.rejects(
+    validateBuiltFontPolicy(root),
+    /font-display.*optional/iu,
   );
 });
 

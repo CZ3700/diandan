@@ -113,10 +113,6 @@
   transform: translate3d(0, 0, 0) scale(1);
 }
 
-.fs-motion-idol__media-layer[data-layer="outgoing"] {
-  z-index: 1;
-}
-
 .fs-motion-idol__panel[data-motion-mode="spatial"]
   .fs-motion-idol__media-layer {
   transition:

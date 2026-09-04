@@ -173,6 +173,9 @@ importers:
       '@types/react-dom':
         specifier: 19.2.5
         version: 19.2.5(@types/react@19.2.18)
+      fan-support-postcss-font-display-optional:
+        specifier: file:./postcss-font-display-optional
+        version: file:apps/storefront/postcss-font-display-optional
 
   apps/worker:
     dependencies:
@@ -2115,6 +2118,9 @@ packages:
   expect-type@1.4.0:
     resolution: {integrity: sha512-KfYbmpRm0VbLjEvVa9yGwCi9GI34xvi7A/HXYWQO65CSD2u3MczUJSuwXKFIxlGsgBQizV9q5J9NHj4VG0n+pA==}
     engines: {node: '>=12.0.0'}
+
+  fan-support-postcss-font-display-optional@file:apps/storefront/postcss-font-display-optional:
+    resolution: {directory: apps/storefront/postcss-font-display-optional, type: directory}
 
   fast-check@4.9.0:
     resolution: {integrity: sha512-7ms6T7SybUev/PQITciI0yLM2pOSFy5zpG8Ty7tQofcVaQUvrMXp6CBwqF6fThLCLOrfBtuHAtwq6Yu4XPCllg==}
@@ -4599,6 +4605,8 @@ snapshots:
   esutils@2.0.3: {}
 
   expect-type@1.4.0: {}
+
+  fan-support-postcss-font-display-optional@file:apps/storefront/postcss-font-display-optional: {}
 
   fast-check@4.9.0:
     dependencies:
