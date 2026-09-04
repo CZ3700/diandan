@@ -13,7 +13,7 @@
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
 | P2-01 | DONE | Codex `/root` | P0-04 | Git `f578208`、PR #10/run `33821542072`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
-| P2-02 | READY | — | P2-01 | 基础原语；Lane B 已释放，可领取 |
+| P2-02 | IN_PROGRESS | Codex `/root` | P2-01 | 基础原语；Lane B 由本任务独占 |
 | P2-03 | PENDING | — | P2-02 | Overlay/menu/toast/language-region/focus |
 | P2-04 | PENDING | — | P2-02 | 七语言长文案组合组件与状态 |
 | P2-05 | PENDING | — | P2-03、P2-04 | 三段标志性动效 |
@@ -87,3 +87,20 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 | 8 | PASS | Fontsource/OFL 依赖精确 `5.3.0`、workspace 依赖显式声明，frozen offline install 与 CI audit 通过 |
 | 9 | PASS | 字体 profile、accent 输入、部署环境和 token 消费边界可替换；新增 locale 会由 exhaustive/static gates 阻断遗漏 |
 | 10 | PASS | focused、本地 0-cache、真实 PG/S3、六视口/320/zoom/keyboard/reduce、clean clone、secret/audit、独立终验与 PR Quality/Security 全部通过 |
+
+## P2-02 执行卡
+
+**本次执行登记**：
+
+- Owner：Codex `/root`
+- 开始：`2026-09-04T09:57:36+08:00`（`2026-09-04T01:57:36Z`）
+- 输入：P2-01 已冻结的共享 design tokens、locale 字体/主题/网格与内部 preview gate；P1-01 的 canonical `SupportedLocale`、金额与展示语言合同。
+- 精确输出：在 `packages/ui` 实现 Button、Link、Icon、Media、Price、Status、Field、Quantity 八类框架内基础原语及其类型化 API、样式和测试；Storefront 增加仅供 dev/test/preview、noindex 的原语验收 fixture，用真实交互证明各状态而不伪装为业务页面。
+- 视觉命题：把电影感深色画册的克制材质落实到可复用控件；排版、边界、触控尺度与单一 accent 建立高级感，状态语义保持清晰可信。
+- 内容计划：内部 fixture 按动作、导航/图标、媒体、金额/状态、表单/数量分区，使用英语、CJK、泰语、越南语、最长西/葡语和 `en-XA` 压力文案；每区只证明原语行为，不加入 Hero、商品卡、购物车行或订单时间线。
+- 交互命题：hover/focus/active 只用克制的颜色、透明度与轻微 transform；loading 保持尺寸并提供可访问状态；reduced motion 取消位移和旋转但保留非动态反馈。
+- 明确不做：P2-03 的 Dialog/Drawer/Toast/Menu/Language/Region/focus-trap，P2-04 的 Hero/IdolPortrait/GiftTile/IdolContext/CartLine/OrderTimeline 与正式组件展示页，P2-05 标志性动效，公开 `/:locale` 页面、正式品牌/Logo/肖像、业务 API、数据库、市场、币种或支付逻辑。
+- TDD 与验证计划：先写失败测试锁定原语语义、类型/状态组合、金额最小单位与 locale 格式化、媒体 alt/fallback、Field 关联/错误、Quantity 边界、无关键翻译文本固定高度/ellipsis、token-only 样式、RTL/pseudo 结构；逐个见红后最小实现并复跑。随后运行受影响 test/typecheck/build、静态边界检查、format/lint、整仓 0-cache check 与 secret scan。
+- 浏览器计划：production build 在 preview gate 下覆盖 390×844 与 1440×900，并抽查六基准视口、320 CSS px、键盘 Tab/Enter/Space/箭头、hover/focus/disabled/loading、RTL 结构、reduced-motion、axe critical/serious、无横向溢出/裁切、console/page/request 错误；证据写入 `output/playwright/p2-02/`。
+- 风险映射：`R-07` 以合成友好微交互、reduced-motion 与稳定 loading 尺寸控制；`R-17` 以 canonical locale 导入、`Intl` 格式化、多脚本/伪语言/RTL 验收和 locale 与 market/currency 零推导控制。
+- 并发/所有权：P2-02 是唯一 Lane B executor；Codex `/root` 独占 `packages/ui`、Storefront 原语 fixture、相关样式/测试及必要 manifest/lockfile。子代理仅做只读审计、测试矩阵建议和独立复核，不修改这些边界。
