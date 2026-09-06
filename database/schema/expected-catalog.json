@@ -195,6 +195,10 @@
       "kind": "TABLE"
     },
     {
+      "name": "admin_idol_identity_receipts",
+      "kind": "TABLE"
+    },
+    {
       "name": "admin_sessions",
       "kind": "TABLE"
     },
@@ -731,6 +735,14 @@
       "kind": "TABLE"
     },
     {
+      "name": "translation_export_receipts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "translation_import_receipts",
+      "kind": "TABLE"
+    },
+    {
       "name": "webhook_effects",
       "kind": "TABLE"
     },
@@ -954,6 +966,226 @@
       "name": "granted_by",
       "dataType": "uuid",
       "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 3,
+      "name": "idol_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 4,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 5,
+      "name": "expected_base_version",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 6,
+      "name": "result_base_version",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 7,
+      "name": "authoring_version",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 8,
+      "name": "publication_head_version",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 9,
+      "name": "old_handle",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 10,
+      "name": "new_handle",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 11,
+      "name": "old_status",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 12,
+      "name": "new_status",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 13,
+      "name": "old_accepting_gifts",
+      "dataType": "boolean",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 14,
+      "name": "new_accepting_gifts",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 15,
+      "name": "previous_updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 16,
+      "name": "draft_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 17,
+      "name": "published_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 18,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 19,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 20,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 21,
+      "name": "redirect_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "position": 22,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
       "defaultExpression": null,
       "identity": "",
       "generation": ""
@@ -16329,6 +16561,246 @@
       "generation": ""
     },
     {
+      "table": "translation_export_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 3,
+      "name": "idol_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 4,
+      "name": "gift_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 5,
+      "name": "homepage_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 6,
+      "name": "policy_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 7,
+      "name": "media_metadata_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 8,
+      "name": "expected_authoring_version",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 9,
+      "name": "source_snapshot_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 10,
+      "name": "english_source_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 11,
+      "name": "locales",
+      "dataType": "supported_locale[]",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 12,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 13,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 14,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_export_receipts",
+      "position": 15,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_import_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_import_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_import_receipts",
+      "position": 3,
+      "name": "export_receipt_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_import_receipts",
+      "position": 4,
+      "name": "authoring_receipt_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_import_receipts",
+      "position": 5,
+      "name": "imported_locales",
+      "dataType": "supported_locale[]",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_import_receipts",
+      "position": 6,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_import_receipts",
+      "position": 7,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_import_receipts",
+      "position": 8,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "translation_import_receipts",
+      "position": 9,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "webhook_effects",
       "position": 1,
       "name": "id",
@@ -16993,6 +17465,294 @@
       "definition": "NOT NULL role_id",
       "deferrable": false,
       "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['CREATE_IDOL'::text, 'RENAME_IDOL'::text, 'SET_IDOL_STATUS'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_authoring_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (authoring_version >= 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_authoring_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL authoring_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_check",
+      "kind": "CHECK",
+      "definition": "CHECK (result_base_version = (expected_base_version + 1))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_check1",
+      "kind": "CHECK",
+      "definition": "CHECK ((new_status = ANY (ARRAY['draft'::text, 'active'::text, 'paused'::text, 'archived'::text])) AND (NOT new_accepting_gifts OR new_status = 'active'::text))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_check2",
+      "kind": "CHECK",
+      "definition": "CHECK (action = 'CREATE_IDOL'::text AND expected_base_version = 0 AND old_handle IS NULL AND old_status IS NULL AND old_accepting_gifts IS NULL AND new_status = 'draft'::text AND NOT new_accepting_gifts AND draft_revision_id IS NULL AND published_revision_id IS NULL AND authoring_version = 0 AND publication_head_version = 0 AND redirect_id IS NULL OR action = 'RENAME_IDOL'::text AND expected_base_version > 0 AND old_handle IS NOT NULL AND old_handle <> new_handle AND old_status = new_status AND old_accepting_gifts = new_accepting_gifts AND redirect_id IS NOT NULL OR action = 'SET_IDOL_STATUS'::text AND expected_base_version > 0 AND old_handle = new_handle AND old_status IS NOT NULL AND old_accepting_gifts IS NOT NULL AND (old_status <> new_status OR old_accepting_gifts <> new_accepting_gifts) AND redirect_id IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_draft_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (draft_revision_id) REFERENCES idol_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_expected_base_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (expected_base_version >= 0 AND expected_base_version <= '9007199254740990'::bigint)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_expected_base_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expected_base_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_idol_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (idol_id) REFERENCES idols(id) ON DELETE RESTRICT DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_idol_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idol_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_idol_id_result_base_version_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (idol_id, result_base_version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_new_accepting_gifts_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL new_accepting_gifts",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_new_handle_check",
+      "kind": "CHECK",
+      "definition": "CHECK (new_handle ~ '^[a-z0-9]+(-[a-z0-9]+)*$'::text AND length(new_handle) <= 128)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_new_handle_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL new_handle",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_new_status_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL new_status",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_publication_head_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (publication_head_version >= 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_publication_head_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL publication_head_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_published_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (published_revision_id) REFERENCES idol_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_redirect_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (redirect_id) REFERENCES slug_redirects(id) ON DELETE RESTRICT DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_redirect_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (redirect_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_result_base_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL result_base_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_receipt_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
     },
     {
       "table": "admin_sessions",
@@ -25681,6 +26441,14 @@
       "definition": "NOT NULL source_hash",
       "deferrable": false,
       "initiallyDeferred": false
+    },
+    {
+      "table": "idols",
+      "name": "admin_idol_change_receipt",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
     },
     {
       "table": "idols",
@@ -37804,6 +38572,14 @@
     },
     {
       "table": "slug_redirects",
+      "name": "admin_idol_redirect_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "slug_redirects",
       "name": "slug_redirects_change_check",
       "kind": "CHECK",
       "definition": "CHECK (old_handle <> new_handle)",
@@ -38207,6 +38983,358 @@
       "name": "support_intents_version_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipt_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_check",
+      "kind": "CHECK",
+      "definition": "CHECK (num_nonnulls(idol_revision_id, gift_revision_id, homepage_revision_id, policy_revision_id, media_metadata_revision_id) = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_english_source_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL english_source_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_expected_authoring_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (expected_authoring_version >= 1 AND expected_authoring_version <= '9007199254740990'::bigint)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_expected_authoring_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expected_authoring_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_gift_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (gift_revision_id) REFERENCES gift_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_homepage_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (homepage_revision_id) REFERENCES homepage_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_idol_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (idol_revision_id) REFERENCES idol_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_locales_check",
+      "kind": "CHECK",
+      "definition": "CHECK (array_ndims(locales) = 1 AND cardinality(locales) >= 1 AND cardinality(locales) <= 7 AND array_position(locales, NULL::text::supported_locale) IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_locales_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL locales",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_media_metadata_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (media_metadata_revision_id) REFERENCES media_metadata_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_policy_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (policy_revision_id) REFERENCES policy_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_source_snapshot_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL source_snapshot_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipt_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_authoring_receipt_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (authoring_receipt_id) REFERENCES content_authoring_receipts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_authoring_receipt_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (authoring_receipt_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_authoring_receipt_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL authoring_receipt_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_export_receipt_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (export_receipt_id) REFERENCES translation_export_receipts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_export_receipt_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL export_receipt_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_imported_locales_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL imported_locales",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -38768,6 +39896,42 @@
       "definition": "CREATE UNIQUE INDEX admin_identity_roles_pkey ON public.admin_identity_roles USING btree (admin_identity_id, role_id)",
       "unique": true,
       "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_idol_identity_receipts_audit_log_id_key ON public.admin_idol_identity_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_idol_id_result_base_version_key",
+      "definition": "CREATE UNIQUE INDEX admin_idol_identity_receipts_idol_id_result_base_version_key ON public.admin_idol_identity_receipts USING btree (idol_id, result_base_version)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_idol_identity_receipts_pkey ON public.admin_idol_identity_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_redirect_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_idol_identity_receipts_redirect_id_key ON public.admin_idol_identity_receipts USING btree (redirect_id)",
+      "unique": true,
+      "primary": false,
       "exclusion": false,
       "valid": true
     },
@@ -42327,6 +43491,51 @@
       "valid": true
     },
     {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX translation_export_receipts_audit_log_id_key ON public.translation_export_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX translation_export_receipts_pkey ON public.translation_export_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX translation_import_receipts_audit_log_id_key ON public.translation_import_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_authoring_receipt_id_key",
+      "definition": "CREATE UNIQUE INDEX translation_import_receipts_authoring_receipt_id_key ON public.translation_import_receipts USING btree (authoring_receipt_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX translation_import_receipts_pkey ON public.translation_import_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "webhook_effects",
       "name": "webhook_effects_once_unique",
       "definition": "CREATE UNIQUE INDEX webhook_effects_once_unique ON public.webhook_effects USING btree (webhook_inbox_id, effect_key, subject_id)",
@@ -42440,6 +43649,30 @@
       "table": "admin_content_locale_grants",
       "name": "admin_content_locale_grant_no_truncate",
       "definition": "CREATE TRIGGER admin_content_locale_grant_no_truncate BEFORE TRUNCATE ON admin_content_locale_grants FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_append_only",
+      "definition": "CREATE TRIGGER admin_idol_identity_receipts_append_only BEFORE DELETE OR UPDATE ON admin_idol_identity_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_identity_receipts_no_truncate",
+      "definition": "CREATE TRIGGER admin_idol_identity_receipts_no_truncate BEFORE TRUNCATE ON admin_idol_identity_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_receipt_prior",
+      "definition": "CREATE TRIGGER admin_idol_receipt_prior BEFORE INSERT ON admin_idol_identity_receipts FOR EACH ROW EXECUTE FUNCTION assert_admin_idol_prior()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_idol_identity_receipts",
+      "name": "admin_idol_receipt_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_idol_receipt_validate AFTER INSERT ON admin_idol_identity_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_idol_receipt()",
       "enabled": "O"
     },
     {
@@ -43754,6 +44987,24 @@
       "table": "idol_translation_reviews",
       "name": "idol_translation_review_validate_trigger",
       "definition": "CREATE TRIGGER idol_translation_review_validate_trigger BEFORE INSERT ON idol_translation_reviews FOR EACH ROW EXECUTE FUNCTION validate_translation_review_event('idol_revision_translations', 'idol_translation_id', 'idol_revisions', 'idol_revision_id')",
+      "enabled": "O"
+    },
+    {
+      "table": "idols",
+      "name": "admin_idol_change_receipt",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_idol_change_receipt AFTER INSERT OR UPDATE ON idols DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_idol_change()",
+      "enabled": "O"
+    },
+    {
+      "table": "idols",
+      "name": "admin_idol_identity_guard",
+      "definition": "CREATE TRIGGER admin_idol_identity_guard BEFORE INSERT OR DELETE OR UPDATE ON idols FOR EACH ROW EXECUTE FUNCTION guard_admin_idol_identity()",
+      "enabled": "O"
+    },
+    {
+      "table": "idols",
+      "name": "admin_idol_identity_no_truncate",
+      "definition": "CREATE TRIGGER admin_idol_identity_no_truncate BEFORE TRUNCATE ON idols FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
     },
     {
@@ -45210,6 +46461,12 @@
     },
     {
       "table": "slug_redirects",
+      "name": "admin_idol_redirect_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_idol_redirect_validate AFTER INSERT ON slug_redirects DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_idol_redirect()",
+      "enabled": "O"
+    },
+    {
+      "table": "slug_redirects",
       "name": "slug_redirects_append_only_trigger",
       "definition": "CREATE TRIGGER slug_redirects_append_only_trigger BEFORE DELETE OR UPDATE ON slug_redirects FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
@@ -45248,6 +46505,42 @@
       "table": "support_intents",
       "name": "support_intents_transition_trigger",
       "definition": "CREATE TRIGGER support_intents_transition_trigger BEFORE UPDATE ON support_intents FOR EACH ROW EXECUTE FUNCTION guard_support_intent_transition()",
+      "enabled": "O"
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipt_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER translation_export_receipt_validate AFTER INSERT ON translation_export_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_translation_export_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_append_only",
+      "definition": "CREATE TRIGGER translation_export_receipts_append_only BEFORE DELETE OR UPDATE ON translation_export_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "translation_export_receipts",
+      "name": "translation_export_receipts_no_truncate",
+      "definition": "CREATE TRIGGER translation_export_receipts_no_truncate BEFORE TRUNCATE ON translation_export_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipt_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER translation_import_receipt_validate AFTER INSERT ON translation_import_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_translation_import_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_append_only",
+      "definition": "CREATE TRIGGER translation_import_receipts_append_only BEFORE DELETE OR UPDATE ON translation_import_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "translation_import_receipts",
+      "name": "translation_import_receipts_no_truncate",
+      "definition": "CREATE TRIGGER translation_import_receipts_no_truncate BEFORE TRUNCATE ON translation_import_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
     },
     {
@@ -45307,6 +46600,16 @@
   ],
   "functions": [
     {
+      "name": "assert_admin_catalog_authority",
+      "identityArguments": "actor uuid, session_id uuid, event_time timestamp with time zone, causal_bound timestamp with time zone, permission text, locales supported_locale[]",
+      "resultType": "void",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_catalog_authority(actor uuid, session_id uuid, event_time timestamp with time zone, causal_bound timestamp with time zone, permission text, locales supported_locale[])\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE session public.admin_sessions%ROWTYPE; active_status text; granted integer;\nBEGIN\n SELECT * INTO session FROM public.admin_sessions WHERE id=session_id FOR SHARE;\n SELECT status INTO active_status FROM public.admin_identities WHERE id=actor FOR SHARE;\n IF session.id IS NULL OR session.admin_identity_id IS DISTINCT FROM actor OR active_status IS DISTINCT FROM 'ACTIVE' OR NOT session.authenticated_with_mfa OR session.revoked_at IS NOT NULL\n OR session.expires_at<=clock_timestamp() OR session.created_at>clock_timestamp() OR event_time<session.created_at OR event_time>=session.expires_at\n OR event_time>GREATEST(clock_timestamp(),transaction_timestamp(),session.created_at,causal_bound) THEN RAISE EXCEPTION 'management operation requires current active MFA session and causal time' USING ERRCODE='23514'; END IF;\n PERFORM ar.role_id FROM public.admin_identity_roles ar JOIN public.roles r ON r.id=ar.role_id JOIN public.role_permissions rp ON rp.role_id=r.id JOIN public.permissions p ON p.id=rp.permission_id\n WHERE ar.admin_identity_id=actor AND p.permission_key=permission AND ar.granted_at<=clock_timestamp() AND rp.granted_at<=clock_timestamp() AND ar.granted_at<=event_time AND rp.granted_at<=event_time FOR SHARE OF ar,r,rp,p;\n IF NOT FOUND THEN RAISE EXCEPTION 'management operation requires its current permission' USING ERRCODE='23514'; END IF;\n PERFORM locale FROM public.admin_content_locale_grants WHERE admin_identity_id=actor AND revoked_at IS NULL AND locale=ANY(locales) AND granted_at<=clock_timestamp() AND granted_at<=event_time FOR SHARE;\n GET DIAGNOSTICS granted=ROW_COUNT;\n IF granted<>cardinality(locales) THEN RAISE EXCEPTION 'management operation requires its current locale scopes' USING ERRCODE='23514'; END IF;\nEND; $function$"
+    },
+    {
       "name": "assert_admin_content_locale_grant_audit",
       "identityArguments": "",
       "resultType": "trigger",
@@ -45315,6 +46618,46 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_content_locale_grant_audit()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE audit public.audit_logs%ROWTYPE;\nBEGIN\n  IF TG_OP = 'UPDATE' THEN\n    IF NEW.revoked_at IS NOT DISTINCT FROM OLD.revoked_at THEN RETURN NULL; END IF;\n    SELECT * INTO audit FROM public.audit_logs WHERE id = NEW.revoked_audit_log_id;\n    IF audit.id IS NULL OR audit.action <> 'CONTENT_LOCALE_REVOKE' OR audit.created_at <> NEW.revoked_at THEN\n      RAISE EXCEPTION 'locale revocation requires exact audit' USING ERRCODE = '23514';\n    END IF;\n  ELSE\n  SELECT * INTO audit FROM public.audit_logs WHERE id = NEW.audit_log_id;\n    IF audit.id IS NULL OR audit.action <> 'CONTENT_LOCALE_GRANT' OR audit.created_at <> NEW.granted_at THEN\n      RAISE EXCEPTION 'locale grant requires exact audit' USING ERRCODE = '23514';\n    END IF;\n  END IF;\n  IF audit.id IS NULL OR audit.actor_type <> 'ADMIN'\n    OR (TG_OP = 'INSERT' AND audit.actor_id IS DISTINCT FROM NEW.granted_by)\n    OR audit.subject_type <> 'ADMIN_CONTENT_LOCALE_GRANT'\n    OR audit.subject_id <> NEW.admin_identity_id OR audit.outcome <> 'SUCCEEDED'\n    OR audit.reason_code IS NULL OR audit.request_id IS NULL OR audit.correlation_id IS NULL\n    OR audit.field_category IS DISTINCT FROM 'CONTENT_TRANSLATION'\n    OR NOT EXISTS (SELECT 1 FROM public.admin_identities WHERE id = audit.actor_id AND status = 'ACTIVE')\n    OR (TG_OP = 'INSERT' AND NOT EXISTS (SELECT 1 FROM public.admin_identities WHERE id = NEW.admin_identity_id AND status = 'ACTIVE')) THEN\n    RAISE EXCEPTION 'content locale grant requires exact active actor audit' USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_idol_change",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_idol_change()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF TG_OP='UPDATE' AND NEW.handle IS NOT DISTINCT FROM OLD.handle AND NEW.status IS NOT DISTINCT FROM OLD.status AND NEW.accepting_gifts IS NOT DISTINCT FROM OLD.accepting_gifts THEN RETURN NULL; END IF;\n -- Publishing has an existing independently validated proof receipt. Authoring only moves draft pointers and does not change identity fields.\n IF TG_OP='UPDATE' AND NEW.handle=OLD.handle AND NEW.accepting_gifts=OLD.accepting_gifts AND NEW.published_revision_id IS DISTINCT FROM OLD.published_revision_id\n  AND EXISTS(SELECT 1 FROM public.content_publication_receipts r JOIN public.content_publications p ON p.id=r.publication_id WHERE p.idol_id=NEW.id AND p.idol_revision_id=NEW.published_revision_id AND r.created_at=NEW.updated_at AND r.action IN('PUBLISH','ROLLBACK')) THEN RETURN NULL; END IF;\n IF NOT EXISTS(SELECT 1 FROM public.admin_idol_identity_receipts r WHERE r.idol_id=NEW.id AND r.result_base_version=NEW.version AND r.created_at=NEW.updated_at\n  AND r.new_handle=NEW.handle AND r.new_status=NEW.status AND r.new_accepting_gifts=NEW.accepting_gifts\n  AND ((TG_OP='INSERT' AND r.action='CREATE_IDOL' AND r.created_at=NEW.created_at)\n   OR(TG_OP='UPDATE' AND r.expected_base_version=OLD.version AND r.old_handle=OLD.handle AND r.old_status=OLD.status AND r.old_accepting_gifts=OLD.accepting_gifts AND r.previous_updated_at=OLD.updated_at))) THEN RAISE EXCEPTION 'idol identity change requires its exact administrative receipt' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_idol_prior",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_idol_prior()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE prior public.idols%ROWTYPE;\nBEGIN\n SELECT * INTO prior FROM public.idols WHERE id=NEW.idol_id FOR UPDATE;\n IF NEW.action='CREATE_IDOL' THEN\n  IF prior.id IS NOT NULL THEN RAISE EXCEPTION 'identity creation receipt requires an absent identity' USING ERRCODE='23514'; END IF;\n ELSE\n  IF prior.id IS NULL OR prior.version IS DISTINCT FROM NEW.expected_base_version\n   OR prior.handle IS DISTINCT FROM NEW.old_handle OR prior.status IS DISTINCT FROM NEW.old_status OR prior.accepting_gifts IS DISTINCT FROM NEW.old_accepting_gifts\n   OR prior.updated_at IS DISTINCT FROM NEW.previous_updated_at OR prior.draft_revision_id IS DISTINCT FROM NEW.draft_revision_id OR prior.published_revision_id IS DISTINCT FROM NEW.published_revision_id\n   THEN RAISE EXCEPTION 'identity receipt requires the exact locked prior identity before mutation' USING ERRCODE='23514'; END IF;\n END IF;\n RETURN NEW;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_idol_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_idol_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE idol public.idols%ROWTYPE; audit public.audit_logs%ROWTYPE; redirect public.slug_redirects%ROWTYPE; actual_authoring bigint; actual_head bigint; proof jsonb; dependency jsonb;\nBEGIN\n SELECT * INTO idol FROM public.idols WHERE id=NEW.idol_id FOR UPDATE;\n SELECT * INTO audit FROM public.audit_logs WHERE id=NEW.audit_log_id;\n SELECT coalesce(max(revision),0) INTO actual_authoring FROM public.idol_revisions WHERE idol_id=NEW.idol_id;\n SELECT coalesce(max(version),0) INTO actual_head FROM public.idol_publication_heads WHERE idol_id=NEW.idol_id;\n IF idol.id IS NULL OR idol.version IS DISTINCT FROM NEW.result_base_version OR idol.handle IS DISTINCT FROM NEW.new_handle OR idol.status IS DISTINCT FROM NEW.new_status OR idol.accepting_gifts IS DISTINCT FROM NEW.new_accepting_gifts\n OR idol.draft_revision_id IS DISTINCT FROM NEW.draft_revision_id OR idol.published_revision_id IS DISTINCT FROM NEW.published_revision_id OR idol.updated_at IS DISTINCT FROM NEW.created_at\n OR actual_authoring IS DISTINCT FROM NEW.authoring_version OR actual_head IS DISTINCT FROM NEW.publication_head_version THEN RAISE EXCEPTION 'idol receipt must match the complete canonical identity and versions' USING ERRCODE='23514'; END IF;\n IF audit.id IS NULL OR audit.actor_type IS DISTINCT FROM 'ADMIN' OR audit.actor_id IS DISTINCT FROM NEW.actor_id OR audit.action IS DISTINCT FROM NEW.action OR audit.subject_type IS DISTINCT FROM 'IDOL_IDENTITY' OR audit.subject_id IS DISTINCT FROM NEW.idol_id OR audit.created_at IS DISTINCT FROM NEW.created_at OR audit.outcome IS DISTINCT FROM 'SUCCEEDED' OR audit.field_category IS DISTINCT FROM 'CONTENT_IDENTITY' OR audit.reason_code IS NULL OR audit.request_id IS NULL OR audit.correlation_id IS DISTINCT FROM audit.request_id THEN RAISE EXCEPTION 'idol operation requires exact safe audit evidence' USING ERRCODE='23514'; END IF;\n IF (NEW.action='CREATE_IDOL') IS DISTINCT FROM (NEW.previous_updated_at IS NULL) OR NEW.created_at<NEW.previous_updated_at THEN RAISE EXCEPTION 'identity receipt requires exact prior causal time' USING ERRCODE='23514'; END IF;\n PERFORM public.assert_admin_catalog_authority(NEW.actor_id,NEW.session_id,NEW.created_at,NEW.previous_updated_at,'content.edit',ARRAY['en','zh-CN','th','vi','ja','es','pt']::public.supported_locale[]);\n IF NEW.action='RENAME_IDOL' THEN\n  SELECT * INTO redirect FROM public.slug_redirects WHERE id=NEW.redirect_id;\n  IF redirect.id IS NULL OR redirect.entity_type IS DISTINCT FROM 'IDOL' OR redirect.idol_id IS DISTINCT FROM NEW.idol_id OR redirect.old_handle IS DISTINCT FROM NEW.old_handle OR redirect.new_handle IS DISTINCT FROM NEW.new_handle OR redirect.created_at IS DISTINCT FROM NEW.created_at THEN RAISE EXCEPTION 'rename requires its immutable same-owner redirect' USING ERRCODE='23514'; END IF;\n END IF;\n IF NEW.action='SET_IDOL_STATUS' AND NEW.new_status='active' THEN\n  SELECT m.manifest INTO proof FROM public.idol_publication_heads h JOIN public.content_publications p ON p.id=h.publication_id AND p.idol_id=h.idol_id AND p.idol_revision_id=h.idol_revision_id JOIN public.content_publication_manifests m ON m.publication_id=p.id JOIN public.content_publication_receipts r ON r.manifest_id=m.id AND r.publication_id=p.id AND r.result_head_version=h.version\n   WHERE h.idol_id=NEW.idol_id AND h.idol_revision_id=NEW.published_revision_id AND p.proof_version=2;\n  IF proof IS NULL THEN RAISE EXCEPTION 'activation requires a current verified publication' USING ERRCODE='23514'; END IF;\n  PERFORM public.assert_publication_manifest_revision(proof->'revision');\n  FOR dependency IN SELECT * FROM jsonb_array_elements(proof->'mediaRevisions') LOOP PERFORM public.assert_publication_manifest_revision(dependency); END LOOP;\n  PERFORM public.assert_publication_manifest_approvals(proof);\n  PERFORM public.assert_publication_manifest_media(proof);\n END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_idol_redirect",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_idol_redirect()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NEW.entity_type<>'IDOL' THEN RETURN NULL; END IF;\n IF NOT EXISTS(SELECT 1 FROM public.admin_idol_identity_receipts WHERE redirect_id=NEW.id AND action='RENAME_IDOL' AND idol_id=NEW.idol_id AND old_handle=NEW.old_handle AND new_handle=NEW.new_handle AND created_at=NEW.created_at)\n OR EXISTS(SELECT 1 FROM public.idols WHERE handle=NEW.old_handle) THEN RAISE EXCEPTION 'idol redirect must represent an exact completed rename' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
     },
     {
       "name": "assert_base_content_preview_grant_audit",
@@ -45977,6 +47320,26 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_resource_management_audit(audit_id uuid, actor uuid, session_id uuid, expected_action text, expected_subject text, subject uuid, event_time timestamp with time zone, causal_lower_bound timestamp with time zone DEFAULT NULL::timestamp with time zone)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE evidence public.audit_logs%ROWTYPE; session public.admin_sessions%ROWTYPE; identity_status text; required_permission text;\nBEGIN\n  SELECT * INTO evidence FROM public.audit_logs WHERE id=audit_id;\n  SELECT * INTO session FROM public.admin_sessions WHERE id=session_id FOR SHARE;\n  SELECT status INTO identity_status FROM public.admin_identities WHERE id=actor FOR SHARE;\n  IF evidence.id IS NULL OR evidence.actor_type<>'ADMIN' OR evidence.actor_id IS DISTINCT FROM actor OR evidence.action<>expected_action\n    OR evidence.subject_type<>expected_subject OR evidence.subject_id<>subject OR evidence.outcome<>'SUCCEEDED'\n    OR evidence.created_at<>event_time OR evidence.reason_code IS NULL OR evidence.request_id IS NULL OR evidence.correlation_id IS NULL\n    OR evidence.field_category IS DISTINCT FROM 'RESOURCE_MANAGEMENT' THEN\n    RAISE EXCEPTION 'resource operation requires its exact audit' USING ERRCODE='23514';\n  END IF;\n  IF session.id IS NULL OR session.admin_identity_id<>actor OR identity_status IS DISTINCT FROM 'ACTIVE'\n    OR NOT session.authenticated_with_mfa OR session.revoked_at IS NOT NULL OR session.expires_at<=clock_timestamp()\n    OR session.created_at>clock_timestamp() OR event_time<session.created_at\n    OR event_time>GREATEST(clock_timestamp(),transaction_timestamp(),session.created_at,causal_lower_bound) THEN\n    RAISE EXCEPTION 'resource operation requires its active MFA actor session' USING ERRCODE='23514';\n  END IF;\n  required_permission:=CASE expected_action WHEN 'POLICY_REGISTER' THEN 'content.policy.manage'\n    WHEN 'MEDIA_UPLOAD_BEGIN' THEN 'content.media.upload' WHEN 'MEDIA_UPLOAD_REGISTER' THEN 'content.media.upload'\n    WHEN 'MEDIA_RIGHTS_SET' THEN 'content.media.rights' WHEN 'MEDIA_PROCESSING_ENQUEUE' THEN 'content.media.process'\n    WHEN 'MEDIA_PROCESSING_RETRY' THEN 'content.media.process' END;\n  PERFORM ar.role_id FROM public.admin_identity_roles ar JOIN public.roles r ON r.id=ar.role_id\n    JOIN public.role_permissions rp ON rp.role_id=r.id JOIN public.permissions p ON p.id=rp.permission_id\n    WHERE ar.admin_identity_id=actor AND p.permission_key=required_permission\n      AND ar.granted_at<=clock_timestamp() AND rp.granted_at<=clock_timestamp()\n      AND ar.granted_at<=event_time AND rp.granted_at<=event_time FOR SHARE OF ar,r,rp,p;\n  IF NOT FOUND THEN RAISE EXCEPTION 'resource operation requires its current specific permission' USING ERRCODE='23514'; END IF;\nEND; $function$"
     },
     {
+      "name": "assert_translation_export_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_translation_export_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE prefix text; parent_column text; owner_column text; source_id uuid; parent jsonb; actual_head bigint; english_hash text; audit public.audit_logs%ROWTYPE; ordered public.supported_locale[];\nBEGIN\n prefix:=CASE WHEN NEW.idol_revision_id IS NOT NULL THEN 'idol' WHEN NEW.gift_revision_id IS NOT NULL THEN 'gift' WHEN NEW.homepage_revision_id IS NOT NULL THEN 'homepage' WHEN NEW.policy_revision_id IS NOT NULL THEN 'policy' ELSE 'media_metadata' END;\n parent_column:=prefix||'_revision_id'; owner_column:=CASE prefix WHEN 'homepage' THEN NULL WHEN 'policy' THEN 'policy_key' WHEN 'media_metadata' THEN 'media_asset_id' ELSE prefix||'_id' END;\n source_id:=coalesce(NEW.idol_revision_id,NEW.gift_revision_id,NEW.homepage_revision_id,NEW.policy_revision_id,NEW.media_metadata_revision_id);\n EXECUTE format('SELECT to_jsonb(r.*) FROM public.%I r WHERE id=$1 FOR UPDATE',prefix||'_revisions') INTO parent USING source_id;\n IF parent->>'lifecycle'='DRAFT' AND NOT public.content_authoring_revision_sealed(parent_column,source_id) THEN RAISE EXCEPTION 'mutable legacy draft must be copied before translation export' USING ERRCODE='23514'; END IF;\n IF owner_column IS NULL THEN EXECUTE 'SELECT max(revision) FROM public.homepage_revisions' INTO actual_head;\n ELSE EXECUTE format('SELECT max(revision) FROM public.%I r WHERE to_jsonb(r.*)->>%L=$1',prefix||'_revisions',owner_column) INTO actual_head USING parent->>owner_column; END IF;\n EXECUTE format('SELECT source_hash FROM public.%I WHERE %I=$1 AND locale=''en''',prefix||'_revision_translations',parent_column) INTO english_hash USING source_id;\n SELECT array_agg(locale ORDER BY locale) INTO ordered FROM(SELECT DISTINCT unnest(NEW.locales) locale) q;\n IF parent IS NULL OR actual_head IS DISTINCT FROM NEW.expected_authoring_version OR english_hash IS DISTINCT FROM NEW.english_source_hash OR NEW.locales IS DISTINCT FROM ordered OR NEW.created_at<(parent->>'created_at')::timestamptz THEN RAISE EXCEPTION 'translation export requires exact source revision head English hash and locale set' USING ERRCODE='23514'; END IF;\n SELECT * INTO audit FROM public.audit_logs WHERE id=NEW.audit_log_id;\n IF audit.id IS NULL OR audit.actor_type IS DISTINCT FROM 'ADMIN' OR audit.actor_id IS DISTINCT FROM NEW.actor_id OR audit.action IS DISTINCT FROM 'TRANSLATION_EXPORT' OR audit.subject_type IS DISTINCT FROM 'TRANSLATION_EXPORT_PACKAGE' OR audit.subject_id IS DISTINCT FROM NEW.id OR audit.created_at IS DISTINCT FROM NEW.created_at OR audit.outcome IS DISTINCT FROM 'SUCCEEDED' OR audit.reason_code IS NULL OR audit.request_id IS NULL OR audit.correlation_id IS DISTINCT FROM audit.request_id THEN RAISE EXCEPTION 'translation export requires exact audit evidence' USING ERRCODE='23514'; END IF;\n PERFORM public.assert_admin_catalog_authority(NEW.actor_id,NEW.session_id,NEW.created_at,(parent->>'created_at')::timestamptz,'content.read',NEW.locales);\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_translation_import_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_translation_import_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE exported public.translation_export_receipts%ROWTYPE; authored public.content_authoring_receipts%ROWTYPE; audit public.audit_logs%ROWTYPE; prefix text; parent_column text; translation_column text; source_id uuid; target_id uuid; imported integer;\nBEGIN\n SELECT * INTO exported FROM public.translation_export_receipts WHERE id=NEW.export_receipt_id;\n SELECT * INTO authored FROM public.content_authoring_receipts WHERE id=NEW.authoring_receipt_id;\n SELECT * INTO audit FROM public.audit_logs WHERE id=NEW.audit_log_id;\n prefix:=CASE WHEN exported.idol_revision_id IS NOT NULL THEN 'idol' WHEN exported.gift_revision_id IS NOT NULL THEN 'gift' WHEN exported.homepage_revision_id IS NOT NULL THEN 'homepage' WHEN exported.policy_revision_id IS NOT NULL THEN 'policy' ELSE 'media_metadata' END;\n parent_column:=prefix||'_revision_id'; translation_column:=prefix||'_translation_id'; source_id:=(to_jsonb(exported)->>parent_column)::uuid; target_id:=(to_jsonb(authored)->>parent_column)::uuid;\n IF exported.id IS NULL OR authored.id IS NULL OR authored.action IS DISTINCT FROM 'COPY' OR (to_jsonb(authored)->>('source_'||parent_column))::uuid IS DISTINCT FROM source_id OR target_id IS NULL OR target_id=source_id\n OR authored.expected_version IS DISTINCT FROM exported.expected_authoring_version OR authored.source_snapshot_hash IS DISTINCT FROM exported.source_snapshot_hash OR authored.actor_id IS DISTINCT FROM NEW.actor_id OR authored.audit_log_id IS DISTINCT FROM NEW.audit_log_id OR authored.created_at IS DISTINCT FROM NEW.created_at OR NEW.imported_locales IS DISTINCT FROM exported.locales\n OR audit.action IS DISTINCT FROM 'CONTENT_REVISION_COPY' OR audit.actor_id IS DISTINCT FROM NEW.actor_id OR audit.subject_id IS DISTINCT FROM target_id OR audit.created_at IS DISTINCT FROM NEW.created_at OR audit.outcome IS DISTINCT FROM 'SUCCEEDED' THEN RAISE EXCEPTION 'translation import requires exact exported source and new COPY audit' USING ERRCODE='23514'; END IF;\n EXECUTE format('SELECT count(*) FROM public.%I t JOIN public.%I r ON r.%I=t.id AND r.sequence=1 WHERE t.%I=$1 AND t.locale=ANY($2) AND t.origin=''IMPORT'' AND t.import_batch_id=$3 AND t.editor_id=$4 AND r.status=''DRAFT'' AND NOT EXISTS(SELECT 1 FROM public.%I later WHERE later.%I=t.id AND later.sequence>1)',prefix||'_revision_translations',prefix||'_translation_reviews',translation_column,parent_column,prefix||'_translation_reviews',translation_column) INTO imported USING target_id,NEW.imported_locales,NEW.id,NEW.actor_id;\n IF imported<>cardinality(NEW.imported_locales) THEN RAISE EXCEPTION 'imported translations must remain new actor IMPORT drafts with exact batch' USING ERRCODE='23514'; END IF;\n PERFORM public.assert_admin_catalog_authority(NEW.actor_id,NEW.session_id,NEW.created_at,authored.created_at,'content.edit',NEW.imported_locales);\n RETURN NULL;\nEND; $function$"
+    },
+    {
       "name": "assert_translation_initial_review",
       "identityArguments": "",
       "resultType": "trigger",
@@ -46045,6 +47408,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_content_locale_grant()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$ BEGIN\n  IF TG_OP = 'INSERT' THEN\n    IF NEW.revoked_at IS NOT NULL OR NEW.revoked_audit_log_id IS NOT NULL OR NEW.granted_at > clock_timestamp() THEN\n      RAISE EXCEPTION 'new locale grant must be current and unrevoked' USING ERRCODE = '23514';\n    END IF;\n  ELSIF to_jsonb(NEW) - ARRAY['revoked_at','revoked_audit_log_id'] IS DISTINCT FROM to_jsonb(OLD) - ARRAY['revoked_at','revoked_audit_log_id']\n    OR (OLD.revoked_at IS NOT NULL AND (NEW.revoked_at IS DISTINCT FROM OLD.revoked_at OR NEW.revoked_audit_log_id IS DISTINCT FROM OLD.revoked_audit_log_id))\n    OR NEW.revoked_at IS NULL OR NEW.revoked_at > clock_timestamp() THEN\n    RAISE EXCEPTION 'locale grant only permits one-way audited revocation' USING ERRCODE = '55000';\n  END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
+      "name": "guard_admin_idol_identity",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_idol_identity()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE handle_value text;\nBEGIN\n IF TG_OP='DELETE' THEN RAISE EXCEPTION 'idol identity history is retained by archival' USING ERRCODE='55000'; END IF;\n IF TG_OP='UPDATE' THEN\n  IF NEW.id IS DISTINCT FROM OLD.id OR NEW.created_at IS DISTINCT FROM OLD.created_at OR NEW.schema_version IS DISTINCT FROM OLD.schema_version\n   OR NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at THEN RAISE EXCEPTION 'idol identity and optimistic version must be preserved' USING ERRCODE='23514'; END IF;\n  IF OLD.status='archived' AND (NEW.handle IS DISTINCT FROM OLD.handle OR NEW.status IS DISTINCT FROM OLD.status OR NEW.accepting_gifts IS DISTINCT FROM OLD.accepting_gifts) THEN RAISE EXCEPTION 'archived idol identity cannot be reactivated or renamed' USING ERRCODE='23514'; END IF;\n END IF;\n IF TG_OP='INSERT' OR NEW.handle IS DISTINCT FROM OLD.handle THEN\n  -- Both current names and every historical source name remain reserved. Locks serialize competing changes to the same namespace.\n  FOR handle_value IN SELECT DISTINCT v FROM unnest(CASE WHEN TG_OP='INSERT' THEN ARRAY[NEW.handle] ELSE ARRAY[OLD.handle,NEW.handle] END) v ORDER BY v LOOP\n   PERFORM pg_advisory_xact_lock(hashtextextended('fan-support:idol-handle:'||handle_value,0));\n  END LOOP;\n  IF EXISTS(SELECT 1 FROM public.slug_redirects WHERE entity_type='IDOL' AND old_handle=NEW.handle)\n    OR EXISTS(SELECT 1 FROM public.idols WHERE handle=NEW.handle AND id<>NEW.id) THEN RAISE EXCEPTION 'idol handle is reserved by a current or historical identity' USING ERRCODE='23505'; END IF;\n END IF;\n RETURN NEW;\nEND; $function$"
     },
     {
       "name": "guard_append_only",

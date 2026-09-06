@@ -22,3 +22,8 @@ export * from "./publication-runtime-route.js";
 export * from "./published-content-route.js";
 export * from "./publication-runtime-composition.js";
 export * from "./published-content-composition.js";
+
+export * from "./admin-session-route.js";
+export * from "./admin-session-composition.js";
+export * from "./admin-workspace-route.js";
+export * from "./admin-workspace-composition.js";

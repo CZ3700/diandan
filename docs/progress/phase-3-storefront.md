@@ -13,7 +13,7 @@
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
 | P3-01 | DONE | Codex `/root` | P1-02、P1-04、P1-05、P1-06 | 全部内容运行时检查点通过；真实发布/回退、七语言公开读取、持久purge，见4C-2验收记录 |
-| P3-02 | READY | — | P2-03、P3-01 | Admin 首页/偶像稳定身份与别名/媒体构图与预览/翻译矩阵/审核，以及所需管理API |
+| P3-02 | DONE | Codex `/root` | P2-03、P3-01 | 七语言自研Admin、真实PG/API/媒体/审核/预览/发布与回退；完整check、双端浏览器和独立复核通过，见P3-02验收记录 |
 | P3-03 | READY | — | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
 | P3-04 | READY | — | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
 | P3-05 | PENDING | — | P2-04、P3-01、P3-04 | 礼物分页/筛选/价格排序/URL恢复/七语言详情/选择偶像/政策/错误状态 |
@@ -30,6 +30,48 @@
 ## Phase 退出证据
 
 已于 2026-09-05 依据用户明确视觉接受与继续开发指令解锁；尚未达到退出门禁。
+
+## P3-02 执行登记（2026-09-07）
+
+- Owner：Codex `/root`，Lane C唯一executor；开始2026-09-06T17:27:39.666642+00:00，基线本地提交 `6983e90`。用户明确要求继续下一阶段；P3-02由READY转IN_PROGRESS，依赖P2-03/P3-01均DONE，Phase 3 ACTIVE。只领取本任务。
+- 输入：已批准黑金视觉、共享可访问组件、18迁移/141表、311合同roots、P3-01真实内容/媒体/审核/预览/发布与purge。先只读审计缺口再冻结新增合同，不凭UI猜测数据库权限或发布资格。
+- 输出：自研Admin首页/艺人稳定身份与运营状态/媒体库及构图、英语源稿与七语矩阵/source diff/审核、受审计翻译包导入导出、双端受控预览、发布/回退/缓存失败重试；必要Application/API与真实浏览器操作一起验收。
+- 边界：沿用当前不可变revision/作者和独立审核/manifest与同事务当前授权；正式OIDC发行与生产开放仍属P5-01。开发身份仅显式TEST/local组合、真实数据库session/MFA/RBAC/CSRF；不把无鉴权入口带入正常生产。P3-03商品/价格/库存运营与P3-04/05粉丝页不在本任务。
+- 文件所有权：root独占共享exports/registry/生成物/锁文件、Next后台UI/i18n/配置、计划/进度/Git；auth_persistence_audit先审计艺人稳定身份/管理发现/历史与DB增量；content_review_audit先审计翻译包/source diff/预览解析；admin_transport先审计API/本地session与真实浏览器fixture。合同冻结后按明确新增文件分配，不交叉编辑。
+- 视觉：深色中性工作区、金色主操作、真实人物和素材预览；列表/编辑/预览明确分区，少边框，无营销Hero或数据卡片拼盘。交互使用现有焦点管理、保存反馈、抽屉/确认与reduced-motion；不新增装饰动效框架。
+- 验证：先失败测试（权限/CSRF/版本冲突/过期翻译包/草稿隔离/自审阻断/不可变历史），再最小实现；受影响tests→format/lint/typecheck/build→真实PG/HTTP/S3→七语言390×844/1440×900、键盘/错误/减少动态/320px/缩放浏览器回归→非作者规范和质量复核→全仓check/S.U.P.E.R/源码证据。失败不绕过门禁，计时/生产CDN等范围如实区分。
+- Git：分支 `codex/p3-02-admin-workspace` 从6983e90继续；只本地检查点提交，最终统一推送，不push/merge，不修改历史未跟踪素材或诊断产物。
+
+## P3-02 验收记录（2026-09-07）
+
+- 风险追踪：R-02由私有DTO/翻译导出字段边界、内存预览与无私密素材截图覆盖；R-08由结构化字段/媒体构图/预览发布回退覆盖；R-12使用原创测试素材和当前版权状态，正式资产授权另留上线门；R-17由七语言源版本/STALE/独立审核和发布证明覆盖。下述实际数据库、协议与浏览器证据不替代正式身份、人工译审和资产批准。
+- 交付：七语言自研内容后台：首页/艺人稳定身份与别名/媒体库；真实目录搜索与分页、源稿和历史 source diff、翻译矩阵、独立审核、受审计翻译包导入导出、私有图片与双端预览、发布检查/发布/历史回退/缓存状态和重试。保留既有黑金视觉，交互动效沿用已验收组件与 reduced-motion。
+- 运行边界：Next → 固定同源 BFF → Application → 专属 Port → PostgreSQL/S3；会话/MFA/RBAC/语言权限/CSRF 当前检查，私有响应 no-store，预览 token 只在内存与 POST 中。真实 PostgreSQL 继续是唯一内容真相源；0019 后共19迁移/144表，新增33合同 roots与11个OpenAPI路径，原311个定义逐项深比较不变（共344）。
+- 本任务新增验证：Admin44单测、i18n5单测；目录/身份/翻译/preview真实PG253断言，其中251为正常业务与触发器约束、2为隔离真实SQL的同时间戳历史排序查询；实际API+PG+TLS S3+worker+Next+Chrome默认模式957断言/306 setup API请求。完整UI模式1003断言/306 setup API请求（不含浏览器额外BFF请求计数）。
+- 浏览器：全部七语言390×844与1440×900，18张最终截图（14张语言/设备、3张编辑/源改变/预览、1张审核成功后刷新中的状态）；`en-reviewer.png`不作稳定审核矩阵证据。保存后读回、独立批准、英文变更后六语言STALE、dirty导航确认、三张真实blob图片解码、修改handle后保留另一个未提交字段均通过实际断言。目录/编辑器/preview三个axe扫描均零violations、零incomplete；Tab五目标有可见焦点，Enter完成搜索/打开记录/预览/关闭。320px与720×450等效200%重排无横向溢出；等效重排不冒充原生Chrome缩放。
+- 既有界面回归：共享输入变化后实际刷新P2-04（16场景/18PNG/10axe/原生200%缩放）和P2-05（8场景/22PNG/3axe/正常及减弱动态），两门通过。本轮没有新真机证据。
+- 故障收敛：上传grant/PUT/登记阶段和发布validate/publish阶段均以失败测试保护恢复；成功发布后的状态读取失败只重读状态，避免再发写命令。修复rights拒绝枚举、资料刷新卸载、语言矩阵命名角色、CSS令牌与server-only配置入口。测试类型声明按现有模式补Node类型；两旧Worker组合测试移除计时区间内动态加载，保留原超时与全部业务断言，并纠正旧测试误写的异步返回类型。
+- 非作者复核：目录SQL/迁移/翻译收据、translation/preview链路、会话/配置/资源清理、界面状态与最后测试修正均独立ACCEPT；相关作者归因和RED→GREEN记录见总证据README。静态预检105/105通过（101 cached），不声称零缓存。
+- 依赖边界：ICU格式化库仅限i18n包许可，新增正向与真实provider/npm alias反向测试；32项通过，原有边界保留。
+- 发布回归：真实事件时钟探针先在旧实现首tick复现23514/CAUSAL_VERSION，再以稳定事务事件时间修复；实际截止、租约和所有SQL guard保留，默认首claim/record两查询回归后继续真实时钟整链，11,364断言/1,450 HTTP请求通过。原自然purge UNAVAILABLE与另一次retry503未自然重现或确定归因，保留安全诊断；两次后续validate失败确认为诊断QueryConfig包装错误并已独立修复，不作生产缺陷。详见总README分项记录。
+- 最终统一检查：2026-09-06T19:55:20.066988+00:00，完整 `pnpm check` exit0；19迁移/144表、全部真实PG/HTTP/S3、format/lint/typecheck/test/build/架构和构建产物门通过。最后typecheck与test各58/58（55 cached），build35/35（35 cached）；31个package出口由Node实际import。额外secrets与diff检查exit0；1,134个源码输入冻结前后逐项一致，摘要`9e7c70c6c4979d3e0ffda81850d42bec8a812655a45a5d60d8ade3591a714d8a`。非作者复核和S.U.P.E.R十项PASS，P3-02 DONE、Lane C释放；Phase3仍ACTIVE（2/6），全局19 DONE / 2 READY / 28 PENDING（49）。
+- 总证据：`output/checks/p3-02-admin/README.md`、`validation.json`、`translation-handoff.md`、`transport-README.md`、`transport-review.md`；页面证据`output/playwright/p3-02-admin/`。详细日志保留在本机同目录（忽略Git），源码输入摘要在validation中。
+- 尚未包含：正式OIDC/管理员发行（P5-01）、正式人工译审/品牌与资产上线批准、商品/价格/库存运营（P3-03）、粉丝正式浏览页（P3-04/05）、PSP/云CDN/staging/生产发布。七份Admin界面review manifest保持DRAFT。仅本地检查点提交，不push/merge，不暂存历史未跟踪产物。
+
+### P3-02 S.U.P.E.R 十项
+
+| # | 检查 | 结果 |
+|:--|:--|:--|
+| 1 | 文件职责 | PASS：目录查询/身份写入、翻译工作区/传输、预览授权/签名、BFF、表单状态与展示拆分 |
+| 2 | 函数职责 | PASS：读取、转换、提交、阶段恢复和状态查询分别处理 |
+| 3 | 单向依赖 | PASS：Route → Application → Domain/Port → Adapter，无客户端直读数据库 |
+| 4 | 无循环 | PASS：workspace/领域/adapter检查与105项静态预检通过 |
+| 5 | 合同边界 | PASS：33个新增versioned roots，原311定义不变 |
+| 6 | 可序列化 | PASS：跨模块对象经Zod解析；React内部回调不进入业务合同 |
+| 7 | 配置注入 | PASS：TEST默认禁用，仅开发loopback；无生产品牌/艺人/供应商凭证硬编码，样式消费设计令牌 |
+| 8 | 显式依赖 | PASS：workspace依赖、ICU库和测试类型/浏览器依赖声明并锁定 |
+| 9 | 可替换 | PASS：五个独立事务Port与配置入口，UI不拥有第二份内容数据库 |
+| 10 | 验证完成 | PASS：最终完整check、真实PG/API/S3、双端七语言浏览器、secrets/diff与1,134源码指纹一致；缓存和外部环境范围如实记录 |
 
 ## P3-01 执行卡
 

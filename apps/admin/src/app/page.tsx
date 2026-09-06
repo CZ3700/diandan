@@ -1,9 +1,14 @@
-import { loadAdminRuntimeConfig } from "../server/runtime-config";
+import { redirect } from "next/navigation";
+import {
+  loadAdminRuntimeConfig,
+  loadAdminWorkspaceConfig,
+} from "../server/runtime-config";
 
 export const dynamic = "force-dynamic";
 
 export default function AdminRuntimePage() {
   loadAdminRuntimeConfig();
+  if (loadAdminWorkspaceConfig().mode === "TEST") redirect("/en");
 
   return (
     <main className="runtime-shell">

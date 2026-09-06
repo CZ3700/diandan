@@ -18,6 +18,7 @@ import {
   runMigrations,
   withEphemeralPostgres,
 } from "../dist/index.js";
+import { seedAdminCatalogOperator } from "./postgres-admin-catalog-fixtures.mjs";
 import { rebuildIdolSearchProjections } from "../dist/catalog-search-projection.js";
 import {
   seedCatalogDirectoryFixtures,
@@ -57,6 +58,9 @@ async function verify(clientConfig) {
       observer,
       fixture.idols[0],
       fixture.editor,
+    );
+    await observer.query(
+      "INSERT INTO public.idols(id,handle,status,accepting_gifts) VALUES ('62000000-0000-4000-8000-000000000001','unpublished-performer','draft',false)",
     );
     await runMigrations({
       clientConfig,
@@ -432,9 +436,6 @@ async function verify(clientConfig) {
     );
 
     await observer.query(
-      "INSERT INTO public.idols(id,handle,status,accepting_gifts) VALUES ('62000000-0000-4000-8000-000000000001','unpublished-performer','draft',false)",
-    );
-    await observer.query(
       "INSERT INTO public.gifts(id,handle,status) VALUES ('62000000-0000-4000-8000-000000000002','unpublished-gift','draft')",
     );
     check(
@@ -472,79 +473,14 @@ async function verify(clientConfig) {
       "effective price boundary changes the catalog version without a database write",
     );
 
-    const initialCursor = createIdolDirectoryCursor({
-      schemaVersion: 1,
-      query: { schemaVersion: 1, locale: "en" },
-      catalogVersion: first.catalogVersion,
-      afterId: fixture.idols[11].id,
-    });
-    let heldVersion;
-    await run(async ({ catalogDirectory }) => {
-      const command = {
-        schemaVersion: 1,
-        plan: createIdolDiscoveryPlan({ schemaVersion: 1, locale: "en" }),
-      };
-      heldVersion = success(
-        await catalogDirectory.readIdols(command),
-        "snapshot before concurrent change",
-      ).catalogVersion;
-      await observer.query(
-        "UPDATE public.idols SET status='paused',accepting_gifts=false,version=version+1,updated_at=transaction_timestamp() WHERE id=$1",
-        [fixture.idols[0].id],
-      );
-      const held = success(
-        await catalogDirectory.readIdols(command),
-        "snapshot after concurrent change",
-      );
-      check(
-        held.catalogVersion === heldVersion &&
-          held.items[0].source.base.status === "active",
-        "one transaction keeps metadata and hydration snapshot stable",
-      );
-      return { schemaVersion: 1, checked: true };
-    });
-    check(
-      (await idols({ after: initialCursor })).code === "CATALOG_CHANGED",
-      "published operational change invalidates an old cursor",
-    );
-    const paused = success(
-      await idols({ anchorId: fixture.idols[0].id }),
-      "paused artist",
-    );
-    check(
-      paused.items[0].source.base.status === "paused" &&
-        !paused.items[0].source.base.acceptingGifts,
-      "paused artist stays visible without accepting gifts",
-    );
-    const pausedGifts = success(
-      await gifts({ idolId: fixture.idols[0].id }),
-      "paused recipient gifts",
-    );
-    check(
-      pausedGifts.totalItems === 120 &&
-        pausedGifts.items.every((item) => !item.offer.purchasable),
-      "paused recipient retains related gifts but no purchasable offer",
-    );
-
-    await observer.query(
-      "DELETE FROM public.idol_translation_search_projections WHERE idol_translation_id=(SELECT id FROM public.idol_revision_translations WHERE idol_revision_id=$1 AND locale='ja')",
-      [fixture.idols[0].revisionId],
-    );
-    check(
-      (await idols()).code === "CATALOG_UNAVAILABLE",
-      "missing projection for another searchable language fails closed",
-    );
-    await observer.query("BEGIN");
-    const rebuilt = await rebuildIdolSearchProjections(observer);
-    await observer.query("COMMIT");
-    check(
-      rebuilt.processed === 841 && (await idols()).outcome === "SUCCESS",
-      "search projection rebuild preserves all immutable seven-language rows",
-    );
-
     const immutableBefore = await observer.query(
       "SELECT jsonb_agg(jsonb_build_array(id,source_hash,translated_from_source_hash,display_name) ORDER BY id) AS translations FROM public.idol_revision_translations",
     );
+    await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0019" },
+    });
     // This fixture has no review, authoring, alias/detail, or processing history; rewind their schemas first.
     await runMigrations({
       clientConfig,
@@ -600,9 +536,9 @@ async function verify(clientConfig) {
       "SELECT count(*)::integer AS count, max(version) AS version FROM public.schema_migrations",
     );
     check(
-      migrationHead.rows[0].count === 18 &&
-        migrationHead.rows[0].version === "0018",
-      "data-bearing up/down/up restores all 18 migrations through publication runtime",
+      migrationHead.rows[0].count === 19 &&
+        migrationHead.rows[0].version === "0019",
+      "data-bearing up/down/up restores all 19 migrations through admin catalog",
     );
     check(
       (await idols()).code === "CATALOG_UNAVAILABLE",
@@ -620,6 +556,89 @@ async function verify(clientConfig) {
     );
     assert.deepEqual(immutableAfter.rows, immutableBefore.rows);
     assertions++;
+
+    const operateCatalog = await seedAdminCatalogOperator(
+      observer,
+      persistence,
+      fixture.editor,
+    );
+    const initialCursor = createIdolDirectoryCursor({
+      schemaVersion: 1,
+      query: { schemaVersion: 1, locale: "en" },
+      catalogVersion: first.catalogVersion,
+      afterId: fixture.idols[11].id,
+    });
+    let heldVersion;
+    await run(async ({ catalogDirectory }) => {
+      const command = {
+        schemaVersion: 1,
+        plan: createIdolDiscoveryPlan({ schemaVersion: 1, locale: "en" }),
+      };
+      heldVersion = success(
+        await catalogDirectory.readIdols(command),
+        "snapshot before concurrent change",
+      ).catalogVersion;
+      const priorBase = (
+        await observer.query("SELECT version FROM idols WHERE id=$1", [
+          fixture.idols[0].id,
+        ])
+      ).rows[0];
+      await operateCatalog({
+        action: "SET_IDOL_STATUS",
+        idolId: fixture.idols[0].id,
+        expectedBaseVersion: Number(priorBase.version),
+        status: "paused",
+        acceptingGifts: false,
+      });
+      const held = success(
+        await catalogDirectory.readIdols(command),
+        "snapshot after concurrent change",
+      );
+      check(
+        held.catalogVersion === heldVersion &&
+          held.items[0].source.base.status === "active",
+        "one transaction keeps metadata and hydration snapshot stable",
+      );
+      return { schemaVersion: 1, checked: true };
+    });
+    check(
+      (await idols({ after: initialCursor })).code === "CATALOG_CHANGED",
+      "published operational change invalidates an old cursor",
+    );
+    const paused = success(
+      await idols({ anchorId: fixture.idols[0].id }),
+      "paused artist",
+    );
+    check(
+      paused.items[0].source.base.status === "paused" &&
+        !paused.items[0].source.base.acceptingGifts,
+      "paused artist stays visible without accepting gifts",
+    );
+    const pausedGifts = success(
+      await gifts({ idolId: fixture.idols[0].id }),
+      "paused recipient gifts",
+    );
+    check(
+      pausedGifts.totalItems === 120 &&
+        pausedGifts.items.every((item) => !item.offer.purchasable),
+      "paused recipient retains related gifts but no purchasable offer",
+    );
+
+    await observer.query(
+      "DELETE FROM public.idol_translation_search_projections WHERE idol_translation_id=(SELECT id FROM public.idol_revision_translations WHERE idol_revision_id=$1 AND locale='ja')",
+      [fixture.idols[0].revisionId],
+    );
+    check(
+      (await idols()).code === "CATALOG_UNAVAILABLE",
+      "missing projection for another searchable language fails closed",
+    );
+    await observer.query("BEGIN");
+    const rebuilt = await rebuildIdolSearchProjections(observer);
+    await observer.query("COMMIT");
+    check(
+      rebuilt.processed === 841 && (await idols()).outcome === "SUCCESS",
+      "search projection rebuild preserves all immutable seven-language rows",
+    );
 
     return {
       artists: 120,

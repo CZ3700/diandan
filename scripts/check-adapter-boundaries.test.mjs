@@ -546,6 +546,107 @@ test("keeps the ui portability exception package-scoped and provider-free", asyn
   }
 });
 
+test("allows the reviewed ICU formatter in i18n manifests, source and declarations", async (context) => {
+  const validateAdapterBoundaries = await loadValidator();
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  await writeInnerPackageFixture(
+    root,
+    "i18n",
+    'import { IntlMessageFormat } from "intl-messageformat";\nexport const message = new IntlMessageFormat("Hello {name}", "en");\n',
+  );
+  await writePackageManifest(root, "i18n", "@fan-support/i18n", {
+    dependencies: { "intl-messageformat": "11.2.14" },
+  });
+  await write(
+    root,
+    "packages/i18n/dist/index.d.ts",
+    'import type { IntlMessageFormat } from "intl-messageformat";\nexport declare const message: IntlMessageFormat;\n',
+  );
+
+  assert.deepEqual(await validateAdapterBoundaries(root), []);
+});
+
+test("keeps the ICU formatter forbidden in domain and content", async (context) => {
+  const validateAdapterBoundaries = await loadValidator();
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  for (const packageName of ["domain", "content"]) {
+    await writeInnerPackageFixture(
+      root,
+      packageName,
+      'export { IntlMessageFormat } from "intl-messageformat";\n',
+    );
+    await writePackageManifest(
+      root,
+      packageName,
+      `@fan-support/${packageName}`,
+      { dependencies: { "intl-messageformat": "11.2.14" } },
+    );
+    await write(
+      root,
+      `packages/${packageName}/dist/index.d.ts`,
+      'export { IntlMessageFormat } from "intl-messageformat";\n',
+    );
+  }
+
+  const errors = await validateAdapterBoundaries(root);
+  for (const packageName of ["domain", "content"]) {
+    for (const file of ["package.json", "src/index.ts", "dist/index.d.ts"]) {
+      assert.ok(
+        errors.some(
+          (error) =>
+            error.includes(`packages/${packageName}/${file}`) &&
+            error.includes("forbidden provider dependency intl-messageformat"),
+        ),
+        `expected ICU scope enforcement in ${packageName}/${file}: ${errors.join(" | ")}`,
+      );
+    }
+  }
+});
+
+test("keeps real provider SDKs and provider aliases forbidden in i18n", async (context) => {
+  const validateAdapterBoundaries = await loadValidator();
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  await writeInnerPackageFixture(
+    root,
+    "i18n",
+    'export { S3Client } from "@aws-sdk/client-s3";\n',
+  );
+  await writePackageManifest(root, "i18n", "@fan-support/i18n", {
+    dependencies: {
+      "@aws-sdk/client-s3": "3.1119.0",
+      "intl-messageformat": "npm:@aws-sdk/client-s3@3.1119.0",
+    },
+  });
+  await write(
+    root,
+    "packages/i18n/dist/index.d.ts",
+    'export type Provider = import("@aws-sdk/client-s3").S3Client;\n',
+  );
+
+  const errors = await validateAdapterBoundaries(root);
+  for (const file of ["package.json", "src/index.ts", "dist/index.d.ts"]) {
+    assert.ok(
+      errors.some(
+        (error) =>
+          error.includes(`packages/i18n/${file}`) &&
+          error.includes("forbidden provider dependency @aws-sdk/client-s3"),
+      ),
+      `expected provider rejection in i18n/${file}: ${errors.join(" | ")}`,
+    );
+  }
+  assert.ok(
+    errors.some((error) =>
+      error.includes(
+        "forbidden provider npm alias target @aws-sdk/client-s3 via intl-messageformat",
+      ),
+    ),
+    `expected reviewed dependency name not to hide a provider alias: ${errors.join(" | ")}`,
+  );
+});
+
 test("rejects font-package scope expansion and alias bypasses", async (context) => {
   const validateAdapterBoundaries = await loadValidator();
   const root = await fixture();

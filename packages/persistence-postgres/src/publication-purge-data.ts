@@ -34,7 +34,8 @@ export async function loadPurgeJob(client: TransactionClient, id: string) {
 export async function purgeTime(client: TransactionClient, row: DraftRow) {
   const [time] = await draftRows(
     client,
-    `SELECT gen_random_uuid() AS id,gen_random_uuid() AS token,${utcTimestampSql("GREATEST(clock_timestamp(),transaction_timestamp(),$1::timestamptz)")} AS now,
+    // Event ordering uses stable transaction time and locked history. Expiry remains wall-clock based.
+    `SELECT gen_random_uuid() AS id,gen_random_uuid() AS token,${utcTimestampSql("GREATEST(transaction_timestamp(),$1::timestamptz)")} AS now,
     clock_timestamp()>=$2::timestamptz+interval '10 minutes' AS expired`,
     [row["updated_at"], row["created_at"]],
   );

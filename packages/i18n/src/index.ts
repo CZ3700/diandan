@@ -1,4 +1,5 @@
 export const workspacePackageName = "@fan-support/i18n" as const;
+export * from "./admin/messages.js";
 
 export {
   DEFAULT_LOCALE,

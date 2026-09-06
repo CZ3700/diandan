@@ -4,7 +4,7 @@ import { randomBytes, randomUUID } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
-import { Client } from "pg";
+import { Client, Pool } from "pg";
 import {
   digestAdminContentToken,
   createPublicationPurgeUseCases,
@@ -18,13 +18,16 @@ import {
   baseContentResponseSchema,
   adminContentResponseSchema,
   adminResourceResponseSchema,
+  adminContentFailureSchema,
+  persistenceTransactionFailureSchema,
 } from "@fan-support/contracts";
+import { compareBaseContentTime } from "../../../packages/application/dist/base-content-time.js";
 import { createStructuredLogger } from "@fan-support/observability";
 import {
-  createPostgresPersistence,
   runMigrations,
   withEphemeralPostgres,
 } from "@fan-support/persistence-postgres";
+import { createPostgresPersistenceWithPoolFactory } from "../../../packages/persistence-postgres/dist/postgres-persistence.js";
 import { createApiApplication } from "../dist/bootstrap.js";
 import { createTestPublicationRuntimeComposition } from "../dist/publication-runtime-composition.js";
 import { createTestPublicationPreflightComposition } from "../dist/publication-preflight-composition.js";
@@ -108,9 +111,185 @@ async function verify(clientConfig, s3) {
   });
   const observer = new Client(clientConfig);
   await observer.connect();
-  const persistence = createPostgresPersistence(clientConfig, {
+  // Failure-only diagnostics retain fixed phases and codes, never SQL, parameters or provider data.
+  const purgeDiagnostics = [];
+  const probePurgeClock = process.env.PUBLICATION_PURGE_CLOCK_PROBE === "1";
+  let purgeClockProbeQueries = 0;
+  const notePurge = (value) => {
+    purgeDiagnostics.push(value);
+    if (purgeDiagnostics.length > 12) purgeDiagnostics.shift();
+  };
+  const guardCodes = new Map([
+    [
+      "purge identity is immutable and transitions require one causal version",
+      "CAUSAL_VERSION",
+    ],
+    ["purge claims require a due job and bounded fresh lease", "CLAIM_WINDOW"],
+    ["purge results require a current unexpired claim", "RESULT_LEASE"],
+    [
+      "purge completion requires the same provider reference",
+      "PROVIDER_REFERENCE",
+    ],
+    ["pending provider work must remain submitted", "PENDING_STATE"],
+    [
+      "publication action requires its current active MFA session",
+      "PUBLICATION_SESSION_TIME",
+    ],
+    [
+      "publication action requires current publish permission",
+      "PUBLICATION_PERMISSION",
+    ],
+    [
+      "publication action requires all seven current locale scopes",
+      "PUBLICATION_LOCALES",
+    ],
+  ]);
+  const createObservedPersistence = (database, options) =>
+    createPostgresPersistenceWithPoolFactory(database, options, (config) => {
+      const pool = new Pool(config);
+      return {
+        async connect() {
+          const connection = await pool.connect();
+          return {
+            async query(sql, values) {
+              const sqlText = typeof sql === "string" ? sql : sql.text;
+              // Test-only earlier clock observation: the following UPDATE and all actual guards
+              // still use the unchanged database clock. This never alters a system clock or lease.
+              const priorClockObservation =
+                (probePurgeClock || purgeClockProbeQueries < 2) &&
+                sqlText.startsWith(
+                  "SELECT gen_random_uuid() AS id,gen_random_uuid() AS token,",
+                ) &&
+                sqlText.includes(" AS expired");
+              const statementText = priorClockObservation
+                ? sqlText.replace(
+                    "GREATEST(clock_timestamp(),",
+                    "GREATEST((clock_timestamp()+interval '2 seconds'),",
+                  )
+                : sqlText;
+              const statement =
+                statementText === sqlText
+                  ? sql
+                  : typeof sql === "string"
+                    ? statementText
+                    : { ...sql, text: statementText };
+              if (priorClockObservation) purgeClockProbeQueries++;
+              try {
+                return await connection.query(statement, values);
+              } catch (error) {
+                const phase = sqlText.includes("content_purge_jobs")
+                  ? "JOB_SQL"
+                  : sqlText.includes("content_purge_attempts")
+                    ? "ATTEMPT_SQL"
+                    : sqlText === "COMMIT"
+                      ? "COMMIT"
+                      : "OTHER_SQL";
+                notePurge({
+                  phase,
+                  sqlstate:
+                    typeof error?.code === "string" &&
+                    /^[A-Z0-9]{5}$/u.test(error.code)
+                      ? error.code
+                      : "NONE",
+                  guard: guardCodes.get(error?.message) ?? "UNCLASSIFIED",
+                });
+                throw error;
+              }
+            },
+            release: (destroy) => connection.release(destroy),
+          };
+        },
+        end: () => pool.end(),
+        on: (event, listener) => pool.on(event, listener),
+        off: (event, listener) => pool.off(event, listener),
+      };
+    });
+  const persistence = createObservedPersistence(clientConfig, {
     catalogPublicMediaBaseUrl: "https://media.example.invalid",
   });
+  const createObservedRuntimePersistence = (database, options) => {
+    const runtimePersistence = createObservedPersistence(database, options);
+    return {
+      ...runtimePersistence,
+      publicationRuntimeTransactionManager: {
+        async runInPublicationRuntimeTransaction(work) {
+          let phase = "BEGIN";
+          try {
+            return await runtimePersistence.publicationRuntimeTransactionManager.runInPublicationRuntimeTransaction(
+              (repositories) => {
+                let authority;
+                return work(
+                  Object.fromEntries(
+                    Object.entries(repositories).map(([name, repository]) => [
+                      name,
+                      Object.fromEntries(
+                        Object.entries(repository).map(([method, call]) => [
+                          method,
+                          async (command) => {
+                            phase = `${name}.${method}`;
+                            const result = await call(command);
+                            const diagnostic = {
+                              phase,
+                              outcome: result.outcome,
+                            };
+                            if (result.outcome === "FAILURE")
+                              diagnostic.code =
+                                result.code ?? result.error?.code;
+                            if (
+                              name === "authorization" &&
+                              result.outcome === "SUCCESS"
+                            )
+                              authority = result.principal;
+                            if (
+                              name === "publicationRuntime" &&
+                              method === "load" &&
+                              result.outcome === "SUCCESS" &&
+                              authority
+                            ) {
+                              diagnostic.evaluationAfterAuthorization =
+                                compareBaseContentTime(
+                                  result.context.preflight.evaluatedAt,
+                                  authority.authorizedAt,
+                                ) >= 0;
+                              diagnostic.evaluationBeforeExpiry =
+                                compareBaseContentTime(
+                                  result.context.preflight.evaluatedAt,
+                                  authority.expiresAt,
+                                ) < 0;
+                            }
+                            notePurge(diagnostic);
+                            return result;
+                          },
+                        ]),
+                      ),
+                    ]),
+                  ),
+                );
+              },
+            );
+          } catch (error) {
+            const application = adminContentFailureSchema.safeParse(
+              error?.failure,
+            );
+            const transaction = persistenceTransactionFailureSchema.safeParse(
+              error?.failure,
+            );
+            notePurge({
+              phase,
+              outcome: "THREW",
+              code: application.success
+                ? application.data.code
+                : transaction.success
+                  ? transaction.data.error.code
+                  : "OTHER",
+              schemaFailure: Array.isArray(error?.issues),
+            });
+            throw error;
+          }
+        },
+      },
+    };
+  };
   let app, cache, worker;
   const runtimes = [],
     logs = [];
@@ -142,7 +321,7 @@ async function verify(clientConfig, s3) {
     await runMigrations({
       clientConfig,
       workspaceRoot,
-      command: { direction: "up", targetVersion: "0018" },
+      command: { direction: "up" },
     });
     const unrelatedEvents = (
       await observer.query(
@@ -177,7 +356,9 @@ async function verify(clientConfig, s3) {
     );
     const compositions = [
       createTestResourceManagementComposition({ ...options, ...media }),
-      createTestPublicationRuntimeComposition(options),
+      createTestPublicationRuntimeComposition(options, {
+        createPersistence: createObservedRuntimePersistence,
+      }),
       createTestPublicationPreflightComposition(options),
       createTestContentAuthoringComposition(options),
       createTestBaseContentComposition(options),
@@ -254,10 +435,14 @@ async function verify(clientConfig, s3) {
       }
       const parsed = schemaFor(route.split("?")[0]).safeParse(json);
       const expected = Array.isArray(status) ? status : [status];
-      if (!expected.includes(response.status))
+      if (!expected.includes(response.status)) {
         console.error(
           `HTTP publication diagnostic ${JSON.stringify({ request: requests, expected, actual: response.status, code: parsed.success && parsed.data.outcome === "FAILURE" ? parsed.data.code : "UNKNOWN", issues: parsed.success && parsed.data.code === "PUBLICATION_BLOCKED" ? parsed.data.issues.map(({ code }) => code) : [] })}`,
         );
+        console.error(
+          `PUBLICATION_SQL_DIAGNOSTIC ${JSON.stringify(purgeDiagnostics)}`,
+        );
+      }
       check(expected.includes(response.status), "expected HTTP status");
       check(
         response.headers.get("cache-control") ===
@@ -643,18 +828,77 @@ async function verify(clientConfig, s3) {
     }
     cache = await createPublicationHttpCache({ base, routes });
     const results = [];
+    let purgeTick = 0,
+      purgeDrain = 0;
+    const purgeTransactions = {
+      async runInPublicationPurgeTransaction(work) {
+        let phase = "BEGIN";
+        try {
+          return await persistence.publicationPurgeTransactionManager.runInPublicationPurgeTransaction(
+            (repositories) =>
+              work({
+                publicationPurge: Object.fromEntries(
+                  ["claim", "record"].map((method) => [
+                    method,
+                    async (command) => {
+                      phase = method === "claim" ? "CLAIM" : "RECORD";
+                      const result =
+                        await repositories.publicationPurge[method](command);
+                      notePurge({
+                        phase,
+                        outcome: result.outcome,
+                        code:
+                          result.outcome === "FAILURE" ? result.code : "NONE",
+                      });
+                      return result;
+                    },
+                  ]),
+                ),
+              }),
+          );
+        } catch (error) {
+          const code = error?.failure?.error?.code;
+          notePurge({
+            phase,
+            outcome: "THREW",
+            code: [
+              "TRANSACTION_ABORTED",
+              "INTEGRITY_VIOLATION",
+              "TRANSACTION_OUTCOME_UNKNOWN",
+              "TEMPORARY_UNAVAILABLE",
+              "CONFIGURATION_ERROR",
+            ].includes(code)
+              ? code
+              : "OTHER",
+          });
+          throw error;
+        }
+      },
+    };
     const createPurgeWorker = () =>
       createPublicationPurgeWorkerRuntime({
         schemaVersion: 1,
         pollIntervalMs: 1000,
         useCases: createPublicationPurgeUseCases({
-          transactions: persistence.publicationPurgeTransactionManager,
+          transactions: purgeTransactions,
           cachePurge: cache.port,
         }),
-        onResult: (result) => results.push(result),
+        onResult: (result) => {
+          results.push(result);
+          purgeTick++;
+          if (result.outcome === "UNAVAILABLE")
+            console.error(
+              `PURGE_DIAGNOSTIC ${JSON.stringify({ tick: purgeTick, drain: purgeDrain, trace: purgeDiagnostics })}`,
+            );
+          if (result.outcome === "UNAVAILABLE" && probePurgeClock)
+            console.error(
+              `PURGE_CLOCK_PROBE ${JSON.stringify({ queries: purgeClockProbeQueries, seconds: 2 })}`,
+            );
+        },
       });
     worker = createPurgeWorker();
     async function drain(publicationIds) {
+      purgeDrain++;
       const deadline = globalThis.performance.now() + 60_000;
       await worker.start();
       for (;;) {
@@ -692,6 +936,10 @@ async function verify(clientConfig, s3) {
       results.at(-1)?.outcome === "RECORDED" &&
         results.at(-1)?.status === "SUBMITTED",
       "provider pending is durably recorded before process restart",
+    );
+    check(
+      purgeClockProbeQueries === 2,
+      "first claim and record preserve causality across an earlier clock observation while expiry and leases use the actual clock",
     );
     await worker.stop();
     worker = createPurgeWorker();
@@ -925,6 +1173,10 @@ async function verify(clientConfig, s3) {
     console.log(
       `PASS publication runtime HTTP (${assertions} assertions, ${requests} HTTP requests); five kinds, seven locales, normal-trigger migration, authorization, version/idempotency, actual local HTTP purge`,
     );
+    if (probePurgeClock)
+      console.log(
+        `PURGE_CLOCK_PROBE ${JSON.stringify({ queries: purgeClockProbeQueries, seconds: 2 })}`,
+      );
   } finally {
     await worker?.stop();
     await cache?.close();

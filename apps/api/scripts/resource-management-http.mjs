@@ -311,7 +311,7 @@ async function verify(database, s3, configPath) {
     await runMigrations({
       clientConfig: database,
       workspaceRoot,
-      command: { direction: "up", targetVersion: "0018" },
+      command: { direction: "up" },
     });
     const publications = async () =>
       JSON.stringify(

@@ -60,6 +60,7 @@ const reviewedAssetDependenciesByPackage = new Map([
   ],
 ]);
 const reviewedPortableDependenciesByPackage = new Map([
+  ["packages/i18n", new Set(["intl-messageformat"])],
   [
     "packages/ui",
     new Set([

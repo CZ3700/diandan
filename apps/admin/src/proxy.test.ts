@@ -7,6 +7,26 @@ type ProxyModule = Readonly<{
   proxy: (request: NextRequest) => Response;
 }>;
 
+test("private pages and unknown administrative routes cannot be cached or leak referrers", async () => {
+  const { proxy } = await loadProxyModule();
+  const response = proxy(
+    new NextRequest("http://localhost/ja/preview?revision=example", {
+      headers: { "x-admin-locale": "th" },
+    }),
+  );
+  expect(response.headers.get("cache-control")).toContain("no-store");
+  expect(response.headers.get("referrer-policy")).toBe("no-referrer");
+  expect(response.headers.get("x-robots-tag")).toContain("noindex");
+  expect(response.headers.get("x-middleware-request-x-admin-locale")).toBe(
+    "ja",
+  );
+  expect(
+    proxy(new NextRequest("http://localhost/api/admin/unknown")).headers.get(
+      "cache-control",
+    ),
+  ).toContain("no-store");
+});
+
 async function loadProxyModule(): Promise<ProxyModule> {
   let loaded: unknown;
   try {

@@ -322,11 +322,11 @@
       "Noto Sans Variable"
     ]
   },
-  "generatedAt": "2026-09-06T11:56:39.031Z",
+  "generatedAt": "2026-09-06T18:40:41.026Z",
   "git": {
     "after": {
-      "sha": "6a14495107f5d8fbe6e5560553672a3ee9f5da86",
-      "sourceFingerprint": "75d54d356e504679152738f8216b657873d3f563ce1c7646e41bcb00896368df",
+      "sha": "6983e9051f97d7bccbd116dcc305106ecd61ffec",
+      "sourceFingerprint": "6adc600b974f69283bfc51bed85946a05ff8c74c2acfcbefadf7a462b9a3f03c",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -875,11 +875,15 @@
         },
         {
           "path": "package.json",
-          "sha256": "3648689abadf59287d25635f0997e6088d728b836b4962d01c74fae17076be71"
+          "sha256": "cefe57a57a2fb3d2933c37765d731d56f146d43ccc523e2e370030f4f4052c83"
         },
         {
           "path": "packages/config/package.json",
           "sha256": "4000af9cd966b6a80390a692c205a0d01da1f98293ff2de75076f425c5164c12"
+        },
+        {
+          "path": "packages/config/src/admin-config.test.ts",
+          "sha256": "4340be7b82fe21f276092a5a7e01e7a223203ce03e08a4da40d6b3a0804660f0"
         },
         {
           "path": "packages/config/src/cache-purge-config.test.ts",
@@ -887,7 +891,7 @@
         },
         {
           "path": "packages/config/src/config-layers.ts",
-          "sha256": "1b07f7a78bdd98f15d8f89dcccf9cbcb57c5117dbe0041c877cbf6c8f5e123cd"
+          "sha256": "f1176181b08d99c65e54fdea982bf6020ef385b595f96a657d28c89a46597d35"
         },
         {
           "path": "packages/config/src/configuration-error.ts",
@@ -895,7 +899,7 @@
         },
         {
           "path": "packages/config/src/env-example.test.ts",
-          "sha256": "fbb556204e7bff704abb3fbb44f9f44a377ed66b33a122f7d5fa26dd4d3a710c"
+          "sha256": "0b6a29149d7a993c4a9f8a4385115822e81c8927e728630aee36227cd055d56b"
         },
         {
           "path": "packages/config/src/index.test.ts",
@@ -919,7 +923,7 @@
         },
         {
           "path": "packages/config/src/server-config.ts",
-          "sha256": "254d033d441d0e193250cd21582654921a7bf5fb2a37e9c62fe620f475a6059b"
+          "sha256": "d9a8f0fab23359fd17b5e4d09576ab4a9c900fe68456db55283a87d378fc1f16"
         },
         {
           "path": "packages/config/src/url-validation.ts",
@@ -935,15 +939,23 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "873dfe2b35208443aad33a3311e543adca4a6d2b18e904b77903a76e99c9b20f"
+          "sha256": "4493406233907b56adce1add053fb2d3abbe12174cb8cb66a4903c45015946a3"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "8eebfc1d1bea4f57c5e69b2463e79323f78474f8c96b3ae3a8d88d3ac6a31432"
+          "sha256": "be18f362fe6ceb417d40bbbc4a608d64bc422d47e9884aa74e212c9b7b418588"
         },
         {
           "path": "packages/contracts/package.json",
           "sha256": "685702fd9b2f21e46728bb07de7ed8309eed23119e02f93db2805bf67d9d7265"
+        },
+        {
+          "path": "packages/contracts/src/admin-catalog.test.ts",
+          "sha256": "e565d044f953704259d3409951ce14e8acaa5163917d2aa3380c9a6d96d27cc1"
+        },
+        {
+          "path": "packages/contracts/src/admin-catalog.ts",
+          "sha256": "61091dee2c395d2661a0f6367fd84c3ccd2bd5f39da58478301d2c03ff435aa7"
         },
         {
           "path": "packages/contracts/src/admin-content-openapi.test.ts",
@@ -962,12 +974,36 @@
           "sha256": "ebf133c5a836a04fd20975dca467d22e18a6b63a8fd23eef5612ac544d0b144e"
         },
         {
+          "path": "packages/contracts/src/admin-preview-media.test.ts",
+          "sha256": "f333ead4ac77d4a70e71a73a83addd0042d5202e13ae1554677159676c15f301"
+        },
+        {
+          "path": "packages/contracts/src/admin-preview-media.ts",
+          "sha256": "f33de76a6ecbbab77e64ad832b5d974a44374a55d431a5ab36b403c5f5955e4e"
+        },
+        {
+          "path": "packages/contracts/src/admin-session.test.ts",
+          "sha256": "e612dbb694394f85e57ea0edd85f90541b0e1ffc6ac431f5c635a55a91143677"
+        },
+        {
+          "path": "packages/contracts/src/admin-session.ts",
+          "sha256": "1865d450002ef72dd9e1baa95a72ea716dafd05529fe7bbff6ffc1567e62a7e9"
+        },
+        {
+          "path": "packages/contracts/src/admin-workspace-openapi.test.ts",
+          "sha256": "e96a1eeb7463cdbfa7a1495668e291db8cc15bcfb2843ea230f6db1a7a88d700"
+        },
+        {
+          "path": "packages/contracts/src/admin-workspace-openapi.ts",
+          "sha256": "554cbd9bf3a386f78c7721f7d56207eee73d25c7e5217cf5df6ccd258d4a2919"
+        },
+        {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "85fd3f5e3e04fff54593c7190e7b9c10dab897c2393231fad7af6090cf8a6f1a"
+          "sha256": "14d8746387c4d9dea8dff59c0ff97e3de28219ac82a109f1974fa3af00fe01cc"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "f48524424510a3d541e51ea536636755776c7bc62986b01046b2baffc0746855"
+          "sha256": "b209006ded072ba80669c0a0465e2ebb2ad39cde36a0d64f770ed4a4d450b707"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -975,7 +1011,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "33f7a5382156144b1b4908c06c6e28276071b120b5f15e6a8276aa784fbe2acd"
+          "sha256": "a9333ab4a4f52b8682473393a38ea5c76052e6b30129d7be19eef06e19d4acf2"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -1155,7 +1191,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "c42f8b63852558a67b1b1aabfa804c059ca66da103d349102364d2b59367a7fc"
+          "sha256": "beb4b6d44c2bf605e48b7c5956670d7d89e7e576ce4afde45f7b462a1b292eae"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -1336,6 +1372,22 @@
         {
           "path": "packages/contracts/src/translation-import.ts",
           "sha256": "ded12dc5cfb7edca4216aa67f19abd506b0dc716182308ac6eb31d9a7fc8a6f4"
+        },
+        {
+          "path": "packages/contracts/src/translation-transfer.test.ts",
+          "sha256": "4c6dc42f810f0bfe22933dd23a6a1f0d4b8f94e4bed2796d6d1b4db252679c3c"
+        },
+        {
+          "path": "packages/contracts/src/translation-transfer.ts",
+          "sha256": "a6f8e2195a5db9f4e633fb40ff6609be08b901ce9f055dd030d6d75e89b091d4"
+        },
+        {
+          "path": "packages/contracts/src/translation-workspace.test.ts",
+          "sha256": "596c8959aa51ac0c1ceaaf61a441c00721cd758f8597874b57d3596126f8be00"
+        },
+        {
+          "path": "packages/contracts/src/translation-workspace.ts",
+          "sha256": "0231afd30e153001fc84f55d0a550f314453fb00637ca65212cbab15504fb7da"
         },
         {
           "path": "packages/contracts/src/versioning.test.ts",
@@ -1735,7 +1787,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "60ca9d55bf9dcc1790b1281f3a788387fd3d3ff2ffdbf6f3a1573d114c6a16df"
+          "sha256": "16c06a7090335055f0c07d1e68505d03177d0524d6abd0dd45df126dd3333cf4"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -1764,24 +1816,26 @@
       ],
       "status": [
         " M .env.example",
+        " M apps/admin/next-env.d.ts",
+        " M apps/admin/package.json",
+        " M apps/admin/src/app/globals.css",
+        " M apps/admin/src/app/layout.tsx",
+        " M apps/admin/src/app/page.tsx",
+        " M apps/admin/src/proxy.test.ts",
+        " M apps/admin/src/proxy.ts",
         " M apps/api/package.json",
         " M apps/api/scripts/base-content-http.mjs",
         " M apps/api/scripts/postgres-admin-content-authoring-http.mjs",
         " M apps/api/scripts/postgres-admin-content-http.mjs",
         " M apps/api/scripts/postgres-catalog-http.mjs",
         " M apps/api/scripts/publication-preflight-http.mjs",
+        " M apps/api/scripts/publication-runtime-http.mjs",
         " M apps/api/scripts/resource-management-http.mjs",
         " M apps/api/src/bootstrap.ts",
         " M apps/api/src/index.ts",
-        " M apps/api/src/production-application.test.ts",
-        " M apps/api/src/production-application.ts",
-        " M apps/worker/package.json",
-        " M apps/worker/src/bootstrap.ts",
-        " M apps/worker/src/index.ts",
-        " M apps/worker/src/production-application.test.ts",
-        " M apps/worker/src/production-application.ts",
         " M database/migrations/manifest.json",
         " M database/schema/expected-catalog.json",
+        " M docs/progress/MASTER.md",
         " M docs/progress/phase-3-storefront.md",
         " M output/playwright/p2-04/README.md",
         " M output/playwright/p2-04/axe-results/baseline-desktop.json",
@@ -1795,56 +1849,97 @@
         " M output/playwright/p2-04/axe-results/timeline.json",
         " M output/playwright/p2-04/axe-results/unavailable.json",
         " M output/playwright/p2-04/browser-results.json",
+        " M output/playwright/p2-04/reduced-motion/1440x900-en.png",
         " M output/playwright/p2-04/screenshots.sha256",
         " M output/playwright/p2-04/viewports/1920x1080-es.png",
-        " M output/playwright/p2-04/viewports/390x844-vi.png",
         " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
         " M package.json",
-        " M packages/application/package.json",
         " M packages/application/src/index.ts",
+        " M packages/application/tsconfig.build.json",
         " M packages/config/src/config-layers.ts",
+        " M packages/config/src/env-example.test.ts",
         " M packages/config/src/server-config.ts",
         " M packages/content/src/index.ts",
-        " M packages/content/src/publication-preflight-assets.ts",
-        " M packages/content/src/publication-validation.ts",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
         " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
+        " M packages/i18n/package.json",
+        " M packages/i18n/src/index.ts",
         " M packages/persistence-port/src/index.ts",
         " M packages/persistence-postgres/package.json",
         " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
-        " M packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs",
-        " M packages/persistence-postgres/src/catalog-directory-repository.ts",
-        " M packages/persistence-postgres/src/catalog-directory-sql.test.ts",
-        " M packages/persistence-postgres/src/catalog-directory-sql.ts",
-        " M packages/persistence-postgres/src/catalog-publication-loader.test.ts",
-        " M packages/persistence-postgres/src/catalog-publication-loader.ts",
-        " M packages/persistence-postgres/src/catalog-search-projection.ts",
+        " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
+        " M packages/persistence-postgres/src/index.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
         " M pnpm-lock.yaml",
-        "?? apps/api/scripts/publication-runtime-http-cache.mjs",
-        "?? apps/api/scripts/publication-runtime-http-fixtures.mjs",
-        "?? apps/api/scripts/publication-runtime-http-media.mjs",
-        "?? apps/api/scripts/publication-runtime-http.mjs",
-        "?? apps/api/src/publication-runtime-composition.test.ts",
-        "?? apps/api/src/publication-runtime-composition.ts",
-        "?? apps/api/src/publication-runtime-route.test.ts",
-        "?? apps/api/src/publication-runtime-route.ts",
-        "?? apps/api/src/published-content-composition.test.ts",
-        "?? apps/api/src/published-content-composition.ts",
-        "?? apps/api/src/published-content-route.test.ts",
-        "?? apps/api/src/published-content-route.ts",
-        "?? apps/worker/src/publication-purge-composition.test.ts",
-        "?? apps/worker/src/publication-purge-composition.ts",
-        "?? apps/worker/src/publication-purge-runtime.test.ts",
-        "?? apps/worker/src/publication-purge-runtime.ts",
-        "?? database/migrations/0018_publication-runtime.down.sql",
-        "?? database/migrations/0018_publication-runtime.up.sql",
-        "?? docs/operations/content-publication.md",
-        "?? docs/plan/p3-01-publication-runtime.md",
+        "?? apps/admin/AGENTS.md",
+        "?? apps/admin/CLAUDE.md",
+        "?? apps/admin/src/app/(hans)/layout.tsx",
+        "?? apps/admin/src/app/(hans)/zh-CN/page.tsx",
+        "?? apps/admin/src/app/(hans)/zh-CN/preview/page.tsx",
+        "?? apps/admin/src/app/(japanese)/ja/page.tsx",
+        "?? apps/admin/src/app/(japanese)/ja/preview/page.tsx",
+        "?? apps/admin/src/app/(japanese)/layout.tsx",
+        "?? apps/admin/src/app/(latin)/en/page.tsx",
+        "?? apps/admin/src/app/(latin)/en/preview/page.tsx",
+        "?? apps/admin/src/app/(latin)/es/page.tsx",
+        "?? apps/admin/src/app/(latin)/es/preview/page.tsx",
+        "?? apps/admin/src/app/(latin)/layout.tsx",
+        "?? apps/admin/src/app/(latin)/pt/page.tsx",
+        "?? apps/admin/src/app/(latin)/pt/preview/page.tsx",
+        "?? apps/admin/src/app/(thai)/layout.tsx",
+        "?? apps/admin/src/app/(thai)/th/page.tsx",
+        "?? apps/admin/src/app/(thai)/th/preview/page.tsx",
+        "?? apps/admin/src/app/(vietnamese)/layout.tsx",
+        "?? apps/admin/src/app/(vietnamese)/vi/page.tsx",
+        "?? apps/admin/src/app/(vietnamese)/vi/preview/page.tsx",
+        "?? apps/admin/src/app/api/admin/[operation]/route.ts",
+        "?? apps/admin/src/app/api/admin/session/route.ts",
+        "?? apps/admin/src/server/admin-api-client.ts",
+        "?? apps/admin/src/server/admin-bff.test.ts",
+        "?? apps/admin/src/server/admin-bff.ts",
+        "?? apps/admin/src/server/admin-operations.test.ts",
+        "?? apps/admin/src/server/admin-operations.ts",
+        "?? apps/admin/src/workspace/artist-identity.tsx",
+        "?? apps/admin/src/workspace/catalog-picker.tsx",
+        "?? apps/admin/src/workspace/client.test.ts",
+        "?? apps/admin/src/workspace/client.ts",
+        "?? apps/admin/src/workspace/components.tsx",
+        "?? apps/admin/src/workspace/content-form.tsx",
+        "?? apps/admin/src/workspace/editor-model.test.ts",
+        "?? apps/admin/src/workspace/editor-model.ts",
+        "?? apps/admin/src/workspace/editor-state.ts",
+        "?? apps/admin/src/workspace/editor.tsx",
+        "?? apps/admin/src/workspace/media-tools.tsx",
+        "?? apps/admin/src/workspace/media-upload-attempt.test.ts",
+        "?? apps/admin/src/workspace/media-upload-attempt.ts",
+        "?? apps/admin/src/workspace/pages.tsx",
+        "?? apps/admin/src/workspace/preview.test.tsx",
+        "?? apps/admin/src/workspace/preview.tsx",
+        "?? apps/admin/src/workspace/publication-attempt.test.ts",
+        "?? apps/admin/src/workspace/publication-attempt.ts",
+        "?? apps/admin/src/workspace/publishing.tsx",
+        "?? apps/admin/src/workspace/state.test.ts",
+        "?? apps/admin/src/workspace/state.ts",
+        "?? apps/admin/src/workspace/workspace.tsx",
+        "?? apps/api/scripts/admin-workspace-browser.mjs",
+        "?? apps/api/scripts/admin-workspace-fixtures.mjs",
+        "?? apps/api/scripts/admin-workspace-http.mjs",
+        "?? apps/api/src/admin-session-composition.test.ts",
+        "?? apps/api/src/admin-session-composition.ts",
+        "?? apps/api/src/admin-session-route.test.ts",
+        "?? apps/api/src/admin-session-route.ts",
+        "?? apps/api/src/admin-workspace-composition.test.ts",
+        "?? apps/api/src/admin-workspace-composition.ts",
+        "?? apps/api/src/admin-workspace-route.test.ts",
+        "?? apps/api/src/admin-workspace-route.ts",
+        "?? apps/api/src/admin-workspace-transport.ts",
+        "?? database/migrations/0019_admin-catalog.down.sql",
+        "?? database/migrations/0019_admin-catalog.up.sql",
+        "?? docs/plan/p3-02-admin-workspace.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -1856,16 +1951,14 @@
         "?? output/checks/p3-01-content-storage/baseline-openapi.json",
         "?? output/checks/p3-01-media/contracts-before.schema.json",
         "?? output/checks/p3-01-publication-preflight/contracts-before.json",
-        "?? output/checks/p3-01-publication-runtime/HTTP-README.md",
-        "?? output/checks/p3-01-publication-runtime/README.md",
-        "?? output/checks/p3-01-publication-runtime/compatibility.json",
         "?? output/checks/p3-01-publication-runtime/contracts-before.json",
-        "?? output/checks/p3-01-publication-runtime/implementation-source.json",
-        "?? output/checks/p3-01-publication-runtime/independent-review.md",
-        "?? output/checks/p3-01-publication-runtime/task-exit-review.md",
-        "?? output/checks/p3-01-publication-runtime/transport-review.md",
-        "?? output/checks/p3-01-publication-runtime/validation.json",
         "?? output/checks/p3-01-resource-management/contracts-before.json",
+        "?? output/checks/p3-02-admin/README.md",
+        "?? output/checks/p3-02-admin/contracts-before.json",
+        "?? output/checks/p3-02-admin/translation-handoff.md",
+        "?? output/checks/p3-02-admin/transport-README.md",
+        "?? output/checks/p3-02-admin/transport-review.md",
+        "?? output/checks/p3-02-admin/validation.json",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -2105,59 +2198,101 @@
         "?? output/playwright/p2-06/viewer-1440.png",
         "?? output/playwright/p2-06/viewer-390.png",
         "?? output/playwright/p2-06/viewer-check.json",
-        "?? packages/application/src/publication-purge.test.ts",
-        "?? packages/application/src/publication-purge.ts",
-        "?? packages/application/src/publication-runtime-idempotency.ts",
-        "?? packages/application/src/publication-runtime.test.ts",
-        "?? packages/application/src/publication-runtime.ts",
-        "?? packages/application/src/published-content.test.ts",
-        "?? packages/application/src/published-content.ts",
-        "?? packages/config/src/cache-purge-config.test.ts",
-        "?? packages/content/src/publication-manifest-canonical.test.ts",
-        "?? packages/content/src/publication-manifest-canonical.ts",
-        "?? packages/content/src/publication-manifest.test.ts",
-        "?? packages/content/src/publication-manifest.ts",
-        "?? packages/content/src/published-content-media.ts",
-        "?? packages/content/src/published-content.test.ts",
-        "?? packages/content/src/published-content.ts",
-        "?? packages/contracts/src/publication-manifest.test.ts",
-        "?? packages/contracts/src/publication-manifest.ts",
-        "?? packages/contracts/src/publication-purge.ts",
-        "?? packages/contracts/src/publication-runtime-openapi.test.ts",
-        "?? packages/contracts/src/publication-runtime-openapi.ts",
-        "?? packages/contracts/src/publication-runtime.test.ts",
-        "?? packages/contracts/src/publication-runtime.ts",
-        "?? packages/contracts/src/published-content.test.ts",
-        "?? packages/contracts/src/published-content.ts",
-        "?? packages/persistence-port/src/publication-runtime.ts",
-        "?? packages/persistence-port/src/published-content.ts",
-        "?? packages/persistence-postgres/scripts/postgres-publication-clock-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-media-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-proof-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-purge-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-receipt-hash-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-runtime-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-runtime-fixtures.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
-        "?? packages/persistence-postgres/src/catalog-published-search.test.ts",
-        "?? packages/persistence-postgres/src/publication-authorization-repository.ts",
-        "?? packages/persistence-postgres/src/publication-purge-data.ts",
-        "?? packages/persistence-postgres/src/publication-purge-repository.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-data.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-load.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-repository.test.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-repository.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-retry.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-write.ts",
-        "?? packages/persistence-postgres/src/published-content-media-proof.test.ts",
-        "?? packages/persistence-postgres/src/published-content-media-proof.ts",
-        "?? packages/persistence-postgres/src/published-content-repository.test.ts",
-        "?? packages/persistence-postgres/src/published-content-repository.ts"
+        "?? output/playwright/p3-02-admin/accessibility.json",
+        "?? output/playwright/p3-02-admin/en-desktop.png",
+        "?? output/playwright/p3-02-admin/en-editor.png",
+        "?? output/playwright/p3-02-admin/en-mobile.png",
+        "?? output/playwright/p3-02-admin/en-preview-desktop.png",
+        "?? output/playwright/p3-02-admin/en-reviewer.png",
+        "?? output/playwright/p3-02-admin/en-source-changed.png",
+        "?? output/playwright/p3-02-admin/es-desktop.png",
+        "?? output/playwright/p3-02-admin/es-mobile.png",
+        "?? output/playwright/p3-02-admin/ja-desktop.png",
+        "?? output/playwright/p3-02-admin/ja-mobile.png",
+        "?? output/playwright/p3-02-admin/pt-desktop.png",
+        "?? output/playwright/p3-02-admin/pt-mobile.png",
+        "?? output/playwright/p3-02-admin/serve-desktop.png",
+        "?? output/playwright/p3-02-admin/th-desktop.png",
+        "?? output/playwright/p3-02-admin/th-mobile.png",
+        "?? output/playwright/p3-02-admin/vi-desktop.png",
+        "?? output/playwright/p3-02-admin/vi-mobile.png",
+        "?? output/playwright/p3-02-admin/zh-CN-desktop.png",
+        "?? output/playwright/p3-02-admin/zh-CN-mobile.png",
+        "?? packages/application/src/admin-catalog.test.ts",
+        "?? packages/application/src/admin-catalog.ts",
+        "?? packages/application/src/admin-preview-media.test.ts",
+        "?? packages/application/src/admin-preview-media.ts",
+        "?? packages/application/src/admin-session.test.ts",
+        "?? packages/application/src/admin-session.ts",
+        "?? packages/application/src/translation-authorization.ts",
+        "?? packages/application/src/translation-test-support.ts",
+        "?? packages/application/src/translation-transfer-idempotency.ts",
+        "?? packages/application/src/translation-transfer.test.ts",
+        "?? packages/application/src/translation-transfer.ts",
+        "?? packages/application/src/translation-workspace.test.ts",
+        "?? packages/application/src/translation-workspace.ts",
+        "?? packages/config/src/admin-config.test.ts",
+        "?? packages/content/src/translation-authoring.ts",
+        "?? packages/content/src/translation-transfer.test.ts",
+        "?? packages/content/src/translation-transfer.ts",
+        "?? packages/content/src/translation-workspace.test.ts",
+        "?? packages/content/src/translation-workspace.ts",
+        "?? packages/contracts/src/admin-catalog.test.ts",
+        "?? packages/contracts/src/admin-catalog.ts",
+        "?? packages/contracts/src/admin-preview-media.test.ts",
+        "?? packages/contracts/src/admin-preview-media.ts",
+        "?? packages/contracts/src/admin-session.test.ts",
+        "?? packages/contracts/src/admin-session.ts",
+        "?? packages/contracts/src/admin-workspace-openapi.test.ts",
+        "?? packages/contracts/src/admin-workspace-openapi.ts",
+        "?? packages/contracts/src/translation-transfer.test.ts",
+        "?? packages/contracts/src/translation-transfer.ts",
+        "?? packages/contracts/src/translation-workspace.test.ts",
+        "?? packages/contracts/src/translation-workspace.ts",
+        "?? packages/i18n/src/admin/en.review.ts",
+        "?? packages/i18n/src/admin/en.ts",
+        "?? packages/i18n/src/admin/es.review.ts",
+        "?? packages/i18n/src/admin/es.ts",
+        "?? packages/i18n/src/admin/ja.review.ts",
+        "?? packages/i18n/src/admin/ja.ts",
+        "?? packages/i18n/src/admin/messages.test.ts",
+        "?? packages/i18n/src/admin/messages.ts",
+        "?? packages/i18n/src/admin/pt.review.ts",
+        "?? packages/i18n/src/admin/pt.ts",
+        "?? packages/i18n/src/admin/review-manifest.ts",
+        "?? packages/i18n/src/admin/th.review.ts",
+        "?? packages/i18n/src/admin/th.ts",
+        "?? packages/i18n/src/admin/vi.review.ts",
+        "?? packages/i18n/src/admin/vi.ts",
+        "?? packages/i18n/src/admin/zh-CN.review.ts",
+        "?? packages/i18n/src/admin/zh-CN.ts",
+        "?? packages/persistence-port/src/admin-catalog.ts",
+        "?? packages/persistence-port/src/admin-preview-media.ts",
+        "?? packages/persistence-port/src/admin-session.ts",
+        "?? packages/persistence-port/src/translation-transfer.ts",
+        "?? packages/persistence-port/src/translation-workspace.ts",
+        "?? packages/persistence-postgres/scripts/postgres-admin-catalog-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-admin-catalog-proof-cases.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-admin-translation-cases.mjs",
+        "?? packages/persistence-postgres/src/admin-catalog-data.ts",
+        "?? packages/persistence-postgres/src/admin-catalog-read.ts",
+        "?? packages/persistence-postgres/src/admin-catalog-repository.test.ts",
+        "?? packages/persistence-postgres/src/admin-catalog-repository.ts",
+        "?? packages/persistence-postgres/src/admin-catalog-write.ts",
+        "?? packages/persistence-postgres/src/admin-preview-media-repository.test.ts",
+        "?? packages/persistence-postgres/src/admin-preview-media-repository.ts",
+        "?? packages/persistence-postgres/src/admin-session-repository.test.ts",
+        "?? packages/persistence-postgres/src/admin-session-repository.ts",
+        "?? packages/persistence-postgres/src/translation-transfer-repository.test.ts",
+        "?? packages/persistence-postgres/src/translation-transfer-repository.ts",
+        "?? packages/persistence-postgres/src/translation-workspace-repository.test.ts",
+        "?? packages/persistence-postgres/src/translation-workspace-repository.ts"
       ]
     },
     "before": {
-      "sha": "6a14495107f5d8fbe6e5560553672a3ee9f5da86",
-      "sourceFingerprint": "75d54d356e504679152738f8216b657873d3f563ce1c7646e41bcb00896368df",
+      "sha": "6983e9051f97d7bccbd116dcc305106ecd61ffec",
+      "sourceFingerprint": "6adc600b974f69283bfc51bed85946a05ff8c74c2acfcbefadf7a462b9a3f03c",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -2706,11 +2841,15 @@
         },
         {
           "path": "package.json",
-          "sha256": "3648689abadf59287d25635f0997e6088d728b836b4962d01c74fae17076be71"
+          "sha256": "cefe57a57a2fb3d2933c37765d731d56f146d43ccc523e2e370030f4f4052c83"
         },
         {
           "path": "packages/config/package.json",
           "sha256": "4000af9cd966b6a80390a692c205a0d01da1f98293ff2de75076f425c5164c12"
+        },
+        {
+          "path": "packages/config/src/admin-config.test.ts",
+          "sha256": "4340be7b82fe21f276092a5a7e01e7a223203ce03e08a4da40d6b3a0804660f0"
         },
         {
           "path": "packages/config/src/cache-purge-config.test.ts",
@@ -2718,7 +2857,7 @@
         },
         {
           "path": "packages/config/src/config-layers.ts",
-          "sha256": "1b07f7a78bdd98f15d8f89dcccf9cbcb57c5117dbe0041c877cbf6c8f5e123cd"
+          "sha256": "f1176181b08d99c65e54fdea982bf6020ef385b595f96a657d28c89a46597d35"
         },
         {
           "path": "packages/config/src/configuration-error.ts",
@@ -2726,7 +2865,7 @@
         },
         {
           "path": "packages/config/src/env-example.test.ts",
-          "sha256": "fbb556204e7bff704abb3fbb44f9f44a377ed66b33a122f7d5fa26dd4d3a710c"
+          "sha256": "0b6a29149d7a993c4a9f8a4385115822e81c8927e728630aee36227cd055d56b"
         },
         {
           "path": "packages/config/src/index.test.ts",
@@ -2750,7 +2889,7 @@
         },
         {
           "path": "packages/config/src/server-config.ts",
-          "sha256": "254d033d441d0e193250cd21582654921a7bf5fb2a37e9c62fe620f475a6059b"
+          "sha256": "d9a8f0fab23359fd17b5e4d09576ab4a9c900fe68456db55283a87d378fc1f16"
         },
         {
           "path": "packages/config/src/url-validation.ts",
@@ -2766,15 +2905,23 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "873dfe2b35208443aad33a3311e543adca4a6d2b18e904b77903a76e99c9b20f"
+          "sha256": "4493406233907b56adce1add053fb2d3abbe12174cb8cb66a4903c45015946a3"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "8eebfc1d1bea4f57c5e69b2463e79323f78474f8c96b3ae3a8d88d3ac6a31432"
+          "sha256": "be18f362fe6ceb417d40bbbc4a608d64bc422d47e9884aa74e212c9b7b418588"
         },
         {
           "path": "packages/contracts/package.json",
           "sha256": "685702fd9b2f21e46728bb07de7ed8309eed23119e02f93db2805bf67d9d7265"
+        },
+        {
+          "path": "packages/contracts/src/admin-catalog.test.ts",
+          "sha256": "e565d044f953704259d3409951ce14e8acaa5163917d2aa3380c9a6d96d27cc1"
+        },
+        {
+          "path": "packages/contracts/src/admin-catalog.ts",
+          "sha256": "61091dee2c395d2661a0f6367fd84c3ccd2bd5f39da58478301d2c03ff435aa7"
         },
         {
           "path": "packages/contracts/src/admin-content-openapi.test.ts",
@@ -2793,12 +2940,36 @@
           "sha256": "ebf133c5a836a04fd20975dca467d22e18a6b63a8fd23eef5612ac544d0b144e"
         },
         {
+          "path": "packages/contracts/src/admin-preview-media.test.ts",
+          "sha256": "f333ead4ac77d4a70e71a73a83addd0042d5202e13ae1554677159676c15f301"
+        },
+        {
+          "path": "packages/contracts/src/admin-preview-media.ts",
+          "sha256": "f33de76a6ecbbab77e64ad832b5d974a44374a55d431a5ab36b403c5f5955e4e"
+        },
+        {
+          "path": "packages/contracts/src/admin-session.test.ts",
+          "sha256": "e612dbb694394f85e57ea0edd85f90541b0e1ffc6ac431f5c635a55a91143677"
+        },
+        {
+          "path": "packages/contracts/src/admin-session.ts",
+          "sha256": "1865d450002ef72dd9e1baa95a72ea716dafd05529fe7bbff6ffc1567e62a7e9"
+        },
+        {
+          "path": "packages/contracts/src/admin-workspace-openapi.test.ts",
+          "sha256": "e96a1eeb7463cdbfa7a1495668e291db8cc15bcfb2843ea230f6db1a7a88d700"
+        },
+        {
+          "path": "packages/contracts/src/admin-workspace-openapi.ts",
+          "sha256": "554cbd9bf3a386f78c7721f7d56207eee73d25c7e5217cf5df6ccd258d4a2919"
+        },
+        {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "85fd3f5e3e04fff54593c7190e7b9c10dab897c2393231fad7af6090cf8a6f1a"
+          "sha256": "14d8746387c4d9dea8dff59c0ff97e3de28219ac82a109f1974fa3af00fe01cc"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "f48524424510a3d541e51ea536636755776c7bc62986b01046b2baffc0746855"
+          "sha256": "b209006ded072ba80669c0a0465e2ebb2ad39cde36a0d64f770ed4a4d450b707"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -2806,7 +2977,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "33f7a5382156144b1b4908c06c6e28276071b120b5f15e6a8276aa784fbe2acd"
+          "sha256": "a9333ab4a4f52b8682473393a38ea5c76052e6b30129d7be19eef06e19d4acf2"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -2986,7 +3157,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "c42f8b63852558a67b1b1aabfa804c059ca66da103d349102364d2b59367a7fc"
+          "sha256": "beb4b6d44c2bf605e48b7c5956670d7d89e7e576ce4afde45f7b462a1b292eae"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -3167,6 +3338,22 @@
         {
           "path": "packages/contracts/src/translation-import.ts",
           "sha256": "ded12dc5cfb7edca4216aa67f19abd506b0dc716182308ac6eb31d9a7fc8a6f4"
+        },
+        {
+          "path": "packages/contracts/src/translation-transfer.test.ts",
+          "sha256": "4c6dc42f810f0bfe22933dd23a6a1f0d4b8f94e4bed2796d6d1b4db252679c3c"
+        },
+        {
+          "path": "packages/contracts/src/translation-transfer.ts",
+          "sha256": "a6f8e2195a5db9f4e633fb40ff6609be08b901ce9f055dd030d6d75e89b091d4"
+        },
+        {
+          "path": "packages/contracts/src/translation-workspace.test.ts",
+          "sha256": "596c8959aa51ac0c1ceaaf61a441c00721cd758f8597874b57d3596126f8be00"
+        },
+        {
+          "path": "packages/contracts/src/translation-workspace.ts",
+          "sha256": "0231afd30e153001fc84f55d0a550f314453fb00637ca65212cbab15504fb7da"
         },
         {
           "path": "packages/contracts/src/versioning.test.ts",
@@ -3566,7 +3753,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "60ca9d55bf9dcc1790b1281f3a788387fd3d3ff2ffdbf6f3a1573d114c6a16df"
+          "sha256": "16c06a7090335055f0c07d1e68505d03177d0524d6abd0dd45df126dd3333cf4"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -3595,24 +3782,26 @@
       ],
       "status": [
         " M .env.example",
+        " M apps/admin/next-env.d.ts",
+        " M apps/admin/package.json",
+        " M apps/admin/src/app/globals.css",
+        " M apps/admin/src/app/layout.tsx",
+        " M apps/admin/src/app/page.tsx",
+        " M apps/admin/src/proxy.test.ts",
+        " M apps/admin/src/proxy.ts",
         " M apps/api/package.json",
         " M apps/api/scripts/base-content-http.mjs",
         " M apps/api/scripts/postgres-admin-content-authoring-http.mjs",
         " M apps/api/scripts/postgres-admin-content-http.mjs",
         " M apps/api/scripts/postgres-catalog-http.mjs",
         " M apps/api/scripts/publication-preflight-http.mjs",
+        " M apps/api/scripts/publication-runtime-http.mjs",
         " M apps/api/scripts/resource-management-http.mjs",
         " M apps/api/src/bootstrap.ts",
         " M apps/api/src/index.ts",
-        " M apps/api/src/production-application.test.ts",
-        " M apps/api/src/production-application.ts",
-        " M apps/worker/package.json",
-        " M apps/worker/src/bootstrap.ts",
-        " M apps/worker/src/index.ts",
-        " M apps/worker/src/production-application.test.ts",
-        " M apps/worker/src/production-application.ts",
         " M database/migrations/manifest.json",
         " M database/schema/expected-catalog.json",
+        " M docs/progress/MASTER.md",
         " M docs/progress/phase-3-storefront.md",
         " M output/playwright/p2-04/README.md",
         " M output/playwright/p2-04/axe-results/baseline-desktop.json",
@@ -3626,56 +3815,97 @@
         " M output/playwright/p2-04/axe-results/timeline.json",
         " M output/playwright/p2-04/axe-results/unavailable.json",
         " M output/playwright/p2-04/browser-results.json",
+        " M output/playwright/p2-04/reduced-motion/1440x900-en.png",
         " M output/playwright/p2-04/screenshots.sha256",
         " M output/playwright/p2-04/viewports/1920x1080-es.png",
-        " M output/playwright/p2-04/viewports/390x844-vi.png",
         " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
         " M package.json",
-        " M packages/application/package.json",
         " M packages/application/src/index.ts",
+        " M packages/application/tsconfig.build.json",
         " M packages/config/src/config-layers.ts",
+        " M packages/config/src/env-example.test.ts",
         " M packages/config/src/server-config.ts",
         " M packages/content/src/index.ts",
-        " M packages/content/src/publication-preflight-assets.ts",
-        " M packages/content/src/publication-validation.ts",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
         " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
+        " M packages/i18n/package.json",
+        " M packages/i18n/src/index.ts",
         " M packages/persistence-port/src/index.ts",
         " M packages/persistence-postgres/package.json",
         " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
-        " M packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs",
-        " M packages/persistence-postgres/src/catalog-directory-repository.ts",
-        " M packages/persistence-postgres/src/catalog-directory-sql.test.ts",
-        " M packages/persistence-postgres/src/catalog-directory-sql.ts",
-        " M packages/persistence-postgres/src/catalog-publication-loader.test.ts",
-        " M packages/persistence-postgres/src/catalog-publication-loader.ts",
-        " M packages/persistence-postgres/src/catalog-search-projection.ts",
+        " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
+        " M packages/persistence-postgres/src/index.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
         " M pnpm-lock.yaml",
-        "?? apps/api/scripts/publication-runtime-http-cache.mjs",
-        "?? apps/api/scripts/publication-runtime-http-fixtures.mjs",
-        "?? apps/api/scripts/publication-runtime-http-media.mjs",
-        "?? apps/api/scripts/publication-runtime-http.mjs",
-        "?? apps/api/src/publication-runtime-composition.test.ts",
-        "?? apps/api/src/publication-runtime-composition.ts",
-        "?? apps/api/src/publication-runtime-route.test.ts",
-        "?? apps/api/src/publication-runtime-route.ts",
-        "?? apps/api/src/published-content-composition.test.ts",
-        "?? apps/api/src/published-content-composition.ts",
-        "?? apps/api/src/published-content-route.test.ts",
-        "?? apps/api/src/published-content-route.ts",
-        "?? apps/worker/src/publication-purge-composition.test.ts",
-        "?? apps/worker/src/publication-purge-composition.ts",
-        "?? apps/worker/src/publication-purge-runtime.test.ts",
-        "?? apps/worker/src/publication-purge-runtime.ts",
-        "?? database/migrations/0018_publication-runtime.down.sql",
-        "?? database/migrations/0018_publication-runtime.up.sql",
-        "?? docs/operations/content-publication.md",
-        "?? docs/plan/p3-01-publication-runtime.md",
+        "?? apps/admin/AGENTS.md",
+        "?? apps/admin/CLAUDE.md",
+        "?? apps/admin/src/app/(hans)/layout.tsx",
+        "?? apps/admin/src/app/(hans)/zh-CN/page.tsx",
+        "?? apps/admin/src/app/(hans)/zh-CN/preview/page.tsx",
+        "?? apps/admin/src/app/(japanese)/ja/page.tsx",
+        "?? apps/admin/src/app/(japanese)/ja/preview/page.tsx",
+        "?? apps/admin/src/app/(japanese)/layout.tsx",
+        "?? apps/admin/src/app/(latin)/en/page.tsx",
+        "?? apps/admin/src/app/(latin)/en/preview/page.tsx",
+        "?? apps/admin/src/app/(latin)/es/page.tsx",
+        "?? apps/admin/src/app/(latin)/es/preview/page.tsx",
+        "?? apps/admin/src/app/(latin)/layout.tsx",
+        "?? apps/admin/src/app/(latin)/pt/page.tsx",
+        "?? apps/admin/src/app/(latin)/pt/preview/page.tsx",
+        "?? apps/admin/src/app/(thai)/layout.tsx",
+        "?? apps/admin/src/app/(thai)/th/page.tsx",
+        "?? apps/admin/src/app/(thai)/th/preview/page.tsx",
+        "?? apps/admin/src/app/(vietnamese)/layout.tsx",
+        "?? apps/admin/src/app/(vietnamese)/vi/page.tsx",
+        "?? apps/admin/src/app/(vietnamese)/vi/preview/page.tsx",
+        "?? apps/admin/src/app/api/admin/[operation]/route.ts",
+        "?? apps/admin/src/app/api/admin/session/route.ts",
+        "?? apps/admin/src/server/admin-api-client.ts",
+        "?? apps/admin/src/server/admin-bff.test.ts",
+        "?? apps/admin/src/server/admin-bff.ts",
+        "?? apps/admin/src/server/admin-operations.test.ts",
+        "?? apps/admin/src/server/admin-operations.ts",
+        "?? apps/admin/src/workspace/artist-identity.tsx",
+        "?? apps/admin/src/workspace/catalog-picker.tsx",
+        "?? apps/admin/src/workspace/client.test.ts",
+        "?? apps/admin/src/workspace/client.ts",
+        "?? apps/admin/src/workspace/components.tsx",
+        "?? apps/admin/src/workspace/content-form.tsx",
+        "?? apps/admin/src/workspace/editor-model.test.ts",
+        "?? apps/admin/src/workspace/editor-model.ts",
+        "?? apps/admin/src/workspace/editor-state.ts",
+        "?? apps/admin/src/workspace/editor.tsx",
+        "?? apps/admin/src/workspace/media-tools.tsx",
+        "?? apps/admin/src/workspace/media-upload-attempt.test.ts",
+        "?? apps/admin/src/workspace/media-upload-attempt.ts",
+        "?? apps/admin/src/workspace/pages.tsx",
+        "?? apps/admin/src/workspace/preview.test.tsx",
+        "?? apps/admin/src/workspace/preview.tsx",
+        "?? apps/admin/src/workspace/publication-attempt.test.ts",
+        "?? apps/admin/src/workspace/publication-attempt.ts",
+        "?? apps/admin/src/workspace/publishing.tsx",
+        "?? apps/admin/src/workspace/state.test.ts",
+        "?? apps/admin/src/workspace/state.ts",
+        "?? apps/admin/src/workspace/workspace.tsx",
+        "?? apps/api/scripts/admin-workspace-browser.mjs",
+        "?? apps/api/scripts/admin-workspace-fixtures.mjs",
+        "?? apps/api/scripts/admin-workspace-http.mjs",
+        "?? apps/api/src/admin-session-composition.test.ts",
+        "?? apps/api/src/admin-session-composition.ts",
+        "?? apps/api/src/admin-session-route.test.ts",
+        "?? apps/api/src/admin-session-route.ts",
+        "?? apps/api/src/admin-workspace-composition.test.ts",
+        "?? apps/api/src/admin-workspace-composition.ts",
+        "?? apps/api/src/admin-workspace-route.test.ts",
+        "?? apps/api/src/admin-workspace-route.ts",
+        "?? apps/api/src/admin-workspace-transport.ts",
+        "?? database/migrations/0019_admin-catalog.down.sql",
+        "?? database/migrations/0019_admin-catalog.up.sql",
+        "?? docs/plan/p3-02-admin-workspace.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -3687,16 +3917,14 @@
         "?? output/checks/p3-01-content-storage/baseline-openapi.json",
         "?? output/checks/p3-01-media/contracts-before.schema.json",
         "?? output/checks/p3-01-publication-preflight/contracts-before.json",
-        "?? output/checks/p3-01-publication-runtime/HTTP-README.md",
-        "?? output/checks/p3-01-publication-runtime/README.md",
-        "?? output/checks/p3-01-publication-runtime/compatibility.json",
         "?? output/checks/p3-01-publication-runtime/contracts-before.json",
-        "?? output/checks/p3-01-publication-runtime/implementation-source.json",
-        "?? output/checks/p3-01-publication-runtime/independent-review.md",
-        "?? output/checks/p3-01-publication-runtime/task-exit-review.md",
-        "?? output/checks/p3-01-publication-runtime/transport-review.md",
-        "?? output/checks/p3-01-publication-runtime/validation.json",
         "?? output/checks/p3-01-resource-management/contracts-before.json",
+        "?? output/checks/p3-02-admin/README.md",
+        "?? output/checks/p3-02-admin/contracts-before.json",
+        "?? output/checks/p3-02-admin/translation-handoff.md",
+        "?? output/checks/p3-02-admin/transport-README.md",
+        "?? output/checks/p3-02-admin/transport-review.md",
+        "?? output/checks/p3-02-admin/validation.json",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -3936,54 +4164,96 @@
         "?? output/playwright/p2-06/viewer-1440.png",
         "?? output/playwright/p2-06/viewer-390.png",
         "?? output/playwright/p2-06/viewer-check.json",
-        "?? packages/application/src/publication-purge.test.ts",
-        "?? packages/application/src/publication-purge.ts",
-        "?? packages/application/src/publication-runtime-idempotency.ts",
-        "?? packages/application/src/publication-runtime.test.ts",
-        "?? packages/application/src/publication-runtime.ts",
-        "?? packages/application/src/published-content.test.ts",
-        "?? packages/application/src/published-content.ts",
-        "?? packages/config/src/cache-purge-config.test.ts",
-        "?? packages/content/src/publication-manifest-canonical.test.ts",
-        "?? packages/content/src/publication-manifest-canonical.ts",
-        "?? packages/content/src/publication-manifest.test.ts",
-        "?? packages/content/src/publication-manifest.ts",
-        "?? packages/content/src/published-content-media.ts",
-        "?? packages/content/src/published-content.test.ts",
-        "?? packages/content/src/published-content.ts",
-        "?? packages/contracts/src/publication-manifest.test.ts",
-        "?? packages/contracts/src/publication-manifest.ts",
-        "?? packages/contracts/src/publication-purge.ts",
-        "?? packages/contracts/src/publication-runtime-openapi.test.ts",
-        "?? packages/contracts/src/publication-runtime-openapi.ts",
-        "?? packages/contracts/src/publication-runtime.test.ts",
-        "?? packages/contracts/src/publication-runtime.ts",
-        "?? packages/contracts/src/published-content.test.ts",
-        "?? packages/contracts/src/published-content.ts",
-        "?? packages/persistence-port/src/publication-runtime.ts",
-        "?? packages/persistence-port/src/published-content.ts",
-        "?? packages/persistence-postgres/scripts/postgres-publication-clock-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-media-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-proof-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-purge-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-receipt-hash-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-runtime-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-runtime-fixtures.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
-        "?? packages/persistence-postgres/src/catalog-published-search.test.ts",
-        "?? packages/persistence-postgres/src/publication-authorization-repository.ts",
-        "?? packages/persistence-postgres/src/publication-purge-data.ts",
-        "?? packages/persistence-postgres/src/publication-purge-repository.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-data.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-load.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-repository.test.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-repository.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-retry.ts",
-        "?? packages/persistence-postgres/src/publication-runtime-write.ts",
-        "?? packages/persistence-postgres/src/published-content-media-proof.test.ts",
-        "?? packages/persistence-postgres/src/published-content-media-proof.ts",
-        "?? packages/persistence-postgres/src/published-content-repository.test.ts",
-        "?? packages/persistence-postgres/src/published-content-repository.ts"
+        "?? output/playwright/p3-02-admin/accessibility.json",
+        "?? output/playwright/p3-02-admin/en-desktop.png",
+        "?? output/playwright/p3-02-admin/en-editor.png",
+        "?? output/playwright/p3-02-admin/en-mobile.png",
+        "?? output/playwright/p3-02-admin/en-preview-desktop.png",
+        "?? output/playwright/p3-02-admin/en-reviewer.png",
+        "?? output/playwright/p3-02-admin/en-source-changed.png",
+        "?? output/playwright/p3-02-admin/es-desktop.png",
+        "?? output/playwright/p3-02-admin/es-mobile.png",
+        "?? output/playwright/p3-02-admin/ja-desktop.png",
+        "?? output/playwright/p3-02-admin/ja-mobile.png",
+        "?? output/playwright/p3-02-admin/pt-desktop.png",
+        "?? output/playwright/p3-02-admin/pt-mobile.png",
+        "?? output/playwright/p3-02-admin/serve-desktop.png",
+        "?? output/playwright/p3-02-admin/th-desktop.png",
+        "?? output/playwright/p3-02-admin/th-mobile.png",
+        "?? output/playwright/p3-02-admin/vi-desktop.png",
+        "?? output/playwright/p3-02-admin/vi-mobile.png",
+        "?? output/playwright/p3-02-admin/zh-CN-desktop.png",
+        "?? output/playwright/p3-02-admin/zh-CN-mobile.png",
+        "?? packages/application/src/admin-catalog.test.ts",
+        "?? packages/application/src/admin-catalog.ts",
+        "?? packages/application/src/admin-preview-media.test.ts",
+        "?? packages/application/src/admin-preview-media.ts",
+        "?? packages/application/src/admin-session.test.ts",
+        "?? packages/application/src/admin-session.ts",
+        "?? packages/application/src/translation-authorization.ts",
+        "?? packages/application/src/translation-test-support.ts",
+        "?? packages/application/src/translation-transfer-idempotency.ts",
+        "?? packages/application/src/translation-transfer.test.ts",
+        "?? packages/application/src/translation-transfer.ts",
+        "?? packages/application/src/translation-workspace.test.ts",
+        "?? packages/application/src/translation-workspace.ts",
+        "?? packages/config/src/admin-config.test.ts",
+        "?? packages/content/src/translation-authoring.ts",
+        "?? packages/content/src/translation-transfer.test.ts",
+        "?? packages/content/src/translation-transfer.ts",
+        "?? packages/content/src/translation-workspace.test.ts",
+        "?? packages/content/src/translation-workspace.ts",
+        "?? packages/contracts/src/admin-catalog.test.ts",
+        "?? packages/contracts/src/admin-catalog.ts",
+        "?? packages/contracts/src/admin-preview-media.test.ts",
+        "?? packages/contracts/src/admin-preview-media.ts",
+        "?? packages/contracts/src/admin-session.test.ts",
+        "?? packages/contracts/src/admin-session.ts",
+        "?? packages/contracts/src/admin-workspace-openapi.test.ts",
+        "?? packages/contracts/src/admin-workspace-openapi.ts",
+        "?? packages/contracts/src/translation-transfer.test.ts",
+        "?? packages/contracts/src/translation-transfer.ts",
+        "?? packages/contracts/src/translation-workspace.test.ts",
+        "?? packages/contracts/src/translation-workspace.ts",
+        "?? packages/i18n/src/admin/en.review.ts",
+        "?? packages/i18n/src/admin/en.ts",
+        "?? packages/i18n/src/admin/es.review.ts",
+        "?? packages/i18n/src/admin/es.ts",
+        "?? packages/i18n/src/admin/ja.review.ts",
+        "?? packages/i18n/src/admin/ja.ts",
+        "?? packages/i18n/src/admin/messages.test.ts",
+        "?? packages/i18n/src/admin/messages.ts",
+        "?? packages/i18n/src/admin/pt.review.ts",
+        "?? packages/i18n/src/admin/pt.ts",
+        "?? packages/i18n/src/admin/review-manifest.ts",
+        "?? packages/i18n/src/admin/th.review.ts",
+        "?? packages/i18n/src/admin/th.ts",
+        "?? packages/i18n/src/admin/vi.review.ts",
+        "?? packages/i18n/src/admin/vi.ts",
+        "?? packages/i18n/src/admin/zh-CN.review.ts",
+        "?? packages/i18n/src/admin/zh-CN.ts",
+        "?? packages/persistence-port/src/admin-catalog.ts",
+        "?? packages/persistence-port/src/admin-preview-media.ts",
+        "?? packages/persistence-port/src/admin-session.ts",
+        "?? packages/persistence-port/src/translation-transfer.ts",
+        "?? packages/persistence-port/src/translation-workspace.ts",
+        "?? packages/persistence-postgres/scripts/postgres-admin-catalog-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-admin-catalog-proof-cases.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-admin-translation-cases.mjs",
+        "?? packages/persistence-postgres/src/admin-catalog-data.ts",
+        "?? packages/persistence-postgres/src/admin-catalog-read.ts",
+        "?? packages/persistence-postgres/src/admin-catalog-repository.test.ts",
+        "?? packages/persistence-postgres/src/admin-catalog-repository.ts",
+        "?? packages/persistence-postgres/src/admin-catalog-write.ts",
+        "?? packages/persistence-postgres/src/admin-preview-media-repository.test.ts",
+        "?? packages/persistence-postgres/src/admin-preview-media-repository.ts",
+        "?? packages/persistence-postgres/src/admin-session-repository.test.ts",
+        "?? packages/persistence-postgres/src/admin-session-repository.ts",
+        "?? packages/persistence-postgres/src/translation-transfer-repository.test.ts",
+        "?? packages/persistence-postgres/src/translation-transfer-repository.ts",
+        "?? packages/persistence-postgres/src/translation-workspace-repository.test.ts",
+        "?? packages/persistence-postgres/src/translation-workspace-repository.ts"
       ]
     }
   },
@@ -4100,7 +4370,7 @@
   "motionChecks": {
     "addToCart": {
       "buttonFocused": true,
-      "stateDelayMs": 49.5,
+      "stateDelayMs": 49.20000076293945,
       "liveAnnouncement": true,
       "pendingObserved": true,
       "countDelta": 1,
@@ -4168,7 +4438,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           },
@@ -4181,7 +4451,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           },
@@ -4194,7 +4464,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           }
@@ -4686,7 +4956,7 @@
         200,
         200
       ],
-      "origin": "http://127.0.0.1:58706"
+      "origin": "http://127.0.0.1:51893"
     },
     {
       "environment": "staging",
@@ -4701,7 +4971,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:58855"
+      "origin": "http://127.0.0.1:52040"
     },
     {
       "environment": "production",
@@ -4716,7 +4986,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:58877"
+      "origin": "http://127.0.0.1:52062"
     }
   ],
   "scenarioResults": [
@@ -4733,91 +5003,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58706/_internal/design-foundations/en/motion"
+            "url": "http://127.0.0.1:51893/_internal/design-foundations/en/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58706/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:51893/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -4878,7 +5148,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 96,
+        "lcpMs": 88,
         "longTasks": [],
         "observers": {
           "event": {
@@ -5063,109 +5333,109 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58706/_internal/design-foundations/vi/motion"
+            "url": "http://127.0.0.1:51893/_internal/design-foundations/vi/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58706/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:51893/icon.svg?icon.3fse5yyfsi15o.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
           }
         ]
       },
@@ -5221,12 +5491,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 32,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 60,
+        "lcpMs": 68,
         "longTasks": [],
         "observers": {
           "event": {
@@ -5247,7 +5517,7 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.700000000000045,
           "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
@@ -5307,97 +5577,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58706/_internal/design-foundations/th/motion"
+            "url": "http://127.0.0.1:51893/_internal/design-foundations/th/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2lg-l7asikrc3.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2lg-l7asikrc3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58706/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:51893/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -5413,7 +5683,7 @@
           {
             "height": 53.015625,
             "label": "เล่นการปรากฏของภาพหลักอีกครั้ง",
-            "width": 271.390625
+            "width": 273.390625
           },
           {
             "height": 48,
@@ -5428,22 +5698,22 @@
           {
             "height": 53.015625,
             "label": "เพิ่มของขวัญลงรถเข็นเพิ่มลงรถเข็นแล้ว",
-            "width": 183.15625
+            "width": 185.140625
           },
           {
             "height": 53.015625,
             "label": "รีเซ็ตการยืนยัน",
-            "width": 136.34375
+            "width": 137.953125
           },
           {
             "height": 53.015625,
             "label": "แสดงข้อผิดพลาดที่แก้ไขได้",
-            "width": 218.265625
+            "width": 223.546875
           },
           {
             "height": 53.015625,
             "label": "เล่นการยืนยันสำเร็จอีกครั้ง",
-            "width": 215.9375
+            "width": 217.328125
           }
         ],
         "document": {
@@ -5458,7 +5728,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 96,
+        "lcpMs": 92,
         "longTasks": [],
         "observers": {
           "event": {
@@ -5479,7 +5749,7 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.800000000000182,
           "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
@@ -5537,175 +5807,175 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58706/_internal/design-foundations/zh-CN/motion"
+            "url": "http://127.0.0.1:51893/_internal/design-foundations/zh-CN/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/0jyq8zfmzj_l3.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/0jyq8zfmzj_l3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58706/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:51893/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -5766,7 +6036,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 60,
+        "lcpMs": 76,
         "longTasks": [],
         "observers": {
           "event": {
@@ -5788,7 +6058,7 @@
         },
         "raf": {
           "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -5949,241 +6219,241 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58706/_internal/design-foundations/ja/motion"
+            "url": "http://127.0.0.1:51893/_internal/design-foundations/ja/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/107x49qjcs-lo.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/107x49qjcs-lo.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-94-wght-normal.0uyd2p7w0xwi9.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-94-wght-normal.0uyd2p7w0xwi9.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-jp-118-wght-normal.0oiz-9fhkq7v6.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-jp-118-wght-normal.0oiz-9fhkq7v6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58706/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:51893/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -6239,12 +6509,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 48,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 80,
+        "lcpMs": 64,
         "longTasks": [],
         "observers": {
           "event": {
@@ -6323,91 +6593,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58706/_internal/design-foundations/es/motion"
+            "url": "http://127.0.0.1:51893/_internal/design-foundations/es/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58706/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:51893/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -6463,12 +6733,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 32,
+          "maxMs": 48,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 60,
+        "lcpMs": 72,
         "longTasks": [],
         "observers": {
           "event": {
@@ -6489,8 +6759,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.700000000000045,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -6653,103 +6923,103 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58706/_internal/design-foundations/en-XA/motion"
+            "url": "http://127.0.0.1:51893/_internal/design-foundations/en-XA/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58706/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:51893/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -6810,7 +7080,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 80,
+        "lcpMs": 76,
         "longTasks": [],
         "observers": {
           "event": {
@@ -6831,8 +7101,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.800000000000182,
+          "p95FrameDeltaMs": 16.800000000000182,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -6891,85 +7161,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58706/_internal/design-foundations/pt/motion"
+            "url": "http://127.0.0.1:51893/_internal/design-foundations/pt/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58706/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:51893/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58706/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:51893/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58706/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:51893/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:51893/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58706/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:51893/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -6990,7 +7266,7 @@
           {
             "height": 48,
             "label": "Mira ValeSelecionado",
-            "width": 172.125
+            "width": 174.421875
           },
           {
             "height": 48,
@@ -7000,17 +7276,17 @@
           {
             "height": 51.59375,
             "label": "Adicionar presente ao carrinhoAdicionado ao carrinho",
-            "width": 272.125
+            "width": 272.078125
           },
           {
             "height": 51.59375,
             "label": "Redefinir a confirmação",
-            "width": 218.796875
+            "width": 218.328125
           },
           {
             "height": 51.59375,
             "label": "Mostrar erro recuperável",
-            "width": 225.609375
+            "width": 226.453125
           },
           {
             "height": 77.1875,
@@ -7025,12 +7301,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 48,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 60,
+        "lcpMs": 88,
         "longTasks": [],
         "observers": {
           "event": {
@@ -7051,8 +7327,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.800000000000182,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -7117,13 +7393,13 @@
       "path": "viewports/768x1024-th.png",
       "pixelHeight": 1024,
       "pixelWidth": 768,
-      "sha256": "4c74ed2577b828e445d2c45f45628fe03a575257f5a8eee8b41e70d707cec237"
+      "sha256": "e09f759ad25319d8899a5d64189bd324c396fe2dc89b56e2e9e470a41d0ec697"
     },
     {
       "path": "viewports/1024x768-zh-CN.png",
       "pixelHeight": 768,
       "pixelWidth": 1024,
-      "sha256": "33598a779eeed11642c37f39848e33a75f65df50fdd3c19d3fcaff43768d56e1"
+      "sha256": "bdb424a962ea591968a5ad917193f38228e843e919d516bfbfc673de938143a4"
     },
     {
       "path": "viewports/1440x900-ja.png",
@@ -7145,9 +7421,9 @@
     },
     {
       "path": "stress/320x800-pt-long.png",
-      "pixelHeight": 3054,
+      "pixelHeight": 3020,
       "pixelWidth": 320,
-      "sha256": "88669082c576ba8410dc519a9d06ae2864a30371e03581e7dd40e7d61fd98c38"
+      "sha256": "7f8c0261e6a00531b435dfdf5ec9963dfbf066035d917ed2a69f024e84132c31"
     },
     {
       "path": "hero/390x844-start.png",
@@ -7159,31 +7435,31 @@
       "path": "hero/390x844-mid.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "a2f5e5547a7332eb71189ab07e0aa0784f7daf50bbaa7625a8e241f4f95755b5"
+      "sha256": "0ab76120abdc155859eaa350b5913de58e0e64977726425800adfedb628defac"
     },
     {
       "path": "hero/390x844-end.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "383055592a2da62f334728ae66f6102c08b07fb5ac23bf8260cc33a1f73d2ac9"
+      "sha256": "277f3bb5bdfab76b5e56545e348e421dd8d8689ab9cf0b8b98040d4f7aa32044"
     },
     {
       "path": "hero/1440x900-start.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "d2e45cf35def194737948bfaca425432ba7b810808956c58036e2f29afa56027"
+      "sha256": "ce716e9d593c5f9a8bd7cd8f5afd6b33d8d3b656d5b5cacf270cf4bf42bc8cb8"
     },
     {
       "path": "hero/1440x900-mid.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "1d525f7b8290e09a85fd44860b2b15b5621ffae142139ff6b1b642c8bba3abbf"
+      "sha256": "9ed6c16abc8adf723d54f2635644ce7d075dbd30c24dde723b4ad241e652f78a"
     },
     {
       "path": "hero/1440x900-end.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "1ecad14a71380baf2eda1982cb3b0f154ea1fa6a987eba6294816bb558b9a6f2"
+      "sha256": "575af8798fb1100c478fc172d9efe81cb9f0a91b86fce07ecfede19a81d2cae0"
     },
     {
       "path": "motion/idol-mouse-spatial-1440.png",
@@ -7195,31 +7471,31 @@
       "path": "motion/idol-keyboard-instant-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "32da896b16ddb55039c52d75f1d2a0a7c456ecf5fcad152267eebb19f28b357e"
+      "sha256": "94d94c78facbda3d99a90d6317830462e8dd738e20823a909c2b277b5efffe36"
     },
     {
       "path": "motion/idol-latest-wins-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "08207f4d347d5ce46dd97f8005e8a9329401a7a9fcbff07276b2eba4d837b77a"
+      "sha256": "2605b3e0c10f90fb3ef5d0dc38ba7e5f9a2e583bf56c13feb4df407204da9ae3"
     },
     {
       "path": "motion/success-end-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "fe03e4379ae0b1f159c210572b6e16e16566097553e3298a9c4d0ebbb8687d60"
+      "sha256": "1164816cb1e3a13dc5136d2867880a1595eb2bb2f0052aa46681f25b21ac9f03"
     },
     {
       "path": "motion/idol-touch-opacity-390.png",
       "pixelHeight": 844,
       "pixelWidth": 390,
-      "sha256": "963e42c50b839ef2c0562e42f039901e0ac4876e0f0db95288d28b4d5a47cee4"
+      "sha256": "84e66060476d9c738363f04c33bb28f643efabbff8b6427fc6c40968e36d1aaa"
     },
     {
       "path": "motion/add-confirmed-390.png",
       "pixelHeight": 844,
       "pixelWidth": 390,
-      "sha256": "6eabb2a204f7ec173a9c62108a9307b2c12b896ee5023613b7722c67571000e1"
+      "sha256": "bb12e022473d29a537b63942eb3507d2e86751940d4517278b3b25bbd3910ce9"
     },
     {
       "path": "reduced-motion/390x844.png",

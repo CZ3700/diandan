@@ -16,6 +16,10 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@fan-support/contracts": "workspace:*"
+    "@fan-support/contracts": "workspace:*",
+    "intl-messageformat": "11.2.14"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3"
   }
 }

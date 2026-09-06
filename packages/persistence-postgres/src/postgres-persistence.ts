@@ -1,3 +1,28 @@
+import { createAdminPreviewMediaRepository } from "./admin-preview-media-repository.js";
+import type {
+  AdminPreviewMediaTransactionManager,
+  AdminPreviewMediaRepositories,
+} from "@fan-support/persistence-port";
+import { createTranslationTransferRepository } from "./translation-transfer-repository.js";
+import type {
+  TranslationTransferTransactionManager,
+  TranslationTransferRepositories,
+} from "@fan-support/persistence-port";
+import { createTranslationWorkspaceRepository } from "./translation-workspace-repository.js";
+import type {
+  TranslationWorkspaceTransactionManager,
+  TranslationWorkspaceRepositories,
+} from "@fan-support/persistence-port";
+import { createAdminCatalogRepository } from "./admin-catalog-repository.js";
+import type {
+  AdminCatalogTransactionManager,
+  AdminCatalogRepositories,
+} from "@fan-support/persistence-port";
+import { createAdminSessionRepository } from "./admin-session-repository.js";
+import type {
+  AdminSessionTransactionManager,
+  AdminSessionRepositories,
+} from "@fan-support/persistence-port";
 import { createPublicationAuthorizationRepository } from "./publication-authorization-repository.js";
 import { createPublicationRuntimeRepository } from "./publication-runtime-repository.js";
 import { createPublicationPurgeRepository } from "./publication-purge-repository.js";
@@ -75,6 +100,11 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly adminPreviewMediaTransactionManager: AdminPreviewMediaTransactionManager;
+  readonly translationTransferTransactionManager: TranslationTransferTransactionManager;
+  readonly translationWorkspaceTransactionManager: TranslationWorkspaceTransactionManager;
+  readonly adminCatalogTransactionManager: AdminCatalogTransactionManager;
+  readonly adminSessionTransactionManager: AdminSessionTransactionManager;
   readonly publicationRuntimeTransactionManager: PublicationRuntimeTransactionManager;
   readonly publicationPurgeTransactionManager: PublicationPurgeTransactionManager;
   readonly publishedContentTransactionManager: PublishedContentTransactionManager;
@@ -351,6 +381,61 @@ export function createPostgresPersistenceWithPoolFactory(
         ),
       }),
     });
+  const adminSessionRunner = createTransactionRunner<AdminSessionRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      adminSession: createAdminSessionRepository(client, scope),
+    }),
+  });
+  const adminCatalogRunner = createTransactionRunner<AdminCatalogRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      authorization: createAdminAuthorizationRepository(client, scope),
+      adminCatalog: createAdminCatalogRepository(
+        client,
+        scope,
+        options?.catalogPublicMediaBaseUrl,
+      ),
+      idempotency: createIdempotencyRepository(
+        createPostgresQueryLayer(client as NodePgClient),
+        scope,
+      ),
+    }),
+  });
+  const translationWorkspaceRunner =
+    createTransactionRunner<TranslationWorkspaceRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createAdminAuthorizationRepository(client, scope),
+        translationWorkspace: createTranslationWorkspaceRepository(
+          client,
+          scope,
+        ),
+      }),
+    });
+  const translationTransferRunner =
+    createTransactionRunner<TranslationTransferRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createAdminAuthorizationRepository(client, scope),
+        translationTransfers: createTranslationTransferRepository(
+          client,
+          scope,
+        ),
+        contentAuthoring: createContentAuthoringRepository(client, scope),
+        idempotency: createIdempotencyRepository(
+          createPostgresQueryLayer(client as NodePgClient),
+          scope,
+        ),
+      }),
+    });
+  const adminPreviewMediaRunner =
+    createTransactionRunner<AdminPreviewMediaRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        adminPreviewMedia: createAdminPreviewMediaRepository(client, scope),
+      }),
+    });
   let lifecycle: "OPEN" | "CLOSING" | "CLOSED" = "OPEN";
   let closePromise: Promise<void> | undefined;
 
@@ -526,6 +611,71 @@ export function createPostgresPersistenceWithPoolFactory(
     },
   };
   return {
+    translationWorkspaceTransactionManager: {
+      async runInTranslationWorkspaceTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return translationWorkspaceRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    translationTransferTransactionManager: {
+      async runInTranslationTransferTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return translationTransferRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    adminPreviewMediaTransactionManager: {
+      async runInAdminPreviewMediaTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminPreviewMediaRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    adminSessionTransactionManager: {
+      async runInAdminSessionTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminSessionRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    adminCatalogTransactionManager: {
+      async runInAdminCatalogTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminCatalogRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
     publicationRuntimeTransactionManager: {
       async runInPublicationRuntimeTransaction(work) {
         if (lifecycle !== "OPEN")

@@ -1,3 +1,4 @@
+import * as mediaCompositionModule from "./media-processing-composition.js";
 import { expect, test, vi } from "vitest";
 
 const environment = {
@@ -19,9 +20,7 @@ const environment = {
 };
 
 async function loadFactory() {
-  const module = await import("./media-processing-composition.js").catch(
-    () => undefined,
-  );
+  const module = mediaCompositionModule;
   expect(
     module?.createWorkerMediaProcessingComposition,
     "media composition must exist",

@@ -26,7 +26,10 @@
     "test:postgres:base-content": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/base-content-http.mjs",
     "test:postgres:resource-management": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node ./scripts/resource-management-http.mjs",
     "test:postgres:publication-preflight": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/publication-preflight-http.mjs",
-    "test:postgres:publication-runtime": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node ./scripts/publication-runtime-http.mjs"
+    "test:postgres:publication-runtime": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node ./scripts/publication-runtime-http.mjs",
+    "test:postgres:admin-workspace": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --output-logs=errors-only && node ./scripts/admin-workspace-http.mjs",
+    "test:browser:admin-workspace": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --output-logs=errors-only && node ./scripts/admin-workspace-http.mjs --ui",
+    "preview:admin-workspace": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --output-logs=errors-only && node ./scripts/admin-workspace-http.mjs --serve"
   },
   "dependencies": {
     "@fan-support/application": "workspace:*",
@@ -48,6 +51,7 @@
     "@fan-support/media-s3": "workspace:*",
     "@fan-support/media-image": "workspace:*",
     "sharp": "0.35.4",
-    "@aws-sdk/client-s3": "3.1119.0"
+    "@aws-sdk/client-s3": "3.1119.0",
+    "@playwright/test": "1.62.1"
   }
 }

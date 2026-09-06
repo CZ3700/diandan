@@ -1,3 +1,6 @@
+export * from "./translation-workspace.js";
+export * from "./translation-transfer.js";
+export * from "./translation-authoring.js";
 export * from "./publication-preflight.js";
 export const workspacePackageName = "@fan-support/content" as const;
 

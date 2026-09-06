@@ -1,3 +1,8 @@
+export * from "./translation-workspace-repository.js";
+export * from "./translation-transfer-repository.js";
+export * from "./admin-preview-media-repository.js";
+export * from "./admin-session-repository.js";
+export * from "./admin-catalog-repository.js";
 export const workspacePackageName =
   "@fan-support/persistence-postgres" as const;
 

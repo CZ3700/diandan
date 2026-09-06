@@ -15,6 +15,7 @@ import {
   runMigrations,
   withEphemeralPostgres,
 } from "@fan-support/persistence-postgres";
+import { seedAdminCatalogOperator } from "../../../packages/persistence-postgres/scripts/postgres-admin-catalog-fixtures.mjs";
 import { createApiApplication } from "../dist/bootstrap.js";
 import {
   seedCatalogDirectoryFixtures,
@@ -115,7 +116,7 @@ async function verify(clientConfig) {
     await runMigrations({
       clientConfig,
       workspaceRoot,
-      command: { direction: "up", targetVersion: "0018" },
+      command: { direction: "up" },
     });
     persistence = createPostgresPersistence(
       {
@@ -461,10 +462,23 @@ async function verify(clientConfig) {
     );
 
     stage = "artist operational status mutation";
-    await observer.query(
-      "UPDATE public.idols SET status='paused',accepting_gifts=false,version=version+1,updated_at=transaction_timestamp() WHERE id=$1",
-      [fixture.idols[0].id],
+    const operateCatalog = await seedAdminCatalogOperator(
+      observer,
+      persistence,
+      fixture.editor,
     );
+    const priorBase = (
+      await observer.query("SELECT version FROM idols WHERE id=$1", [
+        fixture.idols[0].id,
+      ])
+    ).rows[0];
+    await operateCatalog({
+      action: "SET_IDOL_STATUS",
+      idolId: fixture.idols[0].id,
+      expectedBaseVersion: Number(priorBase.version),
+      status: "paused",
+      acceptingGifts: false,
+    });
     const changed = await idols(
       { after: first.pageInfo.endCursor },
       409,

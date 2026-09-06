@@ -142,7 +142,7 @@ try {
       await runMigrations({
         clientConfig,
         workspaceRoot,
-        command: { direction: "up", targetVersion: "0018" },
+        command: { direction: "up" },
       });
       const options = {
         environment: "TEST",

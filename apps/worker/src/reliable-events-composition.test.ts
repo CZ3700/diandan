@@ -1,3 +1,4 @@
+import * as reliableCompositionModule from "./reliable-events-composition.js";
 import { expect, test, vi } from "vitest";
 import {
   currentRequestContext,
@@ -23,16 +24,12 @@ const quietLogger = Object.freeze({
 });
 
 async function loadFactory() {
-  const module = (await import("./reliable-events-composition.js").catch(
-    () => undefined,
-  )) as
+  const module = reliableCompositionModule as
     | Readonly<{
         createWorkerReliableEventsComposition?: (
           environment: Readonly<Record<string, string | undefined>>,
           options?: unknown,
-        ) => Promise<
-          Readonly<{ start(): Promise<void>; stop(): Promise<void> }>
-        >;
+        ) => Readonly<{ start(): Promise<void>; stop(): Promise<void> }>;
       }>
     | undefined;
   return module?.createWorkerReliableEventsComposition;

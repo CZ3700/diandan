@@ -1,4 +1,18 @@
 import {
+  registerAdminSessionRoute,
+  type AdminSessionRouteDependencies,
+} from "./admin-session-route.js";
+import {
+  registerAdminCatalogRoute,
+  registerTranslationWorkspaceRoute,
+  registerTranslationTransferRoute,
+  registerAdminPreviewMediaRoute,
+  type AdminCatalogRouteDependencies,
+  type TranslationWorkspaceRouteDependencies,
+  type TranslationTransferRouteDependencies,
+  type AdminPreviewMediaRouteDependencies,
+} from "./admin-workspace-route.js";
+import {
   registerPublicationRuntimeRoute,
   type PublicationRuntimeRouteDependencies,
 } from "./publication-runtime-route.js";
@@ -59,6 +73,13 @@ export type ApiLifecycleResource = Readonly<{
 }>;
 
 export type CreateApiApplicationOptions = Readonly<{
+  adminSessionRoute?: AdminSessionRouteDependencies;
+  adminSessionRuntime?: ApiLifecycleResource;
+  adminCatalogRoute?: AdminCatalogRouteDependencies;
+  translationWorkspaceRoute?: TranslationWorkspaceRouteDependencies;
+  translationTransferRoute?: TranslationTransferRouteDependencies;
+  adminPreviewMediaRoute?: AdminPreviewMediaRouteDependencies;
+  adminWorkspaceRuntime?: ApiLifecycleResource;
   publicationRuntimeRoute?: PublicationRuntimeRouteDependencies;
   publicationRuntimeLifecycle?: ApiLifecycleResource;
   publishedContentRoute?: PublishedContentRouteDependencies;
@@ -84,6 +105,8 @@ function registerApiLifecycle(
   adapter: FastifyAdapter,
   runtime: ApiLifecycleResource | undefined,
   name:
+    | "API admin session"
+    | "API admin workspace"
     | "API reliable events"
     | "API catalog directory"
     | "API admin content"
@@ -130,6 +153,35 @@ export async function createApiApplication(
     service: "api",
     logger,
   });
+  registerApiLifecycle(
+    adapter,
+    options.adminSessionRuntime,
+    "API admin session",
+  );
+  registerApiLifecycle(
+    adapter,
+    options.adminWorkspaceRuntime,
+    "API admin workspace",
+  );
+  if (options.adminSessionRoute)
+    registerAdminSessionRoute(adapter.getInstance(), options.adminSessionRoute);
+  if (options.adminCatalogRoute)
+    registerAdminCatalogRoute(adapter.getInstance(), options.adminCatalogRoute);
+  if (options.translationWorkspaceRoute)
+    registerTranslationWorkspaceRoute(
+      adapter.getInstance(),
+      options.translationWorkspaceRoute,
+    );
+  if (options.translationTransferRoute)
+    registerTranslationTransferRoute(
+      adapter.getInstance(),
+      options.translationTransferRoute,
+    );
+  if (options.adminPreviewMediaRoute)
+    registerAdminPreviewMediaRoute(
+      adapter.getInstance(),
+      options.adminPreviewMediaRoute,
+    );
   registerApiLifecycle(
     adapter,
     options.reliableEventsRuntime,

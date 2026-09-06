@@ -255,7 +255,7 @@ try {
       await runMigrations({
         clientConfig,
         workspaceRoot,
-        command: { direction: "up", targetVersion: "0018" },
+        command: { direction: "up" },
       });
       const originalPublished = (
         await observer.query(

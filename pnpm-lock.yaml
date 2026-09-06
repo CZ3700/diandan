@@ -68,9 +68,15 @@ importers:
       '@fan-support/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       '@fan-support/design-tokens':
         specifier: workspace:*
         version: link:../../packages/design-tokens
+      '@fan-support/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
       '@fan-support/observability':
         specifier: workspace:*
         version: link:../../packages/observability
@@ -145,6 +151,9 @@ importers:
       '@fan-support/media-s3':
         specifier: workspace:*
         version: link:../../packages/media-s3
+      '@playwright/test':
+        specifier: 1.62.1
+        version: 1.62.1
       pg:
         specifier: 8.23.0
         version: 8.23.0
@@ -390,6 +399,13 @@ importers:
       '@fan-support/contracts':
         specifier: workspace:*
         version: link:../contracts
+      intl-messageformat:
+        specifier: 11.2.14
+        version: 11.2.14
+    devDependencies:
+      '@types/node':
+        specifier: 24.13.3
+        version: 24.13.3
 
   packages/identity-oidc:
     dependencies:
@@ -1061,6 +1077,15 @@ packages:
 
   '@fontsource-variable/noto-sans@5.3.0':
     resolution: {integrity: sha512-e3ZuxzY9AL2psXPZlhwhnYrHUHv6PMoyK9MQ7croF0CUgURLqu9EMjW7q2FgVLwij1tjLsIHQrnwQ8aUcg4BiA==}
+
+  '@formatjs/fast-memoize@3.1.7':
+    resolution: {integrity: sha512-zXfhLpvA6T7+efdt9JLbBwZ00tT7NsBMDVnDu8rpHeNNv8KfRZAMo2gkG0k9lK/Nzc//3kJ9pImsfuJxk3KhUA==}
+
+  '@formatjs/icu-messageformat-parser@3.5.17':
+    resolution: {integrity: sha512-cN9jhVqT7u0K9tix43fhjoUwL0nazyW6zsNIXs2QdPADr+nurPfYyssUiMqcSCGlPcCiqnYVxgSn7zBSuI+5Bg==}
+
+  '@formatjs/icu-skeleton-parser@2.1.11':
+    resolution: {integrity: sha512-j8cUmOJzVgkHuS0QiQ6ga76UIoLOFSAMWhs7aZJztH3aAdCOAE6vpC8KVvFB4cU10ON0y2/5oOVmPJ43s2lTwA==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -2343,6 +2368,9 @@ packages:
   index-to-position@1.2.0:
     resolution: {integrity: sha512-Yg7+ztRkqslMAS2iFaU+Oa4KTSidr63OsFGlOrJoW981kIYO3CGCS3wA95P1mUi/IVSJkn0D479KTJpVpvFNuw==}
     engines: {node: '>=18'}
+
+  intl-messageformat@11.2.14:
+    resolution: {integrity: sha512-9f2VD1HFuxUvMw0RxsaP8WmMns6JRTnsNB/zghTFrp11ZktiXWwVDeZBPQchBKEmo+Gx/ZhxI7Qht7YglFD4PA==}
 
   ipaddr.js@2.5.0:
     resolution: {integrity: sha512-aq+t5NAc+cS6rZQQVWC2x98CPqGtKKTMDd4Gaodv0wShnItdKg/51djkGJ1hqH+Oy0ivDftCbSLCQob8zso01w==}
@@ -3703,6 +3731,14 @@ snapshots:
 
   '@fontsource-variable/noto-sans@5.3.0': {}
 
+  '@formatjs/fast-memoize@3.1.7': {}
+
+  '@formatjs/icu-messageformat-parser@3.5.17':
+    dependencies:
+      '@formatjs/icu-skeleton-parser': 2.1.11
+
+  '@formatjs/icu-skeleton-parser@2.1.11': {}
+
   '@humanfs/core@0.19.2':
     dependencies:
       '@humanfs/types': 0.15.0
@@ -4831,6 +4867,11 @@ snapshots:
   imurmurhash@0.1.4: {}
 
   index-to-position@1.2.0: {}
+
+  intl-messageformat@11.2.14:
+    dependencies:
+      '@formatjs/fast-memoize': 3.1.7
+      '@formatjs/icu-messageformat-parser': 3.5.17
 
   ipaddr.js@2.5.0: {}
 

@@ -1,10 +1,10 @@
 # Progress Master
 
-> 最后更新：2026-09-06
+> 最后更新：2026-09-07
 > 当前里程碑：M3 可浏览 Beta（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3
-> 当前任务：无执行中任务；`P3-01` 全部检查点验收通过，已 DONE，Lane C 已释放
-> 下一可领取任务：`P3-02`、`P3-03`、`P3-04`（READY）；优先 P3-02 自研管理后台
+> 最新完成：`P3-02`（DONE）；当前无executor，Lane C已释放
+> 下一入口：`P3-03`（Lane C，礼物/价格/库存管理）；`P3-04`（Lane B）也READY，本轮已完成P3-02
 
 ## 1. 开工入口
 
@@ -16,18 +16,18 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。2026-09-05 用户批准现有视觉作为开发基线并明确要求进入下一阶段；P2-06 DONE、Phase 2 CLOSED、Phase 3 ACTIVE；P3-01 经 READY 后由 Codex `/root` 领取并于2026-09-06完成全部本地运行时验收，现DONE、Lane C已释放；P3-02/03/04依赖完成并READY。正式品牌资产与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。2026-09-05 用户批准现有视觉作为开发基线并明确要求进入下一阶段；P2-06 DONE、Phase 2 CLOSED、Phase 3 ACTIVE；P3-01 经 READY 后由 Codex `/root` 领取并于2026-09-06完成全部本地运行时验收，现DONE。2026-09-07 P3-02管理后台亦完成本地验收并DONE，Lane C已释放，P3-03/04 READY。正式品牌资产与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
 | PENDING | 28 |
-| READY | 3 |
+| READY | 2 |
 | IN_PROGRESS | 0 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
-| DONE | 18 |
+| DONE | 19 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -79,6 +79,10 @@
 
 ## 5. 最新证据
 
+2026-09-07 P3-02自研内容管理后台已验收DONE：七语言首页/艺人身份/媒体/翻译矩阵与source diff、独立审核、翻译包、私有预览及发布回退完整接通。19迁移/144表，新增33 roots、旧311不变；管理PG253、协议957/306 setup请求、七语言双端UI1003断言/18截图/三个axe均零违规零incomplete。最终完整check、共享P2浏览器回归、secrets/diff及1,134源码指纹一致，三路独立复核与S.U.P.E.R十项PASS。发布时钟的确定性边界修复已回归；早期间歇purge UNAVAILABLE与retry503未确定归因，保留安全诊断，不能混称同一根因。详见 `output/checks/p3-02-admin/README.md` 与 `validation.json`。Phase3仍ACTIVE（2/6），全局19 DONE / 2 READY / 28 PENDING，总49；Lane C释放，下一P3-03礼物/价格/库存管理。正式登录/人工译审/素材批准、PSP/云CDN/staging/生产与新真机均未在本轮验收；按用户决定只本地提交，最后统一推送，本轮未push。
+
+2026-09-07用户要求继续，P3-02由READY转IN_PROGRESS，root独占Lane C；从本地6983e90创建 `codex/p3-02-admin-workspace`。先核对完整规范和已验收P3-01，实施自研Admin与必要管理API；全局仍18 DONE / 2 READY / 1 IN_PROGRESS / 28 PENDING，共49。不提前宣称UI或生产身份完成，仍只本地提交。
+
 2026-09-06 P3-01完整内容运行时已验收为DONE：4C-2接通五类七语言validate/publish/rollback、不可变manifest/实际数据库证明、公开扩展DTO与受审别名搜索，以及七语言持久purge/status/授权新代重试。新32 roots、旧279不变、共311；18迁移/141表、真实PG441断言、全仓内HTTP10,464断言/1,335请求、媒体worker/TLS S3联合423断言、完整check与双端七语言浏览器回归全部通过。真实默认worker调度通过本地HTTP缓存≤60秒门禁；三路非作者复核ACCEPT，S.U.P.E.R十项PASS，1018个源码输入最终指纹一致。证据及运行手册见 `output/checks/p3-01-publication-runtime/README.md`、`task-exit-review.md` 与 `docs/operations/content-publication.md`。Phase 3仍ACTIVE（1/6），全局18 DONE / 3 READY / 28 PENDING，总49；Lane C释放，P3-02/03/04 READY，优先P3-02管理后台。后台与真实前台业务页、正式登录/素材、实际云CDN、PSP/staging/生产发布依后续任务验证；没有新增真机或远端CI证据。按用户决定只做本地检查点提交，最后统一推送，本轮未push。
 
 2026-09-06 P3-01 的 4C-1 发布前检查已验证：五类七语言、独立基础/扩展审核、精确复制继承、全部媒体来源当前版权、目录资格、真实历史publication和微秒时间，从同一数据库事务当前授权后读取。新增1个私有POST/5个versioned roots，旧274不变、共279；1237 tests、166 PG、2595 HTTP断言/277请求、完整check及双端七语言浏览器回归通过。三路非作者复核ACCEPT，S.U.P.E.R十项PASS，948个输入指纹匹配。证据与复跑入口见 `output/checks/p3-01-publication-preflight/README.md`。检查不写生命周期/head/publication/outbox，0013封锁保留；P3-01仍IN_PROGRESS，总49项仍17 DONE/1 IN_PROGRESS/31 PENDING。下一项为4C-2在实际发布事务重跑门禁，接发布/回退、公开扩展DTO、manifest/别名投影与七语言purge。没有新增管理业务UI、正式登录、真机、云/PSP/staging/远端CI或发布结论；按用户要求本地检查点提交，最终统一推送，本轮未push。
@@ -111,6 +115,7 @@ Phase0/1已CLOSED，Phase2中P2-01至P2-05均DONE；P2-06技术评审材料已�
 
 | 日期 | Task | 类型 | 证据 | 结论 |
 |:--|:--|:--|:--|:--|
+| 2026-09-07 | P3-02 | 七语言自研内容后台退出 | `output/checks/p3-02-admin/`；PG253、协议957/UI1003、18截图、完整check | DONE；Phase3仍ACTIVE，P3-03/04 READY，全局19 DONE / 2 READY / 28 PENDING |
 | 2026-09-06 | P3-01 | 完整运行时退出 / 4C-2 | `output/checks/p3-01-publication-runtime/`；PG441、HTTP10,464/1,335请求、全仓check与浏览器回归 | DONE；Phase3仍ACTIVE，P3-02/03/04 READY，全局18 DONE / 3 READY / 28 PENDING |
 | 2026-09-06 | P3-01 | 发布前检查4C-1 | `output/checks/p3-01-publication-preflight/`；1237 tests、166 PG/2595 HTTP、完整check与浏览器回归 | 4C-1通过；任务IN_PROGRESS，下一步4C-2真实发布/回退/purge |
 | 2026-09-06 | P3-01 | 基础内容审核/preview 4A | `output/checks/p3-01-base-content/`；960 tests、910 PG/3847 HTTP、完整 check 与浏览器回归 | 4A 通过；任务 IN_PROGRESS，下一步媒体/政策管理与完整发布链路 |

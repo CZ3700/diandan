@@ -1,4 +1,47 @@
 import {
+  adminSessionCommandSchema,
+  adminSessionRequestSchema,
+  adminSessionResponseSchema,
+  adminSessionBootstrapResponseSchema,
+  adminSessionReadCommandSchema,
+} from "./admin-session.js";
+import {
+  adminCatalogCommandSchema,
+  adminCatalogRequestSchema,
+  adminCatalogOwnerSchema,
+  adminCatalogMutationSchema,
+  adminCatalogResponseSchema,
+  adminCatalogReadCommandSchema,
+  adminCatalogWriteCommandSchema,
+  adminCatalogReceiptReadCommandSchema,
+  idolHandleResolutionCommandSchema,
+  idolHandleResolutionSchema,
+} from "./admin-catalog.js";
+import {
+  translationWorkspaceCommandSchema,
+  translationWorkspaceRequestSchema,
+  translationWorkspaceResponseSchema,
+  translationWorkspaceContextSchema,
+  translationWorkspaceContextResponseSchema,
+} from "./translation-workspace.js";
+import {
+  translationTransferPackageSchema,
+  translationTransferCommandSchema,
+  translationTransferRequestSchema,
+  translationTransferResponseSchema,
+  translationExportReceiptSchema,
+  translationExportReceiptResponseSchema,
+  translationExportCreateCommandSchema,
+  translationExportReadCommandSchema,
+  translationImportRecordCommandSchema,
+} from "./translation-transfer.js";
+import {
+  adminPreviewMediaRequestSchema,
+  adminPreviewMediaResponseSchema,
+  adminPreviewMediaContextSchema,
+  adminPreviewMediaContextResponseSchema,
+} from "./admin-preview-media.js";
+import {
   publicationManifestRevisionSchema,
   publicationManifestAssetSchema,
   publicationManifestVariantSchema,
@@ -1880,6 +1923,171 @@ const registrations = [
     name: "PublicationPurgeRunResult",
     audience: "internal",
     schema: publicationPurgeRunResultSchema,
+  },
+  {
+    name: "AdminSessionCommand",
+    audience: "admin-http",
+    schema: adminSessionCommandSchema,
+  },
+  {
+    name: "AdminSessionRequest",
+    audience: "admin-http",
+    schema: adminSessionRequestSchema,
+  },
+  {
+    name: "AdminSessionResponse",
+    audience: "admin-http",
+    schema: adminSessionResponseSchema,
+  },
+  {
+    name: "AdminSessionBootstrapResponse",
+    audience: "admin-http",
+    schema: adminSessionBootstrapResponseSchema,
+  },
+  {
+    name: "AdminSessionReadCommand",
+    audience: "internal",
+    schema: adminSessionReadCommandSchema,
+  },
+  {
+    name: "AdminCatalogCommand",
+    audience: "admin-http",
+    schema: adminCatalogCommandSchema,
+  },
+  {
+    name: "AdminCatalogRequest",
+    audience: "admin-http",
+    schema: adminCatalogRequestSchema,
+  },
+  {
+    name: "AdminCatalogOwner",
+    audience: "admin-http",
+    schema: adminCatalogOwnerSchema,
+  },
+  {
+    name: "AdminCatalogMutation",
+    audience: "admin-http",
+    schema: adminCatalogMutationSchema,
+  },
+  {
+    name: "AdminCatalogResponse",
+    audience: "admin-http",
+    schema: adminCatalogResponseSchema,
+  },
+  {
+    name: "AdminCatalogReadCommand",
+    audience: "internal",
+    schema: adminCatalogReadCommandSchema,
+  },
+  {
+    name: "AdminCatalogWriteCommand",
+    audience: "internal",
+    schema: adminCatalogWriteCommandSchema,
+  },
+  {
+    name: "AdminCatalogReceiptReadCommand",
+    audience: "internal",
+    schema: adminCatalogReceiptReadCommandSchema,
+  },
+  {
+    name: "IdolHandleResolutionCommand",
+    audience: "internal",
+    schema: idolHandleResolutionCommandSchema,
+  },
+  {
+    name: "IdolHandleResolution",
+    audience: "internal",
+    schema: idolHandleResolutionSchema,
+  },
+  {
+    name: "TranslationWorkspaceCommand",
+    audience: "admin-http",
+    schema: translationWorkspaceCommandSchema,
+  },
+  {
+    name: "TranslationWorkspaceRequest",
+    audience: "admin-http",
+    schema: translationWorkspaceRequestSchema,
+  },
+  {
+    name: "TranslationWorkspaceResponse",
+    audience: "admin-http",
+    schema: translationWorkspaceResponseSchema,
+  },
+  {
+    name: "TranslationWorkspaceContext",
+    audience: "internal",
+    schema: translationWorkspaceContextSchema,
+  },
+  {
+    name: "TranslationWorkspaceContextResponse",
+    audience: "internal",
+    schema: translationWorkspaceContextResponseSchema,
+  },
+  {
+    name: "TranslationTransferPackage",
+    audience: "admin-http",
+    schema: translationTransferPackageSchema,
+  },
+  {
+    name: "TranslationTransferCommand",
+    audience: "admin-http",
+    schema: translationTransferCommandSchema,
+  },
+  {
+    name: "TranslationTransferRequest",
+    audience: "admin-http",
+    schema: translationTransferRequestSchema,
+  },
+  {
+    name: "TranslationTransferResponse",
+    audience: "admin-http",
+    schema: translationTransferResponseSchema,
+  },
+  {
+    name: "TranslationExportReceipt",
+    audience: "internal",
+    schema: translationExportReceiptSchema,
+  },
+  {
+    name: "TranslationExportReceiptResponse",
+    audience: "internal",
+    schema: translationExportReceiptResponseSchema,
+  },
+  {
+    name: "TranslationExportCreateCommand",
+    audience: "internal",
+    schema: translationExportCreateCommandSchema,
+  },
+  {
+    name: "TranslationExportReadCommand",
+    audience: "internal",
+    schema: translationExportReadCommandSchema,
+  },
+  {
+    name: "TranslationImportRecordCommand",
+    audience: "internal",
+    schema: translationImportRecordCommandSchema,
+  },
+  {
+    name: "AdminPreviewMediaRequest",
+    audience: "admin-http",
+    schema: adminPreviewMediaRequestSchema,
+  },
+  {
+    name: "AdminPreviewMediaResponse",
+    audience: "admin-http",
+    schema: adminPreviewMediaResponseSchema,
+  },
+  {
+    name: "AdminPreviewMediaContext",
+    audience: "internal",
+    schema: adminPreviewMediaContextSchema,
+  },
+  {
+    name: "AdminPreviewMediaContextResponse",
+    audience: "internal",
+    schema: adminPreviewMediaContextResponseSchema,
   },
 ] as const;
 

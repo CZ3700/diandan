@@ -1,3 +1,4 @@
+import { adminWorkspacePaths } from "./admin-workspace-openapi.js";
 import { publicationRuntimePaths } from "./publication-runtime-openapi.js";
 import { publicationPreflightPaths } from "./publication-preflight-openapi.js";
 import { resourceManagementPaths } from "./resource-management-openapi.js";
@@ -200,6 +201,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...adminContentPaths(),
         ...contentAuthoringPaths(),
         ...baseContentPaths(),
+        ...adminWorkspacePaths(),
         ...publicationPreflightPaths(),
         ...publicationRuntimePaths(),
         ...resourceManagementPaths(),

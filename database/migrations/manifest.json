@@ -180,6 +180,16 @@
         "up": "91095ca048585748f67ae606522f2a974ea91c6df828641905b70a08d15ec8f4",
         "down": "36892e4b0c7e4d692a7db4a007e27af0356e9e77cf15a3b6e1896b54027af9f9"
       }
+    },
+    {
+      "version": "0019",
+      "name": "admin-catalog",
+      "up": "database/migrations/0019_admin-catalog.up.sql",
+      "down": "database/migrations/0019_admin-catalog.down.sql",
+      "sha256": {
+        "up": "4af6c85ffb883740fa4a5003eaf3afb920b573430121d01f6514fc1954944067",
+        "down": "23d7f313f31e3b45a56be38e3ec2ada2810d2dfef5ddfb6f346f4b4fe4148d0f"
+      }
     }
   ]
 }

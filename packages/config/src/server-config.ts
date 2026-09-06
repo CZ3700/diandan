@@ -769,3 +769,41 @@ export function resolveCachePurgeRuntimeConfig(
     distributionId,
   });
 }
+
+export type AdminRuntimeConfig = Readonly<
+  | { schemaVersion: 1; mode: "DISABLED" }
+  | {
+      schemaVersion: 1;
+      mode: "TEST";
+      siteOrigin: string;
+      internalApiOrigin: string;
+    }
+>;
+/** No production identity provider is installed. TEST access is deliberately local. */
+export function resolveAdminRuntimeConfig(
+  sources: RuntimeConfigSources,
+): AdminRuntimeConfig {
+  const layered = resolveConfigLayers(sources, ["FAN_SUPPORT_ADMIN_MODE"]);
+  if (
+    layered.FAN_SUPPORT_ADMIN_MODE === undefined ||
+    layered.FAN_SUPPORT_ADMIN_MODE === "DISABLED"
+  )
+    return Object.freeze({ schemaVersion: 1, mode: "DISABLED" });
+  if (layered.FAN_SUPPORT_ADMIN_MODE !== "TEST")
+    throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
+  const runtime = resolveServerRuntimeConfig(sources);
+  const internal = resolveInternalApiRuntimeConfig(sources);
+  if (
+    runtime.deploymentEnvironment !== "development" ||
+    runtime.nodeEnvironment !== "development" ||
+    !isLoopbackHttpOrigin(runtime.siteOrigin) ||
+    !isLoopbackHttpOrigin(internal.origin)
+  )
+    throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
+  return Object.freeze({
+    schemaVersion: 1,
+    mode: "TEST",
+    siteOrigin: runtime.siteOrigin,
+    internalApiOrigin: internal.origin,
+  });
+}

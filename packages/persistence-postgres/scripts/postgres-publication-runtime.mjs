@@ -159,7 +159,7 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
       await runMigrations({
         clientConfig,
         workspaceRoot,
-        command: { direction: "up", targetVersion: "0018" },
+        command: { direction: "up" },
       });
       const legacy = await client.query(
         "SELECT count(*)::integer AS count FROM public.content_publications WHERE proof_version<>1",
@@ -324,6 +324,11 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
       }
       if (process.env["PUBLICATION_RUNTIME_PROOF_CASES"] !== "1") {
         stage = "history preserving downgrade";
+        await runMigrations({
+          clientConfig,
+          workspaceRoot,
+          command: { direction: "down", confirmVersion: "0019" },
+        });
         let rejection;
         try {
           await runMigrations({
