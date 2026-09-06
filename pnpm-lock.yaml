@@ -200,6 +200,12 @@ importers:
       '@fan-support/application':
         specifier: workspace:*
         version: link:../../packages/application
+      '@fan-support/cache-purge-cdn':
+        specifier: workspace:*
+        version: link:../../packages/cache-purge-cdn
+      '@fan-support/cache-purge-port':
+        specifier: workspace:*
+        version: link:../../packages/cache-purge-port
       '@fan-support/config':
         specifier: workspace:*
         version: link:../../packages/config
@@ -255,6 +261,9 @@ importers:
 
   packages/application:
     dependencies:
+      '@fan-support/cache-purge-port':
+        specifier: workspace:*
+        version: link:../cache-purge-port
       '@fan-support/catalog':
         specifier: workspace:*
         version: link:../catalog

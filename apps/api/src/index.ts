@@ -18,3 +18,7 @@ export {
   createTestResourceManagementComposition,
   type TestResourceManagementCompositionOptions,
 } from "./resource-management-composition.js";
+export * from "./publication-runtime-route.js";
+export * from "./published-content-route.js";
+export * from "./publication-runtime-composition.js";
+export * from "./published-content-composition.js";

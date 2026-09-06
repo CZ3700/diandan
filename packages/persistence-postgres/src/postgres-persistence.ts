@@ -1,3 +1,15 @@
+import { createPublicationAuthorizationRepository } from "./publication-authorization-repository.js";
+import { createPublicationRuntimeRepository } from "./publication-runtime-repository.js";
+import { createPublicationPurgeRepository } from "./publication-purge-repository.js";
+import { createPublishedContentRepository } from "./published-content-repository.js";
+import type {
+  PublicationRuntimeTransactionManager,
+  PublicationRuntimeRepositories,
+  PublicationPurgeTransactionManager,
+  PublicationPurgeRepositories,
+  PublishedContentTransactionManager,
+  PublishedContentRepositories,
+} from "@fan-support/persistence-port";
 import { createPublicationPreflightRepository } from "./publication-preflight-repository.js";
 import { createContentAuthoringRepository } from "./content-authoring-repository.js";
 import { createResourceManagementRepository } from "./resource-management-repository.js";
@@ -63,6 +75,9 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly publicationRuntimeTransactionManager: PublicationRuntimeTransactionManager;
+  readonly publicationPurgeTransactionManager: PublicationPurgeTransactionManager;
+  readonly publishedContentTransactionManager: PublishedContentTransactionManager;
   readonly publicationPreflightTransactionManager: PublicationPreflightTransactionManager;
   readonly resourceManagementTransactionManager: ResourceManagementTransactionManager;
   readonly baseContentTransactionManager: BaseContentTransactionManager;
@@ -268,6 +283,36 @@ export function createPostgresPersistenceWithPoolFactory(
         idempotency: createIdempotencyRepository(
           createPostgresQueryLayer(client as NodePgClient),
           scope,
+        ),
+      }),
+    });
+  const publicationRuntimeRunner =
+    createTransactionRunner<PublicationRuntimeRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createPublicationAuthorizationRepository(client, scope),
+        publicationRuntime: createPublicationRuntimeRepository(client, scope),
+        idempotency: createIdempotencyRepository(
+          createPostgresQueryLayer(client as NodePgClient),
+          scope,
+        ),
+      }),
+    });
+  const publicationPurgeRunner =
+    createTransactionRunner<PublicationPurgeRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        publicationPurge: createPublicationPurgeRepository(client, scope),
+      }),
+    });
+  const publishedContentRunner =
+    createTransactionRunner<PublishedContentRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        publishedContent: createPublishedContentRepository(
+          client,
+          scope,
+          options?.catalogPublicMediaBaseUrl ?? "",
         ),
       }),
     });
@@ -481,6 +526,50 @@ export function createPostgresPersistenceWithPoolFactory(
     },
   };
   return {
+    publicationRuntimeTransactionManager: {
+      async runInPublicationRuntimeTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return publicationRuntimeRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    publicationPurgeTransactionManager: {
+      async runInPublicationPurgeTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return publicationPurgeRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    publishedContentTransactionManager: {
+      async runInPublishedContentTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        if (options?.catalogPublicMediaBaseUrl === undefined)
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return publishedContentRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
     publicationPreflightTransactionManager: {
       async runInPublicationPreflightTransaction(work) {
         if (lifecycle !== "OPEN")

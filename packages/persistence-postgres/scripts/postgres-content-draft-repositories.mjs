@@ -34,7 +34,7 @@ await withEphemeralPostgres(async (clientConfig) => {
   await runMigrations({
     clientConfig,
     workspaceRoot,
-    command: { direction: "up" },
+    command: { direction: "up", targetVersion: "0017" },
   });
   const observer = new Client(clientConfig);
   await observer.connect();
@@ -45,6 +45,11 @@ await withEphemeralPostgres(async (clientConfig) => {
     );
   try {
     const fixtures = await seedCatalogDirectoryFixtures(observer, 2);
+    await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "up" },
+    });
     const old = async () =>
       (
         await observer.query(`SELECT jsonb_build_object(

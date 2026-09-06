@@ -17,7 +17,7 @@
     "migrations:manifest": "pnpm run build:with-dependencies && node ./scripts/migration-manifest.mjs",
     "migrations:manifest:check": "pnpm run build:with-dependencies && node ./scripts/migration-manifest.mjs --check",
     "test": "vitest run --config ../../vitest.config.ts --root .",
-    "test:postgres": "pnpm run build:with-dependencies && node ./scripts/migration-manifest.mjs --check && node ./scripts/postgres-integration.mjs && node ./scripts/postgres-key-version-upgrade.mjs && node ./scripts/postgres-media-object-key-upgrade.mjs && node ./scripts/postgres-outbox-status-upgrade.mjs && node ./scripts/postgres-constraints.mjs && node ./scripts/postgres-publication-upgrade.mjs && node ./scripts/postgres-repositories.mjs && node ./scripts/postgres-reliable-events.mjs && node ./scripts/postgres-catalog-directory.mjs && node ./scripts/postgres-media-processing.mjs && node ./scripts/postgres-content-drafts.mjs && node ./scripts/postgres-content-draft-repositories.mjs && node ./scripts/postgres-admin-content.mjs && node ./scripts/postgres-content-authoring.mjs && node ./scripts/postgres-base-content.mjs && node ./scripts/postgres-resource-management.mjs && node ./scripts/postgres-publication-preflight.mjs",
+    "test:postgres": "pnpm run build:with-dependencies && node ./scripts/migration-manifest.mjs --check && node ./scripts/postgres-integration.mjs && node ./scripts/postgres-key-version-upgrade.mjs && node ./scripts/postgres-media-object-key-upgrade.mjs && node ./scripts/postgres-outbox-status-upgrade.mjs && node ./scripts/postgres-constraints.mjs && node ./scripts/postgres-publication-upgrade.mjs && node ./scripts/postgres-repositories.mjs && node ./scripts/postgres-reliable-events.mjs && node ./scripts/postgres-catalog-directory.mjs && node ./scripts/postgres-media-processing.mjs && node ./scripts/postgres-content-drafts.mjs && node ./scripts/postgres-content-draft-repositories.mjs && node ./scripts/postgres-admin-content.mjs && node ./scripts/postgres-content-authoring.mjs && node ./scripts/postgres-base-content.mjs && node ./scripts/postgres-resource-management.mjs && node ./scripts/postgres-publication-preflight.mjs && node ./scripts/postgres-publication-runtime.mjs",
     "test:postgres:reliable-events": "pnpm run build:with-dependencies && node ./scripts/postgres-reliable-events.mjs",
     "typecheck": "tsc -p tsconfig.json",
     "catalog:rebuild-search": "pnpm run build:with-dependencies && node ./scripts/rebuild-catalog-search.mjs",
@@ -28,7 +28,8 @@
     "test:postgres:content-authoring": "pnpm run build:with-dependencies && node ./scripts/postgres-content-authoring.mjs",
     "test:postgres:base-content": "pnpm run build:with-dependencies && node ./scripts/postgres-base-content.mjs",
     "test:postgres:resource-management": "pnpm run build:with-dependencies && node ./scripts/postgres-resource-management.mjs",
-    "test:postgres:publication-preflight": "pnpm run build:with-dependencies && node ./scripts/postgres-publication-preflight.mjs"
+    "test:postgres:publication-preflight": "pnpm run build:with-dependencies && node ./scripts/postgres-publication-preflight.mjs",
+    "test:postgres:publication-runtime": "pnpm run build:with-dependencies && node ./scripts/postgres-publication-runtime.mjs"
   },
   "dependencies": {
     "@fan-support/catalog": "workspace:*",

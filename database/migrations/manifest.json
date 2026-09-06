@@ -170,6 +170,16 @@
         "up": "8171ef1a231a14acbf02f8d669f550e97e84fc11a9f66e7588ff8bb8098d8bed",
         "down": "5bba0d13da7bace1965f0e815fd1883b089873f73b30f5dbb8fd53053cb1d644"
       }
+    },
+    {
+      "version": "0018",
+      "name": "publication-runtime",
+      "up": "database/migrations/0018_publication-runtime.up.sql",
+      "down": "database/migrations/0018_publication-runtime.down.sql",
+      "sha256": {
+        "up": "91095ca048585748f67ae606522f2a974ea91c6df828641905b70a08d15ec8f4",
+        "down": "36892e4b0c7e4d692a7db4a007e27af0356e9e77cf15a3b6e1896b54027af9f9"
+      }
     }
   ]
 }

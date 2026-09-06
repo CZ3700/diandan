@@ -12,10 +12,10 @@
 
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
-| P3-01 | IN_PROGRESS | Codex `/root` | P1-02、P1-04、P1-05、P1-06 | 检查点 1、2A、2B、3A、3B、4A、4B、4C-1 已验证；下一项为4C-2事务发布/回退/purge |
-| P3-02 | PENDING | — | P2-03、P3-01 | Admin 首页/偶像别名/媒体构图与预览/翻译矩阵/审核 UI |
-| P3-03 | PENDING | — | P2-03、P3-01 | Admin 受控详情块/七语言礼物/价格/库存 UI |
-| P3-04 | PENDING | — | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
+| P3-01 | DONE | Codex `/root` | P1-02、P1-04、P1-05、P1-06 | 全部内容运行时检查点通过；真实发布/回退、七语言公开读取、持久purge，见4C-2验收记录 |
+| P3-02 | READY | — | P2-03、P3-01 | Admin 首页/偶像稳定身份与别名/媒体构图与预览/翻译矩阵/审核，以及所需管理API |
+| P3-03 | READY | — | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
+| P3-04 | READY | — | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
 | P3-05 | PENDING | — | P2-04、P3-01、P3-04 | 礼物分页/筛选/价格排序/URL恢复/七语言详情/选择偶像/政策/错误状态 |
 | P3-06 | PENDING | — | P3-02/03/04/05 | 七语言 i18n/SEO/cache/运营/性能验收 |
 
@@ -43,6 +43,45 @@
 - 并行：root 独占共享 exports/artifact registry/生成产物/计划与进度；每个检查点在实施前登记子模块文件所有权，以下执行登记为准。旧媒体构图与详情规则子模块属于检查点 1。
 - 验证：新行为先失败测试；输入边界、Unicode、翻页稳定性/上下文隔离、混合比例/焦点/低像素、块结构与翻译一致性；随后受影响 tests、format/lint/typecheck/build 和全仓 check。运行时检查点必须补真实 PostgreSQL/S3、权限/preview、原子发布/回退/purge 重试集成；前台接入时再做 390×844/1440×900 七语言/键盘/reduced-motion。
 - 风险：R-08 内容发布/失效、R-11 异步可靠性、R-14 完整验证、R-17 语言隔离；原媒体比例校验、旧 plain-text description 与冻结 v1 数据均需兼容迁移，不静默放宽现有生产发布门。
+
+## P3-01 检查点 4C-2 执行登记（2026-09-06）
+
+- Owner：Codex `/root`，继续Lane C唯一executor；开始2026-09-06T10:31:06Z，基线本地提交 `6a14495`；用户明确要求继续下一阶段。
+- 范围：同事务当前授权/幂等/版本控制下validate、publish和rollback，真实完整manifest与审核/媒体证明、七语言publication/head/outbox；版本化公开单对象DTO与已审别名搜索；持久缓存更新状态、worker提交/轮询/失败重试，以及本地真实API/DB/media发布到查询≤60秒。
+- 边界：依据规范12.4与既有0006，回退追加新publication指向不可变历史revision，不复制/改写旧内容或订单。解除0013必须以更强的数据库与应用证据门替代，不能直接删除封锁；保留旧279合同及历史v1。价格/库存/艺人稳定身份管理及其所需Application/API/UI仍由P3-02/03负责；不选择正式身份源/素材/市场，不接PSP或云部署。
+- 所有权：root负责新增共享合同/ports/exports/生成物、Application发布及purge编排、worker组合、计划/证据/Git；auth_persistence_audit负责0018与发布/缓存状态PostgreSQL仓储及真实PG测试；content_review_audit负责纯manifest/公开扩展投影与公开PG读取/别名搜索；admin_transport负责新管理/公开HTTP路由与真实HTTP联合验收。先并行只读审计，再冻结合同，各自测试先行，禁止交叉编辑。
+- 验证：缺译/STALE/自审/错误或过期manifest/原图失权阻断；版本冲突/幂等重放撤权/任一步故障原子回滚；历史回退不改原记录；七语言一致与公开隐私；无关event不被内容consumer领取；purge PENDING不误报完成、网络外置、重启/重复/有限重试与可查状态；受影响tests→format/lint/typecheck/build预检→真实PG/HTTP/S3/worker及全仓check→源码冻结后双端七语言浏览器回归→非作者复核/S.U.P.E.R/本地提交。风险R-08/R-11/R-14/R-17。
+- Git：延用 `codex/p3-01-content-runtime`，只提交本地检查点，不push/merge；P3-01全部退出条件通过后才DONE，不提前宣称Phase3结束。
+- 合同起草转交：content_review_audit独占新增publication-manifest/published-content合同及tests，root复核冻结并负责共享exports/registry；其余所有权保持。
+
+### 检查点 4C-2 验证与完整任务退出（2026-09-06）
+
+- 验收时间：2026-09-06T12:12:13.280137+00:00；Lane C executor `/root` 完成并释放。状态记录：P3-01 IN_PROGRESS → REVIEW（独立规范/质量复核）→ DONE（最终全仓与源码复核通过）。本轮只完成这一任务，不领取后续任务。
+- 发布闭环：五类内容validate/publish/rollback同事务重验当前session/MFA/全七locale权限、CSRF、版本和canonical内容；幂等重放也重验当前权限。成功原子提交实际审核/媒体证明、不可变manifest/收据、生命周期、head、audit及七语言Outbox/purge。并发一成功一冲突、审计失败全回滚与原key恢复通过；旧preflight报告不能授权发布。
+- 合同/数据库：32个新增versioned roots，共311，旧279逐项深比较不变。0018新增5表，总18迁移/141表；新publication强制proof_version2，旧v1只由迁移标记。完整正常触发器验证真实源稿、批准/复制链、别名/详情、原图版权/加工来源、双端Hero独立来源、原始hash和head；拒绝伪证明/提前超时/历史修改与已有新历史降级。回退追加新publication，历史revision与订单不改。
+- 公开与媒体：五类单对象七语言公开GET、当前发布head读取及已审名字/别名投影已接正常API组合。扩展缺失或失效不回退旧description。既有已发布父引用的有效历史metadata继续可读，新发布保持当前媒体门；manifest只收录READY衍生图。真实私有TLS S3原图、处理、metadata七语发布及同一衍生对象字节/几何/metadata核验通过，公共媒体origin仍是合成fixture。
+- 缓存：内容专属持久队列只处理CONTENT_PUBLICATION_CHANGED，实际合法无关commerce outbox/dispatch不变；事务外网络、稳定提交key、短事务租约/版本fencing。SUBMITTED/PENDING不能当COMPLETED；重启恢复既有provider reference，FAILED授权重试创建新代并保留历史。使用正常worker调度（空闲1000ms、记录后10ms），实际loopback HTTP缓存通过七语言发布≤60秒；只查询STATUS观察，没有手工runOnce驱动。10分钟总截止未实际等待十分钟，证据为真实SQL尾部租约表达式、正常trigger提前超时拒绝、真实短租约到期及迟到拒收。
+- 专项与全仓：真实PG441断言；独立HTTP10,448断言/1,332请求；105/105 typecheck/test/build预检（51cached），format/lint均PASS。最终 `mise exec node@24.20.0 -- corepack pnpm check` exit0，再次运行18迁移/141表、PG441、HTTP10,464断言/1,335请求、旧目录/内容/权限/API、TLS S3和媒体worker423联合断言；HTTP计数随STATUS观察次数变化。最终typecheck57/57、test57/57、build35/35均缓存命中；31个package exports经Node实际import，合同/架构/格式/lint全部通过。
+- 浏览器：源码和文件清单冻结后顺序P2-04/05回归并由全仓校验新指纹。P2-04为16场景/18PNG/10axe零违规，242输入指纹 `5194a3f48da09dac4804ae4ab359421d046af1369b4383a5859b4f584fa4e597`；P2-05为8场景/22PNG/3axe，critical/serious零、既有3个heading-order moderate保留，358输入指纹 `75d54d356e504679152738f8216b657873d3f563ce1c7646e41bcb00896368df`。七语言/伪语言、390×844/1440×900、键盘、错误、reduced-motion与原生200%缩放通过；root查看实际双端Hero、手机越南语和桌面日语截图。共享组件回归没有新增真机，motion原始报告继续保留physical-device gate。
+- 复核与收敛：三个子模块非作者规范/质量审查及root交叉复核ACCEPT。修复tuple顺序、UTC微秒snapshot hash、NULL证明、Hero同源、purge结果绑定/非终态超时、READY变体与已发布metadata历史读取；每项RED→GREEN，未放宽生产权限或SQL门。代码收敛保持合同/纯证明/事务/仓储/网络/transport职责。一次性探针被正式PG helper覆盖后清理，其早期lint RED保留。
+- 最终证据：`output/checks/p3-01-publication-runtime/README.md`、`validation.json`、`compatibility.json`、`implementation-source.json`、`independent-review.md`、`task-exit-review.md`、`HTTP-README.md`、`transport-review.md`；完整原始日志本地保留。1018个实现/测试/迁移/配置/指导输入最终复核未变，SHA256 `2627ee26c3bceba59d96083281b4b884fe874ef5c85db77a0a7fe3af0f587b3c`；旧279合同深比较不变。secret扫描通过；最终文档与暂存diff检查的退出码见validation.json。
+- 下一入口：Phase 3仍ACTIVE（1/6）；P3-02/03/04的依赖全部DONE且Lane空闲，改READY；P3-05/06仍PENDING。全局18 DONE / 3 READY / 28 PENDING，总49。优先P3-02自研管理后台，随后P3-03商品运营和P3-04/05真实前台；各任务包含其所需Application/API，不能只做UI。Phase 4至7仍LOCKED。
+- 范围与Git：使用说明见 `docs/operations/content-publication.md`。管理写入仍显式TEST组合，正式身份发行、实际CloudFront/公共CDN、正式素材与市场、SEO/运营计时、PSP/staging/生产发布依后续任务验证。沿用 `codex/p3-01-content-runtime` 本地检查点提交，最终统一推送，本轮不push/merge。
+
+### S.U.P.E.R 10项（4C-2与P3-01退出）
+
+| # | 检查 | 结果 |
+|:--|:--|:--|
+| 1 | 文件职责单一 | PASS：合同/manifest/公开投影/SQL/Application/HTTP/worker分离 |
+| 2 | 函数职责单一 | PASS：授权/证明/原子写入/网络/持久状态/清理各自明确 |
+| 3 | 单向依赖 | PASS：Route→Application→Content/Port；SQL/provider留在adapter |
+| 4 | 无循环依赖 | PASS：workspace/domain/adapter及全仓typecheck/build通过 |
+| 5 | Schema定义边界 | PASS：32个新roots；旧279定义深比较不变 |
+| 6 | 可序列化I/O | PASS：严格JSON、UTC微秒、结构化安全错误，无连接/provider原文跨层 |
+| 7 | 无生产硬编码 | PASS：数据库/媒体origin/CDN由配置注入；实体从真实DB加载 |
+| 8 | 显式依赖 | PASS：cache port/adapter及锁文件一致，不新增供应商版本 |
+| 9 | 可替换实现 | PASS：PG/cache/media独立ports，内容队列不消费无关事件 |
+| 10 | 验证通过 | PASS：最终全仓、真实PG/HTTP/S3、浏览器、秘密扫描、独立复核与源码指纹 |
 
 ## P3-01 检查点 4C-1 执行登记（2026-09-06）
 

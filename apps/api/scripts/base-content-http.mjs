@@ -210,7 +210,7 @@ try {
     await runMigrations({
       clientConfig,
       workspaceRoot,
-      command: { direction: "up" },
+      command: { direction: "up", targetVersion: "0017" },
     });
     const observer = new Client(clientConfig);
     await observer.connect();
@@ -238,6 +238,11 @@ try {
           credentials["ja-reviewer"].token,
         ),
         csrfTokenDigest: digest("admin-csrf", credentials["ja-reviewer"].csrf),
+      });
+      await runMigrations({
+        clientConfig,
+        workspaceRoot,
+        command: { direction: "up", targetVersion: "0018" },
       });
       const publicationState = async () =>
         JSON.stringify(

@@ -12,6 +12,8 @@ import {
 /** Shared qualification also covers standalone metadata and detail-only image dependencies. */
 export function validatePreflightAssets(
   context: PublicationPreflightContext,
+  referenceMode:
+    "PUBLICATION_COMMAND" | "PUBLISHED_REFERENCE" = "PUBLICATION_COMMAND",
 ): PublicationPreflightIssue[] {
   const candidate = context.candidate;
   if (candidate.objectKind === "POLICY") return [];
@@ -90,7 +92,10 @@ export function validatePreflightAssets(
   if (candidate.objectKind !== "MEDIA_METADATA") {
     const legacy: PublicationValidationIssue[] = [];
     validateReferencedMediaLifecycle({
-      action: context.action,
+      action:
+        referenceMode === "PUBLISHED_REFERENCE"
+          ? referenceMode
+          : context.action,
       referencedMetadataRevisionIds: new Set(
         candidate.mediaMetadataRevisions.map((row) => row.id),
       ),

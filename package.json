@@ -34,7 +34,7 @@
     "preview:verify": "node ./scripts/runtime-preview.mjs verify",
     "security:secrets": "node ./scripts/scan-secrets.mjs",
     "test": "turbo run test",
-    "test:postgres": "corepack pnpm --filter @fan-support/persistence-postgres test:postgres && corepack pnpm --filter @fan-support/api test:postgres:catalog && corepack pnpm --filter @fan-support/api test:postgres:admin-content && corepack pnpm --filter @fan-support/api test:postgres:content-authoring && corepack pnpm --filter @fan-support/api test:postgres:base-content && corepack pnpm --filter @fan-support/api test:postgres:resource-management && corepack pnpm --filter @fan-support/api test:postgres:publication-preflight",
+    "test:postgres": "corepack pnpm --filter @fan-support/persistence-postgres test:postgres && corepack pnpm --filter @fan-support/api test:postgres:catalog && corepack pnpm --filter @fan-support/api test:postgres:admin-content && corepack pnpm --filter @fan-support/api test:postgres:content-authoring && corepack pnpm --filter @fan-support/api test:postgres:base-content && corepack pnpm --filter @fan-support/api test:postgres:resource-management && corepack pnpm --filter @fan-support/api test:postgres:publication-preflight && corepack pnpm --filter @fan-support/api test:postgres:publication-runtime",
     "test:s3": "corepack pnpm --filter @fan-support/media-s3 test:s3 && corepack pnpm --filter @fan-support/worker test:media-processing",
     "typecheck": "turbo run typecheck",
     "verify:ui-interactions:browser": "node ./scripts/verify-ui-interactions-browser.mjs",

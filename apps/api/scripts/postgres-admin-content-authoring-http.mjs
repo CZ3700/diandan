@@ -197,7 +197,7 @@ try {
     await runMigrations({
       clientConfig,
       workspaceRoot,
-      command: { direction: "up" },
+      command: { direction: "up", targetVersion: "0017" },
     });
     const observer = new Client(clientConfig);
     await observer.connect();
@@ -217,6 +217,11 @@ try {
           expiresInSeconds: name === "expired" ? -60 : 3600,
           revoked: name === "revoked",
         })),
+      });
+      await runMigrations({
+        clientConfig,
+        workspaceRoot,
+        command: { direction: "up", targetVersion: "0018" },
       });
       const publishedBefore = JSON.stringify(
         (

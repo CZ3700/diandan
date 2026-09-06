@@ -41,6 +41,10 @@ test("passes the source-owned reliable-event route and lifecycle into the API bo
     }),
   });
   const createCatalogComposition = vi.fn(() => catalogComposition);
+  const published = {
+    publishedContentRoute: { useCases: { execute: vi.fn() } },
+    publishedContentRuntime: { start: vi.fn(), stop: vi.fn() },
+  };
   const createApplication = vi.fn(async () => application);
 
   await expect(
@@ -49,6 +53,7 @@ test("passes the source-owned reliable-event route and lifecycle into the API bo
       factories: {
         createComposition: createComposition as never,
         createCatalogComposition: createCatalogComposition as never,
+        createPublishedComposition: (() => published) as never,
         createApplication: createApplication as never,
       },
     }),
@@ -65,12 +70,15 @@ test("passes the source-owned reliable-event route and lifecycle into the API bo
     reliableEventsRuntime: composition.reliableEventsRuntime,
     catalogDirectoryRoute: catalogComposition.catalogDirectoryRoute,
     catalogDirectoryRuntime: catalogComposition.catalogDirectoryRuntime,
+    publishedContentRoute: published.publishedContentRoute,
+    publishedContentRuntime: published.publishedContentRuntime,
   });
 });
 
 test("closes composed resources when application construction fails", async () => {
   const reliableStop = vi.fn(async () => undefined);
   const catalogStop = vi.fn(async () => undefined);
+  const publishedStop = vi.fn(async () => undefined);
   await expect(
     createProductionApiApplication(
       {},
@@ -85,6 +93,10 @@ test("closes composed resources when application construction fails", async () =
             catalogDirectoryRoute: {},
             catalogDirectoryRuntime: { start: vi.fn(), stop: catalogStop },
           })) as never,
+          createPublishedComposition: (() => ({
+            publishedContentRoute: {},
+            publishedContentRuntime: { start: vi.fn(), stop: publishedStop },
+          })) as never,
           createApplication: (async () => {
             throw new Error("construction failed");
           }) as never,
@@ -94,4 +106,5 @@ test("closes composed resources when application construction fails", async () =
   ).rejects.toThrow("construction failed");
   expect(reliableStop).toHaveBeenCalledTimes(1);
   expect(catalogStop).toHaveBeenCalledTimes(1);
+  expect(publishedStop).toHaveBeenCalledTimes(1);
 });

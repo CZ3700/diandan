@@ -87,7 +87,7 @@ async function verify(clientConfig) {
   await runMigrations({
     clientConfig,
     workspaceRoot,
-    command: { direction: "up" },
+    command: { direction: "up", targetVersion: "0017" },
   });
   const observer = new Client(clientConfig);
   await observer.connect();
@@ -112,6 +112,11 @@ async function verify(clientConfig) {
       fixture.idols[0],
       fixture.editor,
     );
+    await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "up", targetVersion: "0018" },
+    });
     persistence = createPostgresPersistence(
       {
         ...clientConfig,

@@ -1,3 +1,4 @@
+import { publicationRuntimePaths } from "./publication-runtime-openapi.js";
 import { publicationPreflightPaths } from "./publication-preflight-openapi.js";
 import { resourceManagementPaths } from "./resource-management-openapi.js";
 import { contentAuthoringPaths } from "./content-authoring-openapi.js";
@@ -200,6 +201,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...contentAuthoringPaths(),
         ...baseContentPaths(),
         ...publicationPreflightPaths(),
+        ...publicationRuntimePaths(),
         ...resourceManagementPaths(),
       },
       components: {

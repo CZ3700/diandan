@@ -222,7 +222,7 @@ async function verify(database, s3, configPath) {
   await runMigrations({
     clientConfig: database,
     workspaceRoot,
-    command: { direction: "up" },
+    command: { direction: "up", targetVersion: "0017" },
   });
   const observer = new Client(database);
   await observer.connect();
@@ -307,6 +307,11 @@ async function verify(database, s3, configPath) {
           expiresInSeconds: name === "expired" ? -60 : 3600,
           revoked: name === "revoked",
         })),
+    });
+    await runMigrations({
+      clientConfig: database,
+      workspaceRoot,
+      command: { direction: "up", targetVersion: "0018" },
     });
     const publications = async () =>
       JSON.stringify(

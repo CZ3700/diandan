@@ -147,6 +147,7 @@ export function createCatalogDirectoryRepository(
           selectedIds,
           plan.query.locale,
           dependencies.publicMediaBaseUrl,
+          dependencies.transactionScope,
         );
         if (
           items.length !== selectedIds.length ||
@@ -213,6 +214,7 @@ export function createCatalogDirectoryRepository(
           ids,
           query.locale,
           dependencies.publicMediaBaseUrl,
+          dependencies.transactionScope,
         );
         if (
           records.length !== ids.length ||

@@ -1,4 +1,44 @@
 import {
+  publicationManifestRevisionSchema,
+  publicationManifestAssetSchema,
+  publicationManifestVariantSchema,
+  publicationManifestSchema,
+  publicationManifestRecordSchema,
+} from "./publication-manifest.js";
+import {
+  publishedContentReadCommandSchema,
+  publishedContentResponseSchema,
+  publishedContentContextSchema,
+  publishedContentContextResponseSchema,
+  publishedContentFailureSchema,
+} from "./published-content.js";
+import {
+  publicationAuthorizationCommandSchema,
+  publicationRevisionCommandSchema,
+  publicationStatusCommandSchema,
+  publicationRetryCommandSchema,
+  publicationRuntimeCommandSchema,
+  publicationRuntimeRequestSchema,
+  publicationRuntimeMutationSchema,
+  publicationPurgeRetryResultSchema,
+  publicationStatusResponseSchema,
+  publicationRuntimeResponseSchema,
+  publicationRuntimeContextSchema,
+  publicationRuntimeContextResponseSchema,
+  publicationRuntimeWriteCommandSchema,
+  publicationRuntimeReceiptReadCommandSchema,
+  publicationRuntimeRetryWriteCommandSchema,
+} from "./publication-runtime.js";
+import {
+  publicationPurgeJobSchema,
+  publicationPurgeClaimCommandSchema,
+  publicationPurgeClaimSchema,
+  publicationPurgeClaimResponseSchema,
+  publicationPurgeRecordCommandSchema,
+  publicationPurgeRecordResponseSchema,
+  publicationPurgeRunResultSchema,
+} from "./publication-purge.js";
+import {
   publicationPreflightCommandSchema,
   publicationPreflightRequestSchema,
   publicationPreflightResponseSchema,
@@ -1680,6 +1720,166 @@ const registrations = [
     name: "ResourceMediaRetryCommand",
     audience: "internal",
     schema: resourceMediaRetryCommandSchema,
+  },
+  {
+    name: "PublicationManifestRevision",
+    audience: "internal",
+    schema: publicationManifestRevisionSchema,
+  },
+  {
+    name: "PublicationManifestAsset",
+    audience: "internal",
+    schema: publicationManifestAssetSchema,
+  },
+  {
+    name: "PublicationManifestVariant",
+    audience: "internal",
+    schema: publicationManifestVariantSchema,
+  },
+  {
+    name: "PublicationManifest",
+    audience: "internal",
+    schema: publicationManifestSchema,
+  },
+  {
+    name: "PublicationManifestRecord",
+    audience: "internal",
+    schema: publicationManifestRecordSchema,
+  },
+  {
+    name: "PublishedContentReadCommand",
+    audience: "public-http",
+    schema: publishedContentReadCommandSchema,
+  },
+  {
+    name: "PublishedContentResponse",
+    audience: "public-http",
+    schema: publishedContentResponseSchema,
+  },
+  {
+    name: "PublishedContentContext",
+    audience: "internal",
+    schema: publishedContentContextSchema,
+  },
+  {
+    name: "PublishedContentContextResponse",
+    audience: "internal",
+    schema: publishedContentContextResponseSchema,
+  },
+  {
+    name: "PublishedContentFailure",
+    audience: "public-http",
+    schema: publishedContentFailureSchema,
+  },
+  {
+    name: "PublicationAuthorizationCommand",
+    audience: "internal",
+    schema: publicationAuthorizationCommandSchema,
+  },
+  {
+    name: "PublicationRevisionCommand",
+    audience: "internal",
+    schema: publicationRevisionCommandSchema,
+  },
+  {
+    name: "PublicationStatusCommand",
+    audience: "internal",
+    schema: publicationStatusCommandSchema,
+  },
+  {
+    name: "PublicationRetryCommand",
+    audience: "internal",
+    schema: publicationRetryCommandSchema,
+  },
+  {
+    name: "PublicationRuntimeCommand",
+    audience: "admin-http",
+    schema: publicationRuntimeCommandSchema,
+  },
+  {
+    name: "PublicationRuntimeRequest",
+    audience: "admin-http",
+    schema: publicationRuntimeRequestSchema,
+  },
+  {
+    name: "PublicationRuntimeMutation",
+    audience: "internal",
+    schema: publicationRuntimeMutationSchema,
+  },
+  {
+    name: "PublicationPurgeRetryResult",
+    audience: "internal",
+    schema: publicationPurgeRetryResultSchema,
+  },
+  {
+    name: "PublicationStatusResponse",
+    audience: "admin-http",
+    schema: publicationStatusResponseSchema,
+  },
+  {
+    name: "PublicationRuntimeResponse",
+    audience: "admin-http",
+    schema: publicationRuntimeResponseSchema,
+  },
+  {
+    name: "PublicationRuntimeContext",
+    audience: "internal",
+    schema: publicationRuntimeContextSchema,
+  },
+  {
+    name: "PublicationRuntimeContextResponse",
+    audience: "internal",
+    schema: publicationRuntimeContextResponseSchema,
+  },
+  {
+    name: "PublicationRuntimeWriteCommand",
+    audience: "internal",
+    schema: publicationRuntimeWriteCommandSchema,
+  },
+  {
+    name: "PublicationRuntimeReceiptReadCommand",
+    audience: "internal",
+    schema: publicationRuntimeReceiptReadCommandSchema,
+  },
+  {
+    name: "PublicationRuntimeRetryWriteCommand",
+    audience: "internal",
+    schema: publicationRuntimeRetryWriteCommandSchema,
+  },
+  {
+    name: "PublicationPurgeJob",
+    audience: "internal",
+    schema: publicationPurgeJobSchema,
+  },
+  {
+    name: "PublicationPurgeClaimCommand",
+    audience: "internal",
+    schema: publicationPurgeClaimCommandSchema,
+  },
+  {
+    name: "PublicationPurgeClaim",
+    audience: "internal",
+    schema: publicationPurgeClaimSchema,
+  },
+  {
+    name: "PublicationPurgeClaimResponse",
+    audience: "internal",
+    schema: publicationPurgeClaimResponseSchema,
+  },
+  {
+    name: "PublicationPurgeRecordCommand",
+    audience: "internal",
+    schema: publicationPurgeRecordCommandSchema,
+  },
+  {
+    name: "PublicationPurgeRecordResponse",
+    audience: "internal",
+    schema: publicationPurgeRecordResponseSchema,
+  },
+  {
+    name: "PublicationPurgeRunResult",
+    audience: "internal",
+    schema: publicationPurgeRunResultSchema,
   },
 ] as const;
 

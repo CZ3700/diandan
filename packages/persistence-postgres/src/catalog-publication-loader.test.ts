@@ -126,6 +126,7 @@ function fixture(kind: "IDOL" | "GIFT") {
     },
     publication: {
       id: uuid(3),
+      proof_version: 1,
       schema_version: 1,
       content_type: kind,
       [kind === "IDOL" ? "idol_id" : "gift_id"]: id,
@@ -468,3 +469,19 @@ test("leaves localized content hash verification to the strong domain projection
     record && selectPublishedGift(record.selection, record.source).success,
   ).toBe(false);
 });
+
+test.each([undefined, null, false, 2])(
+  "catalog cannot downgrade a missing or unverified publication proof marker %s",
+  async (version) => {
+    const data = fixture("GIFT");
+    (data.main["publication"] as Row)["proof_version"] = version;
+    await expect(
+      loadGiftDirectoryRecords(
+        clientWith([data.main], data.media),
+        [data.id],
+        "en",
+        origin,
+      ),
+    ).rejects.toThrow("CATALOG_PUBLICATION_INVALID");
+  },
+);

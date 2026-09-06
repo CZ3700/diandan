@@ -210,7 +210,7 @@ export function validateCurrentPublicationEvidence(input: {
 }
 
 export function validateReferencedMediaLifecycle(input: {
-  action: "PUBLISH" | "ROLLBACK";
+  action: "PUBLISH" | "ROLLBACK" | "PUBLISHED_REFERENCE";
   referencedMetadataRevisionIds: ReadonlySet<string>;
   metadataRevisions: readonly Readonly<{
     id: string;

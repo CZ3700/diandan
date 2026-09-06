@@ -313,3 +313,6 @@ export * from "./content-authoring.js";
 export * from "./base-content.js";
 
 export * from "./resource-management.js";
+
+export type * from "./publication-runtime.js";
+export type * from "./published-content.js";

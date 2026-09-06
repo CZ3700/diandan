@@ -37,3 +37,7 @@ export * from "./content-authoring.js";
 export * from "./base-content.js";
 
 export * from "./resource-management.js";
+export * from "./publication-manifest.js";
+export * from "./published-content.js";
+export * from "./publication-purge.js";
+export * from "./publication-runtime.js";

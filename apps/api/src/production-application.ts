@@ -1,4 +1,9 @@
 import type { StructuredLogger } from "@fan-support/observability";
+import {
+  createPublishedContentComposition,
+  type PublishedContentComposition,
+  type PublishedContentCompositionOptions,
+} from "./published-content-composition.js";
 
 import { createApiApplication } from "./bootstrap.js";
 import {
@@ -27,6 +32,10 @@ export type ProductionApiApplicationOptions = Readonly<{
       environment: Readonly<Record<string, string | undefined>>,
       options: CatalogDirectoryCompositionOptions,
     ) => CatalogDirectoryComposition;
+    createPublishedComposition?: (
+      environment: Readonly<Record<string, string | undefined>>,
+      options: PublishedContentCompositionOptions,
+    ) => PublishedContentComposition;
   }>;
 }>;
 
@@ -45,19 +54,27 @@ export async function createProductionApiApplication(
     options.factories?.createCatalogComposition ??
     createCatalogDirectoryComposition;
   let catalog: CatalogDirectoryComposition | undefined;
+  let published: PublishedContentComposition | undefined;
   try {
     catalog = createCatalogComposition(environment, { logger: options.logger });
+    published = (
+      options.factories?.createPublishedComposition ??
+      createPublishedContentComposition
+    )(environment, { logger: options.logger });
     return await createApplication(environment, {
       logger: options.logger,
       paymentWebhookRoute: composition.paymentWebhookRoute,
       reliableEventsRuntime: composition.reliableEventsRuntime,
       catalogDirectoryRoute: catalog.catalogDirectoryRoute,
       catalogDirectoryRuntime: catalog.catalogDirectoryRuntime,
+      publishedContentRoute: published.publishedContentRoute,
+      publishedContentRuntime: published.publishedContentRuntime,
     });
   } catch (error) {
     await Promise.allSettled([
       Promise.resolve().then(() => composition.reliableEventsRuntime.stop()),
       Promise.resolve().then(() => catalog?.catalogDirectoryRuntime.stop()),
+      Promise.resolve().then(() => published?.publishedContentRuntime.stop()),
     ]);
     throw error;
   }

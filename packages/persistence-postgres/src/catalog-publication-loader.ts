@@ -6,11 +6,17 @@ import {
   idolIdSchema,
   publicMediaUrlSchema,
   supportedLocaleSchema,
+  publishedContentReadCommandSchema,
   type GiftDirectoryRecord,
   type IdolDirectoryRecord,
   type SupportedLocale,
 } from "@fan-support/contracts";
-import type { TransactionClient } from "./transaction-runner.js";
+import type {
+  TransactionClient,
+  TransactionScopeControl,
+} from "./transaction-runner.js";
+import { projectPublishedContent } from "@fan-support/content";
+import { loadPublishedContentContext } from "./published-content-repository.js";
 import { mediaProvenanceEligibilitySql } from "./resource-media-eligibility-sql.js";
 import {
   catalogRecord,
@@ -127,6 +133,7 @@ async function loadRecords(
   locale: SupportedLocale,
   publicMediaBaseUrl: string,
   kind: CatalogObjectKind,
+  scope?: TransactionScopeControl,
 ) {
   const { ids, baseUrl } = normalizedInput(
     kind,
@@ -165,6 +172,32 @@ async function loadRecords(
     throw new Error("CATALOG_PUBLICATION_INVALID");
   if (mediaRows.some((row) => row["provenance_eligible"] !== true))
     throw new Error("CATALOG_PUBLICATION_INVALID");
+  // Only explicitly migrated legacy events use the old decoder. New events are
+  // verified with their complete persisted proof before projecting the v1 list subset.
+  for (const id of ids) {
+    const row = byId.get(id)!,
+      publication = catalogRecord(row["publication"]);
+    if (publication["proof_version"] === 1) continue;
+    if (publication["proof_version"] !== 2 || scope === undefined)
+      throw new Error("CATALOG_PUBLICATION_INVALID");
+    const command = publishedContentReadCommandSchema.parse({
+      schemaVersion: 1,
+      locator: { kind, handle: catalogRecord(row["base"])["handle"] },
+      locale,
+    });
+    const loaded = await loadPublishedContentContext(
+      client as TransactionClient,
+      scope,
+      command,
+      baseUrl,
+    );
+    if (
+      loaded.outcome !== "SUCCESS" ||
+      loaded.context.publication.publicationId !== publication["id"] ||
+      projectPublishedContent(loaded.context).outcome !== "SUCCESS"
+    )
+      throw new Error("CATALOG_PUBLICATION_INVALID");
+  }
   return ids.map((id) => {
     const row = byId.get(id)!;
     const revisionId = catalogRecord(row["revision"])["id"];
@@ -184,9 +217,10 @@ export async function loadIdolDirectoryRecords(
   ids: readonly string[],
   locale: SupportedLocale,
   publicMediaBaseUrl: string,
+  scope?: TransactionScopeControl,
 ): Promise<IdolDirectoryRecord[]> {
   return (
-    await loadRecords(client, ids, locale, publicMediaBaseUrl, "IDOL")
+    await loadRecords(client, ids, locale, publicMediaBaseUrl, "IDOL", scope)
   ).map((record) => idolDirectoryRecordSchema.parse(record));
 }
 export async function loadGiftDirectoryRecords(
@@ -194,8 +228,9 @@ export async function loadGiftDirectoryRecords(
   ids: readonly string[],
   locale: SupportedLocale,
   publicMediaBaseUrl: string,
+  scope?: TransactionScopeControl,
 ): Promise<GiftDirectoryRecord[]> {
   return (
-    await loadRecords(client, ids, locale, publicMediaBaseUrl, "GIFT")
+    await loadRecords(client, ids, locale, publicMediaBaseUrl, "GIFT", scope)
   ).map((record) => giftDirectoryRecordSchema.parse(record));
 }

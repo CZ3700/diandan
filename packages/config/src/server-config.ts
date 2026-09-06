@@ -720,3 +720,52 @@ export function toPublicRuntimeConfig(
 
 export { ConfigValidationError } from "./configuration-error.js";
 export type { ConfigSource, RuntimeConfigSources } from "./config-layers.js";
+
+export type CachePurgeRuntimeConfig = Readonly<
+  | { schemaVersion: 1; provider: "UNCONFIGURED" }
+  | {
+      schemaVersion: 1;
+      provider: "CLOUDFRONT";
+      region: string;
+      distributionId: string;
+    }
+>;
+export function resolveCachePurgeRuntimeConfig(
+  sources: RuntimeConfigSources,
+): CachePurgeRuntimeConfig {
+  const layered = resolveConfigLayers(sources, [
+    "FAN_SUPPORT_DEPLOYMENT_ENV",
+    "FAN_SUPPORT_CACHE_PURGE_PROVIDER",
+    "FAN_SUPPORT_CACHE_PURGE_REGION",
+    "FAN_SUPPORT_CACHE_PURGE_DISTRIBUTION_ID",
+  ]);
+  const tier = layered.FAN_SUPPORT_DEPLOYMENT_ENV;
+  const provider = layered.FAN_SUPPORT_CACHE_PURGE_PROVIDER;
+  if (
+    provider === undefined &&
+    (tier === "development" || tier === "test" || tier === "preview")
+  )
+    return Object.freeze({ schemaVersion: 1, provider: "UNCONFIGURED" });
+  if (provider !== "cloudfront")
+    throw new ConfigValidationError(["FAN_SUPPORT_CACHE_PURGE_PROVIDER"]);
+  const region = layered.FAN_SUPPORT_CACHE_PURGE_REGION;
+  const distributionId = layered.FAN_SUPPORT_CACHE_PURGE_DISTRIBUTION_ID;
+  if (
+    typeof region !== "string" ||
+    !/^[a-z0-9][a-z0-9-]{1,62}[a-z0-9]$/u.test(region)
+  )
+    throw new ConfigValidationError(["FAN_SUPPORT_CACHE_PURGE_REGION"]);
+  if (
+    typeof distributionId !== "string" ||
+    !/^[A-Z0-9]{1,64}$/u.test(distributionId)
+  )
+    throw new ConfigValidationError([
+      "FAN_SUPPORT_CACHE_PURGE_DISTRIBUTION_ID",
+    ]);
+  return Object.freeze({
+    schemaVersion: 1,
+    provider: "CLOUDFRONT",
+    region,
+    distributionId,
+  });
+}

@@ -38,7 +38,7 @@
 
 内容存储实现边界：0013 使用 10 张有明确归属的表，固定结构和译文文本分别持久化；新建文档必须含真实英语行，可携带 1 至 7 个 locale，全部从 DRAFT 开始。完整编辑流程复制新 revision/document，禁止覆盖已保存的结构、别名或译文。别名是可选专有名称集合，locale 可为空表示通用名称，独立审核整集，不能借用旧姓名译文审核。稳定 ID 重复创建会拒绝，request ID 冲突回滚，不代表已提供完整幂等结果重放。
 
-含新扩展的 revision 暂时不能 VALIDATED/PUBLISHED，也不能插入 PUBLISH/ROLLBACK publication；旧无扩展 v1 路径保持。解除此门之前必须接通结构编辑者、独立审核人、完整七语言及媒体权限/原图 lineage 的证据校验；任何结构化详情缺译或失效不得静默回退旧 description。公开页面应另加版本化包裹 DTO，保持旧 PublishedGiftView v1 定义不变。
+检查点2B当时含新扩展的 revision 不能 VALIDATED/PUBLISHED，也不能插入 PUBLISH/ROLLBACK publication；旧无扩展 v1 路径保持。解除此门之前必须接通结构编辑者、独立审核人、完整七语言及媒体权限/原图 lineage 的证据校验；任何结构化详情缺译或失效不得静默回退旧 description。公开页面应另加版本化包裹 DTO，保持旧 PublishedGiftView v1 定义不变。
 
 ## 检查点 3：身份、内容命令与只读预览
 
@@ -82,21 +82,23 @@
 
 - [x] 五类内容的受权、只读检查作为有界子检查点已交付，计划见 `docs/plan/p3-01-publication-preflight.md`，证据见 `output/checks/p3-01-publication-preflight/README.md`。基于真实数据库正文与审批、全部七语言、媒体原始来源和当前资格返回阻塞字段；`ready` 只描述读取时刻，不能授权后续发布。保持旧0013发布封锁。当前paused对象按paused检查，其余未归档草稿/active按active所需可售条件检查。
 
-### 4C-2 后续必需工作
+### 4C-2 发布、回退与缓存运行时（2026-09-06 本地验收通过）
 
-- [ ] 在实际validate/publish/rollback事务重跑完整revision检查，并原子写入合法生命周期与发布证据；结合基础审核、别名/详情独立证据、七语言完整度和媒体资格，不能把4C-1的旧ready报告当授权。双端页面排版继续由P3-02/03实现。
+- [x] 在实际validate/publish/rollback事务重跑完整revision检查，并原子写入合法生命周期与发布证据；结合基础审核、别名/详情独立证据、七语言完整度和媒体资格，不能把4C-1的旧ready报告当授权。双端页面排版继续由P3-02/03实现。
 艺人稳定身份与商品/variant/适用关系/价格簿/库存等管理能力分别由 P3-02/P3-03 连同所需 Application/API 端到端实现，不能把这些任务限定成只有 UI；4B 的政策与媒体管理接口不替代这些业务管理能力。
-- [ ] 单对象公开内容接口使用版本化扩展 DTO；与真实发布证据一起验收，只读取满足完整发布证据的当前 head，缺译/失效不得静默回退旧 description（由 3B 移至本检查点）。
-- [ ] 发布同一事务写 audit/publication/head 与七 locale outbox；订阅按 event type 分流，content consumer 不能把无关支付事件送入死信。
-- [ ] 发布/回退事务同步维护 source-hash 绑定的名字/别名投影，并落地 publication manifest/hash 的生成与验证；2A 读取当前从不可变内容与终审记录重建，不将旧汇总 hash 的存在当作真实性证明。
-- [ ] `apps/worker` 接 content purge consumer；精确 locale 路径/标签、提交/轮询完成/重试状态幂等；CloudFront PENDING 不能当作 COMPLETED。
-- [ ] 本地真实 API/DB/media 发布到查询变化 ≤60 秒，失败与重试可查询；云 CDN 真验明确留给部署门，不能冒充当前结果。
+- [x] 单对象公开内容接口使用版本化扩展 DTO；与真实发布证据一起验收，只读取满足完整发布证据的当前 head，缺译/失效不得静默回退旧 description（由 3B 移至本检查点）。
+- [x] 发布同一事务写 audit/publication/head 与七 locale outbox；订阅按 event type 分流，content consumer 不能把无关支付事件送入死信。
+- [x] 发布/回退事务同步维护 source-hash 绑定的名字/别名投影，并落地 publication manifest/hash 的生成与验证；2A 读取当前从不可变内容与终审记录重建，不将旧汇总 hash 的存在当作真实性证明。
+- [x] `apps/worker` 接 content purge consumer；精确 locale 路径/标签、提交/轮询完成/重试状态幂等；CloudFront PENDING 不能当作 COMPLETED。
+- [x] 本地真实 API/DB/media 发布到查询变化 ≤60 秒，失败与重试可查询；云 CDN 真验明确留给部署门，不能冒充当前结果。
 
 ## 检查点 5：任务退出
 
-- [ ] 运行受影响 tests、format/lint/typecheck/build、全仓 `mise exec node@24.20.0 -- corepack pnpm check`，真实 PostgreSQL/S3 集成和 S.U.P.E.R 10 项。
-- [ ] API/worker 新能力独立非作者复核；如有页面变化，补 390×844/1440×900 七语言、键盘、reduced-motion 与错误状态浏览器证据。
-- [ ] 命令、退出码、证据、实际限制写入 phase；完整验收才 P3-01 DONE，再解锁 P3-02/03/04，MASTER 总计保持 49。
+- [x] 运行受影响 tests、format/lint/typecheck/build、全仓 `mise exec node@24.20.0 -- corepack pnpm check`，真实 PostgreSQL/S3 集成和 S.U.P.E.R 10 项。
+- [x] API/worker 新能力独立非作者复核；如有页面变化，补 390×844/1440×900 七语言、键盘、reduced-motion 与错误状态浏览器证据。
+- [x] 命令、退出码、证据、实际限制写入 phase；完整验收才 P3-01 DONE，再解锁 P3-02/03/04，MASTER 总计保持 49。
+
+任务退出：2026-09-06最终全仓check、真实PG/HTTP/TLS S3、双端七语言浏览器回归、非作者复核与S.U.P.E.R全部通过，1018个实现输入指纹未变。P3-01 DONE，P3-02/03/04 READY；全局49项为18 DONE / 3 READY / 28 PENDING。完整结果及限制见 `output/checks/p3-01-publication-runtime/README.md`、`validation.json` 与 `task-exit-review.md`。
 
 ## 下一阶段页面验收矩阵
 

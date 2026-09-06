@@ -45,7 +45,7 @@ async function verify(clientConfig) {
   await runMigrations({
     clientConfig,
     workspaceRoot,
-    command: { direction: "up" },
+    command: { direction: "up", targetVersion: "0017" },
   });
   const observer = new Client(clientConfig);
   await observer.connect();
@@ -58,6 +58,11 @@ async function verify(clientConfig) {
       fixture.idols[0],
       fixture.editor,
     );
+    await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "up" },
+    });
     diagnosticStep = "published price immutability";
     for (const assignment of [
       "amount_minor = amount_minor + 1",
@@ -544,6 +549,11 @@ async function verify(clientConfig) {
     await runMigrations({
       clientConfig,
       workspaceRoot,
+      command: { direction: "down", confirmVersion: "0018" },
+    });
+    await runMigrations({
+      clientConfig,
+      workspaceRoot,
       command: { direction: "down", confirmVersion: "0017" },
     });
     await runMigrations({
@@ -590,9 +600,9 @@ async function verify(clientConfig) {
       "SELECT count(*)::integer AS count, max(version) AS version FROM public.schema_migrations",
     );
     check(
-      migrationHead.rows[0].count === 17 &&
-        migrationHead.rows[0].version === "0017",
-      "data-bearing up/down/up restores all 17 migrations through resource management",
+      migrationHead.rows[0].count === 18 &&
+        migrationHead.rows[0].version === "0018",
+      "data-bearing up/down/up restores all 18 migrations through publication runtime",
     );
     check(
       (await idols()).code === "CATALOG_UNAVAILABLE",

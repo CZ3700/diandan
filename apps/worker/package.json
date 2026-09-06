@@ -37,7 +37,9 @@
     "@fan-support/media-image": "workspace:*",
     "@fan-support/media-port": "workspace:*",
     "@fan-support/media-s3": "workspace:*",
-    "@fan-support/persistence-port": "workspace:*"
+    "@fan-support/persistence-port": "workspace:*",
+    "@fan-support/cache-purge-port": "workspace:*",
+    "@fan-support/cache-purge-cdn": "workspace:*"
   },
   "devDependencies": {
     "tsx": "4.23.13",

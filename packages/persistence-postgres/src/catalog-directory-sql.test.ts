@@ -6,6 +6,25 @@ import {
 } from "./catalog-directory-sql.js";
 
 describe("catalog directory SQL boundaries", () => {
+  test("approved aliases join only the current revision and bind the complete set hash", () => {
+    const query = buildIdolDirectoryQuery({
+      locale: "ja",
+      searchTerm: "alias",
+      take: 12,
+      anchorId: null,
+      afterId: null,
+    });
+    expect(query.text).toContain("idol_alias_search_projections");
+    expect(query.text).toContain(
+      "alias_projection.content_hash = alias_set.content_hash",
+    );
+    expect(query.text).toContain(
+      "alias_review.reviewed_content_hash = alias_set.content_hash",
+    );
+    expect(query.text).toContain("alias_review.status = 'APPROVED'");
+    expect(query.text).toContain("content_publication_manifests");
+    expect(query.text).toContain("media_processing_jobs");
+  });
   test("artist search uses literal substring matching and positional values", () => {
     const query = buildIdolDirectoryQuery({
       locale: "th",

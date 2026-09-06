@@ -239,7 +239,23 @@
       "kind": "TABLE"
     },
     {
+      "name": "content_publication_manifests",
+      "kind": "TABLE"
+    },
+    {
+      "name": "content_publication_receipts",
+      "kind": "TABLE"
+    },
+    {
       "name": "content_publications",
+      "kind": "TABLE"
+    },
+    {
+      "name": "content_purge_attempts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "content_purge_jobs",
       "kind": "TABLE"
     },
     {
@@ -364,6 +380,10 @@
     },
     {
       "name": "idempotency_records",
+      "kind": "TABLE"
+    },
+    {
+      "name": "idol_alias_search_projections",
       "kind": "TABLE"
     },
     {
@@ -2429,6 +2449,326 @@
       "generation": ""
     },
     {
+      "table": "content_publication_manifests",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 3,
+      "name": "publication_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 4,
+      "name": "idol_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 5,
+      "name": "gift_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 6,
+      "name": "homepage_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 7,
+      "name": "policy_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 8,
+      "name": "media_metadata_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 9,
+      "name": "manifest_text",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 10,
+      "name": "manifest",
+      "dataType": "jsonb",
+      "notNull": false,
+      "defaultExpression": "(manifest_text)::jsonb",
+      "identity": "",
+      "generation": "s"
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 11,
+      "name": "manifest_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 12,
+      "name": "translation_manifest_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 13,
+      "name": "approval_manifest_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 14,
+      "name": "media_manifest_hash",
+      "dataType": "sha256_hex",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_manifests",
+      "position": 15,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 3,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 4,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 5,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 6,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 7,
+      "name": "manifest_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 8,
+      "name": "publication_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 9,
+      "name": "purge_job_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 10,
+      "name": "expected_version",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 11,
+      "name": "expected_content_hash",
+      "dataType": "sha256_hex",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 12,
+      "name": "result_head_version",
+      "dataType": "bigint",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 13,
+      "name": "result_content_hash",
+      "dataType": "sha256_hex",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 14,
+      "name": "result_generation",
+      "dataType": "integer",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 15,
+      "name": "result_version",
+      "dataType": "bigint",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 16,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publication_receipts",
+      "position": 17,
+      "name": "field_paths",
+      "dataType": "text[]",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "content_publications",
       "position": 1,
       "name": "id",
@@ -2644,6 +2984,296 @@
       "name": "audit_log_id",
       "dataType": "uuid",
       "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_publications",
+      "position": 23,
+      "name": "proof_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "2",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_attempts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_attempts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_attempts",
+      "position": 3,
+      "name": "job_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_attempts",
+      "position": 4,
+      "name": "job_version",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_attempts",
+      "position": 5,
+      "name": "lease_token",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_attempts",
+      "position": 6,
+      "name": "kind",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_attempts",
+      "position": 7,
+      "name": "error_code",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_attempts",
+      "position": 8,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 3,
+      "name": "publication_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 4,
+      "name": "outbox_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 5,
+      "name": "locale",
+      "dataType": "supported_locale",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 6,
+      "name": "generation",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 7,
+      "name": "retry_of",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 8,
+      "name": "status",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": "'PENDING'::text",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 9,
+      "name": "version",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 10,
+      "name": "attempt_count",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 11,
+      "name": "failure_count",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 12,
+      "name": "paths",
+      "dataType": "text[]",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 13,
+      "name": "lease_token",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 14,
+      "name": "lease_expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 15,
+      "name": "purge_reference",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 16,
+      "name": "error_code",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 17,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 18,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 19,
+      "name": "next_attempt_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "content_purge_jobs",
+      "position": 20,
+      "name": "completed_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
       "defaultExpression": null,
       "identity": "",
       "generation": ""
@@ -5605,6 +6235,56 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "position": 1,
+      "name": "alias_set_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "position": 2,
+      "name": "alias_id",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "position": 3,
+      "name": "content_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "position": 4,
+      "name": "algorithm_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "position": 5,
+      "name": "normalized_name",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
       "identity": "",
       "generation": ""
     },
@@ -18411,6 +19091,390 @@
       "initiallyDeferred": false
     },
     {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifest_translation_manifest_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL translation_manifest_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifest_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_approval_manifest_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL approval_manifest_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_check",
+      "kind": "CHECK",
+      "definition": "CHECK (num_nonnulls(idol_revision_id, gift_revision_id, homepage_revision_id, policy_revision_id, media_metadata_revision_id) = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_gift_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (gift_revision_id) REFERENCES gift_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_homepage_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (homepage_revision_id) REFERENCES homepage_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_idol_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (idol_revision_id) REFERENCES idol_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_manifest_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL manifest_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_manifest_text_check",
+      "kind": "CHECK",
+      "definition": "CHECK (octet_length(manifest_text) >= 2 AND octet_length(manifest_text) <= 8388608)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_manifest_text_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL manifest_text",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_media_metadata_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (media_metadata_revision_id) REFERENCES media_metadata_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_policy_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (policy_revision_id) REFERENCES policy_revisions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_publication_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (publication_id) REFERENCES content_publications(id) ON DELETE RESTRICT DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_publication_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (publication_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipt_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['VALIDATE'::text, 'PUBLISH'::text, 'ROLLBACK'::text, 'RETRY_PURGE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = 'RETRY_PURGE'::text AND manifest_id IS NULL AND publication_id IS NOT NULL AND purge_job_id IS NOT NULL AND num_nonnulls(expected_content_hash, result_head_version, result_content_hash) = 0 AND result_generation IS NOT NULL AND result_version = 1 AND field_paths = ARRAY['cachePurge'::text] OR action <> 'RETRY_PURGE'::text AND manifest_id IS NOT NULL AND purge_job_id IS NULL AND expected_content_hash IS NOT NULL AND result_head_version IS NOT NULL AND result_content_hash IS NOT NULL AND result_generation IS NULL AND result_version IS NULL AND (action = 'VALIDATE'::text) = (publication_id IS NULL) AND field_paths =\nCASE\n    WHEN action = 'VALIDATE'::text THEN ARRAY['lifecycle'::text]\n    ELSE ARRAY['lifecycle'::text, 'publication'::text, 'searchProjection'::text, 'cachePurge'::text]\nEND)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_expected_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (expected_version >= 0 AND expected_version <= '9007199254740991'::bigint)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_expected_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expected_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_field_paths_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL field_paths",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_manifest_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (manifest_id) REFERENCES content_publication_manifests(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_manifest_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (manifest_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_publication_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (publication_id) REFERENCES content_publications(id) ON DELETE RESTRICT DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_purge_job_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (purge_job_id) REFERENCES content_purge_jobs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_purge_job_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (purge_job_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_result_generation_check",
+      "kind": "CHECK",
+      "definition": "CHECK (result_generation > 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_result_head_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (result_head_version >= 0 AND result_head_version <= '9007199254740991'::bigint)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_result_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (result_version > 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "publication_receipt_snapshot_hash",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "content_publications",
+      "name": "content_publication_current_proof",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
       "table": "content_publications",
       "name": "content_publications_action_check",
       "kind": "CHECK",
@@ -18628,6 +19692,22 @@
     },
     {
       "table": "content_publications",
+      "name": "content_publications_proof_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (proof_version = ANY (ARRAY[1, 2]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publications",
+      "name": "content_publications_proof_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL proof_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_publications",
       "name": "content_publications_published_at_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL published_at",
@@ -18713,6 +19793,414 @@
       "definition": "CHECK (content_type = 'IDOL'::text AND idol_id IS NOT NULL AND idol_revision_id IS NOT NULL AND gift_id IS NULL AND gift_revision_id IS NULL AND homepage_revision_id IS NULL AND policy_key IS NULL AND policy_revision_id IS NULL AND media_asset_id IS NULL AND media_metadata_revision_id IS NULL AND site_locale_config_revision_id IS NULL OR content_type = 'GIFT'::text AND idol_id IS NULL AND idol_revision_id IS NULL AND gift_id IS NOT NULL AND gift_revision_id IS NOT NULL AND homepage_revision_id IS NULL AND policy_key IS NULL AND policy_revision_id IS NULL AND media_asset_id IS NULL AND media_metadata_revision_id IS NULL AND site_locale_config_revision_id IS NULL OR content_type = 'HOMEPAGE'::text AND idol_id IS NULL AND idol_revision_id IS NULL AND gift_id IS NULL AND gift_revision_id IS NULL AND homepage_revision_id IS NOT NULL AND policy_key IS NULL AND policy_revision_id IS NULL AND media_asset_id IS NULL AND media_metadata_revision_id IS NULL AND site_locale_config_revision_id IS NULL OR content_type = 'POLICY'::text AND idol_id IS NULL AND idol_revision_id IS NULL AND gift_id IS NULL AND gift_revision_id IS NULL AND homepage_revision_id IS NULL AND policy_key IS NOT NULL AND policy_revision_id IS NOT NULL AND media_asset_id IS NULL AND media_metadata_revision_id IS NULL AND site_locale_config_revision_id IS NULL OR content_type = 'MEDIA_METADATA'::text AND idol_id IS NULL AND idol_revision_id IS NULL AND gift_id IS NULL AND gift_revision_id IS NULL AND homepage_revision_id IS NULL AND policy_key IS NULL AND policy_revision_id IS NULL AND media_asset_id IS NOT NULL AND media_metadata_revision_id IS NOT NULL AND site_locale_config_revision_id IS NULL OR content_type = 'SITE_LOCALE_CONFIG'::text AND idol_id IS NULL AND idol_revision_id IS NULL AND gift_id IS NULL AND gift_revision_id IS NULL AND homepage_revision_id IS NULL AND policy_key IS NULL AND policy_revision_id IS NULL AND media_asset_id IS NULL AND media_metadata_revision_id IS NULL AND site_locale_config_revision_id IS NOT NULL)",
       "deferrable": false,
       "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempt_binding",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_job_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (job_id) REFERENCES content_purge_jobs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_job_id_job_version_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (job_id, job_version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_job_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL job_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_job_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (job_version > 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_job_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL job_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_kind_check",
+      "kind": "CHECK",
+      "definition": "CHECK (kind = ANY (ARRAY['CLAIM'::text, 'SUBMITTED'::text, 'PENDING'::text, 'COMPLETED'::text, 'FAILURE'::text, 'TIMEOUT'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_kind_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL kind",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_lease_token_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL lease_token",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_attempt_count_check",
+      "kind": "CHECK",
+      "definition": "CHECK (attempt_count >= 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_attempt_count_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL attempt_count",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_check",
+      "kind": "CHECK",
+      "definition": "CHECK ((generation = 1) = (retry_of IS NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_check1",
+      "kind": "CHECK",
+      "definition": "CHECK ((lease_token IS NULL) = (lease_expires_at IS NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_check2",
+      "kind": "CHECK",
+      "definition": "CHECK ((status = 'COMPLETED'::text) = (completed_at IS NOT NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_check3",
+      "kind": "CHECK",
+      "definition": "CHECK ((status = ANY (ARRAY['COMPLETED'::text, 'FAILED'::text])) = (next_attempt_at IS NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_check4",
+      "kind": "CHECK",
+      "definition": "CHECK (status <> 'SUBMITTED'::text OR purge_reference IS NOT NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_check5",
+      "kind": "CHECK",
+      "definition": "CHECK (status <> 'PENDING'::text OR purge_reference IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_check6",
+      "kind": "CHECK",
+      "definition": "CHECK ((status <> ALL (ARRAY['COMPLETED'::text, 'FAILED'::text])) OR lease_token IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_check7",
+      "kind": "CHECK",
+      "definition": "CHECK (updated_at::timestamp with time zone >= created_at::timestamp with time zone AND (completed_at IS NULL OR completed_at::timestamp with time zone >= created_at::timestamp with time zone))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_error_code_check",
+      "kind": "CHECK",
+      "definition": "CHECK (error_code = ANY (ARRAY['INVALID_COMMAND'::text, 'PURGE_NOT_FOUND'::text, 'IDEMPOTENCY_CONFLICT'::text, 'ACCESS_DENIED'::text, 'RATE_LIMITED'::text, 'TEMPORARY_UNAVAILABLE'::text, 'CONFIGURATION_ERROR'::text, 'UNEXPECTED_ADAPTER_FAILURE'::text, 'PURGE_TIMEOUT'::text, 'INVALID_PROVIDER_RESPONSE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_failure_count_check",
+      "kind": "CHECK",
+      "definition": "CHECK (failure_count >= 0 AND failure_count <= 6)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_failure_count_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL failure_count",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_generation_check",
+      "kind": "CHECK",
+      "definition": "CHECK (generation > 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_generation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL generation",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_locale_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL locale",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_outbox_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (outbox_event_id) REFERENCES outbox_events(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_outbox_event_id_generation_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (outbox_event_id, generation)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_outbox_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL outbox_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_paths_check",
+      "kind": "CHECK",
+      "definition": "CHECK (array_ndims(paths) = 1 AND cardinality(paths) >= 1 AND cardinality(paths) <= 3000 AND array_position(paths, NULL::text) IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_paths_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL paths",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_publication_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (publication_id) REFERENCES content_publications(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_publication_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL publication_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_purge_reference_check",
+      "kind": "CHECK",
+      "definition": "CHECK (length(purge_reference) >= 1 AND length(purge_reference) <= 512)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_retry_of_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (retry_of) REFERENCES content_purge_jobs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_retry_of_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (retry_of)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_status_check",
+      "kind": "CHECK",
+      "definition": "CHECK (status = ANY (ARRAY['PENDING'::text, 'SUBMITTED'::text, 'COMPLETED'::text, 'FAILED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_status_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL status",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (version >= 1 AND version <= '9007199254740991'::bigint)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_transition_receipt",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
     },
     {
       "table": "customer_contacts",
@@ -22743,6 +24231,78 @@
       "name": "idempotency_records_updated_at_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "name": "idol_alias_search_projections_algorithm_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (algorithm_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "name": "idol_alias_search_projections_algorithm_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL algorithm_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "name": "idol_alias_search_projections_alias_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL alias_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "name": "idol_alias_search_projections_alias_set_id_alias_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (alias_set_id, alias_id) REFERENCES idol_revision_aliases(alias_set_id, alias_id) ON DELETE CASCADE",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "name": "idol_alias_search_projections_alias_set_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL alias_set_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "name": "idol_alias_search_projections_content_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL content_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "name": "idol_alias_search_projections_normalized_name_check",
+      "kind": "CHECK",
+      "definition": "CHECK (length(normalized_name) >= 1 AND length(normalized_name) <= 240)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "name": "idol_alias_search_projections_normalized_name_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL normalized_name",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "name": "idol_alias_search_projections_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (alias_set_id, alias_id)",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -37626,6 +39186,69 @@
       "valid": true
     },
     {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_pkey",
+      "definition": "CREATE UNIQUE INDEX content_publication_manifests_pkey ON public.content_publication_manifests USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifests_publication_id_key",
+      "definition": "CREATE UNIQUE INDEX content_publication_manifests_publication_id_key ON public.content_publication_manifests USING btree (publication_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipt_event_unique",
+      "definition": "CREATE UNIQUE INDEX content_publication_receipt_event_unique ON public.content_publication_receipts USING btree (publication_id) WHERE (action = ANY (ARRAY['PUBLISH'::text, 'ROLLBACK'::text]))",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX content_publication_receipts_audit_log_id_key ON public.content_publication_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_manifest_id_key",
+      "definition": "CREATE UNIQUE INDEX content_publication_receipts_manifest_id_key ON public.content_publication_receipts USING btree (manifest_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX content_publication_receipts_pkey ON public.content_publication_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipts_purge_job_id_key",
+      "definition": "CREATE UNIQUE INDEX content_publication_receipts_purge_job_id_key ON public.content_publication_receipts USING btree (purge_job_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "content_publications",
       "name": "content_publications_audit_log_unique",
       "definition": "CREATE UNIQUE INDEX content_publications_audit_log_unique ON public.content_publications USING btree (audit_log_id)",
@@ -37710,6 +39333,60 @@
       "table": "content_publications",
       "name": "content_publications_site_locale_root_unique",
       "definition": "CREATE UNIQUE INDEX content_publications_site_locale_root_unique ON public.content_publications USING btree ((true)) WHERE ((content_type = 'SITE_LOCALE_CONFIG'::text) AND (replaces_publication_id IS NULL))",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_job_id_job_version_key",
+      "definition": "CREATE UNIQUE INDEX content_purge_attempts_job_id_job_version_key ON public.content_purge_attempts USING btree (job_id, job_version)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempts_pkey",
+      "definition": "CREATE UNIQUE INDEX content_purge_attempts_pkey ON public.content_purge_attempts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_due_idx",
+      "definition": "CREATE INDEX content_purge_due_idx ON public.content_purge_jobs USING btree (next_attempt_at, id) WHERE (status = ANY (ARRAY['PENDING'::text, 'SUBMITTED'::text]))",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_outbox_event_id_generation_key",
+      "definition": "CREATE UNIQUE INDEX content_purge_jobs_outbox_event_id_generation_key ON public.content_purge_jobs USING btree (outbox_event_id, generation)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_pkey",
+      "definition": "CREATE UNIQUE INDEX content_purge_jobs_pkey ON public.content_purge_jobs USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_jobs_retry_of_key",
+      "definition": "CREATE UNIQUE INDEX content_purge_jobs_retry_of_key ON public.content_purge_jobs USING btree (retry_of)",
       "unique": true,
       "primary": false,
       "exclusion": false,
@@ -38333,6 +40010,15 @@
       "definition": "CREATE UNIQUE INDEX idempotency_records_scope_key_unique ON public.idempotency_records USING btree (actor, operation, idempotency_key)",
       "unique": true,
       "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "idol_alias_search_projections",
+      "name": "idol_alias_search_projections_pkey",
+      "definition": "CREATE UNIQUE INDEX idol_alias_search_projections_pkey ON public.idol_alias_search_projections USING btree (alias_set_id, alias_id)",
+      "unique": true,
+      "primary": true,
       "exclusion": false,
       "valid": true
     },
@@ -40949,9 +42635,63 @@
       "enabled": "O"
     },
     {
+      "table": "content_publication_manifests",
+      "name": "content_publication_manifest_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER content_publication_manifest_validate AFTER INSERT ON content_publication_manifests DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_content_publication_manifest()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "publication_evidence_append_only",
+      "definition": "CREATE TRIGGER publication_evidence_append_only BEFORE DELETE OR UPDATE ON content_publication_manifests FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_publication_manifests",
+      "name": "publication_evidence_no_truncate",
+      "definition": "CREATE TRIGGER publication_evidence_no_truncate BEFORE TRUNCATE ON content_publication_manifests FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "content_publication_receipt_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER content_publication_receipt_validate AFTER INSERT ON content_publication_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_content_publication_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "publication_evidence_append_only",
+      "definition": "CREATE TRIGGER publication_evidence_append_only BEFORE DELETE OR UPDATE ON content_publication_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "publication_evidence_no_truncate",
+      "definition": "CREATE TRIGGER publication_evidence_no_truncate BEFORE TRUNCATE ON content_publication_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_publication_receipts",
+      "name": "publication_receipt_snapshot_hash",
+      "definition": "CREATE CONSTRAINT TRIGGER publication_receipt_snapshot_hash AFTER INSERT ON content_publication_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_publication_receipt_snapshot_hash()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_publications",
+      "name": "a_content_publication_proof_version",
+      "definition": "CREATE TRIGGER a_content_publication_proof_version BEFORE INSERT ON content_publications FOR EACH ROW EXECUTE FUNCTION guard_new_content_publication_proof()",
+      "enabled": "O"
+    },
+    {
       "table": "content_publications",
       "name": "content_extension_publication_block",
       "definition": "CREATE TRIGGER content_extension_publication_block BEFORE INSERT ON content_publications FOR EACH ROW EXECUTE FUNCTION block_content_extension_publication()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_publications",
+      "name": "content_publication_current_proof",
+      "definition": "CREATE CONSTRAINT TRIGGER content_publication_current_proof AFTER INSERT ON content_publications DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_current_content_publication_proof()",
       "enabled": "O"
     },
     {
@@ -40976,6 +42716,48 @@
       "table": "content_publications",
       "name": "content_publications_validate_trigger",
       "definition": "CREATE TRIGGER content_publications_validate_trigger BEFORE INSERT ON content_publications FOR EACH ROW EXECUTE FUNCTION validate_content_publication()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "content_purge_attempt_binding",
+      "definition": "CREATE CONSTRAINT TRIGGER content_purge_attempt_binding AFTER INSERT ON content_purge_attempts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_content_purge_attempt_binding()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "publication_evidence_append_only",
+      "definition": "CREATE TRIGGER publication_evidence_append_only BEFORE DELETE OR UPDATE ON content_purge_attempts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_purge_attempts",
+      "name": "publication_evidence_no_truncate",
+      "definition": "CREATE TRIGGER publication_evidence_no_truncate BEFORE TRUNCATE ON content_purge_attempts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_job_guard",
+      "definition": "CREATE TRIGGER content_purge_job_guard BEFORE INSERT OR UPDATE ON content_purge_jobs FOR EACH ROW EXECUTE FUNCTION guard_content_purge_job()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_no_delete",
+      "definition": "CREATE TRIGGER content_purge_no_delete BEFORE DELETE ON content_purge_jobs FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_no_truncate",
+      "definition": "CREATE TRIGGER content_purge_no_truncate BEFORE TRUNCATE ON content_purge_jobs FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "content_purge_jobs",
+      "name": "content_purge_transition_receipt",
+      "definition": "CREATE CONSTRAINT TRIGGER content_purge_transition_receipt AFTER INSERT OR UPDATE ON content_purge_jobs DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_content_purge_transition_receipt()",
       "enabled": "O"
     },
     {
@@ -41382,6 +43164,12 @@
     },
     {
       "table": "gift_revisions",
+      "name": "a_publication_runtime_lifecycle",
+      "definition": "CREATE TRIGGER a_publication_runtime_lifecycle BEFORE UPDATE OF lifecycle ON gift_revisions FOR EACH ROW EXECUTE FUNCTION guard_publication_runtime_lifecycle()",
+      "enabled": "O"
+    },
+    {
+      "table": "gift_revisions",
       "name": "gift_authored_revision_delete_guard",
       "definition": "CREATE TRIGGER gift_authored_revision_delete_guard BEFORE DELETE ON gift_revisions FOR EACH ROW EXECUTE FUNCTION guard_authored_content_payload('gift_revision_id', 'id')",
       "enabled": "O"
@@ -41558,6 +43346,12 @@
       "table": "homepage_revision_translations",
       "name": "homepage_translations_no_truncate_trigger",
       "definition": "CREATE TRIGGER homepage_translations_no_truncate_trigger BEFORE TRUNCATE ON homepage_revision_translations FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "homepage_revisions",
+      "name": "a_publication_runtime_lifecycle",
+      "definition": "CREATE TRIGGER a_publication_runtime_lifecycle BEFORE UPDATE OF lifecycle ON homepage_revisions FOR EACH ROW EXECUTE FUNCTION guard_publication_runtime_lifecycle()",
       "enabled": "O"
     },
     {
@@ -41868,6 +43662,12 @@
     },
     {
       "table": "idol_revisions",
+      "name": "a_publication_runtime_lifecycle",
+      "definition": "CREATE TRIGGER a_publication_runtime_lifecycle BEFORE UPDATE OF lifecycle ON idol_revisions FOR EACH ROW EXECUTE FUNCTION guard_publication_runtime_lifecycle()",
+      "enabled": "O"
+    },
+    {
+      "table": "idol_revisions",
       "name": "idol_authored_revision_delete_guard",
       "definition": "CREATE TRIGGER idol_authored_revision_delete_guard BEFORE DELETE ON idol_revisions FOR EACH ROW EXECUTE FUNCTION guard_authored_content_payload('idol_revision_id', 'id')",
       "enabled": "O"
@@ -42098,6 +43898,12 @@
       "table": "media_metadata_revision_translations",
       "name": "media_metadata_translations_no_truncate_trigger",
       "definition": "CREATE TRIGGER media_metadata_translations_no_truncate_trigger BEFORE TRUNCATE ON media_metadata_revision_translations FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_metadata_revisions",
+      "name": "a_publication_runtime_lifecycle",
+      "definition": "CREATE TRIGGER a_publication_runtime_lifecycle BEFORE UPDATE OF lifecycle ON media_metadata_revisions FOR EACH ROW EXECUTE FUNCTION guard_publication_runtime_lifecycle()",
       "enabled": "O"
     },
     {
@@ -43044,6 +44850,12 @@
     },
     {
       "table": "policy_revisions",
+      "name": "a_publication_runtime_lifecycle",
+      "definition": "CREATE TRIGGER a_publication_runtime_lifecycle BEFORE UPDATE OF lifecycle ON policy_revisions FOR EACH ROW EXECUTE FUNCTION guard_publication_runtime_lifecycle()",
+      "enabled": "O"
+    },
+    {
+      "table": "policy_revisions",
       "name": "policy_authored_revision_delete_guard",
       "definition": "CREATE TRIGGER policy_authored_revision_delete_guard BEFORE DELETE ON policy_revisions FOR EACH ROW EXECUTE FUNCTION guard_authored_content_payload('policy_revision_id', 'id')",
       "enabled": "O"
@@ -43615,6 +45427,46 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_content_publication_heads()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF EXISTS (\n    SELECT 1\n    FROM public.content_publications publication\n    LEFT JOIN public.audit_logs audit ON audit.id = publication.audit_log_id\n    WHERE audit.id IS NULL\n       OR audit.actor_type <> 'ADMIN'\n       OR audit.actor_id IS DISTINCT FROM publication.published_by\n       OR audit.action <> CASE publication.action\n            WHEN 'PUBLISH' THEN 'CONTENT_PUBLISH'\n            ELSE 'CONTENT_ROLLBACK'\n          END\n       OR audit.subject_type <> 'CONTENT_PUBLICATION'\n       OR audit.subject_id <> publication.id\n       OR audit.outcome <> 'SUCCEEDED'\n       OR audit.request_id IS NULL\n       OR audit.correlation_id IS NULL\n  ) THEN\n    RAISE EXCEPTION 'content publication requires exact successful audit evidence'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF EXISTS (\n    SELECT 1\n    FROM public.content_publications publication\n    JOIN public.audit_logs audit ON audit.id = publication.audit_log_id\n    CROSS JOIN LATERAL (\n      SELECT\n        pg_catalog.count(*) AS locale_event_count,\n        pg_catalog.count(DISTINCT outbox.locale) AS distinct_locale_event_count\n      FROM public.outbox_events outbox\n      WHERE outbox.event_type = 'CONTENT_PUBLICATION_CHANGED'\n        AND outbox.aggregate_type = 'CONTENT_PUBLICATION'\n        AND outbox.aggregate_id = publication.id\n        AND outbox.aggregate_version = 1\n        AND outbox.primary_subject_id = publication.id\n        AND outbox.secondary_subject_id = COALESCE(\n          publication.idol_revision_id,\n          publication.gift_revision_id,\n          publication.homepage_revision_id,\n          publication.policy_revision_id,\n          publication.media_metadata_revision_id,\n          publication.site_locale_config_revision_id\n        )\n        AND outbox.locale IS NOT NULL\n        AND outbox.market IS NULL\n        AND outbox.currency IS NULL\n        AND outbox.idempotency_key =\n          'content-publication:' || publication.id::text || ':' || outbox.locale::text\n        AND outbox.request_id = audit.request_id\n        AND outbox.correlation_id = audit.correlation_id\n        AND outbox.occurred_at = publication.published_at\n    ) exact_outbox\n    WHERE exact_outbox.locale_event_count <> 7\n       OR exact_outbox.distinct_locale_event_count <> 7\n  ) THEN\n    RAISE EXCEPTION 'content publication and exactly seven localized outbox records must commit together'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF EXISTS (\n    SELECT 1\n    FROM public.content_publications publication\n    WHERE publication.action = 'ROLLBACK'\n      AND NOT EXISTS (\n        SELECT 1\n        FROM public.content_publications historical\n        WHERE historical.id <> publication.id\n          AND historical.published_at <= publication.published_at\n          AND (\n            (publication.content_type = 'IDOL'\n              AND historical.content_type = 'IDOL'\n              AND historical.idol_id = publication.idol_id\n              AND historical.idol_revision_id = publication.idol_revision_id)\n            OR (publication.content_type = 'GIFT'\n              AND historical.content_type = 'GIFT'\n              AND historical.gift_id = publication.gift_id\n              AND historical.gift_revision_id = publication.gift_revision_id)\n            OR (publication.content_type = 'HOMEPAGE'\n              AND historical.content_type = 'HOMEPAGE'\n              AND historical.homepage_revision_id = publication.homepage_revision_id)\n            OR (publication.content_type = 'POLICY'\n              AND historical.content_type = 'POLICY'\n              AND historical.policy_key = publication.policy_key\n              AND historical.policy_revision_id = publication.policy_revision_id)\n            OR (publication.content_type = 'MEDIA_METADATA'\n              AND historical.content_type = 'MEDIA_METADATA'\n              AND historical.media_asset_id = publication.media_asset_id\n              AND historical.media_metadata_revision_id = publication.media_metadata_revision_id)\n            OR (publication.content_type = 'SITE_LOCALE_CONFIG'\n              AND historical.content_type = 'SITE_LOCALE_CONFIG'\n              AND historical.site_locale_config_revision_id =\n                publication.site_locale_config_revision_id)\n          )\n      )\n  ) THEN\n    RAISE EXCEPTION 'content rollback must target a previously published immutable revision'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF EXISTS (\n    SELECT 1\n    FROM public.idol_publication_heads head\n    LEFT JOIN public.content_publications publication\n      ON publication.id = head.publication_id\n    LEFT JOIN public.idol_revisions revision\n      ON revision.id = head.idol_revision_id AND revision.idol_id = head.idol_id\n    LEFT JOIN public.idols idol ON idol.id = head.idol_id\n    WHERE publication.id IS NULL\n       OR publication.content_type <> 'IDOL'\n       OR publication.idol_id <> head.idol_id\n       OR publication.idol_revision_id <> head.idol_revision_id\n       OR revision.id IS NULL\n       OR NOT (revision.lifecycle IN ('PUBLISHED', 'SUPERSEDED'))\n       OR (publication.action = 'PUBLISH' AND revision.lifecycle <> 'PUBLISHED')\n       OR (publication.action = 'ROLLBACK' AND revision.lifecycle <> 'SUPERSEDED')\n       OR idol.published_revision_id IS DISTINCT FROM head.idol_revision_id\n       OR EXISTS (\n         SELECT 1 FROM public.content_publications successor\n         WHERE successor.replaces_publication_id = publication.id\n       )\n  ) THEN\n    RAISE EXCEPTION 'idol published pointer must equal its current head'\n      USING ERRCODE = '23514';\n  END IF;\n  IF EXISTS (\n    SELECT 1 FROM public.idols idol\n    WHERE idol.published_revision_id IS NOT NULL\n      AND NOT EXISTS (\n        SELECT 1 FROM public.idol_publication_heads head\n        WHERE head.idol_id = idol.id\n          AND head.idol_revision_id = idol.published_revision_id\n      )\n  ) THEN\n    RAISE EXCEPTION 'idol published pointer must equal its current head'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF EXISTS (\n    SELECT 1\n    FROM public.gift_publication_heads head\n    LEFT JOIN public.content_publications publication\n      ON publication.id = head.publication_id\n    LEFT JOIN public.gift_revisions revision\n      ON revision.id = head.gift_revision_id AND revision.gift_id = head.gift_id\n    LEFT JOIN public.gifts gift ON gift.id = head.gift_id\n    WHERE publication.id IS NULL\n       OR publication.content_type <> 'GIFT'\n       OR publication.gift_id <> head.gift_id\n       OR publication.gift_revision_id <> head.gift_revision_id\n       OR revision.id IS NULL\n       OR NOT (revision.lifecycle IN ('PUBLISHED', 'SUPERSEDED'))\n       OR (publication.action = 'PUBLISH' AND revision.lifecycle <> 'PUBLISHED')\n       OR (publication.action = 'ROLLBACK' AND revision.lifecycle <> 'SUPERSEDED')\n       OR gift.published_revision_id IS DISTINCT FROM head.gift_revision_id\n       OR EXISTS (\n         SELECT 1 FROM public.content_publications successor\n         WHERE successor.replaces_publication_id = publication.id\n       )\n  ) THEN\n    RAISE EXCEPTION 'gift published pointer must equal its current head'\n      USING ERRCODE = '23514';\n  END IF;\n  IF EXISTS (\n    SELECT 1 FROM public.gifts gift\n    WHERE gift.published_revision_id IS NOT NULL\n      AND NOT EXISTS (\n        SELECT 1 FROM public.gift_publication_heads head\n        WHERE head.gift_id = gift.id\n          AND head.gift_revision_id = gift.published_revision_id\n      )\n  ) THEN\n    RAISE EXCEPTION 'gift published pointer must equal its current head'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF EXISTS (\n    SELECT 1\n    FROM public.homepage_publication_heads head\n    LEFT JOIN public.content_publications publication\n      ON publication.id = head.publication_id\n    LEFT JOIN public.homepage_revisions revision\n      ON revision.id = head.homepage_revision_id\n    WHERE publication.id IS NULL\n       OR publication.content_type <> 'HOMEPAGE'\n       OR publication.homepage_revision_id <> head.homepage_revision_id\n       OR revision.id IS NULL\n       OR NOT (revision.lifecycle IN ('PUBLISHED', 'SUPERSEDED'))\n       OR (publication.action = 'PUBLISH' AND revision.lifecycle <> 'PUBLISHED')\n       OR (publication.action = 'ROLLBACK' AND revision.lifecycle <> 'SUPERSEDED')\n       OR EXISTS (\n         SELECT 1 FROM public.content_publications successor\n         WHERE successor.replaces_publication_id = publication.id\n       )\n  ) THEN\n    RAISE EXCEPTION 'homepage publication head is inconsistent'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF EXISTS (\n    SELECT 1\n    FROM public.policy_publication_heads head\n    LEFT JOIN public.content_publications publication\n      ON publication.id = head.publication_id\n    LEFT JOIN public.policy_revisions revision\n      ON revision.id = head.policy_revision_id AND revision.policy_key = head.policy_key\n    WHERE publication.id IS NULL\n       OR publication.content_type <> 'POLICY'\n       OR publication.policy_key <> head.policy_key\n       OR publication.policy_revision_id <> head.policy_revision_id\n       OR revision.id IS NULL\n       OR NOT (revision.lifecycle IN ('PUBLISHED', 'SUPERSEDED'))\n       OR (publication.action = 'PUBLISH' AND revision.lifecycle <> 'PUBLISHED')\n       OR (publication.action = 'ROLLBACK' AND revision.lifecycle <> 'SUPERSEDED')\n       OR EXISTS (\n         SELECT 1 FROM public.content_publications successor\n         WHERE successor.replaces_publication_id = publication.id\n       )\n  ) THEN\n    RAISE EXCEPTION 'policy publication head is inconsistent'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF EXISTS (\n    SELECT 1\n    FROM public.media_metadata_publication_heads head\n    LEFT JOIN public.content_publications publication\n      ON publication.id = head.publication_id\n    LEFT JOIN public.media_metadata_revisions revision\n      ON revision.id = head.media_metadata_revision_id\n     AND revision.media_asset_id = head.media_asset_id\n    WHERE publication.id IS NULL\n       OR publication.content_type <> 'MEDIA_METADATA'\n       OR publication.media_asset_id <> head.media_asset_id\n       OR publication.media_metadata_revision_id <> head.media_metadata_revision_id\n       OR revision.id IS NULL\n       OR NOT (revision.lifecycle IN ('PUBLISHED', 'SUPERSEDED'))\n       OR (publication.action = 'PUBLISH' AND revision.lifecycle <> 'PUBLISHED')\n       OR (publication.action = 'ROLLBACK' AND revision.lifecycle <> 'SUPERSEDED')\n       OR EXISTS (\n         SELECT 1 FROM public.content_publications successor\n         WHERE successor.replaces_publication_id = publication.id\n       )\n  ) THEN\n    RAISE EXCEPTION 'media publication head is inconsistent'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF EXISTS (\n    SELECT 1\n    FROM public.site_locale_config_publication_heads head\n    LEFT JOIN public.content_publications publication\n      ON publication.id = head.publication_id\n    LEFT JOIN public.site_locale_config_revisions revision\n      ON revision.id = head.site_locale_config_revision_id\n    WHERE publication.id IS NULL\n       OR publication.content_type <> 'SITE_LOCALE_CONFIG'\n       OR publication.site_locale_config_revision_id <>\n          head.site_locale_config_revision_id\n       OR revision.id IS NULL\n       OR NOT (revision.lifecycle IN ('PUBLISHED', 'SUPERSEDED'))\n       OR (publication.action = 'PUBLISH' AND revision.lifecycle <> 'PUBLISHED')\n       OR (publication.action = 'ROLLBACK' AND revision.lifecycle <> 'SUPERSEDED')\n       OR EXISTS (\n         SELECT 1 FROM public.content_publications successor\n         WHERE successor.replaces_publication_id = publication.id\n       )\n  ) THEN\n    RAISE EXCEPTION 'site-locale publication head is inconsistent'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF EXISTS (\n    SELECT 1\n    FROM public.content_publications publication\n    WHERE NOT EXISTS (\n      SELECT 1 FROM public.content_publications successor\n      WHERE successor.replaces_publication_id = publication.id\n    )\n      AND NOT (\n        (publication.content_type = 'IDOL' AND EXISTS (\n          SELECT 1 FROM public.idol_publication_heads head\n          WHERE head.publication_id = publication.id\n        ))\n        OR (publication.content_type = 'GIFT' AND EXISTS (\n          SELECT 1 FROM public.gift_publication_heads head\n          WHERE head.publication_id = publication.id\n        ))\n        OR (publication.content_type = 'HOMEPAGE' AND EXISTS (\n          SELECT 1 FROM public.homepage_publication_heads head\n          WHERE head.publication_id = publication.id\n        ))\n        OR (publication.content_type = 'POLICY' AND EXISTS (\n          SELECT 1 FROM public.policy_publication_heads head\n          WHERE head.publication_id = publication.id\n        ))\n        OR (publication.content_type = 'MEDIA_METADATA' AND EXISTS (\n          SELECT 1 FROM public.media_metadata_publication_heads head\n          WHERE head.publication_id = publication.id\n        ))\n        OR (publication.content_type = 'SITE_LOCALE_CONFIG' AND EXISTS (\n          SELECT 1 FROM public.site_locale_config_publication_heads head\n          WHERE head.publication_id = publication.id\n        ))\n      )\n  ) THEN\n    RAISE EXCEPTION 'content publication leaf must equal its typed current head'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
+      "name": "assert_content_publication_manifest",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_content_publication_manifest()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE value jsonb:=NEW.manifest; target_id uuid; expected_kind text; media_revision jsonb;\nBEGIN\n  target_id:=coalesce(NEW.idol_revision_id,NEW.gift_revision_id,NEW.homepage_revision_id,NEW.policy_revision_id,NEW.media_metadata_revision_id);\n  expected_kind:=CASE WHEN NEW.idol_revision_id IS NOT NULL THEN 'IDOL' WHEN NEW.gift_revision_id IS NOT NULL THEN 'GIFT' WHEN NEW.homepage_revision_id IS NOT NULL THEN 'HOMEPAGE' WHEN NEW.policy_revision_id IS NOT NULL THEN 'POLICY' ELSE 'MEDIA_METADATA' END;\n  IF jsonb_typeof(value) IS DISTINCT FROM 'object' OR jsonb_typeof(value->'revision') IS DISTINCT FROM 'object' OR jsonb_typeof(value->'target') IS DISTINCT FROM 'object'\n    OR jsonb_typeof(value->'mediaRevisions') IS DISTINCT FROM 'array' OR jsonb_typeof(value->'approvals') IS DISTINCT FROM 'array'\n    OR jsonb_typeof(value->'copies') IS DISTINCT FROM 'array' OR jsonb_typeof(value->'extensionApprovals') IS DISTINCT FROM 'array'\n    OR jsonb_typeof(value->'media') IS DISTINCT FROM 'object' THEN RAISE EXCEPTION 'manifest proof sections must have their exact shape' USING ERRCODE='23514'; END IF;\n  IF value->>'schemaVersion' IS DISTINCT FROM '1' OR (value#>>'{target,revisionId}')::uuid IS DISTINCT FROM target_id OR value#>>'{target,owner,kind}' IS DISTINCT FROM expected_kind\n    OR value->'target' IS DISTINCT FROM jsonb_build_object('owner',value#>'{revision,target}','revisionId',value#>'{revision,revisionId}')\n    OR NEW.manifest_text<>public.canonical_publication_json(value)\n    OR NEW.manifest_hash<>encode(sha256(convert_to('fan-support.publication-manifest.v1'||chr(10)||NEW.manifest_text,'UTF8')),'hex')\n    OR NEW.translation_manifest_hash<>encode(sha256(convert_to('fan-support.publication-manifest.v1/translations'||chr(10)||public.canonical_publication_json(jsonb_build_object('revision',value->'revision')),'UTF8')),'hex')\n    OR NEW.approval_manifest_hash<>encode(sha256(convert_to('fan-support.publication-manifest.v1/approvals'||chr(10)||public.canonical_publication_json(jsonb_build_object('approvals',value->'approvals','copies',value->'copies','extensionApprovals',value->'extensionApprovals')),'UTF8')),'hex')\n    OR (expected_kind='POLICY' AND NEW.media_manifest_hash IS NOT NULL)\n    OR (expected_kind<>'POLICY' AND NEW.media_manifest_hash IS DISTINCT FROM encode(sha256(convert_to('fan-support.publication-manifest.v1/media'||chr(10)||public.canonical_publication_json(jsonb_build_object('mediaRevisions',value->'mediaRevisions','media',value->'media')),'UTF8')),'hex')) THEN\n    RAISE EXCEPTION 'manifest requires exact canonical target bytes and section hashes' USING ERRCODE='23514';\n  END IF;\n  PERFORM public.assert_publication_manifest_revision(value->'revision');\n  FOR media_revision IN SELECT * FROM jsonb_array_elements(value->'mediaRevisions') LOOP\n    IF media_revision#>>'{target,kind}' IS DISTINCT FROM 'MEDIA_METADATA' THEN RAISE EXCEPTION 'manifest media dependency must be typed' USING ERRCODE='23514'; END IF;\n    PERFORM public.assert_publication_manifest_revision(media_revision);\n  END LOOP;\n  PERFORM public.assert_publication_manifest_approvals(value);\n  PERFORM public.assert_publication_manifest_media(value);\n  IF NOT EXISTS(SELECT 1 FROM public.content_publication_receipts WHERE manifest_id=NEW.id AND created_at=NEW.created_at) THEN\n    RAISE EXCEPTION 'manifest requires an exact administrative operation receipt' USING ERRCODE='23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_content_publication_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_content_publication_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE proof public.content_publication_manifests%ROWTYPE; publication public.content_publications%ROWTYPE; job public.content_purge_jobs%ROWTYPE; prior_job public.content_purge_jobs%ROWTYPE;\n  kind text; parent jsonb; expected_action text; expected_subject text; subject uuid; causal_bound timestamptz; revision jsonb; audit jsonb; chain_count bigint;\nBEGIN\n  IF NEW.action='RETRY_PURGE' THEN\n    SELECT * INTO job FROM public.content_purge_jobs WHERE id=NEW.purge_job_id FOR UPDATE;\n    SELECT * INTO prior_job FROM public.content_purge_jobs WHERE id=job.retry_of FOR UPDATE;\n    IF job.id IS NULL OR prior_job.id IS NULL OR prior_job.status<>'FAILED' OR prior_job.version<>NEW.expected_version OR job.publication_id<>NEW.publication_id\n      OR job.generation<>NEW.result_generation OR job.created_at<>NEW.created_at THEN RAISE EXCEPTION 'purge retry requires its exact failed predecessor and generation' USING ERRCODE='23514'; END IF;\n    expected_action:='CONTENT_PURGE_RETRY'; expected_subject:='CONTENT_PURGE_JOB'; subject:=job.id; causal_bound:=prior_job.updated_at;\n  ELSE\n    SELECT * INTO proof FROM public.content_publication_manifests WHERE id=NEW.manifest_id;\n    IF proof.id IS NULL OR proof.created_at<>NEW.created_at OR proof.publication_id IS DISTINCT FROM NEW.publication_id THEN RAISE EXCEPTION 'publication receipt requires its exact typed manifest' USING ERRCODE='23514'; END IF;\n    kind:=proof.manifest#>>'{target,owner,kind}';\n    EXECUTE format('SELECT to_jsonb(r.*) FROM public.%I r WHERE id=$1',lower(kind)||'_revisions') INTO parent USING coalesce(proof.idol_revision_id,proof.gift_revision_id,proof.homepage_revision_id,proof.policy_revision_id,proof.media_metadata_revision_id);\n    causal_bound:=(proof.manifest#>>'{revision,createdAt}')::timestamptz;\n    FOR revision IN SELECT proof.manifest->'revision' UNION ALL SELECT * FROM jsonb_array_elements(proof.manifest->'mediaRevisions') LOOP\n      causal_bound:=GREATEST(causal_bound,(revision->>'createdAt')::timestamptz);\n      FOR audit IN SELECT * FROM jsonb_array_elements(revision->'translationAudits') LOOP\n        causal_bound:=GREATEST(causal_bound,(audit->>'editedAt')::timestamptz,(audit#>>'{review,reviewedAt}')::timestamptz);\n      END LOOP;\n    END LOOP;\n    FOR audit IN SELECT * FROM jsonb_array_elements(proof.manifest->'extensionApprovals') LOOP causal_bound:=GREATEST(causal_bound,(audit->>'editedAt')::timestamptz,(audit->>'reviewedAt')::timestamptz); END LOOP;\n    IF NEW.created_at<causal_bound THEN RAISE EXCEPTION 'publication event cannot precede its immutable evidence' USING ERRCODE='23514'; END IF;\n    IF NEW.action='VALIDATE' THEN\n      IF kind='HOMEPAGE' THEN SELECT coalesce(max(version),0) INTO chain_count FROM public.homepage_publication_heads;\n      ELSIF kind='POLICY' THEN SELECT coalesce(max(version),0) INTO chain_count FROM public.policy_publication_heads WHERE policy_key=parent->>'policy_key';\n      ELSE EXECUTE format('SELECT coalesce(max(version),0) FROM public.%I WHERE %I=$1',lower(kind)||'_publication_heads',CASE kind WHEN 'MEDIA_METADATA' THEN 'media_asset_id' ELSE lower(kind)||'_id' END) INTO chain_count USING (parent->>CASE kind WHEN 'MEDIA_METADATA' THEN 'media_asset_id' ELSE lower(kind)||'_id' END)::uuid;\n      END IF;\n      IF chain_count<>NEW.expected_version THEN RAISE EXCEPTION 'validation receipt must bind the actual publication head version' USING ERRCODE='23514'; END IF;\n      IF NOT EXISTS(SELECT 1 FROM public.content_authoring_receipts a WHERE coalesce(a.idol_revision_id,a.gift_revision_id,a.homepage_revision_id,a.policy_revision_id,a.media_metadata_revision_id)=(parent->>'id')::uuid) THEN RAISE EXCEPTION 'legacy drafts require authoring copy before runtime validation' USING ERRCODE='23514'; END IF;\n      IF parent->>'lifecycle'<>'VALIDATED' OR (parent->>'validated_at')::timestamptz IS DISTINCT FROM NEW.created_at OR NEW.result_head_version<>NEW.expected_version THEN\n        RAISE EXCEPTION 'validation receipt requires its exact validated transition' USING ERRCODE='23514';\n      END IF;\n      expected_action:='CONTENT_VALIDATE'; expected_subject:='CONTENT_VALIDATION'; subject:=NEW.id;\n    ELSE\n      SELECT * INTO publication FROM public.content_publications WHERE id=NEW.publication_id;\n      IF publication.id IS NULL OR publication.action<>NEW.action OR publication.published_at<>NEW.created_at OR publication.published_by<>NEW.actor_id\n        OR publication.audit_log_id<>NEW.audit_log_id OR NEW.result_head_version<>NEW.expected_version+1 THEN\n        RAISE EXCEPTION 'publication receipt requires its exact event and head version' USING ERRCODE='23514';\n      END IF;\n      WITH RECURSIVE chain AS (SELECT id,replaces_publication_id FROM public.content_publications WHERE id=NEW.publication_id UNION ALL SELECT p.id,p.replaces_publication_id FROM public.content_publications p JOIN chain c ON p.id=c.replaces_publication_id)\n        SELECT count(*) INTO chain_count FROM chain;\n      IF chain_count<>NEW.result_head_version THEN RAISE EXCEPTION 'publication receipt head version must match actual chain length' USING ERRCODE='23514'; END IF;\n      -- The typed head transition and the immutable predecessor chain independently bind optimistic concurrency.\n      IF NEW.action='PUBLISH' AND (parent->>'lifecycle'<>'PUBLISHED' OR (parent->>'published_at')::timestamptz IS DISTINCT FROM NEW.created_at)\n        OR NEW.action='ROLLBACK' AND parent->>'lifecycle'<>'SUPERSEDED' THEN RAISE EXCEPTION 'publication lifecycle must match its immutable action' USING ERRCODE='23514'; END IF;\n      causal_bound:=GREATEST(causal_bound,(SELECT published_at+interval '1 microsecond' FROM public.content_publications WHERE id=publication.replaces_publication_id));\n      causal_bound:=GREATEST(causal_bound,(parent->>'validated_at')::timestamptz);\n      expected_action:=CASE NEW.action WHEN 'PUBLISH' THEN 'CONTENT_PUBLISH' ELSE 'CONTENT_ROLLBACK' END; expected_subject:='CONTENT_PUBLICATION'; subject:=NEW.publication_id;\n    END IF;\n  END IF;\n  PERFORM public.assert_publication_admin_audit(NEW.audit_log_id,NEW.actor_id,NEW.session_id,expected_action,expected_subject,subject,NEW.created_at,causal_bound);\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_content_purge_attempt_binding",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_content_purge_attempt_binding()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE job public.content_purge_jobs%ROWTYPE;\nBEGIN\n  SELECT * INTO job FROM public.content_purge_jobs WHERE id=NEW.job_id;\n  IF job.id IS NULL OR NEW.job_version<>job.version OR NEW.created_at<>job.updated_at\n    OR (NEW.kind='CLAIM' AND NEW.lease_token IS DISTINCT FROM job.lease_token)\n    OR (NEW.kind<>'CLAIM' AND job.lease_token IS NOT NULL) THEN\n    RAISE EXCEPTION 'purge attempt requires its committed job transition' USING ERRCODE='23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_content_purge_transition_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_content_purge_transition_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE attempt public.content_purge_attempts%ROWTYPE; expected_kind text; expected_token uuid;\nBEGIN\n  IF TG_OP='INSERT' THEN\n    IF NEW.generation>1 AND NOT EXISTS(SELECT 1 FROM public.content_publication_receipts r\n      JOIN public.content_purge_jobs parent ON parent.id=NEW.retry_of\n      WHERE r.action='RETRY_PURGE' AND r.purge_job_id=NEW.id AND r.publication_id=NEW.publication_id\n        AND r.expected_version=parent.version AND r.result_generation=NEW.generation AND r.result_version=1 AND r.created_at=NEW.created_at) THEN\n      RAISE EXCEPTION 'purge retry requires exact authorized publication receipt' USING ERRCODE='23514';\n    END IF;\n    RETURN NULL;\n  END IF;\n  SELECT * INTO attempt FROM public.content_purge_attempts WHERE job_id=NEW.id AND job_version=NEW.version;\n  expected_kind:=CASE WHEN NEW.lease_token IS NOT NULL THEN 'CLAIM'\n    WHEN NEW.error_code='PURGE_TIMEOUT' THEN 'TIMEOUT' WHEN NEW.error_code IS NOT NULL THEN 'FAILURE'\n    WHEN NEW.status='COMPLETED' THEN 'COMPLETED' WHEN OLD.status='PENDING' THEN 'SUBMITTED' ELSE 'PENDING' END;\n  expected_token:=CASE WHEN NEW.lease_token IS NOT NULL THEN NEW.lease_token ELSE OLD.lease_token END;\n  IF attempt.id IS NULL OR attempt.kind<>expected_kind OR attempt.created_at<>NEW.updated_at\n    OR (expected_token IS NOT NULL AND attempt.lease_token<>expected_token)\n    OR attempt.error_code IS DISTINCT FROM (CASE WHEN expected_kind='CLAIM' THEN NULL ELSE NEW.error_code END) THEN\n    RAISE EXCEPTION 'purge transition requires its exact immutable lease receipt' USING ERRCODE='23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
       "name": "assert_content_translation_copy",
       "identityArguments": "",
       "resultType": "trigger",
@@ -43623,6 +45475,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_content_translation_copy()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE source_row jsonb; target_row jsonb; source_revision jsonb; target_revision jsonb; source_chain jsonb; target_chain jsonb; receipt public.content_authoring_receipts%ROWTYPE; labels_equal boolean; english_hash public.sha256_hex;\nBEGIN\n  EXECUTE format('SELECT to_jsonb(t.*) FROM %s t WHERE id=$1',TG_ARGV[0]::regclass) INTO source_row USING NEW.source_translation_id;\n  EXECUTE format('SELECT to_jsonb(t.*) FROM %s t WHERE id=$1',TG_ARGV[0]::regclass) INTO target_row USING NEW.target_translation_id;\n  IF source_row IS NULL OR target_row IS NULL OR (source_row - 'id' - TG_ARGV[1]) IS DISTINCT FROM (target_row - 'id' - TG_ARGV[1]) THEN\n    RAISE EXCEPTION 'copied translation must retain exact text and original audit fields' USING ERRCODE='23514';\n  END IF;\n  EXECUTE format('SELECT to_jsonb(r.*) FROM %s r WHERE id=$1',TG_ARGV[2]::regclass) INTO source_revision USING (source_row ->> TG_ARGV[1])::uuid;\n  EXECUTE format('SELECT to_jsonb(r.*) FROM %s r WHERE id=$1',TG_ARGV[2]::regclass) INTO target_revision USING (target_row ->> TG_ARGV[1])::uuid;\n  IF (source_revision ->> 'revision')::bigint >= (target_revision ->> 'revision')::bigint OR (TG_ARGV[5] <> '' AND source_revision ->> TG_ARGV[5] IS DISTINCT FROM target_revision ->> TG_ARGV[5]) THEN\n    RAISE EXCEPTION 'copy source must precede target revision with same owner' USING ERRCODE='23514';\n  END IF;\n  EXECUTE format('SELECT * FROM public.content_authoring_receipts WHERE %I=$1',TG_ARGV[1]) INTO receipt USING (target_row ->> TG_ARGV[1])::uuid;\n  IF receipt.id IS NULL OR receipt.action <> 'COPY' OR receipt.audit_log_id <> NEW.audit_log_id OR receipt.created_at <> NEW.copied_at OR (to_jsonb(receipt) ->> ('source_'||TG_ARGV[1]))::uuid IS DISTINCT FROM (source_row ->> TG_ARGV[1])::uuid THEN\n    RAISE EXCEPTION 'copy evidence requires its exact authoring receipt' USING ERRCODE='23514';\n  END IF;\n  EXECUTE format('SELECT source_hash FROM %s WHERE %I=$1 AND locale=''en''',TG_ARGV[0]::regclass,TG_ARGV[1]) INTO english_hash USING (target_row ->> TG_ARGV[1])::uuid;\n  IF english_hash IS NULL OR target_row ->> 'translated_from_source_hash' <> english_hash THEN\n    RAISE EXCEPTION 'copied approval must bind actual target English source' USING ERRCODE='23514';\n  END IF;\n  EXECUTE format('SELECT jsonb_agg(to_jsonb(r.*)-''id''-%L ORDER BY sequence) FROM %s r WHERE %I=$1',TG_ARGV[4],TG_ARGV[3]::regclass,TG_ARGV[4]) INTO source_chain USING NEW.source_translation_id;\n  EXECUTE format('SELECT jsonb_agg(to_jsonb(r.*)-''id''-%L ORDER BY sequence) FROM %s r WHERE %I=$1',TG_ARGV[4],TG_ARGV[3]::regclass,TG_ARGV[4]) INTO target_chain USING NEW.target_translation_id;\n  IF source_chain IS DISTINCT FROM target_chain OR jsonb_array_length(source_chain) <> 3 OR source_chain -> 2 ->> 'status' <> 'APPROVED' THEN\n    RAISE EXCEPTION 'copied approval requires exact original three-event review chain' USING ERRCODE='23514';\n  END IF;\n  EXECUTE format('SELECT EXISTS(SELECT 1 FROM %s WHERE id=$1 AND %I=$2 AND sequence=3 AND status=''APPROVED'')',TG_ARGV[3]::regclass,TG_ARGV[4]) INTO labels_equal USING NEW.source_approval_review_id,NEW.source_translation_id;\n  IF NOT labels_equal THEN RAISE EXCEPTION 'copy approval reference must bind source translation' USING ERRCODE='23514'; END IF;\n  IF TG_ARGV[1]='gift_revision_id' THEN\n    SELECT NOT EXISTS((SELECT gift_variant_id,label FROM public.gift_variant_labels WHERE gift_translation_id=NEW.source_translation_id EXCEPT SELECT gift_variant_id,label FROM public.gift_variant_labels WHERE gift_translation_id=NEW.target_translation_id) UNION ALL (SELECT gift_variant_id,label FROM public.gift_variant_labels WHERE gift_translation_id=NEW.target_translation_id EXCEPT SELECT gift_variant_id,label FROM public.gift_variant_labels WHERE gift_translation_id=NEW.source_translation_id)) INTO labels_equal;\n  ELSIF TG_ARGV[1]='homepage_revision_id' THEN\n    SELECT NOT EXISTS((SELECT slot_key,label FROM public.homepage_slot_translations WHERE homepage_translation_id=NEW.source_translation_id EXCEPT SELECT slot_key,label FROM public.homepage_slot_translations WHERE homepage_translation_id=NEW.target_translation_id) UNION ALL (SELECT slot_key,label FROM public.homepage_slot_translations WHERE homepage_translation_id=NEW.target_translation_id EXCEPT SELECT slot_key,label FROM public.homepage_slot_translations WHERE homepage_translation_id=NEW.source_translation_id)) INTO labels_equal;\n  END IF;\n  IF NOT labels_equal THEN RAISE EXCEPTION 'copied localized child labels must be identical' USING ERRCODE='23514'; END IF;\n  RETURN NULL;\nEND;\n$function$"
+    },
+    {
+      "name": "assert_current_content_publication_proof",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_current_content_publication_proof()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE proof public.content_publication_manifests%ROWTYPE;\nBEGIN\n  IF NEW.proof_version=1 THEN RETURN NULL; END IF;\n  SELECT * INTO proof FROM public.content_publication_manifests WHERE publication_id=NEW.id;\n  IF proof.id IS NULL OR proof.idol_revision_id IS DISTINCT FROM NEW.idol_revision_id OR proof.gift_revision_id IS DISTINCT FROM NEW.gift_revision_id\n    OR proof.homepage_revision_id IS DISTINCT FROM NEW.homepage_revision_id OR proof.policy_revision_id IS DISTINCT FROM NEW.policy_revision_id\n    OR proof.media_metadata_revision_id IS DISTINCT FROM NEW.media_metadata_revision_id OR proof.created_at<>NEW.published_at\n    OR proof.translation_manifest_hash<>NEW.translation_manifest_hash OR proof.approval_manifest_hash<>NEW.approval_manifest_hash\n    OR proof.media_manifest_hash IS DISTINCT FROM NEW.media_manifest_hash\n    OR NOT EXISTS(SELECT 1 FROM public.content_publication_receipts WHERE publication_id=NEW.id AND manifest_id=proof.id AND action=NEW.action AND actor_id=NEW.published_by AND audit_log_id=NEW.audit_log_id AND created_at=NEW.published_at)\n    OR (SELECT count(*) FROM public.content_purge_jobs WHERE publication_id=NEW.id AND generation=1)<>7 THEN\n    RAISE EXCEPTION 'current publication requires exact manifest receipt and seven purge jobs' USING ERRCODE='23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
     },
     {
       "name": "assert_dispute_evidence_and_event",
@@ -43975,6 +45837,66 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_provider_transaction_ledger()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  target_event_id uuid;\n  event_row public.provider_events%ROWTYPE;\n  matched_count integer;\n  ledger_count integer;\nBEGIN\n  IF TG_TABLE_NAME = 'provider_events' THEN\n    target_event_id := NEW.id;\n  ELSIF TG_TABLE_NAME = 'provider_event_associations' THEN\n    target_event_id := NEW.provider_event_id;\n  ELSE\n    RAISE EXCEPTION 'unsupported provider transaction ledger source: %', TG_TABLE_NAME\n      USING ERRCODE = '23514';\n  END IF;\n\n  SELECT * INTO event_row\n  FROM public.provider_events\n  WHERE id = target_event_id;\n\n  SELECT count(*) INTO matched_count\n  FROM public.provider_event_associations association\n  WHERE association.provider_event_id = target_event_id\n    AND association.association_status = 'MATCHED';\n\n  SELECT count(*) INTO ledger_count\n  FROM public.payment_transactions transaction_row\n  JOIN public.provider_event_associations association\n    ON association.provider_event_id = target_event_id\n   AND association.association_status = 'MATCHED'\n   AND association.payment_attempt_id = transaction_row.payment_attempt_id\n  WHERE transaction_row.provider_event_id = target_event_id\n    AND transaction_row.transaction_type = event_row.provider_transaction_type\n    AND transaction_row.provider_transaction_reference = event_row.provider_transaction_reference\n    AND transaction_row.amount_minor = event_row.amount_minor\n    AND transaction_row.currency = event_row.currency\n    AND transaction_row.evidence_kind = event_row.evidence_kind\n    AND transaction_row.reconcile_audit_log_id IS NOT DISTINCT FROM event_row.reconcile_audit_log_id\n    AND transaction_row.occurred_at = event_row.occurred_at;\n\n  IF event_row.id IS NULL\n     OR (matched_count = 0 AND ledger_count <> 0)\n     OR (matched_count = 1 AND event_row.provider_transaction_type IS NULL\n       AND ledger_count <> 0)\n     OR (matched_count = 1 AND event_row.provider_transaction_type IS NOT NULL\n       AND ledger_count <> 1) THEN\n    RAISE EXCEPTION 'provider transaction evidence and exact ledger record must commit together'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
+      "name": "assert_publication_admin_audit",
+      "identityArguments": "audit_id uuid, actor uuid, session_id uuid, expected_action text, expected_subject text, subject uuid, event_time timestamp with time zone, causal_bound timestamp with time zone",
+      "resultType": "void",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_publication_admin_audit(audit_id uuid, actor uuid, session_id uuid, expected_action text, expected_subject text, subject uuid, event_time timestamp with time zone, causal_bound timestamp with time zone)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE evidence public.audit_logs%ROWTYPE; session public.admin_sessions%ROWTYPE; active_status text; locale_count integer;\nBEGIN\n  SELECT * INTO evidence FROM public.audit_logs WHERE id=audit_id;\n  SELECT * INTO session FROM public.admin_sessions WHERE id=session_id FOR SHARE;\n  SELECT status INTO active_status FROM public.admin_identities WHERE id=actor FOR SHARE;\n  IF evidence.id IS NULL OR evidence.actor_type<>'ADMIN' OR evidence.actor_id IS DISTINCT FROM actor OR evidence.action<>expected_action\n    OR evidence.subject_type<>expected_subject OR evidence.subject_id<>subject OR evidence.outcome<>'SUCCEEDED' OR evidence.created_at<>event_time\n    OR evidence.reason_code IS NULL OR evidence.request_id IS NULL OR evidence.correlation_id IS NULL OR evidence.field_category IS DISTINCT FROM 'CONTENT_PUBLICATION' THEN\n    RAISE EXCEPTION 'publication action requires its exact audit evidence' USING ERRCODE='23514';\n  END IF;\n  IF session.id IS NULL OR session.admin_identity_id<>actor OR active_status IS DISTINCT FROM 'ACTIVE' OR NOT session.authenticated_with_mfa\n    OR session.revoked_at IS NOT NULL OR session.expires_at<=clock_timestamp() OR session.created_at>clock_timestamp()\n    OR event_time<session.created_at OR event_time>=session.expires_at OR event_time>GREATEST(clock_timestamp(),transaction_timestamp(),session.created_at,causal_bound) THEN\n    RAISE EXCEPTION 'publication action requires its current active MFA session' USING ERRCODE='23514';\n  END IF;\n  PERFORM ar.role_id FROM public.admin_identity_roles ar JOIN public.roles r ON r.id=ar.role_id JOIN public.role_permissions rp ON rp.role_id=r.id JOIN public.permissions p ON p.id=rp.permission_id\n    WHERE ar.admin_identity_id=actor AND p.permission_key='content.publish' AND ar.granted_at<=clock_timestamp() AND rp.granted_at<=clock_timestamp()\n      AND ar.granted_at<=event_time AND rp.granted_at<=event_time FOR SHARE OF ar,r,rp,p;\n  IF NOT FOUND THEN RAISE EXCEPTION 'publication action requires current publish permission' USING ERRCODE='23514'; END IF;\n  PERFORM locale FROM public.admin_content_locale_grants WHERE admin_identity_id=actor AND revoked_at IS NULL AND granted_at<=clock_timestamp() AND granted_at<=event_time FOR SHARE;\n  GET DIAGNOSTICS locale_count=ROW_COUNT;\n  IF locale_count<>7 THEN RAISE EXCEPTION 'publication action requires all seven current locale scopes' USING ERRCODE='23514'; END IF;\nEND; $function$"
+    },
+    {
+      "name": "assert_publication_hero_originals",
+      "identityArguments": "desktop uuid, mobile uuid",
+      "resultType": "void",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_publication_hero_originals(desktop uuid, mobile uuid)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE overlap boolean;\nBEGIN\n WITH desktop_sources AS (\n   SELECT id,checksum_sha256 FROM public.media_assets WHERE id=desktop AND identity_kind='SOURCE'\n   UNION SELECT source.id,source.checksum_sha256 FROM public.media_processing_jobs job JOIN public.media_assets source ON source.id=job.source_asset_id WHERE job.output_asset_id=desktop\n ),mobile_sources AS (\n   SELECT id,checksum_sha256 FROM public.media_assets WHERE id=mobile AND identity_kind='SOURCE'\n   UNION SELECT source.id,source.checksum_sha256 FROM public.media_processing_jobs job JOIN public.media_assets source ON source.id=job.source_asset_id WHERE job.output_asset_id=mobile\n ) SELECT NOT EXISTS(SELECT 1 FROM desktop_sources) OR NOT EXISTS(SELECT 1 FROM mobile_sources)\n   OR EXISTS(SELECT 1 FROM desktop_sources d JOIN mobile_sources m ON d.id=m.id OR d.checksum_sha256=m.checksum_sha256) INTO overlap;\n IF overlap THEN RAISE EXCEPTION 'desktop and mobile heroes require independent original photo identities and bytes' USING ERRCODE='23514'; END IF;\nEND; $function$"
+    },
+    {
+      "name": "assert_publication_manifest_approvals",
+      "identityArguments": "value jsonb",
+      "resultType": "void",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_publication_manifest_approvals(value jsonb)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE revision jsonb; audit jsonb; source_audit jsonb; source_translation jsonb; source_review jsonb; edge jsonb; prior_edge jsonb; text_row jsonb; expected jsonb;\n approvals jsonb:='[]'; copies jsonb:='[]'; extension_approvals jsonb:='[]'; kind text; prefix text; parent_column text; translation_column text; source_revision uuid; prior_revision uuid; receipt_id uuid;\n alias public.idol_revision_alias_sets%ROWTYPE; detail public.gift_detail_documents%ROWTYPE; tr public.gift_detail_translations%ROWTYPE; review_row jsonb;\nBEGIN\n FOR revision IN SELECT value->'revision' UNION ALL SELECT * FROM jsonb_array_elements(value->'mediaRevisions') LOOP\n  kind:=revision#>>'{target,kind}'; prefix:=lower(kind); parent_column:=prefix||'_revision_id'; translation_column:=prefix||'_translation_id';\n  FOR audit IN SELECT * FROM jsonb_array_elements(revision->'translationAudits') LOOP\n   approvals:=approvals||jsonb_build_array(public.publication_approval(kind,(revision->>'revisionId')::uuid,audit));\n   IF audit ? 'inheritedFrom' THEN\n    EXECUTE format('SELECT to_jsonb(e.*),to_jsonb(s.*),to_jsonb(r.*),to_jsonb(old.*),receipt.id FROM public.%I e JOIN public.%I s ON s.id=e.source_translation_id JOIN public.%I r ON r.id=e.source_approval_review_id LEFT JOIN public.%I old ON old.target_translation_id=s.id JOIN public.content_authoring_receipts receipt ON receipt.%I=$2 AND receipt.audit_log_id=e.audit_log_id WHERE e.target_translation_id=$1',prefix||'_translation_copy_evidence',prefix||'_revision_translations',prefix||'_translation_reviews',prefix||'_translation_copy_evidence',parent_column)\n      INTO edge,source_translation,source_review,prior_edge,receipt_id USING (audit->>'id')::uuid,(revision->>'revisionId')::uuid;\n    IF edge IS NULL OR source_review->>'status' IS DISTINCT FROM 'APPROVED' THEN RAISE EXCEPTION 'manifest copy requires its exact immutable source approval and receipt' USING ERRCODE='23514'; END IF;\n    source_revision:=(source_translation->>parent_column)::uuid;\n    source_audit:=public.publication_pick_fields(source_translation,ARRAY['id','locale','sourceHash','translatedFromSourceHash','origin','importBatchId','editorId'])\n      ||jsonb_build_object('reviewId',source_review->'id','reviewSequence',source_review->'sequence','editedAt',public.publication_utc((source_translation->>'edited_at')::timestamptz),'review',public.publication_approved_review(source_review,true));\n    IF prior_edge IS NOT NULL THEN\n      EXECUTE format('SELECT %I FROM public.%I WHERE id=$1',parent_column,prefix||'_revision_translations') INTO prior_revision USING (prior_edge->>'source_translation_id')::uuid;\n      source_audit:=source_audit||jsonb_build_object('inheritedFrom',jsonb_build_object('revisionId',prior_revision,'translationId',prior_edge->'source_translation_id','reviewId',prior_edge->'source_approval_review_id'));\n    END IF;\n    -- 0015's immutable typed edge binds original raw fields, editor, origin and hashes to these target fields.\n    SELECT item INTO text_row FROM jsonb_array_elements(revision#>'{content,translations}') item WHERE item->>'locale'=audit->>'locale';\n    expected:=jsonb_build_object('target',jsonb_build_object('owner',revision->'target','revisionId',revision->'revisionId','locale',audit->'locale'),\n      'targetTranslationId',audit->'id','targetReviewId',audit->'reviewId','authoringReceiptId',receipt_id,\n      'source',jsonb_build_object('target',jsonb_build_object('owner',revision->'target','revisionId',source_revision,'locale',source_translation->'locale'),'text',jsonb_build_object('kind',kind,'fields',text_row->'fields'),'audit',source_audit),\n      'sourceApproval',public.publication_approval(kind,source_revision,source_audit));\n    copies:=copies||jsonb_build_array(expected);\n   END IF;\n  END LOOP;\n END LOOP;\n revision:=value->'revision';\n IF revision#>>'{target,kind}'='IDOL' THEN\n  SELECT * INTO alias FROM public.idol_revision_alias_sets WHERE idol_revision_id=(revision->>'revisionId')::uuid;\n  IF alias.id IS NOT NULL THEN\n   SELECT to_jsonb(r.*) INTO review_row FROM public.idol_revision_alias_reviews r WHERE alias_set_id=alias.id ORDER BY sequence DESC LIMIT 1;\n   extension_approvals:=jsonb_build_array(jsonb_build_object('kind','IDOL_ALIASES','revisionId',revision->'revisionId','subjectId',alias.id,'reviewId',review_row->'id','sequence',review_row->'sequence',\n     'auditLogId',review_row->'audit_log_id','editorId',alias.editor_id,'structureEditorId',alias.editor_id,'reviewerId',review_row->'reviewer_id','editedAt',public.publication_utc(alias.edited_at),\n     'reviewedAt',public.publication_utc((review_row->>'reviewed_at')::timestamptz),'contentHash',review_row->'reviewed_content_hash','sourceHash',NULL));\n  END IF;\n ELSIF revision#>>'{target,kind}'='GIFT' THEN\n  SELECT * INTO detail FROM public.gift_detail_documents WHERE gift_revision_id=(revision->>'revisionId')::uuid;\n  FOR tr IN SELECT * FROM public.gift_detail_translations WHERE document_id=detail.id LOOP\n   SELECT to_jsonb(r.*) INTO review_row FROM public.gift_detail_translation_reviews r WHERE gift_detail_translation_id=tr.id ORDER BY sequence DESC LIMIT 1;\n   extension_approvals:=extension_approvals||jsonb_build_array(jsonb_build_object('kind','GIFT_DETAILS','revisionId',revision->'revisionId','subjectId',tr.id,'locale',tr.locale,'reviewId',review_row->'id','sequence',review_row->'sequence',\n     'auditLogId',review_row->'audit_log_id','editorId',tr.editor_id,'structureEditorId',detail.editor_id,'reviewerId',review_row->'reviewer_id','editedAt',public.publication_utc(tr.edited_at),\n     'reviewedAt',public.publication_utc((review_row->>'reviewed_at')::timestamptz),'contentHash',review_row->'reviewed_content_hash','sourceHash',review_row->'reviewed_source_hash'));\n  END LOOP;\n END IF;\n IF NOT public.publication_same_set(value->'approvals',approvals) OR NOT public.publication_same_set(value->'copies',copies) OR NOT public.publication_same_set(value->'extensionApprovals',extension_approvals) THEN\n  RAISE EXCEPTION 'manifest approval sections must contain exactly the real current reviews and typed copy edges' USING ERRCODE='23514';\n END IF;\nEND; $function$"
+    },
+    {
+      "name": "assert_publication_manifest_extensions",
+      "identityArguments": "value jsonb",
+      "resultType": "void",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_publication_manifest_extensions(value jsonb)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE kind text:=value#>>'{target,kind}'; revision uuid:=(value->>'revisionId')::uuid;\n a public.idol_revision_alias_sets%ROWTYPE; d public.gift_detail_documents%ROWTYPE; t public.gift_detail_translations%ROWTYPE;\n r jsonb; expected jsonb; actual jsonb; blocks jsonb; translated_blocks jsonb; translations jsonb:='[]'; text_translations jsonb:='[]'; english_hash text;\nBEGIN\n IF kind='IDOL' THEN SELECT * INTO a FROM public.idol_revision_alias_sets WHERE idol_revision_id=revision FOR SHARE; END IF;\n IF a.id IS NULL THEN\n   IF value#>'{extensions,aliases}' IS NOT NULL OR value#>'{content,aliases}' IS NOT NULL THEN RAISE EXCEPTION 'manifest cannot invent alias content' USING ERRCODE='23514'; END IF;\n ELSE\n   SELECT to_jsonb(review.*) INTO r FROM public.idol_revision_alias_reviews review WHERE alias_set_id=a.id ORDER BY sequence DESC LIMIT 1;\n   IF r->>'status' IS DISTINCT FROM 'APPROVED' OR r->>'sequence' IS DISTINCT FROM '3' OR r->>'reviewed_content_hash' IS DISTINCT FROM a.content_hash\n     OR (r->>'reviewer_id')::uuid=a.editor_id THEN RAISE EXCEPTION 'manifest aliases require independent terminal approval' USING ERRCODE='23514'; END IF;\n   SELECT coalesce(jsonb_agg(jsonb_build_object('id',alias_id,'locale',locale,'text',text) ORDER BY position),'[]') INTO actual FROM public.idol_revision_aliases WHERE alias_set_id=a.id;\n   expected:=jsonb_build_object('schemaVersion',1,'id',a.id,'idolRevisionId',revision,'aliases',actual,'contentHash',a.content_hash,'editorId',a.editor_id,'editedAt',public.publication_utc(a.edited_at),'review',public.publication_approved_review(r,false));\n   IF (value#>'{extensions,aliases}')-'aliases' IS DISTINCT FROM expected-'aliases' OR NOT public.publication_same_set(value#>'{extensions,aliases,aliases}',actual)\n      OR NOT public.publication_same_set(value#>'{content,aliases}',actual) THEN RAISE EXCEPTION 'manifest must retain the complete actual alias set' USING ERRCODE='23514'; END IF;\n END IF;\n IF kind='GIFT' THEN SELECT * INTO d FROM public.gift_detail_documents WHERE gift_revision_id=revision FOR SHARE; END IF;\n IF d.id IS NULL THEN\n   IF value#>'{extensions,details}' IS NOT NULL OR value#>'{content,details}' IS NOT NULL THEN RAISE EXCEPTION 'manifest cannot invent detail content' USING ERRCODE='23514'; END IF;\n   RETURN;\n END IF;\n SELECT source_hash INTO english_hash FROM public.gift_detail_translations WHERE document_id=d.id AND locale='en';\n IF (SELECT count(*) FROM public.gift_detail_translations WHERE document_id=d.id)<>7 THEN RAISE EXCEPTION 'published detail requires all seven languages' USING ERRCODE='23514'; END IF;\n SELECT jsonb_agg(jsonb_build_object('id',b.block_id,'kind',b.kind)||CASE b.kind\n   WHEN 'HEADING' THEN jsonb_build_object('level',b.heading_level)\n   WHEN 'LIST' THEN jsonb_build_object('style',b.list_style,'itemIds',(SELECT jsonb_agg(item_id ORDER BY position) FROM public.gift_detail_block_items WHERE document_id=d.id AND block_id=b.block_id))\n   WHEN 'SPECIFICATIONS' THEN jsonb_build_object('itemIds',(SELECT jsonb_agg(item_id ORDER BY position) FROM public.gift_detail_block_items WHERE document_id=d.id AND block_id=b.block_id))\n   WHEN 'MEDIA' THEN public.publication_pick_fields(to_jsonb(b.*),ARRAY['mediaAssetId','mediaMetadataRevisionId','captionEnabled']) ELSE '{}'::jsonb END ORDER BY b.position)\n INTO blocks FROM public.gift_detail_blocks b WHERE document_id=d.id;\n FOR t IN SELECT * FROM public.gift_detail_translations WHERE document_id=d.id ORDER BY locale FOR SHARE LOOP\n   SELECT to_jsonb(review.*) INTO r FROM public.gift_detail_translation_reviews review WHERE gift_detail_translation_id=t.id ORDER BY sequence DESC LIMIT 1;\n   IF r->>'status' IS DISTINCT FROM 'APPROVED' OR r->>'sequence' IS DISTINCT FROM '3' OR r->>'reviewed_content_hash' IS DISTINCT FROM t.source_hash\n      OR r->>'reviewed_source_hash' IS DISTINCT FROM english_hash OR t.translated_from_source_hash IS DISTINCT FROM english_hash\n      OR (r->>'reviewer_id')::uuid IN (t.editor_id,d.editor_id) THEN RAISE EXCEPTION 'manifest details require current independent terminal approval' USING ERRCODE='23514'; END IF;\n   SELECT jsonb_agg(jsonb_build_object('blockId',b.block_id,'kind',b.kind)||CASE b.kind\n     WHEN 'HEADING' THEN jsonb_build_object('text',b.text) WHEN 'PARAGRAPH' THEN jsonb_build_object('text',b.text)\n     WHEN 'LIST' THEN jsonb_build_object('items',(SELECT jsonb_agg(public.publication_pick_fields(to_jsonb(i.*),ARRAY['itemId','text']) ORDER BY i.item_id) FROM public.gift_detail_translation_items i WHERE translation_id=t.id AND block_id=b.block_id))\n     WHEN 'SPECIFICATIONS' THEN jsonb_build_object('items',(SELECT jsonb_agg(public.publication_pick_fields(to_jsonb(i.*),ARRAY['itemId','label','value']) ORDER BY i.item_id) FROM public.gift_detail_translation_items i WHERE translation_id=t.id AND block_id=b.block_id))\n     ELSE public.publication_pick_fields(to_jsonb(b.*),ARRAY['mediaMetadataRevisionId','caption']) END ORDER BY b.block_id)\n   INTO translated_blocks FROM public.gift_detail_translation_blocks b WHERE translation_id=t.id;\n   expected:=public.publication_pick_fields(to_jsonb(t.*),ARRAY['schemaVersion','id','documentId','giftRevisionId','locale','sourceHash','translatedFromSourceHash','origin','importBatchId','editorId'])\n     ||jsonb_build_object('editedAt',public.publication_utc(t.edited_at),'review',public.publication_approved_review(r,true),'blocks',translated_blocks);\n   translations:=translations||jsonb_build_array(expected);\n   text_translations:=text_translations||jsonb_build_array(public.publication_pick_fields(to_jsonb(t.*),ARRAY['locale','origin','importBatchId'])||jsonb_build_object('blocks',translated_blocks));\n END LOOP;\n expected:=jsonb_build_object('schemaVersion',1,'outcome','SUCCESS','document',jsonb_build_object('schemaVersion',1,'id',d.id,'giftRevisionId',revision,'blocks',blocks));\n IF (value#>'{extensions,details}')-'translations' IS DISTINCT FROM expected OR NOT public.publication_same_set(value#>'{extensions,details,translations}',translations)\n   OR value#>'{content,details,blocks}' IS DISTINCT FROM blocks OR NOT public.publication_same_set(value#>'{content,details,translations}',text_translations) THEN\n   RAISE EXCEPTION 'manifest must retain all actual detail structure and raw translations' USING ERRCODE='23514';\n END IF;\nEND; $function$"
+    },
+    {
+      "name": "assert_publication_manifest_media",
+      "identityArguments": "value jsonb",
+      "resultType": "void",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_publication_manifest_media(value jsonb)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE assets uuid[]; metadata uuid[]; declared uuid[]; row_value jsonb; asset public.media_assets%ROWTYPE; variant public.media_variants%ROWTYPE; lineage jsonb; proof jsonb; source public.media_assets%ROWTYPE;\n job public.media_processing_jobs%ROWTYPE; output public.media_processing_outputs%ROWTYPE; expected jsonb; expected_command jsonb; existing_ids uuid[]:='{}'; job_ids uuid[]; metadata_row public.media_metadata_revisions%ROWTYPE; hero_pair record;\nBEGIN\n IF jsonb_typeof(value#>'{media,assets}') IS DISTINCT FROM 'array' OR jsonb_typeof(value#>'{media,variants}') IS DISTINCT FROM 'array' OR jsonb_typeof(value#>'{media,lineage}') IS DISTINCT FROM 'array' THEN RAISE EXCEPTION 'manifest media proof must have typed collections' USING ERRCODE='23514'; END IF;\n SELECT coalesce(array_agg(DISTINCT asset_id ORDER BY asset_id),'{}'),coalesce(array_agg(DISTINCT metadata_id ORDER BY metadata_id) FILTER(WHERE metadata_id<>(value#>>'{revision,revisionId}')::uuid),'{}') INTO assets,metadata FROM public.publication_media_references(value->'revision');\n SELECT coalesce(array_agg((item->>'id')::uuid ORDER BY (item->>'id')::uuid),'{}') INTO declared FROM jsonb_array_elements(value#>'{media,assets}') item;\n IF declared IS DISTINCT FROM assets THEN RAISE EXCEPTION 'manifest must contain all and only referenced binary identities' USING ERRCODE='23514'; END IF;\n SELECT coalesce(array_agg((item->>'revisionId')::uuid ORDER BY (item->>'revisionId')::uuid),'{}') INTO declared FROM jsonb_array_elements(value->'mediaRevisions') item;\n IF declared IS DISTINCT FROM metadata THEN RAISE EXCEPTION 'manifest must contain all and only actual metadata dependencies' USING ERRCODE='23514'; END IF;\n SELECT coalesce(array_agg((item->>'assetId')::uuid ORDER BY (item->>'assetId')::uuid),'{}') INTO declared FROM jsonb_array_elements(value#>'{media,lineage}') item;\n IF declared IS DISTINCT FROM assets THEN RAISE EXCEPTION 'manifest lineage must cover each referenced asset exactly once' USING ERRCODE='23514'; END IF;\n FOR metadata_row IN SELECT * FROM public.media_metadata_revisions WHERE id=ANY(metadata) FOR SHARE LOOP\n  IF metadata_row.lifecycle NOT IN ('PUBLISHED','SUPERSEDED') OR NOT EXISTS(SELECT 1 FROM public.content_publications WHERE media_metadata_revision_id=metadata_row.id AND media_asset_id=metadata_row.media_asset_id) THEN RAISE EXCEPTION 'referenced metadata requires a real publication ledger event' USING ERRCODE='23514'; END IF;\n END LOOP;\n FOR row_value IN SELECT * FROM jsonb_array_elements(value#>'{media,assets}') LOOP\n  SELECT * INTO asset FROM public.media_assets WHERE id=(row_value->>'id')::uuid FOR SHARE;\n  IF asset.id IS NULL OR asset.processing_status<>'READY' OR asset.rights_status<>'APPROVED' OR row_value IS DISTINCT FROM public.publication_asset(to_jsonb(asset)) THEN RAISE EXCEPTION 'manifest requires exact currently eligible immutable binary identity' USING ERRCODE='23514'; END IF;\n  SELECT item INTO lineage FROM jsonb_array_elements(value#>'{media,lineage}') item WHERE (item->>'assetId')::uuid=asset.id;\n  IF lineage->>'identityKind' IS DISTINCT FROM asset.identity_kind OR jsonb_typeof(lineage->'processing') IS DISTINCT FROM 'array'\n    OR (asset.identity_kind='SOURCE' AND jsonb_array_length(lineage->'processing')<>0)\n    OR (asset.identity_kind='PROCESSED_MASTER' AND jsonb_array_length(lineage->'processing')=0) THEN RAISE EXCEPTION 'manifest processing lineage must match actual binary purpose' USING ERRCODE='23514'; END IF;\n  -- Every currently recorded original remains relevant even when reusing an older immutable proof subset.\n  FOR job IN SELECT * FROM public.media_processing_jobs WHERE output_asset_id=asset.id ORDER BY id FOR SHARE LOOP\n    SELECT * INTO source FROM public.media_assets WHERE id=job.source_asset_id FOR SHARE;\n    IF job.status<>'SUCCEEDED' OR source.identity_kind<>'SOURCE' OR source.rights_status<>'APPROVED' OR source.processing_status='ARCHIVED' THEN RAISE EXCEPTION 'all current processing originals must remain eligible' USING ERRCODE='23514'; END IF;\n  END LOOP;\n  job_ids:='{}';\n  FOR proof IN SELECT * FROM jsonb_array_elements(lineage->'processing') LOOP\n   IF (proof->>'jobId')::uuid=ANY(job_ids) THEN RAISE EXCEPTION 'processing evidence identities cannot repeat' USING ERRCODE='23514'; END IF;\n   job_ids:=array_append(job_ids,(proof->>'jobId')::uuid);\n   SELECT * INTO job FROM public.media_processing_jobs WHERE id=(proof->>'jobId')::uuid AND output_asset_id=asset.id FOR SHARE;\n   SELECT * INTO source FROM public.media_assets WHERE id=job.source_asset_id FOR SHARE;\n   SELECT * INTO output FROM public.media_processing_outputs WHERE job_id=job.id AND kind='MASTER';\n   expected_command:=jsonb_build_object('schemaVersion',1,'profileVersion',job.profile_version,'source',jsonb_build_object('assetId',source.id,'metadataRevisionId',job.source_metadata_revision_id,'checksumSha256',job.source_checksum_sha256,'objectKey',source.object_key,'mimeType',source.mime_type,'byteSize',source.byte_size,'width',source.width,'height',source.height),'role',job.role,'fit',job.fit,'focalPoint',jsonb_build_object('x',job.focal_x,'y',job.focal_y));\n   expected:=jsonb_build_object('jobId',job.id,'command',expected_command,'commandHash',job.command_hash,'sourceAsset',public.publication_asset(to_jsonb(source)),'sourceIdentityKind',source.identity_kind,'outputAssetId',job.output_asset_id,'output',public.publication_pick_fields(to_jsonb(output),ARRAY['mediaAssetId','checksumSha256','objectKey','width','height','byteSize']));\n   IF job.id IS NULL OR job.status<>'SUCCEEDED' OR output.job_id IS NULL OR proof IS DISTINCT FROM expected THEN RAISE EXCEPTION 'manifest processing proof requires exact immutable command and output rows' USING ERRCODE='23514'; END IF;\n  END LOOP;\n END LOOP;\n FOR row_value IN SELECT * FROM jsonb_array_elements(value#>'{media,variants}') LOOP\n  SELECT * INTO variant FROM public.media_variants WHERE id=(row_value->>'id')::uuid FOR SHARE;\n  IF variant.id=ANY(existing_ids) THEN RAISE EXCEPTION 'manifest variants cannot repeat' USING ERRCODE='23514'; END IF;\n  existing_ids:=array_append(existing_ids,variant.id);\n  IF variant.id IS NULL OR NOT variant.media_asset_id=ANY(assets) OR variant.status<>'READY'\n    OR row_value IS DISTINCT FROM public.publication_pick_fields(to_jsonb(variant),ARRAY['schemaVersion','id','mediaAssetId','format','width','height','byteSize','checksumSha256','objectKey']) THEN RAISE EXCEPTION 'manifest variants require exact eligible immutable rows' USING ERRCODE='23514'; END IF;\n END LOOP;\n FOR hero_pair IN\n   SELECT d.media_asset_id AS desktop,m.media_asset_id AS mobile FROM public.idol_revision_media d JOIN public.idol_revision_media m ON m.idol_revision_id=d.idol_revision_id\n     WHERE value#>>'{revision,target,kind}'='IDOL' AND d.idol_revision_id=(value#>>'{revision,revisionId}')::uuid AND d.role='HERO_DESKTOP' AND m.role='HERO_MOBILE'\n   UNION ALL SELECT h.desktop_media_asset_id,h.mobile_media_asset_id FROM public.homepage_slots h\n     WHERE value#>>'{revision,target,kind}'='HOMEPAGE' AND h.homepage_revision_id=(value#>>'{revision,revisionId}')::uuid AND h.kind='HERO_IDOL'\n LOOP PERFORM public.assert_publication_hero_originals(hero_pair.desktop,hero_pair.mobile); END LOOP;\n IF EXISTS(SELECT 1 FROM unnest(assets) id WHERE NOT EXISTS(SELECT 1 FROM jsonb_array_elements(value#>'{media,variants}') item WHERE (item->>'mediaAssetId')::uuid=id)) THEN RAISE EXCEPTION 'each published asset requires a recorded ready variant' USING ERRCODE='23514'; END IF;\nEND; $function$"
+    },
+    {
+      "name": "assert_publication_manifest_revision",
+      "identityArguments": "value jsonb",
+      "resultType": "void",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_publication_manifest_revision(value jsonb)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE kind text:=value#>>'{target,kind}'; revision_id uuid:=(value->>'revisionId')::uuid; prefix text; parent_column text; translation_column text;\n  parent jsonb; translation jsonb; review jsonb; evidence jsonb; source_parent uuid; text_row jsonb; audit_row jsonb; expected jsonb; fields text[]; actual_count integer; locales text[]:='{}'; english_hash text;\nBEGIN\n  IF kind IS NULL OR kind NOT IN ('IDOL','GIFT','HOMEPAGE','POLICY','MEDIA_METADATA')\n    OR jsonb_typeof(value) IS DISTINCT FROM 'object' OR jsonb_typeof(value->'content') IS DISTINCT FROM 'object'\n    OR jsonb_typeof(value#>'{content,translations}') IS DISTINCT FROM 'array' OR jsonb_typeof(value->'translationAudits') IS DISTINCT FROM 'array'\n    OR jsonb_typeof(value->'extensions') IS DISTINCT FROM 'object' THEN RAISE EXCEPTION 'manifest revision kind and proof shape must be typed' USING ERRCODE='23514'; END IF;\n  prefix:=lower(kind); parent_column:=prefix||'_revision_id'; translation_column:=prefix||'_translation_id';\n  EXECUTE format('SELECT to_jsonb(p.*) FROM public.%I p WHERE p.id=$1 FOR UPDATE',prefix||'_revisions') INTO parent USING revision_id;\n  IF parent IS NULL OR value->>'schemaVersion' IS DISTINCT FROM '1' OR value#>>'{content,kind}' IS DISTINCT FROM kind OR (value->>'revisionNumber')::bigint IS DISTINCT FROM (parent->>'revision')::bigint\n    OR (value->>'createdBy')::uuid IS DISTINCT FROM (parent->>'created_by')::uuid OR (value->>'createdAt')::timestamptz IS DISTINCT FROM (parent->>'created_at')::timestamptz THEN\n    RAISE EXCEPTION 'manifest revision requires its exact immutable parent' USING ERRCODE='23514';\n  END IF;\n  IF (kind='IDOL' AND (value#>>'{target,idolId}')::uuid IS DISTINCT FROM (parent->>'idol_id')::uuid)\n    OR (kind='GIFT' AND (value#>>'{target,giftId}')::uuid IS DISTINCT FROM (parent->>'gift_id')::uuid)\n    OR (kind='POLICY' AND value#>>'{target,policyKey}' IS DISTINCT FROM parent->>'policy_key')\n    OR (kind='MEDIA_METADATA' AND (value#>>'{target,mediaAssetId}')::uuid IS DISTINCT FROM (parent->>'media_asset_id')::uuid) THEN\n    RAISE EXCEPTION 'manifest revision requires its exact owner' USING ERRCODE='23514';\n  END IF;\n  fields:=CASE kind WHEN 'IDOL' THEN ARRAY['displayName','shortBio','fullBio','seoTitle','seoDescription']\n    WHEN 'GIFT' THEN ARRAY['title','subtitle','shortDescription','description','fulfillmentDescription','safetyNotice','seoTitle','seoDescription']\n    WHEN 'HOMEPAGE' THEN ARRAY['heroTitle','heroSubtitle','ctaLabel','announcement','seoTitle','seoDescription']\n    WHEN 'POLICY' THEN ARRAY['title','summary','body'] ELSE ARRAY['alt','title','caption'] END;\n  EXECUTE format('SELECT count(*),max(source_hash) FILTER(WHERE locale=''en'') FROM public.%I WHERE %I=$1',prefix||'_revision_translations',parent_column) INTO actual_count,english_hash USING revision_id;\n  IF actual_count<>7 OR jsonb_array_length(value#>'{content,translations}') IS DISTINCT FROM 7 OR jsonb_array_length(value->'translationAudits') IS DISTINCT FROM 7 THEN\n    RAISE EXCEPTION 'manifest revision requires seven real translations and approvals' USING ERRCODE='23514';\n  END IF;\n  FOR text_row IN SELECT * FROM jsonb_array_elements(value#>'{content,translations}') LOOP\n    IF text_row->>'locale'=ANY(locales) THEN RAISE EXCEPTION 'manifest locale must occur once' USING ERRCODE='23514'; END IF;\n    locales:=array_append(locales,text_row->>'locale');\n    EXECUTE format('SELECT to_jsonb(t.*),to_jsonb(r.*),to_jsonb(e.*) FROM public.%I t JOIN LATERAL(SELECT * FROM public.%I WHERE %I=t.id ORDER BY sequence DESC LIMIT 1) r ON true LEFT JOIN public.%I e ON e.target_translation_id=t.id WHERE t.%I=$1 AND t.locale=$2 FOR UPDATE OF t',prefix||'_revision_translations',prefix||'_translation_reviews',translation_column,prefix||'_translation_copy_evidence',parent_column)\n      INTO translation,review,evidence USING revision_id,text_row->>'locale';\n    SELECT item INTO audit_row FROM jsonb_array_elements(value->'translationAudits') item WHERE item->>'locale'=text_row->>'locale';\n    IF translation IS NULL OR audit_row IS NULL OR review->>'status' IS DISTINCT FROM 'APPROVED' OR review->>'sequence' IS DISTINCT FROM '3'\n      OR text_row->>'origin' IS DISTINCT FROM translation->>'origin' OR text_row->>'importBatchId' IS DISTINCT FROM translation->>'import_batch_id'\n      OR (audit_row->>'id')::uuid IS DISTINCT FROM (translation->>'id')::uuid OR (audit_row->>'reviewId')::uuid IS DISTINCT FROM (review->>'id')::uuid OR audit_row->>'reviewSequence' IS DISTINCT FROM '3'\n      OR audit_row->>'sourceHash' IS DISTINCT FROM translation->>'source_hash' OR audit_row->>'translatedFromSourceHash' IS DISTINCT FROM english_hash\n      OR translation->>'translated_from_source_hash' IS DISTINCT FROM english_hash OR audit_row->>'origin' IS DISTINCT FROM translation->>'origin'\n      OR audit_row->>'importBatchId' IS DISTINCT FROM translation->>'import_batch_id' OR (audit_row->>'editorId')::uuid IS DISTINCT FROM (translation->>'editor_id')::uuid\n      OR (audit_row->>'editedAt')::timestamptz IS DISTINCT FROM (translation->>'edited_at')::timestamptz\n      OR audit_row#>>'{review,status}' IS DISTINCT FROM 'APPROVED' OR (audit_row#>>'{review,reviewerId}')::uuid IS DISTINCT FROM (review->>'reviewer_id')::uuid\n      OR (audit_row#>>'{review,reviewedAt}')::timestamptz IS DISTINCT FROM (review->>'reviewed_at')::timestamptz\n      OR audit_row#>>'{review,reviewedSourceHash}' IS DISTINCT FROM review->>'reviewed_source_hash'\n      OR audit_row#>>'{review,reviewedContentHash}' IS DISTINCT FROM review->>'reviewed_content_hash'\n      OR review->>'reviewed_source_hash' IS DISTINCT FROM english_hash OR review->>'reviewed_content_hash' IS DISTINCT FROM translation->>'source_hash'\n      OR (review->>'reviewer_id')::uuid=(translation->>'editor_id')::uuid THEN\n      RAISE EXCEPTION 'manifest must bind exact current independent approved translation evidence' USING ERRCODE='23514';\n    END IF;\n    expected:=public.publication_pick_fields(translation,fields);\n    IF (text_row->'fields')-ARRAY['variantLabels','slotLabels'] IS DISTINCT FROM expected THEN RAISE EXCEPTION 'manifest translation fields must equal real raw content' USING ERRCODE='23514'; END IF;\n    IF kind='GIFT' THEN\n      SELECT coalesce(jsonb_agg(public.publication_pick_fields(to_jsonb(r.*),ARRAY['giftVariantId','label'])),'[]') INTO expected FROM public.gift_variant_labels r WHERE gift_translation_id=(translation->>'id')::uuid;\n      IF NOT public.publication_same_set(text_row#>'{fields,variantLabels}',expected) THEN RAISE EXCEPTION 'manifest variant labels require real content' USING ERRCODE='23514'; END IF;\n    ELSIF kind='HOMEPAGE' THEN\n      SELECT coalesce(jsonb_agg(public.publication_pick_fields(to_jsonb(r.*),ARRAY['slotKey','label'])),'[]') INTO expected FROM public.homepage_slot_translations r WHERE homepage_translation_id=(translation->>'id')::uuid;\n      IF NOT public.publication_same_set(text_row#>'{fields,slotLabels}',expected) THEN RAISE EXCEPTION 'manifest slot labels require real content' USING ERRCODE='23514'; END IF;\n    END IF;\n    IF evidence IS NULL THEN\n      IF audit_row ? 'inheritedFrom' OR (review->>'reviewer_id')::uuid=(parent->>'created_by')::uuid THEN RAISE EXCEPTION 'direct approval cannot inherit structure independence' USING ERRCODE='23514'; END IF;\n    ELSE\n      EXECUTE format('SELECT %I FROM public.%I WHERE id=$1',parent_column,prefix||'_revision_translations') INTO source_parent USING (evidence->>'source_translation_id')::uuid;\n      IF (audit_row#>>'{inheritedFrom,revisionId}')::uuid IS DISTINCT FROM source_parent\n        OR (audit_row#>>'{inheritedFrom,translationId}')::uuid IS DISTINCT FROM (evidence->>'source_translation_id')::uuid\n        OR (audit_row#>>'{inheritedFrom,reviewId}')::uuid IS DISTINCT FROM (evidence->>'source_approval_review_id')::uuid THEN\n        RAISE EXCEPTION 'inherited approval requires exact typed source edge' USING ERRCODE='23514';\n      END IF;\n    END IF;\n  END LOOP;\n  IF kind='IDOL' THEN\n    expected:=public.publication_pick_fields(parent,ARRAY['themeAccent','heroTextTone','displayOrder']);\n  ELSIF kind='GIFT' THEN\n    SELECT coalesce(jsonb_agg(public.publication_pick_fields(to_jsonb(r.*),ARRAY['componentCode','quantity','unit'])),'[]') INTO expected FROM public.gift_revision_contents r WHERE gift_revision_id=revision_id;\n    IF NOT public.publication_same_set(value#>'{content,structure,contents}',expected) THEN RAISE EXCEPTION 'manifest gift contents require exact rows' USING ERRCODE='23514'; END IF;\n    expected:=public.publication_pick_fields(parent,ARRAY['category','requiresSafetyNotice','shippingMode'])||jsonb_build_object('deliveryEstimate',jsonb_build_object('minimum',parent->'delivery_minimum','maximum',parent->'delivery_maximum','unit',parent->'delivery_unit'));\n    IF (value#>'{content,structure}')-'contents' IS DISTINCT FROM expected THEN RAISE EXCEPTION 'manifest gift structure requires exact parent' USING ERRCODE='23514'; END IF;\n  ELSIF kind='HOMEPAGE' THEN\n    SELECT coalesce(jsonb_agg(public.publication_pick_fields(to_jsonb(r.*),ARRAY['slotKey','kind','idolId','giftId','policyKey','desktopMediaAssetId','desktopMediaMetadataRevisionId','mobileMediaAssetId','mobileMediaMetadataRevisionId','sortOrder'])),'[]') INTO expected FROM public.homepage_slots r WHERE homepage_revision_id=revision_id;\n    IF NOT public.publication_same_set(value#>'{content,structure,slots}',expected) THEN RAISE EXCEPTION 'manifest homepage slots require exact rows' USING ERRCODE='23514'; END IF;\n  ELSIF kind='POLICY' THEN\n    IF value#>>'{content,structure,kind}' IS DISTINCT FROM parent->>'kind' OR (value#>>'{content,structure,effectiveAt}')::timestamptz IS DISTINCT FROM (parent->>'effective_at')::timestamptz THEN RAISE EXCEPTION 'manifest policy structure requires exact parent' USING ERRCODE='23514'; END IF;\n  ELSE expected:=jsonb_build_object('presentationKind',parent->'presentation_kind','focalPoint',jsonb_build_object('x',parent->'focal_x','y',parent->'focal_y'));\n  END IF;\n  IF kind IN ('IDOL','MEDIA_METADATA') AND value#>'{content,structure}' IS DISTINCT FROM expected THEN RAISE EXCEPTION 'manifest structure requires exact parent values' USING ERRCODE='23514'; END IF;\n  PERFORM public.assert_publication_manifest_extensions(value);\n  IF kind IN ('IDOL','GIFT') THEN\n    EXECUTE format('SELECT coalesce(jsonb_agg(public.publication_pick_fields(to_jsonb(r.*),ARRAY[''role'',''mediaAssetId'',''mediaMetadataRevisionId'',''sortOrder''])),''[]'') FROM public.%I r WHERE %I=$1',prefix||'_revision_media',parent_column) INTO expected USING revision_id;\n    IF NOT public.publication_same_set(value#>'{content,media}',expected) THEN RAISE EXCEPTION 'manifest media references require exact typed rows' USING ERRCODE='23514'; END IF;\n  END IF;\nEND; $function$"
+    },
+    {
       "name": "assert_publication_outbox_source",
       "identityArguments": "",
       "resultType": "trigger",
@@ -43983,6 +45905,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_publication_outbox_source()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.event_type = 'CONTENT_PUBLICATION_CHANGED' AND NOT EXISTS (\n    SELECT 1\n    FROM public.content_publications publication\n    JOIN public.audit_logs audit ON audit.id = publication.audit_log_id\n    WHERE publication.id = NEW.aggregate_id\n      AND NEW.aggregate_type = 'CONTENT_PUBLICATION'\n      AND NEW.aggregate_version = 1\n      AND NEW.primary_subject_id = publication.id\n      AND NEW.secondary_subject_id = COALESCE(\n        publication.idol_revision_id,\n        publication.gift_revision_id,\n        publication.homepage_revision_id,\n        publication.policy_revision_id,\n        publication.media_metadata_revision_id,\n        publication.site_locale_config_revision_id\n      )\n      AND NEW.locale IS NOT NULL\n      AND NEW.market IS NULL\n      AND NEW.currency IS NULL\n      AND NEW.idempotency_key =\n        'content-publication:' || publication.id::text || ':' || NEW.locale::text\n      AND NEW.request_id = audit.request_id\n      AND NEW.correlation_id = audit.correlation_id\n      AND NEW.occurred_at = publication.published_at\n      AND (\n        (publication.content_type = 'IDOL' AND EXISTS (\n          SELECT 1\n          FROM public.idol_revision_translations translation\n          WHERE translation.idol_revision_id = publication.idol_revision_id\n            AND translation.locale = NEW.locale\n        ))\n        OR (publication.content_type = 'GIFT' AND EXISTS (\n          SELECT 1\n          FROM public.gift_revision_translations translation\n          WHERE translation.gift_revision_id = publication.gift_revision_id\n            AND translation.locale = NEW.locale\n        ))\n        OR (publication.content_type = 'HOMEPAGE' AND EXISTS (\n          SELECT 1\n          FROM public.homepage_revision_translations translation\n          WHERE translation.homepage_revision_id = publication.homepage_revision_id\n            AND translation.locale = NEW.locale\n        ))\n        OR (publication.content_type = 'POLICY' AND EXISTS (\n          SELECT 1\n          FROM public.policy_revision_translations translation\n          WHERE translation.policy_revision_id = publication.policy_revision_id\n            AND translation.locale = NEW.locale\n        ))\n        OR (publication.content_type = 'MEDIA_METADATA' AND EXISTS (\n          SELECT 1\n          FROM public.media_metadata_revision_translations translation\n          WHERE translation.media_metadata_revision_id =\n            publication.media_metadata_revision_id\n            AND translation.locale = NEW.locale\n        ))\n        OR (publication.content_type = 'SITE_LOCALE_CONFIG' AND EXISTS (\n          SELECT 1\n          FROM public.site_locale_config_entries entry\n          WHERE entry.site_locale_config_revision_id =\n            publication.site_locale_config_revision_id\n            AND entry.locale = NEW.locale\n            AND entry.enabled\n        ))\n      )\n  ) THEN\n    RAISE EXCEPTION 'content publication outbox must reference its authoritative source'\n      USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'PAYMENT_CONFIG_PUBLISHED' AND NOT EXISTS (\n    SELECT 1\n    FROM public.payment_config_publications publication\n    JOIN public.config_versions revision ON revision.id = publication.config_version_id\n    JOIN public.audit_logs audit ON audit.id = publication.audit_log_id\n    WHERE NEW.aggregate_type = 'PAYMENT_CONFIG'\n      AND NEW.aggregate_id = publication.config_version_id\n      AND NEW.aggregate_version = revision.version\n      AND NEW.primary_subject_id = publication.id\n      AND NEW.secondary_subject_id IS NULL\n      AND NEW.locale IS NULL\n      AND NEW.market IS NULL\n      AND NEW.currency IS NULL\n      AND NEW.idempotency_key = 'payment-config-publication:' || publication.id::text\n      AND NEW.request_id = audit.request_id\n      AND NEW.correlation_id = audit.correlation_id\n      AND NEW.occurred_at = publication.created_at\n  ) THEN\n    RAISE EXCEPTION 'payment-config outbox must reference its authoritative source'\n      USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'PRICE_BOOK_PUBLISHED' AND NOT EXISTS (\n    SELECT 1\n    FROM public.price_book_publications publication\n    JOIN public.audit_logs audit ON audit.id = publication.audit_log_id\n    WHERE NEW.aggregate_type = 'PRICE_BOOK'\n      AND NEW.aggregate_id = publication.price_book_id\n      AND NEW.aggregate_version = publication.price_book_revision\n      AND NEW.primary_subject_id = publication.id\n      AND NEW.secondary_subject_id = publication.price_book_id\n      AND NEW.locale IS NULL\n      AND NEW.market = publication.market\n      AND NEW.currency = publication.currency\n      AND NEW.idempotency_key = 'price-book-publication:' || publication.id::text\n      AND NEW.request_id = audit.request_id\n      AND NEW.correlation_id = audit.correlation_id\n      AND NEW.occurred_at = publication.published_at\n  ) THEN\n    RAISE EXCEPTION 'price-book outbox must reference its authoritative source'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
+    },
+    {
+      "name": "assert_publication_receipt_snapshot_hash",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_publication_receipt_snapshot_hash()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\n SET \"TimeZone\" TO 'UTC'\nAS $function$\nDECLARE proof public.content_publication_manifests%ROWTYPE; parent jsonb; before_state jsonb; after_state jsonb; kind text;\nBEGIN\n  IF NEW.action='RETRY_PURGE' THEN RETURN NULL; END IF;\n  SELECT * INTO proof FROM public.content_publication_manifests WHERE id=NEW.manifest_id;\n  kind:=proof.manifest#>>'{target,owner,kind}';\n  IF proof.id IS NULL OR kind IS NULL THEN RAISE EXCEPTION 'snapshot hash requires its real manifest revision' USING ERRCODE='23514'; END IF;\n  EXECUTE format('SELECT to_jsonb(r.*) FROM public.%I r WHERE id=$1',lower(kind)||'_revisions') INTO parent USING (proof.manifest#>>'{target,revisionId}')::uuid;\n  after_state:=jsonb_build_object('status',parent->'lifecycle')||public.publication_pick_fields(parent,ARRAY['validatedAt','publishedAt','supersededAt','archivedAt']);\n  before_state:=CASE NEW.action WHEN 'VALIDATE' THEN jsonb_build_object('status','DRAFT')\n    WHEN 'PUBLISH' THEN jsonb_build_object('status','VALIDATED','validatedAt',parent->'validated_at') ELSE after_state END;\n  IF NEW.expected_content_hash IS DISTINCT FROM public.publication_snapshot_hash(proof.manifest->'revision',before_state)\n    OR NEW.result_content_hash IS DISTINCT FROM public.publication_snapshot_hash(proof.manifest->'revision',after_state) THEN\n    RAISE EXCEPTION 'publication receipt hashes require exact canonical content and lifecycle states' USING ERRCODE='23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
     },
     {
       "name": "assert_refund_allocation",
@@ -44072,7 +46004,17 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.block_content_extension_publication()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE idol_revision uuid; gift_revision uuid;\nBEGIN\n  IF TG_TABLE_NAME = 'idol_revisions' THEN\n    IF NEW.lifecycle = 'DRAFT' THEN RETURN NEW; END IF; idol_revision := NEW.id;\n  ELSIF TG_TABLE_NAME = 'gift_revisions' THEN\n    IF NEW.lifecycle = 'DRAFT' THEN RETURN NEW; END IF; gift_revision := NEW.id;\n  ELSE idol_revision := NEW.idol_revision_id; gift_revision := NEW.gift_revision_id;\n  END IF;\n  IF EXISTS (SELECT 1 FROM public.idol_revision_alias_sets WHERE idol_revision_id = idol_revision)\n    OR EXISTS (SELECT 1 FROM public.gift_detail_documents WHERE gift_revision_id = gift_revision) THEN\n    RAISE EXCEPTION 'content extension publication proof is not enabled' USING ERRCODE = '55000';\n  END IF;\n  RETURN NEW;\nEND; $function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.block_content_extension_publication()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE idol_revision uuid; gift_revision uuid;\nBEGIN\n  IF TG_TABLE_NAME='idol_revisions' THEN IF NEW.lifecycle='DRAFT' THEN RETURN NEW; END IF; idol_revision:=NEW.id;\n  ELSIF TG_TABLE_NAME='gift_revisions' THEN IF NEW.lifecycle='DRAFT' THEN RETURN NEW; END IF; gift_revision:=NEW.id;\n  ELSE idol_revision:=NEW.idol_revision_id; gift_revision:=NEW.gift_revision_id; END IF;\n  IF (EXISTS(SELECT 1 FROM public.idol_revision_alias_sets WHERE idol_revision_id=idol_revision) OR EXISTS(SELECT 1 FROM public.gift_detail_documents WHERE gift_revision_id=gift_revision))\n    AND NOT EXISTS(SELECT 1 FROM public.content_publication_manifests WHERE idol_revision_id=idol_revision OR gift_revision_id=gift_revision) THEN\n    RAISE EXCEPTION 'content extension publication requires complete immutable proof' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
+      "name": "canonical_publication_json",
+      "identityArguments": "value jsonb",
+      "resultType": "text",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.canonical_publication_json(value jsonb)\n RETURNS text\n LANGUAGE plpgsql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE result text;\nBEGIN\n  IF jsonb_typeof(value)='object' THEN\n    SELECT '{'||coalesce(string_agg(to_json(key)::text||':'||public.canonical_publication_json(child),',' ORDER BY key COLLATE \"C\"),'')||'}' INTO result FROM jsonb_each(value) AS entry(key,child);\n  ELSIF jsonb_typeof(value)='array' THEN\n    SELECT '['||coalesce(string_agg(public.canonical_publication_json(child),',' ORDER BY position),'')||']' INTO result FROM jsonb_array_elements(value) WITH ORDINALITY AS entry(child,position);\n  ELSE result:=value::text;\n  END IF;\n  RETURN result;\nEND; $function$"
     },
     {
       "name": "content_authoring_revision_sealed",
@@ -44205,6 +46147,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_content_preview_grant()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE session public.admin_sessions%ROWTYPE; identity_status text;\nBEGIN\n  IF TG_OP = 'UPDATE' THEN\n    IF to_jsonb(NEW) - ARRAY['revoked_at','revoked_audit_log_id'] IS DISTINCT FROM to_jsonb(OLD) - ARRAY['revoked_at','revoked_audit_log_id']\n      OR (OLD.revoked_at IS NOT NULL AND (NEW.revoked_at IS DISTINCT FROM OLD.revoked_at OR NEW.revoked_audit_log_id IS DISTINCT FROM OLD.revoked_audit_log_id))\n      OR NEW.revoked_at IS NULL OR NEW.revoked_at > GREATEST(clock_timestamp(),transaction_timestamp(),OLD.created_at) THEN\n      RAISE EXCEPTION 'preview grant only permits one-way revocation' USING ERRCODE = '55000';\n    END IF;\n    RETURN NEW;\n  END IF;\n  SELECT * INTO session FROM public.admin_sessions WHERE id = NEW.session_id FOR SHARE;\n  SELECT status INTO identity_status FROM public.admin_identities WHERE id = NEW.actor_id FOR SHARE;\n  IF session.id IS NULL OR session.admin_identity_id <> NEW.actor_id OR identity_status IS DISTINCT FROM 'ACTIVE'\n    OR NOT session.authenticated_with_mfa OR session.revoked_at IS NOT NULL OR session.expires_at <= clock_timestamp()\n    OR NEW.created_at < session.created_at OR NEW.created_at > GREATEST(clock_timestamp(),transaction_timestamp(),session.created_at)\n    OR NEW.expires_at > session.expires_at OR NEW.revoked_at IS NOT NULL OR NEW.revoked_audit_log_id IS NOT NULL THEN\n    RAISE EXCEPTION 'preview grant requires its active MFA session and actor' USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND; $function$"
     },
     {
+      "name": "guard_content_purge_job",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_content_purge_job()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE publication public.content_publications%ROWTYPE; event public.outbox_events%ROWTYPE;\n  parent public.content_purge_jobs%ROWTYPE; root text; expected_paths text[]; actual_now timestamptz:=clock_timestamp();\nBEGIN\n  IF TG_OP='INSERT' THEN\n    SELECT * INTO publication FROM public.content_publications WHERE id=NEW.publication_id;\n    SELECT * INTO event FROM public.outbox_events WHERE id=NEW.outbox_event_id;\n    root:='/'||NEW.locale::text;\n    expected_paths:=CASE publication.content_type\n      WHEN 'HOMEPAGE' THEN ARRAY[root,root||'/sitemap.xml']\n      WHEN 'POLICY' THEN ARRAY[root||'/policies/'||publication.policy_key||'*',root||'/sitemap.xml']\n      WHEN 'MEDIA_METADATA' THEN ARRAY[root,root||'/gifts*',root||'/idols*',root||'/media/'||publication.media_asset_id::text||'*',root||'/sitemap.xml']\n      ELSE ARRAY[root,root||'/gifts*',root||'/idols*',root||'/sitemap.xml'] END;\n    IF publication.id IS NULL OR publication.proof_version<>2 OR event.id IS NULL\n      OR event.event_type IS DISTINCT FROM 'CONTENT_PUBLICATION_CHANGED'\n      OR event.aggregate_type IS DISTINCT FROM 'CONTENT_PUBLICATION'\n      OR event.aggregate_id IS DISTINCT FROM NEW.publication_id\n      OR event.primary_subject_id IS DISTINCT FROM NEW.publication_id OR event.locale IS DISTINCT FROM NEW.locale\n      OR NEW.paths IS DISTINCT FROM expected_paths OR NEW.status<>'PENDING' OR NEW.version<>1 OR NEW.attempt_count<>0 OR NEW.failure_count<>0\n      OR NEW.lease_token IS NOT NULL OR NEW.purge_reference IS NOT NULL OR NEW.error_code IS NOT NULL\n      OR NEW.completed_at IS NOT NULL OR NEW.updated_at<>NEW.created_at OR NEW.next_attempt_at IS DISTINCT FROM NEW.created_at THEN\n      RAISE EXCEPTION 'purge jobs require exact publication locale paths and initial state' USING ERRCODE='23514';\n    END IF;\n    IF NEW.generation=1 THEN\n      IF NEW.created_at<>publication.published_at THEN RAISE EXCEPTION 'root purge job must share publication time' USING ERRCODE='23514'; END IF;\n    ELSE\n      SELECT * INTO parent FROM public.content_purge_jobs WHERE id=NEW.retry_of FOR UPDATE;\n      IF parent.id IS NULL OR parent.status<>'FAILED' OR NEW.generation<>parent.generation+1\n        OR NEW.publication_id<>parent.publication_id OR NEW.outbox_event_id<>parent.outbox_event_id\n        OR NEW.locale<>parent.locale OR NEW.paths IS DISTINCT FROM parent.paths OR NEW.created_at<parent.updated_at THEN\n        RAISE EXCEPTION 'purge retries require an exact failed predecessor' USING ERRCODE='23514';\n      END IF;\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF (to_jsonb(NEW)-ARRAY['status','version','attempt_count','failure_count','lease_token','lease_expires_at','purge_reference','error_code','updated_at','next_attempt_at','completed_at'])\n    IS DISTINCT FROM (to_jsonb(OLD)-ARRAY['status','version','attempt_count','failure_count','lease_token','lease_expires_at','purge_reference','error_code','updated_at','next_attempt_at','completed_at'])\n    OR OLD.status IN ('COMPLETED','FAILED') OR NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at\n    OR NEW.updated_at>GREATEST(actual_now,transaction_timestamp(),OLD.updated_at) THEN\n    RAISE EXCEPTION 'purge identity is immutable and transitions require one causal version' USING ERRCODE='23514';\n  END IF;\n  IF NEW.lease_token IS NOT NULL THEN\n    IF (OLD.lease_expires_at IS NOT NULL AND OLD.lease_expires_at>actual_now) OR OLD.next_attempt_at>actual_now\n      OR NEW.lease_token IS NOT DISTINCT FROM OLD.lease_token OR NEW.lease_expires_at<=actual_now\n      OR NEW.lease_expires_at>actual_now+interval '300 seconds' OR NEW.lease_expires_at>OLD.created_at+interval '10 minutes'\n      OR NEW.attempt_count<>OLD.attempt_count+1 OR NEW.failure_count<>OLD.failure_count OR NEW.status<>OLD.status\n      OR NEW.next_attempt_at IS DISTINCT FROM OLD.next_attempt_at OR NEW.purge_reference IS DISTINCT FROM OLD.purge_reference\n      OR NEW.error_code IS DISTINCT FROM OLD.error_code OR NEW.completed_at IS DISTINCT FROM OLD.completed_at THEN\n      RAISE EXCEPTION 'purge claims require a due job and bounded fresh lease' USING ERRCODE='23514';\n    END IF;\n  ELSE\n    IF NEW.attempt_count<>OLD.attempt_count OR NEW.lease_expires_at IS NOT NULL THEN\n      RAISE EXCEPTION 'purge results cannot change claim count' USING ERRCODE='23514';\n    END IF;\n    IF NEW.status='FAILED' AND NEW.error_code IS NULL THEN\n      RAISE EXCEPTION 'failed purge jobs require a safe failure code' USING ERRCODE='23514';\n    END IF;\n    IF NEW.error_code='PURGE_TIMEOUT' AND NEW.status<>'FAILED' THEN\n      RAISE EXCEPTION 'absolute purge timeout must be terminal' USING ERRCODE='23514';\n    END IF;\n    IF NEW.status='FAILED' AND NEW.error_code='PURGE_TIMEOUT' THEN\n      IF actual_now<OLD.created_at+interval '10 minutes' OR NEW.failure_count<>OLD.failure_count\n        OR NEW.purge_reference IS DISTINCT FROM OLD.purge_reference THEN\n        RAISE EXCEPTION 'purge timeout requires the absolute deadline' USING ERRCODE='23514';\n      END IF;\n    ELSIF OLD.lease_token IS NULL OR OLD.lease_expires_at<=actual_now THEN\n      RAISE EXCEPTION 'purge results require a current unexpired claim' USING ERRCODE='23514';\n    END IF;\n    IF NEW.status='COMPLETED' THEN\n      IF NEW.completed_at IS DISTINCT FROM NEW.updated_at OR NEW.purge_reference IS NULL OR NEW.error_code IS NOT NULL\n        OR NEW.failure_count<>OLD.failure_count OR (OLD.purge_reference IS NOT NULL AND NEW.purge_reference<>OLD.purge_reference) THEN\n        RAISE EXCEPTION 'purge completion requires the same provider reference' USING ERRCODE='23514';\n      END IF;\n    ELSIF NEW.error_code IS NOT NULL AND NEW.error_code<>'PURGE_TIMEOUT' THEN\n      IF NEW.failure_count<>OLD.failure_count+1 OR NEW.purge_reference IS DISTINCT FROM OLD.purge_reference\n        OR NEW.status NOT IN (OLD.status,'FAILED') OR (NEW.failure_count>=6 AND NEW.status<>'FAILED') THEN\n        RAISE EXCEPTION 'purge failure must preserve provider identity and bounded retries' USING ERRCODE='23514';\n      END IF;\n    ELSIF NEW.status<>'FAILED' THEN\n      IF NEW.status<>'SUBMITTED' OR NEW.purge_reference IS NULL OR NEW.failure_count<>OLD.failure_count\n        OR (OLD.purge_reference IS NOT NULL AND NEW.purge_reference<>OLD.purge_reference) THEN\n        RAISE EXCEPTION 'pending provider work must remain submitted' USING ERRCODE='23514';\n      END IF;\n    END IF;\n    IF NEW.next_attempt_at IS NOT NULL AND NEW.next_attempt_at>OLD.created_at+interval '10 minutes' THEN\n      RAISE EXCEPTION 'purge retry schedule cannot extend the absolute deadline' USING ERRCODE='23514';\n    END IF;\n  END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
       "name": "guard_customer_contact_transition",
       "identityArguments": "",
       "resultType": "trigger",
@@ -44325,6 +46277,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_media_upload_reservation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE session public.admin_sessions%ROWTYPE;\nBEGIN\n  IF TG_OP='INSERT' THEN\n    SELECT * INTO session FROM public.admin_sessions WHERE id=NEW.session_id FOR SHARE;\n    IF NEW.status<>'PENDING' OR NEW.version<>1 OR session.id IS NULL OR NEW.expires_at>session.expires_at\n      OR NEW.expires_at>clock_timestamp()+interval '900 seconds' OR NEW.created_at>GREATEST(clock_timestamp(),transaction_timestamp(),session.created_at) THEN\n      RAISE EXCEPTION 'upload reservation requires a bounded initial ticket' USING ERRCODE='23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF OLD.status<>'PENDING' OR NEW.status<>'REGISTERED' OR NEW.version<>2\n    OR to_jsonb(NEW)-ARRAY['status','version','registered_asset_id','registered_at','registration_audit_log_id','verified_width','verified_height','verified_orientation','registration_field_paths']\n      IS DISTINCT FROM to_jsonb(OLD)-ARRAY['status','version','registered_asset_id','registered_at','registration_audit_log_id','verified_width','verified_height','verified_orientation','registration_field_paths'] THEN\n    RAISE EXCEPTION 'upload reservation permits only one immutable registration' USING ERRCODE='55000';\n  END IF;\n  IF OLD.expires_at<=clock_timestamp() OR NEW.registered_at>GREATEST(clock_timestamp(),transaction_timestamp(),OLD.created_at) THEN\n    RAISE EXCEPTION 'upload registration requires an unexpired ticket' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND; $function$"
     },
     {
+      "name": "guard_new_content_publication_proof",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_new_content_publication_proof()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.proof_version<>2 THEN RAISE EXCEPTION 'new content publications require current proof version' USING ERRCODE='23514'; END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
       "name": "guard_nonterminal_payment_lock",
       "identityArguments": "",
       "resultType": "trigger",
@@ -44423,6 +46385,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.guard_publication_head_transition()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_TABLE_SCHEMA <> 'public' THEN\n    RAISE EXCEPTION 'publication head guard is restricted to public schema'\n      USING ERRCODE = '55000';\n  END IF;\n  IF TG_OP = 'DELETE' THEN\n    RAISE EXCEPTION 'publication heads cannot be deleted' USING ERRCODE = '55000';\n  END IF;\n  IF TG_OP = 'INSERT' THEN\n    IF NEW.version <> 1 THEN\n      RAISE EXCEPTION 'publication head must start at version one' USING ERRCODE = '23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF NEW.version <> OLD.version + 1 OR NEW.updated_at <= OLD.updated_at THEN\n    RAISE EXCEPTION 'publication head update requires one version increment and a later timestamp'\n      USING ERRCODE = '23514';\n  END IF;\n  IF NEW.id <> OLD.id OR NEW.schema_version <> OLD.schema_version\n     OR NEW.created_at <> OLD.created_at OR NEW.publication_id = OLD.publication_id THEN\n    RAISE EXCEPTION 'publication head identity is immutable and its publication must advance'\n      USING ERRCODE = '55000';\n  END IF;\n\n  IF TG_TABLE_NAME = 'idol_publication_heads' THEN\n    IF NEW.idol_id <> OLD.idol_id OR NEW.idol_revision_id = OLD.idol_revision_id THEN\n      RAISE EXCEPTION 'idol publication head owner is immutable and revision must change'\n        USING ERRCODE = '55000';\n    END IF;\n  ELSIF TG_TABLE_NAME = 'gift_publication_heads' THEN\n    IF NEW.gift_id <> OLD.gift_id OR NEW.gift_revision_id = OLD.gift_revision_id THEN\n      RAISE EXCEPTION 'gift publication head owner is immutable and revision must change'\n        USING ERRCODE = '55000';\n    END IF;\n  ELSIF TG_TABLE_NAME = 'homepage_publication_heads' THEN\n    IF NEW.singleton_key <> OLD.singleton_key\n       OR NEW.homepage_revision_id = OLD.homepage_revision_id THEN\n      RAISE EXCEPTION 'homepage publication head owner is immutable and revision must change'\n        USING ERRCODE = '55000';\n    END IF;\n  ELSIF TG_TABLE_NAME = 'policy_publication_heads' THEN\n    IF NEW.policy_key <> OLD.policy_key OR NEW.policy_revision_id = OLD.policy_revision_id THEN\n      RAISE EXCEPTION 'policy publication head owner is immutable and revision must change'\n        USING ERRCODE = '55000';\n    END IF;\n  ELSIF TG_TABLE_NAME = 'media_metadata_publication_heads' THEN\n    IF NEW.media_asset_id <> OLD.media_asset_id\n       OR NEW.media_metadata_revision_id = OLD.media_metadata_revision_id THEN\n      RAISE EXCEPTION 'media publication head owner is immutable and revision must change'\n        USING ERRCODE = '55000';\n    END IF;\n  ELSIF TG_TABLE_NAME = 'site_locale_config_publication_heads' THEN\n    IF NEW.singleton_key <> OLD.singleton_key\n       OR NEW.site_locale_config_revision_id = OLD.site_locale_config_revision_id THEN\n      RAISE EXCEPTION 'locale-config publication head owner is immutable and revision must change'\n        USING ERRCODE = '55000';\n    END IF;\n  ELSIF TG_TABLE_NAME = 'price_book_publication_heads' THEN\n    IF NEW.market_id <> OLD.market_id OR NEW.market <> OLD.market\n       OR NEW.currency <> OLD.currency\n       OR (NEW.price_book_id = OLD.price_book_id\n           AND NEW.price_book_revision = OLD.price_book_revision) THEN\n      RAISE EXCEPTION 'price-book publication head owner is immutable and revision must change'\n        USING ERRCODE = '55000';\n    END IF;\n  ELSIF TG_TABLE_NAME = 'payment_config_publication_heads' THEN\n    IF NEW.singleton_key <> OLD.singleton_key OR NEW.config_kind <> OLD.config_kind\n       OR (NEW.config_version_id = OLD.config_version_id\n           AND NEW.config_version = OLD.config_version) THEN\n      RAISE EXCEPTION 'payment-config publication head owner is immutable and revision must change'\n        USING ERRCODE = '55000';\n    END IF;\n  ELSE\n    RAISE EXCEPTION 'unsupported publication head table: %', TG_TABLE_NAME\n      USING ERRCODE = '55000';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
+    },
+    {
+      "name": "guard_publication_runtime_lifecycle",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_publication_runtime_lifecycle()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE receipt_id uuid;\nBEGIN\n  IF NEW.lifecycle=OLD.lifecycle OR NEW.lifecycle NOT IN ('VALIDATED','PUBLISHED') THEN RETURN NEW; END IF;\n  SELECT r.id INTO receipt_id FROM public.content_publication_receipts r JOIN public.content_publication_manifests m ON m.id=r.manifest_id\n    WHERE coalesce(m.idol_revision_id,m.gift_revision_id,m.homepage_revision_id,m.policy_revision_id,m.media_metadata_revision_id)=NEW.id\n      AND r.action=CASE NEW.lifecycle WHEN 'VALIDATED' THEN 'VALIDATE' ELSE 'PUBLISH' END\n      AND r.created_at=CASE NEW.lifecycle WHEN 'VALIDATED' THEN NEW.validated_at ELSE NEW.published_at END;\n  IF receipt_id IS NULL THEN RAISE EXCEPTION 'new lifecycle transition requires its exact runtime receipt' USING ERRCODE='23514'; END IF;\n  RETURN NEW;\nEND; $function$"
     },
     {
       "name": "guard_published_price_mutation",
@@ -44533,6 +46505,116 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.lock_base_content_review_parent()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE parent_id uuid; translation_id uuid;\nBEGIN\n  translation_id := (to_jsonb(NEW)->>TG_ARGV[1])::uuid;\n  EXECUTE format('SELECT %I FROM %s WHERE id=$1',TG_ARGV[3],TG_ARGV[0]::regclass) INTO parent_id USING translation_id;\n  EXECUTE format('SELECT id FROM %s WHERE id=$1 FOR UPDATE',TG_ARGV[2]::regclass) USING parent_id;\n  EXECUTE format('SELECT id FROM %s WHERE id=$1 FOR UPDATE',TG_ARGV[0]::regclass) USING translation_id;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
+      "name": "publication_approval",
+      "identityArguments": "kind text, revision_id uuid, audit jsonb",
+      "resultType": "jsonb",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.publication_approval(kind text, revision_id uuid, audit jsonb)\n RETURNS jsonb\n LANGUAGE plpgsql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE parent_key text; paths text[];\nBEGIN\n parent_key:=CASE kind WHEN 'IDOL' THEN 'idolRevisionId' WHEN 'GIFT' THEN 'giftRevisionId' WHEN 'HOMEPAGE' THEN 'homepageRevisionId' WHEN 'POLICY' THEN 'policyRevisionId' ELSE 'mediaMetadataRevisionId' END;\n paths:=CASE kind WHEN 'IDOL' THEN ARRAY['displayName','shortBio','fullBio','seoTitle','seoDescription']\n  WHEN 'GIFT' THEN ARRAY['title','subtitle','shortDescription','description','fulfillmentDescription','variantLabels','safetyNotice','seoTitle','seoDescription']\n  WHEN 'HOMEPAGE' THEN ARRAY['heroTitle','heroSubtitle','ctaLabel','announcement','slotLabels','seoTitle','seoDescription']\n  WHEN 'POLICY' THEN ARRAY['title','summary','body'] ELSE ARRAY['alt','title','caption'] END;\n RETURN jsonb_strip_nulls(jsonb_build_object('schemaVersion',1,'objectKind',kind,'approvalId',audit->'reviewId','translationRevisionId',audit->'id',parent_key,revision_id,'locale',audit->'locale',\n   'approvedSourceHash',audit#>'{review,reviewedSourceHash}','approvedContentHash',audit#>'{review,reviewedContentHash}','origin',audit->'origin','importBatchId',audit->'importBatchId',\n   'editorId',audit->'editorId','reviewerId',audit#>'{review,reviewerId}','reviewedAt',audit#>'{review,reviewedAt}','reviewedFieldPaths',to_jsonb(paths)));\nEND; $function$"
+    },
+    {
+      "name": "publication_approved_review",
+      "identityArguments": "value jsonb, is_translation boolean",
+      "resultType": "jsonb",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.publication_approved_review(value jsonb, is_translation boolean)\n RETURNS jsonb\n LANGUAGE sql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT jsonb_build_object('status',value->'status','reviewerId',value->'reviewer_id','reviewedAt',public.publication_utc((value->>'reviewed_at')::timestamptz),'reviewedContentHash',value->'reviewed_content_hash')\n || CASE WHEN is_translation THEN jsonb_build_object('reviewedSourceHash',value->'reviewed_source_hash') ELSE '{}'::jsonb END\n$function$"
+    },
+    {
+      "name": "publication_asset",
+      "identityArguments": "value jsonb",
+      "resultType": "jsonb",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.publication_asset(value jsonb)\n RETURNS jsonb\n LANGUAGE sql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT public.publication_pick_fields(value,ARRAY['schemaVersion','id','checksumSha256','mimeType','width','height','byteSize','objectKey'])||jsonb_build_object('createdAt',public.publication_utc((value->>'created_at')::timestamptz))\n$function$"
+    },
+    {
+      "name": "publication_legacy_json_number",
+      "identityArguments": "value jsonb",
+      "resultType": "text",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.publication_legacy_json_number(value jsonb)\n RETURNS text\n LANGUAGE sql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n  SELECT trim_scale((value#>>'{}')::numeric)::text\n$function$"
+    },
+    {
+      "name": "publication_legacy_snapshot_json",
+      "identityArguments": "value jsonb",
+      "resultType": "text",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.publication_legacy_snapshot_json(value jsonb)\n RETURNS text\n LANGUAGE plpgsql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE result text;\nBEGIN\n  CASE jsonb_typeof(value)\n    WHEN 'object' THEN\n      SELECT '{'||coalesce(string_agg(to_json(key)::text||':'||public.publication_legacy_snapshot_json(child),',' ORDER BY key COLLATE \"C\"),'')||'}'\n      INTO result FROM jsonb_each(value) AS entry(key,child);\n    WHEN 'array' THEN\n      SELECT '['||coalesce(string_agg(public.publication_legacy_snapshot_json(child),',' ORDER BY position),'')||']'\n      INTO result FROM jsonb_array_elements(value) WITH ORDINALITY AS entry(child,position);\n    WHEN 'string' THEN result:=to_json(normalize(value#>>'{}',NFC))::text;\n    WHEN 'number' THEN result:=public.publication_legacy_json_number(value);\n    ELSE result:=value::text;\n  END CASE;\n  RETURN result;\nEND; $function$"
+    },
+    {
+      "name": "publication_media_references",
+      "identityArguments": "value jsonb",
+      "resultType": "TABLE(asset_id uuid, metadata_id uuid)",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.publication_media_references(value jsonb)\n RETURNS TABLE(asset_id uuid, metadata_id uuid)\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE kind text:=value#>>'{target,kind}'; target_revision uuid:=(value->>'revisionId')::uuid;\nBEGIN\n IF kind='IDOL' THEN RETURN QUERY SELECT media_asset_id,media_metadata_revision_id FROM public.idol_revision_media WHERE idol_revision_id=target_revision;\n ELSIF kind='GIFT' THEN\n  RETURN QUERY SELECT media_asset_id,media_metadata_revision_id FROM public.gift_revision_media WHERE gift_revision_id=target_revision UNION SELECT b.media_asset_id,b.media_metadata_revision_id FROM public.gift_detail_documents d JOIN public.gift_detail_blocks b ON b.document_id=d.id WHERE d.gift_revision_id=target_revision AND b.kind='MEDIA';\n ELSIF kind='HOMEPAGE' THEN\n  RETURN QUERY SELECT desktop_media_asset_id,desktop_media_metadata_revision_id FROM public.homepage_slots h WHERE homepage_revision_id=target_revision AND h.kind='HERO_IDOL' UNION SELECT mobile_media_asset_id,mobile_media_metadata_revision_id FROM public.homepage_slots h WHERE homepage_revision_id=target_revision AND h.kind='HERO_IDOL';\n ELSIF kind='MEDIA_METADATA' THEN RETURN QUERY SELECT media_asset_id,id FROM public.media_metadata_revisions WHERE id=target_revision;\n END IF;\nEND; $function$"
+    },
+    {
+      "name": "publication_pick_fields",
+      "identityArguments": "row_value jsonb, field_names text[]",
+      "resultType": "jsonb",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.publication_pick_fields(row_value jsonb, field_names text[])\n RETURNS jsonb\n LANGUAGE plpgsql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE result jsonb:='{}'; field text; source text; value jsonb;\nBEGIN\n  FOREACH field IN ARRAY field_names LOOP\n    source:=lower(regexp_replace(field,'([A-Z])','_\\1','g'));\n    value:=row_value->source;\n    IF value IS NOT NULL AND value<>'null'::jsonb THEN result:=result||jsonb_build_object(field,value); END IF;\n  END LOOP;\n  RETURN result;\nEND; $function$"
+    },
+    {
+      "name": "publication_same_set",
+      "identityArguments": "left_value jsonb, right_value jsonb",
+      "resultType": "boolean",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.publication_same_set(left_value jsonb, right_value jsonb)\n RETURNS boolean\n LANGUAGE sql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n  SELECT coalesce(jsonb_typeof(left_value)='array' AND jsonb_typeof(right_value)='array'\n    AND left_value @> right_value AND right_value @> left_value AND jsonb_array_length(left_value)=jsonb_array_length(right_value),false)\n$function$"
+    },
+    {
+      "name": "publication_snapshot_hash",
+      "identityArguments": "value jsonb, lifecycle jsonb",
+      "resultType": "text",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.publication_snapshot_hash(value jsonb, lifecycle jsonb)\n RETURNS text\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\n SET \"TimeZone\" TO 'UTC'\nAS $function$\nBEGIN\n  RETURN encode(sha256(convert_to(public.publication_legacy_snapshot_json(jsonb_build_object('purpose','content-authoring-snapshot-v1','snapshot',public.publication_snapshot_payload(value,lifecycle))),'UTF8')),'hex');\nEND; $function$"
+    },
+    {
+      "name": "publication_snapshot_payload",
+      "identityArguments": "value jsonb, lifecycle jsonb",
+      "resultType": "jsonb",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.publication_snapshot_payload(value jsonb, lifecycle jsonb)\n RETURNS jsonb\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\n SET \"TimeZone\" TO 'UTC'\nAS $function$\nDECLARE kind text:=value#>>'{target,kind}'; revision_id uuid:=(value->>'revisionId')::uuid; prefix text; parent_column text; translation_column text;\n  parent jsonb; translation jsonb; review jsonb; source jsonb; audit jsonb; fields jsonb; item jsonb; content jsonb:=value->'content'; extensions jsonb:=value->'extensions';\n  translations jsonb:='[]'; audits jsonb:='[]'; rows jsonb; detail_translations jsonb:='[]'; text_details jsonb:='[]'; blocks jsonb; block jsonb; items jsonb;\nBEGIN\n  PERFORM public.assert_publication_manifest_revision(value);\n  prefix:=lower(kind); parent_column:=prefix||'_revision_id'; translation_column:=prefix||'_translation_id';\n  EXECUTE format('SELECT to_jsonb(p.*) FROM public.%I p WHERE id=$1',prefix||'_revisions') INTO parent USING revision_id;\n  FOR translation,review IN EXECUTE format('SELECT to_jsonb(t.*),to_jsonb(r.*) FROM public.%I t JOIN LATERAL(SELECT * FROM public.%I WHERE %I=t.id ORDER BY sequence DESC LIMIT 1) r ON true WHERE t.%I=$1 ORDER BY t.locale',prefix||'_revision_translations',prefix||'_translation_reviews',translation_column,parent_column) USING revision_id LOOP\n    SELECT entry INTO source FROM jsonb_array_elements(content->'translations') entry WHERE entry->>'locale'=translation->>'locale';\n    fields:=source->'fields';\n    IF kind='GIFT' THEN\n      SELECT coalesce(jsonb_agg(public.publication_pick_fields(to_jsonb(r.*),ARRAY['giftVariantId','label']) ORDER BY gift_variant_id),'[]') INTO rows FROM public.gift_variant_labels r WHERE gift_translation_id=(translation->>'id')::uuid;\n      fields:=jsonb_set(fields,'{variantLabels}',rows);\n    ELSIF kind='HOMEPAGE' THEN\n      SELECT coalesce(jsonb_agg(public.publication_pick_fields(to_jsonb(r.*),ARRAY['slotKey','label']) ORDER BY slot_key),'[]') INTO rows FROM public.homepage_slot_translations r WHERE homepage_translation_id=(translation->>'id')::uuid;\n      fields:=jsonb_set(fields,'{slotLabels}',rows);\n    END IF;\n    translations:=translations||jsonb_build_array(jsonb_set(source,'{fields}',fields));\n    SELECT entry INTO audit FROM jsonb_array_elements(value->'translationAudits') entry WHERE entry->>'locale'=translation->>'locale';\n    audit:=jsonb_set(audit,'{editedAt}',translation->'edited_at');\n    audit:=jsonb_set(audit,'{review}',jsonb_build_object('status',review->'status')||public.publication_pick_fields(review,ARRAY['submittedAt','reviewerId','reviewedAt','reviewedSourceHash','reviewedContentHash']));\n    audits:=audits||jsonb_build_array(audit);\n  END LOOP;\n  content:=jsonb_set(content,'{translations}',translations);\n  IF kind IN ('IDOL','GIFT') THEN\n    EXECUTE format('SELECT coalesce(jsonb_agg(public.publication_pick_fields(to_jsonb(r.*),ARRAY[''role'',''mediaAssetId'',''mediaMetadataRevisionId'',''sortOrder'']) ORDER BY role,sort_order),''[]'') FROM public.%I r WHERE %I=$1',prefix||'_revision_media',parent_column) INTO rows USING revision_id;\n    content:=jsonb_set(content,'{media}',rows);\n  END IF;\n  IF kind='IDOL' AND extensions ? 'aliases' THEN\n    SELECT coalesce(jsonb_agg(jsonb_build_object('id',a.alias_id,'locale',a.locale,'text',a.text) ORDER BY a.position),'[]') INTO rows\n      FROM public.idol_revision_aliases a JOIN public.idol_revision_alias_sets s ON s.id=a.alias_set_id WHERE s.idol_revision_id=revision_id;\n    content:=jsonb_set(content,'{aliases}',rows); extensions:=jsonb_set(extensions,'{aliases,aliases}',rows);\n  ELSIF kind='GIFT' THEN\n    SELECT coalesce(jsonb_agg(public.publication_pick_fields(to_jsonb(r.*),ARRAY['componentCode','quantity','unit']) ORDER BY component_code),'[]') INTO rows FROM public.gift_revision_contents r WHERE gift_revision_id=revision_id;\n    content:=jsonb_set(content,'{structure,contents}',rows);\n    IF extensions ? 'details' THEN\n      FOR item IN SELECT entry FROM jsonb_array_elements(extensions#>'{details,translations}') entry ORDER BY (entry->>'locale')::public.supported_locale LOOP\n        blocks:='[]';\n        FOR block IN SELECT entry FROM jsonb_array_elements(item->'blocks') entry ORDER BY entry->>'blockId' LOOP\n          IF block->>'kind' IN ('LIST','SPECIFICATIONS') THEN\n            SELECT jsonb_agg(entry ORDER BY entry->>'itemId') INTO items FROM jsonb_array_elements(block->'items') entry;\n            block:=jsonb_set(block,'{items}',items);\n          END IF;\n          blocks:=blocks||jsonb_build_array(block);\n        END LOOP;\n        item:=jsonb_set(item,'{blocks}',blocks);\n        detail_translations:=detail_translations||jsonb_build_array(item);\n        text_details:=text_details||jsonb_build_array((item-ARRAY['schemaVersion','id','documentId','giftRevisionId','sourceHash','translatedFromSourceHash','editorId','editedAt','review']));\n      END LOOP;\n      extensions:=jsonb_set(extensions,'{details,translations}',detail_translations);\n      content:=jsonb_set(content,'{details,translations}',text_details);\n    END IF;\n  ELSIF kind='HOMEPAGE' THEN\n    SELECT coalesce(jsonb_agg(public.publication_pick_fields(to_jsonb(r.*),ARRAY['slotKey','kind','idolId','giftId','policyKey','desktopMediaAssetId','desktopMediaMetadataRevisionId','mobileMediaAssetId','mobileMediaMetadataRevisionId','sortOrder']) ORDER BY sort_order),'[]') INTO rows FROM public.homepage_slots r WHERE homepage_revision_id=revision_id;\n    content:=jsonb_set(content,'{structure,slots}',rows);\n  ELSIF kind='POLICY' THEN\n    content:=jsonb_set(content,'{structure,effectiveAt}',parent->'effective_at');\n  END IF;\n  RETURN jsonb_set(jsonb_set(jsonb_set(jsonb_set(value,'{createdAt}',parent->'created_at'),'{content}',content),'{translationAudits}',audits),'{extensions}',extensions)\n    ||jsonb_build_object('lifecycle',lifecycle);\nEND; $function$"
+    },
+    {
+      "name": "publication_utc",
+      "identityArguments": "value timestamp with time zone",
+      "resultType": "text",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.publication_utc(value timestamp with time zone)\n RETURNS text\n LANGUAGE sql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$ SELECT to_char(value AT TIME ZONE 'UTC','YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"') $function$"
     },
     {
       "name": "validate_cart_item_commerce_context",

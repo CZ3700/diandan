@@ -1,4 +1,12 @@
 import {
+  registerPublicationRuntimeRoute,
+  type PublicationRuntimeRouteDependencies,
+} from "./publication-runtime-route.js";
+import {
+  registerPublishedContentRoute,
+  type PublishedContentRouteDependencies,
+} from "./published-content-route.js";
+import {
   registerPublicationPreflightRoute,
   type PublicationPreflightRouteDependencies,
 } from "./publication-preflight-route.js";
@@ -51,6 +59,10 @@ export type ApiLifecycleResource = Readonly<{
 }>;
 
 export type CreateApiApplicationOptions = Readonly<{
+  publicationRuntimeRoute?: PublicationRuntimeRouteDependencies;
+  publicationRuntimeLifecycle?: ApiLifecycleResource;
+  publishedContentRoute?: PublishedContentRouteDependencies;
+  publishedContentRuntime?: ApiLifecycleResource;
   resourceManagementRoute?: ResourceManagementRouteDependencies;
   resourceManagementRuntime?: ApiLifecycleResource;
   publicationPreflightRoute?: PublicationPreflightRouteDependencies;
@@ -78,6 +90,8 @@ function registerApiLifecycle(
     | "API content authoring"
     | "API base content"
     | "API publication preflight"
+    | "API publication runtime"
+    | "API published content"
     | "API resource management",
 ): void {
   if (runtime === undefined) {
@@ -160,6 +174,26 @@ export async function createApiApplication(
     registerPublicationPreflightRoute(
       adapter.getInstance(),
       options.publicationPreflightRoute,
+    );
+  registerApiLifecycle(
+    adapter,
+    options.publicationRuntimeLifecycle,
+    "API publication runtime",
+  );
+  registerApiLifecycle(
+    adapter,
+    options.publishedContentRuntime,
+    "API published content",
+  );
+  if (options.publicationRuntimeRoute !== undefined)
+    registerPublicationRuntimeRoute(
+      adapter.getInstance(),
+      options.publicationRuntimeRoute,
+    );
+  if (options.publishedContentRoute !== undefined)
+    registerPublishedContentRoute(
+      adapter.getInstance(),
+      options.publishedContentRoute,
     );
   registerApiLifecycle(adapter, options.baseContentRuntime, "API base content");
   if (options.baseContentRoute !== undefined)

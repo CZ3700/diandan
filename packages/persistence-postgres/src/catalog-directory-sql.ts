@@ -25,6 +25,21 @@ function versionState(includeCommerce: boolean): string {
       `SELECT jsonb_build_array(idol_translation_id, source_hash, algorithm_version, normalized_name) value FROM public.idol_translation_search_projections`,
     ),
     aggregateState(
+      `SELECT jsonb_build_array(alias_set_id,alias_id,content_hash,algorithm_version,normalized_name) value FROM public.idol_alias_search_projections`,
+    ),
+    aggregateState(
+      `SELECT jsonb_build_array(id,idol_revision_id,content_hash,alias_count) value FROM public.idol_revision_alias_sets`,
+    ),
+    aggregateState(
+      `SELECT jsonb_build_array(id,alias_set_id,sequence,status,reviewed_content_hash) value FROM public.idol_revision_alias_reviews`,
+    ),
+    aggregateState(
+      `SELECT jsonb_build_array(id,publication_id,manifest_hash) value FROM public.content_publication_manifests`,
+    ),
+    aggregateState(
+      `SELECT jsonb_build_array(id,source_asset_id,output_asset_id,status) value FROM public.media_processing_jobs`,
+    ),
+    aggregateState(
       `SELECT jsonb_build_array(id, processing_status, rights_status) value FROM public.media_assets`,
     ),
     aggregateState(
@@ -76,9 +91,8 @@ function versionState(includeCommerce: boolean): string {
   return `version_state AS (SELECT encode(sha256(convert_to(jsonb_build_array(${states.join(",\n")})::text, 'UTF8')), 'hex') AS catalog_version)`;
 }
 
-const visibleIdols = `visible_idols AS (
-  SELECT idol.id, idol.handle, revision.display_order, requested_translation.id translation_id,
-    projection.normalized_name, projection.idol_translation_id projection_id
+const visibleIdols = `public_idol_revisions AS (
+  SELECT idol.id,idol.handle,revision.id revision_id,revision.display_order,publication.proof_version
   FROM public.idols idol
   JOIN public.idol_publication_heads head ON head.idol_id = idol.id
     AND head.idol_revision_id = idol.published_revision_id
@@ -88,12 +102,29 @@ const visibleIdols = `visible_idols AS (
   JOIN public.idol_revisions revision ON revision.id = head.idol_revision_id
     AND revision.idol_id = idol.id
     AND revision.lifecycle = CASE publication.action WHEN 'PUBLISH' THEN 'PUBLISHED' ELSE 'SUPERSEDED' END
-  LEFT JOIN public.idol_revision_translations requested_translation ON requested_translation.idol_revision_id = revision.id AND requested_translation.locale = $1
-  LEFT JOIN public.idol_revision_translations translation ON translation.idol_revision_id = revision.id
-  LEFT JOIN public.idol_translation_search_projections projection ON projection.idol_translation_id = translation.id
-    AND projection.source_hash = translation.source_hash AND projection.algorithm_version = 1
   WHERE idol.status IN ('active', 'paused')
     AND NOT EXISTS (SELECT 1 FROM public.content_publications successor WHERE successor.replaces_publication_id = publication.id)
+), visible_idols AS (
+  SELECT revision.id,revision.handle,revision.display_order,requested_translation.id translation_id,
+    projection.normalized_name,projection.idol_translation_id projection_id
+  FROM public_idol_revisions revision
+  LEFT JOIN public.idol_revision_translations requested_translation ON requested_translation.idol_revision_id = revision.revision_id AND requested_translation.locale = $1
+  LEFT JOIN public.idol_revision_translations translation ON translation.idol_revision_id = revision.revision_id
+  LEFT JOIN public.idol_translation_search_projections projection ON projection.idol_translation_id = translation.id
+    AND projection.source_hash = translation.source_hash AND projection.algorithm_version = 1
+  UNION ALL
+  SELECT revision.id,revision.handle,revision.display_order,requested_translation.id translation_id,
+    alias_projection.normalized_name,alias_projection.alias_set_id projection_id
+  FROM public_idol_revisions revision
+  JOIN public.idol_revision_alias_sets alias_set ON alias_set.idol_revision_id=revision.revision_id
+  JOIN public.idol_revision_aliases alias ON alias.alias_set_id=alias_set.id
+  LEFT JOIN public.idol_revision_translations requested_translation ON requested_translation.idol_revision_id=revision.revision_id AND requested_translation.locale = $1
+  LEFT JOIN public.idol_revision_alias_reviews alias_review ON alias_review.alias_set_id=alias_set.id
+    AND alias_review.sequence=3 AND alias_review.status = 'APPROVED' AND alias_review.reviewed_content_hash = alias_set.content_hash
+  LEFT JOIN public.idol_alias_search_projections alias_projection ON alias_projection.alias_set_id=alias_set.id
+    AND alias_projection.alias_id=alias.alias_id AND alias_projection.content_hash = alias_set.content_hash
+    AND alias_projection.algorithm_version=1 AND alias_review.id IS NOT NULL
+  WHERE revision.proof_version=2
 )`;
 
 export function buildIdolDirectoryQuery(

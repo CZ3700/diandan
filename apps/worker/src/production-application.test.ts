@@ -13,7 +13,8 @@ const resource = () => ({
 
 it("wires media and reliable event runtimes into the production worker", async () => {
   const reliable = resource(),
-    media = resource();
+    media = resource(),
+    purge = resource();
   const application = {} as NestFastifyApplication;
   const createApplication = vi.fn(async () => application);
   expect(production.createProductionWorkerApplication).toBeTypeOf("function");
@@ -26,19 +27,26 @@ it("wires media and reliable event runtimes into the production worker", async (
           createApplication,
           createReliableComposition: () => reliable,
           createMediaComposition: async () => media,
+          createPurgeComposition: async () => purge,
         },
       },
     ),
   ).resolves.toBe(application);
   expect(createApplication).toHaveBeenCalledWith(
     {},
-    { logger, reliableEventsRuntime: reliable, mediaProcessingRuntime: media },
+    {
+      logger,
+      reliableEventsRuntime: reliable,
+      mediaProcessingRuntime: media,
+      publicationPurgeRuntime: purge,
+    },
   );
 });
 
 it("releases constructed resources when worker creation fails", async () => {
   const reliable = resource(),
-    media = resource();
+    media = resource(),
+    purge = resource();
   const failure = new Error("controlled startup failure");
   await expect(
     production.createProductionWorkerApplication(
@@ -51,12 +59,14 @@ it("releases constructed resources when worker creation fails", async () => {
           },
           createReliableComposition: () => reliable,
           createMediaComposition: async () => media,
+          createPurgeComposition: async () => purge,
         },
       },
     ),
   ).rejects.toBe(failure);
   expect(reliable.stop).toHaveBeenCalledTimes(1);
   expect(media.stop).toHaveBeenCalledTimes(1);
+  expect(purge.stop).toHaveBeenCalledTimes(1);
 });
 
 it("releases the reliable queue if media composition cannot be constructed", async () => {
