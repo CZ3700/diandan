@@ -22,6 +22,11 @@ export interface ImageMaster extends ImageArtifact {
   orientation: number;
   plan: MediaImageProcessingSuccess["plan"];
 }
+interface SourceImageMetadata {
+  width: number;
+  height: number;
+  orientation: number;
+}
 
 function matchesHeader(
   bytes: Buffer,
@@ -111,15 +116,15 @@ function inputPipeline(bytes: Buffer, budget: ProcessingBudget): Sharp {
   }).timeout({ seconds: budget.codecSeconds() });
 }
 
-/** Decode into metadata-free sRGB pixels before applying the pure framing geometry. */
-export async function createImageMaster(
+/** Header inspection is only a bound and format check; callers must also decode all pixels. */
+export async function readSourceImageMetadata(
   bytes: Buffer,
-  command: MediaImageProcessingCommand,
+  mimeType: MediaImageProcessingCommand["source"]["mimeType"],
   budget: ProcessingBudget,
-): Promise<ImageMaster> {
-  if (!matchesHeader(bytes, command.source.mimeType))
+): Promise<SourceImageMetadata> {
+  if (!matchesHeader(bytes, mimeType))
     throw new ProcessingFailure("MIME_MISMATCH");
-  if (command.source.mimeType === "image/png" && isAnimatedPng(bytes))
+  if (mimeType === "image/png" && isAnimatedPng(bytes))
     throw new ProcessingFailure("INVALID_IMAGE");
   // metadata() reads headers only; pixel allocation is limited on every actual decode below.
   const metadata = await codec(() =>
@@ -129,22 +134,69 @@ export async function createImageMaster(
   );
   if (metadata.width * metadata.height > MEDIA_IMAGE_PROFILE.sourcePixelLimit)
     throw new ProcessingFailure("PIXEL_LIMIT_EXCEEDED");
+  if (
+    !Number.isInteger(metadata.width) ||
+    !Number.isInteger(metadata.height) ||
+    metadata.width < 1 ||
+    metadata.width > 20_000 ||
+    metadata.height < 1 ||
+    metadata.height > 20_000
+  )
+    throw new ProcessingFailure("INVALID_IMAGE");
   if ((metadata.pages ?? 1) !== 1 || (metadata.delay?.length ?? 0) > 1)
     throw new ProcessingFailure("INVALID_IMAGE");
   const actualMime =
     metadata.format === "heif" && metadata.compression === "av1"
       ? "image/avif"
       : `image/${metadata.format}`;
-  if (actualMime !== command.source.mimeType)
-    throw new ProcessingFailure("MIME_MISMATCH");
+  if (actualMime !== mimeType) throw new ProcessingFailure("MIME_MISMATCH");
+  const orientation = metadata.orientation ?? 1;
+  if (!Number.isInteger(orientation) || orientation < 1 || orientation > 8)
+    throw new ProcessingFailure("INVALID_IMAGE");
+  return { width: metadata.width, height: metadata.height, orientation };
+}
+
+/** Force complete, warning-free decoding; metadata-only probes cannot verify image integrity. */
+export async function decodeSourcePixels(
+  bytes: Buffer,
+  metadata: SourceImageMetadata,
+  budget: ProcessingBudget,
+) {
+  const decoded = await codec(() =>
+    inputPipeline(bytes, budget)
+      .autoOrient()
+      .toColourspace("srgb")
+      .flatten({ background: MEDIA_IMAGE_PROFILE.neutral })
+      .raw()
+      .toBuffer({ resolveWithObject: true }),
+  );
+  const swapped = metadata.orientation >= 5;
+  if (
+    decoded.info.width !== (swapped ? metadata.height : metadata.width) ||
+    decoded.info.height !== (swapped ? metadata.width : metadata.height) ||
+    decoded.info.channels !== 3
+  )
+    throw new ProcessingFailure("INVALID_IMAGE");
+  return decoded;
+}
+
+/** Decode into metadata-free sRGB pixels before applying the pure framing geometry. */
+export async function createImageMaster(
+  bytes: Buffer,
+  command: MediaImageProcessingCommand,
+  budget: ProcessingBudget,
+): Promise<ImageMaster> {
+  const metadata = await readSourceImageMetadata(
+    bytes,
+    command.source.mimeType,
+    budget,
+  );
   if (
     metadata.width !== command.source.width ||
     metadata.height !== command.source.height
   )
     throw new ProcessingFailure("DIMENSION_MISMATCH");
-  const orientation = metadata.orientation ?? 1;
-  if (!Number.isInteger(orientation) || orientation < 1 || orientation > 8)
-    throw new ProcessingFailure("INVALID_IMAGE");
+  const { orientation } = metadata;
   const swapped = orientation >= 5;
   const framing = planMediaFraming({
     schemaVersion: 1,
@@ -163,21 +215,8 @@ export async function createImageMaster(
         ? "SOURCE_TOO_SMALL"
         : "INVALID_COMMAND",
     );
-  const decoded = await codec(() =>
-    inputPipeline(bytes, budget)
-      .autoOrient()
-      .toColourspace("srgb")
-      .flatten({ background: MEDIA_IMAGE_PROFILE.neutral })
-      .raw()
-      .toBuffer({ resolveWithObject: true }),
-  );
+  const decoded = await decodeSourcePixels(bytes, metadata, budget);
   const { plan } = framing;
-  if (
-    decoded.info.width !== plan.request.sourceWidth ||
-    decoded.info.height !== plan.request.sourceHeight ||
-    decoded.info.channels !== 3
-  )
-    throw new ProcessingFailure("INVALID_IMAGE");
   const { sourceCrop: crop, destination: destination, target } = plan;
   const masterBytes = await codec(() =>
     sharp(decoded.data, {

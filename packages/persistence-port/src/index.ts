@@ -310,3 +310,5 @@ export type {
 
 export * from "./content-authoring.js";
 export * from "./base-content.js";
+
+export * from "./resource-management.js";

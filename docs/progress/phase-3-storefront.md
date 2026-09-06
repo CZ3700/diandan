@@ -12,7 +12,7 @@
 
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
-| P3-01 | IN_PROGRESS | Codex `/root` | P1-02、P1-04、P1-05、P1-06 | 检查点 1、2A、2B、3A、3B、4A 已验证；后续为媒体/政策管理、完整验证与发布/回退/purge |
+| P3-01 | IN_PROGRESS | Codex `/root` | P1-02、P1-04、P1-05、P1-06 | 检查点 1、2A、2B、3A、3B、4A、4B 已验证；下一项为4C完整验证与发布/回退/purge |
 | P3-02 | PENDING | — | P2-03、P3-01 | Admin 首页/偶像别名/媒体构图与预览/翻译矩阵/审核 UI |
 | P3-03 | PENDING | — | P2-03、P3-01 | Admin 受控详情块/七语言礼物/价格/库存 UI |
 | P3-04 | PENDING | — | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
@@ -43,6 +43,29 @@
 - 并行：root 独占共享 exports/artifact registry/生成产物/计划与进度；每个检查点在实施前登记子模块文件所有权，以下执行登记为准。旧媒体构图与详情规则子模块属于检查点 1。
 - 验证：新行为先失败测试；输入边界、Unicode、翻页稳定性/上下文隔离、混合比例/焦点/低像素、块结构与翻译一致性；随后受影响 tests、format/lint/typecheck/build 和全仓 check。运行时检查点必须补真实 PostgreSQL/S3、权限/preview、原子发布/回退/purge 重试集成；前台接入时再做 390×844/1440×900 七语言/键盘/reduced-motion。
 - 风险：R-08 内容发布/失效、R-11 异步可靠性、R-14 完整验证、R-17 语言隔离；原媒体比例校验、旧 plain-text description 与冻结 v1 数据均需兼容迁移，不静默放宽现有生产发布门。
+
+## P3-01 检查点 4B 执行登记（2026-09-06）
+
+- Owner：Codex `/root`，Lane C 唯一 executor；开始 2026-09-06T07:52:06.944936Z。4A 已验收，本轮继续媒体与政策管理入口。
+- 输出：政策稳定 owner READ/REGISTER；媒体私有签名上传、服务端真实字节与完整解码后登记、受权媒体/任务状态读取、版权事件、构图任务入队及保留历史的人工重试。新原图/角色 master 的版权与七语言 metadata 仍独立审核，不自动发布。
+- 合同与边界：旧 246 roots 保持；新 admin-resource 授权与可序列化命令/port，0017 增量迁移。上传预留/最终登记为短事务；签名、下载、解码不持数据库事务。登记再次校验当前 session/MFA/RBAC、固定 key/hash/size/MIME、版本/期限；不信任浏览器尺寸或“已验证”标志。失败无永久 IN_PROGRESS 幂等残留。
+- 历史：人工重试创建新 generation 和父任务 FK，原 job/attempt/output 不改；普通 enqueue 保持根任务去重。版权引用另存 append-only 事件，只改当前 rights_status，不改旧不可变 rights_reference；读取资格须检查来源 provenance。政策注册写专属 UUID 审计收据，同 key 不同 kind 拒绝，后接 3B 作者 API。
+- 所有权：root 独占合同/port/共享导出/生成物/根组合/计划和 Git；auth_persistence_audit 在合同冻结后独占0017、资源管理授权/仓储/真实PG及旧enqueue必要适配；content_review_audit 独占纯校验/Application与独立原图 inspection adapter；admin_transport 独占新管理route/真实HTTP/TLS S3闭环 harness。不同文件并行，非作者先规范复核再质量复核。
+- 验证：先 RED；伪 MIME/损坏/多帧/EXIF/尺寸预算、去重不覆盖、跨票/撤权/到期、版权独立/来源撤权、政策首次创建、idem重放/并发/审计失败回滚、六次终止后新代重试；实际PG+TLS S3+HTTP+真实图片处理，受影响测试、全仓check、浏览器共享输入刷新及S.U.P.E.R。
+- Git：已验收历史保存为本地 `1924df4`，分支 `codex/p3-01-content-runtime`；用户确认本地可独立开发时先按检查点本地提交，最终统一推送。当前不push/merge；原始真机/诊断日志与大量历史截图保留本地。发布/回退/outbox/purge仍为后续 P3-01 退出要求。
+
+### 检查点 4B 验证记录（2026-09-06 本地验收通过）
+
+- 交付：10 个私有管理 POST；政策稳定 owner 注册/读取，原图预约/签名上传/完整解码可信登记，媒体/任务读取，版权事件，构图入队与失败任务新代重试。政策和媒体 metadata 首次 authoring 与独立审核已覆盖七语言；本轮是接口与处理链路，不是后台业务页面或正式管理员登录。
+- 合同/数据库：新增 28 roots，共 274；旧 246 定义深比较不变。0017 四张专属关系表，总计 17 迁移/136 表；不可变上传预约、版权连续版本、重试代次/前驱和精确 actor/session/audit 由正常 PostgreSQL 约束保护。
+- 上传与历史：签名最多 300 秒、预约最多 900 秒且受当前会话上限约束；网络与完整解码在事务外，登记重新授权并检查固定身份/版本。只按实际验证后的 SOURCE checksum 去重，保留既有资产与最初版权证据。同 key COMPLETE 已完成重放仍先当前授权；过期/已登记 BEGIN 不再签发。FAILED 新代不改旧 job/attempt/output，普通 enqueue 只去重 generation 1。
+- 版权与媒体资格：原图初始 processing/rights=PENDING，metadata 后续 authoring 创建；原图保留私有源信息，processor 才剥离 EXIF。每个公开媒体行须有明确 true 来源资格，false/null/缺失拒绝整份快照；真实 worker master 来源撤权/恢复导致资格 true→false→true，尚不代表 CDN 已刷新。
+- 专项：1197 tests（contracts 238/content 149/application 264/port 4/PostgreSQL 317/API 78/image 68/S3 79），真实资源 PG 129、时序 10、nested/composition unit 41、旧目录 PG 307/旧媒体 PG 152 均 PASS。真实 Nest/Fastify+PG+TLS S3+Chrome+worker 为 1798 断言/159 请求，13 个产物实际下载核对字节/尺寸/metadata；Chrome 自动 OPTIONS/PUT 与拒绝来源无对象落库，Node 独立验证 TLS 链。
+- RED→GREEN：短会话上传允许 1 秒起且固定实际 S3 signingDate；45 秒+789 微秒的票/返回 grant/签名截止均不越会话。内部 GET 的真实适配器逻辑 1ms 探针（网络 I/O stubbed）6 断言通过，内部有效期改为120秒但下载最小策略/用户权限/处理预算不变。nested 冲突不再误报503，保留409；审计故障同事务回滚且同 key 可恢复。
+- 全仓中间记录：首次在旧3A review authorization 断言间歇失败，12 次自然诊断各110断言均通过，原始原因未确认。只加固旧harness：明确grant完整/时钟生效前置条件、有界等待、受控查询时钟回拨与安全诊断，112断言PASS；不改生产权限/TTL/DDL，不无条件重试授权。第二次实际PG/HTTP/S3/worker全过后在lint发现3项规范问题，已仅改2处类型写法；完整lint与typecheck/test/build预检105任务通过。两次失败日志保留；最终统一 `mise exec node@24.20.0 -- corepack pnpm check` exit 0，typecheck 56/56、test 56/56、build 35/35（最终均cached），31个package exports、format/lint/架构/合同及全部真实PG/HTTP/S3/worker（423断言）通过。
+- 浏览器：P2-04为16场景/18 PNG/10 axe零违规；P2-05为8场景/22 PNG/3 axe，critical/serious零，保留3条既有heading-order moderate。覆盖七语言/伪语言、390×844/1440×900等视口、键盘/reduced-motion/错误/原生200%缩放；root实际检查双端composite与motion Hero。最后harness/type-only修正没有改变任何渲染输入。无新增真机证据，原P2-05原始报告保留physical-device gate。
+- 复核/证据：三位子代理分别对非本人模块规范与质量复核 ACCEPT，追加3A fixture和两处类型修正复核ACCEPT。证据与复跑说明 `output/checks/p3-01-resource-management/README.md`、`validation.json`、`independent-review.md`、`HTTP-README.md`；913个最终实现/测试/迁移/配置/相关指导文件与确定性探针输入，SHA256 `efbc99d4266b27e32ed54cbba2ac29370d53bbbfd0446de6195bc94f1050976a`。排除docs/与验收文档，包含6个实现相关Markdown；最终913个输入匹配，secret scan与git diff --check均PASS。S.U.P.E.R：1模块单责、2函数单责、3单向依赖、4无环、5schema边界、6可序列化、7外部配置、8明确依赖、9可替换ports、10最终全仓测试均PASS，逐项依据见README。
+- 边界与下一入口：私有PUT在原TTL内可能继续可用，最终登记仍拒绝撤权会话；无引用私有对象保留待可审计清理。继续运行时计划4C：完整revision验证、原子publish/rollback、公开扩展DTO/manifest/head、别名投影、七语言outbox/purge与本地≤60秒可见性。P3-01仍IN_PROGRESS，49项仍17 DONE/1 IN_PROGRESS/31 PENDING，不解锁P3-02至06；无正式素材/生产登录/云CDN/PSP/staging/远端CI或生产发布结论。按用户选择保留本地检查点提交，最后统一推送GitHub。
 
 ## P3-01 检查点 4A 执行登记（2026-09-06）
 

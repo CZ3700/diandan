@@ -463,6 +463,10 @@
       "kind": "TABLE"
     },
     {
+      "name": "media_processing_admin_receipts",
+      "kind": "TABLE"
+    },
+    {
       "name": "media_processing_attempts",
       "kind": "TABLE"
     },
@@ -472,6 +476,14 @@
     },
     {
       "name": "media_processing_outputs",
+      "kind": "TABLE"
+    },
+    {
+      "name": "media_rights_events",
+      "kind": "TABLE"
+    },
+    {
+      "name": "media_upload_reservations",
       "kind": "TABLE"
     },
     {
@@ -608,6 +620,10 @@
     },
     {
       "name": "policy_publication_heads",
+      "kind": "TABLE"
+    },
+    {
+      "name": "policy_registration_receipts",
       "kind": "TABLE"
     },
     {
@@ -7973,6 +7989,96 @@
       "generation": ""
     },
     {
+      "table": "media_processing_admin_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "position": 3,
+      "name": "job_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "position": 4,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "position": 5,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "position": 6,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "position": 7,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "position": 8,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "position": 9,
+      "name": "field_paths",
+      "dataType": "text[]",
+      "notNull": true,
+      "defaultExpression": "ARRAY['processingJob'::text]",
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "media_processing_attempts",
       "position": 1,
       "name": "schema_version",
@@ -8333,6 +8439,26 @@
       "generation": ""
     },
     {
+      "table": "media_processing_jobs",
+      "position": 27,
+      "name": "generation",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_processing_jobs",
+      "position": 28,
+      "name": "retry_of_job_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "media_processing_outputs",
       "position": 1,
       "name": "schema_version",
@@ -8449,6 +8575,346 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 3,
+      "name": "asset_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 4,
+      "name": "version",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 5,
+      "name": "previous_status",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 6,
+      "name": "new_status",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 7,
+      "name": "evidence_reference",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 8,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 9,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 10,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 11,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_rights_events",
+      "position": 12,
+      "name": "field_paths",
+      "dataType": "text[]",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 3,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 4,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 5,
+      "name": "object_key",
+      "dataType": "media_object_key",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 6,
+      "name": "checksum_sha256",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 7,
+      "name": "mime_type",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 8,
+      "name": "byte_size",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 9,
+      "name": "rights_reference",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 10,
+      "name": "status",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": "'PENDING'::text",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 11,
+      "name": "version",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 12,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 13,
+      "name": "expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 14,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 15,
+      "name": "registered_asset_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 16,
+      "name": "registered_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 17,
+      "name": "registration_audit_log_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 18,
+      "name": "verified_width",
+      "dataType": "integer",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 19,
+      "name": "verified_height",
+      "dataType": "integer",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 20,
+      "name": "verified_orientation",
+      "dataType": "smallint",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 21,
+      "name": "field_paths",
+      "dataType": "text[]",
+      "notNull": true,
+      "defaultExpression": "ARRAY['upload'::text]",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "media_upload_reservations",
+      "position": 22,
+      "name": "registration_field_paths",
+      "dataType": "text[]",
+      "notNull": false,
+      "defaultExpression": null,
       "identity": "",
       "generation": ""
     },
@@ -12749,6 +13215,96 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "policy_registration_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "policy_registration_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "policy_registration_receipts",
+      "position": 3,
+      "name": "policy_key",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "policy_registration_receipts",
+      "position": 4,
+      "name": "kind",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "policy_registration_receipts",
+      "position": 5,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "policy_registration_receipts",
+      "position": 6,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "policy_registration_receipts",
+      "position": 7,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "policy_registration_receipts",
+      "position": 8,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "policy_registration_receipts",
+      "position": 9,
+      "name": "field_paths",
+      "dataType": "text[]",
+      "notNull": true,
+      "defaultExpression": "ARRAY['policy'::text]",
       "identity": "",
       "generation": ""
     },
@@ -24839,6 +25395,22 @@
       "initiallyDeferred": false
     },
     {
+      "table": "media_assets",
+      "name": "media_rights_status_evidence",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "media_assets",
+      "name": "reserved_media_source_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
       "table": "media_metadata_publication_heads",
       "name": "media_metadata_publication__media_metadata_revision_id_not_null",
       "kind": "NOT_NULL",
@@ -25503,6 +26075,158 @@
       "initiallyDeferred": false
     },
     {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipt_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['ENQUEUE'::text, 'RETRY'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_field_paths_check",
+      "kind": "CHECK",
+      "definition": "CHECK (field_paths = ARRAY['processingJob'::text])",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_field_paths_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL field_paths",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_job_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (job_id) REFERENCES media_processing_jobs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_job_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL job_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "media_processing_attempts",
       "name": "media_processing_attempt_error_shape",
       "kind": "CHECK",
@@ -25640,6 +26364,14 @@
     },
     {
       "table": "media_processing_jobs",
+      "name": "media_processing_command_generation_unique",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (command_hash, generation)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_jobs",
       "name": "media_processing_error_shape",
       "kind": "CHECK",
       "definition": "CHECK (error_code IS NULL AND error_retryable IS NULL OR (error_code = ANY (ARRAY['INVALID_COMMAND'::text, 'SOURCE_NOT_FOUND'::text, 'SOURCE_CHANGED'::text, 'INVALID_IMAGE'::text, 'MIME_MISMATCH'::text, 'DIMENSION_MISMATCH'::text, 'SOURCE_TOO_SMALL'::text, 'PIXEL_LIMIT_EXCEEDED'::text, 'OUTPUT_LIMIT_EXCEEDED'::text, 'STORAGE_UNAVAILABLE'::text, 'OBJECT_CONFLICT'::text, 'PROCESSING_TIMEOUT'::text, 'UNEXPECTED_PROCESSING_FAILURE'::text])) AND error_retryable IS NOT NULL AND error_retryable = (error_code = ANY (ARRAY['STORAGE_UNAVAILABLE'::text, 'PROCESSING_TIMEOUT'::text, 'UNEXPECTED_PROCESSING_FAILURE'::text])))",
@@ -25675,14 +26407,6 @@
       "name": "media_processing_jobs_attempt_count_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL attempt_count",
-      "deferrable": false,
-      "initiallyDeferred": false
-    },
-    {
-      "table": "media_processing_jobs",
-      "name": "media_processing_jobs_command_hash_key",
-      "kind": "UNIQUE",
-      "definition": "UNIQUE (command_hash)",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -25747,6 +26471,22 @@
       "name": "media_processing_jobs_focal_y_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL focal_y",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_jobs",
+      "name": "media_processing_jobs_generation_check",
+      "kind": "CHECK",
+      "definition": "CHECK (generation > 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_jobs",
+      "name": "media_processing_jobs_generation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL generation",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -25827,6 +26567,14 @@
       "name": "media_processing_jobs_requested_by_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL requested_by",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_jobs",
+      "name": "media_processing_jobs_retry_of_job_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (retry_of_job_id) REFERENCES media_processing_jobs(id) ON DELETE RESTRICT",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -25915,6 +26663,22 @@
       "name": "media_processing_jobs_updated_at_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_processing_jobs",
+      "name": "media_processing_retry_receipt_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "media_processing_jobs",
+      "name": "media_processing_retry_shape",
+      "kind": "CHECK",
+      "definition": "CHECK (generation = 1 AND retry_of_job_id IS NULL OR generation > 1 AND retry_of_job_id IS NOT NULL)",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -26107,6 +26871,526 @@
       "name": "media_processing_outputs_width_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL width",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_event_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_event_version_unique",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (asset_id, version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_asset_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (asset_id) REFERENCES media_assets(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_asset_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL asset_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_check",
+      "kind": "CHECK",
+      "definition": "CHECK (field_paths =\nCASE\n    WHEN previous_status = new_status THEN ARRAY['rightsEvidence'::text]\n    ELSE ARRAY['rightsStatus'::text, 'rightsEvidence'::text]\nEND)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_evidence_reference_check",
+      "kind": "CHECK",
+      "definition": "CHECK (length(evidence_reference) >= 1 AND length(evidence_reference) <= 256 AND evidence_reference ~ '^[A-Za-z0-9][A-Za-z0-9:._/-]*$'::text AND strpos(evidence_reference, '://'::text) = 0 AND strpos(evidence_reference, '..'::text) = 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_evidence_reference_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL evidence_reference",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_field_paths_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL field_paths",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_new_status_check",
+      "kind": "CHECK",
+      "definition": "CHECK (new_status = ANY (ARRAY['PENDING'::text, 'APPROVED'::text, 'REJECTED'::text, 'EXPIRED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_new_status_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL new_status",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_previous_status_check",
+      "kind": "CHECK",
+      "definition": "CHECK (previous_status = ANY (ARRAY['PENDING'::text, 'APPROVED'::text, 'REJECTED'::text, 'EXPIRED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_previous_status_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL previous_status",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (version > 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservation_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_byte_size_check",
+      "kind": "CHECK",
+      "definition": "CHECK (byte_size >= 1 AND byte_size <= 26214400)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_byte_size_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL byte_size",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_check",
+      "kind": "CHECK",
+      "definition": "CHECK (object_key::text = ('uploads/v1/'::text || id::text))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (expires_at::timestamp with time zone > created_at::timestamp with time zone AND expires_at::timestamp with time zone <= (created_at::timestamp with time zone + '00:15:00'::interval))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_check2",
+      "kind": "CHECK",
+      "definition": "CHECK ((verified_width::bigint * verified_height) <= 40000000)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_check3",
+      "kind": "CHECK",
+      "definition": "CHECK (status = 'PENDING'::text AND version = 1 AND num_nonnulls(registered_asset_id, registered_at, registration_audit_log_id, verified_width, verified_height, verified_orientation, registration_field_paths) = 0 OR status = 'REGISTERED'::text AND version = 2 AND num_nonnulls(registered_asset_id, registered_at, registration_audit_log_id, verified_width, verified_height, verified_orientation, registration_field_paths) = 7 AND registered_at::timestamp with time zone >= created_at::timestamp with time zone AND registration_field_paths = ARRAY['registration'::text])",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_checksum_sha256_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL checksum_sha256",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_expires_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expires_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_field_paths_check",
+      "kind": "CHECK",
+      "definition": "CHECK (field_paths = ARRAY['upload'::text])",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_field_paths_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL field_paths",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_mime_type_check",
+      "kind": "CHECK",
+      "definition": "CHECK (mime_type = ANY (ARRAY['image/jpeg'::text, 'image/png'::text, 'image/webp'::text, 'image/avif'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_mime_type_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL mime_type",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_object_key_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (object_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_object_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL object_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_registered_asset_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (registered_asset_id) REFERENCES media_assets(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_registration_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (registration_audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_registration_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (registration_audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_rights_reference_check",
+      "kind": "CHECK",
+      "definition": "CHECK (length(rights_reference) >= 1 AND length(rights_reference) <= 256 AND rights_reference ~ '^[A-Za-z0-9][A-Za-z0-9:._/-]*$'::text AND strpos(rights_reference, '://'::text) = 0 AND strpos(rights_reference, '..'::text) = 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_rights_reference_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL rights_reference",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_status_check",
+      "kind": "CHECK",
+      "definition": "CHECK (status = ANY (ARRAY['PENDING'::text, 'REGISTERED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_status_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL status",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_verified_height_check",
+      "kind": "CHECK",
+      "definition": "CHECK (verified_height >= 1 AND verified_height <= 20000)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_verified_orientation_check",
+      "kind": "CHECK",
+      "definition": "CHECK (verified_orientation >= 1 AND verified_orientation <= 8)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_verified_width_check",
+      "kind": "CHECK",
+      "definition": "CHECK (verified_width >= 1 AND verified_width <= 20000)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (version = ANY (ARRAY[1, 2]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -32071,6 +33355,158 @@
       "initiallyDeferred": false
     },
     {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_owner_fk",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (policy_key, kind) REFERENCES policies(policy_key, kind) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipt_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_field_paths_check",
+      "kind": "CHECK",
+      "definition": "CHECK (field_paths = ARRAY['policy'::text])",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_field_paths_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL field_paths",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_kind_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL kind",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_policy_key_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (policy_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_policy_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL policy_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "policy_revision_translations",
       "name": "policy_revision_translation_locale_unique",
       "kind": "UNIQUE",
@@ -37477,6 +38913,33 @@
       "valid": true
     },
     {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX media_processing_admin_receipts_audit_log_id_key ON public.media_processing_admin_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX media_processing_admin_receipts_pkey ON public.media_processing_admin_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_retry_receipt_unique",
+      "definition": "CREATE UNIQUE INDEX media_processing_retry_receipt_unique ON public.media_processing_admin_receipts USING btree (job_id) WHERE (action = 'RETRY'::text)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "media_processing_attempts",
       "name": "media_processing_attempts_lease_token_key",
       "definition": "CREATE UNIQUE INDEX media_processing_attempts_lease_token_key ON public.media_processing_attempts USING btree (lease_token)",
@@ -37496,18 +38959,18 @@
     },
     {
       "table": "media_processing_jobs",
-      "name": "media_processing_expired_idx",
-      "definition": "CREATE INDEX media_processing_expired_idx ON public.media_processing_jobs USING btree (lease_expires_at, id) WHERE (status = 'PROCESSING'::text)",
-      "unique": false,
+      "name": "media_processing_command_generation_unique",
+      "definition": "CREATE UNIQUE INDEX media_processing_command_generation_unique ON public.media_processing_jobs USING btree (command_hash, generation)",
+      "unique": true,
       "primary": false,
       "exclusion": false,
       "valid": true
     },
     {
       "table": "media_processing_jobs",
-      "name": "media_processing_jobs_command_hash_key",
-      "definition": "CREATE UNIQUE INDEX media_processing_jobs_command_hash_key ON public.media_processing_jobs USING btree (command_hash)",
-      "unique": true,
+      "name": "media_processing_expired_idx",
+      "definition": "CREATE INDEX media_processing_expired_idx ON public.media_processing_jobs USING btree (lease_expires_at, id) WHERE (status = 'PROCESSING'::text)",
+      "unique": false,
       "primary": false,
       "exclusion": false,
       "valid": true
@@ -37526,6 +38989,15 @@
       "name": "media_processing_ready_idx",
       "definition": "CREATE INDEX media_processing_ready_idx ON public.media_processing_jobs USING btree (next_attempt_at, id) WHERE (status = 'PENDING'::text)",
       "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_processing_jobs",
+      "name": "media_processing_retry_successor_unique",
+      "definition": "CREATE UNIQUE INDEX media_processing_retry_successor_unique ON public.media_processing_jobs USING btree (retry_of_job_id) WHERE (retry_of_job_id IS NOT NULL)",
+      "unique": true,
       "primary": false,
       "exclusion": false,
       "valid": true
@@ -37552,6 +39024,87 @@
       "table": "media_processing_outputs",
       "name": "media_processing_variant_once_idx",
       "definition": "CREATE UNIQUE INDEX media_processing_variant_once_idx ON public.media_processing_outputs USING btree (job_id, media_variant_id) WHERE (kind = 'VARIANT'::text)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_event_version_unique",
+      "definition": "CREATE UNIQUE INDEX media_rights_event_version_unique ON public.media_rights_events USING btree (asset_id, version)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX media_rights_events_audit_log_id_key ON public.media_rights_events USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_pkey",
+      "definition": "CREATE UNIQUE INDEX media_rights_events_pkey ON public.media_rights_events USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_actor_idx",
+      "definition": "CREATE INDEX media_upload_reservations_actor_idx ON public.media_upload_reservations USING btree (actor_id, created_at, id)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX media_upload_reservations_audit_log_id_key ON public.media_upload_reservations USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_object_key_key",
+      "definition": "CREATE UNIQUE INDEX media_upload_reservations_object_key_key ON public.media_upload_reservations USING btree (object_key)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_pending_expiry_idx",
+      "definition": "CREATE INDEX media_upload_reservations_pending_expiry_idx ON public.media_upload_reservations USING btree (expires_at, id) WHERE (status = 'PENDING'::text)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_pkey",
+      "definition": "CREATE UNIQUE INDEX media_upload_reservations_pkey ON public.media_upload_reservations USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_registration_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX media_upload_reservations_registration_audit_log_id_key ON public.media_upload_reservations USING btree (registration_audit_log_id)",
       "unique": true,
       "primary": false,
       "exclusion": false,
@@ -38551,6 +40104,33 @@
       "table": "policy_publication_heads",
       "name": "policy_publication_heads_publication_id_key",
       "definition": "CREATE UNIQUE INDEX policy_publication_heads_publication_id_key ON public.policy_publication_heads USING btree (publication_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX policy_registration_receipts_audit_log_id_key ON public.policy_registration_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX policy_registration_receipts_pkey ON public.policy_registration_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_policy_key_key",
+      "definition": "CREATE UNIQUE INDEX policy_registration_receipts_policy_key_key ON public.policy_registration_receipts USING btree (policy_key)",
       "unique": true,
       "primary": false,
       "exclusion": false,
@@ -40455,6 +42035,18 @@
       "enabled": "O"
     },
     {
+      "table": "media_assets",
+      "name": "media_rights_status_evidence",
+      "definition": "CREATE CONSTRAINT TRIGGER media_rights_status_evidence AFTER UPDATE OF rights_status ON media_assets DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_media_rights_status_change()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_assets",
+      "name": "reserved_media_source_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER reserved_media_source_validate AFTER INSERT ON media_assets DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_reserved_media_source()",
+      "enabled": "O"
+    },
+    {
       "table": "media_metadata_publication_heads",
       "name": "media_metadata_publication_heads_consistency_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER media_metadata_publication_heads_consistency_trigger AFTER INSERT OR DELETE OR UPDATE ON media_metadata_publication_heads DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_content_publication_heads()",
@@ -40593,6 +42185,24 @@
       "enabled": "O"
     },
     {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipt_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER media_processing_admin_receipt_validate AFTER INSERT ON media_processing_admin_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_media_processing_admin_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_append_only",
+      "definition": "CREATE TRIGGER media_processing_admin_receipts_append_only BEFORE DELETE OR UPDATE ON media_processing_admin_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_processing_admin_receipts",
+      "name": "media_processing_admin_receipts_no_truncate",
+      "definition": "CREATE TRIGGER media_processing_admin_receipts_no_truncate BEFORE TRUNCATE ON media_processing_admin_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "media_processing_attempts",
       "name": "media_processing_attempt_evidence",
       "definition": "CREATE CONSTRAINT TRIGGER media_processing_attempt_evidence AFTER INSERT OR UPDATE ON media_processing_attempts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_media_processing_evidence()",
@@ -40608,6 +42218,12 @@
       "table": "media_processing_attempts",
       "name": "media_processing_attempts_no_truncate",
       "definition": "CREATE TRIGGER media_processing_attempts_no_truncate BEFORE TRUNCATE ON media_processing_attempts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_processing_jobs",
+      "name": "a_media_processing_generation_guard",
+      "definition": "CREATE TRIGGER a_media_processing_generation_guard BEFORE INSERT ON media_processing_jobs FOR EACH ROW EXECUTE FUNCTION guard_media_processing_generation()",
       "enabled": "O"
     },
     {
@@ -40629,6 +42245,12 @@
       "enabled": "O"
     },
     {
+      "table": "media_processing_jobs",
+      "name": "media_processing_retry_receipt_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER media_processing_retry_receipt_validate AFTER INSERT ON media_processing_jobs DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_media_processing_retry_receipt()",
+      "enabled": "O"
+    },
+    {
       "table": "media_processing_outputs",
       "name": "media_processing_output_evidence",
       "definition": "CREATE CONSTRAINT TRIGGER media_processing_output_evidence AFTER INSERT ON media_processing_outputs DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_media_processing_evidence()",
@@ -40644,6 +42266,54 @@
       "table": "media_processing_outputs",
       "name": "media_processing_outputs_no_truncate",
       "definition": "CREATE TRIGGER media_processing_outputs_no_truncate BEFORE TRUNCATE ON media_processing_outputs FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_event_guard",
+      "definition": "CREATE TRIGGER media_rights_event_guard BEFORE INSERT ON media_rights_events FOR EACH ROW EXECUTE FUNCTION guard_media_rights_event()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_event_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER media_rights_event_validate AFTER INSERT ON media_rights_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_media_rights_event()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_append_only",
+      "definition": "CREATE TRIGGER media_rights_events_append_only BEFORE DELETE OR UPDATE ON media_rights_events FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_rights_events",
+      "name": "media_rights_events_no_truncate",
+      "definition": "CREATE TRIGGER media_rights_events_no_truncate BEFORE TRUNCATE ON media_rights_events FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservation_guard",
+      "definition": "CREATE TRIGGER media_upload_reservation_guard BEFORE INSERT OR UPDATE ON media_upload_reservations FOR EACH ROW EXECUTE FUNCTION guard_media_upload_reservation()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservation_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER media_upload_reservation_validate AFTER INSERT OR UPDATE ON media_upload_reservations DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_media_upload_reservation()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_no_delete",
+      "definition": "CREATE TRIGGER media_upload_reservations_no_delete BEFORE DELETE ON media_upload_reservations FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "media_upload_reservations",
+      "name": "media_upload_reservations_no_truncate",
+      "definition": "CREATE TRIGGER media_upload_reservations_no_truncate BEFORE TRUNCATE ON media_upload_reservations FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
     },
     {
@@ -41271,6 +42941,12 @@
       "enabled": "O"
     },
     {
+      "table": "policies",
+      "name": "registered_policy_owner_guard",
+      "definition": "CREATE TRIGGER registered_policy_owner_guard BEFORE DELETE OR UPDATE ON policies FOR EACH ROW EXECUTE FUNCTION guard_registered_policy_owner()",
+      "enabled": "O"
+    },
+    {
       "table": "policy_acceptances",
       "name": "order_aggregate_from_policy_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER order_aggregate_from_policy_trigger AFTER INSERT OR DELETE OR UPDATE ON policy_acceptances DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_order_aggregate()",
@@ -41310,6 +42986,24 @@
       "table": "policy_publication_heads",
       "name": "policy_publication_heads_no_truncate_trigger",
       "definition": "CREATE TRIGGER policy_publication_heads_no_truncate_trigger BEFORE TRUNCATE ON policy_publication_heads FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipt_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER policy_registration_receipt_validate AFTER INSERT ON policy_registration_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_policy_registration_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_append_only",
+      "definition": "CREATE TRIGGER policy_registration_receipts_append_only BEFORE DELETE OR UPDATE ON policy_registration_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "policy_registration_receipts",
+      "name": "policy_registration_receipts_no_truncate",
+      "definition": "CREATE TRIGGER policy_registration_receipts_no_truncate BEFORE TRUNCATE ON policy_registration_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
     },
     {
@@ -42041,6 +43735,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_inventory_reservation_ledger_semantics()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  linked_count integer;\n  creation_count integer;\n  terminal_count integer;\nBEGIN\n  SELECT count(*),\n    count(*) FILTER (WHERE\n      delta_on_hand = 0\n      AND delta_reserved = NEW.quantity\n      AND source_type = 'RESERVATION'\n      AND source_id = NEW.id\n    ),\n    count(*) FILTER (WHERE\n      (NEW.status = 'COMMITTED'\n        AND delta_on_hand = -NEW.quantity AND delta_reserved = -NEW.quantity\n        AND source_type = 'PAYMENT' AND source_id = NEW.locked_order_id)\n      OR (NEW.status = 'RELEASED'\n        AND delta_on_hand = 0 AND delta_reserved = -NEW.quantity\n        AND source_type = 'PAYMENT' AND source_id = NEW.locked_order_id)\n      OR (NEW.status = 'EXPIRED'\n        AND delta_on_hand = 0 AND delta_reserved = -NEW.quantity\n        AND source_type = 'EXPIRY' AND source_id = NEW.id)\n    )\n    INTO linked_count, creation_count, terminal_count\n    FROM inventory_ledger\n    WHERE reservation_id = NEW.id\n      AND inventory_item_id = NEW.inventory_item_id\n      AND location_id = NEW.location_id;\n\n  IF creation_count <> 1\n     OR (NEW.status = 'ACTIVE' AND linked_count <> 1)\n     OR (NEW.status <> 'ACTIVE' AND (linked_count <> 2 OR terminal_count <> 1))\n     OR (NEW.status IN ('COMMITTED', 'RELEASED') AND NEW.locked_order_id IS NULL) THEN\n    RAISE EXCEPTION 'reservation state must bind exact inventory ledger deltas'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
+      "name": "assert_media_processing_admin_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_media_processing_admin_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE job public.media_processing_jobs%ROWTYPE;\nBEGIN\n  SELECT * INTO job FROM public.media_processing_jobs WHERE id=NEW.job_id FOR UPDATE;\n  IF job.id IS NULL OR (NEW.action='ENQUEUE' AND job.generation<>1) OR (NEW.action='RETRY' AND job.generation=1)\n    OR NEW.created_at<job.created_at OR (NEW.action='RETRY' AND (job.requested_by<>NEW.actor_id OR NEW.created_at<>job.created_at)) THEN\n    RAISE EXCEPTION 'processing administration requires its exact job generation' USING ERRCODE='23514';\n  END IF;\n  IF NEW.action='RETRY' AND NOT EXISTS(SELECT 1 FROM public.audit_logs WHERE id=NEW.audit_log_id AND reason_code=job.reason) THEN\n    RAISE EXCEPTION 'manual retry reason must bind its job and audit' USING ERRCODE='23514';\n  END IF;\n  PERFORM public.assert_resource_management_audit(NEW.audit_log_id,NEW.actor_id,NEW.session_id,'MEDIA_PROCESSING_'||NEW.action,'MEDIA_PROCESSING_JOB',NEW.job_id,NEW.created_at,job.created_at);\n  RETURN NULL;\nEND; $function$"
+    },
+    {
       "name": "assert_media_processing_evidence",
       "identityArguments": "",
       "resultType": "trigger",
@@ -42049,6 +43753,46 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_media_processing_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  job public.media_processing_jobs%ROWTYPE;\n  job_identifier uuid;\n  target_width integer;\n  target_height integer;\nBEGIN\n  IF TG_TABLE_NAME = 'media_processing_jobs' THEN job_identifier := NEW.id; ELSE job_identifier := NEW.job_id; END IF;\n  SELECT * INTO job FROM public.media_processing_jobs WHERE id = job_identifier;\n  IF (SELECT count(*) FROM public.media_processing_attempts WHERE job_id = job.id) <> job.attempt_count THEN\n    RAISE EXCEPTION 'media attempt history must be complete' USING ERRCODE = '23514';\n  END IF;\n  IF job.attempt_count > 0 AND NOT EXISTS (\n    SELECT 1 FROM public.media_processing_attempts attempt WHERE attempt.job_id = job.id AND attempt.attempt_number = job.attempt_count\n      AND ((job.status = 'PROCESSING' AND attempt.status = 'PROCESSING' AND attempt.lease_token = job.lease_token)\n        OR (job.status = 'SUCCEEDED' AND attempt.status = 'SUCCEEDED' AND attempt.lease_token = job.lease_token)\n        OR (job.status IN ('PENDING','FAILED') AND attempt.status IN ('FAILED','EXPIRED')))\n  ) THEN RAISE EXCEPTION 'media job must match terminal attempt evidence' USING ERRCODE = '23514'; END IF;\n  IF EXISTS (SELECT 1 FROM public.media_processing_attempts WHERE job_id = job.id AND attempt_number < job.attempt_count AND status = 'PROCESSING') THEN\n    RAISE EXCEPTION 'prior media attempts must be terminal' USING ERRCODE = '23514';\n  END IF;\n  IF job.status <> 'SUCCEEDED' THEN\n    IF EXISTS (SELECT 1 FROM public.media_processing_outputs WHERE job_id = job.id) THEN\n      RAISE EXCEPTION 'partial media outputs cannot become persisted evidence' USING ERRCODE = '23514';\n    END IF;\n    RETURN NULL;\n  END IF;\n  target_width := CASE job.role WHEN 'PORTRAIT' THEN 1600 WHEN 'HERO_DESKTOP' THEN 2400 WHEN 'HERO_MOBILE' THEN 1080 ELSE 1200 END;\n  target_height := CASE job.role WHEN 'PORTRAIT' THEN 2000 WHEN 'HERO_DESKTOP' THEN 1350 WHEN 'HERO_MOBILE' THEN 1350 ELSE 1200 END;\n  IF (SELECT count(*) FROM public.media_processing_outputs WHERE job_id = job.id) <> 13\n    OR (SELECT count(*) FROM public.media_processing_outputs WHERE job_id = job.id AND kind = 'MASTER') <> 1\n    OR EXISTS (\n      SELECT 1 FROM public.media_processing_outputs output WHERE output.job_id = job.id AND\n        (output.media_asset_id <> job.output_asset_id OR output.width::bigint * target_height <> output.height::bigint * target_width\n          OR (output.kind = 'MASTER' AND output.width <> target_width)\n          OR (output.kind = 'VARIANT' AND output.width NOT IN (320,640,960,target_width))\n          OR output.object_key <> 'processed/v1/' || CASE WHEN output.kind = 'VARIANT' THEN\n            (SELECT master.checksum_sha256 || '/' FROM public.media_processing_outputs master WHERE master.job_id = job.id AND master.kind = 'MASTER')\n            ELSE '' END || output.checksum_sha256 || '.' || CASE output.format WHEN 'JPEG' THEN 'jpg' ELSE lower(output.format) END)\n    ) OR EXISTS (\n      SELECT 1 FROM public.media_processing_outputs output\n      LEFT JOIN public.media_assets asset ON asset.id = output.media_asset_id\n      LEFT JOIN public.media_variants variant ON variant.id = output.media_variant_id\n      WHERE output.job_id = job.id AND ((output.kind = 'MASTER' AND\n        (asset.identity_kind <> 'PROCESSED_MASTER' OR asset.processing_status <> 'READY' OR asset.rights_status NOT IN ('PENDING','APPROVED') OR asset.mime_type <> 'image/png'\n          OR asset.width <> output.width OR asset.height <> output.height OR asset.byte_size <> output.byte_size\n          OR asset.object_key <> output.object_key OR asset.checksum_sha256 <> output.checksum_sha256))\n        OR (output.kind = 'VARIANT' AND (variant.media_asset_id <> output.media_asset_id OR variant.status <> 'READY'\n          OR variant.format <> output.format OR variant.width <> output.width OR variant.height <> output.height\n          OR variant.byte_size <> output.byte_size OR variant.object_key <> output.object_key OR variant.checksum_sha256 <> output.checksum_sha256)))\n    ) THEN RAISE EXCEPTION 'media success requires complete immutable output evidence' USING ERRCODE = '23514'; END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_media_processing_retry_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_media_processing_retry_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.generation>1 AND NOT EXISTS(SELECT 1 FROM public.media_processing_admin_receipts WHERE job_id=NEW.id AND action='RETRY') THEN\n    RAISE EXCEPTION 'manual processing retry requires permanent audit evidence' USING ERRCODE='23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_media_rights_event",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_media_rights_event()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE current_status text; asset_created timestamptz; previous_time timestamptz; latest public.media_rights_events%ROWTYPE;\nBEGIN\n  SELECT rights_status,created_at INTO current_status,asset_created FROM public.media_assets WHERE id=NEW.asset_id;\n  SELECT max(created_at) INTO previous_time FROM public.media_rights_events WHERE asset_id=NEW.asset_id AND version<NEW.version;\n  SELECT * INTO latest FROM public.media_rights_events WHERE asset_id=NEW.asset_id ORDER BY version DESC LIMIT 1;\n  IF current_status IS DISTINCT FROM latest.new_status THEN\n    RAISE EXCEPTION 'rights event and asset status must commit together' USING ERRCODE='23514';\n  END IF;\n  PERFORM public.assert_resource_management_audit(NEW.audit_log_id,NEW.actor_id,NEW.session_id,'MEDIA_RIGHTS_SET','MEDIA_RIGHTS_EVENT',NEW.id,NEW.created_at,GREATEST(asset_created,previous_time));\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_media_rights_status_change",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_media_rights_status_change()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE latest public.media_rights_events%ROWTYPE;\nBEGIN\n  IF NEW.rights_status=OLD.rights_status THEN RETURN NULL; END IF;\n  SELECT * INTO latest FROM public.media_rights_events WHERE asset_id=NEW.id ORDER BY version DESC LIMIT 1;\n  IF latest.id IS NULL OR latest.previous_status<>OLD.rights_status OR latest.new_status<>NEW.rights_status THEN\n    RAISE EXCEPTION 'asset rights transition requires its exact immutable event' USING ERRCODE='23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_media_upload_reservation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_media_upload_reservation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE asset public.media_assets%ROWTYPE;\nBEGIN\n  IF TG_OP='INSERT' THEN\n    PERFORM public.assert_resource_management_audit(NEW.audit_log_id,NEW.actor_id,NEW.session_id,'MEDIA_UPLOAD_BEGIN','MEDIA_UPLOAD_RESERVATION',NEW.id,NEW.created_at);\n  ELSE\n    SELECT * INTO asset FROM public.media_assets WHERE id=NEW.registered_asset_id FOR SHARE;\n    IF asset.id IS NULL OR asset.identity_kind<>'SOURCE' OR asset.checksum_sha256<>NEW.checksum_sha256 OR asset.mime_type<>NEW.mime_type\n      OR asset.byte_size<>NEW.byte_size OR asset.width<>NEW.verified_width OR asset.height<>NEW.verified_height OR asset.processing_status='ARCHIVED' THEN\n      RAISE EXCEPTION 'upload registration requires exact verified source identity' USING ERRCODE='23514';\n    END IF;\n    PERFORM public.assert_resource_management_audit(NEW.registration_audit_log_id,NEW.actor_id,NEW.session_id,'MEDIA_UPLOAD_REGISTER','MEDIA_UPLOAD_RESERVATION',NEW.id,NEW.registered_at,NEW.created_at);\n  END IF;\n  RETURN NULL;\nEND; $function$"
     },
     {
       "name": "assert_notification_attempt_consistency",
@@ -42181,6 +43925,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_payment_success_aggregate_plan()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  aggregate_count integer;\n  tracked_item_count integer;\n  current_reservation_count integer;\n  invalid_reservation_count integer;\n  extraneous_reservation_count integer;\n  unavailable_reservation_count integer;\n  fulfillment_count integer;\n  invalid_fulfillment_count integer;\nBEGIN\n  IF NEW.status <> 'SUCCEEDED' OR (TG_OP = 'UPDATE' AND OLD.status = 'SUCCEEDED') THEN\n    RETURN NULL;\n  END IF;\n\n  SELECT count(*) INTO aggregate_count\n    FROM orders order_row\n    JOIN carts cart ON cart.id = order_row.cart_id\n    JOIN order_events order_event\n      ON order_event.order_id = order_row.id\n      AND order_event.sequence = order_row.version\n    WHERE order_row.id = NEW.order_id\n      AND order_row.current_payment_attempt_id = NEW.id\n      AND order_row.order_status = 'OPEN'\n      AND order_row.payment_status = 'PAID'\n      AND cart.locked_order_id = order_row.id\n      AND cart.status = 'CONVERTED'\n      AND (\n        (order_event.from_order_status = 'PENDING_PAYMENT'\n          AND order_event.event_type = 'PAYMENT_STATUS_CHANGED')\n        OR (order_event.from_order_status = 'CANCELED'\n          AND order_event.event_type = 'LATE_PAYMENT_RECOVERED')\n      )\n      AND order_event.authority_kind = 'PROVIDER_EVIDENCE'\n      AND order_event.provider_event_id = NEW.provider_event_id\n      AND order_event.to_payment_attempt_id = NEW.id\n      AND order_event.to_order_status = 'OPEN'\n      AND order_event.to_payment_status = 'PAID';\n\n  SELECT\n    count(*) FILTER (WHERE variant.inventory_policy = 'TRACKED'),\n    count(current_reservation.id) FILTER (WHERE variant.inventory_policy = 'TRACKED'),\n    count(*) FILTER (\n      WHERE (variant.inventory_policy = 'TRACKED' AND (\n        current_reservation.id IS NULL\n        OR current_reservation.gift_variant_id <> item.gift_variant_id\n        OR current_reservation.quantity <> item.quantity\n        OR current_reservation.checkout_session_id <> source_order.checkout_session_id\n        OR current_reservation.checkout_quote_id <> source_order.checkout_quote_id\n        OR current_reservation.status = 'ACTIVE'\n        OR (OLD.status = 'UNKNOWN'\n          AND current_reservation.status NOT IN ('COMMITTED', 'RELEASED', 'EXPIRED'))\n        OR (OLD.status <> 'UNKNOWN' AND current_reservation.status <> 'COMMITTED')\n      ))\n      OR (variant.inventory_policy <> 'TRACKED' AND current_reservation.id IS NOT NULL)\n    ),\n    count(*) FILTER (WHERE current_reservation.status IN ('RELEASED', 'EXPIRED'))\n    INTO tracked_item_count, current_reservation_count,\n      invalid_reservation_count, unavailable_reservation_count\n    FROM public.order_items item\n    JOIN public.orders source_order ON source_order.id = item.order_id\n    JOIN public.gift_variants variant ON variant.id = item.gift_variant_id\n    LEFT JOIN LATERAL (\n      SELECT reservation.*\n      FROM public.inventory_reservations reservation\n      WHERE reservation.locked_order_id = item.order_id\n        AND reservation.cart_item_id = item.cart_item_id\n      ORDER BY reservation.created_at DESC, reservation.id DESC\n      LIMIT 1\n    ) current_reservation ON true\n    WHERE item.order_id = NEW.order_id;\n\n  SELECT count(*) INTO extraneous_reservation_count\n  FROM public.inventory_reservations reservation\n  WHERE reservation.locked_order_id = NEW.order_id\n    AND NOT EXISTS (\n      SELECT 1\n      FROM public.order_items item\n      JOIN public.gift_variants variant ON variant.id = item.gift_variant_id\n      WHERE item.order_id = NEW.order_id\n        AND item.cart_item_id = reservation.cart_item_id\n        AND variant.inventory_policy = 'TRACKED'\n    );\n\n  IF current_reservation_count <> tracked_item_count\n     OR invalid_reservation_count <> 0\n     OR extraneous_reservation_count <> 0 THEN\n    RAISE EXCEPTION 'tracked order-item reservation coverage is incomplete'\n      USING ERRCODE = '23514';\n  END IF;\n\n  SELECT count(*),\n    count(*) FILTER (WHERE status <>\n      CASE WHEN unavailable_reservation_count > 0 THEN 'ON_HOLD' ELSE 'PENDING' END)\n    INTO fulfillment_count, invalid_fulfillment_count\n    FROM fulfillments\n    WHERE order_id = NEW.order_id;\n\n  IF aggregate_count <> 1\n     OR fulfillment_count = 0\n     OR invalid_fulfillment_count <> 0\n     OR EXISTS (\n       SELECT 1 FROM payment_attempts competing\n       WHERE competing.order_id = NEW.order_id\n         AND competing.id <> NEW.id\n         AND competing.status IN ('CREATED', 'REQUIRES_ACTION', 'PROCESSING', 'UNKNOWN', 'SUCCEEDED')\n     )\n     OR (OLD.status = 'UNKNOWN' AND NOT EXISTS (\n       SELECT 1\n       FROM audit_logs audit\n       JOIN payment_attempt_events payment_event\n         ON payment_event.payment_attempt_id = NEW.id\n        AND payment_event.sequence = NEW.version\n        AND payment_event.from_status = 'UNKNOWN'\n        AND payment_event.to_status = 'SUCCEEDED'\n        AND payment_event.provider_event_id = NEW.provider_event_id\n       JOIN orders audit_order ON audit_order.id = NEW.order_id\n       JOIN order_events audit_order_event\n         ON audit_order_event.order_id = audit_order.id\n        AND audit_order_event.sequence = audit_order.version\n        AND audit_order_event.provider_event_id = NEW.provider_event_id\n       WHERE audit.action = 'LATE_PAYMENT_SUCCESS_APPLIED'\n         AND audit.subject_type = 'PAYMENT_ATTEMPT'\n         AND audit.subject_id = NEW.id\n         AND audit.reason_code = CASE WHEN unavailable_reservation_count > 0\n           THEN 'LATE_PAYMENT_INVENTORY_UNAVAILABLE'\n           ELSE 'PAYMENT_SUCCESS_RECONCILED'\n         END\n         AND audit.outcome = 'SUCCEEDED'\n         AND (\n           (audit.actor_type = 'ADMIN' AND audit.actor_id IS NOT NULL\n             AND audit.task_name IS NULL)\n           OR (audit.actor_type = 'SYSTEM' AND audit.actor_id IS NULL\n             AND audit.task_name IS NOT NULL)\n         )\n         AND audit.request_id = payment_event.request_id\n         AND audit.correlation_id = payment_event.correlation_id\n         AND audit.request_id = audit_order_event.request_id\n         AND audit.correlation_id = audit_order_event.correlation_id\n         AND audit.created_at = payment_event.occurred_at\n         AND audit.created_at = audit_order_event.occurred_at\n         AND audit.created_at = transaction_timestamp()\n         AND payment_event.occurred_at = transaction_timestamp()\n         AND audit_order_event.occurred_at = transaction_timestamp()\n     )) THEN\n    RAISE EXCEPTION 'payment success aggregate plan is incomplete'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
+      "name": "assert_policy_registration_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_policy_registration_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE owner public.policies%ROWTYPE;\nBEGIN\n  SELECT * INTO owner FROM public.policies WHERE policy_key=NEW.policy_key FOR UPDATE;\n  IF owner.policy_key IS NULL OR owner.kind<>NEW.kind OR owner.created_at<>NEW.created_at THEN\n    RAISE EXCEPTION 'policy registration requires exact immutable owner' USING ERRCODE='23514';\n  END IF;\n  PERFORM public.assert_resource_management_audit(NEW.audit_log_id,NEW.actor_id,NEW.session_id,'POLICY_REGISTER','POLICY_REGISTRATION',NEW.id,NEW.created_at);\n  RETURN NULL;\nEND; $function$"
+    },
+    {
       "name": "assert_price_book_publication",
       "identityArguments": "",
       "resultType": "trigger",
@@ -42269,6 +44023,26 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_refund_state_event_outbox()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  event_count integer;\n  aggregate_order_id uuid;\nBEGIN\n  SELECT refund.order_id INTO aggregate_order_id\n  FROM public.refunds refund\n  WHERE refund.id = NEW.refund_id;\n  SELECT count(*) INTO event_count\n  FROM public.refunds refund\n  JOIN public.orders order_row ON order_row.id = refund.order_id\n  JOIN public.outbox_events event\n    ON event.event_type = 'REFUND_STATUS_CHANGED'\n   AND event.aggregate_type = 'REFUND'\n   AND event.aggregate_id = refund.id\n   AND event.aggregate_version = NEW.sequence\n   AND event.primary_subject_id = refund.id\n   AND event.secondary_subject_id = order_row.id\n   AND event.request_id = NEW.request_id\n   AND event.correlation_id = NEW.correlation_id\n   AND event.occurred_at = NEW.occurred_at\n   AND event.locale = order_row.presentation_locale\n   AND event.market = order_row.market\n   AND event.currency = refund.currency\n  WHERE refund.id = NEW.refund_id;\n  IF event_count <> 1 THEN\n    RAISE EXCEPTION 'refund state event and outbox record must commit together'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
+    },
+    {
+      "name": "assert_reserved_media_source",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_reserved_media_source()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.object_key NOT LIKE 'uploads/v1/%' THEN RETURN NULL; END IF;\n  IF NEW.identity_kind<>'SOURCE' OR NEW.processing_status<>'PENDING' OR NEW.rights_status<>'PENDING'\n    OR NOT EXISTS(SELECT 1 FROM public.media_upload_reservations ticket WHERE ticket.object_key=NEW.object_key AND ticket.status='REGISTERED'\n      AND ticket.registered_asset_id=NEW.id AND ticket.checksum_sha256=NEW.checksum_sha256 AND ticket.mime_type=NEW.mime_type\n      AND ticket.byte_size=NEW.byte_size AND ticket.verified_width=NEW.width AND ticket.verified_height=NEW.height\n      AND ticket.rights_reference=NEW.rights_reference AND ticket.registered_at=NEW.created_at) THEN\n    RAISE EXCEPTION 'reserved original requires its completed trusted registration' USING ERRCODE='23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_resource_management_audit",
+      "identityArguments": "audit_id uuid, actor uuid, session_id uuid, expected_action text, expected_subject text, subject uuid, event_time timestamp with time zone, causal_lower_bound timestamp with time zone",
+      "resultType": "void",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_resource_management_audit(audit_id uuid, actor uuid, session_id uuid, expected_action text, expected_subject text, subject uuid, event_time timestamp with time zone, causal_lower_bound timestamp with time zone DEFAULT NULL::timestamp with time zone)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE evidence public.audit_logs%ROWTYPE; session public.admin_sessions%ROWTYPE; identity_status text; required_permission text;\nBEGIN\n  SELECT * INTO evidence FROM public.audit_logs WHERE id=audit_id;\n  SELECT * INTO session FROM public.admin_sessions WHERE id=session_id FOR SHARE;\n  SELECT status INTO identity_status FROM public.admin_identities WHERE id=actor FOR SHARE;\n  IF evidence.id IS NULL OR evidence.actor_type<>'ADMIN' OR evidence.actor_id IS DISTINCT FROM actor OR evidence.action<>expected_action\n    OR evidence.subject_type<>expected_subject OR evidence.subject_id<>subject OR evidence.outcome<>'SUCCEEDED'\n    OR evidence.created_at<>event_time OR evidence.reason_code IS NULL OR evidence.request_id IS NULL OR evidence.correlation_id IS NULL\n    OR evidence.field_category IS DISTINCT FROM 'RESOURCE_MANAGEMENT' THEN\n    RAISE EXCEPTION 'resource operation requires its exact audit' USING ERRCODE='23514';\n  END IF;\n  IF session.id IS NULL OR session.admin_identity_id<>actor OR identity_status IS DISTINCT FROM 'ACTIVE'\n    OR NOT session.authenticated_with_mfa OR session.revoked_at IS NOT NULL OR session.expires_at<=clock_timestamp()\n    OR session.created_at>clock_timestamp() OR event_time<session.created_at\n    OR event_time>GREATEST(clock_timestamp(),transaction_timestamp(),session.created_at,causal_lower_bound) THEN\n    RAISE EXCEPTION 'resource operation requires its active MFA actor session' USING ERRCODE='23514';\n  END IF;\n  required_permission:=CASE expected_action WHEN 'POLICY_REGISTER' THEN 'content.policy.manage'\n    WHEN 'MEDIA_UPLOAD_BEGIN' THEN 'content.media.upload' WHEN 'MEDIA_UPLOAD_REGISTER' THEN 'content.media.upload'\n    WHEN 'MEDIA_RIGHTS_SET' THEN 'content.media.rights' WHEN 'MEDIA_PROCESSING_ENQUEUE' THEN 'content.media.process'\n    WHEN 'MEDIA_PROCESSING_RETRY' THEN 'content.media.process' END;\n  PERFORM ar.role_id FROM public.admin_identity_roles ar JOIN public.roles r ON r.id=ar.role_id\n    JOIN public.role_permissions rp ON rp.role_id=r.id JOIN public.permissions p ON p.id=rp.permission_id\n    WHERE ar.admin_identity_id=actor AND p.permission_key=required_permission\n      AND ar.granted_at<=clock_timestamp() AND rp.granted_at<=clock_timestamp()\n      AND ar.granted_at<=event_time AND rp.granted_at<=event_time FOR SHARE OF ar,r,rp,p;\n  IF NOT FOUND THEN RAISE EXCEPTION 'resource operation requires its current specific permission' USING ERRCODE='23514'; END IF;\nEND; $function$"
     },
     {
       "name": "assert_translation_initial_review",
@@ -42511,6 +44285,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_media_processing_attempt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP = 'DELETE' THEN RAISE EXCEPTION 'media attempts cannot be deleted' USING ERRCODE = '55000'; END IF;\n  IF TG_OP = 'UPDATE' THEN\n    IF OLD.status <> 'PROCESSING' OR NEW.status = 'PROCESSING'\n      OR (to_jsonb(NEW) - ARRAY['status','finished_at','error_code','error_retryable']) IS DISTINCT FROM\n        (to_jsonb(OLD) - ARRAY['status','finished_at','error_code','error_retryable']) THEN\n      RAISE EXCEPTION 'media attempt evidence is immutable' USING ERRCODE = '55000';\n    END IF;\n    IF NEW.status = 'EXPIRED' AND (OLD.lease_expires_at > statement_timestamp()\n      OR NEW.error_code <> 'PROCESSING_TIMEOUT' OR NEW.error_retryable IS DISTINCT FROM true) THEN\n      RAISE EXCEPTION 'only expired claims can expire' USING ERRCODE = '23514';\n    END IF;\n  ELSIF NEW.status <> 'PROCESSING' OR NOT EXISTS (\n    SELECT 1 FROM public.media_processing_jobs job WHERE job.id = NEW.job_id AND job.status = 'PROCESSING'\n      AND job.attempt_count = NEW.attempt_number AND job.lease_token = NEW.lease_token\n      AND job.lease_expires_at = NEW.lease_expires_at\n  ) THEN RAISE EXCEPTION 'attempt must match claimed job' USING ERRCODE = '23514'; END IF;\n  RETURN NEW;\nEND; $function$"
     },
     {
+      "name": "guard_media_processing_generation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_media_processing_generation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE previous public.media_processing_jobs%ROWTYPE;\nBEGIN\n  IF NEW.generation=1 THEN RETURN NEW; END IF;\n  SELECT * INTO previous FROM public.media_processing_jobs WHERE id=NEW.retry_of_job_id FOR UPDATE;\n  IF previous.id IS NULL OR previous.status<>'FAILED' OR NEW.generation<>previous.generation+1\n    OR ROW(NEW.source_asset_id,NEW.source_metadata_revision_id,NEW.source_checksum_sha256,NEW.profile_version,NEW.role,NEW.fit,NEW.focal_x,NEW.focal_y,NEW.command_hash)\n      IS DISTINCT FROM ROW(previous.source_asset_id,previous.source_metadata_revision_id,previous.source_checksum_sha256,previous.profile_version,previous.role,previous.fit,previous.focal_x,previous.focal_y,previous.command_hash)\n    OR NEW.created_at<GREATEST(previous.created_at,previous.updated_at,previous.completed_at)\n    OR NEW.created_at>GREATEST(clock_timestamp(),transaction_timestamp(),previous.created_at,previous.updated_at,previous.completed_at) THEN\n    RAISE EXCEPTION 'manual retry requires the next generation of its failed immutable recipe' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
       "name": "guard_media_processing_job",
       "identityArguments": "",
       "resultType": "trigger",
@@ -42519,6 +44303,26 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.guard_media_processing_job()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP = 'INSERT' THEN\n    IF NEW.status <> 'PENDING' OR NEW.attempt_count <> 0 OR NEW.error_code IS NOT NULL THEN\n      RAISE EXCEPTION 'media processing must begin pending' USING ERRCODE = '23514';\n    END IF;\n    IF NOT EXISTS (\n      SELECT 1 FROM public.media_assets asset JOIN public.media_metadata_revisions metadata\n        ON metadata.media_asset_id = asset.id\n      WHERE asset.id = NEW.source_asset_id AND metadata.id = NEW.source_metadata_revision_id\n        AND asset.checksum_sha256 = NEW.source_checksum_sha256\n        AND asset.identity_kind = 'SOURCE' AND asset.processing_status <> 'ARCHIVED' AND asset.rights_status IN ('PENDING','APPROVED')\n        AND asset.byte_size <= 26214400 AND asset.width <= 20000 AND asset.height <= 20000\n        AND asset.width::bigint * asset.height <= 40000000 AND metadata.lifecycle <> 'ARCHIVED'\n        AND metadata.focal_x = NEW.focal_x AND metadata.focal_y = NEW.focal_y\n    ) THEN RAISE EXCEPTION 'media processing source is not eligible' USING ERRCODE = '23514'; END IF;\n    RETURN NEW;\n  END IF;\n  IF TG_OP = 'DELETE' THEN RAISE EXCEPTION 'media processing history cannot be deleted' USING ERRCODE = '55000'; END IF;\n  IF (to_jsonb(NEW) - ARRAY['status','attempt_count','lease_token','lease_expires_at','next_attempt_at','error_code','error_retryable','output_asset_id','result_hash','orientation','updated_at','completed_at'])\n    IS DISTINCT FROM (to_jsonb(OLD) - ARRAY['status','attempt_count','lease_token','lease_expires_at','next_attempt_at','error_code','error_retryable','output_asset_id','result_hash','orientation','updated_at','completed_at']) THEN\n    RAISE EXCEPTION 'media processing recipe is immutable' USING ERRCODE = '55000';\n  END IF;\n  IF OLD.status IN ('SUCCEEDED','FAILED') THEN\n    IF NEW IS DISTINCT FROM OLD THEN RAISE EXCEPTION 'terminal media processing is immutable' USING ERRCODE = '55000'; END IF;\n    RETURN NEW;\n  END IF;\n  IF NEW.status = 'PROCESSING' THEN\n    IF NOT ((OLD.status = 'PENDING' AND OLD.next_attempt_at <= statement_timestamp())\n      OR (OLD.status = 'PROCESSING' AND OLD.lease_expires_at <= statement_timestamp()))\n      OR NEW.attempt_count <> OLD.attempt_count + 1 OR NEW.lease_token IS NOT DISTINCT FROM OLD.lease_token\n      OR NEW.lease_expires_at < statement_timestamp() + interval '60 seconds'\n      OR NEW.lease_expires_at > statement_timestamp() + interval '3600 seconds' THEN\n      RAISE EXCEPTION 'media claim must advance an available lease' USING ERRCODE = '23514';\n    END IF;\n  ELSIF NEW.status = 'PENDING' THEN\n    IF OLD.status <> 'PROCESSING' OR NEW.attempt_count <> OLD.attempt_count\n      OR NEW.error_retryable IS DISTINCT FROM true\n      OR NEW.next_attempt_at < statement_timestamp() + make_interval(secs => least(300, power(2,NEW.attempt_count)::integer)) THEN\n      RAISE EXCEPTION 'media retry requires bounded backoff' USING ERRCODE = '23514';\n    END IF;\n  ELSIF NEW.status IN ('SUCCEEDED','FAILED') THEN\n    IF NEW.attempt_count <> OLD.attempt_count OR (NEW.status = 'SUCCEEDED' AND\n      (OLD.status <> 'PROCESSING' OR OLD.lease_expires_at <= statement_timestamp())) THEN\n      RAISE EXCEPTION 'media completion requires a current claim' USING ERRCODE = '23514';\n    END IF;\n    IF NEW.lease_token IS DISTINCT FROM OLD.lease_token OR NEW.lease_expires_at IS DISTINCT FROM OLD.lease_expires_at THEN\n      RAISE EXCEPTION 'media completion must preserve claim evidence' USING ERRCODE = '23514';\n    END IF;\n  ELSE RAISE EXCEPTION 'invalid media transition' USING ERRCODE = '23514'; END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
+      "name": "guard_media_rights_event",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_media_rights_event()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE asset public.media_assets%ROWTYPE; previous public.media_rights_events%ROWTYPE;\nBEGIN\n  SELECT * INTO asset FROM public.media_assets WHERE id=NEW.asset_id FOR UPDATE;\n  SELECT * INTO previous FROM public.media_rights_events WHERE asset_id=NEW.asset_id ORDER BY version DESC LIMIT 1;\n  IF asset.id IS NULL OR NEW.version<>COALESCE(previous.version,0)+1 OR NEW.previous_status<>COALESCE(previous.new_status,asset.rights_status)\n    OR asset.rights_status<>NEW.previous_status OR NEW.created_at<GREATEST(asset.created_at,previous.created_at) THEN\n    RAISE EXCEPTION 'rights event must advance its locked canonical status and version' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
+      "name": "guard_media_upload_reservation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_media_upload_reservation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE session public.admin_sessions%ROWTYPE;\nBEGIN\n  IF TG_OP='INSERT' THEN\n    SELECT * INTO session FROM public.admin_sessions WHERE id=NEW.session_id FOR SHARE;\n    IF NEW.status<>'PENDING' OR NEW.version<>1 OR session.id IS NULL OR NEW.expires_at>session.expires_at\n      OR NEW.expires_at>clock_timestamp()+interval '900 seconds' OR NEW.created_at>GREATEST(clock_timestamp(),transaction_timestamp(),session.created_at) THEN\n      RAISE EXCEPTION 'upload reservation requires a bounded initial ticket' USING ERRCODE='23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF OLD.status<>'PENDING' OR NEW.status<>'REGISTERED' OR NEW.version<>2\n    OR to_jsonb(NEW)-ARRAY['status','version','registered_asset_id','registered_at','registration_audit_log_id','verified_width','verified_height','verified_orientation','registration_field_paths']\n      IS DISTINCT FROM to_jsonb(OLD)-ARRAY['status','version','registered_asset_id','registered_at','registration_audit_log_id','verified_width','verified_height','verified_orientation','registration_field_paths'] THEN\n    RAISE EXCEPTION 'upload reservation permits only one immutable registration' USING ERRCODE='55000';\n  END IF;\n  IF OLD.expires_at<=clock_timestamp() OR NEW.registered_at>GREATEST(clock_timestamp(),transaction_timestamp(),OLD.created_at) THEN\n    RAISE EXCEPTION 'upload registration requires an unexpired ticket' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND; $function$"
     },
     {
       "name": "guard_nonterminal_payment_lock",
@@ -42629,6 +44433,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.guard_published_price_mutation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP = 'DELETE' AND OLD.status IN ('PUBLISHED', 'SUPERSEDED', 'ARCHIVED') THEN\n    RAISE EXCEPTION 'published price evidence cannot be deleted' USING ERRCODE = '55000';\n  ELSIF TG_OP = 'DELETE' THEN\n    RETURN OLD;\n  END IF;\n\n  IF (to_jsonb(NEW) - 'status' - 'valid_during') IS DISTINCT FROM (to_jsonb(OLD) - 'status' - 'valid_during') THEN\n    RAISE EXCEPTION 'price revision fields are immutable' USING ERRCODE = '55000';\n  END IF;\n  IF NOT (\n    NEW.status = OLD.status\n    OR (OLD.status = 'DRAFT' AND NEW.status IN ('PUBLISHED', 'ARCHIVED'))\n    OR (OLD.status = 'PUBLISHED' AND NEW.status = 'SUPERSEDED')\n    OR (OLD.status = 'SUPERSEDED' AND NEW.status = 'ARCHIVED')\n  ) THEN\n    RAISE EXCEPTION 'invalid price lifecycle transition' USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
+    },
+    {
+      "name": "guard_registered_policy_owner",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_registered_policy_owner()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF EXISTS(SELECT 1 FROM public.policy_registration_receipts WHERE policy_key=OLD.policy_key) THEN\n    RAISE EXCEPTION 'registered policy owner is immutable' USING ERRCODE='55000';\n  END IF;\n  RETURN CASE WHEN TG_OP='DELETE' THEN OLD ELSE NEW END;\nEND; $function$"
     },
     {
       "name": "guard_reservation_order_binding",

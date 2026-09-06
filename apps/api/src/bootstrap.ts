@@ -1,4 +1,8 @@
 import {
+  registerResourceManagementRoute,
+  type ResourceManagementRouteDependencies,
+} from "./resource-management-route.js";
+import {
   registerContentAuthoringRoute,
   type ContentAuthoringRouteDependencies,
 } from "./admin-content-authoring-route.js";
@@ -43,6 +47,8 @@ export type ApiLifecycleResource = Readonly<{
 }>;
 
 export type CreateApiApplicationOptions = Readonly<{
+  resourceManagementRoute?: ResourceManagementRouteDependencies;
+  resourceManagementRuntime?: ApiLifecycleResource;
   baseContentRoute?: BaseContentRouteDependencies;
   baseContentRuntime?: ApiLifecycleResource;
   logger?: StructuredLogger;
@@ -64,7 +70,8 @@ function registerApiLifecycle(
     | "API catalog directory"
     | "API admin content"
     | "API content authoring"
-    | "API base content",
+    | "API base content"
+    | "API resource management",
 ): void {
   if (runtime === undefined) {
     return;
@@ -126,6 +133,16 @@ export async function createApiApplication(
     registerContentAuthoringRoute(
       adapter.getInstance(),
       options.contentAuthoringRoute,
+    );
+  registerApiLifecycle(
+    adapter,
+    options.resourceManagementRuntime,
+    "API resource management",
+  );
+  if (options.resourceManagementRoute !== undefined)
+    registerResourceManagementRoute(
+      adapter.getInstance(),
+      options.resourceManagementRoute,
     );
   registerApiLifecycle(adapter, options.baseContentRuntime, "API base content");
   if (options.baseContentRoute !== undefined)

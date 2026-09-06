@@ -49,7 +49,8 @@ export function createStorageTransfer(
   now: () => Date,
   budget: ProcessingBudget,
 ) {
-  const expiry = () => new Date(now().getTime() + 60_000).toISOString();
+  const expiry = (seconds: number) =>
+    new Date(now().getTime() + seconds * 1000).toISOString();
   function validExpiry(expiresAt: string): boolean {
     return new Date(expiresAt).getTime() > now().getTime();
   }
@@ -80,7 +81,7 @@ export function createStorageTransfer(
   }
 
   async function download(
-    command: MediaImageProcessingCommand,
+    command: Readonly<{ source: Omit<Identity, "storageClass"> }>,
   ): Promise<Buffer> {
     const expected = { ...command.source, storageClass: "SOURCE" as const };
     await inspect(expected, true);
@@ -91,7 +92,9 @@ export function createStorageTransfer(
           operation: "CREATE_DOWNLOAD_GRANT",
           storageClass: "SOURCE",
           objectKey: command.source.objectKey,
-          expiresAt: expiry(),
+          // Internal GET grants must still satisfy a provider's 60-second minimum
+          // after ordinary dispatch latency. Transfer and codec budgets stay unchanged.
+          expiresAt: expiry(120),
         }),
       ),
       "CREATE_DOWNLOAD_GRANT",
@@ -188,7 +191,7 @@ export function createStorageTransfer(
           checksumSha256: expected.checksumSha256,
           byteSize: expected.byteSize,
           mimeType: expected.mimeType,
-          expiresAt: expiry(),
+          expiresAt: expiry(60),
         }),
       ),
       "CREATE_UPLOAD_GRANT",

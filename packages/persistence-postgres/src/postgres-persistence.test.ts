@@ -19,6 +19,28 @@ const validConfig = {
   password: "test-password",
 } as const;
 
+test("resource management shares authorization, idempotency and the serializable lifecycle", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    undefined,
+    () => pool,
+  );
+  expect(persistence).toHaveProperty("resourceManagementTransactionManager");
+  await expect(
+    persistence.resourceManagementTransactionManager.runInResourceManagementTransaction(
+      async (repositories) => Object.keys(repositories).sort(),
+    ),
+  ).resolves.toEqual(["authorization", "idempotency", "resources"]);
+  expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL SERIALIZABLE");
+  await persistence.close();
+  await expect(
+    persistence.resourceManagementTransactionManager.runInResourceManagementTransaction(
+      async () => null,
+    ),
+  ).rejects.toMatchObject({ name: "PersistenceTransactionFailureError" });
+});
+
 test("base reviews and preview share authorization, idempotency and the serializable lifecycle", async () => {
   const pool = new TransactionPool();
   const persistence = createPostgresPersistenceWithPoolFactory(

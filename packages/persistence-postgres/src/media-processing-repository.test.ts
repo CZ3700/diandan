@@ -32,6 +32,23 @@ function harness(fail = false) {
   };
 }
 describe("media processing repository", () => {
+  test("reports a PostgreSQL serialization failure inside enqueue as an explicit conflict", async () => {
+    const query = async (sql: string) => {
+      if (sql.includes("media-processing:canonical-source"))
+        throw Object.assign(new Error("synthetic serialization failure"), {
+          code: "40001",
+        });
+      return { rows: [] };
+    };
+    const repository = createMediaProcessingRepository(
+      { query, release: () => undefined },
+      { markRollbackOnly: vi.fn(), trackOperation: async (work) => work() },
+    );
+    expect(await repository.enqueue(enqueue)).toMatchObject({
+      outcome: "FAILURE",
+      code: "CONFLICT",
+    });
+  });
   test("the actual transaction runner rolls back even when the caller catches a boundary failure", async () => {
     const statements: string[] = [];
     const query = async (sql: string) => {

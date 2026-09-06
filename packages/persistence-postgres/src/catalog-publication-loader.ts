@@ -11,6 +11,7 @@ import {
   type SupportedLocale,
 } from "@fan-support/contracts";
 import type { TransactionClient } from "./transaction-runner.js";
+import { mediaProvenanceEligibilitySql } from "./resource-media-eligibility-sql.js";
 import {
   catalogRecord,
   catalogRows,
@@ -72,6 +73,7 @@ function mainQuery(kind: CatalogObjectKind): string {
 function mediaQuery(kind: CatalogObjectKind): string {
   const table = TABLES[kind];
   return `SELECT to_jsonb(reference.*) AS reference, to_jsonb(asset.*) AS asset,
+    ${mediaProvenanceEligibilitySql} AS provenance_eligible,
     to_jsonb(metadata.*) AS metadata, to_jsonb(variant.*) AS variant,
     (SELECT coalesce(jsonb_agg(to_jsonb(translation.*) || jsonb_build_object('review', to_jsonb(review.*)) ORDER BY translation.locale), '[]'::jsonb)
       FROM public.media_metadata_revision_translations translation
@@ -160,6 +162,8 @@ async function loadRecords(
       (row) => !revisionIds.includes(catalogRecord(row["reference"])[parent]),
     )
   )
+    throw new Error("CATALOG_PUBLICATION_INVALID");
+  if (mediaRows.some((row) => row["provenance_eligible"] !== true))
     throw new Error("CATALOG_PUBLICATION_INVALID");
   return ids.map((id) => {
     const row = byId.get(id)!;

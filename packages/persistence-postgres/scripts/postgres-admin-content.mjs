@@ -21,6 +21,7 @@ import {
   runMigrations,
   withEphemeralPostgres,
 } from "../dist/index.js";
+import { createAdminAuthorizationRepository } from "../dist/admin-authorization-repository.js";
 import { seedCatalogDirectoryFixtures } from "./postgres-catalog-fixtures.mjs";
 import {
   seedAdminContentFixtures,
@@ -155,6 +156,41 @@ await withEphemeralPostgres(async (clientConfig) => {
           authorization(name, permission, locales, overrides),
         ),
       );
+    async function grantBound(locales) {
+      const bound = (
+        await client.query(
+          `SELECT count(*)::integer AS count,
+        to_char(max(granted_at) AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS granted_at
+        FROM admin_content_locale_grants WHERE admin_identity_id=$1 AND locale=ANY($2::text[]) AND revoked_at IS NULL`,
+          [fixtures.reviewer, locales],
+        )
+      ).rows[0];
+      assert.equal(
+        bound.count,
+        locales.length,
+        "positive fixture has every explicit active locale grant",
+      );
+      return bound.granted_at;
+    }
+    async function waitForGrantClock(grantedAt, rollbackMilliseconds = 0) {
+      const started = performance.now();
+      while (performance.now() - started < 6_000) {
+        const { effective } = (
+          await client.query(
+            "SELECT clock_timestamp()-$2::double precision*interval '1 millisecond'>=$1::timestamptz+interval '500 milliseconds' AS effective",
+            [grantedAt, rollbackMilliseconds],
+          )
+        ).rows[0];
+        if (effective) return;
+        await delay(25);
+      }
+      assert.fail(
+        "fixture database clock did not reach its explicit grant within the bounded wait",
+      );
+    }
+    async function waitForFixtureGrant(locales) {
+      await waitForGrantClock(await grantBound(locales));
+    }
     stage = "canonical authorization";
     for (const name of ["editor", "reviewer"])
       equal(
@@ -274,6 +310,7 @@ await withEphemeralPostgres(async (clientConfig) => {
       [fixtures.reviewer],
     );
     await grantAdminContentLocale(client, suspendedScope);
+    await waitForFixtureGrant([suspendedScope.locale]);
     stage = "revoke after original grantor suspension";
     const independentlyRevokedScope = {
       adminIdentityId: fixtures.reviewer,
@@ -322,6 +359,7 @@ await withEphemeralPostgres(async (clientConfig) => {
       ...independentlyRevokedScope,
       actorId: fixtures.editor,
     });
+    await waitForFixtureGrant([independentlyRevokedScope.locale]);
     stage = "reject suspended actual revoker";
     const inactiveRevokerScope = {
       adminIdentityId: fixtures.editor,
@@ -395,6 +433,60 @@ await withEphemeralPostgres(async (clientConfig) => {
       replacementGrant !== savedGrant,
       "regrant creates a new historical record",
     );
+    stage = "locale grant clock boundary";
+    const latestGrantAt = await grantBound([...SUPPORTED_LOCALES]);
+    const rollbackMilliseconds =
+      Math.max(
+        0,
+        Number(
+          (
+            await client.query(
+              "SELECT ceil(extract(epoch FROM clock_timestamp()-$1::timestamptz)*1000)::text AS milliseconds",
+              [latestGrantAt],
+            )
+          ).rows[0].milliseconds,
+        ),
+      ) + 2_000;
+    const rolledBackAuthorization = createAdminAuthorizationRepository(
+      {
+        query(sql, values = []) {
+          return sql.includes(
+            "SELECT locale FROM public.admin_content_locale_grants",
+          )
+            ? client.query(
+                sql.replaceAll(
+                  "clock_timestamp()",
+                  "(clock_timestamp()-$3::double precision*interval '1 millisecond')",
+                ),
+                [...values, rollbackMilliseconds],
+              )
+            : client.query(sql, values);
+        },
+        release() {},
+      },
+      { trackOperation: (work) => work(), markRollbackOnly() {} },
+    );
+    const authorizeAtRolledBackClock = () =>
+      transaction(client, () =>
+        rolledBackAuthorization.authorize(
+          authorization("reviewer", "content.translation.review", [
+            ...SUPPORTED_LOCALES,
+          ]),
+        ),
+      );
+    equal(
+      (await authorizeAtRolledBackClock()).code,
+      "FORBIDDEN",
+      "a persisted grant still in the future at the authorization clock is forbidden",
+    );
+    if (process.env.ADMIN_CONTENT_GRANT_CLOCK_RED !== "1")
+      await waitForGrantClock(latestGrantAt, rollbackMilliseconds);
+    equal(
+      (await authorizeAtRolledBackClock()).outcome,
+      "SUCCESS",
+      "positive authorization requires the database clock to reach the persisted grants",
+    );
+    await waitForFixtureGrant([...SUPPORTED_LOCALES]);
     stage = "atomic authorized creation";
     const aliasCommand = adminAliasDraftFixture(fixtures);
     const detailCommand = adminGiftDetailDraftFixture(fixtures);
@@ -574,6 +666,25 @@ await withEphemeralPostgres(async (clientConfig) => {
             canonical.context.locales,
           ),
         );
+        if (principal.outcome !== "SUCCESS") {
+          const diagnostic = (
+            await client.query(
+              `WITH instant AS MATERIALIZED(SELECT clock_timestamp() AS now)
+            SELECT to_char(instant.now AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS observed_at,
+              i.status,s.authenticated_with_mfa,s.revoked_at IS NULL AS not_revoked,
+              extract(epoch FROM s.expires_at-instant.now)::text AS session_seconds_remaining,
+              (SELECT jsonb_agg(jsonb_build_object('locale',g.locale,'not_revoked',g.revoked_at IS NULL,'grant_minus_now_us',extract(epoch FROM g.granted_at-instant.now)*1000000) ORDER BY g.locale,g.granted_at)
+                FROM admin_content_locale_grants g WHERE g.admin_identity_id=i.id AND g.locale=ANY($2::text[])) AS locale_grants,
+              (SELECT jsonb_agg(jsonb_build_object('identity_grant_minus_now_us',extract(epoch FROM ar.granted_at-instant.now)*1000000,'permission_grant_minus_now_us',extract(epoch FROM rp.granted_at-instant.now)*1000000))
+                FROM admin_identity_roles ar JOIN role_permissions rp ON rp.role_id=ar.role_id JOIN permissions p ON p.id=rp.permission_id WHERE ar.admin_identity_id=i.id AND p.permission_key='content.translation.review') AS permission_grants
+            FROM admin_sessions s JOIN admin_identities i ON i.id=s.admin_identity_id CROSS JOIN instant WHERE s.id=$1`,
+              [fixtures.sessions.reviewer, canonical.context.locales],
+            )
+          ).rows[0];
+          process.stderr.write(
+            `${JSON.stringify({ probe: "canonical-review-authorization", code: principal.code, locales: canonical.context.locales, ...diagnostic })}\n`,
+          );
+        }
         equal(
           principal.outcome,
           "SUCCESS",

@@ -76,6 +76,7 @@ export type S3MediaStorageAdapterDependencies = Readonly<{
     command: unknown,
     options: Readonly<{
       expiresIn: number;
+      signingDate?: Date;
       signableHeaders?: ReadonlySet<string>;
       unhoistableHeaders?: ReadonlySet<string>;
     }>,
@@ -283,9 +284,13 @@ function readProviderErrorName(error: unknown): string {
   }
 }
 
-function expiresInSeconds(expiresAt: string, now: Date): number | undefined {
+function expiresInSeconds(
+  expiresAt: string,
+  now: Date,
+  minimum = 60,
+): number | undefined {
   const seconds = Math.floor((Date.parse(expiresAt) - now.getTime()) / 1_000);
-  return Number.isSafeInteger(seconds) && seconds >= 60 && seconds <= 900
+  return Number.isSafeInteger(seconds) && seconds >= minimum && seconds <= 900
     ? seconds
     : undefined;
 }
@@ -750,10 +755,8 @@ function createS3MediaStorageAdapterWithDependencies(
       ) {
         return failure("CREATE_UPLOAD_GRANT", "CONFIGURATION_ERROR");
       }
-      const expiresIn = expiresInSeconds(
-        parsed.data.expiresAt,
-        dependencies.now(),
-      );
+      const signingDate = dependencies.now();
+      const expiresIn = expiresInSeconds(parsed.data.expiresAt, signingDate, 1);
       if (expiresIn === undefined) {
         return failure("CREATE_UPLOAD_GRANT", "INVALID_COMMAND");
       }
@@ -772,6 +775,8 @@ function createS3MediaStorageAdapterWithDependencies(
       try {
         const url = await dependencies.presign(command, {
           expiresIn,
+          // Credential resolution must not shift the signature past the caller's session ceiling.
+          signingDate,
           signableHeaders: new Set([
             "content-length",
             "content-type",
@@ -990,6 +995,9 @@ export function createS3MediaStorageAdapter(
       presign: (command, options) =>
         getSignedUrl(presignClient, command as never, {
           expiresIn: options.expiresIn,
+          ...(options.signingDate === undefined
+            ? {}
+            : { signingDate: options.signingDate }),
           ...(options.signableHeaders === undefined
             ? {}
             : { signableHeaders: new Set(options.signableHeaders) }),

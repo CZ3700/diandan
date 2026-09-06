@@ -160,6 +160,16 @@
         "up": "851cb0d745ea6dce706906500dc81443608568d119c1ec9f592bc461d532bc6d",
         "down": "17ff4cfbc4fee3a4fbb3ae8303c2af2de01b3d238d2c305bdebb2805b124980a"
       }
+    },
+    {
+      "version": "0017",
+      "name": "resource-management",
+      "up": "database/migrations/0017_resource-management.up.sql",
+      "down": "database/migrations/0017_resource-management.down.sql",
+      "sha256": {
+        "up": "8171ef1a231a14acbf02f8d669f550e97e84fc11a9f66e7588ff8bb8098d8bed",
+        "down": "5bba0d13da7bace1965f0e815fd1883b089873f73b30f5dbb8fd53053cb1d644"
+      }
     }
   ]
 }

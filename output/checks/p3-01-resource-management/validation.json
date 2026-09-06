@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "taskId": "P3-01",
+  "checkpoint": "4B",
+  "status": "PASS",
+  "taskStatus": "IN_PROGRESS",
+  "git": {
+    "baseCommit": "1924df44ac93c5c52f513e7f0c16f6674509fdb5",
+    "branch": "codex/p3-01-content-runtime",
+    "strategy": "Local checkpoint commits; one later combined GitHub push per user instruction.",
+    "pushed": false,
+    "remoteCiVerified": false
+  },
+  "implementation": {
+    "inputCount": 913,
+    "fingerprint": "efbc99d4266b27e32ed54cbba2ac29370d53bbbfd0446de6195bc94f1050976a",
+    "manifest": "implementation-source.json",
+    "finalMatch": true
+  },
+  "affectedTests": {
+    "total": 1197,
+    "byPackage": {
+      "contracts": 238,
+      "content": 149,
+      "application": 264,
+      "persistence-port": 4,
+      "persistence-postgres": 317,
+      "api": 78,
+      "media-image": 68,
+      "media-s3": 79
+    },
+    "result": "PASS",
+    "log": "targeted-tests-final.log"
+  },
+  "compatibility": {
+    "previousRoots": 246,
+    "totalRoots": 274,
+    "allPreviousUnchanged": true
+  },
+  "database": {
+    "migrations": 17,
+    "tables": 136,
+    "resourceAssertions": 129,
+    "timeAssertions": 10,
+    "nestedUnitAndCompositionTests": 41,
+    "legacyCatalogAssertions": 307,
+    "legacyMediaAssertions": 152,
+    "legacyAdminAfterFixtureHardening": 112,
+    "result": "PASS"
+  },
+  "httpStorageWorker": {
+    "assertions": 1798,
+    "requests": 159,
+    "processedObjects": 13,
+    "realPostgres": true,
+    "localTlsS3": true,
+    "realChromeCors": true,
+    "certificatePolicy": "Exact ephemeral Chrome SPKI pin; independent Node CA chain validation.",
+    "log": "http-final.log",
+    "result": "PASS"
+  },
+  "inspectionBoundaryProbe": {
+    "assertions": 6,
+    "realAdapterCode": true,
+    "networkIO": "stubbed",
+    "result": "PASS"
+  },
+  "browserRegressions": [
+    {
+      "task": "p2-04",
+      "result": "passed",
+      "scenarios": 16,
+      "screenshots": 18,
+      "axeScans": 10,
+      "blockingViolations": 0,
+      "violations": 0,
+      "rendererFingerprint": "6a659d234d55d9dd07de60ff379ff82ba8127807592159a6220883bb195ab5ac",
+      "evidence": "output/playwright/p2-04/browser-results.json"
+    },
+    {
+      "task": "p2-05",
+      "result": "passed-with-physical-device-gate",
+      "scenarios": 8,
+      "screenshots": 22,
+      "axeScans": 3,
+      "blockingViolations": 0,
+      "violations": 3,
+      "rendererFingerprint": "a1d7b31c515c031dc7ff75210898e3883765f9f77a8b630f1620389b3c8da906",
+      "evidence": "output/playwright/p2-05/browser-results.json"
+    }
+  ],
+  "newPhysicalDeviceEvidence": false,
+  "visualInspection": [
+    "output/playwright/p2-04/reduced-motion/390x844-en.png",
+    "output/playwright/p2-04/reduced-motion/1440x900-en.png",
+    "output/playwright/p2-05/hero/390x844-end.png",
+    "output/playwright/p2-05/hero/1440x900-end.png"
+  ],
+  "independentReview": {
+    "specification": "ACCEPT",
+    "quality": "ACCEPT",
+    "fixtureFollowup": "ACCEPT"
+  },
+  "wholeCheck": {
+    "status": "PASS",
+    "exitCode": 0,
+    "log": "check.log",
+    "initialFailureLog": "check-first-red.log",
+    "lintFailureLog": "check-style-red.log",
+    "typecheck": {
+      "successful": 56,
+      "total": 56,
+      "cached": 56
+    },
+    "test": {
+      "successful": 56,
+      "total": 56,
+      "cached": 56
+    },
+    "build": {
+      "successful": 35,
+      "total": 35,
+      "cached": 35
+    },
+    "nodeImportedPackageExports": 31,
+    "legacyWorkerAssertions": 423
+  },
+  "secrets": {
+    "status": "PASS",
+    "finalAfterDocumentation": true,
+    "log": "secrets-final.log"
+  },
+  "diffCheck": {
+    "status": "PASS",
+    "finalAfterDocumentation": true
+  },
+  "superChecks": "PASS_10_OF_10",
+  "initialIntermittentFailure": {
+    "suite": "legacy 3A PostgreSQL",
+    "check": "review authorization uses canonical scope",
+    "cause": "unconfirmed",
+    "naturalDiagnosticRuns": 12,
+    "naturalAssertionsPerRun": 110,
+    "naturalRunsAllPassed": true,
+    "controlledBoundary": "Future locale grant denied, independent database clock condition, then one successful authorization.",
+    "fixtureHardeningAssertions": 112,
+    "productionAuthorizationOrTtlChanged": false
+  },
+  "remaining": [
+    "Full revision validation, publication/rollback, public extended DTOs and manifest/head.",
+    "Aliases projection, seven-locale outbox/purge and local <=60-second visibility.",
+    "Admin business UI and production identity provider.",
+    "Audited cleanup of unreferenced private uploaded objects.",
+    "Current provenance eligibility does not attest to CDN invalidation.",
+    "No new physical device, real operator media, cloud CDN, PSP, staging, remote CI or production release."
+  ],
+  "acceptedAt": "2026-09-06T09:22:11.850050Z",
+  "staticPreflight": {
+    "status": "PASS",
+    "tasks": 105,
+    "cached": 29,
+    "log": "static-preflight-final.log"
+  },
+  "browserRendererInputsFinalMatch": true
+}

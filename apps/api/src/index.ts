@@ -12,3 +12,8 @@ export {
   createTestBaseContentComposition,
   type TestBaseContentCompositionOptions,
 } from "./base-content-composition.js";
+
+export {
+  createTestResourceManagementComposition,
+  type TestResourceManagementCompositionOptions,
+} from "./resource-management-composition.js";

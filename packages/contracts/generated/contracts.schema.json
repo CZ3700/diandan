@@ -4449,6 +4449,1692 @@
       ],
       "type": "object"
     },
+    "AdminResourceAuthorizationCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "csrfTokenDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "permission": {
+          "enum": [
+            "content.media.upload",
+            "content.media.read",
+            "content.media.process",
+            "content.media.rights",
+            "content.policy.manage"
+          ],
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "sessionTokenDigest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "sessionTokenDigest",
+        "csrfTokenDigest",
+        "permission"
+      ],
+      "type": "object"
+    },
+    "AdminResourceCommand": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "READ_POLICY",
+              "type": "string"
+            },
+            "policyKey": {
+              "maxLength": 64,
+              "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "action",
+            "policyKey"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "REGISTER_POLICY",
+              "type": "string"
+            },
+            "expectedVersion": {
+              "const": 0,
+              "type": "number"
+            },
+            "idempotencyKey": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            },
+            "kind": {
+              "enum": [
+                "TERMS",
+                "PRIVACY",
+                "REFUND",
+                "DELIVERY"
+              ],
+              "type": "string"
+            },
+            "policyKey": {
+              "maxLength": 64,
+              "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            "reasonCode": {
+              "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "action",
+            "policyKey",
+            "kind",
+            "expectedVersion",
+            "idempotencyKey",
+            "reasonCode"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "BEGIN_UPLOAD",
+              "type": "string"
+            },
+            "byteSize": {
+              "exclusiveMinimum": 0,
+              "maximum": 26214400,
+              "type": "integer"
+            },
+            "checksumSha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "expectedVersion": {
+              "const": 0,
+              "type": "number"
+            },
+            "idempotencyKey": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            },
+            "mimeType": {
+              "enum": [
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "image/avif"
+              ],
+              "type": "string"
+            },
+            "reasonCode": {
+              "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+              "type": "string"
+            },
+            "rightsReference": {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9:._/-]*$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "action",
+            "checksumSha256",
+            "byteSize",
+            "mimeType",
+            "rightsReference",
+            "expectedVersion",
+            "idempotencyKey",
+            "reasonCode"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "READ_UPLOAD",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "uploadId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "action",
+            "uploadId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "COMPLETE_UPLOAD",
+              "type": "string"
+            },
+            "expectedVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "idempotencyKey": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            },
+            "reasonCode": {
+              "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "uploadId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "action",
+            "uploadId",
+            "expectedVersion",
+            "idempotencyKey",
+            "reasonCode"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "READ_MEDIA",
+              "type": "string"
+            },
+            "assetId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "action",
+            "assetId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "SET_MEDIA_RIGHTS",
+              "type": "string"
+            },
+            "assetId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "evidenceReference": {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9:._/-]*$",
+              "type": "string"
+            },
+            "expectedVersion": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "idempotencyKey": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            },
+            "reasonCode": {
+              "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+              "type": "string"
+            },
+            "rightsStatus": {
+              "enum": [
+                "PENDING",
+                "APPROVED",
+                "REJECTED",
+                "EXPIRED"
+              ],
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "action",
+            "assetId",
+            "expectedVersion",
+            "rightsStatus",
+            "evidenceReference",
+            "idempotencyKey",
+            "reasonCode"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "ENQUEUE_MEDIA",
+              "type": "string"
+            },
+            "expectedVersion": {
+              "const": 0,
+              "type": "number"
+            },
+            "fit": {
+              "enum": [
+                "COVER",
+                "CONTAIN"
+              ],
+              "type": "string"
+            },
+            "idempotencyKey": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            },
+            "metadataRevisionId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "reasonCode": {
+              "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+              "type": "string"
+            },
+            "role": {
+              "enum": [
+                "PORTRAIT",
+                "HERO_DESKTOP",
+                "HERO_MOBILE",
+                "GIFT_PRIMARY"
+              ],
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "sourceAssetId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "action",
+            "sourceAssetId",
+            "metadataRevisionId",
+            "role",
+            "fit",
+            "expectedVersion",
+            "idempotencyKey",
+            "reasonCode"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "READ_MEDIA_JOB",
+              "type": "string"
+            },
+            "jobId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "action",
+            "jobId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "RETRY_MEDIA_JOB",
+              "type": "string"
+            },
+            "expectedVersion": {
+              "maximum": 6,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "idempotencyKey": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            },
+            "jobId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "reasonCode": {
+              "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "action",
+            "jobId",
+            "expectedVersion",
+            "idempotencyKey",
+            "reasonCode"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "AdminResourceRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "command": {
+          "oneOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "action": {
+                  "const": "READ_POLICY",
+                  "type": "string"
+                },
+                "policyKey": {
+                  "maxLength": 64,
+                  "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "action",
+                "policyKey"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "action": {
+                  "const": "REGISTER_POLICY",
+                  "type": "string"
+                },
+                "expectedVersion": {
+                  "const": 0,
+                  "type": "number"
+                },
+                "idempotencyKey": {
+                  "maxLength": 256,
+                  "minLength": 16,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                  "type": "string"
+                },
+                "kind": {
+                  "enum": [
+                    "TERMS",
+                    "PRIVACY",
+                    "REFUND",
+                    "DELIVERY"
+                  ],
+                  "type": "string"
+                },
+                "policyKey": {
+                  "maxLength": 64,
+                  "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                  "type": "string"
+                },
+                "reasonCode": {
+                  "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "action",
+                "policyKey",
+                "kind",
+                "expectedVersion",
+                "idempotencyKey",
+                "reasonCode"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "action": {
+                  "const": "BEGIN_UPLOAD",
+                  "type": "string"
+                },
+                "byteSize": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 26214400,
+                  "type": "integer"
+                },
+                "checksumSha256": {
+                  "pattern": "^[a-f0-9]{64}$",
+                  "type": "string"
+                },
+                "expectedVersion": {
+                  "const": 0,
+                  "type": "number"
+                },
+                "idempotencyKey": {
+                  "maxLength": 256,
+                  "minLength": 16,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                  "type": "string"
+                },
+                "mimeType": {
+                  "enum": [
+                    "image/jpeg",
+                    "image/png",
+                    "image/webp",
+                    "image/avif"
+                  ],
+                  "type": "string"
+                },
+                "reasonCode": {
+                  "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                  "type": "string"
+                },
+                "rightsReference": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9:._/-]*$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "action",
+                "checksumSha256",
+                "byteSize",
+                "mimeType",
+                "rightsReference",
+                "expectedVersion",
+                "idempotencyKey",
+                "reasonCode"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "action": {
+                  "const": "READ_UPLOAD",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "uploadId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "action",
+                "uploadId"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "action": {
+                  "const": "COMPLETE_UPLOAD",
+                  "type": "string"
+                },
+                "expectedVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "idempotencyKey": {
+                  "maxLength": 256,
+                  "minLength": 16,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                  "type": "string"
+                },
+                "reasonCode": {
+                  "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "uploadId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "action",
+                "uploadId",
+                "expectedVersion",
+                "idempotencyKey",
+                "reasonCode"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "action": {
+                  "const": "READ_MEDIA",
+                  "type": "string"
+                },
+                "assetId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "action",
+                "assetId"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "action": {
+                  "const": "SET_MEDIA_RIGHTS",
+                  "type": "string"
+                },
+                "assetId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "evidenceReference": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9:._/-]*$",
+                  "type": "string"
+                },
+                "expectedVersion": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "idempotencyKey": {
+                  "maxLength": 256,
+                  "minLength": 16,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                  "type": "string"
+                },
+                "reasonCode": {
+                  "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                  "type": "string"
+                },
+                "rightsStatus": {
+                  "enum": [
+                    "PENDING",
+                    "APPROVED",
+                    "REJECTED",
+                    "EXPIRED"
+                  ],
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "action",
+                "assetId",
+                "expectedVersion",
+                "rightsStatus",
+                "evidenceReference",
+                "idempotencyKey",
+                "reasonCode"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "action": {
+                  "const": "ENQUEUE_MEDIA",
+                  "type": "string"
+                },
+                "expectedVersion": {
+                  "const": 0,
+                  "type": "number"
+                },
+                "fit": {
+                  "enum": [
+                    "COVER",
+                    "CONTAIN"
+                  ],
+                  "type": "string"
+                },
+                "idempotencyKey": {
+                  "maxLength": 256,
+                  "minLength": 16,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                  "type": "string"
+                },
+                "metadataRevisionId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "reasonCode": {
+                  "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                  "type": "string"
+                },
+                "role": {
+                  "enum": [
+                    "PORTRAIT",
+                    "HERO_DESKTOP",
+                    "HERO_MOBILE",
+                    "GIFT_PRIMARY"
+                  ],
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "sourceAssetId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "action",
+                "sourceAssetId",
+                "metadataRevisionId",
+                "role",
+                "fit",
+                "expectedVersion",
+                "idempotencyKey",
+                "reasonCode"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "action": {
+                  "const": "READ_MEDIA_JOB",
+                  "type": "string"
+                },
+                "jobId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "action",
+                "jobId"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "action": {
+                  "const": "RETRY_MEDIA_JOB",
+                  "type": "string"
+                },
+                "expectedVersion": {
+                  "maximum": 6,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "idempotencyKey": {
+                  "maxLength": 256,
+                  "minLength": 16,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                  "type": "string"
+                },
+                "jobId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "reasonCode": {
+                  "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "action",
+                "jobId",
+                "expectedVersion",
+                "idempotencyKey",
+                "reasonCode"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        "csrfToken": {
+          "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+          "type": "string"
+        },
+        "requestId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "sessionToken": {
+          "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requestId",
+        "sessionToken",
+        "csrfToken",
+        "command"
+      ],
+      "type": "object"
+    },
+    "AdminResourceResponse": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "MUTATION",
+                  "type": "string"
+                },
+                "outcome": {
+                  "const": "SUCCESS",
+                  "type": "string"
+                },
+                "replayed": {
+                  "type": "boolean"
+                },
+                "resultId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "kind",
+                "resultId",
+                "replayed"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "enum": [
+                    "INVALID_COMMAND",
+                    "UNAUTHENTICATED",
+                    "FORBIDDEN",
+                    "CSRF_INVALID",
+                    "NOT_FOUND",
+                    "REVISION_NOT_DRAFT",
+                    "ALREADY_EXISTS",
+                    "INVALID_CONTENT",
+                    "CONTENT_UNAVAILABLE",
+                    "STALE_CONTENT",
+                    "STALE_VERSION",
+                    "SELF_REVIEW",
+                    "INVALID_REVIEW_STATE",
+                    "IDEMPOTENCY_CONFLICT",
+                    "CONFLICT",
+                    "PREVIEW_UNAVAILABLE"
+                  ],
+                  "type": "string"
+                },
+                "outcome": {
+                  "const": "FAILURE",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "code"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "POLICY",
+                  "type": "string"
+                },
+                "outcome": {
+                  "const": "SUCCESS",
+                  "type": "string"
+                },
+                "policy": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "createdAt": {
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                      "type": "string"
+                    },
+                    "kind": {
+                      "enum": [
+                        "TERMS",
+                        "PRIVACY",
+                        "REFUND",
+                        "DELIVERY"
+                      ],
+                      "type": "string"
+                    },
+                    "policyKey": {
+                      "maxLength": 64,
+                      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                      "type": "string"
+                    },
+                    "schemaVersion": {
+                      "const": 1,
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "schemaVersion",
+                    "policyKey",
+                    "kind",
+                    "createdAt"
+                  ],
+                  "type": "object"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "kind",
+                "policy"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "enum": [
+                    "INVALID_COMMAND",
+                    "UNAUTHENTICATED",
+                    "FORBIDDEN",
+                    "CSRF_INVALID",
+                    "NOT_FOUND",
+                    "REVISION_NOT_DRAFT",
+                    "ALREADY_EXISTS",
+                    "INVALID_CONTENT",
+                    "CONTENT_UNAVAILABLE",
+                    "STALE_CONTENT",
+                    "STALE_VERSION",
+                    "SELF_REVIEW",
+                    "INVALID_REVIEW_STATE",
+                    "IDEMPOTENCY_CONFLICT",
+                    "CONFLICT",
+                    "PREVIEW_UNAVAILABLE"
+                  ],
+                  "type": "string"
+                },
+                "outcome": {
+                  "const": "FAILURE",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "code"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "UPLOAD",
+                  "type": "string"
+                },
+                "outcome": {
+                  "const": "SUCCESS",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "upload": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "assetId": {
+                      "anyOf": [
+                        {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "expiresAt": {
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                      "type": "string"
+                    },
+                    "schemaVersion": {
+                      "const": 1,
+                      "type": "number"
+                    },
+                    "status": {
+                      "enum": [
+                        "PENDING",
+                        "REGISTERED"
+                      ],
+                      "type": "string"
+                    },
+                    "uploadId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "version": {
+                      "anyOf": [
+                        {
+                          "const": 1,
+                          "type": "number"
+                        },
+                        {
+                          "const": 2,
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "schemaVersion",
+                    "uploadId",
+                    "version",
+                    "status",
+                    "assetId",
+                    "expiresAt"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "kind",
+                "upload"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "enum": [
+                    "INVALID_COMMAND",
+                    "UNAUTHENTICATED",
+                    "FORBIDDEN",
+                    "CSRF_INVALID",
+                    "NOT_FOUND",
+                    "REVISION_NOT_DRAFT",
+                    "ALREADY_EXISTS",
+                    "INVALID_CONTENT",
+                    "CONTENT_UNAVAILABLE",
+                    "STALE_CONTENT",
+                    "STALE_VERSION",
+                    "SELF_REVIEW",
+                    "INVALID_REVIEW_STATE",
+                    "IDEMPOTENCY_CONFLICT",
+                    "CONFLICT",
+                    "PREVIEW_UNAVAILABLE"
+                  ],
+                  "type": "string"
+                },
+                "outcome": {
+                  "const": "FAILURE",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "code"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "grant": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "expiresAt": {
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                      "type": "string"
+                    },
+                    "headers": {
+                      "additionalProperties": {
+                        "maxLength": 4096,
+                        "type": "string"
+                      },
+                      "propertyNames": {
+                        "maxLength": 128,
+                        "minLength": 1,
+                        "pattern": "^[!#$%&'*+.^_`|~0-9a-z-]+$",
+                        "type": "string"
+                      },
+                      "type": "object"
+                    },
+                    "method": {
+                      "const": "PUT",
+                      "type": "string"
+                    },
+                    "url": {
+                      "format": "uri",
+                      "maxLength": 8192,
+                      "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "method",
+                    "url",
+                    "headers",
+                    "expiresAt"
+                  ],
+                  "type": "object"
+                },
+                "kind": {
+                  "const": "UPLOAD_GRANT",
+                  "type": "string"
+                },
+                "outcome": {
+                  "const": "SUCCESS",
+                  "type": "string"
+                },
+                "replayed": {
+                  "type": "boolean"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "uploadId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "kind",
+                "uploadId",
+                "replayed",
+                "grant"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "enum": [
+                    "INVALID_COMMAND",
+                    "UNAUTHENTICATED",
+                    "FORBIDDEN",
+                    "CSRF_INVALID",
+                    "NOT_FOUND",
+                    "REVISION_NOT_DRAFT",
+                    "ALREADY_EXISTS",
+                    "INVALID_CONTENT",
+                    "CONTENT_UNAVAILABLE",
+                    "STALE_CONTENT",
+                    "STALE_VERSION",
+                    "SELF_REVIEW",
+                    "INVALID_REVIEW_STATE",
+                    "IDEMPOTENCY_CONFLICT",
+                    "CONFLICT",
+                    "PREVIEW_UNAVAILABLE"
+                  ],
+                  "type": "string"
+                },
+                "outcome": {
+                  "const": "FAILURE",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "code"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "MEDIA",
+                  "type": "string"
+                },
+                "media": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "assetId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "byteSize": {
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991,
+                      "type": "integer"
+                    },
+                    "height": {
+                      "exclusiveMinimum": 0,
+                      "maximum": 20000,
+                      "type": "integer"
+                    },
+                    "identityKind": {
+                      "enum": [
+                        "SOURCE",
+                        "PROCESSED_MASTER"
+                      ],
+                      "type": "string"
+                    },
+                    "mimeType": {
+                      "enum": [
+                        "image/jpeg",
+                        "image/png",
+                        "image/webp",
+                        "image/avif"
+                      ],
+                      "type": "string"
+                    },
+                    "processingStatus": {
+                      "enum": [
+                        "PENDING",
+                        "PROCESSING",
+                        "READY",
+                        "FAILED",
+                        "ARCHIVED"
+                      ],
+                      "type": "string"
+                    },
+                    "rightsStatus": {
+                      "enum": [
+                        "PENDING",
+                        "APPROVED",
+                        "REJECTED",
+                        "EXPIRED"
+                      ],
+                      "type": "string"
+                    },
+                    "rightsVersion": {
+                      "maximum": 9007199254740991,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "schemaVersion": {
+                      "const": 1,
+                      "type": "number"
+                    },
+                    "width": {
+                      "exclusiveMinimum": 0,
+                      "maximum": 20000,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "schemaVersion",
+                    "assetId",
+                    "identityKind",
+                    "mimeType",
+                    "width",
+                    "height",
+                    "byteSize",
+                    "processingStatus",
+                    "rightsStatus",
+                    "rightsVersion"
+                  ],
+                  "type": "object"
+                },
+                "outcome": {
+                  "const": "SUCCESS",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "kind",
+                "media"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "enum": [
+                    "INVALID_COMMAND",
+                    "UNAUTHENTICATED",
+                    "FORBIDDEN",
+                    "CSRF_INVALID",
+                    "NOT_FOUND",
+                    "REVISION_NOT_DRAFT",
+                    "ALREADY_EXISTS",
+                    "INVALID_CONTENT",
+                    "CONTENT_UNAVAILABLE",
+                    "STALE_CONTENT",
+                    "STALE_VERSION",
+                    "SELF_REVIEW",
+                    "INVALID_REVIEW_STATE",
+                    "IDEMPOTENCY_CONFLICT",
+                    "CONFLICT",
+                    "PREVIEW_UNAVAILABLE"
+                  ],
+                  "type": "string"
+                },
+                "outcome": {
+                  "const": "FAILURE",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "code"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "job": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "generation": {
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991,
+                      "type": "integer"
+                    },
+                    "retryOfJobId": {
+                      "anyOf": [
+                        {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "schemaVersion": {
+                      "const": 1,
+                      "type": "number"
+                    },
+                    "snapshot": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "attemptCount": {
+                          "maximum": 6,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "error": {
+                          "anyOf": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "code": {
+                                  "enum": [
+                                    "INVALID_COMMAND",
+                                    "SOURCE_NOT_FOUND",
+                                    "SOURCE_CHANGED",
+                                    "INVALID_IMAGE",
+                                    "MIME_MISMATCH",
+                                    "DIMENSION_MISMATCH",
+                                    "SOURCE_TOO_SMALL",
+                                    "PIXEL_LIMIT_EXCEEDED",
+                                    "OUTPUT_LIMIT_EXCEEDED",
+                                    "STORAGE_UNAVAILABLE",
+                                    "OBJECT_CONFLICT",
+                                    "PROCESSING_TIMEOUT",
+                                    "UNEXPECTED_PROCESSING_FAILURE"
+                                  ],
+                                  "type": "string"
+                                },
+                                "retryable": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "code",
+                                "retryable"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "jobId": {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        "nextAttemptAt": {
+                          "anyOf": [
+                            {
+                              "format": "date-time",
+                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "outputAssetId": {
+                          "anyOf": [
+                            {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "schemaVersion": {
+                          "const": 1,
+                          "type": "number"
+                        },
+                        "status": {
+                          "enum": [
+                            "PENDING",
+                            "PROCESSING",
+                            "SUCCEEDED",
+                            "FAILED"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "schemaVersion",
+                        "jobId",
+                        "status",
+                        "attemptCount",
+                        "outputAssetId",
+                        "error",
+                        "nextAttemptAt"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "schemaVersion",
+                    "snapshot",
+                    "generation",
+                    "retryOfJobId"
+                  ],
+                  "type": "object"
+                },
+                "kind": {
+                  "const": "MEDIA_JOB",
+                  "type": "string"
+                },
+                "outcome": {
+                  "const": "SUCCESS",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "kind",
+                "job"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "enum": [
+                    "INVALID_COMMAND",
+                    "UNAUTHENTICATED",
+                    "FORBIDDEN",
+                    "CSRF_INVALID",
+                    "NOT_FOUND",
+                    "REVISION_NOT_DRAFT",
+                    "ALREADY_EXISTS",
+                    "INVALID_CONTENT",
+                    "CONTENT_UNAVAILABLE",
+                    "STALE_CONTENT",
+                    "STALE_VERSION",
+                    "SELF_REVIEW",
+                    "INVALID_REVIEW_STATE",
+                    "IDEMPOTENCY_CONFLICT",
+                    "CONFLICT",
+                    "PREVIEW_UNAVAILABLE"
+                  ],
+                  "type": "string"
+                },
+                "outcome": {
+                  "const": "FAILURE",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "outcome",
+                "code"
+              ],
+              "type": "object"
+            }
+          ]
+        }
+      ]
+    },
     "AppendBaseContentReviewCommand": {
       "additionalProperties": false,
       "properties": {
@@ -127704,6 +129390,77 @@
         }
       ]
     },
+    "MediaRightsSetCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "actorId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "assetId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "eventId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "evidenceReference": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9:._/-]*$",
+          "type": "string"
+        },
+        "expectedVersion": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "reasonCode": {
+          "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+          "type": "string"
+        },
+        "requestId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "rightsStatus": {
+          "enum": [
+            "PENDING",
+            "APPROVED",
+            "REJECTED",
+            "EXPIRED"
+          ],
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "sessionId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "assetId",
+        "expectedVersion",
+        "rightsStatus",
+        "evidenceReference",
+        "reasonCode",
+        "actorId",
+        "sessionId",
+        "requestId",
+        "eventId"
+      ],
+      "type": "object"
+    },
     "MediaSnapshot": {
       "additionalProperties": false,
       "properties": {
@@ -128123,6 +129880,1141 @@
         "altTranslation"
       ],
       "type": "object"
+    },
+    "MediaSourceInspectionCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "profileVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "source": {
+          "additionalProperties": false,
+          "properties": {
+            "byteSize": {
+              "exclusiveMinimum": 0,
+              "maximum": 26214400,
+              "type": "integer"
+            },
+            "checksumSha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "mimeType": {
+              "enum": [
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "image/avif"
+              ],
+              "type": "string"
+            },
+            "objectKey": {
+              "maxLength": 1024,
+              "minLength": 1,
+              "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.{1,2}(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "objectKey",
+            "checksumSha256",
+            "byteSize",
+            "mimeType"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "profileVersion",
+        "source"
+      ],
+      "type": "object"
+    },
+    "MediaSourceInspectionReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "height": {
+          "exclusiveMinimum": 0,
+          "maximum": 20000,
+          "type": "integer"
+        },
+        "orientation": {
+          "maximum": 8,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "profileVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "source": {
+          "additionalProperties": false,
+          "properties": {
+            "byteSize": {
+              "exclusiveMinimum": 0,
+              "maximum": 26214400,
+              "type": "integer"
+            },
+            "checksumSha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "mimeType": {
+              "enum": [
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "image/avif"
+              ],
+              "type": "string"
+            },
+            "objectKey": {
+              "maxLength": 1024,
+              "minLength": 1,
+              "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.{1,2}(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "objectKey",
+            "checksumSha256",
+            "byteSize",
+            "mimeType"
+          ],
+          "type": "object"
+        },
+        "width": {
+          "exclusiveMinimum": 0,
+          "maximum": 20000,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "profileVersion",
+        "source",
+        "width",
+        "height",
+        "orientation"
+      ],
+      "type": "object"
+    },
+    "MediaSourceInspectionResponse": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "outcome": {
+              "const": "SUCCESS",
+              "type": "string"
+            },
+            "receipt": {
+              "additionalProperties": false,
+              "properties": {
+                "height": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 20000,
+                  "type": "integer"
+                },
+                "orientation": {
+                  "maximum": 8,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "profileVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "source": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "byteSize": {
+                      "exclusiveMinimum": 0,
+                      "maximum": 26214400,
+                      "type": "integer"
+                    },
+                    "checksumSha256": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "mimeType": {
+                      "enum": [
+                        "image/jpeg",
+                        "image/png",
+                        "image/webp",
+                        "image/avif"
+                      ],
+                      "type": "string"
+                    },
+                    "objectKey": {
+                      "maxLength": 1024,
+                      "minLength": 1,
+                      "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.{1,2}(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "objectKey",
+                    "checksumSha256",
+                    "byteSize",
+                    "mimeType"
+                  ],
+                  "type": "object"
+                },
+                "width": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 20000,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "profileVersion",
+                "source",
+                "width",
+                "height",
+                "orientation"
+              ],
+              "type": "object"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "receipt"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "error": {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "enum": [
+                    "INVALID_COMMAND",
+                    "SOURCE_NOT_FOUND",
+                    "SOURCE_CHANGED",
+                    "INVALID_IMAGE",
+                    "MIME_MISMATCH",
+                    "DIMENSION_MISMATCH",
+                    "SOURCE_TOO_SMALL",
+                    "PIXEL_LIMIT_EXCEEDED",
+                    "OUTPUT_LIMIT_EXCEEDED",
+                    "STORAGE_UNAVAILABLE",
+                    "OBJECT_CONFLICT",
+                    "PROCESSING_TIMEOUT",
+                    "UNEXPECTED_PROCESSING_FAILURE"
+                  ],
+                  "type": "string"
+                },
+                "retryable": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "code",
+                "retryable"
+              ],
+              "type": "object"
+            },
+            "outcome": {
+              "const": "FAILURE",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "error"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "MediaUploadGrantResponse": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "grant": {
+              "additionalProperties": false,
+              "properties": {
+                "expiresAt": {
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                  "type": "string"
+                },
+                "headers": {
+                  "additionalProperties": {
+                    "maxLength": 4096,
+                    "type": "string"
+                  },
+                  "propertyNames": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "^[!#$%&'*+.^_`|~0-9a-z-]+$",
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "method": {
+                  "const": "PUT",
+                  "type": "string"
+                },
+                "url": {
+                  "format": "uri",
+                  "maxLength": 8192,
+                  "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "method",
+                "url",
+                "headers",
+                "expiresAt"
+              ],
+              "type": "object"
+            },
+            "kind": {
+              "const": "UPLOAD_GRANT",
+              "type": "string"
+            },
+            "outcome": {
+              "const": "SUCCESS",
+              "type": "string"
+            },
+            "replayed": {
+              "type": "boolean"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "uploadId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "kind",
+            "uploadId",
+            "replayed",
+            "grant"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "enum": [
+                "INVALID_COMMAND",
+                "UNAUTHENTICATED",
+                "FORBIDDEN",
+                "CSRF_INVALID",
+                "NOT_FOUND",
+                "REVISION_NOT_DRAFT",
+                "ALREADY_EXISTS",
+                "INVALID_CONTENT",
+                "CONTENT_UNAVAILABLE",
+                "STALE_CONTENT",
+                "STALE_VERSION",
+                "SELF_REVIEW",
+                "INVALID_REVIEW_STATE",
+                "IDEMPOTENCY_CONFLICT",
+                "CONFLICT",
+                "PREVIEW_UNAVAILABLE"
+              ],
+              "type": "string"
+            },
+            "outcome": {
+              "const": "FAILURE",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "code"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "MediaUploadReadCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "actorId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "sessionId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "uploadId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "uploadId",
+        "actorId",
+        "sessionId"
+      ],
+      "type": "object"
+    },
+    "MediaUploadRegisterCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "actorId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "assetId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "expectedVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "reasonCode": {
+          "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+          "type": "string"
+        },
+        "receipt": {
+          "additionalProperties": false,
+          "properties": {
+            "height": {
+              "exclusiveMinimum": 0,
+              "maximum": 20000,
+              "type": "integer"
+            },
+            "orientation": {
+              "maximum": 8,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "profileVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "source": {
+              "additionalProperties": false,
+              "properties": {
+                "byteSize": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 26214400,
+                  "type": "integer"
+                },
+                "checksumSha256": {
+                  "pattern": "^[a-f0-9]{64}$",
+                  "type": "string"
+                },
+                "mimeType": {
+                  "enum": [
+                    "image/jpeg",
+                    "image/png",
+                    "image/webp",
+                    "image/avif"
+                  ],
+                  "type": "string"
+                },
+                "objectKey": {
+                  "maxLength": 1024,
+                  "minLength": 1,
+                  "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.{1,2}(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "objectKey",
+                "checksumSha256",
+                "byteSize",
+                "mimeType"
+              ],
+              "type": "object"
+            },
+            "width": {
+              "exclusiveMinimum": 0,
+              "maximum": 20000,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "profileVersion",
+            "source",
+            "width",
+            "height",
+            "orientation"
+          ],
+          "type": "object"
+        },
+        "requestId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "sessionId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "uploadId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "uploadId",
+        "expectedVersion",
+        "reasonCode",
+        "actorId",
+        "sessionId",
+        "requestId",
+        "assetId",
+        "receipt"
+      ],
+      "type": "object"
+    },
+    "MediaUploadReserveCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "actorId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "byteSize": {
+          "exclusiveMinimum": 0,
+          "maximum": 26214400,
+          "type": "integer"
+        },
+        "checksumSha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+          "type": "string"
+        },
+        "expectedVersion": {
+          "const": 0,
+          "type": "number"
+        },
+        "expiresAt": {
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+          "type": "string"
+        },
+        "mimeType": {
+          "enum": [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/avif"
+          ],
+          "type": "string"
+        },
+        "objectKey": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.{1,2}(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
+          "type": "string"
+        },
+        "reasonCode": {
+          "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+          "type": "string"
+        },
+        "requestId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "rightsReference": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9:._/-]*$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "sessionId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "uploadId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "checksumSha256",
+        "byteSize",
+        "mimeType",
+        "rightsReference",
+        "expectedVersion",
+        "reasonCode",
+        "actorId",
+        "sessionId",
+        "requestId",
+        "uploadId",
+        "objectKey",
+        "createdAt",
+        "expiresAt"
+      ],
+      "type": "object"
+    },
+    "MediaUploadResponse": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "UPLOAD",
+              "type": "string"
+            },
+            "outcome": {
+              "const": "SUCCESS",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "upload": {
+              "additionalProperties": false,
+              "properties": {
+                "assetId": {
+                  "anyOf": [
+                    {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "expiresAt": {
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "status": {
+                  "enum": [
+                    "PENDING",
+                    "REGISTERED"
+                  ],
+                  "type": "string"
+                },
+                "uploadId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "version": {
+                  "anyOf": [
+                    {
+                      "const": 1,
+                      "type": "number"
+                    },
+                    {
+                      "const": 2,
+                      "type": "number"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "uploadId",
+                "version",
+                "status",
+                "assetId",
+                "expiresAt"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "kind",
+            "upload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "enum": [
+                "INVALID_COMMAND",
+                "UNAUTHENTICATED",
+                "FORBIDDEN",
+                "CSRF_INVALID",
+                "NOT_FOUND",
+                "REVISION_NOT_DRAFT",
+                "ALREADY_EXISTS",
+                "INVALID_CONTENT",
+                "CONTENT_UNAVAILABLE",
+                "STALE_CONTENT",
+                "STALE_VERSION",
+                "SELF_REVIEW",
+                "INVALID_REVIEW_STATE",
+                "IDEMPOTENCY_CONFLICT",
+                "CONFLICT",
+                "PREVIEW_UNAVAILABLE"
+              ],
+              "type": "string"
+            },
+            "outcome": {
+              "const": "FAILURE",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "code"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "MediaUploadSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "assetId": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expiresAt": {
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "status": {
+          "enum": [
+            "PENDING",
+            "REGISTERED"
+          ],
+          "type": "string"
+        },
+        "uploadId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "const": 1,
+              "type": "number"
+            },
+            {
+              "const": 2,
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "uploadId",
+        "version",
+        "status",
+        "assetId",
+        "expiresAt"
+      ],
+      "type": "object"
+    },
+    "MediaUploadTicket": {
+      "additionalProperties": false,
+      "properties": {
+        "actorId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "assetId": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+          "type": "string"
+        },
+        "expiresAt": {
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+          "type": "string"
+        },
+        "rightsReference": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9:._/-]*$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "sessionId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "source": {
+          "additionalProperties": false,
+          "properties": {
+            "byteSize": {
+              "exclusiveMinimum": 0,
+              "maximum": 26214400,
+              "type": "integer"
+            },
+            "checksumSha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "mimeType": {
+              "enum": [
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "image/avif"
+              ],
+              "type": "string"
+            },
+            "objectKey": {
+              "maxLength": 1024,
+              "minLength": 1,
+              "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.{1,2}(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "objectKey",
+            "checksumSha256",
+            "byteSize",
+            "mimeType"
+          ],
+          "type": "object"
+        },
+        "status": {
+          "enum": [
+            "PENDING",
+            "REGISTERED"
+          ],
+          "type": "string"
+        },
+        "uploadId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "const": 1,
+              "type": "number"
+            },
+            {
+              "const": 2,
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "uploadId",
+        "version",
+        "actorId",
+        "sessionId",
+        "source",
+        "rightsReference",
+        "status",
+        "assetId",
+        "createdAt",
+        "expiresAt"
+      ],
+      "type": "object"
+    },
+    "MediaUploadTicketResponse": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "outcome": {
+              "const": "SUCCESS",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "value": {
+              "additionalProperties": false,
+              "properties": {
+                "actorId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "assetId": {
+                  "anyOf": [
+                    {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "createdAt": {
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                  "type": "string"
+                },
+                "expiresAt": {
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                  "type": "string"
+                },
+                "rightsReference": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9:._/-]*$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "sessionId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "source": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "byteSize": {
+                      "exclusiveMinimum": 0,
+                      "maximum": 26214400,
+                      "type": "integer"
+                    },
+                    "checksumSha256": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "mimeType": {
+                      "enum": [
+                        "image/jpeg",
+                        "image/png",
+                        "image/webp",
+                        "image/avif"
+                      ],
+                      "type": "string"
+                    },
+                    "objectKey": {
+                      "maxLength": 1024,
+                      "minLength": 1,
+                      "pattern": "^(?!\\/)(?!.*(?:^|\\/)\\.{1,2}(?:\\/|$))[A-Za-z0-9][A-Za-z0-9._/-]*$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "objectKey",
+                    "checksumSha256",
+                    "byteSize",
+                    "mimeType"
+                  ],
+                  "type": "object"
+                },
+                "status": {
+                  "enum": [
+                    "PENDING",
+                    "REGISTERED"
+                  ],
+                  "type": "string"
+                },
+                "uploadId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "version": {
+                  "anyOf": [
+                    {
+                      "const": 1,
+                      "type": "number"
+                    },
+                    {
+                      "const": 2,
+                      "type": "number"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "uploadId",
+                "version",
+                "actorId",
+                "sessionId",
+                "source",
+                "rightsReference",
+                "status",
+                "assetId",
+                "createdAt",
+                "expiresAt"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "value"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "enum": [
+                "INVALID_COMMAND",
+                "UNAUTHENTICATED",
+                "FORBIDDEN",
+                "CSRF_INVALID",
+                "NOT_FOUND",
+                "REVISION_NOT_DRAFT",
+                "ALREADY_EXISTS",
+                "INVALID_CONTENT",
+                "CONTENT_UNAVAILABLE",
+                "STALE_CONTENT",
+                "STALE_VERSION",
+                "SELF_REVIEW",
+                "INVALID_REVIEW_STATE",
+                "IDEMPOTENCY_CONFLICT",
+                "CONFLICT",
+                "PREVIEW_UNAVAILABLE"
+              ],
+              "type": "string"
+            },
+            "outcome": {
+              "const": "FAILURE",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "code"
+          ],
+          "type": "object"
+        }
+      ]
     },
     "MediaVariant": {
       "additionalProperties": false,
@@ -172289,6 +175181,973 @@
           ]
         }
       ]
+    },
+    "ResourceMediaEnqueueCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "actorId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "expectedVersion": {
+          "const": 0,
+          "type": "number"
+        },
+        "fit": {
+          "enum": [
+            "COVER",
+            "CONTAIN"
+          ],
+          "type": "string"
+        },
+        "jobId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "metadataRevisionId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "reasonCode": {
+          "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+          "type": "string"
+        },
+        "receiptId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "requestId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "PORTRAIT",
+            "HERO_DESKTOP",
+            "HERO_MOBILE",
+            "GIFT_PRIMARY"
+          ],
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "sessionId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "sourceAssetId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "sourceAssetId",
+        "metadataRevisionId",
+        "role",
+        "fit",
+        "expectedVersion",
+        "reasonCode",
+        "actorId",
+        "sessionId",
+        "requestId",
+        "jobId",
+        "receiptId"
+      ],
+      "type": "object"
+    },
+    "ResourceMediaJobReadCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "jobId"
+      ],
+      "type": "object"
+    },
+    "ResourceMediaJobResponse": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "job": {
+              "additionalProperties": false,
+              "properties": {
+                "generation": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991,
+                  "type": "integer"
+                },
+                "retryOfJobId": {
+                  "anyOf": [
+                    {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "snapshot": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "attemptCount": {
+                      "maximum": 6,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "error": {
+                      "anyOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "code": {
+                              "enum": [
+                                "INVALID_COMMAND",
+                                "SOURCE_NOT_FOUND",
+                                "SOURCE_CHANGED",
+                                "INVALID_IMAGE",
+                                "MIME_MISMATCH",
+                                "DIMENSION_MISMATCH",
+                                "SOURCE_TOO_SMALL",
+                                "PIXEL_LIMIT_EXCEEDED",
+                                "OUTPUT_LIMIT_EXCEEDED",
+                                "STORAGE_UNAVAILABLE",
+                                "OBJECT_CONFLICT",
+                                "PROCESSING_TIMEOUT",
+                                "UNEXPECTED_PROCESSING_FAILURE"
+                              ],
+                              "type": "string"
+                            },
+                            "retryable": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "code",
+                            "retryable"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "jobId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "nextAttemptAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "outputAssetId": {
+                      "anyOf": [
+                        {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "schemaVersion": {
+                      "const": 1,
+                      "type": "number"
+                    },
+                    "status": {
+                      "enum": [
+                        "PENDING",
+                        "PROCESSING",
+                        "SUCCEEDED",
+                        "FAILED"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "schemaVersion",
+                    "jobId",
+                    "status",
+                    "attemptCount",
+                    "outputAssetId",
+                    "error",
+                    "nextAttemptAt"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "snapshot",
+                "generation",
+                "retryOfJobId"
+              ],
+              "type": "object"
+            },
+            "kind": {
+              "const": "MEDIA_JOB",
+              "type": "string"
+            },
+            "outcome": {
+              "const": "SUCCESS",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "kind",
+            "job"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "enum": [
+                "INVALID_COMMAND",
+                "UNAUTHENTICATED",
+                "FORBIDDEN",
+                "CSRF_INVALID",
+                "NOT_FOUND",
+                "REVISION_NOT_DRAFT",
+                "ALREADY_EXISTS",
+                "INVALID_CONTENT",
+                "CONTENT_UNAVAILABLE",
+                "STALE_CONTENT",
+                "STALE_VERSION",
+                "SELF_REVIEW",
+                "INVALID_REVIEW_STATE",
+                "IDEMPOTENCY_CONFLICT",
+                "CONFLICT",
+                "PREVIEW_UNAVAILABLE"
+              ],
+              "type": "string"
+            },
+            "outcome": {
+              "const": "FAILURE",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "code"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "ResourceMediaJobSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "generation": {
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991,
+          "type": "integer"
+        },
+        "retryOfJobId": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "snapshot": {
+          "additionalProperties": false,
+          "properties": {
+            "attemptCount": {
+              "maximum": 6,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "error": {
+              "anyOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "enum": [
+                        "INVALID_COMMAND",
+                        "SOURCE_NOT_FOUND",
+                        "SOURCE_CHANGED",
+                        "INVALID_IMAGE",
+                        "MIME_MISMATCH",
+                        "DIMENSION_MISMATCH",
+                        "SOURCE_TOO_SMALL",
+                        "PIXEL_LIMIT_EXCEEDED",
+                        "OUTPUT_LIMIT_EXCEEDED",
+                        "STORAGE_UNAVAILABLE",
+                        "OBJECT_CONFLICT",
+                        "PROCESSING_TIMEOUT",
+                        "UNEXPECTED_PROCESSING_FAILURE"
+                      ],
+                      "type": "string"
+                    },
+                    "retryable": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "retryable"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "jobId": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            },
+            "nextAttemptAt": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "outputAssetId": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            },
+            "status": {
+              "enum": [
+                "PENDING",
+                "PROCESSING",
+                "SUCCEEDED",
+                "FAILED"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "jobId",
+            "status",
+            "attemptCount",
+            "outputAssetId",
+            "error",
+            "nextAttemptAt"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "snapshot",
+        "generation",
+        "retryOfJobId"
+      ],
+      "type": "object"
+    },
+    "ResourceMediaReadCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "assetId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "assetId"
+      ],
+      "type": "object"
+    },
+    "ResourceMediaResponse": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "MEDIA",
+              "type": "string"
+            },
+            "media": {
+              "additionalProperties": false,
+              "properties": {
+                "assetId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "byteSize": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991,
+                  "type": "integer"
+                },
+                "height": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 20000,
+                  "type": "integer"
+                },
+                "identityKind": {
+                  "enum": [
+                    "SOURCE",
+                    "PROCESSED_MASTER"
+                  ],
+                  "type": "string"
+                },
+                "mimeType": {
+                  "enum": [
+                    "image/jpeg",
+                    "image/png",
+                    "image/webp",
+                    "image/avif"
+                  ],
+                  "type": "string"
+                },
+                "processingStatus": {
+                  "enum": [
+                    "PENDING",
+                    "PROCESSING",
+                    "READY",
+                    "FAILED",
+                    "ARCHIVED"
+                  ],
+                  "type": "string"
+                },
+                "rightsStatus": {
+                  "enum": [
+                    "PENDING",
+                    "APPROVED",
+                    "REJECTED",
+                    "EXPIRED"
+                  ],
+                  "type": "string"
+                },
+                "rightsVersion": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "width": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 20000,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "assetId",
+                "identityKind",
+                "mimeType",
+                "width",
+                "height",
+                "byteSize",
+                "processingStatus",
+                "rightsStatus",
+                "rightsVersion"
+              ],
+              "type": "object"
+            },
+            "outcome": {
+              "const": "SUCCESS",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "kind",
+            "media"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "enum": [
+                "INVALID_COMMAND",
+                "UNAUTHENTICATED",
+                "FORBIDDEN",
+                "CSRF_INVALID",
+                "NOT_FOUND",
+                "REVISION_NOT_DRAFT",
+                "ALREADY_EXISTS",
+                "INVALID_CONTENT",
+                "CONTENT_UNAVAILABLE",
+                "STALE_CONTENT",
+                "STALE_VERSION",
+                "SELF_REVIEW",
+                "INVALID_REVIEW_STATE",
+                "IDEMPOTENCY_CONFLICT",
+                "CONFLICT",
+                "PREVIEW_UNAVAILABLE"
+              ],
+              "type": "string"
+            },
+            "outcome": {
+              "const": "FAILURE",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "code"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "ResourceMediaRetryCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "actorId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "expectedVersion": {
+          "maximum": 6,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "jobId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "newJobId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "reasonCode": {
+          "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+          "type": "string"
+        },
+        "receiptId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "requestId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "sessionId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "jobId",
+        "expectedVersion",
+        "reasonCode",
+        "actorId",
+        "sessionId",
+        "requestId",
+        "newJobId",
+        "receiptId"
+      ],
+      "type": "object"
+    },
+    "ResourceMediaSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "assetId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "byteSize": {
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991,
+          "type": "integer"
+        },
+        "height": {
+          "exclusiveMinimum": 0,
+          "maximum": 20000,
+          "type": "integer"
+        },
+        "identityKind": {
+          "enum": [
+            "SOURCE",
+            "PROCESSED_MASTER"
+          ],
+          "type": "string"
+        },
+        "mimeType": {
+          "enum": [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/avif"
+          ],
+          "type": "string"
+        },
+        "processingStatus": {
+          "enum": [
+            "PENDING",
+            "PROCESSING",
+            "READY",
+            "FAILED",
+            "ARCHIVED"
+          ],
+          "type": "string"
+        },
+        "rightsStatus": {
+          "enum": [
+            "PENDING",
+            "APPROVED",
+            "REJECTED",
+            "EXPIRED"
+          ],
+          "type": "string"
+        },
+        "rightsVersion": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "width": {
+          "exclusiveMinimum": 0,
+          "maximum": 20000,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "assetId",
+        "identityKind",
+        "mimeType",
+        "width",
+        "height",
+        "byteSize",
+        "processingStatus",
+        "rightsStatus",
+        "rightsVersion"
+      ],
+      "type": "object"
+    },
+    "ResourcePolicyReadCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "policyKey": {
+          "maxLength": 64,
+          "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "policyKey"
+      ],
+      "type": "object"
+    },
+    "ResourcePolicyRegisterCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "actorId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "expectedVersion": {
+          "const": 0,
+          "type": "number"
+        },
+        "kind": {
+          "enum": [
+            "TERMS",
+            "PRIVACY",
+            "REFUND",
+            "DELIVERY"
+          ],
+          "type": "string"
+        },
+        "policyKey": {
+          "maxLength": 64,
+          "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "reasonCode": {
+          "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+          "type": "string"
+        },
+        "receiptId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "requestId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        },
+        "sessionId": {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "policyKey",
+        "kind",
+        "expectedVersion",
+        "reasonCode",
+        "actorId",
+        "sessionId",
+        "requestId",
+        "receiptId"
+      ],
+      "type": "object"
+    },
+    "ResourcePolicyResponse": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "POLICY",
+              "type": "string"
+            },
+            "outcome": {
+              "const": "SUCCESS",
+              "type": "string"
+            },
+            "policy": {
+              "additionalProperties": false,
+              "properties": {
+                "createdAt": {
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                  "type": "string"
+                },
+                "kind": {
+                  "enum": [
+                    "TERMS",
+                    "PRIVACY",
+                    "REFUND",
+                    "DELIVERY"
+                  ],
+                  "type": "string"
+                },
+                "policyKey": {
+                  "maxLength": 64,
+                  "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                  "type": "string"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "policyKey",
+                "kind",
+                "createdAt"
+              ],
+              "type": "object"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "kind",
+            "policy"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "enum": [
+                "INVALID_COMMAND",
+                "UNAUTHENTICATED",
+                "FORBIDDEN",
+                "CSRF_INVALID",
+                "NOT_FOUND",
+                "REVISION_NOT_DRAFT",
+                "ALREADY_EXISTS",
+                "INVALID_CONTENT",
+                "CONTENT_UNAVAILABLE",
+                "STALE_CONTENT",
+                "STALE_VERSION",
+                "SELF_REVIEW",
+                "INVALID_REVIEW_STATE",
+                "IDEMPOTENCY_CONFLICT",
+                "CONFLICT",
+                "PREVIEW_UNAVAILABLE"
+              ],
+              "type": "string"
+            },
+            "outcome": {
+              "const": "FAILURE",
+              "type": "string"
+            },
+            "schemaVersion": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "outcome",
+            "code"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "ResourcePolicySnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "createdAt": {
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "TERMS",
+            "PRIVACY",
+            "REFUND",
+            "DELIVERY"
+          ],
+          "type": "string"
+        },
+        "policyKey": {
+          "maxLength": 64,
+          "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "const": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "policyKey",
+        "kind",
+        "createdAt"
+      ],
+      "type": "object"
     },
     "RevokeBaseContentPreviewCommand": {
       "additionalProperties": false,

@@ -70,11 +70,18 @@
 
 证据：`output/checks/p3-01-base-content/README.md`；960 tests、910 PG/3847 HTTP 断言（388 请求）、最终全仓 check 与双端七语言浏览器回归通过；完整 P3-01 仍 IN_PROGRESS。
 
-### 4A 后续必需工作
+### 4B：媒体与政策管理（2026-09-06 本地验收通过）
+
+- [x] 政策稳定 owner READ/REGISTER 和首次七语言 authoring/review；0017 专属授权/审计收据。
+- [x] 私有原图预约/签名上传/实际完整解码登记，当前会话与资源权限、会话上限、事务外网络和登记再授权；按已验证 SOURCE checksum 去重且不覆盖旧证据。
+- [x] 媒体/任务受权读取、append-only 版权事件、普通 enqueue 与失败任务新 generation 有审计重试；历史和六次自动尝试/lease fence 保留。
+- [x] 来源版权进入 processed master 的真实数据库资格；公开 loader 对每行必须取得明确 true 证明。版权、metadata/译文审核、处理成功与公开发布仍独立。
+- [x] 最终全仓 check、S.U.P.E.R、源码指纹与本地检查点归档；专项证据见 `output/checks/p3-01-resource-management/README.md`，详细计划见 `docs/plan/p3-01-resource-management.md`。
+
+### 4C 后续必需工作
 
 - [ ] 完整 revision 验证：结合基础审核、别名/详情独立证据、七语言完整度和媒体资格，阻止新版本作者自审新稿或借用不相关审核；双端页面排版继续由 P3-02/03 实现。
-- [ ] 明确政策稳定 owner 的授权注册或可重复初始化入口，并用真实数据库验证首次内容创建；仅在 fixtures 中预置 policy_key 不满足退出条件。艺人稳定身份与商品/variant/适用关系/价格簿/库存等管理能力分别由 P3-02/P3-03 连同所需 Application/API 端到端实现，不能把这些任务限定成只有 UI。
-- [ ] 补齐媒体签名上传、可信解码登记、版权操作与终止任务有审计重试的管理 API 授权边界，复用现有 S3/媒体 worker；产物 READY 不能代替可信登记或版权批准。双端构图与管理预览 UI 由 P3-02 接入。
+艺人稳定身份与商品/variant/适用关系/价格簿/库存等管理能力分别由 P3-02/P3-03 连同所需 Application/API 端到端实现，不能把这些任务限定成只有 UI；4B 的政策与媒体管理接口不替代这些业务管理能力。
 - [ ] 单对象公开内容接口使用版本化扩展 DTO；与真实发布证据一起验收，只读取满足完整发布证据的当前 head，缺译/失效不得静默回退旧 description（由 3B 移至本检查点）。
 - [ ] 发布同一事务写 audit/publication/head 与七 locale outbox；订阅按 event type 分流，content consumer 不能把无关支付事件送入死信。
 - [ ] 发布/回退事务同步维护 source-hash 绑定的名字/别名投影，并落地 publication manifest/hash 的生成与验证；2A 读取当前从不可变内容与终审记录重建，不将旧汇总 hash 的存在当作真实性证明。

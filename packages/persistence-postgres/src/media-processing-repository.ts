@@ -13,7 +13,10 @@ import {
   hashMediaProcessingCommand,
   validateMediaProcessingReceipt,
 } from "@fan-support/content";
-import type { MediaProcessingRepository } from "@fan-support/persistence-port";
+import {
+  parsePersistenceTransactionFailure,
+  type MediaProcessingRepository,
+} from "@fan-support/persistence-port";
 import { classifyPostgresFailure } from "./errors.js";
 import {
   loadMediaCommand,
@@ -78,9 +81,14 @@ export function createMediaProcessingRepository(
               throw persistenceTransactionFailureFromPostgres(boundaryError);
             }
           }
+          const code =
+            parsePersistenceTransactionFailure(error)?.error.code ??
+            classifyPostgresFailure(error).code;
           return failure(
             error instanceof MediaOutputConflict ||
-              classifyPostgresFailure(error).code === "ALREADY_EXISTS"
+              code === "ALREADY_EXISTS" ||
+              code === "TRANSACTION_ABORTED" ||
+              code === "VERSION_CONFLICT"
               ? "CONFLICT"
               : "UNAVAILABLE",
           );
@@ -174,7 +182,8 @@ export function createMediaProcessingRepository(
         const hash = hashMediaProcessingCommand(command);
         const previous = await loadMediaJob(client, request.jobId, true);
         if (previous !== undefined)
-          return previous["command_hash"] === hash &&
+          return Number(previous["generation"] ?? 1) === 1 &&
+            previous["command_hash"] === hash &&
             previous["requested_by"] === request.requestedBy.toLowerCase() &&
             previous["reason"] === request.reason
             ? mediaSnapshot(previous)
@@ -200,7 +209,8 @@ export function createMediaProcessingRepository(
         );
         const jobs = await mediaRows(
           client,
-          `SELECT * FROM public.media_processing_jobs WHERE id=$1::uuid OR command_hash=$2 ORDER BY id`,
+          // JSON projection reads the additive column while retaining the historical 0012 adapter contract.
+          `SELECT * FROM public.media_processing_jobs job WHERE id=$1::uuid OR (command_hash=$2 AND coalesce((to_jsonb(job)->>'generation')::integer,1)=1) ORDER BY id`,
           [request.jobId, hash],
         );
         const exactId = jobs.find(

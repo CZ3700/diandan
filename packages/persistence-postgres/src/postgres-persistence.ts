@@ -1,4 +1,6 @@
 import { createContentAuthoringRepository } from "./content-authoring-repository.js";
+import { createResourceManagementRepository } from "./resource-management-repository.js";
+import { createResourceAuthorizationRepository } from "./resource-authorization-repository.js";
 import { createBaseContentReviewRepository } from "./base-content-review-repository.js";
 import { createBaseContentPreviewRepository } from "./base-content-preview-repository.js";
 import { createAdminAuthorizationRepository } from "./admin-authorization-repository.js";
@@ -10,6 +12,8 @@ import { publicMediaUrlSchema } from "@fan-support/contracts";
 import { createCatalogDirectoryRepository } from "./catalog-directory-repository.js";
 import type {
   JsonValue,
+  ResourceManagementTransactionManager,
+  ResourceManagementRepositories,
   BaseContentTransactionManager,
   BaseContentRepositories,
   ContentAuthoringTransactionManager,
@@ -56,6 +60,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly resourceManagementTransactionManager: ResourceManagementTransactionManager;
   readonly baseContentTransactionManager: BaseContentTransactionManager;
   readonly contentAuthoringTransactionManager: ContentAuthoringTransactionManager;
   readonly adminContentTransactionManager: AdminContentTransactionManager;
@@ -274,6 +279,18 @@ export function createPostgresPersistenceWithPoolFactory(
       ),
     }),
   });
+  const resourceManagementRunner =
+    createTransactionRunner<ResourceManagementRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createResourceAuthorizationRepository(client, scope),
+        resources: createResourceManagementRepository(client, scope),
+        idempotency: createIdempotencyRepository(
+          createPostgresQueryLayer(client as NodePgClient),
+          scope,
+        ),
+      }),
+    });
   let lifecycle: "OPEN" | "CLOSING" | "CLOSED" = "OPEN";
   let closePromise: Promise<void> | undefined;
 
@@ -449,6 +466,19 @@ export function createPostgresPersistenceWithPoolFactory(
     },
   };
   return {
+    resourceManagementTransactionManager: {
+      async runInResourceManagementTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return resourceManagementRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
     baseContentTransactionManager,
     contentAuthoringTransactionManager,
     adminContentTransactionManager,

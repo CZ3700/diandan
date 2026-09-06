@@ -108,6 +108,9 @@ importers:
       '@fan-support/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@fan-support/media-port':
+        specifier: workspace:*
+        version: link:../../packages/media-port
       '@fan-support/observability':
         specifier: workspace:*
         version: link:../../packages/observability
@@ -133,9 +136,21 @@ importers:
         specifier: 7.8.2
         version: 7.8.2
     devDependencies:
+      '@aws-sdk/client-s3':
+        specifier: 3.1119.0
+        version: 3.1119.0
+      '@fan-support/media-image':
+        specifier: workspace:*
+        version: link:../../packages/media-image
+      '@fan-support/media-s3':
+        specifier: workspace:*
+        version: link:../../packages/media-s3
       pg:
         specifier: 8.23.0
         version: 8.23.0
+      sharp:
+        specifier: 0.35.4
+        version: 0.35.4(@types/node@24.13.3)
       tsx:
         specifier: 4.23.13
         version: 4.23.13

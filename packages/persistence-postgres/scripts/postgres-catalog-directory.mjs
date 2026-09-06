@@ -544,6 +544,11 @@ async function verify(clientConfig) {
     await runMigrations({
       clientConfig,
       workspaceRoot,
+      command: { direction: "down", confirmVersion: "0017" },
+    });
+    await runMigrations({
+      clientConfig,
+      workspaceRoot,
       command: { direction: "down", confirmVersion: "0016" },
     });
     await runMigrations({
@@ -585,9 +590,9 @@ async function verify(clientConfig) {
       "SELECT count(*)::integer AS count, max(version) AS version FROM public.schema_migrations",
     );
     check(
-      migrationHead.rows[0].count === 16 &&
-        migrationHead.rows[0].version === "0016",
-      "data-bearing up/down/up restores all 16 migrations through base content review",
+      migrationHead.rows[0].count === 17 &&
+        migrationHead.rows[0].version === "0017",
+      "data-bearing up/down/up restores all 17 migrations through resource management",
     );
     check(
       (await idols()).code === "CATALOG_UNAVAILABLE",

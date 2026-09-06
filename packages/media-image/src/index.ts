@@ -112,3 +112,8 @@ export function createMediaImageProcessor(
     },
   };
 }
+
+export {
+  createMediaSourceInspector,
+  type MediaSourceInspectorOptions,
+} from "./source-inspection.js";

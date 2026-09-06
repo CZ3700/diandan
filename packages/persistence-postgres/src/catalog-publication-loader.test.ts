@@ -160,6 +160,7 @@ function fixture(kind: "IDOL" | "GIFT") {
     const assetId = uuid(10 + index),
       metadataId = uuid(20 + index);
     return {
+      provenance_eligible: true,
       reference: {
         [kind === "IDOL" ? "idol_revision_id" : "gift_revision_id"]: revisionId,
         role,
@@ -412,6 +413,22 @@ test("retains current asset rights and processing states for the domain publicat
     ).toBe(false);
   }
 });
+
+test.each([false, null, undefined])(
+  "rejects an otherwise approved master when source provenance is %s",
+  async (proof) => {
+    const data = fixture("IDOL");
+    (data.media[0]! as Row)["provenance_eligible"] = proof;
+    await expect(
+      loadIdolDirectoryRecords(
+        clientWith([data.main], data.media),
+        [data.id],
+        "en",
+        origin,
+      ),
+    ).rejects.toThrow("CATALOG_PUBLICATION_INVALID");
+  },
+);
 
 test("does not fabricate approved or missing media translation evidence", async () => {
   const unapproved = fixture("GIFT");

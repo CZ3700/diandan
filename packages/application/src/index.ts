@@ -42,3 +42,9 @@ export * from "./media-processing.js";
 
 export * from "./content-authoring.js";
 export * from "./base-content.js";
+
+export {
+  createResourceManagementUseCases,
+  type ResourceManagementDependencies,
+  type ResourceManagementUseCases,
+} from "./resource-management.js";

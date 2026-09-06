@@ -135,6 +135,84 @@ function createHarness(
 }
 
 describe("S3 media storage adapter", () => {
+  test.each([1000, 45000, 59999])(
+    "honors an upload session ceiling of %i milliseconds without extending it",
+    async (remaining) => {
+      const { adapter, presignCalls } = createHarness();
+      const expiresAt = new Date(now.getTime() + remaining).toISOString();
+      const result = await adapter.createUploadGrant({
+        schemaVersion: 1,
+        operation: "CREATE_UPLOAD_GRANT",
+        storageClass: "SOURCE",
+        objectKey: "source/short-session.png",
+        checksumSha256: checksumHex,
+        byteSize: 128,
+        mimeType: "image/png",
+        expiresAt,
+      });
+      expect(result.outcome).toBe("SUCCESS");
+      if (result.outcome !== "SUCCESS")
+        throw new Error("short upload must be allowed");
+      expect(result.value.expiresAt).toBe(expiresAt);
+      expect(presignCalls[0]).toMatchObject({
+        options: { expiresIn: Math.floor(remaining / 1000) },
+      });
+    },
+  );
+  test("pins upload signing to the budget clock before asynchronous credentials resolve", async () => {
+    const { adapter, presignCalls } = createHarness();
+    const result = await adapter.createUploadGrant({
+      schemaVersion: 1,
+      operation: "CREATE_UPLOAD_GRANT",
+      storageClass: "SOURCE",
+      objectKey: "source/short-session.png",
+      checksumSha256: checksumHex,
+      byteSize: 128,
+      mimeType: "image/png",
+      expiresAt: "2026-09-03T12:01:00.000Z",
+    });
+    expect(result.outcome).toBe("SUCCESS");
+    expect(presignCalls[0]).toMatchObject({
+      options: { expiresIn: 60, signingDate: now },
+    });
+  });
+  test.each([0, 999, 901000])(
+    "rejects an upload outside the bounded signing window (%i ms)",
+    async (remaining) => {
+      const { adapter, presignCalls } = createHarness();
+      const result = await adapter.createUploadGrant({
+        schemaVersion: 1,
+        operation: "CREATE_UPLOAD_GRANT",
+        storageClass: "SOURCE",
+        objectKey: "source/short-session.png",
+        checksumSha256: checksumHex,
+        byteSize: 128,
+        mimeType: "image/png",
+        expiresAt: new Date(now.getTime() + remaining).toISOString(),
+      });
+      expect(result).toMatchObject({
+        outcome: "FAILURE",
+        error: { code: "INVALID_COMMAND" },
+      });
+      expect(presignCalls).toHaveLength(0);
+    },
+  );
+  test("retains the existing minimum window for private downloads", async () => {
+    const { adapter, presignCalls } = createHarness();
+    const result = await adapter.createDownloadGrant({
+      schemaVersion: 1,
+      operation: "CREATE_DOWNLOAD_GRANT",
+      storageClass: "SOURCE",
+      objectKey: "source/short-session.png",
+      expiresAt: new Date(now.getTime() + 45000).toISOString(),
+    });
+    expect(result).toMatchObject({
+      outcome: "FAILURE",
+      error: { code: "INVALID_COMMAND" },
+    });
+    expect(presignCalls).toHaveLength(0);
+  });
+
   test("passes the shared media-storage conformance suite", async () => {
     const metadata = {
       ChecksumSHA256: checksumBase64,

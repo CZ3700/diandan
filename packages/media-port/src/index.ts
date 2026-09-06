@@ -58,4 +58,7 @@ export interface MediaStoragePort {
 
 export const workspacePackageName = "@fan-support/media-port" as const;
 
-export type { MediaImageProcessingPort } from "./processing.js";
+export type {
+  MediaImageProcessingPort,
+  MediaSourceInspectionPort,
+} from "./processing.js";

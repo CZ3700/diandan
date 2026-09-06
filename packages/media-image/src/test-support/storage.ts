@@ -46,7 +46,12 @@ interface StoredObject {
 }
 export function memoryStorage(
   source: Buffer,
-  command: MediaImageProcessingCommand,
+  command: Readonly<{
+    source: Pick<
+      MediaImageProcessingCommand["source"],
+      "objectKey" | "checksumSha256" | "byteSize" | "mimeType"
+    >;
+  }>,
 ) {
   const objects = new Map<string, StoredObject>([
     [

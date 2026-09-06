@@ -1,3 +1,4 @@
+import { resourceManagementPaths } from "./resource-management-openapi.js";
 import { contentAuthoringPaths } from "./content-authoring-openapi.js";
 import { baseContentPaths } from "./base-content-openapi.js";
 import { adminContentPaths } from "./admin-content-openapi.js";
@@ -197,6 +198,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...adminContentPaths(),
         ...contentAuthoringPaths(),
         ...baseContentPaths(),
+        ...resourceManagementPaths(),
       },
       components: {
         schemas: httpComponents,
