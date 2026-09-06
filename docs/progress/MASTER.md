@@ -3,7 +3,7 @@
 > 最后更新：2026-09-06
 > 当前里程碑：M3 可浏览 Beta（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3
-> 当前任务：`P3-01`（`IN_PROGRESS`）；检查点 1、2A、2B、3A、3B、4A、4B 已验证；下一项为4C完整 revision 验证与事务发布/回退/purge
+> 当前任务：`P3-01`（`IN_PROGRESS`）；检查点 1、2A、2B、3A、3B、4A、4B、4C-1 已验证；下一项为4C-2事务发布/回退/purge
 > 下一可领取任务：无；P3-01 完整 API/数据库/发布链路验收后解锁直接依赖
 
 ## 1. 开工入口
@@ -79,6 +79,8 @@
 
 ## 5. 最新证据
 
+2026-09-06 P3-01 的 4C-1 发布前检查已验证：五类七语言、独立基础/扩展审核、精确复制继承、全部媒体来源当前版权、目录资格、真实历史publication和微秒时间，从同一数据库事务当前授权后读取。新增1个私有POST/5个versioned roots，旧274不变、共279；1237 tests、166 PG、2595 HTTP断言/277请求、完整check及双端七语言浏览器回归通过。三路非作者复核ACCEPT，S.U.P.E.R十项PASS，948个输入指纹匹配。证据与复跑入口见 `output/checks/p3-01-publication-preflight/README.md`。检查不写生命周期/head/publication/outbox，0013封锁保留；P3-01仍IN_PROGRESS，总49项仍17 DONE/1 IN_PROGRESS/31 PENDING。下一项为4C-2在实际发布事务重跑门禁，接发布/回退、公开扩展DTO、manifest/别名投影与七语言purge。没有新增管理业务UI、正式登录、真机、云/PSP/staging/远端CI或发布结论；按用户要求本地检查点提交，最终统一推送，本轮未push。
+
 2026-09-06 P3-01 的 4B 媒体与政策管理已验证：10个私有管理POST，政策owner首次注册与七语言内容审核、私有图片签名上传/完整解码登记、版权连续事件、任务查询/入队/保留历史的新代重试；0017四张专属表，旧246合同不变、共274。1197 tests、资源PG129、HTTP/S3/Chrome/worker1798断言（159请求）、17迁移/136表、最终完整check与既有双端七语言浏览器回归通过。旧3A一次授权间歇失败未自然复现，保留诊断并以真实PG受控时钟边界加固fixture（112断言），未改生产权限/TTL；两处类型/lint修正通过105任务预检与再次全仓check。三路非作者复核及追加修正复核ACCEPT，S.U.P.E.R 10项PASS；913个输入最终指纹匹配。证据与复跑入口见 `output/checks/p3-01-resource-management/README.md`。P3-01仍IN_PROGRESS、49项仍17 DONE/1 IN_PROGRESS/31 PENDING；下一项是运行时计划4C完整验证/发布/回退/公开扩展DTO/manifest/head/别名投影/七语言outbox/purge。后台业务UI、无引用对象清理、正式登录/素材、云/PSP/staging/远端CI与发布仍不在本轮结论内。Git按用户选择在 `codex/p3-01-content-runtime` 保留本地检查点提交，最终统一推送，当前未push。
 
 2026-09-06 P3-01 的 4A 基础审核与受控预览已验证：五类基础内容七语言 read/submit/approve 与精确 owner/revision/locale preview，当前权限/源 hash/独立作者/幂等/审计同事务；0016 两张专属表，旧 233 合同不变。960 tests、910 PG/3847 HTTP 断言（388 请求）、16 迁移/132 表、最终完整 check 与双端七语言浏览器回归通过。真实会话上限微秒精度与旧 3A 短预览 fixture 已 RED→GREEN，未放宽 TTL/约束；三路非作者复核 ACCEPT、S.U.P.E.R 10 项 PASS。证据见 `output/checks/p3-01-base-content/README.md`，863 个工作区源码输入最终指纹未变。下一入口为运行时计划“4A 后续必需工作”：完整验证、政策 owner 初始化、媒体管理 API，随后发布/回退/公开扩展 DTO/manifest/head/名字别名投影/outbox/purge/≤60 秒可见性。P3-01 仍 IN_PROGRESS，49 项仍 17 DONE、1 IN_PROGRESS、31 PENDING；没有新增后台业务 UI、真机、正式登录、云/PSP/staging/远端 CI 或发布结论。
@@ -107,6 +109,7 @@ Phase0/1已CLOSED，Phase2中P2-01至P2-05均DONE；P2-06技术评审材料已�
 
 | 日期 | Task | 类型 | 证据 | 结论 |
 |:--|:--|:--|:--|:--|
+| 2026-09-06 | P3-01 | 发布前检查4C-1 | `output/checks/p3-01-publication-preflight/`；1237 tests、166 PG/2595 HTTP、完整check与浏览器回归 | 4C-1通过；任务IN_PROGRESS，下一步4C-2真实发布/回退/purge |
 | 2026-09-06 | P3-01 | 基础内容审核/preview 4A | `output/checks/p3-01-base-content/`；960 tests、910 PG/3847 HTTP、完整 check 与浏览器回归 | 4A 通过；任务 IN_PROGRESS，下一步媒体/政策管理与完整发布链路 |
 | 2026-09-06 | P3-01 | 基础内容作者流程 3B | `output/checks/p3-01-authoring/`；886 tests、211 PG/909 HTTP、媒体回拨152 PG、完整 check 与浏览器回归 | 3B 通过；任务 IN_PROGRESS，下一步检查点 4 |
 | 2026-09-06 | P3-01 | 扩展内容授权/审核/preview 3A | `output/checks/p3-01-admin-content/`；688 tests、108 PG/434 HTTP、时钟回拨回归、完整 check 与浏览器回归 | 3A 通过；任务 IN_PROGRESS，下一步 3B 基础内容创建/复制 |

@@ -12,7 +12,7 @@
 
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
-| P3-01 | IN_PROGRESS | Codex `/root` | P1-02、P1-04、P1-05、P1-06 | 检查点 1、2A、2B、3A、3B、4A、4B 已验证；下一项为4C完整验证与发布/回退/purge |
+| P3-01 | IN_PROGRESS | Codex `/root` | P1-02、P1-04、P1-05、P1-06 | 检查点 1、2A、2B、3A、3B、4A、4B、4C-1 已验证；下一项为4C-2事务发布/回退/purge |
 | P3-02 | PENDING | — | P2-03、P3-01 | Admin 首页/偶像别名/媒体构图与预览/翻译矩阵/审核 UI |
 | P3-03 | PENDING | — | P2-03、P3-01 | Admin 受控详情块/七语言礼物/价格/库存 UI |
 | P3-04 | PENDING | — | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
@@ -43,6 +43,21 @@
 - 并行：root 独占共享 exports/artifact registry/生成产物/计划与进度；每个检查点在实施前登记子模块文件所有权，以下执行登记为准。旧媒体构图与详情规则子模块属于检查点 1。
 - 验证：新行为先失败测试；输入边界、Unicode、翻页稳定性/上下文隔离、混合比例/焦点/低像素、块结构与翻译一致性；随后受影响 tests、format/lint/typecheck/build 和全仓 check。运行时检查点必须补真实 PostgreSQL/S3、权限/preview、原子发布/回退/purge 重试集成；前台接入时再做 390×844/1440×900 七语言/键盘/reduced-motion。
 - 风险：R-08 内容发布/失效、R-11 异步可靠性、R-14 完整验证、R-17 语言隔离；原媒体比例校验、旧 plain-text description 与冻结 v1 数据均需兼容迁移，不静默放宽现有生产发布门。
+
+## P3-01 检查点 4C-1 执行登记（2026-09-06）
+
+- Owner：Codex `/root`，继续 Lane C 唯一 executor；开始 2026-09-06T09:35:57Z，基线本地提交 `be57b34`。
+- 范围：五类内容的受权发布前检查，从同一 PostgreSQL 快照加载正文、七语言审核及继承、独立别名/详情审核、媒体及来源资格、关联目录资格，返回稳定字段路径与阻塞原因。只接收对象/revision/action，不接受浏览器候选、时间、审核人、资格标记或 manifest。
+- 边界：本子检查点不改变生命周期或 published head，不解除0013扩展发布封锁。后续4C-2接同一校验器完成原子publish/rollback、manifest、公开扩展DTO和七语言outbox/purge；ROLLBACK遵循规范12.4与既有数据库，创建新publication事件指向历史不可变revision，不复制或重写历史。P3-01继续IN_PROGRESS，其他任务不解锁。
+- 所有权：root拥有计划、共享exports/registry/生成物、port、Application、TEST组合及publication-preflight-media纯来源校验；content_review_audit拥有新preflight合同/纯规则及测试，合同冻结后auth_persistence_audit拥有只读PostgreSQL加载器/证据映射/真实PG测试，admin_transport拥有HTTP路由/测试/真实HTTP harness。每次独立模块变更先RED，再实现；不并行修改同一文件。
+- 验证：五类七语言缺译/STALE/自审/复制继承、独立别名与详情审批、媒体加工/版权/来源、双端Hero来源、目录关联/价格资格、目标与当前head绑定、撤权/MFA/CSRF/无状态变更。受影响测试→format/lint/typecheck/build→实际PG/HTTP与全仓check；共享前台输入回归、非作者规范及质量复核、S.U.P.E.R与源码证据。
+- Git：按用户决定本地检查点提交，最终统一推送；本轮不push/merge，不宣称云CDN、正式登录、PSP、staging或生产验收。
+
+- 4C-1本地验收完成：2026-09-06T10:22:30.394715Z。新增一个私有POST、5个版本化root（旧274深比较不变，共279）；SERIALIZABLE同事务当前授权与canonical读取，五类七语言审核/复制/独立扩展、所有媒体原图当前版权、历史publication和微秒时间边界通过。
+- 最终验证：受影响1,237 tests；format/lint与105任务typecheck/test/build预检（35缓存）；实际PG166、HTTP2,595断言/277请求；完整 `mise exec node@24.20.0 -- corepack pnpm check` exit0，typecheck56/test56/build35（全部缓存），实际17迁移/136表与31个Node exports。既有真实本地PG、TLS S3、Chrome资源接口1798断言和媒体worker423联合断言均复跑通过。
+- 浏览器：P2-04 16场景/18PNG/10axe，零violations；P2-05 8场景/22PNG/3axe，critical/serious为0、保留既有3个heading-order moderate。覆盖七语言、390×844/1440×900、键盘、错误、reduced-motion，查看实际双端截图。首轮motion因新增源码导致工作区变化而拒收，冻结文件清单后重跑通过；不新增真机结论。
+- 复核与归档：三路非作者规范/质量复核ACCEPT，S.U.P.E.R十项PASS，secret扫描和git diff检查通过。948个输入指纹 `ec6a81497ecf77965b38ab194d82491d0e8048854c55d007adb7aff198179a06` 在最终验收后匹配。命令、RED→GREEN、失败夹具诊断与准确范围见 `output/checks/p3-01-publication-preflight/README.md` / `validation.json` / `independent-review.md`。
+- 下一入口：4C-2在实际事务重跑规则并完成validate/publish/rollback、public扩展DTO、manifest/head/别名投影、七语言outbox/purge和本地≤60秒可见性；保留0013封锁，P3-01仍IN_PROGRESS，其他任务不解锁。后台业务UI、正式登录、云CDN、PSP/staging/远端CI与生产发布尚不在本轮证据内。
 
 ## P3-01 检查点 4B 执行登记（2026-09-06）
 

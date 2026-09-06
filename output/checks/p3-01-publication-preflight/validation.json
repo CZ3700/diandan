@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "P3-01-4C-1",
+  "status": "PASS",
+  "taskStatus": "IN_PROGRESS",
+  "counts": {
+    "total": 49,
+    "done": 17,
+    "inProgress": 1,
+    "pending": 31
+  },
+  "git": {
+    "base": "be57b34f6246e2b895ae519a17de7163648bf609",
+    "branch": "codex/p3-01-content-runtime",
+    "pushed": false,
+    "policy": "Local checkpoint commit; combined push later as requested."
+  },
+  "affectedTests": {
+    "total": 1237,
+    "packages": {
+      "contracts": 246,
+      "content": 299,
+      "application": 278,
+      "persistencePort": 4,
+      "persistencePostgres": 321,
+      "api": 89
+    },
+    "exitCode": 0,
+    "log": "affected-final.log"
+  },
+  "unitSlices": {
+    "newContractTests": 7,
+    "newOpenApiTests": 1,
+    "newPureContentTests": 136,
+    "newMediaLineageTests": 14,
+    "newApplicationTests": 14,
+    "newRouteTests": 8,
+    "newCompositionTests": 3
+  },
+  "postgres": {
+    "assertions": 166,
+    "exitCode": 0,
+    "log": "postgres-final.log",
+    "normalTriggers": true,
+    "newMigrations": 0,
+    "extensionsPublicationGuardRetained": true
+  },
+  "http": {
+    "assertions": 2595,
+    "requests": 277,
+    "unchangedTableDigestsPerPreflight": 28,
+    "exitCode": 0,
+    "log": "http-final.log",
+    "unexpectedMediaNetworkCalls": 0
+  },
+  "workspacePreflight": {
+    "format": {
+      "exitCode": 0,
+      "log": "format-final.log"
+    },
+    "lint": {
+      "exitCode": 0,
+      "log": "lint-final.log"
+    },
+    "typecheckTestBuild": {
+      "successful": 105,
+      "total": 105,
+      "cached": 35,
+      "exitCode": 0,
+      "log": "workspace-preflight-final.log"
+    }
+  },
+  "fullCheck": {
+    "status": "PASS",
+    "exitCode": 0,
+    "log": "full-check-final.log",
+    "migrations": 17,
+    "tables": 136,
+    "typecheck": {
+      "successful": 56,
+      "total": 56,
+      "cached": 56
+    },
+    "test": {
+      "successful": 56,
+      "total": 56,
+      "cached": 56
+    },
+    "build": {
+      "successful": 35,
+      "total": 35,
+      "cached": 35
+    },
+    "nodePackageExports": 31,
+    "integrations": {
+      "catalogPostgresAssertions": 307,
+      "mediaPostgresAssertions": 152,
+      "resourceManagementPostgresAssertions": 129,
+      "preflightPostgresAssertions": 166,
+      "preflightHttpAssertions": 2595,
+      "preflightHttpRequests": 277,
+      "resourceHttpS3BrowserAssertions": 1798,
+      "resourceHttpRequests": 159,
+      "mediaWorkerPostgresTlsS3Assertions": 423
+    }
+  },
+  "secrets": {
+    "exitCode": 0,
+    "log": "secrets-final.log"
+  },
+  "contracts": {
+    "oldRootCount": 274,
+    "newRootCount": 279,
+    "unchangedOldRoots": 274,
+    "changedOrMissingOldRoots": [],
+    "addedRoots": [
+      "PublicationPreflightCommand",
+      "PublicationPreflightContext",
+      "PublicationPreflightContextResponse",
+      "PublicationPreflightRequest",
+      "PublicationPreflightResponse"
+    ]
+  },
+  "browsers": [
+    {
+      "name": "p2-04",
+      "exitCode": 0,
+      "log": "browser-composites.log",
+      "result": "passed",
+      "generatedAt": "2026-09-06T09:59:30.962Z",
+      "scenarios": 16,
+      "screenshots": 18,
+      "axeReports": 10,
+      "criticalSerious": 0,
+      "remainingViolations": [],
+      "sourceFingerprint": "10d2ed7d6cce3e21e92e36f0ce24f0a572334dbd9301a0f89d525cf7ac91b9f0",
+      "currentFingerprintMatched": true,
+      "newPhysicalDeviceEvidence": false
+    },
+    {
+      "name": "p2-05",
+      "exitCode": 0,
+      "log": "browser-motion-final.log",
+      "result": "passed-with-physical-device-gate",
+      "generatedAt": "2026-09-06T10:12:17.504Z",
+      "scenarios": 8,
+      "screenshots": 22,
+      "axeReports": 3,
+      "criticalSerious": 0,
+      "remainingViolations": [
+        {
+          "report": "baseline-mobile",
+          "id": "heading-order",
+          "impact": "moderate"
+        },
+        {
+          "report": "baseline-desktop",
+          "id": "heading-order",
+          "impact": "moderate"
+        },
+        {
+          "report": "pseudo-320",
+          "id": "heading-order",
+          "impact": "moderate"
+        }
+      ],
+      "sourceFingerprint": "399edd2e8d46725213e301f7e39fb4a501e02f9447944f0512a896cd19f65f27",
+      "currentFingerprintMatched": true,
+      "newPhysicalDeviceEvidence": false
+    }
+  ],
+  "independentReview": {
+    "result": "ACCEPT",
+    "reviewers": [
+      "content_review_audit",
+      "auth_persistence_audit",
+      "admin_transport"
+    ],
+    "evidence": "independent-review.md"
+  },
+  "source": {
+    "files": 948,
+    "fingerprint": "ec6a81497ecf77965b38ab194d82491d0e8048854c55d007adb7aff198179a06",
+    "manifest": "implementation-source.json",
+    "matchedAfterBrowser": true,
+    "matchedAfterFullCheck": true
+  },
+  "super": {
+    "passed": 10,
+    "failed": 0,
+    "result": "PASS"
+  },
+  "boundaries": {
+    "actualPublicationOrRollback": false,
+    "businessAdminUi": false,
+    "newPhysicalDeviceEvidence": false,
+    "productionLogin": false,
+    "newImageCodecOrS3EvidenceFromPreflight": false,
+    "cloudCdn": false,
+    "psp": false,
+    "staging": false,
+    "remoteCi": false,
+    "productionRelease": false
+  },
+  "remaining": [
+    "P3-01 4C-2 atomic publication/rollback with current revalidation",
+    "versioned public DTO and publication manifest/head/search projection",
+    "seven-locale outbox/purge and local <=60 second visibility",
+    "P3-01 complete exit gates before dependent tasks unlock"
+  ],
+  "completedAt": "2026-09-06T10:22:30.394715Z"
+}

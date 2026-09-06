@@ -23633,6 +23633,506 @@
         ],
         "x-fan-support-audience": "public-http"
       },
+      "PublicationPreflightCommand": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "PUBLISH",
+              "ROLLBACK"
+            ],
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "target": {
+            "additionalProperties": false,
+            "properties": {
+              "owner": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "idolId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "IDOL",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "idolId"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "giftId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "GIFT",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "giftId"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "HOMEPAGE",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "POLICY",
+                        "type": "string"
+                      },
+                      "policyKey": {
+                        "maxLength": 64,
+                        "minLength": 1,
+                        "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "policyKey"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "MEDIA_METADATA",
+                        "type": "string"
+                      },
+                      "mediaAssetId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "mediaAssetId"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "revisionId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "owner",
+              "revisionId"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "target",
+          "action"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "PublicationPreflightResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "enum": [
+                  "PUBLISH",
+                  "ROLLBACK"
+                ],
+                "type": "string"
+              },
+              "contentHash": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "evaluatedAt": {
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                "type": "string"
+              },
+              "headVersion": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "issues": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "anyOf": [
+                        {
+                          "enum": [
+                            "SCHEMA_INVALID",
+                            "BASE_NOT_PUBLIC",
+                            "BASE_ARCHIVED",
+                            "REVISION_PARENT_MISMATCH",
+                            "REVISION_NOT_VALIDATED",
+                            "REVISION_LIFECYCLE_TIME_INVALID",
+                            "TARGET_OPERATIONAL_STATE_INVALID",
+                            "DRAFT_POINTER_MISMATCH",
+                            "PUBLISHED_POINTER_MISMATCH",
+                            "CURRENT_PUBLICATION_EVIDENCE_MISSING",
+                            "CURRENT_PUBLICATION_EVIDENCE_MISMATCH",
+                            "PUBLISH_TARGET_ALREADY_CURRENT",
+                            "ROLLBACK_TARGET_INVALID",
+                            "PUBLIC_REVISION_NOT_ELIGIBLE",
+                            "PUBLIC_VIEW_STATUS_MISMATCH",
+                            "PUBLIC_VIEW_IDENTITY_MISMATCH",
+                            "PUBLIC_VIEW_TRANSLATION_MISMATCH",
+                            "PUBLIC_VIEW_LOCALE_MISMATCH",
+                            "PUBLIC_VIEW_CONTENT_MISMATCH",
+                            "PUBLIC_VIEW_AVAILABILITY_MISMATCH",
+                            "TRANSLATION_MISSING",
+                            "TRANSLATION_DUPLICATE",
+                            "TRANSLATION_PARENT_MISMATCH",
+                            "TRANSLATION_NOT_APPROVED",
+                            "TRANSLATION_STALE",
+                            "TRANSLATION_CONTENT_HASH_MISMATCH",
+                            "TRANSLATION_APPROVAL_MISSING",
+                            "TRANSLATION_APPROVAL_DUPLICATE",
+                            "TRANSLATION_APPROVAL_MISMATCH",
+                            "ENGLISH_SOURCE_INVALID",
+                            "SAFETY_NOTICE_MISSING",
+                            "VARIANT_MISSING",
+                            "VARIANT_SELLABLE_MISSING",
+                            "VARIANT_DUPLICATE_ID",
+                            "VARIANT_DUPLICATE_SKU",
+                            "VARIANT_LABEL_MISMATCH",
+                            "ELIGIBILITY_MISSING",
+                            "ELIGIBLE_IDOL_NOT_PUBLISHED",
+                            "PRICE_MISSING",
+                            "PRICE_VARIANT_MISMATCH",
+                            "PRICE_BOOK_DUPLICATE",
+                            "PRICE_DUPLICATE",
+                            "PRICE_BOOK_NOT_PUBLISHED",
+                            "PRICE_NOT_EFFECTIVE",
+                            "PRICE_OVERLAP",
+                            "INVENTORY_ITEM_MISMATCH",
+                            "INVENTORY_ITEM_MISSING",
+                            "INVENTORY_BALANCE_ITEM_MISMATCH",
+                            "MEDIA_MISSING",
+                            "MEDIA_REFERENCE_PARENT_MISMATCH",
+                            "MEDIA_REQUIRED_ROLE_MISSING",
+                            "MEDIA_REQUIRED_ROLE_DUPLICATE",
+                            "MEDIA_REFERENCE_DUPLICATE",
+                            "MEDIA_SORT_ORDER_DUPLICATE",
+                            "MEDIA_GALLERY_LIMIT_EXCEEDED",
+                            "MEDIA_ASSET_DUPLICATE",
+                            "MEDIA_ASSET_CHECKSUM_DUPLICATE",
+                            "MEDIA_ASSET_MISSING",
+                            "MEDIA_METADATA_DUPLICATE",
+                            "MEDIA_METADATA_MISSING",
+                            "MEDIA_VARIANT_ID_DUPLICATE",
+                            "MEDIA_DERIVATIVE_DUPLICATE",
+                            "MEDIA_ASSET_NOT_READY",
+                            "MEDIA_RIGHTS_NOT_APPROVED",
+                            "MEDIA_METADATA_MISMATCH",
+                            "MEDIA_METADATA_NOT_PUBLISHABLE",
+                            "MEDIA_PRESENTATION_KIND_INVALID",
+                            "MEDIA_SOURCE_DIMENSIONS_INVALID",
+                            "MEDIA_SOURCE_ASPECT_RATIO_INVALID",
+                            "MEDIA_DERIVATIVE_MISSING",
+                            "MEDIA_DERIVATIVE_NOT_READY",
+                            "MEDIA_DERIVATIVE_USABLE_SIZE_MISSING",
+                            "MEDIA_DERIVATIVE_DIMENSIONS_INVALID",
+                            "MEDIA_DERIVATIVE_ASPECT_RATIO_INVALID",
+                            "MEDIA_ALT_MISSING",
+                            "HOMEPAGE_SLOT_PARENT_MISMATCH",
+                            "HOMEPAGE_SLOT_DUPLICATE",
+                            "HOMEPAGE_HERO_INVALID",
+                            "HOMEPAGE_SLOT_LABEL_MISMATCH",
+                            "HOMEPAGE_REFERENCE_NOT_PUBLIC",
+                            "POLICY_NOT_EFFECTIVE",
+                            "POLICY_EFFECTIVE_TIME_INVALID",
+                            "IMPORT_MUST_BE_DRAFT",
+                            "OPTIONAL_FIELD_MISSING"
+                          ],
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "CANONICAL_SNAPSHOT_MISMATCH",
+                            "REVIEW_SELF_APPROVAL",
+                            "REVIEW_COPY_PROOF_MISSING",
+                            "REVIEW_COPY_PROOF_MISMATCH",
+                            "TRANSLATION_ICU_INVALID",
+                            "EXTENSION_REVIEW_MISSING",
+                            "EXTENSION_REVIEW_MISMATCH",
+                            "EXTENSION_NOT_APPROVED",
+                            "EXTENSION_TRANSLATION_MISSING",
+                            "EXTENSION_CONTENT_INVALID",
+                            "MEDIA_PROVENANCE_MISSING",
+                            "MEDIA_PROVENANCE_MISMATCH",
+                            "MEDIA_ORIGINAL_RIGHTS_NOT_APPROVED",
+                            "HERO_ORIGINAL_SOURCE_REUSED"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "locale": {
+                      "enum": [
+                        "en",
+                        "zh-CN",
+                        "th",
+                        "vi",
+                        "ja",
+                        "es",
+                        "pt"
+                      ],
+                      "type": "string"
+                    },
+                    "path": {
+                      "items": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "maximum": 9007199254740991,
+                            "minimum": 0,
+                            "type": "integer"
+                          }
+                        ]
+                      },
+                      "type": "array"
+                    },
+                    "severity": {
+                      "enum": [
+                        "BLOCKER",
+                        "WARNING"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "severity",
+                    "path"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "PUBLICATION_PREFLIGHT",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "ready": {
+                "type": "boolean"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "target": {
+                "additionalProperties": false,
+                "properties": {
+                  "owner": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "idolId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "IDOL",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "idolId"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "giftId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "GIFT",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "giftId"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "kind": {
+                            "const": "HOMEPAGE",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "kind": {
+                            "const": "POLICY",
+                            "type": "string"
+                          },
+                          "policyKey": {
+                            "maxLength": 64,
+                            "minLength": 1,
+                            "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "policyKey"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "kind": {
+                            "const": "MEDIA_METADATA",
+                            "type": "string"
+                          },
+                          "mediaAssetId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "mediaAssetId"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "owner",
+                  "revisionId"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "target",
+              "action",
+              "headVersion",
+              "contentHash",
+              "evaluatedAt",
+              "ready",
+              "issues"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "INVALID_COMMAND",
+                  "UNAUTHENTICATED",
+                  "FORBIDDEN",
+                  "CSRF_INVALID",
+                  "NOT_FOUND",
+                  "REVISION_NOT_DRAFT",
+                  "ALREADY_EXISTS",
+                  "INVALID_CONTENT",
+                  "CONTENT_UNAVAILABLE",
+                  "STALE_CONTENT",
+                  "STALE_VERSION",
+                  "SELF_REVIEW",
+                  "INVALID_REVIEW_STATE",
+                  "IDEMPOTENCY_CONFLICT",
+                  "CONFLICT",
+                  "PREVIEW_UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "admin-http"
+      },
       "PublicationValidationReport": {
         "additionalProperties": false,
         "properties": {
@@ -37022,6 +37522,411 @@
         "x-fan-support-concurrency": "not-applicable",
         "x-fan-support-idempotency": "same actor/operation/key/body returns the original safe result reference",
         "x-fan-support-rbac": "content.preview"
+      }
+    },
+    "/api/v1/admin/content/publication/preflight": {
+      "post": {
+        "description": "Requires a current session, MFA, content.read and all seven locales. This read-only observation does not publish, validate a stored lifecycle, change current heads, or enqueue cache purges. Publication must repeat the check in its own transaction. Unknown fields and query strings are rejected. PUBLISH and ROLLBACK select the action being checked.",
+        "operationId": "readPublicationPreflight",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "enum": [
+                      "PUBLISH",
+                      "ROLLBACK"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "target": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "owner": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "idolId": {
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                "type": "string"
+                              },
+                              "kind": {
+                                "const": "IDOL",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "idolId"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "giftId": {
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                "type": "string"
+                              },
+                              "kind": {
+                                "const": "GIFT",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "giftId"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "kind": {
+                                "const": "HOMEPAGE",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "kind"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "kind": {
+                                "const": "POLICY",
+                                "type": "string"
+                              },
+                              "policyKey": {
+                                "maxLength": 64,
+                                "minLength": 1,
+                                "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "policyKey"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "kind": {
+                                "const": "MEDIA_METADATA",
+                                "type": "string"
+                              },
+                              "mediaAssetId": {
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "mediaAssetId"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "revisionId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "owner",
+                      "revisionId"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "target",
+                  "action"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationPreflightResponse"
+                }
+              }
+            },
+            "description": "Current readiness and field-specific blockers; no publishing capability is granted.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminContentFailure"
+                }
+              }
+            },
+            "description": "Safe rejection without internal details.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminContentFailure"
+                }
+              }
+            },
+            "description": "Safe rejection without internal details.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminContentFailure"
+                }
+              }
+            },
+            "description": "Safe rejection without internal details.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminContentFailure"
+                }
+              }
+            },
+            "description": "Safe rejection without internal details.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminContentFailure"
+                }
+              }
+            },
+            "description": "Safe rejection without internal details.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminContentFailure"
+                }
+              }
+            },
+            "description": "Safe rejection without internal details.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminContentFailure"
+                }
+              }
+            },
+            "description": "Safe rejection without internal details.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "Check current canonical publication readiness",
+        "x-fan-support-rbac": "content.read"
       }
     },
     "/api/v1/admin/content/reviews/approve": {

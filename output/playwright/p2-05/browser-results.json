@@ -322,11 +322,11 @@
       "Noto Sans Variable"
     ]
   },
-  "generatedAt": "2026-09-06T08:50:09.440Z",
+  "generatedAt": "2026-09-06T10:12:17.504Z",
   "git": {
     "after": {
-      "sha": "1924df44ac93c5c52f513e7f0c16f6674509fdb5",
-      "sourceFingerprint": "a1d7b31c515c031dc7ff75210898e3883765f9f77a8b630f1620389b3c8da906",
+      "sha": "be57b34f6246e2b895ae519a17de7163648bf609",
+      "sourceFingerprint": "399edd2e8d46725213e301f7e39fb4a501e02f9447944f0512a896cd19f65f27",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -875,7 +875,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "4ab0bb3b861f7594c4380480f8edbc22c6148db5e45d180f01c56e4a551a5e33"
+          "sha256": "71ec36cf806decfe2cf8a4d4b69c1ddc84fea150e07d043dcce0e61bd4d3bec3"
         },
         {
           "path": "packages/config/package.json",
@@ -931,11 +931,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "821ad4a6bd338295d2dd7aeaa38f1d67a861d4e953707a87b93a2e5c990fb09c"
+          "sha256": "3538fcc67c4f405aaa1390aceedf3b80297462d9c25b9680160519d5cfe548cb"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "47a47fc4a1ea24ff0b395e27c180d621d33024c30b5373a80076120840c64356"
+          "sha256": "2a02dbc3462cc78e23591e0bb87c37a9c2bc261e0818528f5ef94463afdaa770"
         },
         {
           "path": "packages/contracts/package.json",
@@ -963,7 +963,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "30c5ba1058f9733147603a74f8643941905ddd80f33fd731e5b174050b082d18"
+          "sha256": "e0afc0a1817e7f16c7f0c1bfdead9a1764411b7b3453f61d56391325909f74f8"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -971,7 +971,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "767084cbfee82c88851e11569d1e7b17d2f23ad775c30f9f306fc03d2dd95213"
+          "sha256": "52942421cdb132e1cbdda23c5058e433eedce8ea1798f3a7e44abcc3b51575d8"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -1151,7 +1151,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "cd747e698b67d3b3412b3fc0be203d4c3bd20b1e0b011095b39399765bd99494"
+          "sha256": "fe1e3248619508c03ab0cc420f716f0c9fd8e03224ab8022f83b08e91409c528"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -1240,6 +1240,22 @@
         {
           "path": "packages/contracts/src/public-projection.ts",
           "sha256": "edb75adca534225e30663c14c8cde06fb3913ada31342b8236a0b2e69c997117"
+        },
+        {
+          "path": "packages/contracts/src/publication-preflight-openapi.test.ts",
+          "sha256": "111cabda204fd22f8613c130e9b8c7b2b9e86534dcc86f3ecac16f0826a38a02"
+        },
+        {
+          "path": "packages/contracts/src/publication-preflight-openapi.ts",
+          "sha256": "574bd26da4c6b85a88bc1ede193e0f271fb04d0dbbaa1e74aab6054103a570b7"
+        },
+        {
+          "path": "packages/contracts/src/publication-preflight.test.ts",
+          "sha256": "07dfbc2d79c58aa1815d769773457d84d9d9c7911968ea09498fc166eca6b121"
+        },
+        {
+          "path": "packages/contracts/src/publication-preflight.ts",
+          "sha256": "b4f3f6b4b5e60aec0e6dbbe1044ae289b5aa6bb7c70d426487e13b1d18b685a9"
         },
         {
           "path": "packages/contracts/src/publication.ts",
@@ -1710,8 +1726,7 @@
         " M apps/api/package.json",
         " M apps/api/src/bootstrap.ts",
         " M apps/api/src/index.ts",
-        " M database/migrations/manifest.json",
-        " M database/schema/expected-catalog.json",
+        " M docs/plan/p3-01-content-runtime.md",
         " M docs/progress/MASTER.md",
         " M docs/progress/phase-3-storefront.md",
         " M output/playwright/p2-04/README.md",
@@ -1729,43 +1744,29 @@
         " M output/playwright/p2-04/rtl/390x844-en.png",
         " M output/playwright/p2-04/screenshots.sha256",
         " M output/playwright/p2-04/states/390x844-en.png",
+        " M output/playwright/p2-04/viewports/1920x1080-es.png",
+        " M output/playwright/p2-04/viewports/390x844-vi.png",
         " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
         " M package.json",
         " M packages/application/src/index.ts",
+        " M packages/application/tsconfig.build.json",
+        " M packages/content/src/index.ts",
+        " M packages/content/tsconfig.build.json",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
-        " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/media-image/src/image-pipeline.ts",
-        " M packages/media-image/src/index.ts",
-        " M packages/media-image/src/storage-transfer.ts",
-        " M packages/media-image/src/test-support/storage.ts",
-        " M packages/media-port/src/index.ts",
-        " M packages/media-port/src/processing.ts",
-        " M packages/media-s3/src/adapter.ts",
-        " M packages/media-s3/src/index.test.ts",
         " M packages/persistence-port/src/index.ts",
         " M packages/persistence-postgres/package.json",
-        " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
-        " M packages/persistence-postgres/src/catalog-publication-loader.test.ts",
-        " M packages/persistence-postgres/src/catalog-publication-loader.ts",
-        " M packages/persistence-postgres/src/media-processing-repository.test.ts",
-        " M packages/persistence-postgres/src/media-processing-repository.ts",
-        " M packages/persistence-postgres/src/postgres-persistence.test.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
-        " M pnpm-lock.yaml",
-        "?? apps/api/scripts/resource-management-browser.mjs",
-        "?? apps/api/scripts/resource-management-http-fixtures.mjs",
-        "?? apps/api/scripts/resource-management-http.mjs",
-        "?? apps/api/src/resource-management-composition.test.ts",
-        "?? apps/api/src/resource-management-composition.ts",
-        "?? apps/api/src/resource-management-route.test.ts",
-        "?? apps/api/src/resource-management-route.ts",
-        "?? database/migrations/0017_resource-management.down.sql",
-        "?? database/migrations/0017_resource-management.up.sql",
-        "?? docs/plan/p3-01-resource-management.md",
+        "?? apps/api/scripts/publication-preflight-http-fixtures.mjs",
+        "?? apps/api/scripts/publication-preflight-http.mjs",
+        "?? apps/api/src/publication-preflight-composition.test.ts",
+        "?? apps/api/src/publication-preflight-composition.ts",
+        "?? apps/api/src/publication-preflight-route.test.ts",
+        "?? apps/api/src/publication-preflight-route.ts",
+        "?? docs/plan/p3-01-publication-preflight.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -1776,15 +1777,15 @@
         "?? output/checks/p3-01-content-storage/baseline-contracts.schema.json",
         "?? output/checks/p3-01-content-storage/baseline-openapi.json",
         "?? output/checks/p3-01-media/contracts-before.schema.json",
-        "?? output/checks/p3-01-resource-management/HTTP-README.md",
-        "?? output/checks/p3-01-resource-management/README.md",
-        "?? output/checks/p3-01-resource-management/compatibility.json",
+        "?? output/checks/p3-01-publication-preflight/HTTP-README.md",
+        "?? output/checks/p3-01-publication-preflight/README.md",
+        "?? output/checks/p3-01-publication-preflight/compatibility.json",
+        "?? output/checks/p3-01-publication-preflight/contracts-before.json",
+        "?? output/checks/p3-01-publication-preflight/implementation-source.json",
+        "?? output/checks/p3-01-publication-preflight/independent-review.md",
+        "?? output/checks/p3-01-publication-preflight/independent-transport-review.md",
+        "?? output/checks/p3-01-publication-preflight/validation.json",
         "?? output/checks/p3-01-resource-management/contracts-before.json",
-        "?? output/checks/p3-01-resource-management/implementation-source.json",
-        "?? output/checks/p3-01-resource-management/independent-review.md",
-        "?? output/checks/p3-01-resource-management/independent-transport-review.md",
-        "?? output/checks/p3-01-resource-management/source-inspection-download-window.mjs",
-        "?? output/checks/p3-01-resource-management/validation.json",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -2024,38 +2025,40 @@
         "?? output/playwright/p2-06/viewer-1440.png",
         "?? output/playwright/p2-06/viewer-390.png",
         "?? output/playwright/p2-06/viewer-check.json",
-        "?? packages/application/src/resource-management-idempotency.ts",
-        "?? packages/application/src/resource-management-shared.ts",
-        "?? packages/application/src/resource-management-upload.ts",
-        "?? packages/application/src/resource-management.test.ts",
-        "?? packages/application/src/resource-management.ts",
-        "?? packages/contracts/src/resource-management-openapi.test.ts",
-        "?? packages/contracts/src/resource-management-openapi.ts",
-        "?? packages/contracts/src/resource-management.test.ts",
-        "?? packages/contracts/src/resource-management.ts",
-        "?? packages/media-image/src/source-inspection.test.ts",
-        "?? packages/media-image/src/source-inspection.ts",
-        "?? packages/persistence-port/src/resource-management.ts",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management-concurrency.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management-constraints.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management-fixtures.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management-time.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management.mjs",
-        "?? packages/persistence-postgres/src/resource-authorization-repository.ts",
-        "?? packages/persistence-postgres/src/resource-management-data.ts",
-        "?? packages/persistence-postgres/src/resource-management-repository.test.ts",
-        "?? packages/persistence-postgres/src/resource-management-repository.ts",
-        "?? packages/persistence-postgres/src/resource-media-eligibility-sql.ts",
-        "?? packages/persistence-postgres/src/resource-media-repository.ts",
-        "?? packages/persistence-postgres/src/resource-policy-repository.ts",
-        "?? packages/persistence-postgres/src/resource-processing-repository.ts",
-        "?? packages/persistence-postgres/src/resource-upload-repository.ts"
+        "?? packages/application/src/publication-preflight-fixtures.ts",
+        "?? packages/application/src/publication-preflight.test.ts",
+        "?? packages/application/src/publication-preflight.ts",
+        "?? packages/content/src/publication-preflight-assets.ts",
+        "?? packages/content/src/publication-preflight-bindings.ts",
+        "?? packages/content/src/publication-preflight-effective-time.ts",
+        "?? packages/content/src/publication-preflight-extensions.ts",
+        "?? packages/content/src/publication-preflight-fixtures.ts",
+        "?? packages/content/src/publication-preflight-media.test.ts",
+        "?? packages/content/src/publication-preflight-media.ts",
+        "?? packages/content/src/publication-preflight-reviews.ts",
+        "?? packages/content/src/publication-preflight-shared.ts",
+        "?? packages/content/src/publication-preflight.test.ts",
+        "?? packages/content/src/publication-preflight.ts",
+        "?? packages/contracts/src/publication-preflight-openapi.test.ts",
+        "?? packages/contracts/src/publication-preflight-openapi.ts",
+        "?? packages/contracts/src/publication-preflight.test.ts",
+        "?? packages/contracts/src/publication-preflight.ts",
+        "?? packages/persistence-port/src/publication-preflight.ts",
+        "?? packages/persistence-postgres/scripts/postgres-publication-preflight-cases.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-publication-preflight-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-publication-preflight-media.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-publication-preflight.mjs",
+        "?? packages/persistence-postgres/src/publication-preflight-candidate.ts",
+        "?? packages/persistence-postgres/src/publication-preflight-data.ts",
+        "?? packages/persistence-postgres/src/publication-preflight-evidence.ts",
+        "?? packages/persistence-postgres/src/publication-preflight-mapping.ts",
+        "?? packages/persistence-postgres/src/publication-preflight-repository.test.ts",
+        "?? packages/persistence-postgres/src/publication-preflight-repository.ts"
       ]
     },
     "before": {
-      "sha": "1924df44ac93c5c52f513e7f0c16f6674509fdb5",
-      "sourceFingerprint": "a1d7b31c515c031dc7ff75210898e3883765f9f77a8b630f1620389b3c8da906",
+      "sha": "be57b34f6246e2b895ae519a17de7163648bf609",
+      "sourceFingerprint": "399edd2e8d46725213e301f7e39fb4a501e02f9447944f0512a896cd19f65f27",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -2604,7 +2607,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "4ab0bb3b861f7594c4380480f8edbc22c6148db5e45d180f01c56e4a551a5e33"
+          "sha256": "71ec36cf806decfe2cf8a4d4b69c1ddc84fea150e07d043dcce0e61bd4d3bec3"
         },
         {
           "path": "packages/config/package.json",
@@ -2660,11 +2663,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "821ad4a6bd338295d2dd7aeaa38f1d67a861d4e953707a87b93a2e5c990fb09c"
+          "sha256": "3538fcc67c4f405aaa1390aceedf3b80297462d9c25b9680160519d5cfe548cb"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "47a47fc4a1ea24ff0b395e27c180d621d33024c30b5373a80076120840c64356"
+          "sha256": "2a02dbc3462cc78e23591e0bb87c37a9c2bc261e0818528f5ef94463afdaa770"
         },
         {
           "path": "packages/contracts/package.json",
@@ -2692,7 +2695,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "30c5ba1058f9733147603a74f8643941905ddd80f33fd731e5b174050b082d18"
+          "sha256": "e0afc0a1817e7f16c7f0c1bfdead9a1764411b7b3453f61d56391325909f74f8"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -2700,7 +2703,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "767084cbfee82c88851e11569d1e7b17d2f23ad775c30f9f306fc03d2dd95213"
+          "sha256": "52942421cdb132e1cbdda23c5058e433eedce8ea1798f3a7e44abcc3b51575d8"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -2880,7 +2883,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "cd747e698b67d3b3412b3fc0be203d4c3bd20b1e0b011095b39399765bd99494"
+          "sha256": "fe1e3248619508c03ab0cc420f716f0c9fd8e03224ab8022f83b08e91409c528"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -2969,6 +2972,22 @@
         {
           "path": "packages/contracts/src/public-projection.ts",
           "sha256": "edb75adca534225e30663c14c8cde06fb3913ada31342b8236a0b2e69c997117"
+        },
+        {
+          "path": "packages/contracts/src/publication-preflight-openapi.test.ts",
+          "sha256": "111cabda204fd22f8613c130e9b8c7b2b9e86534dcc86f3ecac16f0826a38a02"
+        },
+        {
+          "path": "packages/contracts/src/publication-preflight-openapi.ts",
+          "sha256": "574bd26da4c6b85a88bc1ede193e0f271fb04d0dbbaa1e74aab6054103a570b7"
+        },
+        {
+          "path": "packages/contracts/src/publication-preflight.test.ts",
+          "sha256": "07dfbc2d79c58aa1815d769773457d84d9d9c7911968ea09498fc166eca6b121"
+        },
+        {
+          "path": "packages/contracts/src/publication-preflight.ts",
+          "sha256": "b4f3f6b4b5e60aec0e6dbbe1044ae289b5aa6bb7c70d426487e13b1d18b685a9"
         },
         {
           "path": "packages/contracts/src/publication.ts",
@@ -3439,8 +3458,7 @@
         " M apps/api/package.json",
         " M apps/api/src/bootstrap.ts",
         " M apps/api/src/index.ts",
-        " M database/migrations/manifest.json",
-        " M database/schema/expected-catalog.json",
+        " M docs/plan/p3-01-content-runtime.md",
         " M docs/progress/MASTER.md",
         " M docs/progress/phase-3-storefront.md",
         " M output/playwright/p2-04/README.md",
@@ -3458,43 +3476,29 @@
         " M output/playwright/p2-04/rtl/390x844-en.png",
         " M output/playwright/p2-04/screenshots.sha256",
         " M output/playwright/p2-04/states/390x844-en.png",
+        " M output/playwright/p2-04/viewports/1920x1080-es.png",
+        " M output/playwright/p2-04/viewports/390x844-vi.png",
         " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
         " M package.json",
         " M packages/application/src/index.ts",
+        " M packages/application/tsconfig.build.json",
+        " M packages/content/src/index.ts",
+        " M packages/content/tsconfig.build.json",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
-        " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/media-image/src/image-pipeline.ts",
-        " M packages/media-image/src/index.ts",
-        " M packages/media-image/src/storage-transfer.ts",
-        " M packages/media-image/src/test-support/storage.ts",
-        " M packages/media-port/src/index.ts",
-        " M packages/media-port/src/processing.ts",
-        " M packages/media-s3/src/adapter.ts",
-        " M packages/media-s3/src/index.test.ts",
         " M packages/persistence-port/src/index.ts",
         " M packages/persistence-postgres/package.json",
-        " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
-        " M packages/persistence-postgres/src/catalog-publication-loader.test.ts",
-        " M packages/persistence-postgres/src/catalog-publication-loader.ts",
-        " M packages/persistence-postgres/src/media-processing-repository.test.ts",
-        " M packages/persistence-postgres/src/media-processing-repository.ts",
-        " M packages/persistence-postgres/src/postgres-persistence.test.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
-        " M pnpm-lock.yaml",
-        "?? apps/api/scripts/resource-management-browser.mjs",
-        "?? apps/api/scripts/resource-management-http-fixtures.mjs",
-        "?? apps/api/scripts/resource-management-http.mjs",
-        "?? apps/api/src/resource-management-composition.test.ts",
-        "?? apps/api/src/resource-management-composition.ts",
-        "?? apps/api/src/resource-management-route.test.ts",
-        "?? apps/api/src/resource-management-route.ts",
-        "?? database/migrations/0017_resource-management.down.sql",
-        "?? database/migrations/0017_resource-management.up.sql",
-        "?? docs/plan/p3-01-resource-management.md",
+        "?? apps/api/scripts/publication-preflight-http-fixtures.mjs",
+        "?? apps/api/scripts/publication-preflight-http.mjs",
+        "?? apps/api/src/publication-preflight-composition.test.ts",
+        "?? apps/api/src/publication-preflight-composition.ts",
+        "?? apps/api/src/publication-preflight-route.test.ts",
+        "?? apps/api/src/publication-preflight-route.ts",
+        "?? docs/plan/p3-01-publication-preflight.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -3505,15 +3509,15 @@
         "?? output/checks/p3-01-content-storage/baseline-contracts.schema.json",
         "?? output/checks/p3-01-content-storage/baseline-openapi.json",
         "?? output/checks/p3-01-media/contracts-before.schema.json",
-        "?? output/checks/p3-01-resource-management/HTTP-README.md",
-        "?? output/checks/p3-01-resource-management/README.md",
-        "?? output/checks/p3-01-resource-management/compatibility.json",
+        "?? output/checks/p3-01-publication-preflight/HTTP-README.md",
+        "?? output/checks/p3-01-publication-preflight/README.md",
+        "?? output/checks/p3-01-publication-preflight/compatibility.json",
+        "?? output/checks/p3-01-publication-preflight/contracts-before.json",
+        "?? output/checks/p3-01-publication-preflight/implementation-source.json",
+        "?? output/checks/p3-01-publication-preflight/independent-review.md",
+        "?? output/checks/p3-01-publication-preflight/independent-transport-review.md",
+        "?? output/checks/p3-01-publication-preflight/validation.json",
         "?? output/checks/p3-01-resource-management/contracts-before.json",
-        "?? output/checks/p3-01-resource-management/implementation-source.json",
-        "?? output/checks/p3-01-resource-management/independent-review.md",
-        "?? output/checks/p3-01-resource-management/independent-transport-review.md",
-        "?? output/checks/p3-01-resource-management/source-inspection-download-window.mjs",
-        "?? output/checks/p3-01-resource-management/validation.json",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -3753,33 +3757,35 @@
         "?? output/playwright/p2-06/viewer-1440.png",
         "?? output/playwright/p2-06/viewer-390.png",
         "?? output/playwright/p2-06/viewer-check.json",
-        "?? packages/application/src/resource-management-idempotency.ts",
-        "?? packages/application/src/resource-management-shared.ts",
-        "?? packages/application/src/resource-management-upload.ts",
-        "?? packages/application/src/resource-management.test.ts",
-        "?? packages/application/src/resource-management.ts",
-        "?? packages/contracts/src/resource-management-openapi.test.ts",
-        "?? packages/contracts/src/resource-management-openapi.ts",
-        "?? packages/contracts/src/resource-management.test.ts",
-        "?? packages/contracts/src/resource-management.ts",
-        "?? packages/media-image/src/source-inspection.test.ts",
-        "?? packages/media-image/src/source-inspection.ts",
-        "?? packages/persistence-port/src/resource-management.ts",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management-concurrency.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management-constraints.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management-fixtures.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management-time.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-resource-management.mjs",
-        "?? packages/persistence-postgres/src/resource-authorization-repository.ts",
-        "?? packages/persistence-postgres/src/resource-management-data.ts",
-        "?? packages/persistence-postgres/src/resource-management-repository.test.ts",
-        "?? packages/persistence-postgres/src/resource-management-repository.ts",
-        "?? packages/persistence-postgres/src/resource-media-eligibility-sql.ts",
-        "?? packages/persistence-postgres/src/resource-media-repository.ts",
-        "?? packages/persistence-postgres/src/resource-policy-repository.ts",
-        "?? packages/persistence-postgres/src/resource-processing-repository.ts",
-        "?? packages/persistence-postgres/src/resource-upload-repository.ts"
+        "?? packages/application/src/publication-preflight-fixtures.ts",
+        "?? packages/application/src/publication-preflight.test.ts",
+        "?? packages/application/src/publication-preflight.ts",
+        "?? packages/content/src/publication-preflight-assets.ts",
+        "?? packages/content/src/publication-preflight-bindings.ts",
+        "?? packages/content/src/publication-preflight-effective-time.ts",
+        "?? packages/content/src/publication-preflight-extensions.ts",
+        "?? packages/content/src/publication-preflight-fixtures.ts",
+        "?? packages/content/src/publication-preflight-media.test.ts",
+        "?? packages/content/src/publication-preflight-media.ts",
+        "?? packages/content/src/publication-preflight-reviews.ts",
+        "?? packages/content/src/publication-preflight-shared.ts",
+        "?? packages/content/src/publication-preflight.test.ts",
+        "?? packages/content/src/publication-preflight.ts",
+        "?? packages/contracts/src/publication-preflight-openapi.test.ts",
+        "?? packages/contracts/src/publication-preflight-openapi.ts",
+        "?? packages/contracts/src/publication-preflight.test.ts",
+        "?? packages/contracts/src/publication-preflight.ts",
+        "?? packages/persistence-port/src/publication-preflight.ts",
+        "?? packages/persistence-postgres/scripts/postgres-publication-preflight-cases.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-publication-preflight-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-publication-preflight-media.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-publication-preflight.mjs",
+        "?? packages/persistence-postgres/src/publication-preflight-candidate.ts",
+        "?? packages/persistence-postgres/src/publication-preflight-data.ts",
+        "?? packages/persistence-postgres/src/publication-preflight-evidence.ts",
+        "?? packages/persistence-postgres/src/publication-preflight-mapping.ts",
+        "?? packages/persistence-postgres/src/publication-preflight-repository.test.ts",
+        "?? packages/persistence-postgres/src/publication-preflight-repository.ts"
       ]
     }
   },
@@ -3896,7 +3902,7 @@
   "motionChecks": {
     "addToCart": {
       "buttonFocused": true,
-      "stateDelayMs": 48.59999990463257,
+      "stateDelayMs": 48.69999980926514,
       "liveAnnouncement": true,
       "pendingObserved": true,
       "countDelta": 1,
@@ -4482,7 +4488,7 @@
         200,
         200
       ],
-      "origin": "http://127.0.0.1:49848"
+      "origin": "http://127.0.0.1:54568"
     },
     {
       "environment": "staging",
@@ -4497,7 +4503,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:49997"
+      "origin": "http://127.0.0.1:54724"
     },
     {
       "environment": "production",
@@ -4512,7 +4518,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:50019"
+      "origin": "http://127.0.0.1:54746"
     }
   ],
   "scenarioResults": [
@@ -4529,91 +4535,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49848/_internal/design-foundations/en/motion"
+            "url": "http://127.0.0.1:54568/_internal/design-foundations/en/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49848/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:54568/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -4669,12 +4675,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 48,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 64,
+        "lcpMs": 100,
         "longTasks": [],
         "observers": {
           "event": {
@@ -4695,8 +4701,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.800000000000182,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -4859,109 +4865,109 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49848/_internal/design-foundations/vi/motion"
+            "url": "http://127.0.0.1:54568/_internal/design-foundations/vi/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49848/icon.svg?icon.3fse5yyfsi15o.svg"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
+            "url": "http://127.0.0.1:54568/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -5017,7 +5023,7 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 32,
+          "maxMs": 40,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
@@ -5103,97 +5109,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49848/_internal/design-foundations/th/motion"
+            "url": "http://127.0.0.1:54568/_internal/design-foundations/th/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2lg-l7asikrc3.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2lg-l7asikrc3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49848/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:54568/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -5209,7 +5215,7 @@
           {
             "height": 53.015625,
             "label": "เล่นการปรากฏของภาพหลักอีกครั้ง",
-            "width": 273.390625
+            "width": 271.390625
           },
           {
             "height": 48,
@@ -5224,22 +5230,22 @@
           {
             "height": 53.015625,
             "label": "เพิ่มของขวัญลงรถเข็นเพิ่มลงรถเข็นแล้ว",
-            "width": 185.140625
+            "width": 183.15625
           },
           {
             "height": 53.015625,
             "label": "รีเซ็ตการยืนยัน",
-            "width": 137.953125
+            "width": 136.34375
           },
           {
             "height": 53.015625,
             "label": "แสดงข้อผิดพลาดที่แก้ไขได้",
-            "width": 223.546875
+            "width": 218.265625
           },
           {
             "height": 53.015625,
             "label": "เล่นการยืนยันสำเร็จอีกครั้ง",
-            "width": 217.328125
+            "width": 215.9375
           }
         ],
         "document": {
@@ -5249,12 +5255,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 32,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 96,
+        "lcpMs": 80,
         "longTasks": [],
         "observers": {
           "event": {
@@ -5276,7 +5282,7 @@
         },
         "raf": {
           "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -5333,175 +5339,175 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49848/_internal/design-foundations/zh-CN/motion"
+            "url": "http://127.0.0.1:54568/_internal/design-foundations/zh-CN/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/0jyq8zfmzj_l3.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/0jyq8zfmzj_l3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49848/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:54568/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -5557,7 +5563,7 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 48,
+          "maxMs": 40,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
@@ -5583,7 +5589,7 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.700000000000045,
           "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
@@ -5745,235 +5751,241 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49848/_internal/design-foundations/ja/motion"
+            "url": "http://127.0.0.1:54568/_internal/design-foundations/ja/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/107x49qjcs-lo.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/107x49qjcs-lo.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-94-wght-normal.0uyd2p7w0xwi9.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-94-wght-normal.0uyd2p7w0xwi9.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-mobile.png"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-jp-118-wght-normal.0oiz-9fhkq7v6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49848/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:54568/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -6029,12 +6041,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 48,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 72,
+        "lcpMs": 80,
         "longTasks": [],
         "observers": {
           "event": {
@@ -6055,7 +6067,7 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.799999999999955,
           "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
@@ -6113,97 +6125,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49848/_internal/design-foundations/es/motion"
+            "url": "http://127.0.0.1:54568/_internal/design-foundations/es/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49848/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:54568/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -6259,7 +6271,7 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 32,
+          "maxMs": 40,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
@@ -6285,8 +6297,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.800000000000182,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -6449,97 +6461,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49848/_internal/design-foundations/en-XA/motion"
+            "url": "http://127.0.0.1:54568/_internal/design-foundations/en-XA/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49848/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:54568/icon.svg?icon.3fse5yyfsi15o.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           }
         ]
       },
@@ -6595,12 +6607,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 48,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 64,
+        "lcpMs": 80,
         "longTasks": [],
         "observers": {
           "event": {
@@ -6621,8 +6633,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.700000000000045,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -6681,91 +6693,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:49848/_internal/design-foundations/pt/motion"
+            "url": "http://127.0.0.1:54568/_internal/design-foundations/pt/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:49848/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:54568/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:49848/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:54568/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:49848/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:54568/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:49848/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:54568/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -6821,12 +6833,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 32,
+          "maxMs": 40,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 84,
+        "lcpMs": 64,
         "longTasks": [],
         "observers": {
           "event": {
@@ -6913,7 +6925,7 @@
       "path": "viewports/768x1024-th.png",
       "pixelHeight": 1024,
       "pixelWidth": 768,
-      "sha256": "e09f759ad25319d8899a5d64189bd324c396fe2dc89b56e2e9e470a41d0ec697"
+      "sha256": "4c74ed2577b828e445d2c45f45628fe03a575257f5a8eee8b41e70d707cec237"
     },
     {
       "path": "viewports/1024x768-zh-CN.png",
@@ -6925,7 +6937,7 @@
       "path": "viewports/1440x900-ja.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "8e61d9980d32bf8ec8b7a42e4a0d677a02e4e3812ee97a0eb7b8e5c0c67b7197"
+      "sha256": "6e9ecaa969ce06c0fd8453b60bf839f887da08b0a11b031dc443734239a30e5e"
     },
     {
       "path": "viewports/1920x1080-es.png",
@@ -6955,13 +6967,13 @@
       "path": "hero/390x844-mid.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "fa2e6920549801fae73e19420b477337f98930ed5971b3ea6fd52a5bc94655b5"
+      "sha256": "f8f862a92aa998338fec85a9471a0a5b06618e48d6f745ea19162cc3c05cb3e5"
     },
     {
       "path": "hero/390x844-end.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "383055592a2da62f334728ae66f6102c08b07fb5ac23bf8260cc33a1f73d2ac9"
+      "sha256": "277f3bb5bdfab76b5e56545e348e421dd8d8689ab9cf0b8b98040d4f7aa32044"
     },
     {
       "path": "hero/1440x900-start.png",
@@ -6991,13 +7003,13 @@
       "path": "motion/idol-keyboard-instant-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "94d94c78facbda3d99a90d6317830462e8dd738e20823a909c2b277b5efffe36"
+      "sha256": "fa811b95ce6a09c5a2a217f1314aedd71d2ef45f84f75960ef06b3f42b5bad5c"
     },
     {
       "path": "motion/idol-latest-wins-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "2605b3e0c10f90fb3ef5d0dc38ba7e5f9a2e583bf56c13feb4df407204da9ae3"
+      "sha256": "2ca409bc7a1f2a4bdf40c297199b3406d1a5c0af24fc32173027a920087db4b1"
     },
     {
       "path": "motion/success-end-1440.png",
@@ -7009,19 +7021,19 @@
       "path": "motion/idol-touch-opacity-390.png",
       "pixelHeight": 844,
       "pixelWidth": 390,
-      "sha256": "963e42c50b839ef2c0562e42f039901e0ac4876e0f0db95288d28b4d5a47cee4"
+      "sha256": "84e66060476d9c738363f04c33bb28f643efabbff8b6427fc6c40968e36d1aaa"
     },
     {
       "path": "motion/add-confirmed-390.png",
       "pixelHeight": 844,
       "pixelWidth": 390,
-      "sha256": "6eabb2a204f7ec173a9c62108a9307b2c12b896ee5023613b7722c67571000e1"
+      "sha256": "bb12e022473d29a537b63942eb3507d2e86751940d4517278b3b25bbd3910ce9"
     },
     {
       "path": "reduced-motion/390x844.png",
-      "pixelHeight": 2751,
+      "pixelHeight": 2725,
       "pixelWidth": 390,
-      "sha256": "6ffc7a0f84f5f46e683d0b336fc298d2750ecb51b05d08fee3fecbf8f169e8a8"
+      "sha256": "60357115086f715982bd75e4a6d4ae771e5aae2d5ded8a841ac0a519c05a1de4"
     },
     {
       "path": "reduced-motion/1440x900.png",

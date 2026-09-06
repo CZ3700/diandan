@@ -1,3 +1,4 @@
+export * from "./publication-preflight.js";
 import type {
   AppendOutboxEventCommand,
   AppendOutboxEventResponse,

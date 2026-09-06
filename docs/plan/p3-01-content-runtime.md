@@ -78,9 +78,13 @@
 - [x] 来源版权进入 processed master 的真实数据库资格；公开 loader 对每行必须取得明确 true 证明。版权、metadata/译文审核、处理成功与公开发布仍独立。
 - [x] 最终全仓 check、S.U.P.E.R、源码指纹与本地检查点归档；专项证据见 `output/checks/p3-01-resource-management/README.md`，详细计划见 `docs/plan/p3-01-resource-management.md`。
 
-### 4C 后续必需工作
+### 4C-1 发布前检查（2026-09-06 本地验收通过）
 
-- [ ] 完整 revision 验证：结合基础审核、别名/详情独立证据、七语言完整度和媒体资格，阻止新版本作者自审新稿或借用不相关审核；双端页面排版继续由 P3-02/03 实现。
+- [x] 五类内容的受权、只读检查作为有界子检查点已交付，计划见 `docs/plan/p3-01-publication-preflight.md`，证据见 `output/checks/p3-01-publication-preflight/README.md`。基于真实数据库正文与审批、全部七语言、媒体原始来源和当前资格返回阻塞字段；`ready` 只描述读取时刻，不能授权后续发布。保持旧0013发布封锁。当前paused对象按paused检查，其余未归档草稿/active按active所需可售条件检查。
+
+### 4C-2 后续必需工作
+
+- [ ] 在实际validate/publish/rollback事务重跑完整revision检查，并原子写入合法生命周期与发布证据；结合基础审核、别名/详情独立证据、七语言完整度和媒体资格，不能把4C-1的旧ready报告当授权。双端页面排版继续由P3-02/03实现。
 艺人稳定身份与商品/variant/适用关系/价格簿/库存等管理能力分别由 P3-02/P3-03 连同所需 Application/API 端到端实现，不能把这些任务限定成只有 UI；4B 的政策与媒体管理接口不替代这些业务管理能力。
 - [ ] 单对象公开内容接口使用版本化扩展 DTO；与真实发布证据一起验收，只读取满足完整发布证据的当前 head，缺译/失效不得静默回退旧 description（由 3B 移至本检查点）。
 - [ ] 发布同一事务写 audit/publication/head 与七 locale outbox；订阅按 event type 分流，content consumer 不能把无关支付事件送入死信。

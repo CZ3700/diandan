@@ -1,4 +1,8 @@
 import {
+  registerPublicationPreflightRoute,
+  type PublicationPreflightRouteDependencies,
+} from "./publication-preflight-route.js";
+import {
   registerResourceManagementRoute,
   type ResourceManagementRouteDependencies,
 } from "./resource-management-route.js";
@@ -49,6 +53,8 @@ export type ApiLifecycleResource = Readonly<{
 export type CreateApiApplicationOptions = Readonly<{
   resourceManagementRoute?: ResourceManagementRouteDependencies;
   resourceManagementRuntime?: ApiLifecycleResource;
+  publicationPreflightRoute?: PublicationPreflightRouteDependencies;
+  publicationPreflightRuntime?: ApiLifecycleResource;
   baseContentRoute?: BaseContentRouteDependencies;
   baseContentRuntime?: ApiLifecycleResource;
   logger?: StructuredLogger;
@@ -71,6 +77,7 @@ function registerApiLifecycle(
     | "API admin content"
     | "API content authoring"
     | "API base content"
+    | "API publication preflight"
     | "API resource management",
 ): void {
   if (runtime === undefined) {
@@ -143,6 +150,16 @@ export async function createApiApplication(
     registerResourceManagementRoute(
       adapter.getInstance(),
       options.resourceManagementRoute,
+    );
+  registerApiLifecycle(
+    adapter,
+    options.publicationPreflightRuntime,
+    "API publication preflight",
+  );
+  if (options.publicationPreflightRoute !== undefined)
+    registerPublicationPreflightRoute(
+      adapter.getInstance(),
+      options.publicationPreflightRoute,
     );
   registerApiLifecycle(adapter, options.baseContentRuntime, "API base content");
   if (options.baseContentRoute !== undefined)

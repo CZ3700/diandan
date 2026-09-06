@@ -1,3 +1,4 @@
+import { createPublicationPreflightRepository } from "./publication-preflight-repository.js";
 import { createContentAuthoringRepository } from "./content-authoring-repository.js";
 import { createResourceManagementRepository } from "./resource-management-repository.js";
 import { createResourceAuthorizationRepository } from "./resource-authorization-repository.js";
@@ -12,6 +13,8 @@ import { publicMediaUrlSchema } from "@fan-support/contracts";
 import { createCatalogDirectoryRepository } from "./catalog-directory-repository.js";
 import type {
   JsonValue,
+  PublicationPreflightTransactionManager,
+  PublicationPreflightRepositories,
   ResourceManagementTransactionManager,
   ResourceManagementRepositories,
   BaseContentTransactionManager,
@@ -60,6 +63,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly publicationPreflightTransactionManager: PublicationPreflightTransactionManager;
   readonly resourceManagementTransactionManager: ResourceManagementTransactionManager;
   readonly baseContentTransactionManager: BaseContentTransactionManager;
   readonly contentAuthoringTransactionManager: ContentAuthoringTransactionManager;
@@ -267,6 +271,17 @@ export function createPostgresPersistenceWithPoolFactory(
         ),
       }),
     });
+  const publicationPreflightRunner =
+    createTransactionRunner<PublicationPreflightRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createAdminAuthorizationRepository(client, scope),
+        publicationPreflight: createPublicationPreflightRepository(
+          client,
+          scope,
+        ),
+      }),
+    });
   const baseContentRunner = createTransactionRunner<BaseContentRepositories>({
     acquireClient: async () => pool.connect(),
     createRepositories: (client, scope) => ({
@@ -466,6 +481,19 @@ export function createPostgresPersistenceWithPoolFactory(
     },
   };
   return {
+    publicationPreflightTransactionManager: {
+      async runInPublicationPreflightTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return publicationPreflightRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
     resourceManagementTransactionManager: {
       async runInResourceManagementTransaction(work) {
         if (lifecycle !== "OPEN")

@@ -1,3 +1,4 @@
+export * from "./publication-preflight-composition.js";
 export {
   createTestAdminContentComposition,
   type TestAdminContentCompositionOptions,

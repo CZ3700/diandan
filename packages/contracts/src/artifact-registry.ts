@@ -1,4 +1,11 @@
 import {
+  publicationPreflightCommandSchema,
+  publicationPreflightRequestSchema,
+  publicationPreflightResponseSchema,
+  publicationPreflightContextSchema,
+  publicationPreflightContextResponseSchema,
+} from "./publication-preflight.js";
+import {
   mediaSourceInspectionCommandSchema,
   mediaSourceInspectionReceiptSchema,
   mediaSourceInspectionResponseSchema,
@@ -1443,6 +1450,31 @@ const registrations = [
     name: "ContentAuthoringRequest",
     audience: "internal",
     schema: contentAuthoringRequestSchema,
+  },
+  {
+    name: "PublicationPreflightCommand",
+    audience: "admin-http",
+    schema: publicationPreflightCommandSchema,
+  },
+  {
+    name: "PublicationPreflightRequest",
+    audience: "internal",
+    schema: publicationPreflightRequestSchema,
+  },
+  {
+    name: "PublicationPreflightResponse",
+    audience: "admin-http",
+    schema: publicationPreflightResponseSchema,
+  },
+  {
+    name: "PublicationPreflightContext",
+    audience: "internal",
+    schema: publicationPreflightContextSchema,
+  },
+  {
+    name: "PublicationPreflightContextResponse",
+    audience: "internal",
+    schema: publicationPreflightContextResponseSchema,
   },
   {
     name: "BaseContentReviewContext",
