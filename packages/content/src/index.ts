@@ -19,3 +19,4 @@ export * from "./content-authoring.js";
 export * from "./base-content.js";
 export * from "./publication-manifest.js";
 export * from "./published-content.js";
+export * from "./published-gift-commerce.js";

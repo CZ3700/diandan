@@ -1,3 +1,14 @@
+import { createGiftCommerceAuthorizationRepository } from "./gift-commerce-authorization-repository.js";
+import { createGiftCommerceCatalogRepository } from "./gift-commerce-gift-repository.js";
+import { createGiftCommercePricingRepository } from "./gift-commerce-pricing-repository.js";
+import { createGiftCommerceInventoryRepository } from "./gift-commerce-inventory-repository.js";
+import { createPublishedGiftCommerceRepository } from "./published-gift-commerce-repository.js";
+import type {
+  GiftCommerceRepositories,
+  GiftCommerceTransactionManager,
+  PublishedGiftCommerceTransactionManager,
+  PublishedGiftCommerceRepository,
+} from "@fan-support/persistence-port";
 import { createAdminPreviewMediaRepository } from "./admin-preview-media-repository.js";
 import type {
   AdminPreviewMediaTransactionManager,
@@ -100,6 +111,8 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly giftCommerceTransactionManager: GiftCommerceTransactionManager;
+  readonly publishedGiftCommerceTransactionManager: PublishedGiftCommerceTransactionManager;
   readonly adminPreviewMediaTransactionManager: AdminPreviewMediaTransactionManager;
   readonly translationTransferTransactionManager: TranslationTransferTransactionManager;
   readonly translationWorkspaceTransactionManager: TranslationWorkspaceTransactionManager;
@@ -436,6 +449,37 @@ export function createPostgresPersistenceWithPoolFactory(
         adminPreviewMedia: createAdminPreviewMediaRepository(client, scope),
       }),
     });
+  const giftCommerceRunner = createTransactionRunner<GiftCommerceRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      authorization: createGiftCommerceAuthorizationRepository(client, scope),
+      contentAuthorization: createAdminAuthorizationRepository(client, scope),
+      contentAuthoring: createContentAuthoringRepository(client, scope),
+      catalog: createGiftCommerceCatalogRepository(
+        client,
+        scope,
+        options?.catalogPublicMediaBaseUrl,
+      ),
+      pricing: createGiftCommercePricingRepository(client, scope),
+      inventory: createGiftCommerceInventoryRepository(client, scope),
+      idempotency: createIdempotencyRepository(
+        createPostgresQueryLayer(client as NodePgClient),
+        scope,
+      ),
+    }),
+  });
+  const publishedGiftCommerceRunner = createTransactionRunner<
+    Readonly<{ publishedGiftCommerce: PublishedGiftCommerceRepository }>
+  >({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      publishedGiftCommerce: createPublishedGiftCommerceRepository(
+        client,
+        scope,
+        options!.catalogPublicMediaBaseUrl!,
+      ),
+    }),
+  });
   let lifecycle: "OPEN" | "CLOSING" | "CLOSED" = "OPEN";
   let closePromise: Promise<void> | undefined;
 
@@ -645,6 +689,35 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return adminPreviewMediaRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    giftCommerceTransactionManager: {
+      async runInGiftCommerceTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return giftCommerceRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    publishedGiftCommerceTransactionManager: {
+      async runInPublishedGiftCommerceTransaction(work) {
+        if (
+          lifecycle !== "OPEN" ||
+          options?.catalogPublicMediaBaseUrl === undefined
+        )
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return publishedGiftCommerceRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
           work,
         );

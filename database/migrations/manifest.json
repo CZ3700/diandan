@@ -190,6 +190,16 @@
         "up": "4af6c85ffb883740fa4a5003eaf3afb920b573430121d01f6514fc1954944067",
         "down": "23d7f313f31e3b45a56be38e3ec2ada2810d2dfef5ddfb6f346f4b4fe4148d0f"
       }
+    },
+    {
+      "version": "0020",
+      "name": "gift-commerce",
+      "up": "database/migrations/0020_gift-commerce.up.sql",
+      "down": "database/migrations/0020_gift-commerce.down.sql",
+      "sha256": {
+        "up": "181324185661d1975f60f8931fb4791997659943f06fcb05b2fbad8ced090204",
+        "down": "9f8eff0d2b50130ef1c9d583adc3e97f4155bafe75b668fe221e53fe843acc89"
+      }
     }
   ]
 }

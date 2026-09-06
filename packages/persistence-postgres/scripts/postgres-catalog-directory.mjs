@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 import assert from "node:assert/strict";
+import { randomUUID } from "node:crypto";
+import { performance } from "node:perf_hooks";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
@@ -19,6 +21,7 @@ import {
   withEphemeralPostgres,
 } from "../dist/index.js";
 import { seedAdminCatalogOperator } from "./postgres-admin-catalog-fixtures.mjs";
+import { seedGiftCommerceAuthority } from "./postgres-gift-commerce-fixtures.mjs";
 import { rebuildIdolSearchProjections } from "../dist/catalog-search-projection.js";
 import {
   seedCatalogDirectoryFixtures,
@@ -61,6 +64,19 @@ async function verify(clientConfig) {
     );
     await observer.query(
       "INSERT INTO public.idols(id,handle,status,accepting_gifts) VALUES ('62000000-0000-4000-8000-000000000001','unpublished-performer','draft',false)",
+    );
+    await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "up", targetVersion: "0019" },
+    });
+    // This historical book has a scheduled row inside a wider book window.
+    // Seed it before commerce receipts become mandatory, then exercise current reads.
+    const temporal = await seedTemporalCatalogPrices(
+      observer,
+      fixture.editor,
+      fixture.gifts[2],
+      10,
     );
     await runMigrations({
       clientConfig,
@@ -138,6 +154,37 @@ async function verify(clientConfig) {
       assert.ok(condition, message);
       assertions++;
     };
+
+    const beforePrice = success(
+      await gifts({ market: "CATALOG_TIME", availability: "PURCHASABLE" }),
+      "scheduled price before activation",
+    );
+    check(
+      beforePrice.totalItems === 0,
+      "future price is not purchasable early",
+    );
+    const activationWaitStarted = performance.now();
+    while (true) {
+      const now = await observer.query(
+        "SELECT clock_timestamp() >= $1::timestamptz AS active",
+        [temporal.effectiveAt],
+      );
+      if (now.rows[0].active) break;
+      assert.ok(
+        performance.now() - activationWaitStarted < 15000,
+        "the historical price reaches its fixed activation time within a bounded wait",
+      );
+      await delay(10);
+    }
+    const afterPrice = success(
+      await gifts({ market: "CATALOG_TIME", availability: "PURCHASABLE" }),
+      "scheduled price after activation",
+    );
+    check(
+      afterPrice.totalItems === 1 &&
+        afterPrice.catalogVersion !== beforePrice.catalogVersion,
+      "effective price boundary changes the catalog version without a database write",
+    );
 
     const collected = [],
       first = success(await idols(), "first artist window");
@@ -435,47 +482,14 @@ async function verify(clientConfig) {
       "active nontracked item requires no fabricated stock balance",
     );
 
-    await observer.query(
-      "INSERT INTO public.gifts(id,handle,status) VALUES ('62000000-0000-4000-8000-000000000002','unpublished-gift','draft')",
-    );
-    check(
-      success(
-        await idols({ q: "unpublished-performer" }),
-        "draft artist search",
-      ).items.length === 0 &&
-        success(await gifts(), "draft gift filter").totalItems === 120,
-      "unpublished operational rows never enter the public directory",
-    );
-
-    const temporal = await seedTemporalCatalogPrices(
-      observer,
-      fixture.editor,
-      fixture.gifts[2],
-    );
-    const beforePrice = success(
-      await gifts({ market: "CATALOG_TIME", availability: "PURCHASABLE" }),
-      "scheduled price before activation",
-    );
-    check(
-      beforePrice.totalItems === 0,
-      "future price is not purchasable early",
-    );
-    await delay(
-      Math.max(0, Date.parse(temporal.effectiveAt) - Date.now()) + 10,
-    );
-    const afterPrice = success(
-      await gifts({ market: "CATALOG_TIME", availability: "PURCHASABLE" }),
-      "scheduled price after activation",
-    );
-    check(
-      afterPrice.totalItems === 1 &&
-        afterPrice.catalogVersion !== beforePrice.catalogVersion,
-      "effective price boundary changes the catalog version without a database write",
-    );
-
     const immutableBefore = await observer.query(
       "SELECT jsonb_agg(jsonb_build_array(id,source_hash,translated_from_source_hash,display_name) ORDER BY id) AS translations FROM public.idol_revision_translations",
     );
+    await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0020" },
+    });
     await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -536,9 +550,9 @@ async function verify(clientConfig) {
       "SELECT count(*)::integer AS count, max(version) AS version FROM public.schema_migrations",
     );
     check(
-      migrationHead.rows[0].count === 19 &&
-        migrationHead.rows[0].version === "0019",
-      "data-bearing up/down/up restores all 19 migrations through admin catalog",
+      migrationHead.rows[0].count === 20 &&
+        migrationHead.rows[0].version === "0020",
+      "data-bearing up/down/up restores all 20 migrations through gift commerce",
     );
     check(
       (await idols()).code === "CATALOG_UNAVAILABLE",
@@ -556,6 +570,47 @@ async function verify(clientConfig) {
     );
     assert.deepEqual(immutableAfter.rows, immutableBefore.rows);
     assertions++;
+
+    const commerceCredentials = await seedGiftCommerceAuthority(observer, {
+      actorId: fixture.editor,
+    });
+    const createdGift =
+      await persistence.giftCommerceTransactionManager.runInGiftCommerceTransaction(
+        async ({ authorization, catalog }) => {
+          const authorized = success(
+            await authorization.authorize({
+              schemaVersion: 1,
+              sessionTokenDigest: commerceCredentials.sessionTokenDigest,
+              csrfTokenDigest: commerceCredentials.csrfTokenDigest,
+              permission: "gift.manage",
+              locales: [],
+            }),
+            "draft gift current authority",
+          );
+          return catalog.write({
+            schemaVersion: 1,
+            requestId: randomUUID(),
+            principal: authorized.principal,
+            command: {
+              schemaVersion: 1,
+              action: "CREATE_GIFT",
+              handle: "unpublished-gift",
+              expectedBaseVersion: 0,
+              reasonCode: "CATALOG_FIXTURE",
+              idempotencyKey: randomUUID(),
+            },
+          });
+        },
+      );
+    success(createdGift, "audited draft gift creation");
+    check(
+      success(
+        await idols({ q: "unpublished-performer" }),
+        "draft artist search",
+      ).items.length === 0 &&
+        success(await gifts(), "draft gift filter").totalItems === 120,
+      "unpublished operational rows never enter the public directory",
+    );
 
     const operateCatalog = await seedAdminCatalogOperator(
       observer,

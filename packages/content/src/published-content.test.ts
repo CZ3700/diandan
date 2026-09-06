@@ -16,6 +16,7 @@ import {
   computePublicationManifestHash,
 } from "./publication-manifest.js";
 import { projectPublishedContent } from "./published-content.js";
+import { projectPublishedGiftCommerce } from "./published-gift-commerce.js";
 import { validatePreflightAssets } from "./publication-preflight-assets.js";
 
 function fixture(
@@ -106,6 +107,86 @@ function fixture(
   });
 }
 describe("published content projection", () => {
+  test("gift classification binds the published revision and omits internal profile authors", () => {
+    const context = fixture("GIFT");
+    const owner = context.publication.target.owner;
+    if (owner.kind !== "GIFT") throw new Error("gift fixture");
+    const profile = {
+      schemaVersion: 1,
+      publicationId: context.publication.publicationId,
+      giftId: owner.giftId,
+      giftRevisionId: context.publication.target.revisionId,
+      manifestHash: context.publication.manifestHash,
+      profile: {
+        schemaVersion: 1,
+        giftId: owner.giftId,
+        giftRevisionId: context.publication.target.revisionId,
+        giftKind: "WISH",
+        profileHash: "a".repeat(64),
+        createdBy: context.canonical.snapshot.createdBy,
+        createdAt: context.canonical.snapshot.createdAt,
+      },
+    };
+    const result = projectPublishedGiftCommerce({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      context,
+      profileVersion: 2,
+      profile,
+    });
+    expect(result).toMatchObject({
+      outcome: "SUCCESS",
+      kind: "PUBLISHED_GIFT_COMMERCE",
+      classification: { kind: "CLASSIFIED", giftKind: "WISH" },
+    });
+    expect(JSON.stringify(result)).not.toMatch(
+      /createdBy|reviewerId|sessionId|support_intent/u,
+    );
+    expect(
+      projectPublishedGiftCommerce({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        context,
+        profileVersion: 2,
+        profile: { ...profile, manifestHash: "b".repeat(64) },
+      }),
+    ).toMatchObject({ code: "CONTENT_UNAVAILABLE" });
+    expect(
+      projectPublishedGiftCommerce({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        context,
+        profile: null,
+      }),
+    ).toMatchObject({ code: "CONTENT_UNAVAILABLE" });
+    expect(
+      projectPublishedGiftCommerce({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        context,
+        profileVersion: 2,
+        profile: null,
+      }),
+    ).toMatchObject({ code: "CONTENT_UNAVAILABLE" });
+    expect(
+      projectPublishedGiftCommerce({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        context,
+        profileVersion: 1,
+        profile,
+      }),
+    ).toMatchObject({ code: "CONTENT_UNAVAILABLE" });
+    expect(
+      projectPublishedGiftCommerce({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        context,
+        profileVersion: 1,
+        profile: null,
+      }),
+    ).toMatchObject({ classification: { kind: "LEGACY" } });
+  });
   test("published parents retain pinned historical metadata while new publication stays strict", () => {
     const input = fixture("IDOL");
     const candidate = input.canonical.candidate;

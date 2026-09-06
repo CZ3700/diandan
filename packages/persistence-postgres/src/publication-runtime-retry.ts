@@ -33,7 +33,7 @@ export async function retryPublicationPurge(
   if (successor) return baseContentFailure("CONFLICT");
   const [time] = await draftRows(
     client,
-    `SELECT gen_random_uuid() AS result_id,gen_random_uuid() AS job_id,gen_random_uuid() AS audit_id,${utcTimestampSql("GREATEST(clock_timestamp(),transaction_timestamp(),$1::timestamptz,$2::timestamptz)")} AS now`,
+    `SELECT gen_random_uuid() AS result_id,gen_random_uuid() AS job_id,gen_random_uuid() AS audit_id,${utcTimestampSql("GREATEST(transaction_timestamp(),$1::timestamptz,$2::timestamptz)")} AS now`,
     [prior["updated_at"], input.principal.authorizedAt],
   );
   if (!time) throw new Error("Purge retry event time unavailable");

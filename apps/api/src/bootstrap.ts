@@ -1,4 +1,12 @@
 import {
+  registerGiftCommerceRoute,
+  type GiftCommerceRouteDependencies,
+} from "./gift-commerce-route.js";
+import {
+  registerPublishedGiftCommerceRoute,
+  type PublishedGiftCommerceRouteDependencies,
+} from "./published-gift-commerce-route.js";
+import {
   registerAdminSessionRoute,
   type AdminSessionRouteDependencies,
 } from "./admin-session-route.js";
@@ -73,6 +81,9 @@ export type ApiLifecycleResource = Readonly<{
 }>;
 
 export type CreateApiApplicationOptions = Readonly<{
+  giftCommerceRoute?: GiftCommerceRouteDependencies;
+  giftCommerceRuntime?: ApiLifecycleResource;
+  publishedGiftCommerceRoute?: PublishedGiftCommerceRouteDependencies;
   adminSessionRoute?: AdminSessionRouteDependencies;
   adminSessionRuntime?: ApiLifecycleResource;
   adminCatalogRoute?: AdminCatalogRouteDependencies;
@@ -107,6 +118,7 @@ function registerApiLifecycle(
   name:
     | "API admin session"
     | "API admin workspace"
+    | "API gift commerce"
     | "API reliable events"
     | "API catalog directory"
     | "API admin content"
@@ -158,6 +170,18 @@ export async function createApiApplication(
     options.adminSessionRuntime,
     "API admin session",
   );
+  registerApiLifecycle(
+    adapter,
+    options.giftCommerceRuntime,
+    "API gift commerce",
+  );
+  if (options.giftCommerceRoute)
+    registerGiftCommerceRoute(adapter.getInstance(), options.giftCommerceRoute);
+  if (options.publishedGiftCommerceRoute)
+    registerPublishedGiftCommerceRoute(
+      adapter.getInstance(),
+      options.publishedGiftCommerceRoute,
+    );
   registerApiLifecycle(
     adapter,
     options.adminWorkspaceRuntime,

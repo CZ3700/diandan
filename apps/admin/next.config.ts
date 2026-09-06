@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(import.meta.dirname, "../.."),
   poweredByHeader: false,
   reactStrictMode: true,
+  devIndicators: false,
 };
 
 export default nextConfig;

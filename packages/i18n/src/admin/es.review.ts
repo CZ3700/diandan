@@ -3,12 +3,12 @@ export default {
   namespace: "admin",
   locale: "es",
   sourceHash:
-    "a345d46890fac309104fc48c613803d05791c11fdca784bae5a6861cf01cfa26",
+    "842b2d4b5da64f93612dc57951bad9b0b5644aad82cf8615beee1d1197cbc176",
   translationHash:
-    "dbac01680caf0512845cfdb36cb9734cd5cd13348241a8d4db15c11e8028208e",
+    "86dd06ff6272fc3b209b39e1c1a7169c020846592d4994c94f44cf59e0aca48e",
   translator: "Codex",
   reviewer: null,
   status: "DRAFT",
   approvedCommit: null,
-  templateVersion: "p3-02-admin-v1",
+  templateVersion: "p3-03-admin-v1",
 } as const;

@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { persistGiftPublicationProfile } from "./gift-commerce-gift-profile.js";
 import {
   SUPPORTED_LOCALES,
   sourceHashSchema,
@@ -143,12 +144,7 @@ export async function writePublicationRuntime(
     base = AUTHORING_TABLES[snapshot.target.kind];
   if ((head ? Number(head["version"]) : 0) !== command.expectedVersion)
     return baseContentFailure("STALE_VERSION");
-  const time = await publicationTime(
-      client,
-      input,
-      canonical.evaluatedAt,
-      head,
-    ),
+  const time = await publicationTime(client, input, canonical, head),
     publishing = command.action !== "VALIDATE";
   const [session] = await draftRows(
     client,
@@ -269,6 +265,13 @@ export async function writePublicationRuntime(
     VALUES(${publicationValues.map((_, index) => `$${index + 1}`).join(",")})`,
     publicationValues,
   );
+  if (snapshot.target.kind === "GIFT")
+    await persistGiftPublicationProfile(client, {
+      publicationId: time.publicationId,
+      giftId: snapshot.target.giftId,
+      giftRevisionId: snapshot.revisionId,
+      manifestHash: input.manifestHash,
+    });
   if (head)
     await client.query(
       `UPDATE public.${table.heads} SET publication_id=$2,${table.parent}=$3,version=version+1,updated_at=$4 WHERE id=$1 AND version=$5`,

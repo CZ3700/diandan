@@ -48,6 +48,7 @@ export function adminFailureStatus(code: string): number {
     case "INVALID_CONTENT":
       return 400;
     case "CONTENT_UNAVAILABLE":
+    case "COMMERCE_UNAVAILABLE":
       return 503;
     default:
       return 409;

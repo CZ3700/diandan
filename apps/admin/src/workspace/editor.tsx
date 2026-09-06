@@ -9,7 +9,10 @@ import {
 } from "@fan-support/contracts";
 import { AdminClientError } from "./client";
 import { ContentFields, StructureFields } from "./content-form";
-import { LocaleSelect, Status, TextArea } from "./components";
+import { LocaleSelect, Select, Status, TextArea } from "./components";
+import { GiftDetailsEditor } from "./gift-details-editor";
+import { GiftDetailReview } from "./gift-detail-review";
+import { GiftCommercePanel } from "./gift-commerce-panel";
 import { previewHref } from "./state";
 import { Publishing } from "./publishing";
 import { MediaTools } from "./media-tools";
@@ -46,6 +49,12 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
     context,
     setDraft,
     setStructureDirty,
+    setDetailsDirty,
+    gift,
+    giftKind,
+    detailReview,
+    detailReviewError,
+    setGiftKind,
     setDirty,
     setFields,
     setAliases,
@@ -88,6 +97,7 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
           label={t("contentLanguage")}
           value={locale}
           onChange={changeLocale}
+          disabled={busy || identityDirty}
           allowed={!revisionId ? ["en"] : session.localeScopes}
         />
       </header>
@@ -97,7 +107,7 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
           {errors.length > 0 && <p>{errors.join(" · ")}</p>}
           <Button
             variant="quiet"
-            disabled={busy}
+            disabled={busy || identityDirty}
             onClick={() => {
               if (!dirty || window.confirm(t("discard"))) refresh();
             }}
@@ -115,6 +125,45 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
         <p role="status">{t("loading")}</p>
       ) : (
         <>
+          {gift && props.commerce && (
+            <GiftCommercePanel
+              client={client}
+              gift={gift}
+              context={props.commerce}
+              locale={props.initialLocale}
+              t={t}
+              reason={reason}
+              busy={busy || dirty}
+              run={run}
+              refresh={refresh}
+              onDirty={setIdentityDirty}
+            />
+          )}
+          {gift && (
+            <Select
+              label={t("giftType")}
+              value={giftKind}
+              disabled={readOnly || identityDirty}
+              onChange={(value) => {
+                setGiftKind(value as typeof giftKind);
+                setDirty(true);
+              }}
+            >
+              {(
+                [
+                  ["VIRTUAL", "kindVirtual"],
+                  ["PHYSICAL", "kindPhysical"],
+                  ["WISH", "kindWish"],
+                  ["MERCHANDISE", "kindMerchandise"],
+                  ["OTHER", "kindOther"],
+                ] as const
+              ).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {t(label)}
+                </option>
+              ))}
+            </Select>
+          )}
           {owner.status === "archived" && (
             <p className="admin-notice">{t("archiveHint")}</p>
           )}
@@ -133,7 +182,9 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
                 <button
                   key={cell.locale}
                   type="button"
-                  disabled={cell.access === "RESTRICTED" || busy}
+                  disabled={
+                    cell.access === "RESTRICTED" || busy || identityDirty
+                  }
                   aria-pressed={locale === cell.locale}
                   onClick={() => changeLocale(cell.locale)}
                 >
@@ -154,7 +205,7 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
               <ContentFields
                 fields={fields}
                 t={t}
-                disabled={readOnly}
+                disabled={readOnly || identityDirty}
                 errors={errors}
                 onChange={(next) => {
                   setFields(next);
@@ -205,7 +256,7 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
                 client={client}
                 locale={locale}
                 t={t}
-                disabled={readOnly}
+                disabled={readOnly || identityDirty}
                 onChange={(next) => {
                   setDraft(next);
                   setStructureDirty(true);
@@ -282,6 +333,40 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
               )}
             </details>
           )}
+          {(draft?.kind === "GIFT" || detailReview || detailReviewError) && (
+            <details open={!revisionId || !draft}>
+              <summary>{t("details")}</summary>
+              {detailReviewError && (
+                <p role="alert" className="admin-error">
+                  {detailReviewError}
+                </p>
+              )}
+              {draft?.kind === "GIFT" && (
+                <GiftDetailsEditor
+                  details={draft.details}
+                  locale={locale}
+                  client={client}
+                  t={t}
+                  disabled={readOnly || identityDirty}
+                  onChange={(details) => {
+                    setDraft({ ...draft, details });
+                    setDetailsDirty(true);
+                    setDirty(true);
+                  }}
+                />
+              )}
+              {detailReview && (
+                <GiftDetailReview
+                  review={detailReview}
+                  actorId={session.actorId}
+                  permissions={session.permissions}
+                  blocked={busy || dirty || identityDirty}
+                  t={t}
+                  onReview={(action) => run(() => reviewAliases(action))}
+                />
+              )}
+            </details>
+          )}
           <Field
             id="change-reason"
             label={t("reason")}
@@ -293,7 +378,12 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
           />
           <div className="admin-save-bar">
             <Button
-              disabled={readOnly || (!dirty && Boolean(revisionId))}
+              disabled={
+                readOnly ||
+                identityDirty ||
+                (!dirty && Boolean(revisionId)) ||
+                (gift !== null && gift.variants.length === 0)
+              }
               loading={busy}
               onClick={() => run(save, t("saved"))}
             >
@@ -306,6 +396,7 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
                   disabled={
                     busy ||
                     dirty ||
+                    identityDirty ||
                     !context ||
                     context.audit.review.status !== "DRAFT" ||
                     !canEdit
@@ -319,6 +410,7 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
                   disabled={
                     busy ||
                     dirty ||
+                    identityDirty ||
                     !context ||
                     context.audit.review.status !== "IN_REVIEW" ||
                     !canReview ||
@@ -344,9 +436,9 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => {
-                      if (dirty || busy) e.preventDefault();
+                      if (dirty || busy || identityDirty) e.preventDefault();
                     }}
-                    aria-disabled={dirty || busy}
+                    aria-disabled={dirty || busy || identityDirty}
                   >
                     {t(
                       viewport === "desktop"
@@ -362,7 +454,7 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
                 <div className="admin-actions">
                   <Button
                     variant="secondary"
-                    disabled={busy || dirty}
+                    disabled={busy || dirty || identityDirty}
                     onClick={() => run(exportPackage)}
                   >
                     {t("export")}
@@ -372,7 +464,7 @@ export function ContentEditor(props: Parameters<typeof useContentEditor>[0]) {
                     <input
                       type="file"
                       accept="application/json,.json"
-                      disabled={busy || dirty || !canEdit}
+                      disabled={busy || dirty || identityDirty || !canEdit}
                       onChange={(event) => {
                         const file = event.target.files?.[0];
                         event.target.value = "";

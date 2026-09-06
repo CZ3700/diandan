@@ -58,6 +58,7 @@ import {
 } from "./publication-runtime-http-media.mjs";
 import { withIndependentPublicationMedia } from "./publication-runtime-http-fixtures.mjs";
 import { createPublicationHttpCache } from "./publication-runtime-http-cache.mjs";
+import { publicationSessionDiagnostic } from "./publication-runtime-http-session-diagnostic.mjs";
 
 const workspaceRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -150,6 +151,7 @@ async function verify(clientConfig, s3) {
       return {
         async connect() {
           const connection = await pool.connect();
+          let pendingPublicationReceipt;
           return {
             async query(sql, values) {
               const sqlText = typeof sql === "string" ? sql : sql.text;
@@ -175,7 +177,28 @@ async function verify(clientConfig, s3) {
                     : { ...sql, text: statementText };
               if (priorClockObservation) purgeClockProbeQueries++;
               try {
-                return await connection.query(statement, values);
+                if (sqlText === "COMMIT" && pendingPublicationReceipt)
+                  notePurge({
+                    phase: "PUBLICATION_SESSION_BEFORE_COMMIT",
+                    ...(await publicationSessionDiagnostic(
+                      connection,
+                      pendingPublicationReceipt,
+                    )),
+                  });
+                const result = await connection.query(statement, values);
+                if (
+                  sqlText.startsWith(
+                    "INSERT INTO public.content_publication_receipts(",
+                  )
+                )
+                  pendingPublicationReceipt = (values ?? sql.values)?.[0];
+                if (
+                  sqlText.startsWith("BEGIN") ||
+                  sqlText === "COMMIT" ||
+                  sqlText === "ROLLBACK"
+                )
+                  pendingPublicationReceipt = undefined;
+                return result;
               } catch (error) {
                 const phase = sqlText.includes("content_purge_jobs")
                   ? "JOB_SQL"

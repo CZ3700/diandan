@@ -1,4 +1,36 @@
 import {
+  publishedGiftCommerceReadCommandSchema,
+  publishedGiftCommerceResponseSchema,
+  publishedGiftCommerceContextResponseSchema,
+} from "./published-gift-commerce.js";
+import {
+  giftCommerceFailureSchema,
+  giftCommerceAuthorizationCommandSchema,
+  giftCommerceAuthorizationResponseSchema,
+  giftCommerceAccessContextCommandSchema,
+  giftCommerceAccessContextResponseSchema,
+  giftCommerceContentAuthoringSchema,
+  giftCommerceReadCommandSchema,
+  giftCommerceMutationCommandSchema,
+  giftCommerceCommandSchema,
+  giftCommerceRequestSchema,
+  giftCommerceWriteCommandSchema,
+  giftCommerceReceiptReadCommandSchema,
+  giftCommerceVariantSchema,
+  giftCommerceGiftSchema,
+  giftCommercePriceBookSchema,
+  giftCommercePriceSchema,
+  giftCommerceRawContextSchema,
+  giftCommerceContextResponseSchema,
+  giftCommerceReadResponseSchema,
+  giftCommerceMutationSchema,
+  giftCommerceResponseSchema,
+} from "./gift-commerce.js";
+import {
+  giftRevisionProfileSchema,
+  giftPublicationProfileSchema,
+} from "./gift-commerce-profile.js";
+import {
   adminSessionCommandSchema,
   adminSessionRequestSchema,
   adminSessionResponseSchema,
@@ -2088,6 +2120,136 @@ const registrations = [
     name: "AdminPreviewMediaContextResponse",
     audience: "internal",
     schema: adminPreviewMediaContextResponseSchema,
+  },
+  {
+    name: "GiftCommerceFailure",
+    audience: "admin-http",
+    schema: giftCommerceFailureSchema,
+  },
+  {
+    name: "GiftCommerceAuthorizationCommand",
+    audience: "internal",
+    schema: giftCommerceAuthorizationCommandSchema,
+  },
+  {
+    name: "GiftCommerceAuthorizationResponse",
+    audience: "internal",
+    schema: giftCommerceAuthorizationResponseSchema,
+  },
+  {
+    name: "GiftCommerceAccessContextCommand",
+    audience: "internal",
+    schema: giftCommerceAccessContextCommandSchema,
+  },
+  {
+    name: "GiftCommerceAccessContextResponse",
+    audience: "internal",
+    schema: giftCommerceAccessContextResponseSchema,
+  },
+  {
+    name: "GiftCommerceContentAuthoring",
+    audience: "admin-http",
+    schema: giftCommerceContentAuthoringSchema,
+  },
+  {
+    name: "GiftCommerceReadCommand",
+    audience: "admin-http",
+    schema: giftCommerceReadCommandSchema,
+  },
+  {
+    name: "GiftCommerceMutationCommand",
+    audience: "admin-http",
+    schema: giftCommerceMutationCommandSchema,
+  },
+  {
+    name: "GiftCommerceCommand",
+    audience: "admin-http",
+    schema: giftCommerceCommandSchema,
+  },
+  {
+    name: "GiftCommerceRequest",
+    audience: "admin-http",
+    schema: giftCommerceRequestSchema,
+  },
+  {
+    name: "GiftCommerceWriteCommand",
+    audience: "internal",
+    schema: giftCommerceWriteCommandSchema,
+  },
+  {
+    name: "GiftCommerceReceiptReadCommand",
+    audience: "internal",
+    schema: giftCommerceReceiptReadCommandSchema,
+  },
+  {
+    name: "GiftCommerceVariant",
+    audience: "admin-http",
+    schema: giftCommerceVariantSchema,
+  },
+  {
+    name: "GiftCommerceGift",
+    audience: "admin-http",
+    schema: giftCommerceGiftSchema,
+  },
+  {
+    name: "GiftCommercePriceBook",
+    audience: "admin-http",
+    schema: giftCommercePriceBookSchema,
+  },
+  {
+    name: "GiftCommercePrice",
+    audience: "admin-http",
+    schema: giftCommercePriceSchema,
+  },
+  {
+    name: "GiftCommerceRawContext",
+    audience: "internal",
+    schema: giftCommerceRawContextSchema,
+  },
+  {
+    name: "GiftCommerceContextResponse",
+    audience: "admin-http",
+    schema: giftCommerceContextResponseSchema,
+  },
+  {
+    name: "GiftCommerceReadResponse",
+    audience: "admin-http",
+    schema: giftCommerceReadResponseSchema,
+  },
+  {
+    name: "GiftCommerceMutation",
+    audience: "admin-http",
+    schema: giftCommerceMutationSchema,
+  },
+  {
+    name: "GiftCommerceResponse",
+    audience: "admin-http",
+    schema: giftCommerceResponseSchema,
+  },
+  {
+    name: "GiftRevisionProfile",
+    audience: "internal",
+    schema: giftRevisionProfileSchema,
+  },
+  {
+    name: "GiftPublicationProfile",
+    audience: "internal",
+    schema: giftPublicationProfileSchema,
+  },
+  {
+    name: "PublishedGiftCommerceReadCommand",
+    audience: "public-http",
+    schema: publishedGiftCommerceReadCommandSchema,
+  },
+  {
+    name: "PublishedGiftCommerceResponse",
+    audience: "public-http",
+    schema: publishedGiftCommerceResponseSchema,
+  },
+  {
+    name: "PublishedGiftCommerceContextResponse",
+    audience: "internal",
+    schema: publishedGiftCommerceContextResponseSchema,
   },
 ] as const;
 

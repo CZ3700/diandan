@@ -14,7 +14,7 @@
 |:--|:--|:--|:--|:--|
 | P3-01 | DONE | Codex `/root` | P1-02、P1-04、P1-05、P1-06 | 全部内容运行时检查点通过；真实发布/回退、七语言公开读取、持久purge，见4C-2验收记录 |
 | P3-02 | DONE | Codex `/root` | P2-03、P3-01 | 七语言自研Admin、真实PG/API/媒体/审核/预览/发布与回退；完整check、双端浏览器和独立复核通过，见P3-02验收记录 |
-| P3-03 | READY | — | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
+| P3-03 | DONE | Codex `/root` | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
 | P3-04 | READY | — | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
 | P3-05 | PENDING | — | P2-04、P3-01、P3-04 | 礼物分页/筛选/价格排序/URL恢复/七语言详情/选择偶像/政策/错误状态 |
 | P3-06 | PENDING | — | P3-02/03/04/05 | 七语言 i18n/SEO/cache/运营/性能验收 |
@@ -30,6 +30,46 @@
 ## Phase 退出证据
 
 已于 2026-09-05 依据用户明确视觉接受与继续开发指令解锁；尚未达到退出门禁。
+
+## P3-03 执行登记（2026-09-07）
+
+- Owner：Codex `/root`，Lane C唯一executor；开始2026-09-06T20:09:55.313873+00:00，基线本地`cdf2ab24a46eb914c4e82b456d6e630886cfed7b`，分支`codex/p3-03-gift-commerce`。用户明确继续下一阶段；依赖P2-03/P3-01完成，P3-02亦已DONE，Phase3 ACTIVE。本轮只领取P3-03；dependency-graph波次是原保守排期，当前用户与MASTER批准的独立Lane C继续顺序优先，未领取依赖P3-04的P3-05。
+- 新需求：虚拟、实体、心愿、周边及其他礼物；粉丝付款后工作室准备/采购并转交艺人。礼物类型与现货/按单准备采购/预售策略独立；部分无库存可持续售卖，不能把0库存误作售罄、用虚构超大库存或把虚拟礼物当余额/自动送达。MVP继续internal_to_idol，不增粉丝地址收集或众筹。
+- 输出：自研Admin礼物稳定身份/类型/状态、规格与适用艺人、受控详情块/七语言编辑审核/媒体预览发布、价格簿及不可变调价/回退、库存流水与库存策略保护；所需管理合同/Application/Port/实际PG/API/BFF一起实现。
+- 边界：旧344合同roots及历史发布/订单解码保持兼容，新能力采用独立versioned扩展；当前会话/MFA/RBAC/CSRF/幂等/乐观锁/审计同事务。现有内容、媒体和发布证明复用，价格和库存不进入译文成为第二真相源。正式OIDC/人工译审/品牌素材/PSP/云/staging/生产按后续门，不在本轮宣称完成。
+- 所有权：root拥有规范/ADR/任务计划/进度/Git、共享exports/registry/生成物/根锁文件以及Next UI/i18n；auth_persistence_audit先只读PG与库存价格保护；content_review_audit先只读Domain/合同/发布兼容；admin_transport先只读API/BFF/真实联合验收。合同冻结后登记独占源码和唯一迁移owner，再并行编写失败测试与最小实现。
+- 验证：先失败测试，覆盖无库存按单重复可售、TRACKED零库存拒绝和并发预占保护、暂停/恢复、策略切换、幂等/版本冲突/撤权/审计回滚；有效价格唯一、调价与回退不改旧价格/订单；礼物七语言缺失/STALE/自审/媒体无权阻断。受影响tests→format/lint/typecheck/build→真实PG/HTTP/S3与完整check；390×844/1440×900全七语、键盘/错误/reduced-motion/320px/reflow；独立规范与质量复核、S.U.P.E.R十项、源码和证据冻结。
+- 风险：R-06并发/错价/库存漂移、R-08内容构图、R-10权限审计、R-17语言与商业上下文隔离；新增礼物类型的履约说明也受R-13约束。
+- Git：按用户既有决定只本地检查点提交，最后统一推送；不push/merge，不改254项历史/诊断未跟踪产物。
+
+## P3-03 验收记录（2026-09-07）
+
+- 状态：DONE，全部本地验收门通过，Lane C 释放。Phase 3 仍 ACTIVE（3/6）；全局 20 DONE / 1 READY / 28 PENDING，共 49；下一 P3-04。
+- 交付：礼物身份/分类/状态、规格库存策略、适用艺人搜索及分页、受控图文块与七语言详情、履约说明、独立审核/预览/发布、完整价格簿版本/发布/历史回退、库存流水及原因审计。虚拟/实体/心愿/周边/其他与限量库存/按单准备/预售分别配置，全部由工作室转交艺人；按单准备无库存身份，可重复接单，但仍受真实发布/适用关系/价格/状态约束。
+- 历史与边界：20 迁移/153 表；344 个旧 schema roots 逐项深比较不变，追加 26 个，共 370。新礼物 profile 绑定精确 revision/publication/原 manifest，显式 legacy marker 保留历史读取；新 profile 缺失不允许降级。已有库存/交易历史的策略不能原位修改；余额不得小于预占，不能编辑 reserved。回退不重写旧价格版本或倒退作者版本号。
+- 后台与权限：Next → 固定 BFF → Application → Port → PostgreSQL；当前 session/MFA/RBAC/CSRF 与幂等、版本、业务写入、收据、审计在同一事务。英语详情变化后六语言 STALE；内容编辑依真实变更语言授权，礼物类型依全局 gift.manage。仅日语审核且无 commerce 权限的账号仍能读取实际英文源与自己的详情并独立批准，其他语言及商业接口继续拒绝。
+- 真实数据库：新商业链 117 断言，另有 4 约束边界及 6 价格回退断言；并发改价/库存同版本仅一个成功、密封价格不可删除、故障审计全回滚并可用同键恢复。旧目录 307、旧父版本兼容 64、作者链 211、发布运行链 447、管理目录 258 断言通过。旧迁移降级实测执行到正确 SQL：20→19→18 后 18 拒绝删除发布历史；有新 profile 历史时 20 本身拒绝删除，不以错误 confirmVersion 代替历史保护。
+- 时间边界：发布事件早读、preflight 早读、manual retry、正常旧未来 head 下 VALIDATE 共四类确定性 RED→GREEN，30 断言；仅保留稳定事务时间与真实历史，VALIDATE 不推进 head。新保存桥接及真实 App 的内容授权传值也精确复现后修复，保留商业 principal 和全部内容/语言检查。原实时有效期、MFA、权限、租约及既有 SQL guard 不变。早期自然 503/23514 未捕获精确触发瞬间，不将这些受控探针冒充其已确认根因。
+- HTTP 与浏览器：默认协议模式 1658 断言/512 setup 请求；最终完整 UI 1703 断言/512 setup 请求（额外浏览器 BFF 请求未纳入 setup 计数），真实 PostgreSQL/TLS S3/图片 worker/Next/Chrome。七语言 390×844 与 1440×900，18 张最终 PNG（17 张稳定页面，en-created.png 为保存成功后刷新态）；4 axe 均零 violations/零 incomplete，5 项 320px/720px 重排无横向溢出，键盘焦点及 Enter 预览实际 blob 解码。实际保存发布价格、调整库存、按单准备不出现库存输入、创建礼物/规格、dirty 取消、英语独立审核及绑定当前 revision 的六 STALE、日语专属审核均通过。截图为 fullPage，底部粘性操作条按当时 viewport 显示，不把截图中覆盖的片段误作实际交互阻挡。
+- 视觉与回归：保留黑金后台；统一左右字段顺序、可选英文源空槽、手机语言矩阵列宽和焦点滚动空间，关闭开发器件遮挡。root 与非作者复看中日葡页面及预览。共享 P2-04（16 场景/18 PNG/10 axe/原生 Chrome 200%）和 P2-05（8 场景/22 PNG/3 axe/正常与 reduced motion）重新运行成功。本次 Admin 的 720px 为等效重排，不冒充原生缩放；未新增真机测试。
+- 独立复核：商业授权/事务、SQL价格与库存、礼物 profile/公开读取、Admin 状态和单语言审核、旧迁移兼容及最后时间补丁均非作者 ACCEPT；code-simplifier 收敛保留功能/合同。Application/scope 40 tests、Admin 68 tests 通过，最终完整门禁通过，详见下一条。
+- 最终统一检查：`pnpm check` exit 0；typecheck/test 各 58/58（54 cached），build 35/35（30 cached），31 个 package 出口经 Node 实际 import；真实 PostgreSQL、HTTP、TLS S3/worker、架构/格式/lint 全部通过。secrets 通过，Next 自动环境声明经 typegen 恢复；1,219 个实现/测试/配置/迁移/合同输入在最终门禁前后逐项一致，SHA256 `d2cd9b2044a0965628e684df24df3a824a3866986dd668a089c73dda0940e320`。清单排除 docs/output 与自动生成 Next 环境声明，记录见 `implementation-source-final.json` / `validation.json`；不是零缓存验收。
+- 证据：`output/checks/p3-03-gift-commerce/README.md`、`compatibility-final.json`、`independent-review.md`、`transport-README.md`、`transport-review.md`；页面与无障碍记录 `output/playwright/p3-03-gift-commerce/`。运营入口 `docs/operations/gift-commerce.md`。本轮只有 TEST 本地身份/合成素材，七份界面译文 manifest 仍 DRAFT；正式 OIDC/人工译审/资产批准、实际支付及转交、云 CDN/staging/生产均留后续门禁。
+
+### P3-03 S.U.P.E.R 十项
+
+| # | 检查 | 结果 |
+|:--|:--|:--|
+| 1 | 文件职责 | PASS：身份/profile、价格读写、库存流水、授权、传输、表单模型/展示分别负责 |
+| 2 | 函数职责 | PASS：授权范围、编排、结果验证、历史时间与界面更新独立处理 |
+| 3 | 单向依赖 | PASS：BFF/Route → Application → Domain/Port → Adapter，无浏览器直读数据库 |
+| 4 | 无循环 | PASS：workspace/领域/adapter门与全仓类型单测预检通过 |
+| 5 | 合同边界 | PASS：26 个独立 versioned roots；旧 344 定义深度相同 |
+| 6 | 可序列化 | PASS：公开/私有请求、响应、receipt、profile 均经 schema；内部 adapter 回调不进入合同 |
+| 7 | 配置注入 | PASS：生产来源/市场/币种外部配置；样板身份和素材仅限 TEST，样式消费现有令牌 |
+| 8 | 显式依赖 | PASS：workspace 依赖与测试 i18n 入口声明，锁文件同步，无新增业务 SaaS |
+| 9 | 可替换 | PASS：内容、商业、公开目录及外部存储由独立 Port 注入，无第二业务真相源 |
+| 10 | 验证完成 | PASS：完整 check、真实 PG/API/S3、七语言双端浏览器、secrets/diff、1,219 输入一致与非作者复核；外部环境和缓存范围明确 |
 
 ## P3-02 执行登记（2026-09-07）
 

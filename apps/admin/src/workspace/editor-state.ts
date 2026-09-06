@@ -14,6 +14,10 @@ import {
   type ContentAuthoringSnapshot,
   type SupportedLocale,
   type TranslationWorkspaceResponse,
+  type GiftCommerceGift,
+  type GiftCommercePermission,
+  type GiftKind,
+  type GiftCommerceContextResponse,
   baseContentTargetSchema,
 } from "@fan-support/contracts";
 import {
@@ -26,8 +30,43 @@ import {
   editableFields,
   replaceAliasLocale,
   translationChanges,
+  reconcileVariantLabels,
+  savedRevisionId,
 } from "./editor-model";
+import { callCommerce } from "./gift-commerce-client";
+import { newGiftContent } from "./gift-editor-model";
+import {
+  loadGiftDetailReview,
+  sendGiftDetailReview,
+  type GiftDetailReviewData,
+} from "./gift-detail-review";
 type Workspace = Extract<TranslationWorkspaceResponse, { outcome: "SUCCESS" }>;
+export async function readEditorGift(
+  client: AdminClient,
+  giftId: string,
+  revisionId: string | null,
+  locale: SupportedLocale,
+): Promise<GiftCommerceGift | null> {
+  try {
+    const result = await callCommerce(client, {
+      schemaVersion: 1,
+      action: "READ_GIFT",
+      giftId,
+      locale,
+      ...(revisionId ? { revisionId } : {}),
+    });
+    if (result.kind !== "GIFT") throw new AdminClientError("INVALID_RESPONSE");
+    return result.value;
+  } catch (error) {
+    if (
+      revisionId &&
+      error instanceof AdminClientError &&
+      error.code === "FORBIDDEN"
+    )
+      return null;
+    throw error;
+  }
+}
 function newContent(
   kind: AdminCatalogOwner["target"]["kind"],
 ): ContentAuthoringContent | null {
@@ -94,10 +133,13 @@ function cleanOptionalFields(kind: string, fields: Record<string, unknown>) {
     Object.entries(fields).filter(
       ([key, value]) =>
         !(
-          value === "" &&
-          ((kind === "MEDIA_METADATA" &&
-            (key === "title" || key === "caption")) ||
-            (kind === "HOMEPAGE" && key === "announcement"))
+          (value === "" &&
+            ((kind === "MEDIA_METADATA" &&
+              (key === "title" || key === "caption")) ||
+              (kind === "HOMEPAGE" && key === "announcement"))) ||
+          (value === "" &&
+            kind === "GIFT" &&
+            (key === "subtitle" || key === "safetyNotice"))
         ),
     ),
   );
@@ -109,6 +151,7 @@ export function useContentEditor({
   t,
   initialLocale,
   onRefresh,
+  commercePermissions = [],
 }: {
   client: AdminClient;
   session: AdminSession;
@@ -118,6 +161,8 @@ export function useContentEditor({
   onDirty: (value: boolean) => void;
   onRefresh: () => void;
   onOpen: (owner: AdminCatalogOwner) => void;
+  commercePermissions?: readonly GiftCommercePermission[];
+  commerce?: GiftCommerceContextResponse | null;
 }) {
   const [locale, setLocale] = useState<SupportedLocale>(
     session.localeScopes.includes(initialLocale)
@@ -138,6 +183,13 @@ export function useContentEditor({
   const [aliases, setAliases] = useState("");
   const [aliasesDirty, setAliasesDirty] = useState(false);
   const [structureDirty, setStructureDirty] = useState(false);
+  const [detailsDirty, setDetailsDirty] = useState(false);
+  const [gift, setGift] = useState<GiftCommerceGift | null>(null);
+  const [giftKind, setGiftKind] = useState<GiftKind>("OTHER");
+  const [detailReview, setDetailReview] = useState<GiftDetailReviewData | null>(
+    null,
+  );
+  const [detailReviewError, setDetailReviewError] = useState("");
   const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -147,7 +199,10 @@ export function useContentEditor({
   const [reason, setReason] = useState("CONTENT_UPDATE");
   const [refreshIndex, setRefreshIndex] = useState(0);
   const canEdit =
-    session.permissions.includes("content.edit") && owner.status !== "archived";
+    session.permissions.includes("content.edit") &&
+    owner.status !== "archived" &&
+    (owner.target.kind !== "GIFT" ||
+      commercePermissions.includes("gift.manage"));
   const canReview = session.permissions.includes("content.translation.review");
   const canPublish = session.permissions.includes("content.publish");
   const contentTarget = useMemo(
@@ -171,8 +226,12 @@ export function useContentEditor({
     setDirty(false);
     setAliasesDirty(false);
     setStructureDirty(false);
+    setDetailsDirty(false);
+    setGift(null);
+    setDetailReview(null);
+    setDetailReviewError("");
     setErrors([]);
-    if (!revisionId) {
+    if (!revisionId && owner.target.kind !== "GIFT") {
       const content = newContent(owner.target.kind);
       setDraft(content);
       setFields(content?.translations[0]?.fields ?? {});
@@ -181,6 +240,30 @@ export function useContentEditor({
       return;
     }
     void (async () => {
+      let giftSnapshot: GiftCommerceGift | null = null;
+      if (owner.target.kind === "GIFT") {
+        const result = await readEditorGift(
+          client,
+          owner.target.giftId,
+          revisionId,
+          locale,
+        );
+        if (!current) return;
+        setGift(result);
+        giftSnapshot = result;
+        const profile = result?.selectedProfile;
+        setGiftKind(
+          profile?.kind === "PROFILE" ? profile.profile.giftKind : "OTHER",
+        );
+        if (!revisionId) {
+          if (!result) throw new AdminClientError("FORBIDDEN");
+          const content = newGiftContent(result.variants);
+          setDraft(content);
+          setFields(content.translations[0]!.fields);
+          setLocale("en");
+          return;
+        }
+      }
       const result = await client.call(
         "translation-read",
         {
@@ -191,7 +274,25 @@ export function useContentEditor({
       );
       if (!current) return;
       setWorkspace(result);
-      setFields(editableFields(result.source, result.selected?.content.fields));
+      const editable = editableFields(
+        result.source,
+        result.selected?.content.fields,
+      );
+      setFields(
+        giftSnapshot && locale === "en"
+          ? reconcileVariantLabels(editable, giftSnapshot.variants)
+          : editable,
+      );
+      if (owner.target.kind === "GIFT" && revisionId) {
+        try {
+          const detail = await loadGiftDetailReview(client, revisionId, locale);
+          if (!current) return;
+          setDetailReview(detail);
+        } catch (error) {
+          if (current) setDetailReviewError(errorText(error, t));
+        }
+        if (!current) return;
+      }
       try {
         const full = await client.call(
           "authoring-read",
@@ -273,18 +374,37 @@ export function useContentEditor({
           },
         ],
       });
-      result = await client.call(
-        "authoring-create",
-        {
-          schemaVersion: 1,
-          target: owner.target,
-          expectedVersion: owner.authoringVersion,
-          reasonCode: reason,
-          content,
-        },
-        contentAuthoringResponseSchema,
-        true,
-      );
+      result =
+        owner.target.kind === "GIFT" && gift
+          ? await callCommerce(client, {
+              schemaVersion: 1,
+              action: "SAVE_GIFT_CONTENT",
+              expectedBaseVersion: gift.gift.version,
+              giftKind,
+              reasonCode: reason,
+              authoring: {
+                schemaVersion: 1,
+                action: "CREATE",
+                target: owner.target,
+                expectedVersion: gift.authoringVersion,
+                content: content as Extract<
+                  ContentAuthoringContent,
+                  { kind: "GIFT" }
+                >,
+              },
+            })
+          : await client.call(
+              "authoring-create",
+              {
+                schemaVersion: 1,
+                target: owner.target,
+                expectedVersion: owner.authoringVersion,
+                reasonCode: reason,
+                content,
+              },
+              contentAuthoringResponseSchema,
+              true,
+            );
     } else {
       if (!workspace?.editability.canSave)
         throw new AdminClientError("FORBIDDEN");
@@ -310,26 +430,47 @@ export function useContentEditor({
               ),
             }
           : {}),
+        ...(detailsDirty && draft?.kind === "GIFT"
+          ? { details: draft.details }
+          : {}),
       });
-      result = await client.call(
-        "authoring-copy",
-        {
-          schemaVersion: 1,
-          target: owner.target,
-          sourceRevisionId: revisionId,
-          expectedVersion: workspace.authoringHeadVersion,
-          expectedSourceHash: workspace.contentHash,
-          reasonCode: reason,
-          changes,
-        },
-        contentAuthoringResponseSchema,
-        true,
-      );
+      result =
+        owner.target.kind === "GIFT" && gift
+          ? await callCommerce(client, {
+              schemaVersion: 1,
+              action: "SAVE_GIFT_CONTENT",
+              expectedBaseVersion: gift.gift.version,
+              giftKind,
+              reasonCode: reason,
+              authoring: {
+                schemaVersion: 1,
+                action: "COPY",
+                target: owner.target,
+                sourceRevisionId: revisionId,
+                expectedVersion: workspace.authoringHeadVersion,
+                expectedSourceHash: workspace.contentHash,
+                changes: changes as Extract<typeof changes, { kind: "GIFT" }>,
+              },
+            })
+          : await client.call(
+              "authoring-copy",
+              {
+                schemaVersion: 1,
+                target: owner.target,
+                sourceRevisionId: revisionId,
+                expectedVersion: workspace.authoringHeadVersion,
+                expectedSourceHash: workspace.contentHash,
+                reasonCode: reason,
+                changes,
+              },
+              contentAuthoringResponseSchema,
+              true,
+            );
     }
     if (result.kind !== "MUTATION")
       throw new AdminClientError("INVALID_RESPONSE");
     setDirty(false);
-    setRevisionId(result.resultId);
+    setRevisionId(savedRevisionId(result));
     refresh();
     setMessage(t("saved"));
   };
@@ -352,6 +493,12 @@ export function useContentEditor({
     refresh();
   };
   const reviewAliases = async (action: "submit" | "approve") => {
+    if (owner.target.kind === "GIFT") {
+      if (!detailReview) throw new AdminClientError("INVALID_COMMAND");
+      await sendGiftDetailReview(client, detailReview, action, reason);
+      refresh();
+      return;
+    }
     const target = { kind: "IDOL_ALIASES", revisionId };
     const response = await client.call(
       "alias-review-read",
@@ -434,6 +581,12 @@ export function useContentEditor({
     context,
     setDraft,
     setStructureDirty,
+    setDetailsDirty,
+    gift,
+    giftKind,
+    detailReview,
+    detailReviewError,
+    setGiftKind,
     setDirty,
     setFields,
     setAliases,

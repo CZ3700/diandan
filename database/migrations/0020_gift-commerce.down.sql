@@ -1,0 +1,67 @@
+LOCK TABLE public.gift_identity_receipts,public.gift_variant_receipts,public.gift_revision_profiles,public.gift_content_profile_receipts,public.gift_publication_profiles,public.gifts,public.gift_variants,public.gift_revisions,public.content_publications IN ACCESS EXCLUSIVE MODE;
+DO $$ BEGIN
+ IF EXISTS(SELECT 1 FROM public.gift_identity_receipts) OR EXISTS(SELECT 1 FROM public.gift_variant_receipts) OR EXISTS(SELECT 1 FROM public.gift_revision_profiles) OR EXISTS(SELECT 1 FROM public.gift_content_profile_receipts) OR EXISTS(SELECT 1 FROM public.gift_publication_profiles) OR EXISTS(SELECT 1 FROM public.gift_revisions WHERE profile_version=2) THEN RAISE EXCEPTION 'gift classification and identity history cannot be downgraded' USING ERRCODE='55000'; END IF;
+END; $$;
+DROP TRIGGER gift_identity_guard ON public.gifts;
+DROP TRIGGER gift_identity_no_truncate ON public.gifts;
+DROP TRIGGER gift_identity_change_receipt ON public.gifts;
+DROP TRIGGER gift_variant_change_guard ON public.gift_variants;
+DROP TRIGGER gift_variant_no_truncate ON public.gift_variants;
+DROP TRIGGER gift_variant_change_receipt ON public.gift_variants;
+DROP TRIGGER gift_variant_eligibility_receipt ON public.gift_variant_idol_eligibility;
+DROP TRIGGER gift_variant_eligibility_no_update ON public.gift_variant_idol_eligibility;
+DROP TRIGGER gift_variant_eligibility_no_truncate ON public.gift_variant_idol_eligibility;
+DROP TRIGGER gift_profile_version_guard ON public.gift_revisions;
+DROP TRIGGER gift_revision_profile_required ON public.gift_revisions;
+DROP TRIGGER gift_publication_profile_required ON public.content_publications;
+DROP TABLE public.gift_publication_profiles,public.gift_content_profile_receipts,public.gift_revision_profiles,public.gift_variant_receipts,public.gift_identity_receipts;
+DROP FUNCTION public.assert_gift_identity_prior();
+DROP FUNCTION public.guard_gift_identity();
+DROP FUNCTION public.assert_gift_identity_change();
+DROP FUNCTION public.assert_gift_identity_receipt();
+DROP FUNCTION public.assert_gift_variant_prior();
+DROP FUNCTION public.assert_gift_variant_receipt();
+DROP FUNCTION public.guard_gift_variant_change();
+DROP FUNCTION public.assert_gift_variant_change();
+DROP FUNCTION public.guard_gift_profile_version();
+DROP FUNCTION public.assert_gift_revision_profile();
+DROP FUNCTION public.assert_gift_content_profile_prior();
+DROP FUNCTION public.assert_gift_content_profile_receipt();
+DROP FUNCTION public.assert_gift_publication_profile();
+DROP FUNCTION public.gift_profile_hash(uuid,uuid,text,uuid,timestamptz);
+ALTER TABLE public.gift_revisions DROP COLUMN profile_version;
+LOCK TABLE public.gift_price_revision_receipts,public.gift_price_publication_receipts,public.gift_inventory_location_receipts,public.gift_inventory_adjustment_receipts,public.price_books,public.price_book_publications,public.inventory_ledger,public.inventory_locations IN ACCESS EXCLUSIVE MODE;
+DO $$ BEGIN
+ IF EXISTS(SELECT 1 FROM public.gift_price_revision_receipts) OR EXISTS(SELECT 1 FROM public.gift_price_publication_receipts)
+ OR EXISTS(SELECT 1 FROM public.gift_inventory_location_receipts) OR EXISTS(SELECT 1 FROM public.gift_inventory_adjustment_receipts)
+ OR EXISTS(SELECT 1 FROM public.price_books WHERE commerce_proof_version=2) OR EXISTS(SELECT 1 FROM public.price_book_publications WHERE commerce_proof_version=2) THEN
+ RAISE EXCEPTION 'gift commerce history cannot be downgraded' USING ERRCODE='55000'; END IF;
+END; $$;
+DROP TRIGGER gift_commerce_quote_lock ON public.checkout_quote_lines;
+DROP TRIGGER gift_commerce_order_lock ON public.order_items;
+DROP TRIGGER gift_commerce_reservation_lock ON public.inventory_reservations;
+DROP TRIGGER gift_commerce_variant_policy_guard ON public.gift_variants;
+DROP TRIGGER gift_commerce_price_book_payload_guard ON public.price_books;
+DROP TRIGGER gift_commerce_price_payload_guard ON public.prices;
+DROP TRIGGER gift_price_book_managed_proof ON public.price_books;
+DROP TRIGGER gift_price_publication_managed_proof ON public.price_book_publications;
+DROP TRIGGER gift_inventory_managed_adjustment ON public.inventory_ledger;
+DROP TRIGGER gift_inventory_location_managed ON public.inventory_locations;
+DROP TABLE public.gift_inventory_adjustment_receipts,public.gift_inventory_location_receipts,public.gift_price_publication_receipts,public.gift_price_revision_receipts;
+DROP FUNCTION public.assert_gift_inventory_location_managed();
+DROP FUNCTION public.assert_gift_inventory_location_receipt();
+DROP FUNCTION public.assert_gift_inventory_managed_adjustment();
+DROP FUNCTION public.assert_gift_inventory_adjustment_receipt();
+DROP FUNCTION public.guard_gift_inventory_adjustment_prior();
+DROP FUNCTION public.assert_gift_price_publication_receipt();
+DROP FUNCTION public.assert_gift_price_managed_proof();
+DROP FUNCTION public.assert_gift_price_revision_receipt();
+DROP FUNCTION public.guard_gift_commerce_price_payload();
+DROP FUNCTION public.gift_commerce_price_hash(uuid,bigint);
+DROP FUNCTION public.gift_commerce_price_payload(uuid,bigint);
+DROP FUNCTION public.guard_gift_commerce_inventory_identity();
+DROP FUNCTION public.guard_gift_commerce_trade_reference();
+DROP FUNCTION public.gift_commerce_variant_policy_locked(uuid);
+ALTER TABLE public.price_books DROP COLUMN commerce_proof_version;
+ALTER TABLE public.price_book_publications DROP COLUMN commerce_proof_version;
+DROP FUNCTION public.assert_gift_commerce_audit(uuid,uuid,uuid,text,text,uuid,uuid,text,timestamptz,text,timestamptz);

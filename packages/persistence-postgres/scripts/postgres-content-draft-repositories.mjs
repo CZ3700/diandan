@@ -45,11 +45,42 @@ await withEphemeralPostgres(async (clientConfig) => {
     );
   try {
     const fixtures = await seedCatalogDirectoryFixtures(observer, 2);
+    // The legacy extension repository operates on unsealed historical draft parents.
+    // New gift revisions require authoring/profile evidence and include extensions before sealing.
+    const legacyGiftDrafts = [];
+    for (let index = 0; index < 4; index++) {
+      const id = randomUUID();
+      await observer.query(
+        `INSERT INTO gift_revisions(id,gift_id,revision,lifecycle,category,delivery_minimum,delivery_maximum,delivery_unit,requires_safety_notice,shipping_mode,created_by)
+        VALUES($1,$2,$3,'DRAFT','OTHER',1,2,'DAY',false,'internal_to_idol',$4)`,
+        [id, fixtures.gifts[0].id, index + 2, fixtures.editor],
+      );
+      legacyGiftDrafts.push(id);
+    }
     await runMigrations({
       clientConfig,
       workspaceRoot,
       command: { direction: "up" },
     });
+    equal(
+      (
+        await observer.query(
+          "SELECT max(version) AS version FROM public.schema_migrations",
+        )
+      ).rows[0].version,
+      "0020",
+      "legacy extension repository runs against the current gift commerce schema",
+    );
+    equal(
+      (
+        await observer.query(
+          "SELECT count(*)::integer AS count FROM public.gift_revisions WHERE id=ANY($1::uuid[]) AND profile_version=1 AND lifecycle='DRAFT'",
+          [legacyGiftDrafts],
+        )
+      ).rows[0].count,
+      4,
+      "the four extension parents are explicit migrated legacy drafts",
+    );
     const old = async () =>
       (
         await observer.query(`SELECT jsonb_build_object(
@@ -60,20 +91,21 @@ await withEphemeralPostgres(async (clientConfig) => {
     const before = await old();
     let revisionNumber = 1;
     async function draft(kind) {
+      if (kind === "GIFT") {
+        const legacyId = legacyGiftDrafts.shift();
+        assert.ok(legacyId, "each detail case has its own historical draft");
+        return legacyId;
+      }
+      const previousStep = step;
+      step = `legacy parent insert ${kind}`;
       const id = randomUUID();
       const revision = ++revisionNumber;
-      if (kind === "IDOL")
-        await observer.query(
-          `INSERT INTO idol_revisions(id,idol_id,revision,lifecycle,theme_accent,hero_text_tone,display_order,created_by)
+      await observer.query(
+        `INSERT INTO idol_revisions(id,idol_id,revision,lifecycle,theme_accent,hero_text_tone,display_order,created_by)
         VALUES($1,$2,$3,'DRAFT','#D4AF37','light',0,$4)`,
-          [id, fixtures.idols[0].id, revision, fixtures.editor],
-        );
-      else
-        await observer.query(
-          `INSERT INTO gift_revisions(id,gift_id,revision,lifecycle,category,delivery_minimum,delivery_maximum,delivery_unit,requires_safety_notice,shipping_mode,created_by)
-        VALUES($1,$2,$3,'DRAFT','OTHER',1,2,'DAY',false,'internal_to_idol',$4)`,
-          [id, fixtures.gifts[0].id, revision, fixtures.editor],
-        );
+        [id, fixtures.idols[0].id, revision, fixtures.editor],
+      );
+      step = previousStep;
       return id;
     }
     const metadata = fixtures.media[0];
@@ -402,8 +434,22 @@ await withEphemeralPostgres(async (clientConfig) => {
       }),
     );
   } catch (error) {
+    const guard = new Map([
+      [
+        "gift classification requires exact authored revision and hash",
+        "GIFT_AUTHORED_PROFILE_REQUIRED",
+      ],
+      [
+        "content draft requires exact creation audit evidence",
+        "DRAFT_CREATION_AUDIT",
+      ],
+      [
+        "detail translation must bind the canonical draft and English source",
+        "DETAIL_ENGLISH_BINDING",
+      ],
+    ]).get(error?.message);
     console.error(
-      `content draft repository integration: step=${step}; code=${error.code ?? error.name}`,
+      `content draft repository integration: step=${step}; code=${error.code ?? error.name}; guard=${guard ?? "UNCLASSIFIED"}`,
     );
     if (error instanceof assert.AssertionError) console.error(error.message);
     throw error;

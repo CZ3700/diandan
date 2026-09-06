@@ -121,11 +121,11 @@
       "scenarioId": "reduced-motion-390x844-en"
     }
   ],
-  "generatedAt": "2026-09-06T18:39:45.606Z",
+  "generatedAt": "2026-09-06T21:17:13.456Z",
   "git": {
     "after": {
-      "sha": "6983e9051f97d7bccbd116dcc305106ecd61ffec",
-      "sourceFingerprint": "2d608e15ea06a5334c6a755a11048dba4cf21be5a4ff68ba36ceadd4e2313a4d",
+      "sha": "cdf2ab24a46eb914c4e82b456d6e630886cfed7b",
+      "sourceFingerprint": "f9f1c1c5dea5965ddf514adef0a39611b704bd5ed372f39c42d654d9a4af5d84",
       "sourceFingerprintAlgorithm": "p2-04-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -294,7 +294,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "cefe57a57a2fb3d2933c37765d731d56f146d43ccc523e2e370030f4f4052c83"
+          "sha256": "a7efe3683fe45ee86f7c9cf10aaa78c9e2ccb8500e905278561834c802bd567c"
         },
         {
           "path": "packages/config/package.json",
@@ -358,11 +358,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "4493406233907b56adce1add053fb2d3abbe12174cb8cb66a4903c45015946a3"
+          "sha256": "1dcd83de2a38859f995c0b8bfb90c323feb2d252c6a80622ee3fdbf12c701668"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "be18f362fe6ceb417d40bbbc4a608d64bc422d47e9884aa74e212c9b7b418588"
+          "sha256": "526d85a4b9f8e8adfff8535676ea3bd2a3af161ff7d1268e935cd7c746ecdcc0"
         },
         {
           "path": "packages/contracts/package.json",
@@ -418,11 +418,11 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "14d8746387c4d9dea8dff59c0ff97e3de28219ac82a109f1974fa3af00fe01cc"
+          "sha256": "5ad4dcf89e27cfb91a809e86024cdd04b1369ce4b28cde9dfeb7fc42b4b28f7c"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "b209006ded072ba80669c0a0465e2ebb2ad39cde36a0d64f770ed4a4d450b707"
+          "sha256": "6fcb456b580d91de8c562ef8a953dfeae2732040d779ecf2efb90b7bb946c19e"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -430,7 +430,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "a9333ab4a4f52b8682473393a38ea5c76052e6b30129d7be19eef06e19d4acf2"
+          "sha256": "79e7d1fb9b01af1fa2bbc9439c3fe70aa1185a9a7a1dbe731385d93aee95be51"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -585,6 +585,26 @@
           "sha256": "1ec435fd5b1c17ef4e073af18aabd64c86ae4130a3c4491ae425c5567b8c4d81"
         },
         {
+          "path": "packages/contracts/src/gift-commerce-openapi.test.ts",
+          "sha256": "9cca3170357e7abb6cf0e4d622b4f7e5e0db10bde7720c18b452c52138a043e1"
+        },
+        {
+          "path": "packages/contracts/src/gift-commerce-openapi.ts",
+          "sha256": "af11c765de67dd4b6cc925c3ccaba40dbc3ca7f56594f75fe6c56f88098af75a"
+        },
+        {
+          "path": "packages/contracts/src/gift-commerce-profile.ts",
+          "sha256": "7dc788d314ab3b85f755ccc456e66206f1a54fd365976097ce86feb17412eca0"
+        },
+        {
+          "path": "packages/contracts/src/gift-commerce.test.ts",
+          "sha256": "4e7ca14c5c3233856a0a9a452c3a44e365ca526f2242da93fbe63dce7f637645"
+        },
+        {
+          "path": "packages/contracts/src/gift-commerce.ts",
+          "sha256": "217a2711334f39fcca5e6439800f24429c5ea1f86cfeed0c1fc4cf7977d31eb2"
+        },
+        {
           "path": "packages/contracts/src/gift-details.test.ts",
           "sha256": "f3b9a44ff6386799b0770f744a32728ae599f62c3d297bfb1ee0a1c17970db74"
         },
@@ -610,7 +630,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "beb4b6d44c2bf605e48b7c5956670d7d89e7e576ce4afde45f7b462a1b292eae"
+          "sha256": "75a7871cd12c176edf84017ef0d51ee500b7f35493312bcae4057229eb04750a"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -755,6 +775,14 @@
         {
           "path": "packages/contracts/src/published-content.ts",
           "sha256": "dc15c24ab82901097cf29222c0d7ab22fc8328d4b633a874244b39e5ac297d68"
+        },
+        {
+          "path": "packages/contracts/src/published-gift-commerce.test.ts",
+          "sha256": "bd6a14b96619798678a0da606475f13970f2b30948423b4c1f1ab374d0e9a4d6"
+        },
+        {
+          "path": "packages/contracts/src/published-gift-commerce.ts",
+          "sha256": "d91afdb4a0d1507e7b5ac7d883b4f4fb5ad8ede94e0494c097262033c75a4c19"
         },
         {
           "path": "packages/contracts/src/reliable-event-persistence-contracts.test.ts",
@@ -1122,7 +1150,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "16c06a7090335055f0c07d1e68505d03177d0524d6abd0dd45df126dd3333cf4"
+          "sha256": "76e9d4c78e75a8cb1c341f3e1adfc849e5e707785f0b9fc3417661baf2e92bbf"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -1150,115 +1178,100 @@
         }
       ],
       "status": [
-        " M .env.example",
         " M apps/admin/next-env.d.ts",
-        " M apps/admin/package.json",
         " M apps/admin/src/app/globals.css",
-        " M apps/admin/src/app/layout.tsx",
-        " M apps/admin/src/app/page.tsx",
-        " M apps/admin/src/proxy.test.ts",
-        " M apps/admin/src/proxy.ts",
+        " M apps/admin/src/server/admin-operations.ts",
+        " M apps/admin/src/workspace/components.tsx",
+        " M apps/admin/src/workspace/content-form.tsx",
+        " M apps/admin/src/workspace/editor-model.test.ts",
+        " M apps/admin/src/workspace/editor-model.ts",
+        " M apps/admin/src/workspace/editor-state.ts",
+        " M apps/admin/src/workspace/editor.tsx",
+        " M apps/admin/src/workspace/preview.test.tsx",
+        " M apps/admin/src/workspace/preview.tsx",
+        " M apps/admin/src/workspace/workspace.tsx",
         " M apps/api/package.json",
-        " M apps/api/scripts/base-content-http.mjs",
-        " M apps/api/scripts/postgres-admin-content-authoring-http.mjs",
-        " M apps/api/scripts/postgres-admin-content-http.mjs",
-        " M apps/api/scripts/postgres-catalog-http.mjs",
-        " M apps/api/scripts/publication-preflight-http.mjs",
-        " M apps/api/scripts/publication-runtime-http.mjs",
-        " M apps/api/scripts/resource-management-http.mjs",
+        " M apps/api/scripts/admin-workspace-http.mjs",
+        " M apps/api/src/admin-workspace-transport.ts",
         " M apps/api/src/bootstrap.ts",
         " M apps/api/src/index.ts",
+        " M apps/api/src/production-application.ts",
+        " M apps/api/src/published-content-composition.test.ts",
+        " M apps/api/src/published-content-composition.ts",
         " M database/migrations/manifest.json",
         " M database/schema/expected-catalog.json",
+        " M docs/FAN_SUPPORT_PLATFORM_SPEC.md",
+        " M docs/analysis/risk-assessment.md",
+        " M docs/plan/dependency-graph.md",
+        " M docs/plan/task-breakdown.md",
         " M docs/progress/MASTER.md",
         " M docs/progress/phase-3-storefront.md",
         " M package.json",
         " M packages/application/src/index.ts",
-        " M packages/application/tsconfig.build.json",
-        " M packages/config/src/config-layers.ts",
-        " M packages/config/src/env-example.test.ts",
-        " M packages/config/src/server-config.ts",
         " M packages/content/src/index.ts",
+        " M packages/content/src/published-content.test.ts",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
         " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/i18n/package.json",
-        " M packages/i18n/src/index.ts",
+        " M packages/i18n/src/admin/en.review.ts",
+        " M packages/i18n/src/admin/en.ts",
+        " M packages/i18n/src/admin/es.review.ts",
+        " M packages/i18n/src/admin/es.ts",
+        " M packages/i18n/src/admin/ja.review.ts",
+        " M packages/i18n/src/admin/ja.ts",
+        " M packages/i18n/src/admin/pt.review.ts",
+        " M packages/i18n/src/admin/pt.ts",
+        " M packages/i18n/src/admin/th.review.ts",
+        " M packages/i18n/src/admin/th.ts",
+        " M packages/i18n/src/admin/vi.review.ts",
+        " M packages/i18n/src/admin/vi.ts",
+        " M packages/i18n/src/admin/zh-CN.review.ts",
+        " M packages/i18n/src/admin/zh-CN.ts",
         " M packages/persistence-port/src/index.ts",
         " M packages/persistence-postgres/package.json",
+        " M packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
         " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
+        " M packages/persistence-postgres/scripts/postgres-catalog-fixtures.mjs",
         " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
-        " M packages/persistence-postgres/src/index.ts",
+        " M packages/persistence-postgres/src/content-authoring-repository.ts",
+        " M packages/persistence-postgres/src/content-authoring-writes.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
+        " M packages/persistence-postgres/src/publication-preflight-candidate.ts",
+        " M packages/persistence-postgres/src/publication-runtime-write.ts",
+        " M packages/persistence-postgres/src/published-content-repository.ts",
         " M pnpm-lock.yaml",
-        "?? apps/admin/AGENTS.md",
-        "?? apps/admin/CLAUDE.md",
-        "?? apps/admin/src/app/(hans)/layout.tsx",
-        "?? apps/admin/src/app/(hans)/zh-CN/page.tsx",
-        "?? apps/admin/src/app/(hans)/zh-CN/preview/page.tsx",
-        "?? apps/admin/src/app/(japanese)/ja/page.tsx",
-        "?? apps/admin/src/app/(japanese)/ja/preview/page.tsx",
-        "?? apps/admin/src/app/(japanese)/layout.tsx",
-        "?? apps/admin/src/app/(latin)/en/page.tsx",
-        "?? apps/admin/src/app/(latin)/en/preview/page.tsx",
-        "?? apps/admin/src/app/(latin)/es/page.tsx",
-        "?? apps/admin/src/app/(latin)/es/preview/page.tsx",
-        "?? apps/admin/src/app/(latin)/layout.tsx",
-        "?? apps/admin/src/app/(latin)/pt/page.tsx",
-        "?? apps/admin/src/app/(latin)/pt/preview/page.tsx",
-        "?? apps/admin/src/app/(thai)/layout.tsx",
-        "?? apps/admin/src/app/(thai)/th/page.tsx",
-        "?? apps/admin/src/app/(thai)/th/preview/page.tsx",
-        "?? apps/admin/src/app/(vietnamese)/layout.tsx",
-        "?? apps/admin/src/app/(vietnamese)/vi/page.tsx",
-        "?? apps/admin/src/app/(vietnamese)/vi/preview/page.tsx",
-        "?? apps/admin/src/app/api/admin/[operation]/route.ts",
-        "?? apps/admin/src/app/api/admin/session/route.ts",
-        "?? apps/admin/src/server/admin-api-client.ts",
-        "?? apps/admin/src/server/admin-bff.test.ts",
-        "?? apps/admin/src/server/admin-bff.ts",
-        "?? apps/admin/src/server/admin-operations.test.ts",
-        "?? apps/admin/src/server/admin-operations.ts",
-        "?? apps/admin/src/workspace/artist-identity.tsx",
-        "?? apps/admin/src/workspace/catalog-picker.tsx",
-        "?? apps/admin/src/workspace/client.test.ts",
-        "?? apps/admin/src/workspace/client.ts",
-        "?? apps/admin/src/workspace/components.tsx",
-        "?? apps/admin/src/workspace/content-form.tsx",
-        "?? apps/admin/src/workspace/editor-model.test.ts",
-        "?? apps/admin/src/workspace/editor-model.ts",
-        "?? apps/admin/src/workspace/editor-state.ts",
-        "?? apps/admin/src/workspace/editor.tsx",
-        "?? apps/admin/src/workspace/media-tools.tsx",
-        "?? apps/admin/src/workspace/media-upload-attempt.test.ts",
-        "?? apps/admin/src/workspace/media-upload-attempt.ts",
-        "?? apps/admin/src/workspace/pages.tsx",
-        "?? apps/admin/src/workspace/preview.test.tsx",
-        "?? apps/admin/src/workspace/preview.tsx",
-        "?? apps/admin/src/workspace/publication-attempt.test.ts",
-        "?? apps/admin/src/workspace/publication-attempt.ts",
-        "?? apps/admin/src/workspace/publishing.tsx",
-        "?? apps/admin/src/workspace/state.test.ts",
-        "?? apps/admin/src/workspace/state.ts",
-        "?? apps/admin/src/workspace/workspace.tsx",
-        "?? apps/api/scripts/admin-workspace-browser.mjs",
-        "?? apps/api/scripts/admin-workspace-fixtures.mjs",
-        "?? apps/api/scripts/admin-workspace-http.mjs",
-        "?? apps/api/src/admin-session-composition.test.ts",
-        "?? apps/api/src/admin-session-composition.ts",
-        "?? apps/api/src/admin-session-route.test.ts",
-        "?? apps/api/src/admin-session-route.ts",
-        "?? apps/api/src/admin-workspace-composition.test.ts",
-        "?? apps/api/src/admin-workspace-composition.ts",
-        "?? apps/api/src/admin-workspace-route.test.ts",
-        "?? apps/api/src/admin-workspace-route.ts",
-        "?? apps/api/src/admin-workspace-transport.ts",
-        "?? database/migrations/0019_admin-catalog.down.sql",
-        "?? database/migrations/0019_admin-catalog.up.sql",
-        "?? docs/plan/p3-02-admin-workspace.md",
+        "?? apps/admin/src/server/gift-commerce-operations.test.ts",
+        "?? apps/admin/src/workspace/gift-commerce-client.ts",
+        "?? apps/admin/src/workspace/gift-commerce-panel.tsx",
+        "?? apps/admin/src/workspace/gift-commerce-shared.ts",
+        "?? apps/admin/src/workspace/gift-detail-preview.test.tsx",
+        "?? apps/admin/src/workspace/gift-detail-preview.tsx",
+        "?? apps/admin/src/workspace/gift-detail-review.test.tsx",
+        "?? apps/admin/src/workspace/gift-detail-review.tsx",
+        "?? apps/admin/src/workspace/gift-details-editor.tsx",
+        "?? apps/admin/src/workspace/gift-editor-model.test.ts",
+        "?? apps/admin/src/workspace/gift-editor-model.ts",
+        "?? apps/admin/src/workspace/gift-eligibility.tsx",
+        "?? apps/admin/src/workspace/gift-inventory.tsx",
+        "?? apps/admin/src/workspace/gift-prices.tsx",
+        "?? apps/admin/src/workspace/gift-structure.tsx",
+        "?? apps/api/scripts/gift-commerce-browser.mjs",
+        "?? apps/api/scripts/gift-commerce-http-fixtures.mjs",
+        "?? apps/api/scripts/gift-commerce-http.mjs",
+        "?? apps/api/src/gift-commerce-composition.test.ts",
+        "?? apps/api/src/gift-commerce-composition.ts",
+        "?? apps/api/src/gift-commerce-route.test.ts",
+        "?? apps/api/src/gift-commerce-route.ts",
+        "?? apps/api/src/published-gift-commerce-route.test.ts",
+        "?? apps/api/src/published-gift-commerce-route.ts",
+        "?? database/migrations/0020_gift-commerce.down.sql",
+        "?? database/migrations/0020_gift-commerce.up.sql",
+        "?? docs/decisions/011-gift-kind-inventory-policy.md",
+        "?? docs/operations/gift-commerce.md",
+        "?? docs/plan/p3-03-gift-commerce.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -1272,12 +1285,16 @@
         "?? output/checks/p3-01-publication-preflight/contracts-before.json",
         "?? output/checks/p3-01-publication-runtime/contracts-before.json",
         "?? output/checks/p3-01-resource-management/contracts-before.json",
-        "?? output/checks/p3-02-admin/README.md",
         "?? output/checks/p3-02-admin/contracts-before.json",
-        "?? output/checks/p3-02-admin/translation-handoff.md",
-        "?? output/checks/p3-02-admin/transport-README.md",
-        "?? output/checks/p3-02-admin/transport-review.md",
-        "?? output/checks/p3-02-admin/validation.json",
+        "?? output/checks/p3-03-gift-commerce/README.md",
+        "?? output/checks/p3-03-gift-commerce/add-messages.py",
+        "?? output/checks/p3-03-gift-commerce/compatibility-final.json",
+        "?? output/checks/p3-03-gift-commerce/compatibility.json",
+        "?? output/checks/p3-03-gift-commerce/contracts-before.json",
+        "?? output/checks/p3-03-gift-commerce/gift-catalog-guards.sql",
+        "?? output/checks/p3-03-gift-commerce/transport-README.md",
+        "?? output/checks/p3-03-gift-commerce/transport-plan.md",
+        "?? output/checks/p3-03-gift-commerce/transport-review.md",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -1517,101 +1534,76 @@
         "?? output/playwright/p2-06/viewer-1440.png",
         "?? output/playwright/p2-06/viewer-390.png",
         "?? output/playwright/p2-06/viewer-check.json",
-        "?? output/playwright/p3-02-admin/accessibility.json",
-        "?? output/playwright/p3-02-admin/en-desktop.png",
-        "?? output/playwright/p3-02-admin/en-editor.png",
-        "?? output/playwright/p3-02-admin/en-mobile.png",
-        "?? output/playwright/p3-02-admin/en-preview-desktop.png",
-        "?? output/playwright/p3-02-admin/en-reviewer.png",
-        "?? output/playwright/p3-02-admin/en-source-changed.png",
-        "?? output/playwright/p3-02-admin/es-desktop.png",
-        "?? output/playwright/p3-02-admin/es-mobile.png",
-        "?? output/playwright/p3-02-admin/ja-desktop.png",
-        "?? output/playwright/p3-02-admin/ja-mobile.png",
-        "?? output/playwright/p3-02-admin/pt-desktop.png",
-        "?? output/playwright/p3-02-admin/pt-mobile.png",
         "?? output/playwright/p3-02-admin/serve-desktop.png",
-        "?? output/playwright/p3-02-admin/th-desktop.png",
-        "?? output/playwright/p3-02-admin/th-mobile.png",
-        "?? output/playwright/p3-02-admin/vi-desktop.png",
-        "?? output/playwright/p3-02-admin/vi-mobile.png",
-        "?? output/playwright/p3-02-admin/zh-CN-desktop.png",
-        "?? output/playwright/p3-02-admin/zh-CN-mobile.png",
-        "?? packages/application/src/admin-catalog.test.ts",
-        "?? packages/application/src/admin-catalog.ts",
-        "?? packages/application/src/admin-preview-media.test.ts",
-        "?? packages/application/src/admin-preview-media.ts",
-        "?? packages/application/src/admin-session.test.ts",
-        "?? packages/application/src/admin-session.ts",
-        "?? packages/application/src/translation-authorization.ts",
-        "?? packages/application/src/translation-test-support.ts",
-        "?? packages/application/src/translation-transfer-idempotency.ts",
-        "?? packages/application/src/translation-transfer.test.ts",
-        "?? packages/application/src/translation-transfer.ts",
-        "?? packages/application/src/translation-workspace.test.ts",
-        "?? packages/application/src/translation-workspace.ts",
-        "?? packages/config/src/admin-config.test.ts",
-        "?? packages/content/src/translation-authoring.ts",
-        "?? packages/content/src/translation-transfer.test.ts",
-        "?? packages/content/src/translation-transfer.ts",
-        "?? packages/content/src/translation-workspace.test.ts",
-        "?? packages/content/src/translation-workspace.ts",
-        "?? packages/contracts/src/admin-catalog.test.ts",
-        "?? packages/contracts/src/admin-catalog.ts",
-        "?? packages/contracts/src/admin-preview-media.test.ts",
-        "?? packages/contracts/src/admin-preview-media.ts",
-        "?? packages/contracts/src/admin-session.test.ts",
-        "?? packages/contracts/src/admin-session.ts",
-        "?? packages/contracts/src/admin-workspace-openapi.test.ts",
-        "?? packages/contracts/src/admin-workspace-openapi.ts",
-        "?? packages/contracts/src/translation-transfer.test.ts",
-        "?? packages/contracts/src/translation-transfer.ts",
-        "?? packages/contracts/src/translation-workspace.test.ts",
-        "?? packages/contracts/src/translation-workspace.ts",
-        "?? packages/i18n/src/admin/en.review.ts",
-        "?? packages/i18n/src/admin/en.ts",
-        "?? packages/i18n/src/admin/es.review.ts",
-        "?? packages/i18n/src/admin/es.ts",
-        "?? packages/i18n/src/admin/ja.review.ts",
-        "?? packages/i18n/src/admin/ja.ts",
-        "?? packages/i18n/src/admin/messages.test.ts",
-        "?? packages/i18n/src/admin/messages.ts",
-        "?? packages/i18n/src/admin/pt.review.ts",
-        "?? packages/i18n/src/admin/pt.ts",
-        "?? packages/i18n/src/admin/review-manifest.ts",
-        "?? packages/i18n/src/admin/th.review.ts",
-        "?? packages/i18n/src/admin/th.ts",
-        "?? packages/i18n/src/admin/vi.review.ts",
-        "?? packages/i18n/src/admin/vi.ts",
-        "?? packages/i18n/src/admin/zh-CN.review.ts",
-        "?? packages/i18n/src/admin/zh-CN.ts",
-        "?? packages/persistence-port/src/admin-catalog.ts",
-        "?? packages/persistence-port/src/admin-preview-media.ts",
-        "?? packages/persistence-port/src/admin-session.ts",
-        "?? packages/persistence-port/src/translation-transfer.ts",
-        "?? packages/persistence-port/src/translation-workspace.ts",
-        "?? packages/persistence-postgres/scripts/postgres-admin-catalog-fixtures.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-admin-catalog-proof-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-admin-translation-cases.mjs",
-        "?? packages/persistence-postgres/src/admin-catalog-data.ts",
-        "?? packages/persistence-postgres/src/admin-catalog-read.ts",
-        "?? packages/persistence-postgres/src/admin-catalog-repository.test.ts",
-        "?? packages/persistence-postgres/src/admin-catalog-repository.ts",
-        "?? packages/persistence-postgres/src/admin-catalog-write.ts",
-        "?? packages/persistence-postgres/src/admin-preview-media-repository.test.ts",
-        "?? packages/persistence-postgres/src/admin-preview-media-repository.ts",
-        "?? packages/persistence-postgres/src/admin-session-repository.test.ts",
-        "?? packages/persistence-postgres/src/admin-session-repository.ts",
-        "?? packages/persistence-postgres/src/translation-transfer-repository.test.ts",
-        "?? packages/persistence-postgres/src/translation-transfer-repository.ts",
-        "?? packages/persistence-postgres/src/translation-workspace-repository.test.ts",
-        "?? packages/persistence-postgres/src/translation-workspace-repository.ts"
+        "?? output/playwright/p3-03-gift-commerce/accessibility.json",
+        "?? output/playwright/p3-03-gift-commerce/en-created.png",
+        "?? output/playwright/p3-03-gift-commerce/en-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/en-inventory.png",
+        "?? output/playwright/p3-03-gift-commerce/en-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/en-preview.png",
+        "?? output/playwright/p3-03-gift-commerce/en-prices.png",
+        "?? output/playwright/p3-03-gift-commerce/es-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/es-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/ja-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/ja-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/pt-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/pt-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/th-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/th-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/vi-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/vi-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/zh-CN-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/zh-CN-mobile.png",
+        "?? packages/application/src/gift-commerce-content.test.ts",
+        "?? packages/application/src/gift-commerce-content.ts",
+        "?? packages/application/src/gift-commerce-results.ts",
+        "?? packages/application/src/gift-commerce-validation.ts",
+        "?? packages/application/src/gift-commerce.test.ts",
+        "?? packages/application/src/gift-commerce.ts",
+        "?? packages/application/src/published-gift-commerce.test.ts",
+        "?? packages/application/src/published-gift-commerce.ts",
+        "?? packages/content/src/published-gift-commerce.ts",
+        "?? packages/contracts/src/gift-commerce-openapi.test.ts",
+        "?? packages/contracts/src/gift-commerce-openapi.ts",
+        "?? packages/contracts/src/gift-commerce-profile.ts",
+        "?? packages/contracts/src/gift-commerce.test.ts",
+        "?? packages/contracts/src/gift-commerce.ts",
+        "?? packages/contracts/src/published-gift-commerce.test.ts",
+        "?? packages/contracts/src/published-gift-commerce.ts",
+        "?? packages/persistence-port/src/gift-commerce.ts",
+        "?? packages/persistence-port/src/published-gift-commerce.ts",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-atomicity.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-catalog-cases.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-concurrency.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-constraints.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-price-sealing.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-pricing-rollback.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-time-cases.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce.mjs",
+        "?? packages/persistence-postgres/src/gift-commerce-authorization-repository.test.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-authorization-repository.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift-data.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift-profile.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift-read.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift-repository.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift-write.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift.test.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-inventory-data.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-inventory-repository.test.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-inventory-repository.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-current.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-data.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-read.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-repository.test.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-repository.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-write.ts",
+        "?? packages/persistence-postgres/src/published-gift-commerce-repository.ts"
       ]
     },
     "before": {
-      "sha": "6983e9051f97d7bccbd116dcc305106ecd61ffec",
-      "sourceFingerprint": "2d608e15ea06a5334c6a755a11048dba4cf21be5a4ff68ba36ceadd4e2313a4d",
+      "sha": "cdf2ab24a46eb914c4e82b456d6e630886cfed7b",
+      "sourceFingerprint": "f9f1c1c5dea5965ddf514adef0a39611b704bd5ed372f39c42d654d9a4af5d84",
       "sourceFingerprintAlgorithm": "p2-04-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -1780,7 +1772,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "cefe57a57a2fb3d2933c37765d731d56f146d43ccc523e2e370030f4f4052c83"
+          "sha256": "a7efe3683fe45ee86f7c9cf10aaa78c9e2ccb8500e905278561834c802bd567c"
         },
         {
           "path": "packages/config/package.json",
@@ -1844,11 +1836,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "4493406233907b56adce1add053fb2d3abbe12174cb8cb66a4903c45015946a3"
+          "sha256": "1dcd83de2a38859f995c0b8bfb90c323feb2d252c6a80622ee3fdbf12c701668"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "be18f362fe6ceb417d40bbbc4a608d64bc422d47e9884aa74e212c9b7b418588"
+          "sha256": "526d85a4b9f8e8adfff8535676ea3bd2a3af161ff7d1268e935cd7c746ecdcc0"
         },
         {
           "path": "packages/contracts/package.json",
@@ -1904,11 +1896,11 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "14d8746387c4d9dea8dff59c0ff97e3de28219ac82a109f1974fa3af00fe01cc"
+          "sha256": "5ad4dcf89e27cfb91a809e86024cdd04b1369ce4b28cde9dfeb7fc42b4b28f7c"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "b209006ded072ba80669c0a0465e2ebb2ad39cde36a0d64f770ed4a4d450b707"
+          "sha256": "6fcb456b580d91de8c562ef8a953dfeae2732040d779ecf2efb90b7bb946c19e"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -1916,7 +1908,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "a9333ab4a4f52b8682473393a38ea5c76052e6b30129d7be19eef06e19d4acf2"
+          "sha256": "79e7d1fb9b01af1fa2bbc9439c3fe70aa1185a9a7a1dbe731385d93aee95be51"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -2071,6 +2063,26 @@
           "sha256": "1ec435fd5b1c17ef4e073af18aabd64c86ae4130a3c4491ae425c5567b8c4d81"
         },
         {
+          "path": "packages/contracts/src/gift-commerce-openapi.test.ts",
+          "sha256": "9cca3170357e7abb6cf0e4d622b4f7e5e0db10bde7720c18b452c52138a043e1"
+        },
+        {
+          "path": "packages/contracts/src/gift-commerce-openapi.ts",
+          "sha256": "af11c765de67dd4b6cc925c3ccaba40dbc3ca7f56594f75fe6c56f88098af75a"
+        },
+        {
+          "path": "packages/contracts/src/gift-commerce-profile.ts",
+          "sha256": "7dc788d314ab3b85f755ccc456e66206f1a54fd365976097ce86feb17412eca0"
+        },
+        {
+          "path": "packages/contracts/src/gift-commerce.test.ts",
+          "sha256": "4e7ca14c5c3233856a0a9a452c3a44e365ca526f2242da93fbe63dce7f637645"
+        },
+        {
+          "path": "packages/contracts/src/gift-commerce.ts",
+          "sha256": "217a2711334f39fcca5e6439800f24429c5ea1f86cfeed0c1fc4cf7977d31eb2"
+        },
+        {
           "path": "packages/contracts/src/gift-details.test.ts",
           "sha256": "f3b9a44ff6386799b0770f744a32728ae599f62c3d297bfb1ee0a1c17970db74"
         },
@@ -2096,7 +2108,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "beb4b6d44c2bf605e48b7c5956670d7d89e7e576ce4afde45f7b462a1b292eae"
+          "sha256": "75a7871cd12c176edf84017ef0d51ee500b7f35493312bcae4057229eb04750a"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -2241,6 +2253,14 @@
         {
           "path": "packages/contracts/src/published-content.ts",
           "sha256": "dc15c24ab82901097cf29222c0d7ab22fc8328d4b633a874244b39e5ac297d68"
+        },
+        {
+          "path": "packages/contracts/src/published-gift-commerce.test.ts",
+          "sha256": "bd6a14b96619798678a0da606475f13970f2b30948423b4c1f1ab374d0e9a4d6"
+        },
+        {
+          "path": "packages/contracts/src/published-gift-commerce.ts",
+          "sha256": "d91afdb4a0d1507e7b5ac7d883b4f4fb5ad8ede94e0494c097262033c75a4c19"
         },
         {
           "path": "packages/contracts/src/reliable-event-persistence-contracts.test.ts",
@@ -2608,7 +2628,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "16c06a7090335055f0c07d1e68505d03177d0524d6abd0dd45df126dd3333cf4"
+          "sha256": "76e9d4c78e75a8cb1c341f3e1adfc849e5e707785f0b9fc3417661baf2e92bbf"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -2636,115 +2656,100 @@
         }
       ],
       "status": [
-        " M .env.example",
         " M apps/admin/next-env.d.ts",
-        " M apps/admin/package.json",
         " M apps/admin/src/app/globals.css",
-        " M apps/admin/src/app/layout.tsx",
-        " M apps/admin/src/app/page.tsx",
-        " M apps/admin/src/proxy.test.ts",
-        " M apps/admin/src/proxy.ts",
+        " M apps/admin/src/server/admin-operations.ts",
+        " M apps/admin/src/workspace/components.tsx",
+        " M apps/admin/src/workspace/content-form.tsx",
+        " M apps/admin/src/workspace/editor-model.test.ts",
+        " M apps/admin/src/workspace/editor-model.ts",
+        " M apps/admin/src/workspace/editor-state.ts",
+        " M apps/admin/src/workspace/editor.tsx",
+        " M apps/admin/src/workspace/preview.test.tsx",
+        " M apps/admin/src/workspace/preview.tsx",
+        " M apps/admin/src/workspace/workspace.tsx",
         " M apps/api/package.json",
-        " M apps/api/scripts/base-content-http.mjs",
-        " M apps/api/scripts/postgres-admin-content-authoring-http.mjs",
-        " M apps/api/scripts/postgres-admin-content-http.mjs",
-        " M apps/api/scripts/postgres-catalog-http.mjs",
-        " M apps/api/scripts/publication-preflight-http.mjs",
-        " M apps/api/scripts/publication-runtime-http.mjs",
-        " M apps/api/scripts/resource-management-http.mjs",
+        " M apps/api/scripts/admin-workspace-http.mjs",
+        " M apps/api/src/admin-workspace-transport.ts",
         " M apps/api/src/bootstrap.ts",
         " M apps/api/src/index.ts",
+        " M apps/api/src/production-application.ts",
+        " M apps/api/src/published-content-composition.test.ts",
+        " M apps/api/src/published-content-composition.ts",
         " M database/migrations/manifest.json",
         " M database/schema/expected-catalog.json",
+        " M docs/FAN_SUPPORT_PLATFORM_SPEC.md",
+        " M docs/analysis/risk-assessment.md",
+        " M docs/plan/dependency-graph.md",
+        " M docs/plan/task-breakdown.md",
         " M docs/progress/MASTER.md",
         " M docs/progress/phase-3-storefront.md",
         " M package.json",
         " M packages/application/src/index.ts",
-        " M packages/application/tsconfig.build.json",
-        " M packages/config/src/config-layers.ts",
-        " M packages/config/src/env-example.test.ts",
-        " M packages/config/src/server-config.ts",
         " M packages/content/src/index.ts",
+        " M packages/content/src/published-content.test.ts",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
         " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/i18n/package.json",
-        " M packages/i18n/src/index.ts",
+        " M packages/i18n/src/admin/en.review.ts",
+        " M packages/i18n/src/admin/en.ts",
+        " M packages/i18n/src/admin/es.review.ts",
+        " M packages/i18n/src/admin/es.ts",
+        " M packages/i18n/src/admin/ja.review.ts",
+        " M packages/i18n/src/admin/ja.ts",
+        " M packages/i18n/src/admin/pt.review.ts",
+        " M packages/i18n/src/admin/pt.ts",
+        " M packages/i18n/src/admin/th.review.ts",
+        " M packages/i18n/src/admin/th.ts",
+        " M packages/i18n/src/admin/vi.review.ts",
+        " M packages/i18n/src/admin/vi.ts",
+        " M packages/i18n/src/admin/zh-CN.review.ts",
+        " M packages/i18n/src/admin/zh-CN.ts",
         " M packages/persistence-port/src/index.ts",
         " M packages/persistence-postgres/package.json",
+        " M packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
         " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
+        " M packages/persistence-postgres/scripts/postgres-catalog-fixtures.mjs",
         " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
-        " M packages/persistence-postgres/src/index.ts",
+        " M packages/persistence-postgres/src/content-authoring-repository.ts",
+        " M packages/persistence-postgres/src/content-authoring-writes.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
+        " M packages/persistence-postgres/src/publication-preflight-candidate.ts",
+        " M packages/persistence-postgres/src/publication-runtime-write.ts",
+        " M packages/persistence-postgres/src/published-content-repository.ts",
         " M pnpm-lock.yaml",
-        "?? apps/admin/AGENTS.md",
-        "?? apps/admin/CLAUDE.md",
-        "?? apps/admin/src/app/(hans)/layout.tsx",
-        "?? apps/admin/src/app/(hans)/zh-CN/page.tsx",
-        "?? apps/admin/src/app/(hans)/zh-CN/preview/page.tsx",
-        "?? apps/admin/src/app/(japanese)/ja/page.tsx",
-        "?? apps/admin/src/app/(japanese)/ja/preview/page.tsx",
-        "?? apps/admin/src/app/(japanese)/layout.tsx",
-        "?? apps/admin/src/app/(latin)/en/page.tsx",
-        "?? apps/admin/src/app/(latin)/en/preview/page.tsx",
-        "?? apps/admin/src/app/(latin)/es/page.tsx",
-        "?? apps/admin/src/app/(latin)/es/preview/page.tsx",
-        "?? apps/admin/src/app/(latin)/layout.tsx",
-        "?? apps/admin/src/app/(latin)/pt/page.tsx",
-        "?? apps/admin/src/app/(latin)/pt/preview/page.tsx",
-        "?? apps/admin/src/app/(thai)/layout.tsx",
-        "?? apps/admin/src/app/(thai)/th/page.tsx",
-        "?? apps/admin/src/app/(thai)/th/preview/page.tsx",
-        "?? apps/admin/src/app/(vietnamese)/layout.tsx",
-        "?? apps/admin/src/app/(vietnamese)/vi/page.tsx",
-        "?? apps/admin/src/app/(vietnamese)/vi/preview/page.tsx",
-        "?? apps/admin/src/app/api/admin/[operation]/route.ts",
-        "?? apps/admin/src/app/api/admin/session/route.ts",
-        "?? apps/admin/src/server/admin-api-client.ts",
-        "?? apps/admin/src/server/admin-bff.test.ts",
-        "?? apps/admin/src/server/admin-bff.ts",
-        "?? apps/admin/src/server/admin-operations.test.ts",
-        "?? apps/admin/src/server/admin-operations.ts",
-        "?? apps/admin/src/workspace/artist-identity.tsx",
-        "?? apps/admin/src/workspace/catalog-picker.tsx",
-        "?? apps/admin/src/workspace/client.test.ts",
-        "?? apps/admin/src/workspace/client.ts",
-        "?? apps/admin/src/workspace/components.tsx",
-        "?? apps/admin/src/workspace/content-form.tsx",
-        "?? apps/admin/src/workspace/editor-model.test.ts",
-        "?? apps/admin/src/workspace/editor-model.ts",
-        "?? apps/admin/src/workspace/editor-state.ts",
-        "?? apps/admin/src/workspace/editor.tsx",
-        "?? apps/admin/src/workspace/media-tools.tsx",
-        "?? apps/admin/src/workspace/media-upload-attempt.test.ts",
-        "?? apps/admin/src/workspace/media-upload-attempt.ts",
-        "?? apps/admin/src/workspace/pages.tsx",
-        "?? apps/admin/src/workspace/preview.test.tsx",
-        "?? apps/admin/src/workspace/preview.tsx",
-        "?? apps/admin/src/workspace/publication-attempt.test.ts",
-        "?? apps/admin/src/workspace/publication-attempt.ts",
-        "?? apps/admin/src/workspace/publishing.tsx",
-        "?? apps/admin/src/workspace/state.test.ts",
-        "?? apps/admin/src/workspace/state.ts",
-        "?? apps/admin/src/workspace/workspace.tsx",
-        "?? apps/api/scripts/admin-workspace-browser.mjs",
-        "?? apps/api/scripts/admin-workspace-fixtures.mjs",
-        "?? apps/api/scripts/admin-workspace-http.mjs",
-        "?? apps/api/src/admin-session-composition.test.ts",
-        "?? apps/api/src/admin-session-composition.ts",
-        "?? apps/api/src/admin-session-route.test.ts",
-        "?? apps/api/src/admin-session-route.ts",
-        "?? apps/api/src/admin-workspace-composition.test.ts",
-        "?? apps/api/src/admin-workspace-composition.ts",
-        "?? apps/api/src/admin-workspace-route.test.ts",
-        "?? apps/api/src/admin-workspace-route.ts",
-        "?? apps/api/src/admin-workspace-transport.ts",
-        "?? database/migrations/0019_admin-catalog.down.sql",
-        "?? database/migrations/0019_admin-catalog.up.sql",
-        "?? docs/plan/p3-02-admin-workspace.md",
+        "?? apps/admin/src/server/gift-commerce-operations.test.ts",
+        "?? apps/admin/src/workspace/gift-commerce-client.ts",
+        "?? apps/admin/src/workspace/gift-commerce-panel.tsx",
+        "?? apps/admin/src/workspace/gift-commerce-shared.ts",
+        "?? apps/admin/src/workspace/gift-detail-preview.test.tsx",
+        "?? apps/admin/src/workspace/gift-detail-preview.tsx",
+        "?? apps/admin/src/workspace/gift-detail-review.test.tsx",
+        "?? apps/admin/src/workspace/gift-detail-review.tsx",
+        "?? apps/admin/src/workspace/gift-details-editor.tsx",
+        "?? apps/admin/src/workspace/gift-editor-model.test.ts",
+        "?? apps/admin/src/workspace/gift-editor-model.ts",
+        "?? apps/admin/src/workspace/gift-eligibility.tsx",
+        "?? apps/admin/src/workspace/gift-inventory.tsx",
+        "?? apps/admin/src/workspace/gift-prices.tsx",
+        "?? apps/admin/src/workspace/gift-structure.tsx",
+        "?? apps/api/scripts/gift-commerce-browser.mjs",
+        "?? apps/api/scripts/gift-commerce-http-fixtures.mjs",
+        "?? apps/api/scripts/gift-commerce-http.mjs",
+        "?? apps/api/src/gift-commerce-composition.test.ts",
+        "?? apps/api/src/gift-commerce-composition.ts",
+        "?? apps/api/src/gift-commerce-route.test.ts",
+        "?? apps/api/src/gift-commerce-route.ts",
+        "?? apps/api/src/published-gift-commerce-route.test.ts",
+        "?? apps/api/src/published-gift-commerce-route.ts",
+        "?? database/migrations/0020_gift-commerce.down.sql",
+        "?? database/migrations/0020_gift-commerce.up.sql",
+        "?? docs/decisions/011-gift-kind-inventory-policy.md",
+        "?? docs/operations/gift-commerce.md",
+        "?? docs/plan/p3-03-gift-commerce.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -2758,12 +2763,16 @@
         "?? output/checks/p3-01-publication-preflight/contracts-before.json",
         "?? output/checks/p3-01-publication-runtime/contracts-before.json",
         "?? output/checks/p3-01-resource-management/contracts-before.json",
-        "?? output/checks/p3-02-admin/README.md",
         "?? output/checks/p3-02-admin/contracts-before.json",
-        "?? output/checks/p3-02-admin/translation-handoff.md",
-        "?? output/checks/p3-02-admin/transport-README.md",
-        "?? output/checks/p3-02-admin/transport-review.md",
-        "?? output/checks/p3-02-admin/validation.json",
+        "?? output/checks/p3-03-gift-commerce/README.md",
+        "?? output/checks/p3-03-gift-commerce/add-messages.py",
+        "?? output/checks/p3-03-gift-commerce/compatibility-final.json",
+        "?? output/checks/p3-03-gift-commerce/compatibility.json",
+        "?? output/checks/p3-03-gift-commerce/contracts-before.json",
+        "?? output/checks/p3-03-gift-commerce/gift-catalog-guards.sql",
+        "?? output/checks/p3-03-gift-commerce/transport-README.md",
+        "?? output/checks/p3-03-gift-commerce/transport-plan.md",
+        "?? output/checks/p3-03-gift-commerce/transport-review.md",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -3003,96 +3012,71 @@
         "?? output/playwright/p2-06/viewer-1440.png",
         "?? output/playwright/p2-06/viewer-390.png",
         "?? output/playwright/p2-06/viewer-check.json",
-        "?? output/playwright/p3-02-admin/accessibility.json",
-        "?? output/playwright/p3-02-admin/en-desktop.png",
-        "?? output/playwright/p3-02-admin/en-editor.png",
-        "?? output/playwright/p3-02-admin/en-mobile.png",
-        "?? output/playwright/p3-02-admin/en-preview-desktop.png",
-        "?? output/playwright/p3-02-admin/en-reviewer.png",
-        "?? output/playwright/p3-02-admin/en-source-changed.png",
-        "?? output/playwright/p3-02-admin/es-desktop.png",
-        "?? output/playwright/p3-02-admin/es-mobile.png",
-        "?? output/playwright/p3-02-admin/ja-desktop.png",
-        "?? output/playwright/p3-02-admin/ja-mobile.png",
-        "?? output/playwright/p3-02-admin/pt-desktop.png",
-        "?? output/playwright/p3-02-admin/pt-mobile.png",
         "?? output/playwright/p3-02-admin/serve-desktop.png",
-        "?? output/playwright/p3-02-admin/th-desktop.png",
-        "?? output/playwright/p3-02-admin/th-mobile.png",
-        "?? output/playwright/p3-02-admin/vi-desktop.png",
-        "?? output/playwright/p3-02-admin/vi-mobile.png",
-        "?? output/playwright/p3-02-admin/zh-CN-desktop.png",
-        "?? output/playwright/p3-02-admin/zh-CN-mobile.png",
-        "?? packages/application/src/admin-catalog.test.ts",
-        "?? packages/application/src/admin-catalog.ts",
-        "?? packages/application/src/admin-preview-media.test.ts",
-        "?? packages/application/src/admin-preview-media.ts",
-        "?? packages/application/src/admin-session.test.ts",
-        "?? packages/application/src/admin-session.ts",
-        "?? packages/application/src/translation-authorization.ts",
-        "?? packages/application/src/translation-test-support.ts",
-        "?? packages/application/src/translation-transfer-idempotency.ts",
-        "?? packages/application/src/translation-transfer.test.ts",
-        "?? packages/application/src/translation-transfer.ts",
-        "?? packages/application/src/translation-workspace.test.ts",
-        "?? packages/application/src/translation-workspace.ts",
-        "?? packages/config/src/admin-config.test.ts",
-        "?? packages/content/src/translation-authoring.ts",
-        "?? packages/content/src/translation-transfer.test.ts",
-        "?? packages/content/src/translation-transfer.ts",
-        "?? packages/content/src/translation-workspace.test.ts",
-        "?? packages/content/src/translation-workspace.ts",
-        "?? packages/contracts/src/admin-catalog.test.ts",
-        "?? packages/contracts/src/admin-catalog.ts",
-        "?? packages/contracts/src/admin-preview-media.test.ts",
-        "?? packages/contracts/src/admin-preview-media.ts",
-        "?? packages/contracts/src/admin-session.test.ts",
-        "?? packages/contracts/src/admin-session.ts",
-        "?? packages/contracts/src/admin-workspace-openapi.test.ts",
-        "?? packages/contracts/src/admin-workspace-openapi.ts",
-        "?? packages/contracts/src/translation-transfer.test.ts",
-        "?? packages/contracts/src/translation-transfer.ts",
-        "?? packages/contracts/src/translation-workspace.test.ts",
-        "?? packages/contracts/src/translation-workspace.ts",
-        "?? packages/i18n/src/admin/en.review.ts",
-        "?? packages/i18n/src/admin/en.ts",
-        "?? packages/i18n/src/admin/es.review.ts",
-        "?? packages/i18n/src/admin/es.ts",
-        "?? packages/i18n/src/admin/ja.review.ts",
-        "?? packages/i18n/src/admin/ja.ts",
-        "?? packages/i18n/src/admin/messages.test.ts",
-        "?? packages/i18n/src/admin/messages.ts",
-        "?? packages/i18n/src/admin/pt.review.ts",
-        "?? packages/i18n/src/admin/pt.ts",
-        "?? packages/i18n/src/admin/review-manifest.ts",
-        "?? packages/i18n/src/admin/th.review.ts",
-        "?? packages/i18n/src/admin/th.ts",
-        "?? packages/i18n/src/admin/vi.review.ts",
-        "?? packages/i18n/src/admin/vi.ts",
-        "?? packages/i18n/src/admin/zh-CN.review.ts",
-        "?? packages/i18n/src/admin/zh-CN.ts",
-        "?? packages/persistence-port/src/admin-catalog.ts",
-        "?? packages/persistence-port/src/admin-preview-media.ts",
-        "?? packages/persistence-port/src/admin-session.ts",
-        "?? packages/persistence-port/src/translation-transfer.ts",
-        "?? packages/persistence-port/src/translation-workspace.ts",
-        "?? packages/persistence-postgres/scripts/postgres-admin-catalog-fixtures.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-admin-catalog-proof-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-admin-translation-cases.mjs",
-        "?? packages/persistence-postgres/src/admin-catalog-data.ts",
-        "?? packages/persistence-postgres/src/admin-catalog-read.ts",
-        "?? packages/persistence-postgres/src/admin-catalog-repository.test.ts",
-        "?? packages/persistence-postgres/src/admin-catalog-repository.ts",
-        "?? packages/persistence-postgres/src/admin-catalog-write.ts",
-        "?? packages/persistence-postgres/src/admin-preview-media-repository.test.ts",
-        "?? packages/persistence-postgres/src/admin-preview-media-repository.ts",
-        "?? packages/persistence-postgres/src/admin-session-repository.test.ts",
-        "?? packages/persistence-postgres/src/admin-session-repository.ts",
-        "?? packages/persistence-postgres/src/translation-transfer-repository.test.ts",
-        "?? packages/persistence-postgres/src/translation-transfer-repository.ts",
-        "?? packages/persistence-postgres/src/translation-workspace-repository.test.ts",
-        "?? packages/persistence-postgres/src/translation-workspace-repository.ts"
+        "?? output/playwright/p3-03-gift-commerce/accessibility.json",
+        "?? output/playwright/p3-03-gift-commerce/en-created.png",
+        "?? output/playwright/p3-03-gift-commerce/en-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/en-inventory.png",
+        "?? output/playwright/p3-03-gift-commerce/en-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/en-preview.png",
+        "?? output/playwright/p3-03-gift-commerce/en-prices.png",
+        "?? output/playwright/p3-03-gift-commerce/es-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/es-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/ja-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/ja-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/pt-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/pt-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/th-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/th-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/vi-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/vi-mobile.png",
+        "?? output/playwright/p3-03-gift-commerce/zh-CN-desktop.png",
+        "?? output/playwright/p3-03-gift-commerce/zh-CN-mobile.png",
+        "?? packages/application/src/gift-commerce-content.test.ts",
+        "?? packages/application/src/gift-commerce-content.ts",
+        "?? packages/application/src/gift-commerce-results.ts",
+        "?? packages/application/src/gift-commerce-validation.ts",
+        "?? packages/application/src/gift-commerce.test.ts",
+        "?? packages/application/src/gift-commerce.ts",
+        "?? packages/application/src/published-gift-commerce.test.ts",
+        "?? packages/application/src/published-gift-commerce.ts",
+        "?? packages/content/src/published-gift-commerce.ts",
+        "?? packages/contracts/src/gift-commerce-openapi.test.ts",
+        "?? packages/contracts/src/gift-commerce-openapi.ts",
+        "?? packages/contracts/src/gift-commerce-profile.ts",
+        "?? packages/contracts/src/gift-commerce.test.ts",
+        "?? packages/contracts/src/gift-commerce.ts",
+        "?? packages/contracts/src/published-gift-commerce.test.ts",
+        "?? packages/contracts/src/published-gift-commerce.ts",
+        "?? packages/persistence-port/src/gift-commerce.ts",
+        "?? packages/persistence-port/src/published-gift-commerce.ts",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-atomicity.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-catalog-cases.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-concurrency.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-constraints.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-price-sealing.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-pricing-rollback.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-time-cases.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-gift-commerce.mjs",
+        "?? packages/persistence-postgres/src/gift-commerce-authorization-repository.test.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-authorization-repository.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift-data.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift-profile.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift-read.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift-repository.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift-write.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-gift.test.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-inventory-data.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-inventory-repository.test.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-inventory-repository.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-current.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-data.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-read.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-repository.test.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-repository.ts",
+        "?? packages/persistence-postgres/src/gift-commerce-pricing-write.ts",
+        "?? packages/persistence-postgres/src/published-gift-commerce-repository.ts"
       ]
     }
   },
@@ -3421,7 +3405,7 @@
         200,
         200
       ],
-      "origin": "http://127.0.0.1:51627"
+      "origin": "http://127.0.0.1:50223"
     },
     {
       "environment": "staging",
@@ -3436,7 +3420,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:51839"
+      "origin": "http://127.0.0.1:50425"
     },
     {
       "environment": "production",
@@ -3451,7 +3435,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:51862"
+      "origin": "http://127.0.0.1:50448"
     }
   ],
   "scenarioResults": [
@@ -3468,103 +3452,103 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/en/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/en/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           }
         ]
       },
@@ -3717,7 +3701,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -3780,7 +3764,7 @@
           "beforeTop": 11838.234375,
           "beforeWidth": 328,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -3822,127 +3806,127 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/vi/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/vi/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           }
         ]
       },
@@ -4095,7 +4079,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -4158,7 +4142,7 @@
           "beforeTop": 12019.234375,
           "beforeWidth": 358,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -4200,109 +4184,109 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/th/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/th/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2lg-l7asikrc3.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2lg-l7asikrc3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -4455,7 +4439,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -4518,7 +4502,7 @@
           "beforeTop": 7068.8125,
           "beforeWidth": 720,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -4560,187 +4544,187 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/zh-CN/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/zh-CN/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0jyq8zfmzj_l3.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0jyq8zfmzj_l3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-107-wght-normal.0zf7rmtx_19df.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-107-wght-normal.0zf7rmtx_19df.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-44-wght-normal.0i_fxtm9kiy0-.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-44-wght-normal.0i_fxtm9kiy0-.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
           }
         ]
       },
@@ -4893,7 +4877,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -4956,7 +4940,7 @@
           "beforeTop": 5555.03125,
           "beforeWidth": 928,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -4998,259 +4982,259 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/ja/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/ja/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/107x49qjcs-lo.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/107x49qjcs-lo.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-68-wght-normal.3k6k5uhxxem49.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-68-wght-normal.3k6k5uhxxem49.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-94-wght-normal.0uyd2p7w0xwi9.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-94-wght-normal.0uyd2p7w0xwi9.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-108-wght-normal.0kpltt-_vvkn9.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-108-wght-normal.0kpltt-_vvkn9.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-85-wght-normal.1qa_f-9t1u1ns.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-85-wght-normal.1qa_f-9t1u1ns.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-93-wght-normal.3st36lc750yhs.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-93-wght-normal.3st36lc750yhs.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-83-wght-normal.3zx_juwwp7gt1.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-83-wght-normal.3zx_juwwp7gt1.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-72-wght-normal.0jjtw94-5ijn2.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-118-wght-normal.0oiz-9fhkq7v6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-118-wght-normal.0oiz-9fhkq7v6.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-86-wght-normal.14rmjw1_q1pcr.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-jp-86-wght-normal.14rmjw1_q1pcr.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-jp-72-wght-normal.0jjtw94-5ijn2.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -5403,7 +5387,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -5466,7 +5450,7 @@
           "beforeTop": 6260,
           "beforeWidth": 1344,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -5508,103 +5492,109 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/es/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/es/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -5619,32 +5609,32 @@
             {
               "height": 48,
               "label": "Elegir este regalo de apoyo cuidadosamente preparado",
-              "width": 502.5
+              "width": 497.625
             },
             {
               "height": 48,
               "label": "Mira Vale",
-              "width": 102.359375
+              "width": 102.6875
             },
             {
               "height": 48,
               "label": "Recuerdo de medianoche",
-              "width": 245.65625
+              "width": 241.734375
             },
             {
               "height": 48,
               "label": "Recuerdo de medianoche",
-              "width": 245.65625
+              "width": 241.734375
             },
             {
               "height": 48,
               "label": "Cambiar de artista",
-              "width": 185
+              "width": 182.671875
             },
             {
               "height": 48,
               "label": "Recuerdo de medianoche",
-              "width": 245.65625
+              "width": 241.734375
             },
             {
               "height": 48,
@@ -5664,12 +5654,12 @@
             {
               "height": 48,
               "label": "Editar el mensaje privado",
-              "width": 242.0625
+              "width": 239.921875
             },
             {
               "height": 48,
               "label": "Eliminar regalo",
-              "width": 155.75
+              "width": 153.875
             },
             {
               "height": 48,
@@ -5704,22 +5694,22 @@
             {
               "height": 48,
               "label": "Elegir este regalo de apoyo cuidadosamente preparado",
-              "width": 502.5
+              "width": 497.625
             },
             {
               "height": 54.796875,
               "label": "Hero loading state resolved",
-              "width": 273.171875
+              "width": 269.515625
             },
             {
               "height": 48,
               "label": "Elegir este regalo de apoyo cuidadosamente preparado",
-              "width": 502.5
+              "width": 497.625
             },
             {
               "height": 54.796875,
               "label": "Runtime image failure requested",
-              "width": 318.59375
+              "width": 313.28125
             }
           ],
           "document": {
@@ -5741,23 +5731,23 @@
         },
         "cartLineMedia": {
           "gift": {
-            "bottom": 2481.71875,
+            "bottom": 2452.921875,
             "height": 80,
             "left": 288,
             "right": 368,
-            "top": 2401.71875,
+            "top": 2372.921875,
             "width": 80
           },
           "idol": {
-            "bottom": 2489.71875,
+            "bottom": 2460.921875,
             "height": 40,
             "left": 336,
             "right": 376,
-            "top": 2449.71875,
+            "top": 2420.921875,
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -5807,37 +5797,37 @@
           "ordered": true
         },
         "heroFailureStability": {
-          "afterAnchorTop": 7288.28125,
-          "afterDocumentHeight": 7460,
+          "afterAnchorTop": 7259.484375,
+          "afterDocumentHeight": 7431,
           "afterHeight": 756,
           "afterLeft": 288,
-          "afterTop": 6520.28125,
+          "afterTop": 6491.484375,
           "afterWidth": 1344,
-          "beforeAnchorTop": 7288.28125,
-          "beforeDocumentHeight": 7460,
+          "beforeAnchorTop": 7259.484375,
+          "beforeDocumentHeight": 7431,
           "beforeHeight": 756,
           "beforeLeft": 288,
-          "beforeTop": 6520.28125,
+          "beforeTop": 6491.484375,
           "beforeWidth": 1344,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
         "heroTransitionStability": {
-          "afterAnchorTop": 6171.0625,
-          "afterDocumentHeight": 7460,
+          "afterAnchorTop": 6142.265625,
+          "afterDocumentHeight": 7431,
           "afterHeight": 756,
           "afterLeft": 288,
           "afterState": "ready",
-          "afterTop": 5403.0625,
+          "afterTop": 5374.265625,
           "afterWidth": 1344,
-          "beforeAnchorTop": 6171.0625,
-          "beforeDocumentHeight": 7460,
+          "beforeAnchorTop": 6142.265625,
+          "beforeDocumentHeight": 7431,
           "beforeHeight": 756,
           "beforeLeft": 288,
           "beforeState": "loading",
-          "beforeTop": 5403.0625,
+          "beforeTop": 5374.265625,
           "beforeWidth": 1344
         }
       },
@@ -5862,103 +5852,103 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/pt/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/pt/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           }
         ]
       },
@@ -6111,7 +6101,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -6174,7 +6164,7 @@
           "beforeTop": 15611.984375,
           "beforeWidth": 735,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -6222,133 +6212,133 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/en-XA/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/en-XA/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
           }
         ]
       },
@@ -6501,7 +6491,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -6564,7 +6554,7 @@
           "beforeTop": 8113.53125,
           "beforeWidth": 975,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -6612,127 +6602,127 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/en-XA/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/en-XA/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           }
         ]
       },
@@ -6885,7 +6875,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -6948,7 +6938,7 @@
           "beforeTop": 12388.28125,
           "beforeWidth": 288,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -6990,103 +6980,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/pt/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/pt/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           }
         ]
       },
@@ -7106,7 +7090,7 @@
             {
               "height": 48,
               "label": "Mira Vale",
-              "width": 95
+              "width": 93.65625
             },
             {
               "height": 67.1875,
@@ -7121,7 +7105,7 @@
             {
               "height": 48,
               "label": "Escolher outra artista",
-              "width": 190.765625
+              "width": 191.875
             },
             {
               "height": 118.375,
@@ -7146,12 +7130,12 @@
             {
               "height": 48,
               "label": "Editar a mensagem privada",
-              "width": 234.15625
+              "width": 231.65625
             },
             {
               "height": 48,
               "label": "Remover presente",
-              "width": 167.234375
+              "width": 167.4375
             },
             {
               "height": 96.34375,
@@ -7191,7 +7175,7 @@
             {
               "height": 51.59375,
               "label": "Hero loading state resolved",
-              "width": 246.546875
+              "width": 246.59375
             },
             {
               "height": 94.78125,
@@ -7201,7 +7185,7 @@
             {
               "height": 51.59375,
               "label": "Runtime image failure requested",
-              "width": 285.9375
+              "width": 286.96875
             }
           ],
           "document": {
@@ -7223,23 +7207,23 @@
         },
         "cartLineMedia": {
           "gift": {
-            "bottom": 3957.625,
+            "bottom": 3938.4375,
             "height": 80,
             "left": 16,
             "right": 96,
-            "top": 3877.625,
+            "top": 3858.4375,
             "width": 80
           },
           "idol": {
-            "bottom": 3965.625,
+            "bottom": 3946.4375,
             "height": 40,
             "left": 64,
             "right": 104,
-            "top": 3925.625,
+            "top": 3906.4375,
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -7289,37 +7273,37 @@
           "ordered": true
         },
         "heroFailureStability": {
-          "afterAnchorTop": 13218.65625,
-          "afterDocumentHeight": 13457,
+          "afterAnchorTop": 13180.28125,
+          "afterDocumentHeight": 13419,
           "afterHeight": 544,
           "afterLeft": 16,
-          "afterTop": 12662.65625,
+          "afterTop": 12624.28125,
           "afterWidth": 288,
-          "beforeAnchorTop": 13218.65625,
-          "beforeDocumentHeight": 13457,
+          "beforeAnchorTop": 13180.28125,
+          "beforeDocumentHeight": 13419,
           "beforeHeight": 544,
           "beforeLeft": 16,
-          "beforeTop": 12662.65625,
+          "beforeTop": 12624.28125,
           "beforeWidth": 288,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
         "heroTransitionStability": {
-          "afterAnchorTop": 12271.875,
-          "afterDocumentHeight": 13457,
+          "afterAnchorTop": 12233.5,
+          "afterDocumentHeight": 13419,
           "afterHeight": 544,
           "afterLeft": 16,
           "afterState": "ready",
-          "afterTop": 11715.875,
+          "afterTop": 11677.5,
           "afterWidth": 288,
-          "beforeAnchorTop": 12271.875,
-          "beforeDocumentHeight": 13457,
+          "beforeAnchorTop": 12233.5,
+          "beforeDocumentHeight": 13419,
           "beforeHeight": 544,
           "beforeLeft": 16,
           "beforeState": "loading",
-          "beforeTop": 11715.875,
+          "beforeTop": 11677.5,
           "beforeWidth": 288
         }
       },
@@ -7388,109 +7372,109 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/en/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/en/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -7643,7 +7627,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -7706,7 +7690,7 @@
           "beforeTop": 11978.421875,
           "beforeWidth": 358,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -7753,109 +7737,109 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/en/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/en/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -8008,7 +7992,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -8071,7 +8055,7 @@
           "beforeTop": 6243.21875,
           "beforeWidth": 1344,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -8120,103 +8104,103 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/en/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/en/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           }
         ]
       },
@@ -8369,7 +8353,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -8432,7 +8416,7 @@
           "beforeTop": 11978.421875,
           "beforeWidth": 358,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -8481,109 +8465,103 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/en/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/en/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -8598,32 +8576,32 @@
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 211.515625
+              "width": 214.375
             },
             {
               "height": 48,
               "label": "Mira Vale",
-              "width": 102.6875
+              "width": 102.359375
             },
             {
               "height": 48,
               "label": "Midnight keepsake",
-              "width": 185.96875
+              "width": 187.828125
             },
             {
               "height": 48,
               "label": "Midnight keepsake",
-              "width": 185.96875
+              "width": 187.828125
             },
             {
               "height": 48,
               "label": "Change idol",
-              "width": 125.796875
+              "width": 128.03125
             },
             {
               "height": 48,
               "label": "Midnight keepsake",
-              "width": 185.96875
+              "width": 187.828125
             },
             {
               "height": 48,
@@ -8643,62 +8621,62 @@
             {
               "height": 48,
               "label": "Edit private note",
-              "width": 164.828125
+              "width": 167.3125
             },
             {
               "height": 48,
               "label": "Remove gift",
-              "width": 128.453125
+              "width": 130.03125
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 209.515625
+              "width": 212.375
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 209.515625
+              "width": 212.375
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 209.515625
+              "width": 212.375
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 209.515625
+              "width": 212.375
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 209.515625
+              "width": 212.375
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 209.515625
+              "width": 212.375
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 211.515625
+              "width": 214.375
             },
             {
               "height": 54.796875,
               "label": "Hero loading state resolved",
-              "width": 269.515625
+              "width": 273.171875
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 211.515625
+              "width": 214.375
             },
             {
               "height": 54.796875,
               "label": "Runtime image failure requested",
-              "width": 313.28125
+              "width": 318.59375
             }
           ],
           "document": {
@@ -8720,23 +8698,23 @@
         },
         "cartLineMedia": {
           "gift": {
-            "bottom": 2420.328125,
+            "bottom": 2477.921875,
             "height": 80,
             "left": 1312,
             "right": 1392,
-            "top": 2340.328125,
+            "top": 2397.921875,
             "width": 80
           },
           "idol": {
-            "bottom": 2428.328125,
+            "bottom": 2485.921875,
             "height": 40,
             "left": 1304,
             "right": 1344,
-            "top": 2388.328125,
+            "top": 2445.921875,
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -8786,37 +8764,37 @@
           "ordered": true
         },
         "heroFailureStability": {
-          "afterAnchorTop": 7011.21875,
-          "afterDocumentHeight": 7183,
+          "afterAnchorTop": 7085.59375,
+          "afterDocumentHeight": 7258,
           "afterHeight": 756,
           "afterLeft": 48,
-          "afterTop": 6243.21875,
+          "afterTop": 6317.59375,
           "afterWidth": 1344,
-          "beforeAnchorTop": 7011.21875,
-          "beforeDocumentHeight": 7183,
+          "beforeAnchorTop": 7085.59375,
+          "beforeDocumentHeight": 7258,
           "beforeHeight": 756,
           "beforeLeft": 48,
-          "beforeTop": 6243.21875,
+          "beforeTop": 6317.59375,
           "beforeWidth": 1344,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
         "heroTransitionStability": {
-          "afterAnchorTop": 5895.265625,
-          "afterDocumentHeight": 7183,
+          "afterAnchorTop": 5969.640625,
+          "afterDocumentHeight": 7258,
           "afterHeight": 756,
           "afterLeft": 48,
           "afterState": "ready",
-          "afterTop": 5127.265625,
+          "afterTop": 5201.640625,
           "afterWidth": 1344,
-          "beforeAnchorTop": 5895.265625,
-          "beforeDocumentHeight": 7183,
+          "beforeAnchorTop": 5969.640625,
+          "beforeDocumentHeight": 7258,
           "beforeHeight": 756,
           "beforeLeft": 48,
           "beforeState": "loading",
-          "beforeTop": 5127.265625,
+          "beforeTop": 5201.640625,
           "beforeWidth": 1344
         }
       },
@@ -8848,103 +8826,103 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/en/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/en/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
           }
         ]
       },
@@ -9097,7 +9075,7 @@
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -9160,7 +9138,7 @@
           "beforeTop": 11978.421875,
           "beforeWidth": 358,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
@@ -9209,103 +9187,109 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:51627/_internal/design-foundations/en/components"
+            "url": "http://127.0.0.1:50223/_internal/design-foundations/en/components"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2mmr46hy2eglh.css"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2mmr46hy2eglh.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/0vwbgs4aks3-x.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/0vwbgs4aks3-x.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/3qg_gu6pzae_s.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/3qg_gu6pzae_s.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:51627/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:50223/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:51627/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:50223/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:51627/ui-composites/fictional-keepsake-gift.png"
+            "url": "http://127.0.0.1:50223/ui-composites/fictional-keepsake-gift.png"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:50223/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:51627/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:50223/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -9320,32 +9304,32 @@
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 214.375
+              "width": 211.515625
             },
             {
               "height": 48,
               "label": "Mira Vale",
-              "width": 102.359375
+              "width": 102.6875
             },
             {
               "height": 48,
               "label": "Midnight keepsake",
-              "width": 187.828125
+              "width": 185.96875
             },
             {
               "height": 48,
               "label": "Midnight keepsake",
-              "width": 187.828125
+              "width": 185.96875
             },
             {
               "height": 48,
               "label": "Change idol",
-              "width": 128.03125
+              "width": 125.796875
             },
             {
               "height": 48,
               "label": "Midnight keepsake",
-              "width": 187.828125
+              "width": 185.96875
             },
             {
               "height": 48,
@@ -9365,62 +9349,62 @@
             {
               "height": 48,
               "label": "Edit private note",
-              "width": 167.3125
+              "width": 164.828125
             },
             {
               "height": 48,
               "label": "Remove gift",
-              "width": 130.03125
+              "width": 128.453125
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 212.375
+              "width": 209.515625
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 212.375
+              "width": 209.515625
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 212.375
+              "width": 209.515625
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 212.375
+              "width": 209.515625
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 212.375
+              "width": 209.515625
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 212.375
+              "width": 209.515625
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 214.375
+              "width": 211.515625
             },
             {
               "height": 54.796875,
               "label": "Hero loading state resolved",
-              "width": 273.171875
+              "width": 269.515625
             },
             {
               "height": 48,
               "label": "Choose a support gift",
-              "width": 214.375
+              "width": 211.515625
             },
             {
               "height": 54.796875,
               "label": "Runtime image failure requested",
-              "width": 318.59375
+              "width": 313.28125
             }
           ],
           "document": {
@@ -9442,23 +9426,23 @@
         },
         "cartLineMedia": {
           "gift": {
-            "bottom": 2477.921875,
+            "bottom": 2420.328125,
             "height": 80,
             "left": 48,
             "right": 128,
-            "top": 2397.921875,
+            "top": 2340.328125,
             "width": 80
           },
           "idol": {
-            "bottom": 2485.921875,
+            "bottom": 2428.328125,
             "height": 40,
             "left": 96,
             "right": 136,
-            "top": 2445.921875,
+            "top": 2388.328125,
             "width": 40
           }
         },
-        "heroCurrentSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+        "heroCurrentSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
         "heroAction": {
           "background": "rgb(216, 178, 110)",
           "foreground": "rgb(10, 10, 12)",
@@ -9508,37 +9492,37 @@
           "ordered": true
         },
         "heroFailureStability": {
-          "afterAnchorTop": 7085.59375,
-          "afterDocumentHeight": 7258,
+          "afterAnchorTop": 7011.21875,
+          "afterDocumentHeight": 7183,
           "afterHeight": 756,
           "afterLeft": 48,
-          "afterTop": 6317.59375,
+          "afterTop": 6243.21875,
           "afterWidth": 1344,
-          "beforeAnchorTop": 7085.59375,
-          "beforeDocumentHeight": 7258,
+          "beforeAnchorTop": 7011.21875,
+          "beforeDocumentHeight": 7183,
           "beforeHeight": 756,
           "beforeLeft": 48,
-          "beforeTop": 6317.59375,
+          "beforeTop": 6243.21875,
           "beforeWidth": 1344,
           "browserDecodeFailed": true,
-          "initialSrc": "http://127.0.0.1:51627/ui-composites/fictional-performer-hero-desktop.png",
+          "initialSrc": "http://127.0.0.1:50223/ui-composites/fictional-performer-hero-desktop.png",
           "requestedSrc": "data:image/png;base64,AA==",
           "sourceChanged": true
         },
         "heroTransitionStability": {
-          "afterAnchorTop": 5969.640625,
-          "afterDocumentHeight": 7258,
+          "afterAnchorTop": 5895.265625,
+          "afterDocumentHeight": 7183,
           "afterHeight": 756,
           "afterLeft": 48,
           "afterState": "ready",
-          "afterTop": 5201.640625,
+          "afterTop": 5127.265625,
           "afterWidth": 1344,
-          "beforeAnchorTop": 5969.640625,
-          "beforeDocumentHeight": 7258,
+          "beforeAnchorTop": 5895.265625,
+          "beforeDocumentHeight": 7183,
           "beforeHeight": 756,
           "beforeLeft": 48,
           "beforeState": "loading",
-          "beforeTop": 5201.640625,
+          "beforeTop": 5127.265625,
           "beforeWidth": 1344
         }
       },
@@ -9575,7 +9559,7 @@
     },
     {
       "path": "viewports/1920x1080-es.png",
-      "sha256": "9ee49a9bc4934ddcf996d2f042fc6d6e79b96ec5ec8d43ae5a98c33307a88ac5"
+      "sha256": "fa7bbe23c814a29d82b90f7540ab97f9f61509136602299ac59529da17344f1b"
     },
     {
       "path": "responsive/767x900-pt.png",
@@ -9591,7 +9575,7 @@
     },
     {
       "path": "stress/320x800-pt-long.png",
-      "sha256": "7afdec5d6fa080bc44e276b8300d4d19d75819bc873cea580b26364bb25169ea"
+      "sha256": "32a90e51c21923af4fdeabcbe3e5396d8b5036b56061eaf58d3792bb2887f7a9"
     },
     {
       "path": "states/390x844-en.png",
@@ -9607,7 +9591,7 @@
     },
     {
       "path": "rtl/1440x900-en.png",
-      "sha256": "908ae7b3a52a280cce443286e2517137c5335c9f15fa081d38847fea8bdf35a9"
+      "sha256": "45a352bcf82df0a1b1d910f71bc002b85ca319f8634914b8b7eda59abc509d49"
     },
     {
       "path": "reduced-motion/390x844-en.png",
@@ -9615,7 +9599,7 @@
     },
     {
       "path": "reduced-motion/1440x900-en.png",
-      "sha256": "5879c6eeb1816d75fc6a54bf9c385b8db7136247370084f35b15c212712737ee"
+      "sha256": "76024aeffb42410fa9a71ec19e4844eaaea8b53cf79b85e0a915915e87ebb35b"
     },
     {
       "captureMethod": "CDP Page.captureScreenshot without Emulation commands",

@@ -47,6 +47,7 @@ test("binds production public reads to configured PostgreSQL and trusted media o
   expect(Object.keys(composition).sort()).toEqual([
     "publishedContentRoute",
     "publishedContentRuntime",
+    "publishedGiftCommerceRoute",
   ]);
   expect(createPersistence).toHaveBeenCalledWith(
     expect.objectContaining({

@@ -1,11 +1,108 @@
 import { describe, expect, it } from "vitest";
+import { giftVariantIdSchema } from "@fan-support/contracts";
 import {
   emptyFields,
   translationChanges,
   replaceAliasLocale,
   editableFields,
+  reconcileVariantLabels,
+  savedRevisionId,
 } from "./editor-model";
 describe("revision form boundaries", () => {
+  it("exposes newly created draft variants for English naming before activation", () => {
+    expect(
+      reconcileVariantLabels(
+        { variantLabels: [{ giftVariantId: "old", label: "Keep" }] },
+        [{ id: "new" }, { id: "old" }],
+      ),
+    ).toEqual({
+      variantLabels: [
+        { giftVariantId: "new", label: "" },
+        { giftVariantId: "old", label: "Keep" },
+      ],
+    });
+  });
+  it("opens the new gift revision rather than the commerce receipt after save", () => {
+    const revision = "50000000-0000-4000-8000-000000000001";
+    const receipt = "50000000-0000-4000-8000-000000000002";
+    expect(
+      savedRevisionId({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "MUTATION",
+        action: "SAVE_GIFT_CONTENT",
+        resultId: receipt,
+        replayed: false,
+        giftId: receipt,
+        giftRevisionId: revision,
+        authoringVersion: 1,
+        profileHash: "a".repeat(64),
+      }),
+    ).toBe(revision);
+    expect(
+      savedRevisionId({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "MUTATION",
+        resultId: revision,
+        replayed: false,
+      }),
+    ).toBe(revision);
+    expect(() =>
+      savedRevisionId({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "MUTATION",
+        action: "CREATE_GIFT",
+        resultId: receipt,
+        replayed: false,
+        giftId: receipt,
+        baseVersion: 1,
+      }),
+    ).toThrow();
+  });
+  it("keeps gift variant identities while reconciling missing translations", () => {
+    const first = giftVariantIdSchema.parse(
+      "10000000-0000-4000-8000-000000000001",
+    );
+    const second = giftVariantIdSchema.parse(
+      "10000000-0000-4000-8000-000000000002",
+    );
+    const source = {
+      kind: "GIFT" as const,
+      fields: {
+        title: "Gift",
+        shortDescription: "A gift",
+        description: "Description",
+        fulfillmentDescription: "Prepared by the studio",
+        variantLabels: [
+          { giftVariantId: first, label: "Small" },
+          { giftVariantId: second, label: "Large" },
+        ],
+        seoTitle: "Gift",
+        seoDescription: "Description",
+      },
+    };
+    expect(emptyFields(source)["variantLabels"]).toEqual([
+      { giftVariantId: first, label: "" },
+      { giftVariantId: second, label: "" },
+    ]);
+    expect(
+      editableFields(source, {
+        variantLabels: [
+          { giftVariantId: first, label: "小份" },
+          { giftVariantId: "obsolete", label: "旧规格" },
+        ],
+      })["variantLabels"],
+    ).toEqual([
+      { giftVariantId: first, label: "小份" },
+      { giftVariantId: second, label: "" },
+    ]);
+    expect(editableFields(source)).toMatchObject({
+      subtitle: "",
+      safetyNotice: "",
+    });
+  });
   it("exposes new homepage labels as empty translations and removes obsolete slots", () => {
     const source = {
       kind: "HOMEPAGE" as const,

@@ -16,7 +16,9 @@ import {
   runMigrations,
   withEphemeralPostgres,
   createPostgresPersistence,
+  loadMigrationManifest,
 } from "../dist/index.js";
+import { runMigrationCommandOnSession } from "../dist/migrations/runner.js";
 import { createAdminCatalogUseCases } from "../../application/dist/admin-catalog.js";
 import { createTranslationTransferUseCases } from "../../application/dist/translation-transfer.js";
 import { digestAdminContentToken } from "../../application/dist/admin-content-tokens.js";
@@ -858,14 +860,85 @@ await withEphemeralPostgres(async (clientConfig) => {
       "management labels respect locale scope",
     );
     stage = "history downgrade guard";
-    await assert.rejects(
-      runMigrations({
-        clientConfig,
-        workspaceRoot,
-        command: { direction: "down", confirmVersion: "0019" },
-      }),
+    const retainedHistory = async () =>
+      (
+        await client.query(`SELECT
+      (SELECT max(version) FROM public.schema_migrations) AS version,
+      (SELECT count(*)::integer FROM public.gift_revision_profiles) AS profiles,
+      (SELECT count(*)::integer FROM public.gift_revisions WHERE profile_version=2) AS classified_revisions,
+      (SELECT count(*)::integer FROM public.admin_idol_identity_receipts) AS identities,
+      (SELECT count(*)::integer FROM public.translation_export_receipts) AS exports,
+      (SELECT count(*)::integer FROM public.translation_import_receipts) AS imports,
+      (SELECT jsonb_agg(to_jsonb(h) ORDER BY idol_id) FROM public.idol_publication_heads h) AS idol_heads,
+      (SELECT jsonb_agg(to_jsonb(h) ORDER BY gift_id) FROM public.gift_publication_heads h) AS gift_heads,
+      (SELECT jsonb_agg(jsonb_build_object('id',id,'version',version,'status',status,'draft',draft_revision_id,'published',published_revision_id) ORDER BY id) FROM public.gifts) AS gift_versions
+    `)
+      ).rows[0];
+    const beforeDown = await retainedHistory();
+    equal(
+      beforeDown.version,
+      "0020",
+      "admin and translation operations ran at the current migration head",
     );
-    assertions++;
+    equal(
+      beforeDown.profiles > 0 &&
+        beforeDown.profiles === beforeDown.classified_revisions,
+      true,
+      "normal gift translation copies created mandatory classification history",
+    );
+    equal(
+      beforeDown.identities > 0 &&
+        beforeDown.exports > 0 &&
+        beforeDown.imports > 0,
+      true,
+      "the downgrade probe retains real identity and translation exchange receipts",
+    );
+    const migrationManifest = await loadMigrationManifest({ workspaceRoot });
+    const downSql = migrationManifest.find((row) => row.version === "0020").down
+      .sql;
+    let observed;
+    let rejection;
+    try {
+      await runMigrationCommandOnSession(
+        {
+          query: async (sql, values) => {
+            try {
+              return await client.query(sql, values);
+            } catch (error) {
+              if (sql === downSql)
+                observed = {
+                  code: error.code,
+                  guard:
+                    error.message ===
+                    "gift classification and identity history cannot be downgraded"
+                      ? "GIFT_PROFILE_HISTORY"
+                      : "OTHER",
+                };
+              throw error;
+            }
+          },
+        },
+        migrationManifest,
+        { direction: "down", confirmVersion: "0020" },
+      );
+    } catch (error) {
+      rejection = error;
+    }
+    equal(
+      observed,
+      { code: "55000", guard: "GIFT_PROFILE_HISTORY" },
+      "current down SQL rejects actual gift classification history rather than a wrong version",
+    );
+    equal(
+      rejection?.message,
+      "migration 0020 down failed",
+      "runner identifies the exact protected migration",
+    );
+    equal(
+      await retainedHistory(),
+      beforeDown,
+      "rejected downgrade preserves migration head and identity, profile, import, export and publication history",
+    );
     process.stdout.write(
       `admin catalog PostgreSQL checks: ${assertions} assertions PASS\n`,
     );

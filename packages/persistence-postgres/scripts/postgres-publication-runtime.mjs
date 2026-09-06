@@ -13,7 +13,9 @@ import {
   captureDatabaseCatalog,
   runMigrations,
   withEphemeralPostgres,
+  loadMigrationManifest,
 } from "../dist/index.js";
+import { runMigrationCommandOnSession } from "../dist/migrations/runner.js";
 import { createPostgresPersistenceWithPoolFactory } from "../dist/postgres-persistence.js";
 import { seedCatalogDirectoryFixtures } from "./postgres-catalog-fixtures.mjs";
 import { seedPublicationRuntimeFixtures } from "./postgres-publication-runtime-fixtures.mjs";
@@ -324,26 +326,96 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
       }
       if (process.env["PUBLICATION_RUNTIME_PROOF_CASES"] !== "1") {
         stage = "history preserving downgrade";
-        await runMigrations({
-          clientConfig,
-          workspaceRoot,
-          command: { direction: "down", confirmVersion: "0019" },
-        });
-        let rejection;
-        try {
-          await runMigrations({
+        equal(
+          (
+            await client.query(
+              "SELECT max(version) AS version FROM public.schema_migrations",
+            )
+          ).rows[0].version,
+          "0020",
+          "runtime business checks ran against the current migration head",
+        );
+        equal(
+          (
+            await client.query(
+              "SELECT count(*)::integer AS count FROM public.gift_revisions WHERE profile_version=2",
+            )
+          ).rows[0].count,
+          0,
+          "historical runtime fixtures have no new classification history",
+        );
+        for (const [version, previous] of [
+          ["0020", "0019"],
+          ["0019", "0018"],
+        ]) {
+          const reverted = await runMigrations({
             clientConfig,
             workspaceRoot,
-            command: { direction: "down", confirmVersion: "0018" },
+            command: { direction: "down", confirmVersion: version },
           });
+          equal(
+            [reverted.revertedVersions, reverted.currentVersion],
+            [[version], previous],
+            `${version}: only an empty later feature migration is reverted`,
+          );
+        }
+        const retainedHistory = async () =>
+          (
+            await client.query(`SELECT
+          (SELECT max(version) FROM public.schema_migrations) AS version,
+          (SELECT count(*)::integer FROM public.content_publications WHERE proof_version=2) AS publications,
+          (SELECT count(*)::integer FROM public.content_publication_manifests) AS manifests,
+          (SELECT count(*)::integer FROM public.content_publication_receipts) AS receipts,
+          (SELECT count(*)::integer FROM public.content_purge_jobs) AS jobs,
+          (SELECT count(*)::integer FROM public.content_purge_attempts) AS attempts,
+          (SELECT jsonb_agg(to_jsonb(h) ORDER BY gift_id) FROM public.gift_publication_heads h) AS gift_heads,
+          (SELECT jsonb_agg(to_jsonb(h) ORDER BY idol_id) FROM public.idol_publication_heads h) AS idol_heads`)
+          ).rows[0];
+        const beforeDown = await retainedHistory();
+        const manifest = await loadMigrationManifest({ workspaceRoot });
+        const downSql = manifest.find((row) => row.version === "0018").down.sql;
+        let observed;
+        let rejection;
+        try {
+          await runMigrationCommandOnSession(
+            {
+              query: async (sql, values) => {
+                try {
+                  return await client.query(sql, values);
+                } catch (error) {
+                  if (sql === downSql)
+                    observed = {
+                      code: error.code,
+                      guard:
+                        error.message ===
+                        "publication runtime history cannot be discarded"
+                          ? "PUBLICATION_RUNTIME_HISTORY"
+                          : "OTHER",
+                    };
+                  throw error;
+                }
+              },
+            },
+            manifest,
+            { direction: "down", confirmVersion: "0018" },
+          );
         } catch (error) {
           rejection = error;
         }
-        assert.ok(rejection, "runtime history cannot be downgraded away");
         equal(
-          true,
-          true,
-          "0018 down retains real publication and purge history",
+          observed,
+          { code: "55000", guard: "PUBLICATION_RUNTIME_HISTORY" },
+          "0018 actual down SQL rejects retained publication and purge evidence",
+        );
+        equal(
+          rejection?.message,
+          "migration 0018 down failed",
+          "runner reports the exact guarded migration, not a head mismatch",
+        );
+        equal(
+          await retainedHistory(),
+          beforeDown,
+          "failed 0018 downgrade preserves migration head and all runtime history",
         );
         const proof = (
           await client.query(

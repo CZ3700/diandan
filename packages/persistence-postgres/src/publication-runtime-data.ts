@@ -4,6 +4,7 @@ import {
   publicationStatusResponseSchema,
   publicationManifestSchema,
   type PublicationRuntimeWriteCommand,
+  type PublicationPreflightContext,
   type PublicationStatusCommand,
 } from "@fan-support/contracts";
 import { computePublicationManifestHash } from "@fan-support/content";
@@ -17,15 +18,40 @@ import type { TransactionClient } from "./transaction-runner.js";
 export async function publicationTime(
   client: TransactionClient,
   input: PublicationRuntimeWriteCommand,
-  evaluatedAt: string,
+  context: PublicationPreflightContext,
   head: DraftRow | undefined,
 ) {
+  // Only already verified immutable evidence contributes to event ordering.
+  // Preflight's wall-clock evaluation remains a current eligibility check, not persisted history.
+  const bounds = [
+    input.manifest.revision,
+    ...input.manifest.mediaRevisions,
+  ].flatMap((revision) => [
+    revision.createdAt,
+    ...revision.translationAudits.flatMap((audit) => [
+      audit.editedAt,
+      ...(audit.review.status === "APPROVED" ? [audit.review.reviewedAt] : []),
+    ]),
+  ]);
+  for (const approval of input.manifest.extensionApprovals)
+    bounds.push(approval.editedAt, approval.reviewedAt);
+  if (
+    input.command.action !== "VALIDATE" &&
+    "validatedAt" in context.snapshot.lifecycle
+  )
+    bounds.push(context.snapshot.lifecycle.validatedAt);
   const [row] = await draftRows(
     client,
-    `WITH event_clock AS MATERIALIZED (SELECT GREATEST(clock_timestamp(),transaction_timestamp(),$1::timestamptz,$2::timestamptz,$3::timestamptz+interval '1 microsecond') AS event_time)
+    `WITH event_clock AS MATERIALIZED (SELECT GREATEST(transaction_timestamp(),$1::timestamptz,(SELECT max(value) FROM unnest($2::timestamptz[]) AS value),$3::timestamptz+interval '1 microsecond') AS event_time)
     SELECT gen_random_uuid() AS result_id,gen_random_uuid() AS manifest_id,gen_random_uuid() AS publication_id,gen_random_uuid() AS audit_id,
     ${utcTimestampSql("event_time")} AS now,to_jsonb(event_time) AS lifecycle_time FROM event_clock`,
-    [input.principal.authorizedAt, evaluatedAt, head?.["updated_at"] ?? null],
+    [
+      input.principal.authorizedAt,
+      bounds,
+      input.command.action === "VALIDATE"
+        ? null
+        : (head?.["updated_at"] ?? null),
+    ],
   );
   if (!row) throw new Error("Publication event time unavailable");
   return {

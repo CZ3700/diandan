@@ -67,7 +67,96 @@ function operation(
     },
   });
 }
+function commerceOperation(
+  path: string,
+  action: contract.GiftCommerceCommand["action"],
+  mutation = false,
+  bodyLimit = SMALL,
+): AdminOperation {
+  const base = operation(
+    `/api/v1/admin/gift-commerce/${path}`,
+    contract.giftCommerceCommandSchema,
+    contract.giftCommerceResponseSchema,
+    action,
+    undefined,
+    mutation,
+    bodyLimit,
+  );
+  return Object.freeze({
+    ...base,
+    parseResponse(input) {
+      const response = contract.giftCommerceResponseSchema.parse(input);
+      if (response.outcome === "FAILURE") return response;
+      let matches = false;
+      if (mutation)
+        matches = response.kind === "MUTATION" && response.action === action;
+      else
+        switch (action) {
+          case "CONTEXT":
+            matches = response.kind === "COMMERCE_CONTEXT";
+            break;
+          case "READ_GIFT":
+            matches = response.kind === "GIFT";
+            break;
+          case "READ_PRICES":
+            matches =
+              response.kind === "PRICE_BOOKS" || response.kind === "PRICES";
+            break;
+          case "READ_INVENTORY":
+            matches =
+              response.kind === "INVENTORY_BALANCES" ||
+              response.kind === "INVENTORY_LEDGER";
+            break;
+        }
+      if (!matches) throw new Error("Invalid commerce response");
+      return response;
+    },
+  });
+}
 const entries = {
+  "commerce-context": commerceOperation("context/read", "CONTEXT"),
+  "gift-read": commerceOperation("gifts/read", "READ_GIFT"),
+  "gift-create": commerceOperation("gifts/create", "CREATE_GIFT", true),
+  "gift-status": commerceOperation("gifts/status", "SET_GIFT_STATUS", true),
+  "gift-variant-save": commerceOperation(
+    "variants/save",
+    "SAVE_VARIANT",
+    true,
+    128 * 1024,
+  ),
+  "gift-content-save": commerceOperation(
+    "content/save",
+    "SAVE_GIFT_CONTENT",
+    true,
+    LARGE,
+  ),
+  "prices-read": commerceOperation("prices/read", "READ_PRICES"),
+  "price-revision-create": commerceOperation(
+    "prices/create",
+    "CREATE_PRICE_REVISION",
+    true,
+  ),
+  "price-book-publish": commerceOperation(
+    "prices/publish",
+    "PUBLISH_PRICE_BOOK",
+    true,
+  ),
+  "price-book-rollback": commerceOperation(
+    "prices/rollback",
+    "ROLLBACK_PRICE_BOOK",
+    true,
+  ),
+  "inventory-read": commerceOperation("inventory/read", "READ_INVENTORY"),
+  "inventory-adjust": commerceOperation(
+    "inventory/adjust",
+    "ADJUST_INVENTORY",
+    true,
+  ),
+  "inventory-location-create": commerceOperation(
+    "inventory/locations/create",
+    "CREATE_INVENTORY_LOCATION",
+    true,
+  ),
   session: operation(
     "/api/v1/admin/session/read",
     contract.adminSessionCommandSchema,

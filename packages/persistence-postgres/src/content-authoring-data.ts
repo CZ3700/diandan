@@ -310,8 +310,14 @@ export async function authoringTime(
   target: ContentAuthoringTarget,
   owner: DraftRow,
   source: ContentAuthoringSnapshot | null,
+  trustedCommerceTime?: string,
 ): Promise<string> {
   const table = AUTHORING_TABLES[target.kind];
+  const commerceTime = target.kind === "GIFT" ? trustedCommerceTime : undefined;
+  // New commerce receipts use the stable authority floor plus the same locked
+  // content history. Ordinary authoring retains its existing clock behavior.
+  const observedTime =
+    commerceTime === undefined ? "clock_timestamp()," : "$5::timestamptz,";
   const extensionBound =
     target.kind === "IDOL"
       ? `,(SELECT max(GREATEST(s.edited_at,r.created_at,r.submitted_at,r.reviewed_at)) FROM public.idol_revision_alias_sets s LEFT JOIN public.idol_revision_alias_reviews r ON r.alias_set_id=s.id WHERE s.idol_revision_id=$3)`
@@ -320,12 +326,13 @@ export async function authoringTime(
         : "";
   const [row] = await draftRows(
     client,
-    `SELECT to_char(GREATEST(clock_timestamp(),transaction_timestamp(),$1::timestamptz,$2::timestamptz,(SELECT max(GREATEST(p.created_at,p.validated_at,p.published_at,p.superseded_at,p.archived_at)) FROM public.${table.revisions} p ${table.ownerColumn === null ? "" : `WHERE p.${table.ownerColumn}::text=$4`}),(SELECT max(t.edited_at) FROM public.${table.translations} t WHERE t.${table.parent}=$3),(SELECT max(GREATEST(r.created_at,r.submitted_at,r.reviewed_at)) FROM public.${table.reviews} r JOIN public.${table.translations} t ON r.${table.translation}=t.id WHERE t.${table.parent}=$3)${extensionBound}) AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS now`,
+    `SELECT to_char(GREATEST(${observedTime}transaction_timestamp(),$1::timestamptz,$2::timestamptz,(SELECT max(GREATEST(p.created_at,p.validated_at,p.published_at,p.superseded_at,p.archived_at)) FROM public.${table.revisions} p ${table.ownerColumn === null ? "" : `WHERE p.${table.ownerColumn}::text=$4`}),(SELECT max(t.edited_at) FROM public.${table.translations} t WHERE t.${table.parent}=$3),(SELECT max(GREATEST(r.created_at,r.submitted_at,r.reviewed_at)) FROM public.${table.reviews} r JOIN public.${table.translations} t ON r.${table.translation}=t.id WHERE t.${table.parent}=$3)${extensionBound}) AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS now`,
     [
       owner["updated_at"] ?? owner["created_at"] ?? null,
       source?.createdAt ?? null,
       source?.revisionId ?? null,
       ...(table.ownerColumn === null ? [] : [ownerValue(target)]),
+      ...(commerceTime === undefined ? [] : [commerceTime]),
     ],
   );
   if (typeof row?.["now"] !== "string")

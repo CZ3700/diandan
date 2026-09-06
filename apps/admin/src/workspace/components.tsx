@@ -49,16 +49,19 @@ export function LocaleSelect({
   value,
   onChange,
   allowed = SUPPORTED_LOCALES,
+  disabled = false,
 }: {
   label: string;
   value: SupportedLocale;
   onChange: (value: SupportedLocale) => void;
   allowed?: readonly SupportedLocale[];
+  disabled?: boolean;
 }) {
   return (
     <Select
       label={label}
       value={value}
+      disabled={disabled}
       onChange={(next) => onChange(next as SupportedLocale)}
     >
       {SUPPORTED_LOCALES.map((locale) => (
@@ -134,6 +137,9 @@ const statusKeys: Record<string, AdminMessageKey> = {
   FAILED: "failed",
   SUCCEEDED: "succeeded",
   PROCESSING_COMPLETE: "succeeded",
+  PUBLISHED: "published",
+  VALIDATED: "validated",
+  SUPERSEDED: "superseded",
 };
 export function Status({ value, t }: { value: string; t: Translate }) {
   return (
@@ -144,6 +150,16 @@ export function Status({ value, t }: { value: string; t: Translate }) {
 }
 export function errorText(error: unknown, t: Translate) {
   if (!(error instanceof AdminClientError)) return t("error");
+  const commerceErrors: Record<string, AdminMessageKey> = {
+    UNSUPPORTED_PRICE_SOURCE: "multiplePriceWindows",
+    PRICE_BOOK_NOT_READY: "priceNotReady",
+    GIFT_NOT_READY: "giftNotReady",
+    INVENTORY_POLICY_LOCKED: "policyLocked",
+    INSUFFICIENT_INVENTORY: "insufficientInventory",
+    INVENTORY_NOT_TRACKED: "onDemandHint",
+  };
+  const commerceMessage = commerceErrors[error.code];
+  if (commerceMessage) return t(commerceMessage);
   if (/CONFLICT|VERSION|STALE|SOURCE_CHANGED/.test(error.code))
     return t("conflict");
   if (/FORBIDDEN|CSRF|PERMISSION/.test(error.code)) return t("forbidden");

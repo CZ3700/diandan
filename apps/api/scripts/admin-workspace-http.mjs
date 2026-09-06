@@ -7,7 +7,7 @@ import { once } from "node:events";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
-import { Client } from "pg";
+import { Client, Pool } from "pg";
 import { S3Client, PutBucketCorsCommand } from "@aws-sdk/client-s3";
 import * as contract from "@fan-support/contracts";
 import {
@@ -39,6 +39,8 @@ import { createWorkerMediaProcessingComposition } from "../../worker/dist/media-
 import { createMediaProcessingWorkerRuntime } from "../../worker/dist/media-processing-runtime.js";
 import { createPublicationPurgeWorkerRuntime } from "../../worker/dist/publication-purge-runtime.js";
 import { createPublicationHttpCache } from "./publication-runtime-http-cache.mjs";
+import { publicationSessionDiagnostic } from "./publication-runtime-http-session-diagnostic.mjs";
+import { createPostgresPersistenceWithPoolFactory } from "../../../packages/persistence-postgres/dist/postgres-persistence.js";
 import {
   createPublicationMediaFixture,
   publicationMediaEnvironment,
@@ -97,6 +99,8 @@ async function unusedPort() {
   return port;
 }
 function schemaFor(route) {
+  if (route.includes("/gift-commerce/"))
+    return contract.giftCommerceResponseSchema;
   if (route.includes("/session/")) return contract.adminSessionResponseSchema;
   if (route.includes("/catalog/")) return contract.adminCatalogResponseSchema;
   if (route.includes("/translation-workspace/"))
@@ -117,7 +121,78 @@ function schemaFor(route) {
     return contract.publicationRuntimeResponseSchema;
   return contract.adminContentResponseSchema;
 }
-async function verify(database, s3, { serve, ui }) {
+// Failure-only test diagnostics preserve the actual SQL, parameters and transaction behavior.
+function observedPublicationPersistence(database, options) {
+  return createPostgresPersistenceWithPoolFactory(
+    database,
+    options,
+    (config) => {
+      const pool = new Pool(config);
+      return {
+        async connect() {
+          const connection = await pool.connect();
+          let receiptId, sessionDiagnostic;
+          return {
+            async query(statement, values) {
+              const sql =
+                typeof statement === "string" ? statement : statement.text;
+              try {
+                if (sql === "COMMIT" && receiptId)
+                  sessionDiagnostic = await publicationSessionDiagnostic(
+                    connection,
+                    receiptId,
+                  );
+                const result = await connection.query(statement, values);
+                if (
+                  sql.startsWith(
+                    "INSERT INTO public.content_publication_receipts(",
+                  )
+                )
+                  receiptId = (values ?? statement.values)?.[0];
+                if (
+                  sql.startsWith("BEGIN") ||
+                  sql === "COMMIT" ||
+                  sql === "ROLLBACK"
+                ) {
+                  receiptId = undefined;
+                  sessionDiagnostic = undefined;
+                }
+                return result;
+              } catch (error) {
+                console.error(
+                  `Workspace publication diagnostic ${JSON.stringify({
+                    phase: sql === "COMMIT" ? "COMMIT" : "SQL",
+                    sqlstate:
+                      typeof error?.code === "string" &&
+                      /^[A-Z0-9]{5}$/u.test(error.code)
+                        ? error.code
+                        : "NONE",
+                    guard:
+                      error?.message ===
+                      "publication action requires its current active MFA session"
+                        ? "PUBLICATION_SESSION_TIME"
+                        : "UNCLASSIFIED",
+                    ...(sessionDiagnostic ?? {}),
+                  })}`,
+                );
+                throw error;
+              }
+            },
+            release: (destroy) => connection.release(destroy),
+          };
+        },
+        end: () => pool.end(),
+        on: (event, listener) => pool.on(event, listener),
+        off: (event, listener) => pool.off(event, listener),
+      };
+    },
+  );
+}
+export async function verifyAdminWorkspaceScenario(
+  database,
+  s3,
+  { serve, ui, extension },
+) {
   await runMigrations({
     clientConfig: database,
     workspaceRoot,
@@ -153,6 +228,7 @@ async function verify(database, s3, { serve, ui }) {
         authenticatedWithMfa: name !== "no-mfa",
       })),
     );
+    await extension?.seed?.({ client, identities, check });
     const sitePort = await unusedPort(),
       origin = `http://localhost:${sitePort}`;
     const logger = createStructuredLogger({
@@ -189,11 +265,22 @@ async function verify(database, s3, { serve, ui }) {
         createTestAdminContentComposition(common),
         createTestResourceManagementComposition({ ...common, ...media }),
         createTestPublicationPreflightComposition(common),
-        createTestPublicationRuntimeComposition({
-          ...common,
-          publicMediaBaseUrl: "https://media.example.invalid",
-        }),
+        createTestPublicationRuntimeComposition(
+          {
+            ...common,
+            publicMediaBaseUrl: "https://media.example.invalid",
+          },
+          { createPersistence: observedPublicationPersistence },
+        ),
       ];
+      compositions.push(
+        ...((await extension?.compositions?.({
+          common,
+          persistence,
+          environment,
+          logger,
+        })) ?? []),
+      );
       for (const composition of compositions)
         for (const [key, value] of Object.entries(composition))
           if (key.endsWith("Runtime") || key.endsWith("Lifecycle"))
@@ -412,12 +499,7 @@ async function verify(database, s3, { serve, ui }) {
           "manager",
         );
       }
-      const mediaFixtures = [];
-      for (const [name, width, height, hue, role] of [
-        ["Portrait", 1600, 2000, 205, "PORTRAIT"],
-        ["Desktop", 2400, 1350, 28, "HERO_DESKTOP"],
-        ["Mobile", 1080, 1350, 305, "HERO_MOBILE"],
-      ]) {
+      async function createMediaAsset(name, width, height, hue, role) {
         stage = `actual image ${name}`;
         const bytes = await createWorkspaceImage(width, height, hue);
         const grant = await write("/api/v1/admin/resources/uploads/begin", {
@@ -480,8 +562,15 @@ async function verify(database, s3, { serve, ui }) {
           revisionId = await author(owner, workspaceMediaContent(name));
         await approve(owner, revisionId);
         await publish(owner, revisionId);
-        mediaFixtures.push({ assetId, revisionId });
+        return { assetId, revisionId };
       }
+      const mediaFixtures = [];
+      for (const descriptor of [
+        ["Portrait", 1600, 2000, 205, "PORTRAIT"],
+        ["Desktop", 2400, 1350, 28, "HERO_DESKTOP"],
+        ["Mobile", 1080, 1350, 305, "HERO_MOBILE"],
+      ])
+        mediaFixtures.push(await createMediaAsset(...descriptor));
       stage = "real catalog and editorial fixtures";
       const main = await write("/api/v1/admin/catalog/idols/create", {
         handle: "luna-mira",
@@ -620,6 +709,21 @@ async function verify(database, s3, { serve, ui }) {
           revisionId: policyRevision,
         },
       };
+      await extension?.prepare?.({
+        fixtures,
+        request,
+        write,
+        author,
+        approve,
+        publish,
+        createMediaAsset,
+        client,
+        credentials,
+        persistence,
+        base,
+        origin,
+        check,
+      });
       stage = "Next development server";
       const s3Client = new S3Client({
         region: "us-east-1",
@@ -718,19 +822,22 @@ async function verify(database, s3, { serve, ui }) {
       check(ready, "Next development server becomes reachable");
       check(!connectionFailure, "observer connection remains healthy");
       stage = "real browser BFF";
-      browser = await verifyAdminWorkspaceBrowser({
-        origin,
-        credentials,
-        fixtures,
-        request,
-        client,
-        check,
-        configPath: process.env.FAN_SUPPORT_MEDIA_S3_TEST_CONFIG,
-        serve,
-        ui,
-      });
+      browser = await (extension?.verifyBrowser ?? verifyAdminWorkspaceBrowser)(
+        {
+          origin,
+          base,
+          credentials,
+          fixtures,
+          request,
+          client,
+          check,
+          configPath: process.env.FAN_SUPPORT_MEDIA_S3_TEST_CONFIG,
+          serve,
+          ui,
+        },
+      );
       console.log(
-        `PASS admin workspace HTTP/PG/S3/Next browser (${assertions} assertions, ${requests} setup API requests; ${ui ? "full UI" : "protocol"} mode); local TEST identities, secure HttpOnly cookies, actual source processing and canonical current authorization`,
+        `PASS ${extension?.name ?? "admin workspace"} HTTP/PG/S3/Next browser (${assertions} assertions, ${requests} setup API requests; ${ui ? "full UI" : "protocol"} mode); local TEST identities, secure HttpOnly cookies, actual source processing and canonical current authorization`,
       );
       if (serve) {
         console.log(`LOCAL_ADMIN_WORKSPACE_READY ${origin}/en`);
@@ -739,6 +846,7 @@ async function verify(database, s3, { serve, ui }) {
           process.once("SIGINT", resolve);
         });
       }
+      return { assertions, requests };
     } finally {
       await browser?.close();
       if (next) {
@@ -755,46 +863,47 @@ async function verify(database, s3, { serve, ui }) {
     }
   } catch (error) {
     console.error(
-      `Workspace diagnostic ${JSON.stringify({ stage, sqlstate: typeof error?.code === "string" && /^[A-Z0-9]{5}$/u.test(error.code) ? error.code : null, name: ["TypeError", "Error", "AssertionError"].includes(error?.name) ? error.name : "UNAVAILABLE" })}`,
+      `Workspace diagnostic ${JSON.stringify({ stage, assertion: failedLabel ?? "NONE", sqlstate: typeof error?.code === "string" && /^[A-Z0-9]{5}$/u.test(error.code) ? error.code : null, name: ["TypeError", "Error", "AssertionError"].includes(error?.name) ? error.name : "UNAVAILABLE" })}`,
     );
     throw error;
   } finally {
     await client.end();
   }
 }
-try {
-  const serve =
-    process.argv.includes("--serve") ||
-    process.argv.includes("--serve-admin-workspace");
-  const ui =
-    process.argv.includes("--ui") ||
-    process.argv.includes("--run-admin-workspace-ui");
-  if (
-    process.argv.includes("--run-admin-workspace-ui") ||
-    process.argv.includes("--run-admin-workspace") ||
-    process.argv.includes("--serve-admin-workspace")
-  ) {
-    const s3 = readEphemeralS3Config();
-    await prepareEphemeralS3Buckets(s3);
-    await withEphemeralPostgres((database) =>
-      verify(database, s3, { serve, ui }),
+if (path.resolve(process.argv[1] ?? "") === fileURLToPath(import.meta.url))
+  try {
+    const serve =
+      process.argv.includes("--serve") ||
+      process.argv.includes("--serve-admin-workspace");
+    const ui =
+      process.argv.includes("--ui") ||
+      process.argv.includes("--run-admin-workspace-ui");
+    if (
+      process.argv.includes("--run-admin-workspace-ui") ||
+      process.argv.includes("--run-admin-workspace") ||
+      process.argv.includes("--serve-admin-workspace")
+    ) {
+      const s3 = readEphemeralS3Config();
+      await prepareEphemeralS3Buckets(s3);
+      await withEphemeralPostgres((database) =>
+        verifyAdminWorkspaceScenario(database, s3, { serve, ui }),
+      );
+    } else
+      await withEphemeralS3((context) =>
+        runS3IntegrationChild({
+          ...context,
+          scriptUrl: import.meta.url,
+          argument: serve
+            ? "--serve-admin-workspace"
+            : ui
+              ? "--run-admin-workspace-ui"
+              : "--run-admin-workspace",
+          timeoutMs: serve ? 3_600_000 : 420_000,
+        }),
+      );
+  } catch (error) {
+    console.error(
+      `FAIL admin workspace at ${stage}; assertion=${failedLabel ?? "NONE"}; code=${typeof error?.code === "string" && /^[A-Z0-9]{5}$/u.test(error.code) ? error.code : "UNAVAILABLE"}`,
     );
-  } else
-    await withEphemeralS3((context) =>
-      runS3IntegrationChild({
-        ...context,
-        scriptUrl: import.meta.url,
-        argument: serve
-          ? "--serve-admin-workspace"
-          : ui
-            ? "--run-admin-workspace-ui"
-            : "--run-admin-workspace",
-        timeoutMs: serve ? 3_600_000 : 420_000,
-      }),
-    );
-} catch (error) {
-  console.error(
-    `FAIL admin workspace at ${stage}; assertion=${failedLabel ?? "NONE"}; code=${typeof error?.code === "string" && /^[A-Z0-9]{5}$/u.test(error.code) ? error.code : "UNAVAILABLE"}`,
-  );
-  process.exitCode = 1;
-}
+    process.exitCode = 1;
+  }

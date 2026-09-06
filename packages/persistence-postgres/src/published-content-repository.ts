@@ -20,6 +20,7 @@ import { PREFLIGHT_TABLES } from "./publication-preflight-mapping.js";
 import { ownerValue } from "./content-authoring-model.js";
 import { draftRows, type DraftRow } from "./content-draft-data.js";
 import { hasPublishedMediaProof } from "./published-content-media-proof.js";
+import { readGiftPublicationProfile } from "./gift-commerce-gift-profile.js";
 import {
   persistenceTransactionFailureFromPostgres,
   type TransactionClient,
@@ -113,6 +114,13 @@ export async function loadPublishedContentContext(
   });
   if (!record.success || Number(head["version"]) !== record.data.headVersion)
     return failure("CONTENT_UNAVAILABLE");
+  if (owner.kind === "GIFT")
+    await readGiftPublicationProfile(client, {
+      publicationId: record.data.publicationId,
+      giftId: owner.giftId,
+      giftRevisionId: record.data.target.revisionId,
+      manifestHash: record.data.manifestHash,
+    });
   const loaded = await createPublicationPreflightRepository(client, scope).load(
     {
       schemaVersion: 1,

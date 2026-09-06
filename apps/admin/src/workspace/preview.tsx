@@ -13,12 +13,36 @@ import {
 } from "@fan-support/contracts";
 import { useAdminSession, AdminClientError } from "./client";
 import { errorText, translator, type Translate } from "./components";
+import { GiftDetailPreview } from "./gift-detail-preview";
 type Preview = Extract<BaseContentPreviewResponse, { outcome: "SUCCESS" }>;
 type Media = Extract<
   AdminPreviewMediaResponse,
   { outcome: "SUCCESS" }
 >["images"][number];
 type ImageView = { image: Media; url: string | null };
+function PreviewImage({
+  view,
+  t,
+}: {
+  view: ImageView | undefined;
+  t: Translate;
+}) {
+  if (!view || view.image.status !== "AVAILABLE" || !view.url)
+    return <div className="admin-image-unavailable">{t("noMedia")}</div>;
+  const { image, url } = view;
+  return (
+    <Image
+      unoptimized
+      src={url}
+      alt={image.presentationKind === "DECORATIVE" ? "" : image.alt}
+      width={image.width}
+      height={image.height}
+      style={{
+        objectPosition: `${image.focalPoint.x * 100}% ${image.focalPoint.y * 100}%`,
+      }}
+    />
+  );
+}
 export function PreviewBody({
   content,
   images,
@@ -40,29 +64,39 @@ export function PreviewBody({
     <article className="admin-preview-content">
       <h1>{name ?? t("privatePreview")}</h1>
       <div className="admin-preview-images">
-        {images.map(({ image, url }, index) => (
-          <figure key={`${image.assetId}-${index}`}>
-            {url && image.status === "AVAILABLE" ? (
-              <Image
-                unoptimized
-                src={url}
-                alt={image.presentationKind === "DECORATIVE" ? "" : image.alt}
-                width={image.width}
-                height={image.height}
-                style={{
-                  objectPosition: `${image.focalPoint.x * 100}% ${image.focalPoint.y * 100}%`,
-                }}
-              />
-            ) : (
-              <div className="admin-image-unavailable">
-                {t("noMedia")}{" "}
-                <small>
-                  {image.status === "UNAVAILABLE" ? image.code : t("loading")}
-                </small>
-              </div>
-            )}
-          </figure>
-        ))}
+        {images
+          .filter(
+            ({ image }) =>
+              content.kind !== "GIFT" ||
+              content.media.some(
+                (media) =>
+                  media.mediaAssetId === image.assetId &&
+                  media.mediaMetadataRevisionId === image.metadataRevisionId,
+              ),
+          )
+          .map(({ image, url }, index) => (
+            <figure key={`${image.assetId}-${index}`}>
+              {url && image.status === "AVAILABLE" ? (
+                <Image
+                  unoptimized
+                  src={url}
+                  alt={image.presentationKind === "DECORATIVE" ? "" : image.alt}
+                  width={image.width}
+                  height={image.height}
+                  style={{
+                    objectPosition: `${image.focalPoint.x * 100}% ${image.focalPoint.y * 100}%`,
+                  }}
+                />
+              ) : (
+                <div className="admin-image-unavailable">
+                  {t("noMedia")}{" "}
+                  <small>
+                    {image.status === "UNAVAILABLE" ? image.code : t("loading")}
+                  </small>
+                </div>
+              )}
+            </figure>
+          ))}
       </div>
       {Object.entries(content.fields)
         .filter(
@@ -72,14 +106,21 @@ export function PreviewBody({
               "heroTitle",
               "seoTitle",
               "seoDescription",
+              "title",
             ].includes(key),
         )
         .map(([key, value]) =>
           Array.isArray(value) ? (
             <div key={key}>
-              {value.map((row: { slotKey: string; label: string }) => (
-                <h2 key={row.slotKey}>{row.label}</h2>
-              ))}
+              {value.map(
+                (row: {
+                  slotKey?: string;
+                  giftVariantId?: string;
+                  label: string;
+                }) => (
+                  <h2 key={row.giftVariantId ?? row.slotKey}>{row.label}</h2>
+                ),
+              )}
             </div>
           ) : typeof value === "string" && value ? (
             content.kind === "IDOL" && key === "fullBio" ? (
@@ -95,6 +136,21 @@ export function PreviewBody({
             )
           ) : null,
         )}
+      {content.kind === "GIFT" && content.details && (
+        <GiftDetailPreview
+          {...content.details}
+          renderMedia={(assetId, metadataRevisionId) => (
+            <PreviewImage
+              view={images.find(
+                ({ image }) =>
+                  image.assetId === assetId &&
+                  image.metadataRevisionId === metadataRevisionId,
+              )}
+              t={t}
+            />
+          )}
+        />
+      )}
     </article>
   );
 }

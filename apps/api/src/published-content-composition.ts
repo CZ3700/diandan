@@ -1,4 +1,7 @@
-import { createPublishedContentUseCases } from "@fan-support/application";
+import {
+  createPublishedContentUseCases,
+  createPublishedGiftCommerceUseCases,
+} from "@fan-support/application";
 import {
   resolveDatabaseRuntimeConfig,
   resolveObjectStorageRuntimeConfig,
@@ -13,10 +16,13 @@ import {
 
 import type { ApiLifecycleResource } from "./bootstrap.js";
 import type { PublishedContentRouteDependencies } from "./published-content-route.js";
+import type { PublishedGiftCommerceRouteDependencies } from "./published-gift-commerce-route.js";
 
 type PublishedPersistence = Pick<
   PostgresPersistence,
-  "publishedContentTransactionManager" | "close"
+  | "publishedContentTransactionManager"
+  | "publishedGiftCommerceTransactionManager"
+  | "close"
 >;
 type PersistenceFactory = (
   config: PostgresConnectionConfig,
@@ -29,6 +35,7 @@ export type PublishedContentCompositionOptions = Readonly<{
 }>;
 export type PublishedContentComposition = Readonly<{
   publishedContentRoute: PublishedContentRouteDependencies;
+  publishedGiftCommerceRoute: PublishedGiftCommerceRouteDependencies;
   publishedContentRuntime: ApiLifecycleResource;
 }>;
 
@@ -56,6 +63,11 @@ export function createPublishedContentComposition(
   );
   let closePromise: Promise<void> | undefined;
   return Object.freeze({
+    publishedGiftCommerceRoute: {
+      useCases: createPublishedGiftCommerceUseCases({
+        transactions: persistence.publishedGiftCommerceTransactionManager,
+      }),
+    },
     publishedContentRoute: {
       useCases: createPublishedContentUseCases({
         transactions: persistence.publishedContentTransactionManager,

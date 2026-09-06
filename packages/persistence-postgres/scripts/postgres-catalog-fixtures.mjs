@@ -725,11 +725,17 @@ async function seedPrices(
   return { marketId, bookId, publicationId, priceIds };
 }
 
-export async function seedTemporalCatalogPrices(client, editor, gift) {
+export async function seedTemporalCatalogPrices(
+  client,
+  editor,
+  gift,
+  activationDelaySeconds = 2,
+) {
   await client.query("BEGIN");
   try {
     const result = await client.query(
-      "SELECT (transaction_timestamp() + interval '2 seconds')::text AS effective_at",
+      "SELECT (transaction_timestamp() + $1::integer * interval '1 second')::text AS effective_at",
+      [activationDelaySeconds],
     );
     const effectiveAt = result.rows[0].effective_at;
     const prices = await seedPrices(

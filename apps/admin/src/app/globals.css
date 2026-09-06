@@ -2,6 +2,89 @@
 @import "@fan-support/design-tokens/foundations.css";
 @import "@fan-support/ui/primitives.css";
 
+html {
+  scroll-padding-block-end: calc(var(--space-12) * 4);
+}
+.admin-field :is(input, select, textarea) {
+  scroll-margin-block: var(--space-6) calc(var(--space-12) * 4);
+}
+
+.admin-commerce,
+.admin-detail-block {
+  margin-block: var(--space-6);
+  padding: var(--space-4);
+  min-width: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+}
+.admin-commerce > summary {
+  color: var(--color-accent);
+}
+.admin-commerce-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block: var(--space-6);
+}
+.admin-detail-block {
+  display: grid;
+  gap: var(--space-4);
+}
+.admin-detail-block legend {
+  padding-inline: var(--space-2);
+  font-weight: 600;
+}
+.admin-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.admin-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: start;
+}
+.admin-table-wrap caption {
+  text-align: start;
+  color: var(--color-text-muted);
+  padding-block: var(--space-3);
+}
+.admin-table-wrap th,
+.admin-table-wrap td {
+  text-align: start;
+  vertical-align: top;
+  padding: var(--space-3);
+  border-bottom: var(--border-width) solid var(--color-border);
+  overflow-wrap: anywhere;
+}
+.admin-table-wrap td {
+  font-variant-numeric: tabular-nums;
+}
+.admin-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.admin-checkbox input {
+  accent-color: var(--color-accent);
+}
+.admin-variant-list .admin-picker-row {
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+}
+.admin-gift-details {
+  display: grid;
+  gap: var(--space-4);
+}
+.admin-gift-details dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: var(--space-3);
+}
+.admin-gift-details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -633,7 +716,13 @@ a:focus-visible {
     flex-wrap: wrap;
   }
   .admin-locale-matrix {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(
+        min(100%, calc(var(--space-12) * 2 + var(--space-8) + var(--space-2))),
+        1fr
+      )
+    );
   }
   .admin-locale-matrix button {
     border-bottom: var(--border-width) solid var(--color-border);

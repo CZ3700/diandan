@@ -1,15 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Button, Field } from "@fan-support/ui";
 import {
   mediaMetadataRevisionIdSchema,
   type ContentAuthoringContent,
+  type GiftTranslationFields,
   type SupportedLocale,
 } from "@fan-support/contracts";
 import { type AdminMessageKey } from "@fan-support/i18n";
 import { type AdminClient } from "./client";
 import { CatalogPicker } from "./catalog-picker";
 import { Select, TextArea, type Translate } from "./components";
+import { GiftStructureFields } from "./gift-structure";
 
 const limits: Record<string, number> = {
   displayName: 40,
@@ -24,6 +26,11 @@ const limits: Record<string, number> = {
   alt: 300,
   title: 160,
   caption: 300,
+  subtitle: 80,
+  shortDescription: 160,
+  description: 600,
+  fulfillmentDescription: 600,
+  safetyNotice: 600,
 };
 const fieldKeys: Record<string, AdminMessageKey> = {
   displayName: "displayName",
@@ -38,7 +45,24 @@ const fieldKeys: Record<string, AdminMessageKey> = {
   alt: "alt",
   title: "title",
   caption: "caption",
+  subtitle: "subtitle",
+  shortDescription: "shortDescription",
+  description: "description",
+  fulfillmentDescription: "fulfillmentDescription",
+  safetyNotice: "safetyNotice",
 };
+const giftFieldOrder = [
+  "title",
+  "subtitle",
+  "shortDescription",
+  "description",
+  "fulfillmentDescription",
+  "safetyNotice",
+  "variantLabels",
+  "seoTitle",
+  "seoDescription",
+] as const satisfies readonly (keyof GiftTranslationFields)[];
+
 export function ContentFields({
   fields,
   onChange,
@@ -52,31 +76,46 @@ export function ContentFields({
   disabled?: boolean;
   errors?: readonly string[];
 }) {
+  const fieldId = useId();
+  // Only gift fields have variantLabels. Keep optional source fields in place
+  // so the editor and its English reference share the same reading order.
+  const entries: [string, unknown][] = Array.isArray(fields["variantLabels"])
+    ? giftFieldOrder.map((key) => [key, fields[key]])
+    : Object.entries(fields);
   return (
     <div className="admin-fields">
-      {Object.entries(fields).map(([key, value]) =>
+      {entries.map(([key, value]) =>
         Array.isArray(value) ? (
           <div key={key} className="admin-fields">
-            {value.map((row: { slotKey: string; label: string }, index) => (
-              <Field
-                key={row.slotKey}
-                id={`label-${row.slotKey}`}
-                label={`${t("slotLabel")} · ${row.slotKey}`}
-                value={row.label}
-                maxLength={80}
-                disabled={disabled}
-                onChange={(event) =>
-                  onChange({
-                    ...fields,
-                    [key]: value.map((item: unknown, i: number) =>
-                      i === index
-                        ? { ...row, label: event.target.value }
-                        : item,
-                    ),
-                  })
-                }
-              />
-            ))}
+            {value.map(
+              (
+                row: {
+                  slotKey?: string;
+                  giftVariantId?: string;
+                  label: string;
+                },
+                index,
+              ) => (
+                <Field
+                  key={row.giftVariantId ?? row.slotKey}
+                  id={`${fieldId}-label-${index}`}
+                  label={`${t(key === "variantLabels" ? "variantLabel" : "slotLabel")} · ${index + 1}`}
+                  value={row.label}
+                  maxLength={80}
+                  disabled={disabled}
+                  onChange={(event) =>
+                    onChange({
+                      ...fields,
+                      [key]: value.map((item: unknown, i: number) =>
+                        i === index
+                          ? { ...row, label: event.target.value }
+                          : item,
+                      ),
+                    })
+                  }
+                />
+              ),
+            )}
           </div>
         ) : (
           <TextArea
@@ -116,6 +155,17 @@ export function StructureFields({
 }) {
   const [pick, setPick] = useState<string | null>(null);
   const selectProps = { client, locale, t };
+  if (content.kind === "GIFT")
+    return (
+      <GiftStructureFields
+        content={content}
+        onChange={onChange}
+        client={client}
+        locale={locale}
+        t={t}
+        disabled={disabled}
+      />
+    );
   if (content.kind === "IDOL") {
     const structure = (value: Partial<IdolContent["structure"]>) =>
       onChange({ ...content, structure: { ...content.structure, ...value } });

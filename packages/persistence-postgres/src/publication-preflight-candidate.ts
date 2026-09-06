@@ -22,6 +22,7 @@ import {
   PREFLIGHT_TABLES,
 } from "./publication-preflight-mapping.js";
 import type { TransactionClient } from "./transaction-runner.js";
+import { loadGiftCurrentPriceEvidence } from "./gift-commerce-pricing-current.js";
 
 async function giftCommerce(client: TransactionClient, giftId: string) {
   const variants = await preflightRows(
@@ -43,20 +44,9 @@ async function giftCommerce(client: TransactionClient, giftId: string) {
     "r.id=ANY($1::uuid[]) ORDER BY r.id",
     [eligibility.map((row) => row["idol_id"])],
   );
-  const books = await draftRows(
+  const { bookRows, priceRows: prices } = await loadGiftCurrentPriceEvidence(
     client,
-    `SELECT DISTINCT to_jsonb(b.*) AS book FROM public.price_book_publication_heads h
-    JOIN public.price_book_publications p ON p.id=h.publication_id AND p.price_book_id=h.price_book_id AND p.price_book_revision=h.price_book_revision
-    JOIN public.price_books b ON b.id=h.price_book_id AND b.revision=h.price_book_revision
-    JOIN public.prices price ON price.price_book_id=b.id AND price.price_book_revision=b.revision WHERE price.gift_variant_id=ANY($1::uuid[])`,
-    [ids],
-  );
-  const bookRows = books.map((row) => row["book"] as DraftRow);
-  const prices = await preflightRows(
-    client,
-    "prices",
-    "r.gift_variant_id=ANY($1::uuid[]) AND r.status='PUBLISHED' AND EXISTS(SELECT 1 FROM public.price_book_publication_heads h WHERE h.price_book_id=r.price_book_id AND h.price_book_revision=r.price_book_revision) ORDER BY r.id",
-    [ids],
+    ids,
   );
   const items = await preflightRows(
     client,

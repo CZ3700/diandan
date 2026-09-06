@@ -6,6 +6,7 @@ import {
   type AdminCatalogOwner,
   type ContentAuthoringTarget,
   type SupportedLocale,
+  type GiftCommerceContextResponse,
 } from "@fan-support/contracts";
 import { useAdminSession } from "./client";
 import { ContentEditor } from "./editor";
@@ -18,11 +19,12 @@ import {
 } from "./components";
 import { ownerKey } from "./catalog-picker";
 import { MediaUpload } from "./media-tools";
+import { callCommerce } from "./gift-commerce-client";
 export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
   const { client, session, loading, reload } = useAdminSession();
   const t = useMemo(() => translator(locale), [locale]);
   const [section, setSection] = useState<
-    "artists" | "homepage" | "media" | "translations"
+    "artists" | "gifts" | "homepage" | "media" | "translations"
   >("artists");
   const [kind, setKind] = useState<ContentAuthoringTarget["kind"]>("IDOL");
   const [items, setItems] = useState<AdminCatalogOwner[]>([]);
@@ -38,10 +40,28 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
   const [refresh, setRefresh] = useState(0);
   const [creating, setCreating] = useState(false);
   const [handle, setHandle] = useState("");
+  const [commerce, setCommerce] = useState<GiftCommerceContextResponse | null>(
+    null,
+  );
   const onDirty = useCallback((value: boolean) => setDirty(value), []);
   const contentLocale = session?.localeScopes.includes(locale)
     ? locale
     : (session?.localeScopes[0] ?? locale);
+  useEffect(() => {
+    let active = true;
+    setCommerce(null);
+    if (session)
+      void callCommerce(client, { schemaVersion: 1, action: "CONTEXT" })
+        .then((result) => {
+          if (active && result.kind === "COMMERCE_CONTEXT") setCommerce(result);
+        })
+        .catch(() => {
+          /* The content workspace remains available to content-only roles. */
+        });
+    return () => {
+      active = false;
+    };
+  }, [client, session, refresh]);
   useEffect(() => {
     if (!dirty) return;
     const handler = (event: BeforeUnloadEvent) => {
@@ -121,7 +141,9 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
         ? "HOMEPAGE"
         : value === "media"
           ? "MEDIA_METADATA"
-          : "IDOL",
+          : value === "gifts"
+            ? "GIFT"
+            : "IDOL",
     );
     setSelected(null);
     setPage(1);
@@ -135,23 +157,38 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
     setBusy(true);
     setError("");
     try {
-      const result = await client.call(
-        "idol-create",
-        {
-          schemaVersion: 1,
-          handle,
-          expectedBaseVersion: 0,
-          reasonCode: "ARTIST_CREATE",
-        },
-        adminCatalogResponseSchema,
-        true,
-      );
+      const result =
+        kind === "GIFT"
+          ? await callCommerce(client, {
+              schemaVersion: 1,
+              action: "CREATE_GIFT",
+              handle,
+              expectedBaseVersion: 0,
+              reasonCode: "GIFT_CREATE",
+            })
+          : await client.call(
+              "idol-create",
+              {
+                schemaVersion: 1,
+                handle,
+                expectedBaseVersion: 0,
+                reasonCode: "ARTIST_CREATE",
+              },
+              adminCatalogResponseSchema,
+              true,
+            );
       if (result.kind !== "MUTATION") return;
       const read = await client.call(
         "catalog-owner",
         {
           schemaVersion: 1,
-          target: { kind: "IDOL", idolId: result.idolId },
+          target:
+            "giftId" in result
+              ? { kind: "GIFT", giftId: result.giftId }
+              : {
+                  kind: "IDOL",
+                  idolId: "idolId" in result ? result.idolId : undefined,
+                },
           locale: contentLocale,
         },
         adminCatalogResponseSchema,
@@ -201,21 +238,21 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
           {t("workspace")}
         </a>
         <nav aria-label={t("content")}>
-          {(["artists", "homepage", "media", "translations"] as const).map(
-            (item, index) => (
-              <button
-                type="button"
-                key={item}
-                aria-current={section === item ? "page" : undefined}
-                onClick={() => switchSection(item)}
-              >
-                <span aria-hidden="true" className="admin-nav-index">
-                  0{index + 1}
-                </span>
-                {t(item)}
-              </button>
-            ),
-          )}
+          {(
+            ["artists", "gifts", "homepage", "media", "translations"] as const
+          ).map((item, index) => (
+            <button
+              type="button"
+              key={item}
+              aria-current={section === item ? "page" : undefined}
+              onClick={() => switchSection(item)}
+            >
+              <span aria-hidden="true" className="admin-nav-index">
+                0{index + 1}
+              </span>
+              {t(item)}
+            </button>
+          ))}
         </nav>
         <div className="admin-sidebar-footer">
           <LocaleSelect
@@ -246,6 +283,8 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
               key={ownerKey(selected.target)}
               client={client}
               session={session}
+              commerce={commerce}
+              commercePermissions={commerce?.permissions ?? []}
               owner={selected}
               t={t}
               initialLocale={contentLocale}
@@ -262,10 +301,12 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
                 <h1>{t(section)}</h1>
                 <p>{t("workspaceHint")}</p>
               </div>
-              {kind === "IDOL" &&
+              {(kind === "IDOL" ||
+                (kind === "GIFT" &&
+                  commerce?.permissions.includes("gift.manage"))) &&
                 session.permissions.includes("content.edit") && (
                   <Button onClick={() => setCreating(!creating)}>
-                    {t("newArtist")}
+                    {t(kind === "GIFT" ? "newGift" : "newArtist")}
                   </Button>
                 )}
               {kind === "MEDIA_METADATA" &&
@@ -275,7 +316,7 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
                   </Button>
                 )}
             </header>
-            {creating && kind === "IDOL" && (
+            {creating && (kind === "IDOL" || kind === "GIFT") && (
               <form
                 className="admin-create"
                 onSubmit={(event) => {
@@ -298,7 +339,7 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
                     disabled={busy || !handle}
                     loading={busy}
                   >
-                    {t("newArtist")}
+                    {t(kind === "GIFT" ? "newGift" : "newArtist")}
                   </Button>
                   <Button variant="quiet" onClick={() => setCreating(false)}>
                     {t("cancel")}
@@ -327,7 +368,7 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
               <Button variant="secondary" type="submit" disabled={busy}>
                 {t("searchAction")}
               </Button>
-              {kind === "IDOL" && (
+              {(kind === "IDOL" || kind === "GIFT") && (
                 <Select
                   label={t("status")}
                   value={status}
@@ -357,6 +398,7 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
                   }}
                 >
                   <option value="IDOL">{t("artists")}</option>
+                  <option value="GIFT">{t("gifts")}</option>
                   <option value="HOMEPAGE">{t("homepage")}</option>
                   <option value="MEDIA_METADATA">{t("media")}</option>
                 </Select>

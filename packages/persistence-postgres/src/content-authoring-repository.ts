@@ -13,7 +13,10 @@ import {
   lockAuthoringOwner,
 } from "./content-authoring-data.js";
 import { authoringFailure } from "./content-authoring-model.js";
-import { persistContentAuthoring } from "./content-authoring-writes.js";
+import {
+  persistContentAuthoring,
+  type ContentAuthoringGiftOptions,
+} from "./content-authoring-writes.js";
 import {
   persistenceTransactionFailureFromPostgres,
   type TransactionClient,
@@ -24,6 +27,7 @@ import {
 export function createContentAuthoringRepository(
   client: TransactionClient,
   scope: TransactionScopeControl,
+  giftOptions?: ContentAuthoringGiftOptions,
 ): ContentAuthoringRepository {
   function run<Result>(work: () => Promise<Result>): Promise<Result> {
     return scope.trackOperation(async () => {
@@ -98,6 +102,9 @@ export function createContentAuthoringRepository(
           command.target,
           owner,
           source ?? null,
+          command.target.kind === "GIFT"
+            ? giftOptions?.trustedCommerceTime
+            : undefined,
         );
         try {
           plan = prepareContentAuthoring(command, source ?? null, {
@@ -113,6 +120,7 @@ export function createContentAuthoringRepository(
           plan,
           time,
           source ?? null,
+          giftOptions,
         );
         return {
           schemaVersion: 1,

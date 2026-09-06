@@ -5,6 +5,7 @@ import {
   type ContentAuthoringTarget,
   type ContentAuthoringWriteCommand,
   type ContentAuthoringSnapshot,
+  type GiftKind,
 } from "@fan-support/contracts";
 import {
   prepareGiftDetailDraft,
@@ -22,6 +23,18 @@ import {
 } from "./content-authoring-model.js";
 import type { TransactionClient } from "./transaction-runner.js";
 import { contentAuthoringChangedPaths } from "./content-authoring-diff.js";
+import { persistGiftRevisionProfile } from "./gift-commerce-gift-profile.js";
+
+export type ContentAuthoringGiftOptions = Readonly<{
+  giftKind?: GiftKind;
+  /** Same-transaction commerce authority time; never supplied by an HTTP command. */
+  trustedCommerceTime?: string;
+  onGiftRevisionPrepared?: (value: {
+    revisionId: string;
+    authoringReceiptId: string;
+    createdAt: string;
+  }) => Promise<void>;
+}>;
 
 export async function authoringId(client: TransactionClient): Promise<string> {
   const [row] = await draftRows(client, "SELECT gen_random_uuid() AS id");
@@ -305,11 +318,13 @@ export async function persistContentAuthoring(
   plan: ContentAuthoringPlan,
   time: string,
   source: ContentAuthoringSnapshot | null,
+  giftOptions?: ContentAuthoringGiftOptions,
 ): Promise<string> {
   const { command } = input,
     table = AUTHORING_TABLES[command.target.kind],
     id = await authoringId(client),
-    auditId = await authoringId(client);
+    auditId = await authoringId(client),
+    authoringReceiptId = await authoringId(client);
   // The audit FK is deferred so the receipt and audit can be written after the
   // complete payload. Any failure rolls back both the content and its evidence.
   await client.query("SET CONSTRAINTS ALL DEFERRED");
@@ -324,6 +339,20 @@ export async function persistContentAuthoring(
   );
   await translatedRows(client, command.target, plan, id, auditId, time);
   await extensions(client, input, plan, id, time, source);
+  if (command.target.kind === "GIFT") {
+    await persistGiftRevisionProfile(
+      client,
+      input,
+      id,
+      time,
+      giftOptions?.giftKind,
+    );
+    await giftOptions?.onGiftRevisionPrepared?.({
+      revisionId: id,
+      authoringReceiptId,
+      createdAt: time,
+    });
+  }
   if (command.target.kind === "IDOL" || command.target.kind === "GIFT")
     await client.query(
       `UPDATE public.${table.ownerTable} SET draft_revision_id=$1,version=version+1,updated_at=$2 WHERE id=$3`,
@@ -343,6 +372,7 @@ export async function persistContentAuthoring(
     created_at: time,
   });
   await insert(client, "content_authoring_receipts", {
+    id: authoringReceiptId,
     changed_paths: contentAuthoringChangedPaths(plan, source),
     [table.parent]: id,
     [`source_${table.parent}`]:
