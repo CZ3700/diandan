@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactElement } from "react";
+import { useEffect, useRef, useState, type ReactElement } from "react";
 
 import {
   createMediaResourceIdentity,
@@ -23,11 +23,19 @@ export {
 } from "./media-frame.js";
 
 export function Media(props: MediaProps): ReactElement {
+  const imageRef = useRef<HTMLImageElement>(null);
   const [failedResourceIdentity, setFailedResourceIdentity] = useState<
     string | null
   >(null);
   const alternative = resolveMediaAlternative(props);
   const resourceIdentity = createMediaResourceIdentity(props);
+
+  useEffect(() => {
+    const image = imageRef.current;
+    if (image?.complete === true && image.naturalWidth === 0) {
+      setFailedResourceIdentity(resourceIdentity);
+    }
+  }, [resourceIdentity]);
 
   return (
     <MediaFrame
@@ -35,6 +43,7 @@ export function Media(props: MediaProps): ReactElement {
       alternative={alternative}
       failed={failedResourceIdentity === resourceIdentity}
       failureOrigin="runtime"
+      imageRef={imageRef}
       onError={() => setFailedResourceIdentity(resourceIdentity)}
       onLoad={() => setFailedResourceIdentity(null)}
     />

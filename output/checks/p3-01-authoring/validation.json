@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "taskId": "P3-01",
+  "checkpoint": "3B",
+  "status": "VERIFIED_LOCAL",
+  "capturedAt": "2026-09-05T20:44:42.589Z",
+  "gitHead": "674ef5b4a57a6bb9ada6be5bf63670df9105ced4",
+  "sourceFingerprint": "c2e633e867dab434f1400c18ea96a0bee35f5f8d45e66fd4d914726d5d2de009",
+  "sourceFiles": 837,
+  "sourceUnchangedAfterVerification": true,
+  "commandPrefix": "mise exec node@24.20.0 --",
+  "checks": {
+    "affectedTests": {
+      "exitCode": 0,
+      "contracts": 228,
+      "content": 131,
+      "application": 175,
+      "persistencePort": 4,
+      "persistencePostgres": 292,
+      "api": 56,
+      "total": 886,
+      "log": "targeted-tests.log"
+    },
+    "compatibility": {
+      "oldDefinitions": 225,
+      "currentDefinitions": 233,
+      "changedOldDefinitions": [],
+      "newDefinitions": [
+        "ContentAuthoringCommand",
+        "ContentAuthoringPlan",
+        "ContentAuthoringReadCommand",
+        "ContentAuthoringReadResponse",
+        "ContentAuthoringRequest",
+        "ContentAuthoringResponse",
+        "ContentAuthoringSnapshot",
+        "ContentAuthoringWriteCommand"
+      ]
+    },
+    "migrations": {
+      "exitCode": 0,
+      "migrations": 15,
+      "tables": 130,
+      "log": "catalog-write.log"
+    },
+    "postgresAuthoring": {
+      "exitCode": 0,
+      "assertions": 211,
+      "normalTriggers": true,
+      "log": "../p3-01-content-authoring/postgres-green.log"
+    },
+    "httpAuthoring": {
+      "exitCode": 0,
+      "assertions": 909,
+      "requests": 114,
+      "log": "http-final.log",
+      "repeatedInFullCheck": true
+    },
+    "mediaClockRollback": {
+      "exitCode": 0,
+      "assertions": 152,
+      "statuses": [
+        "SUCCEEDED",
+        "FAILED",
+        "EXPIRED"
+      ],
+      "normalTriggers": true,
+      "realLeaseExpiry": true,
+      "log": "../p3-01-media-clock-rollback/postgres-green.log"
+    },
+    "legacyAdmin": {
+      "exitCode": 0,
+      "postgresAssertions": 109,
+      "httpAssertions": 434,
+      "httpRequests": 68
+    },
+    "legacyCatalog": {
+      "exitCode": 0,
+      "postgresAssertions": 307,
+      "httpAssertions": 264,
+      "httpRequests": 43
+    },
+    "browser": [
+      {
+        "phase": "p2-04",
+        "exitCode": 0,
+        "result": "passed",
+        "scenarios": 16,
+        "png": 18,
+        "axeScans": 10,
+        "criticalOrSerious": 0,
+        "nonBlockingFindings": 0,
+        "physicalDevice": false,
+        "sourceFingerprint": "2e185be9dfad2e73609d829a4d29cf867c8ad839bb118cc80f6d71b770f1768d",
+        "generatedAt": "2026-09-05T20:19:20.806Z"
+      },
+      {
+        "phase": "p2-05",
+        "exitCode": 0,
+        "result": "passed-with-physical-device-gate",
+        "scenarios": 8,
+        "png": 22,
+        "axeScans": 3,
+        "criticalOrSerious": 0,
+        "nonBlockingFindings": 3,
+        "physicalDevice": false,
+        "sourceFingerprint": "ef2b3dc299c2079ead41509b50452e4522b19f897eb19338fcc35a5b972a776a",
+        "generatedAt": "2026-09-05T20:20:01.300Z"
+      }
+    ],
+    "full": {
+      "command": "corepack pnpm check",
+      "exitCode": 0,
+      "typecheck": {
+        "successful": 56,
+        "total": 56,
+        "cached": 56
+      },
+      "test": {
+        "successful": 56,
+        "total": 56,
+        "cached": 56
+      },
+      "build": {
+        "successful": 35,
+        "total": 35,
+        "cached": 35
+      },
+      "nodePackageExports": 31,
+      "postgresAndTlsS3WorkerAssertions": 423,
+      "log": "check.log",
+      "earlierLogs": [
+        "check-first.log",
+        "check-second.log"
+      ],
+      "scope": "Final frozen source; actual PostgreSQL, HTTP and S3 suites ran; Turbo cache counts shown explicitly."
+    },
+    "secrets": {
+      "exitCode": 0,
+      "log": "secrets.log"
+    },
+    "diff": {
+      "exitCode": 0,
+      "log": "diff-check.log"
+    },
+    "independentReview": "ACCEPT",
+    "superChecksPassed": 10
+  },
+  "progress": {
+    "phase": 3,
+    "phaseStatus": "ACTIVE",
+    "taskStatus": "IN_PROGRESS",
+    "total": 49,
+    "done": 17,
+    "inProgress": 1,
+    "pending": 31,
+    "next": "Checkpoint 4: base reviews/preview, policy registration, media management APIs, validate/publish/rollback/public projection/outbox/purge"
+  },
+  "limitations": [
+    "Explicit TEST authoring composition; production login issuance and admin editor UI remain later work",
+    "Existing stable owner IDs and policy keys required; homepage is singleton",
+    "Public extended projection, publication and rollback remain blocked until complete evidence chain",
+    "Artist and commerce management tasks include their required APIs; no price/inventory/variant management added here",
+    "No new physical-device, remote CI, PSP, cloud, staging or production release evidence"
+  ]
+}

@@ -40,7 +40,7 @@ function canonicalize(value: CanonicalValue): unknown {
   return value;
 }
 
-function computeTranslationContentHash(
+export function computeTranslationContentHash(
   contentKind: string,
   localizedContent: Readonly<Record<string, CanonicalValue | undefined>>,
 ): string {

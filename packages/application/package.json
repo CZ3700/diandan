@@ -16,9 +16,15 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@fan-support/catalog": "workspace:*",
+    "@fan-support/content": "workspace:*",
     "@fan-support/contracts": "workspace:*",
     "@fan-support/key-management-port": "workspace:*",
     "@fan-support/payment-port": "workspace:*",
-    "@fan-support/persistence-port": "workspace:*"
+    "@fan-support/persistence-port": "workspace:*",
+    "@fan-support/media-port": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3"
   }
 }

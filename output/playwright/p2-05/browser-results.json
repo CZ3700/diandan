@@ -311,7 +311,7 @@
     }
   ],
   "fontLoadingPolicy": {
-    "cssFiles": 10,
+    "cssFiles": 11,
     "fontFaces": 242,
     "strategy": "optional",
     "verifiedFamilies": [
@@ -322,11 +322,11 @@
       "Noto Sans Variable"
     ]
   },
-  "generatedAt": "2026-09-04T18:32:28.397Z",
+  "generatedAt": "2026-09-05T22:06:22.061Z",
   "git": {
     "after": {
-      "sha": "8e49c74b9e0b8296469c57ce35fc003803149938",
-      "sourceFingerprint": "3579e97760b599fdd3ed5f412e0142672db1d292b7cdfaf81f0ddd4b4b63f5cd",
+      "sha": "674ef5b4a57a6bb9ada6be5bf63670df9105ced4",
+      "sourceFingerprint": "c8a8f2d1ebbeb62c009e760d81d52b6f81e1700cb0b9f180fa9ec7cbbbb1670a",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -352,6 +352,42 @@
         {
           "path": "apps/storefront/postcss.config.mjs",
           "sha256": "eb850807f87af61505f5148a08803c15b766327457d7baa38b23475f06ff5269"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/README.md",
+          "sha256": "60fb7746b4719fa6a97a3ecf9142b6005fd5b0c14289d6e9d8a8dfa3935d7a0d"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/gift-blue-orbit.webp",
+          "sha256": "7a2d7ea94b921544b8628422b44f98e9b9732362e9c8dfeabd281709c933a448"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/gift-golden-hour.webp",
+          "sha256": "bb48d0034f01c506b8135d9fb9a8a2f510c201de7b55d4c26b4af0c559866497"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/gift-rose-palace.webp",
+          "sha256": "6baca198ca3a623b026a641269a1c68847f4eb053b3276e692b7539dbf33ffca"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/gift-ruby-bouquet.webp",
+          "sha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/gift-seasonal-table.webp",
+          "sha256": "aed6a065eb54b8d5c1bacfea5dd6f85aa6ca4b3d8f0205ed0d69478acbc09523"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/performer-daylight-desktop.webp",
+          "sha256": "8f4a8277040f631829cff1d76beab63ab0f4ff0fc88df7aa328faffa2c5c47c1"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/performer-daylight-mobile.webp",
+          "sha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/provenance.json",
+          "sha256": "6e321c4e77c87657240694af11661cbe9c782bb2ff98f6b124fcc5961dbece34"
         },
         {
           "path": "apps/storefront/public/ui-composites/README.md",
@@ -382,6 +418,10 @@
           "sha256": "e6d4781f786843214af8b9b08a04f0acbc4f66278d6a460125af1731cf641d42"
         },
         {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(japanese)/ja/brand/page.tsx",
+          "sha256": "1c01c037eb77ed8cd32f141c5a7487d336ca348e869a17515ba039341ba7d1ea"
+        },
+        {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(japanese)/ja/components/page.tsx",
           "sha256": "985ba8511ca2c30893c8841c19d8aac0a823d1b5302b0200b30796a8a3f0fd5c"
         },
@@ -406,6 +446,10 @@
           "sha256": "65eac2a4dc84e720ee3fc0ac96d2b207a64c62b396af002ba7b2ba6a1acb5b5e"
         },
         {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en-XA/brand/page.tsx",
+          "sha256": "e3958321bc7c6835b50987bca10ce74f7f3fddf3d47fd18e5feb1a87bc17b9b2"
+        },
+        {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en-XA/components/page.tsx",
           "sha256": "82a28160a0801c582efae35b7a4aeeed844d31c3bae3a1e76cb764a495307cfa"
         },
@@ -426,6 +470,10 @@
           "sha256": "e800e74beec9c658606e21cd9a016aeb1bb504b83024371fdca33f17d694dde4"
         },
         {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en/brand/page.tsx",
+          "sha256": "6c94cf41311f1c479e3b66b9453de722bdb7e03b94d9bb7ca60e201c53b03bda"
+        },
+        {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en/components/page.tsx",
           "sha256": "bde7318176fdcb89c47937ec3d5754d7c3437130a86d6afaa83a193a34ba7d18"
         },
@@ -444,6 +492,10 @@
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en/primitives/page.tsx",
           "sha256": "2c73ee85b96a1cf32684a1898a62d85d1e37994f881eff7c3f45c336da024cac"
+        },
+        {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/es/brand/page.tsx",
+          "sha256": "4be1bb30c0ee21192510452f415b930b283f67f98663e5016ddccaf0b031f9c4"
         },
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/es/components/page.tsx",
@@ -470,6 +522,10 @@
           "sha256": "cd2860a29b8794f8cce0b5e8fc727e1865519ae5f34ee8aa8e1235b8bef83903"
         },
         {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/pt/brand/page.tsx",
+          "sha256": "9a3c3396e2dce599f24902b65ffcf202eeffe96259f718963894b706dc08337b"
+        },
+        {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/pt/components/page.tsx",
           "sha256": "1ebed9ac0e4800fe4e77689e5c895ad847386e35a9731ee39ab8f38dcf9a2281"
         },
@@ -492,6 +548,10 @@
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(simplified-chinese)/layout.tsx",
           "sha256": "58d24d249ba82bb3ebbda9a13b4f817eadc7b7c28318f1db4086449d10433704"
+        },
+        {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(simplified-chinese)/zh-CN/brand/page.tsx",
+          "sha256": "d2b25b9712c77ba844104bd5ce2b639c85ac19a8898cd4649cc52d893f2d0afe"
         },
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(simplified-chinese)/zh-CN/components/page.tsx",
@@ -518,6 +578,10 @@
           "sha256": "2abd46a1778d093986bdaaa8f853e49532d279ed631c02a16342c5f47ccbf739"
         },
         {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(thai)/th/brand/page.tsx",
+          "sha256": "56cf1b36079030bd408a9a6aa66f98207feafa2783a27185ab509a5f66c80b19"
+        },
+        {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(thai)/th/components/page.tsx",
           "sha256": "1372f2dda8f061bcd47e1e851508575f6a1d03387a41eea48cf9ec480c75a2c3"
         },
@@ -540,6 +604,10 @@
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(vietnamese)/layout.tsx",
           "sha256": "196b44b3fd222afc03591fd9730f1b883d48ccb279ce2a09dc8cf347b55e7c25"
+        },
+        {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(vietnamese)/vi/brand/page.tsx",
+          "sha256": "cb92ab3cf0028e95c7a6e2195423da0c94b034aceb0a74ffa822b293c4b8953a"
         },
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(vietnamese)/vi/components/page.tsx",
@@ -618,6 +686,30 @@
           "sha256": "ecf41d6b64db3e981e6d720d292f01ef28d37ac5007346048a2504349a273af7"
         },
         {
+          "path": "apps/storefront/src/app/ui-brand-copy.ts",
+          "sha256": "94eea1b03829c968b390ab3f6e9657f68e4fc617b2bbad2a4bf1aca56e0cbdba"
+        },
+        {
+          "path": "apps/storefront/src/app/ui-brand-model.test.ts",
+          "sha256": "1a4e210ff812c76a608ac468b1ea22f6499f23813decb29fb9e694c77a0d224e"
+        },
+        {
+          "path": "apps/storefront/src/app/ui-brand-model.ts",
+          "sha256": "fa834771678ad4b338fb52fe3b8f4247389c43276c7047f12499281c81ca1a49"
+        },
+        {
+          "path": "apps/storefront/src/app/ui-brand-page.tsx",
+          "sha256": "b30cf877ae880280baeac12f34ed32a7d064b0d0714da5763e0cc8e4f9a46f23"
+        },
+        {
+          "path": "apps/storefront/src/app/ui-brand-specimen.module.css",
+          "sha256": "62affbf2ebbd753bed2963de97a351bc7e68d6eef197d9864c2ff2bd3f6bb564"
+        },
+        {
+          "path": "apps/storefront/src/app/ui-brand-specimen.tsx",
+          "sha256": "0598519630ff62df70011190a93f7b68181db294064fdaf162e3160d2ee7c8ea"
+        },
+        {
           "path": "apps/storefront/src/app/ui-composites-cart-line-demo.tsx",
           "sha256": "8811fe5dbb1e2119257ccbfc784df2c8d2fda088de8f2b710931c4825723f906"
         },
@@ -675,7 +767,7 @@
         },
         {
           "path": "apps/storefront/src/app/ui-motion-specimen.module.css",
-          "sha256": "2cf4601432d83d40d8bcf2883b7f75c561263adafe5e15960bad93cd7bea28a1"
+          "sha256": "7ce2b00b84e68fc21c73e34bc38a9dab1e99740dd8c287c5a15d8d53f6136d24"
         },
         {
           "path": "apps/storefront/src/app/ui-motion-specimen.test.tsx",
@@ -783,7 +875,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "b88b56babef99b613ce1683a3494098ecef0e8c3e7de5c9f53c05337a745d0e6"
+          "sha256": "0c4aa0d05297ad79b04f4e9ed0dd4887580b12361d980049a2ed57e883f1b3ca"
         },
         {
           "path": "packages/config/package.json",
@@ -839,31 +931,63 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "309c69f2b4367d0ed39ab5a806a624555560b4ca668a61500f908895989cd6fc"
+          "sha256": "e95791f0063af1c37b63c6b1ab8adab2e0f10d1112658cd029c4b6e87fe29a1c"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "b70eeab199b78feac91d231a83588b889b78d167eeec1c4a1772734de9957d00"
+          "sha256": "d8ffd2a3663dbb0d2b52aa6ab88d951f855a11b3f9275db5f7b12b500398e6f0"
         },
         {
           "path": "packages/contracts/package.json",
           "sha256": "685702fd9b2f21e46728bb07de7ed8309eed23119e02f93db2805bf67d9d7265"
         },
         {
+          "path": "packages/contracts/src/admin-content-openapi.test.ts",
+          "sha256": "b54535ff07f64cde222c6dc40554682aa8668735dcad7a274dfd42aaf008a56e"
+        },
+        {
+          "path": "packages/contracts/src/admin-content-openapi.ts",
+          "sha256": "b1e0187c96c22e7d9ed4b078cb84c31d71f7dc5afff79e2a1d328230d2262785"
+        },
+        {
+          "path": "packages/contracts/src/admin-content.test.ts",
+          "sha256": "91fc7c88023953d1919183845e2c209df6dd963130a99db5d8c70103879009c8"
+        },
+        {
+          "path": "packages/contracts/src/admin-content.ts",
+          "sha256": "ebf133c5a836a04fd20975dca467d22e18a6b63a8fd23eef5612ac544d0b144e"
+        },
+        {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "ab3accc216c93772c7a322e4de0f64e1495d341dc88f38b30e4dbb187bec24ee"
+          "sha256": "62ecd0a31cf3c3449c0db8c2418f2f7f062db615828f5c4acd438ae765cbefda"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "1be91631c5721d829983d98e1c5706a06cf9f587aa52dbd1fcbc3800ea4dd33a"
+          "sha256": "c0c33dcc4557f04af1c6a39ea9f58dbc97699e66e1df00b55f11150ea5857f80"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
-          "sha256": "04e50da538d0ffc1ffad2ff8b611b872d2a99c87d948e52dbe88faad76ea5d99"
+          "sha256": "26d0b87b539e0b09fdb987c712c8183d67b3e0214171a1ce7f98f50928ba7add"
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "599d7ebade94bd5d3b8201a6850ea54f0521933f3f34d0435917666646cf99ae"
+          "sha256": "0dfc3301a07430e44cda6b911e8f85c0c7428bc2fb4d9d413246f13a0f323bdd"
+        },
+        {
+          "path": "packages/contracts/src/base-content-openapi.test.ts",
+          "sha256": "a683e11956d3ac73ffd888c14e309267953ec34d59ef304fea79d402cf89e82c"
+        },
+        {
+          "path": "packages/contracts/src/base-content-openapi.ts",
+          "sha256": "fae43f22c8fa4d88103c2f51da38c0b10e4e6bceb49185116cb71e834e3639e1"
+        },
+        {
+          "path": "packages/contracts/src/base-content.test.ts",
+          "sha256": "76a1ecb72a7c02c2c97fba3a4c46bcd0a41030d0e16f9acbab839e878a1708b5"
+        },
+        {
+          "path": "packages/contracts/src/base-content.ts",
+          "sha256": "40cf53b0fd46231d17cb07cf3e02f00ceac7cc622b9ddb9f87ad718d3d156593"
         },
         {
           "path": "packages/contracts/src/cache-purge-port-contracts.ts",
@@ -872,6 +996,26 @@
         {
           "path": "packages/contracts/src/catalog-content.ts",
           "sha256": "307d1b9503151d718c39a1710a6c15d30facdce4ffea3a0d25aad74ef4d81643"
+        },
+        {
+          "path": "packages/contracts/src/catalog-directory-openapi.ts",
+          "sha256": "90c0e78f89772755ea854fa5e33f0c7f89df1b62a53acc15a6cf6da663c527b8"
+        },
+        {
+          "path": "packages/contracts/src/catalog-directory.test.ts",
+          "sha256": "6c1f06ed0d0ed29ee000bc5904a164262cc31fa6e5df7756a780061e500bf447"
+        },
+        {
+          "path": "packages/contracts/src/catalog-directory.ts",
+          "sha256": "6b8e03056d2237ac7df37892fe96a5aedd0dd78e24a56b444b93f34d0ff3d3d9"
+        },
+        {
+          "path": "packages/contracts/src/catalog-discovery.test.ts",
+          "sha256": "15fcfde831fff5809e80b41e889e303407f49cfdc5515d1c110039cfa22389e3"
+        },
+        {
+          "path": "packages/contracts/src/catalog-discovery.ts",
+          "sha256": "9a960c5c3cd9e58fb162423abb8e4368780d77799e4bfb5db6169bc1ef36b10c"
         },
         {
           "path": "packages/contracts/src/catalog.test.ts",
@@ -892,6 +1036,30 @@
         {
           "path": "packages/contracts/src/compatibility.test.ts",
           "sha256": "6387fbddbea0e64b4fa00450b2b3540772379fcca08fca2ee7f6177192526ac4"
+        },
+        {
+          "path": "packages/contracts/src/content-authoring-openapi.test.ts",
+          "sha256": "d7b98bf6a86f4fb1f487e85caf2fadd8809835d8836dd2d7c55767b39f6fd796"
+        },
+        {
+          "path": "packages/contracts/src/content-authoring-openapi.ts",
+          "sha256": "7e772360eb7223a92b480d603a3dc446b69b969306d5db310931546e24f356dd"
+        },
+        {
+          "path": "packages/contracts/src/content-authoring.test.ts",
+          "sha256": "23ba074ba47531ca80977c21bbd0a83789fe1131d9e46336d7c0f4057ea63af1"
+        },
+        {
+          "path": "packages/contracts/src/content-authoring.ts",
+          "sha256": "09622a5a6aafe76daed82abf5ce4d29dd12298a04c98cf16461e36c6cc1b4a36"
+        },
+        {
+          "path": "packages/contracts/src/content-drafts.test.ts",
+          "sha256": "06dbd5785e5b43533aad80a83ee77afc0980f2baa6f712a216819cfe32581228"
+        },
+        {
+          "path": "packages/contracts/src/content-drafts.ts",
+          "sha256": "cf2b421238c3315541c207ff3bbd382a3ade85db889808a102778d0b2d77e0b7"
         },
         {
           "path": "packages/contracts/src/content-lifecycle.ts",
@@ -958,6 +1126,14 @@
           "sha256": "1ec435fd5b1c17ef4e073af18aabd64c86ae4130a3c4491ae425c5567b8c4d81"
         },
         {
+          "path": "packages/contracts/src/gift-details.test.ts",
+          "sha256": "f3b9a44ff6386799b0770f744a32728ae599f62c3d297bfb1ee0a1c17970db74"
+        },
+        {
+          "path": "packages/contracts/src/gift-details.ts",
+          "sha256": "0a4031bbaf55cdc584ad394bff05951b556cde63e6ebdde68be57ff64b9c35e6"
+        },
+        {
           "path": "packages/contracts/src/identifiers.test.ts",
           "sha256": "e60d5d31da7c9de1494065b974b08b842bba54a9b125401ca7df82fcb5275e4f"
         },
@@ -975,7 +1151,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "c11db2a8ed14e4d8af0eefe0f40c95929d886a847f1a730fc20ca8d43b26cd5e"
+          "sha256": "d233004c70465c44c9124a71e480cd0006a47d05bba66723ab39f52992baf804"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -994,8 +1170,24 @@
           "sha256": "5650907e387c83e909117376b2d962a420e3f710dc6078b35e8beab6290dc639"
         },
         {
+          "path": "packages/contracts/src/media-framing.test.ts",
+          "sha256": "01aacb0f439b3b7967205d84a944908aaf50f71bf498aba5d2a25efb63e5722a"
+        },
+        {
+          "path": "packages/contracts/src/media-framing.ts",
+          "sha256": "193d5f7e9de351483b403a06d2b3faae0321ca8231ae1408a59fb6fb24dfb05f"
+        },
+        {
           "path": "packages/contracts/src/media-port-contracts.ts",
           "sha256": "bfa7d1af16719d2bba86d7a08912f6e847add5175fe2094925d41ee48b05648e"
+        },
+        {
+          "path": "packages/contracts/src/media-processing.test.ts",
+          "sha256": "558169d985016ee93f4c0036712323756dccbae2ec10cecaf91036038233db2d"
+        },
+        {
+          "path": "packages/contracts/src/media-processing.ts",
+          "sha256": "c99716df2d42285489e27d1d554c474a010a3909796a245b724f90e776aa21b8"
         },
         {
           "path": "packages/contracts/src/notification-port-contracts.ts",
@@ -1375,7 +1567,7 @@
         },
         {
           "path": "packages/ui/src/media.tsx",
-          "sha256": "9404eb35d8b566a862f904b891613d3b3baf5c54c429e248bd0103e7edb6192d"
+          "sha256": "0551ed2d2e47e48dab2b6736bdd1fe932a6845509be06ffa210acaf00685d499"
         },
         {
           "path": "packages/ui/src/menu.tsx",
@@ -1471,7 +1663,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "65efde1fd16a0d42bb61fec970e363beaed517532252aa090635e8cc445233d7"
+          "sha256": "1071fce5ca4060f4ebbb1732786e2fd8606a65ddd5e4b70495111736f2727678"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -1498,11 +1690,584 @@
           "sha256": "d9c39f7283790192f6e4cc155061772049cb18d8cc8c28f39ab60e40656c54a6"
         }
       ],
-      "status": []
+      "status": [
+        " M apps/api/package.json",
+        " M apps/api/src/bootstrap.ts",
+        " M apps/api/src/index.ts",
+        " M apps/api/src/production-application.test.ts",
+        " M apps/api/src/production-application.ts",
+        " M apps/storefront/src/app/ui-motion-specimen.module.css",
+        " M apps/worker/package.json",
+        " M apps/worker/src/bootstrap.ts",
+        " M apps/worker/src/main.ts",
+        " M apps/worker/src/reliable-events-bootstrap.e2e.test.ts",
+        " M database/migrations/manifest.json",
+        " M database/schema/expected-catalog.json",
+        " M docs/FAN_SUPPORT_PLATFORM_SPEC.md",
+        " M docs/plan/dependency-graph.md",
+        " M docs/plan/milestones.md",
+        " M docs/plan/task-breakdown.md",
+        " M docs/progress/MASTER.md",
+        " M docs/progress/phase-2-design-system.md",
+        " M docs/progress/phase-3-storefront.md",
+        " M output/playwright/p2-02/README.md",
+        " M output/playwright/p2-02/axe-results/default-desktop.json",
+        " M output/playwright/p2-02/axe-results/default-mobile.json",
+        " M output/playwright/p2-02/axe-results/error.json",
+        " M output/playwright/p2-02/axe-results/loading.json",
+        " M output/playwright/p2-02/axe-results/pseudo-320.json",
+        " M output/playwright/p2-02/axe-results/rtl.json",
+        " M output/playwright/p2-02/browser-results.json",
+        " M output/playwright/p2-02/interactions/1440x900-en-hover.png",
+        " M output/playwright/p2-02/reduced-motion/1440x900-en-reduce.png",
+        " M output/playwright/p2-02/rtl/390x844-en-rtl.png",
+        " M output/playwright/p2-02/screenshots.sha256",
+        " M output/playwright/p2-02/stress/320x800-pt-long.png",
+        " M output/playwright/p2-02/zoom/google-chrome-200-percent-pt.png",
+        " M output/playwright/p2-04/README.md",
+        " M output/playwright/p2-04/axe-results/baseline-desktop.json",
+        " M output/playwright/p2-04/axe-results/baseline-mobile.json",
+        " M output/playwright/p2-04/axe-results/cart-line.json",
+        " M output/playwright/p2-04/axe-results/empty-error.json",
+        " M output/playwright/p2-04/axe-results/image-error.json",
+        " M output/playwright/p2-04/axe-results/loading.json",
+        " M output/playwright/p2-04/axe-results/pseudo.json",
+        " M output/playwright/p2-04/axe-results/reduced-motion.json",
+        " M output/playwright/p2-04/axe-results/timeline.json",
+        " M output/playwright/p2-04/axe-results/unavailable.json",
+        " M output/playwright/p2-04/browser-results.json",
+        " M output/playwright/p2-04/responsive/1023x900-en-XA.png",
+        " M output/playwright/p2-04/screenshots.sha256",
+        " M output/playwright/p2-04/states/390x844-en.png",
+        " M output/playwright/p2-04/stress/320x800-en-XA.png",
+        " M output/playwright/p2-04/stress/320x800-pt-long.png",
+        " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
+        " M package.json",
+        " M packages/application/package.json",
+        " M packages/application/src/index.ts",
+        " M packages/catalog/package.json",
+        " M packages/catalog/src/index.ts",
+        " M packages/catalog/tsconfig.json",
+        " M packages/content/src/hashing.ts",
+        " M packages/content/src/index.ts",
+        " M packages/content/src/translation-validation.test.ts",
+        " M packages/content/src/translation-validation.ts",
+        " M packages/contracts/generated/contracts.schema.json",
+        " M packages/contracts/generated/openapi.json",
+        " M packages/contracts/src/artifact-documents.test.ts",
+        " M packages/contracts/src/artifact-documents.ts",
+        " M packages/contracts/src/artifact-registry.test.ts",
+        " M packages/contracts/src/artifact-registry.ts",
+        " M packages/contracts/src/index.ts",
+        " M packages/media-port/src/index.ts",
+        " M packages/media-s3/scripts/s3-integration.mjs",
+        " M packages/persistence-port/src/index.ts",
+        " M packages/persistence-postgres/package.json",
+        " M packages/persistence-postgres/src/index.ts",
+        " M packages/persistence-postgres/src/migration-files.test.ts",
+        " M packages/persistence-postgres/src/postgres-persistence.test.ts",
+        " M packages/persistence-postgres/src/postgres-persistence.ts",
+        " M packages/ui/src/media.tsx",
+        " M pnpm-lock.yaml",
+        " M scripts/check-adapter-boundaries.mjs",
+        " M scripts/check-workspace.mjs",
+        " M scripts/verify-ui-composites-browser.mjs",
+        " M scripts/verify-ui-composites-browser.test.mjs",
+        "?? apps/api/scripts/base-content-http-fixtures.mjs",
+        "?? apps/api/scripts/base-content-http.mjs",
+        "?? apps/api/scripts/postgres-admin-content-authoring-http.mjs",
+        "?? apps/api/scripts/postgres-admin-content-http.mjs",
+        "?? apps/api/scripts/postgres-catalog-http.mjs",
+        "?? apps/api/src/admin-content-authoring-route.test.ts",
+        "?? apps/api/src/admin-content-authoring-route.ts",
+        "?? apps/api/src/admin-content-bootstrap.e2e.test.ts",
+        "?? apps/api/src/admin-content-composition.test.ts",
+        "?? apps/api/src/admin-content-composition.ts",
+        "?? apps/api/src/admin-content-route.test.ts",
+        "?? apps/api/src/admin-content-route.ts",
+        "?? apps/api/src/base-content-composition.test.ts",
+        "?? apps/api/src/base-content-composition.ts",
+        "?? apps/api/src/base-content-route.test.ts",
+        "?? apps/api/src/base-content-route.ts",
+        "?? apps/api/src/catalog-directory-bootstrap.e2e.test.ts",
+        "?? apps/api/src/catalog-directory-composition.test.ts",
+        "?? apps/api/src/catalog-directory-composition.ts",
+        "?? apps/api/src/catalog-directory-route.e2e.test.ts",
+        "?? apps/api/src/catalog-directory-route.ts",
+        "?? apps/api/src/content-authoring-composition.test.ts",
+        "?? apps/api/src/content-authoring-composition.ts",
+        "?? apps/storefront/public/ui-brand/README.md",
+        "?? apps/storefront/public/ui-brand/gift-blue-orbit.webp",
+        "?? apps/storefront/public/ui-brand/gift-golden-hour.webp",
+        "?? apps/storefront/public/ui-brand/gift-rose-palace.webp",
+        "?? apps/storefront/public/ui-brand/gift-ruby-bouquet.webp",
+        "?? apps/storefront/public/ui-brand/gift-seasonal-table.webp",
+        "?? apps/storefront/public/ui-brand/performer-daylight-desktop.webp",
+        "?? apps/storefront/public/ui-brand/performer-daylight-mobile.webp",
+        "?? apps/storefront/public/ui-brand/provenance.json",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(japanese)/ja/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en-XA/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(latin)/es/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(latin)/pt/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(simplified-chinese)/zh-CN/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(thai)/th/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(vietnamese)/vi/brand/page.tsx",
+        "?? apps/storefront/src/app/ui-brand-copy.ts",
+        "?? apps/storefront/src/app/ui-brand-model.test.ts",
+        "?? apps/storefront/src/app/ui-brand-model.ts",
+        "?? apps/storefront/src/app/ui-brand-page.tsx",
+        "?? apps/storefront/src/app/ui-brand-specimen.module.css",
+        "?? apps/storefront/src/app/ui-brand-specimen.tsx",
+        "?? apps/worker/scripts/media-processing-integration.mjs",
+        "?? apps/worker/src/media-processing-composition.test.ts",
+        "?? apps/worker/src/media-processing-composition.ts",
+        "?? apps/worker/src/media-processing-runtime.test.ts",
+        "?? apps/worker/src/media-processing-runtime.ts",
+        "?? apps/worker/src/production-application.test.ts",
+        "?? apps/worker/src/production-application.ts",
+        "?? database/migrations/0010_catalog-search-projection.down.sql",
+        "?? database/migrations/0010_catalog-search-projection.up.sql",
+        "?? database/migrations/0011_price-generated-lifecycle.down.sql",
+        "?? database/migrations/0011_price-generated-lifecycle.up.sql",
+        "?? database/migrations/0012_media-processing.down.sql",
+        "?? database/migrations/0012_media-processing.up.sql",
+        "?? database/migrations/0013_content-drafts.down.sql",
+        "?? database/migrations/0013_content-drafts.up.sql",
+        "?? database/migrations/0014_admin-content.down.sql",
+        "?? database/migrations/0014_admin-content.up.sql",
+        "?? database/migrations/0015_content-authoring.down.sql",
+        "?? database/migrations/0015_content-authoring.up.sql",
+        "?? database/migrations/0016_base-content.down.sql",
+        "?? database/migrations/0016_base-content.up.sql",
+        "?? docs/decisions/008-phase-2-visual-baseline.md",
+        "?? docs/decisions/009-catalog-discovery-localized-authoring.md",
+        "?? docs/decisions/010-media-processing-identities.md",
+        "?? docs/plan/p3-01-base-content-review.md",
+        "?? docs/plan/p3-01-content-authoring.md",
+        "?? docs/plan/p3-01-content-runtime.md",
+        "?? output/checks/p3-01-admin-content-application/README.md",
+        "?? output/checks/p3-01-admin-content-http/README.md",
+        "?? output/checks/p3-01-admin-content/README.md",
+        "?? output/checks/p3-01-admin-content/compatibility.json",
+        "?? output/checks/p3-01-admin-content/contracts-before.json",
+        "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
+        "?? output/checks/p3-01-admin-content/implementation-source.json",
+        "?? output/checks/p3-01-admin-content/independent-review.md",
+        "?? output/checks/p3-01-admin-content/review-timing-probe.txt",
+        "?? output/checks/p3-01-admin-content/validation.json",
+        "?? output/checks/p3-01-authoring-content-application/implementation.md",
+        "?? output/checks/p3-01-authoring/README.md",
+        "?? output/checks/p3-01-authoring/compatibility.json",
+        "?? output/checks/p3-01-authoring/contracts-before.json",
+        "?? output/checks/p3-01-authoring/implementation-source.json",
+        "?? output/checks/p3-01-authoring/independent-review.md",
+        "?? output/checks/p3-01-authoring/validation.json",
+        "?? output/checks/p3-01-base-content/HTTP-README.md",
+        "?? output/checks/p3-01-base-content/README.md",
+        "?? output/checks/p3-01-base-content/compatibility.json",
+        "?? output/checks/p3-01-base-content/contracts-before.json",
+        "?? output/checks/p3-01-base-content/implementation-source.json",
+        "?? output/checks/p3-01-base-content/independent-review.md",
+        "?? output/checks/p3-01-base-content/validation.json",
+        "?? output/checks/p3-01-content-authoring-http/README.md",
+        "?? output/checks/p3-01-content-drafts/maximum-draft-probe.mjs",
+        "?? output/checks/p3-01-content-storage/README.md",
+        "?? output/checks/p3-01-content-storage/baseline-contracts.schema.json",
+        "?? output/checks/p3-01-content-storage/baseline-openapi.json",
+        "?? output/checks/p3-01-content-storage/compatibility.json",
+        "?? output/checks/p3-01-content-storage/implementation-source.json",
+        "?? output/checks/p3-01-content-storage/validation.json",
+        "?? output/checks/p3-01-directory/README.md",
+        "?? output/checks/p3-01-directory/compatibility-and-progress.json",
+        "?? output/checks/p3-01-directory/implementation-source.json",
+        "?? output/checks/p3-01-directory/validation.json",
+        "?? output/checks/p3-01-foundation/README.md",
+        "?? output/checks/p3-01-foundation/compatibility-and-progress.json",
+        "?? output/checks/p3-01-foundation/implementation-source.json",
+        "?? output/checks/p3-01-foundation/validation.json",
+        "?? output/checks/p3-01-media-clock-rollback/README.md",
+        "?? output/checks/p3-01-media/README.md",
+        "?? output/checks/p3-01-media/compatibility-and-progress.json",
+        "?? output/checks/p3-01-media/contracts-before.schema.json",
+        "?? output/checks/p3-01-media/implementation-source.json",
+        "?? output/checks/p3-01-media/validation.json",
+        "?? output/playwright/p2-05-device/README.md",
+        "?? output/playwright/p2-05-device/connection-check.json",
+        "?? output/playwright/p2-05-device/device-results.json",
+        "?? output/playwright/p2-05-device/iphone-touch-probe.png",
+        "?? output/playwright/p2-05-device/native-cart.png",
+        "?? output/playwright/p2-05-device/native-hydrated-samples.json",
+        "?? output/playwright/p2-05-device/native-touch-samples.json",
+        "?? output/playwright/p2-05-device/normal-motion.mp4",
+        "?? output/playwright/p2-05-device/normal-noa.png",
+        "?? output/playwright/p2-05-device/normal-render-samples.json",
+        "?? output/playwright/p2-05-device/ordinary-safari-probe.json",
+        "?? output/playwright/p2-05-device/ordinary-safari.png",
+        "?? output/playwright/p2-05-device/reduced-motion-and-touch.mp4",
+        "?? output/playwright/p2-05-device/reduced-render-samples.json",
+        "?? output/playwright/p2-05-device/unhydrated-scripted-samples.json",
+        "?? output/playwright/p2-05-device/unhydrated-transition-samples.json",
+        "?? output/playwright/p2-06-brand/README.md",
+        "?? output/playwright/p2-06-brand/axe/en-1024-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/en-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/en-1440-image-fallback.json",
+        "?? output/playwright/p2-06-brand/axe/en-1440-interaction-bag.json",
+        "?? output/playwright/p2-06-brand/axe/en-1440-interaction-detail.json",
+        "?? output/playwright/p2-06-brand/axe/en-1440-reduced.json",
+        "?? output/playwright/p2-06-brand/axe/en-1920-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/en-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/en-390-image-fallback.json",
+        "?? output/playwright/p2-06-brand/axe/en-390-interaction-bag.json",
+        "?? output/playwright/p2-06-brand/axe/en-390-interaction-detail.json",
+        "?? output/playwright/p2-06-brand/axe/en-390-reduced.json",
+        "?? output/playwright/p2-06-brand/axe/en-768-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/en-XA-320-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/es-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/es-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/ja-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/ja-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/pt-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/pt-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/th-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/th-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/vi-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/vi-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/zh-CN-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/zh-CN-390-baseline.json",
+        "?? output/playwright/p2-06-brand/capture.mjs",
+        "?? output/playwright/p2-06-brand/detail-framing-before.json",
+        "?? output/playwright/p2-06-brand/environment-results.json",
+        "?? output/playwright/p2-06-brand/results-before-fix.json",
+        "?? output/playwright/p2-06-brand/results.json",
+        "?? output/playwright/p2-06-brand/screenshots.sha256",
+        "?? output/playwright/p2-06-brand/screenshots/en-1024-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1024-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1024-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1024-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-image-fallback-failure.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-image-fallback-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-image-fallback-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-interaction-bag-two-recipients.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-interaction-detail-quantity-2.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-interaction-detail.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-interaction-failure.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-interaction-zh-bag-preserved.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-reduced.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1920-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1920-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1920-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1920-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-image-fallback-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-image-fallback-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-interaction-bag-two-recipients.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-interaction-detail-quantity-2.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-interaction-detail.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-interaction-failure.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-interaction-zh-bag-preserved.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-reduced.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-768-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-768-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-768-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-768-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-XA-320-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-XA-320-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-XA-320-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-XA-320-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-390-hero.png",
+        "?? output/playwright/p2-06-brand/source-continuity.json",
+        "?? output/playwright/p2-06-brand/validation.json",
+        "?? output/playwright/p2-06-brand/verify-environment.mjs",
+        "?? output/playwright/p2-06/README.md",
+        "?? output/playwright/p2-06/artifacts.sha256",
+        "?? output/playwright/p2-06/axe/en-1440-components.json",
+        "?? output/playwright/p2-06/axe/en-1440-motion.json",
+        "?? output/playwright/p2-06/axe/en-390-components.json",
+        "?? output/playwright/p2-06/axe/en-390-motion.json",
+        "?? output/playwright/p2-06/axe/es-1440-components.json",
+        "?? output/playwright/p2-06/axe/es-1440-motion.json",
+        "?? output/playwright/p2-06/axe/es-390-components.json",
+        "?? output/playwright/p2-06/axe/es-390-motion.json",
+        "?? output/playwright/p2-06/axe/ja-1440-components.json",
+        "?? output/playwright/p2-06/axe/ja-1440-motion.json",
+        "?? output/playwright/p2-06/axe/ja-390-components.json",
+        "?? output/playwright/p2-06/axe/ja-390-motion.json",
+        "?? output/playwright/p2-06/axe/pt-1440-components.json",
+        "?? output/playwright/p2-06/axe/pt-1440-motion.json",
+        "?? output/playwright/p2-06/axe/pt-390-components.json",
+        "?? output/playwright/p2-06/axe/pt-390-motion.json",
+        "?? output/playwright/p2-06/axe/th-1440-components.json",
+        "?? output/playwright/p2-06/axe/th-1440-motion.json",
+        "?? output/playwright/p2-06/axe/th-390-components.json",
+        "?? output/playwright/p2-06/axe/th-390-motion.json",
+        "?? output/playwright/p2-06/axe/vi-1440-components.json",
+        "?? output/playwright/p2-06/axe/vi-1440-motion.json",
+        "?? output/playwright/p2-06/axe/vi-390-components.json",
+        "?? output/playwright/p2-06/axe/vi-390-motion.json",
+        "?? output/playwright/p2-06/axe/zh-CN-1440-components.json",
+        "?? output/playwright/p2-06/axe/zh-CN-1440-motion.json",
+        "?? output/playwright/p2-06/axe/zh-CN-390-components.json",
+        "?? output/playwright/p2-06/axe/zh-CN-390-motion.json",
+        "?? output/playwright/p2-06/browser-results.json",
+        "?? output/playwright/p2-06/build-review.py",
+        "?? output/playwright/p2-06/capture.mjs",
+        "?? output/playwright/p2-06/index.html",
+        "?? output/playwright/p2-06/screenshots/en-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/en-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/en-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/en-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/en-1440-states.png",
+        "?? output/playwright/p2-06/screenshots/en-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/en-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/en-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/en-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/en-390-states.png",
+        "?? output/playwright/p2-06/screenshots/es-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/es-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/es-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/es-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/es-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/es-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/es-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/es-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/ja-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/ja-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/ja-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/ja-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/ja-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/ja-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/ja-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/ja-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/pt-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/pt-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/pt-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/pt-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/pt-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/pt-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/pt-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/pt-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/th-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/th-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/th-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/th-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/th-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/th-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/th-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/th-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/vi-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/vi-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/vi-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/vi-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/vi-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/vi-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/vi-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/vi-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-390-motion.png",
+        "?? output/playwright/p2-06/source-continuity.json",
+        "?? output/playwright/p2-06/typography-before.json",
+        "?? output/playwright/p2-06/validation.json",
+        "?? output/playwright/p2-06/viewer-1440.png",
+        "?? output/playwright/p2-06/viewer-390.png",
+        "?? output/playwright/p2-06/viewer-check.json",
+        "?? packages/application/src/admin-content-idempotency.ts",
+        "?? packages/application/src/admin-content-results.ts",
+        "?? packages/application/src/admin-content-review-read.ts",
+        "?? packages/application/src/admin-content-review-validation.ts",
+        "?? packages/application/src/admin-content-tokens.ts",
+        "?? packages/application/src/admin-content.test.ts",
+        "?? packages/application/src/admin-content.ts",
+        "?? packages/application/src/base-content-idempotency.ts",
+        "?? packages/application/src/base-content-time.ts",
+        "?? packages/application/src/base-content.test.ts",
+        "?? packages/application/src/base-content.ts",
+        "?? packages/application/src/catalog-directory.test.ts",
+        "?? packages/application/src/catalog-directory.ts",
+        "?? packages/application/src/content-authoring-idempotency.ts",
+        "?? packages/application/src/content-authoring.test.ts",
+        "?? packages/application/src/content-authoring.ts",
+        "?? packages/application/src/media-processing.test.ts",
+        "?? packages/application/src/media-processing.ts",
+        "?? packages/application/src/test-support/catalog-directory-fixture.ts",
+        "?? packages/catalog/src/directory-cursor.test.ts",
+        "?? packages/catalog/src/directory-cursor.ts",
+        "?? packages/catalog/src/discovery-cache.test.ts",
+        "?? packages/catalog/src/discovery-cache.ts",
+        "?? packages/catalog/src/discovery.test.ts",
+        "?? packages/catalog/src/discovery.ts",
+        "?? packages/content/src/base-content.test.ts",
+        "?? packages/content/src/base-content.ts",
+        "?? packages/content/src/content-authoring.test.ts",
+        "?? packages/content/src/content-authoring.ts",
+        "?? packages/content/src/content-drafts.test.ts",
+        "?? packages/content/src/content-drafts.ts",
+        "?? packages/content/src/gift-details.test.ts",
+        "?? packages/content/src/gift-details.ts",
+        "?? packages/content/src/media-framing.test.ts",
+        "?? packages/content/src/media-framing.ts",
+        "?? packages/content/src/media-processing.test.ts",
+        "?? packages/content/src/media-processing.ts",
+        "?? packages/contracts/src/admin-content-openapi.test.ts",
+        "?? packages/contracts/src/admin-content-openapi.ts",
+        "?? packages/contracts/src/admin-content.test.ts",
+        "?? packages/contracts/src/admin-content.ts",
+        "?? packages/contracts/src/base-content-openapi.test.ts",
+        "?? packages/contracts/src/base-content-openapi.ts",
+        "?? packages/contracts/src/base-content.test.ts",
+        "?? packages/contracts/src/base-content.ts",
+        "?? packages/contracts/src/catalog-directory-openapi.ts",
+        "?? packages/contracts/src/catalog-directory.test.ts",
+        "?? packages/contracts/src/catalog-directory.ts",
+        "?? packages/contracts/src/catalog-discovery.test.ts",
+        "?? packages/contracts/src/catalog-discovery.ts",
+        "?? packages/contracts/src/content-authoring-openapi.test.ts",
+        "?? packages/contracts/src/content-authoring-openapi.ts",
+        "?? packages/contracts/src/content-authoring.test.ts",
+        "?? packages/contracts/src/content-authoring.ts",
+        "?? packages/contracts/src/content-drafts.test.ts",
+        "?? packages/contracts/src/content-drafts.ts",
+        "?? packages/contracts/src/gift-details.test.ts",
+        "?? packages/contracts/src/gift-details.ts",
+        "?? packages/contracts/src/media-framing.test.ts",
+        "?? packages/contracts/src/media-framing.ts",
+        "?? packages/contracts/src/media-processing.test.ts",
+        "?? packages/contracts/src/media-processing.ts",
+        "?? packages/media-image/package.json",
+        "?? packages/media-image/src/failure.test.ts",
+        "?? packages/media-image/src/failure.ts",
+        "?? packages/media-image/src/image-pipeline.test.ts",
+        "?? packages/media-image/src/image-pipeline.ts",
+        "?? packages/media-image/src/index.test.ts",
+        "?? packages/media-image/src/index.ts",
+        "?? packages/media-image/src/storage-transfer.ts",
+        "?? packages/media-image/src/test-support/storage.ts",
+        "?? packages/media-image/tsconfig.build.json",
+        "?? packages/media-image/tsconfig.json",
+        "?? packages/media-port/src/processing.ts",
+        "?? packages/media-s3/scripts/ephemeral-s3-harness.mjs",
+        "?? packages/persistence-port/src/admin-content.ts",
+        "?? packages/persistence-port/src/base-content.ts",
+        "?? packages/persistence-port/src/catalog-directory.ts",
+        "?? packages/persistence-port/src/content-authoring.ts",
+        "?? packages/persistence-port/src/content-drafts.ts",
+        "?? packages/persistence-port/src/media-processing.ts",
+        "?? packages/persistence-postgres/scripts/postgres-admin-content-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-admin-content.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-base-content.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-catalog-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-content-authoring-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-content-authoring.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-content-drafts.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-media-processing-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-media-processing.mjs",
+        "?? packages/persistence-postgres/scripts/rebuild-catalog-search.mjs",
+        "?? packages/persistence-postgres/src/admin-authorization-repository.test.ts",
+        "?? packages/persistence-postgres/src/admin-authorization-repository.ts",
+        "?? packages/persistence-postgres/src/base-content-authorization.ts",
+        "?? packages/persistence-postgres/src/base-content-data.ts",
+        "?? packages/persistence-postgres/src/base-content-preview-repository.test.ts",
+        "?? packages/persistence-postgres/src/base-content-preview-repository.ts",
+        "?? packages/persistence-postgres/src/base-content-review-repository.test.ts",
+        "?? packages/persistence-postgres/src/base-content-review-repository.ts",
+        "?? packages/persistence-postgres/src/catalog-directory-repository.test.ts",
+        "?? packages/persistence-postgres/src/catalog-directory-repository.ts",
+        "?? packages/persistence-postgres/src/catalog-directory-sql.test.ts",
+        "?? packages/persistence-postgres/src/catalog-directory-sql.ts",
+        "?? packages/persistence-postgres/src/catalog-publication-loader.test.ts",
+        "?? packages/persistence-postgres/src/catalog-publication-loader.ts",
+        "?? packages/persistence-postgres/src/catalog-publication-mapper.ts",
+        "?? packages/persistence-postgres/src/catalog-search-projection.test.ts",
+        "?? packages/persistence-postgres/src/catalog-search-projection.ts",
+        "?? packages/persistence-postgres/src/content-authoring-data.ts",
+        "?? packages/persistence-postgres/src/content-authoring-diff.test.ts",
+        "?? packages/persistence-postgres/src/content-authoring-diff.ts",
+        "?? packages/persistence-postgres/src/content-authoring-model.ts",
+        "?? packages/persistence-postgres/src/content-authoring-repository.test.ts",
+        "?? packages/persistence-postgres/src/content-authoring-repository.ts",
+        "?? packages/persistence-postgres/src/content-authoring-writes.ts",
+        "?? packages/persistence-postgres/src/content-draft-data.ts",
+        "?? packages/persistence-postgres/src/content-draft-repository.test.ts",
+        "?? packages/persistence-postgres/src/content-draft-repository.ts",
+        "?? packages/persistence-postgres/src/content-draft-writes.ts",
+        "?? packages/persistence-postgres/src/content-preview-repository.test.ts",
+        "?? packages/persistence-postgres/src/content-preview-repository.ts",
+        "?? packages/persistence-postgres/src/content-review-data.ts",
+        "?? packages/persistence-postgres/src/content-review-repository.test.ts",
+        "?? packages/persistence-postgres/src/content-review-repository.ts",
+        "?? packages/persistence-postgres/src/media-processing-data.ts",
+        "?? packages/persistence-postgres/src/media-processing-outputs.ts",
+        "?? packages/persistence-postgres/src/media-processing-repository.test.ts",
+        "?? packages/persistence-postgres/src/media-processing-repository.ts",
+        "?? scripts/check-ui-motion-device.mjs",
+        "?? scripts/check-ui-motion-device.test.mjs"
+      ]
     },
     "before": {
-      "sha": "8e49c74b9e0b8296469c57ce35fc003803149938",
-      "sourceFingerprint": "3579e97760b599fdd3ed5f412e0142672db1d292b7cdfaf81f0ddd4b4b63f5cd",
+      "sha": "674ef5b4a57a6bb9ada6be5bf63670df9105ced4",
+      "sourceFingerprint": "c8a8f2d1ebbeb62c009e760d81d52b6f81e1700cb0b9f180fa9ec7cbbbb1670a",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -1528,6 +2293,42 @@
         {
           "path": "apps/storefront/postcss.config.mjs",
           "sha256": "eb850807f87af61505f5148a08803c15b766327457d7baa38b23475f06ff5269"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/README.md",
+          "sha256": "60fb7746b4719fa6a97a3ecf9142b6005fd5b0c14289d6e9d8a8dfa3935d7a0d"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/gift-blue-orbit.webp",
+          "sha256": "7a2d7ea94b921544b8628422b44f98e9b9732362e9c8dfeabd281709c933a448"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/gift-golden-hour.webp",
+          "sha256": "bb48d0034f01c506b8135d9fb9a8a2f510c201de7b55d4c26b4af0c559866497"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/gift-rose-palace.webp",
+          "sha256": "6baca198ca3a623b026a641269a1c68847f4eb053b3276e692b7539dbf33ffca"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/gift-ruby-bouquet.webp",
+          "sha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/gift-seasonal-table.webp",
+          "sha256": "aed6a065eb54b8d5c1bacfea5dd6f85aa6ca4b3d8f0205ed0d69478acbc09523"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/performer-daylight-desktop.webp",
+          "sha256": "8f4a8277040f631829cff1d76beab63ab0f4ff0fc88df7aa328faffa2c5c47c1"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/performer-daylight-mobile.webp",
+          "sha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358"
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/provenance.json",
+          "sha256": "6e321c4e77c87657240694af11661cbe9c782bb2ff98f6b124fcc5961dbece34"
         },
         {
           "path": "apps/storefront/public/ui-composites/README.md",
@@ -1558,6 +2359,10 @@
           "sha256": "e6d4781f786843214af8b9b08a04f0acbc4f66278d6a460125af1731cf641d42"
         },
         {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(japanese)/ja/brand/page.tsx",
+          "sha256": "1c01c037eb77ed8cd32f141c5a7487d336ca348e869a17515ba039341ba7d1ea"
+        },
+        {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(japanese)/ja/components/page.tsx",
           "sha256": "985ba8511ca2c30893c8841c19d8aac0a823d1b5302b0200b30796a8a3f0fd5c"
         },
@@ -1582,6 +2387,10 @@
           "sha256": "65eac2a4dc84e720ee3fc0ac96d2b207a64c62b396af002ba7b2ba6a1acb5b5e"
         },
         {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en-XA/brand/page.tsx",
+          "sha256": "e3958321bc7c6835b50987bca10ce74f7f3fddf3d47fd18e5feb1a87bc17b9b2"
+        },
+        {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en-XA/components/page.tsx",
           "sha256": "82a28160a0801c582efae35b7a4aeeed844d31c3bae3a1e76cb764a495307cfa"
         },
@@ -1602,6 +2411,10 @@
           "sha256": "e800e74beec9c658606e21cd9a016aeb1bb504b83024371fdca33f17d694dde4"
         },
         {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en/brand/page.tsx",
+          "sha256": "6c94cf41311f1c479e3b66b9453de722bdb7e03b94d9bb7ca60e201c53b03bda"
+        },
+        {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en/components/page.tsx",
           "sha256": "bde7318176fdcb89c47937ec3d5754d7c3437130a86d6afaa83a193a34ba7d18"
         },
@@ -1620,6 +2433,10 @@
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en/primitives/page.tsx",
           "sha256": "2c73ee85b96a1cf32684a1898a62d85d1e37994f881eff7c3f45c336da024cac"
+        },
+        {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/es/brand/page.tsx",
+          "sha256": "4be1bb30c0ee21192510452f415b930b283f67f98663e5016ddccaf0b031f9c4"
         },
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/es/components/page.tsx",
@@ -1646,6 +2463,10 @@
           "sha256": "cd2860a29b8794f8cce0b5e8fc727e1865519ae5f34ee8aa8e1235b8bef83903"
         },
         {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/pt/brand/page.tsx",
+          "sha256": "9a3c3396e2dce599f24902b65ffcf202eeffe96259f718963894b706dc08337b"
+        },
+        {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(latin)/pt/components/page.tsx",
           "sha256": "1ebed9ac0e4800fe4e77689e5c895ad847386e35a9731ee39ab8f38dcf9a2281"
         },
@@ -1668,6 +2489,10 @@
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(simplified-chinese)/layout.tsx",
           "sha256": "58d24d249ba82bb3ebbda9a13b4f817eadc7b7c28318f1db4086449d10433704"
+        },
+        {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(simplified-chinese)/zh-CN/brand/page.tsx",
+          "sha256": "d2b25b9712c77ba844104bd5ce2b639c85ac19a8898cd4649cc52d893f2d0afe"
         },
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(simplified-chinese)/zh-CN/components/page.tsx",
@@ -1694,6 +2519,10 @@
           "sha256": "2abd46a1778d093986bdaaa8f853e49532d279ed631c02a16342c5f47ccbf739"
         },
         {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(thai)/th/brand/page.tsx",
+          "sha256": "56cf1b36079030bd408a9a6aa66f98207feafa2783a27185ab509a5f66c80b19"
+        },
+        {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(thai)/th/components/page.tsx",
           "sha256": "1372f2dda8f061bcd47e1e851508575f6a1d03387a41eea48cf9ec480c75a2c3"
         },
@@ -1716,6 +2545,10 @@
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(vietnamese)/layout.tsx",
           "sha256": "196b44b3fd222afc03591fd9730f1b883d48ccb279ce2a09dc8cf347b55e7c25"
+        },
+        {
+          "path": "apps/storefront/src/app/%5Finternal/design-foundations/(vietnamese)/vi/brand/page.tsx",
+          "sha256": "cb92ab3cf0028e95c7a6e2195423da0c94b034aceb0a74ffa822b293c4b8953a"
         },
         {
           "path": "apps/storefront/src/app/%5Finternal/design-foundations/(vietnamese)/vi/components/page.tsx",
@@ -1794,6 +2627,30 @@
           "sha256": "ecf41d6b64db3e981e6d720d292f01ef28d37ac5007346048a2504349a273af7"
         },
         {
+          "path": "apps/storefront/src/app/ui-brand-copy.ts",
+          "sha256": "94eea1b03829c968b390ab3f6e9657f68e4fc617b2bbad2a4bf1aca56e0cbdba"
+        },
+        {
+          "path": "apps/storefront/src/app/ui-brand-model.test.ts",
+          "sha256": "1a4e210ff812c76a608ac468b1ea22f6499f23813decb29fb9e694c77a0d224e"
+        },
+        {
+          "path": "apps/storefront/src/app/ui-brand-model.ts",
+          "sha256": "fa834771678ad4b338fb52fe3b8f4247389c43276c7047f12499281c81ca1a49"
+        },
+        {
+          "path": "apps/storefront/src/app/ui-brand-page.tsx",
+          "sha256": "b30cf877ae880280baeac12f34ed32a7d064b0d0714da5763e0cc8e4f9a46f23"
+        },
+        {
+          "path": "apps/storefront/src/app/ui-brand-specimen.module.css",
+          "sha256": "62affbf2ebbd753bed2963de97a351bc7e68d6eef197d9864c2ff2bd3f6bb564"
+        },
+        {
+          "path": "apps/storefront/src/app/ui-brand-specimen.tsx",
+          "sha256": "0598519630ff62df70011190a93f7b68181db294064fdaf162e3160d2ee7c8ea"
+        },
+        {
           "path": "apps/storefront/src/app/ui-composites-cart-line-demo.tsx",
           "sha256": "8811fe5dbb1e2119257ccbfc784df2c8d2fda088de8f2b710931c4825723f906"
         },
@@ -1851,7 +2708,7 @@
         },
         {
           "path": "apps/storefront/src/app/ui-motion-specimen.module.css",
-          "sha256": "2cf4601432d83d40d8bcf2883b7f75c561263adafe5e15960bad93cd7bea28a1"
+          "sha256": "7ce2b00b84e68fc21c73e34bc38a9dab1e99740dd8c287c5a15d8d53f6136d24"
         },
         {
           "path": "apps/storefront/src/app/ui-motion-specimen.test.tsx",
@@ -1959,7 +2816,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "b88b56babef99b613ce1683a3494098ecef0e8c3e7de5c9f53c05337a745d0e6"
+          "sha256": "0c4aa0d05297ad79b04f4e9ed0dd4887580b12361d980049a2ed57e883f1b3ca"
         },
         {
           "path": "packages/config/package.json",
@@ -2015,31 +2872,63 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "309c69f2b4367d0ed39ab5a806a624555560b4ca668a61500f908895989cd6fc"
+          "sha256": "e95791f0063af1c37b63c6b1ab8adab2e0f10d1112658cd029c4b6e87fe29a1c"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "b70eeab199b78feac91d231a83588b889b78d167eeec1c4a1772734de9957d00"
+          "sha256": "d8ffd2a3663dbb0d2b52aa6ab88d951f855a11b3f9275db5f7b12b500398e6f0"
         },
         {
           "path": "packages/contracts/package.json",
           "sha256": "685702fd9b2f21e46728bb07de7ed8309eed23119e02f93db2805bf67d9d7265"
         },
         {
+          "path": "packages/contracts/src/admin-content-openapi.test.ts",
+          "sha256": "b54535ff07f64cde222c6dc40554682aa8668735dcad7a274dfd42aaf008a56e"
+        },
+        {
+          "path": "packages/contracts/src/admin-content-openapi.ts",
+          "sha256": "b1e0187c96c22e7d9ed4b078cb84c31d71f7dc5afff79e2a1d328230d2262785"
+        },
+        {
+          "path": "packages/contracts/src/admin-content.test.ts",
+          "sha256": "91fc7c88023953d1919183845e2c209df6dd963130a99db5d8c70103879009c8"
+        },
+        {
+          "path": "packages/contracts/src/admin-content.ts",
+          "sha256": "ebf133c5a836a04fd20975dca467d22e18a6b63a8fd23eef5612ac544d0b144e"
+        },
+        {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "ab3accc216c93772c7a322e4de0f64e1495d341dc88f38b30e4dbb187bec24ee"
+          "sha256": "62ecd0a31cf3c3449c0db8c2418f2f7f062db615828f5c4acd438ae765cbefda"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "1be91631c5721d829983d98e1c5706a06cf9f587aa52dbd1fcbc3800ea4dd33a"
+          "sha256": "c0c33dcc4557f04af1c6a39ea9f58dbc97699e66e1df00b55f11150ea5857f80"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
-          "sha256": "04e50da538d0ffc1ffad2ff8b611b872d2a99c87d948e52dbe88faad76ea5d99"
+          "sha256": "26d0b87b539e0b09fdb987c712c8183d67b3e0214171a1ce7f98f50928ba7add"
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "599d7ebade94bd5d3b8201a6850ea54f0521933f3f34d0435917666646cf99ae"
+          "sha256": "0dfc3301a07430e44cda6b911e8f85c0c7428bc2fb4d9d413246f13a0f323bdd"
+        },
+        {
+          "path": "packages/contracts/src/base-content-openapi.test.ts",
+          "sha256": "a683e11956d3ac73ffd888c14e309267953ec34d59ef304fea79d402cf89e82c"
+        },
+        {
+          "path": "packages/contracts/src/base-content-openapi.ts",
+          "sha256": "fae43f22c8fa4d88103c2f51da38c0b10e4e6bceb49185116cb71e834e3639e1"
+        },
+        {
+          "path": "packages/contracts/src/base-content.test.ts",
+          "sha256": "76a1ecb72a7c02c2c97fba3a4c46bcd0a41030d0e16f9acbab839e878a1708b5"
+        },
+        {
+          "path": "packages/contracts/src/base-content.ts",
+          "sha256": "40cf53b0fd46231d17cb07cf3e02f00ceac7cc622b9ddb9f87ad718d3d156593"
         },
         {
           "path": "packages/contracts/src/cache-purge-port-contracts.ts",
@@ -2048,6 +2937,26 @@
         {
           "path": "packages/contracts/src/catalog-content.ts",
           "sha256": "307d1b9503151d718c39a1710a6c15d30facdce4ffea3a0d25aad74ef4d81643"
+        },
+        {
+          "path": "packages/contracts/src/catalog-directory-openapi.ts",
+          "sha256": "90c0e78f89772755ea854fa5e33f0c7f89df1b62a53acc15a6cf6da663c527b8"
+        },
+        {
+          "path": "packages/contracts/src/catalog-directory.test.ts",
+          "sha256": "6c1f06ed0d0ed29ee000bc5904a164262cc31fa6e5df7756a780061e500bf447"
+        },
+        {
+          "path": "packages/contracts/src/catalog-directory.ts",
+          "sha256": "6b8e03056d2237ac7df37892fe96a5aedd0dd78e24a56b444b93f34d0ff3d3d9"
+        },
+        {
+          "path": "packages/contracts/src/catalog-discovery.test.ts",
+          "sha256": "15fcfde831fff5809e80b41e889e303407f49cfdc5515d1c110039cfa22389e3"
+        },
+        {
+          "path": "packages/contracts/src/catalog-discovery.ts",
+          "sha256": "9a960c5c3cd9e58fb162423abb8e4368780d77799e4bfb5db6169bc1ef36b10c"
         },
         {
           "path": "packages/contracts/src/catalog.test.ts",
@@ -2068,6 +2977,30 @@
         {
           "path": "packages/contracts/src/compatibility.test.ts",
           "sha256": "6387fbddbea0e64b4fa00450b2b3540772379fcca08fca2ee7f6177192526ac4"
+        },
+        {
+          "path": "packages/contracts/src/content-authoring-openapi.test.ts",
+          "sha256": "d7b98bf6a86f4fb1f487e85caf2fadd8809835d8836dd2d7c55767b39f6fd796"
+        },
+        {
+          "path": "packages/contracts/src/content-authoring-openapi.ts",
+          "sha256": "7e772360eb7223a92b480d603a3dc446b69b969306d5db310931546e24f356dd"
+        },
+        {
+          "path": "packages/contracts/src/content-authoring.test.ts",
+          "sha256": "23ba074ba47531ca80977c21bbd0a83789fe1131d9e46336d7c0f4057ea63af1"
+        },
+        {
+          "path": "packages/contracts/src/content-authoring.ts",
+          "sha256": "09622a5a6aafe76daed82abf5ce4d29dd12298a04c98cf16461e36c6cc1b4a36"
+        },
+        {
+          "path": "packages/contracts/src/content-drafts.test.ts",
+          "sha256": "06dbd5785e5b43533aad80a83ee77afc0980f2baa6f712a216819cfe32581228"
+        },
+        {
+          "path": "packages/contracts/src/content-drafts.ts",
+          "sha256": "cf2b421238c3315541c207ff3bbd382a3ade85db889808a102778d0b2d77e0b7"
         },
         {
           "path": "packages/contracts/src/content-lifecycle.ts",
@@ -2134,6 +3067,14 @@
           "sha256": "1ec435fd5b1c17ef4e073af18aabd64c86ae4130a3c4491ae425c5567b8c4d81"
         },
         {
+          "path": "packages/contracts/src/gift-details.test.ts",
+          "sha256": "f3b9a44ff6386799b0770f744a32728ae599f62c3d297bfb1ee0a1c17970db74"
+        },
+        {
+          "path": "packages/contracts/src/gift-details.ts",
+          "sha256": "0a4031bbaf55cdc584ad394bff05951b556cde63e6ebdde68be57ff64b9c35e6"
+        },
+        {
           "path": "packages/contracts/src/identifiers.test.ts",
           "sha256": "e60d5d31da7c9de1494065b974b08b842bba54a9b125401ca7df82fcb5275e4f"
         },
@@ -2151,7 +3092,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "c11db2a8ed14e4d8af0eefe0f40c95929d886a847f1a730fc20ca8d43b26cd5e"
+          "sha256": "d233004c70465c44c9124a71e480cd0006a47d05bba66723ab39f52992baf804"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -2170,8 +3111,24 @@
           "sha256": "5650907e387c83e909117376b2d962a420e3f710dc6078b35e8beab6290dc639"
         },
         {
+          "path": "packages/contracts/src/media-framing.test.ts",
+          "sha256": "01aacb0f439b3b7967205d84a944908aaf50f71bf498aba5d2a25efb63e5722a"
+        },
+        {
+          "path": "packages/contracts/src/media-framing.ts",
+          "sha256": "193d5f7e9de351483b403a06d2b3faae0321ca8231ae1408a59fb6fb24dfb05f"
+        },
+        {
           "path": "packages/contracts/src/media-port-contracts.ts",
           "sha256": "bfa7d1af16719d2bba86d7a08912f6e847add5175fe2094925d41ee48b05648e"
+        },
+        {
+          "path": "packages/contracts/src/media-processing.test.ts",
+          "sha256": "558169d985016ee93f4c0036712323756dccbae2ec10cecaf91036038233db2d"
+        },
+        {
+          "path": "packages/contracts/src/media-processing.ts",
+          "sha256": "c99716df2d42285489e27d1d554c474a010a3909796a245b724f90e776aa21b8"
         },
         {
           "path": "packages/contracts/src/notification-port-contracts.ts",
@@ -2551,7 +3508,7 @@
         },
         {
           "path": "packages/ui/src/media.tsx",
-          "sha256": "9404eb35d8b566a862f904b891613d3b3baf5c54c429e248bd0103e7edb6192d"
+          "sha256": "0551ed2d2e47e48dab2b6736bdd1fe932a6845509be06ffa210acaf00685d499"
         },
         {
           "path": "packages/ui/src/menu.tsx",
@@ -2647,7 +3604,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "65efde1fd16a0d42bb61fec970e363beaed517532252aa090635e8cc445233d7"
+          "sha256": "1071fce5ca4060f4ebbb1732786e2fd8606a65ddd5e4b70495111736f2727678"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -2674,7 +3631,580 @@
           "sha256": "d9c39f7283790192f6e4cc155061772049cb18d8cc8c28f39ab60e40656c54a6"
         }
       ],
-      "status": []
+      "status": [
+        " M apps/api/package.json",
+        " M apps/api/src/bootstrap.ts",
+        " M apps/api/src/index.ts",
+        " M apps/api/src/production-application.test.ts",
+        " M apps/api/src/production-application.ts",
+        " M apps/storefront/src/app/ui-motion-specimen.module.css",
+        " M apps/worker/package.json",
+        " M apps/worker/src/bootstrap.ts",
+        " M apps/worker/src/main.ts",
+        " M apps/worker/src/reliable-events-bootstrap.e2e.test.ts",
+        " M database/migrations/manifest.json",
+        " M database/schema/expected-catalog.json",
+        " M docs/FAN_SUPPORT_PLATFORM_SPEC.md",
+        " M docs/plan/dependency-graph.md",
+        " M docs/plan/milestones.md",
+        " M docs/plan/task-breakdown.md",
+        " M docs/progress/MASTER.md",
+        " M docs/progress/phase-2-design-system.md",
+        " M docs/progress/phase-3-storefront.md",
+        " M output/playwright/p2-02/README.md",
+        " M output/playwright/p2-02/axe-results/default-desktop.json",
+        " M output/playwright/p2-02/axe-results/default-mobile.json",
+        " M output/playwright/p2-02/axe-results/error.json",
+        " M output/playwright/p2-02/axe-results/loading.json",
+        " M output/playwright/p2-02/axe-results/pseudo-320.json",
+        " M output/playwright/p2-02/axe-results/rtl.json",
+        " M output/playwright/p2-02/browser-results.json",
+        " M output/playwright/p2-02/interactions/1440x900-en-hover.png",
+        " M output/playwright/p2-02/reduced-motion/1440x900-en-reduce.png",
+        " M output/playwright/p2-02/rtl/390x844-en-rtl.png",
+        " M output/playwright/p2-02/screenshots.sha256",
+        " M output/playwright/p2-02/stress/320x800-pt-long.png",
+        " M output/playwright/p2-02/zoom/google-chrome-200-percent-pt.png",
+        " M output/playwright/p2-04/README.md",
+        " M output/playwright/p2-04/axe-results/baseline-desktop.json",
+        " M output/playwright/p2-04/axe-results/baseline-mobile.json",
+        " M output/playwright/p2-04/axe-results/cart-line.json",
+        " M output/playwright/p2-04/axe-results/empty-error.json",
+        " M output/playwright/p2-04/axe-results/image-error.json",
+        " M output/playwright/p2-04/axe-results/loading.json",
+        " M output/playwright/p2-04/axe-results/pseudo.json",
+        " M output/playwright/p2-04/axe-results/reduced-motion.json",
+        " M output/playwright/p2-04/axe-results/timeline.json",
+        " M output/playwright/p2-04/axe-results/unavailable.json",
+        " M output/playwright/p2-04/browser-results.json",
+        " M output/playwright/p2-04/responsive/1023x900-en-XA.png",
+        " M output/playwright/p2-04/screenshots.sha256",
+        " M output/playwright/p2-04/states/390x844-en.png",
+        " M output/playwright/p2-04/stress/320x800-en-XA.png",
+        " M output/playwright/p2-04/stress/320x800-pt-long.png",
+        " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
+        " M package.json",
+        " M packages/application/package.json",
+        " M packages/application/src/index.ts",
+        " M packages/catalog/package.json",
+        " M packages/catalog/src/index.ts",
+        " M packages/catalog/tsconfig.json",
+        " M packages/content/src/hashing.ts",
+        " M packages/content/src/index.ts",
+        " M packages/content/src/translation-validation.test.ts",
+        " M packages/content/src/translation-validation.ts",
+        " M packages/contracts/generated/contracts.schema.json",
+        " M packages/contracts/generated/openapi.json",
+        " M packages/contracts/src/artifact-documents.test.ts",
+        " M packages/contracts/src/artifact-documents.ts",
+        " M packages/contracts/src/artifact-registry.test.ts",
+        " M packages/contracts/src/artifact-registry.ts",
+        " M packages/contracts/src/index.ts",
+        " M packages/media-port/src/index.ts",
+        " M packages/media-s3/scripts/s3-integration.mjs",
+        " M packages/persistence-port/src/index.ts",
+        " M packages/persistence-postgres/package.json",
+        " M packages/persistence-postgres/src/index.ts",
+        " M packages/persistence-postgres/src/migration-files.test.ts",
+        " M packages/persistence-postgres/src/postgres-persistence.test.ts",
+        " M packages/persistence-postgres/src/postgres-persistence.ts",
+        " M packages/ui/src/media.tsx",
+        " M pnpm-lock.yaml",
+        " M scripts/check-adapter-boundaries.mjs",
+        " M scripts/check-workspace.mjs",
+        " M scripts/verify-ui-composites-browser.mjs",
+        " M scripts/verify-ui-composites-browser.test.mjs",
+        "?? apps/api/scripts/base-content-http-fixtures.mjs",
+        "?? apps/api/scripts/base-content-http.mjs",
+        "?? apps/api/scripts/postgres-admin-content-authoring-http.mjs",
+        "?? apps/api/scripts/postgres-admin-content-http.mjs",
+        "?? apps/api/scripts/postgres-catalog-http.mjs",
+        "?? apps/api/src/admin-content-authoring-route.test.ts",
+        "?? apps/api/src/admin-content-authoring-route.ts",
+        "?? apps/api/src/admin-content-bootstrap.e2e.test.ts",
+        "?? apps/api/src/admin-content-composition.test.ts",
+        "?? apps/api/src/admin-content-composition.ts",
+        "?? apps/api/src/admin-content-route.test.ts",
+        "?? apps/api/src/admin-content-route.ts",
+        "?? apps/api/src/base-content-composition.test.ts",
+        "?? apps/api/src/base-content-composition.ts",
+        "?? apps/api/src/base-content-route.test.ts",
+        "?? apps/api/src/base-content-route.ts",
+        "?? apps/api/src/catalog-directory-bootstrap.e2e.test.ts",
+        "?? apps/api/src/catalog-directory-composition.test.ts",
+        "?? apps/api/src/catalog-directory-composition.ts",
+        "?? apps/api/src/catalog-directory-route.e2e.test.ts",
+        "?? apps/api/src/catalog-directory-route.ts",
+        "?? apps/api/src/content-authoring-composition.test.ts",
+        "?? apps/api/src/content-authoring-composition.ts",
+        "?? apps/storefront/public/ui-brand/README.md",
+        "?? apps/storefront/public/ui-brand/gift-blue-orbit.webp",
+        "?? apps/storefront/public/ui-brand/gift-golden-hour.webp",
+        "?? apps/storefront/public/ui-brand/gift-rose-palace.webp",
+        "?? apps/storefront/public/ui-brand/gift-ruby-bouquet.webp",
+        "?? apps/storefront/public/ui-brand/gift-seasonal-table.webp",
+        "?? apps/storefront/public/ui-brand/performer-daylight-desktop.webp",
+        "?? apps/storefront/public/ui-brand/performer-daylight-mobile.webp",
+        "?? apps/storefront/public/ui-brand/provenance.json",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(japanese)/ja/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en-XA/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(latin)/en/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(latin)/es/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(latin)/pt/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(simplified-chinese)/zh-CN/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(thai)/th/brand/page.tsx",
+        "?? apps/storefront/src/app/%5Finternal/design-foundations/(vietnamese)/vi/brand/page.tsx",
+        "?? apps/storefront/src/app/ui-brand-copy.ts",
+        "?? apps/storefront/src/app/ui-brand-model.test.ts",
+        "?? apps/storefront/src/app/ui-brand-model.ts",
+        "?? apps/storefront/src/app/ui-brand-page.tsx",
+        "?? apps/storefront/src/app/ui-brand-specimen.module.css",
+        "?? apps/storefront/src/app/ui-brand-specimen.tsx",
+        "?? apps/worker/scripts/media-processing-integration.mjs",
+        "?? apps/worker/src/media-processing-composition.test.ts",
+        "?? apps/worker/src/media-processing-composition.ts",
+        "?? apps/worker/src/media-processing-runtime.test.ts",
+        "?? apps/worker/src/media-processing-runtime.ts",
+        "?? apps/worker/src/production-application.test.ts",
+        "?? apps/worker/src/production-application.ts",
+        "?? database/migrations/0010_catalog-search-projection.down.sql",
+        "?? database/migrations/0010_catalog-search-projection.up.sql",
+        "?? database/migrations/0011_price-generated-lifecycle.down.sql",
+        "?? database/migrations/0011_price-generated-lifecycle.up.sql",
+        "?? database/migrations/0012_media-processing.down.sql",
+        "?? database/migrations/0012_media-processing.up.sql",
+        "?? database/migrations/0013_content-drafts.down.sql",
+        "?? database/migrations/0013_content-drafts.up.sql",
+        "?? database/migrations/0014_admin-content.down.sql",
+        "?? database/migrations/0014_admin-content.up.sql",
+        "?? database/migrations/0015_content-authoring.down.sql",
+        "?? database/migrations/0015_content-authoring.up.sql",
+        "?? database/migrations/0016_base-content.down.sql",
+        "?? database/migrations/0016_base-content.up.sql",
+        "?? docs/decisions/008-phase-2-visual-baseline.md",
+        "?? docs/decisions/009-catalog-discovery-localized-authoring.md",
+        "?? docs/decisions/010-media-processing-identities.md",
+        "?? docs/plan/p3-01-base-content-review.md",
+        "?? docs/plan/p3-01-content-authoring.md",
+        "?? docs/plan/p3-01-content-runtime.md",
+        "?? output/checks/p3-01-admin-content-application/README.md",
+        "?? output/checks/p3-01-admin-content-http/README.md",
+        "?? output/checks/p3-01-admin-content/README.md",
+        "?? output/checks/p3-01-admin-content/compatibility.json",
+        "?? output/checks/p3-01-admin-content/contracts-before.json",
+        "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
+        "?? output/checks/p3-01-admin-content/implementation-source.json",
+        "?? output/checks/p3-01-admin-content/independent-review.md",
+        "?? output/checks/p3-01-admin-content/review-timing-probe.txt",
+        "?? output/checks/p3-01-admin-content/validation.json",
+        "?? output/checks/p3-01-authoring-content-application/implementation.md",
+        "?? output/checks/p3-01-authoring/README.md",
+        "?? output/checks/p3-01-authoring/compatibility.json",
+        "?? output/checks/p3-01-authoring/contracts-before.json",
+        "?? output/checks/p3-01-authoring/implementation-source.json",
+        "?? output/checks/p3-01-authoring/independent-review.md",
+        "?? output/checks/p3-01-authoring/validation.json",
+        "?? output/checks/p3-01-base-content/HTTP-README.md",
+        "?? output/checks/p3-01-base-content/README.md",
+        "?? output/checks/p3-01-base-content/compatibility.json",
+        "?? output/checks/p3-01-base-content/contracts-before.json",
+        "?? output/checks/p3-01-base-content/implementation-source.json",
+        "?? output/checks/p3-01-base-content/independent-review.md",
+        "?? output/checks/p3-01-base-content/validation.json",
+        "?? output/checks/p3-01-content-authoring-http/README.md",
+        "?? output/checks/p3-01-content-drafts/maximum-draft-probe.mjs",
+        "?? output/checks/p3-01-content-storage/README.md",
+        "?? output/checks/p3-01-content-storage/baseline-contracts.schema.json",
+        "?? output/checks/p3-01-content-storage/baseline-openapi.json",
+        "?? output/checks/p3-01-content-storage/compatibility.json",
+        "?? output/checks/p3-01-content-storage/implementation-source.json",
+        "?? output/checks/p3-01-content-storage/validation.json",
+        "?? output/checks/p3-01-directory/README.md",
+        "?? output/checks/p3-01-directory/compatibility-and-progress.json",
+        "?? output/checks/p3-01-directory/implementation-source.json",
+        "?? output/checks/p3-01-directory/validation.json",
+        "?? output/checks/p3-01-foundation/README.md",
+        "?? output/checks/p3-01-foundation/compatibility-and-progress.json",
+        "?? output/checks/p3-01-foundation/implementation-source.json",
+        "?? output/checks/p3-01-foundation/validation.json",
+        "?? output/checks/p3-01-media-clock-rollback/README.md",
+        "?? output/checks/p3-01-media/README.md",
+        "?? output/checks/p3-01-media/compatibility-and-progress.json",
+        "?? output/checks/p3-01-media/contracts-before.schema.json",
+        "?? output/checks/p3-01-media/implementation-source.json",
+        "?? output/checks/p3-01-media/validation.json",
+        "?? output/playwright/p2-05-device/README.md",
+        "?? output/playwright/p2-05-device/connection-check.json",
+        "?? output/playwright/p2-05-device/device-results.json",
+        "?? output/playwright/p2-05-device/iphone-touch-probe.png",
+        "?? output/playwright/p2-05-device/native-cart.png",
+        "?? output/playwright/p2-05-device/native-hydrated-samples.json",
+        "?? output/playwright/p2-05-device/native-touch-samples.json",
+        "?? output/playwright/p2-05-device/normal-motion.mp4",
+        "?? output/playwright/p2-05-device/normal-noa.png",
+        "?? output/playwright/p2-05-device/normal-render-samples.json",
+        "?? output/playwright/p2-05-device/ordinary-safari-probe.json",
+        "?? output/playwright/p2-05-device/ordinary-safari.png",
+        "?? output/playwright/p2-05-device/reduced-motion-and-touch.mp4",
+        "?? output/playwright/p2-05-device/reduced-render-samples.json",
+        "?? output/playwright/p2-05-device/unhydrated-scripted-samples.json",
+        "?? output/playwright/p2-05-device/unhydrated-transition-samples.json",
+        "?? output/playwright/p2-06-brand/README.md",
+        "?? output/playwright/p2-06-brand/axe/en-1024-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/en-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/en-1440-image-fallback.json",
+        "?? output/playwright/p2-06-brand/axe/en-1440-interaction-bag.json",
+        "?? output/playwright/p2-06-brand/axe/en-1440-interaction-detail.json",
+        "?? output/playwright/p2-06-brand/axe/en-1440-reduced.json",
+        "?? output/playwright/p2-06-brand/axe/en-1920-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/en-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/en-390-image-fallback.json",
+        "?? output/playwright/p2-06-brand/axe/en-390-interaction-bag.json",
+        "?? output/playwright/p2-06-brand/axe/en-390-interaction-detail.json",
+        "?? output/playwright/p2-06-brand/axe/en-390-reduced.json",
+        "?? output/playwright/p2-06-brand/axe/en-768-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/en-XA-320-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/es-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/es-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/ja-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/ja-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/pt-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/pt-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/th-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/th-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/vi-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/vi-390-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/zh-CN-1440-baseline.json",
+        "?? output/playwright/p2-06-brand/axe/zh-CN-390-baseline.json",
+        "?? output/playwright/p2-06-brand/capture.mjs",
+        "?? output/playwright/p2-06-brand/detail-framing-before.json",
+        "?? output/playwright/p2-06-brand/environment-results.json",
+        "?? output/playwright/p2-06-brand/results-before-fix.json",
+        "?? output/playwright/p2-06-brand/results.json",
+        "?? output/playwright/p2-06-brand/screenshots.sha256",
+        "?? output/playwright/p2-06-brand/screenshots/en-1024-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1024-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1024-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1024-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-image-fallback-failure.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-image-fallback-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-image-fallback-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-interaction-bag-two-recipients.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-interaction-detail-quantity-2.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-interaction-detail.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-interaction-failure.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-interaction-zh-bag-preserved.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1440-reduced.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1920-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1920-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1920-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-1920-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-image-fallback-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-image-fallback-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-interaction-bag-two-recipients.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-interaction-detail-quantity-2.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-interaction-detail.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-interaction-failure.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-interaction-zh-bag-preserved.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-390-reduced.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-768-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-768-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-768-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-768-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-XA-320-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-XA-320-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-XA-320-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/en-XA-320-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/es-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/ja-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/pt-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/th-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/vi-390-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-1440-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-1440-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-1440-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-1440-hero.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-390-full.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-390-gifts-viewport.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-390-gifts.png",
+        "?? output/playwright/p2-06-brand/screenshots/zh-CN-390-hero.png",
+        "?? output/playwright/p2-06-brand/source-continuity.json",
+        "?? output/playwright/p2-06-brand/validation.json",
+        "?? output/playwright/p2-06-brand/verify-environment.mjs",
+        "?? output/playwright/p2-06/README.md",
+        "?? output/playwright/p2-06/artifacts.sha256",
+        "?? output/playwright/p2-06/axe/en-1440-components.json",
+        "?? output/playwright/p2-06/axe/en-1440-motion.json",
+        "?? output/playwright/p2-06/axe/en-390-components.json",
+        "?? output/playwright/p2-06/axe/en-390-motion.json",
+        "?? output/playwright/p2-06/axe/es-1440-components.json",
+        "?? output/playwright/p2-06/axe/es-1440-motion.json",
+        "?? output/playwright/p2-06/axe/es-390-components.json",
+        "?? output/playwright/p2-06/axe/es-390-motion.json",
+        "?? output/playwright/p2-06/axe/ja-1440-components.json",
+        "?? output/playwright/p2-06/axe/ja-1440-motion.json",
+        "?? output/playwright/p2-06/axe/ja-390-components.json",
+        "?? output/playwright/p2-06/axe/ja-390-motion.json",
+        "?? output/playwright/p2-06/axe/pt-1440-components.json",
+        "?? output/playwright/p2-06/axe/pt-1440-motion.json",
+        "?? output/playwright/p2-06/axe/pt-390-components.json",
+        "?? output/playwright/p2-06/axe/pt-390-motion.json",
+        "?? output/playwright/p2-06/axe/th-1440-components.json",
+        "?? output/playwright/p2-06/axe/th-1440-motion.json",
+        "?? output/playwright/p2-06/axe/th-390-components.json",
+        "?? output/playwright/p2-06/axe/th-390-motion.json",
+        "?? output/playwright/p2-06/axe/vi-1440-components.json",
+        "?? output/playwright/p2-06/axe/vi-1440-motion.json",
+        "?? output/playwright/p2-06/axe/vi-390-components.json",
+        "?? output/playwright/p2-06/axe/vi-390-motion.json",
+        "?? output/playwright/p2-06/axe/zh-CN-1440-components.json",
+        "?? output/playwright/p2-06/axe/zh-CN-1440-motion.json",
+        "?? output/playwright/p2-06/axe/zh-CN-390-components.json",
+        "?? output/playwright/p2-06/axe/zh-CN-390-motion.json",
+        "?? output/playwright/p2-06/browser-results.json",
+        "?? output/playwright/p2-06/build-review.py",
+        "?? output/playwright/p2-06/capture.mjs",
+        "?? output/playwright/p2-06/index.html",
+        "?? output/playwright/p2-06/screenshots/en-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/en-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/en-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/en-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/en-1440-states.png",
+        "?? output/playwright/p2-06/screenshots/en-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/en-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/en-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/en-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/en-390-states.png",
+        "?? output/playwright/p2-06/screenshots/es-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/es-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/es-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/es-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/es-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/es-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/es-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/es-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/ja-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/ja-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/ja-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/ja-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/ja-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/ja-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/ja-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/ja-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/pt-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/pt-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/pt-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/pt-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/pt-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/pt-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/pt-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/pt-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/th-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/th-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/th-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/th-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/th-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/th-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/th-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/th-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/vi-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/vi-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/vi-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/vi-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/vi-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/vi-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/vi-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/vi-390-motion.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-1440-cart.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-1440-catalog.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-1440-hero.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-1440-motion.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-390-cart.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-390-catalog.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-390-hero.png",
+        "?? output/playwright/p2-06/screenshots/zh-CN-390-motion.png",
+        "?? output/playwright/p2-06/source-continuity.json",
+        "?? output/playwright/p2-06/typography-before.json",
+        "?? output/playwright/p2-06/validation.json",
+        "?? output/playwright/p2-06/viewer-1440.png",
+        "?? output/playwright/p2-06/viewer-390.png",
+        "?? output/playwright/p2-06/viewer-check.json",
+        "?? packages/application/src/admin-content-idempotency.ts",
+        "?? packages/application/src/admin-content-results.ts",
+        "?? packages/application/src/admin-content-review-read.ts",
+        "?? packages/application/src/admin-content-review-validation.ts",
+        "?? packages/application/src/admin-content-tokens.ts",
+        "?? packages/application/src/admin-content.test.ts",
+        "?? packages/application/src/admin-content.ts",
+        "?? packages/application/src/base-content-idempotency.ts",
+        "?? packages/application/src/base-content-time.ts",
+        "?? packages/application/src/base-content.test.ts",
+        "?? packages/application/src/base-content.ts",
+        "?? packages/application/src/catalog-directory.test.ts",
+        "?? packages/application/src/catalog-directory.ts",
+        "?? packages/application/src/content-authoring-idempotency.ts",
+        "?? packages/application/src/content-authoring.test.ts",
+        "?? packages/application/src/content-authoring.ts",
+        "?? packages/application/src/media-processing.test.ts",
+        "?? packages/application/src/media-processing.ts",
+        "?? packages/application/src/test-support/catalog-directory-fixture.ts",
+        "?? packages/catalog/src/directory-cursor.test.ts",
+        "?? packages/catalog/src/directory-cursor.ts",
+        "?? packages/catalog/src/discovery-cache.test.ts",
+        "?? packages/catalog/src/discovery-cache.ts",
+        "?? packages/catalog/src/discovery.test.ts",
+        "?? packages/catalog/src/discovery.ts",
+        "?? packages/content/src/base-content.test.ts",
+        "?? packages/content/src/base-content.ts",
+        "?? packages/content/src/content-authoring.test.ts",
+        "?? packages/content/src/content-authoring.ts",
+        "?? packages/content/src/content-drafts.test.ts",
+        "?? packages/content/src/content-drafts.ts",
+        "?? packages/content/src/gift-details.test.ts",
+        "?? packages/content/src/gift-details.ts",
+        "?? packages/content/src/media-framing.test.ts",
+        "?? packages/content/src/media-framing.ts",
+        "?? packages/content/src/media-processing.test.ts",
+        "?? packages/content/src/media-processing.ts",
+        "?? packages/contracts/src/admin-content-openapi.test.ts",
+        "?? packages/contracts/src/admin-content-openapi.ts",
+        "?? packages/contracts/src/admin-content.test.ts",
+        "?? packages/contracts/src/admin-content.ts",
+        "?? packages/contracts/src/base-content-openapi.test.ts",
+        "?? packages/contracts/src/base-content-openapi.ts",
+        "?? packages/contracts/src/base-content.test.ts",
+        "?? packages/contracts/src/base-content.ts",
+        "?? packages/contracts/src/catalog-directory-openapi.ts",
+        "?? packages/contracts/src/catalog-directory.test.ts",
+        "?? packages/contracts/src/catalog-directory.ts",
+        "?? packages/contracts/src/catalog-discovery.test.ts",
+        "?? packages/contracts/src/catalog-discovery.ts",
+        "?? packages/contracts/src/content-authoring-openapi.test.ts",
+        "?? packages/contracts/src/content-authoring-openapi.ts",
+        "?? packages/contracts/src/content-authoring.test.ts",
+        "?? packages/contracts/src/content-authoring.ts",
+        "?? packages/contracts/src/content-drafts.test.ts",
+        "?? packages/contracts/src/content-drafts.ts",
+        "?? packages/contracts/src/gift-details.test.ts",
+        "?? packages/contracts/src/gift-details.ts",
+        "?? packages/contracts/src/media-framing.test.ts",
+        "?? packages/contracts/src/media-framing.ts",
+        "?? packages/contracts/src/media-processing.test.ts",
+        "?? packages/contracts/src/media-processing.ts",
+        "?? packages/media-image/package.json",
+        "?? packages/media-image/src/failure.test.ts",
+        "?? packages/media-image/src/failure.ts",
+        "?? packages/media-image/src/image-pipeline.test.ts",
+        "?? packages/media-image/src/image-pipeline.ts",
+        "?? packages/media-image/src/index.test.ts",
+        "?? packages/media-image/src/index.ts",
+        "?? packages/media-image/src/storage-transfer.ts",
+        "?? packages/media-image/src/test-support/storage.ts",
+        "?? packages/media-image/tsconfig.build.json",
+        "?? packages/media-image/tsconfig.json",
+        "?? packages/media-port/src/processing.ts",
+        "?? packages/media-s3/scripts/ephemeral-s3-harness.mjs",
+        "?? packages/persistence-port/src/admin-content.ts",
+        "?? packages/persistence-port/src/base-content.ts",
+        "?? packages/persistence-port/src/catalog-directory.ts",
+        "?? packages/persistence-port/src/content-authoring.ts",
+        "?? packages/persistence-port/src/content-drafts.ts",
+        "?? packages/persistence-port/src/media-processing.ts",
+        "?? packages/persistence-postgres/scripts/postgres-admin-content-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-admin-content.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-base-content.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-catalog-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-content-authoring-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-content-authoring.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-content-drafts.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-media-processing-fixtures.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-media-processing.mjs",
+        "?? packages/persistence-postgres/scripts/rebuild-catalog-search.mjs",
+        "?? packages/persistence-postgres/src/admin-authorization-repository.test.ts",
+        "?? packages/persistence-postgres/src/admin-authorization-repository.ts",
+        "?? packages/persistence-postgres/src/base-content-authorization.ts",
+        "?? packages/persistence-postgres/src/base-content-data.ts",
+        "?? packages/persistence-postgres/src/base-content-preview-repository.test.ts",
+        "?? packages/persistence-postgres/src/base-content-preview-repository.ts",
+        "?? packages/persistence-postgres/src/base-content-review-repository.test.ts",
+        "?? packages/persistence-postgres/src/base-content-review-repository.ts",
+        "?? packages/persistence-postgres/src/catalog-directory-repository.test.ts",
+        "?? packages/persistence-postgres/src/catalog-directory-repository.ts",
+        "?? packages/persistence-postgres/src/catalog-directory-sql.test.ts",
+        "?? packages/persistence-postgres/src/catalog-directory-sql.ts",
+        "?? packages/persistence-postgres/src/catalog-publication-loader.test.ts",
+        "?? packages/persistence-postgres/src/catalog-publication-loader.ts",
+        "?? packages/persistence-postgres/src/catalog-publication-mapper.ts",
+        "?? packages/persistence-postgres/src/catalog-search-projection.test.ts",
+        "?? packages/persistence-postgres/src/catalog-search-projection.ts",
+        "?? packages/persistence-postgres/src/content-authoring-data.ts",
+        "?? packages/persistence-postgres/src/content-authoring-diff.test.ts",
+        "?? packages/persistence-postgres/src/content-authoring-diff.ts",
+        "?? packages/persistence-postgres/src/content-authoring-model.ts",
+        "?? packages/persistence-postgres/src/content-authoring-repository.test.ts",
+        "?? packages/persistence-postgres/src/content-authoring-repository.ts",
+        "?? packages/persistence-postgres/src/content-authoring-writes.ts",
+        "?? packages/persistence-postgres/src/content-draft-data.ts",
+        "?? packages/persistence-postgres/src/content-draft-repository.test.ts",
+        "?? packages/persistence-postgres/src/content-draft-repository.ts",
+        "?? packages/persistence-postgres/src/content-draft-writes.ts",
+        "?? packages/persistence-postgres/src/content-preview-repository.test.ts",
+        "?? packages/persistence-postgres/src/content-preview-repository.ts",
+        "?? packages/persistence-postgres/src/content-review-data.ts",
+        "?? packages/persistence-postgres/src/content-review-repository.test.ts",
+        "?? packages/persistence-postgres/src/content-review-repository.ts",
+        "?? packages/persistence-postgres/src/media-processing-data.ts",
+        "?? packages/persistence-postgres/src/media-processing-outputs.ts",
+        "?? packages/persistence-postgres/src/media-processing-repository.test.ts",
+        "?? packages/persistence-postgres/src/media-processing-repository.ts",
+        "?? scripts/check-ui-motion-device.mjs",
+        "?? scripts/check-ui-motion-device.test.mjs"
+      ]
     }
   },
   "launch": {
@@ -2790,7 +4320,7 @@
   "motionChecks": {
     "addToCart": {
       "buttonFocused": true,
-      "stateDelayMs": 48.19999980926514,
+      "stateDelayMs": 48.30000019073486,
       "liveAnnouncement": true,
       "pendingObserved": true,
       "countDelta": 1,
@@ -2858,7 +4388,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           },
@@ -2871,7 +4401,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           },
@@ -2884,7 +4414,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           }
@@ -3025,33 +4555,33 @@
           "activeLayout": {
             "height": 1038,
             "left": 48,
-            "top": 1304,
+            "top": 1276,
             "width": 830
           },
           "activeOpacity": 0,
           "activeRect": {
             "height": 1042.6875,
             "left": 62.524993896484375,
-            "top": 487.734375,
+            "top": 486.9375,
             "width": 834.1500244140625
           },
           "outgoingLayout": {
             "height": 1038,
             "left": 48,
-            "top": 1304,
+            "top": 1276,
             "width": 830
           },
           "outgoingOpacity": 1,
           "outgoingRect": {
             "height": 1037.5,
             "left": 48,
-            "top": 490.328125,
+            "top": 489.53125,
             "width": 830
           },
           "visualRect": {
             "height": 1037.5,
             "left": 48,
-            "top": 490.328125,
+            "top": 489.53125,
             "width": 830
           },
           "coverage": true
@@ -3376,7 +4906,7 @@
         200,
         200
       ],
-      "origin": "http://127.0.0.1:57129"
+      "origin": "http://127.0.0.1:60086"
     },
     {
       "environment": "staging",
@@ -3391,7 +4921,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:57313"
+      "origin": "http://127.0.0.1:60233"
     },
     {
       "environment": "production",
@@ -3406,7 +4936,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:57335"
+      "origin": "http://127.0.0.1:60255"
     }
   ],
   "scenarioResults": [
@@ -3423,91 +4953,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:57129/_internal/design-foundations/en/motion"
+            "url": "http://127.0.0.1:60086/_internal/design-foundations/en/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/31fup-dhw713-.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:57129/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:60086/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -3563,12 +5093,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 48,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 76,
+        "lcpMs": 68,
         "longTasks": [],
         "observers": {
           "event": {
@@ -3589,8 +5119,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.800000000000182,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -3753,109 +5283,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:57129/_internal/design-foundations/vi/motion"
+            "url": "http://127.0.0.1:60086/_internal/design-foundations/vi/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/31fup-dhw713-.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:57129/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:60086/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -3871,7 +5389,7 @@
           {
             "height": 51.8125,
             "label": "Phát lại hiệu ứng ảnh chính",
-            "width": 242.9375
+            "width": 243.34375
           },
           {
             "height": 48,
@@ -3886,22 +5404,22 @@
           {
             "height": 51.8125,
             "label": "Thêm quà vào giỏĐã thêm vào giỏ",
-            "width": 190.109375
+            "width": 189.546875
           },
           {
             "height": 51.8125,
             "label": "Đặt lại xác nhận",
-            "width": 156.921875
+            "width": 156.453125
           },
           {
             "height": 51.8125,
             "label": "Hiển thị lỗi có thể khắc phục",
-            "width": 251
+            "width": 252.625
           },
           {
             "height": 51.8125,
             "label": "Phát lại xác nhận thành công",
-            "width": 257.40625
+            "width": 257.625
           }
         ],
         "document": {
@@ -3916,7 +5434,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 56,
+        "lcpMs": 64,
         "longTasks": [],
         "observers": {
           "event": {
@@ -3937,7 +5455,7 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.700000000000045,
           "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
@@ -3997,97 +5515,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:57129/_internal/design-foundations/th/motion"
+            "url": "http://127.0.0.1:60086/_internal/design-foundations/th/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2lg-l7asikrc3.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2lg-l7asikrc3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/31fup-dhw713-.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:57129/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:60086/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -4103,7 +5621,7 @@
           {
             "height": 53.015625,
             "label": "เล่นการปรากฏของภาพหลักอีกครั้ง",
-            "width": 273.390625
+            "width": 271.390625
           },
           {
             "height": 48,
@@ -4118,22 +5636,22 @@
           {
             "height": 53.015625,
             "label": "เพิ่มของขวัญลงรถเข็นเพิ่มลงรถเข็นแล้ว",
-            "width": 185.140625
+            "width": 183.15625
           },
           {
             "height": 53.015625,
             "label": "รีเซ็ตการยืนยัน",
-            "width": 137.953125
+            "width": 136.34375
           },
           {
             "height": 53.015625,
             "label": "แสดงข้อผิดพลาดที่แก้ไขได้",
-            "width": 223.546875
+            "width": 218.265625
           },
           {
             "height": 53.015625,
             "label": "เล่นการยืนยันสำเร็จอีกครั้ง",
-            "width": 217.328125
+            "width": 215.9375
           }
         ],
         "document": {
@@ -4143,12 +5661,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 32,
+          "maxMs": 40,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 104,
+        "lcpMs": 96,
         "longTasks": [],
         "observers": {
           "event": {
@@ -4169,8 +5687,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.700000000000045,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -4227,175 +5745,175 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:57129/_internal/design-foundations/zh-CN/motion"
+            "url": "http://127.0.0.1:60086/_internal/design-foundations/zh-CN/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/0jyq8zfmzj_l3.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/0jyq8zfmzj_l3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/31fup-dhw713-.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:57129/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:60086/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -4456,7 +5974,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 56,
+        "lcpMs": 64,
         "longTasks": [],
         "observers": {
           "event": {
@@ -4477,7 +5995,7 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
+          "maxFrameDeltaMs": 16.700000000000045,
           "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
@@ -4639,241 +6157,235 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:57129/_internal/design-foundations/ja/motion"
+            "url": "http://127.0.0.1:60086/_internal/design-foundations/ja/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/107x49qjcs-lo.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/107x49qjcs-lo.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/31fup-dhw713-.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-94-wght-normal.0uyd2p7w0xwi9.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-94-wght-normal.0uyd2p7w0xwi9.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-mobile.png"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-jp-118-wght-normal.0oiz-9fhkq7v6.woff2"
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:57129/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:60086/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -4934,7 +6446,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 76,
+        "lcpMs": 80,
         "longTasks": [],
         "observers": {
           "event": {
@@ -4955,7 +6467,7 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.700000000000045,
           "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
@@ -5013,97 +6525,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:57129/_internal/design-foundations/es/motion"
+            "url": "http://127.0.0.1:60086/_internal/design-foundations/es/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/31fup-dhw713-.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-mobile.png"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:57129/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:60086/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -5119,12 +6625,12 @@
           {
             "height": 54.796875,
             "label": "Repetir entrada del cartel",
-            "width": 251.96875
+            "width": 255.59375
           },
           {
             "height": 48,
             "label": "Mira ValeSeleccionado",
-            "width": 188.5625
+            "width": 187.046875
           },
           {
             "height": 48,
@@ -5134,22 +6640,22 @@
           {
             "height": 54.796875,
             "label": "Añadir regalo al carritoAñadido al carrito",
-            "width": 229.796875
+            "width": 231.171875
           },
           {
             "height": 54.796875,
             "label": "Restablecer confirmación",
-            "width": 254.390625
+            "width": 259.203125
           },
           {
             "height": 54.796875,
             "label": "Mostrar error recuperable",
-            "width": 256.46875
+            "width": 258.59375
           },
           {
             "height": 54.796875,
             "label": "Repetir confirmación completada",
-            "width": 319.9375
+            "width": 325.5
           }
         ],
         "document": {
@@ -5164,7 +6670,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 76,
+        "lcpMs": 64,
         "longTasks": [],
         "observers": {
           "event": {
@@ -5185,8 +6691,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -5349,103 +6855,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:57129/_internal/design-foundations/en-XA/motion"
+            "url": "http://127.0.0.1:60086/_internal/design-foundations/en-XA/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3cyxkwy6lipgg.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/31fup-dhw713-.css"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1y34--fqatav0.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2y-gswxtatgmf.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3ue0tseoy-nkb.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/turbopack-0972k3be_c2bg.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:60086/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:57129/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:60086/icon.svg?icon.3fse5yyfsi15o.svg"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           }
         ]
       },
@@ -5461,12 +6961,12 @@
           {
             "height": 51.59375,
             "label": "[!! Řëpļàÿ hëřö ëñţřàñçë !!]",
-            "width": 240.890625
+            "width": 242.390625
           },
           {
             "height": 48,
             "label": "Mira Vale[!! Šëļëçţëd !!]",
-            "width": 187.265625
+            "width": 184.5
           },
           {
             "height": 48,
@@ -5476,247 +6976,21 @@
           {
             "height": 51.59375,
             "label": "[!! Àdd ğïfţ ţö çàřţ !!][!! Àddëd ţö çàřţ !!]",
-            "width": 213.8125
+            "width": 213.15625
           },
           {
             "height": 51.59375,
             "label": "[!! Řëšëţ çöñfïřmàţïöñ !!]",
-            "width": 223.921875
+            "width": 225.890625
           },
           {
             "height": 51.59375,
             "label": "[!! Šhöw řëçövëřàbļë ëřřöř !!]",
-            "width": 257.40625
+            "width": 258.875
           },
           {
             "height": 77.1875,
             "label": "[!! Řëpļàÿ çöñfïřmëd šüççëšš !!]",
-            "width": 256
-          }
-        ],
-        "document": {
-          "bodyScrollWidth": 320,
-          "clientWidth": 320,
-          "scrollWidth": 320
-        },
-        "fontsStatus": "loaded",
-        "interactionLatency": {
-          "maxMs": 48,
-          "sampleCount": 15,
-          "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
-        },
-        "jsTransferBytes": 138475,
-        "lcpMs": 40,
-        "longTasks": [],
-        "observers": {
-          "event": {
-            "installed": true,
-            "supported": true
-          },
-          "layoutShift": {
-            "installed": true,
-            "supported": true
-          },
-          "longTask": {
-            "installed": true,
-            "supported": true
-          },
-          "lcp": {
-            "installed": true,
-            "supported": true
-          }
-        },
-        "raf": {
-          "maxFrameDeltaMs": 16.700000000000045,
-          "p95FrameDeltaMs": 16.700000000000045,
-          "sampleCount": 30
-        },
-        "rawLayoutShift": 0
-      },
-      "runtimeFonts": {
-        "computed": {
-          "fontFamily": "\"Manrope Variable\", \"Noto Sans Variable\", system-ui, sans-serif",
-          "primaryFamily": "Manrope Variable"
-        },
-        "cssom": {
-          "displays": [
-            "optional"
-          ],
-          "families": [
-            "Manrope Variable",
-            "Noto Sans Variable"
-          ],
-          "fontFaces": 14,
-          "importantDescriptors": 0,
-          "imports": 0,
-          "styleSheets": 3,
-          "unreadableStyleSheets": []
-        },
-        "fontFaceSet": {
-          "displays": [
-            "optional"
-          ],
-          "faceCount": 14,
-          "families": [
-            "Manrope Variable",
-            "Noto Sans Variable"
-          ],
-          "statuses": [
-            "loaded",
-            "unloaded"
-          ]
-        },
-        "source": "document.fonts + CSSOM + computedStyle"
-      },
-      "screenshot": "stress/320x800-en-XA.png",
-      "viewport": {
-        "height": 800,
-        "width": 320
-      }
-    },
-    {
-      "axeSummaries": [],
-      "diagnostics": {
-        "console": [],
-        "externalResources": [],
-        "httpErrors": [],
-        "pageErrors": [],
-        "requestFailures": [],
-        "requests": [
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "document",
-            "url": "http://127.0.0.1:57129/_internal/design-foundations/pt/motion"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3cyxkwy6lipgg.css"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3tr2shtlm_24p.css"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/31fup-dhw713-.css"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "image",
-            "url": "http://127.0.0.1:57129/ui-composites/fictional-performer-hero-mobile.png"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1y34--fqatav0.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2y-gswxtatgmf.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/3ue0tseoy-nkb.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/turbopack-0972k3be_c2bg.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/1oktdg9jp8u14.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/08q4u53uid908.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:57129/_next/static/chunks/2qun_6obf6abx.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:57129/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "other",
-            "url": "http://127.0.0.1:57129/icon.svg?icon.3fse5yyfsi15o.svg"
-          }
-        ]
-      },
-      "errors": [],
-      "fixtureUrl": "/_internal/design-foundations/pt/motion",
-      "group": "stress",
-      "id": "stress-320x800-pt",
-      "locale": "pt",
-      "performance": {
-        "clippedText": [],
-        "cls": 0,
-        "controls": [
-          {
-            "height": 77.1875,
-            "label": "Reproduzir novamente a entrada do cartaz",
-            "width": 288
-          },
-          {
-            "height": 48,
-            "label": "Mira ValeSelecionado",
-            "width": 174.421875
-          },
-          {
-            "height": 48,
-            "label": "Noa Aster",
-            "width": 160
-          },
-          {
-            "height": 51.59375,
-            "label": "Adicionar presente ao carrinhoAdicionado ao carrinho",
-            "width": 272.078125
-          },
-          {
-            "height": 51.59375,
-            "label": "Redefinir a confirmação",
-            "width": 218.328125
-          },
-          {
-            "height": 51.59375,
-            "label": "Mostrar erro recuperável",
-            "width": 226.453125
-          },
-          {
-            "height": 77.1875,
-            "label": "Reproduzir novamente a confirmação concluída",
             "width": 256
           }
         ],
@@ -5732,7 +7006,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138475,
-        "lcpMs": 84,
+        "lcpMs": 64,
         "longTasks": [],
         "observers": {
           "event": {
@@ -5794,6 +7068,232 @@
         },
         "source": "document.fonts + CSSOM + computedStyle"
       },
+      "screenshot": "stress/320x800-en-XA.png",
+      "viewport": {
+        "height": 800,
+        "width": 320
+      }
+    },
+    {
+      "axeSummaries": [],
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:60086/_internal/design-foundations/pt/motion"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3cyxkwy6lipgg.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3tr2shtlm_24p.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:60086/_next/static/chunks/0yiwot5m383w1.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:60086/ui-composites/fictional-performer-hero-mobile.png"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1y34--fqatav0.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2y-gswxtatgmf.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:60086/_next/static/chunks/3ue0tseoy-nkb.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:60086/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:60086/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:60086/_next/static/chunks/08q4u53uid908.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:60086/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:60086/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:60086/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:60086/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/pt/motion",
+      "group": "stress",
+      "id": "stress-320x800-pt",
+      "locale": "pt",
+      "performance": {
+        "clippedText": [],
+        "cls": 0,
+        "controls": [
+          {
+            "height": 77.1875,
+            "label": "Reproduzir novamente a entrada do cartaz",
+            "width": 288
+          },
+          {
+            "height": 48,
+            "label": "Mira ValeSelecionado",
+            "width": 174.421875
+          },
+          {
+            "height": 48,
+            "label": "Noa Aster",
+            "width": 160
+          },
+          {
+            "height": 51.59375,
+            "label": "Adicionar presente ao carrinhoAdicionado ao carrinho",
+            "width": 272.078125
+          },
+          {
+            "height": 51.59375,
+            "label": "Redefinir a confirmação",
+            "width": 218.328125
+          },
+          {
+            "height": 51.59375,
+            "label": "Mostrar erro recuperável",
+            "width": 226.453125
+          },
+          {
+            "height": 77.1875,
+            "label": "Reproduzir novamente a confirmação concluída",
+            "width": 256
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 320,
+          "clientWidth": 320,
+          "scrollWidth": 320
+        },
+        "fontsStatus": "loaded",
+        "interactionLatency": {
+          "maxMs": 40,
+          "sampleCount": 15,
+          "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
+        },
+        "jsTransferBytes": 138475,
+        "lcpMs": 96,
+        "longTasks": [],
+        "observers": {
+          "event": {
+            "installed": true,
+            "supported": true
+          },
+          "layoutShift": {
+            "installed": true,
+            "supported": true
+          },
+          "longTask": {
+            "installed": true,
+            "supported": true
+          },
+          "lcp": {
+            "installed": true,
+            "supported": true
+          }
+        },
+        "raf": {
+          "maxFrameDeltaMs": 16.800000000000182,
+          "p95FrameDeltaMs": 16.700000000000045,
+          "sampleCount": 30
+        },
+        "rawLayoutShift": 0
+      },
+      "runtimeFonts": {
+        "computed": {
+          "fontFamily": "\"Manrope Variable\", \"Noto Sans Variable\", system-ui, sans-serif",
+          "primaryFamily": "Manrope Variable"
+        },
+        "cssom": {
+          "displays": [
+            "optional"
+          ],
+          "families": [
+            "Manrope Variable",
+            "Noto Sans Variable"
+          ],
+          "fontFaces": 14,
+          "importantDescriptors": 0,
+          "imports": 0,
+          "styleSheets": 3,
+          "unreadableStyleSheets": []
+        },
+        "fontFaceSet": {
+          "displays": [
+            "optional"
+          ],
+          "faceCount": 14,
+          "families": [
+            "Manrope Variable",
+            "Noto Sans Variable"
+          ],
+          "statuses": [
+            "loaded",
+            "unloaded"
+          ]
+        },
+        "source": "document.fonts + CSSOM + computedStyle"
+      },
       "screenshot": "stress/320x800-pt-long.png",
       "viewport": {
         "height": 800,
@@ -5813,37 +7313,37 @@
       "path": "viewports/390x844-vi.png",
       "pixelHeight": 844,
       "pixelWidth": 390,
-      "sha256": "25d4c77f21d84b572a7fb96fbda90b2a2af4c6618016dc2d620e0f4f8776e379"
+      "sha256": "75c813b8f5b657e8685ebef86979393cbdfe0014040984cf3b4966d0708bbc92"
     },
     {
       "path": "viewports/768x1024-th.png",
       "pixelHeight": 1024,
       "pixelWidth": 768,
-      "sha256": "d94788453fcd9717993d685cdf1e4f5a60471ecc42b4695be23319e97b3dd04f"
+      "sha256": "4c74ed2577b828e445d2c45f45628fe03a575257f5a8eee8b41e70d707cec237"
     },
     {
       "path": "viewports/1024x768-zh-CN.png",
       "pixelHeight": 768,
       "pixelWidth": 1024,
-      "sha256": "bdb424a962ea591968a5ad917193f38228e843e919d516bfbfc673de938143a4"
+      "sha256": "33598a779eeed11642c37f39848e33a75f65df50fdd3c19d3fcaff43768d56e1"
     },
     {
       "path": "viewports/1440x900-ja.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "6e9ecaa969ce06c0fd8453b60bf839f887da08b0a11b031dc443734239a30e5e"
+      "sha256": "8e61d9980d32bf8ec8b7a42e4a0d677a02e4e3812ee97a0eb7b8e5c0c67b7197"
     },
     {
       "path": "viewports/1920x1080-es.png",
       "pixelHeight": 1080,
       "pixelWidth": 1920,
-      "sha256": "d36a9becbd9951b1dbfb975003b442bf19de5a231f17594da0031c8b806177a7"
+      "sha256": "c380e2653a579e027e684d4fb1fc73106f22f0fe7db2e2201503d35689ac09fa"
     },
     {
       "path": "stress/320x800-en-XA.png",
-      "pixelHeight": 2971,
+      "pixelHeight": 3011,
       "pixelWidth": 320,
-      "sha256": "b55b05c0566221c7d0c882f699882fa86857895fcc6b247b5aaaf9d81e397568"
+      "sha256": "d2d1c42cadf0af8bea9f5323f77ad4b672fc2d9a98b2a296ed921a3127100e14"
     },
     {
       "path": "stress/320x800-pt-long.png",
@@ -5861,55 +7361,55 @@
       "path": "hero/390x844-mid.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "0ab76120abdc155859eaa350b5913de58e0e64977726425800adfedb628defac"
+      "sha256": "a2f5e5547a7332eb71189ab07e0aa0784f7daf50bbaa7625a8e241f4f95755b5"
     },
     {
       "path": "hero/390x844-end.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "277f3bb5bdfab76b5e56545e348e421dd8d8689ab9cf0b8b98040d4f7aa32044"
+      "sha256": "383055592a2da62f334728ae66f6102c08b07fb5ac23bf8260cc33a1f73d2ac9"
     },
     {
       "path": "hero/1440x900-start.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "d2e45cf35def194737948bfaca425432ba7b810808956c58036e2f29afa56027"
+      "sha256": "ce716e9d593c5f9a8bd7cd8f5afd6b33d8d3b656d5b5cacf270cf4bf42bc8cb8"
     },
     {
       "path": "hero/1440x900-mid.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "1d525f7b8290e09a85fd44860b2b15b5621ffae142139ff6b1b642c8bba3abbf"
+      "sha256": "9ed6c16abc8adf723d54f2635644ce7d075dbd30c24dde723b4ad241e652f78a"
     },
     {
       "path": "hero/1440x900-end.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "1ecad14a71380baf2eda1982cb3b0f154ea1fa6a987eba6294816bb558b9a6f2"
+      "sha256": "575af8798fb1100c478fc172d9efe81cb9f0a91b86fce07ecfede19a81d2cae0"
     },
     {
       "path": "motion/idol-mouse-spatial-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "746a52afd251366363a4f09d2d9843f216d8b28435e56ee67c7747c44f62f8cd"
+      "sha256": "0bd7a996bee6926626b03ea17bc70083662df1ccd2af6215741f413966774e33"
     },
     {
       "path": "motion/idol-keyboard-instant-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "19e65387317b6e488d9adc434fb103dcae4380786c6929d65e783ef368171403"
+      "sha256": "94d94c78facbda3d99a90d6317830462e8dd738e20823a909c2b277b5efffe36"
     },
     {
       "path": "motion/idol-latest-wins-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "33bc3807c961700fcac4df65c82b2bc1d4e078d15582a3741dc55bdbe3407beb"
+      "sha256": "ed5bac21e4ff73d4c5ced151eef70a051fbe55cdb933d284f1e12cca36476550"
     },
     {
       "path": "motion/success-end-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "1164816cb1e3a13dc5136d2867880a1595eb2bb2f0052aa46681f25b21ac9f03"
+      "sha256": "fe03e4379ae0b1f159c210572b6e16e16566097553e3298a9c4d0ebbb8687d60"
     },
     {
       "path": "motion/idol-touch-opacity-390.png",

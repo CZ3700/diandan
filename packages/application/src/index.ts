@@ -1,3 +1,9 @@
+export {
+  createAdminContentUseCases,
+  digestAdminContentToken,
+  type AdminContentDependencies,
+  type AdminContentUseCases,
+} from "./admin-content.js";
 export const workspacePackageName = "@fan-support/application" as const;
 
 export {
@@ -26,3 +32,13 @@ export {
   type PaymentWebhookEndpointPreflightDependencies,
   type PaymentWebhookEndpointPreflightResult,
 } from "./payment-webhook-endpoint-preflight.js";
+export {
+  createCatalogDirectoryUseCases,
+  type CatalogDirectoryUseCases,
+  type CatalogDirectoryDependencies,
+} from "./catalog-directory.js";
+
+export * from "./media-processing.js";
+
+export * from "./content-authoring.js";
+export * from "./base-content.js";

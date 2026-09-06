@@ -1,0 +1,254 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-05T07:12:59.479305+00:00",
+  "head": "674ef5b4a57a6bb9ada6be5bf63670df9105ced4",
+  "scope": "P3-01 media processing checkpoint implementation, tests and ADR-010",
+  "algorithm": "sha256 of compact JSON sorted path/hash entries",
+  "sourceFingerprint": "19276cab1a151fef35498cba2391be6be7721343d3c4380719eb9fb4a73eb9b7",
+  "files": [
+    {
+      "path": "apps/worker/package.json",
+      "sha256": "95338b5e89130151bcff4db0fe15c8d49c65b2fc0054910d0cd7dc973e31e6de"
+    },
+    {
+      "path": "apps/worker/scripts/media-processing-integration.mjs",
+      "sha256": "c59450043747673e2ad4ceda2ef9dbcc8465d356f196b6d7a0a9713726b77d32"
+    },
+    {
+      "path": "apps/worker/src/bootstrap.ts",
+      "sha256": "fcb403e2268c73c5716c68c286a5b4defe4b0bb25b220fe5ddd71c51ec74b3ee"
+    },
+    {
+      "path": "apps/worker/src/main.ts",
+      "sha256": "2acc6a5fc5352c7e4b0ed1337a802896e7c58717b5769b839fd7455b1f99303c"
+    },
+    {
+      "path": "apps/worker/src/media-processing-composition.test.ts",
+      "sha256": "1dd9dbf1f86f03bf4324415b5aa71935bb2959a3daf996db6858dde0e268c561"
+    },
+    {
+      "path": "apps/worker/src/media-processing-composition.ts",
+      "sha256": "667527f612525ba1872c582240d4e8e391d1d57ae12bb69c483670e5a8634da5"
+    },
+    {
+      "path": "apps/worker/src/media-processing-runtime.test.ts",
+      "sha256": "4733c4d316162ce5508ca59209cee33075d36651f566a4bce085cd463bc74eeb"
+    },
+    {
+      "path": "apps/worker/src/media-processing-runtime.ts",
+      "sha256": "a2795ae2879475053bd7e6367c9888f492b739b4368d2f13d7e22d58c38867cb"
+    },
+    {
+      "path": "apps/worker/src/production-application.test.ts",
+      "sha256": "bf0b1d6a3da2f07ca4060c9c0cfeb4285022eaab70ff1a4fe0cf11092fafe7e2"
+    },
+    {
+      "path": "apps/worker/src/production-application.ts",
+      "sha256": "0a1a1a07287522531a919f953989122c1223ef1e010c755394c98573233eea3e"
+    },
+    {
+      "path": "apps/worker/src/reliable-events-bootstrap.e2e.test.ts",
+      "sha256": "fa42712ea64e1e156430104608e00b8abad79b6cc67678c3c70c399d85fbe4ae"
+    },
+    {
+      "path": "database/migrations/0012_media-processing.down.sql",
+      "sha256": "47bf9a5ac9e5077864b5e682a96baf8fa0781987d765c1cb64e17f01e7eec8ac"
+    },
+    {
+      "path": "database/migrations/0012_media-processing.up.sql",
+      "sha256": "8ea56150eb756ab61bed42936662bbe57abdb521e808d3917afdaf83d03af7a0"
+    },
+    {
+      "path": "database/migrations/manifest.json",
+      "sha256": "10954cee08344bbcd67bde384acb5173cdc6a7868925501ba78c64df6162e176"
+    },
+    {
+      "path": "database/schema/expected-catalog.json",
+      "sha256": "135fa4702580553fc800d9242912fbda836596b69d9fab3cf30a21c0ff8bb4ef"
+    },
+    {
+      "path": "docs/decisions/010-media-processing-identities.md",
+      "sha256": "34442c6036cb349ed4f38a400af546f138547945a6fec172b12fbe27d3c89ddc"
+    },
+    {
+      "path": "package.json",
+      "sha256": "38b394e75268d3a6ec92e94a0109390d463cea9067e49138d5e99c343d23898c"
+    },
+    {
+      "path": "packages/application/src/index.ts",
+      "sha256": "adb019dae68bf95d915f11ea3c05d27399ff7dc42cfe508b5de2aae39dc88189"
+    },
+    {
+      "path": "packages/application/src/media-processing.test.ts",
+      "sha256": "c9d522ff0dc4401c0b4bb87f6fe190cc3ae7b3915f3c7bb33d260012f304fa0c"
+    },
+    {
+      "path": "packages/application/src/media-processing.ts",
+      "sha256": "763184b219d802efa4d984868047798d004d995e379b3d8fca401e25395cd3a9"
+    },
+    {
+      "path": "packages/application/tsconfig.build.json",
+      "sha256": "5cc235ceb250c4af1bc796cf8bed2a00b944a9622884ff9cd6f6afc8ca42a384"
+    },
+    {
+      "path": "packages/content/src/index.ts",
+      "sha256": "3a28b4128e2b146ef24d0fd3dc820c3e8fd0abe8976217f1403e26fc26baab6c"
+    },
+    {
+      "path": "packages/content/src/media-processing.test.ts",
+      "sha256": "59f5edbe54b3601f0c7f67ae1c71989b109a3dfa84ea05e29451e09b699a7b49"
+    },
+    {
+      "path": "packages/content/src/media-processing.ts",
+      "sha256": "4ea39e6cf693125cf80458edd7149f2c0cdf9df66010b6d131377d7b9c8f3631"
+    },
+    {
+      "path": "packages/contracts/generated/contracts.schema.json",
+      "sha256": "f749b355aeff9c3b2909e5b039bf36309314d3b8c1824ac28a0a91a9824f9d2e"
+    },
+    {
+      "path": "packages/contracts/generated/openapi.json",
+      "sha256": "3c314283b40c21e52fc32ce967d475b6fc8afb1ecb41e38558854bcf25863f39"
+    },
+    {
+      "path": "packages/contracts/src/artifact-registry.test.ts",
+      "sha256": "e0f770e1177e844630ab6d7dc719a78f70337016fb79c287f5acde07fa503d13"
+    },
+    {
+      "path": "packages/contracts/src/artifact-registry.ts",
+      "sha256": "016d47687a79da5c7c453cde10ad7996899412606d4532e8cca6e8422288eb73"
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "sha256": "35f60308f705713318bdeb918a107da43fd58f6d04316d00ceea4c6c9bdddffb"
+    },
+    {
+      "path": "packages/contracts/src/media-processing.test.ts",
+      "sha256": "558169d985016ee93f4c0036712323756dccbae2ec10cecaf91036038233db2d"
+    },
+    {
+      "path": "packages/contracts/src/media-processing.ts",
+      "sha256": "c99716df2d42285489e27d1d554c474a010a3909796a245b724f90e776aa21b8"
+    },
+    {
+      "path": "packages/media-image/package.json",
+      "sha256": "2d4e9f489ed3606c59d5c44e109b6411b985935ccc802a36e17e076541244b90"
+    },
+    {
+      "path": "packages/media-image/src/failure.test.ts",
+      "sha256": "419b54bd1af459445aaa540849399815cb27246b696c6fe9afde859a530b9ad0"
+    },
+    {
+      "path": "packages/media-image/src/failure.ts",
+      "sha256": "239552e7cf102322a8471875ee4867e073f9b92aa3f90a746bac51ce8cfa3af6"
+    },
+    {
+      "path": "packages/media-image/src/image-pipeline.test.ts",
+      "sha256": "93f22379f9b5647e7480de1f5bfbdbc5393bbe6d83a3985123320c3c0a91bb73"
+    },
+    {
+      "path": "packages/media-image/src/image-pipeline.ts",
+      "sha256": "93b9d21963fb4cf48466af33f20a72e13267a32c6173cdb68cb5609186cef1d9"
+    },
+    {
+      "path": "packages/media-image/src/index.test.ts",
+      "sha256": "99fe4e1042f8eef09ab804bf5013d63fc46ae2262b9927a7851fe9f991984408"
+    },
+    {
+      "path": "packages/media-image/src/index.ts",
+      "sha256": "14af8341df6c5cc42bc1f1c9d5a5ae09950c04bfeb0f7f4c2a53cbd7481db49a"
+    },
+    {
+      "path": "packages/media-image/src/storage-transfer.ts",
+      "sha256": "c20b03f810f8bae3fd11239bb2c7d1a6afc7fb83f7e8d5cae3168bd28f5ad181"
+    },
+    {
+      "path": "packages/media-image/src/test-support/storage.ts",
+      "sha256": "b04a5a450872238f89da7e2c886dca3b014f61902e944773609a3b7abcb2cdf0"
+    },
+    {
+      "path": "packages/media-image/tsconfig.build.json",
+      "sha256": "cc258c867e60edee0d896a3f786c90d5cbfe7ad7d3d1afdf883326ac7db343c9"
+    },
+    {
+      "path": "packages/media-image/tsconfig.json",
+      "sha256": "7d2549f5921969b07a30a0b827538ae4c3a121a9ae36a7eb8d40aec69f23fda8"
+    },
+    {
+      "path": "packages/media-port/src/index.ts",
+      "sha256": "ba62422a88e209006dcf3cf99cf5bd864c15603cab9d436acba4da2133837d39"
+    },
+    {
+      "path": "packages/media-port/src/processing.ts",
+      "sha256": "de7b703e6d2c189a1840593b3b3f611b32e401a28c73aee11d2188bf328e5667"
+    },
+    {
+      "path": "packages/media-s3/scripts/ephemeral-s3-harness.mjs",
+      "sha256": "5fbbf0e232e452ef6044897e1c1b517cff12d11d2cbb6d23c34d3dcf5c985d15"
+    },
+    {
+      "path": "packages/media-s3/scripts/s3-integration.mjs",
+      "sha256": "cb2ee4290c2e85b5b9f6a588964bfa93981e95c24ff99e4340f334ba76b1d936"
+    },
+    {
+      "path": "packages/persistence-port/src/index.ts",
+      "sha256": "4577f947deebc84d7f45eb8dd25fd92904d3ff6b2f5de17a858b4351218c60af"
+    },
+    {
+      "path": "packages/persistence-port/src/media-processing.ts",
+      "sha256": "ecc5ab5270157144a90365207f6ab20e99be94c6ae038b01e9d2b6b1090f2853"
+    },
+    {
+      "path": "packages/persistence-postgres/package.json",
+      "sha256": "97da176f5b037c845f5a8f8173c70137b368f26b5970053fff0f4da2fa3b513a"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
+      "sha256": "7f9b1f4ca6132c3ef90b6274a14ae9f81cd14dd181aa7f89d8827a7d8de1322b"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/postgres-media-processing-fixtures.mjs",
+      "sha256": "f25e09c35026188aed03cfa515486131682a427faf7ac30969721854a16177d9"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/postgres-media-processing.mjs",
+      "sha256": "32cbf4e8a73a15f0fe6b6e8c82320b9a1901d6406bb4c3ec090b14031d56bd39"
+    },
+    {
+      "path": "packages/persistence-postgres/src/media-processing-data.ts",
+      "sha256": "37cf7ff5ad520c3a8f20c39c38d3f3962c4e8a35c345f473ec533418fafbd9c9"
+    },
+    {
+      "path": "packages/persistence-postgres/src/media-processing-outputs.ts",
+      "sha256": "9181769263756ece13d45daad07b5d991c23b974f538ea8884c2e8271ed70d00"
+    },
+    {
+      "path": "packages/persistence-postgres/src/media-processing-repository.test.ts",
+      "sha256": "fd720a60dcc50e46b307120bfef02c6f7da1814af76872f8b8242bc922fa0abe"
+    },
+    {
+      "path": "packages/persistence-postgres/src/media-processing-repository.ts",
+      "sha256": "a2db260577e873ccfa5b2007ddb57e93ffddcdbc0d62fb9aad514d225dcfe2fc"
+    },
+    {
+      "path": "packages/persistence-postgres/src/postgres-persistence.test.ts",
+      "sha256": "53e2f6a8ee4d38bebd96248606aa4870877fc3dfbdcf91db3fb4922e43f07b86"
+    },
+    {
+      "path": "packages/persistence-postgres/src/postgres-persistence.ts",
+      "sha256": "9b9d74e56e38535d0a27f09fba154b793f92e6d9ae57ac3bf75d79ac66f363c2"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "63941dbbf06c0fc0c0ccc1b7752e5bc211d8fc24bbdc8bfa6ab86601167dcdcf"
+    },
+    {
+      "path": "scripts/check-adapter-boundaries.mjs",
+      "sha256": "c6a74793eba77483de90579869fe265635050779011caf3bd1e78a7fe46e5ffe"
+    },
+    {
+      "path": "scripts/check-workspace.mjs",
+      "sha256": "07808aefc3ada695311062850bb75e9f29c7186302cb24efe12cf52631d72fc4"
+    }
+  ]
+}

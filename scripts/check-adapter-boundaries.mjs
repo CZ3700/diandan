@@ -12,6 +12,7 @@ const adapterPackageNames = new Set([
   "identity-oidc",
   "key-management-kms",
   "media-s3",
+  "media-image",
   "notification-provider",
   "payment-fake",
   "persistence-postgres",

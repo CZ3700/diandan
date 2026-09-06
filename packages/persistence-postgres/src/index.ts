@@ -57,3 +57,5 @@ export {
   EphemeralPostgresError,
   withEphemeralPostgres,
 } from "./testing/ephemeral-postgres.js";
+export { rebuildIdolSearchProjections } from "./catalog-search-projection.js";
+export { createCatalogDirectoryRepository } from "./catalog-directory-repository.js";

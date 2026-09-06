@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "task": "P3-01",
+  "checkpoint": "2B content storage and seven-locale name search",
+  "checkpointResult": "PASS",
+  "taskStatus": "IN_PROGRESS",
+  "sourceFingerprint": "f15247ed1d41c2dfec76be606f4d0f9f8d285598a01a4847aa9b49a6c478e5d6",
+  "independentReview": "ACCEPT",
+  "targetedTests": {
+    "contracts": 212,
+    "content": 102,
+    "catalog": 12,
+    "persistencePort": 4,
+    "persistencePostgres": 273,
+    "api": 32,
+    "worker": 23,
+    "total": 658
+  },
+  "database": {
+    "migrations": 13,
+    "tables": 122,
+    "draftConstraintAssertions": 103,
+    "draftRepositoryAssertions": 62,
+    "directoryAssertions": 307,
+    "httpAssertions": 264,
+    "httpRequests": 43
+  },
+  "compatibility": {
+    "oldRoots": 198,
+    "newRoots": 8,
+    "changedOldRoots": 0,
+    "httpPathsChanged": false
+  },
+  "maxLoad": {
+    "blocks": 32,
+    "itemsPerBlock": 24,
+    "locales": 7,
+    "translatedItems": 5376,
+    "before": {
+      "elapsedMs": 19218,
+      "commitMs": 17396
+    },
+    "verifiedDedicated": {
+      "elapsedMs": 2361,
+      "commitMs": 7
+    },
+    "verifiedFullCheck": {
+      "elapsedMs": 2280,
+      "commitMs": 5
+    }
+  },
+  "boundaries": [
+    "Trusted internal persistence only; no admin HTTP/session/RBAC/CSRF implementation in this slice.",
+    "Extensions remain DRAFT and are blocked from validation/publication/rollback until complete authorization and publication proof is implemented.",
+    "New aliases are not yet included in the public projection.",
+    "Stable ID duplicate rejection and request ID conflicts do not implement complete idempotent success replay.",
+    "No new physical-device, cloud, PSP or production-release evidence."
+  ],
+  "localOnly": true,
+  "verifiedAt": "2026-09-05T16:20:20.773497+00:00",
+  "sourceVerification": {
+    "files": 32,
+    "matchingFiles": 32,
+    "headMatches": true
+  },
+  "fullCheck": {
+    "exitCode": 0,
+    "log": "check.log",
+    "typecheck": {
+      "passed": 56,
+      "cached": 55
+    },
+    "test": {
+      "passed": 56,
+      "cached": 55
+    },
+    "build": {
+      "passed": 35,
+      "cached": 35
+    },
+    "nodeImportedPackageExports": 31
+  },
+  "regressions": {
+    "mediaPostgresAssertions": 136,
+    "realImagePostgresS3Assertions": 423,
+    "workerAttempts": [1, 2, 1, 1, 2]
+  },
+  "commands": [
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm check",
+      "exitCode": 0,
+      "log": "check.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm check:contracts",
+      "exitCode": 0,
+      "log": "contracts-check-final.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm turbo run typecheck test build --output-logs=errors-only",
+      "exitCode": 0,
+      "log": "final-static-tasks.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm security:secrets",
+      "exitCode": 0,
+      "log": "secrets-final.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- node scripts/verify-ui-composites-browser.mjs",
+      "exitCode": 0,
+      "log": "browser-composites.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- node scripts/verify-ui-motion-browser.mjs",
+      "exitCode": 0,
+      "log": "browser-motion-final.log"
+    }
+  ],
+  "browser": {
+    "p2-04": {
+      "scenarios": 16,
+      "screenshots": 18,
+      "axeScans": 10,
+      "blockingAxeFindings": 0,
+      "result": "passed",
+      "sourceFingerprint": "189b27de004752fb72802d15cd0dae39350fd4b26e100c45ad00e8100c72b544"
+    },
+    "p2-05": {
+      "scenarios": 8,
+      "screenshots": 22,
+      "axeScans": 3,
+      "blockingAxeFindings": 0,
+      "result": "passed-with-physical-device-gate",
+      "sourceFingerprint": "90e44f53bbf39bd5e93e884785d3d5021146124d4bfa9b2192d617b71f3fca90"
+    }
+  },
+  "remainingRisks": [
+    "One pre-existing media database-recovery integration failed intermittently in check-attempt2.log; the defect was not reproduced or attributed to source code. Safe diagnostics were added; the dedicated 423-assertion run and final full check passed.",
+    "Maximum payload timing is a local fixture measurement, not a production latency guarantee."
+  ],
+  "progressCounts": {
+    "PENDING": 31,
+    "READY": 0,
+    "IN_PROGRESS": 1,
+    "BLOCKED": 0,
+    "REVIEW": 0,
+    "DONE": 17,
+    "DEFERRED": 0
+  }
+}

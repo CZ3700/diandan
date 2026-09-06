@@ -1,3 +1,7 @@
+import { contentAuthoringPaths } from "./content-authoring-openapi.js";
+import { baseContentPaths } from "./base-content-openapi.js";
+import { adminContentPaths } from "./admin-content-openapi.js";
+import { catalogDirectoryPaths } from "./catalog-directory-openapi.js";
 import { z } from "zod";
 
 import { contractArtifactRegistry } from "./artifact-registry.js";
@@ -189,6 +193,10 @@ export function createContractArtifactDocuments(): Readonly<{
       },
       paths: {
         [PAYMENT_WEBHOOK_PATH]: paymentWebhookPath(),
+        ...catalogDirectoryPaths(),
+        ...adminContentPaths(),
+        ...contentAuthoringPaths(),
+        ...baseContentPaths(),
       },
       components: {
         schemas: httpComponents,
@@ -205,6 +213,20 @@ export function createContractArtifactDocuments(): Readonly<{
           },
         },
         securitySchemes: {
+          AdminSession: {
+            type: "apiKey",
+            in: "cookie",
+            name: "__Host-fan-admin-session",
+            description:
+              "Secure HttpOnly SameSite server-side session; no identity or business data in the cookie.",
+          },
+          AdminCsrf: {
+            type: "apiKey",
+            in: "header",
+            name: "x-csrf-token",
+            description:
+              "Synchronizer token bound to the current platform session; exact Origin is also required.",
+          },
           PaymentWebhookSignature: {
             type: "apiKey",
             in: "header",

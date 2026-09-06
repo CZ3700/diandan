@@ -1,10 +1,10 @@
 # Progress Master
 
-> 最后更新：2026-09-05
-> 当前里程碑：M2 品牌样板（M1 可信内核已完成）
-> 当前 ACTIVE Phase：Phase 2
-> 当前任务：`P2-05`（`REVIEW`；等待真实移动设备录屏/帧率）
-> 下一可领取任务：无（P2-06 等待 P2-05 `DONE`）
+> 最后更新：2026-09-06
+> 当前里程碑：M3 可浏览 Beta（M1/M2 已完成）
+> 当前 ACTIVE Phase：Phase 3
+> 当前任务：`P3-01`（`IN_PROGRESS`）；检查点 1、2A、2B、3A、3B、4A 基础审核与受控预览已验证；下一步媒体/政策管理、完整 revision 验证与事务发布/回退/purge
+> 下一可领取任务：无；P3-01 完整 API/数据库/发布链路验收后解锁直接依赖
 
 ## 1. 开工入口
 
@@ -12,22 +12,22 @@
 
 1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md`
 2. 本文件
-3. 候选任务所在的 `ACTIVE` phase 文件（当前为 `docs/progress/phase-2-design-system.md`）
+3. 候选任务所在的 `ACTIVE` phase 文件（当前为 `docs/progress/phase-3-storefront.md`）
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务；P2-05 产品代码已完成并处于 `REVIEW`，P2-06 的依赖尚未关闭，当前没有可领取任务。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。2026-09-05 用户批准现有视觉作为开发基线并明确要求进入下一阶段；P2-06 DONE、Phase 2 CLOSED、Phase 3 ACTIVE；P3-01 经 READY 后由 Codex `/root` 领取为唯一 Lane C executor。正式品牌资产与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 33 |
+| PENDING | 31 |
 | READY | 0 |
-| IN_PROGRESS | 0 |
+| IN_PROGRESS | 1 |
 | BLOCKED | 0 |
-| REVIEW | 1 |
-| DONE | 15 |
+| REVIEW | 0 |
+| DONE | 17 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -37,8 +37,8 @@
 |:--|--:|:--|:--|:--|
 | 0 基线与骨架 | 5 | CLOSED | `phase-0-baseline.md` | CI、四应用骨架、preview、trace、生产基础设施选型 |
 | 1 合同与领域 | 6 | CLOSED | `phase-1-contracts.md` | domain/catalog/pricing/inventory/migration/webhook |
-| 2 设计系统 | 6 | ACTIVE | `phase-2-design-system.md` | 品牌样板、视觉、axe、设备性能 |
-| 3 自研 Admin、内容与浏览前台 | 6 | LOCKED | `phase-3-storefront.md` | 七语言自研后台、真实内容、发布、SEO/cache、性能 |
+| 2 设计系统 | 6 | CLOSED | `phase-2-design-system.md` | 品牌样板、视觉、axe、设备性能 |
+| 3 自研 Admin、内容与浏览前台 | 6 | ACTIVE | `phase-3-storefront.md` | 七语言自研后台、真实内容、发布、SEO/cache、性能 |
 | 4 购买闭环 | 6 | LOCKED | `phase-4-commerce.md` | 七语言测试支付、订单 locale、查单、通知 |
 | 5 运营与支付 | 8 | LOCKED | `phase-5-operations-payments.md` | RBAC、退款、配置回退、重放、production-like staging |
 | 6 加固与恢复 | 6 | LOCKED | `phase-6-hardening.md` | Release Gate 技术证据 |
@@ -64,7 +64,8 @@
 
 | 决策 | 状态 | 最晚门禁 | 记录 |
 |:--|:--|:--|:--|
-| 品牌名/Logo/正式字体/摄影授权 | OPEN | Phase 2 人工批准 | 待建 ADR |
+| 开发视觉基线 | ACCEPTED | Phase 2 已关闭 | ADR-008；2026-09-05 用户批准 V2 作为后续开发基础 |
+| 正式品牌名/Logo/字体采用/摄影授权 | OPEN | 正式资产导入前且不晚于 P7-01/P7-02 | ADR-008/009；不阻塞内部 Phase 3 开发 |
 | 生产区域/容器平台/PostgreSQL/对象存储/CDN/WAF | ACCEPTED | Phase 0 已关闭 | ADR-007：`us-east-1` AWS 单云 origin；Akamai 为未来 edge 候选 |
 | 经营主体/KYC/收款账户 | OPEN | Phase 4 真实支付 | 待建运营决策 |
 | 管理员 OIDC/MFA/账号恢复 | OPEN | Phase 5 UAT | 待建 ADR |
@@ -74,14 +75,45 @@
 | 履约 SLA/客服承诺 | OPEN | Phase 3 内容冻结 | 待建运营决策 |
 | 邮件、观测、备份供应商 | OPEN | Phase 4/6 | 待建 ADR |
 
-这些 OPEN 项不阻塞当前 Phase 2 产品代码实现，但执行者不得自行把 sandbox 假设写成生产结论。
+这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
 
-Phase 0 与 Phase 1 已分别以真实 clean clone、GitHub Quality/Security、PostgreSQL/S3-compatible 集成及独立验收证据关闭；详细提交、PR 与 run 保留在下表及各 phase 文件。Phase 2 中 P2-01 至 P2-04 均为 `DONE`，其 token/字体、原语、overlay/locale control 与六个 source-owned composite 已通过真实 Chrome、fresh clone、secret/high audit 和独立复核。P2-05 的 Hero、偶像切换、加购/成功及 reduced-motion 产品代码已经完成，8/8 locale/viewport、22 张截图、3 个 axe、242 个 production font face、零 CLS、全量当前/clean-clone 门禁和独立终审均通过；因当前没有可识别的物理移动设备，真机录屏/帧率尚未取得，任务保持 `REVIEW`。P2-06 与 Phase 3 继续等待该硬门禁，不以桌面模拟或部署证据替代。ADR-007 仍只关闭基础设施选型门；按用户要求，本阶段不实施 AWS/Akamai、staging、production 或运维工作。
+2026-09-06 P3-01 的 4A 基础审核与受控预览已验证：五类基础内容七语言 read/submit/approve 与精确 owner/revision/locale preview，当前权限/源 hash/独立作者/幂等/审计同事务；0016 两张专属表，旧 233 合同不变。960 tests、910 PG/3847 HTTP 断言（388 请求）、16 迁移/132 表、最终完整 check 与双端七语言浏览器回归通过。真实会话上限微秒精度与旧 3A 短预览 fixture 已 RED→GREEN，未放宽 TTL/约束；三路非作者复核 ACCEPT、S.U.P.E.R 10 项 PASS。证据见 `output/checks/p3-01-base-content/README.md`，863 个工作区源码输入最终指纹未变。下一入口为运行时计划“4A 后续必需工作”：完整验证、政策 owner 初始化、媒体管理 API，随后发布/回退/公开扩展 DTO/manifest/head/名字别名投影/outbox/purge/≤60 秒可见性。P3-01 仍 IN_PROGRESS，49 项仍 17 DONE、1 IN_PROGRESS、31 PENDING；没有新增后台业务 UI、真机、正式登录、云/PSP/staging/远端 CI 或发布结论。
+
+2026-09-06 P3-01 的 3B 基础内容作者流程已验证：五类内容 read/create/copy、局部译文编辑、精确批准继承与 STALE lineage、当前权限/并发/幂等/审计同事务；0015 作者收据封口内容与复制来源，旧 225 合同不变。886 tests、211 作者 PG/909 HTTP 断言（114 请求）、15 迁移/130 表、最终完整 check 与双端七语言浏览器回归通过。补验修正目录迁移回退顺序、媒体完成时间回拨（152 PG）及会话到期测试（109 PG）；独立复核 ACCEPT，S.U.P.E.R 10 项 PASS。证据见 `output/checks/p3-01-authoring/README.md`，837 个工作区源码输入最终指纹未变。下一入口为运行时计划检查点 4：基础审核/五类 preview、政策 owner 初始化、媒体管理 API、完整发布/回退/公开扩展 DTO/outbox/purge；艺人/商品管理任务包含所需 API。P3-01 继续 IN_PROGRESS，49 任务仍为 17 DONE、1 IN_PROGRESS、31 PENDING；无新增真机、生产登录、后台 UI、云/PSP/staging/远端 CI 或发布结论。
+
+2026-09-06 P3-01 的 3A 内容授权/审核/只读预览已验证：8 个管理 POST 与 1 个 preview POST，session/MFA/RBAC/语言权限与内容/审核/审计/幂等同事务；单语言审稿返回目标译文与实际英语源稿，预览可撤销且最长 15 分钟。688 tests、108 PG/434 HTTP 断言（68 请求）、14 迁移/124 表、完整 check 与 P2-04/05 浏览器回归通过；新增 19 个 roots，旧 206 定义不变。全仓首次 503 已通过真实数据库探针定位墙钟回拨并修复；固定回拨/微秒精度与 100 组七语言/1800 次连续操作通过，独立复核 ACCEPT。证据见 `output/checks/p3-01-admin-content/README.md`。下一入口为运行时计划 3B：基础内容创建/复制，再接发布/回退/outbox/purge；P3-01 继续 IN_PROGRESS，49 任务仍为 17 DONE、1 IN_PROGRESS、31 PENDING。TEST 组合不代表生产登录或后台 UI 已开放，无新真机、远端 CI、PSP、云或发布结论。
+
+2026-09-06 P3-01 的 2B 内容存储已验证：0013 新增 10 张专属表，艺人别名与礼物固定结构/七语言译文由真实 PostgreSQL 保存；初始 DRAFT 审核和精确审计原子提交，新扩展暂时拒绝验证/发布/回退。公开目录已支持跨七语言姓名搜索，返回文案保持请求 locale。658 tests、103 SQL/62 repository/307 目录 PG/264 HTTP 断言、13 迁移/122 表、完整 check 与 P2-04/05 浏览器回归通过；198 个旧合同不变。最大 32×24×7 内容保存本机复验 2280 ms、COMMIT 5 ms。证据见 `output/checks/p3-01-content-storage/README.md`。一次既有媒体恢复测试间歇失败未复现到明确源码缺陷，已保留诊断，独立及最终全仓 423 联合断言通过。P3-01 继续 IN_PROGRESS，下一入口是检查点 3 的授权/内容命令/只读 preview；49 任务计数仍为 17 DONE、1 IN_PROGRESS、31 PENDING，无新真机、远端 CI 或发布结论。
+
+2026-09-05 P3-01 的 2B 媒体子检查点已验证：真实图片解码/EXIF 清理/角色 master/12 个响应式产物、PostgreSQL 持久任务与 worker、原图和主图独立去重（ADR-010）。783 tests、136 条媒体 PG 断言、423 条真实 PG + TLS S3 联合断言、12 迁移/112 表、完整 check 与既有七语言浏览器回归通过；184 个旧合同定义不变。证据见 `output/checks/p3-01-media/README.md`。P3-01 仍 IN_PROGRESS，下一入口为实施计划 2B-内容存储（艺人别名、礼物详情/专属七语言译文），再接授权/preview/审核/发布/回退/purge；不提前解锁前台页面任务，无新的真机、云或生产发布结论。
+
+2026-09-05 P3-01 检查点 2A 已验证：真实 PostgreSQL → Application → Nest/Fastify 公开目录，艺人名字/handle 搜索、远端定位与 cursor 连续翻页，礼物分页/筛选/可售规格最低价排序，七语言强发布投影。120 位艺人与 120 件礼物通过 287 条数据库断言和 193 条真实 HTTP 断言；受影响 631 tests、完整 check、11 迁移/109 表、既有 PG/S3 与 P2-04/05 浏览器回归通过。证据见 `output/checks/p3-01-directory/README.md`。P3-01 继续 IN_PROGRESS，下一入口为 `docs/plan/p3-01-content-runtime.md` 检查点 2B；图片处理、别名/详情写入、管理授权/preview、事务发布/回退/purge 尚未完成，前台业务页接入仍待 P3-04/05。49 项任务计数不变，无新远端 CI、真机或发布结论。
+
+2026-09-05 用户确认现有视觉风格并授权开始下一阶段；追加艺人连续浏览/名字搜索/混合比例照片、礼物分页/筛选排序及多语言自由编辑需求，纳入规范 2.2.0、ADR-009 和 P3-01 至 P3-06。首个合同与纯规则检查点的历史验证：16 新合同、155 旧定义不变、268 tests、完整 check、本地 PG/S3 及 P2-04/05 浏览器刷新通过，见 `output/checks/p3-01-foundation/README.md`。以下历史 REVIEW/LOCKED 记录仅描述当时状态，以最新证据和上方状态表为准。
+
+2026-09-05 P2-06 V2 已按用户反馈改为原色黑金画廊：新内部首页式样板、七张原创多色素材、七语言、艺人/礼物/详情/演示礼袋操作；24/24 cases、86 PNG、26 axe serious/critical0，22条内部说明region moderate记录保留。冷载图像恢复、语义断行与桌面完整详情图已修；Storefront119/UI94/helper11tests、P2-02/04/05浏览器刷新及最终全仓check通过。当前评审入口 `output/playwright/p2-06-brand/README.md`，源码fingerprint `aeaea1e5dec8ddafd21124eebbc3473ec608363628e83a2b7824f622a4585747`；旧手机证据明确为历史版本。P2-06 REVIEW，不代用户批准，Phase3仍LOCKED。
+
+2026-09-05 P2-06 已提交人工评审：`output/playwright/p2-06/index.html` 提供七语言、390×844/1440×900 的28 cases/58 PNG；28份axe critical/serious为0（14个motion页heading-order moderate保留），图片/字体/布局/键盘及独立视觉复核通过。修正内部motion标签的CJK/Thai字距后已重建并刷新P2-05桌面证据；113tests、完整pnpm check及本地PG/S3集成通过，本轮保留并如实统计Turbo缓存。ADR-008为Proposed，人工批准与正式品牌资产仍OPEN，Phase3不解锁。详见新评审包README与phase执行卡。
+
+2026-09-05 P2-05 真机续作完成：物理 iPhone 16 Pro Max / iOS26.5.2 / Safari，440×796 CSS px、DPR3、zh-CN；普通与真实系统 reduced-motion 各8动作/40状态样本通过，并记录24个可信输入事件、图片/面板关联与实际加购/重置。两份完整录屏已解码和hash，独立终审ACCEPT。证据与复核边界见 `output/playwright/p2-05-device/README.md` / `device-results.json`；原桌面证据保持physicalDeviceEvidence=false。普通/减弱脚本序列与用户原生触摸分别记录；早期未hydration的静态页面诊断已明确排除，不宣称固定60渲染fps或field INP。
+
+本轮全量0-cache check exit0：typecheck/test各51个Turbo tasks、build34个，真实本地PostgreSQL/S3-compatible集成、format/lint/合同/架构检查通过；设备/motion/browser-runner共58项回归通过。未修改业务UI、合同、数据库或部署；本轮不重跑fresh clone、远端CI、dependency audit或发布，历史结果仍以各phase原证据为准。
+
+Phase0/1已CLOSED，Phase2中P2-01至P2-05均DONE；P2-06技术评审材料已完成并为REVIEW，等待人工视觉与正式品牌决定。Phase3保持LOCKED。按用户要求，AWS/Akamai、staging、production和运维继续暂缓。
 
 | 日期 | Task | 类型 | 证据 | 结论 |
 |:--|:--|:--|:--|:--|
+| 2026-09-06 | P3-01 | 基础内容审核/preview 4A | `output/checks/p3-01-base-content/`；960 tests、910 PG/3847 HTTP、完整 check 与浏览器回归 | 4A 通过；任务 IN_PROGRESS，下一步媒体/政策管理与完整发布链路 |
+| 2026-09-06 | P3-01 | 基础内容作者流程 3B | `output/checks/p3-01-authoring/`；886 tests、211 PG/909 HTTP、媒体回拨152 PG、完整 check 与浏览器回归 | 3B 通过；任务 IN_PROGRESS，下一步检查点 4 |
+| 2026-09-06 | P3-01 | 扩展内容授权/审核/preview 3A | `output/checks/p3-01-admin-content/`；688 tests、108 PG/434 HTTP、时钟回拨回归、完整 check 与浏览器回归 | 3A 通过；任务 IN_PROGRESS，下一步 3B 基础内容创建/复制 |
+| 2026-09-06 | P3-01 | 内容存储子检查点 2B | `output/checks/p3-01-content-storage/`；658 tests、103/62 内容 PG、307 PG/264 HTTP、完整 check 与浏览器回归 | 内容存储通过；任务 IN_PROGRESS，下一步授权/审核/preview/发布 |
+| 2026-09-05 | P3-01 | 真实媒体处理子检查点 2B | `output/checks/p3-01-media/`；783 tests、136 PG/423 联合断言、完整 check 与浏览器回归 | 媒体子项通过；任务 IN_PROGRESS，当时下一步为别名/详情存储与受权内容发布 |
+| 2026-09-05 | P3-01 | 真实目录读取检查点 2A | `output/checks/p3-01-directory/`；631 tests、287 PG/193 HTTP 断言、完整 check 与浏览器回归 | 检查点通过；任务 IN_PROGRESS，媒体/内容写入/发布链路待接 |
+| 2026-09-05 | P2-06 | 原色黑金 V2 | `output/playwright/p2-06-brand/`、ADR-008；24 cases/86 PNG、完整check、独立复核 | REVIEW；当前可交互候选，待用户决定 |
+| 2026-09-05 | P2-06 | 首版历史评审包 | `output/playwright/p2-06/`、ADR-008；28 cases/58 PNG、完整check、独立复核 | REVIEW；待人工视觉/品牌决定，Phase3 LOCKED |
+| 2026-09-05 | P2-05 | 真机补验完成 | `output/playwright/p2-05-device/`；normal/reduce录屏、可信触摸、0-cache check、独立终审 | DONE；P2-06 READY，Phase3仍LOCKED |
 | 2026-09-02 | SPEC | 规划 | `docs/FAN_SUPPORT_PLATFORM_SPEC.md`、ADR-004、ADR-005、ADR-006 | 2.1.0 已锁定全源码自研、七语言 URL/内容/订单/SEO、原子购物车/intent、支付与门禁 |
 | 2026-09-02 | ARCH | 可视化 | `docs/fan-support-platform-architecture.drawio` | 已同步 Storefront/Admin/API/Worker、PostgreSQL 真相源与可替换外部 Port |
 | 2026-09-02 | RESEARCH | 浏览器研究 | `research/` | 只作为参考站背景，不等于本项目实现 |
@@ -100,7 +132,7 @@ Phase 0 与 Phase 1 已分别以真实 clean clone、GitHub Quality/Security、P
 | 2026-09-04 | P2-01 | Design tokens/fonts/theme/grid | Git `f578208fc05822426bc3d83e362f35ebe29460ee`、[PR #10](https://github.com/CZ3700/diandan/pull/10)、[run 33821542072](https://github.com/CZ3700/diandan/actions/runs/33821542072)、`packages/design-tokens/`、`output/playwright/p2-01/` | schemaVersion 1 tokens/CSS、五类 locale 字体分包/OFL、对比安全 accent、preview-only specimen 与 21 项静态门禁完成；六视口/320/真实 Chrome 200% zoom/键盘/reduce、fresh clean clone、secret/audit、Quality/Security 与独立终验全绿，任务 DONE；正式品牌、axe/读屏、全脚本全条件与真实设备性能仍属后续门禁 |
 | 2026-09-04 | P2-02 | UI primitives/accessibility | Git `9f33dad482798a58e108d0c8c0495a878cf375c7` + evidence `d40a79bd3fb93a884ffd8613c58f84902ae6ca41`、[PR #11](https://github.com/CZ3700/diandan/pull/11)、[run 33835758064](https://github.com/CZ3700/diandan/actions/runs/33835758064)、`packages/ui/`、`output/playwright/p2-02/` | 八类原语、server/client/CSS 边界、BigInt 金额、真实 Media fallback、键盘/RTL/reduce/48px/对比门禁完成；13 场景、6 axe、3 环境 gate、15/15 图片、真实 Chrome 200% zoom、fresh clean clone、high audit/secret、Quality/Security 与独立终验全绿，任务 DONE；无公开业务路由、overlay/composite、支付、staging/production 或正式品牌批准结论 |
 | 2026-09-04 | P2-03 | Overlay/locale controls | Git `0f86e6c16e9f44bd3c9096e2d8d02a9a3e7aa1b8` + evidence `ef6e16a0870b5e230b796f9905649398bfce0859` + CI stabilization `f6e19c948e124436ec423e3607c889f7254b1c24`、[PR #12](https://github.com/CZ3700/diandan/pull/12)、[run 33874955057](https://github.com/CZ3700/diandan/actions/runs/33874955057)、`packages/ui/`、`apps/storefront/`、`output/playwright/p2-03/` | Dialog/Drawer/Menu/Toast/live region、独立 Language/Region、locale URL/cookie adapter 与 fail-closed 生命周期门禁完成；冷 CI 动态导入 flake 已以静态导入根因修复，未放宽 timeout；13/13 场景、8 axe 原始结果、15/15 图片、原生 Chrome 200% zoom、本地/fresh clone/secret/high audit/两路独立终审及真实 Quality/Security 全绿，任务 DONE；未宣称真实 staging/production、AWS apply、正式品牌或真实设备性能 |
-| 2026-09-04 | P2-04 | Composite components | 本地实现、`packages/ui/`、`apps/storefront/`、`output/playwright/p2-04/`，当前 fingerprint `0509535d326e069ae0f127a862fb7edae423365f82d77b6905bbf8f9df7fd605` | 六组合组件与精确 server/client/CSS 边界完成；字体策略调整后 16/16 场景、10 axe、18/18 图片及原生 200% zoom 已重新通过，任务保持 DONE；未宣称真实设备、正式品牌、cloud/staging/production 或发布证据 |
+| 2026-09-04 | P2-04 | Composite components | 本地实现、`packages/ui/`、`apps/storefront/`、`output/playwright/p2-04/`，当前 fingerprint `7baa48a87bd2c7045875d14f294b1da6b859555ea1f10267ceea3968a6e13e46` | 六组合组件与精确 server/client/CSS 边界完成；字体策略调整后 16/16 场景、10 axe、18/18 图片及原生 200% zoom 已重新通过，任务保持 DONE；未宣称真实设备、正式品牌、cloud/staging/production 或发布证据 |
 | 2026-09-05 | P2-05 | Signature motion | Git `36c55fb89a572ffc24ab91605540752c9ee1fd63`、`packages/ui/src/motion*.tsx`、`packages/ui/styles/motion.css`、`apps/storefront/src/app/ui-motion-*`、`output/playwright/p2-05/`，fingerprint `3579e97760b599fdd3ed5f412e0142672db1d292b7cdfaf81f0ddd4b4b63f5cd` | Hero/偶像切换/加购/成功与 reduced-motion 完成；UI 94、Storefront 113、runner 40、checker 12 tests，8/8 场景、22/22 PNG、3 axe、242 个 optional font face、零 CLS，当前与 fresh-clone 全量 check、secret/high audit 及独立终审全绿；无物理手机可用，真机录屏/帧率未取得，任务 `REVIEW`、P2-06/Phase 3 继续等待；部署/运维按用户要求暂缓 |
 
 ## 6. 更新规则

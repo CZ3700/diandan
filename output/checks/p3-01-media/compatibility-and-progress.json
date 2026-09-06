@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "oldRootCount": 184,
+  "currentRootCount": 198,
+  "changedOldRoots": [],
+  "newRoots": [
+    "MediaImageProcessingCommand",
+    "MediaImageProcessingResult",
+    "MediaImageProcessingSuccess",
+    "MediaProcessingClaim",
+    "MediaProcessingClaimCommand",
+    "MediaProcessingClaimResponse",
+    "MediaProcessingCompleteCommand",
+    "MediaProcessingEnqueueCommand",
+    "MediaProcessingFailCommand",
+    "MediaProcessingReadCommand",
+    "MediaProcessingRepositoryFailure",
+    "MediaProcessingRunResult",
+    "MediaProcessingSnapshot",
+    "MediaProcessingSnapshotResponse"
+  ],
+  "taskCount": 49,
+  "taskStatuses": {
+    "DONE": 17,
+    "IN_PROGRESS": 1,
+    "PENDING": 31
+  },
+  "activeTask": "P3-01",
+  "sourceFingerprint": "19276cab1a151fef35498cba2391be6be7721343d3c4380719eb9fb4a73eb9b7"
+}

@@ -1,5 +1,27 @@
+import { createContentAuthoringRepository } from "./content-authoring-repository.js";
+import { createBaseContentReviewRepository } from "./base-content-review-repository.js";
+import { createBaseContentPreviewRepository } from "./base-content-preview-repository.js";
+import { createAdminAuthorizationRepository } from "./admin-authorization-repository.js";
+import { createContentReviewRepository } from "./content-review-repository.js";
+import { createContentPreviewRepository } from "./content-preview-repository.js";
+import { createMediaProcessingRepository } from "./media-processing-repository.js";
+import { createContentDraftRepository } from "./content-draft-repository.js";
+import { publicMediaUrlSchema } from "@fan-support/contracts";
+import { createCatalogDirectoryRepository } from "./catalog-directory-repository.js";
 import type {
   JsonValue,
+  BaseContentTransactionManager,
+  BaseContentRepositories,
+  ContentAuthoringTransactionManager,
+  ContentAuthoringRepositories,
+  AdminContentTransactionManager,
+  AdminContentRepositories,
+  ContentDraftTransactionManager,
+  ContentDraftRepositories,
+  MediaProcessingTransactionManager,
+  MediaProcessingRepositories,
+  ContentReadTransactionManager,
+  ContentReadRepositories,
   ReliableEventTransactionManager,
   ReliableEventTransactionRepositories,
   TransactionOptions,
@@ -34,7 +56,13 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly baseContentTransactionManager: BaseContentTransactionManager;
+  readonly contentAuthoringTransactionManager: ContentAuthoringTransactionManager;
+  readonly adminContentTransactionManager: AdminContentTransactionManager;
+  readonly contentDraftTransactionManager: ContentDraftTransactionManager;
+  readonly mediaProcessingTransactionManager: MediaProcessingTransactionManager;
   readonly transactionManager: TransactionManager;
+  readonly contentReadTransactionManager: ContentReadTransactionManager;
   readonly reliableEventTransactionManager: ReliableEventTransactionManager;
   close(): Promise<void>;
 }
@@ -46,6 +74,7 @@ export type PostgresPersistenceOptions = Readonly<{
     failure: PersistenceFailureNotice,
   ) => void | Promise<void>;
   publishWebhookInbox?: WebhookInboxPublisher;
+  catalogPublicMediaBaseUrl?: string;
 }>;
 
 export interface ManagedPersistencePool {
@@ -75,6 +104,19 @@ function createNodePostgresPool(
   };
 }
 
+function isCatalogMediaOrigin(value: unknown): value is string {
+  if (
+    typeof value !== "string" ||
+    !publicMediaUrlSchema.safeParse(value).success
+  )
+    return false;
+  try {
+    return new URL(value).origin === value;
+  } catch {
+    return false;
+  }
+}
+
 function isPersistenceOptions(
   value: unknown,
 ): value is PostgresPersistenceOptions | undefined {
@@ -88,10 +130,14 @@ function isPersistenceOptions(
   return (
     Object.keys(record).every(
       (key) =>
-        key === "onInfrastructureFailure" || key === "publishWebhookInbox",
+        key === "onInfrastructureFailure" ||
+        key === "publishWebhookInbox" ||
+        key === "catalogPublicMediaBaseUrl",
     ) &&
     (record["onInfrastructureFailure"] === undefined ||
       typeof record["onInfrastructureFailure"] === "function") &&
+    (record["catalogPublicMediaBaseUrl"] === undefined ||
+      isCatalogMediaOrigin(record["catalogPublicMediaBaseUrl"])) &&
     (record["publishWebhookInbox"] === undefined ||
       typeof record["publishWebhookInbox"] === "function")
   );
@@ -166,6 +212,68 @@ export function createPostgresPersistenceWithPoolFactory(
         };
       },
     });
+  const contentReadRunner = createTransactionRunner<ContentReadRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, transactionScope) => ({
+      catalogDirectory: createCatalogDirectoryRepository(client, {
+        transactionScope,
+        publicMediaBaseUrl: options!.catalogPublicMediaBaseUrl!,
+      }),
+    }),
+  });
+  const mediaProcessingRunner =
+    createTransactionRunner<MediaProcessingRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, transactionScope) => ({
+        mediaProcessing: createMediaProcessingRepository(
+          client,
+          transactionScope,
+        ),
+      }),
+    });
+  const contentDraftRunner = createTransactionRunner<ContentDraftRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, transactionScope) => ({
+      contentDrafts: createContentDraftRepository(client, transactionScope),
+    }),
+  });
+  const adminContentRunner = createTransactionRunner<AdminContentRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      authorization: createAdminAuthorizationRepository(client, scope),
+      contentDrafts: createContentDraftRepository(client, scope),
+      contentReviews: createContentReviewRepository(client, scope),
+      contentPreviews: createContentPreviewRepository(client, scope),
+      idempotency: createIdempotencyRepository(
+        createPostgresQueryLayer(client as NodePgClient),
+        scope,
+      ),
+    }),
+  });
+  const contentAuthoringRunner =
+    createTransactionRunner<ContentAuthoringRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createAdminAuthorizationRepository(client, scope),
+        contentAuthoring: createContentAuthoringRepository(client, scope),
+        idempotency: createIdempotencyRepository(
+          createPostgresQueryLayer(client as NodePgClient),
+          scope,
+        ),
+      }),
+    });
+  const baseContentRunner = createTransactionRunner<BaseContentRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      authorization: createAdminAuthorizationRepository(client, scope),
+      baseContentReviews: createBaseContentReviewRepository(client, scope),
+      baseContentPreviews: createBaseContentPreviewRepository(client, scope),
+      idempotency: createIdempotencyRepository(
+        createPostgresQueryLayer(client as NodePgClient),
+        scope,
+      ),
+    }),
+  });
   let lifecycle: "OPEN" | "CLOSING" | "CLOSED" = "OPEN";
   let closePromise: Promise<void> | undefined;
 
@@ -215,6 +323,42 @@ export function createPostgresPersistenceWithPoolFactory(
     },
   };
 
+  const contentReadTransactionManager: ContentReadTransactionManager = {
+    async runInContentReadTransaction<Result extends JsonValue>(
+      work: (repositories: ContentReadRepositories) => Promise<Result>,
+    ): Promise<Result> {
+      if (
+        lifecycle !== "OPEN" ||
+        options?.catalogPublicMediaBaseUrl === undefined
+      ) {
+        throw createPersistenceTransactionFailureError({
+          code: "CONFIGURATION_ERROR",
+          recovery: "NONE",
+        });
+      }
+      return contentReadRunner.run(
+        { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+        work,
+      );
+    },
+  };
+
+  const mediaProcessingTransactionManager: MediaProcessingTransactionManager = {
+    async runInMediaProcessingTransaction<Result extends JsonValue>(
+      work: (repositories: MediaProcessingRepositories) => Promise<Result>,
+    ): Promise<Result> {
+      if (lifecycle !== "OPEN")
+        throw createPersistenceTransactionFailureError({
+          code: "CONFIGURATION_ERROR",
+          recovery: "NONE",
+        });
+      return mediaProcessingRunner.run(
+        { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+        work,
+      );
+    },
+  };
+
   const close = (): Promise<void> => {
     if (closePromise !== undefined) {
       return closePromise;
@@ -248,9 +392,71 @@ export function createPostgresPersistenceWithPoolFactory(
     return closePromise;
   };
 
+  const contentDraftTransactionManager: ContentDraftTransactionManager = {
+    async runInContentDraftTransaction<Result extends JsonValue>(
+      work: (repositories: ContentDraftRepositories) => Promise<Result>,
+    ): Promise<Result> {
+      if (lifecycle !== "OPEN")
+        throw createPersistenceTransactionFailureError({
+          code: "CONFIGURATION_ERROR",
+          recovery: "NONE",
+        });
+      return contentDraftRunner.run(
+        { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+        work,
+      );
+    },
+  };
+
+  const adminContentTransactionManager: AdminContentTransactionManager = {
+    async runInAdminContentTransaction(work) {
+      if (lifecycle !== "OPEN")
+        throw createPersistenceTransactionFailureError({
+          code: "CONFIGURATION_ERROR",
+          recovery: "NONE",
+        });
+      return adminContentRunner.run(
+        { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+        work,
+      );
+    },
+  };
+  const contentAuthoringTransactionManager: ContentAuthoringTransactionManager =
+    {
+      async runInContentAuthoringTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return contentAuthoringRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    };
+  const baseContentTransactionManager: BaseContentTransactionManager = {
+    async runInBaseContentTransaction(work) {
+      if (lifecycle !== "OPEN")
+        throw createPersistenceTransactionFailureError({
+          code: "CONFIGURATION_ERROR",
+          recovery: "NONE",
+        });
+      return baseContentRunner.run(
+        { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+        work,
+      );
+    },
+  };
   return {
+    baseContentTransactionManager,
+    contentAuthoringTransactionManager,
+    adminContentTransactionManager,
     transactionManager,
     reliableEventTransactionManager,
+    contentReadTransactionManager,
+    mediaProcessingTransactionManager,
+    contentDraftTransactionManager,
     close,
   };
 }

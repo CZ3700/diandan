@@ -70,3 +70,44 @@ test("fails Worker initialization when reliable events cannot start", async () =
   expect(start).toHaveBeenCalledTimes(1);
   expect(stop).toHaveBeenCalledTimes(1);
 });
+
+test("starts and closes the media runtime with the same application", async () => {
+  const start = vi.fn(async () => undefined);
+  const stop = vi.fn(async () => undefined);
+  const app = await createWorkerApplication(validEnvironment, {
+    logger: quietLogger,
+    mediaProcessingRuntime: { start, stop },
+  });
+  await app.init();
+  await app.getHttpAdapter().getInstance().ready();
+  expect(start).toHaveBeenCalledTimes(1);
+  await app.close();
+  expect(stop).toHaveBeenCalledTimes(1);
+});
+
+test("closes both resources when media startup fails without leaking raw errors", async () => {
+  const reliable = {
+    start: vi.fn(async () => undefined),
+    stop: vi.fn(async () => undefined),
+  };
+  const media = {
+    start: vi.fn(async () => {
+      throw new Error("PRIVATE_MEDIA_START_FAILURE");
+    }),
+    stop: vi.fn(async () => undefined),
+  };
+  const app = await createWorkerApplication(validEnvironment, {
+    logger: quietLogger,
+    reliableEventsRuntime: reliable,
+    mediaProcessingRuntime: media,
+  });
+  await app.init();
+  await expect(app.getHttpAdapter().getInstance().ready()).rejects.toThrow(
+    "Worker media processing failed to start",
+  );
+  expect(reliable.stop).toHaveBeenCalledTimes(1);
+  expect(media.stop).toHaveBeenCalledTimes(1);
+  await app.close().catch(() => undefined);
+  expect(reliable.stop).toHaveBeenCalledTimes(1);
+  expect(media.stop).toHaveBeenCalledTimes(1);
+});

@@ -265,7 +265,26 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
   const path = paths["/api/v1/webhooks/payments/{endpointId}"] as JsonObject;
   const operation = path["post"] as JsonObject;
 
-  expect(Object.keys(paths)).toEqual([
+  expect(
+    Object.keys(paths)
+      .filter(
+        (path) =>
+          !path.startsWith("/api/v1/admin/content/") &&
+          path !== "/api/v1/content-preview/read",
+      )
+      .sort(),
+  ).toEqual([
+    "/api/v1/admin/content-authoring/copy",
+    "/api/v1/admin/content-authoring/create",
+    "/api/v1/admin/content-authoring/read",
+    "/api/v1/admin/content-review/approve",
+    "/api/v1/admin/content-review/preview/issue",
+    "/api/v1/admin/content-review/preview/revoke",
+    "/api/v1/admin/content-review/read",
+    "/api/v1/admin/content-review/submit",
+    "/api/v1/content-review-preview/read",
+    "/api/v1/gifts",
+    "/api/v1/idols",
     "/api/v1/webhooks/payments/{endpointId}",
   ]);
   expect(operation["operationId"]).toBe("receivePaymentWebhook");
@@ -276,6 +295,16 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     },
   ]);
   expect(securitySchemes).toEqual({
+    AdminSession: expect.objectContaining({
+      type: "apiKey",
+      in: "cookie",
+      name: "__Host-fan-admin-session",
+    }),
+    AdminCsrf: expect.objectContaining({
+      type: "apiKey",
+      in: "header",
+      name: "x-csrf-token",
+    }),
     PaymentWebhookSignature: expect.objectContaining({
       type: "apiKey",
       in: "header",
@@ -425,4 +454,44 @@ test("keeps committed contract artifacts byte-for-byte fresh", async () => {
   expect(openapi, "committed OpenAPI artifact must exist").toBeDefined();
   expect(jsonSchema).toBe(rendered.jsonSchema);
   expect(openapi).toBe(rendered.openapi);
+});
+
+test("describes real public directory operations with explicit language and commerce context", async () => {
+  const { createContractArtifactDocuments } =
+    await import("./artifact-documents.js");
+  const paths = createContractArtifactDocuments().openapi[
+    "paths"
+  ] as JsonObject;
+  for (const [path, responseName] of [
+    ["/api/v1/idols", "IdolDirectoryResponse"],
+    ["/api/v1/gifts", "GiftDirectoryResponse"],
+  ]) {
+    const route = paths[path!] as JsonObject | undefined;
+    expect(route, path).toBeDefined();
+    const operation = route!["get"] as JsonObject;
+    expect(operation["security"]).toEqual([]);
+    expect(JSON.stringify(operation)).toContain(responseName);
+    const parameters = operation["parameters"] as JsonObject[];
+    expect(
+      parameters.some((p) => p["name"] === "locale" && p["required"] === true),
+    ).toBe(true);
+    expect(parameters.some((p) => p["name"] === "schemaVersion")).toBe(false);
+    if (path === "/api/v1/gifts")
+      for (const name of ["market", "currency"])
+        expect(
+          parameters.some((p) => p["name"] === name && p["required"] === true),
+        ).toBe(true);
+  }
+});
+
+test("maps the public idol query parameter to the internal gift recipient field", async () => {
+  const { createContractArtifactDocuments } =
+    await import("./artifact-documents.js");
+  const paths = createContractArtifactDocuments().openapi[
+    "paths"
+  ] as JsonObject;
+  const get = (paths["/api/v1/gifts"] as JsonObject)["get"] as JsonObject;
+  const names = (get["parameters"] as JsonObject[]).map((p) => p["name"]);
+  expect(names).toContain("idol");
+  expect(names).not.toContain("idolId");
 });

@@ -1,6 +1,6 @@
 # Phase 2 — 设计系统与交互样板
 
-> 状态：ACTIVE
+> 状态：CLOSED
 > 任务：6  
 > 解锁条件：Phase 0 退出门禁通过；最初与 Phase 1 同时激活，当前 Phase 1 已关闭
 
@@ -16,8 +16,8 @@
 | P2-02 | DONE | Codex `/root` | P2-01 | Git `9f33dad` + evidence `d40a79b`、PR #11/run `33835758064`；本地、clean clone、浏览器、Quality/Security 与独立终验全绿 |
 | P2-03 | DONE | Codex `/root` | P2-02 | 实现 `0f86e6c` + evidence `ef6e16a` + CI 稳定化 `f6e19c9`；[PR #12](https://github.com/CZ3700/diandan/pull/12)/run `33874955057`、本地、浏览器、fresh clone 与两路独立终审全绿 |
 | P2-04 | DONE | Codex `/root` | P2-02 | 六个组合组件、内部八语言展示页、16 场景/10 axe/18 截图、全仓门禁与独立终审通过 |
-| P2-05 | REVIEW | Codex `/root` | P2-03、P2-04 | 产品代码、本地生产构建与浏览器证据完成；等待真实移动设备录屏/帧率门禁 |
-| P2-06 | PENDING | — | P2-04、P2-05 | 人工品牌样板批准 |
+| P2-05 | DONE | Codex `/root` | P2-03、P2-04 | 桌面证据 + iPhone 普通/系统 reduce 录屏、帧采样、可信触摸、全仓检查及独立终审通过 |
+| P2-06 | DONE | Codex `/root` | P2-04、P2-05 | 24 场景/86 PNG/完整 check；2026-09-05 用户批准 V2 开发视觉基线并授权进入 Phase 3，正式资产仍待上线前独立批准 |
 
 ## 必须证明
 
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭，Phase 2 现为唯一 `ACTIVE` Phase。P2-01、P2-02 与 P2-03 均已通过本地、浏览器、fresh clean-clone、独立终验与真实 PR Quality/Security；P2-04 已通过本地产品代码、浏览器与独立终验。P2-05 的产品代码、桌面生产构建浏览器矩阵、fresh clean-clone 与独立复核已完成并进入 `REVIEW`，但真实移动设备录屏/帧率仍是任务硬门禁。P2-06 继续等待 P2-05 `DONE`，Phase 3 继续锁定。
+2026-09-05 用户明确确认“视觉风格我认为差不多了”，要求“根据这个风格作为基础开展下面的阶段”，动效特效随后打磨。此为 V2 开发视觉基线的人工接受，结合 P2-01 至 P2-05 已有验证和 P2-06 的 24 场景/86 PNG/完整 check，P2-06 改为 DONE，Phase 2 CLOSED，Phase 3 ACTIVE。批准范围与正式资产门禁调整见 ADR-008/009；不把本次确认记作七语言母语审校、正式品牌/摄影许可或新版本真机性能证据。以下执行记录保留历史状态。
 
 ## P2-01 执行卡
 
@@ -242,6 +242,40 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 
 ## P2-05 执行卡
 
+**真机验收续作登记（2026-09-05）**：
+
+- Owner：Codex `/root`；开始：`2026-09-05T03:12:45+08:00`（`2026-09-04T19:12:45Z`）；完成：`2026-09-05T04:13:09+08:00`。本次只续作 P2-05；P2-06 尚未领取。
+- 输入：干净工作树 `674ef5b`、已匹配当前源码指纹的 P2-05 桌面证据，以及 USB 配对的 iPhone 16 Pro Max / iOS 26.5.2。
+- 范围：本地 production-build 样板、物理 Safari 的三类动效、真实系统 reduced-motion、触摸、录屏及性能；无业务 UI、合同、数据库、正式品牌或部署变更。原桌面 `physicalDeviceEvidence:false` 不改写。
+- 实际路径：用户开启 Safari 网页检查器/远程自动化/Developer Mode；WebDriver 触摸未送达，改用普通 Safari + Mac Web Inspector + QuickTime USB Screen。浏览器实测 440×796 CSS px / DPR 3 / zh-CN。
+
+### P2-05 真机续作 DONE 证据
+
+- **产物**：`output/playwright/p2-05-device/device-results.json` 汇总来源、范围、原始/交付录像 SHA-256；`normal-motion.mp4`（80.43 秒）与 `reduced-motion-and-touch.mp4`（167.72 秒）均为 1320×2868，完整解码 exit 0。原始 MOV 保留在 gitignored `.auth` 中；三份 accepted JSON 保存正常/减弱/可信触摸原始数据，README 给出复核方法和边界。
+- **普通模式**：8 动作/40 状态采样；Hero/Success 为 720 ms 动画后静止；偶像双向捕获 220 ms opacity 过渡、prepare/settled/清理终态，radio 与 panel 一致；快速反向最终正确。加购 pending→confirmed/count1，错误仍1，重试→count2；40 次采样无横向溢出。
+- **真实 reduce**：用户实际开启 iPhone「减弱动态效果」，Safari `matchMedia` 实测 true，未使用媒体偏好模拟。8 动作/40 采样均无 running animation，mode=instant、scroll-behavior=auto，53–56 个 motion 节点的 transform/animation/transition 非零项为0；选择、pending/error/重试及成功状态完整，计数2→3→4。
+- **可信触摸**：客户端恢复后用户实际操作产生24个 trusted事件，含9次 touch pointerdown；3次radio change后 checked/panel/image 一致；3次加购4→5→6→7，重置后idle且数量7。pointerdown与click不重复计作两次操作。此真人交互发生在reduce模式；两轮8步序列为物理Safari上的脚本DOM事件（isTrusted=false），明确分开记录。
+- **性能与范围**：正常各动作 rAF 间隔p95为17 ms，最大36 ms（Noa窗口一次>33 ms），Hero首个回调距动作39 ms；reduce各步p95为17 ms，Hero窗口一次最大51 ms。此为USB录制/Inspector附着下的JS回调间隔，不宣称compositor零掉帧、固定60渲染fps、field INP或覆盖所有机型。当前证据为单台手机/简体中文，与既有桌面多语言矩阵互补。
+- **排障与排除项**：本地预览重建后早期手机页未hydration：root lang仍en、profile缺失、radio.checked能变但panel/image不变。已撤回当时的组件通过判断；Raise Inspector并忽略缓存重载后恢复，重新采集accepted证据。`native-touch-samples.json`、`unhydrated-*`、早期PNG与准备录像只属失败诊断，不混入通过。新runbook必须先核验真实Hero/加购/面板图片行为；空Instruments trace不作为零hitch。
+- **新增工具**：`scripts/check-ui-motion-device.mjs` 只做前置连接检查；origin/设备经环境注入，不输出设备/session标识，只清理自建会话，永远输出motionAccepted=false。专项TDD先RED后GREEN、6/6与独立代码复核通过。最后可选live预检返回web-inspector-disabled，失败结果如实存入connection-check.json；它不替代已经完成的普通Safari证据，已停止本次driver，不再要求用户反复改设置。
+- **本次检查**：`TURBO_FORCE=true mise exec node@24.20.0 -- corepack pnpm check` exit0，typecheck/test各51/51 Turbo tasks、build34/34，均0 cached；真实本地PostgreSQL 9 migrations/108 tables/可靠事件、TLS S3-compatible、format/lint/合同/架构/导出通过。设备/静态motion/browser-runner组合58/58，secret scan与git diff --check通过；两份录像完整解码及样本断言通过。本轮不重跑fresh clone、远端CI、dependency audit或发布。
+- **独立终审**：只读复核对normal、actual reduce与trusted input均ACCEPT；解码/hash/范围说明完成，P2-05最低真机门禁关闭。P2-06只更新为READY；正式品牌与指定视口/语言人工批准均未代签，Phase3保持LOCKED。
+
+### P2-05 续作 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | 新脚本仅检查真机连接前置条件 |
+| 2 | PASS | capabilities、响应判定与CLI会话生命周期分别处理 |
+| 3 | PASS | 外层工具调用本地WebDriver，不反向依赖业务模块 |
+| 4 | PASS | 全仓无环，未新增包依赖 |
+| 5 | PASS | 输入严格校验；JSON输出schemaVersion1；连接与动作验收分开 |
+| 6 | PASS | 输入输出可序列化；设备/session标识不进入证据 |
+| 7 | PASS | driver origin/设备经环境注入，无硬编码业务配置 |
+| 8 | PASS | 仅用Node内建功能，无新增依赖 |
+| 9 | PASS | 预检工具可独立替换，不影响UI、领域或支付 |
+| 10 | PASS | 58项回归、整仓0-cache check、真机normal/reduce/可信触摸、录像解码与独立复核通过 |
+
 **本次执行登记**：
 
 - Owner：Codex `/root`
@@ -257,7 +291,7 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 - 风险映射：`R-07` 以严格时长、合成属性、无布局动画、输入方式降级、reduced-motion、浏览器性能探针与独立复核控制；真实设备掉帧时优先删减动效。
 - 并发/所有权：P2-05 是唯一 Lane B executor；Codex `/root` 对 `packages/ui` motion API/样式/测试、Storefront 内部样板、静态/browser gate 及最终状态负责。子代理只做只读架构审计、测试矩阵或独立复核，不形成第二 Lane executor。
 
-### P2-05 实现与验证结果（2026-09-05）
+### P2-05 原实现与验证结果（2026-09-05，本次真机续作前）
 
 - **源码产物**：`@fan-support/ui/motion` 保持 server-compatible，只导出 `HeroEntrance`、`SuccessReveal`；`@fan-support/ui/motion-client` 以独立 `use client` 边界导出 `IdolSwitcher`、`AddToCartConfirmation`；`./motion.css` 为唯一显式样式入口。Storefront 新增七公开 locale + `en-XA` 的 internal/noindex motion fixture、本地虚构人物素材与受控 replay/error 状态，没有新增公开业务路由或支付权威。
 - **主海报与成功终态**：Hero 使用一次性 `opacity + transform` 进入，总时长 720 ms，不延迟首个 CTA；Success 只在调用方明确传入 `confirmed` 时运行 720 ms，结束后无残留 animation。两者不推导订单或支付状态。
@@ -270,10 +304,10 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 - **Focused 与整仓门禁**：UI `17 files / 94 tests`、Storefront `16 / 113`、motion runner `40/40`、motion checker `12/12`、design/font checker `24/24` 全绿。当前工作树 `TURBO_FORCE=true pnpm check` exit 0：workspace 4 apps/30 packages/34 units 无环、合同/领域/adapter/runtime/observability、真实 PostgreSQL 9 migrations/108 tables/可靠事件、TLS S3-compatible、Prettier/ESLint 全绿，typecheck `51/51`、test `51/51`、build `34/34` 且 0 cached。
 - **Fresh clone 与供应链**：全新 clone 使用 Node `24.20.0`、pnpm `11.25.0` 完成 offline frozen install，复用 `433/433`、下载 0；随后完整 0-cache check 与 secret scan 再次通过。当前工作树 secret scan exit 0，npm 官方 registry `pnpm audit --audit-level=high` 返回 `No known vulnerabilities found`。
 - **独立复核**：产品实现、证据 runner、字体 runtime gate 与 code-simplifier 收尾均得到独立 `ACCEPT`；对抗复核拦截并修复了 CSS parser 绕过、证据 schema 缺项、崩溃/锁恢复、offscreen focus scroll 与 transform 后 rect 误判，最新结论无剩余 P1/P2。
-- **真实设备门禁**：`adb` 与 `idevice_id` 不可用，`xcrun xctrace list devices` 只列本机和模拟器，`system_profiler SPUSBDataType -json` 为空；因此没有伪造真机录屏/帧率。P2-05 按最低验收保持 `REVIEW`，唯一解除条件是在可识别的物理移动设备上完成主海报、偶像切换、加购/成功和 reduced-motion 录屏/帧率复核；不通过则先删减动效。
+- **上轮真实设备门禁检查（本次连接前）**：`adb` 与 `idevice_id` 不可用，`xcrun xctrace list devices` 只列本机和模拟器，`system_profiler SPUSBDataType -json` 为空；因此没有伪造真机录屏/帧率。P2-05 按最低验收保持 `REVIEW`，唯一解除条件是在可识别的物理移动设备上完成主海报、偶像切换、加购/成功和 reduced-motion 录屏/帧率复核；不通过则先删减动效。
 - **范围边界**：按用户要求，部署、AWS/Akamai、云资源、staging、production 与运维全部暂缓，且不构成本次产品代码阻断；本地 preview/staging/production gate 仅验证 internal route 开关。P2-06 不会在 P2-05 `DONE` 前领取，Phase 3 继续锁定。
 
-### P2-05 S.U.P.E.R 检查
+### P2-05 原实现 S.U.P.E.R 检查（历史状态，当前结果见续作表）
 
 | # | 结果 | 证据 |
 |:--|:--|:--|
@@ -287,3 +321,93 @@ Phase 0 已于 2026-09-03 通过退出门禁，Phase 1 已于 2026-09-04 关闭�
 | 8 | PASS | 未新增重型 motion 依赖；本地 PostCSS adapter 显式锁入 manifest/lockfile，offline frozen install、secret 与官方 high audit 全绿 |
 | 9 | PASS | CSS motion、React client controller、server wrapper、Storefront adapter、媒体 readiness 和字体构建 adapter 均可在边界内替换 |
 | 10 | REVIEW | focused、8 场景/22 图片/3 axe、本地与 fresh-clone 全量门禁、供应链和独立复核已通过；真实物理移动设备录屏/帧率尚未取得，故任务不标 `DONE` |
+
+
+## P2-06 执行卡
+
+- Owner：Codex `/root`（Lane B 唯一 executor）
+- 开始：`2026-09-05T05:32:05+08:00`
+- 输入：P2-04 组合组件、P2-05 桌面与真机动效证据；两项依赖均 DONE，Phase 2 ACTIVE。
+- 范围：复用当前内部样板，补齐 390×844 与 1440×900 的七语言视觉评审包和 axe 原始结果；从代码固定图片裁切、组件状态、动效、多脚本排版约束；列明正式品牌/字体/摄影决定与批准边界。
+- 验证计划：核对 P2-04/P2-05 当前源码 fingerprint；真实 Chrome 双视口七语言截图、axe、布局/图片/字体检查；复用已通过的六视口、键盘、200% zoom、伪语言与真机证据；检查评审包链接、证据 hash、文档格式与独立只读复核。若发现产品问题，先失败测试后修复并重跑受影响门禁。
+- 产物计划：`output/playwright/p2-06/`、`docs/decisions/008-phase-2-visual-baseline.md`。
+- 风险：R-07 动效与设备范围、R-12 资产授权、R-17 多脚本与语言/市场分离。
+- 决策边界：用户本轮“继续下一步”授权准备与验证评审材料，不等于批准未展示的视觉基线或未提供的正式品牌资产。Phase 3 在所需批准完成前保持 LOCKED；AWS/Akamai、云部署和运维继续暂缓。
+
+### P2-06 技术交付与 REVIEW（2026-09-05T05:45:45+08:00）
+
+- **可审阅产物**：`output/playwright/p2-06/index.html`（本地 `http://10.10.0.182:43107/`），可切换七语言与手机/桌面尺寸，查看海报、catalog、购物车和动效；`docs/decisions/008-phase-2-visual-baseline.md` 为 Proposed 候选基线，人工批准字段未填写。
+- **浏览器矩阵**：7 locales × 390×844/1440×900 × components/motion，共28 cases、58 PNG；28份原始axe的critical/serious为0，14个motion页仍有heading-order moderate，未隐藏。内容lang/noindex、字体/图片加载、横向溢出、文本裁切及键盘真实React状态检查通过。两份画廊视口检查另验证14种切换、键盘、reduce、axe及静态服务边界。
+- **先失败后修正**：真实Chrome发现中文/日文/泰文motion说明标签继承1.44px字距与uppercase，`typography-before.json`断言exit1；仅将`ui-motion-specimen.module.css`的展示样式限制到en/es/pt，重建后所有相应浏览器断言通过。Storefront16个测试文件/113tests通过。未更改业务组件、控制器、合同或数据库。
+- **证据刷新与连续性**：完整`node scripts/verify-ui-motion-browser.mjs` exit0，8场景/22PNG/3axe及本地环境开关通过，新指纹`c2feb3e385e479430411fd3e418f682a63ddbe1a71aae5ad8956e143320b197b`。从HEAD的原P2-05证据逐文件核对292个输入，仅上述标签CSS变化、291项相同；真机原记录仍绑定旧指纹，只复用于未变的动效机制，不回写为本轮手机验收。P2-04指纹仍匹配。
+- **全仓门禁**：`mise exec node@24.20.0 -- corepack pnpm check` exit0，真实本地PG9迁移/108表与S3-compatible集成、format/lint、合同/架构、typecheck/test各51/51 Turbo tasks、build34/34通过；本轮分别50/50/33项缓存命中，不宣称0-cache。首次检查发现证据脚本缺浏览器globals声明，补充明确globals后完整重跑通过。secret scan和diff检查见`validation.json`。
+- **独立评审**：`p206_review_audit`核对全部cases、原始axe、PNG字节/hash、源码SHA与continuity；逐张检查36张CJK/Thai/VI/长西葡关键截图及补充motion图，结论ACCEPT FOR HUMAN REVIEW。未代替项目负责人批准视觉、翻译或品牌。
+- **剩余决定**：依照规范§21及Task P2-06，需项目负责人确认双尺寸多脚本样板，并提供/决定品牌名、Logo、正式字体与摄影授权。R-12中内部桌面图片低于正式建议分辨率，明确不算正式摄影交付。仅在这些决定完成或用户明确修改门禁后才可关闭任务；Phase3保持LOCKED，部署/运维继续暂缓。
+- **后续入口**：优先打开评审画廊；反馈后在ADR-008登记批准人、时间、范围与具体版本；如有修改，按受影响组件/locale/视口重新验证。不可将本地样板加购/订单反馈当成已交付的购买闭环。
+
+### P2-06 S.U.P.E.R 检查（技术材料）
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | CSS负责本地化标签，capture负责证据，builder负责评审画廊，ADR负责候选约束 |
+| 2 | PASS | 没有新增产品业务函数；截图与测量边界分开 |
+| 3 | PASS | 原产品依赖方向未改，证据只读取UI与原有runner |
+| 4 | PASS | 全仓workspace/adapter检查通过，无新增生产依赖 |
+| 5 | PASS | 未改变跨模块合同；证据含schemaVersion1与显式字段 |
+| 6 | PASS | 所有证据为JSON、PNG或文档；无事件/DOM对象越出浏览器采样 |
+| 7 | PASS | 本地预览origin经环境传入；尺寸/语言为验收矩阵与合同；无新增正式品牌/域名/密钥 |
+| 8 | PASS | 使用已有Playwright/axe与Python标准库，无新增依赖 |
+| 9 | PASS | 评审工具和文档可独立替换，不影响产品模块 |
+| 10 | PASS | 失败复现后修正、113tests、浏览器矩阵与全仓check通过；人工批准单独保持REVIEW |
+
+
+### P2-06 视觉改进续作（2026-09-05T06:15:48+08:00）
+
+- Owner：Codex `/root`，Lane B；用户明确反馈认可黑金气质，要求参考research竞品，适配多场景/多颜色艺人照片与礼物。重新打开本任务，不领取Phase3。
+- 已看参考：Vivid桌面首页、商品密度、目录、城堡详情与移动目录；MXCheer首页、商品列表、详情及移动截图。借鉴完整场景礼物图、人物情感入口与双列移动目录；不复制竞品图片/文案、榜单/社区/外部商城等已删除范围。
+- 视觉命题：中性深炭画廊承接原色影像，暖白商品底提供留白，香槟金只强调动作与选择；通过构图与间距维持高级感。
+- 内容计划：完整首页式内部样板，稳定文字区+独立照片区的Hero，艺人选择，六种色彩/场景礼物陈列，礼物详情/演示加购与反馈。保留前版评审包和既有组件/动效证据。
+- 交互计划：复用现有Dialog/Drawer/Media/Price/Button；艺人选择更新上下文，类别筛选、礼物详情与演示购物车可操作；不提交真实订单或支付。沿用受控进入/hover与reduce等价状态，无自动轮播。
+- 范围：新增preview-only brand样板、独立样板样式/数据和原创内部素材，不替换正式品牌、不改数据库/支付、不启动云部署。
+- 验证计划：合同/失败测试先行；390×844与1440×900、多脚本及长西葡语/伪语言；键盘、错误/空状态、reduce、axe、图片与操作实测；受影响测试、format/lint/typecheck/build及原证据指纹核对。独立审阅后重新提交REVIEW。
+
+- 浏览器失败后的必要范围补充：桌面冷载图像在 hydration 前失败，原生 Hero 与基础 Media 未读取已完成的失败状态；原始失败记录见 `p2-06-brand` 首轮矩阵。复用现有组合媒体挂载检查模式，小范围修正 `packages/ui/src/media.tsx`，补齐 native Hero ref 检查；刷新受影响原语/组合/动效证据，不将新版本冒充为上一轮手机验证。
+
+
+### P2-06 V2 技术交付与 REVIEW（2026-09-05T07:07:18+08:00）
+
+- **最终方向**：参考 research 完整场景礼物与移动目录，中性炭黑/暖白/香槟金框架承接自然日光人像、粉紫/冰蓝/暗蓝琥珀幻想图和红色鲜花/暖橙食物；原创七张 WebP，人物4:5、礼物1:1、桌面三列/手机双列。来源与实际分辨率见 `apps/storefront/public/ui-brand/README.md`。
+- **实现**：八个 internal/noindex brand 路由，七语言与伪语言文案，独立纯模型/严格可序列化 fixture query；选艺人、分类、详情、演示加购/数量反馈/移除/空礼袋完整可操作。每条礼物保持原收礼人，语言切换不改变金额、币种与数量。没有新增公开业务路由、订单、支付、数据库或生产依赖。
+- **根因修复**：模型先红后绿；冷载图像在 hydration 前失败时补读原生 Hero 与基础 Media 的完成状态；旧截图 helper 采用原子查询/scroll 防 React 移除竞态；中文按语义断行，长标题balance，独立数量公告；桌面详情方图以真实失败矩形证明后修正完整场景显示。静态令牌与 locale owner 门禁按现有模式修正，未放宽检查。
+- **新证据**：`output/playwright/p2-06-brand/`，24/24 cases、86 PNG、26 axe serious/critical0；22条moderate为内部说明的region建议，未隐藏。七语言双视口、320伪语言、768/1024/1920、键盘焦点、筛选、双收礼人、真实locale导航、删除/上限、两档reduce/失败回退通过。最后图片框与图均405²桌面/308²手机，原图完整；每张PNG字节与SHA复核。
+- **全仓与回归**：Storefront119/UI94/helper11tests；原语P2-02、组合P2-04、动效P2-05完整浏览器runner刷新通过。最终`pnpm check` exit0，真实本地PG/S3、format/lint、typecheck/test各51tasks、build34通过，缓存如实记录；三环境×八路由本地门禁、secret scan与diff检查通过。命令/结果/缓存详见`validation.json`与README。
+- **连续性**：当前315输入指纹`aeaea1e5dec8ddafd21124eebbc3473ec608363628e83a2b7824f622a4585747`。首版之后23个新brand文件与原有`packages/ui/src/media.tsx`变化；旧真机录屏保持原fingerprint，不宣称本版新页面或Media恢复逻辑已在手机验收。原P2-06包留作历史，当前候选见ADR-008的V2条目。
+- **独立复核**：代码与code-simplifier只读复核接受；视觉复核累计真实查看竞品/多脚本/移动/桌面/弹层截图，指出并确认修复断行、动画中间帧证据与详情裁切；最终候选可交付。人工品牌批准与正式素材决定未代填，P2-06回到REVIEW、Phase3保持LOCKED；云部署/运维继续按既有要求暂缓。
+
+### P2-06 V2 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | 本地模型、copy、页面装配、样式、素材与证据职责分开；Media只管媒体恢复 |
+| 2 | PASS | state变换是独立纯函数；媒体恢复与页面交互分别局部控制 |
+| 3 | PASS | Route→fixture model/copy→UI/tokens单向，无业务层反向依赖 |
+| 4 | PASS | workspace与adapter全仓门禁通过，无新增环或依赖 |
+| 5 | PASS | TypeScript精确类型、schemaVersion1、严格key/ID/数量输入，canonical locale由contracts导入 |
+| 6 | PASS | locale导航只有可序列化虚构ID/数量，无函数、DOM或私密内容跨边界 |
+| 7 | PASS | 数据/金额/字标明确内部fixture，复用令牌，preview origin通过env传入，无正式域名/密钥 |
+| 8 | PASS | 使用现有React/UI/Playwright/axe/工具，无新增生产依赖 |
+| 9 | PASS | 内部页面/素材独立替换；Media接口保持不变 |
+| 10 | PASS | 失败复现、单位/浏览器/全仓与独立复核通过；人工批准单列REVIEW |
+
+## Phase 3 合同接入后的兼容回归（2026-09-05）
+
+P3-01 增加共享合同和 catalog workspace 依赖，触发原渲染输入指纹过期；在不改变已接受的视觉源码/素材前提下，重新执行两组真实浏览器回归。P2-04：16/16 场景、18 PNG、10 axe，fingerprint `7baa48a87bd2c7045875d14f294b1da6b859555ea1f10267ceea3968a6e13e46`；P2-05：8/8 场景、22 PNG、3 axe，fingerprint `ad3531c37cea657031d80bd6eba08a8a051770a6c6abed5b8139bd1eb9f2e49b`；均 critical/serious 0。日志与完整 check 见 `output/checks/p3-01-foundation/`。这是共享依赖变化后的本地桌面浏览器回归，不新增或改写 P2-06 的用户视觉批准范围与历史 iPhone 证据。
+
+## Phase 3 真实目录接入后的兼容回归（2026-09-05）
+
+P3-01 检查点 2A 的共享合同/锁文件再次变化，已顺序重跑两组真实浏览器门禁。当前 P2-04 指纹 `bb9bbf36596d218454536a9a93d91b4284a7a209fc9dfd8998aeff15f5119e47`：16 场景/18 PNG/10 axe；当前 P2-05 指纹 `59537ebf5cb42da8c5309ab64c98ae590768fee86c2adf00cdd5a6083d0f1286`：8 场景/22 PNG/3 axe；均 critical/serious 0，最终全仓 check exit 0。当前浏览器文件与日志分别见 `output/playwright/p2-04/`、`output/playwright/p2-05/` 与 `output/checks/p3-01-directory/`。上段为检查点 1 当时的指纹历史；本次仍是桌面浏览器回归，无新的手机、品牌视觉批准或发布结论。
+
+
+## P3-01 媒体处理共享依赖后的浏览器刷新（2026-09-05）
+
+本轮新增图片处理合同和 workspace adapter 后，顺序实际重跑两组浏览器门禁，均 exit 0。P2-04 指纹 `e57299a8ad9d4feaa2ac82840db0b78f36cade9486fa596592ad703d253edb22`：16 场景/18 PNG/10 axe；P2-05 指纹 `5963b4fd468de5b8fcfafd271b8b6a82073894d222fe396d18dbc92cc2183686`：8 场景/22 PNG/3 axe；critical/serious 均 0，双基准视口、键盘、reduced-motion、多语言长文案以及组合组件原生 200% zoom 回归保留。日志见 `output/checks/p3-01-media/p2-04-browser.log`、`p2-05-browser.log`。本轮没有新增前台业务页、真机或视觉审批证据；已批准黑金样板和历史手机材料保持各自原始指纹。

@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-05T05:21:25.592099+00:00",
+  "task": "P3-01",
+  "checkpoint": "2A",
+  "checkpointResult": "PASS",
+  "taskStatus": "IN_PROGRESS",
+  "sourceFingerprint": "b96c2a50a715bac41b218724653a243716504e09e8dd3d08d2197208389e1dc8",
+  "sourceVerification": {
+    "fileCount": 56,
+    "matchingFiles": 56,
+    "headMatches": true,
+    "aggregateMatches": true
+  },
+  "commands": [
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/contracts --filter @fan-support/catalog --filter @fan-support/persistence-port --filter @fan-support/content --filter @fan-support/application --filter @fan-support/persistence-postgres --filter @fan-support/api test",
+      "exitCode": 0,
+      "log": "targeted-tests-final.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/persistence-postgres test:postgres:catalog",
+      "exitCode": 0,
+      "log": "postgres-catalog.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/api test:postgres:catalog",
+      "exitCode": 0,
+      "log": "check.log",
+      "note": "Also included in full check through root test:postgres"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- node scripts/verify-ui-composites-browser.mjs",
+      "exitCode": 0,
+      "log": "composites-browser.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- node scripts/verify-ui-motion-browser.mjs",
+      "exitCode": 0,
+      "log": "motion-browser.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm check",
+      "exitCode": 0,
+      "log": "check.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm security:secrets",
+      "exitCode": 0,
+      "log": "secrets.log"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "log": "diff-check.log"
+    }
+  ],
+  "affectedTests": {
+    "contracts": 181,
+    "catalog": 12,
+    "persistence-port": 4,
+    "content": 84,
+    "application": 63,
+    "persistence-postgres": 255,
+    "api": 32,
+    "total": 631
+  },
+  "integration": {
+    "postgres": {
+      "artists": 120,
+      "gifts": 120,
+      "locales": 7,
+      "assertions": 287,
+      "normalTriggers": true
+    },
+    "http": {
+      "artists": 120,
+      "gifts": 120,
+      "locales": 7,
+      "requests": 31,
+      "assertions": 193,
+      "realNetworkTransport": true,
+      "actualDatabaseFailureAndRecovery": true,
+      "sessionsAfterClose": 0
+    },
+    "migrationRoundTrip": {
+      "migrations": 11,
+      "tables": 109,
+      "result": "PASS"
+    },
+    "existingPostgresAndS3Regression": "PASS"
+  },
+  "turbo": {
+    "typecheck": {
+      "successful": 53,
+      "total": 53,
+      "cached": 23
+    },
+    "test": {
+      "successful": 53,
+      "total": 53,
+      "cached": 25
+    },
+    "build": {
+      "successful": 34,
+      "total": 34,
+      "cached": 26
+    }
+  },
+  "compatibilityArtifact": "compatibility-and-progress.json",
+  "independentReview": {
+    "reviewer": "Codex /root/directory_hydration",
+    "result": "ACCEPT",
+    "scope": "Final root changes and read-only source hashes, old contracts, current browser fingerprints and recorded counts"
+  },
+  "scopeLimits": [
+    "Media bytes processing remains checkpoint 2B",
+    "Artist aliases and structured localized detail storage/authoring remain pending",
+    "Publication aggregate hash algorithms and atomic authoring/publish/rollback/purge remain pending",
+    "Directory catalog version aggregate performance is not validated for very large catalogs",
+    "Existing browser UI has not been connected to the new directory API",
+    "No new physical device, remote CI, staging, PSP or production release evidence"
+  ],
+  "nextEntry": "docs/plan/p3-01-content-runtime.md checkpoint 2B",
+  "progressVerification": {
+    "total": 49,
+    "DONE": 17,
+    "IN_PROGRESS": 1,
+    "PENDING": 31,
+    "activePhase": 3,
+    "task": "P3-01",
+    "result": "PASS"
+  }
+}

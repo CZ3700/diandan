@@ -1777,11 +1777,14 @@ export async function settleDeferredImages(page) {
     }),
   );
   for (const imageId of imageIds) {
-    const image = page.locator(`[data-p2-04-image-id="${imageId}"]`);
-    if ((await image.count()) === 0) {
-      continue;
-    }
-    await image.scrollIntoViewIfNeeded();
+    // A failed image can be replaced by React between separate locator calls.
+    // Resolve and scroll in one DOM turn; the completion check also accepts
+    // the removed image, while each scenario still asserts its visible fallback.
+    await page.evaluate((id) => {
+      document
+        .querySelector(`[data-p2-04-image-id="${id}"]`)
+        ?.scrollIntoView({ behavior: "instant", block: "center" });
+    }, imageId);
     await page.waitForFunction((id) => {
       const element = document.querySelector(`[data-p2-04-image-id="${id}"]`);
       return (

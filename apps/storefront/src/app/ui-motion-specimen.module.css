@@ -61,6 +61,11 @@
   color: var(--idol-accent);
   font-size: var(--type-label-size);
   font-weight: 700;
+}
+
+.eyebrow:lang(en),
+.eyebrow:lang(es),
+.eyebrow:lang(pt) {
   letter-spacing: var(--type-label-tracking);
   text-transform: uppercase;
 }

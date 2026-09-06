@@ -1,0 +1,115 @@
+import { describe, expect, test } from "vitest";
+
+import {
+  buildGiftDirectoryQuery,
+  buildIdolDirectoryQuery,
+} from "./catalog-directory-sql.js";
+
+describe("catalog directory SQL boundaries", () => {
+  test("artist search uses literal substring matching and positional values", () => {
+    const query = buildIdolDirectoryQuery({
+      locale: "th",
+      searchTerm: "'_%\\; drop table idols; --",
+      take: 13,
+      anchorId: null,
+      afterId: null,
+    });
+    expect(query.text).not.toContain("drop table");
+    expect(query.values).toEqual([
+      "th",
+      "'_%\\; drop table idols; --",
+      null,
+      null,
+      13,
+    ]);
+    expect(query.text).toContain("strpos(");
+    expect(query.text).not.toMatch(/\bILIKE\b/u);
+  });
+
+  test("artist query checks projection lineage and returns a window after deterministic ordering", () => {
+    const query = buildIdolDirectoryQuery({
+      locale: "en",
+      take: 41,
+      searchTerm: null,
+      anchorId: "10000000-0000-4000-8000-000000000001",
+      afterId: null,
+    });
+    expect(query.text).toContain(
+      "projection.source_hash = translation.source_hash",
+    );
+    expect(query.text).toContain("projection.algorithm_version = 1");
+    expect(query.text).toContain("ORDER BY match_rank, display_order, id");
+    expect(query.text).toContain("LIMIT $5");
+  });
+
+  test("artist matching considers every published name and ranks each artist only once", () => {
+    const query = buildIdolDirectoryQuery({
+      locale: "en",
+      searchTerm: "luna",
+      take: 2,
+      anchorId: null,
+      afterId: null,
+    });
+    expect(query.text).toContain("requested_translation.locale = $1");
+    expect(query.text).not.toMatch(/\btranslation\.locale = \$1/u);
+    expect(query.text).toContain("min(CASE");
+    expect(query.text).toContain("GROUP BY id, display_order");
+    expect(query.text).toContain("revision.id = head.idol_revision_id");
+  });
+
+  test("gift query separates eligibility scope, purchasable minimum and pagination", () => {
+    const query = buildGiftDirectoryQuery({
+      locale: "ja",
+      market: "TEST",
+      currency: "USD",
+      idolId: null,
+      category: null,
+      priceMinMinor: 0,
+      priceMaxMinor: 1000,
+      availability: "ALL",
+      sort: "PRICE_DESC",
+      take: 12,
+      offset: 12,
+    });
+    expect(query.values).toEqual([
+      "ja",
+      "TEST",
+      "USD",
+      null,
+      null,
+      0,
+      1000,
+      "ALL",
+      12,
+      12,
+    ]);
+    expect(query.text).toContain("min(price.amount_minor)");
+    expect(query.text).toContain("price_minor DESC NULLS LAST, id ASC");
+    expect(query.text).toContain("transaction_timestamp()");
+    expect(query.text).toContain("price_book_publication_heads");
+    expect(query.text).toContain("balance.on_hand > balance.reserved");
+    expect(query.text).toContain("LIMIT $9 OFFSET $10");
+  });
+
+  test("nontracked variants may omit inventory items but existing paused items remain unavailable", () => {
+    const query = buildGiftDirectoryQuery({
+      locale: "en",
+      market: "TEST",
+      currency: "USD",
+      idolId: null,
+      category: null,
+      priceMinMinor: null,
+      priceMaxMinor: null,
+      availability: "ALL",
+      sort: "RECOMMENDED",
+      take: 12,
+      offset: 0,
+    });
+    expect(query.text).toContain(
+      "LEFT JOIN public.inventory_items item ON item.gift_variant_id = variant.id",
+    );
+    expect(query.text).toContain(
+      "item.id IS NULL OR (item.status = 'ACTIVE' AND item.policy = variant.inventory_policy)",
+    );
+  });
+});

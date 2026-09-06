@@ -668,6 +668,28 @@ function issue(
   return { code, path: [...path] };
 }
 
+export function validateTranslationFieldPair(
+  englishSource: unknown,
+  fields: unknown,
+): TranslationImportValidationIssue[] {
+  const englishSyntax = findIcuSyntaxInvalidPath(englishSource);
+  if (englishSyntax !== undefined)
+    return [
+      issue("ICU_SYNTAX_INVALID", [
+        "context",
+        "englishSource",
+        ...englishSyntax,
+      ]),
+    ];
+  const translatedSyntax = findIcuSyntaxInvalidPath(fields);
+  if (translatedSyntax !== undefined)
+    return [issue("ICU_SYNTAX_INVALID", ["fields", ...translatedSyntax])];
+  const mismatch = findIcuVariableMismatchPath(englishSource, fields);
+  if (mismatch !== undefined)
+    return [issue("ICU_VARIABLE_MISMATCH", ["fields", ...mismatch])];
+  return [];
+}
+
 function invalidReport(
   issues: readonly TranslationImportValidationIssue[],
 ): TranslationImportValidationReport {
@@ -771,35 +793,11 @@ export function validateTranslationImportPackage(
     return invalidReport([issue("CONTENT_HASH_MISMATCH", ["contentHash"])]);
   }
 
-  const englishIcuSyntaxPath = findIcuSyntaxInvalidPath(
-    parsed.data.context.englishSource,
-  );
-  if (englishIcuSyntaxPath !== undefined) {
-    return invalidReport([
-      issue("ICU_SYNTAX_INVALID", [
-        "context",
-        "englishSource",
-        ...englishIcuSyntaxPath,
-      ]),
-    ]);
-  }
-
-  const translatedIcuSyntaxPath = findIcuSyntaxInvalidPath(parsed.data.fields);
-  if (translatedIcuSyntaxPath !== undefined) {
-    return invalidReport([
-      issue("ICU_SYNTAX_INVALID", ["fields", ...translatedIcuSyntaxPath]),
-    ]);
-  }
-
-  const icuMismatchPath = findIcuVariableMismatchPath(
+  const fieldIssues = validateTranslationFieldPair(
     parsed.data.context.englishSource,
     parsed.data.fields,
   );
-  if (icuMismatchPath !== undefined) {
-    return invalidReport([
-      issue("ICU_VARIABLE_MISMATCH", ["fields", ...icuMismatchPath]),
-    ]);
-  }
+  if (fieldIssues.length > 0) return invalidReport(fieldIssues);
 
   return translationImportValidationReportSchema.parse({
     schemaVersion: 1,

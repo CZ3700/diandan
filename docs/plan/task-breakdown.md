@@ -108,12 +108,12 @@ P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字�
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
-| P3-01 | P1-02, P1-04, P1-05, P1-06 | 实现 locale-aware 内容/媒体/发布 API、不可变七语言 revision、preview token、outbox 与按 locale CDN cache purge | API/事务/权限测试；preview no-store；发布 ≤60 秒可见；locale cache 不串线；失败可重试 | R-08, R-11, R-14, R-17 |
-| P3-02 | P2-03, P3-01 | 实现自研 Admin 的首页、偶像、媒体与翻译矩阵/source diff/审核/导入导出/七语言预览/发布/回退 | 草稿不污染已发布内容；缺失/stale/自审发布阻断；媒体状态；键盘/axe；冲突提示 | R-02, R-08, R-12, R-17 |
-| P3-03 | P2-03, P3-01 | 实现自研 Admin 的礼物/variant、七语言内容、适用偶像、价格簿、库存流水和上下架 | 调价 revision；库存原因/审计；缺关键批准译文或无效礼物不能发布；权限测试 | R-06, R-08, R-10, R-17 |
-| P3-04 | P2-06, P3-01 | 实现 `/:locale` storefront shell、导航/语言切换、首页、偶像目录与详情 | 真实 DB/media fixtures；七语言/全状态；切换保持上下文；无硬编码 ID；视觉/性能/axe | R-01, R-07, R-08, R-12, R-17 |
-| P3-05 | P2-04, P3-01, P3-04 | 实现七语言礼物详情、未选偶像流程、政策与加载/空/下架/失败/fallback-noindex 状态 | 不适用/售罄/低库存/预售；关键政策无 fallback 上线；不显示偶像地址；服务端 canonical 数据 | R-01, R-13, R-17 |
-| P3-06 | P3-02, P3-03, P3-04, P3-05 | 完成七语言 i18n、SEO、OG、structured data、locale sitemap/self-canonical/hreflang/x-default、性能与运营计时验收 | `en/zh-CN/th/vi/ja/es/pt`；SEO/cache snapshot；运营 3/5/8 分钟证据；LCP 预算 | R-08, R-12, R-13, R-17 |
+| P3-01 | P1-02, P1-04, P1-05, P1-06 | 实现 locale-aware 内容/媒体/发布 API、不可变七语言 revision、preview token、outbox 与按 locale CDN cache purge；艺人搜索/anchor/cursor、礼物分页/金额筛选排序、原图角色构图与多语详情扩展合同 | API/事务/权限测试；preview no-store；发布 ≤60 秒可见；locale cache 不串线；失败可重试 | R-08, R-11, R-14, R-17 |
+| P3-02 | P2-03, P3-01 | 实现自研 Admin 的首页、偶像、媒体与翻译矩阵/source diff/审核/导入导出/七语言预览/发布/回退 | 艺人别名、横竖原图/焦点裁切/完整展示与双端构图预览；草稿不污染已发布内容；缺失/stale/自审发布阻断；媒体状态；键盘/axe；冲突提示 | R-02, R-08, R-12, R-17 |
+| P3-03 | P2-03, P3-01 | 实现自研 Admin 的礼物/variant、受控图文块与七语言详情编辑、适用偶像、价格簿、库存流水和上下架 | 调价 revision；库存原因/审计；缺关键批准译文或无效礼物不能发布；权限测试 | R-06, R-08, R-10, R-17 |
+| P3-04 | P2-06, P3-01 | 实现 `/:locale` storefront shell、导航/语言切换、首页、偶像目录与详情；连续横滑分批加载、名字搜索/建议/直接定位 | 真实 DB/media fixtures；七语言/全状态；切换保持上下文；无硬编码 ID；视觉/性能/axe | R-01, R-07, R-08, R-12, R-17 |
+| P3-05 | P2-04, P3-01, P3-04 | 实现礼物目录分页/筛选抽屉/价格排序/URL状态恢复、七语言礼物详情、未选偶像流程、政策与加载/空/下架/失败/fallback-noindex 状态 | 不适用/售罄/低库存/预售；关键政策无 fallback 上线；不显示偶像地址；服务端 canonical 数据 | R-01, R-13, R-17 |
+| P3-06 | P3-02, P3-03, P3-04, P3-05 | 完成七语言 i18n、SEO、OG、structured data、locale sitemap/self-canonical/hreflang/x-default、性能与运营计时验收；大样本目录/搜索/分页、IME/键盘/读屏与混合比例照片验收 | `en/zh-CN/th/vi/ja/es/pt`；SEO/cache snapshot；运营 3/5/8 分钟证据；LCP 预算 | R-08, R-12, R-13, R-17 |
 
 ## Phase 4 — 加购、结账与订单（6）
 

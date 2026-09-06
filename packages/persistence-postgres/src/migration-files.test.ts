@@ -700,3 +700,30 @@ describe("PostgreSQL migration manifest", () => {
     expect(catalog.tables?.length).toBeGreaterThan(40);
   });
 });
+
+test("price lifecycle fix targets the public guard and preserves every authoritative source field", async () => {
+  const up = await readWorkspaceFile(
+    "database/migrations/0011_price-generated-lifecycle.up.sql",
+  );
+  const down = await readWorkspaceFile(
+    "database/migrations/0011_price-generated-lifecycle.down.sql",
+  );
+  for (const sql of [up, down])
+    expect(sql).toContain(
+      "CREATE OR REPLACE FUNCTION public.guard_published_price_mutation()",
+    );
+  expect(up).toContain("to_jsonb(NEW) - 'status' - 'valid_during'");
+  for (const field of [
+    "amount_minor",
+    "valid_from",
+    "valid_to",
+    "gift_variant_id",
+    "price_book_id",
+  ])
+    expect(up).not.toContain(`- '${field}'`);
+  expect(up).toContain("published price evidence cannot be deleted");
+  expect(up).toContain("invalid price lifecycle transition");
+  expect(down).toContain(
+    "(to_jsonb(NEW) - 'status') IS DISTINCT FROM (to_jsonb(OLD) - 'status')",
+  );
+});

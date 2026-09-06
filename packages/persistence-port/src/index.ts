@@ -290,3 +290,23 @@ export interface ReliableEventTransactionManager {
 }
 
 export const workspacePackageName = "@fan-support/persistence-port" as const;
+
+export type {
+  CatalogDirectoryRepository,
+  ContentReadRepositories,
+  ContentReadTransactionManager,
+} from "./catalog-directory.js";
+
+export * from "./media-processing.js";
+export * from "./content-drafts.js";
+
+export type {
+  AdminAuthorizationRepository,
+  ContentReviewRepository,
+  ContentPreviewRepository,
+  AdminContentRepositories,
+  AdminContentTransactionManager,
+} from "./admin-content.js";
+
+export * from "./content-authoring.js";
+export * from "./base-content.js";

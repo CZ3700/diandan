@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "taskId": "P3-01",
+  "checkpoint": "3A",
+  "status": "VERIFIED_LOCAL",
+  "capturedAt": "2026-09-05T19:26:56.679Z",
+  "gitHead": "674ef5b4a57a6bb9ada6be5bf63670df9105ced4",
+  "sourceFingerprint": "ec012fd5fe0d76279e2b4da2dd9929b808a331c230a04f1abe9f44abe2cbae55",
+  "sourceFiles": 50,
+  "sourceUnchangedAfterVerification": true,
+  "commandPrefix": "mise exec node@24.20.0 --",
+  "checks": {
+    "affectedTests": {
+      "command": "corepack pnpm --filter @fan-support/contracts --filter @fan-support/application --filter @fan-support/persistence-postgres --filter @fan-support/api test",
+      "exitCode": 0,
+      "contracts": 218,
+      "application": 137,
+      "persistencePostgres": 288,
+      "api": 45,
+      "total": 688,
+      "log": "targeted-tests-clock-final.log"
+    },
+    "compatibility": {
+      "schemaVersion": 1,
+      "previousRoots": 206,
+      "currentRoots": 225,
+      "changedPreviousRoots": [],
+      "newRoots": [
+        "AdminAuthorizationCommand",
+        "AdminAuthorizationResponse",
+        "AdminContentCommand",
+        "AdminContentFailure",
+        "AdminContentRequest",
+        "AdminContentResponse",
+        "AdminMutationResponse",
+        "AdminPrincipal",
+        "AppendContentReviewCommand",
+        "ContentPreviewGrantResponse",
+        "ContentPreviewRequest",
+        "ContentPreviewResponse",
+        "ContentReviewContext",
+        "ContentReviewContextResponse",
+        "ContentReviewReadCommand",
+        "ContentReviewResponse",
+        "IssueContentPreviewCommand",
+        "ReadContentPreviewCommand",
+        "RevokeContentPreviewCommand"
+      ]
+    },
+    "postgres": {
+      "command": "node packages/persistence-postgres/scripts/postgres-admin-content.mjs",
+      "exitCode": 0,
+      "assertions": 108,
+      "log": "causal-review-time-green.log"
+    },
+    "http": {
+      "command": "node apps/api/scripts/postgres-admin-content-http.mjs",
+      "exitCode": 0,
+      "assertions": 434,
+      "requests": 68,
+      "log": "../p3-01-admin-content-http/preview-clock-rollback-green.log"
+    },
+    "reviewStress": {
+      "exitCode": 0,
+      "groups": 100,
+      "localesPerGroup": 7,
+      "commands": 1800,
+      "log": "review-timing-after-causal.log",
+      "probe": "review-timing-probe.txt"
+    },
+    "migrations": {
+      "command": "node packages/persistence-postgres/scripts/postgres-integration.mjs --write-catalog",
+      "exitCode": 0,
+      "migrations": 14,
+      "tables": 124,
+      "log": "catalog-write.log"
+    },
+    "browser": [
+      {
+        "command": "node scripts/verify-ui-composites-browser.mjs",
+        "exitCode": 0,
+        "scenarios": 16,
+        "png": 18,
+        "axeScans": 10,
+        "criticalOrSerious": 0,
+        "log": "browser-composites.log"
+      },
+      {
+        "command": "node scripts/verify-ui-motion-browser.mjs",
+        "exitCode": 0,
+        "scenarios": 8,
+        "png": 22,
+        "axeScans": 3,
+        "criticalOrSerious": 0,
+        "physicalDevice": false,
+        "log": "browser-motion.log"
+      }
+    ],
+    "full": {
+      "command": "corepack pnpm check",
+      "exitCode": 0,
+      "typecheck": {
+        "successful": 56,
+        "total": 56,
+        "cached": 25
+      },
+      "test": {
+        "successful": 56,
+        "total": 56,
+        "cached": 27
+      },
+      "build": {
+        "successful": 35,
+        "total": 35,
+        "cached": 28
+      },
+      "nodePackageExports": 31,
+      "postgresAndTlsS3WorkerAssertions": 423,
+      "log": "check.log",
+      "earlierFailureLog": "check-first.log",
+      "earlierFailureResolution": "Real wall-clock backstep reproduced; causal event times and non-monotonic wall-clock authorization semantics corrected; deterministic SQL clock injection and real stress regressions passed."
+    },
+    "secrets": {
+      "command": "corepack pnpm security:secrets",
+      "exitCode": 0,
+      "log": "secrets.log"
+    },
+    "diff": {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "log": "diff-check.log"
+    },
+    "independentReview": "ACCEPT",
+    "superChecksPassed": 10
+  },
+  "progress": {
+    "phase": 3,
+    "phaseStatus": "ACTIVE",
+    "taskStatus": "IN_PROGRESS",
+    "total": 49,
+    "done": 17,
+    "inProgress": 1,
+    "pending": 31,
+    "next": "Checkpoint 3B base revision authoring/copy; checkpoint 4 validate/publish/rollback/outbox/purge"
+  },
+  "limitations": [
+    "Only existing DRAFT parent revisions and alias/gift detail extensions in this checkpoint",
+    "Explicit TEST composition; no production OIDC/login issuance or admin UI",
+    "Preview data API; mobile/desktop admin preview rendering remains later work",
+    "New extension publication block remains until full evidence chain is implemented",
+    "No new physical-device, remote CI, PSP, cloud, staging or production release evidence"
+  ]
+}

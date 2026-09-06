@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "generatedOn": "2026-09-05",
+  "records": [
+    {
+      "schemaVersion": 1,
+      "status": "generated-and-visually-reviewed",
+      "tool": "built-in image_gen",
+      "assetType": "photorealistic-natural / identity-preserve",
+      "intendedUse": "internal fictional editorial portrait for brand design review; not production artist approval",
+      "generatedBrief": "Same original fictional adult male artist, natural daylight magazine photography, warm ivory and olive architectural studio, cream linen wardrobe. Desktop right-aligned landscape with negative space. Mobile independently recomposed vertical portrait. No text, logo, UI, real artist, or competitor source photo.",
+      "prompts": {
+        "desktop": "Use case: photorealistic-natural.\nAsset type: original editorial photograph for an internal fan gift support storefront visual design study.\nCreate ONE high-end editorial lifestyle photograph, landscape aspect ratio approximately 12:7, target resolution 2400 x 1400 or higher.\nScene: a quiet warm ivory architectural studio with gently textured plaster walls, a tall window out of frame, natural window sunlight, a muted olive-toned plane or curtain in the far background, understated calm surroundings.\nSubject: ONE completely fictional adult male performing artist, age 27, East Asian appearance, distinctive original face that does not resemble any celebrity or public figure. Naturally wavy medium dark brown hair swept softly away from his eyes, clean shaven, expressive dark eyes, subtle individual asymmetry, slender elegant build. Wearing a beautifully tailored cream linen-blend open-collar shirt and relaxed ivory trousers. No jewelry or logos. Relaxed sophisticated gaze toward the camera, candid editorial warmth, believable skin pores.\nComposition: waist-up to upper thigh, seated casually on a low neutral bench, person occupies right half to center-right of frame, leave calm uncluttered architectural negative space on the left. Natural shoulders and hands, with one forearm resting comfortably on his thigh. Fashion magazine photography with restrained art direction, medium-format photographic quality, 50mm perspective, subtle depth of field.\nLighting: authentic late morning window sunlight crossing his shoulder and the plaster wall, softly modeled face, natural skin tones, realistic fabric weave. Natural light, no black-and-gold filter, no artificial metallic warmth, no dramatic theatrical darkness, no excessive orange cast.\nColor: luminous warm ivory, soft natural skin, olive and warm stone shadows, varied true-to-life hues.\nConstraints: one photographic image only, no text, no typography, no logo, no watermark, no UI, no collage, no extra people, no real celebrity likeness. Preserve believable anatomy and realistic photography.",
+        "mobile": "Use case: identity-preserve.\nAsset type: independently art-directed mobile portrait photograph for an internal fan gift support storefront visual design study.\nInput image: the attached landscape photograph is the exact fictional adult artist identity and editorial session reference. Keep this same original fictional man, his facial identity, dark softly wavy hairstyle, skin tone, age around 27, cream linen open-collar shirt and ivory trousers. This is an AI-created fictional person and must not resemble a real celebrity.\nCreate ONE NEW mobile vertical editorial photograph from the same session, aspect ratio 4:5, target 1600 x 2000 or at least 1080 x 1350. This must be a deliberately recomposed portrait, not a literal crop of the landscape photograph.\nScene: warm ivory textured architectural studio with softly sunlit plaster and a muted olive background detail.\nComposition: person centered, head has relaxed generous breathing room, frame from above the head to mid-thigh, seated naturally slightly angled toward the camera, relaxed arm and hand on the thigh with complete believable fingers visible within frame; quietly warm sophisticated gaze into the camera. Calm surrounding negative space suitable for a premium mobile editorial card. Natural relaxed posture.\nPhotography: highest quality natural fashion editorial photography, realistic skin detail and fabric weave, soft late morning window light, restrained medium-format look, no beauty-filter plastic texture. Luminous warm ivory palette with natural skin hues, olive and stone background shadows.\nKeep invariants: same original face and hair identity, same clothing and same daylight studio session. Change only composition and natural seated pose for a vertical frame.\nAvoid: text, branding, logos, UI, collage, multiple people, black-and-gold grading, orange tint, theatrical dark lighting, celebrity resemblance, anatomical mistakes. Output exactly one portrait photo."
+      },
+      "constraints": {
+        "originalFictionalAdult": true,
+        "competitorPortraitsUsed": false,
+        "realCelebrityReferenceUsed": false,
+        "brandApprovalImplied": false,
+        "semanticPostProcessing": false,
+        "formatConversionOnly": "cwebp -q 87 -m 6 -metadata none; native dimensions retained; no crop, retouch, or upscale"
+      },
+      "review": {
+        "desktop": "PASS: original fictional adult subject at right, ivory linen clothing, plaster and olive background, calm left negative space, natural editorial light, no visible text/logos/UI.",
+        "mobile": "PASS: same fictional subject identity and clothing in new vertical seated composition, natural fingers and pose, portrait breathing room, no visible text/logos/UI.",
+        "limitations": [
+          "Built-in generator returned desktop 1641x958 rather than requested 2400x1400 target; retained native image without artificial upscaling.",
+          "Mobile returned 1122x1402, approximately 4:5 and meets minimum 1080x1350.",
+          "These generated images illustrate visual compatibility; real artist photography and usage rights remain a separate project approval."
+        ]
+      },
+      "assets": [
+        {
+          "variant": "desktop",
+          "sourceCopyPath": "output/playwright/.auth/performer-daylight-desktop-original.png",
+          "path": "apps/storefront/public/ui-brand/performer-daylight-desktop.webp",
+          "width": 1641,
+          "height": 958,
+          "sha256": "8f4a8277040f631829cff1d76beab63ab0f4ff0fc88df7aa328faffa2c5c47c1",
+          "bytes": 87088,
+          "sourceSha256": "03af28e0bfa2f81bad01715307eb4d332c85486f561d501cd490229d1454af1d",
+          "sourceBytes": 1830702
+        },
+        {
+          "variant": "mobile",
+          "sourceCopyPath": "output/playwright/.auth/performer-daylight-mobile-original.png",
+          "path": "apps/storefront/public/ui-brand/performer-daylight-mobile.webp",
+          "width": 1122,
+          "height": 1402,
+          "sha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+          "bytes": 103840,
+          "sourceSha256": "2c281a8b50a60518516532c644b458778266702113d34030818d27ad6bd5c4af",
+          "sourceBytes": 1989165
+        }
+      ],
+      "generatedAt": "2026-09-04T22:20:34.276120+00:00"
+    },
+    {
+      "schemaVersion": 1,
+      "generationMode": "built-in image_gen",
+      "purpose": "Internal design exploration only; not approved production product assets",
+      "referenceUse": "Viewed research/sonnystar/08-catalog-desktop.png to understand scene-format products only; not passed to image generation or copied.",
+      "encoding": "WebP quality 88 method 6; original composition and dimensions preserved",
+      "images": [
+        {
+          "filename": "gift-rose-palace.webp",
+          "brief": "粉紫玻璃宫殿与悬浮玫瑰花园的原创场景艺术",
+          "prompt": "Use case: stylized-concept. Asset type: original premium digital gift scene for a global artist-support storefront, internal design sample. Generate one square image, at least 1024 by 1024 pixels. A luminous rose-and-lilac glass palace garden suspended in a dreamy pastel sky. The entire delicate architectural sculpture is visible: an original contemporary pavilion built from layered translucent rose quartz glass arches and faceted crystal terraces, surrounded by a small lush rose garden with blush roses, soft mauve cloud light, pearlescent reflections and a few suspended crystal petals. Elegant refined collectible 3D artwork with physically rendered glass and impeccable material detail. Complete environment and substantial central subject, centered safely with roughly 12 percent margin all around; the architectural silhouette should read at small product-card scale. Medium-wide three-quarter view. Palette is pink, lavender, blush and clear glass, genuine color, subtle illumination, no gold-brown grading. Romantic but restrained, sophisticated gallery art direction, no busy game UI. No text, letters, numbers, logos, brands, copyrighted characters, people, hearts-with-text, watermark, border or interface. An original design, not a recreation of any product reference.",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 397642,
+          "sha256": "6baca198ca3a623b026a641269a1c68847f4eb053b3276e692b7539dbf33ffca",
+          "originalSha256": "a2ef0fd47482c4b81401063a6fe16da4eb59cb837e6e583846281072f3f64031",
+          "inspection": "PASS: original scene, no visible text/logo/character/UI, distinct unfiltered palette, main subject reads clearly"
+        },
+        {
+          "filename": "gift-blue-orbit.webp",
+          "brief": "冰蓝光学玻璃环与悬浮星球、水滴的原创场景艺术",
+          "prompt": "Use case: stylized-concept. Asset type: original premium digital gift scene for an artist-support storefront, internal design sample. Generate one square image at least 1024 by 1024 pixels. A poetic levitating orbital sculpture made of clear icy-blue optical glass: an elegant thick asymmetric circular ring gently tilted around a luminous turquoise planetlike glass sphere, with four beautifully spaced small floating glass water droplets and a delicate small translucent icy moon. Present the complete sculpture inside an atmospheric open blue celestial environment, a deep cobalt-to-pale-cyan sky with subtle star light, distant soft mist and a faint mirror-water horizon. Ultra-refined collectible 3D art, high-end art-glass craftsmanship, smooth flawless surfaces, beautiful realistic refraction and restrained caustic light. A clear striking center silhouette with breathing room, all main sculptural elements fully visible and contained in the center 70 percent of the image. Near-frontal slightly three-quarter composition, complete environment, not an isolated inventory icon. Genuine blue and cyan colors, no warm gold-brown filter. Quiet wonder and elegant precision, not a loud game reward. Absolutely no text, letters, numbers, logos, brand marks, copyrighted characters, people, UI, watermark, frame, or words. Original abstract forms.",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 221608,
+          "sha256": "7a2d7ea94b921544b8628422b44f98e9b9732362e9c8dfeabd281709c933a448",
+          "originalSha256": "b05d663e0e78fe681a6791b6b4b4f1f8996368c3b6826ec4592defc785bfcf1d",
+          "inspection": "PASS: original scene, no visible text/logo/character/UI, distinct unfiltered palette, main subject reads clearly"
+        },
+        {
+          "filename": "gift-golden-hour.webp",
+          "brief": "暗蓝夜空与琥珀太阳、缎面金属雕塑的原创场景艺术",
+          "prompt": "Use case: stylized-concept. Asset type: original premium digital gift artwork for an artist-support storefront, internal design sample. Generate one square image at least 1024 by 1024 pixels. A refined amber celestial sun sculpture suspended in a quiet midnight-blue space: a central softly glowing warm amber glass orb nested within a small number of precise sculptural brushed-gold crescent fins, arranged asymmetrically with beautiful negative space like a contemporary astronomical collectible. A very fine orbital arc and two tiny clear amber satellites subtly suggest the heavens. Full dramatic environment with deep inky navy atmosphere, sparse tiny stars and a low reflective obsidian plinth far beneath the floating sculpture. Physically rendered luxury art object, softly illuminated glass with a nuanced inner light and beautifully crafted satin metal; no gaudy bloom, no explosive rays, no yellow wash. The sun sculpture is central, fully visible, with at least 15 percent breathing room around its full silhouette. Medium-wide three-quarter view, gallery-quality art direction. Restrained warm glow against true deep midnight blue, sophisticated and poetic, credible material detail. No text, letters, numbers, logos, brands, people, copyrighted characters, UI, watermark, border, or game reward frame. Original abstract art design.",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 103916,
+          "sha256": "bb48d0034f01c506b8135d9fb9a8a2f510c201de7b55d4c26b4af0c559866497",
+          "originalSha256": "793e2bd41118ad927799a410bfe4c1587dc9dd5a774d97f9f4a6f810b01c69de",
+          "inspection": "PASS: original scene, no visible text/logo/character/UI, distinct unfiltered palette, main subject reads clearly"
+        }
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "generator": "built-in image_gen",
+      "scope": "Original generated internal design study photography; not approved product fulfillment imagery.",
+      "generationBriefs": [
+        {
+          "path": "apps/storefront/public/ui-brand/gift-ruby-bouquet.webp",
+          "prompt": "Use case: product-mockup.\nAsset type: Original square product photograph for an internal luxury gift-support storefront design study, 1024 by 1024 or higher, single image.\nPrimary request: A full, abundant boutique florist bouquet of deep ruby, cherry red and burgundy roses, some rich dark green leaves, gently wrapped in unbranded ivory paper and tied with a simple cream fabric ribbon. The entire bouquet is visible with at least 10% breathing room from every image edge. Place it on a warm milk-white plaster tabletop against a warm milk-white plaster studio backdrop. The wrapping should be restrained and beautifully folded; the red petals have convincing natural irregularity, soft curls and deep layered detail. Real photographic materials and plausible physical contact shadows.\nStyle/medium: High-end, photorealistic florist product photography; understated editorial taste, authentic flower textures, no illustration, no 3D-render look.\nComposition/framing: Square, eye-level to slightly elevated three-quarter view, bouquet centered, product occupies approximately 70–78% of frame, coherent neutral negative space, no cropped petals or paper.\nLighting/mood: Soft natural side window light, warm neutral white balance, subtle physical shadows, no dramatic black background.\nConstraints: No humans, no hands, no text, no lettering, no brand, no logo, no watermark, no extra props.",
+          "framingEditPrompt": "Use case: precise-object-edit. Edit this original bouquet product photograph only to widen the camera framing / zoom out. Preserve the same ruby rose bouquet, same arrangement, same ivory paper and ribbon, same warm plaster background, realistic texture and soft window lighting. Show the complete object with a clearly visible 12% empty background margin on the left and right, and at least 10% margin above and below; all paper edges and ribbon tails must sit safely inside those margins. The current bouquet is too large in the frame, so make it about 75% of the image width. Keep square 1:1, minimum 1024×1024. No text, logos, extra props or people.",
+          "visualInspection": "Accepted: realistic ruby roses, dark foliage, ivory paper and ribbon, warm plaster background, physically plausible shadows, entire object safely framed with >=10% outer margin, no text/logo.",
+          "asset": {
+            "width": 1024,
+            "height": 1024,
+            "bytes": 68304,
+            "sha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345"
+          },
+          "original": {
+            "width": 1254,
+            "height": 1254,
+            "bytes": 2074188,
+            "sha256": "0bd9b5984097ebb5c46f61af5512f0d35ec1d67e597f45ec19dd474405755b25"
+          }
+        },
+        {
+          "path": "apps/storefront/public/ui-brand/gift-seasonal-table.webp",
+          "prompt": "Use case: photorealistic-natural.\nAsset type: Original square gift product lifestyle photograph for an internal luxury gift-support storefront design study, 1024 by 1024 pixels or higher, single image.\nPrimary request: A refined small gift assortment centered around one elegant peach-orange celebration cake. The cake is delicately frosted in a soft warm peach hue, with a few natural seasonal citrus segments and fresh strawberries as tasteful edible decoration. Beside it, a small simple ivory ceramic plate carries two or three exquisite miniature pastries, with one or two pieces of seasonal citrus and strawberry nearby. No text, no candles, no logo, no branded packaging.\nScene/backdrop: Light oatmeal stone or linen-textured tabletop; simple warm neutral background with clean breathing room. The setting is quiet, real, modest in scale and carefully styled.\nStyle/medium: High-end natural lifestyle food photography, realistic cake frosting and fruit textures, tactile materials, authentic light and color, not illustration and not a CGI render.\nComposition/framing: Square, slightly elevated three-quarter angle. Entire cake and entire side plate visible, uncluttered, group comfortably fits within approximately 75% of the image with at least 10–12% outer breathing room. A small gift combination, not a banquet.\nLighting/mood: Gentle warm window sunlight and soft believable shadows, creamy neutral color balance, premium and welcoming.\nConstraints: No people, no hands, no lettering, no text, no logos, no watermark, no excessive flowers or confetti, no elaborate flashy gift boxes, no cut-off objects.",
+          "visualInspection": "Accepted: warm peach cake, citrus/strawberry decoration, side plate with small pastries, oatmeal fabric tabletop in sunlight, uncluttered complete objects, no text/logo.",
+          "asset": {
+            "width": 1024,
+            "height": 1024,
+            "bytes": 90752,
+            "sha256": "aed6a065eb54b8d5c1bacfea5dd6f85aa6ca4b3d8f0205ed0d69478acbc09523"
+          },
+          "original": {
+            "width": 1254,
+            "height": 1254,
+            "bytes": 2118048,
+            "sha256": "bcab57a2ce2f9fa83cb842c017be9d502d4d4d935fd5eab5e377d92d9c50a160"
+          }
+        }
+      ],
+      "encoding": {
+        "tool": "cwebp",
+        "quality": 86,
+        "method": 6,
+        "resize": [1024, 1024],
+        "semanticEditing": "none during encoding; ruby framing adjustment performed with built-in image_gen"
+      },
+      "createdAt": "2026-09-04T22:20:24.654130+00:00"
+    }
+  ]
+}

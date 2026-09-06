@@ -7,6 +7,7 @@ import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { runInNewContext } from "node:vm";
 
 async function loadRunner() {
   let loaded;
@@ -513,14 +514,11 @@ test("only reports text overflow when layout actually clips it", async () => {
   );
 });
 
-test("settles every deferred image instead of jumping past lazy resources", async () => {
+test("settles deferred images even when React replaces a failed image before scrolling", async () => {
   const { settleDeferredImages } = await loadRunner();
   const calls = [];
   const images = ["p2-04-0", "p2-04-1", "p2-04-2"].map((id) => ({
-    async count() {
-      return 1;
-    },
-    async scrollIntoViewIfNeeded() {
+    scrollIntoView() {
       calls.push(`scroll:${id}`);
     },
   }));
@@ -541,9 +539,22 @@ test("settles every deferred image instead of jumping past lazy resources", asyn
           },
         };
       }
-      const match = /data-p2-04-image-id="(p2-04-\d+)"/u.exec(selector);
-      assert.notEqual(match, null);
-      return images[Number(match[1].slice("p2-04-".length))];
+      assert.fail(`Unexpected locator: ${selector}`);
+    },
+    async evaluate(callback, imageId) {
+      return runInNewContext(`(${callback.toString()})(imageId)`, {
+        imageId,
+        document: {
+          querySelector(selector) {
+            const match = /data-p2-04-image-id="(p2-04-\d+)"/u.exec(selector);
+            assert.notEqual(match, null);
+            // The middle image was replaced by its fallback after enumeration.
+            return match[1] === "p2-04-1"
+              ? null
+              : images[Number(match[1].slice("p2-04-".length))];
+          },
+        },
+      });
     },
     async waitForFunction(_callback, imageId) {
       calls.push(imageId === undefined ? "complete" : `wait:${imageId}`);
@@ -556,7 +567,6 @@ test("settles every deferred image instead of jumping past lazy resources", asyn
     "assign",
     "scroll:p2-04-0",
     "wait:p2-04-0",
-    "scroll:p2-04-1",
     "wait:p2-04-1",
     "scroll:p2-04-2",
     "wait:p2-04-2",

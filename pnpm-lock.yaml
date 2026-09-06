@@ -133,6 +133,9 @@ importers:
         specifier: 7.8.2
         version: 7.8.2
     devDependencies:
+      pg:
+        specifier: 8.23.0
+        version: 8.23.0
       tsx:
         specifier: 4.23.13
         version: 4.23.13
@@ -188,9 +191,21 @@ importers:
       '@fan-support/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@fan-support/media-image':
+        specifier: workspace:*
+        version: link:../../packages/media-image
+      '@fan-support/media-port':
+        specifier: workspace:*
+        version: link:../../packages/media-port
+      '@fan-support/media-s3':
+        specifier: workspace:*
+        version: link:../../packages/media-s3
       '@fan-support/observability':
         specifier: workspace:*
         version: link:../../packages/observability
+      '@fan-support/persistence-port':
+        specifier: workspace:*
+        version: link:../../packages/persistence-port
       '@fan-support/persistence-postgres':
         specifier: workspace:*
         version: link:../../packages/persistence-postgres
@@ -213,24 +228,43 @@ importers:
         specifier: 7.8.2
         version: 7.8.2
     devDependencies:
+      pg:
+        specifier: 8.23.0
+        version: 8.23.0
+      sharp:
+        specifier: 0.35.4
+        version: 0.35.4(@types/node@24.13.3)
       tsx:
         specifier: 4.23.13
         version: 4.23.13
 
   packages/application:
     dependencies:
+      '@fan-support/catalog':
+        specifier: workspace:*
+        version: link:../catalog
+      '@fan-support/content':
+        specifier: workspace:*
+        version: link:../content
       '@fan-support/contracts':
         specifier: workspace:*
         version: link:../contracts
       '@fan-support/key-management-port':
         specifier: workspace:*
         version: link:../key-management-port
+      '@fan-support/media-port':
+        specifier: workspace:*
+        version: link:../media-port
       '@fan-support/payment-port':
         specifier: workspace:*
         version: link:../payment-port
       '@fan-support/persistence-port':
         specifier: workspace:*
         version: link:../persistence-port
+    devDependencies:
+      '@types/node':
+        specifier: 24.13.3
+        version: 24.13.3
 
   packages/cache-purge-cdn:
     dependencies:
@@ -253,7 +287,15 @@ importers:
 
   packages/cart: {}
 
-  packages/catalog: {}
+  packages/catalog:
+    dependencies:
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+    devDependencies:
+      '@types/node':
+        specifier: 24.13.3
+        version: 24.13.3
 
   packages/config:
     dependencies:
@@ -365,6 +407,21 @@ importers:
         specifier: workspace:*
         version: link:../contracts
 
+  packages/media-image:
+    dependencies:
+      '@fan-support/content':
+        specifier: workspace:*
+        version: link:../content
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@fan-support/media-port':
+        specifier: workspace:*
+        version: link:../media-port
+      sharp:
+        specifier: 0.35.4
+        version: 0.35.4(@types/node@24.13.3)
+
   packages/media-port:
     dependencies:
       '@fan-support/contracts':
@@ -467,6 +524,12 @@ importers:
 
   packages/persistence-postgres:
     dependencies:
+      '@fan-support/catalog':
+        specifier: workspace:*
+        version: link:../catalog
+      '@fan-support/content':
+        specifier: workspace:*
+        version: link:../content
       '@fan-support/contracts':
         specifier: workspace:*
         version: link:../contracts
@@ -3632,8 +3695,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@img/colour@1.1.0':
-    optional: true
+  '@img/colour@1.1.0': {}
 
   '@img/sharp-darwin-arm64@0.35.4':
     optionalDependencies:
@@ -5289,7 +5351,6 @@ snapshots:
       '@img/sharp-win32-ia32': 0.35.4
       '@img/sharp-win32-x64': 0.35.4
       '@types/node': 24.13.3
-    optional: true
 
   shebang-command@2.0.0:
     dependencies:

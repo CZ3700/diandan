@@ -2,6 +2,11 @@ import type { StructuredLogger } from "@fan-support/observability";
 
 import { createApiApplication } from "./bootstrap.js";
 import {
+  createCatalogDirectoryComposition,
+  type CatalogDirectoryComposition,
+  type CatalogDirectoryCompositionOptions,
+} from "./catalog-directory-composition.js";
+import {
   createApiReliableEventsComposition,
   type ApiReliableEventsComposition,
   type ApiReliableEventsCompositionOptions,
@@ -18,10 +23,14 @@ export type ProductionApiApplicationOptions = Readonly<{
   factories?: Readonly<{
     createApplication?: ApiApplicationFactory;
     createComposition?: ReliableEventsCompositionFactory;
+    createCatalogComposition?: (
+      environment: Readonly<Record<string, string | undefined>>,
+      options: CatalogDirectoryCompositionOptions,
+    ) => CatalogDirectoryComposition;
   }>;
 }>;
 
-export function createProductionApiApplication(
+export async function createProductionApiApplication(
   environment: Readonly<Record<string, string | undefined>>,
   options: ProductionApiApplicationOptions,
 ): ReturnType<ApiApplicationFactory> {
@@ -32,10 +41,24 @@ export function createProductionApiApplication(
   const composition = createComposition(environment, {
     logger: options.logger,
   });
-
-  return createApplication(environment, {
-    logger: options.logger,
-    paymentWebhookRoute: composition.paymentWebhookRoute,
-    reliableEventsRuntime: composition.reliableEventsRuntime,
-  });
+  const createCatalogComposition =
+    options.factories?.createCatalogComposition ??
+    createCatalogDirectoryComposition;
+  let catalog: CatalogDirectoryComposition | undefined;
+  try {
+    catalog = createCatalogComposition(environment, { logger: options.logger });
+    return await createApplication(environment, {
+      logger: options.logger,
+      paymentWebhookRoute: composition.paymentWebhookRoute,
+      reliableEventsRuntime: composition.reliableEventsRuntime,
+      catalogDirectoryRoute: catalog.catalogDirectoryRoute,
+      catalogDirectoryRuntime: catalog.catalogDirectoryRuntime,
+    });
+  } catch (error) {
+    await Promise.allSettled([
+      Promise.resolve().then(() => composition.reliableEventsRuntime.stop()),
+      Promise.resolve().then(() => catalog?.catalogDirectoryRuntime.stop()),
+    ]);
+    throw error;
+  }
 }

@@ -1,0 +1,24 @@
+{
+  "name": "@fan-support/media-image",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run --config ../../vitest.config.ts --root .",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@fan-support/contracts": "workspace:*",
+    "@fan-support/content": "workspace:*",
+    "@fan-support/media-port": "workspace:*",
+    "sharp": "0.35.4"
+  }
+}

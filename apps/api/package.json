@@ -19,7 +19,11 @@
     "dev": "tsx watch src/main.ts",
     "start": "node dist/main.js",
     "test": "vitest run --config ../../vitest.config.ts --root .",
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json",
+    "test:postgres:catalog": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/postgres-catalog-http.mjs",
+    "test:postgres:admin-content": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/postgres-admin-content-http.mjs",
+    "test:postgres:content-authoring": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/postgres-admin-content-authoring-http.mjs",
+    "test:postgres:base-content": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/base-content-http.mjs"
   },
   "dependencies": {
     "@fan-support/application": "workspace:*",
@@ -35,6 +39,7 @@
     "rxjs": "7.8.2"
   },
   "devDependencies": {
-    "tsx": "4.23.13"
+    "tsx": "4.23.13",
+    "pg": "8.23.0"
   }
 }

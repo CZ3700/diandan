@@ -26,6 +26,7 @@ const packageNames = [
   "persistence-postgres",
   "media-port",
   "media-s3",
+  "media-image",
   "identity-port",
   "identity-oidc",
   "notification-port",

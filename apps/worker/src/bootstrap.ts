@@ -29,35 +29,48 @@ export type WorkerLifecycleResource = Readonly<{
 export type CreateWorkerApplicationOptions = Readonly<{
   logger?: StructuredLogger;
   reliableEventsRuntime?: WorkerLifecycleResource;
+  mediaProcessingRuntime?: WorkerLifecycleResource;
 }>;
 
-function registerReliableEventsLifecycle(
+function registerWorkerLifecycles(
   adapter: FastifyAdapter,
-  runtime: WorkerLifecycleResource | undefined,
+  resources: readonly Readonly<{
+    name: string;
+    runtime: WorkerLifecycleResource | undefined;
+  }>[],
 ): void {
-  if (runtime === undefined) {
-    return;
-  }
+  const runtimes = resources.filter(
+    (
+      resource,
+    ): resource is Readonly<{
+      name: string;
+      runtime: WorkerLifecycleResource;
+    }> => resource.runtime !== undefined,
+  );
   let stopPromise: Promise<void> | undefined;
   const stop = (): Promise<void> => {
-    stopPromise ??= runtime.stop();
+    stopPromise ??= (async () => {
+      const results = await Promise.allSettled(
+        runtimes.map(({ runtime }) =>
+          Promise.resolve().then(() => runtime.stop()),
+        ),
+      );
+      if (results.some((result) => result.status === "rejected"))
+        throw new Error("Worker resources failed to stop");
+    })();
     return stopPromise;
   };
   adapter.getInstance().addHook("onReady", async () => {
-    try {
-      await runtime.start();
-    } catch {
-      await stop().catch(() => undefined);
-      throw new Error("Worker reliable events failed to start");
+    for (const { name, runtime } of runtimes) {
+      try {
+        await runtime.start();
+      } catch {
+        await stop().catch(() => undefined);
+        throw new Error(`Worker ${name} failed to start`);
+      }
     }
   });
-  adapter.getInstance().addHook("onClose", async () => {
-    try {
-      await stop();
-    } catch {
-      throw new Error("Worker reliable events failed to stop");
-    }
-  });
+  adapter.getInstance().addHook("onClose", async () => stop());
 }
 
 export async function createWorkerApplication(
@@ -72,7 +85,10 @@ export async function createWorkerApplication(
     service: "worker",
     logger,
   });
-  registerReliableEventsLifecycle(adapter, options.reliableEventsRuntime);
+  registerWorkerLifecycles(adapter, [
+    { name: "reliable events", runtime: options.reliableEventsRuntime },
+    { name: "media processing", runtime: options.mediaProcessingRuntime },
+  ]);
 
   const application = await NestFactory.create<NestFastifyApplication>(
     AppModule,

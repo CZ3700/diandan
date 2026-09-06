@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-05T07:19:33.629639+00:00",
+  "task": "P3-01",
+  "checkpoint": "2B media processing slice",
+  "checkpointResult": "PASS",
+  "taskStatus": "IN_PROGRESS",
+  "head": "674ef5b4a57a6bb9ada6be5bf63670df9105ced4",
+  "sourceFingerprint": "19276cab1a151fef35498cba2391be6be7721343d3c4380719eb9fb4a73eb9b7",
+  "sourceVerification": {
+    "fileCount": 61,
+    "matchingFiles": 61,
+    "aggregateMatches": true,
+    "headMatches": true
+  },
+  "commands": [
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/contracts --filter @fan-support/content --filter @fan-support/media-port --filter @fan-support/media-image --filter @fan-support/persistence-port --filter @fan-support/persistence-postgres --filter @fan-support/application --filter @fan-support/worker --filter @fan-support/api --filter @fan-support/media-s3 test",
+      "exitCode": 0,
+      "log": "targeted-tests-final.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- node packages/persistence-postgres/scripts/postgres-media-processing.mjs",
+      "exitCode": 0,
+      "log": "postgres-identity-kind-final.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/worker test:media-processing",
+      "exitCode": 0,
+      "log": "worker-integration-final.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- node packages/persistence-postgres/scripts/postgres-integration.mjs --write-catalog",
+      "exitCode": 0,
+      "log": "migration-catalog-final.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- node packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
+      "exitCode": 0,
+      "log": "catalog-regression-green.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- node scripts/verify-ui-composites-browser.mjs",
+      "exitCode": 0,
+      "log": "p2-04-browser.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- node scripts/verify-ui-motion-browser.mjs",
+      "exitCode": 0,
+      "log": "p2-05-browser.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm check",
+      "exitCode": 0,
+      "log": "check.log"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm security:secrets",
+      "exitCode": 0,
+      "log": "secrets.log"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "log": "diff-check.log"
+    }
+  ],
+  "affectedTests": {
+    "packages/contracts": 185,
+    "packages/persistence-port": 4,
+    "packages/media-port": 1,
+    "packages/content": 88,
+    "packages/application": 75,
+    "packages/media-s3": 71,
+    "packages/persistence-postgres": 265,
+    "packages/media-image": 39,
+    "apps/api": 32,
+    "apps/worker": 23,
+    "total": 783
+  },
+  "integration": {
+    "postgresMedia": {
+      "assertions": 136,
+      "realPostgres": true,
+      "normalTriggers": true,
+      "realLeaseExpiry": true,
+      "syntheticOutputMetadata": true
+    },
+    "workerPostgresTlsS3": {
+      "assertions": 423,
+      "realBytes": true,
+      "productionComposition": true,
+      "jobs": 5,
+      "outputsPerJob": 13,
+      "independentlyDownloadedAndDecodedObjects": 52,
+      "standaloneAttempts": [
+        1,
+        2,
+        1,
+        1,
+        2
+      ],
+      "fullCheckAttempts": [
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "actualDatabaseFailureAndRecovery": true,
+      "sameByteSourceMasterIsolation": true,
+      "staleFencing": true,
+      "orderedCompositionStopDrain": true
+    },
+    "migrationRoundTrip": {
+      "migrations": 12,
+      "tables": 112,
+      "result": "PASS"
+    },
+    "catalogRegression": {
+      "artists": 120,
+      "gifts": 120,
+      "locales": 7,
+      "postgresAssertions": 287,
+      "httpRequests": 31,
+      "httpAssertions": 193
+    },
+    "existingPostgresAndS3Regression": "PASS"
+  },
+  "turbo": {
+    "typecheck": {
+      "successful": 56,
+      "total": 56,
+      "cached": 53
+    },
+    "test": {
+      "successful": 56,
+      "total": 56,
+      "cached": 27
+    },
+    "build": {
+      "successful": 35,
+      "total": 35,
+      "cached": 28
+    }
+  },
+  "browserRegression": {
+    "p2-04": {
+      "sourceFingerprint": "e57299a8ad9d4feaa2ac82840db0b78f36cade9486fa596592ad703d253edb22",
+      "sourceFileCount": 210,
+      "result": "passed"
+    },
+    "p2-05": {
+      "sourceFingerprint": "5963b4fd468de5b8fcfafd271b8b6a82073894d222fe396d18dbc92cc2183686",
+      "sourceFileCount": 326,
+      "result": "passed-with-physical-device-gate"
+    }
+  },
+  "compatibilityArtifact": "compatibility-and-progress.json",
+  "independentReview": {
+    "reviewers": [
+      "Codex /root/directory_hydration",
+      "Codex /root/directory_db_audit"
+    ],
+    "result": "ACCEPT",
+    "scope": "Non-author DDL, repositories, Application, contracts, receipt validation, worker lifecycle, source fingerprints and evidence accounting; root verified completed full check separately"
+  },
+  "scopeLimits": [
+    "Already registered private sources only; authenticated ingress, edits and previews remain pending",
+    "Artist aliases and dedicated localized structured detail storage remain pending",
+    "Rights revocation lineage, independent original Hero sources, metadata review and atomic publication/purge remain pending",
+    "Six automatic attempts only; manual retry and unreferenced object cleanup remain pending",
+    "Composition stop drains; real process retains existing 10-second SIGTERM deadline and may require lease recovery",
+    "No new storefront business page, physical device, remote CI, PSP, cloud, staging or production release evidence"
+  ],
+  "nextEntry": "docs/plan/p3-01-content-runtime.md checkpoint 2B-content storage",
+  "progressVerification": {
+    "total": 49,
+    "DONE": 17,
+    "IN_PROGRESS": 1,
+    "PENDING": 31,
+    "activePhase": 3,
+    "task": "P3-01",
+    "result": "PASS"
+  }
+}

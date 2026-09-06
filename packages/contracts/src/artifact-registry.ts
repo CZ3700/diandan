@@ -1,4 +1,114 @@
+import {
+  baseContentReviewContextSchema,
+  baseContentReviewReadCommandSchema,
+  baseContentReviewResponseSchema,
+  appendBaseContentReviewCommandSchema,
+  baseContentPreviewResponseSchema,
+  issueBaseContentPreviewCommandSchema,
+  readBaseContentPreviewCommandSchema,
+  revokeBaseContentPreviewCommandSchema,
+  baseContentPreviewGrantResponseSchema,
+  baseContentPreviewRequestSchema,
+  baseContentCommandSchema,
+  baseContentRequestSchema,
+  baseContentResponseSchema,
+} from "./base-content.js";
+import {
+  contentAuthoringCommandSchema,
+  contentAuthoringSnapshotSchema,
+  contentAuthoringPlanSchema,
+  contentAuthoringReadCommandSchema,
+  contentAuthoringWriteCommandSchema,
+  contentAuthoringReadResponseSchema,
+  contentAuthoringResponseSchema,
+  contentAuthoringRequestSchema,
+} from "./content-authoring.js";
+import { contentReviewResponseSchema } from "./admin-content.js";
+import { contentReviewReadCommandSchema } from "./admin-content.js";
+import {
+  adminContentFailureSchema,
+  adminAuthorizationCommandSchema,
+  adminPrincipalSchema,
+  adminAuthorizationResponseSchema,
+  contentReviewContextSchema,
+  contentReviewContextResponseSchema,
+  appendContentReviewCommandSchema,
+  adminMutationResponseSchema,
+  issueContentPreviewCommandSchema,
+  contentPreviewGrantResponseSchema,
+  readContentPreviewCommandSchema,
+  revokeContentPreviewCommandSchema,
+  contentPreviewRequestSchema,
+  contentPreviewResponseSchema,
+  adminContentCommandSchema,
+  adminContentRequestSchema,
+  adminContentResponseSchema,
+} from "./admin-content.js";
+import {
+  idolAliasSetSchema,
+  createIdolAliasDraftCommandSchema,
+  createGiftDetailDraftCommandSchema,
+  contentDraftReadCommandSchema,
+  contentDraftFailureSchema,
+  idolAliasDraftResponseSchema,
+  giftDetailDraftResponseSchema,
+  contentDraftResponseSchema,
+} from "./content-drafts.js";
+import {
+  mediaImageProcessingCommandSchema,
+  mediaImageProcessingSuccessSchema,
+  mediaImageProcessingResultSchema,
+  mediaProcessingEnqueueCommandSchema,
+  mediaProcessingReadCommandSchema,
+  mediaProcessingClaimCommandSchema,
+  mediaProcessingClaimSchema,
+  mediaProcessingSnapshotSchema,
+  mediaProcessingRepositoryFailureSchema,
+  mediaProcessingSnapshotResponseSchema,
+  mediaProcessingClaimResponseSchema,
+  mediaProcessingCompleteCommandSchema,
+  mediaProcessingFailCommandSchema,
+  mediaProcessingRunResultSchema,
+} from "./media-processing.js";
+import {
+  idolDirectoryCursorSchema,
+  idolDirectoryReadCommandSchema,
+  giftDirectoryReadCommandSchema,
+  idolDirectoryRecordSchema,
+  giftDirectoryRecordSchema,
+  catalogDirectoryOfferSchema,
+  catalogDirectoryFailureSchema,
+  idolDirectorySnapshotSchema,
+  giftDirectorySnapshotSchema,
+  idolDirectoryResponseSchema,
+  giftDirectoryResponseSchema,
+  idolDirectoryCursorEncodingInputSchema,
+  idolDirectoryCursorDecodingInputSchema,
+} from "./catalog-directory.js";
 import type { z } from "zod";
+
+import {
+  idolDiscoveryQuerySchema,
+  giftDiscoveryQuerySchema,
+  catalogPageInfoSchema,
+  idolDiscoveryPlanSchema,
+  giftDiscoveryPlanSchema,
+  changeGiftDiscoveryQuerySchema,
+  catalogPageRequestSchema,
+  discoveryCacheInputSchema,
+  discoveryCacheKeySchema,
+} from "./catalog-discovery.js";
+import {
+  giftDetailDocumentSchema,
+  giftDetailTranslationSchema,
+  giftDetailValidationInputSchema,
+  giftDetailValidationReportSchema,
+} from "./gift-details.js";
+import {
+  mediaFramingRequestSchema,
+  mediaFramingPlanSchema,
+  mediaFramingResultSchema,
+} from "./media-framing.js";
 
 import {
   cachePurgePortCommandSchema,
@@ -205,6 +315,86 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "DiscoveryCacheInput",
+    audience: "internal",
+    schema: discoveryCacheInputSchema,
+  },
+  {
+    name: "DiscoveryCacheKey",
+    audience: "internal",
+    schema: discoveryCacheKeySchema,
+  },
+  {
+    name: "IdolDiscoveryQuery",
+    audience: "public-http",
+    schema: idolDiscoveryQuerySchema,
+  },
+  {
+    name: "GiftDiscoveryQuery",
+    audience: "public-http",
+    schema: giftDiscoveryQuerySchema,
+  },
+  {
+    name: "CatalogPageInfo",
+    audience: "public-http",
+    schema: catalogPageInfoSchema,
+  },
+  {
+    name: "IdolDiscoveryPlan",
+    audience: "internal",
+    schema: idolDiscoveryPlanSchema,
+  },
+  {
+    name: "GiftDiscoveryPlan",
+    audience: "internal",
+    schema: giftDiscoveryPlanSchema,
+  },
+  {
+    name: "ChangeGiftDiscoveryQuery",
+    audience: "internal",
+    schema: changeGiftDiscoveryQuerySchema,
+  },
+  {
+    name: "CatalogPageRequest",
+    audience: "internal",
+    schema: catalogPageRequestSchema,
+  },
+  {
+    name: "MediaFramingRequest",
+    audience: "internal",
+    schema: mediaFramingRequestSchema,
+  },
+  {
+    name: "MediaFramingPlan",
+    audience: "internal",
+    schema: mediaFramingPlanSchema,
+  },
+  {
+    name: "MediaFramingResult",
+    audience: "internal",
+    schema: mediaFramingResultSchema,
+  },
+  {
+    name: "GiftDetailDocument",
+    audience: "admin-http",
+    schema: giftDetailDocumentSchema,
+  },
+  {
+    name: "GiftDetailTranslation",
+    audience: "admin-http",
+    schema: giftDetailTranslationSchema,
+  },
+  {
+    name: "GiftDetailValidationInput",
+    audience: "internal",
+    schema: giftDetailValidationInputSchema,
+  },
+  {
+    name: "GiftDetailValidationReport",
+    audience: "internal",
+    schema: giftDetailValidationReportSchema,
+  },
   {
     name: "SupportedLocale",
     audience: "public-http",
@@ -917,6 +1107,378 @@ const registrations = [
     schema: publicErrorEnvelopeSchema,
   },
   { name: "EventEnvelope", audience: "internal", schema: eventEnvelopeSchema },
+
+  {
+    name: "IdolDirectoryCursor",
+    audience: "internal",
+    schema: idolDirectoryCursorSchema,
+  },
+  {
+    name: "IdolDirectoryReadCommand",
+    audience: "internal",
+    schema: idolDirectoryReadCommandSchema,
+  },
+  {
+    name: "GiftDirectoryReadCommand",
+    audience: "internal",
+    schema: giftDirectoryReadCommandSchema,
+  },
+  {
+    name: "IdolDirectoryRecord",
+    audience: "internal",
+    schema: idolDirectoryRecordSchema,
+  },
+  {
+    name: "GiftDirectoryRecord",
+    audience: "internal",
+    schema: giftDirectoryRecordSchema,
+  },
+  {
+    name: "CatalogDirectoryOffer",
+    audience: "internal",
+    schema: catalogDirectoryOfferSchema,
+  },
+  {
+    name: "CatalogDirectoryFailure",
+    audience: "internal",
+    schema: catalogDirectoryFailureSchema,
+  },
+  {
+    name: "IdolDirectorySnapshot",
+    audience: "internal",
+    schema: idolDirectorySnapshotSchema,
+  },
+  {
+    name: "GiftDirectorySnapshot",
+    audience: "internal",
+    schema: giftDirectorySnapshotSchema,
+  },
+  {
+    name: "IdolDirectoryResponse",
+    audience: "public-http",
+    schema: idolDirectoryResponseSchema,
+  },
+  {
+    name: "GiftDirectoryResponse",
+    audience: "public-http",
+    schema: giftDirectoryResponseSchema,
+  },
+  {
+    name: "IdolDirectoryCursorEncodingInput",
+    audience: "internal",
+    schema: idolDirectoryCursorEncodingInputSchema,
+  },
+  {
+    name: "IdolDirectoryCursorDecodingInput",
+    audience: "internal",
+    schema: idolDirectoryCursorDecodingInputSchema,
+  },
+  {
+    name: "MediaImageProcessingCommand",
+    audience: "internal",
+    schema: mediaImageProcessingCommandSchema,
+  },
+  {
+    name: "MediaImageProcessingSuccess",
+    audience: "internal",
+    schema: mediaImageProcessingSuccessSchema,
+  },
+  {
+    name: "MediaImageProcessingResult",
+    audience: "internal",
+    schema: mediaImageProcessingResultSchema,
+  },
+  {
+    name: "MediaProcessingEnqueueCommand",
+    audience: "internal",
+    schema: mediaProcessingEnqueueCommandSchema,
+  },
+  {
+    name: "MediaProcessingReadCommand",
+    audience: "internal",
+    schema: mediaProcessingReadCommandSchema,
+  },
+  {
+    name: "MediaProcessingClaimCommand",
+    audience: "internal",
+    schema: mediaProcessingClaimCommandSchema,
+  },
+  {
+    name: "MediaProcessingClaim",
+    audience: "internal",
+    schema: mediaProcessingClaimSchema,
+  },
+  {
+    name: "MediaProcessingSnapshot",
+    audience: "internal",
+    schema: mediaProcessingSnapshotSchema,
+  },
+  {
+    name: "MediaProcessingRepositoryFailure",
+    audience: "internal",
+    schema: mediaProcessingRepositoryFailureSchema,
+  },
+  {
+    name: "MediaProcessingSnapshotResponse",
+    audience: "internal",
+    schema: mediaProcessingSnapshotResponseSchema,
+  },
+  {
+    name: "MediaProcessingClaimResponse",
+    audience: "internal",
+    schema: mediaProcessingClaimResponseSchema,
+  },
+  {
+    name: "MediaProcessingCompleteCommand",
+    audience: "internal",
+    schema: mediaProcessingCompleteCommandSchema,
+  },
+  {
+    name: "MediaProcessingFailCommand",
+    audience: "internal",
+    schema: mediaProcessingFailCommandSchema,
+  },
+  {
+    name: "MediaProcessingRunResult",
+    audience: "internal",
+    schema: mediaProcessingRunResultSchema,
+  },
+  { name: "IdolAliasSet", audience: "internal", schema: idolAliasSetSchema },
+  {
+    name: "CreateIdolAliasDraftCommand",
+    audience: "internal",
+    schema: createIdolAliasDraftCommandSchema,
+  },
+  {
+    name: "CreateGiftDetailDraftCommand",
+    audience: "internal",
+    schema: createGiftDetailDraftCommandSchema,
+  },
+  {
+    name: "ContentDraftReadCommand",
+    audience: "internal",
+    schema: contentDraftReadCommandSchema,
+  },
+  {
+    name: "ContentDraftFailure",
+    audience: "internal",
+    schema: contentDraftFailureSchema,
+  },
+  {
+    name: "IdolAliasDraftResponse",
+    audience: "internal",
+    schema: idolAliasDraftResponseSchema,
+  },
+  {
+    name: "GiftDetailDraftResponse",
+    audience: "internal",
+    schema: giftDetailDraftResponseSchema,
+  },
+  {
+    name: "ContentDraftResponse",
+    audience: "internal",
+    schema: contentDraftResponseSchema,
+  },
+  {
+    name: "AdminContentFailure",
+    audience: "admin-http",
+    schema: adminContentFailureSchema,
+  },
+  {
+    name: "AdminAuthorizationCommand",
+    audience: "internal",
+    schema: adminAuthorizationCommandSchema,
+  },
+  {
+    name: "AdminPrincipal",
+    audience: "internal",
+    schema: adminPrincipalSchema,
+  },
+  {
+    name: "AdminAuthorizationResponse",
+    audience: "internal",
+    schema: adminAuthorizationResponseSchema,
+  },
+  {
+    name: "ContentReviewContext",
+    audience: "internal",
+    schema: contentReviewContextSchema,
+  },
+  {
+    name: "ContentReviewContextResponse",
+    audience: "internal",
+    schema: contentReviewContextResponseSchema,
+  },
+  {
+    name: "AppendContentReviewCommand",
+    audience: "internal",
+    schema: appendContentReviewCommandSchema,
+  },
+  {
+    name: "AdminMutationResponse",
+    audience: "internal",
+    schema: adminMutationResponseSchema,
+  },
+  {
+    name: "IssueContentPreviewCommand",
+    audience: "internal",
+    schema: issueContentPreviewCommandSchema,
+  },
+  {
+    name: "ContentPreviewGrantResponse",
+    audience: "internal",
+    schema: contentPreviewGrantResponseSchema,
+  },
+  {
+    name: "ReadContentPreviewCommand",
+    audience: "internal",
+    schema: readContentPreviewCommandSchema,
+  },
+  {
+    name: "RevokeContentPreviewCommand",
+    audience: "internal",
+    schema: revokeContentPreviewCommandSchema,
+  },
+  {
+    name: "ContentPreviewRequest",
+    audience: "internal",
+    schema: contentPreviewRequestSchema,
+  },
+  {
+    name: "ContentPreviewResponse",
+    audience: "admin-http",
+    schema: contentPreviewResponseSchema,
+  },
+  {
+    name: "AdminContentCommand",
+    audience: "internal",
+    schema: adminContentCommandSchema,
+  },
+  {
+    name: "AdminContentRequest",
+    audience: "internal",
+    schema: adminContentRequestSchema,
+  },
+  {
+    name: "AdminContentResponse",
+    audience: "admin-http",
+    schema: adminContentResponseSchema,
+  },
+  {
+    name: "ContentReviewReadCommand",
+    audience: "internal",
+    schema: contentReviewReadCommandSchema,
+  },
+  {
+    name: "ContentReviewResponse",
+    audience: "admin-http",
+    schema: contentReviewResponseSchema,
+  },
+  {
+    name: "ContentAuthoringCommand",
+    audience: "internal",
+    schema: contentAuthoringCommandSchema,
+  },
+  {
+    name: "ContentAuthoringSnapshot",
+    audience: "internal",
+    schema: contentAuthoringSnapshotSchema,
+  },
+  {
+    name: "ContentAuthoringPlan",
+    audience: "internal",
+    schema: contentAuthoringPlanSchema,
+  },
+  {
+    name: "ContentAuthoringReadCommand",
+    audience: "internal",
+    schema: contentAuthoringReadCommandSchema,
+  },
+  {
+    name: "ContentAuthoringWriteCommand",
+    audience: "internal",
+    schema: contentAuthoringWriteCommandSchema,
+  },
+  {
+    name: "ContentAuthoringReadResponse",
+    audience: "admin-http",
+    schema: contentAuthoringReadResponseSchema,
+  },
+  {
+    name: "ContentAuthoringResponse",
+    audience: "admin-http",
+    schema: contentAuthoringResponseSchema,
+  },
+  {
+    name: "ContentAuthoringRequest",
+    audience: "internal",
+    schema: contentAuthoringRequestSchema,
+  },
+  {
+    name: "BaseContentReviewContext",
+    audience: "internal",
+    schema: baseContentReviewContextSchema,
+  },
+  {
+    name: "BaseContentReviewReadCommand",
+    audience: "internal",
+    schema: baseContentReviewReadCommandSchema,
+  },
+  {
+    name: "BaseContentReviewResponse",
+    audience: "admin-http",
+    schema: baseContentReviewResponseSchema,
+  },
+  {
+    name: "AppendBaseContentReviewCommand",
+    audience: "internal",
+    schema: appendBaseContentReviewCommandSchema,
+  },
+  {
+    name: "BaseContentPreviewResponse",
+    audience: "admin-http",
+    schema: baseContentPreviewResponseSchema,
+  },
+  {
+    name: "IssueBaseContentPreviewCommand",
+    audience: "internal",
+    schema: issueBaseContentPreviewCommandSchema,
+  },
+  {
+    name: "ReadBaseContentPreviewCommand",
+    audience: "internal",
+    schema: readBaseContentPreviewCommandSchema,
+  },
+  {
+    name: "RevokeBaseContentPreviewCommand",
+    audience: "internal",
+    schema: revokeBaseContentPreviewCommandSchema,
+  },
+  {
+    name: "BaseContentPreviewGrantResponse",
+    audience: "internal",
+    schema: baseContentPreviewGrantResponseSchema,
+  },
+  {
+    name: "BaseContentPreviewRequest",
+    audience: "admin-http",
+    schema: baseContentPreviewRequestSchema,
+  },
+  {
+    name: "BaseContentCommand",
+    audience: "internal",
+    schema: baseContentCommandSchema,
+  },
+  {
+    name: "BaseContentRequest",
+    audience: "internal",
+    schema: baseContentRequestSchema,
+  },
+  {
+    name: "BaseContentResponse",
+    audience: "admin-http",
+    schema: baseContentResponseSchema,
+  },
 ] as const;
 
 export const contractArtifactRegistry: readonly ContractRegistration[] =

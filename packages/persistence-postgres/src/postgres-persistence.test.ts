@@ -19,6 +19,105 @@ const validConfig = {
   password: "test-password",
 } as const;
 
+test("base reviews and preview share authorization, idempotency and the serializable lifecycle", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    undefined,
+    () => pool,
+  );
+  expect(persistence).toHaveProperty("baseContentTransactionManager");
+  await expect(
+    persistence.baseContentTransactionManager.runInBaseContentTransaction(
+      async (repositories) => Object.keys(repositories).sort(),
+    ),
+  ).resolves.toEqual([
+    "authorization",
+    "baseContentPreviews",
+    "baseContentReviews",
+    "idempotency",
+  ]);
+  expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL SERIALIZABLE");
+  await persistence.close();
+  await expect(
+    persistence.baseContentTransactionManager.runInBaseContentTransaction(
+      async () => null,
+    ),
+  ).rejects.toMatchObject({ name: "PersistenceTransactionFailureError" });
+});
+
+test("content drafts use a dedicated serializable transaction and respect pool shutdown", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    undefined,
+    () => pool,
+  );
+  expect(persistence.contentDraftTransactionManager).toBeDefined();
+  await expect(
+    persistence.contentDraftTransactionManager.runInContentDraftTransaction(
+      async (repositories) => Object.keys(repositories),
+    ),
+  ).resolves.toEqual(["contentDrafts"]);
+  expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL SERIALIZABLE");
+  await persistence.close();
+  await expect(
+    persistence.contentDraftTransactionManager.runInContentDraftTransaction(
+      async () => null,
+    ),
+  ).rejects.toMatchObject({ name: "PersistenceTransactionFailureError" });
+});
+
+test("admin authorization and content share one serializable transaction and lifecycle", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    undefined,
+    () => pool,
+  );
+  expect(persistence).toHaveProperty("adminContentTransactionManager");
+  await expect(
+    persistence.adminContentTransactionManager.runInAdminContentTransaction(
+      async (repositories) => Object.keys(repositories).sort(),
+    ),
+  ).resolves.toEqual([
+    "authorization",
+    "contentDrafts",
+    "contentPreviews",
+    "contentReviews",
+    "idempotency",
+  ]);
+  expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL SERIALIZABLE");
+  await persistence.close();
+  await expect(
+    persistence.adminContentTransactionManager.runInAdminContentTransaction(
+      async () => null,
+    ),
+  ).rejects.toMatchObject({ name: "PersistenceTransactionFailureError" });
+});
+
+test("content authoring shares authorization and idempotency in a serializable transaction", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    undefined,
+    () => pool,
+  );
+  expect(persistence).toHaveProperty("contentAuthoringTransactionManager");
+  await expect(
+    persistence.contentAuthoringTransactionManager.runInContentAuthoringTransaction(
+      async (repositories) => Object.keys(repositories).sort(),
+    ),
+  ).resolves.toEqual(["authorization", "contentAuthoring", "idempotency"]);
+  expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL SERIALIZABLE");
+  await persistence.close();
+  await expect(
+    persistence.contentAuthoringTransactionManager.runInContentAuthoringTransaction(
+      async () => null,
+    ),
+  ).rejects.toMatchObject({ name: "PersistenceTransactionFailureError" });
+});
+
 function deferred<Result>() {
   let resolve!: (value: Result | PromiseLike<Result>) => void;
   let reject!: (reason?: unknown) => void;
@@ -379,4 +478,81 @@ test("normalizes close failures without leaking the raw pool error", async () =>
   expect(pool.listeners.size).toBe(1);
   expect(() => pool.emitFailure({ code: "08006" })).not.toThrow();
   expect(persistence.close()).toBe(close);
+});
+
+test("isolates catalog reads in a serializable snapshot and closes the boundary with its pool", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    {
+      catalogPublicMediaBaseUrl: "https://media.example.com",
+    },
+    () => pool,
+  );
+  const manager = persistence.contentReadTransactionManager;
+  await expect(
+    manager.runInContentReadTransaction(async (repositories) =>
+      Object.keys(repositories),
+    ),
+  ).resolves.toEqual(["catalogDirectory"]);
+  expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL SERIALIZABLE");
+  await persistence.close();
+  await expect(
+    manager.runInContentReadTransaction(async () => []),
+  ).rejects.toMatchObject({ code: "CONFIGURATION_ERROR" });
+});
+
+test("requires a configured public media origin for the content read boundary", async () => {
+  for (const value of [
+    "http://media.example.com",
+    "https://media.example.com/catalog/",
+    "https://media.example.com?width=20",
+    "https://10.0.0.1",
+  ]) {
+    expect(() =>
+      createPostgresPersistenceWithPoolFactory(
+        validConfig,
+        { catalogPublicMediaBaseUrl: value },
+        () => new TransactionPool(),
+      ),
+    ).toThrow(PersistenceTransactionFailureError);
+  }
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    undefined,
+    () => pool,
+  );
+  try {
+    await expect(
+      persistence.contentReadTransactionManager.runInContentReadTransaction(
+        async () => null,
+      ),
+    ).rejects.toMatchObject({ code: "CONFIGURATION_ERROR" });
+    expect(pool.client.queries).toEqual([]);
+  } finally {
+    await persistence.close();
+  }
+});
+
+test("provides a dedicated short media transaction boundary and refuses work after close", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    undefined,
+    () => pool,
+  );
+  expect(persistence.mediaProcessingTransactionManager).toBeDefined();
+  await expect(
+    persistence.mediaProcessingTransactionManager.runInMediaProcessingTransaction(
+      async (repositories) => Object.keys(repositories),
+    ),
+  ).resolves.toEqual(["mediaProcessing"]);
+  expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL READ COMMITTED");
+  await persistence.close();
+  await expect(
+    persistence.mediaProcessingTransactionManager.runInMediaProcessingTransaction(
+      async () => null,
+    ),
+  ).rejects.toMatchObject({ code: "CONFIGURATION_ERROR" });
 });

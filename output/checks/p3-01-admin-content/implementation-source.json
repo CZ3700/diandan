@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-05T19:18:20.445Z",
+  "gitHead": "674ef5b4a57a6bb9ada6be5bf63670df9105ced4",
+  "scope": "Checkpoint 3A implementation, shared integration inputs and generated artifacts; excludes documentation and evidence to avoid circular hashes. Includes pre-existing content in shared files.",
+  "algorithm": "sha256-path-content-list-v1",
+  "fingerprint": "ec012fd5fe0d76279e2b4da2dd9929b808a331c230a04f1abe9f44abe2cbae55",
+  "files": [
+    {
+      "path": "apps/api/package.json",
+      "sha256": "c702ef0d0ed6d179f0f80fef715fa8ef34d3fc00d10abd2db1696e28314ffba4"
+    },
+    {
+      "path": "apps/api/scripts/postgres-admin-content-http.mjs",
+      "sha256": "4a9cbb0b7a8d00960710ab8f82b0448d3723ac7cdc0e715374006aa340ffc35b"
+    },
+    {
+      "path": "apps/api/src/admin-content-bootstrap.e2e.test.ts",
+      "sha256": "2e3433db29aabdd0c56816ba5a2a820bac5c3d401dd88ef0e5aba263e14001e6"
+    },
+    {
+      "path": "apps/api/src/admin-content-composition.test.ts",
+      "sha256": "c5fdd6d282254221dd2aaab23e726b05bffef9251167fb7445f2fcb3ab496297"
+    },
+    {
+      "path": "apps/api/src/admin-content-composition.ts",
+      "sha256": "949129117326ad9878c16829b38dbacbe028a86373adcfee6662fb5753a5ac87"
+    },
+    {
+      "path": "apps/api/src/admin-content-route.test.ts",
+      "sha256": "d534684a176b41c5475ba021e0b0e15ea2f6c1c8bccb06244cdce92b39daac01"
+    },
+    {
+      "path": "apps/api/src/admin-content-route.ts",
+      "sha256": "f9792f41c85d7e70c623baac4ecbdf2c78fa0da873287f5fb091d5d8c82f0f53"
+    },
+    {
+      "path": "apps/api/src/bootstrap.ts",
+      "sha256": "fcbb5c8b08e10d1b224bc25059f2981a4b28c9738663d3804c7e43f8a2292c24"
+    },
+    {
+      "path": "apps/api/src/index.ts",
+      "sha256": "86c3235a94a3941c0f77f10a000dfb3babd4da60245d4f7375ed21f2e58bc8ab"
+    },
+    {
+      "path": "database/migrations/0014_admin-content.down.sql",
+      "sha256": "9938abcc0f54aa848241b3e5b02fb3bf20f2b627b702a927fdeba824991f73d4"
+    },
+    {
+      "path": "database/migrations/0014_admin-content.up.sql",
+      "sha256": "5e12869db9582994503a12c5b61f17a7d528ff1772a5ced44d9025f4f8721ff5"
+    },
+    {
+      "path": "database/migrations/manifest.json",
+      "sha256": "bbee84d1048bd592bff739ba066b69ba0820f82bbcb551cf2c317c72f8e4755b"
+    },
+    {
+      "path": "database/schema/expected-catalog.json",
+      "sha256": "add969422c8b189d63323cc736241323a80ce9120e60e6bd7f09935494ebb377"
+    },
+    {
+      "path": "package.json",
+      "sha256": "4d29ca20485c8ab35a21a2f371bcf6ba5bb06466bd74cd15fd671656f4ef6a6e"
+    },
+    {
+      "path": "packages/application/package.json",
+      "sha256": "b714523b8a05365cd265a39d5e1d2b6213e635eb75cc8fe435a2568c6e5bab82"
+    },
+    {
+      "path": "packages/application/src/admin-content-idempotency.ts",
+      "sha256": "3ee852d3f29555c2b379a3bafc660fa5023d0243f89712391537d60243207376"
+    },
+    {
+      "path": "packages/application/src/admin-content-results.ts",
+      "sha256": "dd4ea5362fcf985ab83809f71f9435fab2178a9a8443307f335a8c5a6491265a"
+    },
+    {
+      "path": "packages/application/src/admin-content-review-read.ts",
+      "sha256": "5f5fb9f45abb9df04dbdb0cebdd41dd406ee2bbbde1618e58d0e8ac0a07958fe"
+    },
+    {
+      "path": "packages/application/src/admin-content-review-validation.ts",
+      "sha256": "08ef53416d821d13e3e721893589195572a798156edbc158126c55ce2e45ed50"
+    },
+    {
+      "path": "packages/application/src/admin-content-tokens.ts",
+      "sha256": "57e6c4fce23908fdaeb2157bd1c9f27fbf84c04a3e414ad26c2d64ee4015e229"
+    },
+    {
+      "path": "packages/application/src/admin-content.test.ts",
+      "sha256": "ccb9d39f6b2816ac8bb47da4da8d37a788fc7647911b6d0cfe79a14f164bc4c7"
+    },
+    {
+      "path": "packages/application/src/admin-content.ts",
+      "sha256": "81dd18624d7dbfe0eb351b3848c3f7f21458c348f3110a0770213fb561381d4f"
+    },
+    {
+      "path": "packages/application/src/index.ts",
+      "sha256": "0c9809b38d63488bbd122a991dd03b519eb18a916a6c5b4d05b2de175aa179bc"
+    },
+    {
+      "path": "packages/contracts/generated/contracts.schema.json",
+      "sha256": "0abb903efef001614d360a9f4c53e26327b20885021d3ca32b50c082251299b7"
+    },
+    {
+      "path": "packages/contracts/generated/openapi.json",
+      "sha256": "bc1716ba99c2dfc073708a1fa041de56c3afe5ebf5fef6779e70ce6eac44e991"
+    },
+    {
+      "path": "packages/contracts/src/admin-content-openapi.test.ts",
+      "sha256": "b54535ff07f64cde222c6dc40554682aa8668735dcad7a274dfd42aaf008a56e"
+    },
+    {
+      "path": "packages/contracts/src/admin-content-openapi.ts",
+      "sha256": "b1e0187c96c22e7d9ed4b078cb84c31d71f7dc5afff79e2a1d328230d2262785"
+    },
+    {
+      "path": "packages/contracts/src/admin-content.test.ts",
+      "sha256": "91fc7c88023953d1919183845e2c209df6dd963130a99db5d8c70103879009c8"
+    },
+    {
+      "path": "packages/contracts/src/admin-content.ts",
+      "sha256": "ebf133c5a836a04fd20975dca467d22e18a6b63a8fd23eef5612ac544d0b144e"
+    },
+    {
+      "path": "packages/contracts/src/artifact-documents.test.ts",
+      "sha256": "c6b8489addb190115f6ef771e354c99d99921a970b0808b5e09e1864f35054f4"
+    },
+    {
+      "path": "packages/contracts/src/artifact-documents.ts",
+      "sha256": "7613edc44f96d2f8ebc4d9533164f19a41e24dcd05f1b9a921c553c20bf55042"
+    },
+    {
+      "path": "packages/contracts/src/artifact-registry.ts",
+      "sha256": "fdfe5b5d25933f36ffd0c51c2494f03764122b921ae9d415ce1eca0a12115b3f"
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "sha256": "e9cc321a7a761fdcb260ad4fcbe07f8a2090c25738f661c1d71e96d07bd3dfa7"
+    },
+    {
+      "path": "packages/persistence-port/src/admin-content.ts",
+      "sha256": "a7097ff67fd816755a1fca90f8918c46377e188c9f3064d219c8a6ac8e14a34c"
+    },
+    {
+      "path": "packages/persistence-port/src/index.ts",
+      "sha256": "9b6bf93cd4e388dbdcd0f5e37b5ef46907da0aa6c28dee35b581a9fb702a77bb"
+    },
+    {
+      "path": "packages/persistence-postgres/package.json",
+      "sha256": "00b4194fa7c3cdac3bfef2a87a18f03a4eda56d4674c8c18d53b4126a9035885"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/postgres-admin-content-fixtures.mjs",
+      "sha256": "cc558f9ae548c084db209a8818e4346dc32654f80a002bfb355f843e1ad6e74f"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/postgres-admin-content.mjs",
+      "sha256": "c6f3759ae971161dd25f3914cd96aa92b7d345e32fb766cc09b94da4ec02a59a"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
+      "sha256": "fa4b6124dae80cb474f2fecb41c9188f529f079f4a2f379eb2bb8e7209fff71a"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/postgres-content-drafts.mjs",
+      "sha256": "f751062479b372bdec373b0778eb5021348061daff33b8a032b89d899f2a7429"
+    },
+    {
+      "path": "packages/persistence-postgres/src/admin-authorization-repository.test.ts",
+      "sha256": "f787b70c2f0c905593411355f85ff42330bbf7f9877978261b4ef16bb5e4a0a1"
+    },
+    {
+      "path": "packages/persistence-postgres/src/admin-authorization-repository.ts",
+      "sha256": "dc0d33fcba1a5eacff1a309c050b811d610f177588ef27b35426d19b6eacc9cc"
+    },
+    {
+      "path": "packages/persistence-postgres/src/content-preview-repository.test.ts",
+      "sha256": "b7f0a8bbf0296596acbb534a79e658d7fc67bc84140cd5927d0ebe85cfce2ead"
+    },
+    {
+      "path": "packages/persistence-postgres/src/content-preview-repository.ts",
+      "sha256": "28c8dcf04f3a6c0548f692be2cf958406cce54916cae0a336b603379fc0d25b7"
+    },
+    {
+      "path": "packages/persistence-postgres/src/content-review-data.ts",
+      "sha256": "6191fb689d00762e6167be2279ceda15d442be05c9b40e5df5ce50a27b4879a5"
+    },
+    {
+      "path": "packages/persistence-postgres/src/content-review-repository.test.ts",
+      "sha256": "2703ea4708b7891a0a6d79480273484194c7241f498e76267a3a93040f5e32bf"
+    },
+    {
+      "path": "packages/persistence-postgres/src/content-review-repository.ts",
+      "sha256": "9b6d936383fc0c4983fe8d7f0e233397ae2171c929de63ee7854d56957f393a6"
+    },
+    {
+      "path": "packages/persistence-postgres/src/postgres-persistence.test.ts",
+      "sha256": "72cadfc473ca87ba74bd6141a0c10ec1a011223eebc8c47e249a9d54f9fb6e75"
+    },
+    {
+      "path": "packages/persistence-postgres/src/postgres-persistence.ts",
+      "sha256": "41afa4da11b803b153bcaf2e0fd0173836077b9e842ae300bf7ff1d889f9bbe3"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "1071fce5ca4060f4ebbb1732786e2fd8606a65ddd5e4b70495111736f2727678"
+    }
+  ]
+}

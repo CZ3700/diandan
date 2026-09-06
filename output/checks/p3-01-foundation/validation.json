@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-04T23:49:40.347446+00:00",
+  "task": "P3-01",
+  "checkpoint": 1,
+  "checkpointStatus": "VERIFIED",
+  "taskStatus": "IN_PROGRESS",
+  "tests": {
+    "contracts": 176,
+    "catalog": 8,
+    "content": 84,
+    "total": 268
+  },
+  "fullCheckExitCode": 0,
+  "secretScanExitCode": 0,
+  "newContractRoots": 16,
+  "unchangedContractDefinitions": 155,
+  "browser": {
+    "composites": {
+      "scenarios": 16,
+      "screenshots": 18,
+      "axe": 10,
+      "exitCode": 0
+    },
+    "motion": {
+      "scenarios": 8,
+      "screenshots": 22,
+      "axe": 3,
+      "exitCode": 0
+    },
+    "physicalDeviceNewEvidence": false
+  },
+  "superChecksPassed": 10,
+  "notImplemented": [
+    "published directory response and cursor codec",
+    "PostgreSQL content repository and additive migrations",
+    "actual image decode and derivatives",
+    "admin session and RBAC runtime",
+    "preview and atomic publication rollback",
+    "content purge consumer and visibility verification"
+  ],
+  "productionRelease": false
+}

@@ -18,7 +18,36 @@ import {
   computeIdolTranslationContentHash,
   computePolicyTranslationContentHash,
 } from "./hashing.js";
-import { validateTranslationImportPackage } from "./translation-validation.js";
+import {
+  validateTranslationImportPackage,
+  validateTranslationFieldPair,
+} from "./translation-validation.js";
+
+test("standalone field validation checks real English and translated ICU without a fabricated import package", () => {
+  expect(
+    validateTranslationFieldPair(
+      { title: "Hello {name}" },
+      { title: "Hello {other}" },
+    ),
+  ).toEqual([{ code: "ICU_VARIABLE_MISMATCH", path: ["fields", "title"] }]);
+  expect(
+    validateTranslationFieldPair({ title: "Broken {name" }, { title: "Text" }),
+  ).toEqual([
+    { code: "ICU_SYNTAX_INVALID", path: ["context", "englishSource", "title"] },
+  ]);
+  expect(
+    validateTranslationFieldPair(
+      { title: "Hello {name}" },
+      { title: "Hello {name" },
+    ),
+  ).toEqual([{ code: "ICU_SYNTAX_INVALID", path: ["fields", "title"] }]);
+  expect(
+    validateTranslationFieldPair(
+      { title: "Hello {name}" },
+      { title: "こんにちは {name}" },
+    ),
+  ).toEqual([]);
+});
 
 const EDITOR_ID = "34d657b6-93b2-470f-a777-4ce1f98914e0";
 const REVIEWER_ID = "c64367a8-350a-4fa5-b866-17ceeea511e0";

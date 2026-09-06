@@ -1,5 +1,50 @@
 import { expect, test } from "vitest";
 
+test("registers content draft boundaries as internal versioned contracts", async () => {
+  const { contractArtifactRegistry } = await import("./artifact-registry.js");
+  for (const name of [
+    "IdolAliasSet",
+    "CreateIdolAliasDraftCommand",
+    "CreateGiftDetailDraftCommand",
+    "ContentDraftReadCommand",
+    "ContentDraftFailure",
+    "IdolAliasDraftResponse",
+    "GiftDetailDraftResponse",
+    "ContentDraftResponse",
+  ]) {
+    expect(
+      contractArtifactRegistry.find((entry) => entry.name === name),
+      name,
+    ).toMatchObject({ audience: "internal", versionedRoot: true });
+  }
+});
+
+test("registers discovery, framing and localized detail boundaries without pretending HTTP operations exist", async () => {
+  const { contractArtifactRegistry } = await import("./artifact-registry.js");
+  const roots = new Map(
+    contractArtifactRegistry.map((root) => [root.name, root]),
+  );
+  for (const name of [
+    "DiscoveryCacheInput",
+    "DiscoveryCacheKey",
+    "IdolDiscoveryQuery",
+    "GiftDiscoveryQuery",
+    "CatalogPageInfo",
+    "IdolDiscoveryPlan",
+    "GiftDiscoveryPlan",
+    "ChangeGiftDiscoveryQuery",
+    "CatalogPageRequest",
+    "MediaFramingRequest",
+    "MediaFramingPlan",
+    "MediaFramingResult",
+    "GiftDetailDocument",
+    "GiftDetailTranslation",
+    "GiftDetailValidationInput",
+    "GiftDetailValidationReport",
+  ])
+    expect(roots.get(name), name).toMatchObject({ versionedRoot: true });
+});
+
 const domainRuleRootNames = [
   "SelectPaymentRouteInput",
   "PaymentRouteDecision",
@@ -113,5 +158,30 @@ test("registers only the safe webhook receipt as a public HTTP contract", async 
     "PaymentWebhookVerificationCommand",
   ]) {
     expect(registrationsByName.get(internalName)?.audience).toBe("internal");
+  }
+});
+
+test("keeps media processing contracts internal and versioned", async () => {
+  const { contractArtifactRegistry } = await import("./artifact-registry.js");
+  for (const name of [
+    "MediaImageProcessingCommand",
+    "MediaImageProcessingSuccess",
+    "MediaImageProcessingResult",
+    "MediaProcessingEnqueueCommand",
+    "MediaProcessingReadCommand",
+    "MediaProcessingClaimCommand",
+    "MediaProcessingClaim",
+    "MediaProcessingSnapshot",
+    "MediaProcessingRepositoryFailure",
+    "MediaProcessingSnapshotResponse",
+    "MediaProcessingClaimResponse",
+    "MediaProcessingCompleteCommand",
+    "MediaProcessingFailCommand",
+    "MediaProcessingRunResult",
+  ]) {
+    expect(
+      contractArtifactRegistry.find((root) => root.name === name),
+      name,
+    ).toMatchObject({ audience: "internal", versionedRoot: true });
   }
 });

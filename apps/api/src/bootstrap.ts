@@ -1,3 +1,11 @@
+import {
+  registerContentAuthoringRoute,
+  type ContentAuthoringRouteDependencies,
+} from "./admin-content-authoring-route.js";
+import {
+  registerAdminContentRoute,
+  type AdminContentRouteOptions,
+} from "./admin-content-route.js";
 import "reflect-metadata";
 
 import type { NestApplicationOptions } from "@nestjs/common";
@@ -13,6 +21,10 @@ import {
 import { registerFastifyObservability } from "@fan-support/observability/fastify";
 
 import { AppModule } from "./app.module.js";
+import {
+  registerCatalogDirectoryRoute,
+  type CatalogDirectoryRouteOptions,
+} from "./catalog-directory-route.js";
 import {
   registerPaymentWebhookRoute,
   type PaymentWebhookRouteOptions,
@@ -31,14 +43,28 @@ export type ApiLifecycleResource = Readonly<{
 }>;
 
 export type CreateApiApplicationOptions = Readonly<{
+  baseContentRoute?: BaseContentRouteDependencies;
+  baseContentRuntime?: ApiLifecycleResource;
   logger?: StructuredLogger;
   paymentWebhookRoute?: PaymentWebhookRouteOptions;
   reliableEventsRuntime?: ApiLifecycleResource;
+  contentAuthoringRoute?: ContentAuthoringRouteDependencies;
+  contentAuthoringRuntime?: ApiLifecycleResource;
+  adminContentRoute?: AdminContentRouteOptions;
+  adminContentRuntime?: ApiLifecycleResource;
+  catalogDirectoryRoute?: CatalogDirectoryRouteOptions;
+  catalogDirectoryRuntime?: ApiLifecycleResource;
 }>;
 
-function registerReliableEventsLifecycle(
+function registerApiLifecycle(
   adapter: FastifyAdapter,
   runtime: ApiLifecycleResource | undefined,
+  name:
+    | "API reliable events"
+    | "API catalog directory"
+    | "API admin content"
+    | "API content authoring"
+    | "API base content",
 ): void {
   if (runtime === undefined) {
     return;
@@ -53,14 +79,14 @@ function registerReliableEventsLifecycle(
       await runtime.start();
     } catch {
       await stop().catch(() => undefined);
-      throw new Error("API reliable events failed to start");
+      throw new Error(`${name} failed to start`);
     }
   });
   adapter.getInstance().addHook("onClose", async () => {
     try {
       await stop();
     } catch {
-      throw new Error("API reliable events failed to stop");
+      throw new Error(`${name} failed to stop`);
     }
   });
 }
@@ -76,7 +102,42 @@ export async function createApiApplication(
     service: "api",
     logger,
   });
-  registerReliableEventsLifecycle(adapter, options.reliableEventsRuntime);
+  registerApiLifecycle(
+    adapter,
+    options.reliableEventsRuntime,
+    "API reliable events",
+  );
+  registerApiLifecycle(
+    adapter,
+    options.catalogDirectoryRuntime,
+    "API catalog directory",
+  );
+  registerApiLifecycle(
+    adapter,
+    options.adminContentRuntime,
+    "API admin content",
+  );
+  registerApiLifecycle(
+    adapter,
+    options.contentAuthoringRuntime,
+    "API content authoring",
+  );
+  if (options.contentAuthoringRoute !== undefined)
+    registerContentAuthoringRoute(
+      adapter.getInstance(),
+      options.contentAuthoringRoute,
+    );
+  registerApiLifecycle(adapter, options.baseContentRuntime, "API base content");
+  if (options.baseContentRoute !== undefined)
+    registerBaseContentRoute(adapter.getInstance(), options.baseContentRoute);
+  if (options.adminContentRoute !== undefined)
+    registerAdminContentRoute(adapter.getInstance(), options.adminContentRoute);
+  if (options.catalogDirectoryRoute !== undefined) {
+    registerCatalogDirectoryRoute(
+      adapter.getInstance(),
+      options.catalogDirectoryRoute,
+    );
+  }
   if (options.paymentWebhookRoute !== undefined) {
     registerPaymentWebhookRoute(
       adapter.getInstance(),
@@ -92,3 +153,7 @@ export async function createApiApplication(
   application.useGlobalFilters(new SafeHttpExceptionFilter());
   return application;
 }
+import {
+  registerBaseContentRoute,
+  type BaseContentRouteDependencies,
+} from "./base-content-route.js";

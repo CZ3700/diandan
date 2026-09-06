@@ -48,7 +48,7 @@ P0-01 → (P0-02 + P0-03) → P0-04 → P0-05 → [Phase 0 Gate]
 | W7 | P1-05、P2-04 | Lane A/B：adapter/repository 与组合组件分离 |
 | W8 | P1-06、P2-05 | Lane A/B：可靠事件骨架与动效样板分离 |
 | W9 | P2-06 | 完成 Phase 1/2 退出门禁；随后激活 Phase 3 |
-| W10 | P3-01 | locale-aware 内容/媒体/发布 API 与可靠 cache purge |
+| W10 | P3-01 | locale-aware 内容/媒体/发布 API 与可靠 cache purge；按 ADR-009 先冻结目录发现/构图/详情合同，再接 repository、授权、媒体与发布，不并行领取其他 Lane C 任务 |
 | W11 | P3-02、P3-04 | Lane C/B：Admin 翻译/首页/媒体与七语言 Storefront 浏览分离 |
 | W12 | P3-03、P3-05 | Lane C/B：Admin 商城运营与礼物详情分离 |
 | W13 | P3-06 | 完成 Phase 3 退出门禁；随后激活 Phase 4 |
