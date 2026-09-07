@@ -485,6 +485,17 @@ async function verify(clientConfig) {
     const immutableBefore = await observer.query(
       "SELECT jsonb_agg(jsonb_build_array(id,source_hash,translated_from_source_hash,display_name) ORDER BY id) AS translations FROM public.idol_revision_translations",
     );
+    const seoDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0021" },
+    });
+    assert.deepEqual(
+      [seoDown.revertedVersions, seoDown.currentVersion],
+      [["0021"], "0020"],
+      "SEO purge migration rolls back before the existing directory downgrade sequence",
+    );
+    assertions++;
     await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -550,9 +561,9 @@ async function verify(clientConfig) {
       "SELECT count(*)::integer AS count, max(version) AS version FROM public.schema_migrations",
     );
     check(
-      migrationHead.rows[0].count === 20 &&
-        migrationHead.rows[0].version === "0020",
-      "data-bearing up/down/up restores all 20 migrations through gift commerce",
+      migrationHead.rows[0].count === 21 &&
+        migrationHead.rows[0].version === "0021",
+      "data-bearing up/down/up restores all 21 migrations through storefront SEO purge",
     );
     check(
       (await idols()).code === "CATALOG_UNAVAILABLE",

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "verifiedAt": "2026-09-07T19:52:32.036108+00:00",
+  "historicalOutputFiles": 880,
+  "preservedOldOutputFiles": 818,
+  "refreshedP2ExcludedFiles": 62,
+  "restoredFiles": {
+    "output/playwright/p3-04-storefront/http-results.json": {
+      "originalSha256": "137a8b853b54cf207000b3a005f66a0eb50eca5d022ead4ea6f4b1bcd4687470",
+      "revalidatedSha256": "ddff09eb2aaa7d4a3e5c912f98d0074d4dde8461cab79869557789e48c514d16",
+      "revalidatedCopy": "output/checks/p3-06-storefront-acceptance/revalidated-legacy-output/after-check-6/output/playwright/p3-04-storefront/http-results.json"
+    },
+    "output/playwright/p3-05-gift-storefront/seed-protocol-results.json": {
+      "originalSha256": "282fde859c40a98f42561c7d792bb839bc803364712c768453eebfd5627b4be7",
+      "revalidatedSha256": "cfb99820df6f49230842d94ff62f36f8ad3cd06ad863f40bf23a293363f7d4ce",
+      "revalidatedCopy": "output/checks/p3-06-storefront-acceptance/revalidated-legacy-output/after-check-6/output/playwright/p3-05-gift-storefront/seed-protocol-results.json"
+    }
+  },
+  "originalUntrackedFiles": 414,
+  "originalUntrackedBytesUnchanged": true,
+  "originalFilesStillUntracked": true,
+  "sourceFiles": 1540,
+  "sourceSha256": "59ebd051a135110a3cf01b6b22bc5c373f83e41ad2b79a0b07e2dd166fe2a04d",
+  "sourceSetAndBytesUnchanged": true
+}

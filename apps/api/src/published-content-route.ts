@@ -1,3 +1,4 @@
+import { sendRevalidatedPublicJson } from "./public-revalidation-response.js";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import {
   publishedContentFailureSchema,
@@ -22,11 +23,22 @@ const ROUTES = [
   ["/media/:mediaAssetId", "MEDIA_METADATA"],
 ] as const;
 
-function privacy(reply: FastifyReply): void {
+function securityHeaders(reply: FastifyReply): void {
   void reply
-    .header("cache-control", "no-store")
     .header("x-robots-tag", "noindex, nofollow")
     .header("referrer-policy", "no-referrer");
+}
+function privacy(reply: FastifyReply): void {
+  securityHeaders(reply);
+  void reply
+    .header(
+      "cache-control",
+      reply.request.headers.cookie !== undefined ||
+        reply.request.headers.authorization !== undefined
+        ? "private, no-store"
+        : "no-store",
+    )
+    .removeHeader("etag");
 }
 function statusForFailure(code: PublishedContentFailure["code"]): number {
   switch (code) {
@@ -111,7 +123,7 @@ export function registerPublishedContentRoute(
           privacy(reply);
         });
         scope.addHook("onSend", async (_request, reply, payload) => {
-          privacy(reply);
+          securityHeaders(reply);
           return payload;
         });
         scope.setNotFoundHandler((_request, reply) =>
@@ -131,7 +143,10 @@ export function registerPublishedContentRoute(
               return sendFailure(reply, response.code);
             if (!responseMatches(command, response))
               return sendFailure(reply, "CONTENT_UNAVAILABLE");
-            return reply.send(response);
+            return sendRevalidatedPublicJson(request, reply, response, {
+              resource: "published-content",
+              query: command,
+            });
           } catch {
             return sendFailure(reply, "CONTENT_UNAVAILABLE");
           }

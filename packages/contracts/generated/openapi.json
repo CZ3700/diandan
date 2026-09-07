@@ -59870,6 +59870,841 @@
         ],
         "x-fan-support-audience": "public-http"
       },
+      "StorefrontSeoEntity": {
+        "additionalProperties": false,
+        "properties": {
+          "locales": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "lastModified": {
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                  "type": "string"
+                },
+                "locale": {
+                  "enum": [
+                    "en",
+                    "zh-CN",
+                    "th",
+                    "vi",
+                    "ja",
+                    "es",
+                    "pt"
+                  ],
+                  "type": "string"
+                },
+                "translationRevision": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "locale",
+                "translationRevision",
+                "lastModified"
+              ],
+              "type": "object"
+            },
+            "maxItems": 7,
+            "minItems": 1,
+            "type": "array"
+          },
+          "locator": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "HOMEPAGE",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "handle": {
+                    "maxLength": 96,
+                    "minLength": 1,
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "const": "IDOL",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "handle"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "handle": {
+                    "maxLength": 96,
+                    "minLength": 1,
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "const": "GIFT",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "handle"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "POLICY",
+                    "type": "string"
+                  },
+                  "policyKey": {
+                    "maxLength": 64,
+                    "minLength": 1,
+                    "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "policyKey"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "publication": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "manifestHash": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "publishedAt": {
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                "type": "string"
+              },
+              "revisionId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "revisionId",
+              "manifestHash",
+              "publishedAt"
+            ],
+            "type": "object"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "locator",
+          "publication",
+          "locales"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "StorefrontSeoReadCommand": {
+        "oneOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "locator": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "HOMEPAGE",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "handle": {
+                        "maxLength": 96,
+                        "minLength": 1,
+                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "IDOL",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "handle"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "handle": {
+                        "maxLength": 96,
+                        "minLength": 1,
+                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "GIFT",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "handle"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "POLICY",
+                        "type": "string"
+                      },
+                      "policyKey": {
+                        "maxLength": 64,
+                        "minLength": 1,
+                        "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "policyKey"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "operation": {
+                "const": "ENTITY",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "operation",
+              "locator"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "cursor": {
+                "maxLength": 768,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9_-]+$",
+                "type": "string"
+              },
+              "operation": {
+                "const": "INDEX",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "operation"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "cursor": {
+                "maxLength": 768,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9_-]+$",
+                "type": "string"
+              },
+              "operation": {
+                "const": "CATALOG",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "operation"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "public-http"
+      },
+      "StorefrontSeoResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "entity": {
+                "additionalProperties": false,
+                "properties": {
+                  "locales": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "lastModified": {
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                          "type": "string"
+                        },
+                        "locale": {
+                          "enum": [
+                            "en",
+                            "zh-CN",
+                            "th",
+                            "vi",
+                            "ja",
+                            "es",
+                            "pt"
+                          ],
+                          "type": "string"
+                        },
+                        "translationRevision": {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "locale",
+                        "translationRevision",
+                        "lastModified"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 7,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "locator": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "kind": {
+                            "const": "HOMEPAGE",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "handle": {
+                            "maxLength": 96,
+                            "minLength": 1,
+                            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "IDOL",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "handle"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "handle": {
+                            "maxLength": 96,
+                            "minLength": 1,
+                            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "GIFT",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "handle"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "kind": {
+                            "const": "POLICY",
+                            "type": "string"
+                          },
+                          "policyKey": {
+                            "maxLength": 64,
+                            "minLength": 1,
+                            "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "policyKey"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "publication": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "manifestHash": {
+                        "pattern": "^[a-f0-9]{64}$",
+                        "type": "string"
+                      },
+                      "publishedAt": {
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                        "type": "string"
+                      },
+                      "revisionId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "revisionId",
+                      "manifestHash",
+                      "publishedAt"
+                    ],
+                    "type": "object"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "locator",
+                  "publication",
+                  "locales"
+                ],
+                "type": "object"
+              },
+              "kind": {
+                "const": "STOREFRONT_SEO_ENTITY",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "entity"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "catalogVersion": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "items": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "locales": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "lastModified": {
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                            "type": "string"
+                          },
+                          "locale": {
+                            "enum": [
+                              "en",
+                              "zh-CN",
+                              "th",
+                              "vi",
+                              "ja",
+                              "es",
+                              "pt"
+                            ],
+                            "type": "string"
+                          },
+                          "translationRevision": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "locale",
+                          "translationRevision",
+                          "lastModified"
+                        ],
+                        "type": "object"
+                      },
+                      "maxItems": 7,
+                      "minItems": 1,
+                      "type": "array"
+                    },
+                    "locator": {
+                      "oneOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "HOMEPAGE",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "handle": {
+                              "maxLength": 96,
+                              "minLength": 1,
+                              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "IDOL",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "handle"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "handle": {
+                              "maxLength": 96,
+                              "minLength": 1,
+                              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "GIFT",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "handle"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "POLICY",
+                              "type": "string"
+                            },
+                            "policyKey": {
+                              "maxLength": 64,
+                              "minLength": 1,
+                              "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "policyKey"
+                          ],
+                          "type": "object"
+                        }
+                      ]
+                    },
+                    "publication": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        "manifestHash": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "publishedAt": {
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                          "type": "string"
+                        },
+                        "revisionId": {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "revisionId",
+                        "manifestHash",
+                        "publishedAt"
+                      ],
+                      "type": "object"
+                    },
+                    "schemaVersion": {
+                      "const": 1,
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "schemaVersion",
+                    "locator",
+                    "publication",
+                    "locales"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 20,
+                "type": "array"
+              },
+              "kind": {
+                "const": "STOREFRONT_SEO_INDEX",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "pageInfo": {
+                "additionalProperties": false,
+                "properties": {
+                  "endCursor": {
+                    "anyOf": [
+                      {
+                        "maxLength": 768,
+                        "minLength": 1,
+                        "pattern": "^[A-Za-z0-9_-]+$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "hasNextPage": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "hasNextPage",
+                  "endCursor"
+                ],
+                "type": "object"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "catalogVersion",
+              "items",
+              "pageInfo"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "catalogVersion": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "kind": {
+                "const": "STOREFRONT_SEO_CATALOG",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "pageInfo": {
+                "additionalProperties": false,
+                "properties": {
+                  "endCursor": {
+                    "anyOf": [
+                      {
+                        "maxLength": 768,
+                        "minLength": 1,
+                        "pattern": "^[A-Za-z0-9_-]+$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "hasNextPage": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "hasNextPage",
+                  "endCursor"
+                ],
+                "type": "object"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "shards": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "cursor": {
+                      "maxLength": 768,
+                      "minLength": 1,
+                      "pattern": "^[A-Za-z0-9_-]+$",
+                      "type": "string"
+                    },
+                    "itemCount": {
+                      "maximum": 20,
+                      "minimum": 1,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "cursor",
+                    "itemCount"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 50,
+                "type": "array"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "catalogVersion",
+              "shards",
+              "pageInfo"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "INVALID_QUERY",
+                  "INVALID_CURSOR",
+                  "CATALOG_CHANGED",
+                  "NOT_FOUND",
+                  "CONTENT_UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "public-http"
+      },
       "SupportedLocale": {
         "enum": [
           "en",
@@ -94822,9 +95657,18 @@
     },
     "/api/v1/gift-content/{handle}": {
       "get": {
-        "description": "Anonymous no-store projection from the current PostgreSQL publication and exact classification proof. Exactly one explicit supported locale is required; duplicate/unknown query fields or caller-selected revisions are rejected. Classification is bound to the selected publication, including rollback; legacy publications remain explicitly represented. This response does not quote a price or complete a purchase.",
+        "description": "Anonymous revalidated projection from the current PostgreSQL publication and exact classification proof. Exactly one explicit supported locale is required; duplicate/unknown query fields or caller-selected revisions are rejected. Classification is bound to the selected publication, including rollback; legacy publications remain explicitly represented. This response does not quote a price or complete a purchase.",
         "operationId": "readPublishedGiftCommerce",
         "parameters": [
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "handle",
@@ -94866,8 +95710,50 @@
             "description": "Strict authorized commerce result or safe current published gift projection.",
             "headers": {
               "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
                   "type": "string"
                 }
               },
@@ -94896,8 +95782,12 @@
             "description": "Safe typed rejection without credentials, storage keys, internal proof or connection details.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -94926,8 +95816,12 @@
             "description": "Safe typed rejection without credentials, storage keys, internal proof or connection details.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -94956,8 +95850,12 @@
             "description": "Safe typed rejection without credentials, storage keys, internal proof or connection details.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95114,6 +96012,15 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -95128,8 +96035,38 @@
             "description": "Published directory from one database snapshot.",
             "headers": {
               "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous directory after fresh validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
                   "type": "string"
                 }
               }
@@ -95146,8 +96083,12 @@
             "description": "Invalid query or cursor. Correct the request before retrying.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -95164,8 +96105,12 @@
             "description": "The directory is temporarily unavailable. Retry the same query later.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -95178,9 +96123,18 @@
     },
     "/api/v1/gifts/{handle}": {
       "get": {
-        "description": "Anonymous, no-store read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
+        "description": "Anonymous revalidated read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
         "operationId": "readPublishedGift",
         "parameters": [
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "handle",
@@ -95222,8 +96176,50 @@
             "description": "Strict public content or authorized publication result.",
             "headers": {
               "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
                   "type": "string"
                 }
               },
@@ -95252,8 +96248,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95282,8 +96282,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95312,8 +96316,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95338,9 +96346,18 @@
     },
     "/api/v1/homepage": {
       "get": {
-        "description": "Anonymous, no-store read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
+        "description": "Anonymous revalidated read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
         "operationId": "readPublishedHomepage",
         "parameters": [
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "query",
             "name": "locale",
@@ -95371,8 +96388,50 @@
             "description": "Strict public content or authorized publication result.",
             "headers": {
               "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
                   "type": "string"
                 }
               },
@@ -95401,8 +96460,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95431,8 +96494,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95461,8 +96528,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95548,6 +96619,15 @@
               "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
               "type": "string"
             }
+          },
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -95562,8 +96642,38 @@
             "description": "Published directory from one database snapshot.",
             "headers": {
               "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous directory after fresh validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
                   "type": "string"
                 }
               }
@@ -95580,8 +96690,12 @@
             "description": "Invalid query or cursor. Correct the request before retrying.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -95598,8 +96712,12 @@
             "description": "The artist anchor is not visible in this query.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -95616,8 +96734,12 @@
             "description": "The directory changed. Restart browsing without the old cursor.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -95634,8 +96756,12 @@
             "description": "The directory is temporarily unavailable. Retry the same query later.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -95648,9 +96774,18 @@
     },
     "/api/v1/idols/{handle}": {
       "get": {
-        "description": "Anonymous, no-store read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
+        "description": "Anonymous revalidated read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
         "operationId": "readPublishedIdol",
         "parameters": [
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "handle",
@@ -95692,8 +96827,50 @@
             "description": "Strict public content or authorized publication result.",
             "headers": {
               "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
                   "type": "string"
                 }
               },
@@ -95722,8 +96899,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95752,8 +96933,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95782,8 +96967,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95808,9 +96997,18 @@
     },
     "/api/v1/media/{mediaAssetId}": {
       "get": {
-        "description": "Anonymous, no-store read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
+        "description": "Anonymous revalidated read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
         "operationId": "readPublishedMedia",
         "parameters": [
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "mediaAssetId",
@@ -95851,8 +97049,50 @@
             "description": "Strict public content or authorized publication result.",
             "headers": {
               "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
                   "type": "string"
                 }
               },
@@ -95881,8 +97121,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95911,8 +97155,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95941,8 +97189,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -95967,9 +97219,18 @@
     },
     "/api/v1/policies/{policyKey}": {
       "get": {
-        "description": "Anonymous, no-store read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
+        "description": "Anonymous revalidated read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
         "operationId": "readPublishedPolicy",
         "parameters": [
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "policyKey",
@@ -96011,8 +97272,50 @@
             "description": "Strict public content or authorized publication result.",
             "headers": {
               "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
                   "type": "string"
                 }
               },
@@ -96041,8 +97344,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -96071,8 +97378,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -96101,8 +97412,12 @@
             "description": "Safe rejection without credentials, provider references or internal proof.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               },
@@ -96129,7 +97444,17 @@
       "get": {
         "description": "Only current effective PostgreSQL prices select scopes. Policy links require their actual current publication proof. No country, currency or market is inferred from locale. Unknown and duplicate query parameters are rejected.",
         "operationId": "readStorefrontContext",
-        "parameters": [],
+        "parameters": [
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -96142,8 +97467,38 @@
             "description": "Public scope and policy configuration; empty is valid.",
             "headers": {
               "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh current-state and publication validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
                   "type": "string"
                 }
               }
@@ -96160,8 +97515,12 @@
             "description": "No query parameters are accepted.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -96178,8 +97537,12 @@
             "description": "Commerce configuration unavailable.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -96195,6 +97558,15 @@
         "description": "A SERIALIZABLE PostgreSQL snapshot binds immutable publication proof to current price, stock and operating state. Tracked stock is the maximum available quantity at one active location. Procurement and preorder do not claim physical stock. No selected recipient permits browsing only. This read never reserves stock or creates a cart or payment. Unknown or duplicate query parameters are rejected.",
         "operationId": "readStorefrontGift",
         "parameters": [
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "handle",
@@ -96248,8 +97620,38 @@
             "description": "Published gift and current typed variant offers.",
             "headers": {
               "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh current-state and publication validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
                   "type": "string"
                 }
               }
@@ -96266,8 +97668,12 @@
             "description": "Invalid query; locale, market and currency are required.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -96284,8 +97690,12 @@
             "description": "No current published gift.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -96302,8 +97712,12 @@
             "description": "The selected market and currency scope is not currently available.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -96320,8 +97734,12 @@
             "description": "Current content or required commerce evidence unavailable.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -96337,6 +97755,15 @@
         "description": "One PostgreSQL snapshot verifies every returned publication. A missing hero fails closed; unavailable featured slots retain their published identities. No prices or market are inferred from locale. Unknown or duplicate query parameters are rejected.",
         "operationId": "readStorefrontHomepage",
         "parameters": [
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "query",
             "name": "locale",
@@ -96358,8 +97785,38 @@
             "description": "Published homepage and referenced public views.",
             "headers": {
               "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh current-state and publication validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
                   "type": "string"
                 }
               }
@@ -96376,8 +97833,12 @@
             "description": "Invalid query; send one canonical locale.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -96394,8 +97855,12 @@
             "description": "No current published homepage.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -96412,8 +97877,12 @@
             "description": "Homepage or required hero temporarily unavailable.",
             "headers": {
               "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
                 "schema": {
-                  "const": "no-store",
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
                   "type": "string"
                 }
               }
@@ -96422,6 +97891,529 @@
         },
         "security": [],
         "summary": "Read the current published homepage and its bounded artist and gift references"
+      }
+    },
+    "/api/v1/storefront-seo/catalog": {
+      "get": {
+        "description": "At most 50 descriptors are returned without content hydration; each descriptor cursor reads an INDEX window of at most 20 entities, including the version-bound first window. Read every page until hasNextPage is false; never claim a truncated root sitemap is complete. A descriptor describes current candidates, while INDEX performs full publication validation.",
+        "operationId": "readStorefrontSeoCatalog",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "maxLength": 768,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Current proven SEO representation.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh current-state and publication validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Invalid query or canonical cursor.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Entity has no current publication.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Catalogue changed; restart enumeration from a fresh version.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Publication proof or infrastructure unavailable; never an empty successful catalogue.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Read bounded lightweight sitemap shard descriptors"
+      }
+    },
+    "/api/v1/storefront-seo/entity": {
+      "get": {
+        "description": "Send kind and only its locator field: HOMEPAGE has none, IDOL/GIFT require handle, POLICY requires policyKey. Every locale belongs to the same publication with publication time as lastModified. Unknown/duplicate query fields are rejected. Locale does not infer market. Private requests are never shared or conditionally served.",
+        "operationId": "readStorefrontSeoEntity",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "enum": [
+                "HOMEPAGE",
+                "IDOL",
+                "GIFT",
+                "POLICY"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "handle",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "policyKey",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Current proven SEO representation.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh current-state and publication validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Invalid query or canonical cursor.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Entity has no current publication.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Catalogue changed; restart enumeration from a fresh version.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Publication proof or infrastructure unavailable; never an empty successful catalogue.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Read proven indexable locales for one current publication"
+      }
+    },
+    "/api/v1/storefront-seo/index": {
+      "get": {
+        "description": "At most 20 stable owner keys are hydrated within one PostgreSQL snapshot. The cursor binds catalogue version and keyset position. Continue endCursor while hasNextPage; no directory-window or market filtering is applied. A failed proof fails the request without returning a partial successful window.",
+        "operationId": "readStorefrontSeoIndex",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "maxLength": 768,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Optional conditional validator. Matching is evaluated only after a fresh successful read; ignored for requests carrying Cookie or Authorization.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Current proven SEO representation.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "enum": [
+                    "public, max-age=0, s-maxage=0, must-revalidate",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Unchanged anonymous representation after fresh current-state and publication validation; no response body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Every request rechecks current PostgreSQL proof before a conditional response. Cookie or Authorization requests always return a private, no-store response without ETag or 304.",
+                "schema": {
+                  "const": "public, max-age=0, s-maxage=0, must-revalidate",
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "Anonymous weak validator bound to the canonical resource/query and the entire freshly validated representation; absent for credentialed requests.",
+                "schema": {
+                  "pattern": "^W/\"[a-f0-9]{64}\"$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Invalid query or canonical cursor.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Entity has no current publication.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Catalogue changed; restart enumeration from a fresh version.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontSeoResponse"
+                }
+              }
+            },
+            "description": "Publication proof or infrastructure unavailable; never an empty successful catalogue.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Failures are never stored. Cookie or Authorization requests use private, no-store.",
+                "schema": {
+                  "enum": [
+                    "no-store",
+                    "private, no-store"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Read one bounded publication-verified sitemap window"
       }
     },
     "/api/v1/webhooks/payments/{endpointId}": {

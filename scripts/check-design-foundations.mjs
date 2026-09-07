@@ -292,6 +292,43 @@ function stringPropertyValue(objectLiteral, expectedName) {
     : undefined;
 }
 
+async function readSupportedLocales(workspaceRoot, source, errors) {
+  const entryPath = "packages/contracts/src/locale.ts";
+  const sourceFile = ts.createSourceFile(
+    entryPath,
+    source,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TS,
+  );
+  const exportsCanonicalValues = sourceFile.statements.some(
+    (statement) =>
+      ts.isExportDeclaration(statement) &&
+      !statement.isTypeOnly &&
+      statement.moduleSpecifier !== undefined &&
+      ts.isStringLiteral(statement.moduleSpecifier) &&
+      statement.moduleSpecifier.text === "./locale-values.js" &&
+      statement.exportClause !== undefined &&
+      ts.isNamedExports(statement.exportClause) &&
+      statement.exportClause.elements.some(
+        (element) =>
+          !element.isTypeOnly &&
+          element.name.text === "SUPPORTED_LOCALES" &&
+          (element.propertyName?.text ?? element.name.text) ===
+            "SUPPORTED_LOCALES",
+      ),
+  );
+  const relativePath = exportsCanonicalValues
+    ? "packages/contracts/src/locale-values.ts"
+    : entryPath;
+  const valueSource = exportsCanonicalValues
+    ? await readText(workspaceRoot, relativePath, errors)
+    : source;
+  return valueSource === undefined
+    ? undefined
+    : parseSupportedLocales(valueSource, relativePath, errors);
+}
+
 function parseSupportedLocales(source, relativePath, errors) {
   const sourceFile = ts.createSourceFile(
     relativePath,
@@ -302,19 +339,25 @@ function parseSupportedLocales(source, relativePath, errors) {
   );
   let initializer;
 
-  function visit(node) {
+  for (const statement of sourceFile.statements) {
     if (
-      initializer === undefined &&
-      ts.isVariableDeclaration(node) &&
-      ts.isIdentifier(node.name) &&
-      node.name.text === "SUPPORTED_LOCALES"
+      !ts.isVariableStatement(statement) ||
+      (statement.declarationList.flags & ts.NodeFlags.Const) === 0 ||
+      !statement.modifiers?.some(
+        (modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword,
+      )
     ) {
-      initializer = node.initializer;
-      return;
+      continue;
     }
-    ts.forEachChild(node, visit);
+    for (const declaration of statement.declarationList.declarations) {
+      if (
+        ts.isIdentifier(declaration.name) &&
+        declaration.name.text === "SUPPORTED_LOCALES"
+      ) {
+        initializer = declaration.initializer;
+      }
+    }
   }
-  visit(sourceFile);
 
   if (initializer === undefined) {
     errors.push(`${relativePath} must export SUPPORTED_LOCALES`);
@@ -1618,11 +1661,7 @@ export async function validateDesignFoundations(
   const supportedLocales =
     localeSource === undefined
       ? undefined
-      : parseSupportedLocales(
-          localeSource,
-          "packages/contracts/src/locale.ts",
-          errors,
-        );
+      : await readSupportedLocales(workspaceRoot, localeSource, errors);
   const fontProfilesByLocale =
     fontProfileSource === undefined
       ? undefined

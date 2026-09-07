@@ -874,11 +874,27 @@ await withEphemeralPostgres(async (clientConfig) => {
       (SELECT jsonb_agg(jsonb_build_object('id',id,'version',version,'status',status,'draft',draft_revision_id,'published',published_revision_id) ORDER BY id) FROM public.gifts) AS gift_versions
     `)
       ).rows[0];
+    const beforeSeoDown = await retainedHistory();
+    equal(
+      beforeSeoDown.version,
+      "0021",
+      "admin and translation operations ran at the current migration head",
+    );
+    const seoDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0021" },
+    });
+    equal(
+      [seoDown.revertedVersions, seoDown.currentVersion],
+      [["0021"], "0020"],
+      "SEO purge guard rolls back before the gift classification history probe",
+    );
     const beforeDown = await retainedHistory();
     equal(
-      beforeDown.version,
-      "0020",
-      "admin and translation operations ran at the current migration head",
+      beforeDown,
+      { ...beforeSeoDown, version: "0020" },
+      "SEO guard rollback preserves all admin, translation and publication history",
     );
     equal(
       beforeDown.profiles > 0 &&

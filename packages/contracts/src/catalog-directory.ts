@@ -1,17 +1,26 @@
 import { z } from "zod";
 import {
+  catalogVersionSchema,
+  catalogDirectoryOfferSchema,
+  catalogDirectoryFailureSchema,
+} from "./catalog-directory-public.js";
+export {
+  catalogVersionSchema,
+  catalogDirectoryOfferSchema,
+  catalogDirectoryFailureSchema,
+  idolDirectoryResponseSchema,
+  giftDirectoryResponseSchema,
+  type CatalogDirectoryOffer,
+  type CatalogDirectoryFailure,
+  type IdolDirectoryResponse,
+  type GiftDirectoryResponse,
+} from "./catalog-directory-public.js";
+import {
   CATALOG_DISCOVERY_LIMITS,
-  catalogPageInfoSchema,
   giftDiscoveryPlanSchema,
   idolDiscoveryPlanSchema,
   idolDiscoveryQuerySchema,
 } from "./catalog-discovery.js";
-import {
-  publishedGiftViewSchema,
-  publishedIdolViewSchema,
-} from "./catalog-content.js";
-import { currencySchema, marketSchema } from "./commerce.js";
-import { minorAmountSchema } from "./commerce.js";
 import { idolIdSchema } from "./identifiers.js";
 import {
   giftPublicProjectionSourceSchema,
@@ -20,7 +29,6 @@ import {
 import { publicRevisionSelectionSchema } from "./publication.js";
 import { schemaVersionSchema } from "./versioning.js";
 
-export const catalogVersionSchema = z.string().regex(/^[a-f0-9]{64}$/u);
 export const idolDirectoryCursorSchema = z
   .strictObject({
     schemaVersion: schemaVersionSchema,
@@ -58,29 +66,6 @@ export const giftDirectoryRecordSchema = z
     source: giftPublicProjectionSourceSchema,
   })
   .refine((value) => value.selection.objectKind === "GIFT");
-export const catalogDirectoryOfferSchema = z
-  .strictObject({
-    schemaVersion: schemaVersionSchema,
-    market: marketSchema,
-    currency: currencySchema,
-    priceMinor: minorAmountSchema.nullable(),
-    purchasable: z.boolean(),
-  })
-  .refine((value) => value.purchasable === (value.priceMinor !== null), {
-    message:
-      "The displayed price is the minimum currently purchasable eligible variant price",
-  });
-export const catalogDirectoryFailureSchema = z.strictObject({
-  schemaVersion: schemaVersionSchema,
-  outcome: z.literal("FAILURE"),
-  code: z.enum([
-    "INVALID_QUERY",
-    "INVALID_CURSOR",
-    "CATALOG_CHANGED",
-    "ANCHOR_NOT_FOUND",
-    "CATALOG_UNAVAILABLE",
-  ]),
-});
 export const idolDirectorySnapshotSchema = z.union([
   z.strictObject({
     schemaVersion: schemaVersionSchema,
@@ -111,44 +96,6 @@ export const giftDirectorySnapshotSchema = z.union([
   }),
   catalogDirectoryFailureSchema,
 ]);
-const idolPageInfoSchema = z
-  .strictObject({
-    schemaVersion: schemaVersionSchema,
-    hasNextPage: z.boolean(),
-    endCursor: idolDiscoveryQuerySchema.shape.after.unwrap().nullable(),
-  })
-  .refine((value) => value.hasNextPage === (value.endCursor !== null));
-export const idolDirectoryResponseSchema = z.union([
-  z.strictObject({
-    schemaVersion: schemaVersionSchema,
-    outcome: z.literal("SUCCESS"),
-    catalogVersion: catalogVersionSchema,
-    items: z
-      .array(publishedIdolViewSchema)
-      .max(CATALOG_DISCOVERY_LIMITS.artistWindowMaximum),
-    pageInfo: idolPageInfoSchema,
-  }),
-  catalogDirectoryFailureSchema,
-]);
-export const giftDirectoryResponseSchema = z.union([
-  z.strictObject({
-    schemaVersion: schemaVersionSchema,
-    outcome: z.literal("SUCCESS"),
-    catalogVersion: catalogVersionSchema,
-    items: z
-      .array(
-        z.strictObject({
-          schemaVersion: schemaVersionSchema,
-          gift: publishedGiftViewSchema,
-          offer: catalogDirectoryOfferSchema,
-        }),
-      )
-      .max(CATALOG_DISCOVERY_LIMITS.giftPageMaximum),
-    pageInfo: catalogPageInfoSchema,
-  }),
-  catalogDirectoryFailureSchema,
-]);
-
 export type IdolDirectoryCursor = z.infer<typeof idolDirectoryCursorSchema>;
 export type IdolDirectoryReadCommand = z.infer<
   typeof idolDirectoryReadCommandSchema
@@ -158,14 +105,8 @@ export type GiftDirectoryReadCommand = z.infer<
 >;
 export type IdolDirectoryRecord = z.infer<typeof idolDirectoryRecordSchema>;
 export type GiftDirectoryRecord = z.infer<typeof giftDirectoryRecordSchema>;
-export type CatalogDirectoryOffer = z.infer<typeof catalogDirectoryOfferSchema>;
-export type CatalogDirectoryFailure = z.infer<
-  typeof catalogDirectoryFailureSchema
->;
 export type IdolDirectorySnapshot = z.infer<typeof idolDirectorySnapshotSchema>;
 export type GiftDirectorySnapshot = z.infer<typeof giftDirectorySnapshotSchema>;
-export type IdolDirectoryResponse = z.infer<typeof idolDirectoryResponseSchema>;
-export type GiftDirectoryResponse = z.infer<typeof giftDirectoryResponseSchema>;
 
 export const idolDirectoryCursorEncodingInputSchema = z.strictObject({
   schemaVersion: schemaVersionSchema,

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "observedAt": "2026-09-07T18:35:55.064347+00:00",
+  "ownerPid": 40584,
+  "outerPid": 40570,
+  "nextPid": 56378,
+  "ownedPorts": [57016, 57017, 57018, 57983, 35259, 35258],
+  "ownedContainers": [
+    "fan-support-p1-04-4a7a41e0-3860-45f2-951c-b5a7cb7f41a0",
+    "fan-support-media-s3-it-5ef370d0-f10b-4f51-b45a-e4a42033050d"
+  ],
+  "ownershipEvidence": "Runtime run17-13 owner and outer PIDs; listener sockets of owner40584 and current Next57016; exact previously recorded fixture container names and their port bindings. No unrelated process will be stopped.",
+  "cleanupCompletedAt": "2026-09-07T18:36:37.472601+00:00",
+  "signals": ["SIGUSR2 pause confirmed in log", "SIGTERM normal owner cleanup"],
+  "outerExitCode": 0,
+  "outerExitScope": "Normal cleanup and retained protocol command completion; NOT a passing UI+performance callback. The final performance assertion remains failed.",
+  "portsStillListening": [],
+  "pidsStillPresent": [],
+  "containersStillPresent": []
+}

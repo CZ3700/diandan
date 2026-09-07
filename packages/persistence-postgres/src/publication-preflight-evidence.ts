@@ -9,10 +9,12 @@ import { draftRows, type DraftRow } from "./content-draft-data.js";
 import { preflightSnapshot } from "./publication-preflight-data.js";
 import { preflightApprovals } from "./publication-preflight-mapping.js";
 import type { TransactionClient } from "./transaction-runner.js";
+import type { ContentSnapshotLockMode } from "./content-authoring-data.js";
 
 export async function loadPreflightCopies(
   client: TransactionClient,
   snapshots: readonly ContentAuthoringSnapshot[],
+  lockMode: ContentSnapshotLockMode = "UPDATE",
 ) {
   const proofs = [];
   for (const snapshot of snapshots) {
@@ -33,7 +35,12 @@ export async function loadPreflightCopies(
         sourceId = String(row["source_revision_id"]);
       let source = sourceCache.get(sourceId);
       if (!source) {
-        source = await preflightSnapshot(client, snapshot.target, sourceId);
+        source = await preflightSnapshot(
+          client,
+          snapshot.target,
+          sourceId,
+          lockMode,
+        );
         if (!source) throw new Error("Missing canonical copy source");
         sourceCache.set(sourceId, source);
       }

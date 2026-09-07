@@ -1,3 +1,7 @@
+import {
+  publicRevalidationHeaders,
+  publicRevalidationParameter,
+} from "./public-revalidation-openapi.js";
 import { z } from "zod";
 import {
   giftCommerceReadCommandSchema,
@@ -101,21 +105,26 @@ function responses(privateRoute: boolean): JsonObject {
   return Object.fromEntries(
     (privateRoute
       ? ["200", "400", "401", "403", "404", "409", "413", "503"]
-      : ["200", "400", "404", "503"]
+      : ["200", "304", "400", "404", "503"]
     ).map((status) => [
       status,
       {
         description:
           status === "200"
             ? "Strict authorized commerce result or safe current published gift projection."
-            : "Safe typed rejection without credentials, storage keys, internal proof or connection details.",
+            : status === "304"
+              ? "Unchanged anonymous representation after fresh validation; no response body."
+              : "Safe typed rejection without credentials, storage keys, internal proof or connection details.",
         headers: {
-          "Cache-Control": {
-            schema: {
-              type: "string",
-              const: privateRoute ? "private, no-store" : "no-store",
-            },
-          },
+          ...(privateRoute
+            ? {
+                "Cache-Control": {
+                  schema: { type: "string", const: "private, no-store" },
+                },
+              }
+            : publicRevalidationHeaders(
+                status === "200" ? 200 : status === "304" ? 304 : "FAILURE",
+              )),
           "X-Robots-Tag": {
             schema: { type: "string", const: "noindex, nofollow" },
           },
@@ -123,13 +132,17 @@ function responses(privateRoute: boolean): JsonObject {
             schema: { type: "string", const: "no-referrer" },
           },
         },
-        content: {
-          "application/json": {
-            schema: {
-              $ref: `#/components/schemas/${privateRoute ? "GiftCommerceResponse" : "PublishedGiftCommerceResponse"}`,
-            },
-          },
-        },
+        ...(status === "304"
+          ? {}
+          : {
+              content: {
+                "application/json": {
+                  schema: {
+                    $ref: `#/components/schemas/${privateRoute ? "GiftCommerceResponse" : "PublishedGiftCommerceResponse"}`,
+                  },
+                },
+              },
+            }),
       },
     ]),
   ) as JsonObject;
@@ -222,9 +235,10 @@ export function giftCommercePaths(): JsonObject {
       summary:
         "Read current published gift content and its pinned classification",
       description:
-        "Anonymous no-store projection from the current PostgreSQL publication and exact classification proof. Exactly one explicit supported locale is required; duplicate/unknown query fields or caller-selected revisions are rejected. Classification is bound to the selected publication, including rollback; legacy publications remain explicitly represented. This response does not quote a price or complete a purchase.",
+        "Anonymous revalidated projection from the current PostgreSQL publication and exact classification proof. Exactly one explicit supported locale is required; duplicate/unknown query fields or caller-selected revisions are rejected. Classification is bound to the selected publication, including rollback; legacy publications remain explicitly represented. This response does not quote a price or complete a purchase.",
       security: [],
       parameters: [
+        publicRevalidationParameter(),
         {
           name: "handle",
           in: "path",

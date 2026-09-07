@@ -43,6 +43,164 @@ function equal(actual, expected, label) {
   assert.deepEqual(actual, expected, label);
   assertions++;
 }
+
+async function verifySeoPurgeRollback({
+  client,
+  clientConfig,
+  persistence,
+  credentials,
+}) {
+  const purgeTransaction = (work) =>
+    persistence.publicationPurgeTransactionManager.runInPublicationPurgeTransaction(
+      work,
+    );
+  const claimed = await purgeTransaction(({ publicationPurge }) =>
+    publicationPurge.claim({ schemaVersion: 1, leaseSeconds: 60 }),
+  );
+  equal(
+    claimed.outcome,
+    "SUCCESS",
+    "SEO rollback probe claims a real durable job",
+  );
+  assert.ok(claimed.claim);
+  const claim = claimed.claim;
+  const failed = await purgeTransaction(({ publicationPurge }) =>
+    publicationPurge.record({
+      schemaVersion: 1,
+      jobId: claim.job.id,
+      leaseToken: claim.leaseToken,
+      expectedVersion: claim.version,
+      result: { kind: "FAILURE", code: "ACCESS_DENIED", retryable: false },
+    }),
+  );
+  equal(
+    failed.outcome,
+    "SUCCESS",
+    "SEO rollback probe persists a normal terminal provider failure",
+  );
+  equal(failed.job.status, "FAILED", "SEO rollback predecessor is failed");
+  const parent = (
+    await client.query("SELECT * FROM public.content_purge_jobs WHERE id=$1", [
+      failed.job.id,
+    ])
+  ).rows[0];
+  const additions = [
+    "/sitemap.xml*",
+    `/${parent.locale}/sitemap.xml*`,
+    "/api/v1/storefront-seo/*",
+  ];
+  equal(
+    additions.every((path) => parent.paths.includes(path)),
+    true,
+    "existing job carries all three expanded SEO paths",
+  );
+  const jobs = async () =>
+    (
+      await client.query(
+        "SELECT jsonb_agg(to_jsonb(j) ORDER BY id) AS jobs FROM public.content_purge_jobs j",
+      )
+    ).rows[0].jobs;
+  const before = await jobs();
+  const reverted = await runMigrations({
+    clientConfig,
+    workspaceRoot,
+    command: { direction: "down", confirmVersion: "0021" },
+  });
+  equal(
+    [reverted.revertedVersions, reverted.currentVersion],
+    [["0021"], "0020"],
+    "0021 rolls back before the existing feature downgrade sequence",
+  );
+  equal(
+    await jobs(),
+    before,
+    "0021 down preserves every existing purge job exactly",
+  );
+  for (const [paths, message] of [
+    [
+      parent.paths.filter((path) => !additions.includes(path)),
+      "purge retries require an exact failed predecessor",
+    ],
+    [
+      [...parent.paths, "/*"].sort(),
+      "purge jobs require exact publication locale paths and initial state",
+    ],
+    [
+      [...parent.paths].reverse(),
+      "purge jobs require exact publication locale paths and initial state",
+    ],
+  ]) {
+    await client.query("BEGIN");
+    let observed;
+    try {
+      await client.query(
+        `WITH predecessor AS MATERIALIZED (SELECT *,GREATEST(clock_timestamp(),updated_at) AS at FROM public.content_purge_jobs WHERE id=$1)
+        INSERT INTO public.content_purge_jobs(id,publication_id,outbox_event_id,locale,generation,retry_of,paths,created_at,updated_at,next_attempt_at)
+        SELECT $2,publication_id,outbox_event_id,locale,generation+1,id,$3,at,at,at FROM predecessor`,
+        [parent.id, randomUUID(), paths],
+      );
+    } catch (error) {
+      observed = { code: error.code, message: error.message };
+    } finally {
+      await client.query("ROLLBACK");
+    }
+    equal(
+      observed,
+      { code: "23514", message },
+      "down rejects narrowed, broadened or reordered retry paths at the exact path guard",
+    );
+  }
+  const retry =
+    await persistence.publicationRuntimeTransactionManager.runInPublicationRuntimeTransaction(
+      async ({ authorization, publicationRuntime }) => {
+        const authority = await authorization.authorize({
+          schemaVersion: 1,
+          ...credentials,
+          permission: "content.publish",
+          locales: SUPPORTED_LOCALES,
+        });
+        equal(
+          authority.outcome,
+          "SUCCESS",
+          "post-downgrade retry has current authority",
+        );
+        return publicationRuntime.retry({
+          schemaVersion: 1,
+          requestId: randomUUID(),
+          principal: authority.principal,
+          command: {
+            schemaVersion: 1,
+            action: "RETRY_PURGE",
+            publicationId: parent.publication_id,
+            purgeJobId: parent.id,
+            expectedVersion: Number(parent.version),
+            reasonCode: "PG_SEO_ROLLBACK_RETRY",
+            idempotencyKey: randomUUID(),
+          },
+        });
+      },
+    );
+  equal(
+    retry.outcome,
+    "SUCCESS",
+    "existing expanded job can create an exact authorized retry after 0021 down",
+  );
+  const successor = (
+    await client.query(
+      "SELECT paths,retry_of,generation FROM public.content_purge_jobs WHERE id=$1",
+      [retry.purgeJobId],
+    )
+  ).rows[0];
+  equal(
+    successor,
+    {
+      paths: parent.paths,
+      retry_of: parent.id,
+      generation: parent.generation + 1,
+    },
+    "committed post-downgrade retry preserves expanded paths and predecessor lineage",
+  );
+}
 await withEphemeralPostgres(async (clientConfig) => {
   await runMigrations({
     clientConfig,
@@ -332,7 +490,7 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
               "SELECT max(version) AS version FROM public.schema_migrations",
             )
           ).rows[0].version,
-          "0020",
+          "0021",
           "runtime business checks ran against the current migration head",
         );
         equal(
@@ -344,6 +502,12 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
           0,
           "historical runtime fixtures have no new classification history",
         );
+        await verifySeoPurgeRollback({
+          client,
+          clientConfig,
+          persistence,
+          credentials,
+        });
         for (const [version, previous] of [
           ["0020", "0019"],
           ["0019", "0018"],

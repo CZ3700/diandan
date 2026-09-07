@@ -1,10 +1,11 @@
 # Progress Master
 
-> 最后更新：2026-09-07
+> 最后更新：2026-09-08
 > 当前里程碑：M3 可浏览 Beta（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3
-> 当前任务：`P3-05` DONE，Lane B 已释放
-> 下一入口：`P3-06` READY，七语言/SEO/cache/性能与运营验收；尚未领取
+> 当前任务：`P3-06` IN_PROGRESS，Codex `/root` 独占 Lane D
+> 下一入口：完成P3-06技术实现及其真实验收；Phase3退出门未通过前不解锁Phase4
+> 当前检查点：首屏脚本约203–207KB；377项前台测试、七语88项UI、按需加载异常和共享P2回归通过。完整63次Lighthouse已收集：20/21组评分达标，但仅1/21组LCP达标；最终整条pnpm check已通过；性能与人工门未通过。
 
 ## 1. 开工入口
 
@@ -16,15 +17,15 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 READY、Lane D 无 executor，Phase 3 仍 ACTIVE，Phase 4 仍 LOCKED。正式品牌资产与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06由root领取、Lane D被独占，Phase 3 仍 ACTIVE，Phase 4 仍 LOCKED。正式品牌资产与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
 | PENDING | 26 |
-| READY | 1 |
-| IN_PROGRESS | 0 |
+| READY | 0 |
+| IN_PROGRESS | 1 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
 | DONE | 22 |
@@ -78,6 +79,14 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-08 P3-06本地技术检查点：完整 `pnpm check` attempt6单条exit0（19:30:54–19:51:02 UTC，1207.834秒），真实PG/API/TLS S3/worker、format/lint、类型58/58、测试58/58、构建35/35及实际31出口通过；使用部分构建/测试缓存，独立bounded冷test为58/58零缓存。最终1540实现SHA `59ebd051a135110a3cf01b6b22bc5c373f83e41ad2b79a0b07e2dd166fe2a04d`；末端测试helper生产依赖问题已修，其余296编译产物字节不变，独立复核ACCEPT。P2-04/05最终刷新通过，原414未跟踪文件与818保留旧output逐SHA一致。88项UI通过、63次LH的LCP仅1/21组达标；性能及真人运营/读屏/当前关键译审门仍开放，P3-06 IN_PROGRESS、22 DONE/1 IN_PROGRESS/26 PENDING（49）、Phase4 LOCKED。详见 `output/checks/p3-06-storefront-acceptance/validation.json`，仍仅本地检查点，无push/merge。
+
+2026-09-08第三轮最终编译验收：1,540项实现输入 SHA256 `662dcb3e30ca0d97e070e90262a7e8b6945d5b52ba12088a338ea7d119cc148f`；七语双端88项UI/88PNG通过，85次axe零violations、30条incomplete保留，发布/回退10,418ms/10,240ms。63次移动Lighthouse按三次中位数汇总，评分20/21、LCP1/21、CLS21/21达标；84资源页JS203,468–207,239B、236图片均达建议预算，性能整体仍FAIL。真实lazy9项51断言、最终P2-04/P2-05浏览器回归通过；原414未跟踪文件逐SHA一致。完整整仓check正在串行执行，真人计时/读屏/译审门未完成，状态与计数不变。
+
+2026-09-08继续P3-06：1,515项实现输入与冻结清单完全一致。中断前新run11-46已通过32,461准备/协议断言、63并发读和真实发布/回退14,562ms/17,291ms；compiled browser callback22,692断言，84页面组合/4交互、88PNG、85axe零violations，30incomplete rules仍保留复核。bounded冷测试58/58零缓存通过，默认并发超时反证保留；性能与最终整条check继续补齐，人工运营/读屏/关键译文批准不冒充完成。22 DONE/1 IN_PROGRESS/26 PENDING，Phase3 ACTIVE、Phase4 LOCKED，尚未push/merge。详见phase连续执行检查点与`output/checks/p3-06-storefront-acceptance/README.md`。
+
+2026-09-07用户继续，root从本地`6eacb83`领取P3-06，独占Lane D，分支`codex/p3-06-storefront-acceptance`。推进七语言SEO/OG/structured data/sitemap、locale/market/currency缓存和发布失效、性能及运营/读屏验收；详细边界见phase登记。当前22 DONE /1 IN_PROGRESS /26 PENDING，共49；Phase3 ACTIVE，Phase4 LOCKED。继续只本地提交，保护原414项未跟踪产物。
 
 2026-09-07 P3-05礼物浏览前台已本地验收DONE：七语言真实礼物分页/分类与金额筛选/价格排序/URL与原生后退恢复、详情/艺人搜索选择/规格数量/市场币种/政策和完整错误状态接通。礼物类型与库存策略独立，按单准备不造现货，全部仍由工作室转交艺人。真实协议15714断言/1902 setup请求，完整UI另5550断言（含构建健康总21266）、55PNG/10 axe零违规零incomplete，旧373 roots与全部HTTP operations不变，新5共378。最终整条check exit0、冷测试58/58零缓存、最终1428输入一致、非作者复核和S.U.P.E.R十项PASS；此前格式失败及合同超时反证保留，未放宽原5秒测试预算。证据`output/checks/p3-05-gift-storefront/validation.json`与浏览器README，运行入口`docs/operations/storefront.md`。全局22 DONE /1 READY /26 PENDING（49），Phase3 ACTIVE（5/6），LaneB释放，仅解锁P3-06。购物车/支付属于Phase4；正式译审/素材/市场、PSP/staging/生产和新真机未验收。按用户约定只本地提交，不push/merge。
 

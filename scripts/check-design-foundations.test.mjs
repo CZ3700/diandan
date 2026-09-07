@@ -314,6 +314,74 @@ test("accepts synchronized tokens, licensed local fonts, package CSS imports, an
   assert.deepEqual(await validateDesignFoundations(root), []);
 });
 
+test("follows the public locale value re-export to the canonical leaf", async (context) => {
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  const entry = "packages/contracts/src/locale.ts";
+  const source = await readFile(path.join(root, entry), "utf8");
+  await write(root, "packages/contracts/src/locale-values.ts", source);
+  await write(
+    root,
+    entry,
+    'export { SUPPORTED_LOCALES } from "./locale-values.js";',
+  );
+
+  assert.deepEqual(await validateDesignFoundations(root), []);
+});
+
+test("validates the actual re-exported locale values instead of a nested decoy", async (context) => {
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  const entry = "packages/contracts/src/locale.ts";
+  const source = await readFile(path.join(root, entry), "utf8");
+  await write(
+    root,
+    "packages/contracts/src/locale-values.ts",
+    source.replace('"pt",', '"en",'),
+  );
+  await write(
+    root,
+    entry,
+    `function decoy() { ${source.replace("export ", "")} }\nexport { SUPPORTED_LOCALES } from "./locale-values.js";`,
+  );
+
+  const errors = await validateDesignFoundations(root);
+  assert.ok(
+    errors.includes("SUPPORTED_LOCALES must not contain duplicate locales"),
+  );
+});
+
+test("rejects a type-only locale export even when a nested declaration looks valid", async (context) => {
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  const entry = "packages/contracts/src/locale.ts";
+  const source = await readFile(path.join(root, entry), "utf8");
+  await write(root, "packages/contracts/src/locale-values.ts", source);
+  await write(
+    root,
+    entry,
+    `function decoy() { ${source.replace("export ", "")} }\nexport type { SUPPORTED_LOCALES } from "./locale-values.js";`,
+  );
+
+  const errors = await validateDesignFoundations(root);
+  assert.ok(
+    errors.some((error) => error.includes("must export SUPPORTED_LOCALES")),
+  );
+});
+
+test("rejects a missing canonical locale leaf", async (context) => {
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  await write(
+    root,
+    "packages/contracts/src/locale.ts",
+    'export { SUPPORTED_LOCALES } from "./locale-values.js";',
+  );
+
+  const errors = await validateDesignFoundations(root);
+  assert.ok(errors.some((error) => error.includes("locale-values.ts")));
+});
+
 test("rejects a token value that drifted from the CSS contract", async (context) => {
   const root = await fixture();
   context.after(() => rm(root, { recursive: true, force: true }));

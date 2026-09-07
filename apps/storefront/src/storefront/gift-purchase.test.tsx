@@ -1,5 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { describe, expect, it, vi } from "vitest";
 import {
   storefrontGiftResponseSchema,
   storefrontGiftRecipientSchema,
@@ -8,6 +9,9 @@ import {
 } from "@fan-support/contracts";
 import copy from "../../../../packages/i18n/src/storefront/en";
 import { GiftPurchase } from "./gift-purchase";
+import * as quantity from "./gift-quantity";
+
+vi.mock("server-only", () => ({}));
 
 const variantId = "2abc0000-0000-4000-8000-000000000001";
 const idolId = "30000000-0000-4000-8000-000000000001";
@@ -143,6 +147,37 @@ function render(gift: ReturnType<typeof fixture>, variant?: string) {
 }
 
 describe("gift purchase presentation against canonical offer contracts", () => {
+  it("keeps offer, price and ICU presentation outside the client entry", () => {
+    const source = readFileSync(
+      new URL("./gift-purchase.tsx", import.meta.url),
+      "utf8",
+    );
+    expect(source).not.toMatch(/^["']use client["'];/u);
+    expect(source).toContain('import "server-only"');
+  });
+  it("only sends the quantity ceiling and three labels to the interactive boundary", () => {
+    const client = vi.spyOn(quantity, "GiftQuantity");
+    try {
+      render(fixture());
+      expect(client).toHaveBeenCalledOnce();
+      expect(client.mock.calls[0]?.[0]).toEqual({
+        max: 3,
+        label: copy.giftQuantity,
+        decreaseLabel: copy.giftQuantityDecrease,
+        increaseLabel: copy.giftQuantityIncrease,
+      });
+      const source = readFileSync(
+        new URL("./gift-quantity.tsx", import.meta.url),
+        "utf8",
+      );
+      expect(source).toMatch(/^["']use client["'];/u);
+      expect(source).not.toContain("@fan-support/contracts");
+      expect(source).not.toContain("./copy");
+      expect(source).not.toContain("@fan-support/i18n");
+    } finally {
+      client.mockRestore();
+    }
+  });
   it("exposes variant links as a named group", () => {
     const html = render(fixture());
     expect(html).toContain(

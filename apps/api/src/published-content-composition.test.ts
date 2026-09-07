@@ -33,6 +33,11 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     code: "NOT_FOUND",
   }));
   const createPersistence = vi.fn(() => ({
+    storefrontSeoTransactionManager: {
+      runInStorefrontSeoTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ storefrontSeo: { loadEntity: load } }),
+    },
     storefrontCommerceTransactionManager: {
       runInStorefrontCommerceTransaction: async (
         work: (repositories: unknown) => unknown,
@@ -72,6 +77,7 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     "publishedGiftCommerceRoute",
     "storefrontCommerceRoute",
     "storefrontHomepageRoute",
+    "storefrontSeoRoute",
   ]);
   expect(createPersistence).toHaveBeenCalledWith(
     expect.objectContaining({
@@ -102,6 +108,13 @@ test("binds production public reads to configured PostgreSQL and trusted media o
       schemaVersion: 1,
     }),
   ).resolves.toMatchObject({ kind: "STOREFRONT_CONTEXT" });
+  await expect(
+    composition.storefrontSeoRoute.useCases.execute({
+      schemaVersion: 1,
+      operation: "ENTITY",
+      locator: { kind: "HOMEPAGE" },
+    }),
+  ).resolves.toMatchObject({ code: "NOT_FOUND" });
   await composition.publishedContentRuntime.start();
   await Promise.all([
     composition.publishedContentRuntime.stop(),

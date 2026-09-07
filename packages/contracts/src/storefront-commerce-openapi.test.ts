@@ -7,12 +7,15 @@ test("storefront commerce documents only read routes with explicit scope and sta
     "/api/v1/storefront-context",
     "/api/v1/storefront-gifts/{handle}",
   ]);
-  expect(paths["/api/v1/storefront-context"].get.parameters).toEqual([]);
   expect(
-    paths["/api/v1/storefront-gifts/{handle}"].get.parameters.map((row) => [
-      row.name,
-      row.required,
-    ]),
+    paths["/api/v1/storefront-context"].get.parameters.filter(
+      (parameter) => parameter.in === "query",
+    ),
+  ).toEqual([]);
+  expect(
+    paths["/api/v1/storefront-gifts/{handle}"].get.parameters
+      .filter((parameter) => parameter.in !== "header")
+      .map((row) => [row.name, row.required]),
   ).toEqual([
     ["handle", true],
     ["locale", true],

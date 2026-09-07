@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+import {
+  assertPublicGetCaching,
+  verifyPublicGetConditional,
+} from "./public-get-revalidation.mjs";
 
 import assert from "node:assert/strict";
 import path from "node:path";
@@ -147,6 +151,7 @@ async function verify(clientConfig) {
       "API binds an ephemeral loopback port",
     );
     const baseUrl = `http://127.0.0.1:${address.port}`;
+    const verifiedCacheScopes = new Set();
     async function request(
       kind,
       query,
@@ -165,10 +170,7 @@ async function verify(clientConfig) {
       );
       requests++;
       check(response.status === expectedStatus, label);
-      check(
-        response.headers.get("cache-control") === "no-store",
-        "HTTP responses retain no-store policy",
-      );
+
       const text = await response.text();
       check(
         !text.includes(clientConfig.password),
@@ -179,6 +181,25 @@ async function verify(clientConfig) {
           ? idolDirectoryResponseSchema
           : giftDirectoryResponseSchema
       ).parse(JSON.parse(text));
+      assertPublicGetCaching(response, body, check);
+      if (
+        response.status === 200 &&
+        body.outcome === "SUCCESS" &&
+        !verifiedCacheScopes.has(kind)
+      ) {
+        await verifyPublicGetConditional({
+          base: baseUrl,
+          route: `/api/v1/${kind}?${search}`,
+          response,
+          schema:
+            kind === "idols"
+              ? idolDirectoryResponseSchema
+              : giftDirectoryResponseSchema,
+          check,
+        });
+        requests += 3;
+        verifiedCacheScopes.add(kind);
+      }
       check(
         hasOnlyPublicKeys(body),
         "HTTP response exposes no persistence or private content fields",

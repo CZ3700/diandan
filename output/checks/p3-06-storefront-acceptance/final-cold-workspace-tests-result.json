@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "exec",
+    "turbo",
+    "run",
+    "test",
+    "--force",
+    "--concurrency=2",
+    "--output-logs=errors-only"
+  ],
+  "startedAt": "2026-09-07T18:39:55.609851+00:00",
+  "finishedAt": "2026-09-07T18:40:42.577795+00:00",
+  "elapsedSeconds": 46.967,
+  "exitCode": 0,
+  "log": "output/checks/p3-06-storefront-acceptance/final-cold-workspace-tests.log",
+  "implementationSha256": "662dcb3e30ca0d97e070e90262a7e8b6945d5b52ba12088a338ea7d119cc148f"
+}

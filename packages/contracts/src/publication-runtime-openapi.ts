@@ -1,3 +1,7 @@
+import {
+  publicRevalidationHeaders,
+  publicRevalidationParameter,
+} from "./public-revalidation-openapi.js";
 import { z } from "zod";
 import {
   publicationRevisionCommandSchema,
@@ -33,7 +37,7 @@ function jsonSchema(schema: z.ZodType): JsonObject {
 function responses(privateRoute: boolean): JsonObject {
   const statuses = privateRoute
     ? ["200", "400", "401", "403", "404", "409", "413", "503"]
-    : ["200", "400", "404", "503"];
+    : ["200", "304", "400", "404", "503"];
   return Object.fromEntries(
     statuses.map((status) => [
       status,
@@ -41,14 +45,19 @@ function responses(privateRoute: boolean): JsonObject {
         description:
           status === "200"
             ? "Strict public content or authorized publication result."
-            : "Safe rejection without credentials, provider references or internal proof.",
+            : status === "304"
+              ? "Unchanged anonymous representation after fresh validation; no response body."
+              : "Safe rejection without credentials, provider references or internal proof.",
         headers: {
-          "Cache-Control": {
-            schema: {
-              type: "string",
-              const: privateRoute ? "private, no-store" : "no-store",
-            },
-          },
+          ...(privateRoute
+            ? {
+                "Cache-Control": {
+                  schema: { type: "string", const: "private, no-store" },
+                },
+              }
+            : publicRevalidationHeaders(
+                status === "200" ? 200 : status === "304" ? 304 : "FAILURE",
+              )),
           "X-Robots-Tag": {
             schema: { type: "string", const: "noindex, nofollow" },
           },
@@ -56,13 +65,17 @@ function responses(privateRoute: boolean): JsonObject {
             schema: { type: "string", const: "no-referrer" },
           },
         },
-        content: {
-          "application/json": {
-            schema: {
-              $ref: `#/components/schemas/${privateRoute ? "PublicationRuntimeResponse" : "PublishedContentResponse"}`,
-            },
-          },
-        },
+        ...(status === "304"
+          ? {}
+          : {
+              content: {
+                "application/json": {
+                  schema: {
+                    $ref: `#/components/schemas/${privateRoute ? "PublicationRuntimeResponse" : "PublishedContentResponse"}`,
+                  },
+                },
+              },
+            }),
       },
     ]),
   );
@@ -140,9 +153,10 @@ export function publicationRuntimePaths(): JsonObject {
         operationId,
         summary: "Read the current published content in one explicit locale",
         description:
-          "Anonymous, no-store read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
+          "Anonymous revalidated read from the current PostgreSQL publication head and manifest. Exactly one supported locale query is required; other query fields, duplicate locale and client revision selection are rejected. Accept-Language does not select or change content. Responses contain safe presentation fields only; aliases and gift details are resolved from the pinned manifest.",
         security: [],
         parameters: [
+          publicRevalidationParameter(),
           ...Object.entries(properties)
             .filter(([name]) => name !== "kind")
             .map(([name, schema]) => ({

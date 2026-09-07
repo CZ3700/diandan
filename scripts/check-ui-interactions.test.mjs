@@ -255,18 +255,6 @@ export function RegionControl({ options, value }: { options: readonly unknown[];
 
   await write(
     root,
-    "packages/contracts/src/locale.ts",
-    `export const SUPPORTED_LOCALES = Object.freeze([
-  "en", "zh-CN", "th", "vi", "ja", "es", "pt",
-] as const);
-export const LOCALE_NATIVE_NAMES = Object.freeze({
-  en: "English", "zh-CN": "简体中文", th: "ไทย", vi: "Tiếng Việt", ja: "日本語", es: "Español", pt: "Português",
-});
-export const supportedLocaleSchema = z.enum(SUPPORTED_LOCALES);
-`,
-  );
-  await write(
-    root,
     "apps/storefront/src/app/globals.css",
     '@import "@fan-support/ui/interactions.css";\n@import "@fan-support/ui/primitives.css";\n',
   );
@@ -285,40 +273,6 @@ export function UiInteractionLab({ previewLocale }: { previewLocale: string }) {
     };
   }, [previewLocale]);
   return null;
-}
-`,
-  );
-  await write(
-    root,
-    "apps/storefront/src/presentation-locale.ts",
-    `import { supportedLocaleSchema, type SupportedLocale } from "@fan-support/contracts";
-const PRESENTATION_LOCALE_COOKIE_NAME = "site_locale";
-const PRESENTATION_LOCALE_MAX_AGE_SECONDS = 31_536_000;
-function requireSupportedLocale(value: unknown): SupportedLocale {
-  const parsed = supportedLocaleSchema.safeParse(value);
-  if (!parsed.success) throw new TypeError("Expected a canonical supported locale");
-  return parsed.data;
-}
-export function createPresentationLocaleUrl(currentUrl: URL, nextLocale: unknown): URL {
-  const locale = requireSupportedLocale(nextLocale);
-  const source = supportedLocaleSchema.safeParse(currentUrl.pathname.split("/")[1]);
-  if (!source.success) throw new TypeError("Expected a route with a canonical leading locale");
-  const destination = new URL(currentUrl.href);
-  const segments = destination.pathname.split("/");
-  segments[1] = locale;
-  destination.pathname = segments.join("/");
-  return destination;
-}
-export function serializePresentationLocaleCookie(locale: unknown, options: { secure: boolean }): string {
-  const value = requireSupportedLocale(locale);
-  const attributes = [
-    \`\${PRESENTATION_LOCALE_COOKIE_NAME}=\${value}\`,
-    "Path=/",
-    \`Max-Age=\${PRESENTATION_LOCALE_MAX_AGE_SECONDS}\`,
-    "SameSite=Lax",
-  ];
-  if (options.secure) attributes.push("Secure");
-  return attributes.join("; ");
 }
 `,
   );
@@ -349,6 +303,7 @@ export function createInternalPresentationLocaleUrl(currentUrl: URL, nextLocale:
     );
   }
 
+  await installSplitLocaleFixture(root);
   return root;
 }
 
@@ -363,6 +318,304 @@ async function validateFixture(context) {
   const root = await fixture();
   context.after(() => rm(root, { recursive: true, force: true }));
   return { root, validateUiInteractions: await loadValidator() };
+}
+
+async function installSplitLocaleFixture(root) {
+  await write(
+    root,
+    "packages/contracts/src/locale-values.ts",
+    `export const SUPPORTED_LOCALES = Object.freeze([
+  "en", "zh-CN", "th", "vi", "ja", "es", "pt",
+] as const);
+export const DEFAULT_LOCALE = "en";
+export const LOCALE_NATIVE_NAMES = Object.freeze({ en: "English" });
+export function parseSupportedLocale(value: unknown) { return value; }
+`,
+  );
+  await write(
+    root,
+    "packages/contracts/src/locale.ts",
+    `import { z } from "zod";
+import { SUPPORTED_LOCALES } from "./locale-values.js";
+export { SUPPORTED_LOCALES, DEFAULT_LOCALE, LOCALE_NATIVE_NAMES, parseSupportedLocale } from "./locale-values.js";
+export const supportedLocaleSchema = z.enum(SUPPORTED_LOCALES);
+`,
+  );
+  await write(
+    root,
+    "apps/storefront/src/canonical-locale.ts",
+    `import { parseSupportedLocale } from "@fan-support/contracts";
+export function requireCanonicalLocale(value: unknown, message = "Expected a canonical supported locale") {
+  const parsed = parseSupportedLocale(value);
+  if (parsed === undefined || parsed !== value) throw new TypeError(message);
+  return parsed;
+}
+`,
+  );
+  await write(
+    root,
+    "apps/storefront/src/presentation-locale.ts",
+    `import { requireCanonicalLocale } from "./canonical-locale";
+const PRESENTATION_LOCALE_COOKIE_NAME = "site_locale";
+const PRESENTATION_LOCALE_MAX_AGE_SECONDS = 31_536_000;
+function leadingLocale(pathname: string) {
+  const segments = pathname.split("/");
+  const candidate = segments[1];
+  if (candidate === undefined) throw new TypeError("Expected a route with a canonical leading locale");
+  return requireCanonicalLocale(candidate, "Expected a route with a canonical leading locale");
+}
+export function createPresentationLocaleUrl(currentUrl: URL, nextLocale: unknown): URL {
+  const locale = requireCanonicalLocale(nextLocale);
+  leadingLocale(currentUrl.pathname);
+  const destination = new URL(currentUrl.href);
+  const segments = destination.pathname.split("/");
+  segments[1] = locale;
+  destination.pathname = segments.join("/");
+  return destination;
+}
+export function serializePresentationLocaleCookie(locale: unknown, options: { secure: boolean }): string {
+  const value = requireCanonicalLocale(locale);
+  const attributes = [
+    \`\${PRESENTATION_LOCALE_COOKIE_NAME}=\${value}\`,
+    "Path=/",
+    \`Max-Age=\${PRESENTATION_LOCALE_MAX_AGE_SECONDS}\`,
+    "SameSite=Lax",
+  ];
+  if (options.secure) attributes.push("Secure");
+  return attributes.join("; ");
+}
+`,
+  );
+}
+
+test("accepts the actual split locale value and exact presentation helper chain", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await installSplitLocaleFixture(root);
+  assert.deepEqual(await validateUiInteractions(root), []);
+});
+
+for (const [name, file, from, to, error] of [
+  [
+    "wrong export",
+    "locale.ts",
+    "export { SUPPORTED_LOCALES,",
+    "export { DEFAULT_LOCALE as SUPPORTED_LOCALES,",
+    "must value-re-export canonical locale bindings",
+  ],
+  [
+    "type-only export",
+    "locale.ts",
+    "export { SUPPORTED_LOCALES,",
+    "export { type SUPPORTED_LOCALES,",
+    "must value-re-export canonical locale bindings",
+  ],
+  [
+    "wrong import",
+    "locale.ts",
+    "import { SUPPORTED_LOCALES }",
+    "import { DEFAULT_LOCALE as SUPPORTED_LOCALES }",
+    "must value-import SUPPORTED_LOCALES from ./locale-values.js",
+  ],
+  [
+    "type-only import",
+    "locale.ts",
+    "import { SUPPORTED_LOCALES }",
+    "import type { SUPPORTED_LOCALES }",
+    "must value-import SUPPORTED_LOCALES from ./locale-values.js",
+  ],
+  [
+    "wrong enum",
+    "locale.ts",
+    "z.enum(SUPPORTED_LOCALES)",
+    'z.enum(["en"])',
+    "supportedLocaleSchema must derive from SUPPORTED_LOCALES",
+  ],
+  [
+    "shadow declaration",
+    "locale.ts",
+    "export const supportedLocaleSchema",
+    'const SUPPORTED_LOCALES = ["en"];\nexport const supportedLocaleSchema',
+    "must value-import SUPPORTED_LOCALES from ./locale-values.js",
+  ],
+  [
+    "leaf order",
+    "locale-values.ts",
+    '"en", "zh-CN"',
+    '"zh-CN", "en"',
+    "canonical SUPPORTED_LOCALES must remain",
+  ],
+  [
+    "leaf duplicate",
+    "locale-values.ts",
+    '"es", "pt"',
+    '"es", "es"',
+    "canonical SUPPORTED_LOCALES must remain",
+  ],
+  [
+    "leaf nonexported",
+    "locale-values.ts",
+    "export const SUPPORTED_LOCALES",
+    "const SUPPORTED_LOCALES",
+    "canonical SUPPORTED_LOCALES must remain",
+  ],
+]) {
+  test(`rejects split canonical locale ${name}`, async (context) => {
+    const { root, validateUiInteractions } = await validateFixture(context);
+    await installSplitLocaleFixture(root);
+    await replace(root, `packages/contracts/src/${file}`, from, to);
+    includesError(await validateUiInteractions(root), error);
+  });
+}
+
+test("requires the real locale leaf even when old source contains declaration comments", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await installSplitLocaleFixture(root);
+  await rm(path.join(root, "packages/contracts/src/locale-values.ts"));
+  await replace(
+    root,
+    "packages/contracts/src/locale.ts",
+    "import { z }",
+    '// SUPPORTED_LOCALES = Object.freeze(["en", "zh-CN", "th", "vi", "ja", "es", "pt"] as const);\nimport { z }',
+  );
+  includesError(
+    await validateUiInteractions(root),
+    "missing P2-03 interaction file packages/contracts/src/locale-values.ts",
+  );
+});
+
+for (const [name, file, from, to] of [
+  [
+    "normalization without exact equality",
+    "canonical-locale.ts",
+    "parsed === undefined || parsed !== value",
+    "parsed === undefined",
+  ],
+  [
+    "helper fake parser",
+    "canonical-locale.ts",
+    'from "@fan-support/contracts"',
+    'from "./fake-parser"',
+  ],
+  [
+    "helper nonthrowing reject",
+    "canonical-locale.ts",
+    "throw new TypeError(message)",
+    "return parsed",
+  ],
+  [
+    "wrong helper import",
+    "presentation-locale.ts",
+    'from "./canonical-locale"',
+    'from "./fake-helper"',
+  ],
+  [
+    "unvalidated target",
+    "presentation-locale.ts",
+    "const locale = requireCanonicalLocale(nextLocale)",
+    "const locale = nextLocale",
+  ],
+  [
+    "unvalidated source",
+    "presentation-locale.ts",
+    "leadingLocale(currentUrl.pathname);",
+    "// leadingLocale(currentUrl.pathname);",
+  ],
+  [
+    "unvalidated cookie",
+    "presentation-locale.ts",
+    "const value = requireCanonicalLocale(locale)",
+    "const value = locale",
+  ],
+]) {
+  test(`rejects ${name} instead of trusting canonical helper text`, async (context) => {
+    const { root, validateUiInteractions } = await validateFixture(context);
+    await installSplitLocaleFixture(root);
+    await replace(root, `apps/storefront/src/${file}`, from, to);
+    includesError(
+      await validateUiInteractions(root),
+      "presentation locale routes and cookie must use the exact canonical helper",
+    );
+  });
+}
+
+test("reports an empty presentation function without throwing or trusting comments", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await write(
+    root,
+    "apps/storefront/src/presentation-locale.ts",
+    `import { requireCanonicalLocale } from "./canonical-locale";
+function leadingLocale(pathname: string) {}
+export function createPresentationLocaleUrl(currentUrl: URL, nextLocale: unknown) {}
+export function serializePresentationLocaleCookie(locale: unknown) {}
+// const locale = requireCanonicalLocale(nextLocale); leadingLocale(currentUrl.pathname);
+`,
+  );
+  includesError(
+    await validateUiInteractions(root),
+    "presentation locale routes and cookie must use the exact canonical helper",
+  );
+});
+
+test("does not accept a canonical enum mentioned only in a comment", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/contracts/src/locale.ts",
+    "export const supportedLocaleSchema = z.enum(SUPPORTED_LOCALES);",
+    '// export const supportedLocaleSchema = z.enum(SUPPORTED_LOCALES);\nexport const supportedLocaleSchema = z.enum(["en"]);',
+  );
+  includesError(
+    await validateUiInteractions(root),
+    "supportedLocaleSchema must derive from SUPPORTED_LOCALES",
+  );
+});
+
+for (const [name, from, to] of [
+  [
+    "leading helper parameter",
+    "leadingLocale(pathname: string)",
+    "leadingLocale(pathname: string, requireCanonicalLocale = (value: unknown, _message?: string) => value)",
+  ],
+  [
+    "create source-check parameter",
+    "createPresentationLocaleUrl(currentUrl: URL, nextLocale: unknown)",
+    "createPresentationLocaleUrl(currentUrl: URL, nextLocale: unknown, leadingLocale = (_pathname: string) => undefined)",
+  ],
+  [
+    "cookie helper parameter",
+    "serializePresentationLocaleCookie(locale: unknown, options: { secure: boolean })",
+    "serializePresentationLocaleCookie(locale: unknown, options: { secure: boolean }, requireCanonicalLocale = (value: unknown) => value)",
+  ],
+  [
+    "hoisted local source-check function",
+    "leadingLocale(currentUrl.pathname);",
+    "leadingLocale(currentUrl.pathname);\n  function leadingLocale(_pathname: string) {}",
+  ],
+  [
+    "defaulted source parameter",
+    "leadingLocale(pathname: string)",
+    'leadingLocale(pathname: string = "/en")',
+  ],
+  [
+    "optional target parameter",
+    "createPresentationLocaleUrl(currentUrl: URL, nextLocale: unknown)",
+    "createPresentationLocaleUrl(currentUrl: URL, nextLocale?: unknown)",
+  ],
+  [
+    "rest cookie parameter",
+    "serializePresentationLocaleCookie(locale: unknown, options: { secure: boolean })",
+    "serializePresentationLocaleCookie(locale: unknown, ...options: { secure: boolean }[])",
+  ],
+]) {
+  test(`rejects presentation ${name} instead of accepting a shadowed call`, async (context) => {
+    const { root, validateUiInteractions } = await validateFixture(context);
+    assert.deepEqual(await validateUiInteractions(root), []);
+    await replace(root, "apps/storefront/src/presentation-locale.ts", from, to);
+    includesError(
+      await validateUiInteractions(root),
+      "presentation locale routes and cookie must use the exact canonical helper",
+    );
+  });
 }
 
 test("accepts the reviewed P2-03 interaction contract", async (context) => {
@@ -519,13 +772,13 @@ test("keeps pseudo locale internal and forbids flag-based language UI", async (c
   includesError(errors, "language and region controls must not use flags");
 });
 
-test("requires schema-validated locale URLs and host-only cookie attributes", async (context) => {
+test("requires canonical-validated locale URLs and host-only cookie attributes", async (context) => {
   const { root, validateUiInteractions } = await validateFixture(context);
   await replace(
     root,
     "apps/storefront/src/presentation-locale.ts",
-    "supportedLocaleSchema.safeParse(value)",
-    "{ success: true, data: value as SupportedLocale }",
+    "requireCanonicalLocale(nextLocale)",
+    "nextLocale as SupportedLocale",
   );
   await replace(
     root,
@@ -543,7 +796,7 @@ test("requires schema-validated locale URLs and host-only cookie attributes", as
   const errors = await validateUiInteractions(root);
   includesError(
     errors,
-    "presentation locale values must use supportedLocaleSchema.safeParse",
+    "presentation locale routes and cookie must use the exact canonical helper",
   );
   includesError(errors, "locale cookie must set SameSite=Lax");
   includesError(errors, "locale cookie must remain host-only without Domain");

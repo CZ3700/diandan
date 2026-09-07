@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "scope": "Read-only preparation smoke. No START/FINISH, business mutation, clipboard write, credentials export, HAR or trace. Existing role windows remain available for the human.",
+  "guide": "http://127.0.0.1:59939",
+  "admin": "http://localhost:59200",
+  "ownerPid": 88206,
+  "outerPid": 88184,
+  "toolSession": 23606,
+  "startedAt": "2026-09-07T19:54:16.446Z",
+  "assertions": 22,
+  "cases": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "PASS",
+      "observation": {
+        "title": "本地运营验收操作卡",
+        "groups": 3,
+        "copyButtons": 34,
+        "rawCollapsed": true,
+        "rawVisible": false,
+        "startButtons": 3,
+        "finishDisabled": true,
+        "operatorEmpty": true,
+        "attempts": 0,
+        "overflow": false,
+        "pendingCopy": true
+      },
+      "screenshot": "final-guide-1440.png"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": "PASS",
+      "observation": {
+        "title": "本地运营验收操作卡",
+        "groups": 3,
+        "copyButtons": 34,
+        "rawCollapsed": true,
+        "rawVisible": false,
+        "startButtons": 3,
+        "finishDisabled": true,
+        "operatorEmpty": true,
+        "attempts": 0,
+        "overflow": false,
+        "pendingCopy": true
+      },
+      "screenshot": "final-guide-390.png"
+    }
+  ],
+  "pageErrors": [],
+  "preparation": {
+    "materialsSha256": "56d827550c86a7f6a41498b43c1ead06e8249d58d6ee348452bf0e41ac5dda57",
+    "measuredGiftCreated": false,
+    "humanOperationsAcceptance": false,
+    "timingAttemptsBefore": 0,
+    "timingAttemptsAfter": 0
+  },
+  "http": [
+    {
+      "label": "guide",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "no-store"
+    },
+    {
+      "label": "materials",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "cacheControl": "no-store"
+    },
+    {
+      "label": "state",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "cacheControl": "no-store"
+    },
+    {
+      "label": "admin-health",
+      "status": 200,
+      "contentType": "application/json",
+      "cacheControl": "private, no-store, max-age=0"
+    }
+  ],
+  "browserVersion": "152.0.7977.82",
+  "environmentKeptRunning": true,
+  "approximateRuntimeDeadline": "2026-09-07T20:52:14Z",
+  "deadlineScope": "Outer existing runner timeout is one hour from launch; exact identity expiry can be earlier. Preparation is not human acceptance.",
+  "finishedAt": "2026-09-07T19:54:18.346Z"
+}

@@ -22,3 +22,4 @@ export * from "./published-content.js";
 export * from "./published-gift-commerce.js";
 
 export * from "./storefront-homepage.js";
+export * from "./storefront-seo.js";

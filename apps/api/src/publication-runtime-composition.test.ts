@@ -35,6 +35,11 @@ test("connects both real use cases and drains one shared test persistence once",
     code: "NOT_FOUND",
   }));
   const createPersistence = vi.fn(() => ({
+    storefrontSeoTransactionManager: {
+      runInStorefrontSeoTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ storefrontSeo: { loadEntity: load } }),
+    },
     storefrontCommerceTransactionManager: {
       runInStorefrontCommerceTransaction: async (
         work: (repositories: unknown) => unknown,
@@ -100,6 +105,13 @@ test("connects both real use cases and drains one shared test persistence once",
     locator: { kind: "HOMEPAGE" },
     locale: "ja",
   });
+  await expect(
+    composition.storefrontSeoRoute.useCases.execute({
+      schemaVersion: 1,
+      operation: "ENTITY",
+      locator: { kind: "HOMEPAGE" },
+    }),
+  ).resolves.toMatchObject({ code: "NOT_FOUND" });
   await composition.publicationRuntimeLifecycle.start();
   await Promise.all([
     composition.publicationRuntimeLifecycle.stop(),

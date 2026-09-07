@@ -76,3 +76,93 @@ it("rejects a different locale and a response exceeding the requested result win
     code: "CATALOG_UNAVAILABLE",
   });
 });
+
+it("keeps full query validation before fetch and supplies the schema's default window", async () => {
+  const { requestArtistDirectory } = await import("./directory-request");
+  const request = vi.fn<typeof fetch>(async () =>
+    Response.json(directoryFixturePage([])),
+  );
+  const signal = new AbortController().signal;
+  for (const query of [
+    { schemaVersion: 1, locale: "en", limit: 41 },
+    { schemaVersion: 1, locale: "en", limit: 12, q: "a\u200fb" },
+    { schemaVersion: 1, locale: "en", limit: 12, anchorId: "not-an-id" },
+    {
+      schemaVersion: 1,
+      locale: "en",
+      limit: 12,
+      after: "cursor",
+      anchorId: "a0000000-0000-4000-8000-000000000001",
+    },
+    { schemaVersion: 1, locale: "en", limit: 12, unexpected: "private" },
+  ]) {
+    await expect(
+      requestArtistDirectory(
+        query as Parameters<typeof requestArtistDirectory>[0],
+        signal,
+        request,
+      ),
+    ).resolves.toMatchObject({ outcome: "FAILURE", code: "INVALID_QUERY" });
+  }
+  expect(request).not.toHaveBeenCalled();
+  await expect(
+    requestArtistDirectory({ schemaVersion: 1, locale: "en" }, signal, request),
+  ).resolves.toMatchObject({ outcome: "SUCCESS" });
+  expect(request.mock.calls[0]?.[0]).toBe(
+    "/api/storefront/idols?locale=en&limit=12",
+  );
+});
+
+it("validates both Unicode input and full network DTOs through the deferred search path", async () => {
+  const { requestArtistSearch } = await import("./directory-request");
+  const request = vi.fn<typeof fetch>(async () =>
+    Response.json(directoryFixturePage([1])),
+  );
+  const signal = new AbortController().signal;
+  for (const raw of ["a".repeat(81), "a\u200fb"])
+    await expect(
+      requestArtistSearch(raw, "en", signal, request),
+    ).resolves.toEqual({ kind: "invalid" });
+  expect(request).not.toHaveBeenCalled();
+  const result = await requestArtistSearch(
+    "  Điện 日本  ",
+    "en",
+    signal,
+    request,
+  );
+  expect(result).toMatchObject({
+    kind: "response",
+    response: { outcome: "SUCCESS" },
+  });
+  expect(request.mock.calls[0]?.[0]).toBe(
+    "/api/storefront/idols?locale=en&limit=6&q=%C4%90i%E1%BB%87n+%E6%97%A5%E6%9C%AC",
+  );
+  const original = directoryFixturePage([1]);
+  if (original.outcome !== "SUCCESS") throw new Error("Invalid fixture");
+  for (const item of [
+    { ...original.items[0], id: "not-an-id" },
+    { ...original.items[0], privateNote: "must not cross this boundary" },
+    {
+      ...original.items[0],
+      portrait: { ...original.items[0]!.portrait, width: 0 },
+    },
+    {
+      ...original.items[0],
+      localeContext: {
+        schemaVersion: 1,
+        requestedLocale: "ja",
+        resolvedLocale: "ja",
+        fallbackUsed: false,
+      },
+    },
+  ]) {
+    await expect(
+      requestArtistSearch("artist", "en", signal, async () =>
+        Response.json({ ...original, items: [item] }),
+      ),
+    ).resolves.toMatchObject({
+      kind: "response",
+      response: { outcome: "FAILURE", code: "CATALOG_UNAVAILABLE" },
+    });
+  }
+});

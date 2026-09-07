@@ -6,7 +6,10 @@ import {
 } from "@fan-support/contracts";
 import type { PublicationPreflightRepository } from "@fan-support/persistence-port";
 import { baseContentFailure, baseContentRun } from "./base-content-data.js";
-import { lockAuthoringOwner } from "./content-authoring-data.js";
+import {
+  lockAuthoringOwner,
+  type ContentSnapshotLockMode,
+} from "./content-authoring-data.js";
 import { ownerValue } from "./content-authoring-model.js";
 import { draftRows, type DraftRow } from "./content-draft-data.js";
 import {
@@ -44,6 +47,7 @@ function snapshotInstants(snapshot: ContentAuthoringSnapshot): string[] {
 export function createPublicationPreflightRepository(
   client: TransactionClient,
   scope: TransactionScopeControl,
+  lockMode: ContentSnapshotLockMode = "UPDATE",
 ): PublicationPreflightRepository {
   return {
     load: (input) =>
@@ -52,12 +56,13 @@ export function createPublicationPreflightRepository(
         if (!parsed.success) return baseContentFailure("INVALID_COMMAND");
         const command = parsed.data;
         await client.query("SET LOCAL TIME ZONE 'UTC'");
-        if (!(await lockAuthoringOwner(client, command.target.owner)))
+        if (!(await lockAuthoringOwner(client, command.target.owner, lockMode)))
           return baseContentFailure("NOT_FOUND");
         const snapshot = await preflightSnapshot(
           client,
           command.target.owner,
           command.target.revisionId,
+          lockMode,
         );
         if (!snapshot) return baseContentFailure("NOT_FOUND");
         const table = PREFLIGHT_TABLES[snapshot.target.kind];
@@ -90,10 +95,10 @@ export function createPublicationPreflightRepository(
               publishedAt: historical["published_at"],
             }
           : null;
-        const media = await loadPreflightMedia(client, snapshot);
+        const media = await loadPreflightMedia(client, snapshot, lockMode);
         const snapshots = [snapshot, ...media.mediaSnapshots];
         const approvals = snapshots.flatMap(preflightApprovals);
-        const copies = await loadPreflightCopies(client, snapshots);
+        const copies = await loadPreflightCopies(client, snapshots, lockMode);
         const extensionApprovals = await loadPreflightExtensionApprovals(
           client,
           snapshot,

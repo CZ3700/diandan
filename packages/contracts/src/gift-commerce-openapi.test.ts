@@ -17,7 +17,7 @@ type Operation = {
   security: unknown;
   responses: Record<
     string,
-    { headers: Record<string, { schema: { const: string } }> }
+    { headers: Record<string, { schema: { const?: string; enum?: string[] } }> }
   >;
 };
 import { expect, test } from "vitest";
@@ -69,11 +69,17 @@ test("public commerce content requires an explicit locale and no private session
   const read = value["/api/v1/gift-content/{handle}"]!.get;
   expect(read.security).toEqual([]);
   expect(read.parameters.map((p) => [p.name, p.in, p.required])).toEqual([
+    ["If-None-Match", "header", false],
     ["handle", "path", true],
     ["locale", "query", true],
   ]);
-  expect(read.responses["200"]!.headers["Cache-Control"]!.schema.const).toBe(
-    "no-store",
-  );
+  expect(read.responses["200"]!.headers["Cache-Control"]!.schema).toEqual({
+    type: "string",
+    enum: [
+      "public, max-age=0, s-maxage=0, must-revalidate",
+      "private, no-store",
+    ],
+  });
+  expect(read.responses["304"]).not.toHaveProperty("content");
   expect(read.requestBody).toBeUndefined();
 });

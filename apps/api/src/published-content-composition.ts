@@ -4,6 +4,7 @@ import {
   createPublishedGiftCommerceUseCases,
   createStorefrontHomepageUseCases,
   createStorefrontCommerceUseCases,
+  createStorefrontSeoUseCases,
 } from "@fan-support/application";
 import {
   resolveDatabaseRuntimeConfig,
@@ -28,6 +29,7 @@ type PublishedPersistence = Pick<
   | "publishedGiftCommerceTransactionManager"
   | "storefrontHomepageTransactionManager"
   | "storefrontCommerceTransactionManager"
+  | "storefrontSeoTransactionManager"
   | "close"
 >;
 type PersistenceFactory = (
@@ -44,6 +46,7 @@ export type PublishedContentComposition = Readonly<{
   publishedGiftCommerceRoute: PublishedGiftCommerceRouteDependencies;
   storefrontHomepageRoute: StorefrontHomepageRouteDependencies;
   storefrontCommerceRoute: StorefrontCommerceRouteDependencies;
+  storefrontSeoRoute: StorefrontSeoRouteDependencies;
   publishedContentRuntime: ApiLifecycleResource;
 }>;
 
@@ -71,6 +74,11 @@ export function createPublishedContentComposition(
   );
   let closePromise: Promise<void> | undefined;
   return Object.freeze({
+    storefrontSeoRoute: {
+      useCases: createStorefrontSeoUseCases({
+        transactions: persistence.storefrontSeoTransactionManager,
+      }),
+    },
     storefrontCommerceRoute: {
       useCases: createStorefrontCommerceUseCases({
         transactions: persistence.storefrontCommerceTransactionManager,
@@ -100,3 +108,4 @@ export function createPublishedContentComposition(
     }),
   });
 }
+import type { StorefrontSeoRouteDependencies } from "./storefront-seo-route.js";

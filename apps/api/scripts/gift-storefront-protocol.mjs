@@ -1,4 +1,8 @@
 import {
+  assertPublicGetCaching,
+  verifyPublicGetConditional,
+} from "./public-get-revalidation.mjs";
+import {
   SUPPORTED_LOCALES,
   giftDirectoryResponseSchema,
   publishedGiftCommerceResponseSchema,
@@ -105,8 +109,13 @@ export async function verifyGiftStorefrontProtocol({
       "public gift browsing excludes internal proof, credentials and private fan or artist details",
     );
   }
+  const verifiedCacheScopes = new Set();
+  const previousTags = new Map();
   async function get(route, schema, status = 200) {
     const response = await globalThis.fetch(base + route, {
+      ...(status !== 200 && previousTags.has(route)
+        ? { headers: { "if-none-match": previousTags.get(route) } }
+        : {}),
       signal: globalThis.AbortSignal.timeout(30000),
       redirect: "manual",
     });
@@ -119,10 +128,21 @@ export async function verifyGiftStorefrontProtocol({
       response.status === status,
       `actual ${route.split("?")[0]} status matches contract`,
     );
-    check(
-      response.headers.get("cache-control") === "no-store",
-      "public read does not create an uncontrolled shared cache",
-    );
+    assertPublicGetCaching(response, parsed, check);
+    if (response.status === 200 && parsed.outcome === "SUCCESS") {
+      previousTags.set(route, response.headers.get("etag"));
+      const resource = route.split("?")[0].split("/").slice(0, 4).join("/");
+      if (!verifiedCacheScopes.has(resource)) {
+        await verifyPublicGetConditional({
+          base,
+          route,
+          response,
+          schema,
+          check,
+        });
+        verifiedCacheScopes.add(resource);
+      }
+    }
     return parsed;
   }
   const directory = (scope, query = {}, status = 200) =>

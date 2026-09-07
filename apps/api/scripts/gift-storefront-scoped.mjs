@@ -1,3 +1,7 @@
+import {
+  assertPublicGetCaching,
+  verifyPublicGetConditional,
+} from "./public-get-revalidation.mjs";
 import { randomUUID } from "node:crypto";
 import {
   SUPPORTED_LOCALES,
@@ -13,8 +17,13 @@ export async function verifyGiftStorefrontScoped({
   check,
 }) {
   const cases = [];
+  const verifiedCacheScopes = new Set();
+  const previousTags = new Map();
   async function get(route, schema, status = 200) {
     const response = await globalThis.fetch(base + route, {
+      ...(status !== 200 && previousTags.has(route)
+        ? { headers: { "if-none-match": previousTags.get(route) } }
+        : {}),
       redirect: "manual",
       signal: globalThis.AbortSignal.timeout(30_000),
     });
@@ -28,10 +37,21 @@ export async function verifyGiftStorefrontScoped({
       response.status === status && value.success,
       "scoped HTTP result has exact status and schema",
     );
-    check(
-      response.headers.get("cache-control") === "no-store",
-      "scoped commerce has no shared-cache authority",
-    );
+    assertPublicGetCaching(response, value.data, check);
+    if (response.status === 200 && value.data.outcome === "SUCCESS") {
+      previousTags.set(route, response.headers.get("etag"));
+      const resource = route.split("?")[0].split("/").slice(0, 4).join("/");
+      if (!verifiedCacheScopes.has(resource)) {
+        await verifyPublicGetConditional({
+          base,
+          route,
+          response,
+          schema,
+          check,
+        });
+        verifiedCacheScopes.add(resource);
+      }
+    }
     check(
       !/(sourceObjectKey|rightsReference|sessionToken|csrfToken|signedUrl|reviewedBy|fanMessage|fulfillmentAddress)/u.test(
         JSON.stringify(value.data),

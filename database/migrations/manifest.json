@@ -200,6 +200,16 @@
         "up": "181324185661d1975f60f8931fb4791997659943f06fcb05b2fbad8ced090204",
         "down": "9f8eff0d2b50130ef1c9d583adc3e97f4155bafe75b668fe221e53fe843acc89"
       }
+    },
+    {
+      "version": "0021",
+      "name": "storefront-seo-purge",
+      "up": "database/migrations/0021_storefront-seo-purge.up.sql",
+      "down": "database/migrations/0021_storefront-seo-purge.down.sql",
+      "sha256": {
+        "up": "8b9f8f46e234e337ae734995080a7ce3fb422b15d8fe142e5f3fdae4ed7be88d",
+        "down": "c282bee67699190a62a0a6bcc577435d0f8d830d46bb914c2716265cd7c72080"
+      }
     }
   ]
 }

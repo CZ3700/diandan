@@ -1,19 +1,22 @@
+import {
+  publicNotModifiedResponse,
+  publicRevalidationHeaders,
+  publicRevalidationParameter,
+} from "./public-revalidation-openapi.js";
 export function storefrontCommercePaths() {
-  const response = (schema: string, description: string) => ({
+  const response = (schema: string, description: string, success = false) => ({
     description,
-    headers: {
-      "Cache-Control": { schema: { type: "string", const: "no-store" } },
-    },
+    headers: publicRevalidationHeaders(success ? 200 : "FAILURE"),
     content: {
       "application/json": {
         schema: { $ref: `#/components/schemas/${schema}` },
       },
     },
   });
-  const context = (description: string) =>
-    response("StorefrontContextResponse", description);
-  const gift = (description: string) =>
-    response("StorefrontGiftResponse", description);
+  const context = (description: string, success = false) =>
+    response("StorefrontContextResponse", description, success);
+  const gift = (description: string, success = false) =>
+    response("StorefrontGiftResponse", description, success);
   return {
     "/api/v1/storefront-context": {
       get: {
@@ -23,11 +26,13 @@ export function storefrontCommercePaths() {
         description:
           "Only current effective PostgreSQL prices select scopes. Policy links require their actual current publication proof. No country, currency or market is inferred from locale. Unknown and duplicate query parameters are rejected.",
         security: [],
-        parameters: [],
+        parameters: [publicRevalidationParameter()],
         responses: {
           200: context(
             "Public scope and policy configuration; empty is valid.",
+            true,
           ),
+          304: publicNotModifiedResponse(),
           400: context("No query parameters are accepted."),
           503: context("Commerce configuration unavailable."),
         },
@@ -42,6 +47,7 @@ export function storefrontCommercePaths() {
           "A SERIALIZABLE PostgreSQL snapshot binds immutable publication proof to current price, stock and operating state. Tracked stock is the maximum available quantity at one active location. Procurement and preorder do not claim physical stock. No selected recipient permits browsing only. This read never reserves stock or creates a cart or payment. Unknown or duplicate query parameters are rejected.",
         security: [],
         parameters: [
+          publicRevalidationParameter(),
           {
             name: "handle",
             in: "path",
@@ -74,7 +80,8 @@ export function storefrontCommercePaths() {
           },
         ],
         responses: {
-          200: gift("Published gift and current typed variant offers."),
+          200: gift("Published gift and current typed variant offers.", true),
+          304: publicNotModifiedResponse(),
           400: gift("Invalid query; locale, market and currency are required."),
           404: gift("No current published gift."),
           409: gift(

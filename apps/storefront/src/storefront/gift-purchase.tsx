@@ -1,14 +1,13 @@
-"use client";
-import { useId, useState } from "react";
+import "server-only";
 import type {
   StorefrontGiftOffer,
   StorefrontGiftResponse,
   SupportedLocale,
 } from "@fan-support/contracts";
 import { Price } from "@fan-support/ui";
-import { Quantity } from "@fan-support/ui/client";
+import { GiftQuantity } from "./gift-quantity";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
-import { giftSelectionHref, selectGiftOffer } from "./gift-selection";
+import { giftSelectionHref, selectGiftOffer } from "./gift-selection-values";
 
 type Gift = Extract<StorefrontGiftResponse, { outcome: "SUCCESS" }>;
 export function GiftPurchase({
@@ -102,8 +101,6 @@ function Offer({
   locale: SupportedLocale;
   copy: StorefrontCopy;
 }>) {
-  const id = useId();
-  const [quantity, setQuantity] = useState(1);
   const policyLabels = {
     TRACKED: copy.giftTracked,
     PREORDER: copy.giftPreorder,
@@ -158,15 +155,12 @@ function Offer({
         <p className="gift-offer-notice">{copy.giftRecipientMissing}</p>
       )}
       {offer.availability !== "UNAVAILABLE" && !offer.requiresRecipient && (
-        <Quantity
-          id={id}
+        <GiftQuantity
+          key={`${offer.giftVariantId}:${offer.maxQuantity}:${gift.recipient.kind}`}
           label={copy.giftQuantity}
           decreaseLabel={copy.giftQuantityDecrease}
           increaseLabel={copy.giftQuantityIncrease}
-          min={1}
           max={offer.maxQuantity}
-          value={quantity}
-          onValueChange={setQuantity}
         />
       )}
     </div>

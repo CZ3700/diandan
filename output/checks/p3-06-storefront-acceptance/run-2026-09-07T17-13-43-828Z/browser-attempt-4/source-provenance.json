@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "sourceManifest": "output/checks/p3-06-storefront-acceptance/implementation-source-before-final-matrix.json",
+  "sourceSha256": "662dcb3e30ca0d97e070e90262a7e8b6945d5b52ba12088a338ea7d119cc148f",
+  "sourceFileCount": 1540,
+  "previousCompiledSourceSha256": "7f4695db1562591e674b91776af7ca095ecea0cb44da77d62e94555fe49a4446",
+  "differenceFromPrevious": "One standalone acceptance harness file added; product source byte-identical. SIGUSR1 rebuilt the production artifact before this run.",
+  "runtime": "Compiled production artifact under TEST runtime with real PostgreSQL/API/TLS media; local HTTP browser origin.",
+  "signalSentAt": "2026-09-07T18:22:50Z",
+  "userDesktopApplicationsRemainRunning": true,
+  "concurrentProjectBuildsDuringMeasurements": false,
+  "voiceOverOrRealDeviceEvidence": false
+}

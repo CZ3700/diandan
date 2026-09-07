@@ -1,5 +1,74 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import ts from "typescript";
 import { parseGiftSelection, giftSelectionHref } from "./gift-selection";
+import * as legacy from "./gift-selection";
+import * as pureSelection from "./gift-selection-values";
+
+function declarationModule(name: string) {
+  const entry = new URL("./gift-selection.ts", import.meta.url);
+  const source = ts.createSourceFile(
+    "gift-selection.ts",
+    readFileSync(entry, "utf8"),
+    ts.ScriptTarget.Latest,
+    true,
+  );
+  for (const statement of source.statements) {
+    if (ts.isFunctionDeclaration(statement) && statement.name?.text === name)
+      return source;
+    if (
+      ts.isExportDeclaration(statement) &&
+      statement.moduleSpecifier &&
+      ts.isStringLiteral(statement.moduleSpecifier) &&
+      statement.exportClause &&
+      ts.isNamedExports(statement.exportClause) &&
+      statement.exportClause.elements.some(
+        (element) => element.name.text === name,
+      )
+    ) {
+      const file = new URL(
+        statement.moduleSpecifier.text.replace(/(?:\.js)?$/u, ".ts"),
+        entry,
+      );
+      return ts.createSourceFile(
+        file.pathname,
+        readFileSync(file, "utf8"),
+        ts.ScriptTarget.Latest,
+        true,
+      );
+    }
+  }
+  throw new Error(`Missing selection export: ${name}`);
+}
+
+it.each(["giftSelectionHref", "giftCanonicalPath", "selectGiftOffer"])(
+  "%s is declared independently of raw query schemas",
+  (name) => {
+    const source = declarationModule(name);
+    const runtimeContracts = source.statements.filter(
+      (statement) =>
+        ts.isImportDeclaration(statement) &&
+        ts.isStringLiteral(statement.moduleSpecifier) &&
+        statement.moduleSpecifier.text === "@fan-support/contracts" &&
+        !statement.importClause?.isTypeOnly,
+    );
+    expect(runtimeContracts).toHaveLength(0);
+  },
+);
+
+it("retains the legacy exports as the same pure function bindings", () => {
+  expect(Object.keys(legacy).sort()).toEqual([
+    "giftCanonicalPath",
+    "giftRecoveryQuery",
+    "giftSelectionHref",
+    "parseGiftSelection",
+    "selectGiftOffer",
+  ]);
+  for (const key of Object.keys(
+    pureSelection,
+  ) as (keyof typeof pureSelection)[])
+    expect(legacy[key]).toBe(pureSelection[key]);
+});
 
 describe("gift detail selection URLs", () => {
   it("requires explicit market and currency independently from locale", () => {

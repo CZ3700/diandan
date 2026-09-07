@@ -1,3 +1,4 @@
+import { sendRevalidatedPublicJson } from "./public-revalidation-response.js";
 import type { FastifyInstance, FastifyReply } from "fastify";
 import {
   publishedGiftCommerceReadCommandSchema,
@@ -10,11 +11,22 @@ export type PublishedGiftCommerceRouteDependencies = Readonly<{
     execute(input: unknown): Promise<PublishedGiftCommerceResponse>;
   }>;
 }>;
-function privacy(reply: FastifyReply) {
+function securityHeaders(reply: FastifyReply): void {
   void reply
-    .header("cache-control", "no-store")
     .header("x-robots-tag", "noindex, nofollow")
     .header("referrer-policy", "no-referrer");
+}
+function privacy(reply: FastifyReply): void {
+  securityHeaders(reply);
+  void reply
+    .header(
+      "cache-control",
+      reply.request.headers.cookie !== undefined ||
+        reply.request.headers.authorization !== undefined
+        ? "private, no-store"
+        : "no-store",
+    )
+    .removeHeader("etag");
 }
 function failure(reply: FastifyReply, code: PublishedContentFailure["code"]) {
   privacy(reply);
@@ -32,7 +44,7 @@ export function registerPublishedGiftCommerceRoute(
         privacy(reply);
       });
       scope.addHook("onSend", async (_request, reply, payload) => {
-        privacy(reply);
+        securityHeaders(reply);
         return payload;
       });
       scope.setErrorHandler((_error, _request, reply) =>
@@ -73,7 +85,10 @@ export function registerPublishedGiftCommerceRoute(
             view.localeContext.fallbackUsed
           )
             return failure(reply, "CONTENT_UNAVAILABLE");
-          return reply.send(response);
+          return sendRevalidatedPublicJson(request, reply, response, {
+            resource: "published-gift-commerce",
+            query: command.data,
+          });
         } catch {
           return failure(reply, "CONTENT_UNAVAILABLE");
         }

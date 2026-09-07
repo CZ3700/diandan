@@ -1,3 +1,4 @@
+import { sendRevalidatedPublicJson } from "./public-revalidation-response.js";
 import type { FastifyInstance, FastifyReply } from "fastify";
 import {
   storefrontContextResponseSchema,
@@ -17,11 +18,22 @@ type Failure = Extract<
   StorefrontContextResponse | StorefrontGiftResponse,
   { outcome: "FAILURE" }
 >;
-function privacy(reply: FastifyReply) {
+function securityHeaders(reply: FastifyReply): void {
   void reply
-    .header("cache-control", "no-store")
     .header("x-robots-tag", "noindex, nofollow")
     .header("referrer-policy", "no-referrer");
+}
+function privacy(reply: FastifyReply): void {
+  securityHeaders(reply);
+  void reply
+    .header(
+      "cache-control",
+      reply.request.headers.cookie !== undefined ||
+        reply.request.headers.authorization !== undefined
+        ? "private, no-store"
+        : "no-store",
+    )
+    .removeHeader("etag");
 }
 function failure(reply: FastifyReply, code: Failure["code"]) {
   privacy(reply);
@@ -46,7 +58,7 @@ export function registerStorefrontCommerceRoute(
       privacy(reply);
     });
     scope.addHook("onSend", async (_request, reply, payload) => {
-      privacy(reply);
+      securityHeaders(reply);
       return payload;
     });
     scope.setErrorHandler((_error, request, reply) =>
@@ -73,7 +85,10 @@ export function registerStorefrontCommerceRoute(
           );
           return result.outcome === "FAILURE"
             ? failure(reply, result.code)
-            : reply.send(result);
+            : sendRevalidatedPublicJson(request, reply, result, {
+                resource: "storefront-context",
+                query: { schemaVersion: 1 },
+              });
         } catch {
           return failure(reply, "COMMERCE_UNAVAILABLE");
         }
@@ -135,7 +150,10 @@ export function registerStorefrontCommerceRoute(
                 ).toLowerCase() !== command.data.idolId.toLowerCase())
           )
             return failure(reply, "CONTENT_UNAVAILABLE");
-          return reply.send(result);
+          return sendRevalidatedPublicJson(request, reply, result, {
+            resource: "storefront-gift",
+            query: command.data,
+          });
         } catch {
           return failure(reply, "CONTENT_UNAVAILABLE");
         }

@@ -1,52 +1,59 @@
-import {
-  idolDirectoryResponseSchema,
-  idolDiscoveryQuerySchema,
-  type IdolDirectoryResponse,
-  type IdolDiscoveryQuery,
+import type {
+  IdolDirectoryResponse,
+  SupportedLocale,
 } from "@fan-support/contracts";
+import type { ArtistDirectoryQuery } from "./directory-validation";
+export type { ArtistDirectoryQuery } from "./directory-validation";
+
+function unavailable(): IdolDirectoryResponse {
+  return { schemaVersion: 1, outcome: "FAILURE", code: "CATALOG_UNAVAILABLE" };
+}
 
 export async function requestArtistDirectory(
-  query: IdolDiscoveryQuery,
+  query: ArtistDirectoryQuery,
   signal: AbortSignal,
   request: typeof fetch = fetch,
 ): Promise<IdolDirectoryResponse> {
-  const parsed = idolDiscoveryQuerySchema.safeParse(query);
-  if (!parsed.success)
-    return { schemaVersion: 1, outcome: "FAILURE", code: "INVALID_QUERY" };
-  const params = new URLSearchParams({
-    locale: parsed.data.locale,
-    limit: String(parsed.data.limit),
-  });
-  if (parsed.data.q !== undefined) params.set("q", parsed.data.q);
-  if (parsed.data.after !== undefined) params.set("after", parsed.data.after);
-  if (parsed.data.anchorId !== undefined)
-    params.set("anchorId", parsed.data.anchorId);
   try {
-    const response = await request(
-      `/api/storefront/idols?${params.toString()}`,
-      { cache: "no-store", credentials: "same-origin", signal },
+    if (signal.aborted) return unavailable();
+    const validation = await import("./directory-validation");
+    if (signal.aborted) return unavailable();
+    const response = await validation.requestArtistDirectory(
+      query,
+      signal,
+      request,
     );
-    const result = idolDirectoryResponseSchema.parse(await response.json());
-    if (result.outcome === "FAILURE") return result;
-    if (
-      !response.ok ||
-      result.items.length > parsed.data.limit ||
-      (result.pageInfo.hasNextPage &&
-        result.items.length !== parsed.data.limit) ||
-      result.items.some(
-        (item) =>
-          item.localeContext.requestedLocale !== parsed.data.locale ||
-          item.localeContext.resolvedLocale !== parsed.data.locale ||
-          item.localeContext.fallbackUsed,
-      )
-    )
-      throw new Error("Invalid directory response");
-    return result;
+    return signal.aborted ? unavailable() : response;
   } catch {
+    return unavailable();
+  }
+}
+
+export async function requestArtistSearch(
+  raw: string,
+  locale: SupportedLocale,
+  signal: AbortSignal,
+  request: typeof fetch = fetch,
+): Promise<
+  | Readonly<{ kind: "invalid" }>
+  | Readonly<{ kind: "response"; response: IdolDirectoryResponse }>
+> {
+  try {
+    if (signal.aborted) return { kind: "response", response: unavailable() };
+    const validation = await import("./directory-validation");
+    if (signal.aborted) return { kind: "response", response: unavailable() };
+    const prepared = validation.prepareArtistSearch(raw, false);
+    if (prepared.kind !== "query") return { kind: "invalid" };
+    const response = await validation.requestArtistDirectory(
+      { schemaVersion: 1, locale, limit: 6, q: prepared.q },
+      signal,
+      request,
+    );
     return {
-      schemaVersion: 1,
-      outcome: "FAILURE",
-      code: "CATALOG_UNAVAILABLE",
+      kind: "response",
+      response: signal.aborted ? unavailable() : response,
     };
+  } catch {
+    return { kind: "response", response: unavailable() };
   }
 }

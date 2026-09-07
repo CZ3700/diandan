@@ -1,4 +1,5 @@
 .storefront {
+  isolation: isolate;
   color: var(--color-text);
   background: var(--color-bg);
   overflow-wrap: anywhere;

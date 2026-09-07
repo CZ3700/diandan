@@ -1,0 +1,408 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "sourceSha256": "7f4695db1562591e674b91776af7ca095ecea0cb44da77d62e94555fe49a4446",
+  "scope": "Compiled TEST Chrome async-validation regression; actual API/script bytes; fault injection only. No Lighthouse, VoiceOver, BFCache or production claim.",
+  "startedAt": "2026-09-07T18:18:47.019Z",
+  "chunks": {
+    "gift": [
+      {
+        "path": "/_next/static/chunks/1fmu990k9ls3p.js",
+        "sha256": "1ff71d5e7d2a509c77050ee96a209f0874de7b05833407389cfc4b1aa5648969",
+        "export": "validateGiftFilterDraft"
+      }
+    ],
+    "artist": [
+      {
+        "path": "/_next/static/chunks/3uj1ol0m8neth.js",
+        "sha256": "186dc485e3f56f92d5667e8cda179cb6bfd5298ec99f4d58f0f3fb054d403710",
+        "export": "prepareArtistSearch"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "gift-delay-edit",
+      "kind": "gift",
+      "status": "PASS",
+      "assertions": 6,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js",
+        "/_next/static/chunks/1fmu990k9ls3p.js",
+        "/_next/static/chunks/066uch4wt2mh4.js",
+        "/_next/static/chunks/17ukiawqd9x62.js",
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "queries": [],
+      "observations": {
+        "cancelledUrl": "http://localhost:57016/en/gifts?market=GLOBAL&currency=USD"
+      },
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "finalUrl": "http://localhost:57016/en/gifts?market=GLOBAL&currency=USD&page=1&pageSize=12&sort=PRICE_DESC&priceMinMinor=200&availability=ALL"
+    },
+    {
+      "name": "gift-delay-ime",
+      "kind": "gift",
+      "status": "PASS",
+      "assertions": 6,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js",
+        "/_next/static/chunks/1fmu990k9ls3p.js",
+        "/_next/static/chunks/066uch4wt2mh4.js",
+        "/_next/static/chunks/17ukiawqd9x62.js",
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "queries": [],
+      "observations": {
+        "cancelledUrl": "http://localhost:57016/en/gifts?market=GLOBAL&currency=USD"
+      },
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "finalUrl": "http://localhost:57016/en/gifts?market=GLOBAL&currency=USD&page=1&pageSize=12&sort=PRICE_DESC&priceMinMinor=200&availability=ALL"
+    },
+    {
+      "name": "gift-delay-close",
+      "kind": "gift",
+      "status": "FAIL",
+      "assertions": 2,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "queries": [],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "error": {
+        "name": "Error",
+        "message": "locator.click: Error: strict mode violation: locator('[data-overlay-trigger=\"drawer\"]') resolved to 2 elements:\n    1) <button tabindex=\"0\" type=\"button\" aria-expanded=\"false\" aria-haspopup=\"dialog\" class=\"fs-overlay-trigger\" data-base-ui-click-trigger=\"\" data-overlay-trigger=\"drawer\" id=\"base-ui-_R_7vilubsnpfivb_\">…</button> aka getByRole('button', { name: 'Menu' })\n    2) <button tabindex=\"0\" type=\"button\" aria-expanded=\"false\" aria-haspopup=\"dialog\" class=\"fs-overlay-trigger\" data-base-ui-click-trigger=\"\" data-overlay-trigger=\"drawer\" id=\"base-ui-_R_3t7klubsnpfivb_\">Filter and sort</button> aka getByRole('button', { name: 'Filter and sort' })\n\nCall log:\n\u001b[2m  - waiting for locator('[data-overlay-trigger=\"drawer\"]')\u001b[22m\n"
+      },
+      "finalUrl": "http://localhost:57016/en/gifts?market=GLOBAL&currency=USD"
+    },
+    {
+      "name": "gift-script-failure-recovery",
+      "kind": "gift",
+      "status": "PASS",
+      "assertions": 5,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js",
+        "/_next/static/chunks/1fmu990k9ls3p.js",
+        "/_next/static/chunks/066uch4wt2mh4.js",
+        "/_next/static/chunks/17ukiawqd9x62.js",
+        "/_next/static/chunks/1fmu990k9ls3p.js",
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js",
+        "/_next/static/chunks/1fmu990k9ls3p.js",
+        "/_next/static/chunks/066uch4wt2mh4.js",
+        "/_next/static/chunks/17ukiawqd9x62.js",
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "queries": [],
+      "observations": {
+        "recoveryHref": "/en/gifts?market=GLOBAL&currency=USD"
+      },
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/0vjwuf65439t2.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "finalUrl": "http://localhost:57016/en/gifts?market=GLOBAL&currency=USD&page=1&pageSize=12&sort=PRICE_DESC&priceMinMinor=200&availability=ALL"
+    },
+    {
+      "name": "artist-delay-escape",
+      "kind": "artist",
+      "status": "PASS",
+      "assertions": 6,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2vuwxt426o2_w.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js",
+        "/_next/static/chunks/3uj1ol0m8neth.js",
+        "/_next/static/chunks/066uch4wt2mh4.js",
+        "/_next/static/chunks/17ukiawqd9x62.js"
+      ],
+      "queries": [],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2vuwxt426o2_w.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "finalUrl": "http://localhost:57016/en/idols"
+    },
+    {
+      "name": "artist-delay-clear",
+      "kind": "artist",
+      "status": "PASS",
+      "assertions": 6,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2vuwxt426o2_w.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js",
+        "/_next/static/chunks/3uj1ol0m8neth.js",
+        "/_next/static/chunks/066uch4wt2mh4.js",
+        "/_next/static/chunks/17ukiawqd9x62.js"
+      ],
+      "queries": [],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2vuwxt426o2_w.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "finalUrl": "http://localhost:57016/en/idols"
+    },
+    {
+      "name": "artist-delay-ime",
+      "kind": "artist",
+      "status": "PASS",
+      "assertions": 6,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2vuwxt426o2_w.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js",
+        "/_next/static/chunks/3uj1ol0m8neth.js",
+        "/_next/static/chunks/066uch4wt2mh4.js",
+        "/_next/static/chunks/17ukiawqd9x62.js"
+      ],
+      "queries": [],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2vuwxt426o2_w.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "finalUrl": "http://localhost:57016/en/idols"
+    },
+    {
+      "name": "artist-delay-latest-wins",
+      "kind": "artist",
+      "status": "PASS",
+      "assertions": 5,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2vuwxt426o2_w.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js",
+        "/_next/static/chunks/3uj1ol0m8neth.js",
+        "/_next/static/chunks/066uch4wt2mh4.js",
+        "/_next/static/chunks/17ukiawqd9x62.js"
+      ],
+      "queries": [
+        "Kai"
+      ],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2vuwxt426o2_w.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "finalUrl": "http://localhost:57016/en/idols"
+    },
+    {
+      "name": "artist-script-failure-retry",
+      "kind": "artist",
+      "status": "PASS",
+      "assertions": 5,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2vuwxt426o2_w.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js",
+        "/_next/static/chunks/3uj1ol0m8neth.js",
+        "/_next/static/chunks/066uch4wt2mh4.js",
+        "/_next/static/chunks/17ukiawqd9x62.js",
+        "/_next/static/chunks/3uj1ol0m8neth.js",
+        "/_next/static/chunks/3uj1ol0m8neth.js"
+      ],
+      "queries": [
+        "Mira"
+      ],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2vuwxt426o2_w.js",
+        "/_next/static/chunks/2his4ro2odel9.js",
+        "/_next/static/chunks/284u0o263rb96.js",
+        "/_next/static/chunks/3ioapxzk91min.js"
+      ],
+      "finalUrl": "http://localhost:57016/en/idols"
+    }
+  ],
+  "browserVersion": "152.0.7977.82",
+  "finishedAt": "2026-09-07T18:19:10.833Z"
+}

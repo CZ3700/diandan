@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "compiledSourceSha256": "7f4695db1562591e674b91776af7ca095ecea0cb44da77d62e94555fe49a4446",
+  "harnessPath": "apps/api/scripts/storefront-acceptance-lazy-validation.mjs",
+  "harnessSha256": "9852757b83080c44ad35133570a7a4fd304f52cf61e49975276262ec1d64f3b2",
+  "browserVersion": "152.0.7977.82",
+  "status": "PASS",
+  "caseCount": 9,
+  "assertionCount": 51,
+  "screenshotCount": 9,
+  "productionSourceChangedDuringRun": false,
+  "firstAttempt": "lazy-validation-attempt-1",
+  "firstAttemptFailure": "Fixture strict locator matched both header and gift filter Drawer triggers; limited the trigger to existing gift-filters__mobile. No product fix or assertion removal."
+}

@@ -11,7 +11,7 @@ import type { StorefrontCopy } from "./copy";
 import { ArtistSearch } from "./artist-search";
 import { PublishedImage } from "./published-image";
 import { requestArtistDirectory } from "./directory-request";
-import { giftSelectionHref } from "./gift-selection";
+import { giftSelectionHref } from "./gift-selection-values";
 import { createDirectoryState, directoryReducer } from "./directory-model";
 
 export function GiftRecipientPicker({

@@ -17,6 +17,8 @@ const TOAST_PATH = "packages/ui/src/toast.tsx";
 const SELECTION_CONTROLS_PATH = "packages/ui/src/selection-controls.tsx";
 const INTERACTION_CSS_PATH = "packages/ui/styles/interactions.css";
 const CONTRACT_LOCALE_PATH = "packages/contracts/src/locale.ts";
+const CONTRACT_LOCALE_VALUES_PATH = "packages/contracts/src/locale-values.ts";
+const CANONICAL_LOCALE_PATH = "apps/storefront/src/canonical-locale.ts";
 const STOREFRONT_GLOBAL_CSS_PATH = "apps/storefront/src/app/globals.css";
 const INTERACTION_LAB_PATH = "apps/storefront/src/app/ui-interaction-lab.tsx";
 const PRESENTATION_LOCALE_PATH = "apps/storefront/src/presentation-locale.ts";
@@ -425,34 +427,186 @@ async function validateBaseUiBoundary(workspaceRoot, errors) {
   }
 }
 
+function hasExportModifier(node) {
+  return (
+    node.modifiers?.some(
+      (modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword,
+    ) ?? false
+  );
+}
+
+function valueBindingCount(sourceFile, name) {
+  let count = 0;
+  for (const statement of sourceFile.statements) {
+    if (ts.isVariableStatement(statement)) {
+      for (const declaration of statement.declarationList.declarations)
+        count += bindingIdentifiers(declaration.name).filter(
+          (value) => value === name,
+        ).length;
+    } else if (
+      ts.isFunctionDeclaration(statement) ||
+      ts.isClassDeclaration(statement)
+    ) {
+      if (statement.name?.text === name) count += 1;
+    } else if (ts.isImportDeclaration(statement)) {
+      const clause = statement.importClause;
+      if (clause?.isTypeOnly) continue;
+      if (clause?.name?.text === name) count += 1;
+      if (clause?.namedBindings && ts.isNamedImports(clause.namedBindings))
+        count += clause.namedBindings.elements.filter(
+          (element) => !element.isTypeOnly && element.name.text === name,
+        ).length;
+    }
+  }
+  return count;
+}
+
+function hasExactValueImport(sourceFile, module, name) {
+  return (
+    valueBindingCount(sourceFile, name) === 1 &&
+    sourceFile.statements.some((statement) => {
+      if (
+        !ts.isImportDeclaration(statement) ||
+        !ts.isStringLiteral(statement.moduleSpecifier) ||
+        statement.moduleSpecifier.text !== module
+      )
+        return false;
+      const clause = statement.importClause;
+      return (
+        clause !== undefined &&
+        !clause.isTypeOnly &&
+        clause.namedBindings !== undefined &&
+        ts.isNamedImports(clause.namedBindings) &&
+        clause.namedBindings.elements.some(
+          (element) =>
+            !element.isTypeOnly &&
+            element.name.text === name &&
+            (element.propertyName?.text ?? element.name.text) === name,
+        )
+      );
+    })
+  );
+}
+
+function hasExactValueReexport(sourceFile, module, name) {
+  const matches = [];
+  for (const statement of sourceFile.statements) {
+    if (
+      !ts.isExportDeclaration(statement) ||
+      !statement.exportClause ||
+      !ts.isNamedExports(statement.exportClause)
+    )
+      continue;
+    for (const element of statement.exportClause.elements)
+      if (element.name.text === name) matches.push({ statement, element });
+  }
+  if (matches.length !== 1) return false;
+  const { statement, element } = matches[0];
+  return (
+    !statement.isTypeOnly &&
+    !element.isTypeOnly &&
+    statement.moduleSpecifier !== undefined &&
+    ts.isStringLiteral(statement.moduleSpecifier) &&
+    statement.moduleSpecifier.text === module &&
+    (element.propertyName?.text ?? element.name.text) === name
+  );
+}
+
+function exportedConst(sourceFile, name) {
+  const declaration = directConstDeclaration(sourceFile, name);
+  return declaration !== undefined &&
+    valueBindingCount(sourceFile, name) === 1 &&
+    hasExportModifier(declaration.parent.parent)
+    ? declaration
+    : undefined;
+}
+
+function staticValue(expression) {
+  let current = expression;
+  while (
+    ts.isParenthesizedExpression(current) ||
+    ts.isAsExpression(current) ||
+    ts.isSatisfiesExpression(current)
+  )
+    current = current.expression;
+  return current;
+}
+
+function canonicalLocaleValues(sourceFile) {
+  const declaration = exportedConst(sourceFile, "SUPPORTED_LOCALES");
+  if (declaration === undefined) return undefined;
+  const initializer = staticValue(declaration.initializer);
+  if (
+    !ts.isCallExpression(initializer) ||
+    !pathMatches(initializer.expression, ["Object", "freeze"]) ||
+    initializer.arguments.length !== 1 ||
+    valueBindingCount(sourceFile, "Object") !== 0
+  )
+    return undefined;
+  const array = staticValue(initializer.arguments[0]);
+  return ts.isArrayLiteralExpression(array) &&
+    array.elements.every(ts.isStringLiteral)
+    ? array.elements.map((element) => element.text)
+    : undefined;
+}
+
 function validateCanonicalLocaleSource(
   contractLocale,
+  contractLocaleValues,
   selectionControls,
   errors,
 ) {
-  if (contractLocale !== undefined) {
-    const localeMatch = contractLocale.match(
-      /SUPPORTED_LOCALES\s*=\s*Object\.freeze\(\s*\[([\s\S]*?)\]\s*as\s+const\s*\)/u,
+  if (contractLocaleValues !== undefined) {
+    const locales = canonicalLocaleValues(
+      parseSource(contractLocaleValues, CONTRACT_LOCALE_VALUES_PATH),
     );
-    const locales = localeMatch?.[1]
-      ?.match(/["']([^"']+)["']/gu)
-      ?.map((literal) => literal.slice(1, -1));
     if (
       locales === undefined ||
       locales.length !== PUBLIC_LOCALES.length ||
       locales.some((locale, index) => locale !== PUBLIC_LOCALES[index])
-    ) {
+    )
       errors.push(
         `canonical SUPPORTED_LOCALES must remain ${PUBLIC_LOCALES.join(", ")}`,
       );
-    }
+  }
+  if (contractLocale !== undefined) {
+    const sourceFile = parseSource(contractLocale, CONTRACT_LOCALE_PATH);
     if (
-      !/supportedLocaleSchema\s*=\s*z\.enum\(SUPPORTED_LOCALES\)/u.test(
-        contractLocale,
+      !hasExactValueImport(
+        sourceFile,
+        "./locale-values.js",
+        "SUPPORTED_LOCALES",
       )
-    ) {
+    )
+      errors.push(
+        "locale.ts must value-import SUPPORTED_LOCALES from ./locale-values.js without shadowing",
+      );
+    if (
+      ![
+        "SUPPORTED_LOCALES",
+        "DEFAULT_LOCALE",
+        "LOCALE_NATIVE_NAMES",
+        "parseSupportedLocale",
+      ].every((name) =>
+        hasExactValueReexport(sourceFile, "./locale-values.js", name),
+      )
+    )
+      errors.push(
+        "locale.ts must value-re-export canonical locale bindings from ./locale-values.js",
+      );
+    const initializer = exportedConst(
+      sourceFile,
+      "supportedLocaleSchema",
+    )?.initializer;
+    if (
+      initializer === undefined ||
+      !ts.isCallExpression(initializer) ||
+      !pathMatches(initializer.expression, ["z", "enum"]) ||
+      initializer.arguments.length !== 1 ||
+      !pathMatches(initializer.arguments[0], ["SUPPORTED_LOCALES"]) ||
+      !hasExactValueImport(sourceFile, "zod", "z")
+    )
       errors.push("supportedLocaleSchema must derive from SUPPORTED_LOCALES");
-    }
   }
 
   if (selectionControls === undefined) {
@@ -1581,20 +1735,199 @@ async function validateInteractionRoutes(workspaceRoot, errors) {
   }
 }
 
-function validatePresentationLocale(source, internalSource, errors) {
-  if (source !== undefined) {
-    if (!source.includes("supportedLocaleSchema.safeParse(value)")) {
-      errors.push(
-        "presentation locale values must use supportedLocaleSchema.safeParse",
-      );
-    }
+function isNamedCall(expression, name, argumentPath) {
+  return (
+    expression !== undefined &&
+    ts.isCallExpression(expression) &&
+    pathMatches(expression.expression, [name]) &&
+    expression.arguments.length === 1 &&
+    pathMatches(expression.arguments[0], argumentPath)
+  );
+}
+
+function isStrictComparison(expression, left, operator, right) {
+  return (
+    ts.isBinaryExpression(expression) &&
+    expression.operatorToken.kind === operator &&
+    pathMatches(expression.left, [left]) &&
+    pathMatches(expression.right, [right])
+  );
+}
+
+function hasExactCanonicalHelper(source) {
+  if (source === undefined) return false;
+  const sourceFile = parseSource(source, CANONICAL_LOCALE_PATH);
+  const helper = directNamedFunctionLike(sourceFile, "requireCanonicalLocale");
+  const body = functionBody(helper);
+  if (
+    !hasExactValueImport(
+      sourceFile,
+      "@fan-support/contracts",
+      "parseSupportedLocale",
+    ) ||
+    valueBindingCount(sourceFile, "TypeError") !== 0 ||
+    helper === undefined ||
+    !hasExportModifier(helper) ||
+    helper.parameters.length !== 2 ||
+    helper.parameters.some(
+      (parameter, index) =>
+        !ts.isIdentifier(parameter.name) ||
+        parameter.name.text !== ["value", "message"][index],
+    ) ||
+    body?.statements.length !== 3
+  )
+    return false;
+  const parsed = singleConstDeclaration(body.statements[0]);
+  const rejected = body.statements[1];
+  const returned = body.statements[2];
+  if (
+    parsed?.name.text !== "parsed" ||
+    !isNamedCall(parsed.initializer, "parseSupportedLocale", ["value"]) ||
+    !ts.isIfStatement(rejected) ||
+    rejected.elseStatement !== undefined ||
+    !ts.isBinaryExpression(rejected.expression) ||
+    rejected.expression.operatorToken.kind !== ts.SyntaxKind.BarBarToken
+  )
+    return false;
+  const condition = rejected.expression;
+  const throwing =
+    ts.isBlock(rejected.thenStatement) &&
+    rejected.thenStatement.statements.length === 1
+      ? rejected.thenStatement.statements[0]
+      : rejected.thenStatement;
+  return (
+    isStrictComparison(
+      condition.left,
+      "parsed",
+      ts.SyntaxKind.EqualsEqualsEqualsToken,
+      "undefined",
+    ) &&
+    isStrictComparison(
+      condition.right,
+      "parsed",
+      ts.SyntaxKind.ExclamationEqualsEqualsToken,
+      "value",
+    ) &&
+    ts.isThrowStatement(throwing) &&
+    ts.isNewExpression(throwing.expression) &&
+    pathMatches(throwing.expression.expression, ["TypeError"]) &&
+    throwing.expression.arguments?.length === 1 &&
+    pathMatches(throwing.expression.arguments[0], ["message"]) &&
+    ts.isReturnStatement(returned) &&
+    returned.expression !== undefined &&
+    pathMatches(returned.expression, ["parsed"])
+  );
+}
+
+function hasCanonicalPresentationBindings(sourceFile) {
+  if (
+    !hasExactValueImport(
+      sourceFile,
+      "./canonical-locale",
+      "requireCanonicalLocale",
+    )
+  )
+    return false;
+  const leading = directNamedFunctionLike(sourceFile, "leadingLocale");
+  const create = directNamedFunctionLike(
+    sourceFile,
+    "createPresentationLocaleUrl",
+  );
+  const cookie = directNamedFunctionLike(
+    sourceFile,
+    "serializePresentationLocaleCookie",
+  );
+  // These reviewed adapters have fixed inputs; an added/defaulted parameter can
+  // shadow the validator without introducing a body-level declaration.
+  for (const [adapter, names] of [
+    [leading, ["pathname"]],
+    [create, ["currentUrl", "nextLocale"]],
+    [cookie, ["locale", "options"]],
+  ]) {
     if (
-      (source.match(/supportedLocaleSchema\.safeParse\s*\(/gu) ?? []).length < 2
-    ) {
+      adapter === undefined ||
+      adapter.parameters.length !== names.length ||
+      adapter.parameters.some(
+        (parameter, index) =>
+          !ts.isIdentifier(parameter.name) ||
+          parameter.name.text !== names[index] ||
+          parameter.initializer !== undefined ||
+          parameter.questionToken !== undefined ||
+          parameter.dotDotDotToken !== undefined,
+      )
+    )
+      return false;
+  }
+  const leadingBody = functionBody(leading);
+  const createBody = functionBody(create);
+  const cookieBody = functionBody(cookie);
+  if (
+    leadingBody === undefined ||
+    createBody === undefined ||
+    cookieBody === undefined ||
+    leadingBody.statements.length < 3 ||
+    createBody.statements.length < 2 ||
+    cookieBody.statements.length < 1 ||
+    !hasExportModifier(create) ||
+    !hasExportModifier(cookie) ||
+    valueBindingCount(createBody, "leadingLocale") !== 0 ||
+    [leadingBody, createBody, cookieBody].some(
+      (body) => valueBindingCount(body, "requireCanonicalLocale") !== 0,
+    )
+  )
+    return false;
+  const segments = singleConstDeclaration(leadingBody.statements[0]);
+  const candidate = singleConstDeclaration(leadingBody.statements[1]);
+  const leadingReturn = leadingBody.statements.at(-1);
+  const target = singleConstDeclaration(createBody.statements[0]);
+  const checkSource = callExpressionFromStatement(createBody.statements[1]);
+  const cookieValue = singleConstDeclaration(cookieBody.statements[0]);
+  return (
+    segments?.name.text === "segments" &&
+    ts.isCallExpression(segments.initializer) &&
+    pathMatches(segments.initializer.expression, ["pathname", "split"]) &&
+    segments.initializer.arguments.length === 1 &&
+    ts.isStringLiteral(segments.initializer.arguments[0]) &&
+    segments.initializer.arguments[0].text === "/" &&
+    candidate?.name.text === "candidate" &&
+    ts.isElementAccessExpression(candidate.initializer) &&
+    pathMatches(candidate.initializer.expression, ["segments"]) &&
+    ts.isNumericLiteral(candidate.initializer.argumentExpression) &&
+    candidate.initializer.argumentExpression.text === "1" &&
+    ts.isReturnStatement(leadingReturn) &&
+    leadingReturn.expression !== undefined &&
+    ts.isCallExpression(leadingReturn.expression) &&
+    pathMatches(leadingReturn.expression.expression, [
+      "requireCanonicalLocale",
+    ]) &&
+    (leadingReturn.expression.arguments.length === 1 ||
+      (leadingReturn.expression.arguments.length === 2 &&
+        ts.isStringLiteral(leadingReturn.expression.arguments[1]))) &&
+    pathMatches(leadingReturn.expression.arguments[0], ["candidate"]) &&
+    target?.name.text === "locale" &&
+    isNamedCall(target.initializer, "requireCanonicalLocale", ["nextLocale"]) &&
+    isNamedCall(checkSource, "leadingLocale", ["currentUrl", "pathname"]) &&
+    cookieValue?.name.text === "value" &&
+    isNamedCall(cookieValue.initializer, "requireCanonicalLocale", ["locale"])
+  );
+}
+
+function validatePresentationLocale(
+  source,
+  canonicalHelper,
+  internalSource,
+  errors,
+) {
+  if (source !== undefined) {
+    if (
+      !hasExactCanonicalHelper(canonicalHelper) ||
+      !hasCanonicalPresentationBindings(
+        parseSource(source, PRESENTATION_LOCALE_PATH),
+      )
+    )
       errors.push(
-        "presentation locale route sources and targets must both use supportedLocaleSchema.safeParse",
+        "presentation locale routes and cookie must use the exact canonical helper",
       );
-    }
     if (source.includes("en-XA")) {
       errors.push(
         "en-XA must not enter the production presentation locale adapter",
@@ -1818,9 +2151,11 @@ export async function validateUiInteractions(
     selectionControls,
     interactionCss,
     contractLocale,
+    contractLocaleValues,
     storefrontCss,
     interactionLab,
     presentationLocale,
+    canonicalHelper,
     internalPresentationLocale,
   ] = await Promise.all([
     readJson(workspaceRoot, UI_MANIFEST_PATH, errors),
@@ -1833,16 +2168,23 @@ export async function validateUiInteractions(
     readText(workspaceRoot, SELECTION_CONTROLS_PATH, errors),
     readText(workspaceRoot, INTERACTION_CSS_PATH, errors),
     readText(workspaceRoot, CONTRACT_LOCALE_PATH, errors),
+    readText(workspaceRoot, CONTRACT_LOCALE_VALUES_PATH, errors),
     readText(workspaceRoot, STOREFRONT_GLOBAL_CSS_PATH, errors),
     readText(workspaceRoot, INTERACTION_LAB_PATH, errors),
     readText(workspaceRoot, PRESENTATION_LOCALE_PATH, errors),
+    readText(workspaceRoot, CANONICAL_LOCALE_PATH, errors),
     readText(workspaceRoot, INTERNAL_PRESENTATION_LOCALE_PATH, errors),
   ]);
 
   validateUiManifest(uiManifest, errors);
   validateEntrypoints(interactions, root, client, errors);
   await validateBaseUiBoundary(workspaceRoot, errors);
-  validateCanonicalLocaleSource(contractLocale, selectionControls, errors);
+  validateCanonicalLocaleSource(
+    contractLocale,
+    contractLocaleValues,
+    selectionControls,
+    errors,
+  );
   validateMenuScrollLock(menu, interactionCss, errors);
   validateInteractionLab(interactionLab, errors);
   validateSourceOwnedInteractionIcons({ menu, overlay, toast }, errors);
@@ -1850,6 +2192,7 @@ export async function validateUiInteractions(
   await validateInteractionRoutes(workspaceRoot, errors);
   validatePresentationLocale(
     presentationLocale,
+    canonicalHelper,
     internalPresentationLocale,
     errors,
   );

@@ -7,8 +7,8 @@ import type {
 } from "@fan-support/contracts";
 import { Button, Field } from "@fan-support/ui";
 import type { StorefrontCopy } from "./copy";
-import { prepareArtistSearch, canSelectSearchArtist } from "./directory-model";
-import { requestArtistDirectory } from "./directory-request";
+import { canSelectSearchArtist } from "./directory-model";
+import { requestArtistSearch } from "./directory-request";
 import styles from "./artist-directory.module.css";
 
 type SearchState = Readonly<{
@@ -63,37 +63,36 @@ export function ArtistSearch({
   };
 
   useEffect(() => {
-    const prepared = prepareArtistSearch(raw, composing);
     const requestId = ++sequence.current;
     controller.current?.abort();
-    if (!open || prepared.kind === "idle") {
+    if (!open || composing || raw.trim().length === 0) {
       setState(idle);
-      return;
-    }
-    if (prepared.kind === "invalid") {
-      setState({ ...idle, status: "invalid" });
       return;
     }
     const cancellation = new AbortController();
     controller.current = cancellation;
     setState({ ...idle, status: "loading" });
     const timer = window.setTimeout(() => {
-      void requestArtistDirectory(
-        { schemaVersion: 1, locale, limit: 6, q: prepared.q },
-        cancellation.signal,
-      ).then((response) => {
-        if (requestId !== sequence.current || cancellation.signal.aborted)
-          return;
-        setState(
-          response.outcome === "SUCCESS"
-            ? {
-                status: "ready",
-                items: response.items,
-                more: response.pageInfo.hasNextPage,
-              }
-            : { ...idle, status: "error" },
-        );
-      });
+      void requestArtistSearch(raw, locale, cancellation.signal).then(
+        (result) => {
+          if (requestId !== sequence.current || cancellation.signal.aborted)
+            return;
+          if (result.kind === "invalid") {
+            setState({ ...idle, status: "invalid" });
+            return;
+          }
+          const response = result.response;
+          setState(
+            response.outcome === "SUCCESS"
+              ? {
+                  status: "ready",
+                  items: response.items,
+                  more: response.pageInfo.hasNextPage,
+                }
+              : { ...idle, status: "error" },
+          );
+        },
+      );
     }, 250);
     return () => {
       window.clearTimeout(timer);

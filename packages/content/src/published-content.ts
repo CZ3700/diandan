@@ -1,4 +1,6 @@
 import {
+  DEFAULT_LOCALE,
+  SUPPORTED_LOCALES,
   publishedContentContextSchema,
   publishedContentResponseSchema,
   type PublishedContentContext,
@@ -380,21 +382,31 @@ function project(
     };
   throw new Error("Public content kind mismatch");
 }
-export function projectPublishedContent(
-  input: unknown,
+function verifiedContext(input: unknown): PublishedContentContext {
+  const context = publishedContentContextSchema.parse(input);
+  if (
+    !currentPublication(context) ||
+    computePublicationManifestHash(context.publication.manifest) !==
+      context.publication.manifestHash ||
+    !verifyPublicationManifest(context.publication.manifest, context.canonical)
+  )
+    throw new Error("Public publication proof invalid");
+  return context;
+}
+
+function unavailable(): PublishedContentResponse {
+  return {
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "CONTENT_UNAVAILABLE",
+  };
+}
+
+/** Private rendering boundary; only the validating public entry points call it. */
+function projectVerifiedContext(
+  context: PublishedContentContext,
 ): PublishedContentResponse {
   try {
-    const context = publishedContentContextSchema.parse(input);
-    if (
-      !currentPublication(context) ||
-      computePublicationManifestHash(context.publication.manifest) !==
-        context.publication.manifestHash ||
-      !verifyPublicationManifest(
-        context.publication.manifest,
-        context.canonical,
-      )
-    )
-      throw new Error("Public publication proof invalid");
     const media = publishedMediaResolver(context);
     const content = project(context, media);
     if (!media.complete()) throw new Error("Public media projection mismatch");
@@ -411,10 +423,32 @@ export function projectPublishedContent(
       content,
     });
   } catch {
-    return {
-      schemaVersion: 1,
-      outcome: "FAILURE",
-      code: "CONTENT_UNAVAILABLE",
-    };
+    return unavailable();
+  }
+}
+
+export function projectPublishedContent(
+  input: unknown,
+): PublishedContentResponse {
+  try {
+    return projectVerifiedContext(verifiedContext(input));
+  } catch {
+    return unavailable();
+  }
+}
+
+/** Proves one source-language context, then retains every locale's full projection gate. */
+export function projectPublishedContentLocales(
+  input: unknown,
+): readonly PublishedContentResponse[] {
+  try {
+    const context = verifiedContext(input);
+    if (context.locale !== DEFAULT_LOCALE)
+      throw new Error("Publication source locale mismatch");
+    return SUPPORTED_LOCALES.map((locale) =>
+      projectVerifiedContext({ ...context, locale }),
+    );
+  } catch {
+    return SUPPORTED_LOCALES.map(() => unavailable());
   }
 }

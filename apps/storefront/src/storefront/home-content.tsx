@@ -1,8 +1,7 @@
-import { ArtistDirectory } from "./artist-directory";
+import type { ReactNode } from "react";
 import type {
   StorefrontHomepageResponse,
   SupportedLocale,
-  IdolDirectoryResponse,
 } from "@fan-support/contracts";
 import { Icon } from "@fan-support/ui";
 import { PublishedHeroImage, PublishedImage } from "./published-image";
@@ -17,14 +16,12 @@ export function HomeContent({
   copy,
   contextQuery,
   directory,
-  initialAnchor,
 }: Readonly<{
   data: StorefrontHomepageResponse;
   locale: SupportedLocale;
   copy: StorefrontCopy;
   contextQuery: string;
-  directory?: IdolDirectoryResponse;
-  initialAnchor?: string;
+  directory?: ReactNode;
 }>) {
   if (data.outcome === "FAILURE")
     return (
@@ -149,15 +146,7 @@ export function HomeContent({
             ) : null,
           )}
         </div>
-        {directory && (
-          <ArtistDirectory
-            locale={locale}
-            copy={copy}
-            initial={directory}
-            {...(initialAnchor ? { initialAnchor } : {})}
-            contextQuery={contextQuery}
-          />
-        )}
+        {directory}
       </section>
       <section
         className="storefront-section storefront-gifts"

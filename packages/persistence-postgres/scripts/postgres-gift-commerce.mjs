@@ -583,7 +583,9 @@ await withEphemeralPostgres(async (config) => {
     let downRejected = false;
     try {
       await client.query(
-        (await loadMigrationManifest({ workspaceRoot })).at(-1).down.sql,
+        (await loadMigrationManifest({ workspaceRoot })).find(
+          (migration) => migration.version === "0020",
+        ).down.sql,
       );
     } catch (e) {
       downRejected = e.code === "55000";

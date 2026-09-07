@@ -201,6 +201,7 @@ export function createContractArtifactDocuments(): Readonly<{
       paths: {
         ...storefrontHomepagePaths(),
         ...storefrontCommercePaths(),
+        ...storefrontSeoPaths(),
         [PAYMENT_WEBHOOK_PATH]: paymentWebhookPath(),
         ...catalogDirectoryPaths(),
         ...adminContentPaths(),
@@ -271,3 +272,4 @@ export function renderContractArtifactDocuments(): Readonly<{
     openapi: renderJson(documents.openapi),
   });
 }
+import { storefrontSeoPaths } from "./storefront-seo-openapi.js";

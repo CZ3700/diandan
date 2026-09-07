@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useReducer, useRef } from "react";
-import {
-  CATALOG_DISCOVERY_LIMITS,
-  idolIdSchema,
-  type IdolDirectoryResponse,
-  type SupportedLocale,
+import type {
+  IdolDirectoryResponse,
+  IdolId,
+  SupportedLocale,
 } from "@fan-support/contracts";
 import { Button } from "@fan-support/ui";
 import type { StorefrontCopy } from "./copy";
@@ -14,17 +13,17 @@ import { ArtistTrack } from "./artist-track";
 import {
   createDirectoryState,
   directoryAnchorHref,
+  directoryContextQuery,
   directoryReducer,
 } from "./directory-model";
 import { requestArtistDirectory } from "./directory-request";
-import { directoryContextQuery } from "./directory-query";
 import styles from "./artist-directory.module.css";
 
 export type ArtistDirectoryProps = Readonly<{
   locale: SupportedLocale;
   copy: StorefrontCopy;
   initial: IdolDirectoryResponse;
-  initialAnchor?: string;
+  initialAnchor?: IdolId;
   contextQuery?: string;
   headingLevel?: 1 | 2;
 }>;
@@ -65,7 +64,7 @@ function Directory({
     [],
   );
 
-  const load = async (mode: "append" | "replace", anchor?: string) => {
+  const load = async (mode: "append" | "replace", anchor?: IdolId) => {
     if (
       mode === "append" &&
       (busy.current || !state.hasNextPage || state.endCursor === null)
@@ -86,13 +85,10 @@ function Directory({
       {
         schemaVersion: 1,
         locale,
-        limit: CATALOG_DISCOVERY_LIMITS.artistWindowDefault,
         ...(mode === "append" && state.endCursor !== null
           ? { after: state.endCursor }
           : {}),
-        ...(anchor === undefined
-          ? {}
-          : { anchorId: idolIdSchema.parse(anchor) }),
+        ...(anchor === undefined ? {} : { anchorId: anchor }),
       },
       cancellation.signal,
     );

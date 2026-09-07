@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "sourceSha256": "662dcb3e30ca0d97e070e90262a7e8b6945d5b52ba12088a338ea7d119cc148f",
+  "matrixPageCases": 84,
+  "additionalInteractionAndErrorGroups": 4,
+  "totalCases": 88,
+  "screenshots": 88,
+  "axeReports": 85,
+  "axeViolations": 0,
+  "axeIncompleteEntries": {
+    "color-contrast": 29,
+    "aria-hidden-focus": 1
+  },
+  "axeIncompleteNodes": {
+    "color-contrast": 533,
+    "aria-hidden-focus": 3
+  },
+  "pageErrors": 0,
+  "actualOverlayTargetHitPoints": 9,
+  "actualOverlayHitPointsPass": true,
+  "publicationVisibility": [
+    {
+      "operation": "PUBLISH",
+      "status": "PASS",
+      "elapsedMs": 10418,
+      "observations": 1
+    },
+    {
+      "operation": "ROLLBACK",
+      "status": "PASS",
+      "elapsedMs": 10240,
+      "observations": 1
+    }
+  ],
+  "publicationVisibilityBudgetMs": 60000,
+  "externalCdnEvidence": false,
+  "performanceVerdict": "Separate performance/results.json; UI PASS does not imply lab budget PASS.",
+  "scope": "Actual local Chrome against production-compiled TEST Next, real PG/API/TLS media. Visual pass forces all DOM main images eager for decoding; separate resource measurements are unmodified initial navigations.",
+  "notProven": [
+    "Physical phone",
+    "VoiceOver spoken output",
+    "Real non-developer 3/5/8-minute operational timing",
+    "Production CDN",
+    "RUM",
+    "Formal translation or production asset approval"
+  ]
+}

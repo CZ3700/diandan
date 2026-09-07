@@ -103,6 +103,7 @@ export type CreateApiApplicationOptions = Readonly<{
   publicationRuntimeLifecycle?: ApiLifecycleResource;
   publishedContentRoute?: PublishedContentRouteDependencies;
   storefrontHomepageRoute?: StorefrontHomepageRouteDependencies;
+  storefrontSeoRoute?: StorefrontSeoRouteDependencies;
   storefrontCommerceRoute?: StorefrontCommerceRouteDependencies;
   publishedContentRuntime?: ApiLifecycleResource;
   resourceManagementRoute?: ResourceManagementRouteDependencies;
@@ -291,6 +292,11 @@ export async function createApiApplication(
       adapter.getInstance(),
       options.storefrontHomepageRoute,
     );
+  if (options.storefrontSeoRoute !== undefined)
+    registerStorefrontSeoRoute(
+      adapter.getInstance(),
+      options.storefrontSeoRoute,
+    );
   registerApiLifecycle(adapter, options.baseContentRuntime, "API base content");
   if (options.baseContentRoute !== undefined)
     registerBaseContentRoute(adapter.getInstance(), options.baseContentRoute);
@@ -321,3 +327,7 @@ import {
   registerBaseContentRoute,
   type BaseContentRouteDependencies,
 } from "./base-content-route.js";
+import {
+  registerStorefrontSeoRoute,
+  type StorefrontSeoRouteDependencies,
+} from "./storefront-seo-route.js";

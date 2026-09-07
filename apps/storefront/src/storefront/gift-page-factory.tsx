@@ -13,33 +13,19 @@ import {
   loadStorefrontPresentationConfig,
 } from "../server/runtime-config";
 import { loadStorefrontCopy } from "../server/storefront-copy";
-import {
-  readCommerceContext,
-  giftRead,
-  policyRead,
-  artistRead,
-  commerceRead,
-  giftDirectoryRead,
-} from "./gift-page-reads";
+import { readCommerceContext, policyRead, artistRead } from "./gift-page-reads";
+import { readGiftDetailPage } from "./gift-detail-page-reads";
 import { SiteHeader } from "./site-header";
 import { SiteFooter, PageState } from "./page-parts";
-import {
-  MarketChoices,
-  PolicyLinks,
-  isMarketAvailable,
-} from "./commerce-context";
+import { MarketChoices, PolicyLinks } from "./commerce-context";
 import { GiftDirectorySection } from "./gift-directory-section";
 import { GiftDetail } from "./gift-detail";
 import { PolicyBody } from "./gift-content";
 import { formatStorefrontMessage } from "./copy";
-import {
-  parseGiftSelection,
-  giftRecoveryQuery,
-  giftCanonicalPath,
-} from "./gift-selection";
-import { prepareGiftQuery } from "./gift-query";
+import { giftRecoveryQuery } from "./gift-selection";
 import { queryString } from "./navigation";
 import { createStorefrontLoading } from "./route-states";
+import { GiftPageSeo, loadGiftSeo } from "./gift-seo";
 
 type Kind = "gifts" | "gift" | "policy" | "region";
 type Props = Readonly<{
@@ -52,10 +38,16 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
   async function Page({ searchParams, params }: Props) {
     loadStorefrontRuntimeConfig();
     const name = loadStorefrontPresentationConfig().name;
-    const [copy, values, context] = await Promise.all([
+    const [values, routeParams] = await Promise.all([searchParams, params]);
+    const handle =
+      kind === "gift" ? slugSchema.safeParse(routeParams.handle) : undefined;
+    if (handle && !handle.success) notFound();
+    const [copy, context, detail] = await Promise.all([
       loadStorefrontCopy(locale),
-      searchParams,
       readCommerceContext(),
+      handle?.success
+        ? readGiftDetailPage(locale, handle.data, values)
+        : undefined,
     ]);
     const contextQuery = queryString(values);
     let content: ReactNode;
@@ -92,7 +84,7 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
         </div>
       );
     else if (kind === "policy") {
-      const key = policyKeySchema.safeParse((await params).handle);
+      const key = policyKeySchema.safeParse(routeParams.handle);
       if (!key.success) notFound();
       const result = await policyRead(locale, key.data);
       if (result.outcome === "FAILURE" && result.code === "NOT_FOUND")
@@ -144,22 +136,10 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
         );
       }
     } else {
-      const handle = slugSchema.safeParse((await params).handle);
-      if (!handle.success) notFound();
-      const result = await giftRead(locale, handle.data);
+      if (!detail) notFound();
+      const { handle, result, scoped, artists, selection } = detail;
       if (result.outcome === "FAILURE" && result.code === "NOT_FOUND")
         notFound();
-      const selection = parseGiftSelection(values);
-      const scoped =
-        selection.kind === "VALID"
-          ? await commerceRead(
-              locale,
-              handle.data,
-              selection.market,
-              selection.currency,
-              selection.idolId,
-            )
-          : undefined;
       if (scoped?.outcome === "FAILURE" && scoped.code === "NOT_FOUND")
         notFound();
       if (
@@ -182,7 +162,7 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
                 ? giftRecoveryQuery(contextQuery)
                 : contextQuery
             }
-            retryPath={`/gifts/${handle.data}`}
+            retryPath={`/gifts/${handle}`}
           />
         );
       else
@@ -193,10 +173,7 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
             content={scoped?.outcome === "SUCCESS" ? scoped : result}
             {...(scoped?.outcome === "SUCCESS" ? { commerce: scoped } : {})}
             context={context}
-            artists={await artistRead(
-              locale,
-              typeof values["idol"] === "string" ? values["idol"] : undefined,
-            )}
+            artists={artists}
             contextQuery={contextQuery}
             {...(selection.kind === "VALID" && selection.variantId
               ? { variantId: selection.variantId }
@@ -215,6 +192,14 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
           active={kind === "gifts" || kind === "gift" ? "gifts" : "other"}
         />
         <main id="main-content" tabIndex={-1}>
+          <Suspense fallback={null}>
+            <GiftPageSeo
+              locale={locale}
+              kind={kind}
+              values={values}
+              {...(routeParams.handle ? { handle: routeParams.handle } : {})}
+            />
+          </Suspense>
           {content}
         </main>
         <SiteFooter
@@ -251,110 +236,12 @@ export function createGiftStorefrontMetadata(
   locale: SupportedLocale,
   kind: Kind,
 ) {
-  return async ({ searchParams, params }: Props): Promise<Metadata> => {
-    const [copy, values] = await Promise.all([
-      loadStorefrontCopy(locale),
-      searchParams,
-    ]);
-    const query = queryString(values);
-    const rawHandle = (await params).handle;
-    let title = kind === "region" ? copy.marketChoose : copy.giftTitle,
-      description = copy.giftBody,
-      noindex = kind === "region";
-    let path = kind === "region" ? "/region" : "/gifts";
-    if (kind === "gift") {
-      const handle = slugSchema.safeParse(rawHandle);
-      if (handle.success) {
-        path = `/gifts/${handle.data}`;
-        const result = await giftRead(locale, handle.data);
-        if (result.outcome === "SUCCESS") {
-          title = result.content.view.seoTitle;
-          description = result.content.view.seoDescription;
-          noindex = result.content.view.localeContext.fallbackUsed;
-        } else noindex = true;
-        const selection = parseGiftSelection(values);
-        if (selection.kind !== "VALID") noindex = true;
-        else {
-          const scoped = await commerceRead(
-            locale,
-            handle.data,
-            selection.market,
-            selection.currency,
-            selection.idolId,
-          );
-          const selectedVariantId = selection.variantId;
-          if (
-            scoped.outcome !== "SUCCESS" ||
-            scoped.content.view.localeContext.fallbackUsed ||
-            (scoped.recipient.kind === "PUBLISHED" &&
-              scoped.recipient.idol.localeContext.fallbackUsed) ||
-            (selectedVariantId &&
-              !scoped.offers.some(
-                (offer) =>
-                  offer.giftVariantId.toLowerCase() ===
-                  selectedVariantId.toLowerCase(),
-              ))
-          )
-            noindex = true;
-        }
-      } else noindex = true;
-    } else if (kind === "policy") {
-      const key = policyKeySchema.safeParse(rawHandle);
-      if (key.success) {
-        path = `/policies/${key.data}`;
-        const result = await policyRead(locale, key.data);
-        if (result.outcome === "SUCCESS" && result.content.kind === "POLICY") {
-          title = result.content.view.title;
-          description = result.content.view.summary;
-          noindex = result.content.view.localeContext.fallbackUsed;
-        } else noindex = true;
-      } else noindex = true;
-    } else if (kind === "gifts") {
-      const prepared = prepareGiftQuery(locale, values);
-      if (!prepared.valid) noindex = true;
-      else {
-        const context = await readCommerceContext();
-        if (
-          !isMarketAvailable(
-            context,
-            prepared.query.market,
-            prepared.query.currency,
-          )
-        )
-          noindex = true;
-        else {
-          const result = await giftDirectoryRead(prepared.apiQuery);
-          noindex =
-            result.outcome !== "SUCCESS" ||
-            result.items.some((item) => item.gift.localeContext.fallbackUsed) ||
-            result.items.length === 0;
-        }
-        if (
-          prepared.query.sort !== "RECOMMENDED" ||
-          prepared.query.category ||
-          prepared.query.availability !== "ALL" ||
-          prepared.query.priceMinMinor !== undefined ||
-          prepared.query.priceMaxMinor !== undefined ||
-          prepared.query.idolId
-        )
-          noindex = true;
-      }
-    }
-    return {
-      title,
-      description,
-      alternates: {
-        canonical: new URL(
-          giftCanonicalPath(locale, path, query),
-          loadStorefrontRuntimeConfig().siteOrigin,
-        ).href,
-      },
-      robots: {
-        index:
-          !noindex &&
-          process.env["FAN_SUPPORT_DEPLOYMENT_ENV"] === "production",
-        follow: true,
-      },
-    };
+  return async function generateMetadata({
+    params,
+    searchParams,
+  }: Props): Promise<Metadata> {
+    return (
+      await loadGiftSeo(locale, kind, (await params).handle, await searchParams)
+    ).metadata;
   };
 }

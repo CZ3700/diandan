@@ -195,8 +195,12 @@ function setup() {
   });
   return { app, execute, logs };
 }
-function privacy(headers: Record<string, unknown>) {
-  expect(headers["cache-control"]).toBe("no-store");
+function privacy(headers: Record<string, unknown>, revalidated = false) {
+  expect(headers["cache-control"]).toBe(
+    revalidated ? "public, max-age=0, s-maxage=0, must-revalidate" : "no-store",
+  );
+  if (revalidated) expect(headers["etag"]).toMatch(/^W\/"[a-f0-9]{64}"$/u);
+  else expect(headers["etag"]).toBeUndefined();
   expect(headers["x-robots-tag"]).toBe("noindex, nofollow");
   expect(headers["referrer-policy"]).toBe("no-referrer");
   expect(headers["set-cookie"]).toBeUndefined();
@@ -216,7 +220,7 @@ test("maps all five anonymous GET locators with explicit seven-language context"
           url: `/api/v1${path}?locale=${locale}`,
         });
         expect(response.statusCode).toBe(200);
-        privacy(response.headers);
+        privacy(response.headers, true);
         expect(execute).toHaveBeenLastCalledWith({
           schemaVersion: 1,
           locator,
@@ -227,6 +231,53 @@ test("maps all five anonymous GET locators with explicit seven-language context"
           publication,
         });
       }
+  } finally {
+    await app.close();
+  }
+});
+
+test("every content kind rechecks current proof before 304 and keeps credentials private", async () => {
+  const { app, execute } = setup();
+  try {
+    for (const { path, locator } of locations) {
+      execute.mockResolvedValue(responseFor(locator.kind));
+      const url = `/api/v1${path}?locale=en`;
+      const first = await app.inject({ url });
+      const etag = String(first.headers.etag);
+      expect(etag).toMatch(/^W\/"[a-f0-9]{64}"$/u);
+      const before = execute.mock.calls.length;
+      const same = await app.inject({
+        url,
+        headers: { "if-none-match": etag },
+      });
+      expect(same.statusCode).toBe(304);
+      expect(same.body).toBe("");
+      expect(execute.mock.calls.length).toBe(before + 1);
+      privacy(same.headers, true);
+      for (const credentials of [
+        { cookie: "fixture=public" },
+        { authorization: "Bearer fixture-only" },
+      ]) {
+        const privateReply = await app.inject({
+          url,
+          headers: { ...credentials, "if-none-match": "*" },
+        });
+        expect(privateReply.statusCode).toBe(200);
+        expect(privateReply.headers["cache-control"]).toBe("private, no-store");
+        expect(privateReply.headers.etag).toBeUndefined();
+      }
+      execute.mockResolvedValue({
+        schemaVersion: 1,
+        outcome: "FAILURE",
+        code: "CONTENT_UNAVAILABLE",
+      });
+      const revoked = await app.inject({
+        url,
+        headers: { "if-none-match": etag },
+      });
+      expect(revoked.statusCode).toBe(503);
+      privacy(revoked.headers);
+    }
   } finally {
     await app.close();
   }

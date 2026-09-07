@@ -4,7 +4,9 @@ import { expect, test } from "vitest";
 test("homepage operation documents only locale and the safe public response", async () => {
   const paths = homepageModule.storefrontHomepagePaths();
   const operation = paths["/api/v1/storefront-homepage"].get;
-  expect(operation.parameters).toEqual([
+  expect(
+    operation.parameters.filter((parameter) => parameter.in === "query"),
+  ).toEqual([
     {
       name: "locale",
       in: "query",

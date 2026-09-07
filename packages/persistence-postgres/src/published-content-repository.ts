@@ -121,13 +121,17 @@ export async function loadPublishedContentContext(
       giftRevisionId: record.data.target.revisionId,
       manifestHash: record.data.manifestHash,
     });
-  const loaded = await createPublicationPreflightRepository(client, scope).load(
-    {
-      schemaVersion: 1,
-      action: record.data.action,
-      target: record.data.target,
-    },
-  );
+  // Public proofs retain shared locks through the consistent transaction. They
+  // must never upgrade them to authoring locks while hydrating shared references.
+  const loaded = await createPublicationPreflightRepository(
+    client,
+    scope,
+    "SHARE",
+  ).load({
+    schemaVersion: 1,
+    action: record.data.action,
+    target: record.data.target,
+  });
   if (loaded.outcome === "FAILURE")
     return failure(
       loaded.code === "NOT_FOUND" ? "NOT_FOUND" : "CONTENT_UNAVAILABLE",

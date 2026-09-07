@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+import {
+  assertPublicGetCaching,
+  verifyPublicGetConditional,
+} from "./public-get-revalidation.mjs";
 import assert from "node:assert/strict";
 import { randomBytes, randomUUID } from "node:crypto";
 import path from "node:path";
@@ -414,6 +418,7 @@ async function verify(clientConfig, s3) {
         value.csrf,
       ]),
     ].filter(Boolean);
+    const verifiedCacheScopes = new Set();
     async function request(
       route,
       body,
@@ -467,11 +472,41 @@ async function verify(clientConfig, s3) {
         );
       }
       check(expected.includes(response.status), "expected HTTP status");
-      check(
-        response.headers.get("cache-control") ===
-          (privateRoute ? "private, no-store" : "no-store"),
-        "safe no-store response",
+      const publicGet = method === "GET" && !privateRoute;
+      const hasCredentials = Object.keys(headers).some((name) =>
+        ["cookie", "authorization"].includes(name.toLowerCase()),
       );
+      if (publicGet && !hasCredentials && parsed.success) {
+        assertPublicGetCaching(response, parsed.data, check);
+        const resource = route.split("?")[0].split("/").slice(0, 4).join("/");
+        if (
+          response.status === 200 &&
+          parsed.data.outcome === "SUCCESS" &&
+          !verifiedCacheScopes.has(resource)
+        ) {
+          await verifyPublicGetConditional({
+            base,
+            route,
+            response,
+            schema: schemaFor(route.split("?")[0]),
+            check,
+          });
+          requests += 3;
+          verifiedCacheScopes.add(resource);
+        }
+      } else {
+        check(
+          response.headers.get("cache-control") ===
+            (privateRoute || (publicGet && hasCredentials)
+              ? "private, no-store"
+              : "no-store"),
+          "non-public, credential-bearing and failed responses retain exact no-store policy",
+        );
+        check(
+          response.headers.get("etag") === null,
+          "non-public and credential-bearing responses never receive ETags",
+        );
+      }
       check(
         response.headers.get("x-robots-tag") === "noindex, nofollow",
         "noindex response",
@@ -665,13 +700,18 @@ async function verify(clientConfig, s3) {
           purgePlans.every(
             (plan) =>
               plan.paths.includes(`/${plan.locale}/sitemap.xml`) &&
+              plan.paths.includes(`/${plan.locale}/sitemap.xml*`) &&
+              plan.paths.includes("/sitemap.xml*") &&
+              plan.paths.includes("/api/v1/storefront-seo/*") &&
               plan.paths.every(
                 (path) =>
+                  path === "/sitemap.xml*" ||
+                  path === "/api/v1/storefront-seo/*" ||
                   path === `/${plan.locale}` ||
                   path.startsWith(`/${plan.locale}/`),
               ),
           ),
-        "every initial purge plan contains its own sitemap and exactly its assigned locale namespace",
+        "every initial purge plan requires both sitemap variants and global SEO paths; all remaining paths stay within its assigned locale namespace",
       );
       const ledger = await observer.query(
         "SELECT proof_version FROM public.content_publications WHERE id=$1",

@@ -1,5 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
+
+vi.mock("server-only", () => ({}));
 import {
   giftDirectoryResponseSchema,
   giftDiscoveryQuerySchema,

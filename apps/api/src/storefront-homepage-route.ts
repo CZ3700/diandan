@@ -1,3 +1,4 @@
+import { sendRevalidatedPublicJson } from "./public-revalidation-response.js";
 import type { FastifyInstance, FastifyReply } from "fastify";
 import {
   storefrontHomepageReadCommandSchema,
@@ -12,11 +13,22 @@ export type StorefrontHomepageRouteDependencies = Readonly<{
     execute(input: unknown): Promise<StorefrontHomepageResponse>;
   }>;
 }>;
-function privacy(reply: FastifyReply) {
+function securityHeaders(reply: FastifyReply): void {
   void reply
-    .header("cache-control", "no-store")
     .header("x-robots-tag", "noindex, nofollow")
     .header("referrer-policy", "no-referrer");
+}
+function privacy(reply: FastifyReply): void {
+  securityHeaders(reply);
+  void reply
+    .header(
+      "cache-control",
+      reply.request.headers.cookie !== undefined ||
+        reply.request.headers.authorization !== undefined
+        ? "private, no-store"
+        : "no-store",
+    )
+    .removeHeader("etag");
 }
 function failure(reply: FastifyReply, code: PublishedContentFailure["code"]) {
   privacy(reply);
@@ -39,7 +51,7 @@ export function registerStorefrontHomepageRoute(
       privacy(reply);
     });
     scope.addHook("onSend", async (_request, reply, payload) => {
-      privacy(reply);
+      securityHeaders(reply);
       return payload;
     });
     scope.setErrorHandler((_error, _request, reply) =>
@@ -86,7 +98,10 @@ export function registerStorefrontHomepageRoute(
             )
           )
             return failure(reply, "CONTENT_UNAVAILABLE");
-          return reply.send(result);
+          return sendRevalidatedPublicJson(request, reply, result, {
+            resource: "storefront-homepage",
+            query: command.data,
+          });
         } catch {
           return failure(reply, "CONTENT_UNAVAILABLE");
         }

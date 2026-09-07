@@ -2303,6 +2303,26 @@ const registrations = [
     audience: "internal",
     schema: storefrontGiftContextResponseSchema,
   },
+  {
+    name: "StorefrontSeoReadCommand",
+    audience: "public-http",
+    schema: storefrontSeoReadCommandSchema,
+  },
+  {
+    name: "StorefrontSeoEntity",
+    audience: "public-http",
+    schema: storefrontSeoEntitySchema,
+  },
+  {
+    name: "StorefrontSeoResponse",
+    audience: "public-http",
+    schema: storefrontSeoResponseSchema,
+  },
+  {
+    name: "StorefrontSeoSnapshot",
+    audience: "internal",
+    schema: storefrontSeoSnapshotSchema,
+  },
 ] as const;
 
 export const contractArtifactRegistry: readonly ContractRegistration[] =
@@ -2314,3 +2334,9 @@ export const contractArtifactRegistry: readonly ContractRegistration[] =
       }),
     ),
   );
+import {
+  storefrontSeoReadCommandSchema,
+  storefrontSeoEntitySchema,
+  storefrontSeoResponseSchema,
+  storefrontSeoSnapshotSchema,
+} from "./storefront-seo.js";

@@ -4,6 +4,7 @@ import {
   createPublishedContentUseCases,
   createStorefrontHomepageUseCases,
   createStorefrontCommerceUseCases,
+  createStorefrontSeoUseCases,
 } from "@fan-support/application";
 import {
   createPostgresPersistence,
@@ -22,6 +23,7 @@ type BasePersistence = Pick<
   | "publishedContentTransactionManager"
   | "storefrontHomepageTransactionManager"
   | "storefrontCommerceTransactionManager"
+  | "storefrontSeoTransactionManager"
   | "close"
 >;
 export type TestPublicationRuntimeCompositionOptions = Readonly<{
@@ -46,6 +48,7 @@ export function createTestPublicationRuntimeComposition(
   publishedContentRoute: PublishedContentRouteDependencies;
   storefrontHomepageRoute: StorefrontHomepageRouteDependencies;
   storefrontCommerceRoute: StorefrontCommerceRouteDependencies;
+  storefrontSeoRoute: StorefrontSeoRouteDependencies;
 }> {
   if (
     options?.environment !== "TEST" ||
@@ -88,6 +91,11 @@ export function createTestPublicationRuntimeComposition(
   });
   let closePromise: Promise<void> | undefined;
   return Object.freeze({
+    storefrontSeoRoute: {
+      useCases: createStorefrontSeoUseCases({
+        transactions: persistence.storefrontSeoTransactionManager,
+      }),
+    },
     storefrontCommerceRoute: {
       useCases: createStorefrontCommerceUseCases({
         transactions: persistence.storefrontCommerceTransactionManager,
@@ -116,3 +124,4 @@ export function createTestPublicationRuntimeComposition(
     },
   });
 }
+import type { StorefrontSeoRouteDependencies } from "./storefront-seo-route.js";

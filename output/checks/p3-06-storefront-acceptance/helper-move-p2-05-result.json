@@ -1,0 +1,16 @@
+{
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "verify:ui-motion:browser"
+  ],
+  "startedAt": "2026-09-07T19:29:57.332852+00:00",
+  "finishedAt": "2026-09-07T19:30:34.995036+00:00",
+  "elapsedSeconds": 37.662,
+  "exitCode": 0,
+  "log": "output/checks/p3-06-storefront-acceptance/helper-move-p2-05.log"
+}

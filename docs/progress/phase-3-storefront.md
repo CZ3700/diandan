@@ -17,7 +17,7 @@
 | P3-03 | DONE | Codex `/root` | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
 | P3-04 | DONE | Codex `/root` | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
 | P3-05 | DONE | Codex `/root` | P2-04、P3-01、P3-04 | 真实七语礼物分页/筛选/详情/选择艺人/政策；完整check、PG/HTTP、浏览器与独立复核通过，见P3-05验收记录 |
-| P3-06 | READY | — | P3-02/03/04/05 | 七语言 i18n/SEO/cache/运营/性能验收；Lane D空闲，尚未领取 |
+| P3-06 | IN_PROGRESS | Codex `/root` | P3-02/03/04/05 | 七语言 i18n/SEO/cache/运营/性能验收；root独占Lane D，见本轮登记 |
 
 ## 必须证明
 
@@ -30,6 +30,31 @@
 ## Phase 退出证据
 
 已于 2026-09-05 依据用户明确视觉接受与继续开发指令解锁；尚未达到退出门禁。
+
+## P3-06 执行登记（2026-09-07）
+
+- Owner：Codex `/root`，Lane D唯一executor；开始2026-09-07T09:35:24.293839+00:00，基线`6eacb83ff39776cb09be16ae6ac398699d180129`，分支`codex/p3-06-storefront-acceptance`。用户授权继续，Phase3 ACTIVE、P3-02/03/04/05 DONE，P3-06由READY领取；本轮只执行本任务。
+- 输入：已批准V2原色黑金、真实七语言首页/艺人/礼物/政策/市场价格、不可变publication/媒体/翻译证明、持久outbox/purge，以及已有Admin与浏览器harness。先核对规范全文/完整phase/依赖风险和实际实现，不把已有测试数量当本任务完成。
+- 输出与顺序：先冻结缺口与合同，接完整SEO读取、self-canonical/hreflang/x-default/OG/适用JSON-LD和分页locale sitemap；再接ETag/条件请求、locale/market/currency缓存隔离与精确发布失效；随后七语言大目录/IME/键盘/读屏/混合比例媒体、移动Lighthouse与资源预算、实际Admin运营计时及验收材料。
+- 边界：不改变已批准视觉主方向，不接购物车、支付、订单或正式云发布；不凭locale猜市场，不伪造价格、评价/库存或Organization正式品牌。旧378合同根/全部历史operations保持兼容，新增跨模块接口先Zod/schemaVersion与失败测试；不修改历史已发布内容及人工审核证据。
+- 证据纪律：TEST发布证明与人工正式译审分开；自动浏览器时长不当作非开发运营3/5/8分钟计时；实验室指标不当作真实用户p75 RUM；axe/可访问树不当作实际VoiceOver/NVDA。先完成所有可独立实施与验证工作、准备可操作验收包，再为确实需要人的验收获取结果，未满足退出条件不关闭Phase3或解锁Phase4。
+- 所有权：root独占计划/进度/Git、共享合同exports/registry/生成物/根依赖锁及最终合并；三个子代理完成只读审计与合同冻结后按`output/checks/p3-06-storefront-acceptance/implementation-plan.md`独占后端SEO、首页拆分/既有公开GET重新验证、真实harness与UAT准备工具。root负责SEO页面/站点地图及共享cache helper。无同一文件并写，不另领取任务。
+- 验证：先失败测试；七locale互返/事故fallback撤出cluster和sitemap、真实lastmod、基础分页与筛选noindex、未知参数/私密值不入SEO/cache、ETag/304与价格边界、发布/回退≤60秒及跨实例路径；受影响tests→format/lint/typecheck/build→真实PG/API/TLS S3/worker/Next/Chrome全七语390×844/1440×900、键盘/reduced-motion/重排/axe/读屏、可重复性能与运营门→非作者review、S.U.P.E.R十项与全仓check。风险R-08/R-12/R-13/R-17。
+- Git：按用户决定只本地检查点、最终统一推送；保护本轮前414项未跟踪产物与全部既有验收原字节，记录`output/checks/p3-06-storefront-acceptance/untracked-baseline.json`。旧门禁如须刷新，保留历史与新回归的来源边界，不push/merge，不强制加入原始日志。
+
+### P3-06 连续执行检查点（2026-09-08，未退出）
+
+- 技术实现：当前发布证明驱动的七语 SEO/OG/JSON-LD、分页 sitemap、公共 ETag 条件请求与私有 no-store、0021 发布失效路径；修复公共读取之间的锁升级冲突，收敛同请求七语重复证明计算，完整审核与媒体校验保留。
+- 新真实证据：`run-2026-09-07T11-46-25-432Z` protocol 32,461 累计准备/协议断言与 6,090 管理请求通过；63 并发读成功，数据库 deadlocks 0→0。PUBLISH 14,562ms、ROLLBACK 17,291ms 可见。compiled browser callback 22,692 断言通过，84 页面组合/4 交互、88 PNG、85 axe 零 violations，30 incomplete rules 保留待逐类复核。后续等待环境结束记录 FAIL，不将 callback 与整体环境退出混为一谈。
+- 整仓冷测试以包级并发 2、content 文件 worker 2 完成 58/58、0 cached；原断言和 5 秒门未变。此前两次默认并发超时反证保留，最终整条 `pnpm check` 与 Lighthouse/资源采样尚未完成。
+- 继续时重新核对 1,515 项源码/配置/测试输入与冻结清单完全一致，SHA256 `fe46825ee20b329c3291f632a556388381e4f80a9fa6ec76e92ff19e9da6d000`；已有实现和浏览器结果可连续使用。
+- 第二轮实际性能：`run-2026-09-07T17-13-43-828Z` 完整 63 次 Lighthouse / 84 资源页；LCP 21/21 组超标，分数仅 5/21 组达 90，CLS 和图片预算通过，JS 331,928–345,161 bytes 超出建议。原失败全保留。随后将首页/艺人目录从主视觉等待链中拆出、礼物独立读并行、临时加载字体用现有系统字 token、公共合同隔离内部依赖；另修复浏览器实测顶栏遮挡弹层。前台 46 files / 316 tests、types、相关 lint/format 与依赖 6/6 build PASS；非作者复审 ACCEPT。新冻结 1,526 files、SHA256 `5cafc7406b4213ac07c35e2d8a5e304b5efea745dcba4d7e1f22dfa071df4b5b`；新生产 build + 双端 smoke 于 17:47:23 UTC PASS，完整新矩阵/性能及整仓门待复测。详见 `performance-iteration-2-implementation.md`。
+- 第三轮首屏减包：63条公开route编译入口不再静态加载Zod/内部proof；精确locale纯值、目录按需完整验证、Server购买展示+Quantity小client、Server筛选初值+按需schema。完整前台52files377tests、types与全仓format/lint PASS，独立边界复审76tests PASS；实际首次交互故障注入9cases51assertions PASS。6页JS203,468–207,239 bytes，LCP2,785.8–3,918.9ms仍未达lab目标，CLS0；新完整矩阵/63次LH进行中，未改测量方法/预算。源码1,540files，`662dcb3e30ca0d97e070e90262a7e8b6945d5b52ba12088a338ea7d119cc148f`。
+- 第三轮完整验收（18:38 UTC前完成）：同一662源码的84页面组合/4交互、88PNG PASS；85axe零violations，29 color-contrast incomplete/533节点、1 aria-hidden-focus incomplete/3节点保留，实际弹层9/9命中。真实发布/回退10,418/10,240ms均在原60秒门内。63次LH完整收集、21组各三次中位数：score20/21、LCP1/21（2,416.4–5,415.9ms）、CLS21/21（全部0）；84资源JS203,468–207,239B仍超150KB SHOULD，236图片全达SHOULD，0资源失败。性能状态COLLECTED_BUDGET_FAILED，不以正常fixture清理exit0覆盖失败。共享P2-04/P2-05新浏览器回归各exit0；最终冷test与整仓check继续串行执行。
+- 最终静态门同步：整仓attempt3被旧locale.ts本地声明假设阻断，原失败保留。仅修正foundation/interactions四个检查器与测试文件；32/59定向tests及实际两gate、格式/lint通过。最终1540输入SHA256 `3572b837e0ed6d532fc6d967a22763d64a1c6fb921c1281443104c61e4c75c94`；与662产品来源仅四个验证器差异，所有应用/资产/依赖构建输入不变，浏览器与性能证据可继承。整仓attempt4从头执行。
+- 最后检查修复：attempt4准确暴露旧.at(-1)取0021而未测试0020历史保护，精确version目标修后真实PG117项通过。静态绑定检查独立复审发现三类遮蔽，修后66项及实际gate通过。attempt5完整PG/API/S3与format/lint/type/test/build通过后，末端adapter guard拒绝src内测试helper导入typescript；现移到包内test-support，noEmit/build rootDir分离，九测试/实际adapter/31exports通过，其余296个生产编译文件逐字节不变，独立复审ACCEPT。最后1540源SHA `59ebd051a135110a3cf01b6b22bc5c373f83e41ad2b79a0b07e2dd166fe2a04d`；P2-04/05分别26.511/37.662秒通过，完整attempt6正在执行。
+- 最终整仓验收：attempt6于19:51:02 UTC整条exit0，1207.834秒；真实PG/API/TLS S3/媒体worker、format/lint、type58/58（28 cache）、test58/58（29 cache）、build35/35（30 cache）、31Node实际出口通过。独立bounded冷test58/58零缓存；最后protocol run19-44真实32,461断言/6,090 setup请求通过。1540实现与59ebd051冻结完全一致，原414项仍未跟踪且字节一致；818保留旧output核对通过，两项重写JSON先存本轮副本后恢复。共享P2新证据保留，原五次完整check失败均保留。S.U.P.E.R 1–9 ACCEPT，第10 PARTIAL（性能及人工门未完成）；总记录 `validation.json`。
+- 状态仍 IN_PROGRESS，22 DONE / 1 IN_PROGRESS / 26 PENDING；真实非开发运营 3/5/8 分钟、读屏及其他未满足门不以自动化代替。Phase 3 ACTIVE、Phase 4 LOCKED，未推送或合并。证据入口 `output/checks/p3-06-storefront-acceptance/README.md`。
 
 ## P3-05 执行登记（2026-09-07）
 

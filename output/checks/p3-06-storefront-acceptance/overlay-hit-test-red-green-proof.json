@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "status": "RED_TO_GREEN",
+  "redExitCode": 1,
+  "greenExitCode": 0,
+  "oldSourceHash": "d4b93616d76c95363b4872a2fb46f9e2ad8385779413858669e0b95da6c27352",
+  "newSourceHash": "0702860f81200bdf43e06ebb0ecbecf83bde2e03a09e41dd4c1eb5e76a233caf",
+  "onlyStyleChange": "Added isolation: isolate to .storefront; removing exactly that declaration recreates the original CSS SHA-256. Shared compiled CSS files and hit-test assertions unchanged.",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 1440,
+      "height": 900
+    }
+  ],
+  "paintedHitSamples": 18,
+  "gateAssertions": 26,
+  "formalMatrixHook": "Runs immediately after mobile filter becomes visible, stores full observation before asserting. Existing Tab/known-guard/Escape checks remain unchanged.",
+  "fullCompiledApplicationRerunPending": true
+}

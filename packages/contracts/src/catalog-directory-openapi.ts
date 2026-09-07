@@ -1,5 +1,9 @@
 import { z } from "zod";
 import {
+  publicRevalidationHeaders,
+  publicRevalidationParameter,
+} from "./public-revalidation-openapi.js";
+import {
   giftDiscoveryQuerySchema,
   idolDiscoveryQuerySchema,
 } from "./catalog-discovery.js";
@@ -40,6 +44,10 @@ export function catalogDirectoryPaths(): JsonObject {
         [
           ["200", "Published directory from one database snapshot."],
           [
+            "304",
+            "Unchanged anonymous directory after fresh validation; no response body.",
+          ],
+          [
             "400",
             "Invalid query or cursor. Correct the request before retrying.",
           ],
@@ -62,16 +70,18 @@ export function catalogDirectoryPaths(): JsonObject {
             status,
             {
               description,
-              headers: {
-                "Cache-Control": {
-                  schema: { type: "string", const: "no-store" },
-                },
-              },
-              content: {
-                "application/json": {
-                  schema: { $ref: `#/components/schemas/${response}` },
-                },
-              },
+              headers: publicRevalidationHeaders(
+                status === "200" ? 200 : status === "304" ? 304 : "FAILURE",
+              ),
+              ...(status === "304"
+                ? {}
+                : {
+                    content: {
+                      "application/json": {
+                        schema: { $ref: `#/components/schemas/${response}` },
+                      },
+                    },
+                  }),
             },
           ]),
       );
@@ -85,7 +95,7 @@ export function catalogDirectoryPaths(): JsonObject {
                 ? "Search or browse published artists"
                 : "Browse published gifts in an explicit market and currency",
             security: [],
-            parameters,
+            parameters: [...parameters, publicRevalidationParameter()],
             responses,
             description:
               "Parameters must occur once. Unknown keys and noncanonical numeric values are rejected. Language never selects market or currency; prices are discovery hints and must be revalidated during checkout.",

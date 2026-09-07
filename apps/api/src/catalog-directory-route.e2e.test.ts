@@ -27,7 +27,7 @@ const emptyGifts = {
   },
 };
 
-test("parses explicit public directory context and marks every response no-store", async () => {
+test("parses explicit public directory context and revalidates successful public reads", async () => {
   const app = Fastify();
   const readIdols = vi.fn(async () => emptyIdols);
   const readGifts = vi.fn(async () => emptyGifts);
@@ -37,7 +37,10 @@ test("parses explicit public directory context and marks every response no-store
       url: "/api/v1/idols?locale=ja&q=%E3%83%9F%E3%83%A9&limit=8",
     });
     expect(idols.statusCode).toBe(200);
-    expect(idols.headers["cache-control"]).toBe("no-store");
+    expect(idols.headers["cache-control"]).toBe(
+      "public, max-age=0, s-maxage=0, must-revalidate",
+    );
+    expect(idols.headers.etag).toMatch(/^W\/"[a-f0-9]{64}"$/u);
     expect(readIdols).toHaveBeenCalledWith({
       schemaVersion: 1,
       locale: "ja",

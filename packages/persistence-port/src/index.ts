@@ -333,3 +333,4 @@ export type {
   StorefrontCommerceRepositories,
   StorefrontCommerceTransactionManager,
 } from "./storefront-commerce.js";
+export * from "./storefront-seo.js";

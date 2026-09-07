@@ -325,6 +325,9 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/storefront-context",
     "/api/v1/storefront-gifts/{handle}",
     "/api/v1/storefront-homepage",
+    "/api/v1/storefront-seo/catalog",
+    "/api/v1/storefront-seo/entity",
+    "/api/v1/storefront-seo/index",
     "/api/v1/webhooks/payments/{endpointId}",
   ]);
   expect(operation["operationId"]).toBe("receivePaymentWebhook");

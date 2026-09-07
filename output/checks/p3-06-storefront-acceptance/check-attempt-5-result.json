@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "check"
+  ],
+  "startedAt": "2026-09-07T19:00:45.644733+00:00",
+  "finishedAt": "2026-09-07T19:20:13.418864+00:00",
+  "elapsedSeconds": 1167.695,
+  "exitCode": 1,
+  "log": "output/checks/p3-06-storefront-acceptance/check-attempt-5.log",
+  "implementationSha256": "b0cab59fda6be4618eb2645f8da56d10df2d9580b66ec61dcaa26561955f74bd"
+}

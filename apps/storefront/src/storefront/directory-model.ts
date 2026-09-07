@@ -1,8 +1,8 @@
-import {
-  artistSearchTermSchema,
-  type CatalogDirectoryFailure,
-  type IdolDirectoryResponse,
-  type PublishedIdolView,
+import type {
+  CatalogDirectoryFailure,
+  IdolDirectoryResponse,
+  IdolId,
+  PublishedIdolView,
 } from "@fan-support/contracts";
 
 export type DirectoryState = Readonly<{
@@ -10,11 +10,11 @@ export type DirectoryState = Readonly<{
   catalogVersion?: string;
   hasNextPage: boolean;
   endCursor: string | null;
-  anchor?: string | undefined;
+  anchor?: IdolId | undefined;
   request: number;
   loading: boolean;
   mode: "append" | "replace";
-  pendingAnchor?: string | undefined;
+  pendingAnchor?: IdolId | undefined;
   error?: CatalogDirectoryFailure["code"] | undefined;
 }>;
 
@@ -23,7 +23,7 @@ export type DirectoryAction =
       type: "begin";
       request: number;
       mode: "append" | "replace";
-      anchor?: string;
+      anchor?: IdolId;
     }>
   | Readonly<{
       type: "receive";
@@ -33,7 +33,7 @@ export type DirectoryAction =
 
 export function createDirectoryState(
   response: IdolDirectoryResponse,
-  anchor?: string,
+  anchor?: IdolId,
 ): DirectoryState {
   const initial: DirectoryState = {
     items: [],
@@ -93,22 +93,10 @@ export function directoryReducer(
   };
 }
 
-export function prepareArtistSearch(
-  raw: string,
-  composing: boolean,
-):
-  | Readonly<{ kind: "idle" }>
-  | Readonly<{ kind: "invalid" }>
-  | Readonly<{ kind: "query"; q: string }> {
-  if (composing || raw.trim().length === 0) return { kind: "idle" };
-  const query = artistSearchTermSchema.safeParse(raw.trim());
-  return query.success ? { kind: "query", q: query.data } : { kind: "invalid" };
-}
-
 /** Location is public navigation context; unrelated commerce query and fragment survive. */
 export function directoryAnchorHref(
   currentUrl: string,
-  anchor: string | undefined,
+  anchor: IdolId | undefined,
 ): string {
   const url = new URL(currentUrl);
   url.searchParams.delete("q");
@@ -125,4 +113,13 @@ export function canSelectSearchArtist(
   return (
     !acceptingOnly || (artist.status === "active" && artist.acceptingGifts)
   );
+}
+
+export function directoryContextQuery(query: string, anchor?: IdolId): string {
+  const context = new URLSearchParams(query);
+  context.delete("q");
+  context.delete("after");
+  context.delete("anchorId");
+  if (anchor !== undefined) context.set("anchorId", anchor);
+  return context.toString();
 }

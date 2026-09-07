@@ -1,0 +1,1017 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "scope": "Seven-language actual compiled TEST UI and HTML SEO; performance runs separately",
+  "cases": [
+    {
+      "name": "en-390-home-images",
+      "pass": true
+    },
+    {
+      "name": "en-390-artists-images",
+      "pass": true
+    },
+    {
+      "name": "en-390-artist-images",
+      "pass": true
+    },
+    {
+      "name": "en-390-gifts-images",
+      "pass": true
+    },
+    {
+      "name": "en-390-gift-images",
+      "pass": true
+    },
+    {
+      "name": "en-390-policy-images",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    "en-390-home-images.png",
+    "en-390-artists-images.png",
+    "en-390-artist-images.png",
+    "en-390-gifts-images.png",
+    "en-390-gift-images.png",
+    "en-390-policy-images.png"
+  ],
+  "axe": [
+    {
+      "name": "en-390-home-images",
+      "version": "4.13.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                "a[href$=\"kai-ren\"] > figure > figcaption > h3"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "a[href$=\"kai-ren\"] > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "a[href$=\"studio-guest\"] > figure > figcaption > h3"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "a[href$=\"studio-guest\"] > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(4) > a > figure > figcaption > h3"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(4) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(5) > a > figure > figcaption > h3"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(5) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(6) > a > figure > figcaption > h3"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(6) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(7) > a > figure > figcaption > h3"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(7) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(8) > a > figure > figcaption > h3"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(8) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(9) > a > figure > figcaption > h3"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(9) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(10) > a > figure > figcaption > h3"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(10) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(11) > a > figure > figcaption > h3"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(11) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(12) > a > figure > figcaption > h3"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(12) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "en-390-artists-images",
+      "version": "4.13.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                "a[href$=\"kai-ren\"] > figure > figcaption > h2"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "a[href$=\"kai-ren\"] > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "a[href$=\"studio-guest\"] > figure > figcaption > h2"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "a[href$=\"studio-guest\"] > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(4) > a > figure > figcaption > h2"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(4) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(5) > a > figure > figcaption > h2"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(5) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(6) > a > figure > figcaption > h2"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(6) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(7) > a > figure > figcaption > h2"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(7) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(8) > a > figure > figcaption > h2"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(8) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(9) > a > figure > figcaption > h2"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(9) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(10) > a > figure > figcaption > h2"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(10) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(11) > a > figure > figcaption > h2"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(11) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(12) > a > figure > figcaption > h2"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "li[data-accepting=\"true\"]:nth-child(12) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "en-390-artist-images",
+      "version": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-gifts-images",
+      "version": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-gift-images",
+      "version": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-policy-images",
+      "version": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "metadata": [
+    {
+      "locale": "en",
+      "kind": "home",
+      "path": "/en",
+      "selector": "[data-artist-directory]",
+      "title": "A little closer",
+      "description": "A thoughtful gift, prepared for your artist",
+      "canonical": [
+        "http://localhost:63524/en"
+      ],
+      "robots": "noindex, follow",
+      "alternates": [
+        {
+          "locale": "en",
+          "href": "http://localhost:63524/en"
+        },
+        {
+          "locale": "zh-CN",
+          "href": "http://localhost:63524/zh-CN"
+        },
+        {
+          "locale": "th",
+          "href": "http://localhost:63524/th"
+        },
+        {
+          "locale": "vi",
+          "href": "http://localhost:63524/vi"
+        },
+        {
+          "locale": "ja",
+          "href": "http://localhost:63524/ja"
+        },
+        {
+          "locale": "es",
+          "href": "http://localhost:63524/es"
+        },
+        {
+          "locale": "pt",
+          "href": "http://localhost:63524/pt"
+        },
+        {
+          "locale": "x-default",
+          "href": "http://localhost:63524/en"
+        }
+      ],
+      "ogUrl": "http://localhost:63524/en",
+      "ogTitle": "A little closer",
+      "twitter": "summary_large_image",
+      "structured": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "http://localhost:63524/#organization",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/"
+            },
+            {
+              "@type": "WebSite",
+              "@id": "http://localhost:63524/#website",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/",
+              "publisher": {
+                "@id": "http://localhost:63524/#organization"
+              }
+            },
+            {
+              "@type": "WebPage",
+              "@id": "http://localhost:63524/en#page",
+              "url": "http://localhost:63524/en",
+              "name": "A little closer",
+              "description": "A thoughtful gift, prepared for your artist",
+              "inLanguage": "en",
+              "isPartOf": {
+                "@id": "http://localhost:63524/#website"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "kind": "artists",
+      "path": "/en/idols",
+      "selector": "[data-artist-directory]",
+      "title": "Find the one who inspires you.",
+      "description": "A familiar face. A new story. A little closer.",
+      "canonical": [
+        "http://localhost:63524/en/idols"
+      ],
+      "robots": "noindex, follow",
+      "alternates": [
+        {
+          "locale": "en",
+          "href": "http://localhost:63524/en/idols"
+        },
+        {
+          "locale": "zh-CN",
+          "href": "http://localhost:63524/zh-CN/idols"
+        },
+        {
+          "locale": "th",
+          "href": "http://localhost:63524/th/idols"
+        },
+        {
+          "locale": "vi",
+          "href": "http://localhost:63524/vi/idols"
+        },
+        {
+          "locale": "ja",
+          "href": "http://localhost:63524/ja/idols"
+        },
+        {
+          "locale": "es",
+          "href": "http://localhost:63524/es/idols"
+        },
+        {
+          "locale": "pt",
+          "href": "http://localhost:63524/pt/idols"
+        },
+        {
+          "locale": "x-default",
+          "href": "http://localhost:63524/en/idols"
+        }
+      ],
+      "ogUrl": "http://localhost:63524/en/idols",
+      "ogTitle": "Find the one who inspires you.",
+      "twitter": "summary_large_image",
+      "structured": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "http://localhost:63524/#organization",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/"
+            },
+            {
+              "@type": "WebSite",
+              "@id": "http://localhost:63524/#website",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/",
+              "publisher": {
+                "@id": "http://localhost:63524/#organization"
+              }
+            },
+            {
+              "@type": "CollectionPage",
+              "@id": "http://localhost:63524/en/idols#page",
+              "url": "http://localhost:63524/en/idols",
+              "name": "Find the one who inspires you.",
+              "description": "A familiar face. A new story. A little closer.",
+              "inLanguage": "en",
+              "isPartOf": {
+                "@id": "http://localhost:63524/#website"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "http://localhost:63524/en"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Find the one who inspires you.",
+                  "item": "http://localhost:63524/en/idols"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "kind": "artist",
+      "path": "/en/idols/mira-vale?market=GLOBAL&currency=USD",
+      "selector": ".storefront-story",
+      "title": "Mira Vale",
+      "description": "Music, movement, and moments worth sharing.",
+      "canonical": [
+        "http://localhost:63524/en/idols/mira-vale?market=GLOBAL&currency=USD"
+      ],
+      "robots": "noindex, follow",
+      "alternates": [
+        {
+          "locale": "en",
+          "href": "http://localhost:63524/en/idols/mira-vale?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "zh-CN",
+          "href": "http://localhost:63524/zh-CN/idols/mira-vale?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "th",
+          "href": "http://localhost:63524/th/idols/mira-vale?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "vi",
+          "href": "http://localhost:63524/vi/idols/mira-vale?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "ja",
+          "href": "http://localhost:63524/ja/idols/mira-vale?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "es",
+          "href": "http://localhost:63524/es/idols/mira-vale?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "pt",
+          "href": "http://localhost:63524/pt/idols/mira-vale?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "x-default",
+          "href": "http://localhost:63524/en/idols/mira-vale?market=GLOBAL&currency=USD"
+        }
+      ],
+      "ogUrl": "http://localhost:63524/en/idols/mira-vale?market=GLOBAL&currency=USD",
+      "ogTitle": "Mira Vale",
+      "twitter": "summary_large_image",
+      "structured": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "http://localhost:63524/#organization",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/"
+            },
+            {
+              "@type": "WebSite",
+              "@id": "http://localhost:63524/#website",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/",
+              "publisher": {
+                "@id": "http://localhost:63524/#organization"
+              }
+            },
+            {
+              "@type": "ProfilePage",
+              "@id": "http://localhost:63524/en/idols/mira-vale?market=GLOBAL&currency=USD#page",
+              "url": "http://localhost:63524/en/idols/mira-vale?market=GLOBAL&currency=USD",
+              "name": "Mira Vale",
+              "description": "Music, movement, and moments worth sharing.",
+              "inLanguage": "en",
+              "isPartOf": {
+                "@id": "http://localhost:63524/#website"
+              },
+              "mainEntity": {
+                "@type": "Person",
+                "name": "Mira Vale",
+                "image": "https://media.example.invalid:63525/processed/v1/42f611e59c1393c8f216c30977b8f2c767e71db9609a91c9595a061bfd489da9/2b69ad15323b4da2d7dc6b638765ed0e8bc39412ecc8efabde1167e9f3a3dae8.webp",
+                "url": "http://localhost:63524/en/idols/mira-vale?market=GLOBAL&currency=USD"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "http://localhost:63524/en"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Artists",
+                  "item": "http://localhost:63524/en/idols"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Mira Vale",
+                  "item": "http://localhost:63524/en/idols/mira-vale?market=GLOBAL&currency=USD"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "kind": "gifts",
+      "path": "/en/gifts?market=GLOBAL&currency=USD",
+      "selector": "[data-gift-directory]",
+      "title": "A gift, with meaning.",
+      "description": "Discover gifts chosen for moments worth remembering.",
+      "canonical": [
+        "http://localhost:63524/en/gifts?market=GLOBAL&currency=USD"
+      ],
+      "robots": "noindex, follow",
+      "alternates": [
+        {
+          "locale": "en",
+          "href": "http://localhost:63524/en/gifts?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "zh-CN",
+          "href": "http://localhost:63524/zh-CN/gifts?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "th",
+          "href": "http://localhost:63524/th/gifts?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "vi",
+          "href": "http://localhost:63524/vi/gifts?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "ja",
+          "href": "http://localhost:63524/ja/gifts?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "es",
+          "href": "http://localhost:63524/es/gifts?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "pt",
+          "href": "http://localhost:63524/pt/gifts?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "x-default",
+          "href": "http://localhost:63524/en/gifts?market=GLOBAL&currency=USD"
+        }
+      ],
+      "ogUrl": "http://localhost:63524/en/gifts?market=GLOBAL&currency=USD",
+      "ogTitle": "A gift, with meaning.",
+      "twitter": "summary_large_image",
+      "structured": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "http://localhost:63524/#organization",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/"
+            },
+            {
+              "@type": "WebSite",
+              "@id": "http://localhost:63524/#website",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/",
+              "publisher": {
+                "@id": "http://localhost:63524/#organization"
+              }
+            },
+            {
+              "@type": "CollectionPage",
+              "@id": "http://localhost:63524/en/gifts?market=GLOBAL&currency=USD#page",
+              "url": "http://localhost:63524/en/gifts?market=GLOBAL&currency=USD",
+              "name": "A gift, with meaning.",
+              "description": "Discover gifts chosen for moments worth remembering.",
+              "inLanguage": "en",
+              "isPartOf": {
+                "@id": "http://localhost:63524/#website"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "http://localhost:63524/en"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "A gift, with meaning.",
+                  "item": "http://localhost:63524/en/gifts?market=GLOBAL&currency=USD"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "kind": "gift",
+      "path": "/en/gifts/studio-gift-001?market=GLOBAL&currency=USD",
+      "selector": "[data-gift-detail]",
+      "title": "Rose Palace 01",
+      "description": "A thoughtful gift, prepared for your artist",
+      "canonical": [
+        "http://localhost:63524/en/gifts/studio-gift-001?market=GLOBAL&currency=USD"
+      ],
+      "robots": "noindex, follow",
+      "alternates": [
+        {
+          "locale": "en",
+          "href": "http://localhost:63524/en/gifts/studio-gift-001?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "zh-CN",
+          "href": "http://localhost:63524/zh-CN/gifts/studio-gift-001?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "th",
+          "href": "http://localhost:63524/th/gifts/studio-gift-001?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "vi",
+          "href": "http://localhost:63524/vi/gifts/studio-gift-001?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "ja",
+          "href": "http://localhost:63524/ja/gifts/studio-gift-001?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "es",
+          "href": "http://localhost:63524/es/gifts/studio-gift-001?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "pt",
+          "href": "http://localhost:63524/pt/gifts/studio-gift-001?market=GLOBAL&currency=USD"
+        },
+        {
+          "locale": "x-default",
+          "href": "http://localhost:63524/en/gifts/studio-gift-001?market=GLOBAL&currency=USD"
+        }
+      ],
+      "ogUrl": "http://localhost:63524/en/gifts/studio-gift-001?market=GLOBAL&currency=USD",
+      "ogTitle": "Rose Palace 01",
+      "twitter": "summary_large_image",
+      "structured": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "http://localhost:63524/#organization",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/"
+            },
+            {
+              "@type": "WebSite",
+              "@id": "http://localhost:63524/#website",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/",
+              "publisher": {
+                "@id": "http://localhost:63524/#organization"
+              }
+            },
+            {
+              "@type": "WebPage",
+              "@id": "http://localhost:63524/en/gifts/studio-gift-001?market=GLOBAL&currency=USD#page",
+              "url": "http://localhost:63524/en/gifts/studio-gift-001?market=GLOBAL&currency=USD",
+              "name": "Rose Palace 01",
+              "description": "A thoughtful gift, prepared for your artist",
+              "inLanguage": "en",
+              "isPartOf": {
+                "@id": "http://localhost:63524/#website"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "http://localhost:63524/en"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Gifts",
+                  "item": "http://localhost:63524/en/gifts"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Rose Palace 01",
+                  "item": "http://localhost:63524/en/gifts/studio-gift-001?market=GLOBAL&currency=USD"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "@id": "http://localhost:63524/en/gifts/studio-gift-001?market=GLOBAL&currency=USD#product",
+          "url": "http://localhost:63524/en/gifts/studio-gift-001?market=GLOBAL&currency=USD",
+          "name": "Rose Palace 01",
+          "description": "A thoughtful gift, prepared for your artist",
+          "image": [
+            "https://media.example.invalid:63525/processed/v1/3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018/9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp"
+          ],
+          "offers": {
+            "@type": "Offer",
+            "url": "http://localhost:63524/en/gifts/studio-gift-001?market=GLOBAL&currency=USD",
+            "priceCurrency": "USD",
+            "price": "12.00",
+            "availability": "https://schema.org/InStock"
+          }
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "kind": "policy",
+      "path": "/en/policies/delivery",
+      "selector": "main h1",
+      "title": "Delivery to the artist",
+      "description": "A thoughtful gift, prepared for your artist",
+      "canonical": [
+        "http://localhost:63524/en/policies/delivery"
+      ],
+      "robots": "noindex, follow",
+      "alternates": [
+        {
+          "locale": "en",
+          "href": "http://localhost:63524/en/policies/delivery"
+        },
+        {
+          "locale": "zh-CN",
+          "href": "http://localhost:63524/zh-CN/policies/delivery"
+        },
+        {
+          "locale": "th",
+          "href": "http://localhost:63524/th/policies/delivery"
+        },
+        {
+          "locale": "vi",
+          "href": "http://localhost:63524/vi/policies/delivery"
+        },
+        {
+          "locale": "ja",
+          "href": "http://localhost:63524/ja/policies/delivery"
+        },
+        {
+          "locale": "es",
+          "href": "http://localhost:63524/es/policies/delivery"
+        },
+        {
+          "locale": "pt",
+          "href": "http://localhost:63524/pt/policies/delivery"
+        },
+        {
+          "locale": "x-default",
+          "href": "http://localhost:63524/en/policies/delivery"
+        }
+      ],
+      "ogUrl": "http://localhost:63524/en/policies/delivery",
+      "ogTitle": "Delivery to the artist",
+      "twitter": "summary",
+      "structured": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "http://localhost:63524/#organization",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/"
+            },
+            {
+              "@type": "WebSite",
+              "@id": "http://localhost:63524/#website",
+              "name": "FAN SUPPORT",
+              "url": "http://localhost:63524/",
+              "publisher": {
+                "@id": "http://localhost:63524/#organization"
+              }
+            },
+            {
+              "@type": "WebPage",
+              "@id": "http://localhost:63524/en/policies/delivery#page",
+              "url": "http://localhost:63524/en/policies/delivery",
+              "name": "Delivery to the artist",
+              "description": "A thoughtful gift, prepared for your artist",
+              "inLanguage": "en",
+              "isPartOf": {
+                "@id": "http://localhost:63524/#website"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "http://localhost:63524/en"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Delivery to the artist",
+                  "item": "http://localhost:63524/en/policies/delivery"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "reflow": [
+    {
+      "name": "en-390-home-images",
+      "width": 390,
+      "root": 390,
+      "body": 390
+    },
+    {
+      "name": "en-390-artists-images",
+      "width": 390,
+      "root": 390,
+      "body": 390
+    },
+    {
+      "name": "en-390-artist-images",
+      "width": 390,
+      "root": 390,
+      "body": 390
+    },
+    {
+      "name": "en-390-gifts-images",
+      "width": 390,
+      "root": 390,
+      "body": 390
+    },
+    {
+      "name": "en-390-gift-images",
+      "width": 390,
+      "root": 390,
+      "body": 390
+    },
+    {
+      "name": "en-390-policy-images",
+      "width": 390,
+      "root": 390,
+      "body": 390
+    }
+  ],
+  "pageErrors": [],
+  "physicalDeviceEvidence": false,
+  "voiceOverEvidence": false,
+  "browserVersion": "152.0.7977.82",
+  "failure": {
+    "step": "zh-CN-390-home",
+    "name": "TimeoutError",
+    "assertion": null
+  }
+}

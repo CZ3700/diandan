@@ -43,6 +43,11 @@ import type {
   StorefrontCommerceTransactionManager,
   StorefrontCommerceRepositories,
 } from "@fan-support/persistence-port";
+import { createStorefrontSeoRepository } from "./storefront-seo-repository.js";
+import type {
+  StorefrontSeoTransactionManager,
+  StorefrontSeoRepositories,
+} from "@fan-support/persistence-port";
 import { createStorefrontHomepageRepository } from "./storefront-homepage-repository.js";
 import type {
   PublicationRuntimeTransactionManager,
@@ -130,6 +135,7 @@ export interface PostgresPersistence {
   readonly publicationPurgeTransactionManager: PublicationPurgeTransactionManager;
   readonly publishedContentTransactionManager: PublishedContentTransactionManager;
   readonly storefrontCommerceTransactionManager: StorefrontCommerceTransactionManager;
+  readonly storefrontSeoTransactionManager: StorefrontSeoTransactionManager;
   readonly storefrontHomepageTransactionManager: StorefrontHomepageTransactionManager;
   readonly publicationPreflightTransactionManager: PublicationPreflightTransactionManager;
   readonly resourceManagementTransactionManager: ResourceManagementTransactionManager;
@@ -374,6 +380,17 @@ export function createPostgresPersistenceWithPoolFactory(
       acquireClient: async () => pool.connect(),
       createRepositories: (client, scope) => ({
         storefrontCommerce: createStorefrontCommerceRepository(
+          client,
+          scope,
+          options?.catalogPublicMediaBaseUrl ?? "",
+        ),
+      }),
+    });
+  const storefrontSeoRunner =
+    createTransactionRunner<StorefrontSeoRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        storefrontSeo: createStorefrontSeoRepository(
           client,
           scope,
           options?.catalogPublicMediaBaseUrl ?? "",
@@ -836,6 +853,22 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return storefrontCommerceRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    storefrontSeoTransactionManager: {
+      async runInStorefrontSeoTransaction(work) {
+        if (
+          lifecycle !== "OPEN" ||
+          options?.catalogPublicMediaBaseUrl === undefined
+        )
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return storefrontSeoRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
           work,
         );

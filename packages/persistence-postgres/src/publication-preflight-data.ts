@@ -10,6 +10,7 @@ import { computeContentAuthoringSnapshotHash } from "@fan-support/content";
 import {
   authoringHeadVersion,
   loadAuthoringSnapshot,
+  type ContentSnapshotLockMode,
 } from "./content-authoring-data.js";
 import { draftRows, type DraftRow } from "./content-draft-data.js";
 import {
@@ -38,12 +39,14 @@ export async function preflightSnapshot(
   client: TransactionClient,
   target: ContentAuthoringTarget,
   id: string,
+  lockMode: ContentSnapshotLockMode = "UPDATE",
 ) {
   const snapshot = await loadAuthoringSnapshot(
     client,
     target,
     id,
     await authoringHeadVersion(client, target),
+    lockMode,
   );
   if (!snapshot) return undefined;
   // The older draft DTO loader uses JavaScript Date. Restore the exact PostgreSQL
@@ -148,6 +151,7 @@ export function preflightMediaReferences(snapshot: ContentAuthoringSnapshot) {
 export async function loadPreflightMedia(
   client: TransactionClient,
   snapshot: ContentAuthoringSnapshot,
+  lockMode: ContentSnapshotLockMode = "UPDATE",
 ) {
   const references = preflightMediaReferences(snapshot);
   const assetIds = [
@@ -193,6 +197,7 @@ export async function loadPreflightMedia(
         mediaAssetId: reference.mediaAssetId,
       } as ContentAuthoringTarget,
       reference.mediaMetadataRevisionId,
+      lockMode,
     );
     if (!value) throw new Error("Missing canonical media metadata");
     mediaSnapshots.push(value);

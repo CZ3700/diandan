@@ -1,0 +1,29 @@
+import type {
+  GiftDiscoveryQuery,
+  SupportedLocale,
+} from "@fan-support/contracts";
+import type { StorefrontCopy } from "./copy";
+
+export type GiftFilterDraft = Readonly<{
+  sort: GiftDiscoveryQuery["sort"];
+  category: string;
+  availability: GiftDiscoveryQuery["availability"];
+  minimum: string;
+  maximum: string;
+}>;
+
+export type GiftFilterProps = Readonly<{
+  locale: SupportedLocale;
+  copy: StorefrontCopy;
+  query: GiftDiscoveryQuery;
+  contextQuery: string;
+  basePath: string;
+}>;
+
+export type GiftFilterClientProps = GiftFilterProps &
+  Readonly<{
+    initialDraft: GiftFilterDraft;
+    resetHref: string;
+    recoveryHref: string;
+    hint: string;
+  }>;

@@ -55,3 +55,4 @@ export * from "./published-gift-commerce.js";
 export * from "./storefront-homepage.js";
 
 export * from "./storefront-commerce.js";
+export * from "./storefront-seo.js";

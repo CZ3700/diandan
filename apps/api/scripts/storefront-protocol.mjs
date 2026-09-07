@@ -1,4 +1,8 @@
 import {
+  assertPublicGetCaching,
+  verifyPublicGetConditional,
+} from "./public-get-revalidation.mjs";
+import {
   SUPPORTED_LOCALES,
   idolDirectoryResponseSchema,
   publishedContentResponseSchema,
@@ -15,8 +19,13 @@ export async function verifyStorefrontProtocol({
   mutate = false,
 }) {
   const cases = [];
+  const verifiedCacheScopes = new Set();
+  const previousTags = new Map();
   async function get(route, schema, status = 200) {
     const response = await globalThis.fetch(base + route, {
+      ...(status !== 200 && previousTags.has(route)
+        ? { headers: { "if-none-match": previousTags.get(route) } }
+        : {}),
       signal: globalThis.AbortSignal.timeout(30_000),
       redirect: "manual",
     });
@@ -25,10 +34,21 @@ export async function verifyStorefrontProtocol({
       response.status === status,
       `public protocol ${route.split("?")[0]} matches its HTTP status`,
     );
-    check(
-      response.headers.get("cache-control") === "no-store",
-      "public projection HTTP does not create an uncontrolled shared cache",
-    );
+    assertPublicGetCaching(response, value, check);
+    if (response.status === 200 && value.outcome === "SUCCESS") {
+      previousTags.set(route, response.headers.get("etag"));
+      const resource = route.split("?")[0].split("/").slice(0, 4).join("/");
+      if (!verifiedCacheScopes.has(resource)) {
+        await verifyPublicGetConditional({
+          base,
+          route,
+          response,
+          schema,
+          check,
+        });
+        verifiedCacheScopes.add(resource);
+      }
+    }
     return value;
   }
   const home = (locale = "en", status = 200) =>

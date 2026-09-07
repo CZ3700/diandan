@@ -18,20 +18,25 @@ import {
 } from "./content-authoring-model.js";
 import type { TransactionClient } from "./transaction-runner.js";
 
+export type ContentSnapshotLockMode = "UPDATE" | "SHARE";
+
 export async function lockAuthoringOwner(
   client: TransactionClient,
   target: ContentAuthoringTarget,
+  lockMode: ContentSnapshotLockMode = "UPDATE",
 ): Promise<DraftRow | undefined> {
   const table = AUTHORING_TABLES[target.kind];
   if (table.ownerTable === null) {
     await client.query(
-      "SELECT pg_advisory_xact_lock(hashtextextended('fan-support:content-authoring:homepage',0))",
+      lockMode === "SHARE"
+        ? "SELECT pg_advisory_xact_lock_shared(hashtextextended('fan-support:content-authoring:homepage',0))"
+        : "SELECT pg_advisory_xact_lock(hashtextextended('fan-support:content-authoring:homepage',0))",
     );
     return {};
   }
   const [row] = await draftRows(
     client,
-    `SELECT to_jsonb(o.*) AS owner FROM public.${table.ownerTable} o WHERE ${table.ownerKey}=$1 FOR UPDATE`,
+    `SELECT to_jsonb(o.*) AS owner FROM public.${table.ownerTable} o WHERE ${table.ownerKey}=$1 FOR ${lockMode}`,
     [ownerValue(target)],
   );
   return row?.["owner"] as DraftRow | undefined;
@@ -84,11 +89,12 @@ export async function loadAuthoringSnapshot(
   target: ContentAuthoringTarget,
   id: string,
   headVersion: number,
+  lockMode: ContentSnapshotLockMode = "UPDATE",
 ): Promise<ContentAuthoringSnapshot | undefined> {
   const table = AUTHORING_TABLES[target.kind];
   const [header] = await draftRows(
     client,
-    `SELECT to_jsonb(r.*) AS revision FROM public.${table.revisions} r WHERE id=$1${table.ownerColumn === null ? "" : ` AND ${table.ownerColumn}=$2`} FOR UPDATE`,
+    `SELECT to_jsonb(r.*) AS revision FROM public.${table.revisions} r WHERE id=$1${table.ownerColumn === null ? "" : ` AND ${table.ownerColumn}=$2`} FOR ${lockMode}`,
     table.ownerColumn === null ? [id] : [id, ownerValue(target)],
   );
   if (!header) return undefined;
@@ -120,7 +126,7 @@ export async function loadAuthoringSnapshot(
   }
   const translations = await draftRows(
     client,
-    `SELECT to_jsonb(t.*) AS translation,to_jsonb(r.*) AS review,to_jsonb(e.*) AS evidence FROM public.${table.translations} t LEFT JOIN LATERAL(SELECT * FROM public.${table.reviews} WHERE ${table.translation}=t.id ORDER BY sequence DESC LIMIT 1) r ON true LEFT JOIN public.${table.evidence} e ON e.target_translation_id=t.id WHERE t.${table.parent}=$1 ORDER BY t.locale FOR UPDATE OF t`,
+    `SELECT to_jsonb(t.*) AS translation,to_jsonb(r.*) AS review,to_jsonb(e.*) AS evidence FROM public.${table.translations} t LEFT JOIN LATERAL(SELECT * FROM public.${table.reviews} WHERE ${table.translation}=t.id ORDER BY sequence DESC LIMIT 1) r ON true LEFT JOIN public.${table.evidence} e ON e.target_translation_id=t.id WHERE t.${table.parent}=$1 ORDER BY t.locale FOR ${lockMode} OF t`,
     [id],
   );
   const text = [],

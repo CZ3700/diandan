@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { idolIdSchema } from "@fan-support/contracts";
 import { directoryFixturePage as page } from "./directory-fixture";
 
 async function model() {
@@ -63,7 +64,7 @@ describe("artist directory transitions", () => {
       type: "begin",
       request: 2,
       mode: "replace",
-      anchor: "a0000000-0000-4000-8000-000000000100",
+      anchor: idolIdSchema.parse("a0000000-0000-4000-8000-000000000100"),
     });
     expect(
       m.directoryReducer(state, {
@@ -110,7 +111,7 @@ describe("artist directory transitions", () => {
       type: "begin",
       request: 2,
       mode: "replace",
-      anchor: "a0000000-0000-4000-8000-000000000100",
+      anchor: idolIdSchema.parse("a0000000-0000-4000-8000-000000000100"),
     });
     state = m.directoryReducer(state, {
       type: "receive",
@@ -122,7 +123,7 @@ describe("artist directory transitions", () => {
   });
 
   it("validates Unicode search without altering valid names and defers IME composition", async () => {
-    const m = await model();
+    const m = await import("./directory-validation");
     expect(m.prepareArtistSearch("  日本の芸人  ", false)).toEqual({
       kind: "query",
       q: "日本の芸人",
@@ -146,7 +147,7 @@ describe("artist directory transitions", () => {
     expect(
       m.directoryAnchorHref(
         "https://store.invalid/ja/idols?market=TEST&currency=JPY&gift=keepsake&q=old&after=stale#artists",
-        "a0000000-0000-4000-8000-000000000100",
+        idolIdSchema.parse("a0000000-0000-4000-8000-000000000100"),
       ),
     ).toBe(
       "/ja/idols?market=TEST&currency=JPY&gift=keepsake&anchorId=a0000000-0000-4000-8000-000000000100#artists",

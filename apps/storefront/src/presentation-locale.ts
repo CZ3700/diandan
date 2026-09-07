@@ -1,18 +1,8 @@
-import {
-  supportedLocaleSchema,
-  type SupportedLocale,
-} from "@fan-support/contracts";
+import type { SupportedLocale } from "@fan-support/contracts";
+import { requireCanonicalLocale } from "./canonical-locale";
 
 const PRESENTATION_LOCALE_COOKIE_NAME = "site_locale";
 const PRESENTATION_LOCALE_MAX_AGE_SECONDS = 31_536_000;
-
-function requireSupportedLocale(value: unknown): SupportedLocale {
-  const parsed = supportedLocaleSchema.safeParse(value);
-  if (!parsed.success) {
-    throw new TypeError("Expected a canonical supported locale");
-  }
-  return parsed.data;
-}
 
 function leadingLocale(pathname: string): SupportedLocale {
   const segments = pathname.split("/");
@@ -28,18 +18,17 @@ function leadingLocale(pathname: string): SupportedLocale {
     throw new TypeError("Expected a route with a canonical leading locale");
   }
 
-  const parsed = supportedLocaleSchema.safeParse(candidate);
-  if (!parsed.success) {
-    throw new TypeError("Expected a route with a canonical leading locale");
-  }
-  return parsed.data;
+  return requireCanonicalLocale(
+    candidate,
+    "Expected a route with a canonical leading locale",
+  );
 }
 
 export function createPresentationLocaleUrl(
   currentUrl: URL,
   nextLocale: unknown,
 ): URL {
-  const locale = requireSupportedLocale(nextLocale);
+  const locale = requireCanonicalLocale(nextLocale);
   leadingLocale(currentUrl.pathname);
 
   const destination = new URL(currentUrl.href);
@@ -53,7 +42,7 @@ export function serializePresentationLocaleCookie(
   locale: unknown,
   options: Readonly<{ secure: boolean }>,
 ): string {
-  const value = requireSupportedLocale(locale);
+  const value = requireCanonicalLocale(locale);
   const attributes = [
     `${PRESENTATION_LOCALE_COOKIE_NAME}=${value}`,
     "Path=/",

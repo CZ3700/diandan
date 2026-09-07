@@ -41,7 +41,12 @@ export function publicationPurgePaths(
   locale: SupportedLocale,
 ): string[] {
   const root = `/${locale}`,
-    paths = [`${root}/sitemap.xml`];
+    paths = [
+      `${root}/sitemap.xml`,
+      `${root}/sitemap.xml*`,
+      "/sitemap.xml*",
+      "/api/v1/storefront-seo/*",
+    ];
   switch (target.owner.kind) {
     case "HOMEPAGE":
       paths.push(root);

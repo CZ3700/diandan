@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "task": "P3-06",
+  "status": "LOCAL_TECHNICAL_CHECKPOINT_VERIFIED_PHASE_ACCEPTANCE_OPEN",
+  "taskStatus": "IN_PROGRESS",
+  "phase3": "ACTIVE",
+  "phase4": "LOCKED",
+  "updatedAt": "2026-09-07T19:59:24.175011+00:00",
+  "counts": {
+    "done": 22,
+    "inProgress": 1,
+    "pending": 26,
+    "total": 49
+  },
+  "source": {
+    "baseCommit": "6eacb83ff39776cb09be16ae6ac398699d180129",
+    "manifest": "implementation-source-before-check-6.json",
+    "files": 1540,
+    "sha256": "59ebd051a135110a3cf01b6b22bc5c373f83e41ad2b79a0b07e2dd166fe2a04d",
+    "browserManifest": "implementation-source-before-final-matrix.json",
+    "browserSha256": "662dcb3e30ca0d97e070e90262a7e8b6945d5b52ba12088a338ea7d119cc148f",
+    "inheritance": "Since the final UI/performance source: four static checker/test files, the exact 0020 down-migration test target, and test helper relocation with noEmit/build rootDir separation. Independent comparison proves remaining 296 contracts production outputs byte-identical; only four emitted test-helper artifacts removed."
+  },
+  "completeRepositoryCheck": {
+    "status": "PASS",
+    "result": "check-attempt-6-result.json",
+    "command": "mise exec node@24.20.0 -- corepack pnpm check",
+    "priorFailuresRetained": [
+      "check-attempt-1-result.json",
+      "check-attempt-2-result.json",
+      "check-attempt-3-result.json",
+      "check-attempt-4-result.json",
+      "check-attempt-5-result.json"
+    ],
+    "startedAt": "2026-09-07T19:30:54.764951+00:00",
+    "finishedAt": "2026-09-07T19:51:02.614505+00:00",
+    "elapsedSeconds": 1207.834,
+    "exitCode": 0,
+    "typecheckTasks": 58,
+    "typecheckCached": 28,
+    "testTasks": 58,
+    "testCached": 29,
+    "buildTasks": 35,
+    "buildCached": 30,
+    "realNodePackageImports": 31,
+    "cacheScope": "Whole command passed in one run; package caches reused as listed. Separate bounded cold test evidence is not represented as a zero-cache whole check."
+  },
+  "coldWorkspaceTests": {
+    "status": "PASS",
+    "result": "final-cold-workspace-tests-result.json",
+    "tasks": 58,
+    "cached": 0,
+    "constraint": "--force --concurrency=2, content file workers=2; original assertions and timeouts unchanged; not proof of unrestricted cold concurrency."
+  },
+  "sharedBrowser": {
+    "p2-04": "helper-move-p2-04-result.json",
+    "p2-05": "helper-move-p2-05-result.json",
+    "status": "PASS"
+  },
+  "storefrontBrowser": {
+    "status": "PASS",
+    "cases": 88,
+    "screenshots": 88,
+    "axeReports": 85,
+    "axeViolations": 0,
+    "axeIncompleteEntries": 30,
+    "axeIncompleteNodes": 536,
+    "pageErrors": 0,
+    "publicationVisibility": [
+      {
+        "operation": "PUBLISH",
+        "status": "PASS",
+        "elapsedMs": 10418,
+        "observations": 1
+      },
+      {
+        "operation": "ROLLBACK",
+        "status": "PASS",
+        "elapsedMs": 10240,
+        "observations": 1
+      }
+    ],
+    "budgetMs": 60000,
+    "summary": "run-2026-09-07T17-13-43-828Z/browser-attempt-4/ui-verification-summary.json"
+  },
+  "lazyLoading": {
+    "status": "PASS",
+    "cases": 9,
+    "assertions": 51,
+    "screenshots": 9,
+    "directory": "run-2026-09-07T17-13-43-828Z/lazy-validation-attempt-2",
+    "scope": "Delayed validation loads, edit/IME/cancel/latest-wins and actual 503 recovery; no valid business response stubs.",
+    "compiledSourceSha256": "7f4695db1562591e674b91776af7ca095ecea0cb44da77d62e94555fe49a4446",
+    "sourceRelationship": "The only added file before the 662dcb3e final matrix snapshot was the standalone lazy-validation harness; product implementation was unchanged."
+  },
+  "performance": {
+    "schemaVersion": 1,
+    "status": "COLLECTED_BUDGET_FAILED",
+    "sourceSha256": "662dcb3e30ca0d97e070e90262a7e8b6945d5b52ba12088a338ea7d119cc148f",
+    "rawLighthouseReports": 63,
+    "aggregateGroups": 21,
+    "scoreMedianTargetMetGroups": 20,
+    "lcpMedianTargetMetGroups": 1,
+    "clsMedianTargetMetGroups": 21,
+    "scoreMedianRange": [
+      0.7,
+      0.97
+    ],
+    "lcpMedianRangeMs": [
+      2416.4,
+      5415.928800000001
+    ],
+    "clsMedianRange": [
+      0,
+      0
+    ],
+    "resourcePages": 84,
+    "resourceFailures": 0,
+    "javascriptGzipRangeBytes": [
+      203468,
+      207239
+    ],
+    "observedInitialImages": 236,
+    "maximumInitialImageBytes": 56383,
+    "budget": {
+      "labTargetsMet": false,
+      "scoreMedianMinimum": 0.9,
+      "lcpLabMedianExclusiveMaximumMs": 2500,
+      "clsLabMedianExclusiveMaximum": 0.1,
+      "javascriptShouldMet": false,
+      "imagesShouldMet": true,
+      "javascriptPagesExceedingRecommendation": 84,
+      "imagesExceedingRecommendation": 0,
+      "fieldCwvEvidence": false
+    },
+    "runtimeErrors": 0,
+    "rawSamplesPreserved": true,
+    "scope": "All 63 fixed mobile simulated Lighthouse runs and all 84 initial-resource navigations retained. No algorithm, throttling, protocol or budget relaxed. Local TEST is not staging, real phone, field CWV or production CDN.",
+    "callbackFailure": "AssertionError ERR_ASSERTION retained in browser-attempt-4/failure.json. Browser UI report remains independently PASS. Normal SIGTERM cleanup later exits zero and does not change this failed budget verdict."
+  },
+  "humanAcceptance": {
+    "nonDeveloperOperations3_5_8Minutes": "PENDING",
+    "voiceOverOrNvdaObservedSpeech": "PENDING",
+    "currentSevenLocaleCriticalCopyApproval": "PENDING",
+    "automatedTimingIsNotHumanAcceptance": true,
+    "runbook": "operations-uat-README.md",
+    "training": "operations-uat-training.md",
+    "preparedEnvironment": {
+      "status": "READY_FOR_HUMANS_NOT_ACCEPTED",
+      "guide": "http://127.0.0.1:59939",
+      "admin": "http://localhost:59200/zh-CN",
+      "approximateDeadline": "2026-09-07T20:52:14Z",
+      "evidence": "operations-uat/run-2026-09-07T19-52-15.055Z-e0c4cf3e/final-preparation-smoke.json",
+      "preparationAssertions": 1796,
+      "preparationSetupApiRequests": 581,
+      "readOnlySmokeAssertions": 22,
+      "timingAttemptsAtHandoff": 0,
+      "scope": "LOCAL TEST Admin Next dev. Root inspected both viewport screenshots. No measured operation performed; live timing.json remains untracked for actual human recording."
+    }
+  },
+  "review": {
+    "super": "super-final-review.md",
+    "superChecks1To9": "ACCEPT",
+    "superCheck10": "PARTIAL",
+    "latestIndependent": "contracts-test-helper-review.md",
+    "verificationSummaryIndependent": "storefront_e2e read-only ACCEPT: raw UI/performance/lazy metrics, test-only source inheritance, actual cleanup, incomplete axe and outstanding human gates verified; no new browser/test execution."
+  },
+  "protection": {
+    "status": "PASS",
+    "untrackedBaseline": "untracked-baseline.json",
+    "originalUntrackedFiles": 414,
+    "historicalOutputManifest": "pre-check-evidence-manifest.json",
+    "historicalOutputFiles": 880,
+    "refreshOnlyPrefixes": [
+      "output/playwright/p2-04/",
+      "output/playwright/p2-05/"
+    ],
+    "evidence": "final-protection.json",
+    "preservedHistoricalOutputFiles": 818,
+    "originalUntrackedStillUntracked": true,
+    "originalUntrackedBytesUnchanged": true
+  },
+  "git": {
+    "branch": "codex/p3-06-storefront-acceptance",
+    "policy": "Local checkpoint commits; final bulk push later per user decision.",
+    "pushed": false,
+    "merged": false,
+    "checkpointCommit": "Record in git log; this tracked file does not self-reference its commit."
+  },
+  "notProven": [
+    "Performance budget completion",
+    "Human operations, speech reader, current critical copy approval",
+    "Production identity or MFA",
+    "Real phone",
+    "Real cloud CDN",
+    "RUM or field p75",
+    "PSP sandbox or live payment",
+    "Staging, gray release or production release"
+  ],
+  "nextWork": "performance-next-steps.md",
+  "fixtureCleanup": {
+    "status": "PASS",
+    "evidence": "run-2026-09-07T17-13-43-828Z/owned-cleanup-final.json",
+    "scope": "Owned retained fixture PID, six ports and two containers absent. Outer exit 0 is cleanup only and does not override the failed performance callback."
+  },
+  "actualProtocol": {
+    "status": "PASS",
+    "result": "run-2026-09-07T19-44-16-684Z/protocol-results.json",
+    "assertions": 32461,
+    "setupApiRequests": 6090,
+    "durationMs": 277319,
+    "actualPostgres": true,
+    "actualTlsS3": true,
+    "actualImageWorker": true,
+    "scope": "Real fixture, public protocol and SEO proof/validators; not complete P3-06 acceptance",
+    "browserEvidence": false,
+    "performanceAcceptance": false,
+    "humanOperationsEvidence": false
+  },
+  "secrets": {
+    "status": "PASS",
+    "result": "staged-secrets-result.json",
+    "previousResult": "final-secrets-result.json",
+    "scope": "After explicit staging, rerun repository policy and full scan; includes fresh UAT proof and final documentation."
+  },
+  "diffCheck": {
+    "status": "PASS",
+    "commands": [
+      "git diff --check",
+      "git diff --cached --check"
+    ],
+    "trackedUnstagedChangesAtReview": 0
+  }
+}

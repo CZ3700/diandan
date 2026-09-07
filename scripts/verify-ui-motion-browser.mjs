@@ -3080,9 +3080,14 @@ async function settleImages(page) {
   });
 }
 
-async function settleMotionPage(page, locale) {
+async function settleMotionPage(page, locale, phaseTimes) {
   const url = fixturePath(locale);
   const response = await page.goto(url, { waitUntil: "load" });
+  if (phaseTimes) {
+    phaseTimes.navigationLoadedAt = await page.evaluate(() =>
+      performance.now(),
+    );
+  }
   invariant(response?.status() === 200, `${url} must return 200`);
   const root = page.locator('main[data-ui-motion="v1"]');
   await root.waitFor({ state: "visible" });
@@ -3103,6 +3108,9 @@ async function settleMotionPage(page, locale) {
   await settleImages(page);
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(850);
+  if (phaseTimes) {
+    phaseTimes.settleCompletedAt = await page.evaluate(() => performance.now());
+  }
   return url;
 }
 
@@ -3319,7 +3327,7 @@ async function installPerformanceObservers(context) {
   });
 }
 
-async function beginPerformanceWindow(page) {
+async function beginPerformanceWindow(page, phaseTimes) {
   invariant(
     await page.evaluate(() => window.__p205MotionMetrics !== undefined),
     "performance observers must initialize before navigation",
@@ -3327,6 +3335,10 @@ async function beginPerformanceWindow(page) {
   const startedAt = await page.evaluate(() => performance.now());
   await page.getByTestId("replay-hero").click();
   const endedAt = await page.evaluate(() => performance.now());
+  if (phaseTimes) {
+    phaseTimes.trustedClickStartedAt = startedAt;
+    phaseTimes.trustedClickEndedAt = endedAt;
+  }
   await page.waitForTimeout(100);
   return {
     durationMs: endedAt - startedAt,
@@ -3334,7 +3346,15 @@ async function beginPerformanceWindow(page) {
   };
 }
 
-async function collectPerformance(page, expectedWidth, interactionFallback) {
+async function collectPerformance(
+  page,
+  expectedWidth,
+  interactionFallback,
+  phaseTimes,
+) {
+  if (phaseTimes) {
+    phaseTimes.collectStartedAt = await page.evaluate(() => performance.now());
+  }
   const metrics = await page.evaluate(async (fallback) => {
     const deltas = [];
     let previous;
@@ -3441,7 +3461,24 @@ async function collectPerformance(page, expectedWidth, interactionFallback) {
       rawLayoutShift: window.__p205MotionMetrics.rawLayoutShift,
     };
   }, interactionFallback);
+  if (phaseTimes) {
+    phaseTimes.collectEndedAt = await page.evaluate(() => performance.now());
+  }
   const errors = assessMotionPerformance(metrics, expectedWidth);
+  if (errors.length > 0) {
+    process.stderr.write(
+      `P2-05 performance failure: ${JSON.stringify({
+        expectedWidth,
+        errors,
+        lcpMs: metrics.lcpMs,
+        cls: metrics.cls,
+        longTasks: metrics.longTasks,
+        raf: metrics.raf,
+        interactionLatency: metrics.interactionLatency,
+        phaseTimes,
+      })}\n`,
+    );
+  }
   invariant(errors.length === 0, errors.join("; "));
   return metrics;
 }
@@ -3497,13 +3534,19 @@ async function runScenario({ AxeBuilder, browser, candidate, entry, origin }) {
   const page = await context.newPage();
   const diagnostics = await observePage(page, context, origin);
   try {
-    const url = await settleMotionPage(page, entry.locale);
+    const phaseTimes = {};
+    const url = await settleMotionPage(page, entry.locale, phaseTimes);
+    phaseTimes.fontAuditStartedAt = await page.evaluate(() =>
+      performance.now(),
+    );
     const runtimeFonts = await collectRuntimeFontEvidence(page);
-    const interactionFallback = await beginPerformanceWindow(page);
+    phaseTimes.fontAuditEndedAt = await page.evaluate(() => performance.now());
+    const interactionFallback = await beginPerformanceWindow(page, phaseTimes);
     const performanceEvidence = await collectPerformance(
       page,
       entry.viewport.width,
       interactionFallback,
+      phaseTimes,
     );
     const axeSummaries = [];
     for (const scan of entry.axe) {
