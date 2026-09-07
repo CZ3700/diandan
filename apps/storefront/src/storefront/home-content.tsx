@@ -7,6 +7,7 @@ import type {
 import { Icon } from "@fan-support/ui";
 import { PublishedHeroImage, PublishedImage } from "./published-image";
 import { storefrontHref } from "./navigation";
+import { giftDetailHref } from "./gift-query";
 import type { StorefrontCopy } from "./copy";
 import { HowItWorks, PageState, StudioPromise } from "./page-parts";
 
@@ -179,9 +180,9 @@ export function HomeContent({
                 lang={slot.content.content.view.localeContext.resolvedLocale}
               >
                 <a
-                  href={storefrontHref(
+                  href={giftDetailHref(
                     locale,
-                    `/gifts/${slot.content.content.view.handle}`,
+                    slot.content.content.view.handle,
                     contextQuery,
                   )}
                 >

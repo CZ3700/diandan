@@ -1,4 +1,5 @@
 import { ControlledBiography } from "./content-safety";
+import type { ReactNode } from "react";
 import type {
   PublishedIdolView,
   SupportedLocale,
@@ -13,11 +14,13 @@ export function ArtistContent({
   locale,
   copy,
   contextQuery,
+  gifts,
 }: Readonly<{
   artist: PublishedIdolView;
   locale: SupportedLocale;
   copy: StorefrontCopy;
   contextQuery: string;
+  gifts?: ReactNode;
 }>) {
   const query = new URLSearchParams(contextQuery);
   query.set("idol", artist.id);
@@ -89,6 +92,7 @@ export function ArtistContent({
           </div>
         </section>
       )}
+      {gifts}
       <StudioPromise copy={copy} />
       <section className="storefront-section storefront-final">
         <h2>{artist.acceptingGifts ? copy.giftTitle : copy.artistPaused}</h2>

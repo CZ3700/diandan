@@ -3,9 +3,22 @@ import {
   type SupportedLocale,
 } from "@fan-support/contracts";
 import type en from "./en.js";
+import { IntlMessageFormat } from "intl-messageformat";
 import { storefrontCopyReviews } from "./review-manifest.js";
 
 export type StorefrontCopy = Readonly<Record<keyof typeof en, string>>;
+
+/** Format complete messages so languages own word order and plural rules. */
+export function formatStorefrontMessage(
+  copy: StorefrontCopy,
+  key: keyof StorefrontCopy,
+  locale: SupportedLocale,
+  values: Readonly<Record<string, string | number>>,
+): string {
+  const result = new IntlMessageFormat(copy[key], locale).format(values);
+  if (typeof result !== "string") throw new Error("STOREFRONT_MESSAGE_INVALID");
+  return result;
+}
 
 async function catalogForLocale(
   locale: SupportedLocale,

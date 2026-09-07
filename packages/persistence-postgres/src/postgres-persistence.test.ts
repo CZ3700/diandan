@@ -27,6 +27,12 @@ test("homepage composition uses one serializable read transaction and respects s
     () => pool,
   );
   expect(persistence).toHaveProperty("storefrontHomepageTransactionManager");
+  expect(persistence).toHaveProperty("storefrontCommerceTransactionManager");
+  await expect(
+    persistence.storefrontCommerceTransactionManager.runInStorefrontCommerceTransaction(
+      async (repositories) => Object.keys(repositories),
+    ),
+  ).resolves.toEqual(["storefrontCommerce"]);
   await expect(
     persistence.storefrontHomepageTransactionManager.runInStorefrontHomepageTransaction(
       async (repositories) => Object.keys(repositories),
@@ -34,6 +40,11 @@ test("homepage composition uses one serializable read transaction and respects s
   ).resolves.toEqual(["storefrontHomepage"]);
   expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL SERIALIZABLE");
   await persistence.close();
+  await expect(
+    persistence.storefrontCommerceTransactionManager.runInStorefrontCommerceTransaction(
+      async () => null,
+    ),
+  ).rejects.toMatchObject({ name: "PersistenceTransactionFailureError" });
   await expect(
     persistence.storefrontHomepageTransactionManager.runInStorefrontHomepageTransaction(
       async () => null,

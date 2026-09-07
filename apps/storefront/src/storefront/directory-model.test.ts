@@ -159,3 +159,16 @@ describe("artist directory transitions", () => {
     ).toBe("/en?market=TEST");
   });
 });
+
+it("recipient search only permits artists who currently receive gifts", async () => {
+  const imported = await import("./directory-model");
+  const select = (imported as unknown as Record<string, unknown>)[
+    "canSelectSearchArtist"
+  ];
+  expect(typeof select).toBe("function");
+  if (typeof select !== "function") return;
+  expect(select({ status: "active", acceptingGifts: true }, true)).toBe(true);
+  expect(select({ status: "active", acceptingGifts: false }, true)).toBe(false);
+  expect(select({ status: "paused", acceptingGifts: false }, true)).toBe(false);
+  expect(select({ status: "paused", acceptingGifts: false }, false)).toBe(true);
+});

@@ -117,3 +117,12 @@ export function directoryAnchorHref(
   else url.searchParams.set("anchorId", anchor);
   return `${url.pathname}${url.search}${url.hash}`;
 }
+
+export function canSelectSearchArtist(
+  artist: Pick<PublishedIdolView, "status" | "acceptingGifts">,
+  acceptingOnly: boolean,
+): boolean {
+  return (
+    !acceptingOnly || (artist.status === "active" && artist.acceptingGifts)
+  );
+}

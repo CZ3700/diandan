@@ -1,4 +1,8 @@
 import {
+  registerStorefrontCommerceRoute,
+  type StorefrontCommerceRouteDependencies,
+} from "./storefront-commerce-route.js";
+import {
   registerGiftCommerceRoute,
   type GiftCommerceRouteDependencies,
 } from "./gift-commerce-route.js";
@@ -99,6 +103,7 @@ export type CreateApiApplicationOptions = Readonly<{
   publicationRuntimeLifecycle?: ApiLifecycleResource;
   publishedContentRoute?: PublishedContentRouteDependencies;
   storefrontHomepageRoute?: StorefrontHomepageRouteDependencies;
+  storefrontCommerceRoute?: StorefrontCommerceRouteDependencies;
   publishedContentRuntime?: ApiLifecycleResource;
   resourceManagementRoute?: ResourceManagementRouteDependencies;
   resourceManagementRuntime?: ApiLifecycleResource;
@@ -275,6 +280,11 @@ export async function createApiApplication(
     registerPublishedContentRoute(
       adapter.getInstance(),
       options.publishedContentRoute,
+    );
+  if (options.storefrontCommerceRoute !== undefined)
+    registerStorefrontCommerceRoute(
+      adapter.getInstance(),
+      options.storefrontCommerceRoute,
     );
   if (options.storefrontHomepageRoute !== undefined)
     registerStorefrontHomepageRoute(

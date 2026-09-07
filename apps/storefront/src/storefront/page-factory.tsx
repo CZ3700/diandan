@@ -1,4 +1,7 @@
 import "server-only";
+import { PolicyLinks } from "./commerce-context";
+import { GiftDirectorySection } from "./gift-directory-section";
+import { readCommerceContext } from "./gift-page-reads";
 import { hasFallback } from "./content-safety";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -121,6 +124,17 @@ export function createStorefrontPage(
       content =
         result.outcome === "SUCCESS" && result.content.kind === "IDOL" ? (
           <ArtistContent
+            gifts={
+              <GiftDirectorySection
+                locale={locale}
+                copy={copy}
+                values={{ ...values, idol: result.content.view.id }}
+                context={await readCommerceContext()}
+                basePath={`/idols/${handle.data}`}
+                headingLevel={2}
+                artist={result.content.view}
+              />
+            }
             artist={result.content.view}
             locale={locale}
             copy={copy}
@@ -162,6 +176,14 @@ export function createStorefrontPage(
           {content}
         </main>
         <SiteFooter
+          policyLinks={
+            <PolicyLinks
+              locale={locale}
+              copy={copy}
+              context={await readCommerceContext()}
+              contextQuery={contextQuery}
+            />
+          }
           locale={locale}
           copy={copy}
           name={name}

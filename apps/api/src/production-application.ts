@@ -70,6 +70,7 @@ export async function createProductionApiApplication(
       publishedContentRoute: published.publishedContentRoute,
       publishedGiftCommerceRoute: published.publishedGiftCommerceRoute,
       storefrontHomepageRoute: published.storefrontHomepageRoute,
+      storefrontCommerceRoute: published.storefrontCommerceRoute,
       publishedContentRuntime: published.publishedContentRuntime,
     });
   } catch (error) {

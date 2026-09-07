@@ -1,7 +1,9 @@
+import type { StorefrontCommerceRouteDependencies } from "./storefront-commerce-route.js";
 import {
   createPublicationRuntimeUseCases,
   createPublishedContentUseCases,
   createStorefrontHomepageUseCases,
+  createStorefrontCommerceUseCases,
 } from "@fan-support/application";
 import {
   createPostgresPersistence,
@@ -19,6 +21,7 @@ type BasePersistence = Pick<
   | "publicationRuntimeTransactionManager"
   | "publishedContentTransactionManager"
   | "storefrontHomepageTransactionManager"
+  | "storefrontCommerceTransactionManager"
   | "close"
 >;
 export type TestPublicationRuntimeCompositionOptions = Readonly<{
@@ -42,6 +45,7 @@ export function createTestPublicationRuntimeComposition(
   publicationRuntimeLifecycle: ApiLifecycleResource;
   publishedContentRoute: PublishedContentRouteDependencies;
   storefrontHomepageRoute: StorefrontHomepageRouteDependencies;
+  storefrontCommerceRoute: StorefrontCommerceRouteDependencies;
 }> {
   if (
     options?.environment !== "TEST" ||
@@ -84,6 +88,11 @@ export function createTestPublicationRuntimeComposition(
   });
   let closePromise: Promise<void> | undefined;
   return Object.freeze({
+    storefrontCommerceRoute: {
+      useCases: createStorefrontCommerceUseCases({
+        transactions: persistence.storefrontCommerceTransactionManager,
+      }),
+    },
     storefrontHomepageRoute: {
       useCases: createStorefrontHomepageUseCases({
         transactions: persistence.storefrontHomepageTransactionManager,

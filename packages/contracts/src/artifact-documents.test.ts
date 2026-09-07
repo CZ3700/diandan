@@ -4,6 +4,8 @@ import { expect, test } from "vitest";
 import { z } from "zod";
 
 import { paymentWebhookEndpointIdSchema } from "./identifiers.js";
+import * as artifacts from "./artifact-documents.js";
+import * as registry from "./artifact-registry.js";
 
 type JsonObject = Record<string, unknown>;
 
@@ -33,11 +35,6 @@ function isStrictVersionedRoot(schema: JsonObject): boolean {
 }
 
 test("renders deterministic JSON Schema and OpenAPI documents from one registry", async () => {
-  const [artifacts, registry] = await Promise.all([
-    import("./artifact-documents.js").catch(() => undefined),
-    import("./artifact-registry.js").catch(() => undefined),
-  ]);
-
   expect(artifacts, "artifact renderer module must exist").toBeDefined();
   expect(artifacts?.createContractArtifactDocuments).toBeTypeOf("function");
   expect(artifacts?.renderContractArtifactDocuments).toBeTypeOf("function");
@@ -325,6 +322,8 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/idols/{handle}",
     "/api/v1/media/{mediaAssetId}",
     "/api/v1/policies/{policyKey}",
+    "/api/v1/storefront-context",
+    "/api/v1/storefront-gifts/{handle}",
     "/api/v1/storefront-homepage",
     "/api/v1/webhooks/payments/{endpointId}",
   ]);

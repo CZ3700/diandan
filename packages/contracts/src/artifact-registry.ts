@@ -1,4 +1,11 @@
 import {
+  storefrontContextReadCommandSchema,
+  storefrontContextResponseSchema,
+  storefrontGiftReadCommandSchema,
+  storefrontGiftResponseSchema,
+  storefrontGiftContextResponseSchema,
+} from "./storefront-commerce.js";
+import {
   storefrontHomepageReadCommandSchema,
   storefrontHomepageContextResponseSchema,
   storefrontHomepageResponseSchema,
@@ -2270,6 +2277,31 @@ const registrations = [
     name: "StorefrontHomepageResponse",
     audience: "public-http",
     schema: storefrontHomepageResponseSchema,
+  },
+  {
+    name: "StorefrontContextReadCommand",
+    audience: "public-http",
+    schema: storefrontContextReadCommandSchema,
+  },
+  {
+    name: "StorefrontContextResponse",
+    audience: "public-http",
+    schema: storefrontContextResponseSchema,
+  },
+  {
+    name: "StorefrontGiftReadCommand",
+    audience: "public-http",
+    schema: storefrontGiftReadCommandSchema,
+  },
+  {
+    name: "StorefrontGiftResponse",
+    audience: "public-http",
+    schema: storefrontGiftResponseSchema,
+  },
+  {
+    name: "StorefrontGiftContextResponse",
+    audience: "internal",
+    schema: storefrontGiftContextResponseSchema,
   },
 ] as const;
 

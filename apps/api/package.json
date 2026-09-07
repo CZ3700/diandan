@@ -34,7 +34,10 @@
     "test:browser:gift-commerce": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --output-logs=errors-only && node ./scripts/gift-commerce-http.mjs --ui",
     "test:postgres:storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --output-logs=errors-only && node ./scripts/storefront-http.mjs",
     "test:browser:storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --output-logs=errors-only && node ./scripts/storefront-http.mjs --production --ui",
-    "preview:storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --output-logs=errors-only && node ./scripts/storefront-http.mjs --serve"
+    "preview:storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --output-logs=errors-only && node ./scripts/storefront-http.mjs --serve",
+    "test:postgres:gift-storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --output-logs=errors-only && node ./scripts/gift-storefront-http.mjs",
+    "test:browser:gift-storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --output-logs=errors-only && node ./scripts/gift-storefront-http.mjs --production --ui",
+    "preview:gift-storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --output-logs=errors-only && node ./scripts/gift-storefront-http.mjs --production --serve"
   },
   "dependencies": {
     "@fan-support/application": "workspace:*",

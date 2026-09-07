@@ -35,6 +35,11 @@ test("connects both real use cases and drains one shared test persistence once",
     code: "NOT_FOUND",
   }));
   const createPersistence = vi.fn(() => ({
+    storefrontCommerceTransactionManager: {
+      runInStorefrontCommerceTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ storefrontCommerce: { loadGift: load } }),
+    },
     storefrontHomepageTransactionManager: {
       runInStorefrontHomepageTransaction: async (
         work: (repositories: unknown) => unknown,
@@ -65,6 +70,15 @@ test("connects both real use cases and drains one shared test persistence once",
     options.allowedOrigin,
   );
   expect(composition).toHaveProperty("storefrontHomepageRoute");
+  await expect(
+    composition.storefrontCommerceRoute.useCases.readGift({
+      schemaVersion: 1,
+      locale: "ja",
+      handle: "gift",
+      market: "TEST",
+      currency: "USD",
+    }),
+  ).resolves.toMatchObject({ code: "NOT_FOUND" });
   await expect(
     composition.storefrontHomepageRoute.useCases.execute({
       schemaVersion: 1,

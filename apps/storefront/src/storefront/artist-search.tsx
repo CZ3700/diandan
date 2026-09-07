@@ -7,7 +7,7 @@ import type {
 } from "@fan-support/contracts";
 import { Button, Field } from "@fan-support/ui";
 import type { StorefrontCopy } from "./copy";
-import { prepareArtistSearch } from "./directory-model";
+import { prepareArtistSearch, canSelectSearchArtist } from "./directory-model";
 import { requestArtistDirectory } from "./directory-request";
 import styles from "./artist-directory.module.css";
 
@@ -37,9 +37,11 @@ export function ArtistSearch({
   locale,
   copy,
   onSelect,
+  acceptingOnly = false,
 }: Readonly<{
   locale: SupportedLocale;
   copy: StorefrontCopy;
+  acceptingOnly?: boolean;
   onSelect: (id: PublishedIdolView["id"]) => void;
 }>) {
   const id = useId();
@@ -104,6 +106,7 @@ export function ArtistSearch({
     setOpen(false);
   };
   const select = (artist: PublishedIdolView) => {
+    if (!canSelectSearchArtist(artist, acceptingOnly)) return;
     close();
     setRaw(artist.displayName);
     onSelect(artist.id);
@@ -201,6 +204,9 @@ export function ArtistSearch({
                   id={resultId(index)}
                   role="option"
                   aria-selected={active === index}
+                  aria-disabled={
+                    !canSelectSearchArtist(artist, acceptingOnly) || undefined
+                  }
                   tabIndex={-1}
                   data-artist-result={artist.id}
                   lang={artist.localeContext.resolvedLocale}
@@ -208,7 +214,12 @@ export function ArtistSearch({
                   onClick={() => select(artist)}
                   onPointerMove={() => setActive(index)}
                 >
-                  <span>{artist.displayName}</span>
+                  <span>
+                    {artist.displayName}
+                    {acceptingOnly && !artist.acceptingGifts
+                      ? ` · ${copy.artistPaused}`
+                      : ""}
+                  </span>
                   <span className={styles["resultHandle"]}>
                     @{artist.handle}
                   </span>

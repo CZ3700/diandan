@@ -1,0 +1,24 @@
+{
+  "p2-04": {
+    "result": "passed",
+    "generatedAt": "2026-09-07T08:30:37.775Z",
+    "sourceFingerprint": "2bf05a55b681e83ebb503943738fab8da22812fa21b33303955ee95692e0b5bd",
+    "sourceInputCount": 272,
+    "screenshots": 18,
+    "axeScans": 10,
+    "evidence": "output/playwright/p2-04/browser-results.json",
+    "log": "output/checks/p3-05-gift-storefront/shared-composites-final.log",
+    "physicalDeviceEvidence": false
+  },
+  "p2-05": {
+    "result": "passed-with-physical-device-gate",
+    "generatedAt": "2026-09-07T08:34:19.022Z",
+    "sourceFingerprint": "5c616b53b6b9a51068263d778490996ee972fefff7113adc408a722183474085",
+    "sourceInputCount": 521,
+    "screenshots": 22,
+    "axeScans": 3,
+    "evidence": "output/playwright/p2-05/browser-results.json",
+    "log": "output/checks/p3-05-gift-storefront/shared-motion-final.log",
+    "physicalDeviceEvidence": false
+  }
+}

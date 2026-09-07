@@ -1,3 +1,4 @@
+import { storefrontCommercePaths } from "./storefront-commerce-openapi.js";
 import { storefrontHomepagePaths } from "./storefront-homepage-openapi.js";
 import { adminWorkspacePaths } from "./admin-workspace-openapi.js";
 import { giftCommercePaths } from "./gift-commerce-openapi.js";
@@ -199,6 +200,7 @@ export function createContractArtifactDocuments(): Readonly<{
       },
       paths: {
         ...storefrontHomepagePaths(),
+        ...storefrontCommercePaths(),
         [PAYMENT_WEBHOOK_PATH]: paymentWebhookPath(),
         ...catalogDirectoryPaths(),
         ...adminContentPaths(),

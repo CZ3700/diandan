@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "browserVersion": "152.0.7977.82",
+  "attempt": 2,
+  "cases": [],
+  "screenshots": [
+    "en-390-directory.png",
+    "en-390-detail.png",
+    "diagnostic-failure.png"
+  ],
+  "axe": [
+    {
+      "name": "en-390-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-detail",
+      "engineVersion": "4.13.0",
+      "violations": [
+        {
+          "id": "landmark-unique",
+          "impact": "moderate",
+          "nodes": [
+            {
+              "target": [
+                ".gift-delivery-copy > .gift-policy-links[aria-label=\"Policies and support\"]"
+              ],
+              "failureSummary": "Fix any of the following:\n  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".gift-variant-options"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "reflow": [
+    {
+      "name": "en-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "en-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    }
+  ],
+  "metrics": [
+    {
+      "name": "smoke-directory",
+      "lcp": 592,
+      "cls": 0,
+      "imageTransferBytes": 15976
+    },
+    {
+      "name": "smoke-detail",
+      "lcp": 380,
+      "cls": 0,
+      "imageTransferBytes": 14623
+    },
+    {
+      "name": "en-390-directory",
+      "lcp": 480,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "en-390-detail",
+      "lcp": 372,
+      "cls": 0,
+      "imageTransferBytes": 0
+    }
+  ],
+  "pageErrors": [],
+  "failure": {
+    "step": "/en/gifts/studio-gift-001",
+    "name": "AssertionError",
+    "assertion": "en-390-detail has zero axe violations"
+  },
+  "metricScope": "Local unthrottled observations; imageTransferBytes is sampled after eagerly decoding all DOM images, not a first-viewport budget. Formal performance budget remains P3-06."
+}

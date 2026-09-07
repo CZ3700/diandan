@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "browserVersion": "152.0.7977.82",
+  "scope": "Actual Chrome non-BFCache Back URL/form restoration",
+  "observations": [
+    {
+      "label": "initial",
+      "url": "http://localhost:65096/en/gifts?market=GLOBAL&currency=USD&sort=PRICE_ASC&page=2",
+      "sort": "PRICE_ASC",
+      "min": "",
+      "max": "",
+      "events": [
+        {
+          "persisted": false
+        }
+      ],
+      "navType": "navigate"
+    },
+    {
+      "label": "draft",
+      "url": "http://localhost:65096/en/gifts?market=GLOBAL&currency=USD&sort=PRICE_ASC&page=2",
+      "sort": "PRICE_DESC",
+      "min": "10.00",
+      "max": "20.00",
+      "events": [
+        {
+          "persisted": false
+        }
+      ],
+      "navType": "navigate"
+    },
+    {
+      "label": "applied",
+      "url": "http://localhost:65096/en/gifts?market=GLOBAL&currency=USD&page=1&pageSize=12&sort=PRICE_DESC&priceMinMinor=1000&priceMaxMinor=2000&availability=ALL",
+      "sort": "PRICE_DESC",
+      "min": "10.00",
+      "max": "20.00",
+      "events": [
+        {
+          "persisted": false
+        }
+      ],
+      "navType": "navigate"
+    },
+    {
+      "label": "back",
+      "url": "http://localhost:65096/en/gifts?market=GLOBAL&currency=USD&sort=PRICE_ASC&page=2",
+      "sort": "PRICE_ASC",
+      "min": "",
+      "max": "",
+      "events": [
+        {
+          "persisted": false
+        }
+      ],
+      "navType": "back_forward"
+    },
+    {
+      "label": "back-after-one-second",
+      "url": "http://localhost:65096/en/gifts?market=GLOBAL&currency=USD&sort=PRICE_ASC&page=2",
+      "sort": "PRICE_ASC",
+      "min": "",
+      "max": "",
+      "events": [
+        {
+          "persisted": false
+        }
+      ],
+      "navType": "back_forward"
+    }
+  ]
+}

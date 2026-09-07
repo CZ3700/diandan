@@ -64,3 +64,5 @@ export * from "./gift-commerce.js";
 export * from "./published-gift-commerce.js";
 
 export * from "./storefront-homepage.js";
+
+export { createStorefrontCommerceUseCases } from "./storefront-commerce.js";

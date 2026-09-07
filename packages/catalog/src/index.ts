@@ -8,3 +8,5 @@ export {
   createIdolDirectoryQueryHash,
 } from "./directory-cursor.js";
 export { normalizeArtistSearchName } from "./discovery.js";
+
+export { projectStorefrontGiftOffers } from "./storefront-offers.js";

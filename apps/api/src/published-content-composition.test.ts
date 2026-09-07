@@ -33,6 +33,23 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     code: "NOT_FOUND",
   }));
   const createPersistence = vi.fn(() => ({
+    storefrontCommerceTransactionManager: {
+      runInStorefrontCommerceTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) =>
+        work({
+          storefrontCommerce: {
+            readContext: async () => ({
+              schemaVersion: 1,
+              outcome: "SUCCESS",
+              kind: "STOREFRONT_CONTEXT",
+              markets: [],
+              policies: [],
+            }),
+            loadGift: load,
+          },
+        }),
+    },
     storefrontHomepageTransactionManager: {
       runInStorefrontHomepageTransaction: async (
         work: (repositories: unknown) => unknown,
@@ -53,6 +70,7 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     "publishedContentRoute",
     "publishedContentRuntime",
     "publishedGiftCommerceRoute",
+    "storefrontCommerceRoute",
     "storefrontHomepageRoute",
   ]);
   expect(createPersistence).toHaveBeenCalledWith(
@@ -79,6 +97,11 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     }),
   ).resolves.toMatchObject({ code: "NOT_FOUND" });
   expect(load).toHaveBeenCalledTimes(2);
+  await expect(
+    composition.storefrontCommerceRoute.useCases.readContext({
+      schemaVersion: 1,
+    }),
+  ).resolves.toMatchObject({ kind: "STOREFRONT_CONTEXT" });
   await composition.publishedContentRuntime.start();
   await Promise.all([
     composition.publishedContentRuntime.stop(),

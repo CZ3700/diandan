@@ -1,0 +1,562 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "browserVersion": "152.0.7977.82",
+  "attempt": 3,
+  "cases": [
+    {
+      "name": "seven-locales-two-viewports-directory-detail-policy",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    "en-390-directory.png",
+    "en-390-detail.png",
+    "en-390-policy.png",
+    "en-1440-directory.png",
+    "en-1440-detail.png",
+    "en-1440-policy.png",
+    "zh-CN-390-directory.png",
+    "zh-CN-390-detail.png",
+    "zh-CN-390-policy.png",
+    "zh-CN-1440-directory.png",
+    "zh-CN-1440-detail.png",
+    "zh-CN-1440-policy.png",
+    "th-390-directory.png",
+    "th-390-detail.png",
+    "th-390-policy.png",
+    "th-1440-directory.png",
+    "th-1440-detail.png",
+    "th-1440-policy.png",
+    "vi-390-directory.png",
+    "vi-390-detail.png",
+    "vi-390-policy.png",
+    "vi-1440-directory.png",
+    "vi-1440-detail.png",
+    "vi-1440-policy.png",
+    "ja-390-directory.png",
+    "ja-390-detail.png",
+    "ja-390-policy.png",
+    "ja-1440-directory.png",
+    "ja-1440-detail.png",
+    "ja-1440-policy.png",
+    "es-390-directory.png",
+    "es-390-detail.png",
+    "es-390-policy.png",
+    "es-1440-directory.png",
+    "es-1440-detail.png",
+    "es-1440-policy.png",
+    "pt-390-directory.png",
+    "pt-390-detail.png",
+    "pt-390-policy.png",
+    "pt-1440-directory.png",
+    "pt-1440-detail.png",
+    "pt-1440-policy.png",
+    "diagnostic-failure.png"
+  ],
+  "axe": [
+    {
+      "name": "en-390-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-detail",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-policy",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-detail",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-policy",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "reflow": [
+    {
+      "name": "en-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "en-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "en-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "en-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "en-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "en-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "zh-CN-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "zh-CN-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "zh-CN-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "zh-CN-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "zh-CN-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "zh-CN-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "th-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "th-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "th-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "th-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "th-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "th-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "vi-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "vi-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "vi-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "vi-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "vi-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "vi-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "ja-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "ja-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "ja-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "ja-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "ja-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "ja-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "es-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "es-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "es-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "es-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "es-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "es-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "pt-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "pt-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "pt-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "pt-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "pt-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "pt-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    }
+  ],
+  "metrics": [
+    {
+      "name": "smoke-directory",
+      "lcp": 608,
+      "cls": 0,
+      "imageTransferBytes": 15976
+    },
+    {
+      "name": "smoke-detail",
+      "lcp": 412,
+      "cls": 0,
+      "imageTransferBytes": 14623
+    },
+    {
+      "name": "en-390-directory",
+      "lcp": 600,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "en-390-detail",
+      "lcp": 360,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "en-1440-directory",
+      "lcp": 520,
+      "cls": 0,
+      "imageTransferBytes": 15441
+    },
+    {
+      "name": "en-1440-detail",
+      "lcp": 428,
+      "cls": 0,
+      "imageTransferBytes": 48184
+    },
+    {
+      "name": "zh-CN-390-directory",
+      "lcp": 476,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "zh-CN-390-detail",
+      "lcp": 432,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "zh-CN-1440-directory",
+      "lcp": 460,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "zh-CN-1440-detail",
+      "lcp": 404,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "th-390-directory",
+      "lcp": 520,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "th-390-detail",
+      "lcp": 392,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "th-1440-directory",
+      "lcp": 524,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "th-1440-detail",
+      "lcp": 376,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "vi-390-directory",
+      "lcp": 552,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "vi-390-detail",
+      "lcp": 420,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "vi-1440-directory",
+      "lcp": 516,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "vi-1440-detail",
+      "lcp": 396,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "ja-390-directory",
+      "lcp": 460,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "ja-390-detail",
+      "lcp": 384,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "ja-1440-directory",
+      "lcp": 508,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "ja-1440-detail",
+      "lcp": 428,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "es-390-directory",
+      "lcp": 492,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "es-390-detail",
+      "lcp": 416,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "es-1440-directory",
+      "lcp": 508,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "es-1440-detail",
+      "lcp": 348,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "pt-390-directory",
+      "lcp": 436,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "pt-390-detail",
+      "lcp": 344,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "pt-1440-directory",
+      "lcp": 448,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "pt-1440-detail",
+      "lcp": 388,
+      "cls": 0,
+      "imageTransferBytes": 0
+    }
+  ],
+  "pageErrors": [],
+  "failure": {
+    "step": "/en/gifts",
+    "name": "AssertionError",
+    "assertion": "native Back restores the URL's applied filter controls"
+  },
+  "metricScope": "Local unthrottled observations; imageTransferBytes is sampled after eagerly decoding all DOM images, not a first-viewport budget. Formal performance budget remains P3-06."
+}

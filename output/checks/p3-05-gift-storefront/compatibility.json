@@ -1,0 +1,30 @@
+{
+  "baseCommit": "4c7adf15dbb0933d3afea382f4a6f333b8b0b7e5",
+  "artifacts": {
+    "contracts.schema.json": {
+      "oldRoots": 373,
+      "newRoots": 378,
+      "unchangedHistoricalRoots": 373,
+      "newNames": [
+        "StorefrontContextReadCommand",
+        "StorefrontContextResponse",
+        "StorefrontGiftContextResponse",
+        "StorefrontGiftReadCommand",
+        "StorefrontGiftResponse"
+      ],
+      "sha256": "b3325c8a080a97c31ecbf9c6e7e677653e508537c708b55aea8c44110ab78698"
+    },
+    "openapi.json": {
+      "oldRoots": 113,
+      "newRoots": 117,
+      "unchangedHistoricalRoots": 113,
+      "newNames": [
+        "StorefrontContextReadCommand",
+        "StorefrontContextResponse",
+        "StorefrontGiftReadCommand",
+        "StorefrontGiftResponse"
+      ],
+      "sha256": "329652aaa93d55c51d0b8077dd89a173a6118b89f00c62ba22475bcd8cda0a37"
+    }
+  }
+}

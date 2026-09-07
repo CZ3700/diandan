@@ -16,8 +16,8 @@
 | P3-02 | DONE | Codex `/root` | P2-03、P3-01 | 七语言自研Admin、真实PG/API/媒体/审核/预览/发布与回退；完整check、双端浏览器和独立复核通过，见P3-02验收记录 |
 | P3-03 | DONE | Codex `/root` | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
 | P3-04 | DONE | Codex `/root` | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
-| P3-05 | READY | — | P2-04、P3-01、P3-04 | 礼物分页/筛选/价格排序/URL恢复/七语言详情/选择偶像/政策/错误状态 |
-| P3-06 | PENDING | — | P3-02/03/04/05 | 七语言 i18n/SEO/cache/运营/性能验收 |
+| P3-05 | DONE | Codex `/root` | P2-04、P3-01、P3-04 | 真实七语礼物分页/筛选/详情/选择艺人/政策；完整check、PG/HTTP、浏览器与独立复核通过，见P3-05验收记录 |
+| P3-06 | READY | — | P3-02/03/04/05 | 七语言 i18n/SEO/cache/运营/性能验收；Lane D空闲，尚未领取 |
 
 ## 必须证明
 
@@ -30,6 +30,32 @@
 ## Phase 退出证据
 
 已于 2026-09-05 依据用户明确视觉接受与继续开发指令解锁；尚未达到退出门禁。
+
+## P3-05 执行登记（2026-09-07）
+
+- Owner：Codex `/root`，Lane B唯一executor；开始2026-09-07T06:38:55.240243+00:00，基线`4c7adf15dbb0933d3afea382f4a6f333b8b0b7e5`，分支`codex/p3-05-gift-storefront`。用户授权继续；P2-04/P3-01/P3-04 DONE，Phase3 ACTIVE，P3-05 READY后领取；只领取本任务。
+- 输入与输出：复用已发布商品/变体/真实价格与三类库存策略、七语详情与媒体、P3-04 shell/艺人搜索/图片。完成礼物服务端分页/筛选/金额排序/URL与后退恢复、七语详情/规格与数量展示、未选艺人选择、真实政策及加载/空/下架/不可用/失败/fallback-noindex；必要公开读取与BFF一起实现。
+- 商品语义：VIRTUAL/PHYSICAL/WISH/MERCHANDISE/OTHER与TRACKED/PROCURE_ON_DEMAND/PREORDER独立；无库存的按单准备仍可重复展示为可售，有限库存按canonical余额，工作室准备/采购后转交艺人。市场/币种来自校验上下文与真实数据库，语言切换不选市场、不改金额；不在内容文字中复制库存价格。
+- 视觉与范围：沿用V2原色黑金，商品图片居主位，桌面紧凑工具栏、手机筛选抽屉、清晰页码/结果数与收礼艺人上下文。完整购物车/support_intent/支付属于Phase4，不做假加购或浏览器持久化私密留言；政策使用现有受审发布内容，正式条款/时效/市场仍需后续运营决定，不擅自编造正式承诺。
+- 所有权：root拥有计划/进度/Git、共享exports/registry/生成物/根配置锁、页面组合/详情/政策/i18n。三个子代理先只读审计服务端商品与市场/政策读链、分页筛选交互、真实联合harness；合同冻结并登记精确文件所有权后再并行实现，不交叉改同一文件/迁移。
+- 验证：合同/测试先行，覆盖分页上限1000与out-of-range空页、同价稳定排序/筛选金额精度、URL重复非法参数、未选/不适用/暂停艺人、按单/低库存/售罄/预售、七语详情/关键政策拒绝fallback、当前价格/发布证明与隐私；受影响tests→format/lint/typecheck/build→真实PG/API/TLS S3/Next/Chrome全七语390×844/1440×900、键盘/错误/reduced-motion/320px及重排/axe→独立复核、完整仓库门与S.U.P.E.R。R-01/R-13/R-17；沿用既有测试5秒门限，记录P3-04并行artifact初始化波动，必要时以实测定位后最小修复，不放宽断言。
+- Git：只本地检查点提交、最后统一推送；保护原261项未跟踪产物，不push/merge；原始运行日志依仓库规则仅本地保留，结构化结果和截图随检查点交付。
+
+## P3-05 验收记录（2026-09-07）
+
+- 状态：DONE；最终完整门于2026-09-07T08:48:57.366664+00:00通过，Lane B释放。Phase3仍ACTIVE（5/6），全局22 DONE /1 READY /26 PENDING，共49；仅解锁P3-06，本轮不领取，Phase4仍LOCKED。
+- 交付：七语言真实礼物目录、结果数/分页/分类/金额/可售状态/价格排序、URL/刷新/原生后退恢复；详情包含完整原色图片、受审描述和结构化块、艺人搜索选择、规格/真实价格/数量边界、工作室转交说明和真实政策。市场/币种由数据库当前配置显式选择，语言不推断市场，跨礼物链接清除旧规格，语言切换保留当前实体和商业上下文。
+- 商品与读取：VIRTUAL/PHYSICAL/WISH/MERCHANDISE/OTHER与TRACKED/PROCURE_ON_DEMAND/PREORDER独立。TRACKED采用单一有效位置最大实际可用量，不累加仓位；按单准备与预售不制造库存记录。暂停/不适用艺人、无效规格、不可用价格/发布证明均明确拒绝，不静默换商品。两条公开GET经Application/Domain/Port/PG，严格BFF绑定scope/locale/entity/recipient与目录cardinality；政策缺失或关键fallback拒绝正文，详情/政策不存在返回真实404。
+- 兼容：旧373合同根、113 OpenAPI schemas及全部旧HTTP operations逐项深比较不变；新增5根（总378）、4 schemas（总117），无新迁移/第三方依赖，当前20迁移/153表。真实PG DOMAIN数组问题以`currency::text`最小聚合修正，不放宽发布/价格/当前授权条件。
+- 测试先行与修复：保留公开读取/offer/目录/选择状态RED→GREEN；浏览器发现并修复政策导航同名、规格group语义、非BFCache原生Back表单恢复。内部focus guard允许短暂转移的oracle严格沿用P2上限500ms，普通外部焦点立即失败；这是测试oracle修正，未改共享弹层。后退诊断明确pageshow.persisted=false，不冒充BFCache命中。
+- 完整门禁：`mise exec node@24.20.0 -- corepack pnpm check`最终整条exit0（08:34:37Z至08:48:57Z），全部真实PG/HTTP/TLS S3/worker、format/lint/typecheck/test/build/依赖与构建出口通过；最终type/test各58/58（58 cached）、build35/35（35 cached），31出口经Node实际导入。独立完整冷测试`turbo run test --force --output-logs=errors-only`58/58、0 cache、36.735秒通过，contracts52文件/319 tests，storefront36文件/221 tests。最终完整门复用这些缓存，不称零缓存整条check。
+- 反证与维护：首次完整check真实前缀通过后因browser harness单处格式失败exit1；原失败记录保留。合同严格路径清单补齐真实两接口；动态import移到文件级后单文件通过，但全仓仍7340ms超时。仅contracts包worker上限改为2后冷测试通过，原5秒预算、两次独立完整渲染/字节freshness/全部断言不变；不承诺所有机器从此无波动。源码与证据详情见`test-maintenance-review.md`。
+- 真实协议：本轮15714断言/1902 setup请求，来自实际管理会话/七语作者与独立审核/价格簿/库存/发布、PG/API/TLS S3及媒体worker；旧P3-04再次15221断言/5006请求通过。媒体联合423断言通过真实重试/租约/数据库恢复，尝试1/2/1/1/2；120艺人/120礼物目录307断言通过。正式身份和资产仍非本轮结论。
+- 浏览器：最终attempt7对应冻结源码，七语言390×844/1440×900，8组场景、55PNG、10 axe零违规零incomplete、44重排、33/33响应式图片实际解码、0 pageErrors。完整总21266=协议15714+build/health2+browser5550；不能全称浏览器断言。键盘/IME/Escape/筛选取消/Back/语言上下文/无效范围/JPY精度/错误/404/reduced-motion全部通过。31本机未限速指标不冒充正式性能预算。
+- 共享与预览：P2-04/05最终真实浏览器刷新分别18PNG/10axe与22PNG/3axe，指纹见`shared-browser-summary.json`；P2-05新真机门仍明确保留。最终check后恢复同一临时TEST预览，attempt8短smoke通过，中文目录200、未知礼物404；未覆盖attempt7完整证据，不将短验证混入完整计数。
+- 冻结与复核：1428实现输入摘要`689ca8596cac257223c7b3f0445314aebd5c00a34ed48d7bfdad22a05e1a8122`前后逐项一致；源清单排除docs/output和Next自动环境声明。非作者后端/目录/前台/测试维护/交付进度复核均ACCEPT，code-simplifier仅做本范围职责收敛，S.U.P.E.R十项PASS（逐项见检查README）。secrets/diff通过，原261项未跟踪产物hash全未变且不暂存，旧P3-04 HTTP证据原字节已恢复，两次新回归另存。
+- 证据与复跑：`output/checks/p3-05-gift-storefront/README.md`、`validation.json`、`check-final-result.json`、`check-final-summary.txt`及独立review；`output/playwright/p3-05-gift-storefront/results.json`、attempt7、55PNG校验清单。原始日志和旧重复截图仅本地保留，结构化诊断与最终图包随检查点交付。操作手册`docs/operations/storefront.md`。
+- 后续边界：正式人工译审仍DRAFT，正式素材/市场/政策、PSP、staging/生产和新真机未验收；P3-06负责SEO/OG/structured data/sitemap/hreflang/cache、读屏、运营3/5/8分钟与正式性能预算。完整购物车、加密support_intent、库存预留和支付/订单/履约属于Phase4，本轮结算入口有明确禁用说明。只本地提交，不push/merge。
 
 ## P3-04 执行登记（2026-09-07）
 

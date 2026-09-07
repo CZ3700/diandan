@@ -3,8 +3,8 @@
 > 最后更新：2026-09-07
 > 当前里程碑：M3 可浏览 Beta（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3
-> 当前任务：`P3-04` DONE，Lane B 已释放
-> 下一入口：`P3-05` READY：礼物分页/筛选/详情与政策；本轮仅完成 P3-04
+> 当前任务：`P3-05` DONE，Lane B 已释放
+> 下一入口：`P3-06` READY，七语言/SEO/cache/性能与运营验收；尚未领取
 
 ## 1. 开工入口
 
@@ -16,18 +16,18 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。2026-09-05 用户批准现有视觉作为开发基线并明确要求进入下一阶段；P2-06 DONE、Phase 2 CLOSED、Phase 3 ACTIVE；P3-01 经 READY 后由 Codex `/root` 领取并于2026-09-06完成全部本地运行时验收，现DONE。2026-09-07 P3-02管理后台亦完成本地验收并DONE，Lane C已释放，P3-03/04 READY。正式品牌资产与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 READY、Lane D 无 executor，Phase 3 仍 ACTIVE，Phase 4 仍 LOCKED。正式品牌资产与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 27 |
+| PENDING | 26 |
 | READY | 1 |
 | IN_PROGRESS | 0 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
-| DONE | 21 |
+| DONE | 22 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -78,6 +78,10 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-07 P3-05礼物浏览前台已本地验收DONE：七语言真实礼物分页/分类与金额筛选/价格排序/URL与原生后退恢复、详情/艺人搜索选择/规格数量/市场币种/政策和完整错误状态接通。礼物类型与库存策略独立，按单准备不造现货，全部仍由工作室转交艺人。真实协议15714断言/1902 setup请求，完整UI另5550断言（含构建健康总21266）、55PNG/10 axe零违规零incomplete，旧373 roots与全部HTTP operations不变，新5共378。最终整条check exit0、冷测试58/58零缓存、最终1428输入一致、非作者复核和S.U.P.E.R十项PASS；此前格式失败及合同超时反证保留，未放宽原5秒测试预算。证据`output/checks/p3-05-gift-storefront/validation.json`与浏览器README，运行入口`docs/operations/storefront.md`。全局22 DONE /1 READY /26 PENDING（49），Phase3 ACTIVE（5/6），LaneB释放，仅解锁P3-06。购物车/支付属于Phase4；正式译审/素材/市场、PSP/staging/生产和新真机未验收。按用户约定只本地提交，不push/merge。
+
+2026-09-07 用户授权继续，从本地4c7adf1领取P3-05，root独占LaneB，分支`codex/p3-05-gift-storefront`。沿用已批准视觉，接通礼物分页/筛选/价格排序/七语详情/艺人选择与政策，商品类型和库存策略保持独立。全局21 DONE /1 IN_PROGRESS /27 PENDING，共49；仅本地提交，详细范围见phase登记。
 
 2026-09-07 P3-04公开首页与艺人浏览已本地验收DONE：七语言真实首页、连续横滑/120艺人分页、姓名/别名搜索及直接定位、详情、上下文保留与独立双端照片适配。51最终截图/10 axe零违规（轨道外incomplete人工复核）、81图片解码、真实协议15221断言/5006请求通过。旧370 roots不变，新3共373，20迁移/153表；1374实现输入一致，非作者复核和S.U.P.E.R十项PASS。全仓各门**分段通过**：完整前缀PG/HTTP/S3通过后修正output辅助脚本lint，原样后缀exit0；并行合同超时保留，同源314测试独立通过，最终复用缓存，不宣称单次整条check exit0或波动已修复。详情见 `output/checks/p3-04-storefront/validation.json` 与phase验收记录，运营入口 `docs/operations/storefront.md`。Phase3仍ACTIVE（4/6），全局21 DONE /1 READY /27 PENDING（49），LaneB释放，P3-05 READY；只本地提交，不push/merge。正式人工译审/素材/市场、PSP/履约、staging/生产及新真机不在本轮结论内。
 

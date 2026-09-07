@@ -1,7 +1,7 @@
 import {
-  createStorefrontPage,
-  createStorefrontMetadata,
-} from "../../../../../../storefront/page-factory";
+  createGiftStorefrontPage,
+  createGiftStorefrontMetadata,
+} from "../../../../../../storefront/gift-page-factory";
 export const dynamic = "force-dynamic";
-export const generateMetadata = createStorefrontMetadata("pt", "unavailable");
-export default createStorefrontPage("pt", "unavailable");
+export const generateMetadata = createGiftStorefrontMetadata("pt", "policy");
+export default createGiftStorefrontPage("pt", "policy");

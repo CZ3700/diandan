@@ -11,5 +11,6 @@ export type { SupportedLocale } from "@fan-support/contracts";
 
 export {
   loadStorefrontCopy,
+  formatStorefrontMessage,
   type StorefrontCopy,
 } from "./storefront/messages.js";

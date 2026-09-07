@@ -1,0 +1,9 @@
+{
+  "command": "mise exec node@24.20.0 -- corepack pnpm check",
+  "startedAt": "2026-09-07T08:34:37.045442+00:00",
+  "finishedAt": "2026-09-07T08:48:57.366664+00:00",
+  "exitCode": 0,
+  "log": "output/checks/p3-05-gift-storefront/check-final.log",
+  "supersedes": "output/checks/p3-05-gift-storefront/check-full-result.json",
+  "note": "Original failed check and both fresh P3-04 protocol results retained. Immutable prior checkpoint evidence restored."
+}

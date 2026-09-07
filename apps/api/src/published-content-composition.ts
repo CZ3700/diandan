@@ -1,7 +1,9 @@
+import type { StorefrontCommerceRouteDependencies } from "./storefront-commerce-route.js";
 import {
   createPublishedContentUseCases,
   createPublishedGiftCommerceUseCases,
   createStorefrontHomepageUseCases,
+  createStorefrontCommerceUseCases,
 } from "@fan-support/application";
 import {
   resolveDatabaseRuntimeConfig,
@@ -25,6 +27,7 @@ type PublishedPersistence = Pick<
   | "publishedContentTransactionManager"
   | "publishedGiftCommerceTransactionManager"
   | "storefrontHomepageTransactionManager"
+  | "storefrontCommerceTransactionManager"
   | "close"
 >;
 type PersistenceFactory = (
@@ -40,6 +43,7 @@ export type PublishedContentComposition = Readonly<{
   publishedContentRoute: PublishedContentRouteDependencies;
   publishedGiftCommerceRoute: PublishedGiftCommerceRouteDependencies;
   storefrontHomepageRoute: StorefrontHomepageRouteDependencies;
+  storefrontCommerceRoute: StorefrontCommerceRouteDependencies;
   publishedContentRuntime: ApiLifecycleResource;
 }>;
 
@@ -67,6 +71,11 @@ export function createPublishedContentComposition(
   );
   let closePromise: Promise<void> | undefined;
   return Object.freeze({
+    storefrontCommerceRoute: {
+      useCases: createStorefrontCommerceUseCases({
+        transactions: persistence.storefrontCommerceTransactionManager,
+      }),
+    },
     storefrontHomepageRoute: {
       useCases: createStorefrontHomepageUseCases({
         transactions: persistence.storefrontHomepageTransactionManager,

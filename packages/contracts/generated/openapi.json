@@ -53576,6 +53576,2472 @@
           "SUCCEEDED refunds have processedAmountMinor equal to requestedAmountMinor"
         ]
       },
+      "StorefrontContextReadCommand": {
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "StorefrontContextResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "STOREFRONT_CONTEXT",
+                "type": "string"
+              },
+              "markets": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "currencies": {
+                      "items": {
+                        "pattern": "^[A-Z]{3}$",
+                        "type": "string"
+                      },
+                      "maxItems": 100,
+                      "minItems": 1,
+                      "type": "array"
+                    },
+                    "market": {
+                      "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "market",
+                    "currencies"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 500,
+                "type": "array"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "policies": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "TERMS",
+                        "PRIVACY",
+                        "REFUND",
+                        "DELIVERY"
+                      ],
+                      "type": "string"
+                    },
+                    "policyKey": {
+                      "maxLength": 64,
+                      "minLength": 1,
+                      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "policyKey",
+                    "kind"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 500,
+                "type": "array"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "markets",
+              "policies"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "INVALID_QUERY",
+                  "COMMERCE_UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "public-http"
+      },
+      "StorefrontGiftReadCommand": {
+        "additionalProperties": false,
+        "properties": {
+          "currency": {
+            "pattern": "^[A-Z]{3}$",
+            "type": "string"
+          },
+          "handle": {
+            "maxLength": 96,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "idolId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "locale": {
+            "enum": [
+              "en",
+              "zh-CN",
+              "th",
+              "vi",
+              "ja",
+              "es",
+              "pt"
+            ],
+            "type": "string"
+          },
+          "market": {
+            "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "handle",
+          "locale",
+          "market",
+          "currency"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "StorefrontGiftResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "classification": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "LEGACY",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "giftKind": {
+                        "enum": [
+                          "VIRTUAL",
+                          "PHYSICAL",
+                          "WISH",
+                          "MERCHANDISE",
+                          "OTHER"
+                        ],
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "CLASSIFIED",
+                        "type": "string"
+                      },
+                      "profileHash": {
+                        "pattern": "^[a-f0-9]{64}$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "giftKind",
+                      "profileHash"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "content": {
+                "additionalProperties": false,
+                "properties": {
+                  "details": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "format": {
+                            "const": "LEGACY_TEXT",
+                            "type": "string"
+                          },
+                          "text": {
+                            "maxLength": 600,
+                            "minLength": 1,
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "format",
+                          "text"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "blocks": {
+                            "items": {
+                              "oneOf": [
+                                {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "id": {
+                                      "maxLength": 64,
+                                      "minLength": 1,
+                                      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                                      "type": "string"
+                                    },
+                                    "kind": {
+                                      "const": "HEADING",
+                                      "type": "string"
+                                    },
+                                    "level": {
+                                      "anyOf": [
+                                        {
+                                          "const": 2,
+                                          "type": "number"
+                                        },
+                                        {
+                                          "const": 3,
+                                          "type": "number"
+                                        }
+                                      ]
+                                    },
+                                    "text": {
+                                      "maxLength": 160,
+                                      "minLength": 1,
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "level",
+                                    "text"
+                                  ],
+                                  "type": "object"
+                                },
+                                {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "id": {
+                                      "maxLength": 64,
+                                      "minLength": 1,
+                                      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                                      "type": "string"
+                                    },
+                                    "kind": {
+                                      "const": "PARAGRAPH",
+                                      "type": "string"
+                                    },
+                                    "text": {
+                                      "maxLength": 4000,
+                                      "minLength": 1,
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "text"
+                                  ],
+                                  "type": "object"
+                                },
+                                {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "id": {
+                                      "maxLength": 64,
+                                      "minLength": 1,
+                                      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                                      "type": "string"
+                                    },
+                                    "items": {
+                                      "items": {
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "id": {
+                                            "maxLength": 64,
+                                            "minLength": 1,
+                                            "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                                            "type": "string"
+                                          },
+                                          "text": {
+                                            "maxLength": 600,
+                                            "minLength": 1,
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "id",
+                                          "text"
+                                        ],
+                                        "type": "object"
+                                      },
+                                      "maxItems": 24,
+                                      "minItems": 1,
+                                      "type": "array"
+                                    },
+                                    "kind": {
+                                      "const": "LIST",
+                                      "type": "string"
+                                    },
+                                    "style": {
+                                      "enum": [
+                                        "ORDERED",
+                                        "UNORDERED"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "style",
+                                    "items"
+                                  ],
+                                  "type": "object"
+                                },
+                                {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "id": {
+                                      "maxLength": 64,
+                                      "minLength": 1,
+                                      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                                      "type": "string"
+                                    },
+                                    "items": {
+                                      "items": {
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "id": {
+                                            "maxLength": 64,
+                                            "minLength": 1,
+                                            "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                                            "type": "string"
+                                          },
+                                          "label": {
+                                            "maxLength": 160,
+                                            "minLength": 1,
+                                            "type": "string"
+                                          },
+                                          "value": {
+                                            "maxLength": 600,
+                                            "minLength": 1,
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "id",
+                                          "label",
+                                          "value"
+                                        ],
+                                        "type": "object"
+                                      },
+                                      "maxItems": 24,
+                                      "minItems": 1,
+                                      "type": "array"
+                                    },
+                                    "kind": {
+                                      "const": "SPECIFICATIONS",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "items"
+                                  ],
+                                  "type": "object"
+                                },
+                                {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "caption": {
+                                      "maxLength": 300,
+                                      "minLength": 1,
+                                      "type": "string"
+                                    },
+                                    "id": {
+                                      "maxLength": 64,
+                                      "minLength": 1,
+                                      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                                      "type": "string"
+                                    },
+                                    "kind": {
+                                      "const": "MEDIA",
+                                      "type": "string"
+                                    },
+                                    "media": {
+                                      "oneOf": [
+                                        {
+                                          "additionalProperties": false,
+                                          "properties": {
+                                            "alt": {
+                                              "maxLength": 300,
+                                              "minLength": 1,
+                                              "type": "string"
+                                            },
+                                            "focalPoint": {
+                                              "additionalProperties": false,
+                                              "properties": {
+                                                "x": {
+                                                  "maximum": 1,
+                                                  "minimum": 0,
+                                                  "type": "number"
+                                                },
+                                                "y": {
+                                                  "maximum": 1,
+                                                  "minimum": 0,
+                                                  "type": "number"
+                                                }
+                                              },
+                                              "required": [
+                                                "x",
+                                                "y"
+                                              ],
+                                              "type": "object"
+                                            },
+                                            "height": {
+                                              "exclusiveMinimum": 0,
+                                              "maximum": 9007199254740991,
+                                              "type": "integer"
+                                            },
+                                            "kind": {
+                                              "const": "INFORMATIVE",
+                                              "type": "string"
+                                            },
+                                            "schemaVersion": {
+                                              "const": 1,
+                                              "type": "number"
+                                            },
+                                            "url": {
+                                              "format": "uri",
+                                              "maxLength": 8192,
+                                              "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                              "type": "string",
+                                              "x-runtime-invariants": [
+                                                "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                                "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                                "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                                "storage and CDN signing credentials are rejected"
+                                              ]
+                                            },
+                                            "width": {
+                                              "exclusiveMinimum": 0,
+                                              "maximum": 9007199254740991,
+                                              "type": "integer"
+                                            }
+                                          },
+                                          "required": [
+                                            "schemaVersion",
+                                            "kind",
+                                            "url",
+                                            "alt",
+                                            "width",
+                                            "height",
+                                            "focalPoint"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        {
+                                          "additionalProperties": false,
+                                          "properties": {
+                                            "alt": {
+                                              "const": "",
+                                              "type": "string"
+                                            },
+                                            "focalPoint": {
+                                              "additionalProperties": false,
+                                              "properties": {
+                                                "x": {
+                                                  "maximum": 1,
+                                                  "minimum": 0,
+                                                  "type": "number"
+                                                },
+                                                "y": {
+                                                  "maximum": 1,
+                                                  "minimum": 0,
+                                                  "type": "number"
+                                                }
+                                              },
+                                              "required": [
+                                                "x",
+                                                "y"
+                                              ],
+                                              "type": "object"
+                                            },
+                                            "height": {
+                                              "exclusiveMinimum": 0,
+                                              "maximum": 9007199254740991,
+                                              "type": "integer"
+                                            },
+                                            "kind": {
+                                              "const": "DECORATIVE",
+                                              "type": "string"
+                                            },
+                                            "schemaVersion": {
+                                              "const": 1,
+                                              "type": "number"
+                                            },
+                                            "url": {
+                                              "format": "uri",
+                                              "maxLength": 8192,
+                                              "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                              "type": "string",
+                                              "x-runtime-invariants": [
+                                                "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                                "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                                "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                                "storage and CDN signing credentials are rejected"
+                                              ]
+                                            },
+                                            "width": {
+                                              "exclusiveMinimum": 0,
+                                              "maximum": 9007199254740991,
+                                              "type": "integer"
+                                            }
+                                          },
+                                          "required": [
+                                            "schemaVersion",
+                                            "kind",
+                                            "url",
+                                            "alt",
+                                            "width",
+                                            "height",
+                                            "focalPoint"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "media"
+                                  ],
+                                  "type": "object"
+                                }
+                              ]
+                            },
+                            "maxItems": 32,
+                            "minItems": 1,
+                            "type": "array"
+                          },
+                          "format": {
+                            "const": "BLOCKS",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "format",
+                          "blocks"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "kind": {
+                    "const": "GIFT",
+                    "type": "string"
+                  },
+                  "view": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "category": {
+                        "enum": [
+                          "FLOWERS",
+                          "FOOD",
+                          "BEAUTY",
+                          "ACCESSORY",
+                          "OTHER"
+                        ],
+                        "type": "string"
+                      },
+                      "contents": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "componentCode": {
+                              "maxLength": 64,
+                              "minLength": 1,
+                              "pattern": "^[A-Z][A-Z0-9_]*$",
+                              "type": "string"
+                            },
+                            "quantity": {
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991,
+                              "type": "integer"
+                            },
+                            "unit": {
+                              "enum": [
+                                "ITEM",
+                                "GRAM",
+                                "MILLILITER"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "componentCode",
+                            "quantity",
+                            "unit"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 32,
+                        "minItems": 1,
+                        "type": "array"
+                      },
+                      "deliveryEstimate": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "maximum": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991,
+                            "type": "integer"
+                          },
+                          "minimum": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991,
+                            "type": "integer"
+                          },
+                          "unit": {
+                            "enum": [
+                              "DAY",
+                              "WEEK"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "minimum",
+                          "maximum",
+                          "unit"
+                        ],
+                        "type": "object"
+                      },
+                      "description": {
+                        "maxLength": 600,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "fulfillmentDescription": {
+                        "maxLength": 600,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "gallery": {
+                        "items": {
+                          "oneOf": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "alt": {
+                                  "maxLength": 300,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "focalPoint": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "x": {
+                                      "maximum": 1,
+                                      "minimum": 0,
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "maximum": 1,
+                                      "minimum": 0,
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "type": "object"
+                                },
+                                "height": {
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991,
+                                  "type": "integer"
+                                },
+                                "kind": {
+                                  "const": "INFORMATIVE",
+                                  "type": "string"
+                                },
+                                "schemaVersion": {
+                                  "const": 1,
+                                  "type": "number"
+                                },
+                                "url": {
+                                  "format": "uri",
+                                  "maxLength": 8192,
+                                  "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                  "type": "string",
+                                  "x-runtime-invariants": [
+                                    "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                    "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                    "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                    "storage and CDN signing credentials are rejected"
+                                  ]
+                                },
+                                "width": {
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991,
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "kind",
+                                "url",
+                                "alt",
+                                "width",
+                                "height",
+                                "focalPoint"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "alt": {
+                                  "const": "",
+                                  "type": "string"
+                                },
+                                "focalPoint": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "x": {
+                                      "maximum": 1,
+                                      "minimum": 0,
+                                      "type": "number"
+                                    },
+                                    "y": {
+                                      "maximum": 1,
+                                      "minimum": 0,
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "type": "object"
+                                },
+                                "height": {
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991,
+                                  "type": "integer"
+                                },
+                                "kind": {
+                                  "const": "DECORATIVE",
+                                  "type": "string"
+                                },
+                                "schemaVersion": {
+                                  "const": 1,
+                                  "type": "number"
+                                },
+                                "url": {
+                                  "format": "uri",
+                                  "maxLength": 8192,
+                                  "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                  "type": "string",
+                                  "x-runtime-invariants": [
+                                    "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                    "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                    "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                    "storage and CDN signing credentials are rejected"
+                                  ]
+                                },
+                                "width": {
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991,
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "kind",
+                                "url",
+                                "alt",
+                                "width",
+                                "height",
+                                "focalPoint"
+                              ],
+                              "type": "object"
+                            }
+                          ]
+                        },
+                        "maxItems": 12,
+                        "type": "array"
+                      },
+                      "handle": {
+                        "maxLength": 96,
+                        "minLength": 1,
+                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                        "type": "string"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "localeContext": {
+                        "anyOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": false,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "en",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "en",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": false,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "zh-CN",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "zh-CN",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": false,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "th",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "th",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": false,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "vi",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "vi",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": false,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "ja",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "ja",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": false,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "es",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "es",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": false,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "pt",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "pt",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": true,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "zh-CN",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "en",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": true,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "th",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "en",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": true,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "vi",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "en",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": true,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "ja",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "en",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": true,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "es",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "en",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "fallbackUsed": {
+                                "const": true,
+                                "type": "boolean"
+                              },
+                              "requestedLocale": {
+                                "const": "pt",
+                                "type": "string"
+                              },
+                              "resolvedLocale": {
+                                "const": "en",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "translationRevision": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "requestedLocale",
+                              "resolvedLocale",
+                              "fallbackUsed"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "primaryMedia": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "alt": {
+                                "maxLength": 300,
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "focalPoint": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "x": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "type": "object"
+                              },
+                              "height": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991,
+                                "type": "integer"
+                              },
+                              "kind": {
+                                "const": "INFORMATIVE",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "url": {
+                                "format": "uri",
+                                "maxLength": 8192,
+                                "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                "type": "string",
+                                "x-runtime-invariants": [
+                                  "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                  "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                  "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                  "storage and CDN signing credentials are rejected"
+                                ]
+                              },
+                              "width": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "kind",
+                              "url",
+                              "alt",
+                              "width",
+                              "height",
+                              "focalPoint"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "alt": {
+                                "const": "",
+                                "type": "string"
+                              },
+                              "focalPoint": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "x": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y"
+                                ],
+                                "type": "object"
+                              },
+                              "height": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991,
+                                "type": "integer"
+                              },
+                              "kind": {
+                                "const": "DECORATIVE",
+                                "type": "string"
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "url": {
+                                "format": "uri",
+                                "maxLength": 8192,
+                                "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                "type": "string",
+                                "x-runtime-invariants": [
+                                  "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                  "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                  "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                  "storage and CDN signing credentials are rejected"
+                                ]
+                              },
+                              "width": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "kind",
+                              "url",
+                              "alt",
+                              "width",
+                              "height",
+                              "focalPoint"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "safetyNotice": {
+                        "maxLength": 600,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      },
+                      "seoDescription": {
+                        "maxLength": 155,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "seoTitle": {
+                        "maxLength": 60,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "shippingMode": {
+                        "const": "internal_to_idol",
+                        "type": "string"
+                      },
+                      "shortDescription": {
+                        "maxLength": 160,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "status": {
+                        "enum": [
+                          "active",
+                          "paused"
+                        ],
+                        "type": "string"
+                      },
+                      "subtitle": {
+                        "maxLength": 80,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "title": {
+                        "maxLength": 160,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "variants": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "id": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "inventoryPolicy": {
+                              "enum": [
+                                "TRACKED",
+                                "PROCURE_ON_DEMAND",
+                                "PREORDER"
+                              ],
+                              "type": "string"
+                            },
+                            "label": {
+                              "maxLength": 80,
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "schemaVersion": {
+                              "const": 1,
+                              "type": "number"
+                            },
+                            "status": {
+                              "enum": [
+                                "active",
+                                "paused"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "schemaVersion",
+                            "id",
+                            "label",
+                            "status",
+                            "inventoryPolicy"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 64,
+                        "minItems": 1,
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "id",
+                      "handle",
+                      "status",
+                      "localeContext",
+                      "title",
+                      "shortDescription",
+                      "description",
+                      "fulfillmentDescription",
+                      "category",
+                      "contents",
+                      "deliveryEstimate",
+                      "shippingMode",
+                      "primaryMedia",
+                      "gallery",
+                      "variants",
+                      "seoTitle",
+                      "seoDescription"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "view",
+                  "details"
+                ],
+                "type": "object"
+              },
+              "currency": {
+                "pattern": "^[A-Z]{3}$",
+                "type": "string"
+              },
+              "kind": {
+                "const": "STOREFRONT_GIFT",
+                "type": "string"
+              },
+              "market": {
+                "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                "type": "string"
+              },
+              "offers": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "availability": {
+                      "enum": [
+                        "AVAILABLE",
+                        "PREORDER",
+                        "UNAVAILABLE"
+                      ],
+                      "type": "string"
+                    },
+                    "giftVariantId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "maxQuantity": {
+                      "anyOf": [
+                        {
+                          "const": 0,
+                          "type": "number"
+                        },
+                        {
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991,
+                          "type": "integer"
+                        }
+                      ]
+                    },
+                    "price": {
+                      "anyOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "priceId": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "priceRevision": {
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991,
+                              "type": "integer"
+                            },
+                            "unitAmountMinor": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "priceId",
+                            "priceRevision",
+                            "unitAmountMinor"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "reason": {
+                      "anyOf": [
+                        {
+                          "enum": [
+                            "GIFT_PAUSED",
+                            "VARIANT_PAUSED",
+                            "RECIPIENT_UNAVAILABLE",
+                            "NOT_ELIGIBLE",
+                            "NO_ELIGIBLE_RECIPIENT",
+                            "PRICE_UNAVAILABLE",
+                            "OUT_OF_STOCK",
+                            "INVENTORY_UNAVAILABLE"
+                          ],
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "requiresRecipient": {
+                      "type": "boolean"
+                    },
+                    "stock": {
+                      "oneOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "availableQuantity": {
+                              "anyOf": [
+                                {
+                                  "const": 0,
+                                  "type": "number"
+                                },
+                                {
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991,
+                                  "type": "integer"
+                                }
+                              ]
+                            },
+                            "kind": {
+                              "const": "TRACKED",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "availableQuantity"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "PROCURE_ON_DEMAND",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "PREORDER",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "type": "object"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "giftVariantId",
+                    "price",
+                    "availability",
+                    "reason",
+                    "requiresRecipient",
+                    "stock",
+                    "maxQuantity"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 64,
+                "minItems": 1,
+                "type": "array"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "publication": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "manifestHash": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "publishedAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "revisionId",
+                  "manifestHash",
+                  "publishedAt"
+                ],
+                "type": "object"
+              },
+              "recipient": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "NONE",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "idol": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "acceptingGifts": {
+                            "type": "boolean"
+                          },
+                          "displayName": {
+                            "maxLength": 40,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "handle": {
+                            "maxLength": 96,
+                            "minLength": 1,
+                            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                            "type": "string"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "localeContext": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": false,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "en",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "en",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": false,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "zh-CN",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "zh-CN",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": false,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "th",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "th",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": false,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "vi",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "vi",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": false,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "ja",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "ja",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": false,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "es",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "es",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": false,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "pt",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "pt",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": true,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "zh-CN",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "en",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": true,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "th",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "en",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": true,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "vi",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "en",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": true,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "ja",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "en",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": true,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "es",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "en",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "fallbackUsed": {
+                                    "const": true,
+                                    "type": "boolean"
+                                  },
+                                  "requestedLocale": {
+                                    "const": "pt",
+                                    "type": "string"
+                                  },
+                                  "resolvedLocale": {
+                                    "const": "en",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "translationRevision": {
+                                    "minLength": 1,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "requestedLocale",
+                                  "resolvedLocale",
+                                  "fallbackUsed"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "portrait": {
+                            "oneOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "alt": {
+                                    "maxLength": 300,
+                                    "minLength": 1,
+                                    "type": "string"
+                                  },
+                                  "focalPoint": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "x": {
+                                        "maximum": 1,
+                                        "minimum": 0,
+                                        "type": "number"
+                                      },
+                                      "y": {
+                                        "maximum": 1,
+                                        "minimum": 0,
+                                        "type": "number"
+                                      }
+                                    },
+                                    "required": [
+                                      "x",
+                                      "y"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "height": {
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991,
+                                    "type": "integer"
+                                  },
+                                  "kind": {
+                                    "const": "INFORMATIVE",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "url": {
+                                    "format": "uri",
+                                    "maxLength": 8192,
+                                    "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                    "type": "string",
+                                    "x-runtime-invariants": [
+                                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                      "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                      "storage and CDN signing credentials are rejected"
+                                    ]
+                                  },
+                                  "width": {
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991,
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "kind",
+                                  "url",
+                                  "alt",
+                                  "width",
+                                  "height",
+                                  "focalPoint"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "alt": {
+                                    "const": "",
+                                    "type": "string"
+                                  },
+                                  "focalPoint": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "x": {
+                                        "maximum": 1,
+                                        "minimum": 0,
+                                        "type": "number"
+                                      },
+                                      "y": {
+                                        "maximum": 1,
+                                        "minimum": 0,
+                                        "type": "number"
+                                      }
+                                    },
+                                    "required": [
+                                      "x",
+                                      "y"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "height": {
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991,
+                                    "type": "integer"
+                                  },
+                                  "kind": {
+                                    "const": "DECORATIVE",
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "url": {
+                                    "format": "uri",
+                                    "maxLength": 8192,
+                                    "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                    "type": "string",
+                                    "x-runtime-invariants": [
+                                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                      "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                      "storage and CDN signing credentials are rejected"
+                                    ]
+                                  },
+                                  "width": {
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991,
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "kind",
+                                  "url",
+                                  "alt",
+                                  "width",
+                                  "height",
+                                  "focalPoint"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          },
+                          "status": {
+                            "enum": [
+                              "active",
+                              "paused"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "id",
+                          "handle",
+                          "status",
+                          "acceptingGifts",
+                          "localeContext",
+                          "displayName",
+                          "portrait"
+                        ],
+                        "type": "object"
+                      },
+                      "kind": {
+                        "const": "PUBLISHED",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "idol"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "idolId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "UNAVAILABLE",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "idolId"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "publication",
+              "content",
+              "classification",
+              "market",
+              "currency",
+              "recipient",
+              "offers"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "INVALID_QUERY",
+                  "NOT_FOUND",
+                  "MARKET_UNAVAILABLE",
+                  "CONTENT_UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "public-http"
+      },
       "StorefrontHomepageReadCommand": {
         "additionalProperties": false,
         "properties": {
@@ -93657,6 +96123,213 @@
         },
         "security": [],
         "summary": "Read the current published content in one explicit locale"
+      }
+    },
+    "/api/v1/storefront-context": {
+      "get": {
+        "description": "Only current effective PostgreSQL prices select scopes. Policy links require their actual current publication proof. No country, currency or market is inferred from locale. Unknown and duplicate query parameters are rejected.",
+        "operationId": "readStorefrontContext",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontContextResponse"
+                }
+              }
+            },
+            "description": "Public scope and policy configuration; empty is valid.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontContextResponse"
+                }
+              }
+            },
+            "description": "No query parameters are accepted.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontContextResponse"
+                }
+              }
+            },
+            "description": "Commerce configuration unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Read currently active market and currency scopes and proven published policy links"
+      }
+    },
+    "/api/v1/storefront-gifts/{handle}": {
+      "get": {
+        "description": "A SERIALIZABLE PostgreSQL snapshot binds immutable publication proof to current price, stock and operating state. Tracked stock is the maximum available quantity at one active location. Procurement and preorder do not claim physical stock. No selected recipient permits browsing only. This read never reserves stock or creates a cart or payment. Unknown or duplicate query parameters are rejected.",
+        "operationId": "readStorefrontGift",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "handle",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Slug"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SupportedLocale"
+            }
+          },
+          {
+            "in": "query",
+            "name": "market",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Market"
+            }
+          },
+          {
+            "in": "query",
+            "name": "currency",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Currency"
+            }
+          },
+          {
+            "in": "query",
+            "name": "idol",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/IdolId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontGiftResponse"
+                }
+              }
+            },
+            "description": "Published gift and current typed variant offers.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontGiftResponse"
+                }
+              }
+            },
+            "description": "Invalid query; locale, market and currency are required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontGiftResponse"
+                }
+              }
+            },
+            "description": "No current published gift.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontGiftResponse"
+                }
+              }
+            },
+            "description": "The selected market and currency scope is not currently available.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontGiftResponse"
+                }
+              }
+            },
+            "description": "Current content or required commerce evidence unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Read a published gift with current variant prices, stock and recipient eligibility"
       }
     },
     "/api/v1/storefront-homepage": {

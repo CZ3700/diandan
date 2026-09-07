@@ -1,6 +1,6 @@
-# 公开首页与艺人浏览
+# 公开首页、艺人与礼物浏览
 
-本入口覆盖 P3-04：公开七语言首页、导航、连续艺人目录、名字搜索定位及艺人详情。礼物完整分页/筛选/详情和政策正文属于 P3-05；SEO、历史 handle 重定向、正式运营计时与完整性能门属于 P3-06。当前预留交易页明确展示准备中，不能下单。
+本入口覆盖 P3-04/P3-05：七语言首页、连续艺人目录和姓名搜索、礼物分页与筛选、规格详情、艺人选择、地区币种及已发布政策。完整 SEO、历史 handle 重定向、正式运营计时与性能门属于 P3-06；购买与私密留言归 Phase 4，当前浏览页明确提示下单未开放。
 
 ## 配置与运行
 
@@ -50,3 +50,42 @@ mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/api preview:storef
 图片失败优先检查构建时 origin、TLS 信任、发布衍生路径和真实字节；保留可访问的媒体错误状态，不回退到无授权源图。内容失败检查公开 API 的固定错误码与 request ID，禁止把数据库凭据、私密留言、完整署名或艺人地址写进日志/截图。
 
 管理目录的因果事件时间由稳定事务时间与本次必要授权/历史下限决定；会话、MFA、权限和到期仍实时验证。确定性 PostgreSQL 回归在 `packages/persistence-postgres/scripts/postgres-admin-catalog-time.mjs`，纳入正常数据库集成门；不要通过忽略提交错误或重试成功来隐藏此类故障。
+
+
+## 礼物目录、详情与地区币种
+
+`/:locale/gifts` 及艺人详情中的礼物目录使用相同服务器分页：默认 12，最多 48，页码最多 1000。页数/总数来自同一数据库快照，越界页保持实际空页并提供返回入口。排序为推荐、价格升序、价格降序；类别、金额、可售状态和页码保存在 URL。筛选或排序变更重置第一页，浏览器后退/刷新恢复已应用条件。金额输入按当前币种精度解析为整数最小单位，不用浮点乘法求值。
+
+语言和 `market/currency` 分开。没有明确商业上下文时显示数据库提供的可选组合，不根据语言、IP 或测试国家猜测价格。`GET /api/v1/storefront-context` 只投影当前有效市场/币种与已发布政策 key/kind。市场显示的是已配置代码，不把代码擅自解释成国家。切换币种清除旧金额筛选；语言切换保留艺人、规格、商业上下文及查询。
+
+目录起价取当前市场/币种、有效发布、适用艺人及可售规格的最低价。无可售规格时目录无价格；不可用状态仍可查看。详情使用 `GET /api/v1/storefront-gifts/:handle`，将内容与逐规格价格、库存和艺人证明放在同一 SERIALIZABLE 读取中；半开有效期使用 PostgreSQL 微秒时间。未指定规格时选择最低可用价规格，显式规格失效不静默换成别的。选艺人支持搜索与继续加载，暂停收礼艺人在列表和搜索中均不可选。艺人的 UUID、规格和市场选择使用公开导航参数，艺人地址从不返回前台。
+
+礼物分类和库存策略独立：
+
+- `TRACKED`：展示当前一个可履约位置能够提供的实际数量；数量上限不能把多个仓位相加。0 表示售罄。未设定营销性质的“低库存”阈值，有限数量直接显示实数。
+- `PROCURE_ON_DEMAND`：付款后由工作室采购或准备，不依赖现货；不创造大库存余额。界面数量边界复用商业命令的安全整数上限，并不表示现货数量。
+- `PREORDER`：展示预售及发布的预计转交区间，付款后由工作室按商品说明准备。
+
+虚拟、实体、心愿、周边和其他礼物都按工作室转交艺人的语义展示；分类不触发自动送达、余额或众筹行为。这里的价格和数量是浏览信息；本阶段不创建购物车、预占或支付，不收集私密留言。Phase 4 必须再次在服务器校验交易条件。
+
+## 商品文案与政策
+
+礼物名称、说明、履约文本和受控详情块来自已审核发布版本。英语是源稿，六语言各自审核，英语变化使旧译文失效；继续使用后台已有七语言原子发布流程。受控详情支持标题、段落、列表、规格与经验证媒体，不执行任意作者 HTML/CSS/脚本。礼物图片保留原颜色，目录和主图完整 contain，图库和详情媒体保留原比例。
+
+政策链接取实际发布的 key/kind，正文使用当前 locale 的真实已发布内容。关键政策缺失、失败或 fallback 时显示不可用，不回退英文正文；页面禁止索引。浏览页的基础 self-canonical 单独筛选公开页面参数，购物车、支付 attempt 和追踪参数不会进入 canonical。完整 SEO 与上线文案批准仍由后续门禁处理。
+
+## P3-05 可重复验收和预览
+
+```sh
+mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/api test:postgres:gift-storefront
+mise exec node@24.20.0 -- corepack pnpm verify:gift-storefront:browser
+mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/api preview:gift-storefront
+```
+
+默认模式运行真实 PostgreSQL/API/TLS S3/图片 worker 与协议矩阵；浏览器模式再编译 Next 并验证 Chrome。预览打印当轮 URL 和 owner PID，进程退出后临时服务销毁。`SIGUSR1` 重建当前预览并运行完整 UI，`SIGHUP` 重建并运行短 smoke，`SIGUSR2` 仅暂停该预览的 Next，`SIGTERM` 清理整套临时服务。运行共享组件/动效或全仓构建前先暂停预览 Next，避免两个构建同时写 `.next`。
+
+新证据写入 `output/checks/p3-05-gift-storefront/`、`output/playwright/p3-05-gift-storefront/`，每次浏览器尝试独立存储。夹具为 27 个礼物身份（25 可见）、3 个艺人、2 个 TEST 市场/币种和 4 项测试政策；重复图片与名称用于规模和状态验证，不代表正式商品、真实艺人或人工译审批准。`PRICE_UNAVAILABLE` 分支有领域/SSR 测试；当前真实协议夹具包含实际价格，不能声称该分支被真实 HTTP 穷尽。
+
+真实 PG 联调曾发现 `array_agg(currency_code)` 的 DOMAIN 数组被 node-pg 读为字符串。聚合 `currency::text` 后返回可验证数组；保留正常业务谓词并通过新真实 context 协议回归。探针入口为 `output/checks/p3-05-gift-storefront/domain-array-probe.mjs`。不要放宽 schema 或把解析失败改为空地区列表。
+
+根 `pnpm check` 的历史 storefront 协议会写 P3-04 固定 `http-results.json`。本轮先用 `protect-regression.py backup` 保存原字节，检查后用 `restore` 将新回归结果归档 P3-05/regression 并恢复 P3-04；脚本校验原 hash，拒绝覆盖现有备份。不要用破坏性 Git 操作覆盖旧证据。原始 `.log` 保留本地，提交选择源码、文档和结构化结果，避免强行跟踪被忽略的日志。

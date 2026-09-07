@@ -1,5 +1,6 @@
 import type { SupportedLocale } from "@fan-support/contracts";
 import { Icon } from "@fan-support/ui";
+import type { ReactNode } from "react";
 import type { StorefrontCopy } from "./copy";
 import { storefrontHref } from "./navigation";
 
@@ -79,11 +80,13 @@ export function SiteFooter({
   locale,
   name,
   contextQuery,
+  policyLinks,
 }: Readonly<{
   copy: StorefrontCopy;
   locale: SupportedLocale;
   name: string;
   contextQuery: string;
+  policyLinks?: ReactNode;
 }>) {
   return (
     <footer className="storefront-footer">
@@ -99,6 +102,7 @@ export function SiteFooter({
         {copy.backArtists}
         <Icon name="arrow-right" decorative />
       </a>
+      {policyLinks}
     </footer>
   );
 }

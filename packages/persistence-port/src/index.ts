@@ -327,3 +327,9 @@ export * from "./gift-commerce.js";
 export * from "./published-gift-commerce.js";
 
 export * from "./storefront-homepage.js";
+
+export type {
+  StorefrontCommerceRepository,
+  StorefrontCommerceRepositories,
+  StorefrontCommerceTransactionManager,
+} from "./storefront-commerce.js";

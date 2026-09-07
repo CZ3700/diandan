@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "taskId": "P3-05",
+  "status": "DONE",
+  "validatedAt": "2026-09-07T08:50:38.720822+00:00",
+  "scope": "Local gift storefront implementation and acceptance; not production release",
+  "git": {
+    "baseCommit": "4c7adf15dbb0933d3afea382f4a6f333b8b0b7e5",
+    "branch": "codex/p3-05-gift-storefront",
+    "delivery": "Local checkpoint only; no push or merge"
+  },
+  "source": {
+    "algorithm": "p3-05-source-manifest-v1",
+    "count": 1428,
+    "sha256": "689ca8596cac257223c7b3f0445314aebd5c00a34ed48d7bfdad22a05e1a8122"
+  },
+  "fullCheck": {
+    "command": "mise exec node@24.20.0 -- corepack pnpm check",
+    "startedAt": "2026-09-07T08:34:37.045442+00:00",
+    "finishedAt": "2026-09-07T08:48:57.366664+00:00",
+    "exitCode": 0,
+    "log": "output/checks/p3-05-gift-storefront/check-final.log",
+    "supersedes": "output/checks/p3-05-gift-storefront/check-full-result.json",
+    "note": "Original failed check and both fresh P3-04 protocol results retained. Immutable prior checkpoint evidence restored."
+  },
+  "firstFullCheck": {
+    "command": "mise exec node@24.20.0 -- corepack pnpm check",
+    "startedAt": "2026-09-07T08:01:08.513075+00:00",
+    "finishedAt": "2026-09-07T08:15:36.067983+00:00",
+    "exitCode": 1,
+    "log": "output/checks/p3-05-gift-storefront/check-full.log",
+    "note": "Raw logs remain local; previous P3-04 evidence restored and fresh regression archived."
+  },
+  "finalCore": {
+    "format": "PASS",
+    "lint": "PASS",
+    "typecheck": {
+      "tasks": 58,
+      "successful": 58,
+      "cached": 58
+    },
+    "test": {
+      "tasks": 58,
+      "successful": 58,
+      "cached": 58
+    },
+    "build": {
+      "tasks": 35,
+      "successful": 35,
+      "cached": 35
+    },
+    "nodeImportedExports": 31,
+    "adapterBoundaries": "PASS",
+    "secretScan": "PASS"
+  },
+  "independentColdTests": {
+    "command": "mise exec node@24.20.0 -- corepack pnpm exec turbo run test --force --output-logs=errors-only",
+    "tasks": 58,
+    "successful": 58,
+    "cached": 0,
+    "seconds": 36.735,
+    "contracts": {
+      "files": 52,
+      "tests": 319,
+      "maxWorkers": 2,
+      "defaultTestTimeoutMs": 5000,
+      "deterministicTestMs": 693,
+      "artifactTestFileMs": 1584,
+      "packageSeconds": 13.81
+    },
+    "storefront": {
+      "files": 36,
+      "tests": 221
+    },
+    "note": "Actual full cold run; final full check reused these test caches. Previous timeouts retained; no permanent cross-machine stability claim."
+  },
+  "actualIntegration": {
+    "postgres": true,
+    "tlsS3": true,
+    "imageWorker": true,
+    "migrations": 20,
+    "tables": 153,
+    "catalog": {
+      "artists": 120,
+      "gifts": 120,
+      "assertions": 307
+    },
+    "oldStorefrontProtocol": {
+      "assertions": 15221,
+      "setupApiRequests": 5006
+    },
+    "giftStorefrontProtocol": {
+      "assertions": 15714,
+      "setupApiRequests": 1902,
+      "durationMs": 106390
+    },
+    "mediaWorkerAssertions": 423,
+    "mediaWorkerAttempts": [
+      1,
+      2,
+      1,
+      1,
+      2
+    ]
+  },
+  "browser": {
+    "result": "PASS",
+    "attempt": 7,
+    "evidence": "output/playwright/p3-05-gift-storefront/results.json",
+    "evidenceSha256": "470ed75bcf81de735aff30164119225ded9487cb3c49fadcefb976528b9d0a02",
+    "browserVersion": "152.0.7977.82",
+    "locales": [
+      "en",
+      "zh-CN",
+      "th",
+      "vi",
+      "ja",
+      "es",
+      "pt"
+    ],
+    "viewports": [
+      "390x844",
+      "1440x900"
+    ],
+    "assertions": {
+      "protocol": 15714,
+      "buildAndHealth": 2,
+      "browser": 5550,
+      "combined": 21266
+    },
+    "setupApiRequests": 1902,
+    "caseGroups": 8,
+    "screenshots": 55,
+    "screenshotManifest": "output/playwright/p3-05-gift-storefront/screenshots.sha256",
+    "axeScans": 10,
+    "axeViolations": 0,
+    "axeIncomplete": 0,
+    "reflowObservations": 44,
+    "responsiveCandidates": 33,
+    "decodedResponses": 33,
+    "unhandledPageErrors": 0,
+    "localPerformanceObservations": 31,
+    "metricScope": "Local unthrottled observations; imageTransferBytes is sampled after eagerly decoding all DOM images, not a first-viewport budget. Formal performance budget remains P3-06.",
+    "backNavigation": "Actual non-BFCache Back reproduction and repair; no BFCache hit claimed"
+  },
+  "sharedBrowser": {
+    "p2-04": {
+      "result": "passed",
+      "generatedAt": "2026-09-07T08:30:37.775Z",
+      "sourceFingerprint": "2bf05a55b681e83ebb503943738fab8da22812fa21b33303955ee95692e0b5bd",
+      "sourceInputCount": 272,
+      "screenshots": 18,
+      "axeScans": 10,
+      "evidence": "output/playwright/p2-04/browser-results.json",
+      "log": "output/checks/p3-05-gift-storefront/shared-composites-final.log",
+      "physicalDeviceEvidence": false
+    },
+    "p2-05": {
+      "result": "passed-with-physical-device-gate",
+      "generatedAt": "2026-09-07T08:34:19.022Z",
+      "sourceFingerprint": "5c616b53b6b9a51068263d778490996ee972fefff7113adc408a722183474085",
+      "sourceInputCount": 521,
+      "screenshots": 22,
+      "axeScans": 3,
+      "evidence": "output/playwright/p2-05/browser-results.json",
+      "log": "output/checks/p3-05-gift-storefront/shared-motion-final.log",
+      "physicalDeviceEvidence": false
+    }
+  },
+  "compatibility": {
+    "baseCommit": "4c7adf15dbb0933d3afea382f4a6f333b8b0b7e5",
+    "artifacts": {
+      "contracts.schema.json": {
+        "oldRoots": 373,
+        "newRoots": 378,
+        "unchangedHistoricalRoots": 373,
+        "newNames": [
+          "StorefrontContextReadCommand",
+          "StorefrontContextResponse",
+          "StorefrontGiftContextResponse",
+          "StorefrontGiftReadCommand",
+          "StorefrontGiftResponse"
+        ],
+        "sha256": "b3325c8a080a97c31ecbf9c6e7e677653e508537c708b55aea8c44110ab78698"
+      },
+      "openapi.json": {
+        "oldRoots": 113,
+        "newRoots": 117,
+        "unchangedHistoricalRoots": 113,
+        "newNames": [
+          "StorefrontContextReadCommand",
+          "StorefrontContextResponse",
+          "StorefrontGiftReadCommand",
+          "StorefrontGiftResponse"
+        ],
+        "sha256": "329652aaa93d55c51d0b8077dd89a173a6118b89f00c62ba22475bcd8cda0a37"
+      }
+    }
+  },
+  "historicalHttpOperations": "All previous operations deeply equal; only two new GET routes",
+  "preservation": {
+    "historicalUntrackedCount": 261,
+    "allHistoricalHashesUnchanged": true,
+    "historicalFilesExcludedFromStaging": true,
+    "oldStorefrontEvidence": {
+      "originalPath": "output/playwright/p3-04-storefront/http-results.json",
+      "originalSha256": "137a8b853b54cf207000b3a005f66a0eb50eca5d022ead4ea6f4b1bcd4687470",
+      "state": "RESTORED_AND_VERIFIED",
+      "freshRegressionSha256": "0f00b0fecdef510ae6d0ba024e36addb862343525048bb15f7cd920f205cf18b",
+      "freshRegressionPath": "output/checks/p3-05-gift-storefront/regression/p3-04-http-results.json",
+      "earlierFreshRegressions": [
+        {
+          "path": "output/checks/p3-05-gift-storefront/regression/p3-04-http-results-first-check.json",
+          "sha256": "a2613d7bd3542e9e22b05d1e7315cda77a70f655cdb849fe74bcf06febd1e83b"
+        }
+      ]
+    }
+  },
+  "independentReviews": {
+    "backendRead": "ACCEPT",
+    "directoryAndPurchase": "ACCEPT",
+    "frontend": "ACCEPT",
+    "testMaintenance": "ACCEPT",
+    "deliveryAndProgress": "ACCEPT"
+  },
+  "superReview": {
+    "items": 10,
+    "passed": 10,
+    "evidence": "output/checks/p3-05-gift-storefront/README.md"
+  },
+  "progress": {
+    "total": 49,
+    "DONE": 22,
+    "READY": 1,
+    "PENDING": 26,
+    "IN_PROGRESS": 0,
+    "BLOCKED": 0,
+    "REVIEW": 0,
+    "DEFERRED": 0,
+    "phase3": "ACTIVE; 5/6",
+    "nextTask": "P3-06 READY; unclaimed",
+    "laneB": "released",
+    "phase4": "LOCKED"
+  },
+  "localLogs": {
+    "output/checks/p3-05-gift-storefront/check-final.log": "998b0142f0c1c7e776a9bc679f26b8ab258f30f1270424d9b16c4cb0542dd645",
+    "output/checks/p3-05-gift-storefront/tests-concurrency-controlled.log": "5b8fa62f71b22a972fa61079b4cfccbc9c17a3fe63fcb931aab95279db1112ad",
+    "output/checks/p3-05-gift-storefront/contracts-full-cold-green.log": "2012831498eaf9822b4787e1edd7e502466f5f109cb0c5671df60f635f059b35",
+    "output/checks/p3-05-gift-storefront/core-final-build.log": "2cbffb18672c99737c4b82064818c3ede7efea66826bedbb16ee53ba194cf87d",
+    "output/checks/p3-05-gift-storefront/secrets-final.log": "c5de5c7294bce3c849ea5b4d2c4df1edc669c7858437ffd95fa7af48e078d2c1",
+    "output/checks/p3-05-gift-storefront/shared-composites-final.log": "ea2e47051c77f903e05cc0e23df8c24ac87e91915f23a139cd5750a70d6e139c",
+    "output/checks/p3-05-gift-storefront/shared-motion-final.log": "8de8a7c85acd2c8a888d49c7a565624e0d61e899ebe84506186120dad5c4ad1c",
+    "output/checks/p3-05-gift-storefront/secrets-staged.log": "c5de5c7294bce3c849ea5b4d2c4df1edc669c7858437ffd95fa7af48e078d2c1"
+  },
+  "limitations": [
+    "TEST fixture uses fictional existing repository media; no formal asset or translation approval. All seven storefront review manifests remain DRAFT.",
+    "Browser emulation is not a new physical-device test; shared P2-05 physical-device gate remains explicit.",
+    "Local unthrottled metrics are not P3-06 performance budgets, SEO/cache, screen-reader or timed operator acceptance.",
+    "Real missing-price lifecycle HTTP coverage is not claimed; Domain/SSR price-unavailable coverage is separate.",
+    "No real cart, encrypted support_intent, stock reservation, order, payment or fulfillment transaction in this task; checkout remains disabled with localized explanation.",
+    "Formal operating markets, policies, PSP, staging, production and real small-value payments are not approved or verified here.",
+    "Raw logs and earlier duplicate screenshot matrices remain local; final 55 PNG and structured diagnostic results accompany the checkpoint."
+  ],
+  "previewRestoration": {
+    "result": "PASS",
+    "browserAttempt": 8,
+    "combinedAssertions": 16076,
+    "browserAssertions": 360,
+    "screenshots": 3,
+    "smokeEvidence": "output/playwright/p3-05-gift-storefront/smoke-results.json",
+    "temporaryUrl": "http://localhost:65096/zh-CN/gifts?market=GLOBAL&currency=USD",
+    "actualHttpStatus": 200,
+    "unknownGiftHttpStatus": 404,
+    "completeEvidenceSha256Unchanged": true,
+    "note": "Finite local TEST fixture; short smoke is separate from the full acceptance matrix."
+  },
+  "deliveryVerification": {
+    "checkedAt": "2026-09-07T08:56:50.421471+00:00",
+    "stagedFiles": 284,
+    "diffCheck": "PASS",
+    "stagedSecretScan": "PASS",
+    "implementationFreeze": "PASS",
+    "historicalUntrackedPreserved": 261,
+    "historicalUntrackedStaged": 0,
+    "otherLocalOnlyFiles": 153,
+    "scopeEvidence": "output/checks/p3-05-gift-storefront/staged-scope.json",
+    "generatedEnvironment": "Official Admin next typegen restored exact baseline bytes after the integration harness generated dev references; source manifest unchanged."
+  }
+}
