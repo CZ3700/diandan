@@ -144,10 +144,12 @@ export async function identityEventTime(
   input: AdminCatalogWriteCommand,
   prior: DraftRow | undefined,
 ) {
+  // Current wall-clock checks authorize the operation; only stable transaction
+  // time and the necessary, already effective authority/history order its event.
   const [row] = await draftRows(
     client,
     `SELECT gen_random_uuid() AS id,gen_random_uuid() AS audit_id,gen_random_uuid() AS idol_id,gen_random_uuid() AS redirect_id,
- ${utcTimestampSql("GREATEST(clock_timestamp(),transaction_timestamp(),$2::timestamptz,s.created_at,(SELECT max(granted_at) FROM public.admin_content_locale_grants WHERE admin_identity_id=s.admin_identity_id AND revoked_at IS NULL AND granted_at<=clock_timestamp()))")} AS at
+ ${utcTimestampSql("GREATEST(transaction_timestamp(),$2::timestamptz,s.created_at,(SELECT min(GREATEST(ar.granted_at,rp.granted_at)) FROM public.admin_identity_roles ar JOIN public.role_permissions rp ON rp.role_id=ar.role_id JOIN public.permissions p ON p.id=rp.permission_id WHERE ar.admin_identity_id=s.admin_identity_id AND p.permission_key='content.edit' AND ar.granted_at<=clock_timestamp() AND rp.granted_at<=clock_timestamp()),(SELECT max(granted_at) FROM public.admin_content_locale_grants WHERE admin_identity_id=s.admin_identity_id AND revoked_at IS NULL AND granted_at<=clock_timestamp()))")} AS at
  FROM public.admin_sessions s WHERE s.id=$1`,
     [input.principal.sessionId, prior?.["updated_at"] ?? null],
   );

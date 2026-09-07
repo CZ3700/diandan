@@ -62,3 +62,5 @@ export * from "./published-content.js";
 export * from "./gift-commerce.js";
 
 export * from "./published-gift-commerce.js";
+
+export * from "./storefront-homepage.js";

@@ -42,6 +42,7 @@ test("passes the source-owned reliable-event route and lifecycle into the API bo
   });
   const createCatalogComposition = vi.fn(() => catalogComposition);
   const published = {
+    storefrontHomepageRoute: { useCases: { execute: vi.fn() } },
     publishedContentRoute: { useCases: { execute: vi.fn() } },
     publishedContentRuntime: { start: vi.fn(), stop: vi.fn() },
   };
@@ -71,6 +72,7 @@ test("passes the source-owned reliable-event route and lifecycle into the API bo
     catalogDirectoryRoute: catalogComposition.catalogDirectoryRoute,
     catalogDirectoryRuntime: catalogComposition.catalogDirectoryRuntime,
     publishedContentRoute: published.publishedContentRoute,
+    storefrontHomepageRoute: published.storefrontHomepageRoute,
     publishedContentRuntime: published.publishedContentRuntime,
   });
 });

@@ -705,6 +705,83 @@ function packageFontImports(source, relativePath) {
     );
 }
 
+function bindsPublicHomepage(source, relativePath, locale) {
+  const sourceFile = ts.createSourceFile(
+    relativePath,
+    source,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TSX,
+  );
+  const factories = new Map();
+  for (const statement of sourceFile.statements) {
+    if (
+      !ts.isImportDeclaration(statement) ||
+      !ts.isStringLiteral(statement.moduleSpecifier) ||
+      statement.importClause?.isTypeOnly
+    )
+      continue;
+    const modulePath = path.posix
+      .normalize(
+        path.posix.join(
+          path.posix.dirname(relativePath),
+          statement.moduleSpecifier.text,
+        ),
+      )
+      .replace(/\.[jt]s$/u, "");
+    const bindings = statement.importClause?.namedBindings;
+    if (
+      modulePath !== "apps/storefront/src/storefront/page-factory" ||
+      !bindings ||
+      !ts.isNamedImports(bindings)
+    )
+      continue;
+    for (const binding of bindings.elements) {
+      if (!binding.isTypeOnly)
+        factories.set(
+          binding.propertyName?.text ?? binding.name.text,
+          binding.name.text,
+        );
+    }
+  }
+  function matchesFactory(expression, factory) {
+    if (!expression) return false;
+    const call = unwrapTypeWrappers(expression);
+    return (
+      ts.isCallExpression(call) &&
+      ts.isIdentifier(call.expression) &&
+      call.expression.text === factories.get(factory) &&
+      call.arguments.length === 2 &&
+      ts.isStringLiteral(call.arguments[0]) &&
+      call.arguments[0].text === locale &&
+      ts.isStringLiteral(call.arguments[1]) &&
+      call.arguments[1].text === "home"
+    );
+  }
+  const page = sourceFile.statements.find(
+    (statement) =>
+      ts.isExportAssignment(statement) && !statement.isExportEquals,
+  );
+  const metadata = sourceFile.statements
+    .filter(
+      (statement) =>
+        ts.isVariableStatement(statement) &&
+        statement.modifiers?.some(
+          (modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword,
+        ),
+    )
+    .flatMap((statement) => statement.declarationList.declarations)
+    .find(
+      (declaration) =>
+        ts.isIdentifier(declaration.name) &&
+        declaration.name.text === "generateMetadata",
+    );
+  return (
+    matchesFactory(page?.expression, "createStorefrontPage") &&
+    matchesFactory(metadata?.initializer, "createStorefrontMetadata")
+  );
+}
+
 async function validateStorefrontFontRoutes(
   workspaceRoot,
   fontProfilesByLocale,
@@ -714,24 +791,25 @@ async function validateStorefrontFontRoutes(
     return;
   }
   const routeRoot = "apps/storefront/src/app/%5Finternal/design-foundations";
+  const publicRouteRoot = "apps/storefront/src/app/(public)";
   const uniqueProfiles = new Map();
   const expectedLayoutPaths = new Set();
   for (const profile of fontProfilesByLocale.values()) {
     uniqueProfiles.set(profile.id, profile);
   }
 
-  for (const profile of uniqueProfiles.values()) {
-    const layoutPath = `${routeRoot}/(${profile.id})/layout.tsx`;
-    expectedLayoutPaths.add(layoutPath);
-    const layout = await readText(workspaceRoot, layoutPath, errors);
-    if (layout === undefined) {
-      continue;
-    }
-    const imports = packageFontImports(layout, layoutPath);
-    if (imports.length !== 1 || imports[0] !== profile.cssModule) {
-      errors.push(
-        `${layoutPath} must import only ${profile.cssModule} for its locale profile`,
-      );
+  for (const root of [routeRoot, publicRouteRoot]) {
+    for (const profile of uniqueProfiles.values()) {
+      const layoutPath = `${root}/(${profile.id})/layout.tsx`;
+      expectedLayoutPaths.add(layoutPath);
+      const layout = await readText(workspaceRoot, layoutPath, errors);
+      if (layout === undefined) continue;
+      const imports = packageFontImports(layout, layoutPath);
+      if (imports.length !== 1 || imports[0] !== profile.cssModule) {
+        errors.push(
+          `${layoutPath} must import only ${profile.cssModule} for its locale profile`,
+        );
+      }
     }
   }
 
@@ -750,6 +828,18 @@ async function validateStorefrontFontRoutes(
     }
   }
 
+  const expectedPublicHomepages = new Set();
+  for (const [locale, profile] of fontProfilesByLocale) {
+    const pagePath = `${publicRouteRoot}/(${profile.id})/${locale}/page.tsx`;
+    expectedPublicHomepages.add(pagePath);
+    const page = await readText(workspaceRoot, pagePath, errors);
+    if (page !== undefined && !bindsPublicHomepage(page, pagePath, locale)) {
+      errors.push(
+        `${pagePath} must bind the ${locale} public homepage and metadata to the storefront page factory`,
+      );
+    }
+  }
+
   const storefrontSourceRoot = path.join(workspaceRoot, "apps/storefront/src");
   const importCandidates = [
     ...(await walkCssFiles(storefrontSourceRoot)),
@@ -757,6 +847,23 @@ async function validateStorefrontFontRoutes(
   ];
   for (const absolutePath of importCandidates) {
     const relativePath = path.relative(workspaceRoot, absolutePath);
+    if (
+      relativePath.startsWith(`${publicRouteRoot}/`) &&
+      relativePath.endsWith("/page.tsx")
+    ) {
+      const visibleSegments = relativePath
+        .slice(publicRouteRoot.length + 1, -"/page.tsx".length)
+        .split("/")
+        .filter((segment) => !/^\([^/]+\)$/u.test(segment));
+      if (
+        visibleSegments.length === 1 &&
+        !expectedPublicHomepages.has(relativePath)
+      ) {
+        errors.push(
+          `${relativePath} is not a canonical public locale homepage`,
+        );
+      }
+    }
     if (expectedLayoutPaths.has(relativePath)) {
       continue;
     }

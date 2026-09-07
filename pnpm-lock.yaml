@@ -178,6 +178,9 @@ importers:
       '@fan-support/design-tokens':
         specifier: workspace:*
         version: link:../../packages/design-tokens
+      '@fan-support/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
       '@fan-support/observability':
         specifier: workspace:*
         version: link:../../packages/observability

@@ -69,6 +69,7 @@ export async function createProductionApiApplication(
       catalogDirectoryRuntime: catalog.catalogDirectoryRuntime,
       publishedContentRoute: published.publishedContentRoute,
       publishedGiftCommerceRoute: published.publishedGiftCommerceRoute,
+      storefrontHomepageRoute: published.storefrontHomepageRoute,
       publishedContentRuntime: published.publishedContentRuntime,
     });
   } catch (error) {

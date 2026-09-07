@@ -8,6 +8,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./storefront": {
+      "types": "./dist/storefront/messages.d.ts",
+      "import": "./dist/storefront/messages.js"
     }
   },
   "scripts": {

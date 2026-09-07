@@ -311,7 +311,7 @@
     }
   ],
   "fontLoadingPolicy": {
-    "cssFiles": 11,
+    "cssFiles": 13,
     "fontFaces": 242,
     "strategy": "optional",
     "verifiedFamilies": [
@@ -322,11 +322,11 @@
       "Noto Sans Variable"
     ]
   },
-  "generatedAt": "2026-09-06T21:18:33.288Z",
+  "generatedAt": "2026-09-06T23:48:26.678Z",
   "git": {
     "after": {
-      "sha": "cdf2ab24a46eb914c4e82b456d6e630886cfed7b",
-      "sourceFingerprint": "ea0d73b2f17e5df34c3aa2b36d2fb98768726e9530fcc06a69e5582165474b43",
+      "sha": "fc6e28e6a6ec8ef7cd3316ef901c7e104c1bb1d6",
+      "sourceFingerprint": "b4fd4cae61825c31b07f89d08a51ffd487889ce5d9663d42f4bd25b68a6f2fff",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -335,11 +335,11 @@
         },
         {
           "path": "apps/storefront/next.config.ts",
-          "sha256": "0c7106a629529b71768f6bfb49bf92e29ff84b1b63c3d580f91490663c4323f0"
+          "sha256": "114e59f077a45123565aedde964648978f3d3db4effb30d85a6d658f54fe2d77"
         },
         {
           "path": "apps/storefront/package.json",
-          "sha256": "6dd8e4a5d67dc5139cf3a5f1f5ef86a29a25132f37add3be412e3e384830c5bf"
+          "sha256": "fa4b4dfe41f607bebaf0409cd24e122e75cd54beca00e4f071c76ce7c42aac49"
         },
         {
           "path": "apps/storefront/postcss-font-display-optional/index.cjs",
@@ -642,6 +642,286 @@
           "sha256": "c94d0951a6a6709fa937c7477fe25c8eb64038867e538ce3f60550f0264cf3c0"
         },
         {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/cart/page.tsx",
+          "sha256": "919c2c12be88056faa418299c7ae32e131d9b6b7fb6c5d1c4a3d9c4b277e8f9b"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/gifts/[[...path]]/page.tsx",
+          "sha256": "05d81c87edb45baca87247b2e3771b825464aece8d61ea6915d3de53073e48ac"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/idols/[handle]/page.tsx",
+          "sha256": "bdb924a0f538330226875dad612ab2bdfd24e0b845a2e88e1f1b61d6348bd7ce"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/idols/page.tsx",
+          "sha256": "f1b85f6544a6ebd86eccb5082600d197d0c44640f17f8bc43c8e68e594d3af80"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/not-found.tsx",
+          "sha256": "da46caef7f82f9d43cbb6255d5fbbe6058d8809f3953a97e4df7ea9cd0e420e6"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/orders/lookup/page.tsx",
+          "sha256": "05d81c87edb45baca87247b2e3771b825464aece8d61ea6915d3de53073e48ac"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/page.tsx",
+          "sha256": "ddcfbfe5f9f1898b150c6e1614c8a0e8c51aa2e9a58459902968635aa288006e"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/policies/[handle]/page.tsx",
+          "sha256": "05d81c87edb45baca87247b2e3771b825464aece8d61ea6915d3de53073e48ac"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/region/page.tsx",
+          "sha256": "919c2c12be88056faa418299c7ae32e131d9b6b7fb6c5d1c4a3d9c4b277e8f9b"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/layout.tsx",
+          "sha256": "4ad5b042f7cc04114c57baae8f90b8c64065a4148414c64f21a812308b4590d9"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/cart/page.tsx",
+          "sha256": "252e81aa020d6b762019cf8553960efddc0b7d1e628458d97546d5449be626c0"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/gifts/[[...path]]/page.tsx",
+          "sha256": "769832485021b952cf2514e5525d61961440d293353fde74c83e2c757729a109"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/idols/[handle]/page.tsx",
+          "sha256": "1ae0b719d993fb66726f43688fbe3b5fbfc3b2d4dd39a7047a25b63b785e9fd2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/idols/page.tsx",
+          "sha256": "9a1a2ff2183f51abdc7a3436f5d56aef2dba1f321a4507ff2122f296b39fb947"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/not-found.tsx",
+          "sha256": "6b1c43aaf3391fb4bb1c584652809cdecd15f515b329ac6b3e75d941b016b859"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/orders/lookup/page.tsx",
+          "sha256": "769832485021b952cf2514e5525d61961440d293353fde74c83e2c757729a109"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/page.tsx",
+          "sha256": "c7fcdd10a9a1991fcf861978010b5cba4ae8815e9078e815927834079c3bdbf8"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/policies/[handle]/page.tsx",
+          "sha256": "769832485021b952cf2514e5525d61961440d293353fde74c83e2c757729a109"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/region/page.tsx",
+          "sha256": "252e81aa020d6b762019cf8553960efddc0b7d1e628458d97546d5449be626c0"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/cart/page.tsx",
+          "sha256": "dc97ca5b4e9fb5e907c8762344c77a840c0261ec5e8366c16b11d66a95c55fc5"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/gifts/[[...path]]/page.tsx",
+          "sha256": "822e4d075edee5e5fc3c9f23b75388982983442fea8af6a5aea6c5dedb6a347e"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/idols/[handle]/page.tsx",
+          "sha256": "b768d0dd8dcc8b9d217791f972159543a642e05d63851c1ec502bec975930bd3"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/idols/page.tsx",
+          "sha256": "580ef478274b3e2b6a38ac5dffe2ac729343a21331e8a2c46f73c4b87eeb2ac8"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/not-found.tsx",
+          "sha256": "25c8c67f3117ebbb85bfb449e82205a577e6a5f307367b75f1f6b0c918030430"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/orders/lookup/page.tsx",
+          "sha256": "822e4d075edee5e5fc3c9f23b75388982983442fea8af6a5aea6c5dedb6a347e"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/page.tsx",
+          "sha256": "22ff1fb6b89213e344ff0869a4f6624e7c9c6d605752d880e226c69b8e251081"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/policies/[handle]/page.tsx",
+          "sha256": "822e4d075edee5e5fc3c9f23b75388982983442fea8af6a5aea6c5dedb6a347e"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/region/page.tsx",
+          "sha256": "dc97ca5b4e9fb5e907c8762344c77a840c0261ec5e8366c16b11d66a95c55fc5"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/layout.tsx",
+          "sha256": "d8f12172432851b952d5561e082a0e64bd160f0407d57f8cf64a4606d7a501ea"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/cart/page.tsx",
+          "sha256": "924f32f24518645a4bad7b1a0f1d5c999bce4bda7692b64eafa10b0c02e10320"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/gifts/[[...path]]/page.tsx",
+          "sha256": "24cbce3a88eed0c4e2d701fefdc3984c6a3a313d21e8982d22948125380bf2ee"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/idols/[handle]/page.tsx",
+          "sha256": "6fcf59d2e2cacd3b7290898679d19ffd74cd3054eeb149b6278e5810778edc2b"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/idols/page.tsx",
+          "sha256": "52cebdb1f71756a8d5a493d67a6b59116df6b20fe9f4ffd82b1cb9337361e971"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/not-found.tsx",
+          "sha256": "0a05b20b26b98af8e18b39c4d078def6cc18b2936f3e2f1f2e68ad9e754b52dd"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/orders/lookup/page.tsx",
+          "sha256": "24cbce3a88eed0c4e2d701fefdc3984c6a3a313d21e8982d22948125380bf2ee"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/page.tsx",
+          "sha256": "7063529658909d6ddd603ad9d5997e931ac370e3084c5dcd25bd89ef40e44ad2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/policies/[handle]/page.tsx",
+          "sha256": "24cbce3a88eed0c4e2d701fefdc3984c6a3a313d21e8982d22948125380bf2ee"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/region/page.tsx",
+          "sha256": "924f32f24518645a4bad7b1a0f1d5c999bce4bda7692b64eafa10b0c02e10320"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/layout.tsx",
+          "sha256": "80f68e96f6534d10c233c33d2db3081fd9c5bfcf759c691173cb7104cc863590"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/cart/page.tsx",
+          "sha256": "9f61a639cebe7020342077d22555d20c3a6aa88749cc071dc3354033ac11650b"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/gifts/[[...path]]/page.tsx",
+          "sha256": "2c8f1d2d4e5778c0a179742d141e4d64ba169c946c21bc638b55e104439d06c2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/idols/[handle]/page.tsx",
+          "sha256": "a26c71e9fb322ef67e76120223475442f94dee065ebb2e1cf5dde238d328acd4"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/idols/page.tsx",
+          "sha256": "8f3e5a8cdbb5a06ae944de88724e4db5b42b315aa4c081d46536a1b2752a13aa"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/not-found.tsx",
+          "sha256": "2f4b98a819e96f193f9c93758f0dcf298030355a97d3dbf76c8682aa9f118e08"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/orders/lookup/page.tsx",
+          "sha256": "2c8f1d2d4e5778c0a179742d141e4d64ba169c946c21bc638b55e104439d06c2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/page.tsx",
+          "sha256": "9bf20a19cc0c4469b558df5a8be5c97fbf07bc84adc024e899338d6e9cda3ea8"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/policies/[handle]/page.tsx",
+          "sha256": "2c8f1d2d4e5778c0a179742d141e4d64ba169c946c21bc638b55e104439d06c2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/region/page.tsx",
+          "sha256": "9f61a639cebe7020342077d22555d20c3a6aa88749cc071dc3354033ac11650b"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/layout.tsx",
+          "sha256": "3d4efa3a3b7514161ef9b3411bd1fa7b56d51816050a1da83b94928b7951ef51"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/cart/page.tsx",
+          "sha256": "11a6e2bfaabd31fdfdc186aafdd8b6f555179121405be3a87273cd0394f9ab14"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/gifts/[[...path]]/page.tsx",
+          "sha256": "958b9935f409ed2923682d0e916749ec1b9632b34d85556e277512e466e80d42"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/idols/[handle]/page.tsx",
+          "sha256": "7d66e153438eac35e0afac0a38264d9cbc2dd740d5ecf181e526ba0adea5a37a"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/idols/page.tsx",
+          "sha256": "6b484553b9a806719b2a92e058e48b0eedc4c4d387627b27e43caadf03eb63e2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/not-found.tsx",
+          "sha256": "38827b915e43455b6eade688fbb5702cb23f7313074d50c45f8ab16e82dde3cb"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/orders/lookup/page.tsx",
+          "sha256": "958b9935f409ed2923682d0e916749ec1b9632b34d85556e277512e466e80d42"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/page.tsx",
+          "sha256": "a9d754c8e0032986f0f287e94a8cbb9e2d57fc234164dc0b4dd310467743d764"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/policies/[handle]/page.tsx",
+          "sha256": "958b9935f409ed2923682d0e916749ec1b9632b34d85556e277512e466e80d42"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/region/page.tsx",
+          "sha256": "11a6e2bfaabd31fdfdc186aafdd8b6f555179121405be3a87273cd0394f9ab14"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/layout.tsx",
+          "sha256": "4b94b9d89a2449371bce55c20402a30d9c313e1639de9f5c7309dc5757e89cd5"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/cart/page.tsx",
+          "sha256": "1e58ac2efd942e770321ec8ecfd2b9172e8eec187c7f814b2598deb052818be5"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/gifts/[[...path]]/page.tsx",
+          "sha256": "4cda9d94ee20998b100528173b2d1393b279db1d5a1db15f82a148c726990469"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/idols/[handle]/page.tsx",
+          "sha256": "3e72dd87ad8e7d70f651a89f66cba3756835dec67de599cbd65070ef4a7f7cb8"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/idols/page.tsx",
+          "sha256": "728c3a8172e5e6e28b3a705998b6efaa53503eaaa6da8a03a99a1a8368af8309"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/not-found.tsx",
+          "sha256": "0f156f9a2be3bd92e48cfc58e7ef267c56dcaebade5d74aebde7616e5f53709c"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/orders/lookup/page.tsx",
+          "sha256": "4cda9d94ee20998b100528173b2d1393b279db1d5a1db15f82a148c726990469"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/page.tsx",
+          "sha256": "9e4e3070c410abaea06a0d1c9f421e284622441a30a5b96088bf1c356c57998a"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/policies/[handle]/page.tsx",
+          "sha256": "4cda9d94ee20998b100528173b2d1393b279db1d5a1db15f82a148c726990469"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/region/page.tsx",
+          "sha256": "1e58ac2efd942e770321ec8ecfd2b9172e8eec187c7f814b2598deb052818be5"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/idols/route.test.ts",
+          "sha256": "d69eb8681349aaf82a3d558fc7f7d8dc9017cf99e2d5b158a18a60308859d4d7"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/idols/route.ts",
+          "sha256": "f1e3fcb45926c59a8cd8b4035dcaf59823c98dfd873973f62224c215f4fba043"
+        },
+        {
           "path": "apps/storefront/src/app/design-foundation-specimen.module.css",
           "sha256": "25809943cf0a9625eaea48bbcaa9b24b7894bc22b7949ff2b6a51d6178938354"
         },
@@ -679,7 +959,7 @@
         },
         {
           "path": "apps/storefront/src/app/layout.tsx",
-          "sha256": "f443ecf257a8ab76310e66d3bdd29089a00398aef4fa7338c0b0c3aeb38c1dec"
+          "sha256": "314690103a18c0cbc494f6c8802db837c5d8fb0de94a49462a32269bbe399c17"
         },
         {
           "path": "apps/storefront/src/app/page.tsx",
@@ -847,11 +1127,19 @@
         },
         {
           "path": "apps/storefront/src/proxy.test.ts",
-          "sha256": "de6344ee5afdd9cb755e63a044d70761955f3aeddc06b77eb8a5c4378134e3be"
+          "sha256": "e3a59e06c42433764fc7db5701453ce48b3aaa6cbaabd1e71850b0de56899661"
         },
         {
           "path": "apps/storefront/src/proxy.ts",
-          "sha256": "c4dd129dd00a832883383dd0200180b441fdeb180d87ca2ddf3b92c6bc0011c2"
+          "sha256": "8256059c485731291be11d87afc592111ce8f8c8bafa20643c17eaaebcac4566"
+        },
+        {
+          "path": "apps/storefront/src/server/image-config.test.ts",
+          "sha256": "dbba82c16cd52104f8144f7075cd9d7854316ada85206f00fb31da98e6adcd9f"
+        },
+        {
+          "path": "apps/storefront/src/server/image-config.ts",
+          "sha256": "bd5935ace2ec2576aa4e26c18ae53112a4ec0972d85c75a9709175a712afd14f"
         },
         {
           "path": "apps/storefront/src/server/observability-probe.test.ts",
@@ -862,8 +1150,128 @@
           "sha256": "8d7e08a178dc61b23f0b900e6bb2cc9413842f27e4eb8280003c4176771a4d7e"
         },
         {
+          "path": "apps/storefront/src/server/public-catalog.test.ts",
+          "sha256": "f3f14643a7b2a9f24c6969f22ba8952148b8a8066b92127fc54d791453988219"
+        },
+        {
+          "path": "apps/storefront/src/server/public-catalog.ts",
+          "sha256": "a2bca12398b13cece6950fabba1109628c33c4fe47d8f4d5a89a079e37454e37"
+        },
+        {
           "path": "apps/storefront/src/server/runtime-config.ts",
-          "sha256": "9152b37ef2c072d59039f721b7183aee91d379dae2e9a986bd37f801da1d7509"
+          "sha256": "d2d5cc607a5fd74e9841eb708bdbfa6f1b4d4958ef28d5e7646bbe1c1dbcbbc5"
+        },
+        {
+          "path": "apps/storefront/src/server/storefront-copy.test.ts",
+          "sha256": "cacc35565a596eca768483a068f0501bd2ed372bce87955023ad4fec5d2980d0"
+        },
+        {
+          "path": "apps/storefront/src/server/storefront-copy.ts",
+          "sha256": "041495a0731c1abd7ec6cfddedee21b1158e1f67d5bedd5e6636447cddde554f"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-content.tsx",
+          "sha256": "c442175e809cf4d2b035299f347326b72d965d2862579249a263c9ab1f00e883"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-directory.module.css",
+          "sha256": "83ad4916d27061b7f4b7c337cddda5c452308bc9375d59fff6a16337f5fae26e"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-directory.test.tsx",
+          "sha256": "ca13f75d985ce1bc9969c35cb1892f4b9b4a2b5b34cc128f00d2153b0e974e08"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-directory.tsx",
+          "sha256": "f4248434d4f531d119c96562ad09a021a46e0c645a37cc9c25132f4cca35d0f5"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-search.tsx",
+          "sha256": "503770e8c24f5a4e50318f072d47f8032528ed9ae8fe854fa72a6cad9f4dd2c5"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-track.tsx",
+          "sha256": "4d8fb7ddc4c3f23ef61f0c74ad0be0a85d12ed955e4b30cfc54807849eb77528"
+        },
+        {
+          "path": "apps/storefront/src/storefront/content-safety.test.tsx",
+          "sha256": "638759b5e70439e8dec75230c27386bfd8aad935f57573244a9bc08d4b7a51ca"
+        },
+        {
+          "path": "apps/storefront/src/storefront/content-safety.tsx",
+          "sha256": "269c43f62dc3eef6fc2347a99d768056f980f5b92ae8578f83dfa44b24a54950"
+        },
+        {
+          "path": "apps/storefront/src/storefront/copy.ts",
+          "sha256": "ec8cbe2837f41349c7b64fa5de433d4b7e5cf9819bf4684e1f0771de2b7d43dc"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-fixture.ts",
+          "sha256": "bb622df5c1affb3f8241aa9208e6cfc84962818e566c6b97422214740f50cbfa"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-model.test.ts",
+          "sha256": "44096866f2b454fe0eef87609f8aad81a30f151728ce9519b0b1f1ebb89b0edd"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-model.ts",
+          "sha256": "763d32445f609bd0f2b23c4ddfebc27ae06ed9e6df6884c7c33a6e9841cef0e1"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-query.test.ts",
+          "sha256": "3e4afd6aec90a1aa6cd5d0ea4a2433a3d68b05a136218d4bd1758b1c456098bb"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-query.ts",
+          "sha256": "e0c2e8259d71dacf746e348a77f6909bc9bcdda36c54d81963363c769e9775eb"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-request.test.ts",
+          "sha256": "a362935a0e50fa1581a74ddbc2efe114a4765e230bbadd834d1fd0e709229515"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-request.ts",
+          "sha256": "4b9ccf1e79ae3803841980113c3f3ef4f7f3e2e304df20267e78a36c22b8830f"
+        },
+        {
+          "path": "apps/storefront/src/storefront/home-content.tsx",
+          "sha256": "855853290b54a64b5e7c8b277caf084f21f7fe2876f00ed48be0c37c4005c371"
+        },
+        {
+          "path": "apps/storefront/src/storefront/navigation.ts",
+          "sha256": "832cfeaa460dd6f44494a4b7aa8467e1ea827b946893bda10d4b1fe974b4d110"
+        },
+        {
+          "path": "apps/storefront/src/storefront/page-factory.tsx",
+          "sha256": "af993ab37f8e0ede108b5f02de7f68ff44ffe3c32887f8651765f86742d6e455"
+        },
+        {
+          "path": "apps/storefront/src/storefront/page-parts.tsx",
+          "sha256": "56e2539807ae9f2247c01fc7dcb42a42656cb90a246ae64e852b17728d807124"
+        },
+        {
+          "path": "apps/storefront/src/storefront/pages.test.tsx",
+          "sha256": "0057c9c7de55a1e1075cc0e9c5b737a502d05377519fb3fe45e32241fad0275a"
+        },
+        {
+          "path": "apps/storefront/src/storefront/published-image.test.tsx",
+          "sha256": "a9fdd4aeff836770be8d22feb03ace6dc7c50530a455cc8847c12e8e93073ee9"
+        },
+        {
+          "path": "apps/storefront/src/storefront/published-image.tsx",
+          "sha256": "0696ad85ee1b44f8b91b9b8ddc2bc4d732d8eabfe04039ce7f1c460abbc00982"
+        },
+        {
+          "path": "apps/storefront/src/storefront/route-states.tsx",
+          "sha256": "b39919ede75f6e57899142c98271860f91172bd22478b769ab111c6ec4cd4f8f"
+        },
+        {
+          "path": "apps/storefront/src/storefront/site-header.tsx",
+          "sha256": "b9c248f28ca48e97a8634bfd13603db916b4d53219093e021fa00aafc2344fe6"
+        },
+        {
+          "path": "apps/storefront/src/storefront/storefront.css",
+          "sha256": "d4b93616d76c95363b4872a2fb46f9e2ad8385779413858669e0b95da6c27352"
         },
         {
           "path": "apps/storefront/tsconfig.build.json",
@@ -875,7 +1283,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "a7efe3683fe45ee86f7c9cf10aaa78c9e2ccb8500e905278561834c802bd567c"
+          "sha256": "039bbdb3a88e29b25f2b046aa38ff0d2b1fec44d5a48ab24176ef19bd12b1e18"
         },
         {
           "path": "packages/config/package.json",
@@ -891,7 +1299,7 @@
         },
         {
           "path": "packages/config/src/config-layers.ts",
-          "sha256": "f1176181b08d99c65e54fdea982bf6020ef385b595f96a657d28c89a46597d35"
+          "sha256": "55fc01d6dbaa5bcb4e279a94124f78cff445546c5043aecee8b842a2343e4ab9"
         },
         {
           "path": "packages/config/src/configuration-error.ts",
@@ -899,7 +1307,7 @@
         },
         {
           "path": "packages/config/src/env-example.test.ts",
-          "sha256": "0b6a29149d7a993c4a9f8a4385115822e81c8927e728630aee36227cd055d56b"
+          "sha256": "8c54de8e5b2b6f004ecaec2bfc9eae4074b598a168869068ccfd6662adc85322"
         },
         {
           "path": "packages/config/src/index.test.ts",
@@ -923,7 +1331,15 @@
         },
         {
           "path": "packages/config/src/server-config.ts",
-          "sha256": "d9a8f0fab23359fd17b5e4d09576ab4a9c900fe68456db55283a87d378fc1f16"
+          "sha256": "52f9fdb00c9fcdd37657bed32d0f88ce8ce9d0a5a6dd8753fefa080be7e65c57"
+        },
+        {
+          "path": "packages/config/src/storefront-config.test.ts",
+          "sha256": "577233f8f62cbff3bc0466eec54fb53a53e59cfc3fb812723f30d9f45063add7"
+        },
+        {
+          "path": "packages/config/src/storefront-config.ts",
+          "sha256": "4dfb45bb35b239b5d24026fc7b657e54dc18e855904edbbe0e373c6cedcbadd9"
         },
         {
           "path": "packages/config/src/url-validation.ts",
@@ -939,11 +1355,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "1dcd83de2a38859f995c0b8bfb90c323feb2d252c6a80622ee3fdbf12c701668"
+          "sha256": "cde28e592cb2936ba7c46380a999dfcab8ff00dbf12ce6089231d9045e63b3b2"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "526d85a4b9f8e8adfff8535676ea3bd2a3af161ff7d1268e935cd7c746ecdcc0"
+          "sha256": "549735c585c35d6915300d0e9d05e01417c17127a7a1b4bf93f9d28cd2d7520d"
         },
         {
           "path": "packages/contracts/package.json",
@@ -999,11 +1415,11 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "5ad4dcf89e27cfb91a809e86024cdd04b1369ce4b28cde9dfeb7fc42b4b28f7c"
+          "sha256": "fc56345608899e50ea5e554b0007f52ffc93cb3bc45868258ff978383e8fa839"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "6fcb456b580d91de8c562ef8a953dfeae2732040d779ecf2efb90b7bb946c19e"
+          "sha256": "4fb288ea12316bd534340ee8cb4a35e5b777a97e88bde5517bdc74ba5abfdecd"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -1011,7 +1427,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "79e7d1fb9b01af1fa2bbc9439c3fe70aa1185a9a7a1dbe731385d93aee95be51"
+          "sha256": "e5146c97d496e95384cb0827ce83045232153c440460efb22c158ec0a0287cfe"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -1211,7 +1627,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "75a7871cd12c176edf84017ef0d51ee500b7f35493312bcae4057229eb04750a"
+          "sha256": "a89d8d0452b395c0c2abf268591deba3db357cca96d39e199c7de7ecf5e30326"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -1398,6 +1814,22 @@
           "sha256": "d7d52acf252fb9e821b89a99bfc93564f2989fceca4cedafaa6cb741dcf30a95"
         },
         {
+          "path": "packages/contracts/src/storefront-homepage-openapi.test.ts",
+          "sha256": "50189aa491afb5cb294ffd1fb68811d98962d288b4840aca08f2b517119d5e89"
+        },
+        {
+          "path": "packages/contracts/src/storefront-homepage-openapi.ts",
+          "sha256": "3206292d0d8c2c32d0f179f9dd62ca132969bf509424e6cd6f49450b2168c2bc"
+        },
+        {
+          "path": "packages/contracts/src/storefront-homepage.test.ts",
+          "sha256": "d0586962d0981837a45e565f1cd04972d32e2665a8520320c1e983e14f9ea886"
+        },
+        {
+          "path": "packages/contracts/src/storefront-homepage.ts",
+          "sha256": "38eccd46655d39330990faaf68e2ba0b1492b71c3b02381be2eeaca1c45e67ad"
+        },
+        {
           "path": "packages/contracts/src/translation-import.ts",
           "sha256": "ded12dc5cfb7edca4216aa67f19abd506b0dc716182308ac6eb31d9a7fc8a6f4"
         },
@@ -1447,7 +1879,7 @@
         },
         {
           "path": "packages/design-tokens/src/foundations.test.ts",
-          "sha256": "8b74cabe6e8ada82fc5c4fa80ca467babe09c53badad6cf9833f4aafb5d8d383"
+          "sha256": "25846d119c1674f33ef0f9e30372024169af99ea98c54a665f7f0fbae77dbd1e"
         },
         {
           "path": "packages/design-tokens/src/idol-accent.ts",
@@ -1463,7 +1895,7 @@
         },
         {
           "path": "packages/design-tokens/src/tokens.ts",
-          "sha256": "ebb894dc0667c6410a11266753188cb42bfe5dd6ff8bd40baf5a3a8b6f2666ad"
+          "sha256": "7f229191a48c3787527116381a22bc06f92a7c3a0238de4d8ae067fc9632aebb"
         },
         {
           "path": "packages/design-tokens/styles/fonts/japanese.css",
@@ -1487,7 +1919,7 @@
         },
         {
           "path": "packages/design-tokens/styles/foundations.css",
-          "sha256": "f15225827800e5e24c98f4c66505e558825c61ab24cd2318dd497d8ae465dd20"
+          "sha256": "bb836b5726dd265cb264bfd2391e11520bb5ff2701528883d9fd9d42cde9c96a"
         },
         {
           "path": "packages/design-tokens/tsconfig.build.json",
@@ -1815,7 +2247,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "76e9d4c78e75a8cb1c341f3e1adfc849e5e707785f0b9fc3417661baf2e92bbf"
+          "sha256": "0284fe9a9633b88b39311986f96928f4b72ad0787a32974cb6f074559ad4bf9a"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -1843,32 +2275,21 @@
         }
       ],
       "status": [
-        " M apps/admin/next-env.d.ts",
-        " M apps/admin/src/app/globals.css",
-        " M apps/admin/src/server/admin-operations.ts",
-        " M apps/admin/src/workspace/components.tsx",
-        " M apps/admin/src/workspace/content-form.tsx",
-        " M apps/admin/src/workspace/editor-model.test.ts",
-        " M apps/admin/src/workspace/editor-model.ts",
-        " M apps/admin/src/workspace/editor-state.ts",
-        " M apps/admin/src/workspace/editor.tsx",
-        " M apps/admin/src/workspace/preview.test.tsx",
-        " M apps/admin/src/workspace/preview.tsx",
-        " M apps/admin/src/workspace/workspace.tsx",
+        " M .env.example",
         " M apps/api/package.json",
-        " M apps/api/scripts/admin-workspace-http.mjs",
-        " M apps/api/src/admin-workspace-transport.ts",
         " M apps/api/src/bootstrap.ts",
-        " M apps/api/src/index.ts",
+        " M apps/api/src/production-application.test.ts",
         " M apps/api/src/production-application.ts",
+        " M apps/api/src/publication-runtime-composition.test.ts",
+        " M apps/api/src/publication-runtime-composition.ts",
         " M apps/api/src/published-content-composition.test.ts",
         " M apps/api/src/published-content-composition.ts",
-        " M database/migrations/manifest.json",
-        " M database/schema/expected-catalog.json",
-        " M docs/FAN_SUPPORT_PLATFORM_SPEC.md",
-        " M docs/analysis/risk-assessment.md",
-        " M docs/plan/dependency-graph.md",
-        " M docs/plan/task-breakdown.md",
+        " M apps/storefront/next.config.ts",
+        " M apps/storefront/package.json",
+        " M apps/storefront/src/app/layout.tsx",
+        " M apps/storefront/src/proxy.test.ts",
+        " M apps/storefront/src/proxy.ts",
+        " M apps/storefront/src/server/runtime-config.ts",
         " M docs/progress/MASTER.md",
         " M docs/progress/phase-3-storefront.md",
         " M output/playwright/p2-04/README.md",
@@ -1883,77 +2304,152 @@
         " M output/playwright/p2-04/axe-results/timeline.json",
         " M output/playwright/p2-04/axe-results/unavailable.json",
         " M output/playwright/p2-04/browser-results.json",
-        " M output/playwright/p2-04/reduced-motion/1440x900-en.png",
         " M output/playwright/p2-04/rtl/1440x900-en.png",
         " M output/playwright/p2-04/screenshots.sha256",
         " M output/playwright/p2-04/stress/320x800-pt-long.png",
-        " M output/playwright/p2-04/viewports/1920x1080-es.png",
         " M package.json",
         " M packages/application/src/index.ts",
+        " M packages/config/src/config-layers.ts",
+        " M packages/config/src/env-example.test.ts",
+        " M packages/config/src/server-config.ts",
         " M packages/content/src/index.ts",
-        " M packages/content/src/published-content.test.ts",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
         " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/i18n/src/admin/en.review.ts",
-        " M packages/i18n/src/admin/en.ts",
-        " M packages/i18n/src/admin/es.review.ts",
-        " M packages/i18n/src/admin/es.ts",
-        " M packages/i18n/src/admin/ja.review.ts",
-        " M packages/i18n/src/admin/ja.ts",
-        " M packages/i18n/src/admin/pt.review.ts",
-        " M packages/i18n/src/admin/pt.ts",
-        " M packages/i18n/src/admin/th.review.ts",
-        " M packages/i18n/src/admin/th.ts",
-        " M packages/i18n/src/admin/vi.review.ts",
-        " M packages/i18n/src/admin/vi.ts",
-        " M packages/i18n/src/admin/zh-CN.review.ts",
-        " M packages/i18n/src/admin/zh-CN.ts",
+        " M packages/design-tokens/src/foundations.test.ts",
+        " M packages/design-tokens/src/tokens.ts",
+        " M packages/design-tokens/styles/foundations.css",
+        " M packages/i18n/package.json",
+        " M packages/i18n/src/index.ts",
         " M packages/persistence-port/src/index.ts",
         " M packages/persistence-postgres/package.json",
-        " M packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
-        " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
-        " M packages/persistence-postgres/scripts/postgres-catalog-fixtures.mjs",
-        " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
-        " M packages/persistence-postgres/src/content-authoring-repository.ts",
-        " M packages/persistence-postgres/src/content-authoring-writes.ts",
+        " M packages/persistence-postgres/src/admin-catalog-data.ts",
+        " M packages/persistence-postgres/src/postgres-persistence.test.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
-        " M packages/persistence-postgres/src/publication-preflight-candidate.ts",
-        " M packages/persistence-postgres/src/publication-runtime-write.ts",
-        " M packages/persistence-postgres/src/published-content-repository.ts",
         " M pnpm-lock.yaml",
-        "?? apps/admin/src/server/gift-commerce-operations.test.ts",
-        "?? apps/admin/src/workspace/gift-commerce-client.ts",
-        "?? apps/admin/src/workspace/gift-commerce-panel.tsx",
-        "?? apps/admin/src/workspace/gift-commerce-shared.ts",
-        "?? apps/admin/src/workspace/gift-detail-preview.test.tsx",
-        "?? apps/admin/src/workspace/gift-detail-preview.tsx",
-        "?? apps/admin/src/workspace/gift-detail-review.test.tsx",
-        "?? apps/admin/src/workspace/gift-detail-review.tsx",
-        "?? apps/admin/src/workspace/gift-details-editor.tsx",
-        "?? apps/admin/src/workspace/gift-editor-model.test.ts",
-        "?? apps/admin/src/workspace/gift-editor-model.ts",
-        "?? apps/admin/src/workspace/gift-eligibility.tsx",
-        "?? apps/admin/src/workspace/gift-inventory.tsx",
-        "?? apps/admin/src/workspace/gift-prices.tsx",
-        "?? apps/admin/src/workspace/gift-structure.tsx",
-        "?? apps/api/scripts/gift-commerce-browser.mjs",
-        "?? apps/api/scripts/gift-commerce-http-fixtures.mjs",
-        "?? apps/api/scripts/gift-commerce-http.mjs",
-        "?? apps/api/src/gift-commerce-composition.test.ts",
-        "?? apps/api/src/gift-commerce-composition.ts",
-        "?? apps/api/src/gift-commerce-route.test.ts",
-        "?? apps/api/src/gift-commerce-route.ts",
-        "?? apps/api/src/published-gift-commerce-route.test.ts",
-        "?? apps/api/src/published-gift-commerce-route.ts",
-        "?? database/migrations/0020_gift-commerce.down.sql",
-        "?? database/migrations/0020_gift-commerce.up.sql",
-        "?? docs/decisions/011-gift-kind-inventory-policy.md",
-        "?? docs/operations/gift-commerce.md",
-        "?? docs/plan/p3-03-gift-commerce.md",
+        " M scripts/check-design-foundations.mjs",
+        " M scripts/check-design-foundations.test.mjs",
+        "?? apps/api/scripts/storefront-browser.mjs",
+        "?? apps/api/scripts/storefront-catalog-fixtures.mjs",
+        "?? apps/api/scripts/storefront-content-client.mjs",
+        "?? apps/api/scripts/storefront-http.mjs",
+        "?? apps/api/scripts/storefront-image-checks.mjs",
+        "?? apps/api/scripts/storefront-media-fixtures.mjs",
+        "?? apps/api/scripts/storefront-next-refresh.mjs",
+        "?? apps/api/scripts/storefront-protocol.mjs",
+        "?? apps/api/scripts/storefront-test-dns.mjs",
+        "?? apps/api/scripts/storefront-test-network.mjs",
+        "?? apps/api/src/storefront-homepage-fixtures.ts",
+        "?? apps/api/src/storefront-homepage-route.test.ts",
+        "?? apps/api/src/storefront-homepage-route.ts",
+        "?? apps/storefront/AGENTS.md",
+        "?? apps/storefront/CLAUDE.md",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/layout.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/layout.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/layout.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/layout.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/layout.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/region/page.tsx",
+        "?? apps/storefront/src/app/api/storefront/idols/route.test.ts",
+        "?? apps/storefront/src/app/api/storefront/idols/route.ts",
+        "?? apps/storefront/src/server/image-config.test.ts",
+        "?? apps/storefront/src/server/image-config.ts",
+        "?? apps/storefront/src/server/public-catalog.test.ts",
+        "?? apps/storefront/src/server/public-catalog.ts",
+        "?? apps/storefront/src/server/storefront-copy.test.ts",
+        "?? apps/storefront/src/server/storefront-copy.ts",
+        "?? apps/storefront/src/storefront/artist-content.tsx",
+        "?? apps/storefront/src/storefront/artist-directory.module.css",
+        "?? apps/storefront/src/storefront/artist-directory.test.tsx",
+        "?? apps/storefront/src/storefront/artist-directory.tsx",
+        "?? apps/storefront/src/storefront/artist-search.tsx",
+        "?? apps/storefront/src/storefront/artist-track.tsx",
+        "?? apps/storefront/src/storefront/content-safety.test.tsx",
+        "?? apps/storefront/src/storefront/content-safety.tsx",
+        "?? apps/storefront/src/storefront/copy.ts",
+        "?? apps/storefront/src/storefront/directory-fixture.ts",
+        "?? apps/storefront/src/storefront/directory-model.test.ts",
+        "?? apps/storefront/src/storefront/directory-model.ts",
+        "?? apps/storefront/src/storefront/directory-query.test.ts",
+        "?? apps/storefront/src/storefront/directory-query.ts",
+        "?? apps/storefront/src/storefront/directory-request.test.ts",
+        "?? apps/storefront/src/storefront/directory-request.ts",
+        "?? apps/storefront/src/storefront/home-content.tsx",
+        "?? apps/storefront/src/storefront/navigation.ts",
+        "?? apps/storefront/src/storefront/page-factory.tsx",
+        "?? apps/storefront/src/storefront/page-parts.tsx",
+        "?? apps/storefront/src/storefront/pages.test.tsx",
+        "?? apps/storefront/src/storefront/published-image.test.tsx",
+        "?? apps/storefront/src/storefront/published-image.tsx",
+        "?? apps/storefront/src/storefront/route-states.tsx",
+        "?? apps/storefront/src/storefront/site-header.tsx",
+        "?? apps/storefront/src/storefront/storefront.css",
+        "?? docs/operations/storefront.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -1968,15 +2464,37 @@
         "?? output/checks/p3-01-publication-runtime/contracts-before.json",
         "?? output/checks/p3-01-resource-management/contracts-before.json",
         "?? output/checks/p3-02-admin/contracts-before.json",
-        "?? output/checks/p3-03-gift-commerce/README.md",
         "?? output/checks/p3-03-gift-commerce/add-messages.py",
-        "?? output/checks/p3-03-gift-commerce/compatibility-final.json",
         "?? output/checks/p3-03-gift-commerce/compatibility.json",
         "?? output/checks/p3-03-gift-commerce/contracts-before.json",
         "?? output/checks/p3-03-gift-commerce/gift-catalog-guards.sql",
-        "?? output/checks/p3-03-gift-commerce/transport-README.md",
+        "?? output/checks/p3-03-gift-commerce/implementation-source-before.json",
+        "?? output/checks/p3-03-gift-commerce/implementation-source-frozen.json",
         "?? output/checks/p3-03-gift-commerce/transport-plan.md",
-        "?? output/checks/p3-03-gift-commerce/transport-review.md",
+        "?? output/checks/p3-04-storefront/README.md",
+        "?? output/checks/p3-04-storefront/capture-source.py",
+        "?? output/checks/p3-04-storefront/catalog-time-independent-review.md",
+        "?? output/checks/p3-04-storefront/compatibility-final.json",
+        "?? output/checks/p3-04-storefront/compatibility.json",
+        "?? output/checks/p3-04-storefront/contracts-artifact-comparison-cost-review.json",
+        "?? output/checks/p3-04-storefront/contracts-artifact-cost-README.md",
+        "?? output/checks/p3-04-storefront/contracts-artifact-cost-review.json",
+        "?? output/checks/p3-04-storefront/copy-review-README.md",
+        "?? output/checks/p3-04-storefront/design-font-route-README.md",
+        "?? output/checks/p3-04-storefront/directory-README.md",
+        "?? output/checks/p3-04-storefront/directory-root-review.md",
+        "?? output/checks/p3-04-storefront/final-independent-frontend-review.md",
+        "?? output/checks/p3-04-storefront/image-README.md",
+        "?? output/checks/p3-04-storefront/implementation-source-final.json",
+        "?? output/checks/p3-04-storefront/matte-pixel-green.json",
+        "?? output/checks/p3-04-storefront/mobile-composition-independent-review.md",
+        "?? output/checks/p3-04-storefront/read-integration-review.md",
+        "?? output/checks/p3-04-storefront/root-visual-review.md",
+        "?? output/checks/p3-04-storefront/route-loading-independent-review.md",
+        "?? output/checks/p3-04-storefront/super-review.md",
+        "?? output/checks/p3-04-storefront/untracked-baseline.json",
+        "?? output/checks/p3-04-storefront/validation.json",
+        "?? output/checks/p3-04-storefront/write-copy.py",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -2217,75 +2735,97 @@
         "?? output/playwright/p2-06/viewer-390.png",
         "?? output/playwright/p2-06/viewer-check.json",
         "?? output/playwright/p3-02-admin/serve-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/accessibility.json",
-        "?? output/playwright/p3-03-gift-commerce/en-created.png",
-        "?? output/playwright/p3-03-gift-commerce/en-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/en-inventory.png",
-        "?? output/playwright/p3-03-gift-commerce/en-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/en-preview.png",
-        "?? output/playwright/p3-03-gift-commerce/en-prices.png",
-        "?? output/playwright/p3-03-gift-commerce/es-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/es-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/ja-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/ja-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/pt-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/pt-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/th-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/th-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/vi-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/vi-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/zh-CN-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/zh-CN-mobile.png",
-        "?? packages/application/src/gift-commerce-content.test.ts",
-        "?? packages/application/src/gift-commerce-content.ts",
-        "?? packages/application/src/gift-commerce-results.ts",
-        "?? packages/application/src/gift-commerce-validation.ts",
-        "?? packages/application/src/gift-commerce.test.ts",
-        "?? packages/application/src/gift-commerce.ts",
-        "?? packages/application/src/published-gift-commerce.test.ts",
-        "?? packages/application/src/published-gift-commerce.ts",
-        "?? packages/content/src/published-gift-commerce.ts",
-        "?? packages/contracts/src/gift-commerce-openapi.test.ts",
-        "?? packages/contracts/src/gift-commerce-openapi.ts",
-        "?? packages/contracts/src/gift-commerce-profile.ts",
-        "?? packages/contracts/src/gift-commerce.test.ts",
-        "?? packages/contracts/src/gift-commerce.ts",
-        "?? packages/contracts/src/published-gift-commerce.test.ts",
-        "?? packages/contracts/src/published-gift-commerce.ts",
-        "?? packages/persistence-port/src/gift-commerce.ts",
-        "?? packages/persistence-port/src/published-gift-commerce.ts",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-atomicity.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-catalog-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-concurrency.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-constraints.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-fixtures.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-price-sealing.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-pricing-rollback.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-time-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce.mjs",
-        "?? packages/persistence-postgres/src/gift-commerce-authorization-repository.test.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-authorization-repository.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift-data.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift-profile.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift-read.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift-repository.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift-write.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift.test.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-inventory-data.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-inventory-repository.test.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-inventory-repository.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-current.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-data.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-read.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-repository.test.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-repository.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-write.ts",
-        "?? packages/persistence-postgres/src/published-gift-commerce-repository.ts"
+        "?? output/playwright/p3-04-storefront/README.md",
+        "?? output/playwright/p3-04-storefront/accessibility.json",
+        "?? output/playwright/p3-04-storefront/browser-failure.json",
+        "?? output/playwright/p3-04-storefront/browser-failure.png",
+        "?? output/playwright/p3-04-storefront/en-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/en-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/en-1440-home.png",
+        "?? output/playwright/p3-04-storefront/en-390-detail.png",
+        "?? output/playwright/p3-04-storefront/en-390-directory.png",
+        "?? output/playwright/p3-04-storefront/en-390-home.png",
+        "?? output/playwright/p3-04-storefront/en-artist-paused.png",
+        "?? output/playwright/p3-04-storefront/en-directory-catalog-changed.png",
+        "?? output/playwright/p3-04-storefront/en-directory-empty.png",
+        "?? output/playwright/p3-04-storefront/en-directory-end.png",
+        "?? output/playwright/p3-04-storefront/en-directory-network-error.png",
+        "?? output/playwright/p3-04-storefront/en-directory-search-anchor.png",
+        "?? output/playwright/p3-04-storefront/en-home-empty.png",
+        "?? output/playwright/p3-04-storefront/en-home-image-error.png",
+        "?? output/playwright/p3-04-storefront/en-home-network-error.png",
+        "?? output/playwright/p3-04-storefront/en-home-normal-motion.png",
+        "?? output/playwright/p3-04-storefront/en-home-search-anchor.png",
+        "?? output/playwright/p3-04-storefront/es-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/es-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/es-1440-home.png",
+        "?? output/playwright/p3-04-storefront/es-390-detail.png",
+        "?? output/playwright/p3-04-storefront/es-390-directory.png",
+        "?? output/playwright/p3-04-storefront/es-390-home.png",
+        "?? output/playwright/p3-04-storefront/http-results.json",
+        "?? output/playwright/p3-04-storefront/ja-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/ja-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/ja-1440-home.png",
+        "?? output/playwright/p3-04-storefront/ja-390-detail.png",
+        "?? output/playwright/p3-04-storefront/ja-390-directory.png",
+        "?? output/playwright/p3-04-storefront/ja-390-home.png",
+        "?? output/playwright/p3-04-storefront/pt-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/pt-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/pt-1440-home.png",
+        "?? output/playwright/p3-04-storefront/pt-390-detail.png",
+        "?? output/playwright/p3-04-storefront/pt-390-directory.png",
+        "?? output/playwright/p3-04-storefront/pt-390-home.png",
+        "?? output/playwright/p3-04-storefront/results.json",
+        "?? output/playwright/p3-04-storefront/th-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/th-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/th-1440-home.png",
+        "?? output/playwright/p3-04-storefront/th-390-detail.png",
+        "?? output/playwright/p3-04-storefront/th-390-directory.png",
+        "?? output/playwright/p3-04-storefront/th-390-home.png",
+        "?? output/playwright/p3-04-storefront/vi-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/vi-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/vi-1440-home.png",
+        "?? output/playwright/p3-04-storefront/vi-390-detail.png",
+        "?? output/playwright/p3-04-storefront/vi-390-directory.png",
+        "?? output/playwright/p3-04-storefront/vi-390-home.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-1440-home.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-390-detail.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-390-directory.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-390-home.png",
+        "?? packages/application/src/storefront-homepage.test.ts",
+        "?? packages/application/src/storefront-homepage.ts",
+        "?? packages/config/src/storefront-config.test.ts",
+        "?? packages/config/src/storefront-config.ts",
+        "?? packages/content/src/storefront-homepage-fixtures.ts",
+        "?? packages/content/src/storefront-homepage.test.ts",
+        "?? packages/content/src/storefront-homepage.ts",
+        "?? packages/contracts/src/storefront-homepage-openapi.test.ts",
+        "?? packages/contracts/src/storefront-homepage-openapi.ts",
+        "?? packages/contracts/src/storefront-homepage.test.ts",
+        "?? packages/contracts/src/storefront-homepage.ts",
+        "?? packages/i18n/src/storefront/en.ts",
+        "?? packages/i18n/src/storefront/es.ts",
+        "?? packages/i18n/src/storefront/ja.ts",
+        "?? packages/i18n/src/storefront/messages.test.ts",
+        "?? packages/i18n/src/storefront/messages.ts",
+        "?? packages/i18n/src/storefront/pt.ts",
+        "?? packages/i18n/src/storefront/review-manifest.test.ts",
+        "?? packages/i18n/src/storefront/review-manifest.ts",
+        "?? packages/i18n/src/storefront/th.ts",
+        "?? packages/i18n/src/storefront/vi.ts",
+        "?? packages/i18n/src/storefront/zh-CN.ts",
+        "?? packages/persistence-port/src/storefront-homepage.ts",
+        "?? packages/persistence-postgres/scripts/postgres-admin-catalog-time.mjs",
+        "?? packages/persistence-postgres/src/admin-catalog-data.test.ts",
+        "?? packages/persistence-postgres/src/storefront-homepage-repository.test.ts",
+        "?? packages/persistence-postgres/src/storefront-homepage-repository.ts"
       ]
     },
     "before": {
-      "sha": "cdf2ab24a46eb914c4e82b456d6e630886cfed7b",
-      "sourceFingerprint": "ea0d73b2f17e5df34c3aa2b36d2fb98768726e9530fcc06a69e5582165474b43",
+      "sha": "fc6e28e6a6ec8ef7cd3316ef901c7e104c1bb1d6",
+      "sourceFingerprint": "b4fd4cae61825c31b07f89d08a51ffd487889ce5d9663d42f4bd25b68a6f2fff",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -2294,11 +2834,11 @@
         },
         {
           "path": "apps/storefront/next.config.ts",
-          "sha256": "0c7106a629529b71768f6bfb49bf92e29ff84b1b63c3d580f91490663c4323f0"
+          "sha256": "114e59f077a45123565aedde964648978f3d3db4effb30d85a6d658f54fe2d77"
         },
         {
           "path": "apps/storefront/package.json",
-          "sha256": "6dd8e4a5d67dc5139cf3a5f1f5ef86a29a25132f37add3be412e3e384830c5bf"
+          "sha256": "fa4b4dfe41f607bebaf0409cd24e122e75cd54beca00e4f071c76ce7c42aac49"
         },
         {
           "path": "apps/storefront/postcss-font-display-optional/index.cjs",
@@ -2601,6 +3141,286 @@
           "sha256": "c94d0951a6a6709fa937c7477fe25c8eb64038867e538ce3f60550f0264cf3c0"
         },
         {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/cart/page.tsx",
+          "sha256": "919c2c12be88056faa418299c7ae32e131d9b6b7fb6c5d1c4a3d9c4b277e8f9b"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/gifts/[[...path]]/page.tsx",
+          "sha256": "05d81c87edb45baca87247b2e3771b825464aece8d61ea6915d3de53073e48ac"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/idols/[handle]/page.tsx",
+          "sha256": "bdb924a0f538330226875dad612ab2bdfd24e0b845a2e88e1f1b61d6348bd7ce"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/idols/page.tsx",
+          "sha256": "f1b85f6544a6ebd86eccb5082600d197d0c44640f17f8bc43c8e68e594d3af80"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/not-found.tsx",
+          "sha256": "da46caef7f82f9d43cbb6255d5fbbe6058d8809f3953a97e4df7ea9cd0e420e6"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/orders/lookup/page.tsx",
+          "sha256": "05d81c87edb45baca87247b2e3771b825464aece8d61ea6915d3de53073e48ac"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/page.tsx",
+          "sha256": "ddcfbfe5f9f1898b150c6e1614c8a0e8c51aa2e9a58459902968635aa288006e"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/policies/[handle]/page.tsx",
+          "sha256": "05d81c87edb45baca87247b2e3771b825464aece8d61ea6915d3de53073e48ac"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/region/page.tsx",
+          "sha256": "919c2c12be88056faa418299c7ae32e131d9b6b7fb6c5d1c4a3d9c4b277e8f9b"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/layout.tsx",
+          "sha256": "4ad5b042f7cc04114c57baae8f90b8c64065a4148414c64f21a812308b4590d9"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/cart/page.tsx",
+          "sha256": "252e81aa020d6b762019cf8553960efddc0b7d1e628458d97546d5449be626c0"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/gifts/[[...path]]/page.tsx",
+          "sha256": "769832485021b952cf2514e5525d61961440d293353fde74c83e2c757729a109"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/idols/[handle]/page.tsx",
+          "sha256": "1ae0b719d993fb66726f43688fbe3b5fbfc3b2d4dd39a7047a25b63b785e9fd2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/idols/page.tsx",
+          "sha256": "9a1a2ff2183f51abdc7a3436f5d56aef2dba1f321a4507ff2122f296b39fb947"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/not-found.tsx",
+          "sha256": "6b1c43aaf3391fb4bb1c584652809cdecd15f515b329ac6b3e75d941b016b859"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/orders/lookup/page.tsx",
+          "sha256": "769832485021b952cf2514e5525d61961440d293353fde74c83e2c757729a109"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/page.tsx",
+          "sha256": "c7fcdd10a9a1991fcf861978010b5cba4ae8815e9078e815927834079c3bdbf8"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/policies/[handle]/page.tsx",
+          "sha256": "769832485021b952cf2514e5525d61961440d293353fde74c83e2c757729a109"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/region/page.tsx",
+          "sha256": "252e81aa020d6b762019cf8553960efddc0b7d1e628458d97546d5449be626c0"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/cart/page.tsx",
+          "sha256": "dc97ca5b4e9fb5e907c8762344c77a840c0261ec5e8366c16b11d66a95c55fc5"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/gifts/[[...path]]/page.tsx",
+          "sha256": "822e4d075edee5e5fc3c9f23b75388982983442fea8af6a5aea6c5dedb6a347e"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/idols/[handle]/page.tsx",
+          "sha256": "b768d0dd8dcc8b9d217791f972159543a642e05d63851c1ec502bec975930bd3"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/idols/page.tsx",
+          "sha256": "580ef478274b3e2b6a38ac5dffe2ac729343a21331e8a2c46f73c4b87eeb2ac8"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/not-found.tsx",
+          "sha256": "25c8c67f3117ebbb85bfb449e82205a577e6a5f307367b75f1f6b0c918030430"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/orders/lookup/page.tsx",
+          "sha256": "822e4d075edee5e5fc3c9f23b75388982983442fea8af6a5aea6c5dedb6a347e"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/page.tsx",
+          "sha256": "22ff1fb6b89213e344ff0869a4f6624e7c9c6d605752d880e226c69b8e251081"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/policies/[handle]/page.tsx",
+          "sha256": "822e4d075edee5e5fc3c9f23b75388982983442fea8af6a5aea6c5dedb6a347e"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/region/page.tsx",
+          "sha256": "dc97ca5b4e9fb5e907c8762344c77a840c0261ec5e8366c16b11d66a95c55fc5"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/layout.tsx",
+          "sha256": "d8f12172432851b952d5561e082a0e64bd160f0407d57f8cf64a4606d7a501ea"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/cart/page.tsx",
+          "sha256": "924f32f24518645a4bad7b1a0f1d5c999bce4bda7692b64eafa10b0c02e10320"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/gifts/[[...path]]/page.tsx",
+          "sha256": "24cbce3a88eed0c4e2d701fefdc3984c6a3a313d21e8982d22948125380bf2ee"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/idols/[handle]/page.tsx",
+          "sha256": "6fcf59d2e2cacd3b7290898679d19ffd74cd3054eeb149b6278e5810778edc2b"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/idols/page.tsx",
+          "sha256": "52cebdb1f71756a8d5a493d67a6b59116df6b20fe9f4ffd82b1cb9337361e971"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/not-found.tsx",
+          "sha256": "0a05b20b26b98af8e18b39c4d078def6cc18b2936f3e2f1f2e68ad9e754b52dd"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/orders/lookup/page.tsx",
+          "sha256": "24cbce3a88eed0c4e2d701fefdc3984c6a3a313d21e8982d22948125380bf2ee"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/page.tsx",
+          "sha256": "7063529658909d6ddd603ad9d5997e931ac370e3084c5dcd25bd89ef40e44ad2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/policies/[handle]/page.tsx",
+          "sha256": "24cbce3a88eed0c4e2d701fefdc3984c6a3a313d21e8982d22948125380bf2ee"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/region/page.tsx",
+          "sha256": "924f32f24518645a4bad7b1a0f1d5c999bce4bda7692b64eafa10b0c02e10320"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/layout.tsx",
+          "sha256": "80f68e96f6534d10c233c33d2db3081fd9c5bfcf759c691173cb7104cc863590"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/cart/page.tsx",
+          "sha256": "9f61a639cebe7020342077d22555d20c3a6aa88749cc071dc3354033ac11650b"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/gifts/[[...path]]/page.tsx",
+          "sha256": "2c8f1d2d4e5778c0a179742d141e4d64ba169c946c21bc638b55e104439d06c2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/idols/[handle]/page.tsx",
+          "sha256": "a26c71e9fb322ef67e76120223475442f94dee065ebb2e1cf5dde238d328acd4"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/idols/page.tsx",
+          "sha256": "8f3e5a8cdbb5a06ae944de88724e4db5b42b315aa4c081d46536a1b2752a13aa"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/not-found.tsx",
+          "sha256": "2f4b98a819e96f193f9c93758f0dcf298030355a97d3dbf76c8682aa9f118e08"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/orders/lookup/page.tsx",
+          "sha256": "2c8f1d2d4e5778c0a179742d141e4d64ba169c946c21bc638b55e104439d06c2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/page.tsx",
+          "sha256": "9bf20a19cc0c4469b558df5a8be5c97fbf07bc84adc024e899338d6e9cda3ea8"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/policies/[handle]/page.tsx",
+          "sha256": "2c8f1d2d4e5778c0a179742d141e4d64ba169c946c21bc638b55e104439d06c2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/region/page.tsx",
+          "sha256": "9f61a639cebe7020342077d22555d20c3a6aa88749cc071dc3354033ac11650b"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/layout.tsx",
+          "sha256": "3d4efa3a3b7514161ef9b3411bd1fa7b56d51816050a1da83b94928b7951ef51"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/cart/page.tsx",
+          "sha256": "11a6e2bfaabd31fdfdc186aafdd8b6f555179121405be3a87273cd0394f9ab14"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/gifts/[[...path]]/page.tsx",
+          "sha256": "958b9935f409ed2923682d0e916749ec1b9632b34d85556e277512e466e80d42"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/idols/[handle]/page.tsx",
+          "sha256": "7d66e153438eac35e0afac0a38264d9cbc2dd740d5ecf181e526ba0adea5a37a"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/idols/page.tsx",
+          "sha256": "6b484553b9a806719b2a92e058e48b0eedc4c4d387627b27e43caadf03eb63e2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/not-found.tsx",
+          "sha256": "38827b915e43455b6eade688fbb5702cb23f7313074d50c45f8ab16e82dde3cb"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/orders/lookup/page.tsx",
+          "sha256": "958b9935f409ed2923682d0e916749ec1b9632b34d85556e277512e466e80d42"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/page.tsx",
+          "sha256": "a9d754c8e0032986f0f287e94a8cbb9e2d57fc234164dc0b4dd310467743d764"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/policies/[handle]/page.tsx",
+          "sha256": "958b9935f409ed2923682d0e916749ec1b9632b34d85556e277512e466e80d42"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/region/page.tsx",
+          "sha256": "11a6e2bfaabd31fdfdc186aafdd8b6f555179121405be3a87273cd0394f9ab14"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/layout.tsx",
+          "sha256": "4b94b9d89a2449371bce55c20402a30d9c313e1639de9f5c7309dc5757e89cd5"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/cart/page.tsx",
+          "sha256": "1e58ac2efd942e770321ec8ecfd2b9172e8eec187c7f814b2598deb052818be5"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/gifts/[[...path]]/page.tsx",
+          "sha256": "4cda9d94ee20998b100528173b2d1393b279db1d5a1db15f82a148c726990469"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/idols/[handle]/page.tsx",
+          "sha256": "3e72dd87ad8e7d70f651a89f66cba3756835dec67de599cbd65070ef4a7f7cb8"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/idols/page.tsx",
+          "sha256": "728c3a8172e5e6e28b3a705998b6efaa53503eaaa6da8a03a99a1a8368af8309"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/not-found.tsx",
+          "sha256": "0f156f9a2be3bd92e48cfc58e7ef267c56dcaebade5d74aebde7616e5f53709c"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/orders/lookup/page.tsx",
+          "sha256": "4cda9d94ee20998b100528173b2d1393b279db1d5a1db15f82a148c726990469"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/page.tsx",
+          "sha256": "9e4e3070c410abaea06a0d1c9f421e284622441a30a5b96088bf1c356c57998a"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/policies/[handle]/page.tsx",
+          "sha256": "4cda9d94ee20998b100528173b2d1393b279db1d5a1db15f82a148c726990469"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/region/page.tsx",
+          "sha256": "1e58ac2efd942e770321ec8ecfd2b9172e8eec187c7f814b2598deb052818be5"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/idols/route.test.ts",
+          "sha256": "d69eb8681349aaf82a3d558fc7f7d8dc9017cf99e2d5b158a18a60308859d4d7"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/idols/route.ts",
+          "sha256": "f1e3fcb45926c59a8cd8b4035dcaf59823c98dfd873973f62224c215f4fba043"
+        },
+        {
           "path": "apps/storefront/src/app/design-foundation-specimen.module.css",
           "sha256": "25809943cf0a9625eaea48bbcaa9b24b7894bc22b7949ff2b6a51d6178938354"
         },
@@ -2638,7 +3458,7 @@
         },
         {
           "path": "apps/storefront/src/app/layout.tsx",
-          "sha256": "f443ecf257a8ab76310e66d3bdd29089a00398aef4fa7338c0b0c3aeb38c1dec"
+          "sha256": "314690103a18c0cbc494f6c8802db837c5d8fb0de94a49462a32269bbe399c17"
         },
         {
           "path": "apps/storefront/src/app/page.tsx",
@@ -2806,11 +3626,19 @@
         },
         {
           "path": "apps/storefront/src/proxy.test.ts",
-          "sha256": "de6344ee5afdd9cb755e63a044d70761955f3aeddc06b77eb8a5c4378134e3be"
+          "sha256": "e3a59e06c42433764fc7db5701453ce48b3aaa6cbaabd1e71850b0de56899661"
         },
         {
           "path": "apps/storefront/src/proxy.ts",
-          "sha256": "c4dd129dd00a832883383dd0200180b441fdeb180d87ca2ddf3b92c6bc0011c2"
+          "sha256": "8256059c485731291be11d87afc592111ce8f8c8bafa20643c17eaaebcac4566"
+        },
+        {
+          "path": "apps/storefront/src/server/image-config.test.ts",
+          "sha256": "dbba82c16cd52104f8144f7075cd9d7854316ada85206f00fb31da98e6adcd9f"
+        },
+        {
+          "path": "apps/storefront/src/server/image-config.ts",
+          "sha256": "bd5935ace2ec2576aa4e26c18ae53112a4ec0972d85c75a9709175a712afd14f"
         },
         {
           "path": "apps/storefront/src/server/observability-probe.test.ts",
@@ -2821,8 +3649,128 @@
           "sha256": "8d7e08a178dc61b23f0b900e6bb2cc9413842f27e4eb8280003c4176771a4d7e"
         },
         {
+          "path": "apps/storefront/src/server/public-catalog.test.ts",
+          "sha256": "f3f14643a7b2a9f24c6969f22ba8952148b8a8066b92127fc54d791453988219"
+        },
+        {
+          "path": "apps/storefront/src/server/public-catalog.ts",
+          "sha256": "a2bca12398b13cece6950fabba1109628c33c4fe47d8f4d5a89a079e37454e37"
+        },
+        {
           "path": "apps/storefront/src/server/runtime-config.ts",
-          "sha256": "9152b37ef2c072d59039f721b7183aee91d379dae2e9a986bd37f801da1d7509"
+          "sha256": "d2d5cc607a5fd74e9841eb708bdbfa6f1b4d4958ef28d5e7646bbe1c1dbcbbc5"
+        },
+        {
+          "path": "apps/storefront/src/server/storefront-copy.test.ts",
+          "sha256": "cacc35565a596eca768483a068f0501bd2ed372bce87955023ad4fec5d2980d0"
+        },
+        {
+          "path": "apps/storefront/src/server/storefront-copy.ts",
+          "sha256": "041495a0731c1abd7ec6cfddedee21b1158e1f67d5bedd5e6636447cddde554f"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-content.tsx",
+          "sha256": "c442175e809cf4d2b035299f347326b72d965d2862579249a263c9ab1f00e883"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-directory.module.css",
+          "sha256": "83ad4916d27061b7f4b7c337cddda5c452308bc9375d59fff6a16337f5fae26e"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-directory.test.tsx",
+          "sha256": "ca13f75d985ce1bc9969c35cb1892f4b9b4a2b5b34cc128f00d2153b0e974e08"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-directory.tsx",
+          "sha256": "f4248434d4f531d119c96562ad09a021a46e0c645a37cc9c25132f4cca35d0f5"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-search.tsx",
+          "sha256": "503770e8c24f5a4e50318f072d47f8032528ed9ae8fe854fa72a6cad9f4dd2c5"
+        },
+        {
+          "path": "apps/storefront/src/storefront/artist-track.tsx",
+          "sha256": "4d8fb7ddc4c3f23ef61f0c74ad0be0a85d12ed955e4b30cfc54807849eb77528"
+        },
+        {
+          "path": "apps/storefront/src/storefront/content-safety.test.tsx",
+          "sha256": "638759b5e70439e8dec75230c27386bfd8aad935f57573244a9bc08d4b7a51ca"
+        },
+        {
+          "path": "apps/storefront/src/storefront/content-safety.tsx",
+          "sha256": "269c43f62dc3eef6fc2347a99d768056f980f5b92ae8578f83dfa44b24a54950"
+        },
+        {
+          "path": "apps/storefront/src/storefront/copy.ts",
+          "sha256": "ec8cbe2837f41349c7b64fa5de433d4b7e5cf9819bf4684e1f0771de2b7d43dc"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-fixture.ts",
+          "sha256": "bb622df5c1affb3f8241aa9208e6cfc84962818e566c6b97422214740f50cbfa"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-model.test.ts",
+          "sha256": "44096866f2b454fe0eef87609f8aad81a30f151728ce9519b0b1f1ebb89b0edd"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-model.ts",
+          "sha256": "763d32445f609bd0f2b23c4ddfebc27ae06ed9e6df6884c7c33a6e9841cef0e1"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-query.test.ts",
+          "sha256": "3e4afd6aec90a1aa6cd5d0ea4a2433a3d68b05a136218d4bd1758b1c456098bb"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-query.ts",
+          "sha256": "e0c2e8259d71dacf746e348a77f6909bc9bcdda36c54d81963363c769e9775eb"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-request.test.ts",
+          "sha256": "a362935a0e50fa1581a74ddbc2efe114a4765e230bbadd834d1fd0e709229515"
+        },
+        {
+          "path": "apps/storefront/src/storefront/directory-request.ts",
+          "sha256": "4b9ccf1e79ae3803841980113c3f3ef4f7f3e2e304df20267e78a36c22b8830f"
+        },
+        {
+          "path": "apps/storefront/src/storefront/home-content.tsx",
+          "sha256": "855853290b54a64b5e7c8b277caf084f21f7fe2876f00ed48be0c37c4005c371"
+        },
+        {
+          "path": "apps/storefront/src/storefront/navigation.ts",
+          "sha256": "832cfeaa460dd6f44494a4b7aa8467e1ea827b946893bda10d4b1fe974b4d110"
+        },
+        {
+          "path": "apps/storefront/src/storefront/page-factory.tsx",
+          "sha256": "af993ab37f8e0ede108b5f02de7f68ff44ffe3c32887f8651765f86742d6e455"
+        },
+        {
+          "path": "apps/storefront/src/storefront/page-parts.tsx",
+          "sha256": "56e2539807ae9f2247c01fc7dcb42a42656cb90a246ae64e852b17728d807124"
+        },
+        {
+          "path": "apps/storefront/src/storefront/pages.test.tsx",
+          "sha256": "0057c9c7de55a1e1075cc0e9c5b737a502d05377519fb3fe45e32241fad0275a"
+        },
+        {
+          "path": "apps/storefront/src/storefront/published-image.test.tsx",
+          "sha256": "a9fdd4aeff836770be8d22feb03ace6dc7c50530a455cc8847c12e8e93073ee9"
+        },
+        {
+          "path": "apps/storefront/src/storefront/published-image.tsx",
+          "sha256": "0696ad85ee1b44f8b91b9b8ddc2bc4d732d8eabfe04039ce7f1c460abbc00982"
+        },
+        {
+          "path": "apps/storefront/src/storefront/route-states.tsx",
+          "sha256": "b39919ede75f6e57899142c98271860f91172bd22478b769ab111c6ec4cd4f8f"
+        },
+        {
+          "path": "apps/storefront/src/storefront/site-header.tsx",
+          "sha256": "b9c248f28ca48e97a8634bfd13603db916b4d53219093e021fa00aafc2344fe6"
+        },
+        {
+          "path": "apps/storefront/src/storefront/storefront.css",
+          "sha256": "d4b93616d76c95363b4872a2fb46f9e2ad8385779413858669e0b95da6c27352"
         },
         {
           "path": "apps/storefront/tsconfig.build.json",
@@ -2834,7 +3782,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "a7efe3683fe45ee86f7c9cf10aaa78c9e2ccb8500e905278561834c802bd567c"
+          "sha256": "039bbdb3a88e29b25f2b046aa38ff0d2b1fec44d5a48ab24176ef19bd12b1e18"
         },
         {
           "path": "packages/config/package.json",
@@ -2850,7 +3798,7 @@
         },
         {
           "path": "packages/config/src/config-layers.ts",
-          "sha256": "f1176181b08d99c65e54fdea982bf6020ef385b595f96a657d28c89a46597d35"
+          "sha256": "55fc01d6dbaa5bcb4e279a94124f78cff445546c5043aecee8b842a2343e4ab9"
         },
         {
           "path": "packages/config/src/configuration-error.ts",
@@ -2858,7 +3806,7 @@
         },
         {
           "path": "packages/config/src/env-example.test.ts",
-          "sha256": "0b6a29149d7a993c4a9f8a4385115822e81c8927e728630aee36227cd055d56b"
+          "sha256": "8c54de8e5b2b6f004ecaec2bfc9eae4074b598a168869068ccfd6662adc85322"
         },
         {
           "path": "packages/config/src/index.test.ts",
@@ -2882,7 +3830,15 @@
         },
         {
           "path": "packages/config/src/server-config.ts",
-          "sha256": "d9a8f0fab23359fd17b5e4d09576ab4a9c900fe68456db55283a87d378fc1f16"
+          "sha256": "52f9fdb00c9fcdd37657bed32d0f88ce8ce9d0a5a6dd8753fefa080be7e65c57"
+        },
+        {
+          "path": "packages/config/src/storefront-config.test.ts",
+          "sha256": "577233f8f62cbff3bc0466eec54fb53a53e59cfc3fb812723f30d9f45063add7"
+        },
+        {
+          "path": "packages/config/src/storefront-config.ts",
+          "sha256": "4dfb45bb35b239b5d24026fc7b657e54dc18e855904edbbe0e373c6cedcbadd9"
         },
         {
           "path": "packages/config/src/url-validation.ts",
@@ -2898,11 +3854,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "1dcd83de2a38859f995c0b8bfb90c323feb2d252c6a80622ee3fdbf12c701668"
+          "sha256": "cde28e592cb2936ba7c46380a999dfcab8ff00dbf12ce6089231d9045e63b3b2"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "526d85a4b9f8e8adfff8535676ea3bd2a3af161ff7d1268e935cd7c746ecdcc0"
+          "sha256": "549735c585c35d6915300d0e9d05e01417c17127a7a1b4bf93f9d28cd2d7520d"
         },
         {
           "path": "packages/contracts/package.json",
@@ -2958,11 +3914,11 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "5ad4dcf89e27cfb91a809e86024cdd04b1369ce4b28cde9dfeb7fc42b4b28f7c"
+          "sha256": "fc56345608899e50ea5e554b0007f52ffc93cb3bc45868258ff978383e8fa839"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "6fcb456b580d91de8c562ef8a953dfeae2732040d779ecf2efb90b7bb946c19e"
+          "sha256": "4fb288ea12316bd534340ee8cb4a35e5b777a97e88bde5517bdc74ba5abfdecd"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -2970,7 +3926,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "79e7d1fb9b01af1fa2bbc9439c3fe70aa1185a9a7a1dbe731385d93aee95be51"
+          "sha256": "e5146c97d496e95384cb0827ce83045232153c440460efb22c158ec0a0287cfe"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -3170,7 +4126,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "75a7871cd12c176edf84017ef0d51ee500b7f35493312bcae4057229eb04750a"
+          "sha256": "a89d8d0452b395c0c2abf268591deba3db357cca96d39e199c7de7ecf5e30326"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -3357,6 +4313,22 @@
           "sha256": "d7d52acf252fb9e821b89a99bfc93564f2989fceca4cedafaa6cb741dcf30a95"
         },
         {
+          "path": "packages/contracts/src/storefront-homepage-openapi.test.ts",
+          "sha256": "50189aa491afb5cb294ffd1fb68811d98962d288b4840aca08f2b517119d5e89"
+        },
+        {
+          "path": "packages/contracts/src/storefront-homepage-openapi.ts",
+          "sha256": "3206292d0d8c2c32d0f179f9dd62ca132969bf509424e6cd6f49450b2168c2bc"
+        },
+        {
+          "path": "packages/contracts/src/storefront-homepage.test.ts",
+          "sha256": "d0586962d0981837a45e565f1cd04972d32e2665a8520320c1e983e14f9ea886"
+        },
+        {
+          "path": "packages/contracts/src/storefront-homepage.ts",
+          "sha256": "38eccd46655d39330990faaf68e2ba0b1492b71c3b02381be2eeaca1c45e67ad"
+        },
+        {
           "path": "packages/contracts/src/translation-import.ts",
           "sha256": "ded12dc5cfb7edca4216aa67f19abd506b0dc716182308ac6eb31d9a7fc8a6f4"
         },
@@ -3406,7 +4378,7 @@
         },
         {
           "path": "packages/design-tokens/src/foundations.test.ts",
-          "sha256": "8b74cabe6e8ada82fc5c4fa80ca467babe09c53badad6cf9833f4aafb5d8d383"
+          "sha256": "25846d119c1674f33ef0f9e30372024169af99ea98c54a665f7f0fbae77dbd1e"
         },
         {
           "path": "packages/design-tokens/src/idol-accent.ts",
@@ -3422,7 +4394,7 @@
         },
         {
           "path": "packages/design-tokens/src/tokens.ts",
-          "sha256": "ebb894dc0667c6410a11266753188cb42bfe5dd6ff8bd40baf5a3a8b6f2666ad"
+          "sha256": "7f229191a48c3787527116381a22bc06f92a7c3a0238de4d8ae067fc9632aebb"
         },
         {
           "path": "packages/design-tokens/styles/fonts/japanese.css",
@@ -3446,7 +4418,7 @@
         },
         {
           "path": "packages/design-tokens/styles/foundations.css",
-          "sha256": "f15225827800e5e24c98f4c66505e558825c61ab24cd2318dd497d8ae465dd20"
+          "sha256": "bb836b5726dd265cb264bfd2391e11520bb5ff2701528883d9fd9d42cde9c96a"
         },
         {
           "path": "packages/design-tokens/tsconfig.build.json",
@@ -3774,7 +4746,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "76e9d4c78e75a8cb1c341f3e1adfc849e5e707785f0b9fc3417661baf2e92bbf"
+          "sha256": "0284fe9a9633b88b39311986f96928f4b72ad0787a32974cb6f074559ad4bf9a"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -3802,32 +4774,21 @@
         }
       ],
       "status": [
-        " M apps/admin/next-env.d.ts",
-        " M apps/admin/src/app/globals.css",
-        " M apps/admin/src/server/admin-operations.ts",
-        " M apps/admin/src/workspace/components.tsx",
-        " M apps/admin/src/workspace/content-form.tsx",
-        " M apps/admin/src/workspace/editor-model.test.ts",
-        " M apps/admin/src/workspace/editor-model.ts",
-        " M apps/admin/src/workspace/editor-state.ts",
-        " M apps/admin/src/workspace/editor.tsx",
-        " M apps/admin/src/workspace/preview.test.tsx",
-        " M apps/admin/src/workspace/preview.tsx",
-        " M apps/admin/src/workspace/workspace.tsx",
+        " M .env.example",
         " M apps/api/package.json",
-        " M apps/api/scripts/admin-workspace-http.mjs",
-        " M apps/api/src/admin-workspace-transport.ts",
         " M apps/api/src/bootstrap.ts",
-        " M apps/api/src/index.ts",
+        " M apps/api/src/production-application.test.ts",
         " M apps/api/src/production-application.ts",
+        " M apps/api/src/publication-runtime-composition.test.ts",
+        " M apps/api/src/publication-runtime-composition.ts",
         " M apps/api/src/published-content-composition.test.ts",
         " M apps/api/src/published-content-composition.ts",
-        " M database/migrations/manifest.json",
-        " M database/schema/expected-catalog.json",
-        " M docs/FAN_SUPPORT_PLATFORM_SPEC.md",
-        " M docs/analysis/risk-assessment.md",
-        " M docs/plan/dependency-graph.md",
-        " M docs/plan/task-breakdown.md",
+        " M apps/storefront/next.config.ts",
+        " M apps/storefront/package.json",
+        " M apps/storefront/src/app/layout.tsx",
+        " M apps/storefront/src/proxy.test.ts",
+        " M apps/storefront/src/proxy.ts",
+        " M apps/storefront/src/server/runtime-config.ts",
         " M docs/progress/MASTER.md",
         " M docs/progress/phase-3-storefront.md",
         " M output/playwright/p2-04/README.md",
@@ -3842,77 +4803,152 @@
         " M output/playwright/p2-04/axe-results/timeline.json",
         " M output/playwright/p2-04/axe-results/unavailable.json",
         " M output/playwright/p2-04/browser-results.json",
-        " M output/playwright/p2-04/reduced-motion/1440x900-en.png",
         " M output/playwright/p2-04/rtl/1440x900-en.png",
         " M output/playwright/p2-04/screenshots.sha256",
         " M output/playwright/p2-04/stress/320x800-pt-long.png",
-        " M output/playwright/p2-04/viewports/1920x1080-es.png",
         " M package.json",
         " M packages/application/src/index.ts",
+        " M packages/config/src/config-layers.ts",
+        " M packages/config/src/env-example.test.ts",
+        " M packages/config/src/server-config.ts",
         " M packages/content/src/index.ts",
-        " M packages/content/src/published-content.test.ts",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
         " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/i18n/src/admin/en.review.ts",
-        " M packages/i18n/src/admin/en.ts",
-        " M packages/i18n/src/admin/es.review.ts",
-        " M packages/i18n/src/admin/es.ts",
-        " M packages/i18n/src/admin/ja.review.ts",
-        " M packages/i18n/src/admin/ja.ts",
-        " M packages/i18n/src/admin/pt.review.ts",
-        " M packages/i18n/src/admin/pt.ts",
-        " M packages/i18n/src/admin/th.review.ts",
-        " M packages/i18n/src/admin/th.ts",
-        " M packages/i18n/src/admin/vi.review.ts",
-        " M packages/i18n/src/admin/vi.ts",
-        " M packages/i18n/src/admin/zh-CN.review.ts",
-        " M packages/i18n/src/admin/zh-CN.ts",
+        " M packages/design-tokens/src/foundations.test.ts",
+        " M packages/design-tokens/src/tokens.ts",
+        " M packages/design-tokens/styles/foundations.css",
+        " M packages/i18n/package.json",
+        " M packages/i18n/src/index.ts",
         " M packages/persistence-port/src/index.ts",
         " M packages/persistence-postgres/package.json",
-        " M packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
-        " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
-        " M packages/persistence-postgres/scripts/postgres-catalog-fixtures.mjs",
-        " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
-        " M packages/persistence-postgres/src/content-authoring-repository.ts",
-        " M packages/persistence-postgres/src/content-authoring-writes.ts",
+        " M packages/persistence-postgres/src/admin-catalog-data.ts",
+        " M packages/persistence-postgres/src/postgres-persistence.test.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
-        " M packages/persistence-postgres/src/publication-preflight-candidate.ts",
-        " M packages/persistence-postgres/src/publication-runtime-write.ts",
-        " M packages/persistence-postgres/src/published-content-repository.ts",
         " M pnpm-lock.yaml",
-        "?? apps/admin/src/server/gift-commerce-operations.test.ts",
-        "?? apps/admin/src/workspace/gift-commerce-client.ts",
-        "?? apps/admin/src/workspace/gift-commerce-panel.tsx",
-        "?? apps/admin/src/workspace/gift-commerce-shared.ts",
-        "?? apps/admin/src/workspace/gift-detail-preview.test.tsx",
-        "?? apps/admin/src/workspace/gift-detail-preview.tsx",
-        "?? apps/admin/src/workspace/gift-detail-review.test.tsx",
-        "?? apps/admin/src/workspace/gift-detail-review.tsx",
-        "?? apps/admin/src/workspace/gift-details-editor.tsx",
-        "?? apps/admin/src/workspace/gift-editor-model.test.ts",
-        "?? apps/admin/src/workspace/gift-editor-model.ts",
-        "?? apps/admin/src/workspace/gift-eligibility.tsx",
-        "?? apps/admin/src/workspace/gift-inventory.tsx",
-        "?? apps/admin/src/workspace/gift-prices.tsx",
-        "?? apps/admin/src/workspace/gift-structure.tsx",
-        "?? apps/api/scripts/gift-commerce-browser.mjs",
-        "?? apps/api/scripts/gift-commerce-http-fixtures.mjs",
-        "?? apps/api/scripts/gift-commerce-http.mjs",
-        "?? apps/api/src/gift-commerce-composition.test.ts",
-        "?? apps/api/src/gift-commerce-composition.ts",
-        "?? apps/api/src/gift-commerce-route.test.ts",
-        "?? apps/api/src/gift-commerce-route.ts",
-        "?? apps/api/src/published-gift-commerce-route.test.ts",
-        "?? apps/api/src/published-gift-commerce-route.ts",
-        "?? database/migrations/0020_gift-commerce.down.sql",
-        "?? database/migrations/0020_gift-commerce.up.sql",
-        "?? docs/decisions/011-gift-kind-inventory-policy.md",
-        "?? docs/operations/gift-commerce.md",
-        "?? docs/plan/p3-03-gift-commerce.md",
+        " M scripts/check-design-foundations.mjs",
+        " M scripts/check-design-foundations.test.mjs",
+        "?? apps/api/scripts/storefront-browser.mjs",
+        "?? apps/api/scripts/storefront-catalog-fixtures.mjs",
+        "?? apps/api/scripts/storefront-content-client.mjs",
+        "?? apps/api/scripts/storefront-http.mjs",
+        "?? apps/api/scripts/storefront-image-checks.mjs",
+        "?? apps/api/scripts/storefront-media-fixtures.mjs",
+        "?? apps/api/scripts/storefront-next-refresh.mjs",
+        "?? apps/api/scripts/storefront-protocol.mjs",
+        "?? apps/api/scripts/storefront-test-dns.mjs",
+        "?? apps/api/scripts/storefront-test-network.mjs",
+        "?? apps/api/src/storefront-homepage-fixtures.ts",
+        "?? apps/api/src/storefront-homepage-route.test.ts",
+        "?? apps/api/src/storefront-homepage-route.ts",
+        "?? apps/storefront/AGENTS.md",
+        "?? apps/storefront/CLAUDE.md",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/layout.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/layout.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/layout.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/layout.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/region/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/layout.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/cart/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/gifts/[[...path]]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/idols/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/idols/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/not-found.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/orders/lookup/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/policies/[handle]/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/region/page.tsx",
+        "?? apps/storefront/src/app/api/storefront/idols/route.test.ts",
+        "?? apps/storefront/src/app/api/storefront/idols/route.ts",
+        "?? apps/storefront/src/server/image-config.test.ts",
+        "?? apps/storefront/src/server/image-config.ts",
+        "?? apps/storefront/src/server/public-catalog.test.ts",
+        "?? apps/storefront/src/server/public-catalog.ts",
+        "?? apps/storefront/src/server/storefront-copy.test.ts",
+        "?? apps/storefront/src/server/storefront-copy.ts",
+        "?? apps/storefront/src/storefront/artist-content.tsx",
+        "?? apps/storefront/src/storefront/artist-directory.module.css",
+        "?? apps/storefront/src/storefront/artist-directory.test.tsx",
+        "?? apps/storefront/src/storefront/artist-directory.tsx",
+        "?? apps/storefront/src/storefront/artist-search.tsx",
+        "?? apps/storefront/src/storefront/artist-track.tsx",
+        "?? apps/storefront/src/storefront/content-safety.test.tsx",
+        "?? apps/storefront/src/storefront/content-safety.tsx",
+        "?? apps/storefront/src/storefront/copy.ts",
+        "?? apps/storefront/src/storefront/directory-fixture.ts",
+        "?? apps/storefront/src/storefront/directory-model.test.ts",
+        "?? apps/storefront/src/storefront/directory-model.ts",
+        "?? apps/storefront/src/storefront/directory-query.test.ts",
+        "?? apps/storefront/src/storefront/directory-query.ts",
+        "?? apps/storefront/src/storefront/directory-request.test.ts",
+        "?? apps/storefront/src/storefront/directory-request.ts",
+        "?? apps/storefront/src/storefront/home-content.tsx",
+        "?? apps/storefront/src/storefront/navigation.ts",
+        "?? apps/storefront/src/storefront/page-factory.tsx",
+        "?? apps/storefront/src/storefront/page-parts.tsx",
+        "?? apps/storefront/src/storefront/pages.test.tsx",
+        "?? apps/storefront/src/storefront/published-image.test.tsx",
+        "?? apps/storefront/src/storefront/published-image.tsx",
+        "?? apps/storefront/src/storefront/route-states.tsx",
+        "?? apps/storefront/src/storefront/site-header.tsx",
+        "?? apps/storefront/src/storefront/storefront.css",
+        "?? docs/operations/storefront.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -3927,15 +4963,37 @@
         "?? output/checks/p3-01-publication-runtime/contracts-before.json",
         "?? output/checks/p3-01-resource-management/contracts-before.json",
         "?? output/checks/p3-02-admin/contracts-before.json",
-        "?? output/checks/p3-03-gift-commerce/README.md",
         "?? output/checks/p3-03-gift-commerce/add-messages.py",
-        "?? output/checks/p3-03-gift-commerce/compatibility-final.json",
         "?? output/checks/p3-03-gift-commerce/compatibility.json",
         "?? output/checks/p3-03-gift-commerce/contracts-before.json",
         "?? output/checks/p3-03-gift-commerce/gift-catalog-guards.sql",
-        "?? output/checks/p3-03-gift-commerce/transport-README.md",
+        "?? output/checks/p3-03-gift-commerce/implementation-source-before.json",
+        "?? output/checks/p3-03-gift-commerce/implementation-source-frozen.json",
         "?? output/checks/p3-03-gift-commerce/transport-plan.md",
-        "?? output/checks/p3-03-gift-commerce/transport-review.md",
+        "?? output/checks/p3-04-storefront/README.md",
+        "?? output/checks/p3-04-storefront/capture-source.py",
+        "?? output/checks/p3-04-storefront/catalog-time-independent-review.md",
+        "?? output/checks/p3-04-storefront/compatibility-final.json",
+        "?? output/checks/p3-04-storefront/compatibility.json",
+        "?? output/checks/p3-04-storefront/contracts-artifact-comparison-cost-review.json",
+        "?? output/checks/p3-04-storefront/contracts-artifact-cost-README.md",
+        "?? output/checks/p3-04-storefront/contracts-artifact-cost-review.json",
+        "?? output/checks/p3-04-storefront/copy-review-README.md",
+        "?? output/checks/p3-04-storefront/design-font-route-README.md",
+        "?? output/checks/p3-04-storefront/directory-README.md",
+        "?? output/checks/p3-04-storefront/directory-root-review.md",
+        "?? output/checks/p3-04-storefront/final-independent-frontend-review.md",
+        "?? output/checks/p3-04-storefront/image-README.md",
+        "?? output/checks/p3-04-storefront/implementation-source-final.json",
+        "?? output/checks/p3-04-storefront/matte-pixel-green.json",
+        "?? output/checks/p3-04-storefront/mobile-composition-independent-review.md",
+        "?? output/checks/p3-04-storefront/read-integration-review.md",
+        "?? output/checks/p3-04-storefront/root-visual-review.md",
+        "?? output/checks/p3-04-storefront/route-loading-independent-review.md",
+        "?? output/checks/p3-04-storefront/super-review.md",
+        "?? output/checks/p3-04-storefront/untracked-baseline.json",
+        "?? output/checks/p3-04-storefront/validation.json",
+        "?? output/checks/p3-04-storefront/write-copy.py",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -4176,70 +5234,92 @@
         "?? output/playwright/p2-06/viewer-390.png",
         "?? output/playwright/p2-06/viewer-check.json",
         "?? output/playwright/p3-02-admin/serve-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/accessibility.json",
-        "?? output/playwright/p3-03-gift-commerce/en-created.png",
-        "?? output/playwright/p3-03-gift-commerce/en-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/en-inventory.png",
-        "?? output/playwright/p3-03-gift-commerce/en-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/en-preview.png",
-        "?? output/playwright/p3-03-gift-commerce/en-prices.png",
-        "?? output/playwright/p3-03-gift-commerce/es-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/es-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/ja-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/ja-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/pt-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/pt-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/th-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/th-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/vi-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/vi-mobile.png",
-        "?? output/playwright/p3-03-gift-commerce/zh-CN-desktop.png",
-        "?? output/playwright/p3-03-gift-commerce/zh-CN-mobile.png",
-        "?? packages/application/src/gift-commerce-content.test.ts",
-        "?? packages/application/src/gift-commerce-content.ts",
-        "?? packages/application/src/gift-commerce-results.ts",
-        "?? packages/application/src/gift-commerce-validation.ts",
-        "?? packages/application/src/gift-commerce.test.ts",
-        "?? packages/application/src/gift-commerce.ts",
-        "?? packages/application/src/published-gift-commerce.test.ts",
-        "?? packages/application/src/published-gift-commerce.ts",
-        "?? packages/content/src/published-gift-commerce.ts",
-        "?? packages/contracts/src/gift-commerce-openapi.test.ts",
-        "?? packages/contracts/src/gift-commerce-openapi.ts",
-        "?? packages/contracts/src/gift-commerce-profile.ts",
-        "?? packages/contracts/src/gift-commerce.test.ts",
-        "?? packages/contracts/src/gift-commerce.ts",
-        "?? packages/contracts/src/published-gift-commerce.test.ts",
-        "?? packages/contracts/src/published-gift-commerce.ts",
-        "?? packages/persistence-port/src/gift-commerce.ts",
-        "?? packages/persistence-port/src/published-gift-commerce.ts",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-atomicity.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-catalog-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-concurrency.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-constraints.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-fixtures.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-price-sealing.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-pricing-rollback.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce-time-cases.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-gift-commerce.mjs",
-        "?? packages/persistence-postgres/src/gift-commerce-authorization-repository.test.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-authorization-repository.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift-data.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift-profile.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift-read.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift-repository.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift-write.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-gift.test.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-inventory-data.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-inventory-repository.test.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-inventory-repository.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-current.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-data.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-read.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-repository.test.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-repository.ts",
-        "?? packages/persistence-postgres/src/gift-commerce-pricing-write.ts",
-        "?? packages/persistence-postgres/src/published-gift-commerce-repository.ts"
+        "?? output/playwright/p3-04-storefront/README.md",
+        "?? output/playwright/p3-04-storefront/accessibility.json",
+        "?? output/playwright/p3-04-storefront/browser-failure.json",
+        "?? output/playwright/p3-04-storefront/browser-failure.png",
+        "?? output/playwright/p3-04-storefront/en-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/en-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/en-1440-home.png",
+        "?? output/playwright/p3-04-storefront/en-390-detail.png",
+        "?? output/playwright/p3-04-storefront/en-390-directory.png",
+        "?? output/playwright/p3-04-storefront/en-390-home.png",
+        "?? output/playwright/p3-04-storefront/en-artist-paused.png",
+        "?? output/playwright/p3-04-storefront/en-directory-catalog-changed.png",
+        "?? output/playwright/p3-04-storefront/en-directory-empty.png",
+        "?? output/playwright/p3-04-storefront/en-directory-end.png",
+        "?? output/playwright/p3-04-storefront/en-directory-network-error.png",
+        "?? output/playwright/p3-04-storefront/en-directory-search-anchor.png",
+        "?? output/playwright/p3-04-storefront/en-home-empty.png",
+        "?? output/playwright/p3-04-storefront/en-home-image-error.png",
+        "?? output/playwright/p3-04-storefront/en-home-network-error.png",
+        "?? output/playwright/p3-04-storefront/en-home-normal-motion.png",
+        "?? output/playwright/p3-04-storefront/en-home-search-anchor.png",
+        "?? output/playwright/p3-04-storefront/es-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/es-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/es-1440-home.png",
+        "?? output/playwright/p3-04-storefront/es-390-detail.png",
+        "?? output/playwright/p3-04-storefront/es-390-directory.png",
+        "?? output/playwright/p3-04-storefront/es-390-home.png",
+        "?? output/playwright/p3-04-storefront/http-results.json",
+        "?? output/playwright/p3-04-storefront/ja-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/ja-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/ja-1440-home.png",
+        "?? output/playwright/p3-04-storefront/ja-390-detail.png",
+        "?? output/playwright/p3-04-storefront/ja-390-directory.png",
+        "?? output/playwright/p3-04-storefront/ja-390-home.png",
+        "?? output/playwright/p3-04-storefront/pt-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/pt-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/pt-1440-home.png",
+        "?? output/playwright/p3-04-storefront/pt-390-detail.png",
+        "?? output/playwright/p3-04-storefront/pt-390-directory.png",
+        "?? output/playwright/p3-04-storefront/pt-390-home.png",
+        "?? output/playwright/p3-04-storefront/results.json",
+        "?? output/playwright/p3-04-storefront/th-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/th-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/th-1440-home.png",
+        "?? output/playwright/p3-04-storefront/th-390-detail.png",
+        "?? output/playwright/p3-04-storefront/th-390-directory.png",
+        "?? output/playwright/p3-04-storefront/th-390-home.png",
+        "?? output/playwright/p3-04-storefront/vi-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/vi-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/vi-1440-home.png",
+        "?? output/playwright/p3-04-storefront/vi-390-detail.png",
+        "?? output/playwright/p3-04-storefront/vi-390-directory.png",
+        "?? output/playwright/p3-04-storefront/vi-390-home.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-1440-detail.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-1440-directory.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-1440-home.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-390-detail.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-390-directory.png",
+        "?? output/playwright/p3-04-storefront/zh-CN-390-home.png",
+        "?? packages/application/src/storefront-homepage.test.ts",
+        "?? packages/application/src/storefront-homepage.ts",
+        "?? packages/config/src/storefront-config.test.ts",
+        "?? packages/config/src/storefront-config.ts",
+        "?? packages/content/src/storefront-homepage-fixtures.ts",
+        "?? packages/content/src/storefront-homepage.test.ts",
+        "?? packages/content/src/storefront-homepage.ts",
+        "?? packages/contracts/src/storefront-homepage-openapi.test.ts",
+        "?? packages/contracts/src/storefront-homepage-openapi.ts",
+        "?? packages/contracts/src/storefront-homepage.test.ts",
+        "?? packages/contracts/src/storefront-homepage.ts",
+        "?? packages/i18n/src/storefront/en.ts",
+        "?? packages/i18n/src/storefront/es.ts",
+        "?? packages/i18n/src/storefront/ja.ts",
+        "?? packages/i18n/src/storefront/messages.test.ts",
+        "?? packages/i18n/src/storefront/messages.ts",
+        "?? packages/i18n/src/storefront/pt.ts",
+        "?? packages/i18n/src/storefront/review-manifest.test.ts",
+        "?? packages/i18n/src/storefront/review-manifest.ts",
+        "?? packages/i18n/src/storefront/th.ts",
+        "?? packages/i18n/src/storefront/vi.ts",
+        "?? packages/i18n/src/storefront/zh-CN.ts",
+        "?? packages/persistence-port/src/storefront-homepage.ts",
+        "?? packages/persistence-postgres/scripts/postgres-admin-catalog-time.mjs",
+        "?? packages/persistence-postgres/src/admin-catalog-data.test.ts",
+        "?? packages/persistence-postgres/src/storefront-homepage-repository.test.ts",
+        "?? packages/persistence-postgres/src/storefront-homepage-repository.ts"
       ]
     }
   },
@@ -4356,7 +5436,7 @@
   "motionChecks": {
     "addToCart": {
       "buttonFocused": true,
-      "stateDelayMs": 48.5,
+      "stateDelayMs": 49.20000076293945,
       "liveAnnouncement": true,
       "pendingObserved": true,
       "countDelta": 1,
@@ -4424,7 +5504,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 204.171875,
+              "top": 232.96875,
               "width": 1440
             }
           },
@@ -4437,7 +5517,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 204.171875,
+              "top": 232.96875,
               "width": 1440
             }
           },
@@ -4450,7 +5530,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 204.171875,
+              "top": 232.96875,
               "width": 1440
             }
           }
@@ -4942,7 +6022,7 @@
         200,
         200
       ],
-      "origin": "http://127.0.0.1:50550"
+      "origin": "http://127.0.0.1:53421"
     },
     {
       "environment": "staging",
@@ -4957,7 +6037,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:51155"
+      "origin": "http://127.0.0.1:53569"
     },
     {
       "environment": "production",
@@ -4972,7 +6052,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:51178"
+      "origin": "http://127.0.0.1:53592"
     }
   ],
   "scenarioResults": [
@@ -4989,91 +6069,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:50550/_internal/design-foundations/en/motion"
+            "url": "http://127.0.0.1:53421/_internal/design-foundations/en/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1rzy3cp4msjdo.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/turbopack-01wm1a8ps3dbq.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:50550/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:53421/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -5129,12 +6209,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 32,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
-        "jsTransferBytes": 138475,
-        "lcpMs": 88,
+        "jsTransferBytes": 138004,
+        "lcpMs": 92,
         "longTasks": [],
         "observers": {
           "event": {
@@ -5155,8 +6235,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.700000000000045,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -5319,115 +6399,115 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:50550/_internal/design-foundations/vi/motion"
+            "url": "http://127.0.0.1:53421/_internal/design-foundations/vi/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1rzy3cp4msjdo.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/turbopack-01wm1a8ps3dbq.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:50550/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:53421/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -5483,12 +6563,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 32,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
-        "jsTransferBytes": 138475,
-        "lcpMs": 76,
+        "jsTransferBytes": 138004,
+        "lcpMs": 104,
         "longTasks": [],
         "observers": {
           "event": {
@@ -5569,97 +6649,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:50550/_internal/design-foundations/th/motion"
+            "url": "http://127.0.0.1:53421/_internal/design-foundations/th/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2lg-l7asikrc3.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2lg-l7asikrc3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1rzy3cp4msjdo.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/turbopack-01wm1a8ps3dbq.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:50550/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:53421/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -5715,12 +6795,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 32,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
-        "jsTransferBytes": 138475,
-        "lcpMs": 76,
+        "jsTransferBytes": 138004,
+        "lcpMs": 96,
         "longTasks": [],
         "observers": {
           "event": {
@@ -5741,7 +6821,7 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
+          "maxFrameDeltaMs": 16.700000000000045,
           "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
@@ -5799,175 +6879,175 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:50550/_internal/design-foundations/zh-CN/motion"
+            "url": "http://127.0.0.1:53421/_internal/design-foundations/zh-CN/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/0jyq8zfmzj_l3.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/0jyq8zfmzj_l3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1rzy3cp4msjdo.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/turbopack-01wm1a8ps3dbq.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:50550/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:53421/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -6027,8 +7107,8 @@
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
-        "jsTransferBytes": 138475,
-        "lcpMs": 76,
+        "jsTransferBytes": 138004,
+        "lcpMs": 72,
         "longTasks": [],
         "observers": {
           "event": {
@@ -6050,7 +7130,7 @@
         },
         "raf": {
           "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -6211,241 +7291,241 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:50550/_internal/design-foundations/ja/motion"
+            "url": "http://127.0.0.1:53421/_internal/design-foundations/ja/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/107x49qjcs-lo.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/107x49qjcs-lo.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1rzy3cp4msjdo.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/turbopack-01wm1a8ps3dbq.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-113-wght-normal.3csvf_8wczx4r.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-112-wght-normal.0w14y-xq9fx3g.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-94-wght-normal.0uyd2p7w0xwi9.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-94-wght-normal.0uyd2p7w0xwi9.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-92-wght-normal.1kwtzviji7ufx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-105-wght-normal.0awuqzjowwus6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-jp-118-wght-normal.0oiz-9fhkq7v6.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-jp-118-wght-normal.0oiz-9fhkq7v6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:50550/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:53421/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -6501,12 +7581,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 32,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
-        "jsTransferBytes": 138475,
-        "lcpMs": 84,
+        "jsTransferBytes": 138004,
+        "lcpMs": 92,
         "longTasks": [],
         "observers": {
           "event": {
@@ -6528,7 +7608,7 @@
         },
         "raf": {
           "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -6585,97 +7665,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:50550/_internal/design-foundations/es/motion"
+            "url": "http://127.0.0.1:53421/_internal/design-foundations/es/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1rzy3cp4msjdo.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/turbopack-01wm1a8ps3dbq.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:50550/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:53421/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -6731,11 +7811,11 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 32,
+          "maxMs": 40,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
-        "jsTransferBytes": 138475,
+        "jsTransferBytes": 138004,
         "lcpMs": 88,
         "longTasks": [],
         "observers": {
@@ -6757,8 +7837,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.700000000000045,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -6921,103 +8001,103 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:50550/_internal/design-foundations/en-XA/motion"
+            "url": "http://127.0.0.1:53421/_internal/design-foundations/en-XA/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1rzy3cp4msjdo.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/turbopack-01wm1a8ps3dbq.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:50550/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:53421/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -7077,8 +8157,8 @@
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
-        "jsTransferBytes": 138475,
-        "lcpMs": 88,
+        "jsTransferBytes": 138004,
+        "lcpMs": 92,
         "longTasks": [],
         "observers": {
           "event": {
@@ -7099,8 +8179,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.700000000000045,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -7159,91 +8239,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:50550/_internal/design-foundations/pt/motion"
+            "url": "http://127.0.0.1:53421/_internal/design-foundations/pt/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3cyxkwy6lipgg.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:50550/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:53421/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1y34--fqatav0.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2y-gswxtatgmf.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1rzy3cp4msjdo.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/3ue0tseoy-nkb.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/turbopack-0972k3be_c2bg.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/turbopack-01wm1a8ps3dbq.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/08q4u53uid908.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/08q4u53uid908.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:50550/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:53421/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:50550/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:53421/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:50550/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:53421/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -7299,12 +8379,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 32,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
-        "jsTransferBytes": 138475,
-        "lcpMs": 60,
+        "jsTransferBytes": 138004,
+        "lcpMs": 88,
         "longTasks": [],
         "observers": {
           "event": {
@@ -7397,7 +8477,7 @@
       "path": "viewports/1024x768-zh-CN.png",
       "pixelHeight": 768,
       "pixelWidth": 1024,
-      "sha256": "33598a779eeed11642c37f39848e33a75f65df50fdd3c19d3fcaff43768d56e1"
+      "sha256": "bdb424a962ea591968a5ad917193f38228e843e919d516bfbfc673de938143a4"
     },
     {
       "path": "viewports/1440x900-ja.png",
@@ -7433,31 +8513,31 @@
       "path": "hero/390x844-mid.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "a2f5e5547a7332eb71189ab07e0aa0784f7daf50bbaa7625a8e241f4f95755b5"
+      "sha256": "079b335af5187d1780e0528e79a33cd78be3314fd31ef5e9016ec75074246482"
     },
     {
       "path": "hero/390x844-end.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "383055592a2da62f334728ae66f6102c08b07fb5ac23bf8260cc33a1f73d2ac9"
+      "sha256": "277f3bb5bdfab76b5e56545e348e421dd8d8689ab9cf0b8b98040d4f7aa32044"
     },
     {
       "path": "hero/1440x900-start.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "ce716e9d593c5f9a8bd7cd8f5afd6b33d8d3b656d5b5cacf270cf4bf42bc8cb8"
+      "sha256": "d2e45cf35def194737948bfaca425432ba7b810808956c58036e2f29afa56027"
     },
     {
       "path": "hero/1440x900-mid.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "9ed6c16abc8adf723d54f2635644ce7d075dbd30c24dde723b4ad241e652f78a"
+      "sha256": "1d525f7b8290e09a85fd44860b2b15b5621ffae142139ff6b1b642c8bba3abbf"
     },
     {
       "path": "hero/1440x900-end.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "575af8798fb1100c478fc172d9efe81cb9f0a91b86fce07ecfede19a81d2cae0"
+      "sha256": "1ecad14a71380baf2eda1982cb3b0f154ea1fa6a987eba6294816bb558b9a6f2"
     },
     {
       "path": "motion/idol-mouse-spatial-1440.png",
@@ -7469,13 +8549,13 @@
       "path": "motion/idol-keyboard-instant-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "fa811b95ce6a09c5a2a217f1314aedd71d2ef45f84f75960ef06b3f42b5bad5c"
+      "sha256": "32da896b16ddb55039c52d75f1d2a0a7c456ecf5fcad152267eebb19f28b357e"
     },
     {
       "path": "motion/idol-latest-wins-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "82e6639d3137b9cc0e65c79cc9fda646b3d67ad98e81dc9b94dbd441d13442ff"
+      "sha256": "08207f4d347d5ce46dd97f8005e8a9329401a7a9fcbff07276b2eba4d837b77a"
     },
     {
       "path": "motion/success-end-1440.png",

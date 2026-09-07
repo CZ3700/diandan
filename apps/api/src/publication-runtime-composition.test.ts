@@ -35,6 +35,11 @@ test("connects both real use cases and drains one shared test persistence once",
     code: "NOT_FOUND",
   }));
   const createPersistence = vi.fn(() => ({
+    storefrontHomepageTransactionManager: {
+      runInStorefrontHomepageTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ storefrontHomepage: { load } }),
+    },
     publicationRuntimeTransactionManager: {
       runInPublicationRuntimeTransaction: async () => {
         throw new Error("unused");
@@ -59,6 +64,13 @@ test("connects both real use cases and drains one shared test persistence once",
   expect(composition.publicationRuntimeRoute.allowedOrigin).toBe(
     options.allowedOrigin,
   );
+  expect(composition).toHaveProperty("storefrontHomepageRoute");
+  await expect(
+    composition.storefrontHomepageRoute.useCases.execute({
+      schemaVersion: 1,
+      locale: "ja",
+    }),
+  ).resolves.toMatchObject({ code: "NOT_FOUND" });
   await expect(
     composition.publicationRuntimeRoute.useCases.execute({}),
   ).resolves.toMatchObject({ code: "INVALID_COMMAND" });

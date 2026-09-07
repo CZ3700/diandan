@@ -29,6 +29,10 @@ import {
   type PublishedContentRouteDependencies,
 } from "./published-content-route.js";
 import {
+  registerStorefrontHomepageRoute,
+  type StorefrontHomepageRouteDependencies,
+} from "./storefront-homepage-route.js";
+import {
   registerPublicationPreflightRoute,
   type PublicationPreflightRouteDependencies,
 } from "./publication-preflight-route.js";
@@ -94,6 +98,7 @@ export type CreateApiApplicationOptions = Readonly<{
   publicationRuntimeRoute?: PublicationRuntimeRouteDependencies;
   publicationRuntimeLifecycle?: ApiLifecycleResource;
   publishedContentRoute?: PublishedContentRouteDependencies;
+  storefrontHomepageRoute?: StorefrontHomepageRouteDependencies;
   publishedContentRuntime?: ApiLifecycleResource;
   resourceManagementRoute?: ResourceManagementRouteDependencies;
   resourceManagementRuntime?: ApiLifecycleResource;
@@ -270,6 +275,11 @@ export async function createApiApplication(
     registerPublishedContentRoute(
       adapter.getInstance(),
       options.publishedContentRoute,
+    );
+  if (options.storefrontHomepageRoute !== undefined)
+    registerStorefrontHomepageRoute(
+      adapter.getInstance(),
+      options.storefrontHomepageRoute,
     );
   registerApiLifecycle(adapter, options.baseContentRuntime, "API base content");
   if (options.baseContentRoute !== undefined)

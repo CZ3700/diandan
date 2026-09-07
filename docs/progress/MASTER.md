@@ -3,8 +3,8 @@
 > 最后更新：2026-09-07
 > 当前里程碑：M3 可浏览 Beta（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3
-> 当前任务：无进行中任务；`P3-03` 已 DONE，Lane C 已释放
-> 下一 READY：`P3-04`（Lane B），艺人浏览前台；P3-03 已纳入多类型礼物与无现货重复售卖
+> 当前任务：`P3-04` DONE，Lane B 已释放
+> 下一入口：`P3-05` READY：礼物分页/筛选/详情与政策；本轮仅完成 P3-04
 
 ## 1. 开工入口
 
@@ -22,12 +22,12 @@
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 28 |
+| PENDING | 27 |
 | READY | 1 |
 | IN_PROGRESS | 0 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
-| DONE | 20 |
+| DONE | 21 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -79,6 +79,10 @@
 
 ## 5. 最新证据
 
+2026-09-07 P3-04公开首页与艺人浏览已本地验收DONE：七语言真实首页、连续横滑/120艺人分页、姓名/别名搜索及直接定位、详情、上下文保留与独立双端照片适配。51最终截图/10 axe零违规（轨道外incomplete人工复核）、81图片解码、真实协议15221断言/5006请求通过。旧370 roots不变，新3共373，20迁移/153表；1374实现输入一致，非作者复核和S.U.P.E.R十项PASS。全仓各门**分段通过**：完整前缀PG/HTTP/S3通过后修正output辅助脚本lint，原样后缀exit0；并行合同超时保留，同源314测试独立通过，最终复用缓存，不宣称单次整条check exit0或波动已修复。详情见 `output/checks/p3-04-storefront/validation.json` 与phase验收记录，运营入口 `docs/operations/storefront.md`。Phase3仍ACTIVE（4/6），全局21 DONE /1 READY /27 PENDING（49），LaneB释放，P3-05 READY；只本地提交，不push/merge。正式人工译审/素材/市场、PSP/履约、staging/生产及新真机不在本轮结论内。
+
+2026-09-07 用户授权继续，P3-04 已领取，Lane B 唯一 executor `/root`，从本地 fc6e28e 创建 `codex/p3-04-artist-storefront`。沿用已批准黑金视觉，实施真实首页、艺人连续浏览/搜索定位与详情。全局 20 DONE / 1 IN_PROGRESS / 28 PENDING（49），仅本地提交；具体范围与验证见 phase 执行登记。
+
 2026-09-07 P3-03 礼物、价格与库存后台已验收 DONE：虚拟/实体/心愿/周边/其他与限量库存/按单准备/预售独立配置，全部工作室转交艺人；七语言图文详情与独立审核、完整价格版本发布回退、库存流水、策略历史保护和公开分类证明接通。20迁移/153表，旧344 roots不变、新26（共370）；商业PG117+4+6、发布时钟30及旧运行447、实际UI1703断言/512 setup请求、七语言双端18PNG（17稳定+1保存刷新态）、四axe零违规/零incomplete通过。最终完整check、共享浏览器回归、secrets及1,219源码指纹一致，独立复核/S.U.P.E.R十项PASS。已证时钟边界已修，原自然503不冒充已确定归因。证据 `output/checks/p3-03-gift-commerce/README.md`、`validation.json`，运营入口 `docs/operations/gift-commerce.md`。Phase3仍ACTIVE（3/6），全局20 DONE / 1 READY / 28 PENDING（49）；Lane C释放，下一P3-04。正式身份/人工译审/资产批准、真实付款与履约、云/staging/生产及新真机不在本地结论内；仅本地提交，不push/merge。
 
 2026-09-07用户授权继续并补充虚拟/实体/心愿/周边等礼物和无现货重复售卖；从本地cdf2ab2领取P3-03，root独占Lane C，分支`codex/p3-03-gift-commerce`。先核对全部规范、最新验收与现有库存/价格/发布规则，按礼物类型和库存策略独立建模，随后测试先行实现完整管理纵切片。全局19 DONE / 1 READY / 1 IN_PROGRESS / 28 PENDING，共49；继续仅本地提交。
@@ -119,6 +123,7 @@ Phase0/1已CLOSED，Phase2中P2-01至P2-05均DONE；P2-06技术评审材料已�
 
 | 日期 | Task | 类型 | 证据 | 结论 |
 |:--|:--|:--|:--|:--|
+| 2026-09-07 | P3-04 | 七语言首页与艺人浏览 | `output/checks/p3-04-storefront/`；真实协议15221/5006、51截图、同源分段全仓门 | DONE；Phase3仍ACTIVE，P3-05 READY，全局21 DONE /1 READY /27 PENDING |
 | 2026-09-07 | P3-02 | 七语言自研内容后台退出 | `output/checks/p3-02-admin/`；PG253、协议957/UI1003、18截图、完整check | DONE；Phase3仍ACTIVE，P3-03/04 READY，全局19 DONE / 2 READY / 28 PENDING |
 | 2026-09-06 | P3-01 | 完整运行时退出 / 4C-2 | `output/checks/p3-01-publication-runtime/`；PG441、HTTP10,464/1,335请求、全仓check与浏览器回归 | DONE；Phase3仍ACTIVE，P3-02/03/04 READY，全局18 DONE / 3 READY / 28 PENDING |
 | 2026-09-06 | P3-01 | 发布前检查4C-1 | `output/checks/p3-01-publication-preflight/`；1237 tests、166 PG/2595 HTTP、完整check与浏览器回归 | 4C-1通过；任务IN_PROGRESS，下一步4C-2真实发布/回退/purge |

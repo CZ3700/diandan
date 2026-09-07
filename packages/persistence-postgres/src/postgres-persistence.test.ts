@@ -19,6 +19,28 @@ const validConfig = {
   password: "test-password",
 } as const;
 
+test("homepage composition uses one serializable read transaction and respects shutdown", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    { catalogPublicMediaBaseUrl: "https://media.example.test" },
+    () => pool,
+  );
+  expect(persistence).toHaveProperty("storefrontHomepageTransactionManager");
+  await expect(
+    persistence.storefrontHomepageTransactionManager.runInStorefrontHomepageTransaction(
+      async (repositories) => Object.keys(repositories),
+    ),
+  ).resolves.toEqual(["storefrontHomepage"]);
+  expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL SERIALIZABLE");
+  await persistence.close();
+  await expect(
+    persistence.storefrontHomepageTransactionManager.runInStorefrontHomepageTransaction(
+      async () => null,
+    ),
+  ).rejects.toMatchObject({ name: "PersistenceTransactionFailureError" });
+});
+
 test("resource management shares authorization, idempotency and the serializable lifecycle", async () => {
   const pool = new TransactionPool();
   const persistence = createPostgresPersistenceWithPoolFactory(

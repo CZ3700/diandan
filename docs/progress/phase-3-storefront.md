@@ -15,8 +15,8 @@
 | P3-01 | DONE | Codex `/root` | P1-02、P1-04、P1-05、P1-06 | 全部内容运行时检查点通过；真实发布/回退、七语言公开读取、持久purge，见4C-2验收记录 |
 | P3-02 | DONE | Codex `/root` | P2-03、P3-01 | 七语言自研Admin、真实PG/API/媒体/审核/预览/发布与回退；完整check、双端浏览器和独立复核通过，见P3-02验收记录 |
 | P3-03 | DONE | Codex `/root` | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
-| P3-04 | READY | — | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
-| P3-05 | PENDING | — | P2-04、P3-01、P3-04 | 礼物分页/筛选/价格排序/URL恢复/七语言详情/选择偶像/政策/错误状态 |
+| P3-04 | DONE | Codex `/root` | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
+| P3-05 | READY | — | P2-04、P3-01、P3-04 | 礼物分页/筛选/价格排序/URL恢复/七语言详情/选择偶像/政策/错误状态 |
 | P3-06 | PENDING | — | P3-02/03/04/05 | 七语言 i18n/SEO/cache/运营/性能验收 |
 
 ## 必须证明
@@ -30,6 +30,34 @@
 ## Phase 退出证据
 
 已于 2026-09-05 依据用户明确视觉接受与继续开发指令解锁；尚未达到退出门禁。
+
+## P3-04 执行登记（2026-09-07）
+
+- Owner：Codex `/root`，Lane B 唯一 executor；开始 2026-09-06T22:30:16.916943+00:00，基线 `fc6e28e6a6ec8ef7cd3316ef901c7e104c1bb1d6`，分支 `codex/p3-04-artist-storefront`。用户明确继续下一阶段，依赖 P2-06/P3-01 已 DONE，Phase 3 ACTIVE；只领取 P3-04。
+- 范围：公开 locale 路由、导航/独立语言切换、真实发布首页、艺人连续横滑与分批加载、跨名字搜索建议/稳定 ID 定位、艺人详情；服务端读取与必要 BFF，以及七语言和完整错误/空/暂停/回退状态。
+- 视觉：沿用已批准 V2 原色黑金画廊；大幅双端人物海报、留白与金色操作，真实多色媒体为主。首页按海报、艺人、精选礼物、三步说明与信任、最终入口组织。仅保留已有轻量入场/菜单/焦点交互与 reduced motion；装饰动效后续打磨。
+- 所有权：root 拥有 storefront 页面/视觉/路由组合、共享导出/合同/根配置/锁文件、计划进度与 Git。子代理先独立只读审计公开读取、目录交互与真实联合浏览器夹具；冻结边界并明确独占文件后才实现，不并行领取其他任务。
+- 首页边界冻结：storefront_read 独占新增 storefront-homepage 合同/Port/Content/Application/PostgreSQL/HTTP 文件及主 persistence runner、API composition/bootstrap/production 接线与对应 tests；新增三个 roots，不改旧 370，不需要迁移。另独占 storefront 的 public-catalog client 与 tests，负责当前请求 locale/HTTP 响应绑定。root 独占共享 exports/registry/生成物。
+- 联合验收所有权：storefront_e2e 独占 `apps/api/scripts/storefront-*.mjs` 与新证据目录；真实 PG/HTTPS S3/worker/Next/Chrome，120 个明确 TEST 身份，两组原创双端素材与三件多色礼物。源图不足时原像素嵌入中性测试画布，逐像素 hash 与几何证明，不上采样、不伪造摄影原始分辨率。
+- 媒体增量：目录作者后续独占 PublishedImage 与 Next image config/tests，接官方 getImageProps、精确 origin 限制的可重建多尺寸优化图；root 继续页面/样式。保留原发布字节、衍生元数据与所有当前版权证明。
+- 目录边界冻结：storefront_directory 独占 `apps/storefront/src/storefront/artist-directory*`、`artist-search*`、`artist-track*`、`directory-*`（含 tests/CSS），消费原 `IdolDirectoryResponse` 和 `GET /api/storefront/idols` 的 locale/q/anchorId/after/limit；root 提供 `./copy` 的 StorefrontCopy 和 `./published-image` 的 PublishedImage。paused 仍有详情链接，cursor 按 locale/q/limit 绑定；不引入新业务状态合同。
+- 验证：先失败测试，覆盖 locale 与商业上下文隔离、SSR/公开合同、搜索 IME/竞态/定位/分页/失效游标、暂停与媒体失败。受影响 tests → format/lint/typecheck/build → 真实 PostgreSQL/API/对象媒体/Next/浏览器；全七语 390×844 与 1440×900，键盘、错误、reduced motion、320px/重排、axe 与性能记录；非作者复核、完整 check 和 S.U.P.E.R 十项。
+- 边界：无硬编码正式艺人/品牌/市场；不把样板静态数据当业务源。P3-05 礼物分页筛选与政策、Phase 4 交易仍后续。正式素材/人工译审/生产市场/PSP/staging 与真机不冒充已验收。追踪 R-01/R-07/R-08/R-12/R-17。
+- Git：按用户既有决定只本地提交，最终统一推送；保护本轮前全部 261 项未跟踪产物，不 push/merge。
+
+## P3-04 验收记录（2026-09-07）
+
+- 状态：IN_PROGRESS → REVIEW → DONE；验收时间 2026-09-07T00:16:55.385949+00:00，非作者复核 ACCEPT、全部适用门通过，Lane B释放。Phase3仍ACTIVE（4/6）；全局21 DONE /1 READY /27 PENDING，共49。只解锁P3-05，本轮不领取后续任务。
+- 交付：七语言公开shell/导航与语言切换、真实发布首页、艺人连续横滑/服务器cursor分批加载、跨语言姓名别名搜索/IME/建议/稳定ID直接定位、详情与完整空/错/暂停/恢复状态。切换语言和进出详情保留艺人及商业查询上下文；沿用批准的V2原色黑金视觉，交易预留页不提供假下单。
+- 读取与兼容：新增homepage聚合经Application/Port在单SERIALIZABLE事务加载当前明确引用，Hero失败封闭，其他不可用推荐不替换艺人；严格绑定当前locale/发布证明/真实媒体。旧370 roots逐项不变，新增3（373总计），无迁移，20迁移/153表。真实目录时间越界以稳定事务和必要授权/历史下限修复，实时session/MFA/到期和SQL guard不变；新10与旧258目录PG断言通过，受控证明不冒充自然墙钟观测。
+- 图片与路由：双端Hero独立构图，手机按真实比例占位；卡片焦点裁切、srcset不超源宽，精确HTTPS origin/衍生路径/格式/重定向门。七语缺失艺人真实HTTP404；主页/目录只在局部提供loading，避免详情提前流出200。production界面必须通过英文源及目标实际hash/人工审核，全部DRAFT清单保留；正常动态内容七语缺失仍失败封闭。
+- 最终真实协议：15,221断言、5,006 setup请求、120经正常七语审核发布的TEST艺人；真实PG/API/TLS S3/worker，当前head/handle/暂停/归档均实际验证。素材为两组原创虚构成年人物及三件多色礼物，低像素原图嵌入TEST画布且原像素不放大，不冒充正式摄影。
+- UI：Next编译产物在TEST运行，七语言390×844/1440×900，共51最终截图、59案例、48重排、10 axe零violations、81真实图片候选解码、0未处理浏览器错误。198个轨道外contrast incomplete有原始targets和人工17.87/8.17对比度复核，不计作自动通过。LCP最大1028ms/CLS0仅本机未节流DPR1观察；图片bytes是在强制eager验证后采集，不是首屏预算。62533为诊断重跑累计断言，不称最终独立计数。
+- 回归：P2-04（16场景/18PNG/10axe/原生200%）、P2-05（8场景/22PNG/3axe）重新通过。首个P2-05并行帧率失败保留且未改门限。正式真机本轮未重验。
+- 最终全仓门为**同源分段通过**：`check.log`通过全部静态前置、合同、PG/HTTP/S3及423媒体恢复，因output一次性证明脚本bare URL在lint退出1；仅该辅助脚本修为globalThis.URL，8测试通过，1374实现输入未变。原样执行check从prettier起全部后缀，最终exit0；type58/58（58 cached）、test58/58（56 cached）、build35/35（30 cached）、31 Node出口。并行合同首测5000ms再次超时，独立314测试0-cache通过后最终复用缓存；未改断言/预算，未宣称整条pnpm check exit0或并行波动已修复。详见validation.json和check-resume-command.txt。
+- 源码：1374项输入最终摘要 `49fd55e1470ce9ca5e16f5fb82cde578580f8e50bbb06237b365778e1b094d5d`，前后逐项一致；docs/output/Next生成环境声明不在源码清单。旧261项未跟踪产物hash全未变且不暂存；secrets、显式证据日志扫描及diff通过。非作者领域/传输/目录/图片/404/语言清单/依赖复核均ACCEPT，S.U.P.E.R十项PASS（`output/checks/p3-04-storefront/super-review.md`）。
+- 证据：`output/checks/p3-04-storefront/README.md`、`validation.json`、`compatibility-final.json`、全部独立复核；`output/playwright/p3-04-storefront/results.json`、`http-results.json`、`accessibility.json`、截图hash。第一份独立协议失败只有工具摘录、原完整日志被覆盖，未把重跑成功称为根因修复。运营入口`docs/operations/storefront.md`。
+- 后续与范围：P3-05礼物分页/筛选/价格排序/七语详情/艺人选择/政策READY；P3-06仍PENDING，正式SEO/性能/运营及测试初始化稳定性后续处理。无正式人工译审/品牌资产批准/市场配置/PSP实际支付转交/云CDN/staging/生产发布结论。按用户约定只本地提交，不push/merge。
 
 ## P3-03 执行登记（2026-09-07）
 

@@ -60,3 +60,39 @@ test.each([
   expect(responseRequestId).toBe(forwardedRequestId);
   expect(responseRequestId).not.toBe(candidate);
 });
+
+test("redirects the root using only a validated site locale cookie and preserves query", async () => {
+  const { proxy } = await loadProxyModule();
+  const response = proxy(
+    new NextRequest(
+      "https://storefront.example.invalid/?market=TEST&currency=USD",
+      { headers: { cookie: "site_locale=ja", "accept-language": "th" } },
+    ),
+  );
+  expect(response.status).toBe(307);
+  expect(response.headers.get("location")).toBe(
+    "https://storefront.example.invalid/ja?market=TEST&currency=USD",
+  );
+  expect(response.headers.get("cache-control")).toContain("no-store");
+});
+test("normalizes locale case only, and overwrites client-supplied locale headers", async () => {
+  const { proxy } = await loadProxyModule();
+  const normalized = proxy(
+    new NextRequest(
+      "https://storefront.example.invalid/ZH-cn/idols/someone?currency=USD",
+    ),
+  );
+  expect(normalized.status).toBe(308);
+  expect(normalized.headers.get("location")).toBe(
+    "https://storefront.example.invalid/zh-CN/idols/someone?currency=USD",
+  );
+  const page = proxy(
+    new NextRequest("https://storefront.example.invalid/vi/idols/someone", {
+      headers: { "x-storefront-locale": "ja" },
+    }),
+  );
+  expect(page.headers.get("x-middleware-request-x-storefront-locale")).toBe(
+    "vi",
+  );
+  expect(page.headers.get("content-language")).toBe("vi");
+});

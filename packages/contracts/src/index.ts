@@ -51,3 +51,5 @@ export * from "./gift-commerce.js";
 export * from "./gift-commerce-profile.js";
 
 export * from "./published-gift-commerce.js";
+
+export * from "./storefront-homepage.js";

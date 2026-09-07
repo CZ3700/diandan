@@ -38,6 +38,7 @@ import { createPublicationAuthorizationRepository } from "./publication-authoriz
 import { createPublicationRuntimeRepository } from "./publication-runtime-repository.js";
 import { createPublicationPurgeRepository } from "./publication-purge-repository.js";
 import { createPublishedContentRepository } from "./published-content-repository.js";
+import { createStorefrontHomepageRepository } from "./storefront-homepage-repository.js";
 import type {
   PublicationRuntimeTransactionManager,
   PublicationRuntimeRepositories,
@@ -45,6 +46,8 @@ import type {
   PublicationPurgeRepositories,
   PublishedContentTransactionManager,
   PublishedContentRepositories,
+  StorefrontHomepageTransactionManager,
+  StorefrontHomepageRepositories,
 } from "@fan-support/persistence-port";
 import { createPublicationPreflightRepository } from "./publication-preflight-repository.js";
 import { createContentAuthoringRepository } from "./content-authoring-repository.js";
@@ -121,6 +124,7 @@ export interface PostgresPersistence {
   readonly publicationRuntimeTransactionManager: PublicationRuntimeTransactionManager;
   readonly publicationPurgeTransactionManager: PublicationPurgeTransactionManager;
   readonly publishedContentTransactionManager: PublishedContentTransactionManager;
+  readonly storefrontHomepageTransactionManager: StorefrontHomepageTransactionManager;
   readonly publicationPreflightTransactionManager: PublicationPreflightTransactionManager;
   readonly resourceManagementTransactionManager: ResourceManagementTransactionManager;
   readonly baseContentTransactionManager: BaseContentTransactionManager;
@@ -353,6 +357,17 @@ export function createPostgresPersistenceWithPoolFactory(
       acquireClient: async () => pool.connect(),
       createRepositories: (client, scope) => ({
         publishedContent: createPublishedContentRepository(
+          client,
+          scope,
+          options?.catalogPublicMediaBaseUrl ?? "",
+        ),
+      }),
+    });
+  const storefrontHomepageRunner =
+    createTransactionRunner<StorefrontHomepageRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        storefrontHomepage: createStorefrontHomepageRepository(
           client,
           scope,
           options?.catalogPublicMediaBaseUrl ?? "",
@@ -788,6 +803,22 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return publishedContentRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    storefrontHomepageTransactionManager: {
+      async runInStorefrontHomepageTransaction(work) {
+        if (
+          lifecycle !== "OPEN" ||
+          options?.catalogPublicMediaBaseUrl === undefined
+        )
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return storefrontHomepageRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
           work,
         );

@@ -1,6 +1,7 @@
 import {
   createPublicationRuntimeUseCases,
   createPublishedContentUseCases,
+  createStorefrontHomepageUseCases,
 } from "@fan-support/application";
 import {
   createPostgresPersistence,
@@ -9,6 +10,7 @@ import {
   type PostgresPersistenceOptions,
 } from "@fan-support/persistence-postgres";
 import type { PublishedContentRouteDependencies } from "./published-content-route.js";
+import type { StorefrontHomepageRouteDependencies } from "./storefront-homepage-route.js";
 import type { ApiLifecycleResource } from "./bootstrap.js";
 import type { PublicationRuntimeRouteDependencies } from "./publication-runtime-route.js";
 
@@ -16,6 +18,7 @@ type BasePersistence = Pick<
   PostgresPersistence,
   | "publicationRuntimeTransactionManager"
   | "publishedContentTransactionManager"
+  | "storefrontHomepageTransactionManager"
   | "close"
 >;
 export type TestPublicationRuntimeCompositionOptions = Readonly<{
@@ -38,6 +41,7 @@ export function createTestPublicationRuntimeComposition(
   publicationRuntimeRoute: PublicationRuntimeRouteDependencies;
   publicationRuntimeLifecycle: ApiLifecycleResource;
   publishedContentRoute: PublishedContentRouteDependencies;
+  storefrontHomepageRoute: StorefrontHomepageRouteDependencies;
 }> {
   if (
     options?.environment !== "TEST" ||
@@ -80,6 +84,11 @@ export function createTestPublicationRuntimeComposition(
   });
   let closePromise: Promise<void> | undefined;
   return Object.freeze({
+    storefrontHomepageRoute: {
+      useCases: createStorefrontHomepageUseCases({
+        transactions: persistence.storefrontHomepageTransactionManager,
+      }),
+    },
     publishedContentRoute: {
       useCases: createPublishedContentUseCases({
         transactions: persistence.publishedContentTransactionManager,

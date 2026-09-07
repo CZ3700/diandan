@@ -8,3 +8,8 @@ export {
   supportedLocaleSchema,
 } from "@fan-support/contracts";
 export type { SupportedLocale } from "@fan-support/contracts";
+
+export {
+  loadStorefrontCopy,
+  type StorefrontCopy,
+} from "./storefront/messages.js";

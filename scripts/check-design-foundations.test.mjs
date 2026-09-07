@@ -200,12 +200,26 @@ export const FONT_PROFILE_BY_LOCALE = Object.freeze(
       `apps/storefront/src/app/%5Finternal/design-foundations/(${profile})/${locale}/page.tsx`,
       `export default function Page() { return <DesignFoundationSpecimen locale="${locale}" />; }\n`,
     );
+    if (locale !== "en-XA") {
+      await write(
+        root,
+        `apps/storefront/src/app/(public)/(${profile})/${locale}/page.tsx`,
+        `import { createStorefrontPage, createStorefrontMetadata } from "../../../../storefront/page-factory";
+export const generateMetadata = createStorefrontMetadata("${locale}", "home");
+export default createStorefrontPage("${locale}", "home");\n`,
+      );
+    }
   }
   for (const fileName of Object.keys(fontProfiles)) {
     const profile = fileName.replace(/\.css$/u, "");
     await write(
       root,
       `apps/storefront/src/app/%5Finternal/design-foundations/(${profile})/layout.tsx`,
+      `import "@fan-support/design-tokens/fonts/${fileName}";\n`,
+    );
+    await write(
+      root,
+      `apps/storefront/src/app/(public)/(${profile})/layout.tsx`,
       `import "@fan-support/design-tokens/fonts/${fileName}";\n`,
     );
   }
@@ -425,6 +439,110 @@ test("rejects a route group that loads the wrong locale font profile", async (co
     ),
   );
 });
+
+test("rejects a public route group that loads the wrong locale font profile", async (context) => {
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  const layoutPath = "apps/storefront/src/app/(public)/(japanese)/layout.tsx";
+  await write(
+    root,
+    layoutPath,
+    'import "@fan-support/design-tokens/fonts/thai.css";\n',
+  );
+  const errors = await validateDesignFoundations(root);
+  assert.ok(
+    errors.some(
+      (error) =>
+        error.includes(layoutPath) &&
+        error.includes(
+          "must import only @fan-support/design-tokens/fonts/japanese.css",
+        ),
+    ),
+  );
+});
+
+test("public font layout allowance remains exact and excludes pages, nested layouts and unknown profiles", async (context) => {
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  const paths = [
+    "apps/storefront/src/app/(public)/(japanese)/ja/page.tsx",
+    "apps/storefront/src/app/(public)/(japanese)/ja/layout.tsx",
+    "apps/storefront/src/app/(public)/(unknown)/layout.tsx",
+    "apps/storefront/src/app/(public)/layout.tsx",
+  ];
+  for (const relativePath of paths) {
+    await write(
+      root,
+      relativePath,
+      'import "@fan-support/design-tokens/fonts/japanese.css";\n',
+    );
+  }
+  const errors = await validateDesignFoundations(root);
+  for (const relativePath of paths)
+    assert.ok(
+      errors.some(
+        (error) =>
+          error.includes(relativePath) &&
+          error.includes("outside the matching route-group layout"),
+      ),
+    );
+});
+
+test("requires all seven public homepages in the canonical profile and keeps pseudo locale internal", async (context) => {
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  const missing = "apps/storefront/src/app/(public)/(thai)/th/page.tsx";
+  await rm(path.join(root, missing));
+  for (const [profile, locale] of [
+    ["latin", "th"],
+    ["latin", "en-XA"],
+    ["japanese", "en"],
+  ]) {
+    await write(
+      root,
+      `apps/storefront/src/app/(public)/(${profile})/${locale}/page.tsx`,
+      "export default function Page() { return null; }\n",
+    );
+  }
+  const errors = await validateDesignFoundations(root);
+  assert.ok(
+    errors.some(
+      (error) => error.includes(missing) && error.includes("missing"),
+    ),
+  );
+  assert.equal(
+    errors.filter((error) =>
+      error.includes("is not a canonical public locale homepage"),
+    ).length,
+    3,
+  );
+});
+
+for (const source of [
+  'export const generateMetadata = createStorefrontMetadata("ja", "home"); export default createStorefrontPage("en", "home");',
+  'export const generateMetadata = createStorefrontMetadata("en", "home"); export default createStorefrontPage("ja", "home");',
+  'export const generateMetadata = createStorefrontMetadata("ja", "home"); export default createStorefrontPage("ja", "artists");',
+  'function decoy() { return createStorefrontPage("ja", "home"); } export default function Page() { return null; }',
+]) {
+  test(`rejects a public homepage with incorrect locale/factory binding: ${source}`, async (context) => {
+    const root = await fixture();
+    context.after(() => rm(root, { recursive: true, force: true }));
+    const pagePath = "apps/storefront/src/app/(public)/(japanese)/ja/page.tsx";
+    await write(
+      root,
+      pagePath,
+      `import { createStorefrontPage, createStorefrontMetadata } from "../../../../storefront/page-factory";\n${source}\n`,
+    );
+    const errors = await validateDesignFoundations(root);
+    assert.ok(
+      errors.some(
+        (error) =>
+          error.includes(pagePath) &&
+          error.includes("must bind the ja public homepage"),
+      ),
+    );
+  });
+}
 
 test("rejects a canonical font resolver that omits a supported locale", async (context) => {
   const root = await fixture();

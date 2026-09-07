@@ -807,3 +807,5 @@ export function resolveAdminRuntimeConfig(
     internalApiOrigin: internal.origin,
   });
 }
+
+export { resolveStorefrontConfig } from "./storefront-config.js";

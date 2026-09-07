@@ -1,6 +1,7 @@
 import {
   createPublishedContentUseCases,
   createPublishedGiftCommerceUseCases,
+  createStorefrontHomepageUseCases,
 } from "@fan-support/application";
 import {
   resolveDatabaseRuntimeConfig,
@@ -17,11 +18,13 @@ import {
 import type { ApiLifecycleResource } from "./bootstrap.js";
 import type { PublishedContentRouteDependencies } from "./published-content-route.js";
 import type { PublishedGiftCommerceRouteDependencies } from "./published-gift-commerce-route.js";
+import type { StorefrontHomepageRouteDependencies } from "./storefront-homepage-route.js";
 
 type PublishedPersistence = Pick<
   PostgresPersistence,
   | "publishedContentTransactionManager"
   | "publishedGiftCommerceTransactionManager"
+  | "storefrontHomepageTransactionManager"
   | "close"
 >;
 type PersistenceFactory = (
@@ -36,6 +39,7 @@ export type PublishedContentCompositionOptions = Readonly<{
 export type PublishedContentComposition = Readonly<{
   publishedContentRoute: PublishedContentRouteDependencies;
   publishedGiftCommerceRoute: PublishedGiftCommerceRouteDependencies;
+  storefrontHomepageRoute: StorefrontHomepageRouteDependencies;
   publishedContentRuntime: ApiLifecycleResource;
 }>;
 
@@ -63,6 +67,11 @@ export function createPublishedContentComposition(
   );
   let closePromise: Promise<void> | undefined;
   return Object.freeze({
+    storefrontHomepageRoute: {
+      useCases: createStorefrontHomepageUseCases({
+        transactions: persistence.storefrontHomepageTransactionManager,
+      }),
+    },
     publishedGiftCommerceRoute: {
       useCases: createPublishedGiftCommerceUseCases({
         transactions: persistence.publishedGiftCommerceTransactionManager,
