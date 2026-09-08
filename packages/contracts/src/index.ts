@@ -76,3 +76,7 @@ export * from "./cart-edit-internal.js";
 export * from "./cart-edit-events.js";
 
 export * from "./cart-edit-http.js";
+export * from "./checkout-preflight.js";
+export * from "./checkout-preflight-internal.js";
+export * from "./checkout-preflight-public.js";
+export * from "./checkout-preflight-inventory.js";

@@ -1,4 +1,10 @@
 export const workspacePackageName = "@fan-support/domain" as const;
+export {
+  selectCheckoutInventory,
+  planCheckoutInventory,
+  projectCheckoutPreflight,
+  projectCheckoutSession,
+} from "./checkout-preflight.js";
 
 export { evaluateGiftEligibility } from "./gift-eligibility.js";
 export { decideIdempotency } from "./idempotency.js";

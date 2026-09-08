@@ -874,7 +874,28 @@ await withEphemeralPostgres(async (clientConfig) => {
       (SELECT jsonb_agg(jsonb_build_object('id',id,'version',version,'status',status,'draft',draft_revision_id,'published',published_revision_id) ORDER BY id) FROM public.gifts) AS gift_versions
     `)
       ).rows[0];
+    const beforeCheckoutDown = await retainedHistory();
+    equal(
+      beforeCheckoutDown.version,
+      "0025",
+      "admin operations use the current checkout schema",
+    );
+    const checkoutDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0025" },
+    });
+    equal(
+      [checkoutDown.revertedVersions, checkoutDown.currentVersion],
+      [["0025"], "0024"],
+      "empty checkout migration rolls back before existing history probes",
+    );
     const beforeEditDown = await retainedHistory();
+    equal(
+      beforeEditDown,
+      { ...beforeCheckoutDown, version: "0024" },
+      "checkout rollback preserves all admin, translation and publication history",
+    );
     equal(
       beforeEditDown.version,
       "0024",

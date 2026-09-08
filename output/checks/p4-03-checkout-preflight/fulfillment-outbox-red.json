@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "corepack",
+    "pnpm",
+    "--filter",
+    "@fan-support/application",
+    "exec",
+    "vitest",
+    "run",
+    "--config",
+    "../../vitest.config.ts",
+    "--root",
+    ".",
+    "src/checkout-creation.test.ts"
+  ],
+  "startedAt": "2026-09-08T14:27:42.668Z",
+  "endedAt": "2026-09-08T14:27:43.607Z",
+  "durationSeconds": 0.9387675409999999,
+  "code": 1,
+  "signal": null
+}

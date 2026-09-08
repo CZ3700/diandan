@@ -552,7 +552,7 @@ export function createOutboxRepository(
               id, event_type, aggregate_type, aggregate_id, aggregate_version,
               primary_subject_id, secondary_subject_id, locale, market,
               currency, idempotency_key, correlation_id, causation_id,
-              request_id, trace_id, occurred_at, available_at
+              request_id, trace_id, occurred_at, available_at, created_at
             ) values (
               ${parsed.event.eventId}, ${parsed.event.eventType},
               ${aggregateTypes[parsed.event.eventType]},
@@ -562,7 +562,8 @@ export function createOutboxRepository(
               ${parsed.idempotencyKey}, ${parsed.event.correlationId},
               ${parsed.event.causationId ?? null}, ${parsed.event.requestId},
               ${parsed.event.traceId ?? null}, ${parsed.event.occurredAt},
-              ${parsed.availableAt}
+              ${parsed.availableAt},
+              GREATEST(clock_timestamp(), ${parsed.event.occurredAt}::timestamptz)
             )
             on conflict (idempotency_key) do nothing
             returning id

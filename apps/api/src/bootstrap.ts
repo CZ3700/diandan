@@ -78,6 +78,10 @@ import {
   type CartEditRouteDependencies,
 } from "./cart-edit-route.js";
 import {
+  registerCheckoutPreflightRoute,
+  type CheckoutPreflightRouteDependencies,
+} from "./checkout-preflight-route.js";
+import {
   registerCatalogDirectoryRoute,
   type CatalogDirectoryRouteOptions,
 } from "./catalog-directory-route.js";
@@ -102,6 +106,8 @@ export type CreateApiApplicationOptions = Readonly<{
   cartRoute?: CartRouteDependencies;
   cartEditRoute?: CartEditRouteDependencies;
   cartRuntime?: ApiLifecycleResource;
+  checkoutPreflightRoute?: CheckoutPreflightRouteDependencies;
+  checkoutPreflightRuntime?: ApiLifecycleResource;
   managementCenterRoute?: ManagementCenterRouteDependencies;
   managementCenterRuntime?: ApiLifecycleResource;
   giftCommerceRoute?: GiftCommerceRouteDependencies;
@@ -144,6 +150,7 @@ function registerApiLifecycle(
   name:
     | "API admin session"
     | "API cart"
+    | "API checkout preflight"
     | "API admin workspace"
     | "API gift commerce"
     | "API reliable events"
@@ -194,6 +201,11 @@ export async function createApiApplication(
     logger,
   });
   registerApiLifecycle(adapter, options.cartRuntime, "API cart");
+  registerApiLifecycle(
+    adapter,
+    options.checkoutPreflightRuntime,
+    "API checkout preflight",
+  );
   const unavailable = (_request: unknown, reply: FastifyReply) =>
     reply
       .header("cache-control", "private, no-store")
@@ -205,6 +217,26 @@ export async function createApiApplication(
         outcome: "FAILURE",
         code: "TEMPORARY_UNAVAILABLE",
       });
+  if (options.checkoutPreflightRoute)
+    registerCheckoutPreflightRoute(
+      adapter.getInstance(),
+      options.checkoutPreflightRoute,
+    );
+  else
+    for (const [url, method] of [
+      ["/api/v1/cart/validate", "POST"],
+      ["/api/v1/checkout/sessions", "POST"],
+      ["/api/v1/checkout/sessions/:checkoutSessionId/status", "GET"],
+    ] as const) {
+      adapter.getInstance().route({
+        url,
+        method,
+        bodyLimit: 8192,
+        exposeHeadRoute: false,
+        onRequest: async (request, reply) => unavailable(request, reply),
+        handler: unavailable,
+      });
+    }
   if (options.cartRoute)
     registerCartRoute(adapter.getInstance(), options.cartRoute);
   else {

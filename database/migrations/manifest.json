@@ -240,6 +240,16 @@
         "up": "432bc02ad61b014c44bce315a389cc2a76c9593af53192d1e222bccb6442eb7e",
         "down": "723b627be9ca985ae7296beaa825054ba9fb8d309b75485f7ccc0948e82e2385"
       }
+    },
+    {
+      "version": "0025",
+      "name": "checkout-preflight",
+      "up": "database/migrations/0025_checkout-preflight.up.sql",
+      "down": "database/migrations/0025_checkout-preflight.down.sql",
+      "sha256": {
+        "up": "0a585a8849b1537bbea746dc8013673072843323e73bc954393ab42e262e0bd1",
+        "down": "d33f280c6505a5ce460b3c0ff1787ba270e6b935df237a4f800e76071477dcd7"
+      }
     }
   ]
 }

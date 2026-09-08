@@ -235,6 +235,18 @@
       "kind": "TABLE"
     },
     {
+      "name": "checkout_outbox_events",
+      "kind": "TABLE"
+    },
+    {
+      "name": "checkout_preflight_observations",
+      "kind": "TABLE"
+    },
+    {
+      "name": "checkout_preflight_receipts",
+      "kind": "TABLE"
+    },
+    {
       "name": "checkout_quote_lines",
       "kind": "TABLE"
     },
@@ -2478,6 +2490,296 @@
       "name": "locked_order_id",
       "dataType": "uuid",
       "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_outbox_events",
+      "position": 1,
+      "name": "event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_outbox_events",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_outbox_events",
+      "position": 3,
+      "name": "preflight_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_outbox_events",
+      "position": 4,
+      "name": "event_type",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_outbox_events",
+      "position": 5,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_outbox_events",
+      "position": 6,
+      "name": "checkout_session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_outbox_events",
+      "position": 7,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_outbox_events",
+      "position": 8,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_outbox_events",
+      "position": 9,
+      "name": "occurred_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_outbox_events",
+      "position": 10,
+      "name": "status",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": "'PENDING'::text",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "position": 3,
+      "name": "cart_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "position": 4,
+      "name": "cart_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "position": 5,
+      "name": "consent_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "position": 6,
+      "name": "observation",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "position": 7,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "position": 8,
+      "name": "expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "position": 1,
+      "name": "preflight_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "position": 3,
+      "name": "cart_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "position": 4,
+      "name": "cart_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "position": 5,
+      "name": "checkout_session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "position": 6,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "position": 7,
+      "name": "public_order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "position": 8,
+      "name": "event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "position": 9,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "position": 10,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "position": 11,
+      "name": "occurred_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
       "defaultExpression": null,
       "identity": "",
       "generation": ""
@@ -13627,7 +13929,7 @@
       "position": 9,
       "name": "idol_translation_revision_id",
       "dataType": "uuid",
-      "notNull": true,
+      "notNull": false,
       "defaultExpression": null,
       "identity": "",
       "generation": ""
@@ -13717,7 +14019,7 @@
       "position": 18,
       "name": "idol_portrait_alt_translation_revision_id",
       "dataType": "uuid",
-      "notNull": true,
+      "notNull": false,
       "defaultExpression": null,
       "identity": "",
       "generation": ""
@@ -13787,7 +14089,7 @@
       "position": 25,
       "name": "gift_translation_revision_id",
       "dataType": "uuid",
-      "notNull": true,
+      "notNull": false,
       "defaultExpression": null,
       "identity": "",
       "generation": ""
@@ -13877,7 +14179,7 @@
       "position": 34,
       "name": "gift_image_alt_translation_revision_id",
       "dataType": "uuid",
-      "notNull": true,
+      "notNull": false,
       "defaultExpression": null,
       "identity": "",
       "generation": ""
@@ -14019,6 +14321,56 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_items",
+      "position": 49,
+      "name": "checkout_preflight_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_items",
+      "position": 50,
+      "name": "idol_daily_translation_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_items",
+      "position": 51,
+      "name": "gift_daily_translation_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_items",
+      "position": 52,
+      "name": "idol_portrait_alt_daily_translation_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_items",
+      "position": 53,
+      "name": "gift_image_alt_daily_translation_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
       "identity": "",
       "generation": ""
     },
@@ -21969,6 +22321,454 @@
       "definition": "NOT NULL version",
       "deferrable": false,
       "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_checkout_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (checkout_session_id) REFERENCES checkout_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_checkout_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL checkout_session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_event_type_check",
+      "kind": "CHECK",
+      "definition": "CHECK (event_type = 'CHECKOUT_CREATED'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_event_type_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL event_type",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_occurred_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL occurred_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_preflight_id_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (preflight_id, event_id) REFERENCES checkout_preflight_receipts(preflight_id, event_id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_preflight_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (preflight_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_preflight_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL preflight_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_status_check",
+      "kind": "CHECK",
+      "definition": "CHECK (status = 'PENDING'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_status_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL status",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_cart_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (cart_id) REFERENCES carts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_cart_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_cart_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_check",
+      "kind": "CHECK",
+      "definition": "CHECK (expires_at::timestamp with time zone > created_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_check1",
+      "kind": "CHECK",
+      "definition": "CHECK ((observation ->> 'schemaVersion'::text) = '1'::text AND ((observation ->> 'id'::text)::uuid) = id AND ((observation #>> '{consent,cartId}'::text[])::uuid) = cart_id AND ((observation #>> '{consent,cartVersion}'::text[])::bigint) = cart_version::bigint AND (observation ->> 'consentHash'::text) = consent_hash::text AND ((observation ->> 'createdAt'::text)::timestamp with time zone) = created_at::timestamp with time zone AND ((observation ->> 'expiresAt'::text)::timestamp with time zone) = expires_at::timestamp with time zone AND ((observation #>> '{quote,expiresAt}'::text[])::timestamp with time zone) = expires_at::timestamp with time zone AND jsonb_array_length(observation #> '{consent,lines}'::text[]) >= 1 AND jsonb_array_length(observation #> '{consent,lines}'::text[]) <= 500 AND jsonb_array_length(observation #> '{consent,policies}'::text[]) >= 1 AND jsonb_array_length(observation #> '{consent,policies}'::text[]) <= 500 AND (observation - ARRAY['schemaVersion'::text, 'id'::text, 'consentHash'::text, 'consent'::text, 'quote'::text, 'createdAt'::text, 'expiresAt'::text]) = '{}'::jsonb)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_check2",
+      "kind": "CHECK",
+      "definition": "CHECK (consent_hash::text = encode(sha256(convert_to(('fan-support.checkout-consent.v1'::text || chr(10)) || canonical_publication_json(observation -> 'consent'::text), 'UTF8'::name)), 'hex'::text))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_consent_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL consent_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_expires_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expires_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_id_cart_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (id, cart_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_observation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL observation",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_cart_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (cart_id) REFERENCES carts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_cart_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_cart_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_checkout_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (checkout_session_id) REFERENCES checkout_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_checkout_session_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (checkout_session_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_checkout_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL checkout_session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_event_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_occurred_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL occurred_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_order_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (order_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_order_id_public_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id, public_order_id) REFERENCES orders(id, public_order_id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (preflight_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_preflight_id_cart_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (preflight_id, cart_id) REFERENCES checkout_preflight_observations(id, cart_id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_preflight_id_event_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (preflight_id, event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_preflight_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL preflight_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_public_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL public_order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_receipt_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
     },
     {
       "table": "checkout_quote_lines",
@@ -37508,6 +38308,22 @@
     },
     {
       "table": "order_items",
+      "name": "order_items_checkout_preflight_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (checkout_preflight_id) REFERENCES checkout_preflight_observations(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_items",
+      "name": "order_items_checkout_source_shape",
+      "kind": "CHECK",
+      "definition": "CHECK (num_nonnulls(idol_translation_revision_id, idol_daily_translation_id) = 1 AND num_nonnulls(gift_translation_revision_id, gift_daily_translation_id) = 1 AND num_nonnulls(idol_portrait_alt_translation_revision_id, idol_portrait_alt_daily_translation_id) = 1 AND num_nonnulls(gift_image_alt_translation_revision_id, gift_image_alt_daily_translation_id) = 1 AND (schema_version = 1 AND checkout_preflight_id IS NULL AND num_nonnulls(idol_daily_translation_id, gift_daily_translation_id, idol_portrait_alt_daily_translation_id, gift_image_alt_daily_translation_id) = 0 OR schema_version = 2 AND checkout_preflight_id IS NOT NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_items",
       "name": "order_items_created_at_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL created_at",
@@ -37550,7 +38366,15 @@
       "table": "order_items",
       "name": "order_items_gift_alt_translation_locale_check",
       "kind": "CHECK",
-      "definition": "CHECK (NOT gift_image_alt_fallback_used AND gift_image_alt_requested_locale::text = gift_image_alt_resolved_locale::text OR gift_image_alt_fallback_used AND gift_image_alt_requested_locale::text <> 'en'::text AND gift_image_alt_resolved_locale::text = 'en'::text)",
+      "definition": "CHECK (gift_image_alt_daily_translation_id IS NULL AND (NOT gift_image_alt_fallback_used AND gift_image_alt_requested_locale::text = gift_image_alt_resolved_locale::text OR gift_image_alt_fallback_used AND gift_image_alt_requested_locale::text <> 'en'::text AND gift_image_alt_resolved_locale::text = 'en'::text) OR gift_image_alt_daily_translation_id IS NOT NULL AND gift_image_alt_fallback_used = (gift_image_alt_requested_locale::text <> gift_image_alt_resolved_locale::text))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_items",
+      "name": "order_items_gift_daily_translation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (gift_daily_translation_id) REFERENCES daily_publication_revisions(source_translation_id) ON DELETE RESTRICT",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -37575,6 +38399,14 @@
       "name": "order_items_gift_image_alt_check",
       "kind": "CHECK",
       "definition": "CHECK (length(gift_image_alt) >= 1 AND length(gift_image_alt) <= 300)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_items",
+      "name": "order_items_gift_image_alt_daily_translation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (gift_image_alt_daily_translation_id) REFERENCES daily_publication_revisions(source_translation_id) ON DELETE RESTRICT",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -37615,14 +38447,6 @@
       "name": "order_items_gift_image_alt_translation_revision_id_fkey",
       "kind": "FOREIGN_KEY",
       "definition": "FOREIGN KEY (gift_image_alt_translation_revision_id) REFERENCES media_metadata_revision_translations(id) ON DELETE RESTRICT",
-      "deferrable": false,
-      "initiallyDeferred": false
-    },
-    {
-      "table": "order_items",
-      "name": "order_items_gift_image_alt_translation_revision_id_not_null",
-      "kind": "NOT_NULL",
-      "definition": "NOT NULL gift_image_alt_translation_revision_id",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -37702,7 +38526,7 @@
       "table": "order_items",
       "name": "order_items_gift_translation_locale_check",
       "kind": "CHECK",
-      "definition": "CHECK (NOT gift_translation_fallback_used AND gift_translation_requested_locale::text = gift_translation_resolved_locale::text OR gift_translation_fallback_used AND gift_translation_requested_locale::text <> 'en'::text AND gift_translation_resolved_locale::text = 'en'::text)",
+      "definition": "CHECK (gift_daily_translation_id IS NULL AND (NOT gift_translation_fallback_used AND gift_translation_requested_locale::text = gift_translation_resolved_locale::text OR gift_translation_fallback_used AND gift_translation_requested_locale::text <> 'en'::text AND gift_translation_resolved_locale::text = 'en'::text) OR gift_daily_translation_id IS NOT NULL AND gift_translation_fallback_used = (gift_translation_requested_locale::text <> gift_translation_resolved_locale::text))",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -37727,14 +38551,6 @@
       "name": "order_items_gift_translation_revision_id_fkey",
       "kind": "FOREIGN_KEY",
       "definition": "FOREIGN KEY (gift_translation_revision_id) REFERENCES gift_revision_translations(id) ON DELETE RESTRICT",
-      "deferrable": false,
-      "initiallyDeferred": false
-    },
-    {
-      "table": "order_items",
-      "name": "order_items_gift_translation_revision_id_not_null",
-      "kind": "NOT_NULL",
-      "definition": "NOT NULL gift_translation_revision_id",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -37766,7 +38582,15 @@
       "table": "order_items",
       "name": "order_items_idol_alt_translation_locale_check",
       "kind": "CHECK",
-      "definition": "CHECK (NOT idol_portrait_alt_fallback_used AND idol_portrait_alt_requested_locale::text = idol_portrait_alt_resolved_locale::text OR idol_portrait_alt_fallback_used AND idol_portrait_alt_requested_locale::text <> 'en'::text AND idol_portrait_alt_resolved_locale::text = 'en'::text)",
+      "definition": "CHECK (idol_portrait_alt_daily_translation_id IS NULL AND (NOT idol_portrait_alt_fallback_used AND idol_portrait_alt_requested_locale::text = idol_portrait_alt_resolved_locale::text OR idol_portrait_alt_fallback_used AND idol_portrait_alt_requested_locale::text <> 'en'::text AND idol_portrait_alt_resolved_locale::text = 'en'::text) OR idol_portrait_alt_daily_translation_id IS NOT NULL AND idol_portrait_alt_fallback_used = (idol_portrait_alt_requested_locale::text <> idol_portrait_alt_resolved_locale::text))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_items",
+      "name": "order_items_idol_daily_translation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (idol_daily_translation_id) REFERENCES daily_publication_revisions(source_translation_id) ON DELETE RESTRICT",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -37828,6 +38652,14 @@
     },
     {
       "table": "order_items",
+      "name": "order_items_idol_portrait_alt_daily_translation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (idol_portrait_alt_daily_translation_id) REFERENCES daily_publication_revisions(source_translation_id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_items",
       "name": "order_items_idol_portrait_alt_fallback_used_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL idol_portrait_alt_fallback_used",
@@ -37863,14 +38695,6 @@
       "name": "order_items_idol_portrait_alt_translation_revision_id_fkey",
       "kind": "FOREIGN_KEY",
       "definition": "FOREIGN KEY (idol_portrait_alt_translation_revision_id) REFERENCES media_metadata_revision_translations(id) ON DELETE RESTRICT",
-      "deferrable": false,
-      "initiallyDeferred": false
-    },
-    {
-      "table": "order_items",
-      "name": "order_items_idol_portrait_alt_translation_revision_id_not_null",
-      "kind": "NOT_NULL",
-      "definition": "NOT NULL idol_portrait_alt_translation_revision_id",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -37934,7 +38758,7 @@
       "table": "order_items",
       "name": "order_items_idol_translation_locale_check",
       "kind": "CHECK",
-      "definition": "CHECK (NOT idol_translation_fallback_used AND idol_translation_requested_locale::text = idol_translation_resolved_locale::text OR idol_translation_fallback_used AND idol_translation_requested_locale::text <> 'en'::text AND idol_translation_resolved_locale::text = 'en'::text)",
+      "definition": "CHECK (idol_daily_translation_id IS NULL AND (NOT idol_translation_fallback_used AND idol_translation_requested_locale::text = idol_translation_resolved_locale::text OR idol_translation_fallback_used AND idol_translation_requested_locale::text <> 'en'::text AND idol_translation_resolved_locale::text = 'en'::text) OR idol_daily_translation_id IS NOT NULL AND idol_translation_fallback_used = (idol_translation_requested_locale::text <> idol_translation_resolved_locale::text))",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -37959,14 +38783,6 @@
       "name": "order_items_idol_translation_revision_id_fkey",
       "kind": "FOREIGN_KEY",
       "definition": "FOREIGN KEY (idol_translation_revision_id) REFERENCES idol_revision_translations(id) ON DELETE RESTRICT",
-      "deferrable": false,
-      "initiallyDeferred": false
-    },
-    {
-      "table": "order_items",
-      "name": "order_items_idol_translation_revision_id_not_null",
-      "kind": "NOT_NULL",
-      "definition": "NOT NULL idol_translation_revision_id",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -38062,7 +38878,7 @@
       "table": "order_items",
       "name": "order_items_schema_version_check",
       "kind": "CHECK",
-      "definition": "CHECK (schema_version = 1)",
+      "definition": "CHECK (schema_version = ANY (ARRAY[1, 2]))",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -46449,6 +47265,96 @@
       "valid": true
     },
     {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_pkey",
+      "definition": "CREATE UNIQUE INDEX checkout_outbox_events_pkey ON public.checkout_outbox_events USING btree (event_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_preflight_id_key",
+      "definition": "CREATE UNIQUE INDEX checkout_outbox_events_preflight_id_key ON public.checkout_outbox_events USING btree (preflight_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_cart_idx",
+      "definition": "CREATE INDEX checkout_preflight_cart_idx ON public.checkout_preflight_observations USING btree (cart_id, created_at, id)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_id_cart_id_key",
+      "definition": "CREATE UNIQUE INDEX checkout_preflight_observations_id_cart_id_key ON public.checkout_preflight_observations USING btree (id, cart_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_pkey",
+      "definition": "CREATE UNIQUE INDEX checkout_preflight_observations_pkey ON public.checkout_preflight_observations USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_checkout_session_id_key",
+      "definition": "CREATE UNIQUE INDEX checkout_preflight_receipts_checkout_session_id_key ON public.checkout_preflight_receipts USING btree (checkout_session_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_event_id_key",
+      "definition": "CREATE UNIQUE INDEX checkout_preflight_receipts_event_id_key ON public.checkout_preflight_receipts USING btree (event_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_order_id_key",
+      "definition": "CREATE UNIQUE INDEX checkout_preflight_receipts_order_id_key ON public.checkout_preflight_receipts USING btree (order_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX checkout_preflight_receipts_pkey ON public.checkout_preflight_receipts USING btree (preflight_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_preflight_id_event_id_key",
+      "definition": "CREATE UNIQUE INDEX checkout_preflight_receipts_preflight_id_event_id_key ON public.checkout_preflight_receipts USING btree (preflight_id, event_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "checkout_quote_lines",
       "name": "checkout_quote_lines_pkey",
       "definition": "CREATE UNIQUE INDEX checkout_quote_lines_pkey ON public.checkout_quote_lines USING btree (id)",
@@ -50507,6 +51413,54 @@
       "enabled": "O"
     },
     {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_append_only",
+      "definition": "CREATE TRIGGER checkout_outbox_events_append_only BEFORE DELETE OR UPDATE ON checkout_outbox_events FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "checkout_outbox_events",
+      "name": "checkout_outbox_events_no_truncate",
+      "definition": "CREATE TRIGGER checkout_outbox_events_no_truncate BEFORE TRUNCATE ON checkout_outbox_events FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_observation_validate",
+      "definition": "CREATE TRIGGER checkout_observation_validate BEFORE INSERT ON checkout_preflight_observations FOR EACH ROW EXECUTE FUNCTION assert_checkout_observation()",
+      "enabled": "O"
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_append_only",
+      "definition": "CREATE TRIGGER checkout_preflight_observations_append_only BEFORE DELETE OR UPDATE ON checkout_preflight_observations FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "checkout_preflight_observations",
+      "name": "checkout_preflight_observations_no_truncate",
+      "definition": "CREATE TRIGGER checkout_preflight_observations_no_truncate BEFORE TRUNCATE ON checkout_preflight_observations FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_append_only",
+      "definition": "CREATE TRIGGER checkout_preflight_receipts_append_only BEFORE DELETE OR UPDATE ON checkout_preflight_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_preflight_receipts_no_truncate",
+      "definition": "CREATE TRIGGER checkout_preflight_receipts_no_truncate BEFORE TRUNCATE ON checkout_preflight_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "checkout_preflight_receipts",
+      "name": "checkout_receipt_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER checkout_receipt_validate AFTER INSERT ON checkout_preflight_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_checkout_receipt()",
+      "enabled": "O"
+    },
+    {
       "table": "checkout_quote_lines",
       "name": "checkout_line_quote_consistency_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER checkout_line_quote_consistency_trigger AFTER INSERT OR DELETE OR UPDATE ON checkout_quote_lines DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_checkout_quote_consistency()",
@@ -53893,6 +54847,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_cart_support_intent_consistency()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  item_id uuid := COALESCE(\n    (to_jsonb(NEW) ->> 'cart_item_id')::uuid,\n    (to_jsonb(OLD) ->> 'cart_item_id')::uuid,\n    (to_jsonb(NEW) ->> 'id')::uuid,\n    (to_jsonb(OLD) ->> 'id')::uuid\n  );\n  item_mode text;\n  item_has_message boolean;\n  intent_mode text;\n  intent_has_message boolean;\n  is_eligible boolean;\n  intent_privacy_state text;\nBEGIN\n  SELECT display_mode, has_fan_message INTO item_mode, item_has_message\n    FROM cart_items WHERE id = item_id;\n  SELECT display_mode, fan_message_ciphertext IS NOT NULL, privacy_state\n    INTO intent_mode, intent_has_message, intent_privacy_state\n    FROM support_intents WHERE cart_item_id = item_id;\n  SELECT EXISTS (\n    SELECT 1\n    FROM cart_items ci\n    JOIN support_intents si ON si.cart_item_id = ci.id\n    WHERE ci.id = item_id\n      AND (EXISTS (\n        SELECT 1 FROM gift_variant_idol_eligibility eligibility\n        WHERE eligibility.gift_variant_id = ci.gift_variant_id\n          AND eligibility.idol_id = si.idol_id\n      ) OR EXISTS (\n        SELECT 1 FROM gift_variant_recipient_rules eligibility\n        WHERE eligibility.gift_variant_id = ci.gift_variant_id\n          AND eligibility.rule = 'ALL_ACTIVE_ARTISTS'\n      ))\n  ) INTO is_eligible;\n\n  IF item_mode IS NULL OR intent_mode IS NULL\n     OR item_mode <> intent_mode\n     OR (intent_privacy_state <> 'PURGED' AND item_has_message <> intent_has_message)\n     OR NOT is_eligible THEN\n    RAISE EXCEPTION 'cart item and support intent privacy projection diverge'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
+      "name": "assert_checkout_observation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_checkout_observation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NOT EXISTS(SELECT 1 FROM public.carts c WHERE c.id=NEW.cart_id AND c.version=NEW.cart_version AND c.status='ACTIVE' AND c.expires_at>=NEW.expires_at AND c.expires_at>clock_timestamp() AND c.market::text=NEW.observation#>>'{consent,market}' AND c.currency::text=NEW.observation#>>'{consent,currency}') THEN\n    RAISE EXCEPTION 'preflight requires a current authorized cart scope' USING ERRCODE='23514'; END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
       "name": "assert_checkout_quote_consistency",
       "identityArguments": "",
       "resultType": "trigger",
@@ -53901,6 +54865,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_checkout_quote_consistency()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  session_id uuid := COALESCE(\n    (to_jsonb(NEW) ->> 'checkout_session_id')::uuid,\n    (to_jsonb(OLD) ->> 'checkout_session_id')::uuid,\n    (to_jsonb(NEW) ->> 'id')::uuid,\n    (to_jsonb(OLD) ->> 'id')::uuid\n  );\n  session_row checkout_sessions%ROWTYPE;\n  line_count bigint;\n  invalid_count bigint;\n  line_subtotal numeric;\n  line_tax numeric;\n  line_discount numeric;\n  line_total numeric;\nBEGIN\n  SELECT * INTO session_row FROM checkout_sessions WHERE id = session_id;\n  IF session_row.id IS NULL THEN\n    RETURN NULL;\n  END IF;\n\n  SELECT count(*),\n         count(*) FILTER (WHERE\n           q.checkout_quote_id <> session_row.quote_id\n           OR ci.cart_id <> session_row.cart_id\n           OR ci.gift_variant_id <> q.gift_variant_id\n           OR ci.quantity <> q.quantity\n           OR p.market <> session_row.market\n           OR p.currency <> session_row.currency\n           OR p.amount_minor <> q.unit_amount_minor\n         ),\n         COALESCE(sum(q.line_subtotal_minor), 0),\n         COALESCE(sum(q.tax_amount_minor), 0),\n         COALESCE(sum(q.discount_amount_minor), 0),\n         COALESCE(sum(q.line_total_minor), 0)\n    INTO line_count, invalid_count, line_subtotal, line_tax, line_discount, line_total\n    FROM checkout_quote_lines q\n    JOIN cart_items ci ON ci.id = q.cart_item_id\n    JOIN prices p ON p.id = q.price_id\n    WHERE q.checkout_session_id = session_id;\n\n  IF line_count = 0 OR invalid_count <> 0\n     OR line_subtotal <> session_row.subtotal_minor\n     OR line_tax <> session_row.tax_amount_minor\n     OR line_discount <> session_row.discount_amount_minor\n     OR line_total + session_row.shipping_amount_minor + session_row.fee_amount_minor\n        <> session_row.total_amount_minor THEN\n    RAISE EXCEPTION 'checkout quote lines do not match the immutable session snapshot'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
+    },
+    {
+      "name": "assert_checkout_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_checkout_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE observation public.checkout_preflight_observations%ROWTYPE; c public.carts%ROWTYPE; o public.orders%ROWTYPE; line jsonb; item public.order_items%ROWTYPE; inventory_count bigint; policy jsonb;\nBEGIN\n  SELECT * INTO observation FROM public.checkout_preflight_observations WHERE id=NEW.preflight_id;\n  SELECT * INTO c FROM public.carts WHERE id=NEW.cart_id FOR UPDATE;\n  SELECT * INTO o FROM public.orders WHERE id=NEW.order_id;\n  IF (c.status='LOCKED' AND c.locked_order_id=o.id AND c.version=NEW.cart_version\n    AND NEW.cart_version=observation.cart_version+1 AND c.expires_at>NEW.occurred_at\n    AND observation.expires_at>NEW.occurred_at AND observation.cart_id=c.id\n    AND o.cart_id=c.id AND o.checkout_session_id=NEW.checkout_session_id AND o.public_order_id=NEW.public_order_id\n    AND o.order_status='PENDING_PAYMENT' AND o.payment_status='UNPAID' AND o.version=2 AND o.current_payment_attempt_id IS NULL\n    AND o.tax_amount_minor=0 AND o.shipping_amount_minor=0 AND o.fee_amount_minor=0 AND o.discount_amount_minor=0\n    AND o.presentation_locale=observation.observation#>>'{consent,presentationLocale}'\n    AND o.created_at=NEW.occurred_at AND c.updated_at=NEW.occurred_at\n    AND o.checkout_quote_id=(observation.observation#>>'{quote,id}')::uuid\n    AND (SELECT count(*) FROM public.order_items WHERE order_id=o.id)=jsonb_array_length(observation.observation#>'{consent,lines}')\n    AND (SELECT count(*) FROM public.cart_items i JOIN public.support_intents s ON s.cart_item_id=i.id WHERE i.cart_id=c.id AND s.status<>'CANCELED')=jsonb_array_length(observation.observation#>'{consent,lines}')\n    AND (SELECT count(*) FROM public.policy_acceptances WHERE order_id=o.id)=jsonb_array_length(observation.observation#>'{consent,policies}')\n    AND EXISTS(SELECT 1 FROM public.checkout_outbox_events e WHERE e.preflight_id=NEW.preflight_id AND e.event_id=NEW.event_id AND e.order_id=o.id AND e.checkout_session_id=NEW.checkout_session_id AND e.request_id=NEW.request_id AND e.correlation_id=NEW.correlation_id AND e.occurred_at=NEW.occurred_at)\n  ) IS NOT TRUE THEN RAISE EXCEPTION 'checkout receipt must bind the complete locked order' USING ERRCODE='23514'; END IF;\n  FOR line IN SELECT value FROM jsonb_array_elements(observation.observation#>'{consent,lines}') LOOP\n    SELECT * INTO item FROM public.order_items WHERE order_id=o.id AND cart_item_id=(line->>'cartItemId')::uuid;\n    IF item.checkout_preflight_id IS DISTINCT FROM NEW.preflight_id OR NOT EXISTS(\n      SELECT 1 FROM public.cart_items i JOIN public.support_intents s ON s.cart_item_id=i.id\n      JOIN public.fulfillments f ON f.order_item_id=item.id AND f.order_id=o.id\n      WHERE i.id=item.cart_item_id AND i.cart_id=c.id AND i.version=(line->>'itemVersion')::bigint\n        AND s.id=item.support_intent_id AND s.version=(line->>'intentVersion')::bigint+1 AND s.status='CHECKOUT_LOCKED' AND s.privacy_state='ACTIVE'\n        AND s.expires_at>NEW.occurred_at AND s.updated_at=NEW.occurred_at\n        AND f.fulfillment_profile_id=(line->>'fulfillmentProfileId')::uuid AND f.status='PENDING'\n    ) THEN RAISE EXCEPTION 'checkout must lock each exact cart item and intent' USING ERRCODE='23514'; END IF;\n    SELECT count(*) INTO inventory_count FROM public.inventory_reservations r WHERE r.checkout_session_id=NEW.checkout_session_id AND r.cart_item_id=item.cart_item_id;\n    IF line->>'inventoryPolicy'='TRACKED' THEN\n      IF inventory_count<>1 OR NOT EXISTS(SELECT 1 FROM public.inventory_reservations r WHERE r.checkout_session_id=NEW.checkout_session_id AND r.checkout_quote_id=o.checkout_quote_id AND r.cart_item_id=item.cart_item_id AND r.gift_variant_id=item.gift_variant_id AND r.inventory_item_id=(line->>'inventoryItemId')::uuid AND r.locked_order_id=o.id AND r.quantity=item.quantity AND r.status='ACTIVE' AND r.expires_at=observation.expires_at) THEN\n        RAISE EXCEPTION 'checkout requires each exact tracked reservation' USING ERRCODE='23514'; END IF;\n    ELSIF inventory_count<>0 THEN RAISE EXCEPTION 'nontracked checkout cannot invent inventory reservations' USING ERRCODE='23514'; END IF;\n  END LOOP;\n  FOR policy IN SELECT value FROM jsonb_array_elements(observation.observation#>'{consent,policies}') LOOP\n    IF NOT EXISTS(SELECT 1 FROM public.policy_acceptances a WHERE a.order_id=o.id AND a.policy_key=policy->>'policyKey' AND a.policy_revision_id=(policy->>'policyRevisionId')::uuid AND a.policy_translation_revision_id=(policy->>'policyTranslationRevisionId')::uuid AND a.locale::text=policy->>'locale' AND a.accepted_at=NEW.occurred_at AND a.recorded_at=NEW.occurred_at) THEN\n      RAISE EXCEPTION 'checkout requires every exact observed policy acceptance' USING ERRCODE='23514'; END IF;\n  END LOOP;\n  RETURN NULL;\nEND; $function$"
     },
     {
       "name": "assert_content_authoring_receipt",
@@ -54793,6 +55767,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.cart_private_material_hash(message bytea, display_mode text, display_name bytea, data_key bytea, key_version text, message_locale text)\n RETURNS sha256_hex\n LANGUAGE sql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$ SELECT encode(sha256(convert_to(jsonb_build_array(encode(message,'hex'),display_mode,encode(display_name,'hex'),encode(data_key,'hex'),key_version,message_locale)::text,'UTF8')),'hex')::public.sha256_hex $function$"
     },
     {
+      "name": "checkout_source_document",
+      "identityArguments": "ref jsonb, kind text, owner uuid",
+      "resultType": "jsonb",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "STABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.checkout_source_document(ref jsonb, kind text, owner uuid)\n RETURNS jsonb\n LANGUAGE plpgsql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE p public.content_publications%ROWTYPE; manifest jsonb; digest text; revision jsonb; audit jsonb; fields jsonb; owner_key text;\nBEGIN\n  SELECT * INTO p FROM public.content_publications WHERE id=(ref->>'publicationId')::uuid;\n  owner_key:=CASE kind WHEN 'IDOL' THEN 'idolId' WHEN 'GIFT' THEN 'giftId' WHEN 'MEDIA_METADATA' THEN 'mediaAssetId' END;\n  IF owner_key IS NULL OR p.id IS NULL OR ref->>'schemaVersion' IS DISTINCT FROM '1' THEN\n    RAISE EXCEPTION 'checkout source requires a typed immutable publication' USING ERRCODE='23514';\n  END IF;\n  IF ref->>'mode'='APPROVED' AND p.proof_version=2 THEN\n    SELECT m.manifest,m.manifest_hash INTO manifest,digest FROM public.content_publication_manifests m WHERE m.publication_id=p.id;\n    IF kind='MEDIA_METADATA' THEN\n      SELECT value INTO revision FROM jsonb_array_elements(manifest->'mediaRevisions') WHERE value->>'revisionId'=ref->>'revisionId';\n    ELSE revision:=manifest->'revision'; END IF;\n    SELECT value INTO audit FROM jsonb_array_elements(revision->'translationAudits') WHERE value->>'id'=ref->>'translationRevisionId';\n    SELECT value->'fields' INTO fields FROM jsonb_array_elements(revision#>'{content,translations}') WHERE value->>'locale'=ref->>'resolvedLocale';\n    IF (digest=ref->>'manifestHash'\n      AND digest=encode(sha256(convert_to('fan-support.publication-manifest.v1'||chr(10)||public.canonical_publication_json(manifest),'UTF8')),'hex')\n      AND revision->>'revisionId'=ref->>'revisionId' AND revision#>>'{target,kind}'=kind\n      AND (revision->'target'->>owner_key)::uuid=owner\n      AND audit->>'locale'=ref->>'resolvedLocale' AND audit->>'sourceHash'=ref->>'sourceHash'\n      AND audit#>>'{review,status}'='APPROVED' AND fields IS NOT NULL\n      AND (((ref->>'fallbackUsed')::boolean=false AND ref->>'requestedLocale'=ref->>'resolvedLocale')\n        OR ((ref->>'fallbackUsed')::boolean=true AND ref->>'requestedLocale'<>'en' AND ref->>'resolvedLocale'='en'))\n    ) IS NOT TRUE THEN RAISE EXCEPTION 'checkout approved source proof does not match' USING ERRCODE='23514'; END IF;\n    RETURN jsonb_build_object('fields',fields,'media',coalesce(revision#>'{content,media}','[]'::jsonb));\n  ELSIF ref->>'mode'='DAILY' AND p.proof_version=3 THEN\n    SELECT m.manifest,m.manifest_hash INTO manifest,digest FROM public.daily_publication_manifests m WHERE m.publication_id=p.id;\n    IF kind='MEDIA_METADATA' THEN\n      SELECT value->'metadata' INTO revision FROM jsonb_array_elements(manifest->'media') WHERE value#>>'{metadata,revisionId}'=ref->>'revisionId';\n    ELSE revision:=manifest->'document'; END IF;\n    IF (digest=ref->>'manifestHash'\n      AND digest=encode(sha256(convert_to('fan-support.daily-publication.v1'||chr(10)||public.canonical_publication_json(manifest),'UTF8')),'hex')\n      AND ref->>'publicationMode'='DIRECT_OPERATOR_V1' AND revision->>'kind'=kind\n      AND revision->>'revisionId'=ref->>'revisionId' AND (revision->>'ownerId')::uuid=owner\n      AND revision#>>'{source,id}'=ref->>'translationRevisionId' AND revision#>>'{source,sourceHash}'=ref->>'sourceHash'\n      AND revision#>>'{source,locale}'=ref->>'sourceLocale' AND ref->>'resolvedLocale'=ref->>'sourceLocale'\n      AND (ref->>'fallbackUsed')::boolean=(ref->>'requestedLocale'<>ref->>'sourceLocale')\n      AND EXISTS(SELECT 1 FROM public.daily_publication_revisions d WHERE d.revision_id=(ref->>'revisionId')::uuid AND d.source_translation_id=(ref->>'translationRevisionId')::uuid AND d.document=revision)\n    ) IS NOT TRUE THEN RAISE EXCEPTION 'checkout daily source proof does not match' USING ERRCODE='23514'; END IF;\n    RETURN jsonb_build_object('fields',revision#>'{source,fields}','media',coalesce(revision->'media','[]'::jsonb));\n  END IF;\n  RAISE EXCEPTION 'checkout publication mode and actual proof disagree' USING ERRCODE='23514';\nEND; $function$"
+    },
+    {
       "name": "content_authoring_revision_sealed",
       "identityArguments": "parent_column text, revision_id uuid",
       "resultType": "boolean",
@@ -55543,6 +56527,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.validate_cart_item_commerce_context()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  invalid boolean;\nBEGIN\n  SELECT p.gift_variant_id <> NEW.gift_variant_id\n         OR p.market <> c.market OR p.currency <> c.currency\n    INTO invalid\n    FROM carts c\n    JOIN prices p ON p.id = NEW.observed_price_id\n    WHERE c.id = NEW.cart_id;\n  IF invalid IS NULL OR invalid THEN\n    RAISE EXCEPTION 'cart item price must match its variant and cart commerce context'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
     },
     {
+      "name": "validate_checkout_order_item",
+      "identityArguments": "item order_items",
+      "resultType": "void",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.validate_checkout_order_item(item order_items)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE observation jsonb; line jsonb; idol jsonb; gift jsonb; portrait jsonb; image jsonb; binding record; columns jsonb:=to_jsonb(item);\nBEGIN\n  SELECT o.observation INTO observation FROM public.checkout_preflight_observations o WHERE o.id=item.checkout_preflight_id;\n  SELECT value INTO line FROM jsonb_array_elements(observation#>'{consent,lines}') WHERE (value->>'cartItemId')::uuid=item.cart_item_id;\n  IF line IS NULL THEN RAISE EXCEPTION 'checkout order item must bind its observed line' USING ERRCODE='23514'; END IF;\n  idol:=public.checkout_source_document(line->'idolTranslation','IDOL',item.idol_id);\n  gift:=public.checkout_source_document(line->'giftTranslation','GIFT',item.gift_id);\n  portrait:=public.checkout_source_document(line#>'{idolPortrait,altTranslation}','MEDIA_METADATA',item.idol_portrait_asset_id);\n  image:=public.checkout_source_document(line#>'{giftImage,altTranslation}','MEDIA_METADATA',item.gift_image_asset_id);\n  FOR binding IN SELECT * FROM (VALUES\n    ('idol','idol_translation',line->'idolTranslation'),\n    ('gift','gift_translation',line->'giftTranslation'),\n    ('idol_portrait_alt','idol_portrait_alt',line#>'{idolPortrait,altTranslation}'),\n    ('gift_image_alt','gift_image_alt',line#>'{giftImage,altTranslation}')\n  ) AS entries(prefix,locale_prefix,ref) LOOP\n    IF (coalesce(columns->>(binding.prefix||'_translation_revision_id'),columns->>(binding.prefix||'_daily_translation_id'))=binding.ref->>'translationRevisionId'\n      AND (columns->>(binding.prefix||'_daily_translation_id') IS NOT NULL)=(binding.ref->>'mode'='DAILY')\n      AND columns->>(binding.locale_prefix||'_requested_locale')=binding.ref->>'requestedLocale'\n      AND columns->>(binding.locale_prefix||'_resolved_locale')=binding.ref->>'resolvedLocale'\n      AND (columns->>(binding.locale_prefix||'_fallback_used'))::boolean=(binding.ref->>'fallbackUsed')::boolean\n    ) IS NOT TRUE THEN RAISE EXCEPTION 'checkout source columns must bind the exact typed provenance' USING ERRCODE='23514'; END IF;\n  END LOOP;\n  IF (item.idol_display_name=idol#>>'{fields,displayName}' AND item.gift_title=gift#>>'{fields,title}'\n    AND item.idol_portrait_alt=portrait#>>'{fields,alt}' AND item.gift_image_alt=image#>>'{fields,alt}'\n    AND item.idol_handle=line->>'idolHandle' AND item.idol_id=(line->>'idolId')::uuid\n    AND item.gift_id=(line->>'giftId')::uuid AND item.gift_variant_id=(line->>'giftVariantId')::uuid\n    AND item.support_intent_id=(line->>'supportIntentId')::uuid AND item.display_mode=line->>'displayMode'\n    AND item.price_id=(line->>'priceId')::uuid AND item.price_revision=(line->>'priceRevision')::bigint\n    AND item.quantity=(line->>'quantity')::integer AND item.unit_amount_minor=(line->>'unitAmountMinor')::bigint\n    AND item.tax_amount_minor=0 AND item.discount_amount_minor=0\n    AND item.idol_portrait_metadata_revision_id=(line#>>'{idolPortrait,metadataRevisionId}')::uuid\n    AND item.gift_image_metadata_revision_id=(line#>>'{giftImage,metadataRevisionId}')::uuid\n    AND item.idol_portrait_metadata_revision_id=(line#>>'{idolPortrait,altTranslation,revisionId}')::uuid\n    AND item.gift_image_metadata_revision_id=(line#>>'{giftImage,altTranslation,revisionId}')::uuid\n    AND item.idol_portrait_asset_id=(line#>>'{idolPortrait,assetId}')::uuid\n    AND item.gift_image_asset_id=(line#>>'{giftImage,assetId}')::uuid\n    AND item.idol_portrait_checksum_sha256=line#>>'{idolPortrait,checksum}' AND item.idol_portrait_object_key=line#>>'{idolPortrait,objectKey}'\n    AND item.gift_image_checksum_sha256=line#>>'{giftImage,checksum}' AND item.gift_image_object_key=line#>>'{giftImage,objectKey}'\n    AND EXISTS(SELECT 1 FROM jsonb_array_elements(idol->'media') media WHERE media->>'role'='PORTRAIT' AND (media->>'mediaAssetId')::uuid=item.idol_portrait_asset_id AND (media->>'mediaMetadataRevisionId')::uuid=item.idol_portrait_metadata_revision_id)\n    AND EXISTS(SELECT 1 FROM jsonb_array_elements(gift->'media') media WHERE media->>'role'='PRIMARY' AND (media->>'mediaAssetId')::uuid=item.gift_image_asset_id AND (media->>'mediaMetadataRevisionId')::uuid=item.gift_image_metadata_revision_id)\n    AND EXISTS(SELECT 1 FROM public.media_assets a WHERE a.id=item.idol_portrait_asset_id AND a.checksum_sha256=item.idol_portrait_checksum_sha256 AND a.object_key=item.idol_portrait_object_key)\n    AND EXISTS(SELECT 1 FROM public.media_assets a WHERE a.id=item.gift_image_asset_id AND a.checksum_sha256=item.gift_image_checksum_sha256 AND a.object_key=item.gift_image_object_key)\n    AND EXISTS(SELECT 1 FROM public.idols i WHERE i.id=item.idol_id AND i.handle=item.idol_handle)\n  ) IS NOT TRUE THEN RAISE EXCEPTION 'checkout raw snapshot must reproduce the immutable source' USING ERRCODE='23514'; END IF;\n  IF NOT EXISTS(SELECT 1 FROM public.orders o JOIN public.checkout_quote_lines q ON q.checkout_session_id=o.checkout_session_id AND q.checkout_quote_id=o.checkout_quote_id AND q.cart_item_id=item.cart_item_id\n    JOIN public.support_intents s ON s.id=item.support_intent_id AND s.cart_item_id=item.cart_item_id\n    JOIN public.prices p ON p.id=q.price_id AND p.revision=q.price_revision AND p.gift_variant_id=q.gift_variant_id\n    JOIN public.gift_variants v ON v.id=p.gift_variant_id AND v.gift_id=item.gift_id\n    WHERE o.id=item.order_id AND o.cart_id=(observation#>>'{consent,cartId}')::uuid\n      AND q.gift_variant_id=item.gift_variant_id AND q.price_id=item.price_id AND q.price_revision=item.price_revision\n      AND q.quantity=item.quantity AND q.unit_amount_minor=item.unit_amount_minor AND q.line_subtotal_minor=item.line_subtotal_minor\n      AND q.tax_amount_minor=item.tax_amount_minor AND q.discount_amount_minor=item.discount_amount_minor AND q.line_total_minor=item.line_total_minor\n      AND s.idol_id=item.idol_id AND s.display_mode=item.display_mode AND s.status IN('CHECKOUT_LOCKED','CONVERTED','CANCELED')\n      AND p.market=o.market AND p.currency=o.currency AND p.currency=item.currency AND p.amount_minor=item.unit_amount_minor\n      AND p.status IN('PUBLISHED','SUPERSEDED','ARCHIVED')\n      AND o.presentation_locale=item.idol_translation_requested_locale AND o.presentation_locale=item.gift_translation_requested_locale\n      AND o.presentation_locale=item.idol_portrait_alt_requested_locale AND o.presentation_locale=item.gift_image_alt_requested_locale\n      AND (EXISTS(SELECT 1 FROM public.gift_variant_idol_eligibility e WHERE e.gift_variant_id=v.id AND e.idol_id=s.idol_id)\n        OR EXISTS(SELECT 1 FROM public.gift_variant_recipient_rules e WHERE e.gift_variant_id=v.id AND e.rule='ALL_ACTIVE_ARTISTS')))\n    THEN RAISE EXCEPTION 'checkout quote intent and structural eligibility must agree' USING ERRCODE='23514'; END IF;\nEND; $function$"
+    },
+    {
       "name": "validate_content_publication",
       "identityArguments": "",
       "resultType": "trigger",
@@ -55690,7 +56684,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.validate_order_item_snapshot()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NOT EXISTS (\n    SELECT 1\n    FROM orders o\n    JOIN checkout_quote_lines q\n      ON q.checkout_session_id = o.checkout_session_id\n     AND q.checkout_quote_id = o.checkout_quote_id\n     AND q.cart_item_id = NEW.cart_item_id\n    JOIN support_intents si\n      ON si.id = NEW.support_intent_id\n     AND si.cart_item_id = NEW.cart_item_id\n    WHERE o.id = NEW.order_id\n      AND q.gift_variant_id = NEW.gift_variant_id\n      AND q.price_id = NEW.price_id\n      AND q.price_revision = NEW.price_revision\n      AND q.quantity = NEW.quantity\n      AND q.unit_amount_minor = NEW.unit_amount_minor\n      AND q.line_subtotal_minor = NEW.line_subtotal_minor\n      AND q.tax_amount_minor = NEW.tax_amount_minor\n      AND q.discount_amount_minor = NEW.discount_amount_minor\n      AND q.line_total_minor = NEW.line_total_minor\n      AND si.idol_id = NEW.idol_id\n      AND si.display_mode = NEW.display_mode\n      AND si.status IN ('CHECKOUT_LOCKED', 'CONVERTED', 'CANCELED')\n      AND o.currency = NEW.currency\n      AND o.presentation_locale = NEW.idol_translation_requested_locale\n      AND o.presentation_locale = NEW.idol_portrait_alt_requested_locale\n      AND o.presentation_locale = NEW.gift_translation_requested_locale\n      AND o.presentation_locale = NEW.gift_image_alt_requested_locale\n  ) THEN\n    RAISE EXCEPTION 'order item must reproduce its checkout quote and support intent'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT EXISTS (\n    SELECT 1\n    FROM prices p\n    JOIN gift_variants gv ON gv.id = p.gift_variant_id\n    JOIN orders o ON o.id = NEW.order_id\n    WHERE p.id = NEW.price_id\n      AND p.revision = NEW.price_revision\n      AND p.gift_variant_id = NEW.gift_variant_id\n      AND p.market = o.market\n      AND p.currency = NEW.currency\n      AND p.amount_minor = NEW.unit_amount_minor\n      AND p.status IN ('PUBLISHED', 'SUPERSEDED', 'ARCHIVED')\n      AND gv.gift_id = NEW.gift_id\n      AND EXISTS (\n        SELECT 1 FROM gift_variant_idol_eligibility eligibility\n        WHERE eligibility.gift_variant_id = NEW.gift_variant_id\n          AND eligibility.idol_id = NEW.idol_id\n      )\n  ) THEN\n    RAISE EXCEPTION 'order item price snapshot does not match canonical price revision'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT EXISTS (\n    SELECT 1\n    FROM idol_revision_translations translation\n    JOIN idol_revisions revision ON revision.id = translation.idol_revision_id\n    JOIN idols idol ON idol.id = revision.idol_id\n    JOIN idol_revision_media media\n      ON media.idol_revision_id = revision.id AND media.role = 'PORTRAIT'\n    JOIN media_assets asset ON asset.id = media.media_asset_id\n    JOIN media_metadata_revision_translations alt_translation\n      ON alt_translation.id = NEW.idol_portrait_alt_translation_revision_id\n     AND alt_translation.media_metadata_revision_id = media.media_metadata_revision_id\n    WHERE translation.id = NEW.idol_translation_revision_id\n      AND revision.idol_id = NEW.idol_id\n      AND revision.lifecycle IN ('PUBLISHED', 'SUPERSEDED', 'ARCHIVED')\n      AND idol.handle = NEW.idol_handle\n      AND translation.locale = NEW.idol_translation_resolved_locale\n      AND translation.display_name = NEW.idol_display_name\n      AND media.media_asset_id = NEW.idol_portrait_asset_id\n      AND media.media_metadata_revision_id = NEW.idol_portrait_metadata_revision_id\n      AND asset.checksum_sha256 = NEW.idol_portrait_checksum_sha256\n      AND asset.object_key = NEW.idol_portrait_object_key\n      AND alt_translation.locale = NEW.idol_portrait_alt_resolved_locale\n      AND alt_translation.alt = NEW.idol_portrait_alt\n  ) THEN\n    RAISE EXCEPTION 'idol translation and portrait snapshot do not share one canonical revision'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT EXISTS (\n    SELECT 1\n    FROM gift_revision_translations translation\n    JOIN gift_revisions revision ON revision.id = translation.gift_revision_id\n    JOIN gift_revision_media media\n      ON media.gift_revision_id = revision.id AND media.role = 'PRIMARY'\n    JOIN media_assets asset ON asset.id = media.media_asset_id\n    JOIN media_metadata_revision_translations alt_translation\n      ON alt_translation.id = NEW.gift_image_alt_translation_revision_id\n     AND alt_translation.media_metadata_revision_id = media.media_metadata_revision_id\n    WHERE translation.id = NEW.gift_translation_revision_id\n      AND revision.gift_id = NEW.gift_id\n      AND revision.lifecycle IN ('PUBLISHED', 'SUPERSEDED', 'ARCHIVED')\n      AND translation.locale = NEW.gift_translation_resolved_locale\n      AND translation.title = NEW.gift_title\n      AND media.media_asset_id = NEW.gift_image_asset_id\n      AND media.media_metadata_revision_id = NEW.gift_image_metadata_revision_id\n      AND asset.checksum_sha256 = NEW.gift_image_checksum_sha256\n      AND asset.object_key = NEW.gift_image_object_key\n      AND alt_translation.locale = NEW.gift_image_alt_resolved_locale\n      AND alt_translation.alt = NEW.gift_image_alt\n  ) THEN\n    RAISE EXCEPTION 'gift translation and image snapshot do not share one canonical revision'\n      USING ERRCODE = '23514';\n  END IF;\n\n  RETURN NULL;\nEND;\n$function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.validate_order_item_snapshot()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.schema_version = 2 THEN\n    PERFORM public.validate_checkout_order_item(NEW);\n    RETURN NULL;\n  END IF;\n  IF NOT EXISTS (\n    SELECT 1\n    FROM orders o\n    JOIN checkout_quote_lines q\n      ON q.checkout_session_id = o.checkout_session_id\n     AND q.checkout_quote_id = o.checkout_quote_id\n     AND q.cart_item_id = NEW.cart_item_id\n    JOIN support_intents si\n      ON si.id = NEW.support_intent_id\n     AND si.cart_item_id = NEW.cart_item_id\n    WHERE o.id = NEW.order_id\n      AND q.gift_variant_id = NEW.gift_variant_id\n      AND q.price_id = NEW.price_id\n      AND q.price_revision = NEW.price_revision\n      AND q.quantity = NEW.quantity\n      AND q.unit_amount_minor = NEW.unit_amount_minor\n      AND q.line_subtotal_minor = NEW.line_subtotal_minor\n      AND q.tax_amount_minor = NEW.tax_amount_minor\n      AND q.discount_amount_minor = NEW.discount_amount_minor\n      AND q.line_total_minor = NEW.line_total_minor\n      AND si.idol_id = NEW.idol_id\n      AND si.display_mode = NEW.display_mode\n      AND si.status IN ('CHECKOUT_LOCKED', 'CONVERTED', 'CANCELED')\n      AND o.currency = NEW.currency\n      AND o.presentation_locale = NEW.idol_translation_requested_locale\n      AND o.presentation_locale = NEW.idol_portrait_alt_requested_locale\n      AND o.presentation_locale = NEW.gift_translation_requested_locale\n      AND o.presentation_locale = NEW.gift_image_alt_requested_locale\n  ) THEN\n    RAISE EXCEPTION 'order item must reproduce its checkout quote and support intent'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT EXISTS (\n    SELECT 1\n    FROM prices p\n    JOIN gift_variants gv ON gv.id = p.gift_variant_id\n    JOIN orders o ON o.id = NEW.order_id\n    WHERE p.id = NEW.price_id\n      AND p.revision = NEW.price_revision\n      AND p.gift_variant_id = NEW.gift_variant_id\n      AND p.market = o.market\n      AND p.currency = NEW.currency\n      AND p.amount_minor = NEW.unit_amount_minor\n      AND p.status IN ('PUBLISHED', 'SUPERSEDED', 'ARCHIVED')\n      AND gv.gift_id = NEW.gift_id\n      AND EXISTS (\n        SELECT 1 FROM gift_variant_idol_eligibility eligibility\n        WHERE eligibility.gift_variant_id = NEW.gift_variant_id\n          AND eligibility.idol_id = NEW.idol_id\n      )\n  ) THEN\n    RAISE EXCEPTION 'order item price snapshot does not match canonical price revision'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT EXISTS (\n    SELECT 1\n    FROM idol_revision_translations translation\n    JOIN idol_revisions revision ON revision.id = translation.idol_revision_id\n    JOIN idols idol ON idol.id = revision.idol_id\n    JOIN idol_revision_media media\n      ON media.idol_revision_id = revision.id AND media.role = 'PORTRAIT'\n    JOIN media_assets asset ON asset.id = media.media_asset_id\n    JOIN media_metadata_revision_translations alt_translation\n      ON alt_translation.id = NEW.idol_portrait_alt_translation_revision_id\n     AND alt_translation.media_metadata_revision_id = media.media_metadata_revision_id\n    WHERE translation.id = NEW.idol_translation_revision_id\n      AND revision.idol_id = NEW.idol_id\n      AND revision.lifecycle IN ('PUBLISHED', 'SUPERSEDED', 'ARCHIVED')\n      AND idol.handle = NEW.idol_handle\n      AND translation.locale = NEW.idol_translation_resolved_locale\n      AND translation.display_name = NEW.idol_display_name\n      AND media.media_asset_id = NEW.idol_portrait_asset_id\n      AND media.media_metadata_revision_id = NEW.idol_portrait_metadata_revision_id\n      AND asset.checksum_sha256 = NEW.idol_portrait_checksum_sha256\n      AND asset.object_key = NEW.idol_portrait_object_key\n      AND alt_translation.locale = NEW.idol_portrait_alt_resolved_locale\n      AND alt_translation.alt = NEW.idol_portrait_alt\n  ) THEN\n    RAISE EXCEPTION 'idol translation and portrait snapshot do not share one canonical revision'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT EXISTS (\n    SELECT 1\n    FROM gift_revision_translations translation\n    JOIN gift_revisions revision ON revision.id = translation.gift_revision_id\n    JOIN gift_revision_media media\n      ON media.gift_revision_id = revision.id AND media.role = 'PRIMARY'\n    JOIN media_assets asset ON asset.id = media.media_asset_id\n    JOIN media_metadata_revision_translations alt_translation\n      ON alt_translation.id = NEW.gift_image_alt_translation_revision_id\n     AND alt_translation.media_metadata_revision_id = media.media_metadata_revision_id\n    WHERE translation.id = NEW.gift_translation_revision_id\n      AND revision.gift_id = NEW.gift_id\n      AND revision.lifecycle IN ('PUBLISHED', 'SUPERSEDED', 'ARCHIVED')\n      AND translation.locale = NEW.gift_translation_resolved_locale\n      AND translation.title = NEW.gift_title\n      AND media.media_asset_id = NEW.gift_image_asset_id\n      AND media.media_metadata_revision_id = NEW.gift_image_metadata_revision_id\n      AND asset.checksum_sha256 = NEW.gift_image_checksum_sha256\n      AND asset.object_key = NEW.gift_image_object_key\n      AND alt_translation.locale = NEW.gift_image_alt_resolved_locale\n      AND alt_translation.alt = NEW.gift_image_alt\n  ) THEN\n    RAISE EXCEPTION 'gift translation and image snapshot do not share one canonical revision'\n      USING ERRCODE = '23514';\n  END IF;\n\n  RETURN NULL;\nEND;\n$function$"
     },
     {
       "name": "validate_order_provider_cancel_evidence",

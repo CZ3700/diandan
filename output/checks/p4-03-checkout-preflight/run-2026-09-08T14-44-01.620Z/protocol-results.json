@@ -1,0 +1,1345 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "assertions": 1644,
+  "setupAssertions": 5760,
+  "setupRequests": 1989,
+  "protocol": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "cases": [
+      {
+        "name": "authorization-and-input",
+        "status": "PASS"
+      },
+      {
+        "name": "historical-language",
+        "locale": "en",
+        "status": "PASS",
+        "lines": 3,
+        "fulfillments": 3,
+        "orderEvents": 2,
+        "checkoutReceipts": 1,
+        "checkoutOutboxEvents": 1,
+        "fulfillmentOutboxEvents": 3,
+        "reservations": 0,
+        "paymentAttempts": 0
+      },
+      {
+        "name": "historical-language",
+        "locale": "zh-CN",
+        "status": "PASS",
+        "lines": 3,
+        "fulfillments": 3,
+        "orderEvents": 2,
+        "checkoutReceipts": 1,
+        "checkoutOutboxEvents": 1,
+        "fulfillmentOutboxEvents": 3,
+        "reservations": 0,
+        "paymentAttempts": 0
+      },
+      {
+        "name": "historical-language",
+        "locale": "th",
+        "status": "PASS",
+        "lines": 3,
+        "fulfillments": 3,
+        "orderEvents": 2,
+        "checkoutReceipts": 1,
+        "checkoutOutboxEvents": 1,
+        "fulfillmentOutboxEvents": 3,
+        "reservations": 0,
+        "paymentAttempts": 0
+      },
+      {
+        "name": "historical-language",
+        "locale": "vi",
+        "status": "PASS",
+        "lines": 3,
+        "fulfillments": 3,
+        "orderEvents": 2,
+        "checkoutReceipts": 1,
+        "checkoutOutboxEvents": 1,
+        "fulfillmentOutboxEvents": 3,
+        "reservations": 0,
+        "paymentAttempts": 0
+      },
+      {
+        "name": "historical-language",
+        "locale": "ja",
+        "status": "PASS",
+        "lines": 3,
+        "fulfillments": 3,
+        "orderEvents": 2,
+        "checkoutReceipts": 1,
+        "checkoutOutboxEvents": 1,
+        "fulfillmentOutboxEvents": 3,
+        "reservations": 0,
+        "paymentAttempts": 0
+      },
+      {
+        "name": "historical-language",
+        "locale": "es",
+        "status": "PASS",
+        "lines": 3,
+        "fulfillments": 3,
+        "orderEvents": 2,
+        "checkoutReceipts": 1,
+        "checkoutOutboxEvents": 1,
+        "fulfillmentOutboxEvents": 3,
+        "reservations": 0,
+        "paymentAttempts": 0
+      },
+      {
+        "name": "historical-language",
+        "locale": "pt",
+        "status": "PASS",
+        "lines": 3,
+        "fulfillments": 3,
+        "orderEvents": 2,
+        "checkoutReceipts": 1,
+        "checkoutOutboxEvents": 1,
+        "fulfillmentOutboxEvents": 3,
+        "reservations": 0,
+        "paymentAttempts": 0
+      },
+      {
+        "name": "concurrent-stock-and-multi-recipient",
+        "status": "PASS"
+      },
+      {
+        "name": "same-key-concurrency-and-recovery",
+        "status": "PASS"
+      },
+      {
+        "name": "actual-network-disconnect",
+        "status": "PASS",
+        "events": [
+          {
+            "upstreamStatus": 200,
+            "disconnected": true,
+            "downstreamHeadersSent": false
+          }
+        ]
+      },
+      {
+        "name": "expiry-and-kms-failure",
+        "status": "PASS"
+      },
+      {
+        "name": "artist-paused-after-observation",
+        "status": "PASS"
+      },
+      {
+        "name": "gift-paused-after-observation",
+        "status": "PASS"
+      },
+      {
+        "name": "stock-removed-after-observation",
+        "status": "PASS"
+      },
+      {
+        "name": "new-publications-require-review",
+        "status": "PASS"
+      },
+      {
+        "name": "price-change-and-daily-original",
+        "status": "PASS"
+      },
+      {
+        "name": "numeric-price-change",
+        "status": "PASS",
+        "oldAmount": 1500,
+        "newAmount": 1637
+      },
+      {
+        "name": "all-seven-historical-snapshots-immutable",
+        "status": "PASS",
+        "count": 7
+      },
+      {
+        "name": "independent-cookie-idempotency-scope",
+        "status": "PASS"
+      }
+    ],
+    "requests": 195,
+    "requestEvents": [
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "NO_COOKIE",
+        "status": 401,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "INVALID_AUTHORIZATION",
+        "status": 403,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "INVALID_AUTHORIZATION",
+        "status": 403,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "INVALID_AUTHORIZATION",
+        "status": 403,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "MISSING_IDEMPOTENCY",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "NO_COOKIE",
+        "status": 401,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "INVALID_AUTHORIZATION",
+        "status": 403,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "INVALID_AUTHORIZATION",
+        "status": 403,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "INVALID_AUTHORIZATION",
+        "status": 403,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "MISSING_IDEMPOTENCY",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "REJECT_CLIENT_AUTHORITY",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "REJECT_CLIENT_AUTHORITY",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "REJECT_CLIENT_AUTHORITY",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "REJECT_CLIENT_AUTHORITY",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "REJECT_CLIENT_AUTHORITY",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "REJECT_CLIENT_AUTHORITY",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "REJECT_CLIENT_AUTHORITY",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "REJECT_CLIENT_AUTHORITY",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "UNCONFIRMED_POLICY",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "WRONG_POLICY_REVISION",
+        "status": 409,
+        "code": "POLICY_ACCEPTANCE_REQUIRED"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "WRONG_CART_VERSION",
+        "status": 409,
+        "code": "VERSION_CONFLICT"
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 404,
+        "code": "PREFLIGHT_NOT_FOUND"
+      },
+      {
+        "category": "STATUS",
+        "status": 404,
+        "code": "CHECKOUT_NOT_FOUND"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "REJECT_STATUS_LOCALE_REWRITE",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "STATUS",
+        "status": 404,
+        "code": "CHECKOUT_NOT_FOUND"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "REJECT_STATUS_LOCALE_REWRITE",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "STATUS",
+        "status": 404,
+        "code": "CHECKOUT_NOT_FOUND"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "REJECT_STATUS_LOCALE_REWRITE",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "STATUS",
+        "status": 404,
+        "code": "CHECKOUT_NOT_FOUND"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "REJECT_STATUS_LOCALE_REWRITE",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "STATUS",
+        "status": 404,
+        "code": "CHECKOUT_NOT_FOUND"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "REJECT_STATUS_LOCALE_REWRITE",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "STATUS",
+        "status": 404,
+        "code": "CHECKOUT_NOT_FOUND"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "REJECT_STATUS_LOCALE_REWRITE",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "STATUS",
+        "status": 404,
+        "code": "CHECKOUT_NOT_FOUND"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "REJECT_STATUS_LOCALE_REWRITE",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "STATUS",
+        "status": 404,
+        "code": "CHECKOUT_NOT_FOUND"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 409,
+        "code": "INSUFFICIENT_STOCK"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 409,
+        "code": "IDEMPOTENCY_CONFLICT"
+      },
+      {
+        "category": "CREATE",
+        "status": 409,
+        "code": "CART_LOCKED"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 503,
+        "code": "TEMPORARY_UNAVAILABLE"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 409,
+        "code": "PREFLIGHT_EXPIRED"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 409,
+        "code": "IDOL_UNAVAILABLE"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 409,
+        "code": "GIFT_UNAVAILABLE"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 409,
+        "code": "INSUFFICIENT_STOCK"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 409,
+        "code": "PREFLIGHT_CHANGED"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 409,
+        "code": "POLICY_CHANGED"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 409,
+        "code": "PREFLIGHT_CHANGED"
+      },
+      {
+        "category": "VALIDATE",
+        "status": 409,
+        "code": "PRICE_CHANGED"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 409,
+        "code": "PREFLIGHT_CHANGED"
+      },
+      {
+        "category": "VALIDATE",
+        "status": 409,
+        "code": "PRICE_CHANGED"
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_CHANGED_CART_PRICE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CONFIRM_CHANGED_CART_PRICE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "STATUS",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      }
+    ],
+    "counts": {
+      "orders": 17,
+      "sessions": 17,
+      "quote_lines": 32,
+      "order_items": 32,
+      "contacts": 17,
+      "acceptances": 68,
+      "fulfillments": 32,
+      "reservations": 3,
+      "checkout_receipts": 17,
+      "checkout_outbox": 17,
+      "payment_attempts": 0
+    },
+    "actualNetworkDisconnect": true,
+    "browserEvidence": false,
+    "awsKmsEvidence": false,
+    "paymentProviderEvidence": false
+  },
+  "rollback": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "assertions": 8,
+    "scope": "Accepted checkout blocks destructive 0025 rollback; 21 table counts and hashes remain exact",
+    "before": {
+      "carts": {
+        "count": 28,
+        "sha256": "f10413c4be9b153f0c07bb2be436faea1458b150faa819e4e5a081bfe2a176e0"
+      },
+      "cart_items": {
+        "count": 43,
+        "sha256": "1d8dc20588c629781db08ee8ca52251da40846d34da2f6eaf1efbe29e3721689"
+      },
+      "support_intents": {
+        "count": 43,
+        "sha256": "1285ecde49a24476acb0e040e0d76bd6c1f3f0e28d08df6ed0872a7122a959ab"
+      },
+      "customer_contacts": {
+        "count": 17,
+        "sha256": "31b7c20f080f75b75e49a605479903c4089dd606b5601fc66fd0330e657b15b9"
+      },
+      "checkout_preflight_observations": {
+        "count": 28,
+        "sha256": "b59beb48f3fc8837553680d93f4fc1cfda02958190b56f9a3496a85b8fc825eb"
+      },
+      "checkout_preflight_receipts": {
+        "count": 17,
+        "sha256": "eb8aff194b52fb7836ca21cb6733592ba6b77ace021e90f05be7eced53560240"
+      },
+      "checkout_outbox_events": {
+        "count": 17,
+        "sha256": "b5e8bf3fa621ccf108887715cd8e2f9cd9791f08db4bda331353aacf1ee8853a"
+      },
+      "checkout_sessions": {
+        "count": 17,
+        "sha256": "12fa6276adc4a8b6dabea9987e03b90eb4b8f2058d9b94108712a3ace70cf8f3"
+      },
+      "checkout_quote_lines": {
+        "count": 32,
+        "sha256": "ba2cb1e448d3a46999b08338d611e444c453150c768adab47af486cd9c2c646e"
+      },
+      "orders": {
+        "count": 17,
+        "sha256": "d7dc76f3352c529a607ffc1d79833eb71bd3a9f38a30b7748b09e01fb0778823"
+      },
+      "order_items": {
+        "count": 32,
+        "sha256": "8ea09f37494497598a00ba895904884f43ba1a0dcf1c819c5bc4a52d98035575"
+      },
+      "order_events": {
+        "count": 34,
+        "sha256": "03c509dd2e2657fa48a14aa1dcdef267817b4187c3876b124d851fc7722afc3b"
+      },
+      "policy_acceptances": {
+        "count": 68,
+        "sha256": "6da21673e57307c5d2c259a3831f17763a406cc0e86f3f1e2af6bcc2ac5e162d"
+      },
+      "fulfillments": {
+        "count": 32,
+        "sha256": "e046f4f5f4a5e1c000e852b67ca91b5523e83badfd3e2791b048c69d5a3b4d3e"
+      },
+      "fulfillment_events": {
+        "count": 32,
+        "sha256": "97720e883ffe5352f4e28d08bf202045e9a26c375318631228ecb826212b161e"
+      },
+      "inventory_balances": {
+        "count": 5,
+        "sha256": "073054dc2bdd0c8ec8583888c3e0870cc0c43e8ea5e7822475bc5e721068fc4f"
+      },
+      "inventory_reservations": {
+        "count": 3,
+        "sha256": "c7566eb674dda6f9215609808a611ee283779f9021dda4cef4a0efc72722cbd0"
+      },
+      "inventory_ledger": {
+        "count": 13,
+        "sha256": "e34a3a3903c5389531c7bfc2838efb1e0dbd4c658dd0f3f8c77a2e15236541a9"
+      },
+      "idempotency_records": {
+        "count": 1150,
+        "sha256": "a8738413e7f6aca90841a210fec3c603b21dd20df18c89c9e0579c9c15ae1e52"
+      },
+      "outbox_events": {
+        "count": 401,
+        "sha256": "7824ca5111cb6936c6887e99d293184735a87fc2497dca7db5685706bcf2a7af"
+      },
+      "schema_migrations": {
+        "count": 25,
+        "sha256": "07c0cbd05b6c01b566de052107bac2eaa3a2c02992d61e5db2555a8cbae2a00d"
+      }
+    },
+    "after": {
+      "carts": {
+        "count": 28,
+        "sha256": "f10413c4be9b153f0c07bb2be436faea1458b150faa819e4e5a081bfe2a176e0"
+      },
+      "cart_items": {
+        "count": 43,
+        "sha256": "1d8dc20588c629781db08ee8ca52251da40846d34da2f6eaf1efbe29e3721689"
+      },
+      "support_intents": {
+        "count": 43,
+        "sha256": "1285ecde49a24476acb0e040e0d76bd6c1f3f0e28d08df6ed0872a7122a959ab"
+      },
+      "customer_contacts": {
+        "count": 17,
+        "sha256": "31b7c20f080f75b75e49a605479903c4089dd606b5601fc66fd0330e657b15b9"
+      },
+      "checkout_preflight_observations": {
+        "count": 28,
+        "sha256": "b59beb48f3fc8837553680d93f4fc1cfda02958190b56f9a3496a85b8fc825eb"
+      },
+      "checkout_preflight_receipts": {
+        "count": 17,
+        "sha256": "eb8aff194b52fb7836ca21cb6733592ba6b77ace021e90f05be7eced53560240"
+      },
+      "checkout_outbox_events": {
+        "count": 17,
+        "sha256": "b5e8bf3fa621ccf108887715cd8e2f9cd9791f08db4bda331353aacf1ee8853a"
+      },
+      "checkout_sessions": {
+        "count": 17,
+        "sha256": "12fa6276adc4a8b6dabea9987e03b90eb4b8f2058d9b94108712a3ace70cf8f3"
+      },
+      "checkout_quote_lines": {
+        "count": 32,
+        "sha256": "ba2cb1e448d3a46999b08338d611e444c453150c768adab47af486cd9c2c646e"
+      },
+      "orders": {
+        "count": 17,
+        "sha256": "d7dc76f3352c529a607ffc1d79833eb71bd3a9f38a30b7748b09e01fb0778823"
+      },
+      "order_items": {
+        "count": 32,
+        "sha256": "8ea09f37494497598a00ba895904884f43ba1a0dcf1c819c5bc4a52d98035575"
+      },
+      "order_events": {
+        "count": 34,
+        "sha256": "03c509dd2e2657fa48a14aa1dcdef267817b4187c3876b124d851fc7722afc3b"
+      },
+      "policy_acceptances": {
+        "count": 68,
+        "sha256": "6da21673e57307c5d2c259a3831f17763a406cc0e86f3f1e2af6bcc2ac5e162d"
+      },
+      "fulfillments": {
+        "count": 32,
+        "sha256": "e046f4f5f4a5e1c000e852b67ca91b5523e83badfd3e2791b048c69d5a3b4d3e"
+      },
+      "fulfillment_events": {
+        "count": 32,
+        "sha256": "97720e883ffe5352f4e28d08bf202045e9a26c375318631228ecb826212b161e"
+      },
+      "inventory_balances": {
+        "count": 5,
+        "sha256": "073054dc2bdd0c8ec8583888c3e0870cc0c43e8ea5e7822475bc5e721068fc4f"
+      },
+      "inventory_reservations": {
+        "count": 3,
+        "sha256": "c7566eb674dda6f9215609808a611ee283779f9021dda4cef4a0efc72722cbd0"
+      },
+      "inventory_ledger": {
+        "count": 13,
+        "sha256": "e34a3a3903c5389531c7bfc2838efb1e0dbd4c658dd0f3f8c77a2e15236541a9"
+      },
+      "idempotency_records": {
+        "count": 1150,
+        "sha256": "a8738413e7f6aca90841a210fec3c603b21dd20df18c89c9e0579c9c15ae1e52"
+      },
+      "outbox_events": {
+        "count": 401,
+        "sha256": "7824ca5111cb6936c6887e99d293184735a87fc2497dca7db5685706bcf2a7af"
+      },
+      "schema_migrations": {
+        "count": 25,
+        "sha256": "07c0cbd05b6c01b566de052107bac2eaa3a2c02992d61e5db2555a8cbae2a00d"
+      }
+    }
+  },
+  "actualPostgres": true,
+  "actualTlsS3": true,
+  "actualKmsAdapter": true,
+  "actualAwsKms": false,
+  "browserEvidence": false,
+  "paymentProviderEvidence": false
+}

@@ -303,6 +303,9 @@ importers:
       '@fan-support/contracts':
         specifier: workspace:*
         version: link:../contracts
+      '@fan-support/domain':
+        specifier: workspace:*
+        version: link:../domain
       '@fan-support/key-management-port':
         specifier: workspace:*
         version: link:../key-management-port

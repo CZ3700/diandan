@@ -323,7 +323,10 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/cart/items",
     "/api/v1/cart/items/{itemId}",
     "/api/v1/cart/items/{itemId}/editor",
+    "/api/v1/cart/validate",
     "/api/v1/carts",
+    "/api/v1/checkout/sessions",
+    "/api/v1/checkout/sessions/{checkoutSessionId}/status",
     "/api/v1/content-review-preview/read",
     "/api/v1/gift-content/{handle}",
     "/api/v1/gifts",
@@ -482,6 +485,9 @@ test("marks every registered top-level contract with an explicit version policy"
     "$defs"
   ] as JsonObject;
   const unversionedValueObjects = new Set([
+    "CheckoutPolicyAcceptance",
+    "CheckoutEncryptedContact",
+    "CheckoutInventoryAssignment",
     "ManagementCenterPrice",
     "ManagementCenterInventory",
     "ManagementCenterIntent",

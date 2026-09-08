@@ -1,6 +1,6 @@
 # P2-04 UI composite browser verification
 
-Generated: 2026-09-08T12:51:13.488Z
+Generated: 2026-09-08T14:14:42.638Z
 
 ## Outcome
 
@@ -8,7 +8,7 @@ Generated: 2026-09-08T12:51:13.488Z
 - Screenshots: 18
 - Axe scans: 10; critical/serious blocking findings: 0
 - Native Chrome zoom: 200.0% detected for requested 200%
-- Source fingerprint: f45bc16b36996ba4eb5ab174c837a99fe01a7b32195c1ab5ee1e073f34010c30 (p2-04-render-inputs-v1)
+- Source fingerprint: d1a680addabe1b5e15aed8fc7fdc2cf63cb5877b8cb22e6f4580e7b384e38d47 (p2-04-render-inputs-v1)
 
 ## Runtime gates
 

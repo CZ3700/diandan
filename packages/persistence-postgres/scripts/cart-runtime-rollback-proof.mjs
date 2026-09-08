@@ -50,8 +50,17 @@ export async function verifyCartRuntimeRollbackProtection({
     ).rows[0]?.version;
     assert.equal(
       head,
-      "0024",
+      "0025",
       "rollback proof requires the exact current migration",
+    );
+    const checkoutDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0025" },
+    });
+    assert.deepEqual(
+      [checkoutDown.revertedVersions, checkoutDown.currentVersion],
+      [["0025"], "0024"],
     );
     const editCounts = (
       await client.query(
@@ -163,8 +172,8 @@ export async function verifyCartRuntimeRollbackProtection({
     });
     assert.equal(
       restored.currentVersion,
-      "0024",
-      "restore the empty edit migration after the exact legacy rollback proof",
+      "0025",
+      "restore the empty edit and checkout migrations after the exact legacy rollback proof",
     );
     return {
       schemaVersion: 1,
@@ -177,7 +186,7 @@ export async function verifyCartRuntimeRollbackProtection({
       ...(mode === "DYNAMIC"
         ? { dynamicOnlyIntents: count }
         : { pendingIntents: count }),
-      assertions: mode === "DYNAMIC" ? 10 : 11,
+      assertions: mode === "DYNAMIC" ? 11 : 12,
       before,
       after,
     };

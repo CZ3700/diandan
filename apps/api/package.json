@@ -15,6 +15,7 @@
     }
   },
   "scripts": {
+    "test:postgres:checkout-preflight": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/checkout-preflight-*.test.mjs && node ./scripts/checkout-preflight-http.mjs",
     "build": "tsc -p tsconfig.build.json",
     "dev": "tsx watch src/main.ts",
     "start": "node dist/main.js",

@@ -1,3 +1,8 @@
+import { createCheckoutPreflightRepository } from "./checkout-preflight-repository.js";
+import type {
+  CheckoutPreflightRepositories,
+  CheckoutPreflightTransactionManager,
+} from "@fan-support/persistence-port";
 import { createCartEditRepository } from "./cart-edit-repository.js";
 import type {
   CartEditRepositories,
@@ -142,6 +147,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly checkoutPreflightTransactionManager: CheckoutPreflightTransactionManager;
   readonly cartEditTransactionManager: CartEditTransactionManager;
   readonly cartRuntimeTransactionManager: CartRuntimeTransactionManager;
   readonly managementCenterTransactionManager: ManagementCenterTransactionManager;
@@ -295,6 +301,24 @@ export function createPostgresPersistenceWithPoolFactory(
       };
     },
   });
+  const checkoutPreflightRunner =
+    createTransactionRunner<CheckoutPreflightRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => {
+        const database = createPostgresQueryLayer(client as NodePgClient);
+        return {
+          cartRuntime: createCartRuntimeRepository(client, scope),
+          checkoutPreflight: createCheckoutPreflightRepository(
+            client,
+            scope,
+            options!.catalogPublicMediaBaseUrl!,
+          ),
+          inventory: createInventoryRepository(database, scope),
+          idempotency: createIdempotencyRepository(database, scope),
+          outbox: createOutboxRepository(database, scope),
+        };
+      },
+    });
   const cartRuntimeRunner = createTransactionRunner<CartRuntimeRepositories>({
     acquireClient: async () => pool.connect(),
     createRepositories: (client, scope) => {
@@ -952,6 +976,22 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return publishedContentRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    checkoutPreflightTransactionManager: {
+      async runInCheckoutPreflightTransaction(work) {
+        if (
+          lifecycle !== "OPEN" ||
+          options?.catalogPublicMediaBaseUrl === undefined
+        )
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return checkoutPreflightRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
           work,
         );

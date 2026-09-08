@@ -1,4 +1,46 @@
 import {
+  checkoutTranslationSnapshotSchema,
+  checkoutMediaSnapshotSchema,
+  checkoutPolicyAcceptanceSchema,
+  checkoutPreflightValidateCommandSchema,
+  checkoutPreflightCreateCommandSchema,
+  checkoutPreflightReadCommandSchema,
+  checkoutPreflightCommandSchema,
+  checkoutPreflightFailureSchema,
+  checkoutPreflightValidateRequestSchema,
+  checkoutPreflightCreateRequestSchema,
+  checkoutPreflightReadRequestSchema,
+} from "./checkout-preflight.js";
+import {
+  checkoutPreflightLoadCurrentCommandSchema,
+  checkoutPreflightLineFactsSchema,
+  checkoutPreflightPolicyFactsSchema,
+  checkoutPreflightInventoryFactsSchema,
+  checkoutPreflightConsentSchema,
+  checkoutPreflightCurrentSchema,
+  checkoutPreflightObservationSchema,
+  checkoutPreflightSaveCommandSchema,
+  checkoutPreflightFindCommandSchema,
+  checkoutPreflightReadSessionCommandSchema,
+  checkoutEncryptedContactSchema,
+  checkoutPreflightCommitCommandSchema,
+  checkoutPreflightReceiptSchema,
+  checkoutPreflightSessionRecordSchema,
+} from "./checkout-preflight-internal.js";
+import {
+  checkoutPreflightPublicLineSchema,
+  checkoutPreflightPublicPolicySchema,
+  checkoutPreflightViewSchema,
+  checkoutSessionViewSchema,
+  checkoutPreflightResponseSchema,
+} from "./checkout-preflight-public.js";
+import {
+  checkoutInventoryAssignmentSchema,
+  checkoutInventorySelectionSchema,
+  checkoutInventoryPlanCommandSchema,
+  checkoutInventoryPlanSchema,
+} from "./checkout-preflight-inventory.js";
+import {
   cartEditUpdateCommandSchema,
   cartEditRemoveCommandSchema,
   cartEditorReadCommandSchema,
@@ -589,6 +631,9 @@ export type ContractRegistration = Readonly<{
 // Scalars and embedded snapshot value objects follow their versioned parent;
 // they must never be used as standalone API, event, or queue roots.
 const unversionedValueObjectNames = new Set([
+  "CheckoutPolicyAcceptance",
+  "CheckoutEncryptedContact",
+  "CheckoutInventoryAssignment",
   "ManagementCenterPrice",
   "ManagementCenterInventory",
   "ManagementCenterIntent",
@@ -604,6 +649,176 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "CheckoutTranslationSnapshot",
+    audience: "internal",
+    schema: checkoutTranslationSnapshotSchema,
+  },
+  {
+    name: "CheckoutMediaSnapshot",
+    audience: "internal",
+    schema: checkoutMediaSnapshotSchema,
+  },
+  {
+    name: "CheckoutPolicyAcceptance",
+    audience: "internal",
+    schema: checkoutPolicyAcceptanceSchema,
+  },
+  {
+    name: "CheckoutPreflightValidateCommand",
+    audience: "internal",
+    schema: checkoutPreflightValidateCommandSchema,
+  },
+  {
+    name: "CheckoutPreflightCreateCommand",
+    audience: "internal",
+    schema: checkoutPreflightCreateCommandSchema,
+  },
+  {
+    name: "CheckoutPreflightReadCommand",
+    audience: "internal",
+    schema: checkoutPreflightReadCommandSchema,
+  },
+  {
+    name: "CheckoutPreflightCommand",
+    audience: "internal",
+    schema: checkoutPreflightCommandSchema,
+  },
+  {
+    name: "CheckoutPreflightFailure",
+    audience: "public-http",
+    schema: checkoutPreflightFailureSchema,
+  },
+  {
+    name: "CheckoutPreflightValidateRequest",
+    audience: "public-http",
+    schema: checkoutPreflightValidateRequestSchema,
+  },
+  {
+    name: "CheckoutPreflightCreateRequest",
+    audience: "public-http",
+    schema: checkoutPreflightCreateRequestSchema,
+  },
+  {
+    name: "CheckoutPreflightReadRequest",
+    audience: "public-http",
+    schema: checkoutPreflightReadRequestSchema,
+  },
+  {
+    name: "CheckoutPreflightLoadCurrentCommand",
+    audience: "internal",
+    schema: checkoutPreflightLoadCurrentCommandSchema,
+  },
+  {
+    name: "CheckoutPreflightLineFacts",
+    audience: "internal",
+    schema: checkoutPreflightLineFactsSchema,
+  },
+  {
+    name: "CheckoutPreflightPolicyFacts",
+    audience: "internal",
+    schema: checkoutPreflightPolicyFactsSchema,
+  },
+  {
+    name: "CheckoutPreflightInventoryFacts",
+    audience: "internal",
+    schema: checkoutPreflightInventoryFactsSchema,
+  },
+  {
+    name: "CheckoutPreflightConsent",
+    audience: "internal",
+    schema: checkoutPreflightConsentSchema,
+  },
+  {
+    name: "CheckoutPreflightCurrent",
+    audience: "internal",
+    schema: checkoutPreflightCurrentSchema,
+  },
+  {
+    name: "CheckoutPreflightObservation",
+    audience: "internal",
+    schema: checkoutPreflightObservationSchema,
+  },
+  {
+    name: "CheckoutPreflightSaveCommand",
+    audience: "internal",
+    schema: checkoutPreflightSaveCommandSchema,
+  },
+  {
+    name: "CheckoutPreflightFindCommand",
+    audience: "internal",
+    schema: checkoutPreflightFindCommandSchema,
+  },
+  {
+    name: "CheckoutPreflightReadSessionCommand",
+    audience: "internal",
+    schema: checkoutPreflightReadSessionCommandSchema,
+  },
+  {
+    name: "CheckoutEncryptedContact",
+    audience: "internal",
+    schema: checkoutEncryptedContactSchema,
+  },
+  {
+    name: "CheckoutPreflightCommitCommand",
+    audience: "internal",
+    schema: checkoutPreflightCommitCommandSchema,
+  },
+  {
+    name: "CheckoutPreflightReceipt",
+    audience: "internal",
+    schema: checkoutPreflightReceiptSchema,
+  },
+  {
+    name: "CheckoutPreflightSessionRecord",
+    audience: "internal",
+    schema: checkoutPreflightSessionRecordSchema,
+  },
+  {
+    name: "CheckoutPreflightPublicLine",
+    audience: "public-http",
+    schema: checkoutPreflightPublicLineSchema,
+  },
+  {
+    name: "CheckoutPreflightPublicPolicy",
+    audience: "public-http",
+    schema: checkoutPreflightPublicPolicySchema,
+  },
+  {
+    name: "CheckoutPreflightView",
+    audience: "public-http",
+    schema: checkoutPreflightViewSchema,
+  },
+  {
+    name: "CheckoutSessionView",
+    audience: "public-http",
+    schema: checkoutSessionViewSchema,
+  },
+  {
+    name: "CheckoutPreflightResponse",
+    audience: "public-http",
+    schema: checkoutPreflightResponseSchema,
+  },
+  {
+    name: "CheckoutInventoryAssignment",
+    audience: "internal",
+    schema: checkoutInventoryAssignmentSchema,
+  },
+  {
+    name: "CheckoutInventorySelection",
+    audience: "internal",
+    schema: checkoutInventorySelectionSchema,
+  },
+  {
+    name: "CheckoutInventoryPlanCommand",
+    audience: "internal",
+    schema: checkoutInventoryPlanCommandSchema,
+  },
+  {
+    name: "CheckoutInventoryPlan",
+    audience: "internal",
+    schema: checkoutInventoryPlanSchema,
+  },
   {
     name: "CartEditUpdateCommand",
     audience: "internal",

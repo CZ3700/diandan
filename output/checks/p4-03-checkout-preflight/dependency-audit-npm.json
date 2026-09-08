@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "corepack",
+    "pnpm",
+    "audit",
+    "--audit-level=high",
+    "--registry=https://registry.npmjs.org"
+  ],
+  "startedAt": "2026-09-08T14:12:25.481Z",
+  "endedAt": "2026-09-08T14:12:26.936Z",
+  "durationSeconds": 1.454726041,
+  "code": 0,
+  "signal": null
+}

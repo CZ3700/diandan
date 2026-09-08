@@ -25,3 +25,8 @@ export * from "./storefront-homepage.js";
 export * from "./storefront-seo.js";
 
 export * from "./daily-publication.js";
+
+export {
+  canonicalPublicationValue,
+  hashPublicationValue,
+} from "./publication-manifest-canonical.js";

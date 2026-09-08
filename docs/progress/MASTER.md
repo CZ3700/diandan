@@ -3,9 +3,9 @@
 > 最后更新：2026-09-08
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3（验收待续）、Phase 4（ADR-013 本地开发）
-> 当前任务：P4-02 DONE；P4-03 READY、Lane A 无 executor；P3-06 保留 IN_PROGRESS、验收待续且无 executor
-> 下一入口：领取 P4-03，实施 checkout preflight、报价/金额快照、库存预占与待付款订单
-> 当前检查点：P4-02 本地验收完成。七语购物车真实加购/编辑、16cases/40PNG/30axe零violation与真实PG/API/S3通过；旧并发失败保留，原门按同源前缀+完整后缀覆盖。1799最终输入一致，Next自动类型导入暂态与恢复已记录；只本地提交。
+> 当前任务：P4-03 DONE，Lane A 已释放；P4-04 READY、无 executor；P3-06 保留 IN_PROGRESS、验收待续且无 executor
+> 下一入口：P4-04 支付适配、托管付款动作、幂等创建 Saga 与 reconcile 接入
+> 当前检查点：P4-03 本地验收完成。真实预检/待付款订单20cases/195请求/7403断言及8项拒退通过；原单条全仓check exit0，1856实现输入一致，非作者ACCEPT。七语历史、库存并发、改价重确认与断线恢复已验；只本地提交，尚未接通PSP。
 
 ## 1. 开工入口
 
@@ -17,18 +17,18 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 与 P4-02 已完成并释放对应 Lane；下一任务 P4-03 为 READY，Lane A 无 executor。正式品牌资产与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；当前 P4-04 READY、无 executor。正式品牌资产与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 23 |
+| PENDING | 22 |
 | READY | 1 |
 | IN_PROGRESS | 1 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
-| DONE | 24 |
+| DONE | 25 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -79,6 +79,12 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-08 P4-03 DONE：服务端预检、当前事实二次重验、准确政策确认、订单/金额/语言历史快照、联系人加密、真实库存预占、待付款订单与同键恢复完成。最终真实协议20cases/195请求/7403断言（5760准备+1643协议）及8项拒退通过；原单条完整check 1442.426秒exit0，25迁移/165表、全部原PG/API/S3/浏览器静态门及最终质量门通过。1856冻结源一致、2267旧未跟踪文件保留、48旧SQL与468旧合同保持；非作者ACCEPT、S.U.P.E.R10项与secret/high audit通过。前四轮失败/窄修、Next暂态归档恢复及缓存准确保留。详见phase执行卡、`output/checks/p4-03-checkout-preflight/final-verification.md`；无PSP/新结算UI/生产发布结论。P4-04 READY，P3-06未完验收保持，总计25DONE/1READY/1IN_PROGRESS/22PENDING=49。
+
+2026-09-08 P4-03 REVIEW：完整真实下单协议20cases/195请求/7404断言及8项历史拒退通过，七语订单、并发库存、断线恢复、原车接受实际新价、报价到期与历史快照稳定完成。前四次失败及根因/夹具修复均保留，原数据库约束未弱化；1856实现输入冻结，原全仓check正在执行。当前24DONE/1REVIEW/1IN_PROGRESS/23PENDING=49，P3未完验收保留。详见phase执行卡和本轮final-verification。
+
+2026-09-08 从本地 `059dd9d` 领取 P4-03，Lane A 唯一 executor `/root`；实现结账预检、金额/语言快照、库存预占与待付款订单。24 DONE /2 IN_PROGRESS /23 PENDING =49，P3 未完验收保留；仅本地开发，详见 phase 执行登记。
 
 2026-09-08 P4-02 DONE：礼物实际加购、七语购物车抽屉/页、多艺人独立行、数量/删除/私密编辑、版本冲突与原key恢复完成。最终浏览器16cases/40PNG/30axe零violation（14incomplete保留），真实新cart5924断言含准备、33协议请求及独立拒退8项通过。旧0017资源并发23514首次失败保留，原样复验129PASS，冻结源的PG/API后缀与最终8项质量门全部通过，未称单条check exit0；Next自动声明两import暂态已归档恢复。最终1799字节/集合一致，2260旧未跟踪文件无变化，非作者终验ACCEPT、S.U.P.E.R10项与secret/high audit通过。详见 `output/checks/p4-02-cart-storefront/final-verification.md`；无支付/新真机/生产发布结论。P4-03 READY，P3-06未完验收保持，总计24DONE/1READY/1IN_PROGRESS/23PENDING=49。
 

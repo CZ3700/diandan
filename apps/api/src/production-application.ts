@@ -7,6 +7,7 @@ import {
 
 import { createApiApplication } from "./bootstrap.js";
 import { createOptionalCartRuntimeComposition } from "./cart-production.js";
+import { createOptionalCheckoutPreflightComposition } from "./checkout-composition.js";
 import {
   createCatalogDirectoryComposition,
   type CatalogDirectoryComposition,
@@ -28,6 +29,7 @@ export type ProductionApiApplicationOptions = Readonly<{
   logger: StructuredLogger;
   factories?: Readonly<{
     createCartComposition?: typeof createOptionalCartRuntimeComposition;
+    createCheckoutComposition?: typeof createOptionalCheckoutPreflightComposition;
     createApplication?: ApiApplicationFactory;
     createComposition?: ReliableEventsCompositionFactory;
     createCatalogComposition?: (
@@ -58,6 +60,7 @@ export async function createProductionApiApplication(
   let catalog: CatalogDirectoryComposition | undefined;
   let published: PublishedContentComposition | undefined;
   let cart: ReturnType<typeof createOptionalCartRuntimeComposition>;
+  let checkout: ReturnType<typeof createOptionalCheckoutPreflightComposition>;
   try {
     catalog = createCatalogComposition(environment, { logger: options.logger });
     published = (
@@ -68,8 +71,13 @@ export async function createProductionApiApplication(
       options.factories?.createCartComposition ??
       createOptionalCartRuntimeComposition
     )(environment);
+    checkout = (
+      options.factories?.createCheckoutComposition ??
+      createOptionalCheckoutPreflightComposition
+    )(environment);
     return await createApplication(environment, {
       ...(cart ?? {}),
+      ...(checkout ?? {}),
       logger: options.logger,
       paymentWebhookRoute: composition.paymentWebhookRoute,
       reliableEventsRuntime: composition.reliableEventsRuntime,
@@ -87,6 +95,7 @@ export async function createProductionApiApplication(
       Promise.resolve().then(() => catalog?.catalogDirectoryRuntime.stop()),
       Promise.resolve().then(() => published?.publishedContentRuntime.stop()),
       Promise.resolve().then(() => cart?.cartRuntime.stop()),
+      Promise.resolve().then(() => checkout?.checkoutPreflightRuntime.stop()),
     ]);
     throw error;
   }

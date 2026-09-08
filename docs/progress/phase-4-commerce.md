@@ -14,8 +14,8 @@
 |:--|:--|:--|:--|:--|
 | P4-01 | DONE | Codex `/root` | P1-03/04/05、P3-05 | 匿名 cart + presentation/fan-message locale + cart_item/support_intent 原子事务 |
 | P4-02 | DONE | Codex `/root` | P2-03/04、P4-01 | 七语真实加购/抽屉/页、数量/删除/私密编辑、冲突与同键恢复 |
-| P4-03 | READY | — | P4-01、P4-02 | Preflight/quote+amount + order presentation locale + per-object TranslationSnapshotRef + policy revision |
-| P4-04 | PENDING | — | P1-06、P4-03 | PaymentProvider/provider locale mapping/idempotent create Saga/hosted action/reconcile |
+| P4-03 | DONE | Codex `/root` | P4-01、P4-02 | Preflight/quote+amount + order presentation locale + per-object TranslationSnapshotRef + policy revision |
+| P4-04 | READY | — | P1-06、P4-03 | PaymentProvider/provider locale mapping/idempotent create Saga/hosted action/reconcile |
 | P4-05 | PENDING | — | P4-04 | Provider evidence/order/reservation/locale-preserving token exchange |
 | P4-06 | PENDING | — | P4-05、P1-06 | 七语言 Notification/fallback alert/expiry cleanup |
 
@@ -96,3 +96,30 @@
 - 一致性：1799最终输入集合与字节匹配冻结SHA315b79316cff1cd681f16113d2e4d0dc3a54c2afff40913a46c7d5579dc4bdac。原后台next dev曾仅改自动next-env两条类型导入，防漂移中止后已存暂态并精确恢复；不称全过程零漂移。2260原未跟踪文件逐SHA完整保留。非作者实际复核原命令全覆盖/源/七語浏览器/共享证据，ACCEPT；S.U.P.E.R10项PASS。
 - 证据入口：`output/checks/p4-02-cart-storefront/final-verification.md`、`gate-coverage.json`、`final-independent-review.md`；续作运行命令在 `docs/runbooks/cart-runtime.md`。旧资源并发首次23514确切根因仍未定位；旧环境时钟观测不能直接当成本次解释。七语人工译审、P3-06性能/人工运营/VoiceOver、正式资产，以及AWS/IAM、PSP、生产域名/真机/部署证据均不在本轮完成范围。
 - P4-02 DONE，释放Lane B；只解锁直接后继P4-03 READY、Lane A无executor。P3-06仍IN_PROGRESS/无executor，Phase3与Phase4保持ACTIVE。当前24DONE/1READY/1IN_PROGRESS/23PENDING=49。按用户偏好只创建本地检查点，不push/PR/merge。
+
+## P4-03 执行登记（2026-09-08）
+
+- Owner：Codex `/root`，Lane A 唯一 executor；开始 2026-09-08T13:33:34.260131+00:00，基线 `059dd9d`、干净跟踪工作区。按 ADR-013 领取唯一 READY 任务，分支 `codex/p4-03-checkout-preflight`。
+- 范围：服务端 checkout preflight、版本与五类 canonical 数据重验、不可变报价和订单金额、TRACKED 原子预占、按单/预售独立规则、待付款订单与各对象语言/媒体/政策快照、加密联系人、幂等和会话授权。支付能力与 PSP 留给 P4-04。
+- 顺序：合同/端口与失败测试先行，再按文件独占并行 Application、PG 和 API/协议；root 整合。独立审计冻结后才开始实现。
+- 验证：金额/过期/篡改/版本冲突、库存并发与回滚、政策与各对象语言历史不可变、私密信息隔离、真实 PG/HTTP、原有浏览器回归、format/lint/typecheck/build 与原整仓门；非作者复核和 S.U.P.E.R。
+- 边界：保留 P3-06 未完性能/人工验收；不引入实际支付、生产假设或虚假译审。只本地提交，不 push。现有未跟踪文件逐 SHA 存于 `output/checks/p4-03-checkout-preflight/initial-untracked.json`，不改动既有产物。
+
+### P4-03 REVIEW（2026-09-08T14:47:39Z）
+
+- 三个 Cookie 授权端点完成：服务端持久预检、明确政策确认后创建待付款订单、同车读取历史结算。KMS 在 SQL 事务外，最终事务重验当前内容/价格/库存/政策并原子保存报价、金额、各对象来源快照、联系人密文、库存账本/预占、履约事件、幂等回执及持久事件。无支付动作。
+- 第五轮原 HTTP 入口实际 exit0：20 cases、195 cart/checkout 请求、1644 协议 + 5760 准备 =7404 断言，另8项真实0025拒退；17订单/32行及履约/17加密联系人/3预占/68政策确认/17创建回执，零 payment attempt。七语历史、真实中文原文、新价1500→1637、原车明确确认新价、并发不超卖、断线同键恢复、3秒TEST报价前后历史读取均通过。
+- 前四次真实失败分别保留：canonical JSON 保存与哈希不一致、遗漏初始履约 Outbox、旧通用 Outbox 默认时间早于事件、测试政策复制保留了早于新 revision 的 effectiveAt。前三项按原约束修复并有效 RED→GREEN；第四项只修正常政策投稿夹具。没有删除检查或放松 SQL 守卫；自然时钟旧观测不作为本次根因。
+- 468旧合同根/旧OpenAPI保持；25迁移/165表真实往返、0001–0024原SQL逐字保持；原P2-04/05采集器顺序重新通过。新应用层465测试、PG时间回归19断言、原全消费者开发检查通过；全仓原单条 `pnpm check` 正在执行，待结果决定 DONE。
+- 1856实现输入冻结于 `output/checks/p4-03-checkout-preflight/source-final.json`，摘要 `cd848a5ab50fd8f629c5a668068acde7465295827133c0d84507d148b3f0c95e`。证据入口 `final-verification.md`、`http-independent-review.md`、`postgres-README.md`；`docs/runbooks/checkout-preflight.md` 记录恢复边界。Lane A 仍由 root 持有。
+
+## P4-03 验收完成（2026-09-08T15:16:46.209247+00:00）
+
+- 交付：服务端报价预检、准确政策确认、当前事实二次重验、不可变订单/金额/各对象语言来源快照、加密联系人、TRACKED 原子预占与按单/预售独立售卖、初始履约及持久事件、锁车/锁意图和同键恢复。前端付款入口与 PSP 仍属后续任务。
+- 最终实际协议：原全仓门中 20cases/195 cart-checkout 请求，5760准备+1643协议=7403断言（1902准备运营请求+87协议运营请求），另8项0025拒退；17未付款订单、32行与履约、17加密联系人、68政策确认、3真实预占、17创建回执与checkout事件、32原履约Outbox事件，零支付attempt。七语、中文源稿、真实改价1500→1637及原车明确确认、并发最后一件、断线恢复、实际到期与历史稳定均通过。第五轮7404仍保留，轮询自然计数差异没有删除用例。
+- 完整门：原单条 `mise exec node@24.20.0 -- corepack pnpm check` 于2026-09-08T15:11:42.141Z exit0，用时1442.426秒。真实25迁移/165表up/down/up、所有原PG/API/TLS S3/媒体423断言、原UI静态门、新Outbox时间19断言及checkout、format/lint/typecheck/test/build、31Node出口完整通过，无跳步或替代后缀。类型60/60（56缓存）、测试60/60（56缓存）、构建35/35（35缓存），按实际保留缓存范围。
+- 浏览器：原P2-04/05采集器exit0；16场景/18PNG/10axe零violation及4incomplete；8场景/22PNG/3axe保留原3项moderate与3incomplete，blocking0及physical-device门不变。没有本轮新结算UI或真机验收。
+- 保护与兼容：1856实现文件集合/字节与冻结SHA `cd848a5ab50fd8f629c5a668068acde7465295827133c0d84507d148b3f0c95e` 一致；2267原未跟踪文件完整不变；48旧SQL、468旧合同根及旧OpenAPI保持。原后台Next仅自动改写类型导入，暂态归档后精确恢复，未称全过程零漂移。
+- 收敛与终审：定向有效RED→GREEN、最小代码收敛、S.U.P.E.R10项及非作者ACCEPT；额外secret scan exit0（35.738秒）与high dependency audit通过。前四轮实际失败、有效回归/夹具错误和旧未定位间歇风险均保留，不用旧时钟观测替代根因。证据 `output/checks/p4-03-checkout-preflight/final-verification.md`、`final-independent-review.md`、`gate-coverage.json`；续作入口 `docs/runbooks/checkout-preflight.md`。
+- 范围：TEST加密履约配置与本地KMS adapter不代表真实配送审批/AWS KMS；没有PSP收款、正式资产/译审、云或生产发布。本轮不关闭P3-06未完性能/人工验收。
+- P4-03 DONE并释放Lane A；只解锁直接后继P4-04 READY、无executor。P3-06仍IN_PROGRESS且无executor，Phase3/4保持ACTIVE。总计25DONE/1READY/1IN_PROGRESS/22PENDING=49。按用户偏好仅本地Git检查点，不push/PR/merge。

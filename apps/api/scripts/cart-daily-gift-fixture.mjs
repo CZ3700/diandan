@@ -105,6 +105,12 @@ export async function createCartDailyGiftFixture({
   content,
   fixtures,
   check,
+  presentation = {
+    sourceLocale: "en",
+    name: "Daily Cart Fixture",
+    description:
+      "Synthetic daily gift for actual cart recipient-rule verification.",
+  },
 }) {
   const scope = await configureCartDailyGiftFixture({
     client,
@@ -173,12 +179,11 @@ export async function createCartDailyGiftFixture({
       idempotencyKey: randomUUID(),
       intent: {
         kind: "SAVE_GIFT",
-        sourceLocale: "en",
+        sourceLocale: presentation.sourceLocale,
         id: null,
         expectedVersion: 0,
-        name: "Daily Cart Fixture",
-        description:
-          "Synthetic daily gift for actual cart recipient-rule verification.",
+        name: presentation.name,
+        description: presentation.description,
         image: { uploadId: upload.uploadId },
         giftKind: "PHYSICAL",
         category: "FLOWERS",

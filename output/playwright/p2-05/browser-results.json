@@ -322,11 +322,11 @@
       "Noto Sans Variable"
     ]
   },
-  "generatedAt": "2026-09-08T12:52:01.628Z",
+  "generatedAt": "2026-09-08T14:21:05.022Z",
   "git": {
     "after": {
-      "sha": "c6ca6ba88bbbf37bbb1d2d5c6f3f4f656c71210a",
-      "sourceFingerprint": "0e389ae1d8208feff7149a54ecb67efa0bd4ff9bab162784fae729379ce22855",
+      "sha": "059dd9d70ab9212db9670a0e2fc47fcef460dbb0",
+      "sourceFingerprint": "19ece6dd51dfd197bafb2aefcb4262d488ad70ee6f61555d2427b104bad862cf",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -1715,7 +1715,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "a99fb50485c8de54f8cee2c90ecef8427e791e936bee911493f8b4b57bb6bffb"
+          "sha256": "13d790b276896b4d10f3e46a4f5905db2e97fa3be7d1a0cb8f7aa600ba27a4a2"
         },
         {
           "path": "packages/config/package.json",
@@ -1787,11 +1787,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "04ea15bf1bd73bfc140f00a4a5f1b3c58ec86c5b0692af6ab65fe7568744994f"
+          "sha256": "5d478bd1051804e9f5b190f7910fc828599b36c619fe14fbc5e20aa8c250ace3"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "947dd465645e7d114d6274bb2e22af7cf80dd3aea97b8782732d341093a4b42b"
+          "sha256": "1b5e43b9a3f4c37d4853b1e9162de1181afe24e7f2ea2569798aa14f0d1b60de"
         },
         {
           "path": "packages/contracts/package.json",
@@ -1847,11 +1847,11 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "fcbd2e70590c011b66435664b0a3a9ad5ea23b7e85ec95da3857df94b2877f20"
+          "sha256": "85ac54bd5b2f828ec3af04dc4bcef2f7de0a448d3a2be55433e5f5fd3917ef21"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "d2ef7f6f2415bc6d8e41ecaea041aab61cb2277a8c58277368e4d2d4bb25e8ac"
+          "sha256": "677f8abae480c70d28244a96764b166f745961c1919d49f4619512a6d2a0ca56"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -1859,7 +1859,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "c7438d679b8bb73b9666feebddebcc35cad7db3cc59c729805556c6b313d5ec1"
+          "sha256": "d5920566e8cf1e62dc6c838e21eedf0d246fa99e796d0b809c0224b119f27015"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -1972,6 +1972,42 @@
         {
           "path": "packages/contracts/src/catalog.ts",
           "sha256": "eb23fe200e5ac3fcabfc790e0f7a897986f6b8bef21ecaad6f6ad33ae2de8ae4"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-artifacts.test.ts",
+          "sha256": "f24ffd8e4a19b826f5eb4f8853708a8be48d21c09cda074b9b1ed8e7af51012f"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-internal.test.ts",
+          "sha256": "4230fbdcbc8066b3dd668a95067674760153ba92b031ad3169b04e240466b2a9"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-internal.ts",
+          "sha256": "a72d27a91ffc50ca71903d704ecabf2cff74f80eae01142cbafaa13a9951c313"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-inventory.ts",
+          "sha256": "3f51ff7d551495389baad7522db37613bc8bd40b15ed292085ba1193b4c99ed5"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-openapi.ts",
+          "sha256": "0878424f6beec7669c58843aca0eb1b2eb4995dc355fa1694b0bf174e6323f4c"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-public.test.ts",
+          "sha256": "6bf1c45914e58dc9896df56e655eda3f9477b55e66d61fd82339a3cd7ab6030e"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-public.ts",
+          "sha256": "157e7568f74f463a7b86e25f8edceebe7b3daade5f19ec2dd7ffa54225bf1706"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight.test.ts",
+          "sha256": "44c44462cf34ef333e79f8d99349dabc7cae203196d66a0c7b87430d86bfa7fa"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight.ts",
+          "sha256": "02a172c74827ec5b6c261342f753623d1216ecfae78533fb9ffbec63984724fb"
         },
         {
           "path": "packages/contracts/src/commerce.test.ts",
@@ -2143,7 +2179,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "18fe2e1338cb259f852815506951dbe3341480af69226660951c419a050b8d0d"
+          "sha256": "f53f274dfbb14b850b0a5285132aaa4ff944ee72269e2bd6029789c8a230082a"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -2883,7 +2919,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "ab3aaf4030b3353fff8d268300967678ba8186cf0746217ae8bf5067c2cfe06d"
+          "sha256": "0676dead86213d7400fe16a7f3a75cf7e0c1356a4a1a339030c3fcb16e9107f1"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -2912,30 +2948,13 @@
       ],
       "status": [
         " M apps/api/package.json",
+        " M apps/api/scripts/cart-daily-gift-fixture.mjs",
         " M apps/api/src/bootstrap.ts",
-        " M apps/api/src/cart-composition.test.ts",
-        " M apps/api/src/cart-composition.ts",
-        " M apps/api/src/cart-route.test.ts",
-        " M apps/api/src/cart-route.ts",
-        " M apps/storefront/src/app/(public)/(japanese)/ja/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(latin)/en/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(latin)/es/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(latin)/pt/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(thai)/th/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(vietnamese)/vi/cart/page.tsx",
-        " M apps/storefront/src/storefront/gift-page-factory.tsx",
-        " M apps/storefront/src/storefront/gift-page-scheduling.test.tsx",
-        " M apps/storefront/src/storefront/gift-purchase.test.tsx",
-        " M apps/storefront/src/storefront/gift-purchase.tsx",
-        " M apps/storefront/src/storefront/site-header.tsx",
-        " M apps/storefront/src/storefront/storefront-page-shell.tsx",
+        " M apps/api/src/production-application.ts",
         " M database/migrations/manifest.json",
         " M database/schema/expected-catalog.json",
-        " M docs/FAN_SUPPORT_PLATFORM_SPEC.md",
         " M docs/progress/MASTER.md",
         " M docs/progress/phase-4-commerce.md",
-        " M docs/runbooks/cart-runtime.md",
         " M output/playwright/p2-04/README.md",
         " M output/playwright/p2-04/axe-results/baseline-desktop.json",
         " M output/playwright/p2-04/axe-results/baseline-mobile.json",
@@ -2948,92 +2967,48 @@
         " M output/playwright/p2-04/axe-results/timeline.json",
         " M output/playwright/p2-04/axe-results/unavailable.json",
         " M output/playwright/p2-04/browser-results.json",
-        " M output/playwright/p2-04/interactions/1440x900-en-hover.png",
-        " M output/playwright/p2-04/rtl/1440x900-en.png",
-        " M output/playwright/p2-04/screenshots.sha256",
-        " M output/playwright/p2-04/stress/320x800-pt-long.png",
-        " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
         " M package.json",
-        " M packages/application/src/cart-runtime-private.ts",
-        " M packages/application/src/cart-runtime.test.ts",
-        " M packages/application/src/cart-runtime.ts",
+        " M packages/application/package.json",
         " M packages/application/src/index.ts",
+        " M packages/application/tsconfig.build.json",
+        " M packages/content/src/index.ts",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
         " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
-        " M packages/contracts/src/cart-runtime-openapi.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/design-tokens/styles/fonts/generated/japanese-ui.css",
-        " M packages/design-tokens/styles/fonts/generated/japanese-ui.woff2",
-        " M packages/design-tokens/styles/fonts/generated/manifest.json",
-        " M packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.css",
-        " M packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.woff2",
-        " M packages/i18n/src/storefront/en.review.ts",
-        " M packages/i18n/src/storefront/en.ts",
-        " M packages/i18n/src/storefront/es.review.ts",
-        " M packages/i18n/src/storefront/es.ts",
-        " M packages/i18n/src/storefront/ja.review.ts",
-        " M packages/i18n/src/storefront/ja.ts",
-        " M packages/i18n/src/storefront/pt.review.ts",
-        " M packages/i18n/src/storefront/pt.ts",
-        " M packages/i18n/src/storefront/th.review.ts",
-        " M packages/i18n/src/storefront/th.ts",
-        " M packages/i18n/src/storefront/vi.review.ts",
-        " M packages/i18n/src/storefront/vi.ts",
-        " M packages/i18n/src/storefront/zh-CN.review.ts",
-        " M packages/i18n/src/storefront/zh-CN.ts",
+        " M packages/domain/src/index.test.ts",
+        " M packages/domain/src/index.ts",
         " M packages/persistence-port/src/index.ts",
+        " M packages/persistence-postgres/scripts/cart-edit-rollback-proof.mjs",
         " M packages/persistence-postgres/scripts/cart-runtime-rollback-proof.mjs",
         " M packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
         " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
         " M packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs",
         " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
         " M packages/persistence-postgres/scripts/postgres-publication-validation-time-cases.mjs",
-        " M packages/persistence-postgres/src/cart-runtime-repository.test.ts",
-        " M packages/persistence-postgres/src/cart-runtime-repository.ts",
+        " M packages/persistence-postgres/src/index.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
-        "?? apps/api/scripts/cart-storefront-browser.mjs",
-        "?? apps/api/scripts/cart-storefront-gateway.mjs",
-        "?? apps/api/scripts/cart-storefront-gateway.test.mjs",
-        "?? apps/api/scripts/cart-storefront-http.mjs",
-        "?? apps/api/scripts/cart-storefront-protocol.mjs",
-        "?? apps/api/scripts/cart-storefront-runtime.mjs",
-        "?? apps/api/src/cart-edit-bootstrap.e2e.test.ts",
-        "?? apps/api/src/cart-edit-route.test.ts",
-        "?? apps/api/src/cart-edit-route.ts",
-        "?? apps/storefront/src/app/api/storefront/cart/items/[itemId]/editor/route.ts",
-        "?? apps/storefront/src/app/api/storefront/cart/items/[itemId]/route.ts",
-        "?? apps/storefront/src/app/api/storefront/cart/items/route.ts",
-        "?? apps/storefront/src/app/api/storefront/cart/route.ts",
-        "?? apps/storefront/src/server/cart-proxy.test.ts",
-        "?? apps/storefront/src/server/cart-proxy.ts",
-        "?? apps/storefront/src/storefront/cart-body.test.tsx",
-        "?? apps/storefront/src/storefront/cart-body.tsx",
-        "?? apps/storefront/src/storefront/cart-editor-concurrency.test.tsx",
-        "?? apps/storefront/src/storefront/cart-editor-lifecycle.test.tsx",
-        "?? apps/storefront/src/storefront/cart-editor.tsx",
-        "?? apps/storefront/src/storefront/cart-error.test.ts",
-        "?? apps/storefront/src/storefront/cart-error.ts",
-        "?? apps/storefront/src/storefront/cart-header.tsx",
-        "?? apps/storefront/src/storefront/cart-item.test.tsx",
-        "?? apps/storefront/src/storefront/cart-item.tsx",
-        "?? apps/storefront/src/storefront/cart-page-factory.tsx",
-        "?? apps/storefront/src/storefront/cart-panel.tsx",
-        "?? apps/storefront/src/storefront/cart-personalization.test.tsx",
-        "?? apps/storefront/src/storefront/cart-personalization.tsx",
-        "?? apps/storefront/src/storefront/cart-provider.tsx",
-        "?? apps/storefront/src/storefront/cart-removal-focus.test.ts",
-        "?? apps/storefront/src/storefront/cart-removal-focus.ts",
-        "?? apps/storefront/src/storefront/cart-session.test.ts",
-        "?? apps/storefront/src/storefront/cart-session.ts",
-        "?? apps/storefront/src/storefront/cart-validation.ts",
-        "?? apps/storefront/src/storefront/cart.css",
-        "?? apps/storefront/src/storefront/gift-add.tsx",
-        "?? database/migrations/0024_cart-edit-receipts.down.sql",
-        "?? database/migrations/0024_cart-edit-receipts.up.sql",
-        "?? docs/superpowers/plans/2026-09-08-p4-02-cart-storefront.md",
+        " M pnpm-lock.yaml",
+        "?? apps/api/scripts/checkout-preflight-changes.mjs",
+        "?? apps/api/scripts/checkout-preflight-client.mjs",
+        "?? apps/api/scripts/checkout-preflight-fixtures.mjs",
+        "?? apps/api/scripts/checkout-preflight-fixtures.test.mjs",
+        "?? apps/api/scripts/checkout-preflight-gateway.mjs",
+        "?? apps/api/scripts/checkout-preflight-gateway.test.mjs",
+        "?? apps/api/scripts/checkout-preflight-http.mjs",
+        "?? apps/api/scripts/checkout-preflight-proofs.mjs",
+        "?? apps/api/scripts/checkout-preflight-protocol.mjs",
+        "?? apps/api/scripts/checkout-preflight-runtime.mjs",
+        "?? apps/api/src/checkout-composition.test.ts",
+        "?? apps/api/src/checkout-composition.ts",
+        "?? apps/api/src/checkout-preflight-route-bootstrap.test.ts",
+        "?? apps/api/src/checkout-preflight-route.test.ts",
+        "?? apps/api/src/checkout-preflight-route.ts",
+        "?? database/migrations/0025_checkout-preflight.down.sql",
+        "?? database/migrations/0025_checkout-preflight.up.sql",
+        "?? docs/runbooks/checkout-preflight.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -4897,255 +4872,100 @@
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T09-54-20-780Z/concurrent-public-reads-1788861532107.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T09-54-20-780Z/fixture-manifest.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T09-54-20-780Z/protocol-results.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/concurrent-public-reads-1788873383905.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/fixture-manifest.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/protocol-results.json",
         "?? output/checks/p3-06-storefront-acceptance/seo-contract-proposal.md",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.config.mjs",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.test.ts",
         "?? output/checks/p3-06-storefront-acceptance/seo-purge-harness-source-snapshot.json",
         "?? output/checks/p3-06-storefront-acceptance/seo-purge-source-snapshot.json",
-        "?? output/checks/p4-02-cart-storefront/api-bff-review.md",
-        "?? output/checks/p4-02-cart-storefront/api-http-browser-evidence.md",
-        "?? output/checks/p4-02-cart-storefront/axe-incomplete-review.json",
-        "?? output/checks/p4-02-cart-storefront/check-full-1.json",
-        "?? output/checks/p4-02-cart-storefront/contract-persistence-review.md",
-        "?? output/checks/p4-02-cart-storefront/contracts-compatibility.json",
-        "?? output/checks/p4-02-cart-storefront/drawer-initial-focus-diagnostic.mjs",
-        "?? output/checks/p4-02-cart-storefront/final-source-snapshot-2.json",
-        "?? output/checks/p4-02-cart-storefront/final-source-snapshot-3.json",
-        "?? output/checks/p4-02-cart-storefront/final-source-snapshot.json",
-        "?? output/checks/p4-02-cart-storefront/final-verification.md",
-        "?? output/checks/p4-02-cart-storefront/harness-verification.json",
-        "?? output/checks/p4-02-cart-storefront/initial-untracked.json",
-        "?? output/checks/p4-02-cart-storefront/new-source-paths.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-03-03.920Z/failure.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-03-03.920Z/fixture-manifest.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-05-44.060Z/fixture-manifest.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-05-44.060Z/protocol-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-1/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-1/en-390-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-1/en-390-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-1/failure-current-screen.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-1/failure.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/en-390-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/en-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/en-390-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/failure-current-screen.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/failure.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/en-390-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/en-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/en-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/en-390-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/failure-current-screen.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/failure.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-1440-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-1440-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-last-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-private-saved.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-quantity-error.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/es-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/es-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/failure-current-screen.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/failure.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/ja-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/ja-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/pt-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/pt-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/th-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/th-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/th-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/th-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/vi-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/vi-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/zh-CN-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/zh-CN-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/zh-CN-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/zh-CN-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-last-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-private-saved.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-quantity-error.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-last-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-private-saved.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-quantity-error.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/es-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/es-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/es-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/es-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/ja-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/ja-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/ja-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/ja-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/pt-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/pt-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/pt-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/pt-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/th-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/th-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/th-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/th-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/vi-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/vi-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/vi-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/vi-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/zh-CN-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/zh-CN-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/zh-CN-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/zh-CN-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/drawer-initial-focus-diagnostic.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/drawer-initial-focus-with-axe-diagnostic-2.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/drawer-initial-focus-with-axe-diagnostic.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/drawer-motion-diagnostic.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/fixture-manifest.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/protocol-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/th-1440-drawer-motion-settled.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/manifest.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/README.md",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/baseline-desktop.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/baseline-mobile.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/cart-line.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/empty-error.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/image-error.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/loading.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/pseudo.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/reduced-motion.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/timeline.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/unavailable.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/interactions/1440x900-en-hover.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/reduced-motion/1440x900-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/reduced-motion/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/responsive/1023x900-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/responsive/767x900-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/rtl/1440x900-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/rtl/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/screenshots.sha256",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/states/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/stress/320x800-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/stress/320x800-pt-long.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/1024x768-zh-CN.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/1440x900-ja.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/1920x1080-es.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/360x800-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/390x844-vi.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/768x1024-th.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/zoom/google-chrome-baseline-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/README.md",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/axe-results/baseline-desktop.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/axe-results/baseline-mobile.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/axe-results/pseudo-320.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/1440x900-end.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/1440x900-mid.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/1440x900-start.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/390x844-end.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/390x844-mid.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/390x844-start.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/add-confirmed-390.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/idol-keyboard-instant-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/idol-latest-wins-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/idol-mouse-spatial-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/idol-touch-opacity-390.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/success-end-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/raw/motion-checks.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/raw/reduced-motion.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/raw/scenario-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/reduced-motion/1440x900.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/reduced-motion/390x844.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/screenshots.sha256",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/stress/320x800-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/stress/320x800-pt-long.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/1024x768-zh-CN.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/1440x900-ja.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/1920x1080-es.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/360x800-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/390x844-vi.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/768x1024-th.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/manifest.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/README.md",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/baseline-desktop.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/baseline-mobile.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/cart-line.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/empty-error.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/image-error.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/loading.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/pseudo.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/reduced-motion.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/timeline.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/unavailable.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/interactions/1440x900-en-hover.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/reduced-motion/1440x900-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/reduced-motion/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/responsive/1023x900-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/responsive/767x900-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/rtl/1440x900-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/rtl/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/screenshots.sha256",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/states/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/stress/320x800-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/stress/320x800-pt-long.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/1024x768-zh-CN.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/1440x900-ja.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/1920x1080-es.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/360x800-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/390x844-vi.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/768x1024-th.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/zoom/google-chrome-baseline-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/README.md",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/axe-results/baseline-desktop.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/axe-results/baseline-mobile.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/axe-results/pseudo-320.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/1440x900-end.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/1440x900-mid.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/1440x900-start.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/390x844-end.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/390x844-mid.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/390x844-start.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/add-confirmed-390.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/idol-keyboard-instant-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/idol-latest-wins-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/idol-mouse-spatial-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/idol-touch-opacity-390.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/success-end-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/raw/motion-checks.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/raw/reduced-motion.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/raw/scenario-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/reduced-motion/1440x900.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/reduced-motion/390x844.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/screenshots.sha256",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/stress/320x800-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/stress/320x800-pt-long.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/1024x768-zh-CN.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/1440x900-ja.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/1920x1080-es.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/360x800-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/390x844-vi.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/768x1024-th.png",
-        "?? output/checks/p4-02-cart-storefront/ui-implementation-review.md",
-        "?? output/checks/p4-02-cart-storefront/ui-source-freeze.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/daily-immediate-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/pending-rollback-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/protocol-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/results.json",
+        "?? output/checks/p4-03-checkout-preflight/check-dev-1.json",
+        "?? output/checks/p4-03-checkout-preflight/check-dev-2.json",
+        "?? output/checks/p4-03-checkout-preflight/contract-compatibility.json",
+        "?? output/checks/p4-03-checkout-preflight/contracts-domain-review.md",
+        "?? output/checks/p4-03-checkout-preflight/contracts-domain-source-freeze.json",
+        "?? output/checks/p4-03-checkout-preflight/dependency-audit-npm.json",
+        "?? output/checks/p4-03-checkout-preflight/dependency-audit.json",
+        "?? output/checks/p4-03-checkout-preflight/final-verification.md",
+        "?? output/checks/p4-03-checkout-preflight/http-independent-review.md",
+        "?? output/checks/p4-03-checkout-preflight/initial-untracked.json",
+        "?? output/checks/p4-03-checkout-preflight/plan.md",
+        "?? output/checks/p4-03-checkout-preflight/postgres-README.md",
+        "?? output/checks/p4-03-checkout-preflight/postgres-source-freeze.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/failure.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/fixture-manifest.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/run-result.json",
+        "?? output/checks/p4-03-checkout-preflight/run-check.mjs",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/manifest.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/README.md",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/baseline-desktop.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/baseline-mobile.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/cart-line.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/empty-error.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/image-error.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/loading.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/pseudo.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/reduced-motion.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/timeline.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/unavailable.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/browser-results.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/interactions/1440x900-en-hover.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/reduced-motion/1440x900-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/reduced-motion/390x844-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/responsive/1023x900-en-XA.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/responsive/767x900-pt.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/rtl/1440x900-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/rtl/390x844-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/screenshots.sha256",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/states/390x844-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/stress/320x800-en-XA.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/stress/320x800-pt-long.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/1024x768-zh-CN.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/1440x900-ja.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/1920x1080-es.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/360x800-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/390x844-vi.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/768x1024-th.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/zoom/google-chrome-baseline-pt.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/README.md",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/axe-results/baseline-desktop.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/axe-results/baseline-mobile.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/axe-results/pseudo-320.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/browser-results.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/1440x900-end.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/1440x900-mid.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/1440x900-start.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/390x844-end.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/390x844-mid.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/390x844-start.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/add-confirmed-390.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/idol-keyboard-instant-1440.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/idol-latest-wins-1440.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/idol-mouse-spatial-1440.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/idol-touch-opacity-390.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/success-end-1440.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/raw/motion-checks.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/raw/reduced-motion.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/raw/scenario-results.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/reduced-motion/1440x900.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/reduced-motion/390x844.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/screenshots.sha256",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/stress/320x800-en-XA.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/stress/320x800-pt-long.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/1024x768-zh-CN.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/1440x900-ja.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/1920x1080-es.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/360x800-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/390x844-vi.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/768x1024-th.png",
+        "?? output/checks/p4-03-checkout-preflight/ui-composites-browser.json",
+        "?? output/checks/p4-03-checkout-preflight/untracked-midpoint.json",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -5538,36 +5358,49 @@
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-detail.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-directory.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-policy.png",
-        "?? packages/application/src/cart-edit-idempotency.ts",
-        "?? packages/application/src/cart-edit-transaction.ts",
-        "?? packages/application/src/cart-edit.test.ts",
-        "?? packages/application/src/cart-edit.ts",
-        "?? packages/application/src/cart-editor-private.ts",
-        "?? packages/application/src/cart-runtime-view.test.ts",
-        "?? packages/application/src/cart-runtime-view.ts",
-        "?? packages/contracts/src/cart-edit-artifacts.test.ts",
-        "?? packages/contracts/src/cart-edit-events.ts",
-        "?? packages/contracts/src/cart-edit-http.ts",
-        "?? packages/contracts/src/cart-edit-internal.test.ts",
-        "?? packages/contracts/src/cart-edit-internal.ts",
-        "?? packages/contracts/src/cart-edit-openapi.ts",
-        "?? packages/contracts/src/cart-edit.test.ts",
-        "?? packages/contracts/src/cart-edit.ts",
-        "?? packages/persistence-port/src/cart-edit.ts",
-        "?? packages/persistence-postgres/scripts/cart-edit-rollback-proof.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-cart-edit-parameters.mjs",
-        "?? packages/persistence-postgres/src/cart-edit-data.ts",
-        "?? packages/persistence-postgres/src/cart-edit-migration.test.ts",
-        "?? packages/persistence-postgres/src/cart-edit-private-read.ts",
-        "?? packages/persistence-postgres/src/cart-edit-repository.test.ts",
-        "?? packages/persistence-postgres/src/cart-edit-repository.ts",
-        "?? packages/persistence-postgres/src/cart-edit-transaction.test.ts",
-        "?? packages/persistence-postgres/src/cart-edit-write.ts"
+        "?? packages/application/src/checkout-contact.test.ts",
+        "?? packages/application/src/checkout-contact.ts",
+        "?? packages/application/src/checkout-create.ts",
+        "?? packages/application/src/checkout-creation.test.ts",
+        "?? packages/application/src/checkout-idempotency.ts",
+        "?? packages/application/src/checkout-inventory.ts",
+        "?? packages/application/src/checkout-observation.test.ts",
+        "?? packages/application/src/checkout-observation.ts",
+        "?? packages/application/src/checkout-preflight-records.ts",
+        "?? packages/application/src/checkout-preflight.harness.ts",
+        "?? packages/application/src/checkout-preflight.test-fixtures.ts",
+        "?? packages/application/src/checkout-preflight.test.ts",
+        "?? packages/application/src/checkout-preflight.ts",
+        "?? packages/application/src/checkout-transaction.ts",
+        "?? packages/contracts/src/checkout-preflight-artifacts.test.ts",
+        "?? packages/contracts/src/checkout-preflight-internal.test.ts",
+        "?? packages/contracts/src/checkout-preflight-internal.ts",
+        "?? packages/contracts/src/checkout-preflight-inventory.ts",
+        "?? packages/contracts/src/checkout-preflight-openapi.ts",
+        "?? packages/contracts/src/checkout-preflight-public.test.ts",
+        "?? packages/contracts/src/checkout-preflight-public.ts",
+        "?? packages/contracts/src/checkout-preflight.test.ts",
+        "?? packages/contracts/src/checkout-preflight.ts",
+        "?? packages/domain/src/checkout-preflight-inventory.ts",
+        "?? packages/domain/src/checkout-preflight.test.ts",
+        "?? packages/domain/src/checkout-preflight.ts",
+        "?? packages/persistence-port/src/checkout-preflight.ts",
+        "?? packages/persistence-postgres/scripts/checkout-preflight-rollback-proof.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-checkout-preflight-parameters.mjs",
+        "?? packages/persistence-postgres/src/checkout-preflight-content.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-current.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-data.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-migration.test.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-repository.test.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-repository.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-save.test.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-transaction.test.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-write.ts"
       ]
     },
     "before": {
-      "sha": "c6ca6ba88bbbf37bbb1d2d5c6f3f4f656c71210a",
-      "sourceFingerprint": "0e389ae1d8208feff7149a54ecb67efa0bd4ff9bab162784fae729379ce22855",
+      "sha": "059dd9d70ab9212db9670a0e2fc47fcef460dbb0",
+      "sourceFingerprint": "19ece6dd51dfd197bafb2aefcb4262d488ad70ee6f61555d2427b104bad862cf",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -6956,7 +6789,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "a99fb50485c8de54f8cee2c90ecef8427e791e936bee911493f8b4b57bb6bffb"
+          "sha256": "13d790b276896b4d10f3e46a4f5905db2e97fa3be7d1a0cb8f7aa600ba27a4a2"
         },
         {
           "path": "packages/config/package.json",
@@ -7028,11 +6861,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "04ea15bf1bd73bfc140f00a4a5f1b3c58ec86c5b0692af6ab65fe7568744994f"
+          "sha256": "5d478bd1051804e9f5b190f7910fc828599b36c619fe14fbc5e20aa8c250ace3"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "947dd465645e7d114d6274bb2e22af7cf80dd3aea97b8782732d341093a4b42b"
+          "sha256": "1b5e43b9a3f4c37d4853b1e9162de1181afe24e7f2ea2569798aa14f0d1b60de"
         },
         {
           "path": "packages/contracts/package.json",
@@ -7088,11 +6921,11 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "fcbd2e70590c011b66435664b0a3a9ad5ea23b7e85ec95da3857df94b2877f20"
+          "sha256": "85ac54bd5b2f828ec3af04dc4bcef2f7de0a448d3a2be55433e5f5fd3917ef21"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "d2ef7f6f2415bc6d8e41ecaea041aab61cb2277a8c58277368e4d2d4bb25e8ac"
+          "sha256": "677f8abae480c70d28244a96764b166f745961c1919d49f4619512a6d2a0ca56"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -7100,7 +6933,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "c7438d679b8bb73b9666feebddebcc35cad7db3cc59c729805556c6b313d5ec1"
+          "sha256": "d5920566e8cf1e62dc6c838e21eedf0d246fa99e796d0b809c0224b119f27015"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -7213,6 +7046,42 @@
         {
           "path": "packages/contracts/src/catalog.ts",
           "sha256": "eb23fe200e5ac3fcabfc790e0f7a897986f6b8bef21ecaad6f6ad33ae2de8ae4"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-artifacts.test.ts",
+          "sha256": "f24ffd8e4a19b826f5eb4f8853708a8be48d21c09cda074b9b1ed8e7af51012f"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-internal.test.ts",
+          "sha256": "4230fbdcbc8066b3dd668a95067674760153ba92b031ad3169b04e240466b2a9"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-internal.ts",
+          "sha256": "a72d27a91ffc50ca71903d704ecabf2cff74f80eae01142cbafaa13a9951c313"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-inventory.ts",
+          "sha256": "3f51ff7d551495389baad7522db37613bc8bd40b15ed292085ba1193b4c99ed5"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-openapi.ts",
+          "sha256": "0878424f6beec7669c58843aca0eb1b2eb4995dc355fa1694b0bf174e6323f4c"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-public.test.ts",
+          "sha256": "6bf1c45914e58dc9896df56e655eda3f9477b55e66d61fd82339a3cd7ab6030e"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight-public.ts",
+          "sha256": "157e7568f74f463a7b86e25f8edceebe7b3daade5f19ec2dd7ffa54225bf1706"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight.test.ts",
+          "sha256": "44c44462cf34ef333e79f8d99349dabc7cae203196d66a0c7b87430d86bfa7fa"
+        },
+        {
+          "path": "packages/contracts/src/checkout-preflight.ts",
+          "sha256": "02a172c74827ec5b6c261342f753623d1216ecfae78533fb9ffbec63984724fb"
         },
         {
           "path": "packages/contracts/src/commerce.test.ts",
@@ -7384,7 +7253,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "18fe2e1338cb259f852815506951dbe3341480af69226660951c419a050b8d0d"
+          "sha256": "f53f274dfbb14b850b0a5285132aaa4ff944ee72269e2bd6029789c8a230082a"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -8124,7 +7993,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "ab3aaf4030b3353fff8d268300967678ba8186cf0746217ae8bf5067c2cfe06d"
+          "sha256": "0676dead86213d7400fe16a7f3a75cf7e0c1356a4a1a339030c3fcb16e9107f1"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -8153,30 +8022,13 @@
       ],
       "status": [
         " M apps/api/package.json",
+        " M apps/api/scripts/cart-daily-gift-fixture.mjs",
         " M apps/api/src/bootstrap.ts",
-        " M apps/api/src/cart-composition.test.ts",
-        " M apps/api/src/cart-composition.ts",
-        " M apps/api/src/cart-route.test.ts",
-        " M apps/api/src/cart-route.ts",
-        " M apps/storefront/src/app/(public)/(japanese)/ja/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(latin)/en/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(latin)/es/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(latin)/pt/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(thai)/th/cart/page.tsx",
-        " M apps/storefront/src/app/(public)/(vietnamese)/vi/cart/page.tsx",
-        " M apps/storefront/src/storefront/gift-page-factory.tsx",
-        " M apps/storefront/src/storefront/gift-page-scheduling.test.tsx",
-        " M apps/storefront/src/storefront/gift-purchase.test.tsx",
-        " M apps/storefront/src/storefront/gift-purchase.tsx",
-        " M apps/storefront/src/storefront/site-header.tsx",
-        " M apps/storefront/src/storefront/storefront-page-shell.tsx",
+        " M apps/api/src/production-application.ts",
         " M database/migrations/manifest.json",
         " M database/schema/expected-catalog.json",
-        " M docs/FAN_SUPPORT_PLATFORM_SPEC.md",
         " M docs/progress/MASTER.md",
         " M docs/progress/phase-4-commerce.md",
-        " M docs/runbooks/cart-runtime.md",
         " M output/playwright/p2-04/README.md",
         " M output/playwright/p2-04/axe-results/baseline-desktop.json",
         " M output/playwright/p2-04/axe-results/baseline-mobile.json",
@@ -8189,92 +8041,48 @@
         " M output/playwright/p2-04/axe-results/timeline.json",
         " M output/playwright/p2-04/axe-results/unavailable.json",
         " M output/playwright/p2-04/browser-results.json",
-        " M output/playwright/p2-04/interactions/1440x900-en-hover.png",
-        " M output/playwright/p2-04/rtl/1440x900-en.png",
-        " M output/playwright/p2-04/screenshots.sha256",
-        " M output/playwright/p2-04/stress/320x800-pt-long.png",
-        " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
         " M package.json",
-        " M packages/application/src/cart-runtime-private.ts",
-        " M packages/application/src/cart-runtime.test.ts",
-        " M packages/application/src/cart-runtime.ts",
+        " M packages/application/package.json",
         " M packages/application/src/index.ts",
+        " M packages/application/tsconfig.build.json",
+        " M packages/content/src/index.ts",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
         " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
-        " M packages/contracts/src/cart-runtime-openapi.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/design-tokens/styles/fonts/generated/japanese-ui.css",
-        " M packages/design-tokens/styles/fonts/generated/japanese-ui.woff2",
-        " M packages/design-tokens/styles/fonts/generated/manifest.json",
-        " M packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.css",
-        " M packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.woff2",
-        " M packages/i18n/src/storefront/en.review.ts",
-        " M packages/i18n/src/storefront/en.ts",
-        " M packages/i18n/src/storefront/es.review.ts",
-        " M packages/i18n/src/storefront/es.ts",
-        " M packages/i18n/src/storefront/ja.review.ts",
-        " M packages/i18n/src/storefront/ja.ts",
-        " M packages/i18n/src/storefront/pt.review.ts",
-        " M packages/i18n/src/storefront/pt.ts",
-        " M packages/i18n/src/storefront/th.review.ts",
-        " M packages/i18n/src/storefront/th.ts",
-        " M packages/i18n/src/storefront/vi.review.ts",
-        " M packages/i18n/src/storefront/vi.ts",
-        " M packages/i18n/src/storefront/zh-CN.review.ts",
-        " M packages/i18n/src/storefront/zh-CN.ts",
+        " M packages/domain/src/index.test.ts",
+        " M packages/domain/src/index.ts",
         " M packages/persistence-port/src/index.ts",
+        " M packages/persistence-postgres/scripts/cart-edit-rollback-proof.mjs",
         " M packages/persistence-postgres/scripts/cart-runtime-rollback-proof.mjs",
         " M packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
         " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
         " M packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs",
         " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
         " M packages/persistence-postgres/scripts/postgres-publication-validation-time-cases.mjs",
-        " M packages/persistence-postgres/src/cart-runtime-repository.test.ts",
-        " M packages/persistence-postgres/src/cart-runtime-repository.ts",
+        " M packages/persistence-postgres/src/index.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
-        "?? apps/api/scripts/cart-storefront-browser.mjs",
-        "?? apps/api/scripts/cart-storefront-gateway.mjs",
-        "?? apps/api/scripts/cart-storefront-gateway.test.mjs",
-        "?? apps/api/scripts/cart-storefront-http.mjs",
-        "?? apps/api/scripts/cart-storefront-protocol.mjs",
-        "?? apps/api/scripts/cart-storefront-runtime.mjs",
-        "?? apps/api/src/cart-edit-bootstrap.e2e.test.ts",
-        "?? apps/api/src/cart-edit-route.test.ts",
-        "?? apps/api/src/cart-edit-route.ts",
-        "?? apps/storefront/src/app/api/storefront/cart/items/[itemId]/editor/route.ts",
-        "?? apps/storefront/src/app/api/storefront/cart/items/[itemId]/route.ts",
-        "?? apps/storefront/src/app/api/storefront/cart/items/route.ts",
-        "?? apps/storefront/src/app/api/storefront/cart/route.ts",
-        "?? apps/storefront/src/server/cart-proxy.test.ts",
-        "?? apps/storefront/src/server/cart-proxy.ts",
-        "?? apps/storefront/src/storefront/cart-body.test.tsx",
-        "?? apps/storefront/src/storefront/cart-body.tsx",
-        "?? apps/storefront/src/storefront/cart-editor-concurrency.test.tsx",
-        "?? apps/storefront/src/storefront/cart-editor-lifecycle.test.tsx",
-        "?? apps/storefront/src/storefront/cart-editor.tsx",
-        "?? apps/storefront/src/storefront/cart-error.test.ts",
-        "?? apps/storefront/src/storefront/cart-error.ts",
-        "?? apps/storefront/src/storefront/cart-header.tsx",
-        "?? apps/storefront/src/storefront/cart-item.test.tsx",
-        "?? apps/storefront/src/storefront/cart-item.tsx",
-        "?? apps/storefront/src/storefront/cart-page-factory.tsx",
-        "?? apps/storefront/src/storefront/cart-panel.tsx",
-        "?? apps/storefront/src/storefront/cart-personalization.test.tsx",
-        "?? apps/storefront/src/storefront/cart-personalization.tsx",
-        "?? apps/storefront/src/storefront/cart-provider.tsx",
-        "?? apps/storefront/src/storefront/cart-removal-focus.test.ts",
-        "?? apps/storefront/src/storefront/cart-removal-focus.ts",
-        "?? apps/storefront/src/storefront/cart-session.test.ts",
-        "?? apps/storefront/src/storefront/cart-session.ts",
-        "?? apps/storefront/src/storefront/cart-validation.ts",
-        "?? apps/storefront/src/storefront/cart.css",
-        "?? apps/storefront/src/storefront/gift-add.tsx",
-        "?? database/migrations/0024_cart-edit-receipts.down.sql",
-        "?? database/migrations/0024_cart-edit-receipts.up.sql",
-        "?? docs/superpowers/plans/2026-09-08-p4-02-cart-storefront.md",
+        " M pnpm-lock.yaml",
+        "?? apps/api/scripts/checkout-preflight-changes.mjs",
+        "?? apps/api/scripts/checkout-preflight-client.mjs",
+        "?? apps/api/scripts/checkout-preflight-fixtures.mjs",
+        "?? apps/api/scripts/checkout-preflight-fixtures.test.mjs",
+        "?? apps/api/scripts/checkout-preflight-gateway.mjs",
+        "?? apps/api/scripts/checkout-preflight-gateway.test.mjs",
+        "?? apps/api/scripts/checkout-preflight-http.mjs",
+        "?? apps/api/scripts/checkout-preflight-proofs.mjs",
+        "?? apps/api/scripts/checkout-preflight-protocol.mjs",
+        "?? apps/api/scripts/checkout-preflight-runtime.mjs",
+        "?? apps/api/src/checkout-composition.test.ts",
+        "?? apps/api/src/checkout-composition.ts",
+        "?? apps/api/src/checkout-preflight-route-bootstrap.test.ts",
+        "?? apps/api/src/checkout-preflight-route.test.ts",
+        "?? apps/api/src/checkout-preflight-route.ts",
+        "?? database/migrations/0025_checkout-preflight.down.sql",
+        "?? database/migrations/0025_checkout-preflight.up.sql",
+        "?? docs/runbooks/checkout-preflight.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -10138,255 +9946,100 @@
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T09-54-20-780Z/concurrent-public-reads-1788861532107.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T09-54-20-780Z/fixture-manifest.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T09-54-20-780Z/protocol-results.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/concurrent-public-reads-1788873383905.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/fixture-manifest.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/protocol-results.json",
         "?? output/checks/p3-06-storefront-acceptance/seo-contract-proposal.md",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.config.mjs",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.test.ts",
         "?? output/checks/p3-06-storefront-acceptance/seo-purge-harness-source-snapshot.json",
         "?? output/checks/p3-06-storefront-acceptance/seo-purge-source-snapshot.json",
-        "?? output/checks/p4-02-cart-storefront/api-bff-review.md",
-        "?? output/checks/p4-02-cart-storefront/api-http-browser-evidence.md",
-        "?? output/checks/p4-02-cart-storefront/axe-incomplete-review.json",
-        "?? output/checks/p4-02-cart-storefront/check-full-1.json",
-        "?? output/checks/p4-02-cart-storefront/contract-persistence-review.md",
-        "?? output/checks/p4-02-cart-storefront/contracts-compatibility.json",
-        "?? output/checks/p4-02-cart-storefront/drawer-initial-focus-diagnostic.mjs",
-        "?? output/checks/p4-02-cart-storefront/final-source-snapshot-2.json",
-        "?? output/checks/p4-02-cart-storefront/final-source-snapshot-3.json",
-        "?? output/checks/p4-02-cart-storefront/final-source-snapshot.json",
-        "?? output/checks/p4-02-cart-storefront/final-verification.md",
-        "?? output/checks/p4-02-cart-storefront/harness-verification.json",
-        "?? output/checks/p4-02-cart-storefront/initial-untracked.json",
-        "?? output/checks/p4-02-cart-storefront/new-source-paths.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-03-03.920Z/failure.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-03-03.920Z/fixture-manifest.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-05-44.060Z/fixture-manifest.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-05-44.060Z/protocol-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-1/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-1/en-390-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-1/en-390-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-1/failure-current-screen.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-1/failure.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/en-390-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/en-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/en-390-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/failure-current-screen.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-2/failure.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/en-390-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/en-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/en-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/en-390-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/failure-current-screen.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-3/failure.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-1440-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-1440-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-last-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-private-saved.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-quantity-error.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/en-390-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/es-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/es-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/failure-current-screen.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/failure.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/ja-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/ja-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/pt-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/pt-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/th-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/th-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/th-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/th-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/vi-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/vi-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/zh-CN-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/zh-CN-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/zh-CN-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-4/zh-CN-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-last-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-private-saved.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-quantity-error.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-1440-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-add-form.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-empty.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-last-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-private-saved.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-quantity-error.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/en-390-removed.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/es-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/es-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/es-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/es-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/ja-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/ja-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/ja-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/ja-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/pt-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/pt-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/pt-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/pt-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/th-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/th-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/th-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/th-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/vi-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/vi-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/vi-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/vi-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/zh-CN-1440-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/zh-CN-1440-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/zh-CN-390-cart.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/zh-CN-390-drawer.png",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/drawer-initial-focus-diagnostic.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/drawer-initial-focus-with-axe-diagnostic-2.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/drawer-initial-focus-with-axe-diagnostic.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/drawer-motion-diagnostic.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/fixture-manifest.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/protocol-results.json",
-        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/th-1440-drawer-motion-settled.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/manifest.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/README.md",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/baseline-desktop.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/baseline-mobile.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/cart-line.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/empty-error.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/image-error.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/loading.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/pseudo.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/reduced-motion.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/timeline.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/axe-results/unavailable.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/interactions/1440x900-en-hover.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/reduced-motion/1440x900-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/reduced-motion/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/responsive/1023x900-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/responsive/767x900-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/rtl/1440x900-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/rtl/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/screenshots.sha256",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/states/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/stress/320x800-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/stress/320x800-pt-long.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/1024x768-zh-CN.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/1440x900-ja.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/1920x1080-es.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/360x800-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/390x844-vi.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/viewports/768x1024-th.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-04/zoom/google-chrome-baseline-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/README.md",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/axe-results/baseline-desktop.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/axe-results/baseline-mobile.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/axe-results/pseudo-320.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/1440x900-end.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/1440x900-mid.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/1440x900-start.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/390x844-end.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/390x844-mid.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/hero/390x844-start.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/add-confirmed-390.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/idol-keyboard-instant-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/idol-latest-wins-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/idol-mouse-spatial-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/idol-touch-opacity-390.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/motion/success-end-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/raw/motion-checks.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/raw/reduced-motion.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/raw/scenario-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/reduced-motion/1440x900.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/reduced-motion/390x844.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/screenshots.sha256",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/stress/320x800-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/stress/320x800-pt-long.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/1024x768-zh-CN.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/1440x900-ja.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/1920x1080-es.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/360x800-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/390x844-vi.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before-font-refresh/output/playwright/p2-05/viewports/768x1024-th.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/manifest.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/README.md",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/baseline-desktop.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/baseline-mobile.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/cart-line.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/empty-error.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/image-error.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/loading.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/pseudo.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/reduced-motion.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/timeline.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/axe-results/unavailable.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/interactions/1440x900-en-hover.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/reduced-motion/1440x900-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/reduced-motion/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/responsive/1023x900-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/responsive/767x900-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/rtl/1440x900-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/rtl/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/screenshots.sha256",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/states/390x844-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/stress/320x800-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/stress/320x800-pt-long.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/1024x768-zh-CN.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/1440x900-ja.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/1920x1080-es.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/360x800-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/390x844-vi.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/viewports/768x1024-th.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-04/zoom/google-chrome-baseline-pt.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/README.md",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/axe-results/baseline-desktop.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/axe-results/baseline-mobile.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/axe-results/pseudo-320.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/browser-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/1440x900-end.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/1440x900-mid.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/1440x900-start.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/390x844-end.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/390x844-mid.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/hero/390x844-start.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/add-confirmed-390.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/idol-keyboard-instant-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/idol-latest-wins-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/idol-mouse-spatial-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/idol-touch-opacity-390.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/motion/success-end-1440.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/raw/motion-checks.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/raw/reduced-motion.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/raw/scenario-results.json",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/reduced-motion/1440x900.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/reduced-motion/390x844.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/screenshots.sha256",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/stress/320x800-en-XA.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/stress/320x800-pt-long.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/1024x768-zh-CN.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/1440x900-ja.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/1920x1080-es.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/360x800-en.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/390x844-vi.png",
-        "?? output/checks/p4-02-cart-storefront/shared-ui-before/output/playwright/p2-05/viewports/768x1024-th.png",
-        "?? output/checks/p4-02-cart-storefront/ui-implementation-review.md",
-        "?? output/checks/p4-02-cart-storefront/ui-source-freeze.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/daily-immediate-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/pending-rollback-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/protocol-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/results.json",
+        "?? output/checks/p4-03-checkout-preflight/check-dev-1.json",
+        "?? output/checks/p4-03-checkout-preflight/check-dev-2.json",
+        "?? output/checks/p4-03-checkout-preflight/contract-compatibility.json",
+        "?? output/checks/p4-03-checkout-preflight/contracts-domain-review.md",
+        "?? output/checks/p4-03-checkout-preflight/contracts-domain-source-freeze.json",
+        "?? output/checks/p4-03-checkout-preflight/dependency-audit-npm.json",
+        "?? output/checks/p4-03-checkout-preflight/dependency-audit.json",
+        "?? output/checks/p4-03-checkout-preflight/final-verification.md",
+        "?? output/checks/p4-03-checkout-preflight/http-independent-review.md",
+        "?? output/checks/p4-03-checkout-preflight/initial-untracked.json",
+        "?? output/checks/p4-03-checkout-preflight/plan.md",
+        "?? output/checks/p4-03-checkout-preflight/postgres-README.md",
+        "?? output/checks/p4-03-checkout-preflight/postgres-source-freeze.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/failure.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/fixture-manifest.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/run-result.json",
+        "?? output/checks/p4-03-checkout-preflight/run-check.mjs",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/manifest.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/README.md",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/baseline-desktop.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/baseline-mobile.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/cart-line.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/empty-error.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/image-error.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/loading.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/pseudo.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/reduced-motion.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/timeline.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/unavailable.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/browser-results.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/interactions/1440x900-en-hover.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/reduced-motion/1440x900-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/reduced-motion/390x844-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/responsive/1023x900-en-XA.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/responsive/767x900-pt.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/rtl/1440x900-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/rtl/390x844-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/screenshots.sha256",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/states/390x844-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/stress/320x800-en-XA.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/stress/320x800-pt-long.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/1024x768-zh-CN.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/1440x900-ja.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/1920x1080-es.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/360x800-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/390x844-vi.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/viewports/768x1024-th.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/zoom/google-chrome-baseline-pt.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/README.md",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/axe-results/baseline-desktop.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/axe-results/baseline-mobile.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/axe-results/pseudo-320.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/browser-results.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/1440x900-end.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/1440x900-mid.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/1440x900-start.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/390x844-end.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/390x844-mid.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/hero/390x844-start.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/add-confirmed-390.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/idol-keyboard-instant-1440.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/idol-latest-wins-1440.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/idol-mouse-spatial-1440.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/idol-touch-opacity-390.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/motion/success-end-1440.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/raw/motion-checks.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/raw/reduced-motion.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/raw/scenario-results.json",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/reduced-motion/1440x900.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/reduced-motion/390x844.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/screenshots.sha256",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/stress/320x800-en-XA.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/stress/320x800-pt-long.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/1024x768-zh-CN.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/1440x900-ja.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/1920x1080-es.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/360x800-en.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/390x844-vi.png",
+        "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/768x1024-th.png",
+        "?? output/checks/p4-03-checkout-preflight/ui-composites-browser.json",
+        "?? output/checks/p4-03-checkout-preflight/untracked-midpoint.json",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -10779,31 +10432,44 @@
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-detail.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-directory.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-policy.png",
-        "?? packages/application/src/cart-edit-idempotency.ts",
-        "?? packages/application/src/cart-edit-transaction.ts",
-        "?? packages/application/src/cart-edit.test.ts",
-        "?? packages/application/src/cart-edit.ts",
-        "?? packages/application/src/cart-editor-private.ts",
-        "?? packages/application/src/cart-runtime-view.test.ts",
-        "?? packages/application/src/cart-runtime-view.ts",
-        "?? packages/contracts/src/cart-edit-artifacts.test.ts",
-        "?? packages/contracts/src/cart-edit-events.ts",
-        "?? packages/contracts/src/cart-edit-http.ts",
-        "?? packages/contracts/src/cart-edit-internal.test.ts",
-        "?? packages/contracts/src/cart-edit-internal.ts",
-        "?? packages/contracts/src/cart-edit-openapi.ts",
-        "?? packages/contracts/src/cart-edit.test.ts",
-        "?? packages/contracts/src/cart-edit.ts",
-        "?? packages/persistence-port/src/cart-edit.ts",
-        "?? packages/persistence-postgres/scripts/cart-edit-rollback-proof.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-cart-edit-parameters.mjs",
-        "?? packages/persistence-postgres/src/cart-edit-data.ts",
-        "?? packages/persistence-postgres/src/cart-edit-migration.test.ts",
-        "?? packages/persistence-postgres/src/cart-edit-private-read.ts",
-        "?? packages/persistence-postgres/src/cart-edit-repository.test.ts",
-        "?? packages/persistence-postgres/src/cart-edit-repository.ts",
-        "?? packages/persistence-postgres/src/cart-edit-transaction.test.ts",
-        "?? packages/persistence-postgres/src/cart-edit-write.ts"
+        "?? packages/application/src/checkout-contact.test.ts",
+        "?? packages/application/src/checkout-contact.ts",
+        "?? packages/application/src/checkout-create.ts",
+        "?? packages/application/src/checkout-creation.test.ts",
+        "?? packages/application/src/checkout-idempotency.ts",
+        "?? packages/application/src/checkout-inventory.ts",
+        "?? packages/application/src/checkout-observation.test.ts",
+        "?? packages/application/src/checkout-observation.ts",
+        "?? packages/application/src/checkout-preflight-records.ts",
+        "?? packages/application/src/checkout-preflight.harness.ts",
+        "?? packages/application/src/checkout-preflight.test-fixtures.ts",
+        "?? packages/application/src/checkout-preflight.test.ts",
+        "?? packages/application/src/checkout-preflight.ts",
+        "?? packages/application/src/checkout-transaction.ts",
+        "?? packages/contracts/src/checkout-preflight-artifacts.test.ts",
+        "?? packages/contracts/src/checkout-preflight-internal.test.ts",
+        "?? packages/contracts/src/checkout-preflight-internal.ts",
+        "?? packages/contracts/src/checkout-preflight-inventory.ts",
+        "?? packages/contracts/src/checkout-preflight-openapi.ts",
+        "?? packages/contracts/src/checkout-preflight-public.test.ts",
+        "?? packages/contracts/src/checkout-preflight-public.ts",
+        "?? packages/contracts/src/checkout-preflight.test.ts",
+        "?? packages/contracts/src/checkout-preflight.ts",
+        "?? packages/domain/src/checkout-preflight-inventory.ts",
+        "?? packages/domain/src/checkout-preflight.test.ts",
+        "?? packages/domain/src/checkout-preflight.ts",
+        "?? packages/persistence-port/src/checkout-preflight.ts",
+        "?? packages/persistence-postgres/scripts/checkout-preflight-rollback-proof.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-checkout-preflight-parameters.mjs",
+        "?? packages/persistence-postgres/src/checkout-preflight-content.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-current.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-data.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-migration.test.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-repository.test.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-repository.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-save.test.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-transaction.test.ts",
+        "?? packages/persistence-postgres/src/checkout-preflight-write.ts"
       ]
     }
   },
@@ -10920,7 +10586,7 @@
   "motionChecks": {
     "addToCart": {
       "buttonFocused": true,
-      "stateDelayMs": 49,
+      "stateDelayMs": 48.39999961853027,
       "liveAnnouncement": true,
       "pendingObserved": true,
       "countDelta": 1,
@@ -11155,33 +10821,33 @@
           "activeLayout": {
             "height": 1038,
             "left": 48,
-            "top": 1304,
+            "top": 1276,
             "width": 830
           },
           "activeOpacity": 0,
           "activeRect": {
             "height": 1042.6875,
             "left": 62.524993896484375,
-            "top": 487.734375,
+            "top": 486.9375,
             "width": 834.1500244140625
           },
           "outgoingLayout": {
             "height": 1038,
             "left": 48,
-            "top": 1304,
+            "top": 1276,
             "width": 830
           },
           "outgoingOpacity": 1,
           "outgoingRect": {
             "height": 1037.5,
             "left": 48,
-            "top": 490.328125,
+            "top": 489.53125,
             "width": 830
           },
           "visualRect": {
             "height": 1037.5,
             "left": 48,
-            "top": 490.328125,
+            "top": 489.53125,
             "width": 830
           },
           "coverage": true
@@ -11506,7 +11172,7 @@
         200,
         200
       ],
-      "origin": "http://127.0.0.1:61540"
+      "origin": "http://127.0.0.1:55901"
     },
     {
       "environment": "staging",
@@ -11521,7 +11187,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:61690"
+      "origin": "http://127.0.0.1:56058"
     },
     {
       "environment": "production",
@@ -11536,7 +11202,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:61713"
+      "origin": "http://127.0.0.1:56081"
     }
   ],
   "scenarioResults": [
@@ -11553,91 +11219,85 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:61540/_internal/design-foundations/en/motion"
+            "url": "http://127.0.0.1:55901/_internal/design-foundations/en/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:61540/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -11653,7 +11313,7 @@
           {
             "height": 51.71875,
             "label": "Replay hero entrance",
-            "width": 198.921875
+            "width": 199.1875
           },
           {
             "height": 48,
@@ -11668,22 +11328,22 @@
           {
             "height": 51.71875,
             "label": "Add gift to cartAdded to cart",
-            "width": 171.8125
+            "width": 170.890625
           },
           {
             "height": 51.71875,
             "label": "Reset confirmation",
-            "width": 181.859375
+            "width": 184.328125
           },
           {
             "height": 51.71875,
             "label": "Show recoverable error",
-            "width": 215.390625
+            "width": 214.71875
           },
           {
             "height": 51.71875,
             "label": "Replay confirmed success",
-            "width": 237.828125
+            "width": 236.765625
           }
         ],
         "document": {
@@ -11693,12 +11353,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 48,
+          "maxMs": 40,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 84,
+        "lcpMs": 88,
         "longTasks": [],
         "observers": {
           "event": {
@@ -11719,8 +11379,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.800000000000182,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -11883,109 +11543,115 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:61540/_internal/design-foundations/vi/motion"
+            "url": "http://127.0.0.1:55901/_internal/design-foundations/vi/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:61540/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -12001,7 +11667,7 @@
           {
             "height": 51.8125,
             "label": "Phát lại hiệu ứng ảnh chính",
-            "width": 242.9375
+            "width": 242.578125
           },
           {
             "height": 48,
@@ -12016,22 +11682,22 @@
           {
             "height": 51.8125,
             "label": "Thêm quà vào giỏĐã thêm vào giỏ",
-            "width": 190.109375
+            "width": 190.84375
           },
           {
             "height": 51.8125,
             "label": "Đặt lại xác nhận",
-            "width": 156.921875
+            "width": 157
           },
           {
             "height": 51.8125,
             "label": "Hiển thị lỗi có thể khắc phục",
-            "width": 251
+            "width": 252.671875
           },
           {
             "height": 51.8125,
             "label": "Phát lại xác nhận thành công",
-            "width": 257.40625
+            "width": 256.765625
           }
         ],
         "document": {
@@ -12046,7 +11712,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 60,
+        "lcpMs": 84,
         "longTasks": [],
         "observers": {
           "event": {
@@ -12067,7 +11733,7 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.800000000000182,
           "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
@@ -12127,97 +11793,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:61540/_internal/design-foundations/th/motion"
+            "url": "http://127.0.0.1:55901/_internal/design-foundations/th/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2lg-l7asikrc3.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2lg-l7asikrc3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:61540/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -12233,7 +11899,7 @@
           {
             "height": 53.015625,
             "label": "เล่นการปรากฏของภาพหลักอีกครั้ง",
-            "width": 271.390625
+            "width": 273.390625
           },
           {
             "height": 48,
@@ -12248,22 +11914,22 @@
           {
             "height": 53.015625,
             "label": "เพิ่มของขวัญลงรถเข็นเพิ่มลงรถเข็นแล้ว",
-            "width": 183.15625
+            "width": 185.140625
           },
           {
             "height": 53.015625,
             "label": "รีเซ็ตการยืนยัน",
-            "width": 136.34375
+            "width": 137.953125
           },
           {
             "height": 53.015625,
             "label": "แสดงข้อผิดพลาดที่แก้ไขได้",
-            "width": 218.265625
+            "width": 223.546875
           },
           {
             "height": 53.015625,
             "label": "เล่นการยืนยันสำเร็จอีกครั้ง",
-            "width": 215.9375
+            "width": 217.328125
           }
         ],
         "document": {
@@ -12278,7 +11944,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 80,
+        "lcpMs": 96,
         "longTasks": [],
         "observers": {
           "event": {
@@ -12299,8 +11965,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.800000000000182,
+          "p95FrameDeltaMs": 16.800000000000182,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -12357,175 +12023,181 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:61540/_internal/design-foundations/zh-CN/motion"
+            "url": "http://127.0.0.1:55901/_internal/design-foundations/zh-CN/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/12_4afnoxisbz.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/12_4afnoxisbz.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/simplified-chinese-ui.3lne0rhdq7_0v.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/simplified-chinese-ui.3lne0rhdq7_0v.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:61540/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -12586,7 +12258,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 64,
+        "lcpMs": 76,
         "longTasks": [],
         "observers": {
           "event": {
@@ -12608,7 +12280,7 @@
         },
         "raf": {
           "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.800000000000182,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -12769,211 +12441,211 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:61540/_internal/design-foundations/ja/motion"
+            "url": "http://127.0.0.1:55901/_internal/design-foundations/ja/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/38mfysl2j0xa_.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/38mfysl2j0xa_.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/japanese-ui.26gg9m9bgvh8o.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/japanese-ui.26gg9m9bgvh8o.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:61540/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -13034,7 +12706,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 60,
+        "lcpMs": 80,
         "longTasks": [],
         "observers": {
           "event": {
@@ -13055,7 +12727,7 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.799999999999955,
           "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
@@ -13113,97 +12785,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:61540/_internal/design-foundations/es/motion"
+            "url": "http://127.0.0.1:55901/_internal/design-foundations/es/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:61540/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -13285,8 +12957,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.700000000000045,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.800000000000182,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -13449,91 +13121,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:61540/_internal/design-foundations/en-XA/motion"
+            "url": "http://127.0.0.1:55901/_internal/design-foundations/en-XA/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:61540/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -13549,12 +13227,12 @@
           {
             "height": 51.59375,
             "label": "[!! Řëpļàÿ hëřö ëñţřàñçë !!]",
-            "width": 242.359375
+            "width": 242.390625
           },
           {
             "height": 48,
             "label": "Mira Vale[!! Šëļëçţëd !!]",
-            "width": 184.359375
+            "width": 184.5
           },
           {
             "height": 48,
@@ -13564,17 +13242,17 @@
           {
             "height": 51.59375,
             "label": "[!! Àdd ğïfţ ţö çàřţ !!][!! Àddëd ţö çàřţ !!]",
-            "width": 213.828125
+            "width": 213.15625
           },
           {
             "height": 51.59375,
             "label": "[!! Řëšëţ çöñfïřmàţïöñ !!]",
-            "width": 226.59375
+            "width": 225.890625
           },
           {
             "height": 51.59375,
             "label": "[!! Šhöw řëçövëřàbļë ëřřöř !!]",
-            "width": 257.671875
+            "width": 258.875
           },
           {
             "height": 77.1875,
@@ -13615,8 +13293,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.800000000000182,
+          "p95FrameDeltaMs": 16.800000000000182,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -13675,85 +13353,85 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:61540/_internal/design-foundations/pt/motion"
+            "url": "http://127.0.0.1:55901/_internal/design-foundations/pt/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:61540/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:61540/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:61540/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:61540/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -13835,8 +13513,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.700000000000045,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -13889,25 +13567,25 @@
       "path": "viewports/360x800-en.png",
       "pixelHeight": 800,
       "pixelWidth": 360,
-      "sha256": "ae673b3d372584ff556365b15d9b127e5f2bca1a7cc519be706cbe465aa3c776"
+      "sha256": "aed65a6e0846cc3d770caa151b35a0c1611c36dc04a2d4ef0c0879860f47c7bf"
     },
     {
       "path": "viewports/390x844-vi.png",
       "pixelHeight": 844,
       "pixelWidth": 390,
-      "sha256": "ba91c7eb3947a2d20458d6d7fc41992c4d6ffe651aee67b35dc1439bd1ac8e13"
+      "sha256": "51d35e6dae454aefd2e4970e675fe5ebd796bd518e12ce7e84f00942777628f4"
     },
     {
       "path": "viewports/768x1024-th.png",
       "pixelHeight": 1024,
       "pixelWidth": 768,
-      "sha256": "4c74ed2577b828e445d2c45f45628fe03a575257f5a8eee8b41e70d707cec237"
+      "sha256": "e09f759ad25319d8899a5d64189bd324c396fe2dc89b56e2e9e470a41d0ec697"
     },
     {
       "path": "viewports/1024x768-zh-CN.png",
       "pixelHeight": 768,
       "pixelWidth": 1024,
-      "sha256": "290eaf85bc7861ea97d1e175e45c038111d070ff4bb519242c24947c33ca202a"
+      "sha256": "bdb424a962ea591968a5ad917193f38228e843e919d516bfbfc673de938143a4"
     },
     {
       "path": "viewports/1440x900-ja.png",
@@ -13925,7 +13603,7 @@
       "path": "stress/320x800-en-XA.png",
       "pixelHeight": 3011,
       "pixelWidth": 320,
-      "sha256": "b57087f822b4a8cb6b5e9a7619265db53c5f02c0c59aaa154028ad66afa35cc3"
+      "sha256": "d2d1c42cadf0af8bea9f5323f77ad4b672fc2d9a98b2a296ed921a3127100e14"
     },
     {
       "path": "stress/320x800-pt-long.png",
@@ -13943,13 +13621,13 @@
       "path": "hero/390x844-mid.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "fa2e6920549801fae73e19420b477337f98930ed5971b3ea6fd52a5bc94655b5"
+      "sha256": "f8f862a92aa998338fec85a9471a0a5b06618e48d6f745ea19162cc3c05cb3e5"
     },
     {
       "path": "hero/390x844-end.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "383055592a2da62f334728ae66f6102c08b07fb5ac23bf8260cc33a1f73d2ac9"
+      "sha256": "277f3bb5bdfab76b5e56545e348e421dd8d8689ab9cf0b8b98040d4f7aa32044"
     },
     {
       "path": "hero/1440x900-start.png",
@@ -13973,25 +13651,25 @@
       "path": "motion/idol-mouse-spatial-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "746a52afd251366363a4f09d2d9843f216d8b28435e56ee67c7747c44f62f8cd"
+      "sha256": "0bd7a996bee6926626b03ea17bc70083662df1ccd2af6215741f413966774e33"
     },
     {
       "path": "motion/idol-keyboard-instant-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "19e65387317b6e488d9adc434fb103dcae4380786c6929d65e783ef368171403"
+      "sha256": "fa811b95ce6a09c5a2a217f1314aedd71d2ef45f84f75960ef06b3f42b5bad5c"
     },
     {
       "path": "motion/idol-latest-wins-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "33bc3807c961700fcac4df65c82b2bc1d4e078d15582a3741dc55bdbe3407beb"
+      "sha256": "82e6639d3137b9cc0e65c79cc9fda646b3d67ad98e81dc9b94dbd441d13442ff"
     },
     {
       "path": "motion/success-end-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "1164816cb1e3a13dc5136d2867880a1595eb2bb2f0052aa46681f25b21ac9f03"
+      "sha256": "fe03e4379ae0b1f159c210572b6e16e16566097553e3298a9c4d0ebbb8687d60"
     },
     {
       "path": "motion/idol-touch-opacity-390.png",

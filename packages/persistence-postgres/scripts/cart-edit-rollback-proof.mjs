@@ -45,7 +45,16 @@ export async function verifyCartEditRollbackProtection({
         "SELECT version FROM public.schema_migrations ORDER BY version DESC LIMIT 1",
       )
     ).rows[0]?.version;
-    assert.equal(head, "0024");
+    assert.equal(head, "0025");
+    const checkoutDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0025" },
+    });
+    assert.deepEqual(
+      [checkoutDown.revertedVersions, checkoutDown.currentVersion],
+      [["0025"], "0024"],
+    );
     const before = await snapshot(client);
     assert.ok(
       before.cart_item_mutation_receipts.count > 0,
@@ -95,10 +104,16 @@ export async function verifyCartEditRollbackProtection({
     );
     const after = await snapshot(client);
     assert.deepEqual(after, before);
+    const restored = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "up" },
+    });
+    assert.equal(restored.currentVersion, "0025");
     return {
       schemaVersion: 1,
       status: "PASS",
-      assertions: 8,
+      assertions: 10,
       scope:
         "actual accepted edits and private audits block destructive rollback; all ten table counts and bytes preserved",
       before,

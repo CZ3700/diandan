@@ -24,7 +24,8 @@
     "@fan-support/persistence-port": "workspace:*",
     "@fan-support/media-port": "workspace:*",
     "@fan-support/cache-purge-port": "workspace:*",
-    "@fan-support/cart": "workspace:*"
+    "@fan-support/cart": "workspace:*",
+    "@fan-support/domain": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "24.13.3"
