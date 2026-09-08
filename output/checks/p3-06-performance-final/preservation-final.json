@@ -1,0 +1,16 @@
+{
+  "status": "PASS_AFTER_LOCAL_INTEGRATION",
+  "checkedAt": "2026-09-08T03:58:32.682288+00:00",
+  "integratedEvidenceCommit": "3a97f66b20f08f5d9d413980e5724d6c8a4887b9",
+  "originalBaselineFiles": 1376,
+  "originalBaselineExactUnchanged": 1375,
+  "observedPriorPreviewRuntimeUpdateRetained": true,
+  "olderTrackedOutputsOutsideIntentionalP2RefreshUnchanged": 845,
+  "copiedImmutableEvidenceFilesVerified": 1217,
+  "buildInputsVerified": 995,
+  "buildInputsSha256": "df759a88a8dd62d8f08a08eccf87f2e29781e867ffffe955e4f554b7cadce62e",
+  "unexpectedChanges": [],
+  "sharedUiPreviousTrackedReports": "shared-ui/previous-evidence",
+  "originalIgnoredSharedUiLogs": "shared-ui/original-checkout-previous-logs",
+  "scope": "All retained bytes verified after fast-forward and copy. Raw evidence intentionally remains local and untracked; no GitHub push."
+}

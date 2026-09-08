@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-08T03:52:18.514112+00:00",
+  "updatedAt": "2026-09-08T03:58:32.690482+00:00",
   "checkpointStatus": "LOCAL_IMPLEMENTATION_AND_REPOSITORY_CHECKS_PASSED_PHASE_OPEN",
   "task": "P3-06",
   "taskStatus": "IN_PROGRESS",
@@ -207,9 +207,10 @@
     "baselineExactUnchanged": 1375,
     "knownRuntimeUpdatedFiles": 1,
     "runtimeUpdateReport": "preservation-runtime-update.json",
-    "finalVerification": "PASS_BEFORE_LOCAL_INTEGRATION",
+    "finalVerification": "PASS_AFTER_LOCAL_INTEGRATION",
     "priorSharedUiReports": "shared-ui/previous-evidence",
-    "preMergeReport": "preservation-pre-merge.json"
+    "preMergeReport": "preservation-pre-merge.json",
+    "finalReport": "preservation-final.json"
   },
   "remainingGates": [
     "Investigate the retained unavailable artist performance sample; prior intermittent full-check fixture failure remains unexplained despite exact-source full check passing",
@@ -243,5 +244,10 @@
     ],
     "sourceAfterFullCheck": "source-after-full-check.json",
     "scope": "No product source modifications after the successful whole check; preserved upstream OFL text bytes are the only whitespace exception."
+  },
+  "integration": {
+    "status": "FAST_FORWARD_SUCCEEDED",
+    "report": "integration.json",
+    "githubPushed": false
   }
 }

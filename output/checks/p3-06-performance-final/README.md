@@ -2,6 +2,8 @@
 
 从 `fd19144d9b19c6fe7752b635dbc99cef117660b3` 的简洁管理中心版本继续。实现已冻结为本地提交 `7db722b4f5480ffb78eb19f5e2eec7675e50b1bd`；独立工作区 `codex/p3-06-performance-final`，无 GitHub 推送。最终 995 项编译输入 SHA256 为 `df759a88a8dd62d8f08a08eccf87f2e29781e867ffffe955e4f554b7cadce62e`，与提交字节逐项一致。P3-06 仍 IN_PROGRESS，Phase 4 保持 LOCKED；功能回归通过不代表性能与人工退出门已通过。
 
+实现和验收记录已通过 fast-forward 同步回原工作目录的 `codex/p3-06-storefront-acceptance`。同步后核对 995 项编译输入、1,217 个保留证据文件及 845 个本次未刷新旧 tracked output，全部一致；原 1,375 未跟踪文件及另记 SHA 的一项预览状态更新均完整保留。共享 UI 旧报告和原工作区旧日志先归档再刷新，见 `integration.json`、`preservation-final.json`。Git 保存概要、复核与精选截图；完整原始报告、trace、全部截图和字体来源仍留在本地，见 `retained-evidence-manifest.json`。
+
 ## 最终实现与真实结果
 
 - 礼物的当前发布与报价证明仍先完成，艺人目录和市场/政策区域独立服务端流式返回。异常与真实 404 边界保持；非礼物页仍等待其必要上下文，避免后台 Promise 拒绝无人处理。
