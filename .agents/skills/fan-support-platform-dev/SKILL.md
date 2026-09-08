@@ -10,7 +10,7 @@ description: Implement and maintain this repository's fully source-owned global 
 Always read `docs/progress/MASTER.md` first. Then read, in order:
 
 1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md`
-2. The selected task's ACTIVE file in `docs/progress/` (Phase 1 and Phase 2 may be ACTIVE together only as defined by `MASTER.md`)
+2. The selected task's ACTIVE file in `docs/progress/` (concurrent ACTIVE phases are allowed only by the current `MASTER.md` matrix, including the user-approved ADR-013 local-development exception)
 3. The selected Task ID in `docs/plan/task-breakdown.md`
 4. Its direct dependencies and linked risk IDs in `docs/analysis/risk-assessment.md`
 
@@ -167,7 +167,7 @@ Do not write “done” without observable evidence. A local pass is not product
 ## 7. Parallel Execution Protocol
 
 - Read `docs/plan/dependency-graph.md` and `task-breakdown.md` before delegating.
-- Treat Phase status as a hard gate; task dependencies never unlock a task inside a LOCKED Phase.
+- Treat Phase status as a hard gate; task dependencies never unlock a task inside a LOCKED Phase. Follow user-approved scheduling exceptions explicitly recorded in MASTER/ADR-013; they do not waive outstanding acceptance or release gates.
 - Run at most one executor per independent lane; assign explicit Task IDs and exclusive file ownership.
 - Freeze shared contracts before parallel consumers begin.
 - Never let two executors edit the same migration sequence, schemaVersion, global tokens, published content schema or root lockfile concurrently.

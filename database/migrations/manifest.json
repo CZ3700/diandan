@@ -220,6 +220,16 @@
         "up": "0ff21a912fc82856b264c0c3529073120348ea08b370ee97ccfe1cc876f2cdc7",
         "down": "0edeab91d3f283d349c94f0fd41ebfbd0d37a272f275755effb12d7a4cfd23fb"
       }
+    },
+    {
+      "version": "0023",
+      "name": "cart-runtime-recipient-rules",
+      "up": "database/migrations/0023_cart-runtime-recipient-rules.up.sql",
+      "down": "database/migrations/0023_cart-runtime-recipient-rules.down.sql",
+      "sha256": {
+        "up": "5e64caa4c901d9abcd257a2fa1643e760549c81c6cac71c4cdd8f1bd3d944d4c",
+        "down": "3a49b8e8875ec0edb90a53ac3910f4dd3266844ff277ad3cf26a9eed861dcd39"
+      }
     }
   ]
 }

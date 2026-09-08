@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "scope": "Existing pending moderation intents block unsafe 0023 rollback",
+  "mode": "PENDING",
+  "pendingIntents": 3,
+  "assertions": 8,
+  "before": {
+    "carts": {
+      "count": 2,
+      "sha256": "0c2635d12f7baf0dc63cdc1d81f167694ca809e28484886b72292f8a1f7916cd"
+    },
+    "cart_items": {
+      "count": 3,
+      "sha256": "c287eecd6626d8c11c9cf0fbc76df8d438909a5909b510a765556b4ada37c7fe"
+    },
+    "support_intents": {
+      "count": 3,
+      "sha256": "c369d26e2d13b1705a4e847504248c816498995dab9fea946afa648135a272bc"
+    },
+    "outbox_events": {
+      "count": 299,
+      "sha256": "93e682b160ff8e84b07e6ded82fc6a2ac98feee513e6880f690d51a148762384"
+    },
+    "idempotency_records": {
+      "count": 1019,
+      "sha256": "fb0583fb5e002cb9f8d3434c2065a24c07ebbce520c22475981e06bcaf073661"
+    },
+    "schema_migrations": {
+      "count": 23,
+      "sha256": "0a9fcb99fe0090fdbc829515c23735c4d1d947b3c8493df02f1b4ea33ce01d42"
+    }
+  },
+  "after": {
+    "carts": {
+      "count": 2,
+      "sha256": "0c2635d12f7baf0dc63cdc1d81f167694ca809e28484886b72292f8a1f7916cd"
+    },
+    "cart_items": {
+      "count": 3,
+      "sha256": "c287eecd6626d8c11c9cf0fbc76df8d438909a5909b510a765556b4ada37c7fe"
+    },
+    "support_intents": {
+      "count": 3,
+      "sha256": "c369d26e2d13b1705a4e847504248c816498995dab9fea946afa648135a272bc"
+    },
+    "outbox_events": {
+      "count": 299,
+      "sha256": "93e682b160ff8e84b07e6ded82fc6a2ac98feee513e6880f690d51a148762384"
+    },
+    "idempotency_records": {
+      "count": 1019,
+      "sha256": "fb0583fb5e002cb9f8d3434c2065a24c07ebbce520c22475981e06bcaf073661"
+    },
+    "schema_migrations": {
+      "count": 23,
+      "sha256": "0a9fcb99fe0090fdbc829515c23735c4d1d947b3c8493df02f1b4ea33ce01d42"
+    }
+  }
+}

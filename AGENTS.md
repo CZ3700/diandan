@@ -8,7 +8,7 @@
 
 1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md`
 2. `docs/progress/MASTER.md`
-3. 候选任务所在的 `ACTIVE` phase 文件；Phase 1 与 Phase 2 可能按 `MASTER.md` 同时激活
+3. 候选任务所在的 `ACTIVE` phase 文件；并行 ACTIVE 范围以 `MASTER.md` 为准（含用户确认的 ADR-013 本地开发例外）
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 

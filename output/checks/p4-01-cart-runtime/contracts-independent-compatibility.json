@@ -1,0 +1,78 @@
+{
+  "outcome": "PASS",
+  "base": "7ae44bd8c1c07057d746ab2c77242d1e3261fcb2",
+  "comparison": "Every pre-existing root/path/component value compared using exact JSON.stringify bytes and key order; whole generated files intentionally grow.",
+  "defs": {
+    "oldCount": 421,
+    "newCount": 448,
+    "added": [
+      "CartRuntimeAccess",
+      "CartRuntimeAddCommand",
+      "CartRuntimeAddDecision",
+      "CartRuntimeAddDecisionInput",
+      "CartRuntimeAddRequest",
+      "CartRuntimeAppendItemCommand",
+      "CartRuntimeCommand",
+      "CartRuntimeCredentialCommand",
+      "CartRuntimeFailure",
+      "CartRuntimeFindReceiptCommand",
+      "CartRuntimeHeader",
+      "CartRuntimeInitializeCommand",
+      "CartRuntimeInitializeRecordCommand",
+      "CartRuntimeInitializeRequest",
+      "CartRuntimeItemRecord",
+      "CartRuntimeItemView",
+      "CartRuntimeListItemsCommand",
+      "CartRuntimeProjectionInput",
+      "CartRuntimeReadCommand",
+      "CartRuntimeReceipt",
+      "CartRuntimeRequestContext",
+      "CartRuntimeResolveGiftCommand",
+      "CartRuntimeResolvedGift",
+      "CartRuntimeResponse",
+      "CartRuntimeView",
+      "GenerateSupportIntentKeyCommand",
+      "GenerateSupportIntentKeyResponse"
+    ]
+  },
+  "paths": {
+    "oldCount": 79,
+    "newCount": 82,
+    "added": [
+      "/api/v1/cart",
+      "/api/v1/cart/items",
+      "/api/v1/carts"
+    ]
+  },
+  "components": {
+    "headers": {
+      "oldCount": 2,
+      "newCount": 2,
+      "added": []
+    },
+    "schemas": {
+      "oldCount": 139,
+      "newCount": 145,
+      "added": [
+        "CartRuntimeAddRequest",
+        "CartRuntimeFailure",
+        "CartRuntimeInitializeRequest",
+        "CartRuntimeItemView",
+        "CartRuntimeResponse",
+        "CartRuntimeView"
+      ]
+    },
+    "securitySchemes": {
+      "oldCount": 4,
+      "newCount": 6,
+      "added": [
+        "CartCsrf",
+        "CartSession"
+      ]
+    }
+  },
+  "artifacts": {
+    "contracts.schema.json": "84a55f2ba17612f5d5d2a865a1fc588dc31bf271c257fee485177e4f4d89b427",
+    "openapi.json": "bafc63ab8eb514628a2afb8e6b692ed4bf520ab013c217a0ca6a085139a72925"
+  }
+}

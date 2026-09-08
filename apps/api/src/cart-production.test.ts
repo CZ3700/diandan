@@ -1,0 +1,87 @@
+import { expect, test, vi } from "vitest";
+import { createProductionApiApplication } from "./production-application.js";
+import { createApiApplication } from "./bootstrap.js";
+const testDatabaseUrl = [
+  "postgresql://",
+  "test-user",
+  ":",
+  "test-password",
+  "@postgres:5432/fan_support",
+].join("");
+
+const validEnvironment = Object.freeze({
+  NODE_ENV: "test",
+  FAN_SUPPORT_DEPLOYMENT_ENV: "test",
+  FAN_SUPPORT_SITE_ORIGIN: "http://localhost:3002",
+  FAN_SUPPORT_DATABASE_URL: testDatabaseUrl,
+  FAN_SUPPORT_OBJECT_STORAGE_AUTH_MODE: "static",
+  FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: "https://object-storage:9000",
+  FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT: "https://object-storage:9000",
+  FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: "fan-support-media-source",
+  FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: "fan-support-media-derivative",
+  FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN:
+    "https://media.example.invalid",
+  FAN_SUPPORT_OBJECT_STORAGE_REGION: "us-east-1",
+  FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID: "TEST_ACCESS_KEY_ID",
+  FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY:
+    "TEST_OBJECT_STORAGE_SECRET_VALUE",
+  FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true",
+});
+
+const quietLogger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+
+test("unconfigured cart routes fail closed with private responses", async () => {
+  const app = await createApiApplication(validEnvironment, {
+    logger: quietLogger,
+  });
+  try {
+    await app.init();
+    const response = await app.inject({
+      method: "POST",
+      url: "/api/v1/carts",
+      payload: {
+        schemaVersion: 1,
+        presentationLocale: "en",
+        market: "TEST",
+        currency: "USD",
+      },
+    });
+    expect(response.statusCode).toBe(503);
+    expect(response.headers["cache-control"]).toBe("private, no-store");
+    expect(response.headers["set-cookie"]).toBeUndefined();
+    expect(response.json()).toEqual({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "TEMPORARY_UNAVAILABLE",
+    });
+  } finally {
+    await app.close();
+  }
+});
+
+test("partial KMS configuration cannot silently disable carts and closes other resources", async () => {
+  const stop = vi.fn(async () => undefined),
+    createApplication = vi.fn();
+  await expect(
+    createProductionApiApplication(
+      { FAN_SUPPORT_CART_KMS_REGION: "us-east-1" },
+      {
+        logger: quietLogger,
+        factories: {
+          createApplication: createApplication as never,
+          createComposition: (() => ({
+            reliableEventsRuntime: { stop },
+          })) as never,
+          createCatalogComposition: (() => ({
+            catalogDirectoryRuntime: { stop },
+          })) as never,
+          createPublishedComposition: (() => ({
+            publishedContentRuntime: { stop },
+          })) as never,
+        },
+      },
+    ),
+  ).rejects.toThrow("Invalid cart runtime configuration");
+  expect(createApplication).not.toHaveBeenCalled();
+  expect(stop).toHaveBeenCalledTimes(3);
+});

@@ -6,6 +6,7 @@ import {
 } from "./published-content-composition.js";
 
 import { createApiApplication } from "./bootstrap.js";
+import { createOptionalCartRuntimeComposition } from "./cart-production.js";
 import {
   createCatalogDirectoryComposition,
   type CatalogDirectoryComposition,
@@ -26,6 +27,7 @@ type ReliableEventsCompositionFactory = (
 export type ProductionApiApplicationOptions = Readonly<{
   logger: StructuredLogger;
   factories?: Readonly<{
+    createCartComposition?: typeof createOptionalCartRuntimeComposition;
     createApplication?: ApiApplicationFactory;
     createComposition?: ReliableEventsCompositionFactory;
     createCatalogComposition?: (
@@ -55,13 +57,19 @@ export async function createProductionApiApplication(
     createCatalogDirectoryComposition;
   let catalog: CatalogDirectoryComposition | undefined;
   let published: PublishedContentComposition | undefined;
+  let cart: ReturnType<typeof createOptionalCartRuntimeComposition>;
   try {
     catalog = createCatalogComposition(environment, { logger: options.logger });
     published = (
       options.factories?.createPublishedComposition ??
       createPublishedContentComposition
     )(environment, { logger: options.logger });
+    cart = (
+      options.factories?.createCartComposition ??
+      createOptionalCartRuntimeComposition
+    )(environment);
     return await createApplication(environment, {
+      ...(cart ?? {}),
       logger: options.logger,
       paymentWebhookRoute: composition.paymentWebhookRoute,
       reliableEventsRuntime: composition.reliableEventsRuntime,
@@ -78,6 +86,7 @@ export async function createProductionApiApplication(
       Promise.resolve().then(() => composition.reliableEventsRuntime.stop()),
       Promise.resolve().then(() => catalog?.catalogDirectoryRuntime.stop()),
       Promise.resolve().then(() => published?.publishedContentRuntime.stop()),
+      Promise.resolve().then(() => cart?.cartRuntime.stop()),
     ]);
     throw error;
   }

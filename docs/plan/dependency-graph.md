@@ -14,6 +14,8 @@ flowchart LR
   P6[Phase 6<br/>加固与恢复] --> P7[Phase 7<br/>上线灰度]
 ```
 
+2026-09-08 ADR-013：用户要求继续下一阶段，允许 P3 未完验收保留时开展 P4 本地开发。P4 任务按直接依赖逐个解锁，P3 退出仍须补齐；进入 P5 必须同时满足 P3/P4 退出。下面正常波次与最终验收顺序不构成放弃该门。
+
 ## 2. 关键路径
 
 ```text
@@ -51,8 +53,8 @@ P0-01 → (P0-02 + P0-03) → P0-04 → P0-05 → [Phase 0 Gate]
 | W10 | P3-01 | locale-aware 内容/媒体/发布 API 与可靠 cache purge；按 ADR-009 先冻结目录发现/构图/详情合同，再接 repository、授权、媒体与发布，不并行领取其他 Lane C 任务 |
 | W11 | P3-02、P3-04 | Lane C/B：Admin 翻译/首页/媒体与七语言 Storefront 浏览分离 |
 | W12 | P3-03、P3-05 | Lane C/B：Admin 商城运营与礼物详情分离 |
-| W13 | P3-06 | 完成 Phase 3 退出门禁；随后激活 Phase 4 |
-| W14 | P4-01 | 匿名 cart 与 support_intent 原子事务 |
+| W13 | P3-06 | 保留全部退出门；ADR-013 允许本地 P4 开发先行 |
+| W14 | P4-01 | ADR-013 本轮入口；匿名 cart 与 support_intent 原子事务 |
 | W15 | P4-02 | 购物车 UI |
 | W16 | P4-03 | 报价、预占、订单与不可变快照事务 |
 | W17 | P4-04 | provider-bound 两事务支付创建 Saga |

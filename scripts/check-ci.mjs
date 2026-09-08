@@ -65,7 +65,7 @@ const expectedWorkflow = {
     quality: {
       name: "Quality",
       "runs-on": "ubuntu-24.04",
-      "timeout-minutes": 20,
+      "timeout-minutes": 30,
       steps: [
         checkoutStep,
         setupStep,

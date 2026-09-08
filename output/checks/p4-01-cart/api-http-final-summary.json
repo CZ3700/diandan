@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "scope": "P4-01 real PostgreSQL / direct HTTP / TLS S3 with actual KMS adapter and TEST-local remote KMS boundary",
+  "run": "output/checks/p4-01-cart/http-2026-09-08T09-17-42.544Z",
+  "log": "output/checks/p4-01-cart/http-seventh.log",
+  "processExitCode": 0,
+  "harnessAssertionsIncludingSetup": 6029,
+  "setupApiRequests": 1905,
+  "mainProtocolRequests": 29,
+  "mainProtocolCases": 6,
+  "immediateDailyTrials": [
+    {
+      "index": 1,
+      "status": "PASS",
+      "responseStatus": 200,
+      "publicPreReads": 0
+    },
+    {
+      "index": 2,
+      "status": "PASS",
+      "responseStatus": 200,
+      "publicPreReads": 0
+    },
+    {
+      "index": 3,
+      "status": "PASS",
+      "responseStatus": 200,
+      "publicPreReads": 0
+    }
+  ],
+  "pendingRollbackAssertions": 8,
+  "dynamicRollbackAssertions": 7,
+  "nodeTests": 5,
+  "apiVitestTests": 15,
+  "cleanup": "All owned cleanup awaited by the normal finally path; process exited 0",
+  "limitations": [
+    "No browser Secure-cookie behavior, AWS KMS, real customer data, payment or production acceptance",
+    "Attempt 4 CONTENT_UNAVAILABLE remains intermittent and unlocalized; subsequent PASS does not establish a product fix",
+    "The trial interval begins at publishing helper return, after normal publication receipt / price / media-registration checks",
+    "6029 includes fixture checks; rollback helper assertions are separate"
+  ],
+  "earlierFailureLogs": [
+    "http-first.log",
+    "http-second.log",
+    "http-third.log",
+    "http-fourth.log",
+    "http-sixth.log"
+  ]
+}

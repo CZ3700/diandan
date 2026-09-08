@@ -1,11 +1,11 @@
 # Progress Master
 
 > 最后更新：2026-09-08
-> 当前里程碑：M3 可浏览 Beta（M1/M2 已完成）
-> 当前 ACTIVE Phase：Phase 3
-> 当前任务：`P3-06` IN_PROGRESS，Codex `/root` 独占 Lane D
-> 下一入口：继续P3-06剩余移动性能与一次临时不可用采样的诊断，随后完成简洁管理中心真人计时、读屏与关键译文验收
-> 当前检查点：已增加日常 `check:dev`（本机缓存条件下28.16秒），修正每次Lighthouse导航的内容有效性门；28项工具测试、12项实际DOM场景与2次真实Lighthouse采样验证通过。此前实现7db722b的完整check通过；本轮没有重跑PG/S3或完整63次性能矩阵，性能与人工门仍未通过。购买闭环提前开发的顺序提案待用户回复。
+> 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
+> 当前 ACTIVE Phase：Phase 3（验收待续）、Phase 4（ADR-013 本地开发）
+> 当前任务：P4-01 DONE；P4-02 READY、无 executor；P3-06 保留 IN_PROGRESS、验收待续且无 executor
+> 下一入口：P4-02 购物车抽屉/页与真实后端接入，数量、删除、留言编辑和失败恢复
+> 当前检查点：P4-01 本地技术验收完成。全部PG/HTTP/TLS S3、购物车6029断言含准备及3次新礼物首次加购通过；P2-04/05刷新通过。末端output诊断脚本lint修正后，未改的完整质量后缀通过，1734实现输入与集成时一致；分段结果覆盖全部原门。环境时钟回退与原间歇失败证据保留，不称已根治。
 
 ## 1. 开工入口
 
@@ -13,22 +13,22 @@
 
 1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md`
 2. 本文件
-3. 候选任务所在的 `ACTIVE` phase 文件（当前为 `docs/progress/phase-3-storefront.md`）
+3. 候选任务所在的 `ACTIVE` phase 文件（当前为 `docs/progress/phase-3-storefront.md` 与 `docs/progress/phase-4-commerce.md`）
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06由root领取、Lane D被独占，Phase 3 仍 ACTIVE，Phase 4 仍 LOCKED。正式品牌资产与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，root 本轮从 READY 领取 P4-01、Lane A 独占。正式品牌资产与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 26 |
-| READY | 0 |
+| PENDING | 24 |
+| READY | 1 |
 | IN_PROGRESS | 1 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
-| DONE | 22 |
+| DONE | 23 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -40,7 +40,7 @@
 | 1 合同与领域 | 6 | CLOSED | `phase-1-contracts.md` | domain/catalog/pricing/inventory/migration/webhook |
 | 2 设计系统 | 6 | CLOSED | `phase-2-design-system.md` | 品牌样板、视觉、axe、设备性能 |
 | 3 自研 Admin、内容与浏览前台 | 6 | ACTIVE | `phase-3-storefront.md` | 七语言自研后台、真实内容、发布、SEO/cache、性能 |
-| 4 购买闭环 | 6 | LOCKED | `phase-4-commerce.md` | 七语言测试支付、订单 locale、查单、通知 |
+| 4 购买闭环 | 6 | ACTIVE | `phase-4-commerce.md` | 七语言测试支付、订单 locale、查单、通知 |
 | 5 运营与支付 | 8 | LOCKED | `phase-5-operations-payments.md` | RBAC、退款、配置回退、重放、production-like staging |
 | 6 加固与恢复 | 6 | LOCKED | `phase-6-hardening.md` | Release Gate 技术证据 |
 | 7 上线与灰度 | 6 | LOCKED | `phase-7-launch.md` | 正式签署、灰度、复盘 |
@@ -54,12 +54,12 @@
 | 初始状态 | Phase 0 | — |
 | Phase 0 | Phase 1、Phase 2 | Phase 0 |
 | Phase 1 与 Phase 2 | Phase 3 | Phase 1、Phase 2 |
-| Phase 3 | Phase 4 | Phase 3 |
-| Phase 4 | Phase 5 | Phase 4 |
+| Phase 3；或 ADR-013 已确认的本地开发例外 | Phase 4 | 正常路径关闭 Phase 3；例外保留未完验收 |
+| Phase 3 与 Phase 4 | Phase 5 | Phase 3、Phase 4 |
 | Phase 5 | Phase 6 | Phase 5 |
 | Phase 6 | Phase 7 | Phase 6 |
 
-除 Phase 1 与 Phase 2 外，不允许两个 Phase 同时为 `ACTIVE`。协调者还必须执行“每个 Lane 同时最多一个 executor”的并行门禁。
+除 Phase 1/2 与 ADR-013 的 Phase 3/4 本地开发例外外，不允许两个 Phase 同时为 `ACTIVE`。协调者还必须执行“每个 Lane 同时最多一个 executor”的并行门禁。
 
 ## 4. 决策状态
 
@@ -79,6 +79,10 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-08 P4-01 DONE：匿名cart、私密加密与原子加购实现通过本地技术验收。全部原PG/HTTP/TLS S3与浏览器回归通过，购物车6029断言含准备/1905准备请求、3件新上架礼物无预读首次加购通过；旧421合同根不变，23迁移/159表往返与两类历史数据拒绝回退通过。整条full3在1247.50秒仅因output-only诊断脚本URL导入缺失而exit1；修正后原质量后缀33.578秒exit0，类型60/60、测试60/60、构建35/35及31出口通过，1734实现输入逐SHA不变。非作者确认两段覆盖完整原门，S.U.P.E.R 10项PASS，secret/high audit通过；未宣称单次整条exit0或冷缓存。自然PG时钟回退与原间歇失败未根治、P3未完门继续保留。详见 `docs/progress/phase-4-commerce.md` 与 `output/checks/p4-01-cart-runtime/final-verification.md`；23DONE/1READY/1IN_PROGRESS/24PENDING=49，P4-02 READY。本轮仅本地Git交付，无push/merge/生产发布。
+
+2026-09-08 P4-01 REVIEW：匿名购物车与原子加购实现已冻结，真实断开响应重放、同键并发、跨Cookie隔离、七语言和私密意图加密通过；正常管理中心3个新礼物无预读首次加购通过。迁移0023支持全部艺人规则，并修复PENDING被误判AUTOMATED的旧NULL逻辑，真正自动审核证据门保留；实际23迁移/159表往返通过，两种带业务数据的危险回退均拒绝且SHA不变。原P2-04/05刷新通过，P205仍有既存moderate标题问题和人工/真机门。全仓第二入口476.27秒失败，原源定向又有CLAIM_WINDOW；增加TEST权限统计后11243断言/1276请求通过，但旧失败不称已修。独立PG自然时钟观测见 `output/checks/p4-01-cart-runtime/natural-clock-observation.json`。完整第三入口执行中，代码证据与风险见 `docs/progress/phase-4-commerce.md`；22DONE/1IN_PROGRESS/1REVIEW/25PENDING，仅本地开发。
 
 2026-09-08 P3-06开发提速：新增独立 `pnpm check:dev`，默认全仓或精确包筛选、只读计划、首失败停止；原完整check/CI不改。本机缓存条件下28.16秒exit0，类型58/58（57cache）、测试58/58（56cache）、构建35/35（33cache），格式/lint/工作区与领域边界通过。采样增加同次Lighthouse DOM内容证明；HTTP200错误页、隐藏/空容器、目录失败及缺失证明不能进入成功性能汇总，原始报告先保留。28项Node工具测试、12个真实Chrome DOM场景与2次Lighthouse（正常页/预查正常后测量错误页）通过；这是工具校验，不是新的产品性能或数据库验收。详见 `output/checks/p3-06-development-cadence/README.md`、`docs/plan/development-cadence.md`。总进度22/49 DONE不变，P3-06 IN_PROGRESS、Phase4 LOCKED；提前开发购买闭环提案待回复，本轮仅本地提交。
 

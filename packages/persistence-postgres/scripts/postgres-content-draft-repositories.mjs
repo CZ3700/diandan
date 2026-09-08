@@ -68,8 +68,8 @@ await withEphemeralPostgres(async (clientConfig) => {
           "SELECT max(version) AS version FROM public.schema_migrations",
         )
       ).rows[0].version,
-      "0022",
-      "legacy extension repository runs against the current daily management schema",
+      "0023",
+      "legacy extension repository runs against the current cart recipient schema",
     );
     equal(
       (

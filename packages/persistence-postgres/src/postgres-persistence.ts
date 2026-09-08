@@ -47,6 +47,11 @@ import { createPublicationRuntimeRepository } from "./publication-runtime-reposi
 import { createPublicationPurgeRepository } from "./publication-purge-repository.js";
 import { createPublishedContentRepository } from "./published-content-repository.js";
 import { createStorefrontCommerceRepository } from "./storefront-commerce-repository.js";
+import { createCartRuntimeRepository } from "./cart-runtime-repository.js";
+import type {
+  CartRuntimeRepositories,
+  CartRuntimeTransactionManager,
+} from "@fan-support/persistence-port";
 import type {
   StorefrontCommerceTransactionManager,
   StorefrontCommerceRepositories,
@@ -132,6 +137,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly cartRuntimeTransactionManager: CartRuntimeTransactionManager;
   readonly managementCenterTransactionManager: ManagementCenterTransactionManager;
   readonly managementMediaTransactionManager: ManagementMediaTransactionManager;
   readonly giftCommerceTransactionManager: GiftCommerceTransactionManager;
@@ -280,6 +286,22 @@ export function createPostgresPersistenceWithPoolFactory(
         idempotency: createIdempotencyRepository(database, transactionScope),
         outbox: createOutboxRepository(database, transactionScope),
         inventory: createInventoryRepository(database, transactionScope),
+      };
+    },
+  });
+  const cartRuntimeRunner = createTransactionRunner<CartRuntimeRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => {
+      const database = createPostgresQueryLayer(client as NodePgClient);
+      return {
+        cartRuntime: createCartRuntimeRepository(client, scope),
+        storefrontCommerce: createStorefrontCommerceRepository(
+          client,
+          scope,
+          options!.catalogPublicMediaBaseUrl!,
+        ),
+        idempotency: createIdempotencyRepository(database, scope),
+        outbox: createOutboxRepository(database, scope),
       };
     },
   });
@@ -907,6 +929,22 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return publishedContentRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    cartRuntimeTransactionManager: {
+      async runInCartRuntimeTransaction(work) {
+        if (
+          lifecycle !== "OPEN" ||
+          options?.catalogPublicMediaBaseUrl === undefined
+        )
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return cartRuntimeRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
           work,
         );

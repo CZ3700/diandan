@@ -485,6 +485,17 @@ async function verify(clientConfig) {
     const immutableBefore = await observer.query(
       "SELECT jsonb_agg(jsonb_build_array(id,source_hash,translated_from_source_hash,display_name) ORDER BY id) AS translations FROM public.idol_revision_translations",
     );
+    const cartDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0023" },
+    });
+    assert.deepEqual(
+      [cartDown.revertedVersions, cartDown.currentVersion],
+      [["0023"], "0022"],
+      "cart recipient migration rolls back before the existing directory downgrade sequence",
+    );
+    assertions++;
     const managementDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -572,9 +583,9 @@ async function verify(clientConfig) {
       "SELECT count(*)::integer AS count, max(version) AS version FROM public.schema_migrations",
     );
     check(
-      migrationHead.rows[0].count === 22 &&
-        migrationHead.rows[0].version === "0022",
-      "data-bearing up/down/up restores all 22 migrations through daily management publication",
+      migrationHead.rows[0].count === 23 &&
+        migrationHead.rows[0].version === "0023",
+      "data-bearing up/down/up restores all 23 migrations through cart recipient rules",
     );
     check(
       (await idols()).code === "CATALOG_UNAVAILABLE",

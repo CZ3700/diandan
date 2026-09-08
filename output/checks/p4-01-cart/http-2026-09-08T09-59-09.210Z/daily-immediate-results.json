@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "trials": [
+    {
+      "index": 1,
+      "status": "PASS",
+      "responseStatus": 200,
+      "outcome": "SUCCESS",
+      "code": null,
+      "errorKind": null,
+      "publishToAddMs": 0.000999999996565748,
+      "publicPreReads": 0,
+      "diagnostics": {
+        "dailyLoader": {
+          "schemaVersion": 1,
+          "headCount": 1,
+          "proofVersion": 3,
+          "outcome": "SUCCESS",
+          "contextVersion": 3,
+          "giftProjection": "SUCCESS"
+        },
+        "http": {
+          "status": 200,
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "repository": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "contextVersion": 3,
+        "profileVersion": 3,
+        "giftProjection": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "recipientKind": "PUBLISHED",
+        "recipientProjection": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "priceProofMatches": true,
+        "application": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        }
+      }
+    },
+    {
+      "index": 2,
+      "status": "PASS",
+      "responseStatus": 200,
+      "outcome": "SUCCESS",
+      "code": null,
+      "errorKind": null,
+      "publishToAddMs": 0.0010000000038417056,
+      "publicPreReads": 0,
+      "diagnostics": {
+        "dailyLoader": {
+          "schemaVersion": 1,
+          "headCount": 1,
+          "proofVersion": 3,
+          "outcome": "SUCCESS",
+          "contextVersion": 3,
+          "giftProjection": "SUCCESS"
+        },
+        "http": {
+          "status": 200,
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "repository": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "contextVersion": 3,
+        "profileVersion": 3,
+        "giftProjection": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "recipientKind": "PUBLISHED",
+        "recipientProjection": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "priceProofMatches": true,
+        "application": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        }
+      }
+    },
+    {
+      "index": 3,
+      "status": "PASS",
+      "responseStatus": 200,
+      "outcome": "SUCCESS",
+      "code": null,
+      "errorKind": null,
+      "publishToAddMs": 0.001125000009778887,
+      "publicPreReads": 0,
+      "diagnostics": {
+        "dailyLoader": {
+          "schemaVersion": 1,
+          "headCount": 1,
+          "proofVersion": 3,
+          "outcome": "SUCCESS",
+          "contextVersion": 3,
+          "giftProjection": "SUCCESS"
+        },
+        "http": {
+          "status": 200,
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "repository": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "contextVersion": 3,
+        "profileVersion": 3,
+        "giftProjection": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "recipientKind": "PUBLISHED",
+        "recipientProjection": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        },
+        "priceProofMatches": true,
+        "application": {
+          "schemaVersion": 1,
+          "outcome": "SUCCESS",
+          "code": null
+        }
+      }
+    }
+  ]
+}

@@ -117,6 +117,8 @@ P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字�
 
 ## Phase 4 — 加购、结账与订单（6）
 
+2026-09-08 调度：按用户授权与 ADR-013 开始 Phase 4 本地开发；P3-06 的性能及人工验收继续保留，以下直接依赖不变，Phase 5 仍须两阶段退出。
+
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
 | P4-01 | P1-03, P1-04, P1-05, P3-05 | 实现匿名 cart token 与 add-to-cart 原子事务：服务端重验、presentation/fan-message locale、cart item、加密 support_intent、幂等 | 篡改 idol/variant/price 拒绝；切换 locale 不改 market/currency；超时重试无第二行；公共 DTO 无留言明文 | R-01, R-02, R-03, R-17 |

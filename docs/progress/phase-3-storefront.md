@@ -17,7 +17,7 @@
 | P3-03 | DONE | Codex `/root` | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
 | P3-04 | DONE | Codex `/root` | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
 | P3-05 | DONE | Codex `/root` | P2-04、P3-01、P3-04 | 真实七语礼物分页/筛选/详情/选择艺人/政策；完整check、PG/HTTP、浏览器与独立复核通过，见P3-05验收记录 |
-| P3-06 | IN_PROGRESS | Codex `/root` | P3-02/03/04/05 | 七语言 i18n/SEO/cache/运营/性能验收；root独占Lane D，见本轮登记 |
+| P3-06 | IN_PROGRESS | Codex `/root`（验收待续、无 executor） | P3-02/03/04/05 | 未完性能/人工验收保留；ADR-013 允许先做 P4 本地开发，不计 DONE |
 
 ## 必须证明
 

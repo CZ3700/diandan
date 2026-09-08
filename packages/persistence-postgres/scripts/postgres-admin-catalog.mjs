@@ -874,11 +874,32 @@ await withEphemeralPostgres(async (clientConfig) => {
       (SELECT jsonb_agg(jsonb_build_object('id',id,'version',version,'status',status,'draft',draft_revision_id,'published',published_revision_id) ORDER BY id) FROM public.gifts) AS gift_versions
     `)
       ).rows[0];
+    const beforeCartDown = await retainedHistory();
+    equal(
+      beforeCartDown.version,
+      "0023",
+      "admin operations use the current cart recipient schema",
+    );
+    const cartDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0023" },
+    });
+    equal(
+      [cartDown.revertedVersions, cartDown.currentVersion],
+      [["0023"], "0022"],
+      "cart recipient migration rolls back before existing history probes",
+    );
     const beforeDailyDown = await retainedHistory();
+    equal(
+      beforeDailyDown,
+      { ...beforeCartDown, version: "0022" },
+      "cart recipient rollback preserves all admin, translation and publication history",
+    );
     equal(
       beforeDailyDown.version,
       "0022",
-      "admin and translation operations ran at the current migration head",
+      "admin history remains intact at the daily management migration head",
     );
     const dailyDown = await runMigrations({
       clientConfig,

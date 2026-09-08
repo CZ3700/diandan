@@ -319,6 +319,9 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/translation-transfer/export",
     "/api/v1/admin/translation-transfer/import",
     "/api/v1/admin/translation-workspace/read",
+    "/api/v1/cart",
+    "/api/v1/cart/items",
+    "/api/v1/carts",
     "/api/v1/content-review-preview/read",
     "/api/v1/gift-content/{handle}",
     "/api/v1/gifts",
@@ -344,6 +347,16 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     },
   ]);
   expect(securitySchemes).toEqual({
+    CartSession: expect.objectContaining({
+      type: "apiKey",
+      in: "cookie",
+      name: "__Host-fan-cart",
+    }),
+    CartCsrf: expect.objectContaining({
+      type: "apiKey",
+      in: "header",
+      name: "x-csrf-token",
+    }),
     AdminSession: expect.objectContaining({
       type: "apiKey",
       in: "cookie",

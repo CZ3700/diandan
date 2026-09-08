@@ -59,6 +59,7 @@ import {
 import "reflect-metadata";
 
 import type { NestApplicationOptions } from "@nestjs/common";
+import type { FastifyReply } from "fastify";
 import { NestFactory } from "@nestjs/core";
 import {
   FastifyAdapter,
@@ -71,6 +72,7 @@ import {
 import { registerFastifyObservability } from "@fan-support/observability/fastify";
 
 import { AppModule } from "./app.module.js";
+import { registerCartRoute, type CartRouteDependencies } from "./cart-route.js";
 import {
   registerCatalogDirectoryRoute,
   type CatalogDirectoryRouteOptions,
@@ -93,6 +95,8 @@ export type ApiLifecycleResource = Readonly<{
 }>;
 
 export type CreateApiApplicationOptions = Readonly<{
+  cartRoute?: CartRouteDependencies;
+  cartRuntime?: ApiLifecycleResource;
   managementCenterRoute?: ManagementCenterRouteDependencies;
   managementCenterRuntime?: ApiLifecycleResource;
   giftCommerceRoute?: GiftCommerceRouteDependencies;
@@ -134,6 +138,7 @@ function registerApiLifecycle(
   runtime: ApiLifecycleResource | undefined,
   name:
     | "API admin session"
+    | "API cart"
     | "API admin workspace"
     | "API gift commerce"
     | "API reliable events"
@@ -183,6 +188,36 @@ export async function createApiApplication(
     service: "api",
     logger,
   });
+  registerApiLifecycle(adapter, options.cartRuntime, "API cart");
+  if (options.cartRoute)
+    registerCartRoute(adapter.getInstance(), options.cartRoute);
+  else {
+    const unavailable = (_request: unknown, reply: FastifyReply) =>
+      reply
+        .header("cache-control", "private, no-store")
+        .header("x-robots-tag", "noindex, nofollow")
+        .header("referrer-policy", "no-referrer")
+        .code(503)
+        .send({
+          schemaVersion: 1,
+          outcome: "FAILURE",
+          code: "TEMPORARY_UNAVAILABLE",
+        });
+    for (const [url, method] of [
+      ["/api/v1/carts", "POST"],
+      ["/api/v1/cart", "GET"],
+      ["/api/v1/cart/items", "POST"],
+    ] as const) {
+      adapter.getInstance().route({
+        url,
+        method,
+        bodyLimit: 8192,
+        exposeHeadRoute: false,
+        onRequest: async (request, reply) => unavailable(request, reply),
+        handler: unavailable,
+      });
+    }
+  }
   registerApiLifecycle(
     adapter,
     options.adminSessionRuntime,

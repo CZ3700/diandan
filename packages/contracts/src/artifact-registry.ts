@@ -1,4 +1,37 @@
 import {
+  cartRuntimeInitializeCommandSchema,
+  cartRuntimeReadCommandSchema,
+  cartRuntimeAddCommandSchema,
+  cartRuntimeCommandSchema,
+  cartRuntimeFailureSchema,
+  cartRuntimeAccessSchema,
+  cartRuntimeHeaderSchema,
+  cartRuntimeItemRecordSchema,
+  cartRuntimeInitializeRecordCommandSchema,
+  cartRuntimeCredentialCommandSchema,
+  cartRuntimeListItemsCommandSchema,
+  cartRuntimeResolveGiftCommandSchema,
+  cartRuntimeResolvedGiftSchema,
+  cartRuntimeAppendItemCommandSchema,
+  cartRuntimeFindReceiptCommandSchema,
+  cartRuntimeReceiptSchema,
+  cartRuntimeItemViewSchema,
+  cartRuntimeViewSchema,
+  cartRuntimeResponseSchema,
+  cartRuntimeAddDecisionInputSchema,
+  cartRuntimeAddDecisionSchema,
+  cartRuntimeProjectionInputSchema,
+} from "./cart-runtime.js";
+import { cartRuntimeRequestContextSchema } from "./cart-runtime-context.js";
+import {
+  cartRuntimeInitializeRequestSchema,
+  cartRuntimeAddRequestSchema,
+} from "./cart-runtime-http.js";
+import {
+  generateSupportIntentKeyCommandSchema,
+  generateSupportIntentKeyResponseSchema,
+} from "./support-intent-key.js";
+import {
   managementCenterPriceSchema,
   managementCenterInventorySchema,
   managementCenterIntentSchema,
@@ -545,6 +578,132 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "CartRuntimeInitializeCommand",
+    audience: "internal",
+    schema: cartRuntimeInitializeCommandSchema,
+  },
+  {
+    name: "CartRuntimeReadCommand",
+    audience: "internal",
+    schema: cartRuntimeReadCommandSchema,
+  },
+  {
+    name: "CartRuntimeAddCommand",
+    audience: "internal",
+    schema: cartRuntimeAddCommandSchema,
+  },
+  {
+    name: "CartRuntimeCommand",
+    audience: "internal",
+    schema: cartRuntimeCommandSchema,
+  },
+  {
+    name: "CartRuntimeFailure",
+    audience: "public-http",
+    schema: cartRuntimeFailureSchema,
+  },
+  {
+    name: "CartRuntimeAccess",
+    audience: "internal",
+    schema: cartRuntimeAccessSchema,
+  },
+  {
+    name: "CartRuntimeHeader",
+    audience: "internal",
+    schema: cartRuntimeHeaderSchema,
+  },
+  {
+    name: "CartRuntimeItemRecord",
+    audience: "internal",
+    schema: cartRuntimeItemRecordSchema,
+  },
+  {
+    name: "CartRuntimeInitializeRecordCommand",
+    audience: "internal",
+    schema: cartRuntimeInitializeRecordCommandSchema,
+  },
+  {
+    name: "CartRuntimeCredentialCommand",
+    audience: "internal",
+    schema: cartRuntimeCredentialCommandSchema,
+  },
+  {
+    name: "CartRuntimeListItemsCommand",
+    audience: "internal",
+    schema: cartRuntimeListItemsCommandSchema,
+  },
+  {
+    name: "CartRuntimeResolveGiftCommand",
+    audience: "internal",
+    schema: cartRuntimeResolveGiftCommandSchema,
+  },
+  {
+    name: "CartRuntimeResolvedGift",
+    audience: "internal",
+    schema: cartRuntimeResolvedGiftSchema,
+  },
+  {
+    name: "CartRuntimeAppendItemCommand",
+    audience: "internal",
+    schema: cartRuntimeAppendItemCommandSchema,
+  },
+  {
+    name: "CartRuntimeFindReceiptCommand",
+    audience: "internal",
+    schema: cartRuntimeFindReceiptCommandSchema,
+  },
+  {
+    name: "CartRuntimeReceipt",
+    audience: "internal",
+    schema: cartRuntimeReceiptSchema,
+  },
+  {
+    name: "CartRuntimeItemView",
+    audience: "public-http",
+    schema: cartRuntimeItemViewSchema,
+  },
+  {
+    name: "CartRuntimeView",
+    audience: "public-http",
+    schema: cartRuntimeViewSchema,
+  },
+  {
+    name: "CartRuntimeResponse",
+    audience: "public-http",
+    schema: cartRuntimeResponseSchema,
+  },
+  {
+    name: "CartRuntimeAddDecisionInput",
+    audience: "internal",
+    schema: cartRuntimeAddDecisionInputSchema,
+  },
+  {
+    name: "CartRuntimeAddDecision",
+    audience: "internal",
+    schema: cartRuntimeAddDecisionSchema,
+  },
+  {
+    name: "CartRuntimeProjectionInput",
+    audience: "internal",
+    schema: cartRuntimeProjectionInputSchema,
+  },
+  {
+    name: "CartRuntimeRequestContext",
+    audience: "internal",
+    schema: cartRuntimeRequestContextSchema,
+  },
+  {
+    name: "CartRuntimeInitializeRequest",
+    audience: "public-http",
+    schema: cartRuntimeInitializeRequestSchema,
+  },
+  {
+    name: "CartRuntimeAddRequest",
+    audience: "public-http",
+    schema: cartRuntimeAddRequestSchema,
+  },
+
   {
     name: "DiscoveryCacheInput",
     audience: "internal",
@@ -1290,6 +1449,16 @@ const registrations = [
     name: "CachePurgePortError",
     audience: "internal",
     schema: cachePurgePortErrorSchema,
+  },
+  {
+    name: "GenerateSupportIntentKeyCommand",
+    audience: "internal",
+    schema: generateSupportIntentKeyCommandSchema,
+  },
+  {
+    name: "GenerateSupportIntentKeyResponse",
+    audience: "internal",
+    schema: generateSupportIntentKeyResponseSchema,
   },
   {
     name: "KeyManagementPortCommand",

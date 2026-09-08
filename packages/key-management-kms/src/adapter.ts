@@ -8,11 +8,14 @@ import {
 import {
   DecryptCommand,
   GenerateDataKeyCommand,
+  GenerateDataKeyWithoutPlaintextCommand,
   GenerateMacCommand,
   KMSClient,
 } from "@aws-sdk/client-kms";
 import {
   keyManagementPortCommandSchema,
+  generateSupportIntentKeyCommandSchema,
+  generateSupportIntentKeyResponseSchema,
   keyManagementPortResponseSchema,
   MAX_ENVELOPE_PLAINTEXT_BYTES,
   type ComputeBlindIndexResponse,
@@ -20,6 +23,8 @@ import {
   type EncryptEnvelopeFieldsResponse,
   type EncryptEnvelopeResponse,
   type KeyManagementPort,
+  type SupportIntentKeyPort,
+  type GenerateSupportIntentKeyResponse,
   type KeyManagementPortError,
 } from "@fan-support/key-management-port";
 
@@ -525,6 +530,58 @@ function createConfiguredAdapter(
   };
 
   return {
+    async generateSupportIntentKey(
+      input: unknown,
+    ): Promise<GenerateSupportIntentKeyResponse> {
+      const fail = (code: KeyManagementPortError["code"]) =>
+        generateSupportIntentKeyResponseSchema.parse({
+          schemaVersion: 1,
+          operation: "GENERATE_SUPPORT_INTENT_KEY",
+          outcome: "FAILURE",
+          error: failure("ENCRYPT_ENVELOPE", code).error,
+        });
+      const parsed = generateSupportIntentKeyCommandSchema.safeParse(input);
+      if (!parsed.success) return fail("INVALID_COMMAND");
+      if (config === undefined) return fail("CONFIGURATION_ERROR");
+      const keyId = keyIdForVersion(
+        config.encryptionKeyIdsByVersion,
+        config.activeEncryptionKeyVersion,
+      );
+      if (keyId === undefined) return fail("CONFIGURATION_ERROR");
+      try {
+        const raw = await send(
+          new GenerateDataKeyWithoutPlaintextCommand({
+            KeyId: keyId,
+            KeySpec: "AES_256",
+            EncryptionContext: encryptionContext(
+              "SUPPORT_INTENT",
+              parsed.data.subjectId,
+            ),
+          }),
+        );
+        const encryptedKey = isRecord(raw)
+          ? readBytes(raw["CiphertextBlob"])
+          : undefined;
+        if (
+          !isRecord(raw) ||
+          raw["KeyId"] !== keyId ||
+          encryptedKey === undefined
+        )
+          return fail("ENCRYPTION_FAILED");
+        return generateSupportIntentKeyResponseSchema.parse({
+          schemaVersion: 1,
+          operation: "GENERATE_SUPPORT_INTENT_KEY",
+          outcome: "SUCCESS",
+          value: {
+            encryptedDataKey: encodeVersionedBytes(encryptedKey),
+            keyVersion: config.activeEncryptionKeyVersion,
+            algorithm: "AES_256_GCM",
+          },
+        });
+      } catch (error: unknown) {
+        return fail(normalizedFailure("ENCRYPT_ENVELOPE", error).error.code);
+      }
+    },
     async encryptEnvelope(input: unknown) {
       const parsed = keyManagementPortCommandSchema.safeParse(input);
       if (!parsed.success || parsed.data.operation !== "ENCRYPT_ENVELOPE") {
@@ -732,7 +789,7 @@ export function createKmsKeyManagementAdapterForTesting(
 
 export function createKmsKeyManagementAdapter(
   config: KmsKeyManagementAdapterConfig,
-): KeyManagementPort {
+): KeyManagementPort & SupportIntentKeyPort {
   const normalizedConfig = normalizeConfig(config);
   const client =
     normalizedConfig === undefined

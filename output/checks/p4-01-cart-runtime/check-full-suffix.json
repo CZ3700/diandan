@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "scope": "Exact unmodified suffix of package.json check, from prettier through build-artifact validation, after adding only the explicit Node URL import in the output-only clock probe",
+  "command": "prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts && eslint . --max-warnings=0 && turbo run typecheck --output-logs=errors-only && turbo run test --output-logs=errors-only && turbo run build --output-logs=errors-only && node ./scripts/check-adapter-boundaries.mjs && node ./scripts/check-build-artifacts.mjs",
+  "startedAt": "2026-09-08T10:04:30.045848+00:00",
+  "endedAt": "2026-09-08T10:05:03.623193+00:00",
+  "durationSeconds": 33.578,
+  "exitCode": 0
+}

@@ -43,7 +43,8 @@
     "test:performance:storefront-acceptance": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/storefront-acceptance-http.mjs --production --performance",
     "preview:storefront-acceptance": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/storefront-acceptance-http.mjs --production --serve",
     "preview:management-center": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node --test ./scripts/management-center-diagnostics.test.mjs ./scripts/management-center-response-observer.test.mjs && node ./scripts/management-center-local.mjs --serve",
-    "test:browser:management-center": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node --test ./scripts/management-center-diagnostics.test.mjs ./scripts/management-center-response-observer.test.mjs && node ./scripts/management-center-local.mjs --verify"
+    "test:browser:management-center": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node --test ./scripts/management-center-diagnostics.test.mjs ./scripts/management-center-response-observer.test.mjs && node ./scripts/management-center-local.mjs --verify",
+    "test:postgres:cart": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/cart-http-*.test.mjs && node ./scripts/cart-http.mjs"
   },
   "dependencies": {
     "@fan-support/application": "workspace:*",
@@ -57,7 +58,10 @@
     "fastify": "5.12.1",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
-    "@fan-support/media-port": "workspace:*"
+    "@fan-support/media-port": "workspace:*",
+    "@fan-support/key-management-port": "workspace:*",
+    "@fan-support/key-management-kms": "workspace:*",
+    "zod": "4.5.4"
   },
   "devDependencies": {
     "tsx": "4.23.13",

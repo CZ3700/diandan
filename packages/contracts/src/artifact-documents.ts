@@ -1,4 +1,5 @@
 import { managementCenterPaths } from "./management-center-openapi.js";
+import { cartRuntimePaths } from "./cart-runtime-openapi.js";
 import { storefrontCommercePaths } from "./storefront-commerce-openapi.js";
 import { storefrontHomepagePaths } from "./storefront-homepage-openapi.js";
 import { adminWorkspacePaths } from "./admin-workspace-openapi.js";
@@ -200,6 +201,7 @@ export function createContractArtifactDocuments(): Readonly<{
         version: "1.0.0",
       },
       paths: {
+        ...cartRuntimePaths(),
         ...managementCenterPaths(),
         ...storefrontHomepagePaths(),
         ...storefrontCommercePaths(),
@@ -230,6 +232,20 @@ export function createContractArtifactDocuments(): Readonly<{
           },
         },
         securitySchemes: {
+          CartSession: {
+            type: "apiKey",
+            in: "cookie",
+            name: "__Host-fan-cart",
+            description:
+              "256-bit opaque Secure HttpOnly SameSite=Lax host-only cart credential.",
+          },
+          CartCsrf: {
+            type: "apiKey",
+            in: "header",
+            name: "x-csrf-token",
+            description:
+              "Purpose-separated KMS MAC bound to the cart credential; exact Origin is also required.",
+          },
           AdminSession: {
             type: "apiKey",
             in: "cookie",

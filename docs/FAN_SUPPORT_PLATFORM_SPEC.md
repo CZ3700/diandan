@@ -1,7 +1,7 @@
 # 全球偶像礼物应援平台：产品、设计与工程约束
 
 > 文档状态：开发基线（Authoritative）  
-> 版本：3.0.0
+> 版本：3.0.1
 > 日期：2026-09-08
 > 面向：Codex、Claude Code、产品设计、前端、后端、测试与运营  
 > 目标：让执行代理无需重新解释需求，即可按阶段实现、验证和交付第一版平台。
@@ -1311,7 +1311,7 @@ Provider：
 
 ## 19. 分阶段实施顺序
 
-执行代理必须按 `MASTER.md` 的 Phase 解锁矩阵推进。唯一允许同时 `ACTIVE` 的跨 Phase 组合是 Phase 1 与 Phase 2，且只能在 Phase 0 退出门禁通过后启用；其余 Phase 必须等待前置退出门禁。每个 Lane 同时最多一个 executor，不得只凭任务依赖绕过 Phase 状态。详细任务、依赖和验收命令见 `docs/plan/` 与 `docs/progress/`。
+执行代理必须按 `MASTER.md` 的 Phase 解锁矩阵推进。Phase 1 与 Phase 2 可在 Phase 0 退出后同时 ACTIVE。2026-09-08 用户在购买闭环优先的提速提案后要求“继续下一阶段”，按 ADR-013 允许 Phase 3 保留未完验收时激活 Phase 4 的本地开发；Phase 4 各任务仍逐个满足直接依赖、READY 与 Lane 门才可领取。P3 的性能、人工运营、读屏和关键译审不因该例外通过或免除；Phase 5 仍须 P3/P4 退出均通过。每个 Lane 同时最多一个 executor，同一代理只执行一个 Task ID；保留的验收任务可记录待续且无 executor。其他 Phase 不得绕过退出门禁。详细任务、依赖和验收命令见 `docs/plan/` 与 `docs/progress/`。
 
 ### Phase 0：基线与可运行骨架
 
