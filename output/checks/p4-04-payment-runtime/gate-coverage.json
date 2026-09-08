@@ -304,5 +304,13 @@
     "Existing contract determinism test timed out at 5169ms against 5000ms; unchanged test and timeout passed on repeat",
     "Local independent TEST PSP only; no approved actual PSP sandbox or live charge",
     "P4-04 remains IN_PROGRESS; P4-05 remains PENDING; no financial finalization or deployment"
+  ],
+  "additionalChecks": [
+    {
+      "command": "git diff f1f702fcf5ab597bd8bd4a0edb549e2ae953469a f5435cd4466719d38880a62b430a8146a074fb42 --check",
+      "code": 2,
+      "evidence": "whitespace-commit-final.json/log",
+      "disposition": "Explicitly retained nonfunctional extra EOF blank line in each new 0026 SQL file; independent byte/manifest confirmation; not part of original 38 steps"
+    }
   ]
 }
