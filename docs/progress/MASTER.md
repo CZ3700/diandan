@@ -1,11 +1,11 @@
 # Progress Master
 
-> 最后更新：2026-09-08
+> 最后更新：2026-09-09
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3（验收待续）、Phase 4（ADR-013 本地开发）
-> 当前任务：P4-03 DONE，Lane A 已释放；P4-04 READY、无 executor；P3-06 保留 IN_PROGRESS、验收待续且无 executor
-> 下一入口：P4-04 支付适配、托管付款动作、幂等创建 Saga 与 reconcile 接入
-> 当前检查点：P4-03 本地验收完成。真实预检/待付款订单20cases/195请求/7403断言及8项拒退通过；原单条全仓check exit0，1856实现输入一致，非作者ACCEPT。七语历史、库存并发、改价重确认与断线恢复已验；只本地提交，尚未接通PSP。
+> 当前任务：P4-04 IN_PROGRESS，Lane A 唯一 executor `/root`；P3-06 保留 IN_PROGRESS、验收待续且无 executor
+> 下一入口：P4-04 首个实际 PSP 选定、适配与 sandbox 验收（待收款主体、首发市场/币种及 TEST 账号）
+> 当前检查点：P4-04 本地 TEST 支付运行时验收通过。七语双端31cases/71PNG/57axe零违规、7077联合断言；原38检查步骤均有通过证据（含分段复验，非单条check全绿），最终7质量门通过。首个实际PSP仍待主体/市场/账号输入，P4-04保持IN_PROGRESS，P4-05未解锁；只本地提交。
 
 ## 1. 开工入口
 
@@ -17,15 +17,15 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；当前 P4-04 READY、无 executor。正式品牌资产与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；当前 P4-04 已领取，Lane A 唯一 executor `/root`。正式品牌资产与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
 | PENDING | 22 |
-| READY | 1 |
-| IN_PROGRESS | 1 |
+| READY | 0 |
+| IN_PROGRESS | 2 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
 | DONE | 25 |
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-09 领取P4-04：从本地 `f1f702f` 接续支付能力、两事务创建、托管动作、回跳与UNKNOWN恢复，root独占Lane A。首个PSP/收款主体仍待实际输入，先实施TEST链路；25DONE/2IN_PROGRESS/22PENDING=49，P3未完验收保留，仅本地提交。
 
 2026-09-08 P4-03 DONE：服务端预检、当前事实二次重验、准确政策确认、订单/金额/语言历史快照、联系人加密、真实库存预占、待付款订单与同键恢复完成。最终真实协议20cases/195请求/7403断言（5760准备+1643协议）及8项拒退通过；原单条完整check 1442.426秒exit0，25迁移/165表、全部原PG/API/S3/浏览器静态门及最终质量门通过。1856冻结源一致、2267旧未跟踪文件保留、48旧SQL与468旧合同保持；非作者ACCEPT、S.U.P.E.R10项与secret/high audit通过。前四轮失败/窄修、Next暂态归档恢复及缓存准确保留。详见phase执行卡、`output/checks/p4-03-checkout-preflight/final-verification.md`；无PSP/新结算UI/生产发布结论。P4-04 READY，P3-06未完验收保持，总计25DONE/1READY/1IN_PROGRESS/22PENDING=49。
 

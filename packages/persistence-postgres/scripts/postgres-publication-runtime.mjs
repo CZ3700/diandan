@@ -101,6 +101,21 @@ async function verifySeoPurgeRollback({
       )
     ).rows[0].jobs;
   const before = await jobs();
+  const paymentDown = await runMigrations({
+    clientConfig,
+    workspaceRoot,
+    command: { direction: "down", confirmVersion: "0026" },
+  });
+  equal(
+    [paymentDown.revertedVersions, paymentDown.currentVersion],
+    [["0026"], "0025"],
+    "empty payment runtime rolls back before preserved checkout history probes",
+  );
+  equal(
+    await jobs(),
+    before,
+    "payment runtime rollback preserves existing purge jobs exactly",
+  );
   const checkoutReverted = await runMigrations({
     clientConfig,
     workspaceRoot,
@@ -550,7 +565,7 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
               "SELECT max(version) AS version FROM public.schema_migrations",
             )
           ).rows[0].version,
-          "0025",
+          "0026",
           "runtime business checks ran against the current migration head",
         );
         equal(

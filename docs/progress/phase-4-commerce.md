@@ -15,7 +15,7 @@
 | P4-01 | DONE | Codex `/root` | P1-03/04/05、P3-05 | 匿名 cart + presentation/fan-message locale + cart_item/support_intent 原子事务 |
 | P4-02 | DONE | Codex `/root` | P2-03/04、P4-01 | 七语真实加购/抽屉/页、数量/删除/私密编辑、冲突与同键恢复 |
 | P4-03 | DONE | Codex `/root` | P4-01、P4-02 | Preflight/quote+amount + order presentation locale + per-object TranslationSnapshotRef + policy revision |
-| P4-04 | READY | — | P1-06、P4-03 | PaymentProvider/provider locale mapping/idempotent create Saga/hosted action/reconcile |
+| P4-04 | IN_PROGRESS | Codex `/root` | P1-06、P4-03 | PaymentProvider/provider locale mapping/idempotent create Saga/hosted action/reconcile |
 | P4-05 | PENDING | — | P4-04 | Provider evidence/order/reservation/locale-preserving token exchange |
 | P4-06 | PENDING | — | P4-05、P1-06 | 七语言 Notification/fallback alert/expiry cleanup |
 
@@ -123,3 +123,31 @@
 - 收敛与终审：定向有效RED→GREEN、最小代码收敛、S.U.P.E.R10项及非作者ACCEPT；额外secret scan exit0（35.738秒）与high dependency audit通过。前四轮实际失败、有效回归/夹具错误和旧未定位间歇风险均保留，不用旧时钟观测替代根因。证据 `output/checks/p4-03-checkout-preflight/final-verification.md`、`final-independent-review.md`、`gate-coverage.json`；续作入口 `docs/runbooks/checkout-preflight.md`。
 - 范围：TEST加密履约配置与本地KMS adapter不代表真实配送审批/AWS KMS；没有PSP收款、正式资产/译审、云或生产发布。本轮不关闭P3-06未完性能/人工验收。
 - P4-03 DONE并释放Lane A；只解锁直接后继P4-04 READY、无executor。P3-06仍IN_PROGRESS且无executor，Phase3/4保持ACTIVE。总计25DONE/1READY/1IN_PROGRESS/22PENDING=49。按用户偏好仅本地Git检查点，不push/PR/merge。
+
+## P4-04 执行登记（2026-09-09）
+
+- Owner：Codex `/root`，Lane A 唯一 executor；开始 2026-09-08T17:05:54.878806+00:00，基线 `f1f702f`、跟踪工作区干净，分支 `codex/p4-04-payment-runtime`。P3-06保持未完验收且无executor。
+- 范围：绑定既有checkout/cart会话的支付能力、冻结provider/account/environment/method/rule/locale的两事务创建Saga、持久幂等与崩溃恢复、托管付款动作、回跳只查询、UNKNOWN受认证审计reconcile。复用P4-03现有订单/报价/预占，不重复创建订单；可信事件推动订单/库存完整闭环保留P4-05边界。
+- 界面：沿用黑金风格，结算复核、联系邮箱与政策确认、支付方式及安全等待/未知状态；七语、移动/桌面、键盘与reduced motion。具体接口冻结后分工，实现不在浏览器保存支付凭证或私密留言。
+- 流程：先审计旧payment port/schema/authority及失败测试，root冻结共享合同；PG、API/实际协议、界面按文件独占并行，root负责Application/共享合同/生成物与整合。原有任务/阶段门与合同兼容保持。
+- 验证：真实PG两事务/并发/唯一活动attempt、同键重放与崩溃窗口、改变配置不改既有account/amount/locale、授权/隐私、已知终态受控重试、UNKNOWN不换路、回跳不能成功、reconcile可信证据；真实HTTP与七语390×844/1440×900浏览器；受影响测试→format/lint/types/build→原整仓门→非作者复核/S.U.P.E.R。
+- 待定输入：收款主体、首发市场/币种与首个批准PSP仍OPEN，已异步询问用户；按规范§13.1/21先做明确TEST的Fake链路，不自行选择或承诺真实支付商。实际PSP sandbox/小额支付缺证据时不把整个P4-04或Phase4标DONE。风险R-03/05/17及支付相关隐私/库存。
+- Git/产物：仅本地提交，不push/PR/merge/部署；2349项既有未跟踪文件已逐SHA记录于 `output/checks/p4-04-payment-runtime/initial-untracked.json`。
+
+### P4-04 本地联合验收（2026-09-09）
+
+- 两事务支付创建、持久幂等/lease/恢复、可信证据与加密托管动作、五个受保护API及BFF、七语结算/国家与方式选择/托管跳转/回跳只读均已接通。普通GET无支付副作用，已知取消后可受控重试，UNKNOWN不换路，成功证据保持EVIDENCE_PENDING而不提前PAID。
+- 最终浏览器入口 `run-2026-09-08T19-28-30.305Z` 实际exit0，7077联合断言；31cases包含14完整加购→结算→独立TEST PSP→真实返回、14无Cookie空态、双端键盘和保留原订单语言的语言切换。71PNG、57axe零违规/零incomplete、0pageErrors；日语reduced motion。并发、健康变化、实际PSP进程重启、接受后丢响应及两次真实COMMIT后结果边界注入均通过；后者是测试注入，不冒称真实数据库链路故障。
+- 原生TEST PSP表单曾因no-referrer得到Origin:null、再因form-action self阻止跨站303回跳；两个实际RED保留，分别仅改TEST hosted HTML的strict-origin与固定配置returnOrigin CSP，原exactOrigin/CSRF不弱化。生产BFF的精确反代Host绑定、无Cookie空态与SQL domain[]读取亦经有效RED→GREEN及非作者复核。详见本轮 `final-verification.md`。
+- 1979实现输入冻结，SHA `5d43c607c9ca945792c88cea1f697116946df6e5ce986de3c6ee182e1918c5ed`；2349原未跟踪文件复核完整不变。原合同502根/87路径/161components不变，0001–0025的50旧SQL保持，新增0026；26迁移/168表实际往返已通过。
+- 原P2-04/P2-05采集器与完整check尚待最终结果。当前阶段仅为本地检查点验收，不将P4-04标DONE；首个实际PSP尚待用户输入，P4-05仍PENDING，25DONE/2IN_PROGRESS/22PENDING计数不变。
+
+
+### P4-04 本地 TEST 检查点验收（2026-09-09）
+
+- 本轮本地支付创建、托管页面、持久幂等、丢响应和重启恢复、七语言结算入口完成。最终浏览器为 31cases/71PNG/57axe 零 violation/零 incomplete、0pageErrors，7077 联合断言；含14购买流程、14新访客空态、键盘和语言切换。实际PG/独立TEST PSP后续 HTTP 在新 seed 下再次通过 5761准备+801协议=6562断言，另8项拒退与30表哈希不变。
+- 原检查链38步骤均有通过证据，详见本轮 `gate-coverage.json`。原单条 `check-full-2` 于旧内容发布授权403失败；后续旧purge CLAIM_WINDOW/旧内容读取403保留，未改动实际HTTP子进程最终12826断言/1462请求通过，确切原因仍未知。全仓合同测试5169ms超5000ms后同源码/同阈值复验通过。不能称单条完整check exit0，也不称间歇问题已根治。
+- 最终原7项质量后缀33.910秒exit0：format、lint、types60/60（56缓存）、tests60/60（57缓存）、build35/35（33缓存）、adapter边界、31Node出口。原P2-04/05 collector分别29.347/37.756秒通过；旧moderate/incomplete/physical-device边界保留。26迁移/168表、实际PG/API/TLS S3与媒体423断言完整通过，最终secret scan25.264秒和官方registry high audit通过。
+- 原合同门发现TEST seed重复locale表，改为复用已有copy并以真实正常PG配置/HTTP复验；原adapter门发现新增private factory公开导出，移除多余barrel export并加负例，有效RED→GREEN，正式事务manager接线不变。最终1979输入SHA `88c0bbbac1a1299885cafc7f27dd8999f4197518e55e0fcb4dd8f13dd80ee744`；浏览器后这两次源差异均记录，不混同各轮构建。旧50SQL、502合同根/87路径/161components及2349原未跟踪文件完整保持。Next自动类型文件曾暂态变化，已归档并精确恢复。
+- 非作者复核与本地范围S.U.P.E.R10项通过；证据入口 `output/checks/p4-04-payment-runtime/final-verification.md`、`final-independent-review.md`、`gate-coverage.json`；复验及故障恢复入口 `docs/operations/checkout-payments.md`。
+- 这不代表实际收款：首个批准PSP/商户主体/首发市场币种与sandbox账号仍OPEN；不包含PAID终结、库存commit/release、查单通知、正式译审、真机/VoiceOver、云或生产部署。P4-04继续IN_PROGRESS，Lane A由root持有；P4-05仍PENDING，25DONE/2IN_PROGRESS/22PENDING=49不变。按用户偏好仅本地Git检查点，不push/PR/merge。

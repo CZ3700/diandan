@@ -129,6 +129,9 @@ importers:
       '@fan-support/observability':
         specifier: workspace:*
         version: link:../../packages/observability
+      '@fan-support/payment-port':
+        specifier: workspace:*
+        version: link:../../packages/payment-port
       '@fan-support/persistence-postgres':
         specifier: workspace:*
         version: link:../../packages/persistence-postgres
@@ -157,6 +160,9 @@ importers:
       '@aws-sdk/client-s3':
         specifier: 3.1119.0
         version: 3.1119.0
+      '@fan-support/content':
+        specifier: workspace:*
+        version: link:../../packages/content
       '@fan-support/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
@@ -166,6 +172,9 @@ importers:
       '@fan-support/media-s3':
         specifier: workspace:*
         version: link:../../packages/media-s3
+      '@fan-support/payment-fake':
+        specifier: workspace:*
+        version: link:../../packages/payment-fake
       '@playwright/test':
         specifier: 1.62.1
         version: 1.62.1

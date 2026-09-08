@@ -57,7 +57,16 @@ export async function verifyCheckoutPreflightRollbackProtection({
           "SELECT max(version) version FROM public.schema_migrations",
         )
       ).rows[0].version,
-      "0025",
+      "0026",
+    );
+    const paymentDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0026" },
+    });
+    assert.deepEqual(
+      [paymentDown.revertedVersions, paymentDown.currentVersion],
+      [["0026"], "0025"],
     );
     const before = await snapshot(client);
     assert.ok(
@@ -119,10 +128,16 @@ export async function verifyCheckoutPreflightRollbackProtection({
       before,
       "normal migration runner rejection preserves every checkout, inventory and private record",
     );
+    const restored = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "up" },
+    });
+    assert.equal(restored.currentVersion, "0026");
     return {
       schemaVersion: 1,
       status: "PASS",
-      assertions: 8,
+      assertions: 10,
       scope:
         "Accepted checkout blocks destructive 0025 rollback; 21 table counts and hashes remain exact",
       before,

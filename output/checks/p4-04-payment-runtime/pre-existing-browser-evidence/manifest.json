@@ -1,0 +1,364 @@
+{
+  "files": [
+    {
+      "source": "output/playwright/p2-04/README.md",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/README.md",
+      "sha256": "517a977c5e9445f86338a38d36833483dee83457694116e0ea8e5df4a7ded18e"
+    },
+    {
+      "source": "output/playwright/p2-04/axe-results/baseline-desktop.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/baseline-desktop.json",
+      "sha256": "c2baabfcf76186ace2fa1f33902de8ca44eb1470051815ed67729eeeab21f366"
+    },
+    {
+      "source": "output/playwright/p2-04/axe-results/baseline-mobile.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/baseline-mobile.json",
+      "sha256": "3ab4018261d8f7f6a4b2a30dc922c4ad9c846d8475bf6e1606aed58956fd954b"
+    },
+    {
+      "source": "output/playwright/p2-04/axe-results/cart-line.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/cart-line.json",
+      "sha256": "cd6159fad4b902e475022ba28e2173dc54481160fcbbdb0a73e077b6c70caab8"
+    },
+    {
+      "source": "output/playwright/p2-04/axe-results/empty-error.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/empty-error.json",
+      "sha256": "f0434875010fe5335218f80d553b35655a683e2306b529c9ddfd1a288213b040"
+    },
+    {
+      "source": "output/playwright/p2-04/axe-results/image-error.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/image-error.json",
+      "sha256": "36ca5c60321d96f05fcaf6e93b420fefff0c17358917c7b7e270e372e0815d0d"
+    },
+    {
+      "source": "output/playwright/p2-04/axe-results/loading.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/loading.json",
+      "sha256": "699a6862050c51c7c9b55acc8df8db8843a80a242875470c776fa476ef79f348"
+    },
+    {
+      "source": "output/playwright/p2-04/axe-results/pseudo.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/pseudo.json",
+      "sha256": "c9e5daf9a509eee721ac13884ace18a4f6a2cd5998047ba5300058e2dba8d25c"
+    },
+    {
+      "source": "output/playwright/p2-04/axe-results/reduced-motion.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/reduced-motion.json",
+      "sha256": "ceb15258474127330e514c1af7af1614a4c9a3de8d49d2451b862c4454cce5f7"
+    },
+    {
+      "source": "output/playwright/p2-04/axe-results/timeline.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/timeline.json",
+      "sha256": "1c853865f127f5060eb992fb477efc3133b4b0e8561c8c90291b688c44671413"
+    },
+    {
+      "source": "output/playwright/p2-04/axe-results/unavailable.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/unavailable.json",
+      "sha256": "5c509aa154f6f92b8f00b1d655d8c4081a50b6a36120c16b78c4ddb4fe657b84"
+    },
+    {
+      "source": "output/playwright/p2-04/browser-results.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/browser-results.json",
+      "sha256": "8e72ed218b5767ea3cb2319f7863d1616330425229384462539f87e3e8a7c225"
+    },
+    {
+      "source": "output/playwright/p2-04/interactions/1440x900-en-hover.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/interactions/1440x900-en-hover.png",
+      "sha256": "e94aa7a2a7719ea7bcf7627baf697cccca1db0a931fc187e00ed038e1b438094"
+    },
+    {
+      "source": "output/playwright/p2-04/logs/build-storefront.log",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/logs/build-storefront.log",
+      "sha256": "eaddbae0182a9e033e8fd0c99f880dc5a123a81d0e1101b2fa682bf25fa20a04"
+    },
+    {
+      "source": "output/playwright/p2-04/logs/build-ui.log",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/logs/build-ui.log",
+      "sha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8"
+    },
+    {
+      "source": "output/playwright/p2-04/logs/server-preview.log",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/logs/server-preview.log",
+      "sha256": "49a69589cd254a4cb505a8632617305cd8412eb9b4ef06a13f3c675f8d559cbf"
+    },
+    {
+      "source": "output/playwright/p2-04/logs/server-production.log",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/logs/server-production.log",
+      "sha256": "0145642081fb046800ff86ecea9d72b844b7f75eb923c14b172f3417068eec27"
+    },
+    {
+      "source": "output/playwright/p2-04/logs/server-staging.log",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/logs/server-staging.log",
+      "sha256": "361c61764be81dcee28a13f07c920e0f53b38f97e7eb9a865e2eb53203f39d97"
+    },
+    {
+      "source": "output/playwright/p2-04/reduced-motion/1440x900-en.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/reduced-motion/1440x900-en.png",
+      "sha256": "76024aeffb42410fa9a71ec19e4844eaaea8b53cf79b85e0a915915e87ebb35b"
+    },
+    {
+      "source": "output/playwright/p2-04/reduced-motion/390x844-en.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/reduced-motion/390x844-en.png",
+      "sha256": "d6be4c23036ab6eb37dbda81d2c6d6d5069d71763265de17fa7007499c692b7a"
+    },
+    {
+      "source": "output/playwright/p2-04/responsive/1023x900-en-XA.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/responsive/1023x900-en-XA.png",
+      "sha256": "be11759f7bbd5461571515dcd82a06cbf17c0eabaa19b86fc5fb94e374a59214"
+    },
+    {
+      "source": "output/playwright/p2-04/responsive/767x900-pt.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/responsive/767x900-pt.png",
+      "sha256": "7fa3a9bfc36ad6c86f863a1700cbe9eee9d0b8e99e2308f894f96125861a37c0"
+    },
+    {
+      "source": "output/playwright/p2-04/rtl/1440x900-en.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/rtl/1440x900-en.png",
+      "sha256": "908ae7b3a52a280cce443286e2517137c5335c9f15fa081d38847fea8bdf35a9"
+    },
+    {
+      "source": "output/playwright/p2-04/rtl/390x844-en.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/rtl/390x844-en.png",
+      "sha256": "39936c3e84aedeb7f93d774b00c497ca5693dbdad5aaf8d44e67d79e76a781cd"
+    },
+    {
+      "source": "output/playwright/p2-04/screenshots.sha256",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/screenshots.sha256",
+      "sha256": "ec7ca29f45d3bae85b393c2b44352d8428804834856382f0642cddb500f135b8"
+    },
+    {
+      "source": "output/playwright/p2-04/states/390x844-en.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/states/390x844-en.png",
+      "sha256": "de165241341c56d107f3258781e3186527f0827980abf78845529e5bcc0b8306"
+    },
+    {
+      "source": "output/playwright/p2-04/stress/320x800-en-XA.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/stress/320x800-en-XA.png",
+      "sha256": "aab4ff7728a331d472133a4e319c5132b6d8e7b49d863b4b4269cc4c2698124f"
+    },
+    {
+      "source": "output/playwright/p2-04/stress/320x800-pt-long.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/stress/320x800-pt-long.png",
+      "sha256": "bba454c78cd46246921cef020934dedf70570ab9593e1aa2cade455a4d752b08"
+    },
+    {
+      "source": "output/playwright/p2-04/viewports/1024x768-zh-CN.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/1024x768-zh-CN.png",
+      "sha256": "f3eebfb7354acc273ab176d464b4b66f4ecdc7e62847c43269f1ae5886bdf082"
+    },
+    {
+      "source": "output/playwright/p2-04/viewports/1440x900-ja.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/1440x900-ja.png",
+      "sha256": "b0e55f70f0e388c1f99c0408610c8237ef60dbb3a3b3566922f02d6759dbdad6"
+    },
+    {
+      "source": "output/playwright/p2-04/viewports/1920x1080-es.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/1920x1080-es.png",
+      "sha256": "fa7bbe23c814a29d82b90f7540ab97f9f61509136602299ac59529da17344f1b"
+    },
+    {
+      "source": "output/playwright/p2-04/viewports/360x800-en.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/360x800-en.png",
+      "sha256": "deb21036e29bfe7ee2bbf44d0f3f7b370c254d2578f8969663f530ea0c934a53"
+    },
+    {
+      "source": "output/playwright/p2-04/viewports/390x844-vi.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/390x844-vi.png",
+      "sha256": "7ca8e3f970b92e167227aaa12ce17954abd4435ee42d27df2e782cada15ce927"
+    },
+    {
+      "source": "output/playwright/p2-04/viewports/768x1024-th.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/768x1024-th.png",
+      "sha256": "addd8f241ba7111c1b0dad09bac60796a597c469fe57b56b578869e2649cbfe2"
+    },
+    {
+      "source": "output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/zoom/google-chrome-200-percent-pt.png",
+      "sha256": "c5690ab22ca486de182db46e003015f048c5d54e93e02e8abd73321c8101eca6"
+    },
+    {
+      "source": "output/playwright/p2-04/zoom/google-chrome-baseline-pt.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/zoom/google-chrome-baseline-pt.png",
+      "sha256": "8f905c8969f182c1461aa4d02f360733a8b8d50595c2334a73fa75970abcf02f"
+    },
+    {
+      "source": "output/playwright/p2-05/README.md",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/README.md",
+      "sha256": "7ddc14c47068dbe2375486fe3d3520acb07f3bd0254e39a4ea78606bdaae62e8"
+    },
+    {
+      "source": "output/playwright/p2-05/axe-results/baseline-desktop.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/axe-results/baseline-desktop.json",
+      "sha256": "25964392b593bb069da9b2f837f6e0176d8ab98b1fb9ec87f0575f7880db5742"
+    },
+    {
+      "source": "output/playwright/p2-05/axe-results/baseline-mobile.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/axe-results/baseline-mobile.json",
+      "sha256": "aa65f21befccc6ebc50bb6b7cbfd2096bc46afc1ce53e710684e0f11ef36b1c7"
+    },
+    {
+      "source": "output/playwright/p2-05/axe-results/pseudo-320.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/axe-results/pseudo-320.json",
+      "sha256": "df4c2fd959198650e33587dba9acdc429ec8a52f2d488e44b350af968d5900b0"
+    },
+    {
+      "source": "output/playwright/p2-05/browser-results.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/browser-results.json",
+      "sha256": "227bcc2c22892d592754ffd380e36788f303977655069ecda09ced413d9a833e"
+    },
+    {
+      "source": "output/playwright/p2-05/hero/1440x900-end.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/1440x900-end.png",
+      "sha256": "1ecad14a71380baf2eda1982cb3b0f154ea1fa6a987eba6294816bb558b9a6f2"
+    },
+    {
+      "source": "output/playwright/p2-05/hero/1440x900-mid.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/1440x900-mid.png",
+      "sha256": "1d525f7b8290e09a85fd44860b2b15b5621ffae142139ff6b1b642c8bba3abbf"
+    },
+    {
+      "source": "output/playwright/p2-05/hero/1440x900-start.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/1440x900-start.png",
+      "sha256": "d2e45cf35def194737948bfaca425432ba7b810808956c58036e2f29afa56027"
+    },
+    {
+      "source": "output/playwright/p2-05/hero/390x844-end.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/390x844-end.png",
+      "sha256": "277f3bb5bdfab76b5e56545e348e421dd8d8689ab9cf0b8b98040d4f7aa32044"
+    },
+    {
+      "source": "output/playwright/p2-05/hero/390x844-mid.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/390x844-mid.png",
+      "sha256": "f8f862a92aa998338fec85a9471a0a5b06618e48d6f745ea19162cc3c05cb3e5"
+    },
+    {
+      "source": "output/playwright/p2-05/hero/390x844-start.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/390x844-start.png",
+      "sha256": "5067429ab8295478a8ac2eda5c7301b3312a0e8e09d9e6d6e73211897af98072"
+    },
+    {
+      "source": "output/playwright/p2-05/logs/build-storefront.log",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/logs/build-storefront.log",
+      "sha256": "19b76e43356d48edad55a71da74f2fb828c4547db7f5224db2866ba8b56d35d5"
+    },
+    {
+      "source": "output/playwright/p2-05/logs/build-ui.log",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/logs/build-ui.log",
+      "sha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8"
+    },
+    {
+      "source": "output/playwright/p2-05/logs/server-preview.log",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/logs/server-preview.log",
+      "sha256": "af3658cc78a12ee9467707a62abfda24ae22b6806f3d16f783758ccd3dac955d"
+    },
+    {
+      "source": "output/playwright/p2-05/logs/server-production.log",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/logs/server-production.log",
+      "sha256": "da2388857f47fac8775fb3c6d8e654cd54310bbd72a74d18a6c3781f7860304a"
+    },
+    {
+      "source": "output/playwright/p2-05/logs/server-staging.log",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/logs/server-staging.log",
+      "sha256": "9c8f989d0865305f99694d3bdc17604c069a7364ff5e09a9c6c97a5baf8421b7"
+    },
+    {
+      "source": "output/playwright/p2-05/motion/add-confirmed-390.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/add-confirmed-390.png",
+      "sha256": "bb12e022473d29a537b63942eb3507d2e86751940d4517278b3b25bbd3910ce9"
+    },
+    {
+      "source": "output/playwright/p2-05/motion/idol-keyboard-instant-1440.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-keyboard-instant-1440.png",
+      "sha256": "fa811b95ce6a09c5a2a217f1314aedd71d2ef45f84f75960ef06b3f42b5bad5c"
+    },
+    {
+      "source": "output/playwright/p2-05/motion/idol-latest-wins-1440.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-latest-wins-1440.png",
+      "sha256": "82e6639d3137b9cc0e65c79cc9fda646b3d67ad98e81dc9b94dbd441d13442ff"
+    },
+    {
+      "source": "output/playwright/p2-05/motion/idol-mouse-spatial-1440.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-mouse-spatial-1440.png",
+      "sha256": "0bd7a996bee6926626b03ea17bc70083662df1ccd2af6215741f413966774e33"
+    },
+    {
+      "source": "output/playwright/p2-05/motion/idol-touch-opacity-390.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-touch-opacity-390.png",
+      "sha256": "84e66060476d9c738363f04c33bb28f643efabbff8b6427fc6c40968e36d1aaa"
+    },
+    {
+      "source": "output/playwright/p2-05/motion/success-end-1440.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/success-end-1440.png",
+      "sha256": "fe03e4379ae0b1f159c210572b6e16e16566097553e3298a9c4d0ebbb8687d60"
+    },
+    {
+      "source": "output/playwright/p2-05/raw/motion-checks.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/raw/motion-checks.json",
+      "sha256": "fbeb68cd69956a9c928ffa06cbb7a2f5180b8e69b1a1c88a8b2f8e03fa0aec12"
+    },
+    {
+      "source": "output/playwright/p2-05/raw/reduced-motion.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/raw/reduced-motion.json",
+      "sha256": "80292ba07b123f73573121bec6eede2ddc14eac20817f236e6f27801b8ed28b3"
+    },
+    {
+      "source": "output/playwright/p2-05/raw/scenario-results.json",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/raw/scenario-results.json",
+      "sha256": "918958a582fdd5d1bd71354191ec223e2b0b1a301bb5b2b1143ee078ef1b8e19"
+    },
+    {
+      "source": "output/playwright/p2-05/reduced-motion/1440x900.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/reduced-motion/1440x900.png",
+      "sha256": "97aaca202347f51bc64c6a7f52fb18aad12c6e5299f60211b59746e1763e85a9"
+    },
+    {
+      "source": "output/playwright/p2-05/reduced-motion/390x844.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/reduced-motion/390x844.png",
+      "sha256": "6ffc7a0f84f5f46e683d0b336fc298d2750ecb51b05d08fee3fecbf8f169e8a8"
+    },
+    {
+      "source": "output/playwright/p2-05/screenshots.sha256",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/screenshots.sha256",
+      "sha256": "3b20d1984d3cdf0f477e7734dcd20a8428bc89838a4f6ceb041c3aa307112cb1"
+    },
+    {
+      "source": "output/playwright/p2-05/stress/320x800-en-XA.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/stress/320x800-en-XA.png",
+      "sha256": "d2d1c42cadf0af8bea9f5323f77ad4b672fc2d9a98b2a296ed921a3127100e14"
+    },
+    {
+      "source": "output/playwright/p2-05/stress/320x800-pt-long.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/stress/320x800-pt-long.png",
+      "sha256": "88669082c576ba8410dc519a9d06ae2864a30371e03581e7dd40e7d61fd98c38"
+    },
+    {
+      "source": "output/playwright/p2-05/viewports/1024x768-zh-CN.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/1024x768-zh-CN.png",
+      "sha256": "bdb424a962ea591968a5ad917193f38228e843e919d516bfbfc673de938143a4"
+    },
+    {
+      "source": "output/playwright/p2-05/viewports/1440x900-ja.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/1440x900-ja.png",
+      "sha256": "862b804fb02fc3ee8bbdbea0ea479770061fe18f568c62cb2003d046cd5cd213"
+    },
+    {
+      "source": "output/playwright/p2-05/viewports/1920x1080-es.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/1920x1080-es.png",
+      "sha256": "d36a9becbd9951b1dbfb975003b442bf19de5a231f17594da0031c8b806177a7"
+    },
+    {
+      "source": "output/playwright/p2-05/viewports/360x800-en.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/360x800-en.png",
+      "sha256": "aed65a6e0846cc3d770caa151b35a0c1611c36dc04a2d4ef0c0879860f47c7bf"
+    },
+    {
+      "source": "output/playwright/p2-05/viewports/390x844-vi.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/390x844-vi.png",
+      "sha256": "51d35e6dae454aefd2e4970e675fe5ebd796bd518e12ce7e84f00942777628f4"
+    },
+    {
+      "source": "output/playwright/p2-05/viewports/768x1024-th.png",
+      "archive": "output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/768x1024-th.png",
+      "sha256": "e09f759ad25319d8899a5d64189bd324c396fe2dc89b56e2e9e470a41d0ec697"
+    }
+  ]
+}

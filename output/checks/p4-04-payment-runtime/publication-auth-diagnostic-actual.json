@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "--import",
+    "/Users/mario/Desktop/下单/output/checks/p4-04-payment-runtime/publication-auth-diagnostic.mjs",
+    "/Users/mario/Desktop/下单/apps/api/scripts/publication-runtime-http.mjs"
+  ],
+  "startedAt": "2026-09-08T20:04:51.814314+00:00",
+  "endedAt": "2026-09-08T20:05:42.925779+00:00",
+  "durationSeconds": 51.11167399957776,
+  "exitCode": 0,
+  "sourceBefore": {
+    "apps/api/scripts/publication-runtime-http.mjs": "71bedf0a5ea82a50b819b5ab25b5412f92126e1a71949da9ed797a17401b9551",
+    "packages/persistence-postgres/src/admin-authorization-repository.ts": "91f528fedc39014092246b0df58e0c5b0a7d249e9cab313ad977a12edd3790e7",
+    "output/checks/p4-04-payment-runtime/publication-auth-diagnostic.mjs": "9fa902d20439e9da951f2e7f6b1c5e187661d40c6f410caaff9a1a800a87bca8"
+  },
+  "sourceAfter": {
+    "apps/api/scripts/publication-runtime-http.mjs": "71bedf0a5ea82a50b819b5ab25b5412f92126e1a71949da9ed797a17401b9551",
+    "packages/persistence-postgres/src/admin-authorization-repository.ts": "91f528fedc39014092246b0df58e0c5b0a7d249e9cab313ad977a12edd3790e7",
+    "output/checks/p4-04-payment-runtime/publication-auth-diagnostic.mjs": "9fa902d20439e9da951f2e7f6b1c5e187661d40c6f410caaff9a1a800a87bca8"
+  },
+  "log": "publication-auth-diagnostic-actual.log",
+  "logSha256": "1ff3c04fa04ca15a5e9f5be63d92f08804ee919642ec2413b492cbfe4cc07f74",
+  "scope": "One unchanged actual publication-runtime HTTP child script PASS. Parent-only CLI preload was not inherited by the HTTP child and collected no authorization-query evidence; earlier failure cause remains unknown.",
+  "diagnosticAttachment": {
+    "status": "PARENT_ONLY_NOT_EFFECTIVE_FOR_HTTP",
+    "reason": "Original runS3IntegrationChild spawns a new Node without inheriting parent CLI --import; no AUTH_QUERY_DIAGNOSTIC entries were emitted.",
+    "interpretation": "Original unchanged actual HTTP single-script PASS only; previous authorization cause remains unknown."
+  },
+  "childCommand": [
+    "/Users/mario/.local/share/mise/installs/node/24.20.0/bin/node",
+    "/Users/mario/Desktop/下单/apps/api/scripts/publication-runtime-http.mjs",
+    "--run-publication-runtime-http"
+  ],
+  "assertions": 12826,
+  "requests": 1462
+}

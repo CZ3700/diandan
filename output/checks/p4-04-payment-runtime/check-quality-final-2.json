@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "derivation": "Unmodified package.json scripts: specified PostgreSQL command through the complete original check suffix; earlier failed commands remain separate outstanding gates",
+  "startCommand": "prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
+  "sourceSha256": "88c0bbbac1a1299885cafc7f27dd8999f4197518e55e0fcb4dd8f13dd80ee744",
+  "commands": [
+    "prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
+    "eslint . --max-warnings=0",
+    "turbo run typecheck --output-logs=errors-only",
+    "turbo run test --output-logs=errors-only",
+    "turbo run build --output-logs=errors-only",
+    "node ./scripts/check-adapter-boundaries.mjs",
+    "node ./scripts/check-build-artifacts.mjs"
+  ],
+  "results": [
+    {
+      "command": "prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
+      "startedAt": "2026-09-08T20:23:21.957675+00:00",
+      "durationSeconds": 5.46765233296901,
+      "code": 0
+    },
+    {
+      "command": "eslint . --max-warnings=0",
+      "startedAt": "2026-09-08T20:23:27.425683+00:00",
+      "durationSeconds": 5.517867874354124,
+      "code": 0
+    },
+    {
+      "command": "turbo run typecheck --output-logs=errors-only",
+      "startedAt": "2026-09-08T20:23:32.943794+00:00",
+      "durationSeconds": 6.314493332989514,
+      "code": 0
+    },
+    {
+      "command": "turbo run test --output-logs=errors-only",
+      "startedAt": "2026-09-08T20:23:39.258533+00:00",
+      "durationSeconds": 10.775452165864408,
+      "code": 0
+    },
+    {
+      "command": "turbo run build --output-logs=errors-only",
+      "startedAt": "2026-09-08T20:23:50.034153+00:00",
+      "durationSeconds": 2.0295580411329865,
+      "code": 0
+    },
+    {
+      "command": "node ./scripts/check-adapter-boundaries.mjs",
+      "startedAt": "2026-09-08T20:23:52.063950+00:00",
+      "durationSeconds": 3.3971049170941114,
+      "code": 0
+    },
+    {
+      "command": "node ./scripts/check-build-artifacts.mjs",
+      "startedAt": "2026-09-08T20:23:55.462096+00:00",
+      "durationSeconds": 0.40455916710197926,
+      "code": 0
+    }
+  ],
+  "durationSeconds": 33.90962208248675,
+  "code": 0,
+  "completedCommands": 7,
+  "completeRemainingCoverage": true,
+  "logSha256": "7125df139e26b05b2b2cde672813761219e8c9c75853e338821de2a39d03ecf8"
+}

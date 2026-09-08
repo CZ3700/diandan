@@ -19,6 +19,32 @@ const validConfig = {
   password: "test-password",
 } as const;
 
+test("payment runtime composes one serializable client and closes with persistence", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    undefined,
+    () => pool,
+  );
+  await expect(
+    persistence.paymentRuntimeTransactionManager.runInPaymentRuntimeTransaction(
+      async (repositories) => Object.keys(repositories).sort(),
+    ),
+  ).resolves.toEqual([
+    "cartRuntime",
+    "idempotency",
+    "outbox",
+    "paymentRuntime",
+  ]);
+  expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL SERIALIZABLE");
+  await persistence.close();
+  await expect(
+    persistence.paymentRuntimeTransactionManager.runInPaymentRuntimeTransaction(
+      async () => null,
+    ),
+  ).rejects.toMatchObject({ name: "PersistenceTransactionFailureError" });
+});
+
 test("homepage composition uses one serializable read transaction and respects shutdown", async () => {
   const pool = new TransactionPool();
   const persistence = createPostgresPersistenceWithPoolFactory(

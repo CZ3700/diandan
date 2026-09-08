@@ -74,18 +74,6 @@ export function GiftPurchase({
       ) : (
         <p role="status">{copy.giftNotAvailable}</p>
       )}
-      <div className="gift-checkout-state">
-        <button
-          type="button"
-          className="storefront-primary"
-          disabled
-          data-checkout-unavailable
-          aria-describedby="gift-checkout-explanation"
-        >
-          {copy.giftCheckoutUnavailable}
-        </button>
-        <p id="gift-checkout-explanation">{copy.giftCheckoutBody}</p>
-      </div>
     </div>
   );
 }

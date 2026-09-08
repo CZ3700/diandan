@@ -250,6 +250,16 @@
         "up": "0a585a8849b1537bbea746dc8013673072843323e73bc954393ab42e262e0bd1",
         "down": "d33f280c6505a5ce460b3c0ff1787ba270e6b935df237a4f800e76071477dcd7"
       }
+    },
+    {
+      "version": "0026",
+      "name": "payment-runtime",
+      "up": "database/migrations/0026_payment-runtime.up.sql",
+      "down": "database/migrations/0026_payment-runtime.down.sql",
+      "sha256": {
+        "up": "f7d3ba0803f90ff67fa95e6af0b2cf49b6aea95bcb464a5a813be448ceb7d002",
+        "down": "cfd33b7ccce7043417dacb68f813c29ca2cb0356093a907d4fc16cddfc388801"
+      }
     }
   ]
 }

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "corepack",
+    "pnpm",
+    "audit",
+    "--audit-level",
+    "high"
+  ],
+  "startedAt": "2026-09-08T19:31:30.433496+00:00",
+  "endedAt": "2026-09-08T19:31:31.357245+00:00",
+  "durationSeconds": 0.9236663337796926,
+  "code": 1,
+  "log": "dependencies-final.log",
+  "logSha256": "0f45de4ab212eb26193c84f8274968c978c477dc9e9acc7fea2b77d29cc02cbe"
+}

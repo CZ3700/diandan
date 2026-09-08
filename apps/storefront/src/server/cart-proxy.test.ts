@@ -24,6 +24,39 @@ const cart = {
   expiresAt: "2099-01-01T00:00:00Z",
   items: [],
 };
+test("fixed public proxy headers allow a Next internal URL without bypassing first-visit or Origin checks", async () => {
+  const fetcher = vi.fn<typeof fetch>(async () => upstream());
+  const headers = {
+    host: "shop.example.invalid",
+    "x-forwarded-host": "shop.example.invalid",
+    "x-forwarded-proto": "https",
+  };
+  const incoming = (extra: Record<string, string> = {}) =>
+    new Request(
+      "https://next.internal:3100/api/storefront/cart?presentationLocale=en",
+      {
+        headers: { ...headers, ...extra },
+      },
+    );
+  const absent = await run(incoming(), fetcher);
+  expect(absent.status).toBe(404);
+  expect(await absent.json()).toMatchObject({ code: "CART_NOT_FOUND" });
+  expect(fetcher).not.toHaveBeenCalled();
+  expect((await run(incoming({ cookie }), fetcher)).status).toBe(200);
+  expect(fetcher).toHaveBeenCalledTimes(1);
+  for (const extra of [
+    { host: "attacker.invalid" },
+    { "x-forwarded-host": "shop.example.invalid, attacker.invalid" },
+    { "x-forwarded-proto": "http" },
+    { origin: "https://attacker.invalid" },
+    { "sec-fetch-site": "cross-site" },
+  ]) {
+    const response = await run(incoming({ cookie, ...extra }), fetcher);
+    expect(response.status).toBe(403);
+    expect(await response.json()).toMatchObject({ code: "INVALID_ACCESS" });
+  }
+  expect(fetcher).toHaveBeenCalledTimes(1);
+});
 test("only an absent cookie on first read is a missing cart; an invalid existing cookie is never reset", async () => {
   const fetcher = vi.fn<typeof fetch>(async () => upstream());
   const first = await run(

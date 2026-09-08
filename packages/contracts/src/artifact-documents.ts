@@ -1,4 +1,5 @@
 import { checkoutPreflightPaths } from "./checkout-preflight-openapi.js";
+import { paymentRuntimePaths } from "./payment-runtime-openapi.js";
 import { cartEditPaths } from "./cart-edit-openapi.js";
 import { managementCenterPaths } from "./management-center-openapi.js";
 import { cartRuntimePaths } from "./cart-runtime-openapi.js";
@@ -206,6 +207,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...cartRuntimePaths(),
         ...cartEditPaths(),
         ...checkoutPreflightPaths(),
+        ...paymentRuntimePaths(),
         ...managementCenterPaths(),
         ...storefrontHomepagePaths(),
         ...storefrontCommercePaths(),

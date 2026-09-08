@@ -8,6 +8,7 @@ import {
 import { createApiApplication } from "./bootstrap.js";
 import { createOptionalCartRuntimeComposition } from "./cart-production.js";
 import { createOptionalCheckoutPreflightComposition } from "./checkout-composition.js";
+import { createOptionalPaymentRuntimeComposition } from "./payment-runtime-composition.js";
 import {
   createCatalogDirectoryComposition,
   type CatalogDirectoryComposition,
@@ -30,6 +31,7 @@ export type ProductionApiApplicationOptions = Readonly<{
   factories?: Readonly<{
     createCartComposition?: typeof createOptionalCartRuntimeComposition;
     createCheckoutComposition?: typeof createOptionalCheckoutPreflightComposition;
+    createPaymentComposition?: typeof createOptionalPaymentRuntimeComposition;
     createApplication?: ApiApplicationFactory;
     createComposition?: ReliableEventsCompositionFactory;
     createCatalogComposition?: (
@@ -61,6 +63,7 @@ export async function createProductionApiApplication(
   let published: PublishedContentComposition | undefined;
   let cart: ReturnType<typeof createOptionalCartRuntimeComposition>;
   let checkout: ReturnType<typeof createOptionalCheckoutPreflightComposition>;
+  let payment: ReturnType<typeof createOptionalPaymentRuntimeComposition>;
   try {
     catalog = createCatalogComposition(environment, { logger: options.logger });
     published = (
@@ -75,9 +78,14 @@ export async function createProductionApiApplication(
       options.factories?.createCheckoutComposition ??
       createOptionalCheckoutPreflightComposition
     )(environment);
+    payment = (
+      options.factories?.createPaymentComposition ??
+      createOptionalPaymentRuntimeComposition
+    )(environment);
     return await createApplication(environment, {
       ...(cart ?? {}),
       ...(checkout ?? {}),
+      ...(payment ?? {}),
       logger: options.logger,
       paymentWebhookRoute: composition.paymentWebhookRoute,
       reliableEventsRuntime: composition.reliableEventsRuntime,
@@ -96,6 +104,7 @@ export async function createProductionApiApplication(
       Promise.resolve().then(() => published?.publishedContentRuntime.stop()),
       Promise.resolve().then(() => cart?.cartRuntime.stop()),
       Promise.resolve().then(() => checkout?.checkoutPreflightRuntime.stop()),
+      Promise.resolve().then(() => payment?.paymentRuntime.stop()),
     ]);
     throw error;
   }

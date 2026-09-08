@@ -113,3 +113,4 @@ export interface PaymentWebhookVerifier {
 }
 
 export const workspacePackageName = "@fan-support/payment-port" as const;
+export type { PaymentRuntimeProviderRegistration } from "./runtime-provider.js";

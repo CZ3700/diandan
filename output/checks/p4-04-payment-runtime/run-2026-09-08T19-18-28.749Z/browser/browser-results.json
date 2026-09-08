@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "keyboard",
+      "locale": "en",
+      "width": 390,
+      "visited": [
+        "INPUT",
+        "INPUT",
+        "INPUT",
+        "INPUT",
+        "A",
+        "A"
+      ],
+      "nativeBrowserOnly": true
+    }
+  ],
+  "screenshots": [
+    "en-390-review.png",
+    "en-390-unknown.png",
+    "en-390-ready.png",
+    "en-390-hosted.png"
+  ],
+  "axe": [
+    {
+      "name": "en-390-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-unknown",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-ready",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "pageErrors": 0,
+  "cartResponses": [
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    }
+  ],
+  "recoveryDueObservations": [
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": true,
+      "leaseAvailable": true
+    }
+  ],
+  "browserClosed": true,
+  "actualPspSandbox": false,
+  "physicalDeviceEvidence": false,
+  "privatePlaintextPersisted": false,
+  "browserHarnessSha256": "d90ae9c03dc1c4397b2d89148945400c526f9bce4490827565b1cde09f07f08e",
+  "browserVersion": "152.0.7977.82",
+  "failure": {
+    "stage": "en-390-hosted",
+    "locale": "en",
+    "width": 390,
+    "kind": "BROWSER"
+  }
+}

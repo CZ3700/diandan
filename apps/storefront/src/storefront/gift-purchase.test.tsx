@@ -135,13 +135,8 @@ function render(gift: ReturnType<typeof fixture>, variant?: string) {
       {...(variant ? { variantId: variant } : {})}
     />,
   );
-  const checkout = html.match(
-    /<button\b[^>]*data-checkout-unavailable[^>]*>/u,
-  )?.[0];
-  expect(checkout).toBeDefined();
-  expect(checkout).toContain('disabled=""');
-  expect(checkout).toContain('aria-describedby="gift-checkout-explanation"');
-  expect(html).toContain(copy.giftCheckoutBody);
+  expect(html).not.toContain("data-checkout-unavailable");
+  expect(html).not.toContain(copy.giftCheckoutBody);
   expect(html).not.toMatch(/href="[^"]*\/checkout/u);
   return html;
 }

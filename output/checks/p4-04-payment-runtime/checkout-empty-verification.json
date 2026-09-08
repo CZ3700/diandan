@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "status": "FROZEN",
+  "sourceFiles": [
+    {
+      "path": "apps/storefront/src/storefront/checkout-controller.ts",
+      "sha256": "a5b2deda9d4a4bc68a784f441c92a0f2bebb92452377cf3f06c9f5e2193357dc"
+    },
+    {
+      "path": "apps/storefront/src/storefront/checkout-controller.test.ts",
+      "sha256": "d1351f62a8e4dec6d37bc8c35e5362fd779fa359776616ca882a88bf530e2732"
+    }
+  ],
+  "red": {
+    "log": "checkout-empty-red.log",
+    "failed": 4,
+    "passed": 9
+  },
+  "green": {
+    "log": "checkout-empty-final-green.log",
+    "files": 3,
+    "passed": 20,
+    "exitCode": 0
+  },
+  "typecheck": {
+    "log": "checkout-empty-types-final.log",
+    "exitCode": 0,
+    "preservedEarlierFailure": "checkout-empty-types.log"
+  },
+  "format": {
+    "log": "checkout-empty-format-final.log",
+    "exitCode": 0
+  },
+  "lint": {
+    "log": "checkout-empty-lint-final.log",
+    "exitCode": 0
+  },
+  "scope": "After current INVALID_ACCESS, one read-only cart probe must return CART_NOT_FOUND to show empty checkout; other failures and even cart success preserve original checkout auth rejection. No initialization, Cookie mutation, or automatic payment command. Dispose ignores late probe.",
+  "actualBrowser": "PENDING coordinated final compiled 14 UI verification; fifth browser used previous controller"
+}

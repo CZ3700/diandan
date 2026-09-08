@@ -667,6 +667,10 @@
       "kind": "TABLE"
     },
     {
+      "name": "payment_create_receipts",
+      "kind": "TABLE"
+    },
+    {
       "name": "payment_provider_accounts",
       "kind": "TABLE"
     },
@@ -687,6 +691,10 @@
       "kind": "TABLE"
     },
     {
+      "name": "payment_reconcile_receipts",
+      "kind": "TABLE"
+    },
+    {
       "name": "payment_route_rule_countries",
       "kind": "TABLE"
     },
@@ -704,6 +712,10 @@
     },
     {
       "name": "payment_route_rules",
+      "kind": "TABLE"
+    },
+    {
+      "name": "payment_runtime_operations",
       "kind": "TABLE"
     },
     {
@@ -15695,6 +15707,176 @@
       "generation": ""
     },
     {
+      "table": "payment_create_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 3,
+      "name": "operation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 4,
+      "name": "attempt_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 5,
+      "name": "cart_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 6,
+      "name": "checkout_session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 7,
+      "name": "idempotency_key",
+      "dataType": "idempotency_key_value",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 8,
+      "name": "canonical_request_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 9,
+      "name": "create_command",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 10,
+      "name": "create_command_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 11,
+      "name": "supported_action_types",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 12,
+      "name": "country",
+      "dataType": "country_code",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 13,
+      "name": "config_publication_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 14,
+      "name": "original_order_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 15,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 16,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_create_receipts",
+      "position": 17,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "payment_provider_accounts",
       "position": 1,
       "name": "id",
@@ -16295,6 +16477,86 @@
       "generation": ""
     },
     {
+      "table": "payment_reconcile_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "position": 3,
+      "name": "operation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "position": 4,
+      "name": "attempt_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "position": 5,
+      "name": "provider_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "position": 6,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "position": 7,
+      "name": "disposition",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "position": 8,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "payment_route_rule_countries",
       "position": 1,
       "name": "payment_route_rule_id",
@@ -16511,6 +16773,176 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 3,
+      "name": "attempt_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 4,
+      "name": "phase",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 5,
+      "name": "dispatch_authorized",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": "true",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 6,
+      "name": "generation",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 7,
+      "name": "version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 8,
+      "name": "lease_token_digest",
+      "dataType": "bytea",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 9,
+      "name": "lease_expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 10,
+      "name": "next_attempt_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 11,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 12,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 13,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 14,
+      "name": "task_name",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 15,
+      "name": "last_error_code",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 16,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_runtime_operations",
+      "position": 17,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
       "identity": "",
       "generation": ""
     },
@@ -40763,6 +41195,262 @@
       "initiallyDeferred": false
     },
     {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_attempt_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (attempt_id) REFERENCES payment_attempts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_attempt_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (attempt_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_attempt_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL attempt_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_canonical_request_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL canonical_request_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_cart_id_checkout_session_id_idempot_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (cart_id, checkout_session_id, idempotency_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_cart_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (cart_id) REFERENCES carts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_cart_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_check",
+      "kind": "CHECK",
+      "definition": "CHECK (create_command_hash::text = encode(sha256(convert_to(canonical_publication_json(create_command), 'UTF8'::name)), 'hex'::text))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_checkout_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (checkout_session_id) REFERENCES checkout_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_checkout_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL checkout_session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_config_publication_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (config_publication_id) REFERENCES payment_config_publications(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_config_publication_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL config_publication_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_country_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL country",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_create_command_check",
+      "kind": "CHECK",
+      "definition": "CHECK (jsonb_typeof(create_command) = 'object'::text AND (create_command ->> 'operation'::text) = 'CREATE_PAYMENT'::text AND (create_command ->> 'schemaVersion'::text) = '1'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_create_command_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL create_command_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_create_command_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL create_command",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_idempotency_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idempotency_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_operation_id_attempt_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (operation_id, attempt_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_operation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (operation_id) REFERENCES payment_runtime_operations(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_operation_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (operation_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_operation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL operation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_original_order_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL original_order_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_supported_action_types_check",
+      "kind": "CHECK",
+      "definition": "CHECK (jsonb_typeof(supported_action_types) = 'array'::text AND jsonb_array_length(supported_action_types) >= 1 AND jsonb_array_length(supported_action_types) <= 4)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_supported_action_types_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL supported_action_types",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_runtime_receipt_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
       "table": "payment_provider_accounts",
       "name": "payment_provider_accounts_account_reference_digest_check",
       "kind": "CHECK",
@@ -41571,6 +42259,150 @@
       "initiallyDeferred": false
     },
     {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipt_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_attempt_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (attempt_id) REFERENCES payment_attempts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_attempt_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL attempt_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_disposition_check",
+      "kind": "CHECK",
+      "definition": "CHECK (disposition = ANY (ARRAY['OBSERVED'::text, 'APPLIED_NONFINANCIAL'::text, 'PENDING'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_disposition_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL disposition",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_operation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (operation_id) REFERENCES payment_runtime_operations(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_operation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL operation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_provider_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (provider_event_id) REFERENCES provider_events(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_provider_event_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (provider_event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_provider_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL provider_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "payment_route_rule_countries",
       "name": "payment_route_rule_countries_country_not_null",
       "kind": "NOT_NULL",
@@ -41889,6 +42721,214 @@
       "definition": "NOT NULL schema_version",
       "deferrable": false,
       "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_attempt_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (attempt_id) REFERENCES payment_attempts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_attempt_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (attempt_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_attempt_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL attempt_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_check",
+      "kind": "CHECK",
+      "definition": "CHECK (updated_at::timestamp with time zone >= created_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_check1",
+      "kind": "CHECK",
+      "definition": "CHECK ((lease_token_digest IS NULL) = (lease_expires_at IS NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_check2",
+      "kind": "CHECK",
+      "definition": "CHECK ((phase = ANY (ARRAY['CREATE'::text, 'RECONCILE'::text])) AND next_attempt_at IS NOT NULL OR (phase = ANY (ARRAY['EVIDENCE_PENDING'::text, 'COMPLETE'::text])) AND next_attempt_at IS NULL AND lease_token_digest IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_check3",
+      "kind": "CHECK",
+      "definition": "CHECK (audit_log_id IS NULL OR phase = 'RECONCILE'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_dispatch_authorized_check",
+      "kind": "CHECK",
+      "definition": "CHECK (dispatch_authorized)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_dispatch_authorized_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL dispatch_authorized",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_generation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL generation",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_last_error_code_check",
+      "kind": "CHECK",
+      "definition": "CHECK (last_error_code IS NULL OR last_error_code ~ '^[A-Z][A-Z0-9_]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_lease_token_digest_check",
+      "kind": "CHECK",
+      "definition": "CHECK (lease_token_digest IS NULL OR octet_length(lease_token_digest) = 32)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_phase_check",
+      "kind": "CHECK",
+      "definition": "CHECK (phase = ANY (ARRAY['CREATE'::text, 'RECONCILE'::text, 'EVIDENCE_PENDING'::text, 'COMPLETE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_phase_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL phase",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_task_name_check",
+      "kind": "CHECK",
+      "definition": "CHECK (length(task_name) >= 1 AND length(task_name) <= 128 AND task_name ~ '^[a-z][a-z0-9]*([-_:][a-z0-9]+)*$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_task_name_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL task_name",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_receipt_backlink",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (id, attempt_id) REFERENCES payment_create_receipts(operation_id, attempt_id) DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
     },
     {
       "table": "payment_transactions",
@@ -50190,6 +51230,51 @@
       "valid": true
     },
     {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_attempt_id_key",
+      "definition": "CREATE UNIQUE INDEX payment_create_receipts_attempt_id_key ON public.payment_create_receipts USING btree (attempt_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_cart_id_checkout_session_id_idempot_key",
+      "definition": "CREATE UNIQUE INDEX payment_create_receipts_cart_id_checkout_session_id_idempot_key ON public.payment_create_receipts USING btree (cart_id, checkout_session_id, idempotency_key)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_operation_id_attempt_id_key",
+      "definition": "CREATE UNIQUE INDEX payment_create_receipts_operation_id_attempt_id_key ON public.payment_create_receipts USING btree (operation_id, attempt_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_operation_id_key",
+      "definition": "CREATE UNIQUE INDEX payment_create_receipts_operation_id_key ON public.payment_create_receipts USING btree (operation_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX payment_create_receipts_pkey ON public.payment_create_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "payment_provider_accounts",
       "name": "payment_provider_accounts_id_environment_unique",
       "definition": "CREATE UNIQUE INDEX payment_provider_accounts_id_environment_unique ON public.payment_provider_accounts USING btree (id, environment)",
@@ -50298,6 +51383,33 @@
       "valid": true
     },
     {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX payment_reconcile_receipts_audit_log_id_key ON public.payment_reconcile_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX payment_reconcile_receipts_pkey ON public.payment_reconcile_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_provider_event_id_key",
+      "definition": "CREATE UNIQUE INDEX payment_reconcile_receipts_provider_event_id_key ON public.payment_reconcile_receipts USING btree (provider_event_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "payment_route_rule_countries",
       "name": "payment_route_rule_countries_pkey",
       "definition": "CREATE UNIQUE INDEX payment_route_rule_countries_pkey ON public.payment_route_rule_countries USING btree (payment_route_rule_id, country)",
@@ -50355,6 +51467,33 @@
       "table": "payment_route_rules",
       "name": "payment_route_rules_pkey",
       "definition": "CREATE UNIQUE INDEX payment_route_rules_pkey ON public.payment_route_rules USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_attempt_id_key",
+      "definition": "CREATE UNIQUE INDEX payment_runtime_operations_attempt_id_key ON public.payment_runtime_operations USING btree (attempt_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_due_idx",
+      "definition": "CREATE INDEX payment_runtime_operations_due_idx ON public.payment_runtime_operations USING btree (next_attempt_at, id) WHERE (phase = ANY (ARRAY['CREATE'::text, 'RECONCILE'::text]))",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_pkey",
+      "definition": "CREATE UNIQUE INDEX payment_runtime_operations_pkey ON public.payment_runtime_operations USING btree (id)",
       "unique": true,
       "primary": true,
       "exclusion": false,
@@ -53819,6 +54958,12 @@
       "enabled": "O"
     },
     {
+      "table": "payment_attempts",
+      "name": "payment_runtime_dispatch_guard",
+      "definition": "CREATE TRIGGER payment_runtime_dispatch_guard BEFORE UPDATE ON payment_attempts FOR EACH ROW EXECUTE FUNCTION guard_payment_runtime_dispatch()",
+      "enabled": "O"
+    },
+    {
       "table": "payment_config_publication_heads",
       "name": "payment_config_publication_heads_consistency_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER payment_config_publication_heads_consistency_trigger AFTER INSERT OR DELETE OR UPDATE ON payment_config_publication_heads DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_payment_config_publication_heads()",
@@ -53864,6 +55009,24 @@
       "table": "payment_config_publications",
       "name": "payment_config_publications_validate_trigger",
       "definition": "CREATE TRIGGER payment_config_publications_validate_trigger BEFORE INSERT ON payment_config_publications FOR EACH ROW EXECUTE FUNCTION validate_payment_config_publication_event()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_immutable",
+      "definition": "CREATE TRIGGER payment_create_receipts_immutable BEFORE DELETE OR UPDATE ON payment_create_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_create_receipts_no_truncate",
+      "definition": "CREATE TRIGGER payment_create_receipts_no_truncate BEFORE TRUNCATE ON payment_create_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_create_receipts",
+      "name": "payment_runtime_receipt_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER payment_runtime_receipt_validate AFTER INSERT ON payment_create_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_payment_runtime_receipt()",
       "enabled": "O"
     },
     {
@@ -53975,6 +55138,24 @@
       "enabled": "O"
     },
     {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipt_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER payment_reconcile_receipt_validate AFTER INSERT ON payment_reconcile_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_payment_reconcile_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_immutable",
+      "definition": "CREATE TRIGGER payment_reconcile_receipts_immutable BEFORE DELETE OR UPDATE ON payment_reconcile_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_reconcile_receipts",
+      "name": "payment_reconcile_receipts_no_truncate",
+      "definition": "CREATE TRIGGER payment_reconcile_receipts_no_truncate BEFORE TRUNCATE ON payment_reconcile_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "payment_route_rule_countries",
       "name": "payment_route_rule_countries_no_truncate_trigger",
       "definition": "CREATE TRIGGER payment_route_rule_countries_no_truncate_trigger BEFORE TRUNCATE ON payment_route_rule_countries FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
@@ -54032,6 +55213,24 @@
       "table": "payment_route_rules",
       "name": "payment_route_rules_parent_guard_trigger",
       "definition": "CREATE TRIGGER payment_route_rules_parent_guard_trigger BEFORE INSERT OR DELETE OR UPDATE ON payment_route_rules FOR EACH ROW EXECUTE FUNCTION guard_revision_payload_mutation('config_versions', 'config_version_id')",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operation_guard",
+      "definition": "CREATE TRIGGER payment_runtime_operation_guard BEFORE INSERT OR UPDATE ON payment_runtime_operations FOR EACH ROW EXECUTE FUNCTION guard_payment_runtime_operation()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_no_delete",
+      "definition": "CREATE TRIGGER payment_runtime_operations_no_delete BEFORE DELETE ON payment_runtime_operations FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_no_truncate",
+      "definition": "CREATE TRIGGER payment_runtime_operations_no_truncate BEFORE TRUNCATE ON payment_runtime_operations FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
     },
     {
@@ -55487,6 +56686,26 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_payment_provider_translation_package(target_provider_config_id uuid)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  english_hash sha256_hex;\n  translation_count integer;\n  approved_count integer;\n  lineage_count integer;\nBEGIN\n  SELECT source_hash INTO english_hash\n    FROM payment_provider_config_translations\n    WHERE provider_config_id = target_provider_config_id AND locale = 'en';\n\n  IF english_hash IS NULL THEN\n    RAISE EXCEPTION 'payment provider config publication requires an English translation'\n      USING ERRCODE = '23514';\n  END IF;\n\n  SELECT count(*),\n    count(*) FILTER (WHERE latest.status = 'APPROVED'),\n    count(*) FILTER (WHERE translation.translated_from_source_hash = english_hash)\n    INTO translation_count, approved_count, lineage_count\n    FROM payment_provider_config_translations translation\n    LEFT JOIN LATERAL (\n      SELECT review.status\n      FROM payment_provider_config_translation_reviews review\n      WHERE review.provider_config_translation_id = translation.id\n      ORDER BY review.sequence DESC\n      LIMIT 1\n    ) latest ON true\n    WHERE translation.provider_config_id = target_provider_config_id;\n\n  IF translation_count <> 7 OR approved_count <> 7 OR lineage_count <> 7 THEN\n    RAISE EXCEPTION 'payment provider config publication requires seven approved current translations'\n      USING ERRCODE = '23514';\n  END IF;\nEND;\n$function$"
     },
     {
+      "name": "assert_payment_reconcile_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_payment_reconcile_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NOT EXISTS(SELECT 1 FROM public.provider_events event\n    JOIN public.provider_event_associations association ON association.provider_event_id=event.id AND association.association_status='MATCHED' AND association.payment_attempt_id=NEW.attempt_id\n    JOIN public.payment_runtime_operations operation ON operation.id=NEW.operation_id AND operation.attempt_id=NEW.attempt_id\n    JOIN public.payment_attempts attempt ON attempt.id=NEW.attempt_id\n    WHERE event.id=NEW.provider_event_id AND event.reconcile_audit_log_id=NEW.audit_log_id AND event.evidence_kind='AUTHENTICATED_RECONCILE' AND event.event_type='PAYMENT_STATUS'\n      AND event.provider_account_id=attempt.provider_account_id AND event.environment=attempt.environment AND event.currency=attempt.currency AND event.amount_minor=attempt.amount_minor\n      AND ((NEW.disposition='PENDING' AND event.normalized_status='SUCCEEDED' AND operation.phase='EVIDENCE_PENDING' AND attempt.status<>'SUCCEEDED')\n        OR (NEW.disposition='APPLIED_NONFINANCIAL' AND event.normalized_status<>'SUCCEEDED' AND attempt.status=event.normalized_status AND attempt.provider_event_id=event.id)\n        OR (NEW.disposition='OBSERVED' AND event.normalized_status<>'SUCCEEDED'))\n  ) THEN RAISE EXCEPTION 'payment reconcile receipt requires exact authenticated provider evidence' USING ERRCODE='23514'; END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_payment_runtime_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_payment_runtime_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE a public.payment_attempts%ROWTYPE; o public.orders%ROWTYPE; operation public.payment_runtime_operations%ROWTYPE; valid boolean;\nBEGIN\n  SELECT * INTO a FROM public.payment_attempts WHERE id=NEW.attempt_id;\n  SELECT * INTO o FROM public.orders WHERE id=a.order_id FOR UPDATE;\n  SELECT * INTO operation FROM public.payment_runtime_operations WHERE id=NEW.operation_id;\n  SELECT true INTO valid FROM public.carts c JOIN public.checkout_sessions session ON session.id=NEW.checkout_session_id AND session.cart_id=c.id\n    JOIN public.payment_route_rules rule ON rule.id=a.route_rule_id AND rule.provider_account_id=a.provider_account_id AND rule.config_version_id=a.config_version_id AND rule.rule_version=a.rule_version AND rule.payment_method=a.payment_method\n    JOIN public.payment_provider_configs config ON config.id=rule.provider_config_id AND config.config_version_id=a.config_version_id\n    JOIN public.payment_provider_accounts account ON account.id=a.provider_account_id AND account.environment=a.environment\n    JOIN public.merchant_entities merchant ON merchant.id=account.merchant_entity_id\n    JOIN public.payment_config_publication_heads head ON head.publication_id=NEW.config_publication_id AND head.config_version_id=a.config_version_id AND head.config_version=a.config_version\n    WHERE c.id=NEW.cart_id AND c.id=o.cart_id AND c.status='LOCKED' AND c.locked_order_id=o.id AND c.expires_at>NEW.created_at\n      AND session.id=o.checkout_session_id AND session.quote_id=o.checkout_quote_id AND session.quote_expires_at>NEW.created_at\n      AND session.status IN('READY','PAYMENT_PENDING') AND o.quote_expires_at>NEW.created_at AND o.order_status='PENDING_PAYMENT' AND o.payment_status='PENDING'\n      AND o.current_payment_attempt_id=a.id AND o.version=NEW.original_order_version+1\n      AND a.status='CREATED' AND a.version=1 AND NOT a.provider_call_started AND a.external_reference IS NULL AND a.created_at=NEW.created_at\n      AND a.amount_minor=o.total_amount_minor AND a.currency=o.currency AND a.requested_locale=o.presentation_locale\n      AND operation.attempt_id=a.id AND operation.phase='CREATE' AND operation.generation=1 AND operation.created_at=NEW.created_at\n      AND operation.request_id=NEW.request_id AND operation.correlation_id=NEW.correlation_id\n      AND account.status IN('INTERNAL','ACTIVE') AND account.health_status='HEALTHY' AND merchant.status='ACTIVE'\n      AND rule.enabled AND config.enabled AND rule.rollout_basis_points=10000 AND config.rollout_basis_points=10000\n      AND a.amount_minor BETWEEN rule.minimum_amount_minor AND rule.maximum_amount_minor\n      AND EXISTS(SELECT 1 FROM public.payment_route_rule_countries WHERE payment_route_rule_id=rule.id AND country=NEW.country)\n      AND EXISTS(SELECT 1 FROM public.payment_route_rule_markets WHERE payment_route_rule_id=rule.id AND market=o.market)\n      AND EXISTS(SELECT 1 FROM public.payment_route_rule_currencies WHERE payment_route_rule_id=rule.id AND currency=o.currency)\n      AND NOT EXISTS(SELECT 1 FROM public.payment_route_rule_device_capabilities d WHERE d.payment_route_rule_id=rule.id AND NOT NEW.supported_action_types ? d.capability);\n  IF COALESCE(valid,false)=false OR (\n    NEW.create_command->>'attemptId'=a.id::text AND NEW.create_command->>'orderId'=a.order_id::text\n    AND NEW.create_command->>'merchantReference'=a.id::text AND NEW.create_command->>'providerIdempotencyKey'=a.id::text\n    AND NEW.create_command->>'providerAccountId'=a.provider_account_id::text AND NEW.create_command->>'environment'=a.environment\n    AND NEW.create_command->>'amountMinor'=a.amount_minor::text AND NEW.create_command->>'currency'=a.currency\n    AND NEW.create_command->>'requestedLocale'=a.requested_locale AND NEW.create_command->>'paymentMethod'=a.payment_method\n  ) IS NOT TRUE OR EXISTS(SELECT 1 FROM jsonb_array_elements_text(NEW.supported_action_types) AS selected(action) WHERE action NOT IN('REDIRECT','PROVIDER_HOSTED_IFRAME','PROVIDER_COMPONENT','QR_CODE'))\n    OR (SELECT count(DISTINCT action) FROM jsonb_array_elements_text(NEW.supported_action_types) AS selected(action))<>jsonb_array_length(NEW.supported_action_types) THEN\n    RAISE EXCEPTION 'payment create receipt must bind its exact authorized checkout and route' USING ERRCODE='23514';\n  END IF;\n  IF EXISTS(SELECT 1 FROM public.order_items item JOIN public.gift_variants variant ON variant.id=item.gift_variant_id JOIN public.support_intents intent ON intent.id=item.support_intent_id\n    WHERE item.order_id=o.id AND (intent.status<>'CHECKOUT_LOCKED' OR intent.privacy_state<>'ACTIVE' OR intent.expires_at<=NEW.created_at\n      OR (variant.inventory_policy='TRACKED' AND (\n        (SELECT count(*) FROM public.inventory_reservations r WHERE r.checkout_session_id=o.checkout_session_id AND r.cart_item_id=item.cart_item_id AND r.status='ACTIVE')<>1\n        OR NOT EXISTS(SELECT 1 FROM public.inventory_reservations r WHERE r.checkout_session_id=o.checkout_session_id AND r.checkout_quote_id=o.checkout_quote_id AND r.cart_item_id=item.cart_item_id AND r.gift_variant_id=item.gift_variant_id AND r.locked_order_id=o.id AND r.quantity=item.quantity AND r.status='ACTIVE' AND r.expires_at>NEW.created_at)))\n      OR (variant.inventory_policy<>'TRACKED' AND EXISTS(SELECT 1 FROM public.inventory_reservations r WHERE r.checkout_session_id=o.checkout_session_id AND r.cart_item_id=item.cart_item_id))\n    )) THEN RAISE EXCEPTION 'new payment requires the exact valid checkout reservations and intents' USING ERRCODE='23514'; END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
       "name": "assert_payment_state_event_outbox",
       "identityArguments": "",
       "resultType": "trigger",
@@ -56267,6 +57486,26 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_payment_route_child_mutation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  route_id uuid;\n  parent_lifecycle text;\nBEGIN\n  route_id := COALESCE(\n    (to_jsonb(NEW) ->> 'payment_route_rule_id')::uuid,\n    (to_jsonb(OLD) ->> 'payment_route_rule_id')::uuid\n  );\n  SELECT config.lifecycle INTO parent_lifecycle\n    FROM payment_route_rules rule\n    JOIN config_versions config ON config.id = rule.config_version_id\n    WHERE rule.id = route_id;\n  IF parent_lifecycle IN ('PUBLISHED', 'SUPERSEDED', 'ARCHIVED') THEN\n    RAISE EXCEPTION 'published payment route payload is immutable'\n      USING ERRCODE = '55000';\n  END IF;\n  RETURN CASE WHEN TG_OP = 'DELETE' THEN OLD ELSE NEW END;\nEND;\n$function$"
     },
     {
+      "name": "guard_payment_runtime_dispatch",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_payment_runtime_dispatch()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.status_evidence_kind IN('SAFE_EXPIRY','AUDITED_BUSINESS_CANCEL') AND EXISTS(\n    SELECT 1 FROM public.payment_runtime_operations operation WHERE operation.attempt_id=NEW.id AND operation.dispatch_authorized\n  ) THEN\n    RAISE EXCEPTION 'a dispatched payment cannot use pre-provider cancellation or expiry' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
+      "name": "guard_payment_runtime_operation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_payment_runtime_operation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP='INSERT' THEN\n    IF NEW.version<>1 OR NEW.generation<>1 OR NEW.phase<>'CREATE' OR NEW.lease_token_digest IS NULL OR NEW.audit_log_id IS NOT NULL OR NEW.lease_expires_at<=clock_timestamp()\n      OR NOT EXISTS(SELECT 1 FROM public.payment_attempts a WHERE a.id=NEW.attempt_id AND a.status='CREATED' AND NOT a.provider_call_started) THEN\n      RAISE EXCEPTION 'payment runtime must begin with one leased CREATED attempt' USING ERRCODE='23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF NEW.id<>OLD.id OR NEW.attempt_id<>OLD.attempt_id OR NEW.schema_version<>OLD.schema_version OR NEW.created_at<>OLD.created_at\n    OR NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at OR OLD.phase IN('EVIDENCE_PENDING','COMPLETE')\n    OR NEW.generation NOT IN(OLD.generation,OLD.generation+1)\n    OR (NEW.phase='CREATE' AND OLD.phase<>'CREATE') THEN\n    RAISE EXCEPTION 'payment runtime identity, generation and phase are fenced' USING ERRCODE='23514';\n  END IF;\n  IF NEW.generation=OLD.generation+1 THEN\n    IF OLD.lease_expires_at>clock_timestamp() OR NEW.lease_token_digest IS NULL OR NEW.lease_expires_at<=clock_timestamp() THEN\n      RAISE EXCEPTION 'payment runtime cannot replace a live lease' USING ERRCODE='23514';\n    END IF;\n  ELSIF NEW.lease_token_digest IS NOT NULL AND NEW.lease_token_digest IS DISTINCT FROM OLD.lease_token_digest THEN\n    RAISE EXCEPTION 'a replacement payment lease requires a new generation' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
       "name": "guard_payment_webhook_endpoint_transition",
       "identityArguments": "",
       "resultType": "trigger",
@@ -56714,7 +57953,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.validate_payment_attempt_mutation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  transition_allowed boolean;\n  pinned_config_count integer;\n  payable_order boolean;\nBEGIN\n  IF TG_OP = 'INSERT' THEN\n    IF NEW.status <> 'CREATED' OR NEW.version <> 1\n       OR NEW.status_evidence_kind <> 'ATTEMPT_CREATED'\n       OR NEW.provider_event_id IS NOT NULL OR NEW.evidence_audit_log_id IS NOT NULL\n       OR NEW.provider_call_started OR NEW.external_reference IS NOT NULL\n       OR NEW.refund_occupied_minor <> 0 THEN\n      RAISE EXCEPTION 'new payment attempt must start as an uncalled CREATED attempt'\n        USING ERRCODE = '23514';\n    END IF;\n    SELECT count(*) INTO pinned_config_count\n      FROM config_versions config\n      WHERE config.id = NEW.config_version_id\n        AND config.config_kind = 'PAYMENT_ROUTING'\n        AND config.version = NEW.config_version\n        AND config.lifecycle IN ('PUBLISHED', 'SUPERSEDED');\n    IF pinned_config_count <> 1 THEN\n      RAISE EXCEPTION 'payment attempt must pin an immutable published config version'\n        USING ERRCODE = '23514';\n    END IF;\n    SELECT true INTO payable_order\n      FROM orders\n      WHERE id = NEW.order_id\n        AND order_status = 'PENDING_PAYMENT'\n        AND payment_status IN ('UNPAID', 'PENDING')\n      FOR UPDATE;\n    IF COALESCE(payable_order, false) = false OR EXISTS (\n      SELECT 1 FROM payment_attempts predecessor\n      WHERE predecessor.order_id = NEW.order_id\n        AND predecessor.status NOT IN ('FAILED', 'CANCELED', 'EXPIRED')\n    ) THEN\n      RAISE EXCEPTION 'payment attempt retry requires a payable order and only terminal failed predecessors'\n        USING ERRCODE = '23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n\n  IF (to_jsonb(NEW) - 'refund_occupied_minor') IS NOT DISTINCT FROM\n     (to_jsonb(OLD) - 'refund_occupied_minor') THEN\n    IF NEW.refund_occupied_minor IS DISTINCT FROM OLD.refund_occupied_minor\n       AND pg_trigger_depth() < 2 THEN\n      RAISE EXCEPTION 'refund capacity can only change from a refund trigger'\n        USING ERRCODE = '55000';\n    END IF;\n    RETURN NEW;\n  END IF;\n\n  IF (to_jsonb(NEW) - 'status' - 'provider_call_started' - 'external_reference'\n      - 'action_type' - 'action_ciphertext' - 'action_encrypted_data_key'\n      - 'action_key_version' - 'action_expires_at' - 'action_poll_after_ms'\n      - 'status_evidence_kind' - 'provider_event_id' - 'evidence_audit_log_id'\n      - 'evidence_reason_code' - 'version' - 'updated_at' - 'succeeded_at'\n      - 'terminated_at') IS DISTINCT FROM\n     (to_jsonb(OLD) - 'status' - 'provider_call_started' - 'external_reference'\n      - 'action_type' - 'action_ciphertext' - 'action_encrypted_data_key'\n      - 'action_key_version' - 'action_expires_at' - 'action_poll_after_ms'\n      - 'status_evidence_kind' - 'provider_event_id' - 'evidence_audit_log_id'\n      - 'evidence_reason_code' - 'version' - 'updated_at' - 'succeeded_at'\n      - 'terminated_at') THEN\n    RAISE EXCEPTION 'payment attempt route, amount, locale, and identity are immutable'\n      USING ERRCODE = '55000';\n  END IF;\n  IF NEW.refund_occupied_minor <> OLD.refund_occupied_minor THEN\n    RAISE EXCEPTION 'refund capacity can only change through a refund transaction'\n      USING ERRCODE = '55000';\n  END IF;\n  IF OLD.status IN ('SUCCEEDED', 'FAILED', 'CANCELED', 'EXPIRED') THEN\n    RAISE EXCEPTION 'terminal payment attempts are immutable'\n      USING ERRCODE = '55000';\n  END IF;\n  IF NEW.version <> OLD.version + 1 OR NEW.updated_at <= OLD.updated_at THEN\n    RAISE EXCEPTION 'payment attempt transition requires one version increment and a later timestamp'\n      USING ERRCODE = '23514';\n  END IF;\n  IF OLD.provider_call_started AND NOT NEW.provider_call_started THEN\n    RAISE EXCEPTION 'provider_call_started cannot be cleared'\n      USING ERRCODE = '23514';\n  END IF;\n  IF OLD.external_reference IS NOT NULL\n     AND NEW.external_reference IS DISTINCT FROM OLD.external_reference THEN\n    RAISE EXCEPTION 'provider external reference is immutable once bound'\n      USING ERRCODE = '55000';\n  END IF;\n\n  transition_allowed := CASE OLD.status\n    WHEN 'CREATED' THEN NEW.status IN (\n      'REQUIRES_ACTION', 'PROCESSING', 'SUCCEEDED', 'FAILED', 'CANCELED', 'EXPIRED', 'UNKNOWN'\n    )\n    WHEN 'REQUIRES_ACTION' THEN NEW.status IN (\n      'PROCESSING', 'SUCCEEDED', 'FAILED', 'CANCELED', 'EXPIRED', 'UNKNOWN'\n    )\n    WHEN 'PROCESSING' THEN NEW.status IN ('SUCCEEDED', 'FAILED', 'CANCELED', 'EXPIRED', 'UNKNOWN')\n    WHEN 'UNKNOWN' THEN NEW.status IN ('PROCESSING', 'SUCCEEDED', 'FAILED', 'CANCELED', 'EXPIRED')\n    ELSE false\n  END;\n  IF NEW.status = OLD.status OR NOT transition_allowed THEN\n    RAISE EXCEPTION 'invalid payment attempt transition: % -> %', OLD.status, NEW.status\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.status = 'UNKNOWN' AND NEW.status_evidence_kind <> 'NETWORK_UNCERTAINTY' THEN\n    RAISE EXCEPTION 'UNKNOWN payment requires network uncertainty evidence'\n      USING ERRCODE = '23514';\n  ELSIF OLD.status = 'CREATED' AND NEW.status IN ('REQUIRES_ACTION', 'PROCESSING')\n        AND NEW.status_evidence_kind <> 'CREATE_RESULT' THEN\n    RAISE EXCEPTION 'initial provider action requires CREATE_RESULT evidence'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status = 'CANCELED' AND OLD.status = 'CREATED' AND NOT NEW.provider_call_started\n        AND NEW.status_evidence_kind <> 'AUDITED_BUSINESS_CANCEL' THEN\n    RAISE EXCEPTION 'pre-provider cancellation requires audited evidence'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status = 'EXPIRED' AND OLD.status = 'CREATED' AND NOT NEW.provider_call_started\n        AND NEW.status_evidence_kind <> 'SAFE_EXPIRY' THEN\n    RAISE EXCEPTION 'pre-provider expiry requires safe-expiry evidence'\n      USING ERRCODE = '23514';\n  ELSIF NOT (\n    NEW.status = 'UNKNOWN'\n    OR (OLD.status = 'CREATED' AND NEW.status IN ('REQUIRES_ACTION', 'PROCESSING'))\n    OR (NEW.status = 'CANCELED' AND OLD.status = 'CREATED' AND NOT NEW.provider_call_started)\n    OR (NEW.status = 'EXPIRED' AND OLD.status = 'CREATED' AND NOT NEW.provider_call_started)\n  ) AND NEW.status_evidence_kind NOT IN ('VERIFIED_WEBHOOK', 'AUTHENTICATED_RECONCILE') THEN\n    RAISE EXCEPTION 'payment terminal or reconciled transition requires trusted provider evidence'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.status_evidence_kind IN ('VERIFIED_WEBHOOK', 'AUTHENTICATED_RECONCILE')\n     AND NEW.provider_event_id IS NULL THEN\n    RAISE EXCEPTION 'trusted payment evidence requires provider_event_id'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status_evidence_kind = 'VERIFIED_WEBHOOK'\n        AND NEW.evidence_audit_log_id IS NOT NULL THEN\n    RAISE EXCEPTION 'verified webhook evidence cannot carry reconcile audit evidence'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status_evidence_kind = 'AUTHENTICATED_RECONCILE'\n        AND NEW.evidence_audit_log_id IS NULL THEN\n    RAISE EXCEPTION 'reconciled payment evidence requires its audit_log_id'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status_evidence_kind = 'AUDITED_BUSINESS_CANCEL'\n        AND (NEW.evidence_audit_log_id IS NULL OR NEW.provider_event_id IS NOT NULL) THEN\n    RAISE EXCEPTION 'audited business cancellation requires only audit_log_id'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status_evidence_kind IN ('CREATE_RESULT', 'NETWORK_UNCERTAINTY', 'SAFE_EXPIRY')\n        AND (NEW.provider_event_id IS NOT NULL OR NEW.evidence_audit_log_id IS NOT NULL) THEN\n    RAISE EXCEPTION 'local payment evidence cannot carry provider or audit evidence IDs'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.validate_payment_attempt_mutation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  transition_allowed boolean;\n  pinned_config_count integer;\n  payable_order boolean;\nBEGIN\n  IF TG_OP = 'INSERT' THEN\n    IF NEW.status <> 'CREATED' OR NEW.version <> 1\n       OR NEW.status_evidence_kind <> 'ATTEMPT_CREATED'\n       OR NEW.provider_event_id IS NOT NULL OR NEW.evidence_audit_log_id IS NOT NULL\n       OR NEW.provider_call_started OR NEW.external_reference IS NOT NULL\n       OR NEW.refund_occupied_minor <> 0 THEN\n      RAISE EXCEPTION 'new payment attempt must start as an uncalled CREATED attempt'\n        USING ERRCODE = '23514';\n    END IF;\n    SELECT count(*) INTO pinned_config_count\n      FROM config_versions config\n      WHERE config.id = NEW.config_version_id\n        AND config.config_kind = 'PAYMENT_ROUTING'\n        AND config.version = NEW.config_version\n        AND config.lifecycle IN ('PUBLISHED', 'SUPERSEDED');\n    IF pinned_config_count <> 1 THEN\n      RAISE EXCEPTION 'payment attempt must pin an immutable published config version'\n        USING ERRCODE = '23514';\n    END IF;\n    SELECT true INTO payable_order\n      FROM orders\n      WHERE id = NEW.order_id\n        AND order_status = 'PENDING_PAYMENT'\n        AND payment_status IN ('UNPAID', 'PENDING')\n      FOR UPDATE;\n    IF COALESCE(payable_order, false) = false OR EXISTS (\n      SELECT 1 FROM payment_attempts predecessor\n      WHERE predecessor.order_id = NEW.order_id\n        AND predecessor.status NOT IN ('FAILED', 'CANCELED', 'EXPIRED')\n    ) THEN\n      RAISE EXCEPTION 'payment attempt retry requires a payable order and only terminal failed predecessors'\n        USING ERRCODE = '23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n\n  IF (to_jsonb(NEW) - 'refund_occupied_minor') IS NOT DISTINCT FROM\n     (to_jsonb(OLD) - 'refund_occupied_minor') THEN\n    IF NEW.refund_occupied_minor IS DISTINCT FROM OLD.refund_occupied_minor\n       AND pg_trigger_depth() < 2 THEN\n      RAISE EXCEPTION 'refund capacity can only change from a refund trigger'\n        USING ERRCODE = '55000';\n    END IF;\n    RETURN NEW;\n  END IF;\n\n  IF (to_jsonb(NEW) - 'status' - 'provider_call_started' - 'external_reference'\n      - 'action_type' - 'action_ciphertext' - 'action_encrypted_data_key'\n      - 'action_key_version' - 'action_expires_at' - 'action_poll_after_ms'\n      - 'status_evidence_kind' - 'provider_event_id' - 'evidence_audit_log_id'\n      - 'evidence_reason_code' - 'version' - 'updated_at' - 'succeeded_at'\n      - 'terminated_at') IS DISTINCT FROM\n     (to_jsonb(OLD) - 'status' - 'provider_call_started' - 'external_reference'\n      - 'action_type' - 'action_ciphertext' - 'action_encrypted_data_key'\n      - 'action_key_version' - 'action_expires_at' - 'action_poll_after_ms'\n      - 'status_evidence_kind' - 'provider_event_id' - 'evidence_audit_log_id'\n      - 'evidence_reason_code' - 'version' - 'updated_at' - 'succeeded_at'\n      - 'terminated_at') THEN\n    RAISE EXCEPTION 'payment attempt route, amount, locale, and identity are immutable'\n      USING ERRCODE = '55000';\n  END IF;\n  IF NEW.refund_occupied_minor <> OLD.refund_occupied_minor THEN\n    RAISE EXCEPTION 'refund capacity can only change through a refund transaction'\n      USING ERRCODE = '55000';\n  END IF;\n  IF OLD.status IN ('SUCCEEDED', 'FAILED', 'CANCELED', 'EXPIRED') THEN\n    RAISE EXCEPTION 'terminal payment attempts are immutable'\n      USING ERRCODE = '55000';\n  END IF;\n  IF NEW.version <> OLD.version + 1 OR NEW.updated_at <= OLD.updated_at THEN\n    RAISE EXCEPTION 'payment attempt transition requires one version increment and a later timestamp'\n      USING ERRCODE = '23514';\n  END IF;\n  IF OLD.provider_call_started AND NOT NEW.provider_call_started THEN\n    RAISE EXCEPTION 'provider_call_started cannot be cleared'\n      USING ERRCODE = '23514';\n  END IF;\n  IF OLD.external_reference IS NOT NULL\n     AND NEW.external_reference IS DISTINCT FROM OLD.external_reference THEN\n    RAISE EXCEPTION 'provider external reference is immutable once bound'\n      USING ERRCODE = '55000';\n  END IF;\n\n  transition_allowed := CASE OLD.status\n    WHEN 'CREATED' THEN NEW.status IN (\n      'REQUIRES_ACTION', 'PROCESSING', 'SUCCEEDED', 'FAILED', 'CANCELED', 'EXPIRED', 'UNKNOWN'\n    )\n    WHEN 'REQUIRES_ACTION' THEN NEW.status IN (\n      'PROCESSING', 'SUCCEEDED', 'FAILED', 'CANCELED', 'EXPIRED', 'UNKNOWN'\n    )\n    WHEN 'PROCESSING' THEN NEW.status IN ('SUCCEEDED', 'FAILED', 'CANCELED', 'EXPIRED', 'UNKNOWN')\n    WHEN 'UNKNOWN' THEN NEW.status IN ('PROCESSING', 'SUCCEEDED', 'FAILED', 'CANCELED', 'EXPIRED') OR (NEW.status='REQUIRES_ACTION' AND NEW.status_evidence_kind='AUTHENTICATED_RECONCILE' AND NEW.action_type IN('REDIRECT','PROVIDER_HOSTED_IFRAME','PROVIDER_COMPONENT','QR_CODE') AND NEW.action_ciphertext IS NOT NULL AND NEW.action_encrypted_data_key IS NOT NULL AND NEW.action_key_version IS NOT NULL)\n    ELSE false\n  END;\n  IF NEW.status = OLD.status OR NOT transition_allowed THEN\n    RAISE EXCEPTION 'invalid payment attempt transition: % -> %', OLD.status, NEW.status\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.status = 'UNKNOWN' AND NEW.status_evidence_kind <> 'NETWORK_UNCERTAINTY' THEN\n    RAISE EXCEPTION 'UNKNOWN payment requires network uncertainty evidence'\n      USING ERRCODE = '23514';\n  ELSIF OLD.status = 'CREATED' AND NEW.status IN ('REQUIRES_ACTION', 'PROCESSING')\n        AND NEW.status_evidence_kind <> 'CREATE_RESULT' THEN\n    RAISE EXCEPTION 'initial provider action requires CREATE_RESULT evidence'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status = 'CANCELED' AND OLD.status = 'CREATED' AND NOT NEW.provider_call_started\n        AND NEW.status_evidence_kind <> 'AUDITED_BUSINESS_CANCEL' THEN\n    RAISE EXCEPTION 'pre-provider cancellation requires audited evidence'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status = 'EXPIRED' AND OLD.status = 'CREATED' AND NOT NEW.provider_call_started\n        AND NEW.status_evidence_kind <> 'SAFE_EXPIRY' THEN\n    RAISE EXCEPTION 'pre-provider expiry requires safe-expiry evidence'\n      USING ERRCODE = '23514';\n  ELSIF NOT (\n    NEW.status = 'UNKNOWN'\n    OR (OLD.status = 'CREATED' AND NEW.status IN ('REQUIRES_ACTION', 'PROCESSING'))\n    OR (NEW.status = 'CANCELED' AND OLD.status = 'CREATED' AND NOT NEW.provider_call_started)\n    OR (NEW.status = 'EXPIRED' AND OLD.status = 'CREATED' AND NOT NEW.provider_call_started)\n  ) AND NEW.status_evidence_kind NOT IN ('VERIFIED_WEBHOOK', 'AUTHENTICATED_RECONCILE') THEN\n    RAISE EXCEPTION 'payment terminal or reconciled transition requires trusted provider evidence'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.status_evidence_kind IN ('VERIFIED_WEBHOOK', 'AUTHENTICATED_RECONCILE')\n     AND NEW.provider_event_id IS NULL THEN\n    RAISE EXCEPTION 'trusted payment evidence requires provider_event_id'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status_evidence_kind = 'VERIFIED_WEBHOOK'\n        AND NEW.evidence_audit_log_id IS NOT NULL THEN\n    RAISE EXCEPTION 'verified webhook evidence cannot carry reconcile audit evidence'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status_evidence_kind = 'AUTHENTICATED_RECONCILE'\n        AND NEW.evidence_audit_log_id IS NULL THEN\n    RAISE EXCEPTION 'reconciled payment evidence requires its audit_log_id'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status_evidence_kind = 'AUDITED_BUSINESS_CANCEL'\n        AND (NEW.evidence_audit_log_id IS NULL OR NEW.provider_event_id IS NOT NULL) THEN\n    RAISE EXCEPTION 'audited business cancellation requires only audit_log_id'\n      USING ERRCODE = '23514';\n  ELSIF NEW.status_evidence_kind IN ('CREATE_RESULT', 'NETWORK_UNCERTAINTY', 'SAFE_EXPIRY')\n        AND (NEW.provider_event_id IS NOT NULL OR NEW.evidence_audit_log_id IS NOT NULL) THEN\n    RAISE EXCEPTION 'local payment evidence cannot carry provider or audit evidence IDs'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
     },
     {
       "name": "validate_payment_config_publication",

@@ -1,3 +1,6 @@
+import * as paymentRuntimeInternal from "./payment-runtime-internal.js";
+import * as paymentRuntime from "./payment-runtime.js";
+import * as paymentRuntimeConfig from "./payment-runtime-config.js";
 import {
   checkoutTranslationSnapshotSchema,
   checkoutMediaSnapshotSchema,
@@ -649,6 +652,192 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "PaymentRuntimeRecoveryRunResponse",
+    audience: "internal",
+    schema: paymentRuntimeConfig.paymentRuntimeRecoveryRunResponseSchema,
+  },
+  {
+    name: "PaymentRuntimeEncryptedAction",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeEncryptedActionSchema,
+  },
+  {
+    name: "PaymentRuntimeAttemptRecord",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeAttemptRecordSchema,
+  },
+  {
+    name: "PaymentRuntimeRoute",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeRouteSchema,
+  },
+  {
+    name: "PaymentRuntimeRouting",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeRoutingSchema,
+  },
+  {
+    name: "PaymentRuntimeContext",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeContextSchema,
+  },
+  {
+    name: "PaymentRuntimeCurrentCheckout",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeCurrentCheckoutSchema,
+  },
+  {
+    name: "PaymentRuntimeLoadContextCommand",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeLoadContextCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeLoadCurrentCheckoutCommand",
+    audience: "internal",
+    schema:
+      paymentRuntimeInternal.paymentRuntimeLoadCurrentCheckoutCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeReadAttemptCommand",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeReadAttemptCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeFindCreateReceiptCommand",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeFindCreateReceiptCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeCreateReceipt",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeCreateReceiptSchema,
+  },
+  {
+    name: "PaymentRuntimeBeginCreateCommand",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeBeginCreateCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeClaim",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeClaimSchema,
+  },
+  {
+    name: "PaymentRuntimeBeginCreateResult",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeBeginCreateResultSchema,
+  },
+  {
+    name: "PaymentRuntimeSettleCreateCommand",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeSettleCreateCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeClaimRecoveryCommand",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeClaimRecoveryCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeRecordReconcileCommand",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeRecordReconcileCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeDeferRecoveryCommand",
+    audience: "internal",
+    schema: paymentRuntimeInternal.paymentRuntimeDeferRecoveryCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeCapabilitiesCommand",
+    audience: "internal",
+    schema: paymentRuntime.paymentRuntimeCapabilitiesCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeCreateCommand",
+    audience: "internal",
+    schema: paymentRuntime.paymentRuntimeCreateCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeReadCommand",
+    audience: "internal",
+    schema: paymentRuntime.paymentRuntimeReadCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeRecoverCommand",
+    audience: "internal",
+    schema: paymentRuntime.paymentRuntimeRecoverCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeCurrentCommand",
+    audience: "internal",
+    schema: paymentRuntime.paymentRuntimeCurrentCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeCommand",
+    audience: "internal",
+    schema: paymentRuntime.paymentRuntimeCommandSchema,
+  },
+  {
+    name: "PaymentRuntimeCapabilitiesRequest",
+    audience: "public-http",
+    schema: paymentRuntime.paymentRuntimeCapabilitiesRequestSchema,
+  },
+  {
+    name: "PaymentRuntimeCreateRequest",
+    audience: "public-http",
+    schema: paymentRuntime.paymentRuntimeCreateRequestSchema,
+  },
+  {
+    name: "PaymentRuntimeReadRequest",
+    audience: "public-http",
+    schema: paymentRuntime.paymentRuntimeReadRequestSchema,
+  },
+  {
+    name: "PaymentRuntimeRecoverRequest",
+    audience: "public-http",
+    schema: paymentRuntime.paymentRuntimeRecoverRequestSchema,
+  },
+  {
+    name: "PaymentRuntimeCurrentRequest",
+    audience: "public-http",
+    schema: paymentRuntime.paymentRuntimeCurrentRequestSchema,
+  },
+  {
+    name: "PaymentRuntimeFailure",
+    audience: "public-http",
+    schema: paymentRuntime.paymentRuntimeFailureSchema,
+  },
+  {
+    name: "PaymentRuntimeAttemptView",
+    audience: "public-http",
+    schema: paymentRuntime.paymentRuntimeAttemptViewSchema,
+  },
+  {
+    name: "PaymentRuntimeCapabilityView",
+    audience: "public-http",
+    schema: paymentRuntime.paymentRuntimeCapabilityViewSchema,
+  },
+  {
+    name: "PaymentRuntimeCapabilitiesView",
+    audience: "public-http",
+    schema: paymentRuntime.paymentRuntimeCapabilitiesViewSchema,
+  },
+  {
+    name: "PaymentRuntimeResponse",
+    audience: "public-http",
+    schema: paymentRuntime.paymentRuntimeResponseSchema,
+  },
+  {
+    name: "PaymentRuntimeProviderBinding",
+    audience: "internal",
+    schema: paymentRuntimeConfig.paymentRuntimeProviderBindingSchema,
+  },
+  {
+    name: "PaymentRuntimeConfiguration",
+    audience: "internal",
+    schema: paymentRuntimeConfig.paymentRuntimeConfigurationSchema,
+  },
   {
     name: "CheckoutTranslationSnapshot",
     audience: "internal",

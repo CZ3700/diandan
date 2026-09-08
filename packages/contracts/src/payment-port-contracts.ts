@@ -117,7 +117,7 @@ const capabilitiesCommandSchema = z.strictObject({
       message: "requested payment action types must be unique",
     }),
 });
-const createPaymentCommandSchema = z
+export const createPaymentCommandSchema = z
   .strictObject({
     schemaVersion: schemaVersionSchema,
     operation: z.literal("CREATE_PAYMENT"),
@@ -239,7 +239,7 @@ const refundPaymentCommandSchema = z
       });
     }
   });
-const reconcilePaymentCommandSchema = z
+export const reconcilePaymentCommandSchema = z
   .strictObject({
     schemaVersion: schemaVersionSchema,
     operation: z.literal("RECONCILE_PAYMENT"),

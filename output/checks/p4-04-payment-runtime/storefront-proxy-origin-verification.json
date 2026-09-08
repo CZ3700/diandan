@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "scope": "Fixed configured storefront origin behind an overriding reverse proxy; no authentication or CSRF bypass",
+  "sourceFiles": [
+    {
+      "path": "apps/storefront/src/server/request-origin.ts",
+      "sha256": "36394e3cf5fe72f34b8a6c047bd0370a746f47fbbf2dc7268c47cbadaaeb2675"
+    },
+    {
+      "path": "apps/storefront/src/server/request-origin.test.ts",
+      "sha256": "39769a025d02076e7385edb5716ca49b60b81edbcb8416e69a8297e0b9ba80d6"
+    },
+    {
+      "path": "apps/storefront/src/server/cart-proxy.ts",
+      "sha256": "abf955d481e46ced4ff5dd37869f423ca5b9a6a14f75e402adce5ca76a9d0f59"
+    },
+    {
+      "path": "apps/storefront/src/server/cart-proxy.test.ts",
+      "sha256": "5d8f49e93f9edbeba2a12469fe64a3bf19840ecbf61747da692ac5d11d4ac382"
+    },
+    {
+      "path": "apps/storefront/src/server/checkout-proxy.ts",
+      "sha256": "6c5856447c0874e73f6e4d219926a993f387650b4163dae27af0478933a3ed50"
+    },
+    {
+      "path": "apps/storefront/src/server/checkout-proxy.test.ts",
+      "sha256": "51284d46834f7c966917547c68de149cf58dc29ffdb7ac720b5763c25d65f0d4"
+    }
+  ],
+  "actualRed": {
+    "path": "https-origin-diagnostic.json",
+    "kind": "Existing compiled Next through real HTTPS gateway, no Cookie",
+    "status": 403,
+    "code": "INVALID_ACCESS"
+  },
+  "unit": {
+    "red": "storefront-proxy-origin-red.log",
+    "redFailed": 2,
+    "redPassed": 16,
+    "green": "storefront-proxy-origin-green.log",
+    "passed": 37,
+    "files": 3
+  },
+  "checks": {
+    "typecheck": {
+      "log": "storefront-proxy-origin-types.log",
+      "exitCode": 0
+    },
+    "format": {
+      "log": "storefront-proxy-origin-format.log",
+      "exitCode": 0
+    },
+    "lint": {
+      "log": "storefront-proxy-origin-lint.log",
+      "exitCode": 0
+    }
+  },
+  "deploymentBoundary": "The upstream Next listener is private; the fixed reverse proxy overwrites Host, X-Forwarded-Host and X-Forwarded-Proto. No arbitrary Forwarded header is authority. Existing Origin, Fetch Metadata, Cookie, CSRF, command, path and response validation remain in both BFF handlers.",
+  "nextBuild": "PENDING root/e2e coordinated integration",
+  "actualHttpsGreen": "PENDING root/e2e coordinated integration"
+}

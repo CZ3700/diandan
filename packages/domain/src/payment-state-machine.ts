@@ -70,7 +70,14 @@ const PAYMENT_TRANSITIONS: Readonly<
   FAILED: [],
   CANCELED: [],
   EXPIRED: [],
-  UNKNOWN: ["PROCESSING", "SUCCEEDED", "FAILED", "CANCELED", "EXPIRED"],
+  UNKNOWN: [
+    "REQUIRES_ACTION",
+    "PROCESSING",
+    "SUCCEEDED",
+    "FAILED",
+    "CANCELED",
+    "EXPIRED",
+  ],
 };
 
 const REASON_CODE_PATTERN = /^[A-Z][A-Z0-9_]{0,127}$/u;
@@ -155,6 +162,19 @@ export function decidePaymentAttemptTransition(
       current,
       target,
       "PAYMENT_TRANSITION_NOT_ALLOWED",
+    );
+  }
+
+  if (
+    current === "UNKNOWN" &&
+    target === "REQUIRES_ACTION" &&
+    (authority.kind !== "PROVIDER_EVIDENCE" ||
+      authority.evidence.evidence.kind !== "AUTHENTICATED_RECONCILE")
+  ) {
+    return rejectedTransition(
+      current,
+      target,
+      "PAYMENT_PROVIDER_EVIDENCE_REQUIRED",
     );
   }
 

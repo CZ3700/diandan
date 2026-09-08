@@ -1,0 +1,552 @@
+{
+  "schemaVersion": 1,
+  "environment": "TEST",
+  "artistCount": 3,
+  "visibleGiftCount": 25,
+  "policyCount": 4,
+  "locales": [
+    "en",
+    "zh-CN",
+    "th",
+    "vi",
+    "ja",
+    "es",
+    "pt"
+  ],
+  "markets": [
+    {
+      "market": "GLOBAL",
+      "currency": "USD"
+    },
+    {
+      "market": "JAPAN",
+      "currency": "JPY"
+    }
+  ],
+  "artists": [
+    {
+      "id": "d4f34d10-f5dd-4292-a309-cbcf1e80efc5",
+      "handle": "mira-vale",
+      "revisionId": "966bd0a3-79b0-41c0-ba12-3e982c0b9018",
+      "acceptingGifts": true
+    },
+    {
+      "id": "5d85994d-44fd-41e2-81a8-f4770cefb0a2",
+      "handle": "kai-ren",
+      "revisionId": "31e72f4e-f0f5-4267-8511-73d4bec843fc",
+      "acceptingGifts": true
+    },
+    {
+      "id": "46aba1dd-b99d-4fe4-b1e6-d0d2a59e77d4",
+      "handle": "studio-guest",
+      "revisionId": "cfc8e18d-992f-4ec4-b380-476b070850aa",
+      "acceptingGifts": false
+    }
+  ],
+  "gifts": [
+    {
+      "id": "cdb5c371-bdf1-4d38-94fa-02b99ae9b56f",
+      "handle": "studio-gift-001",
+      "revisionId": "be03f6aa-2c18-48b0-907f-bfd7402b52e2",
+      "status": "active"
+    },
+    {
+      "id": "d9217fa0-582d-4025-a6b3-eba6f227936c",
+      "handle": "studio-gift-002",
+      "revisionId": "cf78bee9-5c09-40d2-9298-8e817aaee41f",
+      "status": "active"
+    },
+    {
+      "id": "5494ed9b-eec0-4ff7-bff1-340d00bf690e",
+      "handle": "studio-gift-003",
+      "revisionId": "b8aac34e-54b6-44dd-a0ad-c224a872a483",
+      "status": "active"
+    },
+    {
+      "id": "50c606f6-af1c-4204-b66e-2e62ec38a26d",
+      "handle": "studio-gift-004",
+      "revisionId": "cdfec2ed-7ea8-46fb-936e-3f08d1d78b9f",
+      "status": "active"
+    },
+    {
+      "id": "f11819cc-0d37-475d-b576-c8672ec396ab",
+      "handle": "studio-gift-005",
+      "revisionId": "dfa92290-c257-4d1d-be22-8ad709746a4a",
+      "status": "active"
+    },
+    {
+      "id": "0d243178-65df-4081-bccc-1125b16e884f",
+      "handle": "studio-gift-006",
+      "revisionId": "54f7113a-0454-4bea-bedd-2badbe6938ab",
+      "status": "active"
+    },
+    {
+      "id": "1429053c-6851-4d6a-82de-c7898990b87f",
+      "handle": "studio-gift-007",
+      "revisionId": "ec3a3315-7c12-4657-bc8b-063d2a2e1882",
+      "status": "active"
+    },
+    {
+      "id": "c0b6bfd1-9d3f-4cf7-a782-0512b3c57f2f",
+      "handle": "studio-gift-008",
+      "revisionId": "9a1ba268-c99d-4d44-962f-432f90dc32d4",
+      "status": "active"
+    },
+    {
+      "id": "c779f26d-8e65-44fd-9b7b-3a87d1a28bbf",
+      "handle": "studio-gift-009",
+      "revisionId": "39c3c28b-6bbc-4351-9d40-1bdcf9eb6eda",
+      "status": "active"
+    },
+    {
+      "id": "bb207605-a089-4362-9388-28ca3c926f61",
+      "handle": "studio-gift-010",
+      "revisionId": "7d0450bb-6509-4245-8e96-15e9804c2fa0",
+      "status": "active"
+    },
+    {
+      "id": "2675bf19-a9e9-4d31-b979-47a1d2e1d04c",
+      "handle": "studio-gift-011",
+      "revisionId": "a7ee199f-8b0c-40fc-b852-f74f02b28082",
+      "status": "active"
+    },
+    {
+      "id": "1dbbf7b2-a90c-4677-b0f8-312bfbab53a1",
+      "handle": "studio-gift-012",
+      "revisionId": "41c19394-c750-4e6f-9a70-bfdc91948632",
+      "status": "active"
+    },
+    {
+      "id": "4578ba85-8549-4899-8a36-8febc5cc6e2a",
+      "handle": "studio-gift-013",
+      "revisionId": "021ddd5d-2309-446a-b6b5-c2fb5e12430b",
+      "status": "active"
+    },
+    {
+      "id": "fce34fd4-1bb5-40b1-8101-75e391db827c",
+      "handle": "studio-gift-014",
+      "revisionId": "9381bcec-3eb3-4fc1-a797-bf660c5588da",
+      "status": "active"
+    },
+    {
+      "id": "f971e185-b756-4820-a1f0-6f3833d4d3ed",
+      "handle": "studio-gift-015",
+      "revisionId": "7073ae29-0ad5-478b-b534-6716451c6b13",
+      "status": "active"
+    },
+    {
+      "id": "df9b12cb-5390-4cdc-8694-a186eb4be911",
+      "handle": "studio-gift-016",
+      "revisionId": "300a04f6-74db-4aff-a539-01e37f618d73",
+      "status": "active"
+    },
+    {
+      "id": "391cfb04-e20e-45fa-a422-032dc3b18c66",
+      "handle": "studio-gift-017",
+      "revisionId": "bcba173c-0689-4a73-9e65-33e44043f464",
+      "status": "active"
+    },
+    {
+      "id": "7856d370-27b7-4a6a-bb6a-aeddf866f93c",
+      "handle": "studio-gift-018",
+      "revisionId": "ff2cb652-9f40-4234-ad86-4b55726a6e74",
+      "status": "active"
+    },
+    {
+      "id": "5972a998-3c31-440c-8958-369099f4f29c",
+      "handle": "studio-gift-019",
+      "revisionId": "77d4187c-205d-4743-aea4-7886d2193f82",
+      "status": "active"
+    },
+    {
+      "id": "1df3fc46-3257-48f8-b618-9bae28d6c890",
+      "handle": "studio-gift-020",
+      "revisionId": "3656afeb-edcc-4dd6-b447-188bcaa662be",
+      "status": "active"
+    },
+    {
+      "id": "c0cd4c70-053d-46be-9306-5e5a6d503c63",
+      "handle": "studio-gift-021",
+      "revisionId": "df6b2b88-b8dc-4618-be40-188b3ab52824",
+      "status": "active"
+    },
+    {
+      "id": "6d9a28a4-c51d-4c1c-bbfb-2a03cbdf3970",
+      "handle": "studio-gift-022",
+      "revisionId": "3eca4c5f-3f8d-4f9b-925b-f8f976e08adf",
+      "status": "active"
+    },
+    {
+      "id": "e775830d-49af-4736-a545-bb7dc430f840",
+      "handle": "studio-gift-023",
+      "revisionId": "9284799c-012e-49a9-acec-ae92cc59f3d4",
+      "status": "active"
+    },
+    {
+      "id": "07effbf4-0340-4de1-8c3e-97458c753484",
+      "handle": "studio-gift-024",
+      "revisionId": "a4346265-85b5-4eff-b320-1842b96f9d6f",
+      "status": "active"
+    },
+    {
+      "id": "cdab5142-b252-4fe7-9a74-ce89642c2f8e",
+      "handle": "studio-gift-025",
+      "revisionId": "d1dff731-7a8c-4726-aa93-189df67e1049",
+      "status": "paused"
+    },
+    {
+      "id": "8ead2191-36a8-4752-8a9d-333a636b2af7",
+      "handle": "studio-gift-026",
+      "revisionId": "28960db4-f916-488e-a822-779dba24619c",
+      "status": "archived"
+    },
+    {
+      "id": "0a8b8c63-b0cd-41de-ba58-9c916807dc89",
+      "handle": "studio-gift-027",
+      "status": "draft"
+    }
+  ],
+  "policies": [
+    {
+      "policyKey": "terms",
+      "kind": "TERMS",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "terms"
+      },
+      "revisionId": "5a4550cf-eba5-42b8-a42f-88e5dfb8ed92",
+      "publicationId": "cf4dd992-610a-41ee-a848-4fcc406bcedf"
+    },
+    {
+      "policyKey": "privacy",
+      "kind": "PRIVACY",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "privacy"
+      },
+      "revisionId": "1ca70e31-f573-4c53-b898-eb45ec2f22ea",
+      "publicationId": "b15a04ce-b0f4-4abd-a2a3-14481cc131c5"
+    },
+    {
+      "policyKey": "refund",
+      "kind": "REFUND",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "refund"
+      },
+      "revisionId": "e27b27b8-4151-4df8-9c88-d3f58bbc1394",
+      "publicationId": "4720bc32-6437-4512-9b75-317755dda279"
+    },
+    {
+      "policyKey": "delivery",
+      "kind": "DELIVERY",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "delivery"
+      },
+      "revisionId": "7fa75d33-0fed-4214-86b9-edbd9dade52f",
+      "publicationId": "11eec4ed-7bc2-41a7-bc61-d00b37d2f4a5"
+    }
+  ],
+  "syntheticMediaCompositions": [
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-mobile.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "PORTRAIT",
+      "sourceSha256": "007cae3cc384ab0fba38dcdc8ad4df2f1b2241bc1cff902688809cee7c2074ee",
+      "composedSha256": "09ff605ad73e33046e49523be2bf8c47060191929cc802fd6b92a7e21e79d083",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1600,
+        "height": 2000
+      },
+      "placement": {
+        "left": 239,
+        "top": 299,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "embeddedPixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-desktop.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_DESKTOP",
+      "sourceSha256": "4612276bf7b2d8df770e1ed36e2ee4210ac70935f0f214d4493cc61a0180c82a",
+      "composedSha256": "9fdc2ba59aaba75dbeb3ed67049a4d14a22005662755d736c426a2e8399af1e8",
+      "sourceSize": {
+        "width": 1672,
+        "height": 941
+      },
+      "canvasSize": {
+        "width": 2400,
+        "height": 1350
+      },
+      "placement": {
+        "left": 364,
+        "top": 204,
+        "width": 1672,
+        "height": 941
+      },
+      "resampled": false,
+      "sourcePixelSha256": "9d1aeaf7a6f8493f7dc6d7267f07351f1441dd6f8f90bc46ecb256bfc8f4d255",
+      "embeddedPixelSha256": "9d1aeaf7a6f8493f7dc6d7267f07351f1441dd6f8f90bc46ecb256bfc8f4d255",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-mobile.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_MOBILE",
+      "sourceSha256": "007cae3cc384ab0fba38dcdc8ad4df2f1b2241bc1cff902688809cee7c2074ee",
+      "composedSha256": "4597c8d06473f1c0951eb4b972baf7673b963b6521f2347f461048270ea74f7d",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "embeddedPixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-mobile.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "PORTRAIT",
+      "sourceSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "composedSha256": "04f0dcf56e23bfabb3dd59e78e6127f8361c25df5b2e35fc8f0eb118706e5b31",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1600,
+        "height": 2000
+      },
+      "placement": {
+        "left": 239,
+        "top": 299,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "embeddedPixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-desktop.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_DESKTOP",
+      "sourceSha256": "8f4a8277040f631829cff1d76beab63ab0f4ff0fc88df7aa328faffa2c5c47c1",
+      "composedSha256": "df9d91a0a6544841b041b3d06b6f498be9f64020dd809a6c2e223ae927d471eb",
+      "sourceSize": {
+        "width": 1641,
+        "height": 958
+      },
+      "canvasSize": {
+        "width": 2400,
+        "height": 1350
+      },
+      "placement": {
+        "left": 379,
+        "top": 196,
+        "width": 1641,
+        "height": 958
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d1d5e81f51b31fde9b40a04251a1e12d183a92c96353aa8988468a78723770c2",
+      "embeddedPixelSha256": "d1d5e81f51b31fde9b40a04251a1e12d183a92c96353aa8988468a78723770c2",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-mobile.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_MOBILE",
+      "sourceSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "composedSha256": "1ae8cc2a6c52e13a1273608bfa853cf1f5623250bd65da6d8b9af9bfbe23393e",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "embeddedPixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-rose-palace.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "6baca198ca3a623b026a641269a1c68847f4eb053b3276e692b7539dbf33ffca",
+      "composedSha256": "f850973bff6e01223d6a0fdee9379601ae218105155a6e6a929f4608bcaaa9e1",
+      "sourceSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "canvasSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1254,
+        "height": 1254
+      },
+      "resampled": false,
+      "sourcePixelSha256": "86db5b29868053223e8570f13d6a1bf3b0e181d972cb2c47941015b52690f859",
+      "embeddedPixelSha256": "86db5b29868053223e8570f13d6a1bf3b0e181d972cb2c47941015b52690f859",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-blue-orbit.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "7a2d7ea94b921544b8628422b44f98e9b9732362e9c8dfeabd281709c933a448",
+      "composedSha256": "4a7f82dadbae16a68647b4cba144566f50559bde5083a037e09c574edfe416cc",
+      "sourceSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "canvasSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1254,
+        "height": 1254
+      },
+      "resampled": false,
+      "sourcePixelSha256": "29b11eae98b49b46f791e0d3f6d876f49a53d6af98373e37963a4a78f4741ad0",
+      "embeddedPixelSha256": "29b11eae98b49b46f791e0d3f6d876f49a53d6af98373e37963a4a78f4741ad0",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-ruby-bouquet.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "composedSha256": "429113554ac5599bf5d1ec8aa6a91d087ff2218c400e353585b8d5cc45488159",
+      "sourceSize": {
+        "width": 1024,
+        "height": 1024
+      },
+      "canvasSize": {
+        "width": 1200,
+        "height": 1200
+      },
+      "placement": {
+        "left": 88,
+        "top": 88,
+        "width": 1024,
+        "height": 1024
+      },
+      "resampled": false,
+      "sourcePixelSha256": "75b3c9c96194e6b8ec8c8c279f9c95962df20ba226344c19cf0f48f214a4e444",
+      "embeddedPixelSha256": "75b3c9c96194e6b8ec8c8c279f9c95962df20ba226344c19cf0f48f214a4e444",
+      "formalAssetApproval": false
+    }
+  ],
+  "formalAssetApproval": false,
+  "humanOperationsEvidence": false,
+  "physicalDeviceEvidence": false,
+  "productionReleaseEvidence": false,
+  "profiles": {
+    "schemaVersion": 1,
+    "status": "READY",
+    "count": 3,
+    "testOnly": true,
+    "normalProfileManagementAvailable": false
+  },
+  "paymentConfiguration": {
+    "schemaVersion": 1,
+    "testOnly": true,
+    "syntheticReviewOnly": true,
+    "configVersionId": "0684a277-88d4-4ca0-943a-90ace55db59a",
+    "configVersion": 1,
+    "ruleVersion": 1,
+    "publicationId": "f448e7fc-37c7-486c-b414-be0ddeda7626",
+    "scope": {
+      "country": "US",
+      "market": "GLOBAL",
+      "currency": "USD"
+    },
+    "routes": [
+      {
+        "providerAccountId": "749178a9-a19d-4a05-9033-faa89f0c8c87",
+        "capabilityId": "1fd40d91-e1f9-434b-94a9-c4e94ac412e3",
+        "configVersion": 1,
+        "ruleVersion": 1
+      }
+    ],
+    "manifest": {
+      "schemaVersion": 1,
+      "environment": "TEST",
+      "syntheticReviewOnly": true,
+      "configVersionId": "0684a277-88d4-4ca0-943a-90ace55db59a",
+      "configVersion": 1,
+      "ruleVersion": 1,
+      "scope": {
+        "country": "US",
+        "market": "GLOBAL",
+        "currency": "USD"
+      },
+      "storefrontOrigin": "https://storefront.example.invalid:56107",
+      "providers": [
+        {
+          "providerAccountId": "749178a9-a19d-4a05-9033-faa89f0c8c87",
+          "providerCode": "fake",
+          "providerConfigId": "34be9f8b-3d76-434b-9d0a-b44bec5ddfd9",
+          "capabilityId": "1fd40d91-e1f9-434b-94a9-c4e94ac412e3"
+        }
+      ],
+      "translationHashes": {
+        "en": "2fe7822f307aab36c4d43c9642c4f3f855448c1e97b8cceb3a5548a13d5e6d63",
+        "zh-CN": "854e205fc41887c9eff8f237695482e9e517524da7e3444ffc0aed6f335144ae",
+        "th": "9115fbf15b6a0b3a0e5288917e7de3827b04296e084e3edd1d505ebefcdf190d",
+        "vi": "c22c786517a89230d2d58dbccbc4b493a8a2b9740d5c8fe764aa1c32cbe984bb",
+        "ja": "93ab9d8f5ffadc6f52a17eda1c1e7d445d9efad77af0722c20bdde834c48ba28",
+        "es": "bb44b59b63a17a816f066e70a1620575309fa6d2f89f1e5eba3b8d58e6593ef7",
+        "pt": "955de0f8f547a028e76bd08231dda85a8fb182b5a2c3e600b00c9c63f9be9cbc"
+      }
+    }
+  },
+  "actualPspSandbox": false
+}

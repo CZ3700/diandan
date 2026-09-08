@@ -35,3 +35,13 @@ export * from "./gift-commerce-composition.js";
 export * from "./published-gift-commerce-route.js";
 export * from "./management-center-route.js";
 export * from "./test-management-center-composition.js";
+export {
+  registerPaymentRuntimeRoute,
+  type PaymentRuntimeRouteDependencies,
+} from "./payment-runtime-route.js";
+export {
+  createPaymentRuntimeComposition,
+  createTestPaymentRuntimeComposition,
+  createOptionalPaymentRuntimeComposition,
+  type PaymentRuntimeComposition,
+} from "./payment-runtime-composition.js";

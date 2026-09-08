@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "sourceFiles": [
+    {
+      "path": "apps/api/scripts/payment-runtime-commit-faults.mjs",
+      "sha256": "86fd2e55a687303dff674a18203b184f8d7e525825748c9724736bc06393bc4a"
+    },
+    {
+      "path": "apps/api/scripts/payment-runtime-commit-faults.test.mjs",
+      "sha256": "7389f07ae819b9e9860865ade6800c5f653de3037513e704b8718eaf4439c41f"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/payment-runtime-health-fixture.mjs",
+      "sha256": "95f97542caaa43a4ed1fc93d73547f148c3bbdc971e7f57cee212d744d96d4b1"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/payment-runtime-health-fixture.test.mjs",
+      "sha256": "d78435feb8cce20e030e1d9c62b85b5a7e4578cfb164493dd91c8b434e4a690b"
+    },
+    {
+      "path": "packages/persistence-postgres/package.json",
+      "sha256": "59d47aa29eda866c8237cdfe260d813d2584f3f5d52be5a2fb11a4faec15c6da"
+    }
+  ],
+  "unit": {
+    "status": "PASS",
+    "tests": 7,
+    "scope": "Three delegated transaction-boundary tests and four mock-client health fixture tests; no actual PostgreSQL or HTTP run in this invocation",
+    "effectiveRed": "commit-faults-unit-red.log",
+    "green": "commit-faults-health-final-tests.log"
+  },
+  "static": {
+    "format": "commit-faults-format-check.log",
+    "lint": "commit-faults-lint.log",
+    "exitCode": 0
+  },
+  "actualCommitFaultHttp": "PENDING e2e existing real fixture invocation",
+  "actualHealthEventHttp": "PENDING e2e existing real fixture invocation",
+  "integration": {
+    "export": "verifyPaymentRuntimeCommitFaults(context)",
+    "fixtureRequirement": "createPaymentApi forwards createPersistence; existing recovery worker is stopped; restore TEST provider health before invocation",
+    "cleanup": "Each additional API is stopped in finally; original fixture retains idempotent ownership cleanup"
+  },
+  "limitations": [
+    "Fault injection simulates loss of a successful transaction result after the original real manager resolves; it does not cause a natural network disconnect.",
+    "No business SQL, timing guards, actual clocks, provider status or immutable receipts are modified by this probe."
+  ]
+}

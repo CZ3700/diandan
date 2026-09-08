@@ -82,6 +82,10 @@ import {
   type CheckoutPreflightRouteDependencies,
 } from "./checkout-preflight-route.js";
 import {
+  registerPaymentRuntimeRoute,
+  type PaymentRuntimeRouteDependencies,
+} from "./payment-runtime-route.js";
+import {
   registerCatalogDirectoryRoute,
   type CatalogDirectoryRouteOptions,
 } from "./catalog-directory-route.js";
@@ -108,6 +112,8 @@ export type CreateApiApplicationOptions = Readonly<{
   cartRuntime?: ApiLifecycleResource;
   checkoutPreflightRoute?: CheckoutPreflightRouteDependencies;
   checkoutPreflightRuntime?: ApiLifecycleResource;
+  paymentRuntimeRoute?: PaymentRuntimeRouteDependencies;
+  paymentRuntime?: ApiLifecycleResource;
   managementCenterRoute?: ManagementCenterRouteDependencies;
   managementCenterRuntime?: ApiLifecycleResource;
   giftCommerceRoute?: GiftCommerceRouteDependencies;
@@ -151,6 +157,7 @@ function registerApiLifecycle(
     | "API admin session"
     | "API cart"
     | "API checkout preflight"
+    | "API payment runtime"
     | "API admin workspace"
     | "API gift commerce"
     | "API reliable events"
@@ -201,6 +208,7 @@ export async function createApiApplication(
     logger,
   });
   registerApiLifecycle(adapter, options.cartRuntime, "API cart");
+  registerApiLifecycle(adapter, options.paymentRuntime, "API payment runtime");
   registerApiLifecycle(
     adapter,
     options.checkoutPreflightRuntime,
@@ -216,6 +224,33 @@ export async function createApiApplication(
         schemaVersion: 1,
         outcome: "FAILURE",
         code: "TEMPORARY_UNAVAILABLE",
+      });
+  if (options.paymentRuntimeRoute)
+    registerPaymentRuntimeRoute(
+      adapter.getInstance(),
+      options.paymentRuntimeRoute,
+    );
+  else
+    for (const [url, method] of [
+      ["/api/v1/checkout/current/status", "GET"],
+      ["/api/v1/checkout/sessions/:checkoutSessionId/capabilities", "GET"],
+      ["/api/v1/checkout/sessions/:checkoutSessionId/attempts", "POST"],
+      [
+        "/api/v1/checkout/sessions/:checkoutSessionId/attempts/:attemptId",
+        "GET",
+      ],
+      [
+        "/api/v1/checkout/sessions/:checkoutSessionId/attempts/:attemptId/recover",
+        "POST",
+      ],
+    ] as const)
+      adapter.getInstance().route({
+        url,
+        method,
+        bodyLimit: 8192,
+        exposeHeadRoute: false,
+        onRequest: async (request, reply) => unavailable(request, reply),
+        handler: unavailable,
       });
   if (options.checkoutPreflightRoute)
     registerCheckoutPreflightRoute(

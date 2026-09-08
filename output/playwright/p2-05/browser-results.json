@@ -311,7 +311,7 @@
     }
   ],
   "fontLoadingPolicy": {
-    "cssFiles": 13,
+    "cssFiles": 14,
     "fontFaces": 244,
     "strategy": "optional",
     "verifiedFamilies": [
@@ -322,11 +322,11 @@
       "Noto Sans Variable"
     ]
   },
-  "generatedAt": "2026-09-08T14:21:05.022Z",
+  "generatedAt": "2026-09-08T19:37:47.919Z",
   "git": {
     "after": {
-      "sha": "059dd9d70ab9212db9670a0e2fc47fcef460dbb0",
-      "sourceFingerprint": "19ece6dd51dfd197bafb2aefcb4262d488ad70ee6f61555d2427b104bad862cf",
+      "sha": "f1f702fcf5ab597bd8bd4a0edb549e2ae953469a",
+      "sourceFingerprint": "16446f0234d5e71f7f92cfac3523ff5bc4f289c3ee2686f454d3f24ed7baccee",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -646,6 +646,14 @@
           "sha256": "422010e0156ecf8ff5de7caf804317f7c76e440cc9ffec220727c9ef98168d4d"
         },
         {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/checkout/page.tsx",
+          "sha256": "7f4a645fba56864d372a3105abd0cc934de48a771ca39d218bd947df339fa33d"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/checkout/return/page.tsx",
+          "sha256": "369bdf444b5309d97059cb0133d16e6e6392346f22d7c6721c911f8c750ab14c"
+        },
+        {
           "path": "apps/storefront/src/app/(public)/(japanese)/ja/gifts/[handle]/page.tsx",
           "sha256": "6ae496ca4db0cdb6b4a6b0f436c5e5de27b653ac127093b3d71f6b84768f56c8"
         },
@@ -690,6 +698,14 @@
           "sha256": "62270cf7c1d68a561d2b9780d3434f7ad38fde0b3f18eac1b9d6485d02cba78e"
         },
         {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/checkout/page.tsx",
+          "sha256": "fce2b986a05d72e88686ad48720289395e74de3598baffc4fd8d37a9fd2760eb"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/checkout/return/page.tsx",
+          "sha256": "ddbdac4b08e0e99a7d849ee6b8d9dfb3cc9da2a1c636dc32cd722121c1e86d22"
+        },
+        {
           "path": "apps/storefront/src/app/(public)/(latin)/en/gifts/[handle]/page.tsx",
           "sha256": "147e7194d79ccac60aaed0a7dc6e594d5ac5219a234d7f7f14fcfc22acf12e4f"
         },
@@ -728,6 +744,14 @@
         {
           "path": "apps/storefront/src/app/(public)/(latin)/es/cart/page.tsx",
           "sha256": "0db17b1a92f00f19e846a7e2504cfe4c55f80ea7819c26f105cb7ea7d0710cbc"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/checkout/page.tsx",
+          "sha256": "108f7e14166f6ede2850714bb6b40533ce61ab0ca7c655a836b7e1f2794edce2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/checkout/return/page.tsx",
+          "sha256": "248e267c88bcca8d37f2c9326ac3f5210dc241ab1f44a8c420d6d3471df0adde"
         },
         {
           "path": "apps/storefront/src/app/(public)/(latin)/es/gifts/[handle]/page.tsx",
@@ -774,6 +798,14 @@
           "sha256": "f98fb70d04fe0c855bbfcbd52541a60d759066817dd4215a8e03c894bf8c4ade"
         },
         {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/checkout/page.tsx",
+          "sha256": "e32b9c34cd97e998719ce24796a1106e7e9d477a8dee02859522bc59b85c99e6"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/checkout/return/page.tsx",
+          "sha256": "8908efc1f0c0537039e2d22c8e07494d899e289971d333cbfc9d90b8cd76e482"
+        },
+        {
           "path": "apps/storefront/src/app/(public)/(latin)/pt/gifts/[handle]/page.tsx",
           "sha256": "2ffab0eb14cee70528b4a6caed1dc5da4319c111eb149a99083f083eaf0cf0a2"
         },
@@ -816,6 +848,14 @@
         {
           "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/cart/page.tsx",
           "sha256": "9da4813b620f55a89151e90c2e103a4217baa4f6442ce8a5840e39f5fafed6c5"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/checkout/page.tsx",
+          "sha256": "5a234d814e183ca51e97ebc8ab0422e94c1cbb1b2027650a268cdc3685c0675c"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/checkout/return/page.tsx",
+          "sha256": "f0a3b9aa1c5f0b68b4e17a27f2ec68c5cce62c0eea681c7d9914e0a7135387ff"
         },
         {
           "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/gifts/[handle]/page.tsx",
@@ -862,6 +902,14 @@
           "sha256": "b7feb3d669e7911c8bde0ba9ccddca55b7961d17dbac6cca9ba85a9c60f5ce90"
         },
         {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/checkout/page.tsx",
+          "sha256": "6e2d97320165d01aec3310612c6792ce9115ca493285b010dbb88556522d722a"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/checkout/return/page.tsx",
+          "sha256": "b26ed81fce175c4e816e07e140d752f3574b6dd8fc32d93a4479a8b7d1bef9a1"
+        },
+        {
           "path": "apps/storefront/src/app/(public)/(thai)/th/gifts/[handle]/page.tsx",
           "sha256": "cb49dec517f363020107fffae082a50468742294e533b8d6914e1facb0a5af9c"
         },
@@ -904,6 +952,14 @@
         {
           "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/cart/page.tsx",
           "sha256": "f83769bc6c3c5e055fb5c3de96f354221fc3f61bd17b3fef32f2eea6b3ecd52a"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/checkout/page.tsx",
+          "sha256": "adbd6460549019703c4c9b2957981a5fc693b1e135dda81a3c63b0f67efd6ee6"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/checkout/return/page.tsx",
+          "sha256": "7a69bab5768e8e1e3b66e4ff3e8262fb72eee37b12b313faf97f5eced55b3de0"
         },
         {
           "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/gifts/[handle]/page.tsx",
@@ -960,6 +1016,38 @@
         {
           "path": "apps/storefront/src/app/api/storefront/cart/route.ts",
           "sha256": "aa13ef0e71439b2fc8adc4eac8682137814e5a021bd137e5ff7acda276c4a18c"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/cart/validate/route.ts",
+          "sha256": "bb90b935dd410b6d1a32fd05315ae50fa90ec78c56df93b01794231afde883c9"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/current/status/route.ts",
+          "sha256": "5142b5a63ed285f657b30b53fe52c340cc2efea634fc981db8d791d79a591beb"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/[attemptId]/recover/route.ts",
+          "sha256": "98d6ea1a6773e2ca9fd016e4d222b128f06dd68172ac7306d2dd6efc132ed572"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/[attemptId]/route.ts",
+          "sha256": "ec446033537f1bd32c530126877377ca3c55888af4e0779eff7bcea3d2dd4d93"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/route.ts",
+          "sha256": "7bdef7b6c0655dd9bd2ede242088b3026231b41fb497989b43f401ccd8328fde"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/capabilities/route.ts",
+          "sha256": "7bdef7b6c0655dd9bd2ede242088b3026231b41fb497989b43f401ccd8328fde"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/status/route.ts",
+          "sha256": "7bdef7b6c0655dd9bd2ede242088b3026231b41fb497989b43f401ccd8328fde"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/route.ts",
+          "sha256": "bb90b935dd410b6d1a32fd05315ae50fa90ec78c56df93b01794231afde883c9"
         },
         {
           "path": "apps/storefront/src/app/api/storefront/idols/route.test.ts",
@@ -1182,6 +1270,10 @@
           "sha256": "e7d9769185a3c77710c82f9120b617c982464070f420b4f361521b2ad61644d8"
         },
         {
+          "path": "apps/storefront/src/payment-privacy.test.ts",
+          "sha256": "799537130e7c8edd886501b23cfbba5244ece0cb5bc9de14c3815c44b5ebc8ac"
+        },
+        {
           "path": "apps/storefront/src/presentation-locale.test.ts",
           "sha256": "a085b0b8e1213cfde58f1464ce56e73c98b8cfa7e87db4aa85fffc4e8c487137"
         },
@@ -1195,15 +1287,23 @@
         },
         {
           "path": "apps/storefront/src/proxy.ts",
-          "sha256": "8256059c485731291be11d87afc592111ce8f8c8bafa20643c17eaaebcac4566"
+          "sha256": "51c276a33e494a9603173d84b3575737bf10040d58edf1fc081074e4110eeb12"
         },
         {
           "path": "apps/storefront/src/server/cart-proxy.test.ts",
-          "sha256": "9639ce22ce399a16002b6e4440df59b28f84cd9232d13c00c545633ef9acbb04"
+          "sha256": "5d8f49e93f9edbeba2a12469fe64a3bf19840ecbf61747da692ac5d11d4ac382"
         },
         {
           "path": "apps/storefront/src/server/cart-proxy.ts",
-          "sha256": "3f84b9c1cdc99a7432fd643cd45840e4c80e955efb771c1eb6a1cf737f527119"
+          "sha256": "abf955d481e46ced4ff5dd37869f423ca5b9a6a14f75e402adce5ca76a9d0f59"
+        },
+        {
+          "path": "apps/storefront/src/server/checkout-proxy.test.ts",
+          "sha256": "51284d46834f7c966917547c68de149cf58dc29ffdb7ac720b5763c25d65f0d4"
+        },
+        {
+          "path": "apps/storefront/src/server/checkout-proxy.ts",
+          "sha256": "6c5856447c0874e73f6e4d219926a993f387650b4163dae27af0478933a3ed50"
         },
         {
           "path": "apps/storefront/src/server/image-config.test.ts",
@@ -1236,6 +1336,14 @@
         {
           "path": "apps/storefront/src/server/public-commerce.ts",
           "sha256": "96316065ae650c3bb2460639dd6ddf90e7aa7ba94ab32dcb544475a986152ce0"
+        },
+        {
+          "path": "apps/storefront/src/server/request-origin.test.ts",
+          "sha256": "39769a025d02076e7385edb5716ca49b60b81edbcb8416e69a8297e0b9ba80d6"
+        },
+        {
+          "path": "apps/storefront/src/server/request-origin.ts",
+          "sha256": "36394e3cf5fe72f34b8a6c047bd0370a746f47fbbf2dc7268c47cbadaaeb2675"
         },
         {
           "path": "apps/storefront/src/server/runtime-config.ts",
@@ -1311,7 +1419,11 @@
         },
         {
           "path": "apps/storefront/src/storefront/cart-body.tsx",
-          "sha256": "3612c8b83826450f457c839842e4b94b92e6cd12aae1be82a843040425dad0ca"
+          "sha256": "39d5827ea7c1a62a69bb375694b3d11a067bbd4e8d07cfaf670e8caf11d98512"
+        },
+        {
+          "path": "apps/storefront/src/storefront/cart-checkout-entry.test.tsx",
+          "sha256": "0bb3c8084a778ce1d508e76c47c9a2dd5d27b199c7533a3da415d01531286384"
         },
         {
           "path": "apps/storefront/src/storefront/cart-editor-concurrency.test.tsx",
@@ -1388,6 +1500,62 @@
         {
           "path": "apps/storefront/src/storefront/cart.css",
           "sha256": "8052701fde690c79b72846e465a26e50f98e40e3e996942fd6efcb5881fc6cfb"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-client.tsx",
+          "sha256": "99e44f8b6fae67bdf27019b944b7d3e804731a81cb251d779b68bd7b4d696ea8"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-controller.test.ts",
+          "sha256": "d1351f62a8e4dec6d37bc8c35e5362fd779fa359776616ca882a88bf530e2732"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-controller.ts",
+          "sha256": "a5b2deda9d4a4bc68a784f441c92a0f2bebb92452377cf3f06c9f5e2193357dc"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-focus.test.ts",
+          "sha256": "7bdcf77e7b8f1453f251a042d0b951de2bafeabd34400b8db5b3901309c4e68d"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-focus.ts",
+          "sha256": "a0ccd072303224ff16f698ddadca904ff01b30657c2e6b18beaa25efd718e9c5"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-form.tsx",
+          "sha256": "5b941d6b48e770b4078732c032233cebd55f4f84b225c8d9afde7e90b5da7549"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-page-factory.test.tsx",
+          "sha256": "c50d1133e09d5a050900cd1b6640501b3ebf6b4731b9f10906cb5a5444509754"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-page-factory.tsx",
+          "sha256": "1bed2b0699038e476b9e7e04375b7381ceb9efbb90770864b30196eddf387968"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-review.tsx",
+          "sha256": "da033beaa6c3ebb03c2c967fb97d1f0740f4fe239bbef5736c05d730e8f97109"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-transport.test.ts",
+          "sha256": "9f676cecaf43f377237724d63297a47081c68a30ea202b2d5a9d8bf034f17872"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-transport.ts",
+          "sha256": "303fe9ce85bb9a99e056e6463e1f10fbc9a9adfa146e4a2228bfed2cadb0a300"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-validation.ts",
+          "sha256": "94f1c8f3601aa95835b34f58f8b3b7c898bd398807066f8411216eae408f509d"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-view.test.tsx",
+          "sha256": "60c03474fa5f49b06fe5359a1172b8f0e2164ced854fcbf1fff74cbdd41900f4"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout.css",
+          "sha256": "b0d9d3587ad2c6ff239b491de0fe85568804ff0fa455c5be273479f88963141c"
         },
         {
           "path": "apps/storefront/src/storefront/commerce-context.test.tsx",
@@ -1547,11 +1715,11 @@
         },
         {
           "path": "apps/storefront/src/storefront/gift-purchase.test.tsx",
-          "sha256": "5ad17c48f534c64d8d3aa6ba2fa4fed98b2e8667a2caa4bf2cedbdb8fa90e54b"
+          "sha256": "306e2663c9e676eddbb271c2ec4f1faf7b6cc391ce903eb5beb6fd02eda0dd59"
         },
         {
           "path": "apps/storefront/src/storefront/gift-purchase.tsx",
-          "sha256": "b1e825bfd97d16eeb0f7afbfd21e98ed812e9cff6e24c8739a23b24a847dff99"
+          "sha256": "82b308184cf6149c0a533654a27fc167a7edaa91352bfbf68ad44cb628c90742"
         },
         {
           "path": "apps/storefront/src/storefront/gift-quantity.tsx",
@@ -1638,6 +1806,18 @@
           "sha256": "0057c9c7de55a1e1075cc0e9c5b737a502d05377519fb3fe45e32241fad0275a"
         },
         {
+          "path": "apps/storefront/src/storefront/payment-polling.test.ts",
+          "sha256": "eadff8331644d037accab2d52a1547b03cdd3e801fa3e411ffc1982588a6d004"
+        },
+        {
+          "path": "apps/storefront/src/storefront/payment-polling.ts",
+          "sha256": "3889ccc30803ca9c706ca62d4d88149e3dc1be3169a60c7b378b01d1554aa219"
+        },
+        {
+          "path": "apps/storefront/src/storefront/payment-status.tsx",
+          "sha256": "cdead45294d3b887b345b554907be5fa6ba32acd85443ab615afa736211a9e33"
+        },
+        {
           "path": "apps/storefront/src/storefront/published-image.test.tsx",
           "sha256": "8c2e71ebaaa5c142c369fccb87267eff321290a7d9a219a9a9cc78111bb8fda0"
         },
@@ -1706,6 +1886,10 @@
           "sha256": "0702860f81200bdf43e06ebb0ecbecf83bde2e03a09e41dd4c1eb5e76a233caf"
         },
         {
+          "path": "apps/storefront/src/test-support/checkout-fixtures.ts",
+          "sha256": "11b5662bf12981f877f9c638c200873f17668ebde12172daa4941c8c437c6254"
+        },
+        {
           "path": "apps/storefront/tsconfig.build.json",
           "sha256": "56bcc42b9cedc7661908ad28ebefb4985c4abc8097b6e4ed586c14b51b5e8d59"
         },
@@ -1715,7 +1899,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "13d790b276896b4d10f3e46a4f5905db2e97fa3be7d1a0cb8f7aa600ba27a4a2"
+          "sha256": "8f00c3e66711406a706906bbb2ec8b9e6eb4a67d60b62904b3dc92731e72aff6"
         },
         {
           "path": "packages/config/package.json",
@@ -1731,7 +1915,7 @@
         },
         {
           "path": "packages/config/src/config-layers.ts",
-          "sha256": "66eb870ce4276adb39c953f60f00fc51395410593957172baea4e33dd1011d2d"
+          "sha256": "f59ce1bed3e43a6b3db4f7685099b4e75e5e432ecdea526d5586533d6276cf5c"
         },
         {
           "path": "packages/config/src/configuration-error.ts",
@@ -1748,6 +1932,10 @@
         {
           "path": "packages/config/src/index.ts",
           "sha256": "247512f655fef5a0dea2452d2494a0bca964f3e3db134ae717ba33eb67428687"
+        },
+        {
+          "path": "packages/config/src/payment-runtime-layers.test.ts",
+          "sha256": "1bcf1cf946e4b303540ab3abfd85f5d69f0fb7fd0623ae40fe3b6371ba844d57"
         },
         {
           "path": "packages/config/src/public-config.test.ts",
@@ -1787,11 +1975,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "5d478bd1051804e9f5b190f7910fc828599b36c619fe14fbc5e20aa8c250ace3"
+          "sha256": "86fc810249f84dfd2ddd57af2f99702bbc0837ac5cafb13a44e408e206d3f62f"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "1b5e43b9a3f4c37d4853b1e9162de1181afe24e7f2ea2569798aa14f0d1b60de"
+          "sha256": "2379da7a074d93dafcbda5247bae7aac8a78adf187f23c1629d37931be8aa4f4"
         },
         {
           "path": "packages/contracts/package.json",
@@ -1847,11 +2035,11 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "85ac54bd5b2f828ec3af04dc4bcef2f7de0a448d3a2be55433e5f5fd3917ef21"
+          "sha256": "bf41511a32b5365135382f89037af8776ee75cb134ec8ba175f5360d415421d4"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "677f8abae480c70d28244a96764b166f745961c1919d49f4619512a6d2a0ca56"
+          "sha256": "d4aac9af329856dd7181790fc24d0b5db0db43d4a12b03c2bae3adb5dace28f4"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -1859,7 +2047,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "d5920566e8cf1e62dc6c838e21eedf0d246fa99e796d0b809c0224b119f27015"
+          "sha256": "f6b0fe91acb4dd07a0c6dcfc73d26deab76147ef50965d9d38609d25c87a37bd"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -2179,7 +2367,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "f53f274dfbb14b850b0a5285132aaa4ff944ee72269e2bd6029789c8a230082a"
+          "sha256": "20007f7a54014d7edc87f2e6b6f2b32ac4263594ee22e898647b76dc59276583"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -2267,7 +2455,39 @@
         },
         {
           "path": "packages/contracts/src/payment-port-contracts.ts",
-          "sha256": "7ef2bc8f08b924f185f86a02248fba226f65e2202900449b96fb4bd0385cdba7"
+          "sha256": "8fbb04024e8588cfa6fa661dd1885de4e8897c455b5a05c9282dea98ef9e74df"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-artifacts.test.ts",
+          "sha256": "7cb29f6cb2cd93f7d510fe50aac09e76fb515fc6d55845b5d59b0ca18024bf90"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-config.test.ts",
+          "sha256": "a8adac106beb42aba162f322ea7919ec028b1e73a6a43d29a898d75fbdaf610d"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-config.ts",
+          "sha256": "89679c57d112f81f5c84401ee0bbffc5e06a95f37a52a7310e0c4cf84ab61bfc"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-internal.test.ts",
+          "sha256": "dd75a6db89527dcb7b7c486ae5d37c28aad42bf224469c4f02c782dc97758816"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-internal.ts",
+          "sha256": "d54df6b4e8de5f7267b234f73a57361fa565d454d5a8afb9fbb4fa385b32f82c"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-openapi.ts",
+          "sha256": "d881440e571df2d7f56dc02f8082e86024179dcb3c3d17c3462ab7692006eedc"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime.test.ts",
+          "sha256": "6bc809826d9c621adbc9c44ffa8369546c629f3c0636643c32606b09eea58356"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime.ts",
+          "sha256": "5606726fb66d559dc8d9efcbf73dddbea0291e9e791b878bc404678b372fd48d"
         },
         {
           "path": "packages/contracts/src/payment.test.ts",
@@ -2539,15 +2759,15 @@
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/japanese-ui.css",
-          "sha256": "015c56f62a2aa204289a33a9c721d500ee977f08e0bb8974ea23f8b7c02edaff"
+          "sha256": "051daeeb04b3a2456e38462d3240b1f6e5edb014f11b1d17f24f6653c3f28929"
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/japanese-ui.woff2",
-          "sha256": "0e806658016eab7a7fe095c53846e29283f61c63c0929d4892584e95f97da969"
+          "sha256": "af7db34c4e53d0a690d593636c6310a11f1bc749e116d287a6822bd08e916a69"
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/manifest.json",
-          "sha256": "fb815c6087ec0e9d72cb8593398a282a5b847cd628bdc2effbcf04923cd80957"
+          "sha256": "512a23f731052add68b2b5fdcf0eaaddb376d0db12417a015593d18e676b1704"
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-OFL.txt",
@@ -2555,11 +2775,11 @@
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.css",
-          "sha256": "565c0f8f4ec11e7e881dbebbe1b86f1f60549085f606a71ebc6924f6f0582ba2"
+          "sha256": "28cf765bc5fd14720a1924e5d19cd2e23372d54115988ad3e757466f1d4b3f7f"
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.woff2",
-          "sha256": "9ef22ea7853d125280122dee03c7821f1d532b1878ea86e16df9af627d78ac77"
+          "sha256": "2d635d2f1c44217c7d397a438cd59ef3abff69c0db203cb13ac307ee29a61073"
         },
         {
           "path": "packages/design-tokens/styles/fonts/japanese.css",
@@ -2919,7 +3139,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "0676dead86213d7400fe16a7f3a75cf7e0c1356a4a1a339030c3fcb16e9107f1"
+          "sha256": "0e32033f3384e7c619d7c654e8d70cc4e7206b596436ad2ad986e94bb5484e48"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -2947,10 +3167,18 @@
         }
       ],
       "status": [
+        " M .env.example",
         " M apps/api/package.json",
-        " M apps/api/scripts/cart-daily-gift-fixture.mjs",
+        " M apps/api/scripts/cart-storefront-runtime.mjs",
         " M apps/api/src/bootstrap.ts",
+        " M apps/api/src/index.ts",
         " M apps/api/src/production-application.ts",
+        " M apps/storefront/src/proxy.ts",
+        " M apps/storefront/src/server/cart-proxy.test.ts",
+        " M apps/storefront/src/server/cart-proxy.ts",
+        " M apps/storefront/src/storefront/cart-body.tsx",
+        " M apps/storefront/src/storefront/gift-purchase.test.tsx",
+        " M apps/storefront/src/storefront/gift-purchase.tsx",
         " M database/migrations/manifest.json",
         " M database/schema/expected-catalog.json",
         " M docs/progress/MASTER.md",
@@ -2967,48 +3195,137 @@
         " M output/playwright/p2-04/axe-results/timeline.json",
         " M output/playwright/p2-04/axe-results/unavailable.json",
         " M output/playwright/p2-04/browser-results.json",
+        " M output/playwright/p2-04/screenshots.sha256",
+        " M output/playwright/p2-04/stress/320x800-pt-long.png",
+        " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
         " M package.json",
-        " M packages/application/package.json",
         " M packages/application/src/index.ts",
         " M packages/application/tsconfig.build.json",
-        " M packages/content/src/index.ts",
+        " M packages/config/src/config-layers.ts",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
         " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/domain/src/index.test.ts",
-        " M packages/domain/src/index.ts",
+        " M packages/contracts/src/payment-port-contracts.ts",
+        " M packages/design-tokens/styles/fonts/generated/japanese-ui.css",
+        " M packages/design-tokens/styles/fonts/generated/japanese-ui.woff2",
+        " M packages/design-tokens/styles/fonts/generated/manifest.json",
+        " M packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.css",
+        " M packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.woff2",
+        " M packages/domain/src/payment-state-machine.test.ts",
+        " M packages/domain/src/payment-state-machine.ts",
+        " M packages/i18n/src/storefront/en.review.ts",
+        " M packages/i18n/src/storefront/en.ts",
+        " M packages/i18n/src/storefront/es.review.ts",
+        " M packages/i18n/src/storefront/es.ts",
+        " M packages/i18n/src/storefront/ja.review.ts",
+        " M packages/i18n/src/storefront/ja.ts",
+        " M packages/i18n/src/storefront/pt.review.ts",
+        " M packages/i18n/src/storefront/pt.ts",
+        " M packages/i18n/src/storefront/th.review.ts",
+        " M packages/i18n/src/storefront/th.ts",
+        " M packages/i18n/src/storefront/vi.review.ts",
+        " M packages/i18n/src/storefront/vi.ts",
+        " M packages/i18n/src/storefront/zh-CN.review.ts",
+        " M packages/i18n/src/storefront/zh-CN.ts",
+        " M packages/payment-fake/package.json",
+        " M packages/payment-port/src/index.ts",
         " M packages/persistence-port/src/index.ts",
+        " M packages/persistence-postgres/package.json",
         " M packages/persistence-postgres/scripts/cart-edit-rollback-proof.mjs",
         " M packages/persistence-postgres/scripts/cart-runtime-rollback-proof.mjs",
+        " M packages/persistence-postgres/scripts/checkout-preflight-rollback-proof.mjs",
         " M packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
         " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
         " M packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs",
         " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
         " M packages/persistence-postgres/scripts/postgres-publication-validation-time-cases.mjs",
         " M packages/persistence-postgres/src/index.ts",
+        " M packages/persistence-postgres/src/postgres-persistence.test.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
         " M pnpm-lock.yaml",
-        "?? apps/api/scripts/checkout-preflight-changes.mjs",
-        "?? apps/api/scripts/checkout-preflight-client.mjs",
-        "?? apps/api/scripts/checkout-preflight-fixtures.mjs",
-        "?? apps/api/scripts/checkout-preflight-fixtures.test.mjs",
-        "?? apps/api/scripts/checkout-preflight-gateway.mjs",
-        "?? apps/api/scripts/checkout-preflight-gateway.test.mjs",
-        "?? apps/api/scripts/checkout-preflight-http.mjs",
-        "?? apps/api/scripts/checkout-preflight-proofs.mjs",
-        "?? apps/api/scripts/checkout-preflight-protocol.mjs",
-        "?? apps/api/scripts/checkout-preflight-runtime.mjs",
-        "?? apps/api/src/checkout-composition.test.ts",
-        "?? apps/api/src/checkout-composition.ts",
-        "?? apps/api/src/checkout-preflight-route-bootstrap.test.ts",
-        "?? apps/api/src/checkout-preflight-route.test.ts",
-        "?? apps/api/src/checkout-preflight-route.ts",
-        "?? database/migrations/0025_checkout-preflight.down.sql",
-        "?? database/migrations/0025_checkout-preflight.up.sql",
-        "?? docs/runbooks/checkout-preflight.md",
+        "?? apps/api/scripts/payment-runtime-browser-observer.mjs",
+        "?? apps/api/scripts/payment-runtime-browser-observer.test.mjs",
+        "?? apps/api/scripts/payment-runtime-browser.mjs",
+        "?? apps/api/scripts/payment-runtime-client.mjs",
+        "?? apps/api/scripts/payment-runtime-commit-faults.mjs",
+        "?? apps/api/scripts/payment-runtime-commit-faults.test.mjs",
+        "?? apps/api/scripts/payment-runtime-config-fixture.mjs",
+        "?? apps/api/scripts/payment-runtime-config-fixture.test.mjs",
+        "?? apps/api/scripts/payment-runtime-config-postgres.mjs",
+        "?? apps/api/scripts/payment-runtime-gateway.mjs",
+        "?? apps/api/scripts/payment-runtime-gateway.test.mjs",
+        "?? apps/api/scripts/payment-runtime-http.mjs",
+        "?? apps/api/scripts/payment-runtime-next.mjs",
+        "?? apps/api/scripts/payment-runtime-next.test.mjs",
+        "?? apps/api/scripts/payment-runtime-protocol.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-database.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-http.test.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-process.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-server.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-store.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-store.test.mjs",
+        "?? apps/api/scripts/payment-runtime-retry-protocol.mjs",
+        "?? apps/api/scripts/payment-runtime-runtime.mjs",
+        "?? apps/api/scripts/payment-runtime-tls.mjs",
+        "?? apps/api/src/payment-runtime-bootstrap.test.ts",
+        "?? apps/api/src/payment-runtime-composition.test.ts",
+        "?? apps/api/src/payment-runtime-composition.ts",
+        "?? apps/api/src/payment-runtime-lifecycle.test.ts",
+        "?? apps/api/src/payment-runtime-lifecycle.ts",
+        "?? apps/api/src/payment-runtime-route.test.ts",
+        "?? apps/api/src/payment-runtime-route.ts",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/api/storefront/cart/validate/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/current/status/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/[attemptId]/recover/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/[attemptId]/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/capabilities/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/status/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/route.ts",
+        "?? apps/storefront/src/payment-privacy.test.ts",
+        "?? apps/storefront/src/server/checkout-proxy.test.ts",
+        "?? apps/storefront/src/server/checkout-proxy.ts",
+        "?? apps/storefront/src/server/request-origin.test.ts",
+        "?? apps/storefront/src/server/request-origin.ts",
+        "?? apps/storefront/src/storefront/cart-checkout-entry.test.tsx",
+        "?? apps/storefront/src/storefront/checkout-client.tsx",
+        "?? apps/storefront/src/storefront/checkout-controller.test.ts",
+        "?? apps/storefront/src/storefront/checkout-controller.ts",
+        "?? apps/storefront/src/storefront/checkout-focus.test.ts",
+        "?? apps/storefront/src/storefront/checkout-focus.ts",
+        "?? apps/storefront/src/storefront/checkout-form.tsx",
+        "?? apps/storefront/src/storefront/checkout-page-factory.test.tsx",
+        "?? apps/storefront/src/storefront/checkout-page-factory.tsx",
+        "?? apps/storefront/src/storefront/checkout-review.tsx",
+        "?? apps/storefront/src/storefront/checkout-transport.test.ts",
+        "?? apps/storefront/src/storefront/checkout-transport.ts",
+        "?? apps/storefront/src/storefront/checkout-validation.ts",
+        "?? apps/storefront/src/storefront/checkout-view.test.tsx",
+        "?? apps/storefront/src/storefront/checkout.css",
+        "?? apps/storefront/src/storefront/payment-polling.test.ts",
+        "?? apps/storefront/src/storefront/payment-polling.ts",
+        "?? apps/storefront/src/storefront/payment-status.tsx",
+        "?? apps/storefront/src/test-support/checkout-fixtures.ts",
+        "?? database/migrations/0026_payment-runtime.down.sql",
+        "?? database/migrations/0026_payment-runtime.up.sql",
+        "?? docs/operations/checkout-payments.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -4875,6 +5192,9 @@
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/concurrent-public-reads-1788873383905.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/fixture-manifest.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/protocol-results.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T15-01-13-193Z/concurrent-public-reads-1788879944048.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T15-01-13-193Z/fixture-manifest.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T15-01-13-193Z/protocol-results.json",
         "?? output/checks/p3-06-storefront-acceptance/seo-contract-proposal.md",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.config.mjs",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.test.ts",
@@ -4884,23 +5204,17 @@
         "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/pending-rollback-results.json",
         "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/protocol-results.json",
         "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/results.json",
-        "?? output/checks/p4-03-checkout-preflight/check-dev-1.json",
-        "?? output/checks/p4-03-checkout-preflight/check-dev-2.json",
-        "?? output/checks/p4-03-checkout-preflight/contract-compatibility.json",
-        "?? output/checks/p4-03-checkout-preflight/contracts-domain-review.md",
-        "?? output/checks/p4-03-checkout-preflight/contracts-domain-source-freeze.json",
-        "?? output/checks/p4-03-checkout-preflight/dependency-audit-npm.json",
-        "?? output/checks/p4-03-checkout-preflight/dependency-audit.json",
-        "?? output/checks/p4-03-checkout-preflight/final-verification.md",
-        "?? output/checks/p4-03-checkout-preflight/http-independent-review.md",
-        "?? output/checks/p4-03-checkout-preflight/initial-untracked.json",
-        "?? output/checks/p4-03-checkout-preflight/plan.md",
-        "?? output/checks/p4-03-checkout-preflight/postgres-README.md",
-        "?? output/checks/p4-03-checkout-preflight/postgres-source-freeze.json",
-        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/failure.json",
-        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/fixture-manifest.json",
-        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/run-result.json",
-        "?? output/checks/p4-03-checkout-preflight/run-check.mjs",
+        "?? output/checks/p4-01-cart/http-2026-09-08T15-06-00.360Z/daily-immediate-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T15-06-00.360Z/pending-rollback-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T15-06-00.360Z/protocol-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T15-06-00.360Z/results.json",
+        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T15-07-09.936Z/fixture-manifest.json",
+        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T15-07-09.936Z/protocol-results.json",
+        "?? output/checks/p4-03-checkout-preflight/application-outbox-final.json",
+        "?? output/checks/p4-03-checkout-preflight/commit-evidence-candidates.json",
+        "?? output/checks/p4-03-checkout-preflight/commit-paths.nul",
+        "?? output/checks/p4-03-checkout-preflight/commit-scope.json",
+        "?? output/checks/p4-03-checkout-preflight/secrets-before-final.json",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/manifest.json",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/README.md",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/baseline-desktop.json",
@@ -4964,8 +5278,227 @@
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/360x800-en.png",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/390x844-vi.png",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/768x1024-th.png",
-        "?? output/checks/p4-03-checkout-preflight/ui-composites-browser.json",
+        "?? output/checks/p4-03-checkout-preflight/source-before-full-1.json",
+        "?? output/checks/p4-03-checkout-preflight/source-before-full-2.json",
+        "?? output/checks/p4-03-checkout-preflight/source-before-full-3.json",
+        "?? output/checks/p4-03-checkout-preflight/source-mid-full.json",
         "?? output/checks/p4-03-checkout-preflight/untracked-midpoint.json",
+        "?? output/checks/p4-04-payment-runtime/admin-next-env-before-full.d.ts",
+        "?? output/checks/p4-04-payment-runtime/api-browser-evidence.md",
+        "?? output/checks/p4-04-payment-runtime/api-browser-final-verification.json",
+        "?? output/checks/p4-04-payment-runtime/api-fake-audit.md",
+        "?? output/checks/p4-04-payment-runtime/application-action-recovery-verification.json",
+        "?? output/checks/p4-04-payment-runtime/application-independent-review.md",
+        "?? output/checks/p4-04-payment-runtime/checkout-empty-verification.json",
+        "?? output/checks/p4-04-payment-runtime/commit-faults-source-freeze.json",
+        "?? output/checks/p4-04-payment-runtime/contract-baseline.json",
+        "?? output/checks/p4-04-payment-runtime/contract-compatibility.json",
+        "?? output/checks/p4-04-payment-runtime/dependencies-final-official.json",
+        "?? output/checks/p4-04-payment-runtime/dependencies-final.json",
+        "?? output/checks/p4-04-payment-runtime/design-final.json",
+        "?? output/checks/p4-04-payment-runtime/final-verification.md",
+        "?? output/checks/p4-04-payment-runtime/format-before-final-2.json",
+        "?? output/checks/p4-04-payment-runtime/format-before-final-3.json",
+        "?? output/checks/p4-04-payment-runtime/format-before-final.json",
+        "?? output/checks/p4-04-payment-runtime/https-origin-diagnostic-green.json",
+        "?? output/checks/p4-04-payment-runtime/https-origin-diagnostic.json",
+        "?? output/checks/p4-04-payment-runtime/https-origin-diagnostic.mjs",
+        "?? output/checks/p4-04-payment-runtime/https-origin-final.json",
+        "?? output/checks/p4-04-payment-runtime/https-origin-inspection.json",
+        "?? output/checks/p4-04-payment-runtime/https-origin-request-preload.mjs",
+        "?? output/checks/p4-04-payment-runtime/initial-untracked.json",
+        "?? output/checks/p4-04-payment-runtime/internal-contract-freeze.json",
+        "?? output/checks/p4-04-payment-runtime/lint-before-final-2.json",
+        "?? output/checks/p4-04-payment-runtime/lint-before-final.json",
+        "?? output/checks/p4-04-payment-runtime/original-migration-compatibility.json",
+        "?? output/checks/p4-04-payment-runtime/original-untracked-before-gates.json",
+        "?? output/checks/p4-04-payment-runtime/p2-04-final.json",
+        "?? output/checks/p4-04-payment-runtime/postgres-audit.md",
+        "?? output/checks/p4-04-payment-runtime/postgres-evidence-freeze.json",
+        "?? output/checks/p4-04-payment-runtime/postgres-implementation.md",
+        "?? output/checks/p4-04-payment-runtime/postgres-source-freeze.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/manifest.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/README.md",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/baseline-desktop.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/baseline-mobile.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/cart-line.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/empty-error.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/image-error.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/loading.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/pseudo.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/reduced-motion.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/timeline.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/unavailable.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/browser-results.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/interactions/1440x900-en-hover.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/reduced-motion/1440x900-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/reduced-motion/390x844-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/responsive/1023x900-en-XA.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/responsive/767x900-pt.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/rtl/1440x900-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/rtl/390x844-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/screenshots.sha256",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/states/390x844-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/stress/320x800-en-XA.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/stress/320x800-pt-long.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/1024x768-zh-CN.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/1440x900-ja.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/1920x1080-es.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/360x800-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/390x844-vi.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/768x1024-th.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/zoom/google-chrome-200-percent-pt.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/zoom/google-chrome-baseline-pt.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/README.md",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/axe-results/baseline-desktop.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/axe-results/baseline-mobile.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/axe-results/pseudo-320.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/browser-results.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/1440x900-end.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/1440x900-mid.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/1440x900-start.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/390x844-end.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/390x844-mid.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/390x844-start.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/add-confirmed-390.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-keyboard-instant-1440.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-latest-wins-1440.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-mouse-spatial-1440.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-touch-opacity-390.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/success-end-1440.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/raw/motion-checks.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/raw/reduced-motion.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/raw/scenario-results.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/reduced-motion/1440x900.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/reduced-motion/390x844.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/screenshots.sha256",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/stress/320x800-en-XA.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/stress/320x800-pt-long.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/1024x768-zh-CN.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/1440x900-ja.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/1920x1080-es.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/360x800-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/390x844-vi.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/768x1024-th.png",
+        "?? output/checks/p4-04-payment-runtime/psp-independent-review.md",
+        "?? output/checks/p4-04-payment-runtime/root-followup-independent-review.md",
+        "?? output/checks/p4-04-payment-runtime/root-review.md",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-34-14.486Z/failure.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-34-14.486Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-34-14.486Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-44-18.317Z/failure.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-44-18.317Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-44-18.317Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-48-56.101Z/failure.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-48-56.101Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-48-56.101Z/recovery-observations.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-48-56.101Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/browser/browser-results.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/browser/failure.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/failure.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/protocol-checkpoint.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/recovery-observations.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/browser-results.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/en-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/en-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/en-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/en-390-unknown.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/failure.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/failure.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/protocol-checkpoint.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/recovery-observations.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/browser-results.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-unknown.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/cleanup-confirmation.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/protocol-checkpoint.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/protocol-results.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/recovery-observations.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-check.py",
+        "?? output/checks/p4-04-payment-runtime/secrets-final.json",
+        "?? output/checks/p4-04-payment-runtime/source-before-final-browser.json",
+        "?? output/checks/p4-04-payment-runtime/source-browser-check.json",
+        "?? output/checks/p4-04-payment-runtime/source-snapshot.py",
+        "?? output/checks/p4-04-payment-runtime/storefront-audit.md",
+        "?? output/checks/p4-04-payment-runtime/storefront-implementation.md",
+        "?? output/checks/p4-04-payment-runtime/storefront-owned-files.json",
+        "?? output/checks/p4-04-payment-runtime/storefront-proxy-origin-verification.json",
+        "?? output/checks/p4-04-payment-runtime/storefront-source-freeze.json",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -5358,49 +5891,54 @@
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-detail.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-directory.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-policy.png",
-        "?? packages/application/src/checkout-contact.test.ts",
-        "?? packages/application/src/checkout-contact.ts",
-        "?? packages/application/src/checkout-create.ts",
-        "?? packages/application/src/checkout-creation.test.ts",
-        "?? packages/application/src/checkout-idempotency.ts",
-        "?? packages/application/src/checkout-inventory.ts",
-        "?? packages/application/src/checkout-observation.test.ts",
-        "?? packages/application/src/checkout-observation.ts",
-        "?? packages/application/src/checkout-preflight-records.ts",
-        "?? packages/application/src/checkout-preflight.harness.ts",
-        "?? packages/application/src/checkout-preflight.test-fixtures.ts",
-        "?? packages/application/src/checkout-preflight.test.ts",
-        "?? packages/application/src/checkout-preflight.ts",
-        "?? packages/application/src/checkout-transaction.ts",
-        "?? packages/contracts/src/checkout-preflight-artifacts.test.ts",
-        "?? packages/contracts/src/checkout-preflight-internal.test.ts",
-        "?? packages/contracts/src/checkout-preflight-internal.ts",
-        "?? packages/contracts/src/checkout-preflight-inventory.ts",
-        "?? packages/contracts/src/checkout-preflight-openapi.ts",
-        "?? packages/contracts/src/checkout-preflight-public.test.ts",
-        "?? packages/contracts/src/checkout-preflight-public.ts",
-        "?? packages/contracts/src/checkout-preflight.test.ts",
-        "?? packages/contracts/src/checkout-preflight.ts",
-        "?? packages/domain/src/checkout-preflight-inventory.ts",
-        "?? packages/domain/src/checkout-preflight.test.ts",
-        "?? packages/domain/src/checkout-preflight.ts",
-        "?? packages/persistence-port/src/checkout-preflight.ts",
-        "?? packages/persistence-postgres/scripts/checkout-preflight-rollback-proof.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-checkout-preflight-parameters.mjs",
-        "?? packages/persistence-postgres/src/checkout-preflight-content.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-current.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-data.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-migration.test.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-repository.test.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-repository.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-save.test.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-transaction.test.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-write.ts"
+        "?? packages/application/src/payment-runtime-action.ts",
+        "?? packages/application/src/payment-runtime-capabilities.ts",
+        "?? packages/application/src/payment-runtime-context.ts",
+        "?? packages/application/src/payment-runtime-create.ts",
+        "?? packages/application/src/payment-runtime-execution.ts",
+        "?? packages/application/src/payment-runtime-provider.test.ts",
+        "?? packages/application/src/payment-runtime-provider.ts",
+        "?? packages/application/src/payment-runtime-recovery.ts",
+        "?? packages/application/src/payment-runtime.harness.ts",
+        "?? packages/application/src/payment-runtime.test.ts",
+        "?? packages/application/src/payment-runtime.ts",
+        "?? packages/config/src/payment-runtime-layers.test.ts",
+        "?? packages/contracts/src/payment-runtime-artifacts.test.ts",
+        "?? packages/contracts/src/payment-runtime-config.test.ts",
+        "?? packages/contracts/src/payment-runtime-config.ts",
+        "?? packages/contracts/src/payment-runtime-internal.test.ts",
+        "?? packages/contracts/src/payment-runtime-internal.ts",
+        "?? packages/contracts/src/payment-runtime-openapi.ts",
+        "?? packages/contracts/src/payment-runtime.test.ts",
+        "?? packages/contracts/src/payment-runtime.ts",
+        "?? packages/payment-fake/src/persistent-http.test.ts",
+        "?? packages/payment-fake/src/persistent-http.ts",
+        "?? packages/payment-port/src/runtime-provider.ts",
+        "?? packages/persistence-port/src/payment-runtime.ts",
+        "?? packages/persistence-postgres/scripts/payment-runtime-health-fixture.mjs",
+        "?? packages/persistence-postgres/scripts/payment-runtime-health-fixture.test.mjs",
+        "?? packages/persistence-postgres/scripts/payment-runtime-rollback-proof.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-payment-runtime-action-guard.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-payment-runtime-parameters.mjs",
+        "?? packages/persistence-postgres/src/payment-runtime-action.test.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-config.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-context.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-data.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-evidence.test.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-evidence.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-fence.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-history.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-migration.test.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-recovery.test.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-recovery.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-repository.test.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-repository.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-write.ts"
       ]
     },
     "before": {
-      "sha": "059dd9d70ab9212db9670a0e2fc47fcef460dbb0",
-      "sourceFingerprint": "19ece6dd51dfd197bafb2aefcb4262d488ad70ee6f61555d2427b104bad862cf",
+      "sha": "f1f702fcf5ab597bd8bd4a0edb549e2ae953469a",
+      "sourceFingerprint": "16446f0234d5e71f7f92cfac3523ff5bc4f289c3ee2686f454d3f24ed7baccee",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -5720,6 +6258,14 @@
           "sha256": "422010e0156ecf8ff5de7caf804317f7c76e440cc9ffec220727c9ef98168d4d"
         },
         {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/checkout/page.tsx",
+          "sha256": "7f4a645fba56864d372a3105abd0cc934de48a771ca39d218bd947df339fa33d"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(japanese)/ja/checkout/return/page.tsx",
+          "sha256": "369bdf444b5309d97059cb0133d16e6e6392346f22d7c6721c911f8c750ab14c"
+        },
+        {
           "path": "apps/storefront/src/app/(public)/(japanese)/ja/gifts/[handle]/page.tsx",
           "sha256": "6ae496ca4db0cdb6b4a6b0f436c5e5de27b653ac127093b3d71f6b84768f56c8"
         },
@@ -5764,6 +6310,14 @@
           "sha256": "62270cf7c1d68a561d2b9780d3434f7ad38fde0b3f18eac1b9d6485d02cba78e"
         },
         {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/checkout/page.tsx",
+          "sha256": "fce2b986a05d72e88686ad48720289395e74de3598baffc4fd8d37a9fd2760eb"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/en/checkout/return/page.tsx",
+          "sha256": "ddbdac4b08e0e99a7d849ee6b8d9dfb3cc9da2a1c636dc32cd722121c1e86d22"
+        },
+        {
           "path": "apps/storefront/src/app/(public)/(latin)/en/gifts/[handle]/page.tsx",
           "sha256": "147e7194d79ccac60aaed0a7dc6e594d5ac5219a234d7f7f14fcfc22acf12e4f"
         },
@@ -5802,6 +6356,14 @@
         {
           "path": "apps/storefront/src/app/(public)/(latin)/es/cart/page.tsx",
           "sha256": "0db17b1a92f00f19e846a7e2504cfe4c55f80ea7819c26f105cb7ea7d0710cbc"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/checkout/page.tsx",
+          "sha256": "108f7e14166f6ede2850714bb6b40533ce61ab0ca7c655a836b7e1f2794edce2"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/es/checkout/return/page.tsx",
+          "sha256": "248e267c88bcca8d37f2c9326ac3f5210dc241ab1f44a8c420d6d3471df0adde"
         },
         {
           "path": "apps/storefront/src/app/(public)/(latin)/es/gifts/[handle]/page.tsx",
@@ -5848,6 +6410,14 @@
           "sha256": "f98fb70d04fe0c855bbfcbd52541a60d759066817dd4215a8e03c894bf8c4ade"
         },
         {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/checkout/page.tsx",
+          "sha256": "e32b9c34cd97e998719ce24796a1106e7e9d477a8dee02859522bc59b85c99e6"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(latin)/pt/checkout/return/page.tsx",
+          "sha256": "8908efc1f0c0537039e2d22c8e07494d899e289971d333cbfc9d90b8cd76e482"
+        },
+        {
           "path": "apps/storefront/src/app/(public)/(latin)/pt/gifts/[handle]/page.tsx",
           "sha256": "2ffab0eb14cee70528b4a6caed1dc5da4319c111eb149a99083f083eaf0cf0a2"
         },
@@ -5890,6 +6460,14 @@
         {
           "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/cart/page.tsx",
           "sha256": "9da4813b620f55a89151e90c2e103a4217baa4f6442ce8a5840e39f5fafed6c5"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/checkout/page.tsx",
+          "sha256": "5a234d814e183ca51e97ebc8ab0422e94c1cbb1b2027650a268cdc3685c0675c"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/checkout/return/page.tsx",
+          "sha256": "f0a3b9aa1c5f0b68b4e17a27f2ec68c5cce62c0eea681c7d9914e0a7135387ff"
         },
         {
           "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/gifts/[handle]/page.tsx",
@@ -5936,6 +6514,14 @@
           "sha256": "b7feb3d669e7911c8bde0ba9ccddca55b7961d17dbac6cca9ba85a9c60f5ce90"
         },
         {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/checkout/page.tsx",
+          "sha256": "6e2d97320165d01aec3310612c6792ce9115ca493285b010dbb88556522d722a"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(thai)/th/checkout/return/page.tsx",
+          "sha256": "b26ed81fce175c4e816e07e140d752f3574b6dd8fc32d93a4479a8b7d1bef9a1"
+        },
+        {
           "path": "apps/storefront/src/app/(public)/(thai)/th/gifts/[handle]/page.tsx",
           "sha256": "cb49dec517f363020107fffae082a50468742294e533b8d6914e1facb0a5af9c"
         },
@@ -5978,6 +6564,14 @@
         {
           "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/cart/page.tsx",
           "sha256": "f83769bc6c3c5e055fb5c3de96f354221fc3f61bd17b3fef32f2eea6b3ecd52a"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/checkout/page.tsx",
+          "sha256": "adbd6460549019703c4c9b2957981a5fc693b1e135dda81a3c63b0f67efd6ee6"
+        },
+        {
+          "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/checkout/return/page.tsx",
+          "sha256": "7a69bab5768e8e1e3b66e4ff3e8262fb72eee37b12b313faf97f5eced55b3de0"
         },
         {
           "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/gifts/[handle]/page.tsx",
@@ -6034,6 +6628,38 @@
         {
           "path": "apps/storefront/src/app/api/storefront/cart/route.ts",
           "sha256": "aa13ef0e71439b2fc8adc4eac8682137814e5a021bd137e5ff7acda276c4a18c"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/cart/validate/route.ts",
+          "sha256": "bb90b935dd410b6d1a32fd05315ae50fa90ec78c56df93b01794231afde883c9"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/current/status/route.ts",
+          "sha256": "5142b5a63ed285f657b30b53fe52c340cc2efea634fc981db8d791d79a591beb"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/[attemptId]/recover/route.ts",
+          "sha256": "98d6ea1a6773e2ca9fd016e4d222b128f06dd68172ac7306d2dd6efc132ed572"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/[attemptId]/route.ts",
+          "sha256": "ec446033537f1bd32c530126877377ca3c55888af4e0779eff7bcea3d2dd4d93"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/route.ts",
+          "sha256": "7bdef7b6c0655dd9bd2ede242088b3026231b41fb497989b43f401ccd8328fde"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/capabilities/route.ts",
+          "sha256": "7bdef7b6c0655dd9bd2ede242088b3026231b41fb497989b43f401ccd8328fde"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/status/route.ts",
+          "sha256": "7bdef7b6c0655dd9bd2ede242088b3026231b41fb497989b43f401ccd8328fde"
+        },
+        {
+          "path": "apps/storefront/src/app/api/storefront/checkout/sessions/route.ts",
+          "sha256": "bb90b935dd410b6d1a32fd05315ae50fa90ec78c56df93b01794231afde883c9"
         },
         {
           "path": "apps/storefront/src/app/api/storefront/idols/route.test.ts",
@@ -6256,6 +6882,10 @@
           "sha256": "e7d9769185a3c77710c82f9120b617c982464070f420b4f361521b2ad61644d8"
         },
         {
+          "path": "apps/storefront/src/payment-privacy.test.ts",
+          "sha256": "799537130e7c8edd886501b23cfbba5244ece0cb5bc9de14c3815c44b5ebc8ac"
+        },
+        {
           "path": "apps/storefront/src/presentation-locale.test.ts",
           "sha256": "a085b0b8e1213cfde58f1464ce56e73c98b8cfa7e87db4aa85fffc4e8c487137"
         },
@@ -6269,15 +6899,23 @@
         },
         {
           "path": "apps/storefront/src/proxy.ts",
-          "sha256": "8256059c485731291be11d87afc592111ce8f8c8bafa20643c17eaaebcac4566"
+          "sha256": "51c276a33e494a9603173d84b3575737bf10040d58edf1fc081074e4110eeb12"
         },
         {
           "path": "apps/storefront/src/server/cart-proxy.test.ts",
-          "sha256": "9639ce22ce399a16002b6e4440df59b28f84cd9232d13c00c545633ef9acbb04"
+          "sha256": "5d8f49e93f9edbeba2a12469fe64a3bf19840ecbf61747da692ac5d11d4ac382"
         },
         {
           "path": "apps/storefront/src/server/cart-proxy.ts",
-          "sha256": "3f84b9c1cdc99a7432fd643cd45840e4c80e955efb771c1eb6a1cf737f527119"
+          "sha256": "abf955d481e46ced4ff5dd37869f423ca5b9a6a14f75e402adce5ca76a9d0f59"
+        },
+        {
+          "path": "apps/storefront/src/server/checkout-proxy.test.ts",
+          "sha256": "51284d46834f7c966917547c68de149cf58dc29ffdb7ac720b5763c25d65f0d4"
+        },
+        {
+          "path": "apps/storefront/src/server/checkout-proxy.ts",
+          "sha256": "6c5856447c0874e73f6e4d219926a993f387650b4163dae27af0478933a3ed50"
         },
         {
           "path": "apps/storefront/src/server/image-config.test.ts",
@@ -6310,6 +6948,14 @@
         {
           "path": "apps/storefront/src/server/public-commerce.ts",
           "sha256": "96316065ae650c3bb2460639dd6ddf90e7aa7ba94ab32dcb544475a986152ce0"
+        },
+        {
+          "path": "apps/storefront/src/server/request-origin.test.ts",
+          "sha256": "39769a025d02076e7385edb5716ca49b60b81edbcb8416e69a8297e0b9ba80d6"
+        },
+        {
+          "path": "apps/storefront/src/server/request-origin.ts",
+          "sha256": "36394e3cf5fe72f34b8a6c047bd0370a746f47fbbf2dc7268c47cbadaaeb2675"
         },
         {
           "path": "apps/storefront/src/server/runtime-config.ts",
@@ -6385,7 +7031,11 @@
         },
         {
           "path": "apps/storefront/src/storefront/cart-body.tsx",
-          "sha256": "3612c8b83826450f457c839842e4b94b92e6cd12aae1be82a843040425dad0ca"
+          "sha256": "39d5827ea7c1a62a69bb375694b3d11a067bbd4e8d07cfaf670e8caf11d98512"
+        },
+        {
+          "path": "apps/storefront/src/storefront/cart-checkout-entry.test.tsx",
+          "sha256": "0bb3c8084a778ce1d508e76c47c9a2dd5d27b199c7533a3da415d01531286384"
         },
         {
           "path": "apps/storefront/src/storefront/cart-editor-concurrency.test.tsx",
@@ -6462,6 +7112,62 @@
         {
           "path": "apps/storefront/src/storefront/cart.css",
           "sha256": "8052701fde690c79b72846e465a26e50f98e40e3e996942fd6efcb5881fc6cfb"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-client.tsx",
+          "sha256": "99e44f8b6fae67bdf27019b944b7d3e804731a81cb251d779b68bd7b4d696ea8"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-controller.test.ts",
+          "sha256": "d1351f62a8e4dec6d37bc8c35e5362fd779fa359776616ca882a88bf530e2732"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-controller.ts",
+          "sha256": "a5b2deda9d4a4bc68a784f441c92a0f2bebb92452377cf3f06c9f5e2193357dc"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-focus.test.ts",
+          "sha256": "7bdcf77e7b8f1453f251a042d0b951de2bafeabd34400b8db5b3901309c4e68d"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-focus.ts",
+          "sha256": "a0ccd072303224ff16f698ddadca904ff01b30657c2e6b18beaa25efd718e9c5"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-form.tsx",
+          "sha256": "5b941d6b48e770b4078732c032233cebd55f4f84b225c8d9afde7e90b5da7549"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-page-factory.test.tsx",
+          "sha256": "c50d1133e09d5a050900cd1b6640501b3ebf6b4731b9f10906cb5a5444509754"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-page-factory.tsx",
+          "sha256": "1bed2b0699038e476b9e7e04375b7381ceb9efbb90770864b30196eddf387968"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-review.tsx",
+          "sha256": "da033beaa6c3ebb03c2c967fb97d1f0740f4fe239bbef5736c05d730e8f97109"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-transport.test.ts",
+          "sha256": "9f676cecaf43f377237724d63297a47081c68a30ea202b2d5a9d8bf034f17872"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-transport.ts",
+          "sha256": "303fe9ce85bb9a99e056e6463e1f10fbc9a9adfa146e4a2228bfed2cadb0a300"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-validation.ts",
+          "sha256": "94f1c8f3601aa95835b34f58f8b3b7c898bd398807066f8411216eae408f509d"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout-view.test.tsx",
+          "sha256": "60c03474fa5f49b06fe5359a1172b8f0e2164ced854fcbf1fff74cbdd41900f4"
+        },
+        {
+          "path": "apps/storefront/src/storefront/checkout.css",
+          "sha256": "b0d9d3587ad2c6ff239b491de0fe85568804ff0fa455c5be273479f88963141c"
         },
         {
           "path": "apps/storefront/src/storefront/commerce-context.test.tsx",
@@ -6621,11 +7327,11 @@
         },
         {
           "path": "apps/storefront/src/storefront/gift-purchase.test.tsx",
-          "sha256": "5ad17c48f534c64d8d3aa6ba2fa4fed98b2e8667a2caa4bf2cedbdb8fa90e54b"
+          "sha256": "306e2663c9e676eddbb271c2ec4f1faf7b6cc391ce903eb5beb6fd02eda0dd59"
         },
         {
           "path": "apps/storefront/src/storefront/gift-purchase.tsx",
-          "sha256": "b1e825bfd97d16eeb0f7afbfd21e98ed812e9cff6e24c8739a23b24a847dff99"
+          "sha256": "82b308184cf6149c0a533654a27fc167a7edaa91352bfbf68ad44cb628c90742"
         },
         {
           "path": "apps/storefront/src/storefront/gift-quantity.tsx",
@@ -6712,6 +7418,18 @@
           "sha256": "0057c9c7de55a1e1075cc0e9c5b737a502d05377519fb3fe45e32241fad0275a"
         },
         {
+          "path": "apps/storefront/src/storefront/payment-polling.test.ts",
+          "sha256": "eadff8331644d037accab2d52a1547b03cdd3e801fa3e411ffc1982588a6d004"
+        },
+        {
+          "path": "apps/storefront/src/storefront/payment-polling.ts",
+          "sha256": "3889ccc30803ca9c706ca62d4d88149e3dc1be3169a60c7b378b01d1554aa219"
+        },
+        {
+          "path": "apps/storefront/src/storefront/payment-status.tsx",
+          "sha256": "cdead45294d3b887b345b554907be5fa6ba32acd85443ab615afa736211a9e33"
+        },
+        {
           "path": "apps/storefront/src/storefront/published-image.test.tsx",
           "sha256": "8c2e71ebaaa5c142c369fccb87267eff321290a7d9a219a9a9cc78111bb8fda0"
         },
@@ -6780,6 +7498,10 @@
           "sha256": "0702860f81200bdf43e06ebb0ecbecf83bde2e03a09e41dd4c1eb5e76a233caf"
         },
         {
+          "path": "apps/storefront/src/test-support/checkout-fixtures.ts",
+          "sha256": "11b5662bf12981f877f9c638c200873f17668ebde12172daa4941c8c437c6254"
+        },
+        {
           "path": "apps/storefront/tsconfig.build.json",
           "sha256": "56bcc42b9cedc7661908ad28ebefb4985c4abc8097b6e4ed586c14b51b5e8d59"
         },
@@ -6789,7 +7511,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "13d790b276896b4d10f3e46a4f5905db2e97fa3be7d1a0cb8f7aa600ba27a4a2"
+          "sha256": "8f00c3e66711406a706906bbb2ec8b9e6eb4a67d60b62904b3dc92731e72aff6"
         },
         {
           "path": "packages/config/package.json",
@@ -6805,7 +7527,7 @@
         },
         {
           "path": "packages/config/src/config-layers.ts",
-          "sha256": "66eb870ce4276adb39c953f60f00fc51395410593957172baea4e33dd1011d2d"
+          "sha256": "f59ce1bed3e43a6b3db4f7685099b4e75e5e432ecdea526d5586533d6276cf5c"
         },
         {
           "path": "packages/config/src/configuration-error.ts",
@@ -6822,6 +7544,10 @@
         {
           "path": "packages/config/src/index.ts",
           "sha256": "247512f655fef5a0dea2452d2494a0bca964f3e3db134ae717ba33eb67428687"
+        },
+        {
+          "path": "packages/config/src/payment-runtime-layers.test.ts",
+          "sha256": "1bcf1cf946e4b303540ab3abfd85f5d69f0fb7fd0623ae40fe3b6371ba844d57"
         },
         {
           "path": "packages/config/src/public-config.test.ts",
@@ -6861,11 +7587,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "5d478bd1051804e9f5b190f7910fc828599b36c619fe14fbc5e20aa8c250ace3"
+          "sha256": "86fc810249f84dfd2ddd57af2f99702bbc0837ac5cafb13a44e408e206d3f62f"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "1b5e43b9a3f4c37d4853b1e9162de1181afe24e7f2ea2569798aa14f0d1b60de"
+          "sha256": "2379da7a074d93dafcbda5247bae7aac8a78adf187f23c1629d37931be8aa4f4"
         },
         {
           "path": "packages/contracts/package.json",
@@ -6921,11 +7647,11 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "85ac54bd5b2f828ec3af04dc4bcef2f7de0a448d3a2be55433e5f5fd3917ef21"
+          "sha256": "bf41511a32b5365135382f89037af8776ee75cb134ec8ba175f5360d415421d4"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "677f8abae480c70d28244a96764b166f745961c1919d49f4619512a6d2a0ca56"
+          "sha256": "d4aac9af329856dd7181790fc24d0b5db0db43d4a12b03c2bae3adb5dace28f4"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -6933,7 +7659,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "d5920566e8cf1e62dc6c838e21eedf0d246fa99e796d0b809c0224b119f27015"
+          "sha256": "f6b0fe91acb4dd07a0c6dcfc73d26deab76147ef50965d9d38609d25c87a37bd"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -7253,7 +7979,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "f53f274dfbb14b850b0a5285132aaa4ff944ee72269e2bd6029789c8a230082a"
+          "sha256": "20007f7a54014d7edc87f2e6b6f2b32ac4263594ee22e898647b76dc59276583"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -7341,7 +8067,39 @@
         },
         {
           "path": "packages/contracts/src/payment-port-contracts.ts",
-          "sha256": "7ef2bc8f08b924f185f86a02248fba226f65e2202900449b96fb4bd0385cdba7"
+          "sha256": "8fbb04024e8588cfa6fa661dd1885de4e8897c455b5a05c9282dea98ef9e74df"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-artifacts.test.ts",
+          "sha256": "7cb29f6cb2cd93f7d510fe50aac09e76fb515fc6d55845b5d59b0ca18024bf90"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-config.test.ts",
+          "sha256": "a8adac106beb42aba162f322ea7919ec028b1e73a6a43d29a898d75fbdaf610d"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-config.ts",
+          "sha256": "89679c57d112f81f5c84401ee0bbffc5e06a95f37a52a7310e0c4cf84ab61bfc"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-internal.test.ts",
+          "sha256": "dd75a6db89527dcb7b7c486ae5d37c28aad42bf224469c4f02c782dc97758816"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-internal.ts",
+          "sha256": "d54df6b4e8de5f7267b234f73a57361fa565d454d5a8afb9fbb4fa385b32f82c"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime-openapi.ts",
+          "sha256": "d881440e571df2d7f56dc02f8082e86024179dcb3c3d17c3462ab7692006eedc"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime.test.ts",
+          "sha256": "6bc809826d9c621adbc9c44ffa8369546c629f3c0636643c32606b09eea58356"
+        },
+        {
+          "path": "packages/contracts/src/payment-runtime.ts",
+          "sha256": "5606726fb66d559dc8d9efcbf73dddbea0291e9e791b878bc404678b372fd48d"
         },
         {
           "path": "packages/contracts/src/payment.test.ts",
@@ -7613,15 +8371,15 @@
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/japanese-ui.css",
-          "sha256": "015c56f62a2aa204289a33a9c721d500ee977f08e0bb8974ea23f8b7c02edaff"
+          "sha256": "051daeeb04b3a2456e38462d3240b1f6e5edb014f11b1d17f24f6653c3f28929"
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/japanese-ui.woff2",
-          "sha256": "0e806658016eab7a7fe095c53846e29283f61c63c0929d4892584e95f97da969"
+          "sha256": "af7db34c4e53d0a690d593636c6310a11f1bc749e116d287a6822bd08e916a69"
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/manifest.json",
-          "sha256": "fb815c6087ec0e9d72cb8593398a282a5b847cd628bdc2effbcf04923cd80957"
+          "sha256": "512a23f731052add68b2b5fdcf0eaaddb376d0db12417a015593d18e676b1704"
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-OFL.txt",
@@ -7629,11 +8387,11 @@
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.css",
-          "sha256": "565c0f8f4ec11e7e881dbebbe1b86f1f60549085f606a71ebc6924f6f0582ba2"
+          "sha256": "28cf765bc5fd14720a1924e5d19cd2e23372d54115988ad3e757466f1d4b3f7f"
         },
         {
           "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.woff2",
-          "sha256": "9ef22ea7853d125280122dee03c7821f1d532b1878ea86e16df9af627d78ac77"
+          "sha256": "2d635d2f1c44217c7d397a438cd59ef3abff69c0db203cb13ac307ee29a61073"
         },
         {
           "path": "packages/design-tokens/styles/fonts/japanese.css",
@@ -7993,7 +8751,7 @@
         },
         {
           "path": "pnpm-lock.yaml",
-          "sha256": "0676dead86213d7400fe16a7f3a75cf7e0c1356a4a1a339030c3fcb16e9107f1"
+          "sha256": "0e32033f3384e7c619d7c654e8d70cc4e7206b596436ad2ad986e94bb5484e48"
         },
         {
           "path": "pnpm-workspace.yaml",
@@ -8021,10 +8779,18 @@
         }
       ],
       "status": [
+        " M .env.example",
         " M apps/api/package.json",
-        " M apps/api/scripts/cart-daily-gift-fixture.mjs",
+        " M apps/api/scripts/cart-storefront-runtime.mjs",
         " M apps/api/src/bootstrap.ts",
+        " M apps/api/src/index.ts",
         " M apps/api/src/production-application.ts",
+        " M apps/storefront/src/proxy.ts",
+        " M apps/storefront/src/server/cart-proxy.test.ts",
+        " M apps/storefront/src/server/cart-proxy.ts",
+        " M apps/storefront/src/storefront/cart-body.tsx",
+        " M apps/storefront/src/storefront/gift-purchase.test.tsx",
+        " M apps/storefront/src/storefront/gift-purchase.tsx",
         " M database/migrations/manifest.json",
         " M database/schema/expected-catalog.json",
         " M docs/progress/MASTER.md",
@@ -8041,48 +8807,137 @@
         " M output/playwright/p2-04/axe-results/timeline.json",
         " M output/playwright/p2-04/axe-results/unavailable.json",
         " M output/playwright/p2-04/browser-results.json",
+        " M output/playwright/p2-04/screenshots.sha256",
+        " M output/playwright/p2-04/stress/320x800-pt-long.png",
+        " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
         " M package.json",
-        " M packages/application/package.json",
         " M packages/application/src/index.ts",
         " M packages/application/tsconfig.build.json",
-        " M packages/content/src/index.ts",
+        " M packages/config/src/config-layers.ts",
         " M packages/contracts/generated/contracts.schema.json",
         " M packages/contracts/generated/openapi.json",
         " M packages/contracts/src/artifact-documents.test.ts",
         " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/domain/src/index.test.ts",
-        " M packages/domain/src/index.ts",
+        " M packages/contracts/src/payment-port-contracts.ts",
+        " M packages/design-tokens/styles/fonts/generated/japanese-ui.css",
+        " M packages/design-tokens/styles/fonts/generated/japanese-ui.woff2",
+        " M packages/design-tokens/styles/fonts/generated/manifest.json",
+        " M packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.css",
+        " M packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.woff2",
+        " M packages/domain/src/payment-state-machine.test.ts",
+        " M packages/domain/src/payment-state-machine.ts",
+        " M packages/i18n/src/storefront/en.review.ts",
+        " M packages/i18n/src/storefront/en.ts",
+        " M packages/i18n/src/storefront/es.review.ts",
+        " M packages/i18n/src/storefront/es.ts",
+        " M packages/i18n/src/storefront/ja.review.ts",
+        " M packages/i18n/src/storefront/ja.ts",
+        " M packages/i18n/src/storefront/pt.review.ts",
+        " M packages/i18n/src/storefront/pt.ts",
+        " M packages/i18n/src/storefront/th.review.ts",
+        " M packages/i18n/src/storefront/th.ts",
+        " M packages/i18n/src/storefront/vi.review.ts",
+        " M packages/i18n/src/storefront/vi.ts",
+        " M packages/i18n/src/storefront/zh-CN.review.ts",
+        " M packages/i18n/src/storefront/zh-CN.ts",
+        " M packages/payment-fake/package.json",
+        " M packages/payment-port/src/index.ts",
         " M packages/persistence-port/src/index.ts",
+        " M packages/persistence-postgres/package.json",
         " M packages/persistence-postgres/scripts/cart-edit-rollback-proof.mjs",
         " M packages/persistence-postgres/scripts/cart-runtime-rollback-proof.mjs",
+        " M packages/persistence-postgres/scripts/checkout-preflight-rollback-proof.mjs",
         " M packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
         " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
         " M packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs",
         " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
         " M packages/persistence-postgres/scripts/postgres-publication-validation-time-cases.mjs",
         " M packages/persistence-postgres/src/index.ts",
+        " M packages/persistence-postgres/src/postgres-persistence.test.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
         " M pnpm-lock.yaml",
-        "?? apps/api/scripts/checkout-preflight-changes.mjs",
-        "?? apps/api/scripts/checkout-preflight-client.mjs",
-        "?? apps/api/scripts/checkout-preflight-fixtures.mjs",
-        "?? apps/api/scripts/checkout-preflight-fixtures.test.mjs",
-        "?? apps/api/scripts/checkout-preflight-gateway.mjs",
-        "?? apps/api/scripts/checkout-preflight-gateway.test.mjs",
-        "?? apps/api/scripts/checkout-preflight-http.mjs",
-        "?? apps/api/scripts/checkout-preflight-proofs.mjs",
-        "?? apps/api/scripts/checkout-preflight-protocol.mjs",
-        "?? apps/api/scripts/checkout-preflight-runtime.mjs",
-        "?? apps/api/src/checkout-composition.test.ts",
-        "?? apps/api/src/checkout-composition.ts",
-        "?? apps/api/src/checkout-preflight-route-bootstrap.test.ts",
-        "?? apps/api/src/checkout-preflight-route.test.ts",
-        "?? apps/api/src/checkout-preflight-route.ts",
-        "?? database/migrations/0025_checkout-preflight.down.sql",
-        "?? database/migrations/0025_checkout-preflight.up.sql",
-        "?? docs/runbooks/checkout-preflight.md",
+        "?? apps/api/scripts/payment-runtime-browser-observer.mjs",
+        "?? apps/api/scripts/payment-runtime-browser-observer.test.mjs",
+        "?? apps/api/scripts/payment-runtime-browser.mjs",
+        "?? apps/api/scripts/payment-runtime-client.mjs",
+        "?? apps/api/scripts/payment-runtime-commit-faults.mjs",
+        "?? apps/api/scripts/payment-runtime-commit-faults.test.mjs",
+        "?? apps/api/scripts/payment-runtime-config-fixture.mjs",
+        "?? apps/api/scripts/payment-runtime-config-fixture.test.mjs",
+        "?? apps/api/scripts/payment-runtime-config-postgres.mjs",
+        "?? apps/api/scripts/payment-runtime-gateway.mjs",
+        "?? apps/api/scripts/payment-runtime-gateway.test.mjs",
+        "?? apps/api/scripts/payment-runtime-http.mjs",
+        "?? apps/api/scripts/payment-runtime-next.mjs",
+        "?? apps/api/scripts/payment-runtime-next.test.mjs",
+        "?? apps/api/scripts/payment-runtime-protocol.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-database.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-http.test.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-process.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-server.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-store.mjs",
+        "?? apps/api/scripts/payment-runtime-psp-store.test.mjs",
+        "?? apps/api/scripts/payment-runtime-retry-protocol.mjs",
+        "?? apps/api/scripts/payment-runtime-runtime.mjs",
+        "?? apps/api/scripts/payment-runtime-tls.mjs",
+        "?? apps/api/src/payment-runtime-bootstrap.test.ts",
+        "?? apps/api/src/payment-runtime-composition.test.ts",
+        "?? apps/api/src/payment-runtime-composition.ts",
+        "?? apps/api/src/payment-runtime-lifecycle.test.ts",
+        "?? apps/api/src/payment-runtime-lifecycle.ts",
+        "?? apps/api/src/payment-runtime-route.test.ts",
+        "?? apps/api/src/payment-runtime-route.ts",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(japanese)/ja/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/en/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/es/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(latin)/pt/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(thai)/th/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/checkout/page.tsx",
+        "?? apps/storefront/src/app/(public)/(vietnamese)/vi/checkout/return/page.tsx",
+        "?? apps/storefront/src/app/api/storefront/cart/validate/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/current/status/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/[attemptId]/recover/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/[attemptId]/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/attempts/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/capabilities/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/[checkoutSessionId]/status/route.ts",
+        "?? apps/storefront/src/app/api/storefront/checkout/sessions/route.ts",
+        "?? apps/storefront/src/payment-privacy.test.ts",
+        "?? apps/storefront/src/server/checkout-proxy.test.ts",
+        "?? apps/storefront/src/server/checkout-proxy.ts",
+        "?? apps/storefront/src/server/request-origin.test.ts",
+        "?? apps/storefront/src/server/request-origin.ts",
+        "?? apps/storefront/src/storefront/cart-checkout-entry.test.tsx",
+        "?? apps/storefront/src/storefront/checkout-client.tsx",
+        "?? apps/storefront/src/storefront/checkout-controller.test.ts",
+        "?? apps/storefront/src/storefront/checkout-controller.ts",
+        "?? apps/storefront/src/storefront/checkout-focus.test.ts",
+        "?? apps/storefront/src/storefront/checkout-focus.ts",
+        "?? apps/storefront/src/storefront/checkout-form.tsx",
+        "?? apps/storefront/src/storefront/checkout-page-factory.test.tsx",
+        "?? apps/storefront/src/storefront/checkout-page-factory.tsx",
+        "?? apps/storefront/src/storefront/checkout-review.tsx",
+        "?? apps/storefront/src/storefront/checkout-transport.test.ts",
+        "?? apps/storefront/src/storefront/checkout-transport.ts",
+        "?? apps/storefront/src/storefront/checkout-validation.ts",
+        "?? apps/storefront/src/storefront/checkout-view.test.tsx",
+        "?? apps/storefront/src/storefront/checkout.css",
+        "?? apps/storefront/src/storefront/payment-polling.test.ts",
+        "?? apps/storefront/src/storefront/payment-polling.ts",
+        "?? apps/storefront/src/storefront/payment-status.tsx",
+        "?? apps/storefront/src/test-support/checkout-fixtures.ts",
+        "?? database/migrations/0026_payment-runtime.down.sql",
+        "?? database/migrations/0026_payment-runtime.up.sql",
+        "?? docs/operations/checkout-payments.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -9949,6 +10804,9 @@
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/concurrent-public-reads-1788873383905.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/fixture-manifest.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T13-11-52-834Z/protocol-results.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T15-01-13-193Z/concurrent-public-reads-1788879944048.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T15-01-13-193Z/fixture-manifest.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-08T15-01-13-193Z/protocol-results.json",
         "?? output/checks/p3-06-storefront-acceptance/seo-contract-proposal.md",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.config.mjs",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.test.ts",
@@ -9958,23 +10816,17 @@
         "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/pending-rollback-results.json",
         "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/protocol-results.json",
         "?? output/checks/p4-01-cart/http-2026-09-08T13-16-40.160Z/results.json",
-        "?? output/checks/p4-03-checkout-preflight/check-dev-1.json",
-        "?? output/checks/p4-03-checkout-preflight/check-dev-2.json",
-        "?? output/checks/p4-03-checkout-preflight/contract-compatibility.json",
-        "?? output/checks/p4-03-checkout-preflight/contracts-domain-review.md",
-        "?? output/checks/p4-03-checkout-preflight/contracts-domain-source-freeze.json",
-        "?? output/checks/p4-03-checkout-preflight/dependency-audit-npm.json",
-        "?? output/checks/p4-03-checkout-preflight/dependency-audit.json",
-        "?? output/checks/p4-03-checkout-preflight/final-verification.md",
-        "?? output/checks/p4-03-checkout-preflight/http-independent-review.md",
-        "?? output/checks/p4-03-checkout-preflight/initial-untracked.json",
-        "?? output/checks/p4-03-checkout-preflight/plan.md",
-        "?? output/checks/p4-03-checkout-preflight/postgres-README.md",
-        "?? output/checks/p4-03-checkout-preflight/postgres-source-freeze.json",
-        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/failure.json",
-        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/fixture-manifest.json",
-        "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T14-15-41.188Z/run-result.json",
-        "?? output/checks/p4-03-checkout-preflight/run-check.mjs",
+        "?? output/checks/p4-01-cart/http-2026-09-08T15-06-00.360Z/daily-immediate-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T15-06-00.360Z/pending-rollback-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T15-06-00.360Z/protocol-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-08T15-06-00.360Z/results.json",
+        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T15-07-09.936Z/fixture-manifest.json",
+        "?? output/checks/p4-02-cart-storefront/run-2026-09-08T15-07-09.936Z/protocol-results.json",
+        "?? output/checks/p4-03-checkout-preflight/application-outbox-final.json",
+        "?? output/checks/p4-03-checkout-preflight/commit-evidence-candidates.json",
+        "?? output/checks/p4-03-checkout-preflight/commit-paths.nul",
+        "?? output/checks/p4-03-checkout-preflight/commit-scope.json",
+        "?? output/checks/p4-03-checkout-preflight/secrets-before-final.json",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/manifest.json",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/README.md",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/axe-results/baseline-desktop.json",
@@ -10038,8 +10890,227 @@
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/360x800-en.png",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/390x844-vi.png",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-05/viewports/768x1024-th.png",
-        "?? output/checks/p4-03-checkout-preflight/ui-composites-browser.json",
+        "?? output/checks/p4-03-checkout-preflight/source-before-full-1.json",
+        "?? output/checks/p4-03-checkout-preflight/source-before-full-2.json",
+        "?? output/checks/p4-03-checkout-preflight/source-before-full-3.json",
+        "?? output/checks/p4-03-checkout-preflight/source-mid-full.json",
         "?? output/checks/p4-03-checkout-preflight/untracked-midpoint.json",
+        "?? output/checks/p4-04-payment-runtime/admin-next-env-before-full.d.ts",
+        "?? output/checks/p4-04-payment-runtime/api-browser-evidence.md",
+        "?? output/checks/p4-04-payment-runtime/api-browser-final-verification.json",
+        "?? output/checks/p4-04-payment-runtime/api-fake-audit.md",
+        "?? output/checks/p4-04-payment-runtime/application-action-recovery-verification.json",
+        "?? output/checks/p4-04-payment-runtime/application-independent-review.md",
+        "?? output/checks/p4-04-payment-runtime/checkout-empty-verification.json",
+        "?? output/checks/p4-04-payment-runtime/commit-faults-source-freeze.json",
+        "?? output/checks/p4-04-payment-runtime/contract-baseline.json",
+        "?? output/checks/p4-04-payment-runtime/contract-compatibility.json",
+        "?? output/checks/p4-04-payment-runtime/dependencies-final-official.json",
+        "?? output/checks/p4-04-payment-runtime/dependencies-final.json",
+        "?? output/checks/p4-04-payment-runtime/design-final.json",
+        "?? output/checks/p4-04-payment-runtime/final-verification.md",
+        "?? output/checks/p4-04-payment-runtime/format-before-final-2.json",
+        "?? output/checks/p4-04-payment-runtime/format-before-final-3.json",
+        "?? output/checks/p4-04-payment-runtime/format-before-final.json",
+        "?? output/checks/p4-04-payment-runtime/https-origin-diagnostic-green.json",
+        "?? output/checks/p4-04-payment-runtime/https-origin-diagnostic.json",
+        "?? output/checks/p4-04-payment-runtime/https-origin-diagnostic.mjs",
+        "?? output/checks/p4-04-payment-runtime/https-origin-final.json",
+        "?? output/checks/p4-04-payment-runtime/https-origin-inspection.json",
+        "?? output/checks/p4-04-payment-runtime/https-origin-request-preload.mjs",
+        "?? output/checks/p4-04-payment-runtime/initial-untracked.json",
+        "?? output/checks/p4-04-payment-runtime/internal-contract-freeze.json",
+        "?? output/checks/p4-04-payment-runtime/lint-before-final-2.json",
+        "?? output/checks/p4-04-payment-runtime/lint-before-final.json",
+        "?? output/checks/p4-04-payment-runtime/original-migration-compatibility.json",
+        "?? output/checks/p4-04-payment-runtime/original-untracked-before-gates.json",
+        "?? output/checks/p4-04-payment-runtime/p2-04-final.json",
+        "?? output/checks/p4-04-payment-runtime/postgres-audit.md",
+        "?? output/checks/p4-04-payment-runtime/postgres-evidence-freeze.json",
+        "?? output/checks/p4-04-payment-runtime/postgres-implementation.md",
+        "?? output/checks/p4-04-payment-runtime/postgres-source-freeze.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/manifest.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/README.md",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/baseline-desktop.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/baseline-mobile.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/cart-line.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/empty-error.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/image-error.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/loading.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/pseudo.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/reduced-motion.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/timeline.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/axe-results/unavailable.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/browser-results.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/interactions/1440x900-en-hover.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/reduced-motion/1440x900-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/reduced-motion/390x844-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/responsive/1023x900-en-XA.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/responsive/767x900-pt.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/rtl/1440x900-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/rtl/390x844-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/screenshots.sha256",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/states/390x844-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/stress/320x800-en-XA.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/stress/320x800-pt-long.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/1024x768-zh-CN.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/1440x900-ja.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/1920x1080-es.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/360x800-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/390x844-vi.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/viewports/768x1024-th.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/zoom/google-chrome-200-percent-pt.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-04/zoom/google-chrome-baseline-pt.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/README.md",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/axe-results/baseline-desktop.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/axe-results/baseline-mobile.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/axe-results/pseudo-320.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/browser-results.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/1440x900-end.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/1440x900-mid.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/1440x900-start.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/390x844-end.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/390x844-mid.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/hero/390x844-start.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/add-confirmed-390.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-keyboard-instant-1440.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-latest-wins-1440.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-mouse-spatial-1440.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/idol-touch-opacity-390.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/motion/success-end-1440.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/raw/motion-checks.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/raw/reduced-motion.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/raw/scenario-results.json",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/reduced-motion/1440x900.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/reduced-motion/390x844.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/screenshots.sha256",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/stress/320x800-en-XA.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/stress/320x800-pt-long.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/1024x768-zh-CN.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/1440x900-ja.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/1920x1080-es.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/360x800-en.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/390x844-vi.png",
+        "?? output/checks/p4-04-payment-runtime/pre-existing-browser-evidence/p2-05/viewports/768x1024-th.png",
+        "?? output/checks/p4-04-payment-runtime/psp-independent-review.md",
+        "?? output/checks/p4-04-payment-runtime/root-followup-independent-review.md",
+        "?? output/checks/p4-04-payment-runtime/root-review.md",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-34-14.486Z/failure.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-34-14.486Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-34-14.486Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-44-18.317Z/failure.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-44-18.317Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-44-18.317Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-48-56.101Z/failure.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-48-56.101Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-48-56.101Z/recovery-observations.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T18-48-56.101Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/browser/browser-results.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/browser/failure.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/failure.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/protocol-checkpoint.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/recovery-observations.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-00-17.159Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/browser-results.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/en-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/en-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/en-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/en-390-unknown.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/browser/failure.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/failure.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/protocol-checkpoint.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/recovery-observations.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-18-28.749Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/browser-results.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/en-390-unknown.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/es-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/ja-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/pt-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/th-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/vi-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-1440-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-1440-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-1440-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-1440-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-1440-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-390-empty.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-390-hosted.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-390-ready.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-390-return.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/browser/zh-CN-390-review.png",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/cleanup-confirmation.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/protocol-checkpoint.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/protocol-results.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/recovery-observations.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-08T19-28-30.305Z/run-result.json",
+        "?? output/checks/p4-04-payment-runtime/run-check.py",
+        "?? output/checks/p4-04-payment-runtime/secrets-final.json",
+        "?? output/checks/p4-04-payment-runtime/source-before-final-browser.json",
+        "?? output/checks/p4-04-payment-runtime/source-browser-check.json",
+        "?? output/checks/p4-04-payment-runtime/source-snapshot.py",
+        "?? output/checks/p4-04-payment-runtime/storefront-audit.md",
+        "?? output/checks/p4-04-payment-runtime/storefront-implementation.md",
+        "?? output/checks/p4-04-payment-runtime/storefront-owned-files.json",
+        "?? output/checks/p4-04-payment-runtime/storefront-proxy-origin-verification.json",
+        "?? output/checks/p4-04-payment-runtime/storefront-source-freeze.json",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -10432,44 +11503,49 @@
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-detail.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-directory.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-policy.png",
-        "?? packages/application/src/checkout-contact.test.ts",
-        "?? packages/application/src/checkout-contact.ts",
-        "?? packages/application/src/checkout-create.ts",
-        "?? packages/application/src/checkout-creation.test.ts",
-        "?? packages/application/src/checkout-idempotency.ts",
-        "?? packages/application/src/checkout-inventory.ts",
-        "?? packages/application/src/checkout-observation.test.ts",
-        "?? packages/application/src/checkout-observation.ts",
-        "?? packages/application/src/checkout-preflight-records.ts",
-        "?? packages/application/src/checkout-preflight.harness.ts",
-        "?? packages/application/src/checkout-preflight.test-fixtures.ts",
-        "?? packages/application/src/checkout-preflight.test.ts",
-        "?? packages/application/src/checkout-preflight.ts",
-        "?? packages/application/src/checkout-transaction.ts",
-        "?? packages/contracts/src/checkout-preflight-artifacts.test.ts",
-        "?? packages/contracts/src/checkout-preflight-internal.test.ts",
-        "?? packages/contracts/src/checkout-preflight-internal.ts",
-        "?? packages/contracts/src/checkout-preflight-inventory.ts",
-        "?? packages/contracts/src/checkout-preflight-openapi.ts",
-        "?? packages/contracts/src/checkout-preflight-public.test.ts",
-        "?? packages/contracts/src/checkout-preflight-public.ts",
-        "?? packages/contracts/src/checkout-preflight.test.ts",
-        "?? packages/contracts/src/checkout-preflight.ts",
-        "?? packages/domain/src/checkout-preflight-inventory.ts",
-        "?? packages/domain/src/checkout-preflight.test.ts",
-        "?? packages/domain/src/checkout-preflight.ts",
-        "?? packages/persistence-port/src/checkout-preflight.ts",
-        "?? packages/persistence-postgres/scripts/checkout-preflight-rollback-proof.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-checkout-preflight-parameters.mjs",
-        "?? packages/persistence-postgres/src/checkout-preflight-content.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-current.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-data.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-migration.test.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-repository.test.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-repository.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-save.test.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-transaction.test.ts",
-        "?? packages/persistence-postgres/src/checkout-preflight-write.ts"
+        "?? packages/application/src/payment-runtime-action.ts",
+        "?? packages/application/src/payment-runtime-capabilities.ts",
+        "?? packages/application/src/payment-runtime-context.ts",
+        "?? packages/application/src/payment-runtime-create.ts",
+        "?? packages/application/src/payment-runtime-execution.ts",
+        "?? packages/application/src/payment-runtime-provider.test.ts",
+        "?? packages/application/src/payment-runtime-provider.ts",
+        "?? packages/application/src/payment-runtime-recovery.ts",
+        "?? packages/application/src/payment-runtime.harness.ts",
+        "?? packages/application/src/payment-runtime.test.ts",
+        "?? packages/application/src/payment-runtime.ts",
+        "?? packages/config/src/payment-runtime-layers.test.ts",
+        "?? packages/contracts/src/payment-runtime-artifacts.test.ts",
+        "?? packages/contracts/src/payment-runtime-config.test.ts",
+        "?? packages/contracts/src/payment-runtime-config.ts",
+        "?? packages/contracts/src/payment-runtime-internal.test.ts",
+        "?? packages/contracts/src/payment-runtime-internal.ts",
+        "?? packages/contracts/src/payment-runtime-openapi.ts",
+        "?? packages/contracts/src/payment-runtime.test.ts",
+        "?? packages/contracts/src/payment-runtime.ts",
+        "?? packages/payment-fake/src/persistent-http.test.ts",
+        "?? packages/payment-fake/src/persistent-http.ts",
+        "?? packages/payment-port/src/runtime-provider.ts",
+        "?? packages/persistence-port/src/payment-runtime.ts",
+        "?? packages/persistence-postgres/scripts/payment-runtime-health-fixture.mjs",
+        "?? packages/persistence-postgres/scripts/payment-runtime-health-fixture.test.mjs",
+        "?? packages/persistence-postgres/scripts/payment-runtime-rollback-proof.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-payment-runtime-action-guard.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-payment-runtime-parameters.mjs",
+        "?? packages/persistence-postgres/src/payment-runtime-action.test.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-config.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-context.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-data.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-evidence.test.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-evidence.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-fence.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-history.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-migration.test.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-recovery.test.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-recovery.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-repository.test.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-repository.ts",
+        "?? packages/persistence-postgres/src/payment-runtime-write.ts"
       ]
     }
   },
@@ -10586,7 +11662,7 @@
   "motionChecks": {
     "addToCart": {
       "buttonFocused": true,
-      "stateDelayMs": 48.39999961853027,
+      "stateDelayMs": 48.80000019073486,
       "liveAnnouncement": true,
       "pendingObserved": true,
       "countDelta": 1,
@@ -10654,7 +11730,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           },
@@ -10667,7 +11743,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           },
@@ -10680,7 +11756,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           }
@@ -11172,7 +12248,7 @@
         200,
         200
       ],
-      "origin": "http://127.0.0.1:55901"
+      "origin": "http://127.0.0.1:61649"
     },
     {
       "environment": "staging",
@@ -11187,7 +12263,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:56058"
+      "origin": "http://127.0.0.1:61793"
     },
     {
       "environment": "production",
@@ -11202,7 +12278,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:56081"
+      "origin": "http://127.0.0.1:61815"
     }
   ],
   "scenarioResults": [
@@ -11219,85 +12295,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:55901/_internal/design-foundations/en/motion"
+            "url": "http://127.0.0.1:61649/_internal/design-foundations/en/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:61649/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -11313,7 +12395,7 @@
           {
             "height": 51.71875,
             "label": "Replay hero entrance",
-            "width": 199.1875
+            "width": 198.921875
           },
           {
             "height": 48,
@@ -11328,22 +12410,22 @@
           {
             "height": 51.71875,
             "label": "Add gift to cartAdded to cart",
-            "width": 170.890625
+            "width": 171.8125
           },
           {
             "height": 51.71875,
             "label": "Reset confirmation",
-            "width": 184.328125
+            "width": 181.859375
           },
           {
             "height": 51.71875,
             "label": "Show recoverable error",
-            "width": 214.71875
+            "width": 215.390625
           },
           {
             "height": 51.71875,
             "label": "Replay confirmed success",
-            "width": 236.765625
+            "width": 237.828125
           }
         ],
         "document": {
@@ -11358,7 +12440,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 88,
+        "lcpMs": 84,
         "longTasks": [],
         "observers": {
           "event": {
@@ -11543,115 +12625,115 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:55901/_internal/design-foundations/vi/motion"
+            "url": "http://127.0.0.1:61649/_internal/design-foundations/vi/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:61649/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -11712,7 +12794,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 84,
+        "lcpMs": 60,
         "longTasks": [],
         "observers": {
           "event": {
@@ -11734,7 +12816,7 @@
         },
         "raf": {
           "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -11793,97 +12875,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:55901/_internal/design-foundations/th/motion"
+            "url": "http://127.0.0.1:61649/_internal/design-foundations/th/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2lg-l7asikrc3.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2lg-l7asikrc3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:61649/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -11899,7 +12981,7 @@
           {
             "height": 53.015625,
             "label": "เล่นการปรากฏของภาพหลักอีกครั้ง",
-            "width": 273.390625
+            "width": 271.390625
           },
           {
             "height": 48,
@@ -11914,22 +12996,22 @@
           {
             "height": 53.015625,
             "label": "เพิ่มของขวัญลงรถเข็นเพิ่มลงรถเข็นแล้ว",
-            "width": 185.140625
+            "width": 183.15625
           },
           {
             "height": 53.015625,
             "label": "รีเซ็ตการยืนยัน",
-            "width": 137.953125
+            "width": 136.34375
           },
           {
             "height": 53.015625,
             "label": "แสดงข้อผิดพลาดที่แก้ไขได้",
-            "width": 223.546875
+            "width": 218.265625
           },
           {
             "height": 53.015625,
             "label": "เล่นการยืนยันสำเร็จอีกครั้ง",
-            "width": 217.328125
+            "width": 215.9375
           }
         ],
         "document": {
@@ -11944,7 +13026,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 96,
+        "lcpMs": 92,
         "longTasks": [],
         "observers": {
           "event": {
@@ -11965,8 +13047,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.800000000000182,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -12023,181 +13105,181 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:55901/_internal/design-foundations/zh-CN/motion"
+            "url": "http://127.0.0.1:61649/_internal/design-foundations/zh-CN/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/12_4afnoxisbz.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1unpb6xqhrxa3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/simplified-chinese-ui.3lne0rhdq7_0v.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/simplified-chinese-ui.3q8dv_-6r4bj3.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:61649/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -12258,7 +13340,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 76,
+        "lcpMs": 72,
         "longTasks": [],
         "observers": {
           "event": {
@@ -12279,8 +13361,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -12441,211 +13523,211 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:55901/_internal/design-foundations/ja/motion"
+            "url": "http://127.0.0.1:61649/_internal/design-foundations/ja/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/38mfysl2j0xa_.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2fik9m_pfu2i-.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/japanese-ui.26gg9m9bgvh8o.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/japanese-ui.2_4uhplx016zg.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:61649/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -12727,8 +13809,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.800000000000182,
+          "p95FrameDeltaMs": 16.800000000000182,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -12785,97 +13867,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:55901/_internal/design-foundations/es/motion"
+            "url": "http://127.0.0.1:61649/_internal/design-foundations/es/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:61649/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -12936,7 +14018,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 84,
+        "lcpMs": 56,
         "longTasks": [],
         "observers": {
           "event": {
@@ -12957,7 +14039,7 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.800000000000182,
+          "maxFrameDeltaMs": 16.799999999999955,
           "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
@@ -13121,97 +14203,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:55901/_internal/design-foundations/en-XA/motion"
+            "url": "http://127.0.0.1:61649/_internal/design-foundations/en-XA/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:61649/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -13294,7 +14376,7 @@
         },
         "raf": {
           "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.800000000000182,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -13353,85 +14435,85 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:55901/_internal/design-foundations/pt/motion"
+            "url": "http://127.0.0.1:61649/_internal/design-foundations/pt/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:55901/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:61649/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:55901/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:61649/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:55901/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:61649/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:55901/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:61649/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -13513,8 +14595,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.700000000000045,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -13567,7 +14649,7 @@
       "path": "viewports/360x800-en.png",
       "pixelHeight": 800,
       "pixelWidth": 360,
-      "sha256": "aed65a6e0846cc3d770caa151b35a0c1611c36dc04a2d4ef0c0879860f47c7bf"
+      "sha256": "ae673b3d372584ff556365b15d9b127e5f2bca1a7cc519be706cbe465aa3c776"
     },
     {
       "path": "viewports/390x844-vi.png",
@@ -13579,7 +14661,7 @@
       "path": "viewports/768x1024-th.png",
       "pixelHeight": 1024,
       "pixelWidth": 768,
-      "sha256": "e09f759ad25319d8899a5d64189bd324c396fe2dc89b56e2e9e470a41d0ec697"
+      "sha256": "4c74ed2577b828e445d2c45f45628fe03a575257f5a8eee8b41e70d707cec237"
     },
     {
       "path": "viewports/1024x768-zh-CN.png",
@@ -13621,31 +14703,31 @@
       "path": "hero/390x844-mid.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "f8f862a92aa998338fec85a9471a0a5b06618e48d6f745ea19162cc3c05cb3e5"
+      "sha256": "a2f5e5547a7332eb71189ab07e0aa0784f7daf50bbaa7625a8e241f4f95755b5"
     },
     {
       "path": "hero/390x844-end.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "277f3bb5bdfab76b5e56545e348e421dd8d8689ab9cf0b8b98040d4f7aa32044"
+      "sha256": "383055592a2da62f334728ae66f6102c08b07fb5ac23bf8260cc33a1f73d2ac9"
     },
     {
       "path": "hero/1440x900-start.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "d2e45cf35def194737948bfaca425432ba7b810808956c58036e2f29afa56027"
+      "sha256": "ce716e9d593c5f9a8bd7cd8f5afd6b33d8d3b656d5b5cacf270cf4bf42bc8cb8"
     },
     {
       "path": "hero/1440x900-mid.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "1d525f7b8290e09a85fd44860b2b15b5621ffae142139ff6b1b642c8bba3abbf"
+      "sha256": "9ed6c16abc8adf723d54f2635644ce7d075dbd30c24dde723b4ad241e652f78a"
     },
     {
       "path": "hero/1440x900-end.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "1ecad14a71380baf2eda1982cb3b0f154ea1fa6a987eba6294816bb558b9a6f2"
+      "sha256": "575af8798fb1100c478fc172d9efe81cb9f0a91b86fce07ecfede19a81d2cae0"
     },
     {
       "path": "motion/idol-mouse-spatial-1440.png",
@@ -13663,13 +14745,13 @@
       "path": "motion/idol-latest-wins-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "82e6639d3137b9cc0e65c79cc9fda646b3d67ad98e81dc9b94dbd441d13442ff"
+      "sha256": "2ca409bc7a1f2a4bdf40c297199b3406d1a5c0af24fc32173027a920087db4b1"
     },
     {
       "path": "motion/success-end-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "fe03e4379ae0b1f159c210572b6e16e16566097553e3298a9c4d0ebbb8687d60"
+      "sha256": "1164816cb1e3a13dc5136d2867880a1595eb2bb2f0052aa46681f25b21ac9f03"
     },
     {
       "path": "motion/idol-touch-opacity-390.png",
@@ -13685,9 +14767,9 @@
     },
     {
       "path": "reduced-motion/390x844.png",
-      "pixelHeight": 2751,
+      "pixelHeight": 2725,
       "pixelWidth": 390,
-      "sha256": "6ffc7a0f84f5f46e683d0b336fc298d2750ecb51b05d08fee3fecbf8f169e8a8"
+      "sha256": "60357115086f715982bd75e4a6d4ae771e5aae2d5ded8a841ac0a519c05a1de4"
     },
     {
       "path": "reduced-motion/1440x900.png",

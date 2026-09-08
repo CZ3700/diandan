@@ -162,15 +162,31 @@ function CartContents({
         </>
       )}
       <div className="cart-footer">
-        <button
-          className="storefront-primary"
-          disabled
-          type="button"
-          aria-describedby={hintId}
-        >
-          {copy.giftCheckoutUnavailable}
-        </button>
-        <p id={hintId}>{copy.cartCheckoutBody}</p>
+        {cart &&
+        cart.items.length > 0 &&
+        (cart.status === "LOCKED" || !partial) ? (
+          <a
+            className="storefront-primary"
+            data-cart-checkout
+            href={storefrontHref(locale, "/checkout")}
+          >
+            {copy.checkoutContinue}
+          </a>
+        ) : (
+          <button
+            className="storefront-primary"
+            disabled
+            type="button"
+            aria-describedby={hintId}
+          >
+            {copy.checkoutContinue}
+          </button>
+        )}
+        {(!cart || cart.items.length === 0 || partial) && (
+          <p id={hintId}>
+            {partial ? copy.cartUnavailable : copy.checkoutEmpty}
+          </p>
+        )}
         <a
           className="storefront-secondary"
           href={storefrontHref(locale, "/gifts", contextQuery)}

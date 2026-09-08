@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "scope": "P4-04 PG source freeze after authenticated action recovery and domain-array mapping fix",
+  "files": [
+    {
+      "path": "database/migrations/0026_payment-runtime.down.sql",
+      "sha256": "cfd33b7ccce7043417dacb68f813c29ca2cb0356093a907d4fc16cddfc388801"
+    },
+    {
+      "path": "database/migrations/0026_payment-runtime.up.sql",
+      "sha256": "f7d3ba0803f90ff67fa95e6af0b2cf49b6aea95bcb464a5a813be448ceb7d002"
+    },
+    {
+      "path": "database/migrations/manifest.json",
+      "sha256": "d98e18864057d9bbf5d41b9a8a0242e6a6bea6aa489dc9ca96843693136b3a34"
+    },
+    {
+      "path": "packages/persistence-postgres/package.json",
+      "sha256": "a23b7ddd7f5159d2e03f8f242d41ec538354d6050927ab81317a05d35b5f1a58"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/payment-runtime-rollback-proof.mjs",
+      "sha256": "48ceb9e601138fbe207906eaa6201f5feed270000cc886b9d46b33d0de78f4c9"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/postgres-payment-runtime-action-guard.mjs",
+      "sha256": "3cb3397b1577cfa0ca84118ddcd3e18275702a82da6e0daec67f308f66d4628d"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/postgres-payment-runtime-parameters.mjs",
+      "sha256": "18d5529358fa4d5b284c1385abac28f580c2581b7558374c3d3e3d19f391d46b"
+    },
+    {
+      "path": "packages/persistence-postgres/src/index.ts",
+      "sha256": "1b14007d919c26f4634d5e7ef6df7cf7f99ddffc5368f26962a7e356af8b3070"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-action.test.ts",
+      "sha256": "5362ea611fcf1e8ecf00734c6db92f702dd93aa677f6f1757647dcb30cbf22ae"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-config.ts",
+      "sha256": "2b948a18f244671930e0e6fb9bf50496c61eb8e64a7271f0a928b73dcda29be0"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-context.ts",
+      "sha256": "d9b6ed5851c88717136308e00393e38a17d6d3ab21b8e0b76c444b9ddad42ded"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-data.ts",
+      "sha256": "9e2fc1db18b72dfac3585956a6c760f486bd003b85faf29b4a5c3a35e8e86061"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-evidence.test.ts",
+      "sha256": "217e996b5e7056947f76f2b47ef895f2d21a2bdcdce91e8414498419720b5c6f"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-evidence.ts",
+      "sha256": "1b99a58da44cbfd4c6d201b765529479772a68e3ae08e6ec248bf7c57eff7213"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-fence.ts",
+      "sha256": "9dcfc4f38d2e16901bf3b59d6ed2993541640c23c55430ffa2aa1ce4d6f5bdbc"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-history.ts",
+      "sha256": "17f151e84c7f1c11558d95f45a567c587d376d1347d4612852719449fe9f341c"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-migration.test.ts",
+      "sha256": "d6b2d1fce0ba6ccf0eaaebbda88802647192acc70f2bfa2cf8235510cd983a2c"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-recovery.test.ts",
+      "sha256": "1faacaa33f95a70530ebfbca40ce853f39a5536b56a0e584bdc221d498caf206"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-recovery.ts",
+      "sha256": "1e82d08594bb5e147ecefb29f30700a30dc68b55b3e4b06c875731fa17c2358d"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-repository.test.ts",
+      "sha256": "66394e9bc33be77462dfc053e363f415bd2a47bbfbbf51d338d10b4ca5f633d5"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-repository.ts",
+      "sha256": "f9d2d79d97f05f9cd3430cda5c59a03f9ec8e83471039f2894cfce6272428600"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-write.ts",
+      "sha256": "951571e8a4a981675ee73a35d2c7f560b8c1fd9aef2abdbb0c0d6d975f61eb54"
+    },
+    {
+      "path": "packages/persistence-postgres/src/postgres-persistence.test.ts",
+      "sha256": "192f6c5b0fc31b655c219c7c1f301bd84748085415c93aed294fb1494ca2e270"
+    },
+    {
+      "path": "packages/persistence-postgres/src/postgres-persistence.ts",
+      "sha256": "3fd0dc31aa92553b5acc2e72db9de37903795a53acf6a786a05b8938d1a60171"
+    }
+  ],
+  "verification": {
+    "unit": "42 tests passed / 6 files",
+    "types": "exit 0",
+    "build": "exit 0",
+    "format": "exit 0",
+    "lint": "exit 0",
+    "migrationRoundtrip": "26 migrations / 168 tables PASS",
+    "sqlParameters": "37 statements + domain arrays PASS",
+    "actionMutationProbe": "10 assertions PASS; isolated actual mutation trigger, full evidence authority remains HTTP scope"
+  },
+  "limitations": [
+    "No LIVE PSP or financial aggregate application",
+    "Full HTTP/PSP recovery and complete original check pending root/e2e"
+  ]
+}

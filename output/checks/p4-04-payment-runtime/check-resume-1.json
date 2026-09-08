@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "derivation": "Unmodified package.json scripts: failed publication-runtime node through remaining PostgreSQL commands, then the complete original check suffix",
+  "sourceSha256": "aa99ed9495f50a24d28ffc4cc2cccad59d45d6ff10b413a6998bbc84ef99c2c1",
+  "commands": [
+    "corepack pnpm --filter @fan-support/api test:postgres:publication-runtime",
+    "corepack pnpm --filter @fan-support/api test:postgres:admin-workspace",
+    "corepack pnpm --filter @fan-support/api test:postgres:gift-commerce",
+    "corepack pnpm --filter @fan-support/api test:postgres:storefront",
+    "corepack pnpm --filter @fan-support/api test:postgres:gift-storefront",
+    "corepack pnpm --filter @fan-support/api test:postgres:storefront-acceptance",
+    "corepack pnpm --filter @fan-support/api test:postgres:cart",
+    "corepack pnpm --filter @fan-support/api test:postgres:cart-storefront",
+    "corepack pnpm --filter @fan-support/api test:postgres:checkout-preflight",
+    "corepack pnpm --filter @fan-support/api test:postgres:payment-runtime",
+    "corepack pnpm test:s3",
+    "prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
+    "eslint . --max-warnings=0",
+    "turbo run typecheck --output-logs=errors-only",
+    "turbo run test --output-logs=errors-only",
+    "turbo run build --output-logs=errors-only",
+    "node ./scripts/check-adapter-boundaries.mjs",
+    "node ./scripts/check-build-artifacts.mjs"
+  ],
+  "results": [
+    {
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:publication-runtime",
+      "startedAt": "2026-09-08T19:52:30.612878+00:00",
+      "durationSeconds": 26.881613832898438,
+      "code": 1
+    }
+  ],
+  "durationSeconds": 26.882136750034988,
+  "code": 1,
+  "completedCommands": 1,
+  "completeRemainingCoverage": false,
+  "logSha256": "91f46a814f7ddd1a77b9c2289d154dfde33b4ecac11716022105330512be5c47"
+}

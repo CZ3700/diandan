@@ -1,0 +1,1992 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "empty-checkout",
+      "locale": "en",
+      "width": 390,
+      "status": "PASS"
+    },
+    {
+      "name": "keyboard",
+      "locale": "en",
+      "width": 390,
+      "visited": [
+        "INPUT",
+        "INPUT",
+        "INPUT",
+        "INPUT",
+        "A",
+        "A"
+      ],
+      "nativeBrowserOnly": true
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "en",
+      "width": 390,
+      "reducedMotion": false,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "zh-CN",
+      "width": 390,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "zh-CN",
+      "width": 390,
+      "reducedMotion": false,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "th",
+      "width": 390,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "th",
+      "width": 390,
+      "reducedMotion": false,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "vi",
+      "width": 390,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "vi",
+      "width": 390,
+      "reducedMotion": false,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "ja",
+      "width": 390,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "ja",
+      "width": 390,
+      "reducedMotion": true,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "es",
+      "width": 390,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "es",
+      "width": 390,
+      "reducedMotion": false,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "pt",
+      "width": 390,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "pt",
+      "width": 390,
+      "reducedMotion": false,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "en",
+      "width": 1440,
+      "status": "PASS"
+    },
+    {
+      "name": "keyboard",
+      "locale": "en",
+      "width": 1440,
+      "visited": [
+        "INPUT",
+        "INPUT",
+        "INPUT",
+        "INPUT",
+        "A",
+        "A"
+      ],
+      "nativeBrowserOnly": true
+    },
+    {
+      "name": "frozen-locale-navigation",
+      "from": "en",
+      "to": "ja",
+      "returnLocale": "en",
+      "width": 1440,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "en",
+      "width": 1440,
+      "reducedMotion": false,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "zh-CN",
+      "width": 1440,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "zh-CN",
+      "width": 1440,
+      "reducedMotion": false,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "th",
+      "width": 1440,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "th",
+      "width": 1440,
+      "reducedMotion": false,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "vi",
+      "width": 1440,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "vi",
+      "width": 1440,
+      "reducedMotion": false,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "ja",
+      "width": 1440,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "ja",
+      "width": 1440,
+      "reducedMotion": true,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "es",
+      "width": 1440,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "es",
+      "width": 1440,
+      "reducedMotion": false,
+      "status": "PASS"
+    },
+    {
+      "name": "empty-checkout",
+      "locale": "pt",
+      "width": 1440,
+      "status": "PASS"
+    },
+    {
+      "name": "checkout-hosted-return",
+      "locale": "pt",
+      "width": 1440,
+      "reducedMotion": false,
+      "status": "PASS"
+    }
+  ],
+  "screenshots": [
+    "en-390-empty.png",
+    "en-390-review.png",
+    "en-390-unknown.png",
+    "en-390-ready.png",
+    "en-390-hosted.png",
+    "en-390-return.png",
+    "zh-CN-390-empty.png",
+    "zh-CN-390-review.png",
+    "zh-CN-390-ready.png",
+    "zh-CN-390-hosted.png",
+    "zh-CN-390-return.png",
+    "th-390-empty.png",
+    "th-390-review.png",
+    "th-390-ready.png",
+    "th-390-hosted.png",
+    "th-390-return.png",
+    "vi-390-empty.png",
+    "vi-390-review.png",
+    "vi-390-ready.png",
+    "vi-390-hosted.png",
+    "vi-390-return.png",
+    "ja-390-empty.png",
+    "ja-390-review.png",
+    "ja-390-ready.png",
+    "ja-390-hosted.png",
+    "ja-390-return.png",
+    "es-390-empty.png",
+    "es-390-review.png",
+    "es-390-ready.png",
+    "es-390-hosted.png",
+    "es-390-return.png",
+    "pt-390-empty.png",
+    "pt-390-review.png",
+    "pt-390-ready.png",
+    "pt-390-hosted.png",
+    "pt-390-return.png",
+    "en-1440-empty.png",
+    "en-1440-review.png",
+    "en-1440-ready.png",
+    "en-1440-hosted.png",
+    "en-1440-return.png",
+    "zh-CN-1440-empty.png",
+    "zh-CN-1440-review.png",
+    "zh-CN-1440-ready.png",
+    "zh-CN-1440-hosted.png",
+    "zh-CN-1440-return.png",
+    "th-1440-empty.png",
+    "th-1440-review.png",
+    "th-1440-ready.png",
+    "th-1440-hosted.png",
+    "th-1440-return.png",
+    "vi-1440-empty.png",
+    "vi-1440-review.png",
+    "vi-1440-ready.png",
+    "vi-1440-hosted.png",
+    "vi-1440-return.png",
+    "ja-1440-empty.png",
+    "ja-1440-review.png",
+    "ja-1440-ready.png",
+    "ja-1440-hosted.png",
+    "ja-1440-return.png",
+    "es-1440-empty.png",
+    "es-1440-review.png",
+    "es-1440-ready.png",
+    "es-1440-hosted.png",
+    "es-1440-return.png",
+    "pt-1440-empty.png",
+    "pt-1440-review.png",
+    "pt-1440-ready.png",
+    "pt-1440-hosted.png",
+    "pt-1440-return.png"
+  ],
+  "axe": [
+    {
+      "name": "en-390-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-unknown",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-390-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-390-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-390-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-390-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-1440-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-1440-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-1440-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-1440-return",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-1440-empty",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-1440-review",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-1440-ready",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-1440-return",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "pageErrors": 0,
+  "cartResponses": [
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 404,
+      "code": "CART_NOT_FOUND",
+      "csrfPresent": false
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "INITIALIZE_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "ADD_CART_ITEM",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "category": "READ_CART",
+      "status": 200,
+      "code": "SUCCESS",
+      "csrfPresent": true
+    }
+  ],
+  "recoveryDueObservations": [
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": false,
+      "leaseAvailable": true
+    },
+    {
+      "reconcile": true,
+      "due": true,
+      "leaseAvailable": true
+    }
+  ],
+  "browserClosed": true,
+  "actualPspSandbox": false,
+  "physicalDeviceEvidence": false,
+  "privatePlaintextPersisted": false,
+  "browserHarnessSha256": "faa9a6fc479d32ea5f103677e0da30afed77d16bf60bca7f82231d0efa9ab5d5",
+  "browserVersion": "152.0.7977.82"
+}

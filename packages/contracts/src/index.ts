@@ -80,3 +80,6 @@ export * from "./checkout-preflight.js";
 export * from "./checkout-preflight-internal.js";
 export * from "./checkout-preflight-public.js";
 export * from "./checkout-preflight-inventory.js";
+export * from "./payment-runtime.js";
+export * from "./payment-runtime-config.js";
+export * from "./payment-runtime-internal.js";

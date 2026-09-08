@@ -62,6 +62,7 @@ export async function withCartStorefrontFixture({
   output,
   check,
   progress,
+  storefrontOrigin,
   verify,
 }) {
   if (typeof verify !== "function")
@@ -76,7 +77,7 @@ export async function withCartStorefrontFixture({
     client.on("error", () => undefined);
     own("fixture observer PostgreSQL", () => client.end());
     await client.connect();
-    const origin = await reserveOrigin();
+    const origin = storefrontOrigin ?? (await reserveOrigin());
     const identity = await createStorefrontFixtureIdentity(client);
     await giftCommerceExtension.seed({
       client,

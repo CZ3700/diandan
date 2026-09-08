@@ -14,6 +14,12 @@ test("does not expose the session-level migration helper", () => {
   ).toBe(false);
 });
 
+test("keeps the payment repository with its provider query-layer argument private", () => {
+  expect(
+    Object.hasOwn(persistencePostgres, "createPaymentRuntimeRepository"),
+  ).toBe(false);
+});
+
 test("exposes a managed supplier-free persistence factory", () => {
   expect(persistencePostgres.createPostgresPersistence).toBeTypeOf("function");
   expect(persistencePostgres.createReliableEventRepositories).toBeTypeOf(

@@ -48,9 +48,12 @@
     "test:postgres:cart": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/cart-http-*.test.mjs && node ./scripts/cart-http.mjs",
     "test:postgres:cart-storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/cart-storefront-*.test.mjs && node ./scripts/cart-storefront-http.mjs",
     "test:browser:cart-storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/cart-storefront-http.mjs --production --ui",
-    "preview:cart-storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/cart-storefront-http.mjs --production --serve"
+    "preview:cart-storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/cart-storefront-http.mjs --production --serve",
+    "test:postgres:payment-runtime": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/payment-runtime-*.test.mjs && node ./scripts/payment-runtime-config-postgres.mjs && node ./scripts/payment-runtime-http.mjs",
+    "test:browser:payment-runtime": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/payment-runtime-http.mjs --production --ui"
   },
   "dependencies": {
+    "@fan-support/payment-port": "workspace:*",
     "@fan-support/application": "workspace:*",
     "@fan-support/config": "workspace:*",
     "@fan-support/contracts": "workspace:*",
@@ -68,6 +71,8 @@
     "zod": "4.5.4"
   },
   "devDependencies": {
+    "@fan-support/content": "workspace:*",
+    "@fan-support/payment-fake": "workspace:*",
     "tsx": "4.23.13",
     "pg": "8.23.0",
     "@fan-support/media-s3": "workspace:*",

@@ -1,3 +1,8 @@
+import { createPaymentRuntimeRepository } from "./payment-runtime-repository.js";
+import type {
+  PaymentRuntimeRepositories,
+  PaymentRuntimeTransactionManager,
+} from "@fan-support/persistence-port";
 import { createCheckoutPreflightRepository } from "./checkout-preflight-repository.js";
 import type {
   CheckoutPreflightRepositories,
@@ -147,6 +152,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly paymentRuntimeTransactionManager: PaymentRuntimeTransactionManager;
   readonly checkoutPreflightTransactionManager: CheckoutPreflightTransactionManager;
   readonly cartEditTransactionManager: CartEditTransactionManager;
   readonly cartRuntimeTransactionManager: CartRuntimeTransactionManager;
@@ -301,6 +307,23 @@ export function createPostgresPersistenceWithPoolFactory(
       };
     },
   });
+  const paymentRuntimeRunner =
+    createTransactionRunner<PaymentRuntimeRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => {
+        const database = createPostgresQueryLayer(client as NodePgClient);
+        return {
+          cartRuntime: createCartRuntimeRepository(client, scope),
+          paymentRuntime: createPaymentRuntimeRepository(
+            client,
+            database,
+            scope,
+          ),
+          idempotency: createIdempotencyRepository(database, scope),
+          outbox: createOutboxRepository(database, scope),
+        };
+      },
+    });
   const checkoutPreflightRunner =
     createTransactionRunner<CheckoutPreflightRepositories>({
       acquireClient: async () => pool.connect(),
@@ -976,6 +999,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return publishedContentRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    paymentRuntimeTransactionManager: {
+      async runInPaymentRuntimeTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return paymentRuntimeRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
           work,
         );

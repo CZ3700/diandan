@@ -1,4 +1,5 @@
 import "server-only";
+import { matchesConfiguredRequestOrigin } from "./request-origin";
 import {
   cartRuntimeCommandSchema,
   cartRuntimeCurrentResponseSchema,
@@ -147,7 +148,7 @@ export async function proxyCartRequest(
     const incoming = new URL(request.url);
     const targetOrigin = new URL(options.internalApiOrigin);
     if (
-      incoming.origin !== options.siteOrigin ||
+      !matchesConfiguredRequestOrigin(request, options.siteOrigin) ||
       targetOrigin.origin !== options.internalApiOrigin ||
       !["http:", "https:"].includes(targetOrigin.protocol)
     )

@@ -17,6 +17,7 @@ const OTHER_PAYMENT_ATTEMPT_ID = "a2f80a06-1c38-4591-a0e7-a86cc00e98ad";
 
 function paymentEvidence(
   status: PaymentAttemptStatus,
+  kind: "VERIFIED_WEBHOOK" | "AUTHENTICATED_RECONCILE" = "VERIFIED_WEBHOOK",
 ): Extract<AcceptedProviderEvidence, { eventType: "PAYMENT_STATUS" }> {
   const result = validateProviderEvidence(
     {
@@ -34,10 +35,16 @@ function paymentEvidence(
       providerAccountId: "2d6f6e95-168c-4be6-950e-73d1e33d815b",
       environment: "TEST",
       providerEventId: `evt_payment_${status.toLowerCase()}`,
-      evidence: {
-        kind: "VERIFIED_WEBHOOK",
-        webhookInboxId: "f219e263-c97d-4249-94ed-7c5473020cca",
-      },
+      evidence:
+        kind === "AUTHENTICATED_RECONCILE"
+          ? {
+              kind,
+              auditLogId: "f219e263-c97d-4249-94ed-7c5473020cca",
+            }
+          : {
+              kind: "VERIFIED_WEBHOOK",
+              webhookInboxId: "f219e263-c97d-4249-94ed-7c5473020cca",
+            },
       occurredAt: "2026-09-03T02:00:00Z",
       association: {
         status: "MATCHED",
@@ -59,6 +66,28 @@ function paymentEvidence(
 }
 
 describe("payment attempt state machine", () => {
+  test("restores an uncertain hosted action only from matched audited reconcile evidence", () => {
+    expect(
+      decidePaymentAttemptTransition("UNKNOWN", "REQUIRES_ACTION", {
+        kind: "PROVIDER_EVIDENCE",
+        expectedPaymentAttemptId: PAYMENT_ATTEMPT_ID,
+        evidence: paymentEvidence("REQUIRES_ACTION", "AUTHENTICATED_RECONCILE"),
+      }).decision,
+    ).toBe("APPLIED");
+    for (const authority of [
+      { kind: "CREATE_RESULT" },
+      { kind: "BROWSER_RETURN" },
+      {
+        kind: "PROVIDER_EVIDENCE",
+        expectedPaymentAttemptId: PAYMENT_ATTEMPT_ID,
+        evidence: paymentEvidence("REQUIRES_ACTION"),
+      },
+    ] as const)
+      expect(
+        decidePaymentAttemptTransition("UNKNOWN", "REQUIRES_ACTION", authority)
+          .decision,
+      ).toBe("REJECTED");
+  });
   test("treats a same-state request as an idempotent no-op", () => {
     expect(
       decidePaymentAttemptTransition("PROCESSING", "PROCESSING", {

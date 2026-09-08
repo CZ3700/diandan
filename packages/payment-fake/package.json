@@ -17,6 +17,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./persistent-http": {
+      "types": "./dist/persistent-http.d.ts",
+      "import": "./dist/persistent-http.js"
     }
   },
   "scripts": {

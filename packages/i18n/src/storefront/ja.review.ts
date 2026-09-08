@@ -4,9 +4,9 @@ export default {
   locale: "ja",
   status: "DRAFT",
   sourceHash:
-    "d37e06872a2acf9ea6097838ba123d0570964f9fbe54ec54ee7adf160222d378",
+    "a0621f7726aca9444a8a79d4ae6e6f536aff42a15b039003932cedd43f376b01",
   translationHash:
-    "8ac45b29394f57531f6fe0f2a8bc1258187fe6b0345d3759d994fff85fa65742",
+    "bf8ea64d3cf41c1bb66bc308ee31eb344cd74bedc78fc02b91517f631d2abb71",
   reviewer: null,
   approvedCommit: null,
 } as const;
