@@ -1029,6 +1029,185 @@ test("requires stable, bounded menu layout and scroll locking", async (context) 
   includesError(errors, "unchecked Menu indicator must remain visually hidden");
 });
 
+async function installControlledMenu(root) {
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "export function Menu() {",
+    "export function Menu({ open: controlledOpen, onOpenChange }: { open?: boolean; onOpenChange?: (next: boolean) => void }) {",
+  );
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "const [open, setOpen] = useState(false);",
+    "const [internalOpen, setOpen] = useState(false);\n  const open = controlledOpen ?? internalOpen;",
+  );
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "    setOpen(nextOpen);",
+    "    if (controlledOpen === undefined) setOpen(nextOpen);\n    onOpenChange?.(nextOpen);",
+  );
+}
+
+test("accepts the exact optional controlled Menu state while preserving its uncontrolled default", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await installControlledMenu(root);
+  assert.deepEqual(await validateUiInteractions(root), []);
+});
+
+test("rejects a controlled Menu prop that shadows the undefined comparison binding", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await installControlledMenu(root);
+  for (const [from, to] of [
+    ["open: controlledOpen", "open: undefined"],
+    ["controlledOpen ?? internalOpen", "undefined ?? internalOpen"],
+    ["controlledOpen === undefined", "undefined === undefined"],
+  ])
+    await replace(root, "packages/ui/src/menu.tsx", from, to);
+  includesError(
+    await validateUiInteractions(root),
+    "Menu must use a controlled open state for scroll locking",
+  );
+});
+
+test("rejects a module binding shadowing the controlled Menu's undefined guard", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await installControlledMenu(root);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "export function Menu(",
+    "const undefined = false;\nexport function Menu(",
+  );
+  includesError(
+    await validateUiInteractions(root),
+    "Menu must use a controlled open state for scroll locking",
+  );
+});
+
+for (const [label, statement] of [
+  ["state", "controlledOpen = false;"],
+  ["callback", "onOpenChange = () => {};"],
+  ["loop target", "for (controlledOpen of [false]) {}"],
+  [
+    "destructured callback",
+    "({ callback: onOpenChange } = { callback: () => {} });",
+  ],
+]) {
+  test(`rejects a reassigned controlled Menu ${label} binding`, async (context) => {
+    const { root, validateUiInteractions } = await validateFixture(context);
+    await installControlledMenu(root);
+    await replace(
+      root,
+      "packages/ui/src/menu.tsx",
+      "const open = controlledOpen ?? internalOpen;",
+      `${statement}\n  const open = controlledOpen ?? internalOpen;`,
+    );
+    includesError(
+      await validateUiInteractions(root),
+      "Menu must use a controlled open state for scroll locking",
+    );
+  });
+}
+
+test("rejects a namespace import shadowing the controlled Menu undefined guard", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await installControlledMenu(root);
+  await replace(
+    root,
+    "packages/ui/src/menu.tsx",
+    "export function Menu(",
+    'import * as undefined from "./menu-values.js";\nexport function Menu(',
+  );
+  includesError(
+    await validateUiInteractions(root),
+    "Menu must use a controlled open state for scroll locking",
+  );
+});
+
+for (const [label, from, to] of [
+  ["true initial state", "useState(false)", "useState(true)"],
+  [
+    "truthy instead of nullish state",
+    "controlledOpen ?? internalOpen",
+    "controlledOpen || internalOpen",
+  ],
+  [
+    "wrong internal fallback",
+    "controlledOpen ?? internalOpen",
+    "controlledOpen ?? false",
+  ],
+  [
+    "wrong external property",
+    "open: controlledOpen",
+    "disabled: controlledOpen",
+  ],
+  [
+    "defaulted external property",
+    "open: controlledOpen,",
+    "open: controlledOpen = false,",
+  ],
+  ["shadowed state hook", "onOpenChange }: {", "onOpenChange, useState }: {"],
+  [
+    "shadowed external state",
+    "const handleOpenChange =",
+    "function controlledOpen() {}\n  const handleOpenChange =",
+  ],
+  [
+    "shadowed state setter",
+    "const handleOpenChange =",
+    "function setOpen() {}\n  const handleOpenChange =",
+  ],
+  [
+    "wrong uncontrolled guard",
+    "controlledOpen === undefined",
+    "controlledOpen !== undefined",
+  ],
+  [
+    "unconditional internal write",
+    "if (controlledOpen === undefined) setOpen(nextOpen);",
+    "setOpen(nextOpen);",
+  ],
+  ["missing external callback", "onOpenChange?.(nextOpen);", "void nextOpen;"],
+  [
+    "wrong external callback value",
+    "onOpenChange?.(nextOpen);",
+    "onOpenChange?.(false);",
+  ],
+  ["wrong live Root state", "open={open}", "open={internalOpen}"],
+  [
+    "wrong live Root callback",
+    "onOpenChange={handleOpenChange}",
+    "onOpenChange={() => undefined}",
+  ],
+  [
+    "overriding Root spread",
+    "open={open} onOpenChange={handleOpenChange}",
+    "open={open} onOpenChange={handleOpenChange} {...{ open: false }}",
+  ],
+  [
+    "shadowed external callback",
+    "const handleOpenChange =",
+    "function onOpenChange() {}\n  const handleOpenChange =",
+  ],
+  [
+    "dead state declaration bait",
+    "const open = controlledOpen ?? internalOpen;",
+    "const open = false;\n  const decoy = 'const [open, setOpen] = useState(false);';",
+  ],
+]) {
+  test(`rejects optional controlled Menu with ${label}`, async (context) => {
+    const { root, validateUiInteractions } = await validateFixture(context);
+    await installControlledMenu(root);
+    await replace(root, "packages/ui/src/menu.tsx", from, to);
+    includesError(
+      await validateUiInteractions(root),
+      "Menu must use a controlled open state for scroll locking",
+    );
+  });
+}
+
 test("binds touch scroll prevention and cancellation to the live handlers", async (context) => {
   const { root, validateUiInteractions } = await validateFixture(context);
   await replace(

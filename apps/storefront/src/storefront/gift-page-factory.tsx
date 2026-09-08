@@ -6,6 +6,7 @@ import {
   slugSchema,
   idolIdSchema,
   policyKeySchema,
+  type StorefrontContextResponse,
   type SupportedLocale,
 } from "@fan-support/contracts";
 import {
@@ -20,6 +21,7 @@ import { SiteFooter, PageState } from "./page-parts";
 import { MarketChoices, PolicyLinks } from "./commerce-context";
 import { GiftDirectorySection } from "./gift-directory-section";
 import { GiftDetail } from "./gift-detail";
+import { GiftDetailPolicyLinks } from "./gift-detail-context-section";
 import { PolicyBody } from "./gift-content";
 import { formatStorefrontMessage } from "./copy";
 import { giftRecoveryQuery } from "./gift-selection";
@@ -42,16 +44,27 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
     const handle =
       kind === "gift" ? slugSchema.safeParse(routeParams.handle) : undefined;
     if (handle && !handle.success) notFound();
-    const [copy, context, detail] = await Promise.all([
+    const contextRead = readCommerceContext().catch(
+      (error: unknown): StorefrontContextResponse => {
+        if (kind !== "gift") throw error;
+        return {
+          schemaVersion: 1,
+          outcome: "FAILURE",
+          code: "COMMERCE_UNAVAILABLE",
+        };
+      },
+    );
+    const [copy, detail] = await Promise.all([
       loadStorefrontCopy(locale),
-      readCommerceContext(),
       handle?.success
         ? readGiftDetailPage(locale, handle.data, values)
         : undefined,
+      kind === "gift" ? undefined : contextRead,
     ]);
     const contextQuery = queryString(values);
     let content: ReactNode;
     if (kind === "gifts") {
+      const context = await contextRead;
       const selectedId = idolIdSchema.safeParse(values["idol"]);
       const directory = selectedId.success
         ? await artistRead(locale, selectedId.data)
@@ -71,7 +84,8 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
           {...(artist ? { artist } : {})}
         />
       );
-    } else if (kind === "region")
+    } else if (kind === "region") {
+      const context = await contextRead;
       content = (
         <div className="storefront-section storefront-directory">
           <MarketChoices
@@ -83,7 +97,8 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
           />
         </div>
       );
-    else if (kind === "policy") {
+    } else if (kind === "policy") {
+      const context = await contextRead;
       const key = policyKeySchema.safeParse(routeParams.handle);
       if (!key.success) notFound();
       const result = await policyRead(locale, key.data);
@@ -172,7 +187,7 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
             copy={copy}
             content={scoped?.outcome === "SUCCESS" ? scoped : result}
             {...(scoped?.outcome === "SUCCESS" ? { commerce: scoped } : {})}
-            context={context}
+            context={contextRead}
             artists={artists}
             contextQuery={contextQuery}
             {...(selection.kind === "VALID" && selection.variantId
@@ -208,12 +223,21 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
           name={name}
           contextQuery={contextQuery}
           policyLinks={
-            <PolicyLinks
-              locale={locale}
-              copy={copy}
-              context={context}
-              contextQuery={contextQuery}
-            />
+            kind === "gift" ? (
+              <GiftDetailPolicyLinks
+                locale={locale}
+                copy={copy}
+                context={contextRead}
+                contextQuery={contextQuery}
+              />
+            ) : (
+              <PolicyLinks
+                locale={locale}
+                copy={copy}
+                context={await contextRead}
+                contextQuery={contextQuery}
+              />
+            )
           }
         />
       </div>

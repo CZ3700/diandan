@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { Button, Field } from "@fan-support/ui";
-import { Drawer } from "@fan-support/ui/interactions";
+import { LazyDrawer } from "./lazy-drawer";
 import type { GiftDiscoveryQuery } from "@fan-support/contracts";
 import type {
   GiftFilterDraft,
@@ -296,7 +296,10 @@ export function GiftFiltersClient({
     <div className="gift-filters">
       <div className="gift-filters__desktop">{form("desktop")}</div>
       <div className="gift-filters__mobile">
-        <Drawer
+        <LazyDrawer
+          loadingLabel={copy.loading}
+          errorLabel={copy.contentErrorBody}
+          retryLabel={copy.artistRetry}
           title={copy.giftFilters}
           description={copy.giftFiltersDescription}
           triggerLabel={copy.giftFilters}
@@ -311,7 +314,7 @@ export function GiftFiltersClient({
           }}
         >
           {form("mobile")}
-        </Drawer>
+        </LazyDrawer>
       </div>
     </div>
   );

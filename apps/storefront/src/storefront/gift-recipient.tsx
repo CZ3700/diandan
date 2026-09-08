@@ -6,7 +6,7 @@ import type {
   SupportedLocale,
 } from "@fan-support/contracts";
 import { Button } from "@fan-support/ui";
-import { Drawer } from "@fan-support/ui/interactions";
+import { LazyDrawer } from "./lazy-drawer";
 import type { StorefrontCopy } from "./copy";
 import { ArtistSearch } from "./artist-search";
 import { PublishedImage } from "./published-image";
@@ -74,7 +74,10 @@ export function GiftRecipientPicker({
   }
   return (
     <div data-gift-recipient-picker>
-      <Drawer
+      <LazyDrawer
+        loadingLabel={copy.loading}
+        errorLabel={copy.contentErrorBody}
+        retryLabel={copy.artistRetry}
         open={open}
         onOpenChange={setOpen}
         title={copy.giftRecipientChoose}
@@ -135,7 +138,7 @@ export function GiftRecipientPicker({
                   : copy.artistLoadMore}
           </Button>
         )}
-      </Drawer>
+      </LazyDrawer>
     </div>
   );
 }

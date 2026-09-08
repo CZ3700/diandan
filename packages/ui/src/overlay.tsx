@@ -1,7 +1,13 @@
 "use client";
 
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
-import type { ReactElement, ReactNode } from "react";
+import {
+  useId,
+  useRef,
+  type ReactElement,
+  type ReactNode,
+  type Ref,
+} from "react";
 
 import { Icon } from "./icon.js";
 
@@ -15,6 +21,8 @@ export type DialogProps = Readonly<{
   open?: boolean;
   title: ReactNode;
   triggerLabel: ReactNode;
+  triggerRef?: Ref<HTMLButtonElement>;
+  initialFocus?: "popup";
 }>;
 
 export type DrawerSide = "block-end" | "inline-end" | "inline-start";
@@ -68,9 +76,13 @@ function ModalSurface({
   side,
   title,
   triggerLabel,
+  triggerRef,
+  initialFocus,
 }: ModalSurfaceProps): ReactElement {
   requireAccessibleCopy(triggerLabel, title, description, closeLabel);
   const drawerSide = side ?? "inline-end";
+  const triggerId = useId();
+  const popup = useRef<HTMLDivElement | null>(null);
 
   return (
     <DialogPrimitive.Root
@@ -78,10 +90,13 @@ function ModalSurface({
       modal
       onOpenChange={(nextOpen) => onOpenChange?.(nextOpen)}
       open={open}
+      {...(triggerRef ? { triggerId } : {})}
     >
       <DialogPrimitive.Trigger
         className="fs-overlay-trigger"
         data-overlay-trigger={kind}
+        ref={triggerRef}
+        {...(triggerRef ? { id: triggerId } : {})}
       >
         {triggerLabel}
       </DialogPrimitive.Trigger>
@@ -93,6 +108,8 @@ function ModalSurface({
           data-side={kind === "drawer" ? drawerSide : undefined}
         >
           <DialogPrimitive.Popup
+            ref={popup}
+            {...(initialFocus === "popup" ? { initialFocus: popup } : {})}
             className={
               kind === "drawer" ? "fs-drawer__popup" : "fs-dialog__popup"
             }

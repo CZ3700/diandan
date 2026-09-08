@@ -5,7 +5,7 @@ import {
   SUPPORTED_LOCALES,
   type SupportedLocale,
 } from "@fan-support/contracts";
-import type { ReactElement } from "react";
+import type { ReactElement, Ref } from "react";
 
 import { Menu, type MenuOption } from "./menu.js";
 
@@ -13,6 +13,10 @@ export type LanguageControlProps = Readonly<{
   label: string;
   onValueChange: (locale: SupportedLocale) => void;
   value: SupportedLocale;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  triggerRef?: Ref<HTMLButtonElement>;
+  initialFocus?: "first" | "last";
 }>;
 
 export type RegionOption<Value extends string = string> = MenuOption<Value>;
@@ -34,6 +38,7 @@ export function LanguageControl({
   label,
   onValueChange,
   value,
+  ...control
 }: LanguageControlProps): ReactElement {
   return (
     <Menu
@@ -41,6 +46,7 @@ export function LanguageControl({
       onValueChange={onValueChange}
       options={LANGUAGE_OPTIONS}
       value={value}
+      {...control}
     />
   );
 }

@@ -452,6 +452,12 @@ function valueBindingCount(sourceFile, name) {
       const clause = statement.importClause;
       if (clause?.isTypeOnly) continue;
       if (clause?.name?.text === name) count += 1;
+      if (
+        clause?.namedBindings &&
+        ts.isNamespaceImport(clause.namedBindings) &&
+        clause.namedBindings.name.text === name
+      )
+        count += 1;
       if (clause?.namedBindings && ts.isNamedImports(clause.namedBindings))
         count += clause.namedBindings.elements.filter(
           (element) => !element.isTypeOnly && element.name.text === name,
@@ -461,7 +467,7 @@ function valueBindingCount(sourceFile, name) {
   return count;
 }
 
-function hasExactValueImport(sourceFile, module, name) {
+function hasExactValueImport(sourceFile, module, name, importedName = name) {
   return (
     valueBindingCount(sourceFile, name) === 1 &&
     sourceFile.statements.some((statement) => {
@@ -481,7 +487,7 @@ function hasExactValueImport(sourceFile, module, name) {
           (element) =>
             !element.isTypeOnly &&
             element.name.text === name &&
-            (element.propertyName?.text ?? element.name.text) === name,
+            (element.propertyName?.text ?? element.name.text) === importedName,
         )
       );
     })
@@ -744,21 +750,27 @@ function isZeroArgumentCallStatement(statement, path) {
   );
 }
 
-function hasOrderedTouchDismissalCancellation(handler, setterName) {
+function hasOrderedTouchDismissalCancellation(handler, setterName, controlled) {
   if (
     handler === undefined ||
     handler.body === undefined ||
     !ts.isBlock(handler.body) ||
     handler.parameters.length !== 2 ||
     !ts.isIdentifier(handler.parameters[0].name) ||
-    !ts.isIdentifier(handler.parameters[1].name)
+    !ts.isIdentifier(handler.parameters[1].name) ||
+    handler.parameters.some(
+      (parameter) =>
+        parameter.initializer ||
+        parameter.dotDotDotToken ||
+        parameter.questionToken,
+    )
   ) {
     return false;
   }
   const nextOpenName = handler.parameters[0].name.text;
   const detailsName = handler.parameters[1].name.text;
   const statements = [...handler.body.statements];
-  if (statements.length !== 2) {
+  if (statements.length !== (controlled ? 3 : 2)) {
     return false;
   }
   const hasMatchingIf = (() => {
@@ -820,11 +832,270 @@ function hasOrderedTouchDismissalCancellation(handler, setterName) {
   ) {
     return false;
   }
+  if (controlled) {
+    const guard = statements[1];
+    const callback = callExpressionFromStatement(statements[2]);
+    return (
+      ts.isIfStatement(guard) &&
+      guard.elseStatement === undefined &&
+      ts.isBinaryExpression(unwrapExpression(guard.expression)) &&
+      unwrapExpression(guard.expression).operatorToken.kind ===
+        ts.SyntaxKind.EqualsEqualsEqualsToken &&
+      pathMatches(unwrapExpression(guard.expression).left, [controlled.name]) &&
+      pathMatches(unwrapExpression(guard.expression).right, ["undefined"]) &&
+      callExpressionFromStatement(guard.thenStatement) === setterCalls[0] &&
+      callback !== undefined &&
+      callback.questionDotToken !== undefined &&
+      pathMatches(callback.expression, [controlled.callback]) &&
+      callback.arguments.length === 1 &&
+      pathMatches(callback.arguments[0], [nextOpenName])
+    );
+  }
   const setterStatementIndex = statements.findIndex((statement) => {
     const call = callExpressionFromStatement(statement);
     return call === setterCalls[0];
   });
   return setterStatementIndex === 1;
+}
+
+function menuBindingCount(menu, name) {
+  let count = 0;
+  const visit = (node) => {
+    if (
+      ts.isVariableDeclaration(node) ||
+      ts.isParameter(node) ||
+      ts.isFunctionDeclaration(node) ||
+      ts.isFunctionExpression(node) ||
+      ts.isClassDeclaration(node) ||
+      ts.isClassExpression(node)
+    ) {
+      if (node.name)
+        count += bindingIdentifiers(node.name).filter(
+          (value) => value === name,
+        ).length;
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(menu);
+  return count;
+}
+
+/** Reject writes to the live Menu bindings, including destructuring assignment targets. */
+function hasMenuBindingWrites(menu, names) {
+  const writesTarget = (node) => {
+    const target = unwrapExpression(node);
+    if (ts.isIdentifier(target)) return names.has(target.text);
+    if (ts.isArrayLiteralExpression(target))
+      return target.elements.some(writesTarget);
+    if (ts.isObjectLiteralExpression(target))
+      return target.properties.some((property) => {
+        if (ts.isShorthandPropertyAssignment(property))
+          return names.has(property.name.text);
+        if (ts.isPropertyAssignment(property))
+          return writesTarget(property.initializer);
+        return (
+          ts.isSpreadAssignment(property) && writesTarget(property.expression)
+        );
+      });
+    if (ts.isSpreadElement(target)) return writesTarget(target.expression);
+    if (
+      ts.isBinaryExpression(target) &&
+      target.operatorToken.kind === ts.SyntaxKind.EqualsToken
+    )
+      return writesTarget(target.left);
+    return false;
+  };
+  let found = false;
+  const visit = (node) => {
+    if (
+      (ts.isBinaryExpression(node) &&
+        node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment &&
+        node.operatorToken.kind <= ts.SyntaxKind.LastAssignment &&
+        writesTarget(node.left)) ||
+      ((ts.isForInStatement(node) || ts.isForOfStatement(node)) &&
+        !ts.isVariableDeclarationList(node.initializer) &&
+        writesTarget(node.initializer)) ||
+      ((ts.isPrefixUnaryExpression(node) ||
+        ts.isPostfixUnaryExpression(node)) &&
+        (node.operator === ts.SyntaxKind.PlusPlusToken ||
+          node.operator === ts.SyntaxKind.MinusMinusToken) &&
+        writesTarget(node.operand))
+    )
+      found = true;
+    if (!found) ts.forEachChild(node, visit);
+  };
+  visit(menu);
+  return found;
+}
+
+/** Recognize only the two supported live state bindings, not source-text examples. */
+function menuOpenBinding(sourceFile, menu) {
+  const body = functionBody(menu);
+  if (
+    !body ||
+    valueBindingCount(sourceFile, "undefined") !== 0 ||
+    !hasExactValueImport(sourceFile, "react", "useState") ||
+    !hasExactValueImport(
+      sourceFile,
+      "@base-ui/react/menu",
+      "MenuPrimitive",
+      "Menu",
+    )
+  )
+    return undefined;
+  const returns = body.statements.filter(ts.isReturnStatement);
+  const element =
+    returns.length === 1 && returns[0].expression
+      ? unwrapExpression(returns[0].expression)
+      : undefined;
+  if (
+    !element ||
+    !ts.isJsxElement(element) ||
+    !pathMatches(element.openingElement.tagName, ["MenuPrimitive", "Root"])
+  )
+    return undefined;
+  const attributes = element.openingElement.attributes.properties;
+  const identifierAttribute = (name) => {
+    const matches = attributes.filter(
+      (attribute) =>
+        ts.isJsxAttribute(attribute) && attribute.name.text === name,
+    );
+    const initializer =
+      matches.length === 1 ? matches[0].initializer : undefined;
+    return initializer &&
+      ts.isJsxExpression(initializer) &&
+      initializer.expression &&
+      ts.isIdentifier(unwrapExpression(initializer.expression))
+      ? unwrapExpression(initializer.expression).text
+      : undefined;
+  };
+  const open = identifierAttribute("open");
+  const handler = identifierAttribute("onOpenChange");
+  if (!open || !handler) return undefined;
+  const stateDeclarations = body.statements
+    .filter(ts.isVariableStatement)
+    .filter(
+      (statement) =>
+        (statement.declarationList.flags & ts.NodeFlags.Const) !== 0,
+    )
+    .flatMap((statement) => [...statement.declarationList.declarations])
+    .filter(
+      (declaration) =>
+        ts.isArrayBindingPattern(declaration.name) &&
+        declaration.name.elements.length === 2 &&
+        declaration.name.elements.every(
+          (binding) =>
+            ts.isBindingElement(binding) &&
+            ts.isIdentifier(binding.name) &&
+            !binding.initializer &&
+            !binding.dotDotDotToken,
+        ) &&
+        declaration.initializer &&
+        ts.isCallExpression(declaration.initializer) &&
+        pathMatches(declaration.initializer.expression, ["useState"]) &&
+        declaration.initializer.arguments.length === 1 &&
+        isFalseKeyword(declaration.initializer.arguments[0]),
+    );
+  const derived = directConstDeclaration(body, open)?.initializer;
+  let controlled;
+  let stateName = open;
+  if (derived) {
+    if (
+      !ts.isBinaryExpression(derived) ||
+      derived.operatorToken.kind !== ts.SyntaxKind.QuestionQuestionToken ||
+      !ts.isIdentifier(derived.left) ||
+      !ts.isIdentifier(derived.right) ||
+      menu.parameters.length !== 1 ||
+      !ts.isObjectBindingPattern(menu.parameters[0].name) ||
+      menu.parameters[0].initializer ||
+      menu.parameters[0].dotDotDotToken
+    )
+      return undefined;
+    const bindings = menu.parameters[0].name.elements;
+    const source = bindings.filter(
+      (binding) =>
+        (binding.propertyName ?? binding.name).getText(sourceFile) === "open",
+    );
+    const callback = bindings.filter(
+      (binding) =>
+        (binding.propertyName ?? binding.name).getText(sourceFile) ===
+        "onOpenChange",
+    );
+    if (
+      source.length !== 1 ||
+      callback.length !== 1 ||
+      [...source, ...callback].some(
+        (binding) =>
+          !ts.isIdentifier(binding.name) ||
+          binding.initializer ||
+          binding.dotDotDotToken,
+      ) ||
+      source[0].name.text !== derived.left.text
+    )
+      return undefined;
+    controlled = { name: source[0].name.text, callback: callback[0].name.text };
+    stateName = derived.right.text;
+  }
+  const states = stateDeclarations.filter(
+    (declaration) => declaration.name.elements[0].name.text === stateName,
+  );
+  if (states.length !== 1) return undefined;
+  const setter = states[0].name.elements[1].name.text;
+  const expected = new Map([
+    [open, 1],
+    [stateName, 1],
+    [setter, 1],
+    [handler, 1],
+    ["useState", 0],
+    ["MenuPrimitive", 0],
+    ["useMenuScrollLock", 0],
+    ["undefined", 0],
+  ]);
+  if (controlled) {
+    if (
+      expected.has(controlled.name) ||
+      expected.has(controlled.callback) ||
+      new Set([
+        open,
+        stateName,
+        setter,
+        handler,
+        controlled.name,
+        controlled.callback,
+      ]).size !== 6
+    )
+      return undefined;
+    expected.set(controlled.name, 1);
+    expected.set(controlled.callback, 1);
+  }
+  if (
+    [...expected].some(
+      ([name, count]) => menuBindingCount(menu, name) !== count,
+    ) ||
+    hasMenuBindingWrites(menu, new Set(expected.keys()))
+  )
+    return undefined;
+  // The current controlled Root spread only adds triggerId; it cannot override state/callback.
+  for (const attribute of attributes.filter(ts.isJsxSpreadAttribute)) {
+    const expression = unwrapExpression(attribute.expression);
+    if (
+      !controlled ||
+      !ts.isConditionalExpression(expression) ||
+      !ts.isBinaryExpression(expression.condition) ||
+      expression.condition.operatorToken.kind !==
+        ts.SyntaxKind.EqualsEqualsEqualsToken ||
+      !pathMatches(expression.condition.left, [controlled.name]) ||
+      !pathMatches(expression.condition.right, ["undefined"]) ||
+      !ts.isObjectLiteralExpression(expression.whenTrue) ||
+      expression.whenTrue.properties.length !== 0 ||
+      !ts.isObjectLiteralExpression(expression.whenFalse) ||
+      expression.whenFalse.properties.length !== 1 ||
+      !ts.isShorthandPropertyAssignment(expression.whenFalse.properties[0]) ||
+      expression.whenFalse.properties[0].name.text !== "triggerId"
+    )
+      return undefined;
+  }
+  return { open, setter, handler, controlled };
 }
 
 function isFalseKeyword(expression) {
@@ -1323,29 +1594,21 @@ function validateMenuScrollLock(source, css, errors) {
     const sourceFile = parseSource(source, MENU_PATH);
     const menuFunction = directNamedFunctionLike(sourceFile, "Menu");
     const menuBody = functionBody(menuFunction);
-    const rootTag = source.match(/<MenuPrimitive\.Root\b([\s\S]*?)>/u)?.[1];
-    const openName = rootTag?.match(
-      /\bopen=\{\s*([A-Za-z_$][\w$]*)\s*\}/u,
-    )?.[1];
-    const openSetter =
-      openName === undefined
-        ? undefined
-        : source.match(
-            new RegExp(
-              `(?:const|let)\\s*\\[\\s*${openName}\\s*,\\s*([A-Za-z_$][\\w$]*)\\s*\\]\\s*=\\s*useState(?:<[^>]+>)?\\(\\s*false\\s*\\)`,
-              "u",
-            ),
-          )?.[1];
-    const openChangeHandler = rootTag?.match(
-      /\bonOpenChange=\{\s*([A-Za-z_$][\w$]*)\s*\}/u,
-    )?.[1];
+    const binding = menuOpenBinding(sourceFile, menuFunction);
+    const openName = binding?.open;
+    const openSetter = binding?.setter;
+    const openChangeHandler = binding?.handler;
     const openChangeFunction =
       menuBody !== undefined && openChangeHandler !== undefined
         ? directNamedFunctionLike(menuBody, openChangeHandler)
         : undefined;
     const hasOrderedCancellation =
       openSetter !== undefined &&
-      hasOrderedTouchDismissalCancellation(openChangeFunction, openSetter);
+      hasOrderedTouchDismissalCancellation(
+        openChangeFunction,
+        openSetter,
+        binding?.controlled,
+      );
     const hasControlledChange =
       openSetter !== undefined &&
       openChangeHandler !== undefined &&

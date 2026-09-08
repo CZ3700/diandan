@@ -1,3 +1,4 @@
+import "server-only";
 import type {
   IdolDirectoryResponse,
   PublishedGiftCommerceResponse,
@@ -10,8 +11,11 @@ import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
 import { PublishedImage } from "./published-image";
 import { GiftDescription } from "./gift-content";
 import { GiftPurchase } from "./gift-purchase";
-import { GiftRecipientPicker } from "./gift-recipient";
-import { MarketChoices, PolicyLinks } from "./commerce-context";
+import { GiftDetailRecipient } from "./gift-detail-recipient-section";
+import {
+  GiftDetailMarkets,
+  GiftDetailPolicyLinks,
+} from "./gift-detail-context-section";
 import { storefrontHref } from "./navigation";
 
 type Content = Extract<PublishedGiftCommerceResponse, { outcome: "SUCCESS" }>;
@@ -29,8 +33,8 @@ export function GiftDetail({
 }: Readonly<{
   content: Content | Commerce;
   commerce?: Commerce;
-  context: StorefrontContextResponse;
-  artists: IdolDirectoryResponse;
+  context: Promise<StorefrontContextResponse>;
+  artists: Promise<IdolDirectoryResponse>;
   locale: SupportedLocale;
   copy: StorefrontCopy;
   contextQuery: string;
@@ -45,20 +49,6 @@ export function GiftDetail({
     MERCHANDISE: copy.giftKindMerchandise,
     OTHER: copy.giftKindOther,
   };
-  const recipientId = new URLSearchParams(contextQuery).get("idol");
-  const selectedArtist =
-    artists.outcome === "SUCCESS" && recipientId
-      ? artists.items.find(
-          (artist) => artist.id.toLowerCase() === recipientId.toLowerCase(),
-        )
-      : undefined;
-  const recipient =
-    commerce?.recipient ??
-    (selectedArtist
-      ? { kind: "PUBLISHED" as const, idol: selectedArtist }
-      : recipientId
-        ? { kind: "UNAVAILABLE" as const, idolId: recipientId }
-        : { kind: "NONE" as const });
   const path = `/gifts/${gift.handle}`;
   const estimate = gift.deliveryEstimate;
   return (
@@ -118,58 +108,14 @@ export function GiftDetail({
               {gift.shortDescription}
             </p>
           )}
-          <section
-            className="gift-recipient-summary"
-            aria-labelledby="gift-recipient-title"
-          >
-            <h2 id="gift-recipient-title">{copy.giftRecipient}</h2>
-            {recipient?.kind === "PUBLISHED" ? (
-              <div
-                className="gift-selected-recipient"
-                data-selected-recipient={recipient.idol.id}
-              >
-                <PublishedImage
-                  media={recipient.idol.portrait}
-                  fallbackLabel={copy.mediaFallback}
-                  sizes="64px"
-                />
-                <div>
-                  <a
-                    lang={recipient.idol.localeContext.resolvedLocale}
-                    href={storefrontHref(
-                      locale,
-                      `/idols/${recipient.idol.handle}`,
-                      contextQuery,
-                    )}
-                  >
-                    {recipient.idol.displayName}
-                  </a>
-                  <p>
-                    {recipient.idol.acceptingGifts
-                      ? copy.artistAccepting
-                      : copy.artistPaused}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <p
-                role={recipient?.kind === "UNAVAILABLE" ? "status" : undefined}
-              >
-                {recipient?.kind === "UNAVAILABLE"
-                  ? copy.giftRecipientUnavailable
-                  : copy.giftRecipientMissing}
-              </p>
-            )}
-            <GiftRecipientPicker
-              key={`${locale}:${contextQuery}`}
-              locale={locale}
-              copy={copy}
-              contextQuery={contextQuery}
-              path={path}
-              initial={artists}
-              selected={recipient?.kind === "PUBLISHED"}
-            />
-          </section>
+          <GiftDetailRecipient
+            artists={artists}
+            {...(commerce ? { recipient: commerce.recipient } : {})}
+            locale={locale}
+            copy={copy}
+            contextQuery={contextQuery}
+            path={path}
+          />
           {commerce ? (
             <GiftPurchase
               gift={commerce}
@@ -181,7 +127,7 @@ export function GiftDetail({
           ) : (
             <>
               {marketError && <p role="status">{copy.marketInvalid}</p>}
-              <MarketChoices
+              <GiftDetailMarkets
                 context={context}
                 locale={locale}
                 copy={copy}
@@ -233,7 +179,7 @@ export function GiftDetail({
           {gift.safetyNotice && (
             <p lang={gift.localeContext.resolvedLocale}>{gift.safetyNotice}</p>
           )}
-          <PolicyLinks
+          <GiftDetailPolicyLinks
             labelledBy="gift-delivery-title"
             context={context}
             locale={locale}
@@ -244,7 +190,7 @@ export function GiftDetail({
       </section>
       {commerce && (
         <div className="storefront-section" id="gift-markets">
-          <MarketChoices
+          <GiftDetailMarkets
             context={context}
             locale={locale}
             copy={copy}

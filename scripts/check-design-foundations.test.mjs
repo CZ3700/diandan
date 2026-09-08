@@ -15,12 +15,18 @@ const fontPackages = [
 ];
 
 const fontProfiles = {
-  "japanese.css": ["@fontsource-variable/noto-sans-jp/wght.css"],
+  "japanese.css": [
+    "@fontsource-variable/noto-sans-jp/wght.css",
+    "./generated/japanese-ui.css",
+  ],
   "latin.css": [
     "@fontsource-variable/manrope/wght.css",
     "@fontsource-variable/noto-sans/wght.css",
   ],
-  "simplified-chinese.css": ["@fontsource-variable/noto-sans-sc/wght.css"],
+  "simplified-chinese.css": [
+    "@fontsource-variable/noto-sans-sc/wght.css",
+    "./generated/simplified-chinese-ui.css",
+  ],
   "thai.css": ["@fontsource-variable/noto-sans-thai/wght.css"],
   "vietnamese.css": [
     "@fontsource-variable/manrope/wght.css",

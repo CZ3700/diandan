@@ -63,6 +63,22 @@
   color: var(--color-text-muted);
   font-size: var(--type-label-size);
 }
+.gift-recipient-status {
+  min-block-size: calc(var(--space-16) + var(--space-8));
+}
+.gift-recipient-status > p {
+  color: var(--color-text-muted);
+  font-size: var(--type-label-size);
+}
+.gift-recipient-control {
+  min-block-size: var(--space-12);
+}
+.gift-deferred-markets {
+  min-block-size: calc(var(--space-16) * 5);
+}
+.gift-deferred-policies {
+  min-block-size: var(--space-12);
+}
 .gift-selected-recipient {
   display: flex;
   align-items: center;

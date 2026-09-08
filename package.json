@@ -15,7 +15,7 @@
     "check:artifacts": "node ./scripts/check-build-artifacts.mjs",
     "check:ci": "node ./scripts/check-ci.mjs",
     "check:contracts": "corepack pnpm --filter @fan-support/contracts build && node ./scripts/check-contracts.mjs",
-    "check:design-foundations": "node --test ./scripts/check-design-foundations.test.mjs ./scripts/font-loading-policy.test.mjs && node ./scripts/check-design-foundations.mjs",
+    "check:design-foundations": "node --test ./scripts/check-design-foundations.test.mjs ./scripts/font-loading-policy.test.mjs ./scripts/font-ui-subset.test.mjs ./scripts/font-ui-artifacts.test.mjs && node ./scripts/check-design-foundations.mjs",
     "check:ui-interactions": "node --test ./scripts/check-ui-interactions.test.mjs && node ./scripts/check-ui-interactions.mjs",
     "check:ui-composites": "node --test ./scripts/check-ui-composites.test.mjs && node ./scripts/check-ui-composites.mjs",
     "check:ui-motion": "node --test ./scripts/check-ui-motion.test.mjs && node ./scripts/check-ui-motion.mjs",

@@ -1,28 +1,11 @@
-# Font third-party notices
+Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'
 
-The design foundation bundles the following Fontsource packages as local build
-assets. Each package retains its upstream `LICENSE` file under the installed
-package directory. No font is fetched from a third-party origin at runtime.
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+https://scripts.sil.org/OFL
 
-- @fontsource-variable/manrope | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/manrope
-- @fontsource-variable/noto-sans | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/noto-sans
-- @fontsource-variable/noto-sans-jp | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/noto-sans-jp
-- @fontsource-variable/noto-sans-sc | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/noto-sans-sc
-- @fontsource-variable/noto-sans-thai | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/noto-sans-thai
 
-`OFL-1.1` is the SIL Open Font License, Version 1.1. The authoritative license
-text for each font is the `LICENSE` file shipped with that exact package.
-
-## Copyright notices
-
-- Copyright 2019 The Manrope Project Authors (https://github.com/sharanda/manrope)
-- Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic) NotoSans-Italic[wdth,wght].ttf: Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)
-- Google Inc. (`Noto Sans JP` and `Noto Sans SC`)
-- Copyright 2022 The Noto Project Authors (https://github.com/notofonts/thai)
-
-## SIL Open Font License 1.1
-
-```text
+-----------------------------------------------------------
 SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
 -----------------------------------------------------------
 
@@ -35,7 +18,7 @@ with others.
 
 The OFL allows the licensed fonts to be used, studied, modified and
 redistributed freely as long as they are not sold by themselves. The
-fonts, including any derivative works, can be bundled, embedded,
+fonts, including any derivative works, can be bundled, embedded, 
 redistributed and/or sold with any software provided that any reserved
 names are not used by derivative works. The fonts and derivatives,
 however, cannot be released under any other type of license. The
@@ -108,8 +91,3 @@ INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
 DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
-```
-
-## Self-hosted UI subsets
-
-The Japanese and Simplified Chinese UI subsets are derived from the pinned Google Fonts Noto Sans JP / Noto Sans SC 2.004 sources identified in `scripts/fonts/sources.json`, using FontTools. Copyright 2014–2021 Adobe (http://www.adobe.com/), with Reserved Font Name “Source”. The subset font families retain the Noto Sans names and do not use the Reserved Font Name. The SIL Open Font License 1.1 applies; complete original licenses are distributed at `styles/fonts/generated/japanese-OFL.txt` and `styles/fonts/generated/simplified-chinese-OFL.txt`. Complete original Fontsource subsets remain available for arbitrary text.

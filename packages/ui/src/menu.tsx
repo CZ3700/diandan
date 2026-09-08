@@ -4,7 +4,14 @@ import {
   Menu as MenuPrimitive,
   type MenuRootChangeEventDetails,
 } from "@base-ui/react/menu";
-import { useEffect, useRef, useState, type ReactElement } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type ReactElement,
+  type Ref,
+} from "react";
 
 import { Icon } from "./icon.js";
 
@@ -20,6 +27,10 @@ export type MenuProps<Value extends string = string> = Readonly<{
   onValueChange: (value: Value) => void;
   options: readonly MenuOption<Value>[];
   value: Value;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  triggerRef?: Ref<HTMLButtonElement>;
+  initialFocus?: "first" | "last";
 }>;
 
 const MENU_SCROLL_LOCK_ATTRIBUTE = "data-fs-menu-scroll-lock";
@@ -99,8 +110,24 @@ export function Menu<Value extends string>({
   onValueChange,
   options,
   value,
+  open: controlledOpen,
+  onOpenChange,
+  triggerRef,
+  initialFocus,
 }: MenuProps<Value>): ReactElement {
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setOpen] = useState(false);
+  const open = controlledOpen ?? internalOpen;
+  const triggerId = useId();
+  const trigger = useRef<HTMLButtonElement | null>(null);
+  const initialFocusQueued = useRef(false);
+  const cancelInitialFocus = useRef<(() => void) | null>(null);
+  useEffect(() => () => cancelInitialFocus.current?.(), []);
+  useEffect(() => {
+    if (!open) {
+      cancelInitialFocus.current?.();
+      initialFocusQueued.current = false;
+    }
+  }, [open]);
   useMenuScrollLock(open);
   const selected = validateOptions(label, options, value);
   const handleOpenChange = (
@@ -115,7 +142,8 @@ export function Menu<Value extends string>({
       eventDetails.cancel();
       return;
     }
-    setOpen(nextOpen);
+    if (controlledOpen === undefined) setOpen(nextOpen);
+    onOpenChange?.(nextOpen);
   };
 
   return (
@@ -124,8 +152,17 @@ export function Menu<Value extends string>({
       modal
       onOpenChange={handleOpenChange}
       open={open}
+      {...(controlledOpen === undefined ? {} : { triggerId })}
     >
-      <MenuPrimitive.Trigger className="fs-menu__trigger">
+      <MenuPrimitive.Trigger
+        className="fs-menu__trigger"
+        {...(controlledOpen === undefined ? {} : { id: triggerId })}
+        ref={(node: HTMLButtonElement | null) => {
+          trigger.current = node;
+          if (typeof triggerRef === "function") return triggerRef(node);
+          else if (triggerRef) triggerRef.current = node;
+        }}
+      >
         <span className="fs-menu__trigger-copy">
           <span className="fs-menu__label">{label}</span>
           <span className="fs-menu__value">{selected.label}</span>
@@ -147,7 +184,47 @@ export function Menu<Value extends string>({
           className="fs-menu__positioner"
           sideOffset={8}
         >
-          <MenuPrimitive.Popup aria-label={label} className="fs-menu__popup">
+          <MenuPrimitive.Popup
+            aria-label={label}
+            className="fs-menu__popup"
+            ref={(node: HTMLDivElement | null) => {
+              cancelInitialFocus.current?.();
+              if (!node || !open || !initialFocus || initialFocusQueued.current)
+                return;
+              initialFocusQueued.current = true;
+              let canceled = false;
+              const cancel = () => {
+                canceled = true;
+              };
+              window.addEventListener("keydown", cancel, true);
+              window.addEventListener("pointerdown", cancel, true);
+              const clear = () => {
+                window.removeEventListener("keydown", cancel, true);
+                window.removeEventListener("pointerdown", cancel, true);
+              };
+              const frame = requestAnimationFrame(() => {
+                clear();
+                if (
+                  canceled ||
+                  !node.isConnected ||
+                  (document.activeElement !== trigger.current &&
+                    !node.contains(document.activeElement))
+                )
+                  return;
+                const items = [
+                  ...node.querySelectorAll<HTMLElement>(
+                    '[role="menuitemradio"]:not([aria-disabled="true"])',
+                  ),
+                ];
+                (initialFocus === "last" ? items.at(-1) : items[0])?.focus();
+              });
+              cancelInitialFocus.current = () => {
+                cancel();
+                clear();
+                cancelAnimationFrame(frame);
+              };
+            }}
+          >
             <MenuPrimitive.RadioGroup
               onValueChange={(nextValue) => {
                 const matched = options.find(
