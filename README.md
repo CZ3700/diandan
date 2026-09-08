@@ -1,6 +1,16 @@
 # Fan Support Platform
 
-这是全球偶像礼物应援平台的源码单仓库。Phase 0 可重复本地运行基线已经关闭，Phase 1/2 正在推进可信内核与品牌样板：Storefront、Admin、API、Worker、PostgreSQL 和 S3-compatible 对象存储可在 Docker preview 中启动。产品范围、安全边界和当前任务以 `docs/FAN_SUPPORT_PLATFORM_SPEC.md` 与 `docs/progress/MASTER.md` 为准。
+这是全球偶像礼物应援平台的源码单仓库，包含 Storefront、Admin、API、Worker、PostgreSQL 与对象存储接入。产品范围和当前任务以 `docs/FAN_SUPPORT_PLATFORM_SPEC.md` 与 `docs/progress/MASTER.md` 为准。
+
+## 打开管理中心
+
+```bash
+mise exec node@24.20.0 -- corepack pnpm preview:management-center
+```
+
+启动后自动打开一个中文管理中心。日常操作只有艺人、礼物、首页海报：上传图片、填写内容并提交；海报可从历史记录恢复。详见 [管理中心操作说明](docs/operations/management-center.md)。
+
+这是隔离的本地体验环境，运行时会先验证实际上传与前台读取；最多运行 110 分钟，结束后清理测试数据。正式内容请使用后续部署的持久环境。
 
 ## 前置条件
 

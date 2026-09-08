@@ -15,6 +15,42 @@ const media = {
   focalPoint: { x: 0.4, y: 0.3 },
 } as PublishedMediaView;
 
+test("original image alt retains its actual language in card and hero", () => {
+  const original = {
+    ...media,
+    schemaVersion: 2,
+    localeContext: {
+      schemaVersion: 2,
+      publicationMode: "DIRECT_OPERATOR_V1",
+      sourceLocale: "zh-CN",
+      requestedLocale: "en",
+      resolvedLocale: "zh-CN",
+      fallbackUsed: true,
+      translationRevision: "cc000000-0000-4000-8000-000000000001",
+    },
+  } as PublishedMediaView;
+  expect(
+    attributes(
+      renderToStaticMarkup(
+        <PublishedImage media={original} fallbackLabel="Unavailable" />,
+      ),
+      "img",
+    ).lang,
+  ).toBe("zh-CN");
+  expect(
+    attributes(
+      renderToStaticMarkup(
+        <PublishedHeroImage
+          desktop={original}
+          mobile={original}
+          fallbackLabel="Unavailable"
+        />,
+      ),
+      "img",
+    ).lang,
+  ).toBe("zh-CN");
+});
+
 function attributes(html: string, tag: string) {
   const element = html.match(new RegExp(`<${tag}\\s[^>]*>`));
   expect(element, `${tag} exists`).not.toBeNull();

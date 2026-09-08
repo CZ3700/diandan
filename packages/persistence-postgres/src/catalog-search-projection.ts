@@ -1,15 +1,61 @@
 import { normalizeArtistSearchName } from "@fan-support/catalog";
 import {
   publicationManifestSchema,
+  dailyPublicationDocumentSchema,
+  dailyPublicationManifestSchema,
+  type DailyPublicationManifest,
   type PublicationManifest,
 } from "@fan-support/contracts";
 import {
   computeIdolAliasContentHash,
   computeIdolTranslationContentHash,
+  computeDailySourceHash,
+  computeDailyDocumentHash,
 } from "@fan-support/content";
 import type { TransactionClient } from "./transaction-runner.js";
 
 const batchSize = 256;
+
+async function writeDailyDocumentProjection(
+  client: Pick<TransactionClient, "query">,
+  input: unknown,
+  expectedHash?: unknown,
+): Promise<void> {
+  const document = dailyPublicationDocumentSchema.parse(input);
+  const documentHash = computeDailyDocumentHash(document);
+  if (
+    document.kind !== "IDOL" ||
+    (expectedHash !== undefined && expectedHash !== documentHash) ||
+    document.source.sourceHash !==
+      computeDailySourceHash(
+        document.kind,
+        document.source.locale,
+        document.source.fields,
+      )
+  )
+    throw new Error("Invalid daily search source");
+  await client.query(
+    `INSERT INTO public.idol_daily_search_projections(revision_id,source_translation_id,source_hash,document_hash,algorithm_version,normalized_name)
+     VALUES($1,$2,$3,$4,1,$5) ON CONFLICT(revision_id) DO UPDATE SET source_translation_id=EXCLUDED.source_translation_id,source_hash=EXCLUDED.source_hash,document_hash=EXCLUDED.document_hash,algorithm_version=EXCLUDED.algorithm_version,normalized_name=EXCLUDED.normalized_name`,
+    [
+      document.revisionId,
+      document.source.id,
+      document.source.sourceHash,
+      documentHash,
+      normalizeArtistSearchName(document.source.fields.displayName.trim()),
+    ],
+  );
+}
+
+/** The caller owns the real publication transaction; one original is never expanded into translated rows. */
+export async function writePublishedDailyIdolSearchProjection(
+  client: Pick<TransactionClient, "query">,
+  input: DailyPublicationManifest,
+): Promise<void> {
+  const manifest = dailyPublicationManifestSchema.parse(input);
+  if (manifest.document.kind !== "IDOL") return;
+  await writeDailyDocumentProjection(client, manifest.document);
+}
 /** Called inside publication/head/outbox transaction; also rebuilds one persisted manifest projection. */
 export async function writePublishedIdolSearchProjections(
   client: Pick<TransactionClient, "query">,
@@ -92,7 +138,7 @@ export async function rebuildIdolSearchProjections(
       !Array.isArray(result.rows)
     )
       throw new Error("invalid search projection source");
-    if (result.rows.length === 0) return { schemaVersion: 1, processed };
+    if (result.rows.length === 0) break;
     const ids: string[] = [],
       hashes: string[] = [],
       names: string[] = [];
@@ -122,5 +168,39 @@ export async function rebuildIdolSearchProjections(
     );
     processed += ids.length;
     afterId = ids.at(-1)!;
+  }
+  afterId = null;
+  for (;;) {
+    const result: unknown = await client.query(
+      `SELECT revision_id,document,document_hash FROM public.daily_publication_revisions
+       WHERE object_kind='IDOL' AND ($1::uuid IS NULL OR revision_id>$1::uuid) ORDER BY revision_id LIMIT $2`,
+      [afterId, batchSize],
+    );
+    if (
+      typeof result !== "object" ||
+      result === null ||
+      !("rows" in result) ||
+      !Array.isArray(result.rows)
+    )
+      throw new Error("Invalid daily search source");
+    if (result.rows.length === 0) return { schemaVersion: 1, processed };
+    for (const row of result.rows as unknown[]) {
+      if (
+        typeof row !== "object" ||
+        row === null ||
+        !("revision_id" in row) ||
+        typeof row.revision_id !== "string" ||
+        !("document" in row) ||
+        !("document_hash" in row) ||
+        typeof row.document_hash !== "string"
+      )
+        throw new Error("Invalid daily search source");
+      const document = dailyPublicationDocumentSchema.parse(row.document);
+      if (document.revisionId !== row.revision_id)
+        throw new Error("Invalid daily search source");
+      await writeDailyDocumentProjection(client, document, row.document_hash);
+      afterId = document.revisionId;
+      processed++;
+    }
   }
 }

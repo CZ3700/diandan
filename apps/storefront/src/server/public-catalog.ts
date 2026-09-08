@@ -5,7 +5,7 @@ import {
   idolDirectoryResponseSchema,
   publishedContentResponseSchema,
   storefrontHomepageResponseSchema,
-  type LocaleContext,
+  type ContentLocaleContext,
   type SupportedLocale,
   type IdolDirectoryResponse,
   type PublishedContentResponse,
@@ -50,11 +50,16 @@ function expectedStatus(data: Result[Kind]): number {
   }
 }
 function matchesLocale(
-  context: LocaleContext,
+  context: ContentLocaleContext,
   locale: SupportedLocale,
   allowFallback: boolean,
 ): boolean {
   if (context.requestedLocale !== locale) return false;
+  if (context.schemaVersion === 2)
+    return (
+      context.resolvedLocale === context.sourceLocale &&
+      context.fallbackUsed === (locale !== context.sourceLocale)
+    );
   if (!context.fallbackUsed) return context.resolvedLocale === locale;
   return (
     allowFallback &&

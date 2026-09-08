@@ -15,7 +15,7 @@ test("homepage operation documents only locale and the safe public response", as
     },
   ]);
   expect(operation.responses[200].content["application/json"].schema).toEqual({
-    $ref: "#/components/schemas/StorefrontHomepageResponse",
+    $ref: "#/components/schemas/CurrentStorefrontHomepageResponse",
   });
   expect(operation.security).toEqual([]);
 });

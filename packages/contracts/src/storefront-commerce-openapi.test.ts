@@ -27,5 +27,5 @@ test("storefront commerce documents only read routes with explicit scope and sta
     paths["/api/v1/storefront-gifts/{handle}"].get.responses[409].content[
       "application/json"
     ].schema.$ref,
-  ).toBe("#/components/schemas/StorefrontGiftResponse");
+  ).toBe("#/components/schemas/CurrentStorefrontGiftResponse");
 });

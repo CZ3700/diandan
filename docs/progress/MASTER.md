@@ -4,7 +4,7 @@
 > 当前里程碑：M3 可浏览 Beta（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3
 > 当前任务：`P3-06` IN_PROGRESS，Codex `/root` 独占 Lane D
-> 下一入口：完成P3-06技术实现及其真实验收；Phase3退出门未通过前不解锁Phase4
+> 下一入口：简洁管理中心已完成本地技术验收；通过一个中文窗口试用艺人/礼物上传和海报恢复，继续P3-06剩余性能与人工验收
 > 当前检查点：首屏脚本约203–207KB；377项前台测试、七语88项UI、按需加载异常和共享P2回归通过。完整63次Lighthouse已收集：20/21组评分达标，但仅1/21组LCP达标；最终整条pnpm check已通过；性能与人工门未通过。
 
 ## 1. 开工入口
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-08 P3-06用户反馈修正：单一管理中心、艺人/礼物单图与短表单直接发布、海报替换/历史恢复完成。真实七语双端10次操作、70个公开详情页、98截图/98axe通过，0 violations/页面错误/响应观察失败，1项incomplete仍待人工复核。整条 `pnpm check` attempt5 exit0（1187.855秒），类型58/58、测试58/58、构建35/35及31实际出口通过；原382合同定义不变。后续Admin焦点修正4文件经controlled Chrome与非作者复核；最终全仓静态/类型/单测/构建105/105及runtime15完整管理浏览器通过，原后端/DB输入逐SHA不变。已打开唯一中文TEST窗口。见 `output/checks/p3-06-management-center/validation.json` 与 `docs/operations/management-center.md`。当前为临时TEST环境，无生产账号/持久部署/支付/新真机证据；P3-06 IN_PROGRESS、22 DONE/1 IN_PROGRESS/26 PENDING、Phase4 LOCKED，仅本地提交不push/merge。
 
 2026-09-08 P3-06本地技术检查点：完整 `pnpm check` attempt6单条exit0（19:30:54–19:51:02 UTC，1207.834秒），真实PG/API/TLS S3/worker、format/lint、类型58/58、测试58/58、构建35/35及实际31出口通过；使用部分构建/测试缓存，独立bounded冷test为58/58零缓存。最终1540实现SHA `59ebd051a135110a3cf01b6b22bc5c373f83e41ad2b79a0b07e2dd166fe2a04d`；末端测试helper生产依赖问题已修，其余296编译产物字节不变，独立复核ACCEPT。P2-04/05最终刷新通过，原414未跟踪文件与818保留旧output逐SHA一致。88项UI通过、63次LH的LCP仅1/21组达标；性能及真人运营/读屏/当前关键译审门仍开放，P3-06 IN_PROGRESS、22 DONE/1 IN_PROGRESS/26 PENDING（49）、Phase4 LOCKED。详见 `output/checks/p3-06-storefront-acceptance/validation.json`，仍仅本地检查点，无push/merge。
 

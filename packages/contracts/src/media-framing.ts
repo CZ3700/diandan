@@ -158,18 +158,25 @@ export const mediaFramingPlanSchema = planShapeSchema
     const widthLimited =
       BigInt(request.sourceWidth) * BigInt(target.height) >=
       BigInt(request.sourceHeight) * BigInt(target.width);
-    const expectedWidth = widthLimited
-      ? target.width
-      : roundedRatio(
-          BigInt(request.sourceWidth) * BigInt(target.height),
-          BigInt(request.sourceHeight),
-        );
-    const expectedHeight = widthLimited
-      ? roundedRatio(
-          BigInt(request.sourceHeight) * BigInt(target.width),
-          BigInt(request.sourceWidth),
-        )
-      : target.height;
+    const originalFits =
+      request.sourceWidth <= target.width &&
+      request.sourceHeight <= target.height;
+    const expectedWidth = originalFits
+      ? request.sourceWidth
+      : widthLimited
+        ? target.width
+        : roundedRatio(
+            BigInt(request.sourceWidth) * BigInt(target.height),
+            BigInt(request.sourceHeight),
+          );
+    const expectedHeight = originalFits
+      ? request.sourceHeight
+      : widthLimited
+        ? roundedRatio(
+            BigInt(request.sourceHeight) * BigInt(target.width),
+            BigInt(request.sourceWidth),
+          )
+        : target.height;
     if (
       destination.width !== expectedWidth ||
       destination.height !== expectedHeight

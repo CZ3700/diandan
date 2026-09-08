@@ -1,4 +1,5 @@
 import { sendRevalidatedPublicJson } from "./public-revalidation-response.js";
+import { matchesPublicContentLocale } from "./public-content-locale.js";
 import type { FastifyInstance, FastifyReply } from "fastify";
 import {
   storefrontContextResponseSchema,
@@ -137,9 +138,7 @@ export function registerStorefrontCommerceRoute(
             result.currency !== command.data.currency ||
             contexts.some(
               (locale) =>
-                locale.requestedLocale !== command.data.locale ||
-                locale.resolvedLocale !== command.data.locale ||
-                locale.fallbackUsed,
+                !matchesPublicContentLocale(locale, command.data.locale),
             ) ||
             (recipient.kind === "NONE"
               ? command.data.idolId !== undefined

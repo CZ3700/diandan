@@ -256,7 +256,7 @@ export async function verifyAdminWorkspaceBrowser({
     }
     step = "navigation";
     const page = await contexts.editor.newPage();
-    await page.goto(`${origin}/en`);
+    await page.goto(`${origin}/en/advanced`);
     const cookieProperties = await contexts.editor.cookies(origin);
     check(
       cookieProperties.length === 2 &&
@@ -394,7 +394,7 @@ export async function verifyAdminWorkspaceBrowser({
       "BFF rejects a changed CSRF token",
     );
     const denied = await contexts.denied.newPage();
-    await denied.goto(`${origin}/en`);
+    await denied.goto(`${origin}/en/advanced`);
     const forbidden = await call(denied, "catalog-list", {
       schemaVersion: 1,
       kind: "IDOL",
@@ -541,7 +541,7 @@ export async function verifyAdminWorkspaceBrowser({
     );
     await mkdir(screenshotRoot, { recursive: true });
     if (serve) {
-      await page.goto(`${origin}/en`);
+      await page.goto(`${origin}/en/advanced`);
       await page.getByTestId("content-directory").waitFor();
       await page.bringToFront();
       await page.screenshot({
@@ -556,7 +556,7 @@ export async function verifyAdminWorkspaceBrowser({
         ["mobile", 390, 844],
       ]) {
         await page.setViewportSize({ width, height });
-        await page.goto(`${origin}/${locale}`);
+        await page.goto(`${origin}/${locale}/advanced`);
         await page.getByTestId("content-directory").waitFor();
         await page.waitForFunction(
           () =>
@@ -582,7 +582,7 @@ export async function verifyAdminWorkspaceBrowser({
     step = "directory accessibility and keyboard";
     await verifyReflow(page, "Portuguese directory", 320, 844);
     await page.setViewportSize({ width: 1440, height: 900 });
-    await page.goto(`${origin}/en`);
+    await page.goto(`${origin}/en/advanced`);
     await page.getByTestId("content-directory").waitFor();
     await page.waitForFunction(
       () =>
@@ -741,7 +741,7 @@ export async function verifyAdminWorkspaceBrowser({
       "editor cannot approve own translation in the actual UI",
     );
     const reviewPage = await contexts.reviewer.newPage();
-    await reviewPage.goto(`${origin}/en`);
+    await reviewPage.goto(`${origin}/en/advanced`);
     await reviewPage
       .getByLabel("Search by name or handle", { exact: true })
       .fill("Luna");

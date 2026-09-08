@@ -172,13 +172,21 @@ async function loadRecords(
     throw new Error("CATALOG_PUBLICATION_INVALID");
   if (mediaRows.some((row) => row["provenance_eligible"] !== true))
     throw new Error("CATALOG_PUBLICATION_INVALID");
+  const dailyRecords = new Map<
+    string,
+    Extract<IdolDirectoryRecord | GiftDirectoryRecord, { schemaVersion: 3 }>
+  >();
   // Only explicitly migrated legacy events use the old decoder. New events are
   // verified with their complete persisted proof before projecting the v1 list subset.
   for (const id of ids) {
     const row = byId.get(id)!,
       publication = catalogRecord(row["publication"]);
     if (publication["proof_version"] === 1) continue;
-    if (publication["proof_version"] !== 2 || scope === undefined)
+    if (
+      (publication["proof_version"] !== 2 &&
+        publication["proof_version"] !== 3) ||
+      scope === undefined
+    )
       throw new Error("CATALOG_PUBLICATION_INVALID");
     const command = publishedContentReadCommandSchema.parse({
       schemaVersion: 1,
@@ -197,8 +205,23 @@ async function loadRecords(
       projectPublishedContent(loaded.context).outcome !== "SUCCESS"
     )
       throw new Error("CATALOG_PUBLICATION_INVALID");
+    if (publication["proof_version"] === 3) {
+      if (
+        loaded.context.schemaVersion !== 3 ||
+        loaded.context.current.document.kind !== kind ||
+        loaded.context.current.document.ownerId.toLowerCase() !== id ||
+        loaded.context.current.document.revisionId !==
+          catalogRecord(row["revision"])["id"] ||
+        loaded.context.current.handle !== catalogRecord(row["base"])["handle"]
+      )
+        throw new Error("CATALOG_PUBLICATION_INVALID");
+      dailyRecords.set(id, { schemaVersion: 3, context: loaded.context });
+    } else if (loaded.context.schemaVersion === 3)
+      throw new Error("CATALOG_PUBLICATION_INVALID");
   }
   return ids.map((id) => {
+    const daily = dailyRecords.get(id);
+    if (daily) return daily;
     const row = byId.get(id)!;
     const revisionId = catalogRecord(row["revision"])["id"];
     return mapCatalogPublication(

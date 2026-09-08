@@ -20,8 +20,12 @@ import {
   policyRevisionIdSchema,
   policyTranslationRevisionIdSchema,
 } from "./identifiers.js";
+import { contentLocaleContextSchema } from "./content-provenance.js";
 import { localeContextSchema } from "./locale.js";
-import { publishedMediaViewSchema } from "./media-content.js";
+import {
+  publishedMediaViewSchema,
+  legacyPublishedMediaViewSchema,
+} from "./media-content.js";
 import { schemaVersionSchema } from "./versioning.js";
 
 const slotKeySchema = z
@@ -204,19 +208,26 @@ export const publishedHomepageSlotSchema = z.discriminatedUnion("kind", [
   }),
 ]);
 
-export const publishedHomepageViewSchema = z.strictObject({
+export const legacyPublishedHomepageViewSchema = z.strictObject({
   schemaVersion: schemaVersionSchema,
   localeContext: localeContextSchema,
   heroTitle: homepageTranslationFieldsSchema.shape.heroTitle,
   heroSubtitle: homepageTranslationFieldsSchema.shape.heroSubtitle,
   ctaLabel: homepageTranslationFieldsSchema.shape.ctaLabel,
   announcement: homepageTranslationFieldsSchema.shape.announcement,
-  heroDesktop: publishedMediaViewSchema,
-  heroMobile: publishedMediaViewSchema,
+  heroDesktop: legacyPublishedMediaViewSchema,
+  heroMobile: legacyPublishedMediaViewSchema,
   slots: z.array(publishedHomepageSlotSchema).min(1).max(32),
   seoTitle: homepageTranslationFieldsSchema.shape.seoTitle,
   seoDescription: homepageTranslationFieldsSchema.shape.seoDescription,
 });
+
+export const publishedHomepageViewSchema =
+  legacyPublishedHomepageViewSchema.extend({
+    localeContext: contentLocaleContextSchema,
+    heroDesktop: publishedMediaViewSchema,
+    heroMobile: publishedMediaViewSchema,
+  });
 
 export const publishedPolicyViewSchema = z.strictObject({
   schemaVersion: schemaVersionSchema,

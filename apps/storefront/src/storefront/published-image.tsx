@@ -49,6 +49,9 @@ export function PublishedImage({
   sizes?: string;
 }>) {
   const common = {
+    ...(media.schemaVersion === 2
+      ? { lang: media.localeContext.resolvedLocale }
+      : {}),
     ...responsiveSource(media, sizes),
     width: media.width,
     height: media.height,
@@ -131,6 +134,11 @@ export function PublishedHeroImage({
             height={desktop.height}
           />
           <img
+            lang={
+              mobile.schemaVersion === 2
+                ? mobile.localeContext.resolvedLocale
+                : undefined
+            }
             ref={image}
             {...mobileSource}
             width={mobile.width}

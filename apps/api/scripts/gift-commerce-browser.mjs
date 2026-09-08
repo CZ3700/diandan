@@ -99,7 +99,7 @@ export async function verifyGiftCommerceBrowser({
   async function selectGift(page, locale = "en") {
     diagnosticPage = page;
     step = `select ${locale} navigate`;
-    await page.goto(`${origin}/${locale}`);
+    await page.goto(`${origin}/${locale}/advanced`);
     step = `select ${locale} gift navigation`;
     await page
       .locator("nav")
@@ -275,7 +275,7 @@ export async function verifyGiftCommerceBrowser({
       ]);
     }
     const page = await contexts.manager.newPage();
-    await page.goto(`${origin}/en`);
+    await page.goto(`${origin}/en/advanced`);
     const cookies = await contexts.manager.cookies(origin);
     check(
       cookies.length === 2 &&
@@ -340,7 +340,7 @@ export async function verifyGiftCommerceBrowser({
     );
     check(invalid.status === 403, "actual BFF rejects changed CSRF");
     const editorPage = await contexts.editor.newPage();
-    await editorPage.goto(`${origin}/en`);
+    await editorPage.goto(`${origin}/en/advanced`);
     const deniedWrite = await call(
       editorPage,
       "inventory-location-create",
@@ -357,7 +357,7 @@ export async function verifyGiftCommerceBrowser({
       "content editor cannot perform inventory management through BFF",
     );
     const reviewerPage = await contexts.reviewer.newPage();
-    await reviewerPage.goto(`${origin}/en`);
+    await reviewerPage.goto(`${origin}/en/advanced`);
     const deniedGift = await call(
       reviewerPage,
       "gift-create",
@@ -714,7 +714,7 @@ export async function verifyGiftCommerceBrowser({
       removed.rowCount === 1,
       "same reviewer session loses commerce read capability",
     );
-    await reviewerPage.goto(`${origin}/ja`);
+    await reviewerPage.goto(`${origin}/ja/advanced`);
     await reviewerPage
       .locator("nav")
       .getByRole("button", { name: adminMessage("ja", "gifts"), exact: true })

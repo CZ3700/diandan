@@ -67,7 +67,11 @@ export async function createMatteFixture(sourcePath, role) {
 }
 
 /** Browser media is actual S3 data, served through a tightly scoped local TLS fixture origin. */
-export async function createStorefrontMediaGateway({ s3, configPath }) {
+export async function createStorefrontMediaGateway({
+  s3,
+  configPath,
+  currentPublicClient,
+}) {
   const directory = path.dirname(configPath);
   const { certificatePath, privateKeyPath } =
     await createStorefrontTestCertificate(directory);
@@ -102,7 +106,26 @@ export async function createStorefrontMediaGateway({ s3, configPath }) {
           .end();
         return;
       }
-      const expected = allowed.get(key);
+      let expected = allowed.get(key);
+      if (
+        currentPublicClient &&
+        key &&
+        ["GET", "HEAD"].includes(request.method)
+      ) {
+        // Discover newly published derivatives only; never expose source bucket keys.
+        try {
+          expected = (
+            await currentPublicClient.query(
+              `SELECT v.object_key,v.checksum_sha256,v.byte_size,v.width,v.height,CASE v.format WHEN 'AVIF' THEN 'image/avif' WHEN 'WEBP' THEN 'image/webp' WHEN 'JPEG' THEN 'image/jpeg' END AS mime_type FROM public.media_variants v JOIN public.media_assets a ON a.id=v.media_asset_id JOIN public.media_metadata_publication_heads h ON h.media_asset_id=a.id WHERE v.object_key=$1 AND v.status='READY' AND a.processing_status='READY' AND a.rights_status='APPROVED'`,
+              [key],
+            )
+          ).rows[0];
+          if (expected) allowed.set(key, expected);
+          else allowed.delete(key);
+        } catch {
+          expected = undefined;
+        }
+      }
       if (!expected || !["GET", "HEAD"].includes(request.method)) {
         response.writeHead(404, { "cache-control": "no-store" }).end();
         return;

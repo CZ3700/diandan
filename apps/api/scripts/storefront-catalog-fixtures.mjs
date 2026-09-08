@@ -388,12 +388,13 @@ export async function seedStorefrontCatalog({
     })),
   });
   await content.approve(policyOwner, policyRevision);
+  // Publication must see an already effective policy, beyond the immediate clock boundary.
   const policyDeadline = globalThis.performance.now() + 10_000;
   let policyEffective = false;
   while (!policyEffective && globalThis.performance.now() < policyDeadline) {
     policyEffective = (
       await client.query(
-        "SELECT clock_timestamp()>=$1::timestamptz AS effective",
+        "SELECT clock_timestamp()>=$1::timestamptz+interval '1 second' AS effective",
         [policyEffectiveAt],
       )
     ).rows[0].effective;

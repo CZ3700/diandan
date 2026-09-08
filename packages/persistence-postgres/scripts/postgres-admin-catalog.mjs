@@ -874,11 +874,27 @@ await withEphemeralPostgres(async (clientConfig) => {
       (SELECT jsonb_agg(jsonb_build_object('id',id,'version',version,'status',status,'draft',draft_revision_id,'published',published_revision_id) ORDER BY id) FROM public.gifts) AS gift_versions
     `)
       ).rows[0];
+    const beforeDailyDown = await retainedHistory();
+    equal(
+      beforeDailyDown.version,
+      "0022",
+      "admin and translation operations ran at the current migration head",
+    );
+    const dailyDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0022" },
+    });
+    equal(
+      [dailyDown.revertedVersions, dailyDown.currentVersion],
+      [["0022"], "0021"],
+      "daily management rolls back before the SEO and classification history probes",
+    );
     const beforeSeoDown = await retainedHistory();
     equal(
-      beforeSeoDown.version,
-      "0021",
-      "admin and translation operations ran at the current migration head",
+      beforeSeoDown,
+      { ...beforeDailyDown, version: "0021" },
+      "daily management rollback preserves all admin, translation and publication history",
     );
     const seoDown = await runMigrations({
       clientConfig,

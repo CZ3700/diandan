@@ -1,4 +1,5 @@
 import { sendRevalidatedPublicJson } from "./public-revalidation-response.js";
+import { matchesPublicContentLocale } from "./public-content-locale.js";
 import type { FastifyInstance, FastifyReply } from "fastify";
 import {
   publishedGiftCommerceReadCommandSchema,
@@ -80,9 +81,7 @@ export function registerPublishedGiftCommerceRoute(
           const view = response.content.view;
           if (
             view.handle !== command.data.locator.handle ||
-            view.localeContext.requestedLocale !== command.data.locale ||
-            view.localeContext.resolvedLocale !== command.data.locale ||
-            view.localeContext.fallbackUsed
+            !matchesPublicContentLocale(view.localeContext, command.data.locale)
           )
             return failure(reply, "CONTENT_UNAVAILABLE");
           return sendRevalidatedPublicJson(request, reply, response, {

@@ -1,6 +1,6 @@
 # P2-04 UI composite browser verification
 
-Generated: 2026-09-07T19:29:52.332Z
+Generated: 2026-09-07T22:56:53.988Z
 
 ## Outcome
 
@@ -8,7 +8,7 @@ Generated: 2026-09-07T19:29:52.332Z
 - Screenshots: 18
 - Axe scans: 10; critical/serious blocking findings: 0
 - Native Chrome zoom: 200.0% detected for requested 200%
-- Source fingerprint: 0375b6e34fd5936d7fb1dc29c6d678c48009008dcb0ead008b914e403b050d50 (p2-04-render-inputs-v1)
+- Source fingerprint: 6380cc48e12e31d9fd124fbb956c8a6002babb75ec65c7e45d858241840dffc0 (p2-04-render-inputs-v1)
 
 ## Runtime gates
 
@@ -31,11 +31,11 @@ Generated: 2026-09-07T19:29:52.332Z
 - states/390x844-en.png (de165241341c56d107f3258781e3186527f0827980abf78845529e5bcc0b8306)
 - interactions/1440x900-en-hover.png (e94aa7a2a7719ea7bcf7627baf697cccca1db0a931fc187e00ed038e1b438094)
 - rtl/390x844-en.png (39936c3e84aedeb7f93d774b00c497ca5693dbdad5aaf8d44e67d79e76a781cd)
-- rtl/1440x900-en.png (908ae7b3a52a280cce443286e2517137c5335c9f15fa081d38847fea8bdf35a9)
+- rtl/1440x900-en.png (45a352bcf82df0a1b1d910f71bc002b85ca319f8634914b8b7eda59abc509d49)
 - reduced-motion/390x844-en.png (d6be4c23036ab6eb37dbda81d2c6d6d5069d71763265de17fa7007499c692b7a)
-- reduced-motion/1440x900-en.png (76024aeffb42410fa9a71ec19e4844eaaea8b53cf79b85e0a915915e87ebb35b)
+- reduced-motion/1440x900-en.png (5879c6eeb1816d75fc6a54bf9c385b8db7136247370084f35b15c212712737ee)
 - zoom/google-chrome-baseline-pt.png (8f905c8969f182c1461aa4d02f360733a8b8d50595c2334a73fa75970abcf02f)
-- zoom/google-chrome-200-percent-pt.png (ed864f5115e493e2440e0df3d932d48612d62dac533589a4fbc4bb5bcc01ccfd)
+- zoom/google-chrome-200-percent-pt.png (ad124ecd05ece648a8b3d494408be803870673ee0af756f7c2f1b24a7e69e51c)
 
 Rerun: `mise exec node@24.20.0 -- node scripts/verify-ui-composites-browser.mjs`
 

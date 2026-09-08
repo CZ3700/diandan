@@ -16,21 +16,21 @@ const candidates = `candidates AS (
  FROM public.homepage_publication_heads h
  JOIN public.content_publications p ON p.id=h.publication_id AND p.content_type='HOMEPAGE' AND p.homepage_revision_id=h.homepage_revision_id
  JOIN public.homepage_revisions r ON r.id=h.homepage_revision_id AND r.lifecycle=CASE p.action WHEN 'PUBLISH' THEN 'PUBLISHED' ELSE 'SUPERSEDED' END
- WHERE p.proof_version=2 AND NOT EXISTS(SELECT 1 FROM public.content_publications s WHERE s.replaces_publication_id=p.id)
+ WHERE p.proof_version IN(2,3) AND NOT EXISTS(SELECT 1 FROM public.content_publications s WHERE s.replaces_publication_id=p.id)
  UNION ALL
  SELECT '1:'||b.id::text,jsonb_build_object('kind','IDOL','handle',b.handle),
   jsonb_build_array(h.publication_id,h.idol_revision_id,h.version,b.version,b.status,b.accepting_gifts)
  FROM public.idols b JOIN public.idol_publication_heads h ON h.idol_id=b.id AND h.idol_revision_id=b.published_revision_id
  JOIN public.content_publications p ON p.id=h.publication_id AND p.content_type='IDOL' AND p.idol_id=b.id AND p.idol_revision_id=h.idol_revision_id
  JOIN public.idol_revisions r ON r.id=h.idol_revision_id AND r.idol_id=b.id AND r.lifecycle=CASE p.action WHEN 'PUBLISH' THEN 'PUBLISHED' ELSE 'SUPERSEDED' END
- WHERE b.status IN ('active','paused') AND p.proof_version=2 AND NOT EXISTS(SELECT 1 FROM public.content_publications s WHERE s.replaces_publication_id=p.id)
+ WHERE b.status IN ('active','paused') AND p.proof_version IN(2,3) AND NOT EXISTS(SELECT 1 FROM public.content_publications s WHERE s.replaces_publication_id=p.id)
  UNION ALL
  SELECT '2:'||b.id::text,jsonb_build_object('kind','GIFT','handle',b.handle),
   jsonb_build_array(h.publication_id,h.gift_revision_id,h.version,b.version,b.status)
  FROM public.gifts b JOIN public.gift_publication_heads h ON h.gift_id=b.id AND h.gift_revision_id=b.published_revision_id
  JOIN public.content_publications p ON p.id=h.publication_id AND p.content_type='GIFT' AND p.gift_id=b.id AND p.gift_revision_id=h.gift_revision_id
  JOIN public.gift_revisions r ON r.id=h.gift_revision_id AND r.gift_id=b.id AND r.lifecycle=CASE p.action WHEN 'PUBLISH' THEN 'PUBLISHED' ELSE 'SUPERSEDED' END
- WHERE b.status IN ('active','paused') AND p.proof_version=2 AND NOT EXISTS(SELECT 1 FROM public.content_publications s WHERE s.replaces_publication_id=p.id)
+ WHERE b.status IN ('active','paused') AND p.proof_version IN(2,3) AND NOT EXISTS(SELECT 1 FROM public.content_publications s WHERE s.replaces_publication_id=p.id)
  UNION ALL
  SELECT '3:'||h.policy_key,jsonb_build_object('kind','POLICY','policyKey',h.policy_key),
   jsonb_build_array(h.publication_id,h.policy_revision_id,h.version)
@@ -43,6 +43,8 @@ const version = `version_state AS (
  SELECT encode(sha256(convert_to(jsonb_build_array(
   (SELECT coalesce(jsonb_agg(jsonb_build_array(key,locator,state) ORDER BY key COLLATE "C"),'[]'::jsonb) FROM candidates),
   (SELECT coalesce(jsonb_agg(jsonb_build_array(id,manifest_hash) ORDER BY id),'[]'::jsonb) FROM public.content_publication_manifests),
+  (SELECT coalesce(jsonb_agg(jsonb_build_array(publication_id,manifest_hash) ORDER BY publication_id),'[]'::jsonb) FROM public.daily_publication_manifests),
+  (SELECT coalesce(jsonb_agg(jsonb_build_array(revision_id,document_hash) ORDER BY revision_id),'[]'::jsonb) FROM public.daily_publication_revisions),
   (SELECT coalesce(jsonb_agg(jsonb_build_array(id,processing_status,rights_status) ORDER BY id),'[]'::jsonb) FROM public.media_assets),
   (SELECT coalesce(jsonb_agg(jsonb_build_array(id,status) ORDER BY id),'[]'::jsonb) FROM public.media_variants),
   (SELECT coalesce(jsonb_agg(jsonb_build_array(id,lifecycle) ORDER BY id),'[]'::jsonb) FROM public.media_metadata_revisions),

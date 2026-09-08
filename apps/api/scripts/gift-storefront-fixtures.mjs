@@ -85,6 +85,7 @@ async function seedArtists({ workspaceRoot, content, publishMedia, progress }) {
       })),
     });
     await content.approve(owner, revisionId);
+    // Keep the real future effective time, then leave a clear TEST-only margin before publication.
     await content.publish(owner, revisionId);
     const current = await content.request("/api/v1/admin/catalog/owners/read", {
       target: owner,
@@ -550,7 +551,7 @@ async function seedPolicies({ content, client, progress }) {
     while (
       !(
         await client.query(
-          "SELECT clock_timestamp()>=$1::timestamptz AS ready",
+          "SELECT clock_timestamp()>=$1::timestamptz+interval '1 second' AS ready",
           [effectiveAt],
         )
       ).rows[0].ready

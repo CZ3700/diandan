@@ -17,13 +17,13 @@ export function catalogDirectoryPaths(): JsonObject {
         "/api/v1/idols",
         "discoverIdols",
         idolDiscoveryQuerySchema,
-        "IdolDirectoryResponse",
+        "CurrentIdolDirectoryResponse",
       ],
       [
         "/api/v1/gifts",
         "discoverGifts",
         giftDiscoveryQuerySchema,
-        "GiftDirectoryResponse",
+        "CurrentGiftDirectoryResponse",
       ],
     ].map(([path, operationId, schema, response]) => {
       const rendered = z.toJSONSchema(schema as z.ZodType, {

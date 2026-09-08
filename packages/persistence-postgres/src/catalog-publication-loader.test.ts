@@ -1,4 +1,4 @@
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 import {
   SUPPORTED_LOCALES,
   giftTranslationFieldsSchema,
@@ -15,11 +15,19 @@ import {
   loadIdolDirectoryRecords,
 } from "./catalog-publication-loader.js";
 
+import * as publishedRepository from "./published-content-repository.js";
+
 const uuid = (number: number) =>
   `70000000-0000-4000-8000-${number.toString(16).padStart(12, "0")}`;
 const timestamp = "2026-09-05T00:00:00.000Z";
 const origin = "https://media.example.invalid/catalog/";
 type Row = Record<string, unknown>;
+function assertLegacy<T extends { schemaVersion: number }>(
+  record: T | undefined,
+): asserts record is Exclude<T, { schemaVersion: 3 }> {
+  if (!record || record.schemaVersion === 3)
+    throw new Error("Expected actual legacy fixture");
+}
 
 function translationRows(
   kind: "IDOL" | "GIFT" | "MEDIA_METADATA",
@@ -243,6 +251,7 @@ test("hydrates the exact current idol window and complete seven-locale approval 
   );
   expect(records).toHaveLength(1);
   const record = records[0]!;
+  assertLegacy(record);
   expect(record.selection.currentPublication.translationManifest).toHaveLength(
     28,
   );
@@ -267,6 +276,7 @@ test("hydrates gift components, localized variant labels, and media without proj
     origin,
   );
   const record = records[0]!;
+  assertLegacy(record);
   expect(record.selection.currentPublication.translationManifest).toHaveLength(
     14,
   );
@@ -289,7 +299,9 @@ test("supports a rollback pointer to a superseded immutable revision", async () 
     origin,
   );
   expect(
-    record && selectPublishedIdol(record.selection, record.source).success,
+    record &&
+      record.schemaVersion !== 3 &&
+      selectPublishedIdol(record.selection, record.source).success,
   ).toBe(true);
 });
 
@@ -353,6 +365,7 @@ test("produces valid projections for all seven requested locales", async () => {
     );
     expect(
       idolRecord &&
+        idolRecord.schemaVersion !== 3 &&
         selectPublishedIdol(idolRecord.selection, idolRecord.source).success,
     ).toBe(true);
     const gift = fixture("GIFT");
@@ -364,6 +377,7 @@ test("produces valid projections for all seven requested locales", async () => {
     );
     expect(
       giftRecord &&
+        giftRecord.schemaVersion !== 3 &&
         selectPublishedGift(giftRecord.selection, giftRecord.source).success,
     ).toBe(true);
   }
@@ -390,10 +404,12 @@ test("preserves discovery order when PostgreSQL returns a different row order", 
     "en",
     origin,
   );
-  expect(records.map((record) => record.source.base.id)).toEqual([
-    first.id,
-    id,
-  ]);
+  expect(
+    records.map((record) => {
+      assertLegacy(record);
+      return record.source.base.id;
+    }),
+  ).toEqual([first.id, id]);
 });
 
 test("retains current asset rights and processing states for the domain publication gate", async () => {
@@ -410,7 +426,9 @@ test("retains current asset rights and processing states for the domain publicat
       origin,
     );
     expect(
-      record && selectPublishedIdol(record.selection, record.source).success,
+      record &&
+        record.schemaVersion !== 3 &&
+        selectPublishedIdol(record.selection, record.source).success,
     ).toBe(false);
   }
 });
@@ -466,11 +484,13 @@ test("leaves localized content hash verification to the strong domain projection
     origin,
   );
   expect(
-    record && selectPublishedGift(record.selection, record.source).success,
+    record &&
+      record.schemaVersion !== 3 &&
+      selectPublishedGift(record.selection, record.source).success,
   ).toBe(false);
 });
 
-test.each([undefined, null, false, 2])(
+test.each([undefined, null, false, 2, "2", "3"])(
   "catalog cannot downgrade a missing or unverified publication proof marker %s",
   async (version) => {
     const data = fixture("GIFT");
@@ -485,3 +505,43 @@ test.each([undefined, null, false, 2])(
     ).rejects.toThrow("CATALOG_PUBLICATION_INVALID");
   },
 );
+
+test("daily catalog hydration delegates to the complete current proof without inventing legacy approvals", async () => {
+  const data = fixture("IDOL");
+  (data.main["publication"] as Row)["proof_version"] = 3;
+  data.main["translations"] = [];
+  const scope = {
+    markRollbackOnly: vi.fn(),
+    trackOperation: async <T>(operation: () => Promise<T>) => operation(),
+  };
+  const read = vi
+    .spyOn(publishedRepository, "loadPublishedContentContext")
+    .mockResolvedValue({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "CONTENT_UNAVAILABLE",
+    });
+  try {
+    await expect(
+      loadIdolDirectoryRecords(
+        clientWith([data.main], data.media),
+        [data.id],
+        "ja",
+        origin,
+        scope,
+      ),
+    ).rejects.toThrow("CATALOG_PUBLICATION_INVALID");
+    expect(read).toHaveBeenCalledExactlyOnceWith(
+      expect.anything(),
+      scope,
+      {
+        schemaVersion: 1,
+        locator: { kind: "IDOL", handle: "fictional-entry" },
+        locale: "ja",
+      },
+      origin,
+    );
+  } finally {
+    read.mockRestore();
+  }
+});

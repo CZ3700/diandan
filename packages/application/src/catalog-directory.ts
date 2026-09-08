@@ -16,8 +16,15 @@ import {
   type CatalogDirectoryFailure,
   type GiftDirectoryResponse,
   type IdolDirectoryResponse,
+  type ContentLocaleContext,
+  type IdolDirectoryRecord,
+  type GiftDirectoryRecord,
 } from "@fan-support/contracts";
-import { selectPublishedGift, selectPublishedIdol } from "@fan-support/content";
+import {
+  projectDailyPublication,
+  selectPublishedGift,
+  selectPublishedIdol,
+} from "@fan-support/content";
 import type {
   ContentReadTransactionManager,
   JsonValue,
@@ -43,17 +50,13 @@ function failure(
 }
 
 function hasExactLocale(
-  context: Readonly<{
-    requestedLocale: string;
-    resolvedLocale: string;
-    fallbackUsed: boolean;
-  }>,
+  context: ContentLocaleContext,
   locale: string,
 ): boolean {
   return (
     context.requestedLocale === locale &&
-    context.resolvedLocale === locale &&
-    !context.fallbackUsed
+    (context.schemaVersion === 2 ||
+      (context.resolvedLocale === locale && !context.fallbackUsed))
   );
 }
 
@@ -104,10 +107,7 @@ export function createCatalogDirectoryUseCases(
               const items = [];
               const ids = new Set<string>();
               for (const record of snapshot.items) {
-                const projected = selectPublishedIdol(
-                  record.selection,
-                  record.source,
-                );
+                const projected = projectIdol(record);
                 if (
                   !projected.success ||
                   !hasExactLocale(
@@ -175,10 +175,7 @@ export function createCatalogDirectoryUseCases(
               const items = [];
               const ids = new Set<string>();
               for (const entry of snapshot.items) {
-                const projected = selectPublishedGift(
-                  entry.record.selection,
-                  entry.record.source,
-                );
+                const projected = projectGift(entry.record);
                 if (
                   !projected.success ||
                   !hasExactLocale(
@@ -220,4 +217,21 @@ export function createCatalogDirectoryUseCases(
       }
     },
   });
+}
+
+function projectIdol(record: IdolDirectoryRecord) {
+  if (record.schemaVersion === 1)
+    return selectPublishedIdol(record.selection, record.source);
+  const response = projectDailyPublication(record.context);
+  return response.outcome === "SUCCESS" && response.content.kind === "IDOL"
+    ? { success: true as const, value: response.content.view }
+    : { success: false as const };
+}
+function projectGift(record: GiftDirectoryRecord) {
+  if (record.schemaVersion === 1)
+    return selectPublishedGift(record.selection, record.source);
+  const response = projectDailyPublication(record.context);
+  return response.outcome === "SUCCESS" && response.content.kind === "GIFT"
+    ? { success: true as const, value: response.content.view }
+    : { success: false as const };
 }

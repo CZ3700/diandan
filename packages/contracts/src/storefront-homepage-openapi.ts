@@ -9,7 +9,9 @@ export function storefrontHomepagePaths() {
     headers: publicRevalidationHeaders(success ? 200 : "FAILURE"),
     content: {
       "application/json": {
-        schema: { $ref: "#/components/schemas/StorefrontHomepageResponse" },
+        schema: {
+          $ref: "#/components/schemas/CurrentStorefrontHomepageResponse",
+        },
       },
     },
   });

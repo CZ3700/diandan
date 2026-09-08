@@ -108,7 +108,7 @@ test.each([
   },
 );
 
-test.each(["COVER", "CONTAIN"])(
+test.each(["COVER"])(
   "rejects a low-resolution source instead of enlarging it for %s",
   (fit) => {
     expect(
@@ -198,4 +198,23 @@ test("survives JSON roundtrip as an immutable identity-bound plan", () => {
   const result = framing?.planMediaFraming(JSON.parse(JSON.stringify(source)));
   expect(result).toBeDefined();
   expect(JSON.parse(JSON.stringify(result))).toEqual(result);
+});
+
+test("contains a smaller image at its actual pixel size instead of requiring an enlarged source", () => {
+  expect(
+    framing?.planMediaFraming({
+      ...source,
+      sourceWidth: 800,
+      sourceHeight: 1000,
+      fit: "CONTAIN",
+    }),
+  ).toMatchObject({
+    outcome: "SUCCESS",
+    plan: {
+      target: { width: 1600, height: 2000 },
+      sourceCrop: { x: 0, y: 0, width: 800, height: 1000 },
+      destination: { x: 400, y: 500, width: 800, height: 1000 },
+      background: "NEUTRAL",
+    },
+  });
 });

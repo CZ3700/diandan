@@ -37,6 +37,15 @@ function versionState(includeCommerce: boolean): string {
       `SELECT jsonb_build_array(id,publication_id,manifest_hash) value FROM public.content_publication_manifests`,
     ),
     aggregateState(
+      `SELECT jsonb_build_array(revision_id,document_hash) value FROM public.daily_publication_revisions`,
+    ),
+    aggregateState(
+      `SELECT jsonb_build_array(publication_id,manifest_hash) value FROM public.daily_publication_manifests`,
+    ),
+    aggregateState(
+      `SELECT jsonb_build_array(revision_id,source_translation_id,source_hash,document_hash,algorithm_version,normalized_name) value FROM public.idol_daily_search_projections`,
+    ),
+    aggregateState(
       `SELECT jsonb_build_array(id,source_asset_id,output_asset_id,status) value FROM public.media_processing_jobs`,
     ),
     aggregateState(
@@ -65,6 +74,9 @@ function versionState(includeCommerce: boolean): string {
       ),
       aggregateState(
         `SELECT jsonb_build_array(gift_variant_id, idol_id) value FROM public.gift_variant_idol_eligibility`,
+      ),
+      aggregateState(
+        `SELECT jsonb_build_array(gift_variant_id,rule,operation_id) value FROM public.gift_variant_recipient_rules`,
       ),
       aggregateState(
         `SELECT jsonb_build_array(id, market, status, version) value FROM public.markets WHERE market = $2`,
@@ -112,6 +124,18 @@ const visibleIdols = `public_idol_revisions AS (
   LEFT JOIN public.idol_revision_translations translation ON translation.idol_revision_id = revision.revision_id
   LEFT JOIN public.idol_translation_search_projections projection ON projection.idol_translation_id = translation.id
     AND projection.source_hash = translation.source_hash AND projection.algorithm_version = 1
+  WHERE revision.proof_version IN(1,2)
+  UNION ALL
+  SELECT revision.id,revision.handle,revision.display_order,daily.source_translation_id translation_id,
+    daily_projection.normalized_name,daily_projection.revision_id projection_id
+  FROM public_idol_revisions revision
+  LEFT JOIN public.daily_publication_revisions daily ON daily.revision_id = revision.revision_id
+    AND daily.object_kind='IDOL' AND daily.object_id=revision.id
+  LEFT JOIN public.idol_daily_search_projections daily_projection ON daily_projection.revision_id = daily.revision_id
+    AND daily_projection.source_translation_id = daily.source_translation_id
+    AND daily_projection.source_hash = daily.document#>>'{source,sourceHash}'
+    AND daily_projection.document_hash = daily.document_hash AND daily_projection.algorithm_version=1
+  WHERE revision.proof_version=3
   UNION ALL
   SELECT revision.id,revision.handle,revision.display_order,requested_translation.id translation_id,
     alias_projection.normalized_name,alias_projection.alias_set_id projection_id
@@ -191,12 +215,13 @@ const giftOffer = `LEFT JOIN LATERAL (
   WHERE variant.gift_id = gift.id AND variant.status = 'active' AND gift.status = 'active'
     AND NOT EXISTS (SELECT 1 FROM public.price_book_publications successor WHERE successor.replaces_publication_id = price_publication.id)
     AND EXISTS (
-      SELECT 1 FROM public.gift_variant_idol_eligibility eligibility
-      JOIN public.idols recipient ON recipient.id = eligibility.idol_id
-        AND recipient.status = 'active' AND recipient.accepting_gifts
+      SELECT 1 FROM public.idols recipient
       JOIN public.idol_publication_heads recipient_head ON recipient_head.idol_id = recipient.id
         AND recipient_head.idol_revision_id = recipient.published_revision_id
-      WHERE eligibility.gift_variant_id = variant.id AND ($4::uuid IS NULL OR recipient.id = $4)
+      WHERE recipient.status = 'active' AND recipient.accepting_gifts
+        AND ($4::uuid IS NULL OR recipient.id = $4)
+        AND (EXISTS (SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=recipient.id)
+          OR EXISTS (SELECT 1 FROM public.gift_variant_recipient_rules eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.rule='ALL_ACTIVE_ARTISTS'))
     )
     AND (item.id IS NULL OR (item.status = 'ACTIVE' AND item.policy = variant.inventory_policy))
     AND (variant.inventory_policy IN ('PROCURE_ON_DEMAND', 'PREORDER') OR EXISTS (
@@ -254,14 +279,19 @@ export function buildGiftDirectoryQuery(
         AND publication.content_type = 'GIFT' AND publication.gift_id = gift.id AND publication.gift_revision_id = head.gift_revision_id
       JOIN public.gift_revisions revision ON revision.id = head.gift_revision_id AND revision.gift_id = gift.id
         AND revision.lifecycle = CASE publication.action WHEN 'PUBLISH' THEN 'PUBLISHED' ELSE 'SUPERSEDED' END
-      JOIN public.gift_revision_translations translation ON translation.gift_revision_id = revision.id AND translation.locale = $1
+      LEFT JOIN public.gift_revision_translations translation ON publication.proof_version IN(1,2) AND translation.gift_revision_id = revision.id AND translation.locale = $1
       ${giftOffer}
       WHERE gift.status IN ('active', 'paused')
+        AND (publication.proof_version=3 OR translation.id IS NOT NULL)
         AND NOT EXISTS (SELECT 1 FROM public.content_publications successor WHERE successor.replaces_publication_id = publication.id)
         AND ($4::uuid IS NULL OR EXISTS (
           SELECT 1 FROM public.gift_variants variant
-          JOIN public.gift_variant_idol_eligibility eligibility ON eligibility.gift_variant_id = variant.id
-          WHERE variant.gift_id = gift.id AND variant.status IN ('active', 'paused') AND eligibility.idol_id = $4
+          WHERE variant.gift_id = gift.id AND variant.status IN ('active', 'paused')
+            AND (EXISTS (SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=$4)
+              OR EXISTS (SELECT 1 FROM public.gift_variant_recipient_rules eligibility
+                JOIN public.idols recipient ON recipient.id=$4 AND recipient.status = 'active' AND recipient.accepting_gifts
+                JOIN public.idol_publication_heads recipient_head ON recipient_head.idol_id=recipient.id AND recipient_head.idol_revision_id = recipient.published_revision_id
+                WHERE eligibility.gift_variant_id=variant.id AND eligibility.rule='ALL_ACTIVE_ARTISTS'))
         ))
     ), filtered AS (
       SELECT * FROM candidates

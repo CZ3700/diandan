@@ -1,12 +1,17 @@
 import {
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
-  publishedContentContextSchema,
+  legacyPublishedContentContextSchema,
+  dailyPublicationContextSchema,
   publishedContentResponseSchema,
-  type PublishedContentContext,
+  type LegacyPublishedContentContext,
   type PublishedContentResponse,
   type PublishedGiftDetails,
 } from "@fan-support/contracts";
+import {
+  projectDailyPublication,
+  projectDailyPublicationLocales,
+} from "./daily-publication.js";
 import { sameBaseContentTarget } from "./base-content.js";
 import {
   computePublicationManifestHash,
@@ -18,7 +23,7 @@ import {
 } from "./publication-preflight-shared.js";
 import { publishedMediaResolver } from "./published-content-media.js";
 
-function currentPublication(context: PublishedContentContext): boolean {
+function currentPublication(context: LegacyPublishedContentContext): boolean {
   const { publication, canonical } = context;
   const candidate = canonical.candidate;
   const current = candidate.currentPublication;
@@ -119,7 +124,7 @@ function currentPublication(context: PublishedContentContext): boolean {
   return true;
 }
 function details(
-  context: PublishedContentContext,
+  context: LegacyPublishedContentContext,
   media: ReturnType<typeof publishedMediaResolver>,
   description: string,
 ): PublishedGiftDetails {
@@ -190,7 +195,7 @@ function details(
   };
 }
 function project(
-  context: PublishedContentContext,
+  context: LegacyPublishedContentContext,
   media: ReturnType<typeof publishedMediaResolver>,
 ): unknown {
   const { canonical, locale } = context;
@@ -382,8 +387,8 @@ function project(
     };
   throw new Error("Public content kind mismatch");
 }
-function verifiedContext(input: unknown): PublishedContentContext {
-  const context = publishedContentContextSchema.parse(input);
+function verifiedContext(input: unknown): LegacyPublishedContentContext {
+  const context = legacyPublishedContentContextSchema.parse(input);
   if (
     !currentPublication(context) ||
     computePublicationManifestHash(context.publication.manifest) !==
@@ -404,7 +409,7 @@ function unavailable(): PublishedContentResponse {
 
 /** Private rendering boundary; only the validating public entry points call it. */
 function projectVerifiedContext(
-  context: PublishedContentContext,
+  context: LegacyPublishedContentContext,
 ): PublishedContentResponse {
   try {
     const media = publishedMediaResolver(context);
@@ -431,6 +436,8 @@ export function projectPublishedContent(
   input: unknown,
 ): PublishedContentResponse {
   try {
+    if (dailyPublicationContextSchema.safeParse(input).success)
+      return projectDailyPublication(input);
     return projectVerifiedContext(verifiedContext(input));
   } catch {
     return unavailable();
@@ -442,6 +449,11 @@ export function projectPublishedContentLocales(
   input: unknown,
 ): readonly PublishedContentResponse[] {
   try {
+    if (dailyPublicationContextSchema.safeParse(input).success)
+      return (
+        projectDailyPublicationLocales(input) ??
+        SUPPORTED_LOCALES.map(() => unavailable())
+      );
     const context = verifiedContext(input);
     if (context.locale !== DEFAULT_LOCALE)
       throw new Error("Publication source locale mismatch");

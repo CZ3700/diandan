@@ -137,7 +137,7 @@ describe("published content boundary", () => {
   });
   test("canonical context requires persisted proof separate from current facts", () => {
     expect(
-      Object.keys(content.publishedContentContextSchema.shape).sort(),
+      Object.keys(content.legacyPublishedContentContextSchema.shape).sort(),
     ).toEqual(
       ["schemaVersion", "locale", "publication", "canonical", "media"].sort(),
     );

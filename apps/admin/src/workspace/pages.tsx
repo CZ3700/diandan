@@ -5,8 +5,10 @@ import {
   baseContentTargetSchema,
   type SupportedLocale,
 } from "@fan-support/contracts";
-import { AdminWorkspace } from "./workspace";
+import { ManagementCenter } from "../management-center/center";
+import { getManagementStorefrontOrigin } from "../server/management-config";
 import { AdminPreview } from "./preview";
+import { AdminWorkspace } from "./workspace";
 export type PreviewSearchParams = Readonly<
   Record<string, string | string[] | undefined>
 >;
@@ -14,6 +16,15 @@ function requireWorkspace() {
   if (loadAdminWorkspaceConfig().mode !== "TEST") notFound();
 }
 export function WorkspacePage({ locale }: { locale: SupportedLocale }) {
+  requireWorkspace();
+  return (
+    <ManagementCenter
+      locale={locale}
+      storefrontOrigin={getManagementStorefrontOrigin()}
+    />
+  );
+}
+export function AdvancedWorkspacePage({ locale }: { locale: SupportedLocale }) {
   requireWorkspace();
   return <AdminWorkspace locale={locale} />;
 }

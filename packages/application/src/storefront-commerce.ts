@@ -57,8 +57,12 @@ function projectRecipient(loaded: Loaded): StorefrontGiftRecipient {
   if (
     !sameId(command.idolId, id) ||
     localeContext.requestedLocale !== command.locale ||
-    localeContext.resolvedLocale !== command.locale ||
-    localeContext.fallbackUsed
+    (localeContext.schemaVersion === 2
+      ? localeContext.resolvedLocale !== localeContext.sourceLocale ||
+        localeContext.fallbackUsed !==
+          (command.locale !== localeContext.sourceLocale)
+      : localeContext.resolvedLocale !== command.locale ||
+        localeContext.fallbackUsed)
   )
     throw new Error("Invalid recipient binding");
   return storefrontGiftRecipientSchema.parse({
@@ -120,12 +124,21 @@ export function createStorefrontCommerceUseCases({
                 gift.content.view.handle !== command.data.handle ||
                 gift.content.view.localeContext.requestedLocale !==
                   command.data.locale ||
-                gift.content.view.localeContext.resolvedLocale !==
-                  command.data.locale ||
-                gift.content.view.localeContext.fallbackUsed
+                (gift.content.view.localeContext.schemaVersion === 1 &&
+                  (gift.content.view.localeContext.resolvedLocale !==
+                    command.data.locale ||
+                    gift.content.view.localeContext.fallbackUsed))
               )
                 return failure("CONTENT_UNAVAILABLE");
-              const candidate = loaded.gift.context.canonical.candidate;
+              const context = loaded.gift.context;
+              const candidate =
+                context.schemaVersion === 3
+                  ? {
+                      objectKind: context.current.document.kind,
+                      prices: context.current.prices,
+                      priceBooks: context.current.priceBooks,
+                    }
+                  : context.canonical.candidate;
               if (candidate.objectKind !== "GIFT")
                 return failure("CONTENT_UNAVAILABLE");
               // A selected SQL price must also be part of the canonical current-price evidence.

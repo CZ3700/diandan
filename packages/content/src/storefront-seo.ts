@@ -75,7 +75,7 @@ export function projectStorefrontSeoEntity(input: unknown):
         : content.kind === "POLICY"
           ? { kind: content.kind, policyKey: content.view.policyKey }
           : { kind: content.kind, handle: content.view.handle };
-    const locales = views.map((view, index) => {
+    const locales = views.flatMap((view, index) => {
       const locale = SUPPORTED_LOCALES[index]!;
       if (
         view.outcome !== "SUCCESS" ||
@@ -84,6 +84,7 @@ export function projectStorefrontSeoEntity(input: unknown):
       )
         throw new Error("SEO publication mismatch");
       const provenance = view.content.view.localeContext;
+      if (provenance.schemaVersion === 2 && provenance.fallbackUsed) return [];
       if (
         provenance.requestedLocale !== locale ||
         provenance.resolvedLocale !== locale ||
@@ -91,11 +92,13 @@ export function projectStorefrontSeoEntity(input: unknown):
         !provenance.translationRevision
       )
         throw new Error("SEO locale unavailable");
-      return {
-        locale,
-        translationRevision: provenance.translationRevision,
-        lastModified: view.publication.publishedAt,
-      };
+      return [
+        {
+          locale,
+          translationRevision: provenance.translationRevision,
+          lastModified: view.publication.publishedAt,
+        },
+      ];
     });
     return {
       schemaVersion: 1,

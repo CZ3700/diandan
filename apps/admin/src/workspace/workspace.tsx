@@ -220,7 +220,7 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
           <LocaleSelect
             label={t("language")}
             value={locale}
-            onChange={(value) => window.location.assign(`/${value}`)}
+            onChange={(value) => window.location.assign(`/${value}/advanced`)}
           />
         </div>
       </main>
@@ -230,7 +230,7 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
       <aside className="admin-sidebar">
         <a
           className="admin-wordmark"
-          href={`/${locale}`}
+          href={`/${locale}/advanced`}
           onClick={(event) => {
             if (!canLeave()) event.preventDefault();
           }}
@@ -259,7 +259,7 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
             label={t("language")}
             value={locale}
             onChange={(value) => {
-              if (canLeave()) window.location.assign(`/${value}`);
+              if (canLeave()) window.location.assign(`/${value}/advanced`);
             }}
           />
           <small>{t("localPreview")}</small>

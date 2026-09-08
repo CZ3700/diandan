@@ -33,3 +33,5 @@ export * from "./gift-commerce-route.js";
 export * from "./gift-commerce-composition.js";
 
 export * from "./published-gift-commerce-route.js";
+export * from "./management-center-route.js";
+export * from "./test-management-center-composition.js";

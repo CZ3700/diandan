@@ -53,8 +53,9 @@ export async function requestArtistDirectory(
       result.items.some(
         (item) =>
           item.localeContext.requestedLocale !== parsed.data.locale ||
-          item.localeContext.resolvedLocale !== parsed.data.locale ||
-          item.localeContext.fallbackUsed,
+          (item.localeContext.schemaVersion === 1 &&
+            (item.localeContext.resolvedLocale !== parsed.data.locale ||
+              item.localeContext.fallbackUsed)),
       )
     )
       throw new Error("Invalid directory response");

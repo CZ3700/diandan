@@ -12,6 +12,7 @@ export type CommonMediaProps = Readonly<{
   focalPoint?: MediaFocalPoint;
   height: number;
   imageClassName?: string;
+  lang?: string;
   loading?: "eager" | "lazy";
   sizes?: string;
   src: string;
@@ -172,6 +173,7 @@ export function MediaFrame({
   height,
   imageClassName,
   imageRef,
+  lang,
   loading = "lazy",
   onError,
   onLoad,
@@ -196,6 +198,7 @@ export function MediaFrame({
         <MediaFallback alternative={alternative} />
       ) : (
         <img
+          lang={lang}
           alt={alternative.imageAlt}
           className={classNames("fs-media__image", imageClassName)}
           decoding={decoding}

@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "attempt": 5,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "check"
+  ],
+  "startedAt": "2026-09-07T23:56:24.743941+00:00",
+  "sourceSha256": "7a60d6d39fa6b35b9dc566ff7c192b13fde191ef4bbae9e8d1278b1bae7339e1",
+  "priorFailures": [
+    "full-check-first-meta.json",
+    "full-check-second-meta.json",
+    "full-check-third-meta.json",
+    "full-check-fourth-meta.json"
+  ],
+  "targetedLegacyChecks": "PASS (5 PostgreSQL probes, 436 admin HTTP and 1798 media HTTP assertions)",
+  "exitCode": 0,
+  "finishedAt": "2026-09-08T00:16:12.639932+00:00",
+  "durationSeconds": 1187.855
+}

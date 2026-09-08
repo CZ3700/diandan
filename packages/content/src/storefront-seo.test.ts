@@ -79,3 +79,13 @@ test("SEO cursors have canonical encoding, operation and version bindings withou
   ])
     expect(seo.decodeStorefrontSeoCursor(value, "INDEX")).toBeUndefined();
 });
+
+test("single original is discoverable without claiming six nonexistent translations", async () => {
+  const { createDailyPublicationFixture } =
+    await import("./daily-publication-fixtures.js");
+  const { projectStorefrontSeoEntity } = await import("./storefront-seo.js");
+  const result = projectStorefrontSeoEntity(createDailyPublicationFixture());
+  expect(result.outcome).toBe("SUCCESS");
+  if (result.outcome !== "SUCCESS") return;
+  expect(result.entity.locales.map((row) => row.locale)).toEqual(["zh-CN"]);
+});

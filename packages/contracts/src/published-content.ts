@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { contentLocaleContextSchema } from "./content-provenance.js";
+import { dailyPublicationContextSchema } from "./daily-publication.js";
 import {
   publishedIdolViewSchema,
   publishedGiftViewSchema,
@@ -23,7 +25,7 @@ import {
   mediaMetadataRevisionIdSchema,
   mediaVariantIdSchema,
 } from "./identifiers.js";
-import { localeContextSchema, supportedLocaleSchema } from "./locale.js";
+import { supportedLocaleSchema } from "./locale.js";
 import { publishedMediaViewSchema } from "./media-content.js";
 import { publicationManifestRecordSchema } from "./publication-manifest.js";
 import { publicationPreflightContextSchema } from "./publication-preflight.js";
@@ -170,7 +172,7 @@ export const publishedContentSchema = z.discriminatedUnion("kind", [
   }),
   z.strictObject({
     kind: z.literal("MEDIA_METADATA"),
-    localeContext: localeContextSchema,
+    localeContext: contentLocaleContextSchema,
     view: publishedMediaViewSchema,
   }),
 ]);
@@ -194,7 +196,7 @@ export const publishedContentResponseSchema = z.union([
   }),
   publishedContentFailureSchema,
 ]);
-export const publishedContentContextSchema = z.strictObject({
+export const legacyPublishedContentContextSchema = z.strictObject({
   schemaVersion: schemaVersionSchema,
   locale: supportedLocaleSchema,
   publication: publicationManifestRecordSchema,
@@ -208,6 +210,21 @@ export const publishedContentContextSchema = z.strictObject({
     }),
   ),
 });
+export const publishedContentContextSchema = z.union([
+  legacyPublishedContentContextSchema,
+  dailyPublicationContextSchema,
+]);
+export type LegacyPublishedContentContext = z.infer<
+  typeof legacyPublishedContentContextSchema
+>;
+export const legacyPublishedContentContextResponseSchema = z.union([
+  z.strictObject({
+    schemaVersion: schemaVersionSchema,
+    outcome: z.literal("SUCCESS"),
+    context: legacyPublishedContentContextSchema,
+  }),
+  publishedContentFailureSchema,
+]);
 export const publishedContentContextResponseSchema = z.union([
   z.strictObject({
     schemaVersion: schemaVersionSchema,

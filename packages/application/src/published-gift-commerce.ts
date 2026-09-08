@@ -34,15 +34,18 @@ export function createPublishedGiftCommerceUseCases({
               if (loaded.outcome === "FAILURE") return loaded;
               const result = projectPublishedGiftCommerce(loaded);
               if (result.outcome === "FAILURE") return result;
+              const locale = result.content.view.localeContext;
               if (
                 result.content.kind !== "GIFT" ||
                 result.content.view.handle !== command.data.locator.handle ||
                 loaded.context.locale !== command.data.locale ||
-                result.content.view.localeContext.requestedLocale !==
-                  command.data.locale ||
-                result.content.view.localeContext.resolvedLocale !==
-                  command.data.locale ||
-                result.content.view.localeContext.fallbackUsed
+                locale.requestedLocale !== command.data.locale ||
+                (locale.schemaVersion === 2
+                  ? locale.resolvedLocale !== locale.sourceLocale ||
+                    locale.fallbackUsed !==
+                      (command.data.locale !== locale.sourceLocale)
+                  : locale.resolvedLocale !== command.data.locale ||
+                    locale.fallbackUsed)
               )
                 return unavailable;
               return JSON.parse(JSON.stringify(result)) as JsonValue;

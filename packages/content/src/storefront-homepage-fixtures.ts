@@ -1,6 +1,6 @@
 // Fictional, package-local test support. Never exported from the runtime entry point.
 import {
-  publishedContentContextSchema,
+  legacyPublishedContentContextSchema,
   sourceHashSchema,
   type PublicationPreflightContext,
   homepageSlotSchema,
@@ -76,7 +76,7 @@ export function storefrontPublishedFixture(
       : candidate.objectKind === "MEDIA_METADATA"
         ? candidate.variants
         : candidate.mediaVariants;
-  return publishedContentContextSchema.parse({
+  return legacyPublishedContentContextSchema.parse({
     schemaVersion: 1,
     locale: "en",
     canonical: context,

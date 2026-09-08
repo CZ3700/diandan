@@ -129,24 +129,37 @@ export function createStorefrontCommerceRepository(
         const command = parsed.data;
         const loaded = await load("GIFT", command.handle, command.locale);
         if (loaded.outcome !== "SUCCESS") return loaded;
-        const { publication } = loaded.context;
-        if (publication.target.owner.kind !== "GIFT")
-          return {
-            schemaVersion: 1,
-            outcome: "FAILURE",
-            code: "CONTENT_UNAVAILABLE",
+        const context = loaded.context;
+        const publication = context.publication;
+        let gift;
+        if (context.schemaVersion === 3) {
+          if (context.current.document.kind !== "GIFT")
+            return {
+              schemaVersion: 1,
+              outcome: "FAILURE",
+              code: "CONTENT_UNAVAILABLE",
+            };
+          gift = { ...loaded, profileVersion: 3 as const, profile: null };
+        } else {
+          const owner = context.publication.target.owner;
+          if (owner.kind !== "GIFT")
+            return {
+              schemaVersion: 1,
+              outcome: "FAILURE",
+              code: "CONTENT_UNAVAILABLE",
+            };
+          const profile = await readGiftPublicationProfile(client, {
+            publicationId: publication.publicationId,
+            giftId: owner.giftId,
+            giftRevisionId: context.publication.target.revisionId,
+            manifestHash: publication.manifestHash,
+          });
+          gift = {
+            ...loaded,
+            profileVersion: profile === null ? (1 as const) : (2 as const),
+            profile,
           };
-        const profile = await readGiftPublicationProfile(client, {
-          publicationId: publication.publicationId,
-          giftId: publication.target.owner.giftId,
-          giftRevisionId: publication.target.revisionId,
-          manifestHash: publication.manifestHash,
-        });
-        const gift = {
-          ...loaded,
-          profileVersion: profile === null ? (1 as const) : (2 as const),
-          profile,
-        };
+        }
         const projected = projectPublishedGiftCommerce(gift);
         if (projected.outcome !== "SUCCESS") return projected;
         if (
@@ -210,9 +223,10 @@ export function createStorefrontCommerceRepository(
               content.content.view.acceptingGifts &&
               content.content.view.localeContext.requestedLocale ===
                 command.locale &&
-              content.content.view.localeContext.resolvedLocale ===
-                command.locale &&
-              !content.content.view.localeContext.fallbackUsed
+              (content.content.view.localeContext.schemaVersion === 2 ||
+                (content.content.view.localeContext.resolvedLocale ===
+                  command.locale &&
+                  !content.content.view.localeContext.fallbackUsed))
             );
           },
         );

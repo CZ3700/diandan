@@ -88,17 +88,22 @@ export async function readStorefrontVariantFacts(
     WHERE balance.inventory_item_id=item.id),'0') available_quantity,
    coalesce((SELECT jsonb_agg(jsonb_build_object('priceId',price.id,'priceRevision',price.revision,'unitAmountMinor',price.amount_minor))
     ${currentBook} ${priceJoin} WHERE ${leaf} AND h.market=$3 AND h.currency=$4 AND price.gift_variant_id=variant.id),'[]'::jsonb) prices,
-   EXISTS(SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=$5) eligible_for_selected,
+   (EXISTS(SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=$5)
+    OR EXISTS(SELECT 1 FROM public.gift_variant_recipient_rules eligibility
+     JOIN public.idols recipient ON recipient.id=$5 AND recipient.status='active' AND recipient.accepting_gifts
+     JOIN public.idol_publication_heads recipient_head ON recipient_head.idol_id=recipient.id AND recipient_head.idol_revision_id=recipient.published_revision_id
+     WHERE eligibility.gift_variant_id=variant.id AND eligibility.rule='ALL_ACTIVE_ARTISTS')) eligible_for_selected,
    witness.id witness_id,witness.handle witness_handle
    FROM public.gift_variants variant LEFT JOIN public.inventory_items item ON item.gift_variant_id=variant.id
-   LEFT JOIN LATERAL (SELECT idol.id,idol.handle FROM public.gift_variant_idol_eligibility eligibility
-    JOIN public.idols idol ON idol.id=eligibility.idol_id AND idol.status='active' AND idol.accepting_gifts
+   LEFT JOIN LATERAL (SELECT idol.id,idol.handle FROM public.idols idol
     JOIN public.idol_publication_heads head ON head.idol_id=idol.id AND head.idol_revision_id=idol.published_revision_id
     JOIN public.content_publications publication ON publication.id=head.publication_id AND publication.content_type='IDOL'
      AND publication.idol_id=idol.id AND publication.idol_revision_id=head.idol_revision_id
     JOIN public.idol_revisions revision ON revision.id=head.idol_revision_id AND revision.idol_id=idol.id
      AND revision.lifecycle=CASE publication.action WHEN 'PUBLISH' THEN 'PUBLISHED' ELSE 'SUPERSEDED' END
-    WHERE eligibility.gift_variant_id=variant.id
+    WHERE idol.status='active' AND idol.accepting_gifts
+     AND (EXISTS(SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=idol.id)
+      OR EXISTS(SELECT 1 FROM public.gift_variant_recipient_rules eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.rule='ALL_ACTIVE_ARTISTS'))
      AND NOT EXISTS(SELECT 1 FROM public.content_publications successor WHERE successor.replaces_publication_id=publication.id)
     ORDER BY idol.id LIMIT 1) witness ON $5::uuid IS NULL
    WHERE variant.gift_id=$1 AND variant.id=ANY($2::uuid[]) AND variant.status IN('active','paused')`,

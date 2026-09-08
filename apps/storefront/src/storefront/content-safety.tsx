@@ -1,9 +1,18 @@
 import {
   idolTranslationFieldsSchema,
-  type LocaleContext,
+  type ContentLocaleContext,
 } from "@fan-support/contracts";
 /** The shared schema accepts balanced attribute-free paragraph/list/emphasis tags only. */
-export function ControlledBiography({ text }: Readonly<{ text: string }>) {
+export function ControlledBiography({
+  text,
+  plain = false,
+}: Readonly<{ text: string; plain?: boolean }>) {
+  if (plain)
+    return (
+      <div className="storefront-biography">
+        <p>{text}</p>
+      </div>
+    );
   const value = idolTranslationFieldsSchema.shape.fullBio.parse(text);
   return (
     <div
@@ -12,6 +21,8 @@ export function ControlledBiography({ text }: Readonly<{ text: string }>) {
     />
   );
 }
-export function hasFallback(contexts: readonly LocaleContext[]): boolean {
+export function hasFallback(
+  contexts: readonly ContentLocaleContext[],
+): boolean {
   return contexts.some((context) => context.fallbackUsed);
 }

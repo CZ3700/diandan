@@ -40,6 +40,7 @@ export function adminFailureStatus(code: string): number {
     case "FORBIDDEN":
     case "CSRF_INVALID":
     case "SELF_REVIEW":
+    case "NEEDS_AUTHORIZATION":
       return 403;
     case "NOT_FOUND":
     case "PREVIEW_UNAVAILABLE":
@@ -49,6 +50,7 @@ export function adminFailureStatus(code: string): number {
       return 400;
     case "CONTENT_UNAVAILABLE":
     case "COMMERCE_UNAVAILABLE":
+    case "MANAGEMENT_UNAVAILABLE":
       return 503;
     default:
       return 409;

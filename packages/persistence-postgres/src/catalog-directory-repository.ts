@@ -152,7 +152,10 @@ export function createCatalogDirectoryRepository(
         if (
           items.length !== selectedIds.length ||
           items.some(
-            (item, index) => item.source.base.id !== selectedIds[index],
+            (item, index) =>
+              (item.schemaVersion === 3
+                ? item.context.current.document.ownerId
+                : item.source.base.id) !== selectedIds[index],
           )
         )
           return failure("CATALOG_UNAVAILABLE");
@@ -218,7 +221,12 @@ export function createCatalogDirectoryRepository(
         );
         if (
           records.length !== ids.length ||
-          records.some((item, index) => item.source.base.id !== ids[index])
+          records.some(
+            (item, index) =>
+              (item.schemaVersion === 3
+                ? item.context.current.document.ownerId
+                : item.source.base.id) !== ids[index],
+          )
         )
           return failure("CATALOG_UNAVAILABLE");
         return giftDirectorySnapshotSchema.parse({

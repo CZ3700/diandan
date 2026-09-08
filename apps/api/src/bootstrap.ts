@@ -3,6 +3,10 @@ import {
   type StorefrontCommerceRouteDependencies,
 } from "./storefront-commerce-route.js";
 import {
+  registerManagementCenterRoute,
+  type ManagementCenterRouteDependencies,
+} from "./management-center-route.js";
+import {
   registerGiftCommerceRoute,
   type GiftCommerceRouteDependencies,
 } from "./gift-commerce-route.js";
@@ -89,6 +93,8 @@ export type ApiLifecycleResource = Readonly<{
 }>;
 
 export type CreateApiApplicationOptions = Readonly<{
+  managementCenterRoute?: ManagementCenterRouteDependencies;
+  managementCenterRuntime?: ApiLifecycleResource;
   giftCommerceRoute?: GiftCommerceRouteDependencies;
   giftCommerceRuntime?: ApiLifecycleResource;
   publishedGiftCommerceRoute?: PublishedGiftCommerceRouteDependencies;
@@ -138,7 +144,8 @@ function registerApiLifecycle(
     | "API publication preflight"
     | "API publication runtime"
     | "API published content"
-    | "API resource management",
+    | "API resource management"
+    | "API management center",
 ): void {
   if (runtime === undefined) {
     return;
@@ -247,6 +254,16 @@ export async function createApiApplication(
     options.resourceManagementRuntime,
     "API resource management",
   );
+  registerApiLifecycle(
+    adapter,
+    options.managementCenterRuntime,
+    "API management center",
+  );
+  if (options.managementCenterRoute !== undefined)
+    registerManagementCenterRoute(
+      adapter.getInstance(),
+      options.managementCenterRoute,
+    );
   if (options.resourceManagementRoute !== undefined)
     registerResourceManagementRoute(
       adapter.getInstance(),

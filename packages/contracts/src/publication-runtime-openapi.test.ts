@@ -106,7 +106,7 @@ test("documents five session-protected publication actions and five explicit-loc
       );
     }
     expect(responses["200"]?.content["application/json"].schema.$ref).toBe(
-      `#/components/schemas/${privateRoute ? "PublicationRuntimeResponse" : "PublishedContentResponse"}`,
+      `#/components/schemas/${privateRoute ? "PublicationRuntimeResponse" : "CurrentPublishedContentResponse"}`,
     );
     if (privateRoute)
       expect(responses["409"]?.content["application/json"].schema.$ref).toBe(

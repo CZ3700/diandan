@@ -37,17 +37,31 @@ async function entity(
     await repository.loadEntity(locator),
   );
   if (loaded.outcome === "FAILURE") return expectedKey ? unavailable : loaded;
-  const candidate = loaded.context.canonical.candidate;
-  const key =
-    candidate.objectKind === "HOMEPAGE"
-      ? "0:homepage"
-      : candidate.objectKind === "IDOL"
-        ? `1:${candidate.base.id.toLowerCase()}`
-        : candidate.objectKind === "GIFT"
-          ? `2:${candidate.base.id.toLowerCase()}`
-          : candidate.objectKind === "POLICY"
-            ? `3:${candidate.revision.policyKey}`
+  const context = loaded.context;
+  let key: string | undefined;
+  if (context.schemaVersion === 3) {
+    const document = context.current.document;
+    key =
+      document.kind === "HOMEPAGE"
+        ? "0:homepage"
+        : document.kind === "IDOL"
+          ? `1:${document.ownerId.toLowerCase()}`
+          : document.kind === "GIFT"
+            ? `2:${document.ownerId.toLowerCase()}`
             : undefined;
+  } else {
+    const candidate = context.canonical.candidate;
+    key =
+      candidate.objectKind === "HOMEPAGE"
+        ? "0:homepage"
+        : candidate.objectKind === "IDOL"
+          ? `1:${candidate.base.id.toLowerCase()}`
+          : candidate.objectKind === "GIFT"
+            ? `2:${candidate.base.id.toLowerCase()}`
+            : candidate.objectKind === "POLICY"
+              ? `3:${candidate.revision.policyKey}`
+              : undefined;
+  }
   if (expectedKey !== undefined && key !== expectedKey) return unavailable;
   const projected = projectStorefrontSeoEntity(loaded.context);
   return projected.outcome === "SUCCESS" &&

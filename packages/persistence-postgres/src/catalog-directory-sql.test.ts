@@ -6,6 +6,60 @@ import {
 } from "./catalog-directory-sql.js";
 
 describe("catalog directory SQL boundaries", () => {
+  test("single-source artist search is a distinct hash-bound projection without manufactured locale reviews", () => {
+    const { text } = buildIdolDirectoryQuery({
+      locale: "ja",
+      searchTerm: "原文",
+      take: 12,
+      anchorId: null,
+      afterId: null,
+    });
+    expect(text).toContain("public.idol_daily_search_projections");
+    expect(text).toContain(
+      "daily_projection.source_translation_id = daily.source_translation_id",
+    );
+    expect(text).toContain(
+      "daily_projection.source_hash = daily.document#>>'{source,sourceHash}'",
+    );
+    expect(text).toContain(
+      "daily_projection.document_hash = daily.document_hash",
+    );
+    expect(text).toContain("WHERE revision.proof_version=3");
+    expect(text).toContain("WHERE revision.proof_version IN(1,2)");
+    expect(text.match(/WHERE revision.proof_version=2/gu)).toHaveLength(1);
+    expect(text).toContain("translation_id IS NULL OR projection_id IS NULL");
+    expect(text).toContain("public.daily_publication_manifests");
+  });
+  test("daily gifts use the actual revision and recipient rule without requiring translated rows", () => {
+    const { text } = buildGiftDirectoryQuery({
+      locale: "ja",
+      market: "TEST",
+      currency: "USD",
+      idolId: null,
+      category: null,
+      priceMinMinor: null,
+      priceMaxMinor: null,
+      availability: "ALL",
+      sort: "RECOMMENDED",
+      take: 12,
+      offset: 0,
+    });
+    expect(text).toContain(
+      "LEFT JOIN public.gift_revision_translations translation",
+    );
+    expect(text).toContain("translation ON publication.proof_version IN(1,2)");
+    expect(text).toContain(
+      "publication.proof_version=3 OR translation.id IS NOT NULL",
+    );
+    expect(text.match(/rule='ALL_ACTIVE_ARTISTS'/gu)).toHaveLength(2);
+    expect(text).toContain(
+      "recipient.status = 'active' AND recipient.accepting_gifts",
+    );
+    expect(text).toContain(
+      "recipient_head.idol_revision_id = recipient.published_revision_id",
+    );
+    expect(text).toContain("public.daily_publication_revisions");
+  });
   test("approved aliases join only the current revision and bind the complete set hash", () => {
     const query = buildIdolDirectoryQuery({
       locale: "ja",

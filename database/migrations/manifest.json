@@ -210,6 +210,16 @@
         "up": "8b9f8f46e234e337ae734995080a7ce3fb422b15d8fe142e5f3fdae4ed7be88d",
         "down": "c282bee67699190a62a0a6bcc577435d0f8d830d46bb914c2716265cd7c72080"
       }
+    },
+    {
+      "version": "0022",
+      "name": "daily-management-publication",
+      "up": "database/migrations/0022_daily-management-publication.up.sql",
+      "down": "database/migrations/0022_daily-management-publication.down.sql",
+      "sha256": {
+        "up": "0ff21a912fc82856b264c0c3529073120348ea08b370ee97ccfe1cc876f2cdc7",
+        "down": "0edeab91d3f283d349c94f0fd41ebfbd0d37a272f275755effb12d7a4cfd23fb"
+      }
     }
   ]
 }

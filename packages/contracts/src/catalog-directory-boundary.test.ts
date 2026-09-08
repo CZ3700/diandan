@@ -20,6 +20,10 @@ test.each(["idolDirectoryResponseSchema", "giftDirectoryResponseSchema"])(
 test("keeps the old export surface and re-exports the same public schema objects", () => {
   expect(Object.keys(legacy).sort()).toEqual(
     [
+      "legacyIdolDirectoryRecordSchema",
+      "legacyGiftDirectoryRecordSchema",
+      "legacyIdolDirectorySnapshotSchema",
+      "legacyGiftDirectorySnapshotSchema",
       "catalogVersionSchema",
       "catalogDirectoryOfferSchema",
       "catalogDirectoryFailureSchema",

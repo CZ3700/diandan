@@ -15,6 +15,7 @@ import {
   computePublicationManifestHash,
 } from "@fan-support/content";
 import type { PublishedContentRepository } from "@fan-support/persistence-port";
+import { loadDailyPublicationContext } from "./daily-publication-read.js";
 import { createPublicationPreflightRepository } from "./publication-preflight-repository.js";
 import { PREFLIGHT_TABLES } from "./publication-preflight-mapping.js";
 import { ownerValue } from "./content-authoring-model.js";
@@ -93,6 +94,15 @@ export async function loadPublishedContentContext(
     publication = row["publication"] as DraftRow | undefined,
     head = row["head"] as DraftRow | undefined;
   if (publication?.["proof_version"] === 1) return failure("NOT_FOUND");
+  if (publication?.["proof_version"] === 3 && head)
+    return loadDailyPublicationContext(
+      client,
+      owner,
+      command.locale,
+      publication,
+      head,
+      base.href,
+    );
   if (publication?.["proof_version"] !== 2 || !head)
     return failure("CONTENT_UNAVAILABLE");
   const manifest = publicationManifestSchema.safeParse(row["manifest"]);

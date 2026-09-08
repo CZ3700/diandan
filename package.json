@@ -46,7 +46,9 @@
     "verify:storefront:browser": "corepack pnpm --filter @fan-support/api test:browser:storefront",
     "verify:gift-storefront:browser": "corepack pnpm --filter @fan-support/api test:browser:gift-storefront",
     "verify:storefront-acceptance:browser": "corepack pnpm --filter @fan-support/api test:browser:storefront-acceptance",
-    "verify:storefront-acceptance:performance": "corepack pnpm --filter @fan-support/api test:performance:storefront-acceptance"
+    "verify:storefront-acceptance:performance": "corepack pnpm --filter @fan-support/api test:performance:storefront-acceptance",
+    "preview:management-center": "corepack pnpm --filter @fan-support/api preview:management-center",
+    "verify:management-center": "corepack pnpm --filter @fan-support/api test:browser:management-center"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

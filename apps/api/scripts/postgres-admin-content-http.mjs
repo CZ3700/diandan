@@ -782,10 +782,12 @@ try {
         token: randomBytes(32).toString("base64url"),
         csrf: randomBytes(32).toString("base64url"),
       };
+      const shortSession = randomUUID();
+      // Allow issuance and its positive read to finish before testing real expiry.
       await observer.query(
-        "INSERT INTO admin_sessions(id,admin_identity_id,session_token_digest,csrf_token_digest,authenticated_with_mfa,created_at,last_seen_at,expires_at) VALUES($1,$2,decode($3,'hex'),decode($4,'hex'),true,clock_timestamp(),clock_timestamp(),clock_timestamp()+interval '3 seconds')",
+        "INSERT INTO admin_sessions(id,admin_identity_id,session_token_digest,csrf_token_digest,authenticated_with_mfa,created_at,last_seen_at,expires_at) VALUES($1,$2,decode($3,'hex'),decode($4,'hex'),true,clock_timestamp(),clock_timestamp(),clock_timestamp()+interval '15 seconds')",
         [
-          randomUUID(),
+          shortSession,
           fixture.editor,
           digest("admin-session", credentials.short.token),
           digest("admin-csrf", credentials.short.csrf),
@@ -794,13 +796,38 @@ try {
       const shortGrant = await request("/preview/issue", previewBody, {
         actor: "short",
       });
+      check(
+        (
+          await observer.query(
+            "SELECT g.expires_at=s.expires_at AND g.expires_at>clock_timestamp() AS bounded_and_current FROM content_preview_grants g JOIN admin_sessions s ON s.id=g.session_id WHERE g.id=$1 AND s.id=$2",
+            [shortGrant.grantId, shortSession],
+          )
+        ).rows[0]?.bounded_and_current === true,
+        "short preview is current and expires exactly at its real session deadline",
+      );
       await request(
         "/read",
         { ...previewRequest, token: shortGrant.token },
         { preview: true },
       );
-      await setTimeout(
-        Math.max(1, Date.parse(shortGrant.expiresAt) - Date.now() + 50),
+      const expirationDeadline = globalThis.performance.now() + 20_000;
+      let shortExpired = false;
+      while (
+        !shortExpired &&
+        globalThis.performance.now() < expirationDeadline
+      ) {
+        shortExpired =
+          (
+            await observer.query(
+              "SELECT clock_timestamp()>=GREATEST(g.expires_at,s.expires_at)+interval '250 milliseconds' AS expired FROM content_preview_grants g JOIN admin_sessions s ON s.id=g.session_id WHERE g.id=$1 AND s.id=$2",
+              [shortGrant.grantId, shortSession],
+            )
+          ).rows[0]?.expired === true;
+        if (!shortExpired) await setTimeout(25);
+      }
+      check(
+        shortExpired,
+        "PostgreSQL reaches both actual expiry times within the monotonic wait budget",
       );
       await request(
         "/read",

@@ -150,6 +150,7 @@ test("missing or rights-revoked optional gift remains an explicit unavailable sl
         status: "UNAVAILABLE",
       };
     else {
+      if (gift.context.schemaVersion !== 1) throw new Error("legacy fixture");
       const candidate = gift.context.canonical.candidate;
       if (candidate.objectKind !== "GIFT") throw new Error("fixture");
       candidate.mediaAssets[0]!.rightsStatus = "REJECTED";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type {
-  LocaleContext,
+  ContentLocaleContext,
   PublishedMediaView,
   StorefrontSeoEntity,
   SupportedLocale,
@@ -11,7 +11,7 @@ import { seoAlternateUrls, type SeoIdentity } from "./seo-identity";
 export function provenSeoLocales(
   entity: StorefrontSeoEntity | undefined,
   publication: StorefrontSeoEntity["publication"],
-  context: LocaleContext,
+  context: ContentLocaleContext,
 ): SupportedLocale[] {
   if (
     !entity ||

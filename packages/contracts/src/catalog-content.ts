@@ -24,8 +24,12 @@ import {
   mediaMetadataRevisionIdSchema,
   translationRevisionIdSchema,
 } from "./identifiers.js";
+import { contentLocaleContextSchema } from "./content-provenance.js";
 import { localeContextSchema } from "./locale.js";
-import { publishedMediaViewSchema } from "./media-content.js";
+import {
+  publishedMediaViewSchema,
+  legacyPublishedMediaViewSchema,
+} from "./media-content.js";
 import { slugSchema } from "./presentation.js";
 import { schemaVersionSchema } from "./versioning.js";
 
@@ -229,8 +233,6 @@ export const giftRevisionMediaSchema = z.strictObject({
   sortOrder: z.number().int().nonnegative(),
 });
 
-const publishedGallerySchema = z.array(publishedMediaViewSchema).max(12);
-
 const publishedGiftVariantSchema = z.strictObject({
   schemaVersion: schemaVersionSchema,
   id: giftVariantIdSchema,
@@ -239,74 +241,135 @@ const publishedGiftVariantSchema = z.strictObject({
   inventoryPolicy: giftVariantDefinitionSchema.shape.inventoryPolicy,
 });
 
-export const publishedIdolViewSchema = z
-  .strictObject({
-    schemaVersion: schemaVersionSchema,
-    id: idolIdSchema,
-    handle: slugSchema,
-    status: publicCatalogOperationalStatusSchema,
-    acceptingGifts: z.boolean(),
-    localeContext: localeContextSchema,
-    ...idolTranslationFieldsSchema.shape,
-    themeAccent: idolRevisionSchema.shape.themeAccent,
-    heroTextTone: idolRevisionSchema.shape.heroTextTone,
-    portrait: publishedMediaViewSchema,
-    heroDesktop: publishedMediaViewSchema,
-    heroMobile: publishedMediaViewSchema,
-    gallery: publishedGallerySchema,
-  })
-  .superRefine((value, context) => {
-    if (value.status === "paused" && value.acceptingGifts) {
-      context.addIssue({
-        code: "custom",
-        message: "paused idols cannot accept new gifts",
-        path: ["acceptingGifts"],
-      });
-    }
-  })
-  .meta({
-    "x-runtime-invariants": [
-      "paused idols remain visible but acceptingGifts must be false",
-      "all media are public projections without storage object keys",
-    ],
-  });
+function createPublishedIdolView<
+  L extends z.ZodType,
+  M extends z.ZodType,
+  B extends z.ZodType,
+>(locale: L, media: M, biography: B) {
+  return z
+    .strictObject({
+      schemaVersion: schemaVersionSchema,
+      id: idolIdSchema,
+      handle: slugSchema,
+      status: publicCatalogOperationalStatusSchema,
+      acceptingGifts: z.boolean(),
+      localeContext: locale,
+      ...idolTranslationFieldsSchema.shape,
+      fullBio: biography,
+      themeAccent: idolRevisionSchema.shape.themeAccent,
+      heroTextTone: idolRevisionSchema.shape.heroTextTone,
+      portrait: media,
+      heroDesktop: media,
+      heroMobile: media,
+      gallery: z.array(media).max(12),
+    })
+    .superRefine((value, context) => {
+      if (value.status === "paused" && value.acceptingGifts) {
+        context.addIssue({
+          code: "custom",
+          message: "paused idols cannot accept new gifts",
+          path: ["acceptingGifts"],
+        });
+      }
+    })
+    .meta({
+      "x-runtime-invariants": [
+        "paused idols remain visible but acceptingGifts must be false",
+        "all media are public projections without storage object keys",
+      ],
+    });
+}
 
-export const publishedGiftViewSchema = z
-  .strictObject({
-    schemaVersion: schemaVersionSchema,
-    id: giftIdSchema,
-    handle: slugSchema,
-    status: publicCatalogOperationalStatusSchema,
-    localeContext: localeContextSchema,
-    title: giftTranslationFieldsSchema.shape.title,
-    subtitle: giftTranslationFieldsSchema.shape.subtitle,
-    shortDescription: giftTranslationFieldsSchema.shape.shortDescription,
-    description: giftTranslationFieldsSchema.shape.description,
+function createPublishedGiftView<
+  L extends z.ZodType,
+  M extends z.ZodType,
+  F extends z.ZodType,
+  C extends z.ZodType,
+  D extends z.ZodType,
+>(
+  locale: L,
+  media: M,
+  fields: { fulfillmentDescription: F; contents: C; deliveryEstimate: D },
+) {
+  return z
+    .strictObject({
+      schemaVersion: schemaVersionSchema,
+      id: giftIdSchema,
+      handle: slugSchema,
+      status: publicCatalogOperationalStatusSchema,
+      localeContext: locale,
+      title: giftTranslationFieldsSchema.shape.title,
+      subtitle: giftTranslationFieldsSchema.shape.subtitle,
+      shortDescription: giftTranslationFieldsSchema.shape.shortDescription,
+      description: giftTranslationFieldsSchema.shape.description,
+      fulfillmentDescription: fields.fulfillmentDescription,
+      category: giftRevisionSchema.shape.category,
+      contents: fields.contents,
+      deliveryEstimate: fields.deliveryEstimate,
+      shippingMode: giftRevisionSchema.shape.shippingMode,
+      primaryMedia: media,
+      gallery: z.array(media).max(12),
+      variants: z.array(publishedGiftVariantSchema).min(1).max(64),
+      safetyNotice: giftTranslationFieldsSchema.shape.safetyNotice,
+      seoTitle: giftTranslationFieldsSchema.shape.seoTitle,
+      seoDescription: giftTranslationFieldsSchema.shape.seoDescription,
+    })
+    .superRefine((value, context) => {
+      if (
+        value.status === "active" &&
+        !value.variants.some((variant) => variant.status === "active")
+      ) {
+        context.addIssue({
+          code: "custom",
+          message: "active gifts require at least one active variant",
+          path: ["variants"],
+        });
+      }
+    });
+}
+
+export const legacyPublishedIdolViewSchema = createPublishedIdolView(
+  localeContextSchema,
+  legacyPublishedMediaViewSchema,
+  idolTranslationFieldsSchema.shape.fullBio,
+);
+export const legacyPublishedGiftViewSchema = createPublishedGiftView(
+  localeContextSchema,
+  legacyPublishedMediaViewSchema,
+  {
     fulfillmentDescription:
       giftTranslationFieldsSchema.shape.fulfillmentDescription,
-    category: giftRevisionSchema.shape.category,
     contents: giftRevisionSchema.shape.contents,
     deliveryEstimate: deliveryEstimateSchema,
-    shippingMode: giftRevisionSchema.shape.shippingMode,
-    primaryMedia: publishedMediaViewSchema,
-    gallery: publishedGallerySchema,
-    variants: z.array(publishedGiftVariantSchema).min(1).max(64),
-    safetyNotice: giftTranslationFieldsSchema.shape.safetyNotice,
-    seoTitle: giftTranslationFieldsSchema.shape.seoTitle,
-    seoDescription: giftTranslationFieldsSchema.shape.seoDescription,
-  })
-  .superRefine((value, context) => {
-    if (
-      value.status === "active" &&
-      !value.variants.some((variant) => variant.status === "active")
-    ) {
-      context.addIssue({
-        code: "custom",
-        message: "active gifts require at least one active variant",
-        path: ["variants"],
-      });
-    }
-  });
+  },
+);
+export const publishedIdolViewSchema = createPublishedIdolView(
+  contentLocaleContextSchema,
+  publishedMediaViewSchema,
+  createRequiredTextSchema(600),
+).refine(
+  (value) =>
+    value.localeContext.schemaVersion === 2 ||
+    idolTranslationFieldsSchema.shape.fullBio.safeParse(value.fullBio).success,
+  "Reviewed biography retains its controlled markup boundary",
+);
+export const publishedGiftViewSchema = createPublishedGiftView(
+  contentLocaleContextSchema,
+  publishedMediaViewSchema,
+  {
+    contents: z.array(giftContentComponentSchema).max(32),
+    fulfillmentDescription:
+      giftTranslationFieldsSchema.shape.fulfillmentDescription.optional(),
+    deliveryEstimate: deliveryEstimateSchema.optional(),
+  },
+).refine(
+  (value) =>
+    value.localeContext.schemaVersion === 2 ||
+    (value.contents.length > 0 &&
+      value.fulfillmentDescription !== undefined &&
+      value.deliveryEstimate !== undefined),
+  "Strict reviewed gifts retain their required fulfillment fields",
+);
 
 export type IdolBase = z.infer<typeof idolBaseSchema>;
 export type IdolRevision = z.infer<typeof idolRevisionSchema>;

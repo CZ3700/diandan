@@ -72,9 +72,10 @@ export function GiftDetail({
           {copy.giftBrowse}
         </a>
       </div>
-      {gift.localeContext.fallbackUsed && (
-        <p className="storefront-announcement">{copy.fallbackNotice}</p>
-      )}
+      {gift.localeContext.schemaVersion === 1 &&
+        gift.localeContext.fallbackUsed && (
+          <p className="storefront-announcement">{copy.fallbackNotice}</p>
+        )}
       <div className="gift-detail-top">
         <section className="gift-detail-gallery" aria-label={copy.giftGallery}>
           <figure className="gift-main-image">
@@ -214,17 +215,21 @@ export function GiftDetail({
       >
         <h2 id="gift-delivery-title">{copy.giftDelivery}</h2>
         <div className="gift-delivery-copy">
-          <p lang={gift.localeContext.resolvedLocale}>
-            {gift.fulfillmentDescription}
-          </p>
-          <p>
-            {formatStorefrontMessage(
-              copy,
-              estimate.unit === "WEEK" ? "giftEstimateWeeks" : "giftEstimate",
-              locale,
-              { minimum: estimate.minimum, maximum: estimate.maximum },
-            )}
-          </p>
+          {gift.fulfillmentDescription && (
+            <p lang={gift.localeContext.resolvedLocale}>
+              {gift.fulfillmentDescription}
+            </p>
+          )}
+          {estimate && (
+            <p>
+              {formatStorefrontMessage(
+                copy,
+                estimate.unit === "WEEK" ? "giftEstimateWeeks" : "giftEstimate",
+                locale,
+                { minimum: estimate.minimum, maximum: estimate.maximum },
+              )}
+            </p>
+          )}
           {gift.safetyNotice && (
             <p lang={gift.localeContext.resolvedLocale}>{gift.safetyNotice}</p>
           )}

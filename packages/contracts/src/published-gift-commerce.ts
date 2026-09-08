@@ -39,10 +39,26 @@ export const publishedGiftCommerceContextResponseSchema = z.union([
       schemaVersion: z.literal(1),
       outcome: z.literal("SUCCESS"),
       context: publishedContentContextSchema,
-      profileVersion: z.union([z.literal(1), z.literal(2)]),
+      profileVersion: z.union([z.literal(1), z.literal(2), z.literal(3)]),
       profile: giftPublicationProfileSchema.nullable(),
     })
     .superRefine((value, ctx) => {
+      if (value.context.schemaVersion === 3 || value.profileVersion === 3) {
+        if (
+          value.context.schemaVersion !== 3 ||
+          value.profileVersion !== 3 ||
+          value.profile !== null ||
+          value.context.manifest.document.kind !== "GIFT" ||
+          value.context.current.document.kind !== "GIFT"
+        )
+          ctx.addIssue({
+            code: "custom",
+            path: ["profile"],
+            message:
+              "daily gift classification requires its exact version 3 publication context",
+          });
+        return;
+      }
       const target = value.context.publication.target;
       if (
         target.owner.kind !== "GIFT" ||

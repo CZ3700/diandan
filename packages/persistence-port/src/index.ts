@@ -334,3 +334,7 @@ export type {
   StorefrontCommerceTransactionManager,
 } from "./storefront-commerce.js";
 export * from "./storefront-seo.js";
+
+export * from "./management-center.js";
+
+export * from "./management-media.js";

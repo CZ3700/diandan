@@ -29,7 +29,7 @@ function isStrictVersionedRoot(schema: JsonObject): boolean {
   const required = schema["required"] as unknown[] | undefined;
   return (
     schema["additionalProperties"] === false &&
-    schemaVersion?.["const"] === 1 &&
+    [1, 2, 3].includes(Number(schemaVersion?.["const"])) &&
     required?.includes("schemaVersion") === true
   );
 }
@@ -299,6 +299,12 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/gift-commerce/prices/read",
     "/api/v1/admin/gift-commerce/prices/rollback",
     "/api/v1/admin/gift-commerce/variants/save",
+    "/api/v1/admin/management/context",
+    "/api/v1/admin/management/list",
+    "/api/v1/admin/management/operations/read",
+    "/api/v1/admin/management/operations/retry",
+    "/api/v1/admin/management/submit",
+    "/api/v1/admin/management/uploads/prepare",
     "/api/v1/admin/resources/media/read",
     "/api/v1/admin/resources/media/rights",
     "/api/v1/admin/resources/policies/read",
@@ -461,6 +467,14 @@ test("marks every registered top-level contract with an explicit version policy"
     "$defs"
   ] as JsonObject;
   const unversionedValueObjects = new Set([
+    "ManagementCenterPrice",
+    "ManagementCenterInventory",
+    "ManagementCenterIntent",
+    "ManagementCenterOperation",
+    "ManagementCenterListItem",
+    "ManagementCenterPreparedMedia",
+    "ManagementCenterCheckpoint",
+    "DailyPublicationCurrentMedia",
     "SupportedLocale",
     "TranslationSnapshotRef",
     "MediaSnapshot",

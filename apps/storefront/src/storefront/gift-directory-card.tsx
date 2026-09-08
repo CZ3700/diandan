@@ -62,11 +62,12 @@ export function GiftDirectoryCard({
               />
             </p>
           )}
-          {gift.localeContext.fallbackUsed && (
-            <p className="gift-directory-card__fallback">
-              {copy.fallbackNotice}
-            </p>
-          )}
+          {gift.localeContext.schemaVersion === 1 &&
+            gift.localeContext.fallbackUsed && (
+              <p className="gift-directory-card__fallback">
+                {copy.fallbackNotice}
+              </p>
+            )}
         </div>
       </a>
     </li>

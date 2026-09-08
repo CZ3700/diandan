@@ -21,6 +21,17 @@ function matches(
   locator: PublishedContentLocator,
   context: PublishedContentContext,
 ): boolean {
+  if (context.schemaVersion === 3) {
+    const document = context.current.document;
+    if (document.kind !== locator.kind) return false;
+    if (locator.kind === "IDOL" || locator.kind === "GIFT")
+      return context.current.handle === locator.handle;
+    if (locator.kind === "MEDIA_METADATA")
+      return (
+        document.ownerId.toLowerCase() === locator.mediaAssetId.toLowerCase()
+      );
+    return locator.kind === "HOMEPAGE";
+  }
   const candidate = context.canonical.candidate;
   switch (locator.kind) {
     case "IDOL":

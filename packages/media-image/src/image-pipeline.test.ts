@@ -121,6 +121,30 @@ describe("real decoded framing", () => {
     expect(await pixel(master.bytes, 600, 750)).toEqual([18, 18, 22]);
   });
 
+  it("preserves every small original pixel in the centered master without interpolation", async () => {
+    const bytes = await sharp({
+      create: { width: 300, height: 200, channels: 3, background: "red" },
+    })
+      .png()
+      .toBuffer();
+    const command = commandFor(bytes, { width: 300, height: 200 });
+    command.fit = "CONTAIN";
+    const master = await createImageMaster(bytes, command, budget());
+    expect(master.plan.destination).toEqual({
+      x: 450,
+      y: 500,
+      width: 300,
+      height: 200,
+    });
+    const extracted = await sharp(master.bytes)
+      .extract({ left: 450, top: 500, width: 300, height: 200 })
+      .raw()
+      .toBuffer();
+    expect(extracted).toEqual(await sharp(bytes).raw().toBuffer());
+    expect(await pixel(master.bytes, 449, 500)).toEqual([18, 18, 22]);
+    expect(await pixel(master.bytes, 750, 500)).toEqual([18, 18, 22]);
+  });
+
   it("flattens fully transparent pixels consistently before all output encoders", async () => {
     const bytes = await sharp({
       create: {

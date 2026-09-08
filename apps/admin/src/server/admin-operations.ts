@@ -114,6 +114,51 @@ function commerceOperation(
   });
 }
 const entries = {
+  "management-context": operation(
+    "/api/v1/admin/management/context",
+    contract.managementCenterCommandSchema,
+    contract.managementCenterResponseSchema,
+    "CONTEXT",
+    "CONTEXT",
+  ),
+  "management-list": operation(
+    "/api/v1/admin/management/list",
+    contract.managementCenterCommandSchema,
+    contract.managementCenterResponseSchema,
+    "LIST",
+    "LIST",
+  ),
+  "management-prepare-upload": operation(
+    "/api/v1/admin/management/uploads/prepare",
+    contract.managementCenterCommandSchema,
+    contract.managementCenterResponseSchema,
+    "PREPARE_UPLOAD",
+    "UPLOAD_GRANT",
+    true,
+  ),
+  "management-submit": operation(
+    "/api/v1/admin/management/submit",
+    contract.managementCenterCommandSchema,
+    contract.managementCenterResponseSchema,
+    "SUBMIT",
+    "OPERATION",
+    true,
+  ),
+  "management-read-operation": operation(
+    "/api/v1/admin/management/operations/read",
+    contract.managementCenterCommandSchema,
+    contract.managementCenterResponseSchema,
+    "READ_OPERATION",
+    "OPERATION",
+  ),
+  "management-retry-operation": operation(
+    "/api/v1/admin/management/operations/retry",
+    contract.managementCenterCommandSchema,
+    contract.managementCenterResponseSchema,
+    "RETRY_OPERATION",
+    "OPERATION",
+    true,
+  ),
   "commerce-context": commerceOperation("context/read", "CONTEXT"),
   "gift-read": commerceOperation("gifts/read", "READ_GIFT"),
   "gift-create": commerceOperation("gifts/create", "CREATE_GIFT", true),

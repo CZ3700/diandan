@@ -1,5 +1,13 @@
 import { expect, test, vi } from "vitest";
 const version = "a".repeat(64);
+test("SEO enumerates direct originals alongside reviewed content and versions their real proof records", async () => {
+  const { storefrontSeoIndexQuery } = await import("./storefront-seo-data.js");
+  const { text } = storefrontSeoIndexQuery("INDEX", null);
+  expect(text.match(/p.proof_version IN\(2,3\)/gu)).toHaveLength(3);
+  expect(text).toContain("p.proof_version=2 AND r.effective_at");
+  expect(text).toContain("FROM public.daily_publication_manifests");
+  expect(text).toContain("FROM public.daily_publication_revisions");
+});
 test("SEO SQL enumerates stable owner keys without market or offset and bounds only the requested hydration window", async () => {
   const module = await import("./storefront-seo-data.js").catch(
     () => undefined,

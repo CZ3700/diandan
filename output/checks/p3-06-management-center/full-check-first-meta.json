@@ -1,0 +1,17 @@
+{
+  "status": "FAIL",
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "check"
+  ],
+  "startedAt": "2026-09-07T23:17:56.769162+00:00",
+  "sourceSha256": "eb42e07d2203896e0bfbbfb7f77e280bed494fa4dc77408061553f8b7e9751b0",
+  "exitCode": 1,
+  "finishedAt": "2026-09-07T23:18:27.342051+00:00",
+  "durationSeconds": 30.573
+}

@@ -1349,6 +1349,7 @@ async function verify(database, s3, configPath) {
         ...enqueue,
         sourceAssetId: smallSource.resultId,
         metadataRevisionId: smallMetadata.resultId,
+        fit: "COVER",
       },
       { key: randomUUID() },
     );
@@ -1360,7 +1361,7 @@ async function verify(database, s3, configPath) {
     check(
       failed.job.snapshot.status === "FAILED" &&
         failed.job.snapshot.error?.code === "SOURCE_TOO_SMALL",
-      "real small-image processing yields permanent safe failure",
+      "real undersized COVER processing yields permanent safe failure",
     );
     const retried = await fault("/processing/retry", {
       schemaVersion: 1,

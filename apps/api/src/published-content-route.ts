@@ -1,4 +1,5 @@
 import { sendRevalidatedPublicJson } from "./public-revalidation-response.js";
+import { matchesPublicContentLocale } from "./public-content-locale.js";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import {
   publishedContentFailureSchema,
@@ -90,12 +91,7 @@ function responseMatches(
     content.kind === "MEDIA_METADATA"
       ? content.localeContext
       : content.view.localeContext;
-  if (
-    locale.requestedLocale !== command.locale ||
-    locale.resolvedLocale !== command.locale ||
-    locale.fallbackUsed
-  )
-    return false;
+  if (!matchesPublicContentLocale(locale, command.locale)) return false;
   const locator = command.locator;
   switch (locator.kind) {
     case "IDOL":

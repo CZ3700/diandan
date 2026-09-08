@@ -33,6 +33,19 @@ export function createPublishedGiftCommerceRepository(
           publicMediaBaseUrl,
         );
         if (loaded.outcome === "FAILURE") return loaded;
+        if (loaded.context.schemaVersion === 3) {
+          if (loaded.context.current.document.kind !== "GIFT")
+            return {
+              schemaVersion: 1,
+              outcome: "FAILURE",
+              code: "CONTENT_UNAVAILABLE",
+            } as const;
+          return publishedGiftCommerceContextResponseSchema.parse({
+            ...loaded,
+            profileVersion: 3,
+            profile: null,
+          });
+        }
         const { publication } = loaded.context;
         if (publication.target.owner.kind !== "GIFT")
           return {

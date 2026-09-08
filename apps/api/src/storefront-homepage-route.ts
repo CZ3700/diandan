@@ -1,4 +1,5 @@
 import { sendRevalidatedPublicJson } from "./public-revalidation-response.js";
+import { matchesPublicContentLocale } from "./public-content-locale.js";
 import type { FastifyInstance, FastifyReply } from "fastify";
 import {
   storefrontHomepageReadCommandSchema,
@@ -92,9 +93,7 @@ export function registerStorefrontHomepageRoute(
           if (
             locales.some(
               (locale) =>
-                locale.requestedLocale !== command.data.locale ||
-                locale.resolvedLocale !== command.data.locale ||
-                locale.fallbackUsed,
+                !matchesPublicContentLocale(locale, command.data.locale),
             )
           )
             return failure(reply, "CONTENT_UNAVAILABLE");

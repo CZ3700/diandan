@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import {
-  publishedContentContextSchema,
+  legacyPublishedContentContextSchema,
   sourceHashSchema,
   SUPPORTED_LOCALES,
   type PublicationPreflightContext,
@@ -77,7 +77,7 @@ function fixture(
       : candidate.objectKind === "MEDIA_METADATA"
         ? candidate.variants
         : candidate.mediaVariants;
-  return publishedContentContextSchema.parse({
+  return legacyPublishedContentContextSchema.parse({
     schemaVersion: 1,
     locale: "en",
     canonical: context,

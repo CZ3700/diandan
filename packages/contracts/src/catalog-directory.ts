@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { dailyPublicationContextSchema } from "./daily-publication.js";
 import {
   catalogVersionSchema,
   catalogDirectoryOfferSchema,
@@ -52,50 +53,89 @@ export const giftDirectoryReadCommandSchema = z.strictObject({
   schemaVersion: schemaVersionSchema,
   plan: giftDiscoveryPlanSchema,
 });
-export const idolDirectoryRecordSchema = z
+export const legacyIdolDirectoryRecordSchema = z
   .strictObject({
     schemaVersion: schemaVersionSchema,
     selection: publicRevisionSelectionSchema,
     source: idolPublicProjectionSourceSchema,
   })
   .refine((value) => value.selection.objectKind === "IDOL");
-export const giftDirectoryRecordSchema = z
+export const legacyGiftDirectoryRecordSchema = z
   .strictObject({
     schemaVersion: schemaVersionSchema,
     selection: publicRevisionSelectionSchema,
     source: giftPublicProjectionSourceSchema,
   })
   .refine((value) => value.selection.objectKind === "GIFT");
-export const idolDirectorySnapshotSchema = z.union([
-  z.strictObject({
-    schemaVersion: schemaVersionSchema,
-    outcome: z.literal("SUCCESS"),
-    catalogVersion: catalogVersionSchema,
-    items: z
-      .array(idolDirectoryRecordSchema)
-      .max(CATALOG_DISCOVERY_LIMITS.artistWindowMaximum),
-    hasNextPage: z.boolean(),
-  }),
-  catalogDirectoryFailureSchema,
+export const idolDirectoryRecordSchema = z.union([
+  legacyIdolDirectoryRecordSchema,
+  z
+    .strictObject({
+      schemaVersion: z.literal(3),
+      context: dailyPublicationContextSchema,
+    })
+    .refine((value) => value.context.current.document.kind === "IDOL"),
 ]);
-export const giftDirectorySnapshotSchema = z.union([
-  z.strictObject({
-    schemaVersion: schemaVersionSchema,
-    outcome: z.literal("SUCCESS"),
-    catalogVersion: catalogVersionSchema,
-    items: z
-      .array(
-        z.strictObject({
-          schemaVersion: schemaVersionSchema,
-          record: giftDirectoryRecordSchema,
-          offer: catalogDirectoryOfferSchema,
-        }),
-      )
-      .max(CATALOG_DISCOVERY_LIMITS.giftPageMaximum),
-    totalItems: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
-  }),
-  catalogDirectoryFailureSchema,
+export const giftDirectoryRecordSchema = z.union([
+  legacyGiftDirectoryRecordSchema,
+  z
+    .strictObject({
+      schemaVersion: z.literal(3),
+      context: dailyPublicationContextSchema,
+    })
+    .refine((value) => value.context.current.document.kind === "GIFT"),
 ]);
+function idolSnapshot<R extends z.ZodType>(record: R) {
+  return z.union([
+    z.strictObject({
+      schemaVersion: schemaVersionSchema,
+      outcome: z.literal("SUCCESS"),
+      catalogVersion: catalogVersionSchema,
+      items: z.array(record).max(CATALOG_DISCOVERY_LIMITS.artistWindowMaximum),
+      hasNextPage: z.boolean(),
+    }),
+    catalogDirectoryFailureSchema,
+  ]);
+}
+function giftSnapshot<R extends z.ZodType>(record: R) {
+  return z.union([
+    z.strictObject({
+      schemaVersion: schemaVersionSchema,
+      outcome: z.literal("SUCCESS"),
+      catalogVersion: catalogVersionSchema,
+      items: z
+        .array(
+          z.strictObject({
+            schemaVersion: schemaVersionSchema,
+            record,
+            offer: catalogDirectoryOfferSchema,
+          }),
+        )
+        .max(CATALOG_DISCOVERY_LIMITS.giftPageMaximum),
+      totalItems: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+    }),
+    catalogDirectoryFailureSchema,
+  ]);
+}
+export const legacyIdolDirectorySnapshotSchema = idolSnapshot(
+  legacyIdolDirectoryRecordSchema,
+);
+export const legacyGiftDirectorySnapshotSchema = giftSnapshot(
+  legacyGiftDirectoryRecordSchema,
+);
+export const idolDirectorySnapshotSchema = idolSnapshot(
+  idolDirectoryRecordSchema,
+);
+export const giftDirectorySnapshotSchema = giftSnapshot(
+  giftDirectoryRecordSchema,
+);
+export type LegacyIdolDirectoryRecord = z.infer<
+  typeof legacyIdolDirectoryRecordSchema
+>;
+export type LegacyGiftDirectoryRecord = z.infer<
+  typeof legacyGiftDirectoryRecordSchema
+>;
+
 export type IdolDirectoryCursor = z.infer<typeof idolDirectoryCursorSchema>;
 export type IdolDirectoryReadCommand = z.infer<
   typeof idolDirectoryReadCommandSchema

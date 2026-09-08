@@ -1,4 +1,12 @@
 import { createGiftCommerceAuthorizationRepository } from "./gift-commerce-authorization-repository.js";
+import { createManagementCenterOperationRepository } from "./management-center-operation-repository.js";
+import { createDailyPublicationRepository } from "./daily-publication-repository.js";
+import type {
+  ManagementCenterRepositories,
+  ManagementCenterTransactionManager,
+  ManagementMediaRepositories,
+  ManagementMediaTransactionManager,
+} from "@fan-support/persistence-port";
 import { createGiftCommerceCatalogRepository } from "./gift-commerce-gift-repository.js";
 import { createGiftCommercePricingRepository } from "./gift-commerce-pricing-repository.js";
 import { createGiftCommerceInventoryRepository } from "./gift-commerce-inventory-repository.js";
@@ -124,6 +132,8 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly managementCenterTransactionManager: ManagementCenterTransactionManager;
+  readonly managementMediaTransactionManager: ManagementMediaTransactionManager;
   readonly giftCommerceTransactionManager: GiftCommerceTransactionManager;
   readonly publishedGiftCommerceTransactionManager: PublishedGiftCommerceTransactionManager;
   readonly adminPreviewMediaTransactionManager: AdminPreviewMediaTransactionManager;
@@ -443,6 +453,34 @@ export function createPostgresPersistenceWithPoolFactory(
         ),
       }),
     });
+  const managementRepositories = (
+    client: TransactionClient,
+    scope: Parameters<typeof createManagementCenterOperationRepository>[1],
+  ): ManagementCenterRepositories => ({
+    operations: createManagementCenterOperationRepository(
+      client,
+      scope,
+      options?.catalogPublicMediaBaseUrl ?? "",
+    ),
+    publication: createDailyPublicationRepository(
+      client,
+      scope,
+      options?.catalogPublicMediaBaseUrl ?? "",
+    ),
+  });
+  const managementCenterRunner =
+    createTransactionRunner<ManagementCenterRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: managementRepositories,
+    });
+  const managementMediaRunner =
+    createTransactionRunner<ManagementMediaRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        ...managementRepositories(client, scope),
+        resources: createResourceManagementRepository(client, scope),
+      }),
+    });
   const adminSessionRunner = createTransactionRunner<AdminSessionRepositories>({
     acquireClient: async () => pool.connect(),
     createRepositories: (client, scope) => ({
@@ -738,6 +776,38 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return adminPreviewMediaRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    managementCenterTransactionManager: {
+      async runInManagementCenterTransaction(work) {
+        if (
+          lifecycle !== "OPEN" ||
+          options?.catalogPublicMediaBaseUrl === undefined
+        )
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return managementCenterRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    managementMediaTransactionManager: {
+      async runInManagementMediaTransaction(work) {
+        if (
+          lifecycle !== "OPEN" ||
+          options?.catalogPublicMediaBaseUrl === undefined
+        )
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return managementMediaRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
           work,
         );

@@ -71,7 +71,7 @@ function responses(privateRoute: boolean): JsonObject {
               content: {
                 "application/json": {
                   schema: {
-                    $ref: `#/components/schemas/${privateRoute ? "PublicationRuntimeResponse" : "PublishedContentResponse"}`,
+                    $ref: `#/components/schemas/${privateRoute ? "PublicationRuntimeResponse" : "CurrentPublishedContentResponse"}`,
                   },
                 },
               },

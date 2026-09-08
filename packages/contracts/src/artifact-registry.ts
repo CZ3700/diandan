@@ -1,4 +1,61 @@
 import {
+  managementCenterPriceSchema,
+  managementCenterInventorySchema,
+  managementCenterIntentSchema,
+  managementCenterFailureSchema,
+  managementCenterOperationSchema,
+  managementCenterCommandSchema,
+  managementCenterRequestSchema,
+  managementCenterListItemSchema,
+  managementCenterResponseSchema,
+} from "./management-center.js";
+import {
+  managementCenterAuthorizationSchema,
+  managementCenterPreparedMediaSchema,
+  managementCenterCheckpointSchema,
+  managementCenterClaimSchema,
+} from "./management-center-internal.js";
+import {
+  singleSourceLocaleContextSchema,
+  contentLocaleContextSchema,
+} from "./content-provenance.js";
+import {
+  dailyMediaMetadataDocumentSchema,
+  dailyPublicationDocumentSchema,
+  dailyPublicationManifestSchema,
+  dailyPublicationCurrentMediaSchema,
+  dailyPublicationContextSchema,
+} from "./daily-publication.js";
+import {
+  legacyIdolDirectoryRecordSchema,
+  legacyGiftDirectoryRecordSchema,
+  legacyIdolDirectorySnapshotSchema,
+  legacyGiftDirectorySnapshotSchema,
+} from "./catalog-directory.js";
+import {
+  legacyPublishedContentContextSchema,
+  legacyPublishedContentContextResponseSchema,
+} from "./published-content.js";
+import {
+  legacyPublishedGiftCommerceContextResponseSchema,
+  legacyStorefrontHomepageContextResponseSchema,
+  legacyStorefrontGiftContextResponseSchema,
+} from "./legacy-public-contexts.js";
+import {
+  legacyPublishedContentResponseSchema,
+  legacyIdolDirectoryResponseSchema,
+  legacyGiftDirectoryResponseSchema,
+  legacyPublishedGiftCommerceResponseSchema,
+  legacyStorefrontHomepageResponseSchema,
+  legacyStorefrontGiftResponseSchema,
+} from "./legacy-public-responses.js";
+import {
+  legacyPublishedIdolViewSchema,
+  legacyPublishedGiftViewSchema,
+} from "./catalog-content.js";
+import { legacyPublishedMediaViewSchema } from "./media-content.js";
+import { legacyPublishedHomepageViewSchema } from "./content-models.js";
+import {
   storefrontContextReadCommandSchema,
   storefrontContextResponseSchema,
   storefrontGiftReadCommandSchema,
@@ -473,6 +530,15 @@ export type ContractRegistration = Readonly<{
 // Scalars and embedded snapshot value objects follow their versioned parent;
 // they must never be used as standalone API, event, or queue roots.
 const unversionedValueObjectNames = new Set([
+  "ManagementCenterPrice",
+  "ManagementCenterInventory",
+  "ManagementCenterIntent",
+  "ManagementCenterOperation",
+  "ManagementCenterListItem",
+  "ManagementCenterCheckpoint",
+  "ManagementCenterPreparedMedia",
+  "DailyPublicationCurrentMedia",
+
   "SupportedLocale",
   "TranslationSnapshotRef",
   "MediaSnapshot",
@@ -576,12 +642,12 @@ const registrations = [
   {
     name: "PublishedIdolView",
     audience: "public-http",
-    schema: publishedIdolViewSchema,
+    schema: legacyPublishedIdolViewSchema,
   },
   {
     name: "PublishedGiftView",
     audience: "public-http",
-    schema: publishedGiftViewSchema,
+    schema: legacyPublishedGiftViewSchema,
   },
   { name: "IdolBase", audience: "admin-http", schema: idolBaseSchema },
   {
@@ -728,7 +794,7 @@ const registrations = [
   {
     name: "PublishedHomepageView",
     audience: "public-http",
-    schema: publishedHomepageViewSchema,
+    schema: legacyPublishedHomepageViewSchema,
   },
   {
     name: "PolicyRevision",
@@ -760,7 +826,7 @@ const registrations = [
   {
     name: "PublishedMediaView",
     audience: "public-http",
-    schema: publishedMediaViewSchema,
+    schema: legacyPublishedMediaViewSchema,
   },
   { name: "GiftOffer", audience: "public-http", schema: giftOfferSchema },
   { name: "PriceBook", audience: "internal", schema: priceBookSchema },
@@ -1290,12 +1356,12 @@ const registrations = [
   {
     name: "IdolDirectoryRecord",
     audience: "internal",
-    schema: idolDirectoryRecordSchema,
+    schema: legacyIdolDirectoryRecordSchema,
   },
   {
     name: "GiftDirectoryRecord",
     audience: "internal",
-    schema: giftDirectoryRecordSchema,
+    schema: legacyGiftDirectoryRecordSchema,
   },
   {
     name: "CatalogDirectoryOffer",
@@ -1310,22 +1376,22 @@ const registrations = [
   {
     name: "IdolDirectorySnapshot",
     audience: "internal",
-    schema: idolDirectorySnapshotSchema,
+    schema: legacyIdolDirectorySnapshotSchema,
   },
   {
     name: "GiftDirectorySnapshot",
     audience: "internal",
-    schema: giftDirectorySnapshotSchema,
+    schema: legacyGiftDirectorySnapshotSchema,
   },
   {
     name: "IdolDirectoryResponse",
     audience: "public-http",
-    schema: idolDirectoryResponseSchema,
+    schema: legacyIdolDirectoryResponseSchema,
   },
   {
     name: "GiftDirectoryResponse",
     audience: "public-http",
-    schema: giftDirectoryResponseSchema,
+    schema: legacyGiftDirectoryResponseSchema,
   },
   {
     name: "IdolDirectoryCursorEncodingInput",
@@ -1841,17 +1907,17 @@ const registrations = [
   {
     name: "PublishedContentResponse",
     audience: "public-http",
-    schema: publishedContentResponseSchema,
+    schema: legacyPublishedContentResponseSchema,
   },
   {
     name: "PublishedContentContext",
     audience: "internal",
-    schema: publishedContentContextSchema,
+    schema: legacyPublishedContentContextSchema,
   },
   {
     name: "PublishedContentContextResponse",
     audience: "internal",
-    schema: publishedContentContextResponseSchema,
+    schema: legacyPublishedContentContextResponseSchema,
   },
   {
     name: "PublishedContentFailure",
@@ -2256,12 +2322,12 @@ const registrations = [
   {
     name: "PublishedGiftCommerceResponse",
     audience: "public-http",
-    schema: publishedGiftCommerceResponseSchema,
+    schema: legacyPublishedGiftCommerceResponseSchema,
   },
   {
     name: "PublishedGiftCommerceContextResponse",
     audience: "internal",
-    schema: publishedGiftCommerceContextResponseSchema,
+    schema: legacyPublishedGiftCommerceContextResponseSchema,
   },
   {
     name: "StorefrontHomepageReadCommand",
@@ -2271,12 +2337,12 @@ const registrations = [
   {
     name: "StorefrontHomepageContextResponse",
     audience: "internal",
-    schema: storefrontHomepageContextResponseSchema,
+    schema: legacyStorefrontHomepageContextResponseSchema,
   },
   {
     name: "StorefrontHomepageResponse",
     audience: "public-http",
-    schema: storefrontHomepageResponseSchema,
+    schema: legacyStorefrontHomepageResponseSchema,
   },
   {
     name: "StorefrontContextReadCommand",
@@ -2296,12 +2362,12 @@ const registrations = [
   {
     name: "StorefrontGiftResponse",
     audience: "public-http",
-    schema: storefrontGiftResponseSchema,
+    schema: legacyStorefrontGiftResponseSchema,
   },
   {
     name: "StorefrontGiftContextResponse",
     audience: "internal",
-    schema: storefrontGiftContextResponseSchema,
+    schema: legacyStorefrontGiftContextResponseSchema,
   },
   {
     name: "StorefrontSeoReadCommand",
@@ -2322,6 +2388,201 @@ const registrations = [
     name: "StorefrontSeoSnapshot",
     audience: "internal",
     schema: storefrontSeoSnapshotSchema,
+  },
+  {
+    name: "CurrentPublishedIdolView",
+    audience: "public-http",
+    schema: publishedIdolViewSchema,
+  },
+  {
+    name: "CurrentPublishedGiftView",
+    audience: "public-http",
+    schema: publishedGiftViewSchema,
+  },
+  {
+    name: "CurrentPublishedMediaView",
+    audience: "public-http",
+    schema: publishedMediaViewSchema,
+  },
+  {
+    name: "CurrentPublishedHomepageView",
+    audience: "public-http",
+    schema: publishedHomepageViewSchema,
+  },
+  {
+    name: "CurrentPublishedContentResponse",
+    audience: "public-http",
+    schema: publishedContentResponseSchema,
+  },
+  {
+    name: "CurrentIdolDirectoryResponse",
+    audience: "public-http",
+    schema: idolDirectoryResponseSchema,
+  },
+  {
+    name: "CurrentGiftDirectoryResponse",
+    audience: "public-http",
+    schema: giftDirectoryResponseSchema,
+  },
+  {
+    name: "CurrentPublishedGiftCommerceResponse",
+    audience: "public-http",
+    schema: publishedGiftCommerceResponseSchema,
+  },
+  {
+    name: "CurrentStorefrontHomepageResponse",
+    audience: "public-http",
+    schema: storefrontHomepageResponseSchema,
+  },
+  {
+    name: "CurrentStorefrontGiftResponse",
+    audience: "public-http",
+    schema: storefrontGiftResponseSchema,
+  },
+  {
+    name: "CurrentPublishedContentContext",
+    audience: "internal",
+    schema: publishedContentContextSchema,
+  },
+  {
+    name: "CurrentPublishedContentContextResponse",
+    audience: "internal",
+    schema: publishedContentContextResponseSchema,
+  },
+  {
+    name: "CurrentPublishedGiftCommerceContextResponse",
+    audience: "internal",
+    schema: publishedGiftCommerceContextResponseSchema,
+  },
+  {
+    name: "CurrentStorefrontHomepageContextResponse",
+    audience: "internal",
+    schema: storefrontHomepageContextResponseSchema,
+  },
+  {
+    name: "CurrentStorefrontGiftContextResponse",
+    audience: "internal",
+    schema: storefrontGiftContextResponseSchema,
+  },
+  {
+    name: "CurrentIdolDirectoryRecord",
+    audience: "internal",
+    schema: idolDirectoryRecordSchema,
+  },
+  {
+    name: "CurrentGiftDirectoryRecord",
+    audience: "internal",
+    schema: giftDirectoryRecordSchema,
+  },
+  {
+    name: "CurrentIdolDirectorySnapshot",
+    audience: "internal",
+    schema: idolDirectorySnapshotSchema,
+  },
+  {
+    name: "CurrentGiftDirectorySnapshot",
+    audience: "internal",
+    schema: giftDirectorySnapshotSchema,
+  },
+  {
+    name: "ManagementCenterPrice",
+    audience: "admin-http",
+    schema: managementCenterPriceSchema,
+  },
+  {
+    name: "ManagementCenterInventory",
+    audience: "admin-http",
+    schema: managementCenterInventorySchema,
+  },
+  {
+    name: "ManagementCenterIntent",
+    audience: "admin-http",
+    schema: managementCenterIntentSchema,
+  },
+  {
+    name: "ManagementCenterFailure",
+    audience: "admin-http",
+    schema: managementCenterFailureSchema,
+  },
+  {
+    name: "ManagementCenterOperation",
+    audience: "admin-http",
+    schema: managementCenterOperationSchema,
+  },
+  {
+    name: "ManagementCenterCommand",
+    audience: "admin-http",
+    schema: managementCenterCommandSchema,
+  },
+  {
+    name: "ManagementCenterRequest",
+    audience: "admin-http",
+    schema: managementCenterRequestSchema,
+  },
+  {
+    name: "ManagementCenterListItem",
+    audience: "admin-http",
+    schema: managementCenterListItemSchema,
+  },
+  {
+    name: "ManagementCenterResponse",
+    audience: "admin-http",
+    schema: managementCenterResponseSchema,
+  },
+  {
+    name: "ManagementCenterAuthorization",
+    audience: "internal",
+    schema: managementCenterAuthorizationSchema,
+  },
+  {
+    name: "ManagementCenterPreparedMedia",
+    audience: "internal",
+    schema: managementCenterPreparedMediaSchema,
+  },
+  {
+    name: "ManagementCenterCheckpoint",
+    audience: "internal",
+    schema: managementCenterCheckpointSchema,
+  },
+  {
+    name: "ManagementCenterClaim",
+    audience: "internal",
+    schema: managementCenterClaimSchema,
+  },
+  {
+    name: "SingleSourceLocaleContext",
+    audience: "internal",
+    schema: singleSourceLocaleContextSchema,
+  },
+  {
+    name: "ContentLocaleContext",
+    audience: "internal",
+    schema: contentLocaleContextSchema,
+  },
+  {
+    name: "DailyMediaMetadataDocument",
+    audience: "internal",
+    schema: dailyMediaMetadataDocumentSchema,
+  },
+  {
+    name: "DailyPublicationDocument",
+    audience: "internal",
+    schema: dailyPublicationDocumentSchema,
+  },
+  {
+    name: "DailyPublicationManifest",
+    audience: "internal",
+    schema: dailyPublicationManifestSchema,
+  },
+  {
+    name: "DailyPublicationCurrentMedia",
+    audience: "internal",
+    schema: dailyPublicationCurrentMediaSchema,
+  },
+  {
+    name: "DailyPublicationContext",
+    audience: "internal",
+    schema: dailyPublicationContextSchema,
   },
 ] as const;
 

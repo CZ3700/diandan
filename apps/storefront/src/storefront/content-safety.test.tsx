@@ -36,3 +36,15 @@ test("marks any rendered fallback object as unindexable", async () => {
     ]),
   ).toBe(true);
 });
+
+test("daily biography is literal text, including hearts and markup-looking input", async () => {
+  const { ControlledBiography } = await import("./content-safety.js");
+  const html = renderToStaticMarkup(
+    <ControlledBiography
+      text={"Music <3 <img src=x onerror=alert(1)>"}
+      plain
+    />,
+  );
+  expect(html).toContain("Music &lt;3 &lt;img");
+  expect(html).not.toContain("<img");
+});

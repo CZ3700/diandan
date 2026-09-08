@@ -1,0 +1,23 @@
+{
+  "run": "output/checks/p3-06-management-center/run-2026-09-08T00-16-24.422Z-826775c0",
+  "status": "FAIL",
+  "stage": "keyboard-reduced-motion-and-list-error",
+  "operations": 10,
+  "assertions": 1004,
+  "counts": {
+    "cases": 5,
+    "screenshots": 86,
+    "axe": 85,
+    "incompleteRules": 0,
+    "violations": 0,
+    "observationFailures": 0
+  },
+  "pageErrors": [],
+  "observationFailures": [],
+  "lastCheck": {
+    "passed": false,
+    "label": "[data-management-field=\"image\"] has a visible keyboard focus treatment"
+  },
+  "observedScreenshot": "failure-current-screen.png shows focus on the Add Gift heading after the file input was reached",
+  "scope": "No public-page checks or retained headed window in this failed run"
+}

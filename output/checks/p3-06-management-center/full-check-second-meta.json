@@ -1,0 +1,20 @@
+{
+  "status": "FAIL",
+  "attempt": 2,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "check"
+  ],
+  "startedAt": "2026-09-07T23:22:59.634740+00:00",
+  "sourceSha256": "eb42e07d2203896e0bfbbfb7f77e280bed494fa4dc77408061553f8b7e9751b0",
+  "priorFailure": "full-check-first-meta.json",
+  "unchangedScopedRerun": "constraints-webhook-unchanged-rerun.log",
+  "exitCode": 1,
+  "finishedAt": "2026-09-07T23:25:38.844983+00:00",
+  "durationSeconds": 159.212
+}

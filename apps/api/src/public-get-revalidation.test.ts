@@ -12,6 +12,7 @@ import { registerStorefrontHomepageRoute } from "./storefront-homepage-route.js"
 import { registerPublishedGiftCommerceRoute } from "./published-gift-commerce-route.js";
 import { registerStorefrontCommerceRoute } from "./storefront-commerce-route.js";
 import { registerCatalogDirectoryRoute } from "./catalog-directory-route.js";
+import { registerPublishedContentRoute } from "./published-content-route.js";
 
 const homepage = storefrontHomepageFixture();
 const hero = homepage.slots[0];
@@ -377,3 +378,190 @@ test("gift price expiry changes the validated representation before an old ETag 
     await app.close();
   }
 });
+
+// These are transport DTO fixtures, not fabricated publication or approval evidence.
+function withLocaleContexts(value: unknown, localeContext: object): unknown {
+  if (Array.isArray(value))
+    return value.map((item) => withLocaleContexts(item, localeContext));
+  if (value === null || typeof value !== "object") return value;
+  return Object.fromEntries(
+    Object.entries(value).map(([key, entry]) => [
+      key,
+      key === "localeContext"
+        ? localeContext
+        : withLocaleContexts(entry, localeContext),
+    ]),
+  );
+}
+const originalLocale = {
+  schemaVersion: 2,
+  publicationMode: "DIRECT_OPERATOR_V1",
+  sourceLocale: "zh-CN",
+  requestedLocale: "en",
+  resolvedLocale: "zh-CN",
+  fallbackUsed: true,
+  translationRevision: idol.id,
+};
+const populatedDirectories = {
+  "idol directory": {
+    ...emptyIdols,
+    items: [idol],
+  },
+  "gift directory": {
+    ...emptyGifts,
+    items: [
+      {
+        schemaVersion: 1,
+        gift: gift.content.view,
+        offer: {
+          schemaVersion: 1,
+          market: "TEST",
+          currency: "USD",
+          priceMinor: 1000,
+          purchasable: true,
+        },
+      },
+    ],
+    pageInfo: {
+      schemaVersion: 1,
+      page: 1,
+      pageSize: 12,
+      totalItems: 1,
+      totalPages: 1,
+      hasPreviousPage: false,
+      hasNextPage: false,
+      paginationLimited: false,
+    },
+  },
+};
+const originalScenarios: readonly Scenario[] = [
+  ...scenarios
+    .filter((scenario) => scenario.name !== "public configuration")
+    .map((scenario) => ({
+      ...scenario,
+      value:
+        scenario.name === "idol directory"
+          ? populatedDirectories["idol directory"]
+          : scenario.name === "gift directory"
+            ? populatedDirectories["gift directory"]
+            : scenario.value,
+    })),
+  ...[
+    ["published artist", "/idols/fictional-artist", hero.content],
+    [
+      "published gift",
+      "/gifts/fictional-gift",
+      { ...gift, kind: "PUBLISHED_CONTENT", classification: undefined },
+    ],
+    ["published homepage", "/homepage", homepage.homepage],
+  ].map(([name, path, value]) => ({
+    name: String(name),
+    url: `/api/v1${String(path)}?locale=en`,
+    value: JSON.parse(JSON.stringify(value)) as unknown,
+    unavailable: "CONTENT_UNAVAILABLE",
+    register: (app: FastifyInstance, execute: Reader) =>
+      registerPublishedContentRoute(app, { useCases: { execute } }),
+  })),
+  {
+    name: "gift selected original recipient",
+    url: `/api/v1/storefront-gifts/fictional-gift?locale=en&market=TEST&currency=USD&idol=${idol.id}`,
+    value:
+      commerceGift.outcome === "SUCCESS"
+        ? {
+            ...commerceGift,
+            recipient: {
+              kind: "PUBLISHED",
+              idol: {
+                schemaVersion: 1,
+                id: idol.id,
+                handle: idol.handle,
+                status: idol.status,
+                acceptingGifts: idol.acceptingGifts,
+                localeContext: idol.localeContext,
+                displayName: idol.displayName,
+                portrait: idol.portrait,
+              },
+            },
+            offers: commerceGift.offers.map((offer) => ({
+              ...offer,
+              requiresRecipient: false,
+            })),
+          }
+        : commerceGift,
+    unavailable: "CONTENT_UNAVAILABLE",
+    register: (app, read) =>
+      registerStorefrontCommerceRoute(app, {
+        useCases: { readContext: read, readGift: read },
+      }),
+  },
+];
+for (const scenario of originalScenarios) {
+  test(`${scenario.name}: proven original locale passes while forged or mismatched provenance remains unavailable`, async () => {
+    const app = Fastify();
+    const read = vi.fn<Reader>();
+    scenario.register(app, read);
+    try {
+      const value = withLocaleContexts(scenario.value, originalLocale);
+      read.mockResolvedValue(value as never);
+      const first = await app.inject(scenario.url);
+      expect(first.statusCode).toBe(200);
+      expect(first.json()).toEqual(value);
+      const same = await app.inject({
+        url: scenario.url,
+        headers: { "if-none-match": String(first.headers.etag) },
+      });
+      expect(same.statusCode).toBe(304);
+      expect(read).toHaveBeenCalledTimes(2);
+      read.mockResolvedValueOnce(
+        withLocaleContexts(scenario.value, {
+          ...originalLocale,
+          sourceLocale: "en",
+          resolvedLocale: "en",
+          fallbackUsed: false,
+        }) as never,
+      );
+      expect((await app.inject(scenario.url)).statusCode).toBe(200);
+      for (const invalid of [
+        { ...originalLocale, sourceLocale: "ja" },
+        { ...originalLocale, fallbackUsed: false },
+        { ...originalLocale, requestedLocale: "ja" },
+        { ...originalLocale, publicationMode: "UNKNOWN" },
+        { ...originalLocale, translationRevision: undefined },
+        {
+          schemaVersion: 1,
+          requestedLocale: "ja",
+          resolvedLocale: "en",
+          fallbackUsed: true,
+          translationRevision: idol.id,
+        },
+      ]) {
+        read.mockResolvedValueOnce(
+          withLocaleContexts(scenario.value, invalid) as never,
+        );
+        const denied = await app.inject({
+          url: scenario.url,
+          headers: { "if-none-match": "*" },
+        });
+        expect(denied.statusCode).toBe(503);
+        expect(denied.headers.etag).toBeUndefined();
+        expect(denied.headers["cache-control"]).toBe("no-store");
+      }
+      read.mockResolvedValueOnce(
+        withLocaleContexts(scenario.value, {
+          schemaVersion: 1,
+          requestedLocale: "ja",
+          resolvedLocale: "en",
+          fallbackUsed: true,
+          translationRevision: idol.id,
+        }) as never,
+      );
+      const legacyFallback = await app.inject(
+        scenario.url.replace("locale=en", "locale=ja"),
+      );
+      expect(legacyFallback.statusCode).toBe(503);
+      expect(legacyFallback.headers.etag).toBeUndefined();
+    } finally {
+      await app.close();
+    }
+  });
+}

@@ -2,6 +2,33 @@ import { expect, it, vi } from "vitest";
 import { idolIdSchema } from "@fan-support/contracts";
 import { directoryFixturePage } from "./directory-fixture";
 
+it("accepts a declared published original while preserving the requested route locale", async () => {
+  const { requestArtistDirectory } = await import("./directory-request");
+  const page = directoryFixturePage([1]);
+  if (page.outcome !== "SUCCESS") throw new Error("Expected directory fixture");
+  const original = {
+    ...page,
+    items: page.items.map((item) => ({
+      ...item,
+      localeContext: {
+        schemaVersion: 2,
+        publicationMode: "DIRECT_OPERATOR_V1",
+        sourceLocale: "zh-CN",
+        requestedLocale: "en",
+        resolvedLocale: "zh-CN",
+        fallbackUsed: true,
+        translationRevision: "cc000000-0000-4000-8000-000000000001",
+      },
+    })),
+  };
+  const response = await requestArtistDirectory(
+    { schemaVersion: 1, locale: "en", limit: 12 },
+    new AbortController().signal,
+    async () => Response.json(original),
+  );
+  expect(response.outcome).toBe("SUCCESS");
+});
+
 it("parses only bounded canonical directory requests and safe failure bodies", async () => {
   const loaded = await import("./directory-request").catch(() => undefined);
   expect(loaded, "public directory transport must exist").toBeDefined();

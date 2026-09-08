@@ -1,0 +1,1237 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "environment": "LOCAL_TEST_SINGLE_OPERATOR",
+  "startedAt": "2026-09-08T00:17:19.807Z",
+  "assertions": 1004,
+  "cases": [
+    {
+      "name": "initial-entry-and-session",
+      "status": "PASS"
+    },
+    {
+      "name": "artist-validation-upload-retry-and-single-submit",
+      "status": "PASS"
+    },
+    {
+      "name": "four-gift-types-and-real-price",
+      "status": "PASS"
+    },
+    {
+      "name": "poster-replacement-and-history-restore",
+      "status": "PASS"
+    },
+    {
+      "name": "seven-language-admin-matrix",
+      "status": "PASS"
+    }
+  ],
+  "screenshots": [
+    "zh-CN-1440-upload-error.png",
+    "en-1440-artists-list.png",
+    "en-1440-artists-form.png",
+    "en-1440-gifts-list.png",
+    "en-1440-gifts-form.png",
+    "en-1440-posters-list.png",
+    "en-1440-posters-form.png",
+    "en-390-artists-list.png",
+    "en-390-artists-form.png",
+    "en-390-gifts-list.png",
+    "en-390-gifts-form.png",
+    "en-390-posters-list.png",
+    "en-390-posters-form.png",
+    "zh-CN-1440-artists-list.png",
+    "zh-CN-1440-artists-form.png",
+    "zh-CN-1440-gifts-list.png",
+    "zh-CN-1440-gifts-form.png",
+    "zh-CN-1440-posters-list.png",
+    "zh-CN-1440-posters-form.png",
+    "zh-CN-390-artists-list.png",
+    "zh-CN-390-artists-form.png",
+    "zh-CN-390-gifts-list.png",
+    "zh-CN-390-gifts-form.png",
+    "zh-CN-390-posters-list.png",
+    "zh-CN-390-posters-form.png",
+    "th-1440-artists-list.png",
+    "th-1440-artists-form.png",
+    "th-1440-gifts-list.png",
+    "th-1440-gifts-form.png",
+    "th-1440-posters-list.png",
+    "th-1440-posters-form.png",
+    "th-390-artists-list.png",
+    "th-390-artists-form.png",
+    "th-390-gifts-list.png",
+    "th-390-gifts-form.png",
+    "th-390-posters-list.png",
+    "th-390-posters-form.png",
+    "vi-1440-artists-list.png",
+    "vi-1440-artists-form.png",
+    "vi-1440-gifts-list.png",
+    "vi-1440-gifts-form.png",
+    "vi-1440-posters-list.png",
+    "vi-1440-posters-form.png",
+    "vi-390-artists-list.png",
+    "vi-390-artists-form.png",
+    "vi-390-gifts-list.png",
+    "vi-390-gifts-form.png",
+    "vi-390-posters-list.png",
+    "vi-390-posters-form.png",
+    "ja-1440-artists-list.png",
+    "ja-1440-artists-form.png",
+    "ja-1440-gifts-list.png",
+    "ja-1440-gifts-form.png",
+    "ja-1440-posters-list.png",
+    "ja-1440-posters-form.png",
+    "ja-390-artists-list.png",
+    "ja-390-artists-form.png",
+    "ja-390-gifts-list.png",
+    "ja-390-gifts-form.png",
+    "ja-390-posters-list.png",
+    "ja-390-posters-form.png",
+    "es-1440-artists-list.png",
+    "es-1440-artists-form.png",
+    "es-1440-gifts-list.png",
+    "es-1440-gifts-form.png",
+    "es-1440-posters-list.png",
+    "es-1440-posters-form.png",
+    "es-390-artists-list.png",
+    "es-390-artists-form.png",
+    "es-390-gifts-list.png",
+    "es-390-gifts-form.png",
+    "es-390-posters-list.png",
+    "es-390-posters-form.png",
+    "pt-1440-artists-list.png",
+    "pt-1440-artists-form.png",
+    "pt-1440-gifts-list.png",
+    "pt-1440-gifts-form.png",
+    "pt-1440-posters-list.png",
+    "pt-1440-posters-form.png",
+    "pt-390-artists-list.png",
+    "pt-390-artists-form.png",
+    "pt-390-gifts-list.png",
+    "pt-390-gifts-form.png",
+    "pt-390-posters-list.png",
+    "pt-390-posters-form.png",
+    "failure-current-screen.png"
+  ],
+  "axe": [
+    {
+      "label": "zh-CN-1440-upload-error",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "reflow": [
+    {
+      "label": "zh-CN-1440-upload-error",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "en-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "en-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "en-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "en-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "en-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    }
+  ],
+  "operations": [
+    {
+      "operationId": "90ef826a-19bb-4266-a9bc-4b078bf4b650",
+      "kind": "SAVE_ARTIST",
+      "status": "PUBLISHED",
+      "targetId": "9493354a-e196-4b71-abe9-8b4bc2746028",
+      "handle": "idol-9493354ae1964b71abe98b4bc2746028",
+      "revisionId": "76344dec-780a-49d7-a68d-1be21f1f13ff",
+      "publicationId": "aefdef2e-4407-49ff-90d9-194d2182dd17",
+      "version": 2
+    },
+    {
+      "operationId": "aece846d-4d3f-4aeb-b984-2ee5eb6da6f5",
+      "kind": "SAVE_ARTIST",
+      "status": "PUBLISHED",
+      "targetId": "9493354a-e196-4b71-abe9-8b4bc2746028",
+      "handle": "idol-9493354ae1964b71abe98b4bc2746028",
+      "revisionId": "ab4c5f00-cb31-4a24-af9e-f8ceb04e3bda",
+      "publicationId": "87567546-4948-45ad-9dd2-159f520335cc",
+      "version": 3
+    },
+    {
+      "operationId": "825e50be-49a3-4d05-8281-c532bc3cd8c1",
+      "kind": "SAVE_GIFT",
+      "status": "PUBLISHED",
+      "targetId": "bc423af1-cf8a-4bf2-80ff-152351fed627",
+      "handle": "gift-bc423af1cf8a4bf280ff152351fed627",
+      "revisionId": "28a1279b-0fc7-484d-830f-8725e4f648be",
+      "publicationId": "a04a7e51-fb0a-4c94-b2d4-9059d4cc6747",
+      "version": 2
+    },
+    {
+      "operationId": "cf3bc5d0-e245-4c6c-94c6-571a4e3b92bd",
+      "kind": "SAVE_GIFT",
+      "status": "PUBLISHED",
+      "targetId": "a62101f8-9a17-4a20-93af-2ac11c48d146",
+      "handle": "gift-a62101f89a174a2093af2ac11c48d146",
+      "revisionId": "e3ac4b3b-4f84-4afe-a12b-a6204a6ce996",
+      "publicationId": "0719ad7a-aa1b-4145-8fd1-d4368550e565",
+      "version": 2
+    },
+    {
+      "operationId": "bfdc67d4-133b-4708-95bd-698d0e363a75",
+      "kind": "SAVE_GIFT",
+      "status": "PUBLISHED",
+      "targetId": "40a94312-b47e-414e-a2ed-384893965048",
+      "handle": "gift-40a94312b47e414ea2ed384893965048",
+      "revisionId": "e45726d8-a2b5-4102-be44-01d0c8e9463f",
+      "publicationId": "8826a9a8-32ff-4d2e-b093-39ac070fa84e",
+      "version": 2
+    },
+    {
+      "operationId": "6986bc10-7f78-4f6d-9050-fce062a4c517",
+      "kind": "SAVE_GIFT",
+      "status": "PUBLISHED",
+      "targetId": "e7222687-9da6-4afd-b5d3-2111005c1517",
+      "handle": "gift-e72226879da64afdb5d32111005c1517",
+      "revisionId": "df570f48-4534-49f6-be14-8293385138cf",
+      "publicationId": "9bd00fe3-a244-4ca2-a72d-d375d39135d5",
+      "version": 2
+    },
+    {
+      "operationId": "6a479b93-00a6-4648-8899-bf29403c64b8",
+      "kind": "SAVE_GIFT",
+      "status": "PUBLISHED",
+      "targetId": "bc423af1-cf8a-4bf2-80ff-152351fed627",
+      "handle": "gift-bc423af1cf8a4bf280ff152351fed627",
+      "revisionId": "f0a7f09c-4913-42c1-af09-d9737d928fa3",
+      "publicationId": "3d63daf6-2ceb-4099-bb67-1151b3733666",
+      "version": 3
+    },
+    {
+      "operationId": "a2e40126-4d63-452a-9cbf-afe51d5adf9c",
+      "kind": "REPLACE_POSTER",
+      "status": "PUBLISHED",
+      "targetId": "32591a70-2b02-4d8c-a0d4-0be090b1f634",
+      "handle": null,
+      "revisionId": "32591a70-2b02-4d8c-a0d4-0be090b1f634",
+      "publicationId": "782c47c8-ffbc-460a-9020-28d7536c7684",
+      "version": 2
+    },
+    {
+      "operationId": "94475bb8-6498-4545-b0b0-afd685dc8277",
+      "kind": "REPLACE_POSTER",
+      "status": "PUBLISHED",
+      "targetId": "3564e90f-e463-40ca-a082-1de8d8108469",
+      "handle": null,
+      "revisionId": "3564e90f-e463-40ca-a082-1de8d8108469",
+      "publicationId": "2cb0e076-933d-4c46-9219-43940b51eb9a",
+      "version": 3
+    },
+    {
+      "operationId": "a58fd5cd-06af-4cdb-8a42-a63f1a870596",
+      "kind": "RESTORE_POSTER",
+      "status": "PUBLISHED",
+      "targetId": "fa4536cd-c6c6-439d-a448-80ccf9d92fc5",
+      "handle": null,
+      "revisionId": "fa4536cd-c6c6-439d-a448-80ccf9d92fc5",
+      "publicationId": "258b23bc-40a7-4e4e-b7c4-99c5c174e0d1",
+      "version": 4
+    }
+  ],
+  "uploads": [
+    {
+      "operationId": "90ef826a-19bb-4266-a9bc-4b078bf4b650",
+      "checksumSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "requiredRoles": [
+        "PORTRAIT",
+        "HERO_DESKTOP",
+        "HERO_MOBILE"
+      ]
+    },
+    {
+      "operationId": "825e50be-49a3-4d05-8281-c532bc3cd8c1",
+      "checksumSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "requiredRoles": [
+        "GIFT_PRIMARY"
+      ]
+    },
+    {
+      "operationId": "cf3bc5d0-e245-4c6c-94c6-571a4e3b92bd",
+      "checksumSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "requiredRoles": [
+        "GIFT_PRIMARY"
+      ]
+    },
+    {
+      "operationId": "bfdc67d4-133b-4708-95bd-698d0e363a75",
+      "checksumSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "requiredRoles": [
+        "GIFT_PRIMARY"
+      ]
+    },
+    {
+      "operationId": "6986bc10-7f78-4f6d-9050-fce062a4c517",
+      "checksumSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "requiredRoles": [
+        "GIFT_PRIMARY"
+      ]
+    },
+    {
+      "operationId": "a2e40126-4d63-452a-9cbf-afe51d5adf9c",
+      "checksumSha256": "8f4a8277040f631829cff1d76beab63ab0f4ff0fc88df7aa328faffa2c5c47c1",
+      "requiredRoles": [
+        "HERO_DESKTOP",
+        "HERO_MOBILE"
+      ]
+    },
+    {
+      "operationId": "94475bb8-6498-4545-b0b0-afd685dc8277",
+      "checksumSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "requiredRoles": [
+        "HERO_DESKTOP",
+        "HERO_MOBILE"
+      ]
+    }
+  ],
+  "publicPages": [],
+  "pageErrors": [],
+  "observationFailures": [],
+  "limitations": [
+    "Desktop Chrome with emulated viewports; not a physical phone",
+    "Automated accessibility is not a screen-reader or human translation approval",
+    "No payment, real customer data, operator timing or production deployment"
+  ],
+  "browserVersion": "152.0.7977.82",
+  "failure": {
+    "step": "keyboard-reduced-motion-and-list-error",
+    "name": "Error",
+    "detail": "Failure message omitted; inspect safe phase and last recorded assertions"
+  },
+  "finishedAt": "2026-09-08T00:18:58.049Z",
+  "counts": {
+    "cases": 5,
+    "screenshots": 86,
+    "axe": 85,
+    "incompleteRules": 0,
+    "violations": 0,
+    "observationFailures": 0
+  },
+  "browserClosed": true
+}

@@ -1,5 +1,5 @@
 import {
-  idolDirectoryRecordSchema,
+  legacyIdolDirectoryRecordSchema,
   SUPPORTED_LOCALES,
 } from "@fan-support/contracts";
 import {
@@ -151,7 +151,7 @@ export function createFictionalIdolDirectoryRecord() {
     idolRevisionId: revisionId,
   }));
   const mediaManifests = media.flatMap((entry) => entry.manifests);
-  return idolDirectoryRecordSchema.parse({
+  return legacyIdolDirectoryRecordSchema.parse({
     schemaVersion: 1,
     selection: {
       schemaVersion: 1,

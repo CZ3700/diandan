@@ -1,6 +1,6 @@
 import {
   publishedMediaViewSchema,
-  type PublishedContentContext,
+  type LegacyPublishedContentContext,
 } from "@fan-support/contracts";
 import {
   meetsMediaRoleSourceMinimum,
@@ -9,7 +9,7 @@ import {
 import { sameId } from "./publication-preflight-shared.js";
 
 /** Resolves an approved immutable variant while applying current binary and metadata eligibility. */
-export function publishedMediaResolver(context: PublishedContentContext) {
+export function publishedMediaResolver(context: LegacyPublishedContentContext) {
   const candidate = context.canonical.candidate;
   const assets =
     candidate.objectKind === "POLICY"

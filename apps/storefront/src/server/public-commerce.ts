@@ -9,7 +9,7 @@ import {
   storefrontGiftReadCommandSchema,
   storefrontGiftResponseSchema,
   type GiftDirectoryResponse,
-  type LocaleContext,
+  type ContentLocaleContext,
   type PublishedGiftCommerceResponse,
   type StorefrontContextResponse,
   type StorefrontGiftReadCommand,
@@ -64,10 +64,16 @@ function status(data: Result[Kind]): number {
   }
 }
 function localeMatches(
-  context: LocaleContext,
+  context: ContentLocaleContext,
   locale: SupportedLocale,
   fallback: boolean,
 ) {
+  if (context.schemaVersion === 2)
+    return (
+      context.requestedLocale === locale &&
+      context.resolvedLocale === context.sourceLocale &&
+      context.fallbackUsed === (locale !== context.sourceLocale)
+    );
   return (
     context.requestedLocale === locale &&
     (context.fallbackUsed

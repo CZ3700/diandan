@@ -3,6 +3,7 @@ import {
   publishedGiftCommerceResponseSchema,
   type PublishedGiftCommerceResponse,
 } from "@fan-support/contracts";
+import { hashPublicationValue } from "./publication-manifest-canonical.js";
 import { projectPublishedContent } from "./published-content.js";
 /** Public gift classification adds no business policy or internal profile authorship. */
 export function projectPublishedGiftCommerce(
@@ -25,15 +26,32 @@ export function projectPublishedGiftCommerce(
       outcome: "FAILURE",
       code: "CONTENT_UNAVAILABLE",
     };
+  const document =
+    loaded.context.schemaVersion === 3 ? loaded.context.current.document : null;
   return publishedGiftCommerceResponseSchema.parse({
     ...result,
     kind: "PUBLISHED_GIFT_COMMERCE",
-    classification: loaded.profile
-      ? {
-          kind: "CLASSIFIED",
-          giftKind: loaded.profile.profile.giftKind,
-          profileHash: loaded.profile.profile.profileHash,
-        }
-      : { kind: "LEGACY" },
+    classification:
+      document?.kind === "GIFT"
+        ? {
+            kind: "CLASSIFIED",
+            giftKind: document.giftKind,
+            profileHash: hashPublicationValue(
+              "fan-support.daily-gift-classification.v1",
+              {
+                giftId: document.ownerId,
+                giftRevisionId: document.revisionId,
+                giftKind: document.giftKind,
+                manifestHash: loaded.context.publication.manifestHash,
+              },
+            ),
+          }
+        : loaded.profile
+          ? {
+              kind: "CLASSIFIED",
+              giftKind: loaded.profile.profile.giftKind,
+              profileHash: loaded.profile.profile.profileHash,
+            }
+          : { kind: "LEGACY" },
   });
 }

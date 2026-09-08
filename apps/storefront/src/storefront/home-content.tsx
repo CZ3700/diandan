@@ -59,9 +59,10 @@ export function HomeContent({
           {view.announcement}
         </p>
       )}
-      {view.localeContext.fallbackUsed && (
-        <p className="storefront-announcement">{copy.fallbackNotice}</p>
-      )}
+      {view.localeContext.schemaVersion === 1 &&
+        view.localeContext.fallbackUsed && (
+          <p className="storefront-announcement">{copy.fallbackNotice}</p>
+        )}
       <section className="storefront-hero" aria-labelledby="hero-title">
         <div className="storefront-hero-copy">
           <p className="storefront-eyebrow">{copy.artistEyebrow}</p>

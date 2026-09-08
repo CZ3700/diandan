@@ -16,7 +16,7 @@ export function storefrontCommercePaths() {
   const context = (description: string, success = false) =>
     response("StorefrontContextResponse", description, success);
   const gift = (description: string, success = false) =>
-    response("StorefrontGiftResponse", description, success);
+    response("CurrentStorefrontGiftResponse", description, success);
   return {
     "/api/v1/storefront-context": {
       get: {

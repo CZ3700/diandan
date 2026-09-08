@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { singleSourceLocaleContextSchema } from "./content-provenance.js";
 
 import {
   contentTimestampSchema,
@@ -103,7 +104,7 @@ export const mediaMetadataRevisionTranslationSchema = z
   })
   .superRefine(validateTranslationAudit);
 
-export const publishedMediaViewSchema = z.discriminatedUnion("kind", [
+export const legacyPublishedMediaViewSchema = z.discriminatedUnion("kind", [
   z.strictObject({
     schemaVersion: schemaVersionSchema,
     kind: z.literal("INFORMATIVE"),
@@ -122,6 +123,22 @@ export const publishedMediaViewSchema = z.discriminatedUnion("kind", [
     height: z.number().int().positive(),
     focalPoint: mediaFocalPointSchema,
   }),
+]);
+
+/** Versioned original alt provenance; legacy media remains byte-compatible. */
+export const dailyPublishedMediaViewSchema = z.discriminatedUnion("kind", [
+  legacyPublishedMediaViewSchema.options[0].extend({
+    schemaVersion: z.literal(2),
+    localeContext: singleSourceLocaleContextSchema,
+  }),
+  legacyPublishedMediaViewSchema.options[1].extend({
+    schemaVersion: z.literal(2),
+    localeContext: singleSourceLocaleContextSchema,
+  }),
+]);
+export const publishedMediaViewSchema = z.union([
+  legacyPublishedMediaViewSchema,
+  dailyPublishedMediaViewSchema,
 ]);
 
 export type MediaAsset = z.infer<typeof mediaAssetSchema>;

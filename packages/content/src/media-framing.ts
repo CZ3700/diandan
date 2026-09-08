@@ -59,6 +59,16 @@ function containedPlacement(
   request: MediaFramingRequest,
   target: Size,
 ): Rectangle {
+  if (
+    request.sourceWidth <= target.width &&
+    request.sourceHeight <= target.height
+  )
+    return {
+      x: Math.floor((target.width - request.sourceWidth) / 2),
+      y: Math.floor((target.height - request.sourceHeight) / 2),
+      width: request.sourceWidth,
+      height: request.sourceHeight,
+    };
   const widthLimited =
     BigInt(request.sourceWidth) * BigInt(target.height) >=
     BigInt(request.sourceHeight) * BigInt(target.width);

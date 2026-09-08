@@ -1,3 +1,4 @@
+import { managementCenterPaths } from "./management-center-openapi.js";
 import { storefrontCommercePaths } from "./storefront-commerce-openapi.js";
 import { storefrontHomepagePaths } from "./storefront-homepage-openapi.js";
 import { adminWorkspacePaths } from "./admin-workspace-openapi.js";
@@ -199,6 +200,7 @@ export function createContractArtifactDocuments(): Readonly<{
         version: "1.0.0",
       },
       paths: {
+        ...managementCenterPaths(),
         ...storefrontHomepagePaths(),
         ...storefrontCommercePaths(),
         ...storefrontSeoPaths(),

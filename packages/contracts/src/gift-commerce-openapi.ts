@@ -138,7 +138,7 @@ function responses(privateRoute: boolean): JsonObject {
               content: {
                 "application/json": {
                   schema: {
-                    $ref: `#/components/schemas/${privateRoute ? "GiftCommerceResponse" : "PublishedGiftCommerceResponse"}`,
+                    $ref: `#/components/schemas/${privateRoute ? "GiftCommerceResponse" : "CurrentPublishedGiftCommerceResponse"}`,
                   },
                 },
               },

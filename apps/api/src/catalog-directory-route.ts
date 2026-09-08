@@ -1,5 +1,6 @@
 import type { FastifyInstance, FastifyReply } from "fastify";
 import { sendRevalidatedPublicJson } from "./public-revalidation-response.js";
+import { matchesPublicContentLocale } from "./public-content-locale.js";
 import {
   catalogDirectoryFailureSchema,
   giftDirectoryResponseSchema,
@@ -134,9 +135,10 @@ export function registerCatalogDirectoryRoute(
             response.items.length ||
           response.items.some(
             (item) =>
-              item.localeContext.requestedLocale !== query.data.locale ||
-              item.localeContext.resolvedLocale !== query.data.locale ||
-              item.localeContext.fallbackUsed,
+              !matchesPublicContentLocale(
+                item.localeContext,
+                query.data.locale,
+              ),
           )
         )
           return sendFailure(reply, "CATALOG_UNAVAILABLE");
@@ -177,9 +179,10 @@ export function registerCatalogDirectoryRoute(
             (item) =>
               item.offer.market !== query.data.market ||
               item.offer.currency !== query.data.currency ||
-              item.gift.localeContext.requestedLocale !== query.data.locale ||
-              item.gift.localeContext.resolvedLocale !== query.data.locale ||
-              item.gift.localeContext.fallbackUsed,
+              !matchesPublicContentLocale(
+                item.gift.localeContext,
+                query.data.locale,
+              ),
           )
         )
           return sendFailure(reply, "CATALOG_UNAVAILABLE");

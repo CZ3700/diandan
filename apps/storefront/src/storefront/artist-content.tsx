@@ -66,13 +66,17 @@ export function ArtistContent({
           fallbackLabel={copy.mediaFallback}
         />
       </section>
-      {artist.localeContext.fallbackUsed && (
-        <p className="storefront-announcement">{copy.fallbackNotice}</p>
-      )}
+      {artist.localeContext.schemaVersion === 1 &&
+        artist.localeContext.fallbackUsed && (
+          <p className="storefront-announcement">{copy.fallbackNotice}</p>
+        )}
       <section className="storefront-section storefront-story">
         <h2>{copy.aboutArtist}</h2>
         <div lang={artist.localeContext.resolvedLocale}>
-          <ControlledBiography text={artist.fullBio} />
+          <ControlledBiography
+            text={artist.fullBio}
+            plain={artist.localeContext.schemaVersion === 2}
+          />
         </div>
       </section>
       {artist.gallery.length > 0 && (

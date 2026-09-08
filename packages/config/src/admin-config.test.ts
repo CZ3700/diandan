@@ -31,3 +31,14 @@ test("TEST administration rejects production tiers, remote targets, credentials 
       resolveAdminRuntimeConfig({ environment: { ...local, ...patch } }),
     ).toThrow();
 });
+
+test("the explicit management storefront link does not break Admin runtime configuration", () => {
+  expect(
+    resolveAdminRuntimeConfig({
+      environment: {
+        ...local,
+        FAN_SUPPORT_STOREFRONT_ORIGIN: "http://localhost:3011",
+      },
+    }).mode,
+  ).toBe("TEST");
+});
