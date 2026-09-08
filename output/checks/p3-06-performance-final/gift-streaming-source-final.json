@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "scope": "gift detail streaming only; not repository/build provenance",
+  "files": [
+    {
+      "path": "apps/storefront/src/storefront/gift-detail-page-reads.ts",
+      "sha256": "2864fac51a379b631a9f7a1ea7d82a2bb43752865c4c760771c621bc49f3eabe"
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-page-factory.tsx",
+      "sha256": "d1f4b45c76b6f0f18cec15884e916946945628bbeff5639fb8b224368ced1984"
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-detail.tsx",
+      "sha256": "40115711db8e1b17a8ae9311f26afaa81b81177ad6f17dcce5d6fe6cfa987da1"
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-page-scheduling.test.tsx",
+      "sha256": "373ce498bb20a28cc6c8b8f7cf6e6668653f8b7c5fdd2734ad25d5ed38c96ff1"
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-detail-context-section.tsx",
+      "sha256": "40f851475cce87d4d1c41a1c8d9853d3130636038fa6d4929a98fd5c4bf949da"
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-detail-recipient-section.tsx",
+      "sha256": "00634320ef68adb557e2beacc179bcead0abe9fcc348ba0a4278f060692549e9"
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-detail.css",
+      "sha256": "b67ddc99c9f6747146379c70b9f2f553f98afafc7995cbd9780002df71c1dc7f"
+    }
+  ],
+  "aggregateSha256": "7acd704d7f9b6252ad6347bc555d33ce8776fa85e1ac04713075276a4e29143e"
+}

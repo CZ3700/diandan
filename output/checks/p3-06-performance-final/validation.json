@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-09-08T03:52:18.514112+00:00",
+  "checkpointStatus": "LOCAL_IMPLEMENTATION_AND_REPOSITORY_CHECKS_PASSED_PHASE_OPEN",
+  "task": "P3-06",
+  "taskStatus": "IN_PROGRESS",
+  "phase3": "ACTIVE",
+  "phase4": "LOCKED",
+  "counts": {
+    "DONE": 22,
+    "IN_PROGRESS": 1,
+    "PENDING": 26,
+    "total": 49
+  },
+  "implementationCommit": "7db722b4f5480ffb78eb19f5e2eec7675e50b1bd",
+  "githubPushed": false,
+  "source": {
+    "fileCount": 995,
+    "sha256": "df759a88a8dd62d8f08a08eccf87f2e29781e867ffffe955e4f554b7cadce62e",
+    "manifest": "source-final.json",
+    "scope": "Frozen app/package build inputs including styles, manifests and public assets. Excludes tests, verification scripts, generated Next declarations, docs and output. Runtime remains the same owned real fixture."
+  },
+  "functional": {
+    "storefrontTests": {
+      "status": "PASS",
+      "files": 56,
+      "tests": 442,
+      "log": "storefront-final-suite.log"
+    },
+    "sharedUiTests": {
+      "status": "PASS",
+      "files": 19,
+      "tests": 100,
+      "log": "ui-final-suite.log"
+    },
+    "format": "PASS",
+    "lint": "PASS",
+    "typecheck": {
+      "status": "PASS",
+      "tasks": 58,
+      "cached": 51,
+      "log": "final-types.log"
+    },
+    "postgresS3WorkerApiFixture": {
+      "status": "PASS",
+      "assertions": 32461,
+      "report": "output/checks/p3-06-storefront-acceptance/run-2026-09-08T01-40-26-728Z/protocol-results.json"
+    },
+    "compiledSevenLocaleUi": {
+      "status": "PASS",
+      "cases": 88,
+      "screenshots": 88,
+      "callbackAssertions": 22705,
+      "axeScans": 85,
+      "axeViolations": 0,
+      "axeIncomplete": 30,
+      "pageErrors": 0,
+      "publicationMs": {
+        "PUBLISH": 9177,
+        "ROLLBACK": 9368
+      },
+      "report": "output/checks/p3-06-storefront-acceptance/run-2026-09-08T01-40-26-728Z/browser-attempt-6/browser-results.json"
+    },
+    "headerBrowser": {
+      "status": "PASS",
+      "cases": 11,
+      "assertions": 67,
+      "screenshots": 11,
+      "directory": "header-browser-attempt-2"
+    },
+    "drawerBrowser": {
+      "status": "PASS",
+      "cases": 23,
+      "assertions": 153,
+      "screenshots": 23,
+      "directory": "drawer-browser-attempt-2"
+    },
+    "sharedUiBrowser": {
+      "status": "PASS_WITH_EXISTING_HUMAN_GATES",
+      "scenarios": {
+        "p2-03": 13,
+        "p2-04": 16,
+        "p2-05-matrix": 8,
+        "p2-05-special": 6
+      },
+      "screenshots": 55,
+      "axeScans": 21,
+      "summary": "shared-ui/verification-summary.json"
+    }
+  },
+  "performance": {
+    "status": "COLLECTED_BUDGET_FAILED",
+    "matrix": {
+      "resourcePages": 84,
+      "rawLighthouseRuns": 63,
+      "threeRunGroups": 21,
+      "scoreGroupsPassed": 18,
+      "lcpGroupsPassed": 3,
+      "clsGroupsPassed": 21
+    },
+    "resourceBudget": {
+      "javascriptPagesPassed": 14,
+      "javascriptPagesFailed": 70,
+      "javascriptMinGzipBytes": 148428,
+      "javascriptMaxGzipBytes": 152024,
+      "imagesObserved": 234,
+      "imagesFailed": 0,
+      "builtScriptCount": 10,
+      "actualBuiltScriptBytesMatchRecordedResponses": true
+    },
+    "allThreeSamplesRetained": true,
+    "originalThresholdsPreserved": true,
+    "independentReview": "final-performance-review.json",
+    "rawDirectory": "output/checks/p3-06-storefront-acceptance/run-2026-09-08T01-40-26-728Z/browser-attempt-7/performance",
+    "lighthouseVersion": "13.4.1",
+    "method": "mobile simulate; 21 groups of 3 runs; laboratory only",
+    "businessAvailability": {
+      "successfulContentLcpNodes": 62,
+      "unavailableContentLcpNodes": 1,
+      "affectedSample": "ja-artist-mobile-2.json",
+      "cause": "UNDETERMINED",
+      "originalAggregateRetained": true,
+      "note": "Lighthouse runtime success/HTTP 200 does not prove successful business content. The unavailable sample cannot establish artist-content performance."
+    }
+  },
+  "fonts": {
+    "japaneseBytes": 96956,
+    "simplifiedChineseBytes": 84152,
+    "finalReproduction": "font-feature-repro-result.json",
+    "allSevenArtifactsByteExact": true,
+    "browserComparisons": 3692,
+    "allActualPixelsTextWidthsAndDomDimensionsEqual": true,
+    "strictAllMetricsStatus": "FAIL",
+    "strictAllMetricsExitCode": 1,
+    "strictMetricsDifferences": {
+      "locale": "zh-CN",
+      "count": 20,
+      "weight": 700,
+      "field": "actualBoundingBoxDescent",
+      "pixelDeltas": [
+        1.9073486328125e-06,
+        3.814697265625e-06
+      ]
+    },
+    "reportDirectory": "font-shaping-browser-feature-compatible",
+    "scope": "Local Chrome, measured weights/corpus only; original font fallback retained for arbitrary dynamic content."
+  },
+  "fullCheck": {
+    "status": "PASS",
+    "retainedAttempts": [
+      "full-check-attempt-1.json",
+      "full-check-attempt-2.json"
+    ],
+    "retainedFailureReasons": [
+      "P2-04 browser evidence stale; all P2-03/04/05 refreshed at implementation commit",
+      "PostgreSQL publication-preflight fixture preparation failed before its main assertions. Wrapper default ASSERTION label is not proof of AssertionError; original cause was not retained."
+    ],
+    "preflightIsolatedRecheck": {
+      "status": "PASS",
+      "assertions": 166,
+      "elapsedSeconds": 5.856,
+      "sourceChanged": false,
+      "naturalFailureReproduced": false,
+      "cause": "UNDETERMINED",
+      "report": "preflight-failure-review.md"
+    },
+    "successfulAttempt": 3,
+    "commandResult": {
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "check"
+      ],
+      "cwd": "/Users/mario/Desktop/下单/.turbo/p3-06-performance-worktree",
+      "commit": "7db722b4f5480ffb78eb19f5e2eec7675e50b1bd",
+      "start": "2026-09-08T03:31:05.157489+00:00",
+      "end": "2026-09-08T03:50:51.311580+00:00",
+      "elapsedSeconds": 1186.146104708314,
+      "exitCode": 0,
+      "log": "full-check-attempt-3.log"
+    },
+    "typecheck": {
+      "successful": 58,
+      "total": 58,
+      "cached": 57
+    },
+    "test": {
+      "successful": 58,
+      "total": 58,
+      "cached": 53
+    },
+    "build": {
+      "successful": 35,
+      "total": 35,
+      "cached": 34
+    },
+    "nodePackageExportsImported": 31,
+    "backendProtocolRun": "output/checks/p3-06-storefront-acceptance/run-2026-09-08T03-44-22-998Z",
+    "cachedResultsUsed": true
+  },
+  "preservation": {
+    "baselineFiles": 1376,
+    "baselineExactUnchanged": 1375,
+    "knownRuntimeUpdatedFiles": 1,
+    "runtimeUpdateReport": "preservation-runtime-update.json",
+    "finalVerification": "PASS_BEFORE_LOCAL_INTEGRATION",
+    "priorSharedUiReports": "shared-ui/previous-evidence",
+    "preMergeReport": "preservation-pre-merge.json"
+  },
+  "remainingGates": [
+    "Investigate the retained unavailable artist performance sample; prior intermittent full-check fixture failure remains unexplained despite exact-source full check passing",
+    "Mobile laboratory LCP and three score groups",
+    "First-load JavaScript SHOULD budget on 70 of 84 measured pages",
+    "Human operations timing for simple management center",
+    "Actual screen-reader review including retained axe incomplete items",
+    "Approval of current critical policy/payment/refund translations"
+  ],
+  "newEvidenceAbsent": [
+    "Physical phone measurements",
+    "PSP payments",
+    "Staging deployment",
+    "Production release",
+    "Real-user p75 RUM"
+  ],
+  "codeReview": {
+    "status": "ACCEPT_IN_IMPLEMENTATION_SCOPE",
+    "report": "final-independent-review.md",
+    "superChecks1Through9": "PASS",
+    "superCheck10": "PARTIAL_PHASE_GATES_REMAIN",
+    "note": "Final P2-03/04/05 and full repository check now pass. Original performance budget and strict floating-point font metrics probe failures remain; no task completion claim."
+  },
+  "finalStaticAndSecrets": {
+    "stagedSecretScan": "PASS",
+    "stagedDiffCheck": "PASS",
+    "fullChangeDiffCheck": "PASS_EXCEPT_EXACT_UPSTREAM_LICENSE_WHITESPACE",
+    "upstreamLicenseExclusions": [
+      "packages/design-tokens/styles/fonts/generated/japanese-OFL.txt",
+      "packages/design-tokens/styles/fonts/generated/simplified-chinese-OFL.txt"
+    ],
+    "sourceAfterFullCheck": "source-after-full-check.json",
+    "scope": "No product source modifications after the successful whole check; preserved upstream OFL text bytes are the only whitespace exception."
+  }
+}

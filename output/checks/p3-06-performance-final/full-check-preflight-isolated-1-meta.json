@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "packages/persistence-postgres/scripts/postgres-publication-preflight.mjs"
+  ],
+  "workspace": "/Users/mario/Desktop/\u4e0b\u5355/.turbo/p3-06-performance-worktree",
+  "sourceModified": false,
+  "startedAt": "2026-09-08T03:27:45.170185+00:00",
+  "finishedAt": "2026-09-08T03:27:51.026320+00:00",
+  "durationSeconds": 5.856,
+  "exitCode": 0,
+  "rawOutputSha256": "168bc0a8349948a7a01b633d5c1bd419df1ecaf6777392c54ff660e3e3b1250c",
+  "omittedOutputLineCount": 0,
+  "outputPolicy": "Only static phase enums, integer assertion counts, SQLSTATE, and fixed PASS line; no raw error text, SQL, constraints, keys, credentials or payloads."
+}

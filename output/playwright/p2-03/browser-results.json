@@ -112,10 +112,10 @@
       "state": "default"
     }
   ],
-  "generatedAt": "2026-09-04T18:35:13.938Z",
+  "generatedAt": "2026-09-08T03:15:33.695Z",
   "git": {
     "dirty": false,
-    "sha": "e038fdf14081eb7b1d64961bb4dad950172e4e65",
+    "sha": "7db722b4f5480ffb78eb19f5e2eec7675e50b1bd",
     "status": [],
     "rechecked": true
   },
@@ -357,7 +357,7 @@
       "outerHeight": 929,
       "outerWidth": 1710,
       "screen": {
-        "availHeight": 1000,
+        "availHeight": 1008,
         "availWidth": 1710,
         "height": 1107,
         "width": 1710
@@ -377,7 +377,7 @@
         "pageErrors": [],
         "requestFailures": []
       },
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/pt/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/pt/interactions",
       "metrics": {
         "clippedText": [],
         "controls": [
@@ -472,7 +472,7 @@
         "sha256": "fbd28789c856b9fce449ace1a34644c6869ed90eaee56cc79b46510cc893267e"
       },
       {
-        "bytes": 220270,
+        "bytes": 220268,
         "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
         "localeMarker": {
           "changedFromHidden": true,
@@ -485,7 +485,7 @@
         "path": "zoom/google-chrome-200-percent-pt.png",
         "pixelHeight": 1684,
         "pixelWidth": 3420,
-        "sha256": "4a73a5b67cc055ca2b890fa7a7bb1e378b1ba96ac4dce0df508e48dbb4ead0c8"
+        "sha256": "639efdc5c8d3aacd779aa7fa43f1cb3c634d307ea3c57af4a91596a6e48099d5"
       }
     ],
     "zoomPercent": 200,
@@ -496,7 +496,7 @@
       "outerHeight": 929,
       "outerWidth": 1710,
       "screen": {
-        "availHeight": 1000,
+        "availHeight": 1008,
         "availWidth": 1710,
         "height": 1107,
         "width": 1710
@@ -679,7 +679,7 @@
         "pageErrors": [],
         "requestFailures": []
       },
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/pt/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/pt/interactions",
       "metrics": {
         "clippedText": [],
         "controls": [
@@ -732,7 +732,7 @@
       },
       "screenshot": "zoom/google-chrome-200-percent-pt.png",
       "screenshotEvidence": {
-        "bytes": 220270,
+        "bytes": 220268,
         "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
         "localeMarker": {
           "changedFromHidden": true,
@@ -745,7 +745,7 @@
         "path": "zoom/google-chrome-200-percent-pt.png",
         "pixelHeight": 1684,
         "pixelWidth": 3420,
-        "sha256": "4a73a5b67cc055ca2b890fa7a7bb1e378b1ba96ac4dce0df508e48dbb4ead0c8"
+        "sha256": "639efdc5c8d3aacd779aa7fa43f1cb3c634d307ea3c57af4a91596a6e48099d5"
       }
     }
   },
@@ -798,7 +798,7 @@
       ],
       "fixtureStatus": 200,
       "healthStatus": 200,
-      "origin": "http://127.0.0.1:57998"
+      "origin": "http://127.0.0.1:49785"
     },
     {
       "environment": "staging",
@@ -846,7 +846,7 @@
       ],
       "fixtureStatus": 404,
       "healthStatus": 200,
-      "origin": "http://127.0.0.1:58214"
+      "origin": "http://127.0.0.1:49938"
     },
     {
       "environment": "production",
@@ -894,7 +894,7 @@
       ],
       "fixtureStatus": 404,
       "healthStatus": 200,
-      "origin": "http://127.0.0.1:58230"
+      "origin": "http://127.0.0.1:49952"
     }
   ],
   "scenarioResults": [
@@ -910,7 +910,7 @@
       "documentDirection": "",
       "documentLanguage": "en",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/en/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/en/interactions",
       "group": "baseline",
       "id": "viewport-360x800-en",
       "locale": "en",
@@ -983,7 +983,7 @@
       "documentDirection": "",
       "documentLanguage": "vi",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/vi/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/vi/interactions",
       "group": "baseline",
       "id": "viewport-390x844-vi",
       "locale": "vi",
@@ -1008,12 +1008,12 @@
           {
             "height": 51.8125,
             "label": "Tạo thông báo",
-            "width": 144.1875
+            "width": 145.859375
           },
           {
             "height": 51.8125,
             "label": "Create four unique notifications",
-            "width": 281.109375
+            "width": 284.90625
           },
           {
             "height": 67,
@@ -1084,7 +1084,7 @@
       "documentDirection": "",
       "documentLanguage": "th",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/th/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/th/interactions",
       "group": "baseline",
       "id": "viewport-768x1024-th",
       "locale": "th",
@@ -1185,7 +1185,7 @@
       "documentDirection": "",
       "documentLanguage": "zh-CN",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/zh-CN/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/zh-CN/interactions",
       "group": "baseline",
       "id": "viewport-1024x768-zh-cn",
       "locale": "zh-CN",
@@ -1281,7 +1281,7 @@
       "documentDirection": "",
       "documentLanguage": "ja",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/ja/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/ja/interactions",
       "group": "baseline",
       "id": "viewport-1440x900-ja",
       "locale": "ja",
@@ -1311,7 +1311,7 @@
           {
             "height": 54.796875,
             "label": "Create four unique notifications",
-            "width": 313.96875
+            "width": 305.859375
           },
           {
             "height": 69.984375,
@@ -1351,9 +1351,9 @@
             "bottom": 577.234375,
             "clientHeight": 252,
             "label": "fs-dialog__popup",
-            "left": 395.140625,
+            "left": 352.140625,
             "overflowY": "auto",
-            "right": 1044.859375,
+            "right": 1087.84375,
             "scrollHeight": 252,
             "top": 322.765625,
             "viewportHeight": 900,
@@ -1382,7 +1382,7 @@
       "documentDirection": "",
       "documentLanguage": "es",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/es/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/es/interactions",
       "group": "baseline",
       "id": "viewport-1920x1080-es",
       "locale": "es",
@@ -1455,7 +1455,7 @@
       "documentDirection": "",
       "documentLanguage": "en-XA",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/en-XA/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/en-XA/interactions",
       "group": "stress",
       "id": "stress-320x800-en-xa",
       "locale": "en-XA",
@@ -1556,7 +1556,7 @@
       "documentDirection": "",
       "documentLanguage": "pt",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/pt/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/pt/interactions",
       "group": "stress",
       "id": "stress-320x800-pt",
       "locale": "pt",
@@ -1741,7 +1741,7 @@
       "documentDirection": "",
       "documentLanguage": "ja",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/en/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/en/interactions",
       "group": "interaction",
       "id": "interaction-390x844-en-to-ja",
       "locale": "en",
@@ -1838,7 +1838,7 @@
           "wheel": {
             "bodyOverflow": "hidden",
             "documentOverflow": "hidden",
-            "maxScroll": 1041,
+            "maxScroll": 1060,
             "scrollY": 64,
             "afterScrollY": 64,
             "delta": 600,
@@ -1856,7 +1856,7 @@
       "documentDirection": "",
       "documentLanguage": "en",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/en/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/en/interactions",
       "group": "touch",
       "id": "touch-menu-390x844-en",
       "locale": "en",
@@ -1881,12 +1881,12 @@
           {
             "height": 51.8125,
             "label": "Create notification",
-            "width": 182.921875
+            "width": 179.296875
           },
           {
             "height": 51.8125,
             "label": "Create four unique notifications",
-            "width": 284.90625
+            "width": 281.109375
           },
           {
             "height": 67,
@@ -2184,7 +2184,7 @@
       "documentDirection": "rtl",
       "documentLanguage": "en",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/en/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/en/interactions",
       "group": "direction",
       "id": "rtl-1440x900-en",
       "locale": "en",
@@ -2366,7 +2366,7 @@
       "documentDirection": "",
       "documentLanguage": "en",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/en/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/en/interactions",
       "group": "reduced-motion",
       "id": "reduced-motion-390x844-en",
       "locale": "en",
@@ -2391,12 +2391,12 @@
           {
             "height": 51.8125,
             "label": "Create notification",
-            "width": 179.296875
+            "width": 182.921875
           },
           {
             "height": 51.8125,
             "label": "Create four unique notifications",
-            "width": 281.109375
+            "width": 284.90625
           },
           {
             "height": 67,
@@ -2416,12 +2416,12 @@
           {
             "height": 51.8125,
             "label": "Compact",
-            "width": 104.890625
+            "width": 105.9375
           },
           {
             "height": 51.8125,
             "label": "Comfortable",
-            "width": 132.0625
+            "width": 133.09375
           }
         ],
         "document": {
@@ -2548,7 +2548,7 @@
       "documentDirection": "",
       "documentLanguage": "pt",
       "errors": [],
-      "fixtureUrl": "http://127.0.0.1:57998/_internal/design-foundations/pt/interactions",
+      "fixtureUrl": "http://127.0.0.1:49785/_internal/design-foundations/pt/interactions",
       "group": "reduced-motion",
       "id": "reduced-motion-1440x900-pt",
       "locale": "pt",
@@ -2643,11 +2643,11 @@
       "sha256": "27ae8548e42ee4b9311137f4e2b9eed437dacd741ff76e842b4c4cec6189f76d"
     },
     {
-      "bytes": 74962,
+      "bytes": 74933,
       "path": "viewports/390x844-vi-drawer.png",
-      "pixelHeight": 1949,
+      "pixelHeight": 1930,
       "pixelWidth": 390,
-      "sha256": "0727a95f8ad24cf80c597023115ffd9737154e1296553b0321cff076afe89a99"
+      "sha256": "f59d0dcad638d01c66cc7cbab1bb02132483b898000ea619591859c718829308"
     },
     {
       "bytes": 97064,
@@ -2657,18 +2657,18 @@
       "sha256": "1130bf5f92f7a08a493854f2500846dfdc2d94571e204f3071aa6f37d4c29cc1"
     },
     {
-      "bytes": 112343,
+      "bytes": 112937,
       "path": "viewports/1024x768-zh-CN.png",
       "pixelHeight": 1776,
       "pixelWidth": 1024,
-      "sha256": "5eff1775a9385908df44e85dc06ff1b6ae6febb4267864f8595a7bf22ddf93bd"
+      "sha256": "ba99f13810a29e168b7e89d4f2b7ab6fb28f7c8d19f89780012af34a41e7ef9d"
     },
     {
-      "bytes": 140151,
+      "bytes": 139943,
       "path": "viewports/1440x900-ja-dialog.png",
       "pixelHeight": 1716,
       "pixelWidth": 1440,
-      "sha256": "fb74b8e39d80b0742766e7ce7fb1d1975c2b93b52083fdd453257da19a69a933"
+      "sha256": "ae95933a439109ec542c214955f22a7d9bb673d2d6ff8171d58920fd98d94b23"
     },
     {
       "bytes": 127965,
@@ -2699,11 +2699,11 @@
       "sha256": "515cb3617745d76da6d730be90e2ae37b8b6a0c4f2025c3389d93526be0eff69"
     },
     {
-      "bytes": 96250,
+      "bytes": 96352,
       "path": "interactions/390x844-en-touch-menu.png",
-      "pixelHeight": 1885,
+      "pixelHeight": 1904,
       "pixelWidth": 390,
-      "sha256": "a93f26beedb147a9a125df27567c9c403a833fd525782dadbfc4269b0e882698"
+      "sha256": "e5cffc0bcdccc0f3dac88ea50755e46b43bbc4371ac348fba52d2e704397925b"
     },
     {
       "bytes": 117298,
@@ -2713,11 +2713,11 @@
       "sha256": "8ccc5672c668093a5aba0686d7dcf5d81efec06dbc403c98ab76ef2edc814d17"
     },
     {
-      "bytes": 103391,
+      "bytes": 103342,
       "path": "reduced-motion/390x844-en-dialog.png",
-      "pixelHeight": 1904,
+      "pixelHeight": 1885,
       "pixelWidth": 390,
-      "sha256": "2393815164fde193aa6b36f6a7f4f8f778aa38ee73795c0d71e21b844f5c6460"
+      "sha256": "31e9d6a280dd645617bd91672c8d59afa001937c1e71b292f5d33013e9ba3d71"
     },
     {
       "bytes": 149556,
@@ -2743,7 +2743,7 @@
       "sha256": "fbd28789c856b9fce449ace1a34644c6869ed90eaee56cc79b46510cc893267e"
     },
     {
-      "bytes": 220270,
+      "bytes": 220268,
       "captureMethod": "CDP Page.captureScreenshot with fromSurface=true, captureBeyondViewport=false, no clip, and no Emulation commands",
       "localeMarker": {
         "changedFromHidden": true,
@@ -2756,7 +2756,7 @@
       "path": "zoom/google-chrome-200-percent-pt.png",
       "pixelHeight": 1684,
       "pixelWidth": 3420,
-      "sha256": "4a73a5b67cc055ca2b890fa7a7bb1e378b1ba96ac4dce0df508e48dbb4ead0c8"
+      "sha256": "639efdc5c8d3aacd779aa7fa43f1cb3c634d307ea3c57af4a91596a6e48099d5"
     }
   ],
   "versions": {

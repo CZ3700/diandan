@@ -1,0 +1,685 @@
+{
+  "schemaVersion": 1,
+  "scope": "Existing six original LHR files only; observed stages are not simulated Lantern phases. No resampling.",
+  "source": "output/checks/p3-06-performance-final/baseline-trace/attempt-2026-09-08T01-50-00.639Z-64843ee6",
+  "rows": [
+    {
+      "locale": "en",
+      "attempt": 1,
+      "score": 0.92,
+      "simulatedLcpMs": 3245.4255000000003,
+      "observedLcpMs": 1092,
+      "observedParts": {
+        "timeToFirstByte": 730.569,
+        "resourceLoadDelay": 6.16,
+        "resourceLoadDuration": 199.105,
+        "elementRenderDelay": 155.917
+      },
+      "tbtMs": 16,
+      "fonts": {
+        "count": 2,
+        "transferBytes": 61360,
+        "beforeObservedLcpCount": 2,
+        "beforeObservedLcpBytes": 61360,
+        "startMinMs": 751.96399974823,
+        "endMaxMs": 791.2129993438721
+      },
+      "css": {
+        "count": 4,
+        "transferBytes": 15308,
+        "entries": [
+          {
+            "path": "/_next/static/chunks/40bq4a1qmkc-o.css",
+            "transferBytes": 8116,
+            "startMs": 733.8119993209839,
+            "endMs": 745.6540002822876
+          },
+          {
+            "path": "/_next/static/chunks/3tr2shtlm_24p.css",
+            "transferBytes": 1257,
+            "startMs": 733.9169998168945,
+            "endMs": 745.30299949646
+          },
+          {
+            "path": "/_next/static/chunks/1my0qjbl03dhq.css",
+            "transferBytes": 4461,
+            "startMs": 733.9370002746582,
+            "endMs": 746.9670000076294
+          },
+          {
+            "path": "/_next/static/chunks/3ib-3as_2n5qu.css",
+            "transferBytes": 1474,
+            "startMs": 733.9670000076294,
+            "endMs": 747.210000038147
+          }
+        ]
+      },
+      "scripts": {
+        "count": 10,
+        "transferBytes": 212161,
+        "beforeObservedLcpCount": 10
+      },
+      "images": {
+        "count": 1,
+        "transferBytes": 48416,
+        "entries": [
+          {
+            "path": "/_next/image",
+            "priority": "High",
+            "transferBytes": 48416,
+            "startMs": 736.4119997024536,
+            "networkMs": 736.5679988861084,
+            "endMs": 935.5170001983643
+          }
+        ]
+      },
+      "allHttp200": true,
+      "protocols": [
+        "http/1.1"
+      ],
+      "discovery": {
+        "type": "list",
+        "items": [
+          {
+            "type": "checklist",
+            "items": {
+              "priorityHinted": {
+                "label": "fetchpriority=high applied",
+                "value": true
+              },
+              "requestDiscoverable": {
+                "label": "Request is discoverable in initial document",
+                "value": true
+              },
+              "eagerlyLoaded": {
+                "label": "LCP resources should not use loading=lazy",
+                "value": true
+              }
+            }
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,4,ARTICLE,1,DIV,0,SECTION,0,FIGURE,0,DIV,0,IMG",
+            "selector": "section.gift-detail-gallery > figure.gift-main-image > div.fs-media > img.fs-media__image",
+            "boundingRect": {
+              "top": 161,
+              "bottom": 541,
+              "left": 16,
+              "right": 396,
+              "width": 380,
+              "height": 380
+            },
+            "snippet": "<img alt=\"Rose Palace \u00b7 en\" class=\"fs-media__image\" decoding=\"async\" fetchpriority=\"high\" height=\"1200\" loading=\"eager\" sizes=\"(max-width: 48rem) 100vw, 55vw\" src=\"http://localhost:60599/_next/image?url=https%3A%2F%2Fmedia.example.invalid\u2026\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A60600%2Fprocessed%2\u2026\" style=\"object-position:50% 45%\" width=\"1200\">",
+            "nodeLabel": "Rose Palace \u00b7 en"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "en",
+      "attempt": 2,
+      "score": 0.94,
+      "simulatedLcpMs": 3066.3346,
+      "observedLcpMs": 674,
+      "observedParts": {
+        "timeToFirstByte": 629.447,
+        "resourceLoadDelay": 3.807,
+        "resourceLoadDuration": 8.508,
+        "elementRenderDelay": 31.987
+      },
+      "tbtMs": 2,
+      "fonts": {
+        "count": 1,
+        "transferBytes": 25188,
+        "beforeObservedLcpCount": 1,
+        "beforeObservedLcpBytes": 25188,
+        "startMinMs": 644.0670013427734,
+        "endMaxMs": 648.6370010375977
+      },
+      "css": {
+        "count": 4,
+        "transferBytes": 15308,
+        "entries": [
+          {
+            "path": "/_next/static/chunks/40bq4a1qmkc-o.css",
+            "transferBytes": 8116,
+            "startMs": 630.8840007781982,
+            "endMs": 637.2120008468628
+          },
+          {
+            "path": "/_next/static/chunks/3tr2shtlm_24p.css",
+            "transferBytes": 1257,
+            "startMs": 630.980001449585,
+            "endMs": 636.9190006256104
+          },
+          {
+            "path": "/_next/static/chunks/1my0qjbl03dhq.css",
+            "transferBytes": 4461,
+            "startMs": 630.9990015029907,
+            "endMs": 637.7850008010864
+          },
+          {
+            "path": "/_next/static/chunks/3ib-3as_2n5qu.css",
+            "transferBytes": 1474,
+            "startMs": 631.0330009460449,
+            "endMs": 639.1320009231567
+          }
+        ]
+      },
+      "scripts": {
+        "count": 10,
+        "transferBytes": 212161,
+        "beforeObservedLcpCount": 10
+      },
+      "images": {
+        "count": 1,
+        "transferBytes": 48415,
+        "entries": [
+          {
+            "path": "/_next/image",
+            "priority": "High",
+            "transferBytes": 48415,
+            "startMs": 632.701000213623,
+            "networkMs": 632.8250007629395,
+            "endMs": 641.2090015411377
+          }
+        ]
+      },
+      "allHttp200": true,
+      "protocols": [
+        "http/1.1"
+      ],
+      "discovery": {
+        "type": "list",
+        "items": [
+          {
+            "type": "checklist",
+            "items": {
+              "priorityHinted": {
+                "label": "fetchpriority=high applied",
+                "value": true
+              },
+              "requestDiscoverable": {
+                "label": "Request is discoverable in initial document",
+                "value": true
+              },
+              "eagerlyLoaded": {
+                "label": "LCP resources should not use loading=lazy",
+                "value": true
+              }
+            }
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,4,ARTICLE,1,DIV,0,SECTION,0,FIGURE,0,DIV,0,IMG",
+            "selector": "section.gift-detail-gallery > figure.gift-main-image > div.fs-media > img.fs-media__image",
+            "boundingRect": {
+              "top": 161,
+              "bottom": 541,
+              "left": 16,
+              "right": 396,
+              "width": 380,
+              "height": 380
+            },
+            "snippet": "<img alt=\"Rose Palace \u00b7 en\" class=\"fs-media__image\" decoding=\"async\" fetchpriority=\"high\" height=\"1200\" loading=\"eager\" sizes=\"(max-width: 48rem) 100vw, 55vw\" src=\"http://localhost:60599/_next/image?url=https%3A%2F%2Fmedia.example.invalid\u2026\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A60600%2Fprocessed%2\u2026\" style=\"object-position:50% 45%\" width=\"1200\">",
+            "nodeLabel": "Rose Palace \u00b7 en"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "en",
+      "attempt": 3,
+      "score": 0.92,
+      "simulatedLcpMs": 3219.6386500000003,
+      "observedLcpMs": 647,
+      "observedParts": {
+        "timeToFirstByte": 608.1890009765625,
+        "resourceLoadDelay": 3.4699990234375,
+        "resourceLoadDuration": 5.653,
+        "elementRenderDelay": 29.33
+      },
+      "tbtMs": 5,
+      "fonts": {
+        "count": 2,
+        "transferBytes": 61360,
+        "beforeObservedLcpCount": 2,
+        "beforeObservedLcpBytes": 61360,
+        "startMinMs": 622.0809993743896,
+        "endMaxMs": 639.2089996337891
+      },
+      "css": {
+        "count": 4,
+        "transferBytes": 15308,
+        "entries": [
+          {
+            "path": "/_next/static/chunks/40bq4a1qmkc-o.css",
+            "transferBytes": 8116,
+            "startMs": 609.4060001373291,
+            "endMs": 616.545000076294
+          },
+          {
+            "path": "/_next/static/chunks/3tr2shtlm_24p.css",
+            "transferBytes": 1257,
+            "startMs": 609.4980001449585,
+            "endMs": 615.0429992675781
+          },
+          {
+            "path": "/_next/static/chunks/1my0qjbl03dhq.css",
+            "transferBytes": 4461,
+            "startMs": 609.5159997940063,
+            "endMs": 615.3739995956421
+          },
+          {
+            "path": "/_next/static/chunks/3ib-3as_2n5qu.css",
+            "transferBytes": 1474,
+            "startMs": 609.545000076294,
+            "endMs": 615.2259998321533
+          }
+        ]
+      },
+      "scripts": {
+        "count": 10,
+        "transferBytes": 212161,
+        "beforeObservedLcpCount": 10
+      },
+      "images": {
+        "count": 1,
+        "transferBytes": 48415,
+        "entries": [
+          {
+            "path": "/_next/image",
+            "priority": "High",
+            "transferBytes": 48415,
+            "startMs": 611.0500001907349,
+            "networkMs": 611.2259998321533,
+            "endMs": 616.7030000686646
+          }
+        ]
+      },
+      "allHttp200": true,
+      "protocols": [
+        "http/1.1"
+      ],
+      "discovery": {
+        "type": "list",
+        "items": [
+          {
+            "type": "checklist",
+            "items": {
+              "priorityHinted": {
+                "label": "fetchpriority=high applied",
+                "value": true
+              },
+              "requestDiscoverable": {
+                "label": "Request is discoverable in initial document",
+                "value": true
+              },
+              "eagerlyLoaded": {
+                "label": "LCP resources should not use loading=lazy",
+                "value": true
+              }
+            }
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,4,ARTICLE,1,DIV,0,SECTION,0,FIGURE,0,DIV,0,IMG",
+            "selector": "section.gift-detail-gallery > figure.gift-main-image > div.fs-media > img.fs-media__image",
+            "boundingRect": {
+              "top": 161,
+              "bottom": 541,
+              "left": 16,
+              "right": 396,
+              "width": 380,
+              "height": 380
+            },
+            "snippet": "<img alt=\"Rose Palace \u00b7 en\" class=\"fs-media__image\" decoding=\"async\" fetchpriority=\"high\" height=\"1200\" loading=\"eager\" sizes=\"(max-width: 48rem) 100vw, 55vw\" src=\"http://localhost:60599/_next/image?url=https%3A%2F%2Fmedia.example.invalid\u2026\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A60600%2Fprocessed%2\u2026\" style=\"object-position:50% 45%\" width=\"1200\">",
+            "nodeLabel": "Rose Palace \u00b7 en"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "ja",
+      "attempt": 1,
+      "score": 0.7,
+      "simulatedLcpMs": 5422.938899999999,
+      "observedLcpMs": 567,
+      "observedParts": {
+        "timeToFirstByte": 513.128,
+        "resourceLoadDelay": 3.226,
+        "resourceLoadDuration": 3.533,
+        "elementRenderDelay": 47.038
+      },
+      "tbtMs": 0,
+      "fonts": {
+        "count": 19,
+        "transferBytes": 390817,
+        "beforeObservedLcpCount": 19,
+        "beforeObservedLcpBytes": 390817,
+        "startMinMs": 533.0979995727539,
+        "endMaxMs": 564.9579992294312
+      },
+      "css": {
+        "count": 4,
+        "transferBytes": 47074,
+        "entries": [
+          {
+            "path": "/_next/static/chunks/40bq4a1qmkc-o.css",
+            "transferBytes": 8116,
+            "startMs": 514.5839996337891,
+            "endMs": 520.6049995422363
+          },
+          {
+            "path": "/_next/static/chunks/107x49qjcs-lo.css",
+            "transferBytes": 33023,
+            "startMs": 514.6659994125366,
+            "endMs": 527.007999420166
+          },
+          {
+            "path": "/_next/static/chunks/1my0qjbl03dhq.css",
+            "transferBytes": 4461,
+            "startMs": 514.685998916626,
+            "endMs": 519.1879997253418
+          },
+          {
+            "path": "/_next/static/chunks/3ib-3as_2n5qu.css",
+            "transferBytes": 1474,
+            "startMs": 514.7150001525879,
+            "endMs": 518.7139987945557
+          }
+        ]
+      },
+      "scripts": {
+        "count": 10,
+        "transferBytes": 212161,
+        "beforeObservedLcpCount": 10
+      },
+      "images": {
+        "count": 1,
+        "transferBytes": 48415,
+        "entries": [
+          {
+            "path": "/_next/image",
+            "priority": "High",
+            "transferBytes": 48415,
+            "startMs": 516.1549997329712,
+            "networkMs": 516.261999130249,
+            "endMs": 519.6879997253418
+          }
+        ]
+      },
+      "allHttp200": true,
+      "protocols": [
+        "http/1.1"
+      ],
+      "discovery": {
+        "type": "list",
+        "items": [
+          {
+            "type": "checklist",
+            "items": {
+              "priorityHinted": {
+                "label": "fetchpriority=high applied",
+                "value": true
+              },
+              "requestDiscoverable": {
+                "label": "Request is discoverable in initial document",
+                "value": true
+              },
+              "eagerlyLoaded": {
+                "label": "LCP resources should not use loading=lazy",
+                "value": true
+              }
+            }
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,4,ARTICLE,1,DIV,0,SECTION,0,FIGURE,0,DIV,0,IMG",
+            "selector": "section.gift-detail-gallery > figure.gift-main-image > div.fs-media > img.fs-media__image",
+            "boundingRect": {
+              "top": 161,
+              "bottom": 541,
+              "left": 16,
+              "right": 396,
+              "width": 380,
+              "height": 380
+            },
+            "snippet": "<img alt=\"Rose Palace \u00b7 ja\" class=\"fs-media__image\" decoding=\"async\" fetchpriority=\"high\" height=\"1200\" loading=\"eager\" sizes=\"(max-width: 48rem) 100vw, 55vw\" src=\"http://localhost:60599/_next/image?url=https%3A%2F%2Fmedia.example.invalid\u2026\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A60600%2Fprocessed%2\u2026\" style=\"object-position:50% 45%\" width=\"1200\">",
+            "nodeLabel": "Rose Palace \u00b7 ja"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "ja",
+      "attempt": 2,
+      "score": 0.7,
+      "simulatedLcpMs": 5421.752699999999,
+      "observedLcpMs": 722,
+      "observedParts": {
+        "timeToFirstByte": 673.1100009765624,
+        "resourceLoadDelay": 4.0319990234375,
+        "resourceLoadDuration": 13.506,
+        "elementRenderDelay": 31.686
+      },
+      "tbtMs": 0,
+      "fonts": {
+        "count": 20,
+        "transferBytes": 408129,
+        "beforeObservedLcpCount": 19,
+        "beforeObservedLcpBytes": 390817,
+        "startMinMs": 695.4829998016357,
+        "endMaxMs": 734.0510005950928
+      },
+      "css": {
+        "count": 4,
+        "transferBytes": 47074,
+        "entries": [
+          {
+            "path": "/_next/static/chunks/40bq4a1qmkc-o.css",
+            "transferBytes": 8116,
+            "startMs": 675.0279998779297,
+            "endMs": 681.8150005340576
+          },
+          {
+            "path": "/_next/static/chunks/107x49qjcs-lo.css",
+            "transferBytes": 33023,
+            "startMs": 675.1239995956421,
+            "endMs": 688.8470001220703
+          },
+          {
+            "path": "/_next/static/chunks/1my0qjbl03dhq.css",
+            "transferBytes": 4461,
+            "startMs": 675.1440000534058,
+            "endMs": 688.1140003204346
+          },
+          {
+            "path": "/_next/static/chunks/3ib-3as_2n5qu.css",
+            "transferBytes": 1474,
+            "startMs": 675.1780004501343,
+            "endMs": 688.331000328064
+          }
+        ]
+      },
+      "scripts": {
+        "count": 10,
+        "transferBytes": 212161,
+        "beforeObservedLcpCount": 10
+      },
+      "images": {
+        "count": 1,
+        "transferBytes": 48415,
+        "entries": [
+          {
+            "path": "/_next/image",
+            "priority": "High",
+            "transferBytes": 48415,
+            "startMs": 676.943000793457,
+            "networkMs": 677.0910005569458,
+            "endMs": 690.4490003585815
+          }
+        ]
+      },
+      "allHttp200": true,
+      "protocols": [
+        "http/1.1"
+      ],
+      "discovery": {
+        "type": "list",
+        "items": [
+          {
+            "type": "checklist",
+            "items": {
+              "priorityHinted": {
+                "label": "fetchpriority=high applied",
+                "value": true
+              },
+              "requestDiscoverable": {
+                "label": "Request is discoverable in initial document",
+                "value": true
+              },
+              "eagerlyLoaded": {
+                "label": "LCP resources should not use loading=lazy",
+                "value": true
+              }
+            }
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,4,ARTICLE,1,DIV,0,SECTION,0,FIGURE,0,DIV,0,IMG",
+            "selector": "section.gift-detail-gallery > figure.gift-main-image > div.fs-media > img.fs-media__image",
+            "boundingRect": {
+              "top": 161,
+              "bottom": 541,
+              "left": 16,
+              "right": 396,
+              "width": 380,
+              "height": 380
+            },
+            "snippet": "<img alt=\"Rose Palace \u00b7 ja\" class=\"fs-media__image\" decoding=\"async\" fetchpriority=\"high\" height=\"1200\" loading=\"eager\" sizes=\"(max-width: 48rem) 100vw, 55vw\" src=\"http://localhost:60599/_next/image?url=https%3A%2F%2Fmedia.example.invalid\u2026\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A60600%2Fprocessed%2\u2026\" style=\"object-position:50% 45%\" width=\"1200\">",
+            "nodeLabel": "Rose Palace \u00b7 ja"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "ja",
+      "attempt": 3,
+      "score": 0.86,
+      "simulatedLcpMs": 3610.2426,
+      "observedLcpMs": 671,
+      "observedParts": {
+        "timeToFirstByte": 636.347,
+        "resourceLoadDelay": 3.711,
+        "resourceLoadDuration": 5.921,
+        "elementRenderDelay": 25.404
+      },
+      "tbtMs": 1.5,
+      "fonts": {
+        "count": 20,
+        "transferBytes": 408129,
+        "beforeObservedLcpCount": 5,
+        "beforeObservedLcpBytes": 146765,
+        "startMinMs": 653.204999923706,
+        "endMaxMs": 691.2399997711182
+      },
+      "css": {
+        "count": 4,
+        "transferBytes": 47074,
+        "entries": [
+          {
+            "path": "/_next/static/chunks/40bq4a1qmkc-o.css",
+            "transferBytes": 8116,
+            "startMs": 637.9989995956421,
+            "endMs": 643.3039999008179
+          },
+          {
+            "path": "/_next/static/chunks/107x49qjcs-lo.css",
+            "transferBytes": 33023,
+            "startMs": 638.0930004119873,
+            "endMs": 647.8020000457764
+          },
+          {
+            "path": "/_next/static/chunks/1my0qjbl03dhq.css",
+            "transferBytes": 4461,
+            "startMs": 638.1099996566772,
+            "endMs": 643.6549997329712
+          },
+          {
+            "path": "/_next/static/chunks/3ib-3as_2n5qu.css",
+            "transferBytes": 1474,
+            "startMs": 638.1420001983643,
+            "endMs": 643.7929992675781
+          }
+        ]
+      },
+      "scripts": {
+        "count": 10,
+        "transferBytes": 212161,
+        "beforeObservedLcpCount": 10
+      },
+      "images": {
+        "count": 1,
+        "transferBytes": 48415,
+        "entries": [
+          {
+            "path": "/_next/image",
+            "priority": "High",
+            "transferBytes": 48415,
+            "startMs": 639.8449993133545,
+            "networkMs": 639.9759998321533,
+            "endMs": 645.7659997940063
+          }
+        ]
+      },
+      "allHttp200": true,
+      "protocols": [
+        "http/1.1"
+      ],
+      "discovery": {
+        "type": "list",
+        "items": [
+          {
+            "type": "checklist",
+            "items": {
+              "priorityHinted": {
+                "label": "fetchpriority=high applied",
+                "value": true
+              },
+              "requestDiscoverable": {
+                "label": "Request is discoverable in initial document",
+                "value": true
+              },
+              "eagerlyLoaded": {
+                "label": "LCP resources should not use loading=lazy",
+                "value": true
+              }
+            }
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,4,ARTICLE,1,DIV,0,SECTION,0,FIGURE,0,DIV,0,IMG",
+            "selector": "section.gift-detail-gallery > figure.gift-main-image > div.fs-media > img.fs-media__image",
+            "boundingRect": {
+              "top": 161,
+              "bottom": 541,
+              "left": 16,
+              "right": 396,
+              "width": 380,
+              "height": 380
+            },
+            "snippet": "<img alt=\"Rose Palace \u00b7 ja\" class=\"fs-media__image\" decoding=\"async\" fetchpriority=\"high\" height=\"1200\" loading=\"eager\" sizes=\"(max-width: 48rem) 100vw, 55vw\" src=\"http://localhost:60599/_next/image?url=https%3A%2F%2Fmedia.example.invalid\u2026\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A60600%2Fprocessed%2\u2026\" style=\"object-position:50% 45%\" width=\"1200\">",
+            "nodeLabel": "Rose Palace \u00b7 ja"
+          }
+        ]
+      }
+    }
+  ]
+}

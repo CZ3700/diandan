@@ -4,8 +4,8 @@
 > 当前里程碑：M3 可浏览 Beta（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3
 > 当前任务：`P3-06` IN_PROGRESS，Codex `/root` 独占 Lane D
-> 下一入口：简洁管理中心已完成本地技术验收；通过一个中文窗口试用艺人/礼物上传和海报恢复，继续P3-06剩余性能与人工验收
-> 当前检查点：首屏脚本约203–207KB；377项前台测试、七语88项UI、按需加载异常和共享P2回归通过。完整63次Lighthouse已收集：20/21组评分达标，但仅1/21组LCP达标；最终整条pnpm check已通过；性能与人工门未通过。
+> 下一入口：继续P3-06剩余移动性能与一次临时不可用采样的诊断，随后完成简洁管理中心真人计时、读屏与关键译文验收
+> 当前检查点：本地实现7db722b；首屏脚本约148–152KB；442项前台/100项UI测试、七语88项UI及34项弹层专项、共享P2回归通过。完整63次Lighthouse：18/21组评分、3/21组LCP、21/21组CLS达标；最终整条pnpm check attempt3已通过，性能与人工门未通过。
 
 ## 1. 开工入口
 
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-08 P3-06首屏优化：实现提交 `7db722b4`，995项编译输入SHA `df759a88a8dd62d8f08a08eccf87f2e29781e867ffffe955e4f554b7cadce62e` 与提交逐字节一致；礼物详情非关键区域SSR流式返回、语言菜单与三抽屉按需下载、中日文UI字体固定来源可重复生成并保留完整动态文字回退。七语双端88场景/88PNG、85axe零violations/30incomplete，发布/回退9177/9368ms；Header/Drawer另34场景220断言，P2-03/04/05共55PNG/21axe通过。完整63次LH评分18/21、LCP3/21、CLS21/21；JS148428–152024B（14/84达SHOULD）、234图片均达标，性能整体仍FAIL。前台442/UI100测试及静态/类型通过；最终整条check attempt3 exit0（1186.146秒），类型58/58（57cache）、测试58/58（53cache）、构建35/35（34cache）及31实际出口通过；旧preflight夹具自然失败未复现、原因未确定，所有失败保留。逐份性能复核发现1次日文艺人实际显示临时不可用，原63样本及中位数未替换，该次不能当作成功艺人内容性能。详见 `output/checks/p3-06-performance-final/validation.json`。严格字体metrics探针保留20项微小浮点差FAIL，实际像素/字宽/DOM尺寸3692组一致。原预览到期state更新已保留，其余1375初始未跟踪文件不变；仅本地提交，无GitHub推送。任务计数与Phase门不变。
 
 2026-09-08 P3-06用户反馈修正：单一管理中心、艺人/礼物单图与短表单直接发布、海报替换/历史恢复完成。真实七语双端10次操作、70个公开详情页、98截图/98axe通过，0 violations/页面错误/响应观察失败，1项incomplete仍待人工复核。整条 `pnpm check` attempt5 exit0（1187.855秒），类型58/58、测试58/58、构建35/35及31实际出口通过；原382合同定义不变。后续Admin焦点修正4文件经controlled Chrome与非作者复核；最终全仓静态/类型/单测/构建105/105及runtime15完整管理浏览器通过，原后端/DB输入逐SHA不变。已打开唯一中文TEST窗口。见 `output/checks/p3-06-management-center/validation.json` 与 `docs/operations/management-center.md`。当前为临时TEST环境，无生产账号/持久部署/支付/新真机证据；P3-06 IN_PROGRESS、22 DONE/1 IN_PROGRESS/26 PENDING、Phase4 LOCKED，仅本地提交不push/merge。
 

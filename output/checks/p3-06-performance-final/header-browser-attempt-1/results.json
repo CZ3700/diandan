@@ -1,0 +1,387 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "scope": "Actual compiled TEST Chrome header menu. Fresh browser contexts; only actual lazy script is delayed or returns injected 503. No performance, VoiceOver or physical-device claim.",
+  "sourceSha256": "009fd05e5d10c737a50c01b1f9c197e0714ff17a46e555ccdbb2412b270b3f3b",
+  "chunk": {
+    "path": "/_next/static/chunks/3asu8ps532yh2.js",
+    "sha256": "5580b6938dd7703d783cad15282ccfd77c6de59031d58651e0a85e1658ecdcf0"
+  },
+  "startedAt": "2026-09-08T02:26:58.697Z",
+  "cases": [
+    {
+      "name": "cold-arrowup",
+      "status": "PASS",
+      "stage": "cold-arrowup",
+      "assertions": 6,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/43ru1-lr2279t.js"
+      ],
+      "observations": {
+        "focusedIndex": 6
+      },
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "screenshot": "cold-arrowup.png"
+    },
+    {
+      "name": "cold-arrowdown",
+      "status": "PASS",
+      "stage": "cold-arrowdown",
+      "assertions": 6,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/43ru1-lr2279t.js"
+      ],
+      "observations": {
+        "focusedIndex": 0
+      },
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "screenshot": "cold-arrowdown.png"
+    },
+    {
+      "name": "cold-enter",
+      "status": "PASS",
+      "stage": "cold-enter",
+      "assertions": 5,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/43ru1-lr2279t.js"
+      ],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "screenshot": "cold-enter.png"
+    },
+    {
+      "name": "cold-space",
+      "status": "PASS",
+      "stage": "cold-space",
+      "assertions": 5,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/43ru1-lr2279t.js"
+      ],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "screenshot": "cold-space.png"
+    },
+    {
+      "name": "repeated-open-close",
+      "status": "PASS",
+      "stage": "repeated-open-close",
+      "assertions": 9,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/43ru1-lr2279t.js"
+      ],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "screenshot": "repeated-open-close.png"
+    },
+    {
+      "name": "delay-escape",
+      "status": "PASS",
+      "stage": "delay-escape",
+      "assertions": 7,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/43ru1-lr2279t.js"
+      ],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "screenshot": "delay-escape.png"
+    },
+    {
+      "name": "delay-tab",
+      "status": "PASS",
+      "stage": "delay-tab",
+      "assertions": 7,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/43ru1-lr2279t.js"
+      ],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "screenshot": "delay-tab.png"
+    },
+    {
+      "name": "failure-retry",
+      "status": "PASS",
+      "stage": "failure-retry",
+      "assertions": 5,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/43ru1-lr2279t.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/3asu8ps532yh2.js"
+      ],
+      "observations": {
+        "recovery": "same-document-retry"
+      },
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "screenshot": "failure-retry.png"
+    },
+    {
+      "name": "mobile-first-arrow",
+      "status": "PASS",
+      "stage": "mobile-first-arrow",
+      "assertions": 6,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/43ru1-lr2279t.js"
+      ],
+      "observations": {
+        "focusedIndex": 0
+      },
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "screenshot": "mobile-first-arrow.png"
+    },
+    {
+      "name": "mobile-close-delayed",
+      "status": "PASS",
+      "stage": "mobile-close-delayed",
+      "assertions": 5,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/43ru1-lr2279t.js"
+      ],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "screenshot": "mobile-close-delayed.png"
+    },
+    {
+      "name": "locale-navigation",
+      "status": "PASS",
+      "stage": "locale-navigation",
+      "assertions": 6,
+      "scripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js",
+        "/_next/static/chunks/3asu8ps532yh2.js",
+        "/_next/static/chunks/43ru1-lr2279t.js",
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "observations": {},
+      "initialScripts": [
+        "/_next/static/chunks/1eb2a8tunus1g.js",
+        "/_next/static/chunks/1rzy3cp4msjdo.js",
+        "/_next/static/chunks/2p07cckado7sy.js",
+        "/_next/static/chunks/turbopack-01wm1a8ps3dbq.js",
+        "/_next/static/chunks/1oktdg9jp8u14.js",
+        "/_next/static/chunks/2qun_6obf6abx.js",
+        "/_next/static/chunks/2f4e15bnfimga.js",
+        "/_next/static/chunks/1evwncke1zjvt.js",
+        "/_next/static/chunks/2sfcuzf9iedj9.js"
+      ],
+      "screenshot": "locale-navigation.png"
+    }
+  ],
+  "browserVersion": "152.0.7977.82",
+  "finishedAt": "2026-09-08T02:27:19.941Z",
+  "browserClosed": true
+}

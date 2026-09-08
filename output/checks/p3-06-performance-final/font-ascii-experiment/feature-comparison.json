@@ -1,0 +1,1251 @@
+{
+  "schemaVersion": 1,
+  "status": "READ_ONLY_LAYOUT_FEATURE_COMPARISON",
+  "scope": "Exact manifest-participating original Fontsource shards; feature tags are not shaping-equivalence proof",
+  "profiles": [
+    {
+      "profile": "japanese",
+      "originalShardCount": 25,
+      "originalShards": [
+        {
+          "filename": "noto-sans-jp-100-wght-normal.woff2",
+          "bytes": 20104,
+          "sha256": "8d720830937b13c20b95be6a879e8ddd2e7b7c84fc81553b04aea64090bd030b",
+          "mappedCodepoints": 54,
+          "glyphs": 60,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 5,
+            "decodedBytes": 508
+          }
+        },
+        {
+          "filename": "noto-sans-jp-101-wght-normal.woff2",
+          "bytes": 15764,
+          "sha256": "14ad79f7603247ec37417e409996798bcc09aa0b06201adc1fc524c1ad602b50",
+          "mappedCodepoints": 55,
+          "glyphs": 57,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 5,
+            "decodedBytes": 550
+          }
+        },
+        {
+          "filename": "noto-sans-jp-102-wght-normal.woff2",
+          "bytes": 17520,
+          "sha256": "75f46df9fcf13c3d6bca91b4eb19a7f803a9ec9868826a3608dd5437ea122ccb",
+          "mappedCodepoints": 54,
+          "glyphs": 57,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 5,
+            "decodedBytes": 450
+          }
+        },
+        {
+          "filename": "noto-sans-jp-104-wght-normal.woff2",
+          "bytes": 17792,
+          "sha256": "613fbb530b90cfb8ddd547ceb531147341407089a057d4bf0ec14f272434aa4f",
+          "mappedCodepoints": 54,
+          "glyphs": 59,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 5,
+            "decodedBytes": 506
+          }
+        },
+        {
+          "filename": "noto-sans-jp-105-wght-normal.woff2",
+          "bytes": 17588,
+          "sha256": "19dcc9e3141fa1e500ea657f1ca20635203e1d03563cfb4640690e5d1251486f",
+          "mappedCodepoints": 54,
+          "glyphs": 56,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 5,
+            "decodedBytes": 440
+          }
+        },
+        {
+          "filename": "noto-sans-jp-106-wght-normal.woff2",
+          "bytes": 19504,
+          "sha256": "2f65cd5bf66a19f4b1d7652af457e184aa9d7d5445e614c22e240cc397680fa6",
+          "mappedCodepoints": 54,
+          "glyphs": 59,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 162
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 5,
+            "decodedBytes": 508
+          }
+        },
+        {
+          "filename": "noto-sans-jp-107-wght-normal.woff2",
+          "bytes": 16652,
+          "sha256": "dcbd08dd15bf1b2442e4766e4bdd528326e6f3ab40115c622b5cfa06db663ee4",
+          "mappedCodepoints": 56,
+          "glyphs": 59,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 152
+          }
+        },
+        {
+          "filename": "noto-sans-jp-108-wght-normal.woff2",
+          "bytes": 18444,
+          "sha256": "639ac8ea02fe1dbd7ac1f5f4cc5aceb3a0b2f6218c8c429b804f97d90cbaf44c",
+          "mappedCodepoints": 54,
+          "glyphs": 57,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 162
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 152
+          }
+        },
+        {
+          "filename": "noto-sans-jp-109-wght-normal.woff2",
+          "bytes": 15212,
+          "sha256": "89af699d25c48d333e94002c6b894a4f0f489e9e9a73f5aff6518aaba3665ebd",
+          "mappedCodepoints": 54,
+          "glyphs": 55,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 5,
+            "decodedBytes": 508
+          }
+        },
+        {
+          "filename": "noto-sans-jp-110-wght-normal.woff2",
+          "bytes": 15864,
+          "sha256": "fea76e74e1104098076e3181e134dfea245616939c06cf6541a42ccc2a7ca821",
+          "mappedCodepoints": 54,
+          "glyphs": 58,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 152
+          }
+        },
+        {
+          "filename": "noto-sans-jp-111-wght-normal.woff2",
+          "bytes": 16984,
+          "sha256": "d3fcad261eb5123928f680db013c22abd33b094e0d6a7ce7ae2b45a438b17bf1",
+          "mappedCodepoints": 54,
+          "glyphs": 60,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 172
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vhal",
+              "vpal"
+            ],
+            "lookups": 7,
+            "decodedBytes": 696
+          }
+        },
+        {
+          "filename": "noto-sans-jp-112-wght-normal.woff2",
+          "bytes": 15820,
+          "sha256": "04c1dd71359756923259898f77eb941de0af8fe0056ab0d82c1bc83765f58e9e",
+          "mappedCodepoints": 54,
+          "glyphs": 56,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 4,
+            "decodedBytes": 400
+          }
+        },
+        {
+          "filename": "noto-sans-jp-113-wght-normal.woff2",
+          "bytes": 14804,
+          "sha256": "71fdc6966fcbb5d70c8e4b7b3f82010f77a5c8871e33c4705369655fef215d7d",
+          "mappedCodepoints": 54,
+          "glyphs": 58,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 3,
+            "decodedBytes": 212
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 5,
+            "decodedBytes": 534
+          }
+        },
+        {
+          "filename": "noto-sans-jp-114-wght-normal.woff2",
+          "bytes": 14452,
+          "sha256": "6892696a8a5eefd068616824e9a7f343f2a03a9f9afc5ca9da60aa2d11ad7215",
+          "mappedCodepoints": 55,
+          "glyphs": 57,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 5,
+            "decodedBytes": 444
+          }
+        },
+        {
+          "filename": "noto-sans-jp-115-wght-normal.woff2",
+          "bytes": 16088,
+          "sha256": "1f67b2a2a9353fc00f4b0e8a9e5dbd4579dacecd30b3c8dff50916c10b4e1a1f",
+          "mappedCodepoints": 54,
+          "glyphs": 58,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 164
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 4,
+            "decodedBytes": 402
+          }
+        },
+        {
+          "filename": "noto-sans-jp-116-wght-normal.woff2",
+          "bytes": 16444,
+          "sha256": "78fdda440157f7e87ed1f6ca5d9422aa459b2973c15aa966cf9286aa06a83d5a",
+          "mappedCodepoints": 54,
+          "glyphs": 65,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 3,
+            "decodedBytes": 210
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vhal",
+              "vpal"
+            ],
+            "lookups": 7,
+            "decodedBytes": 868
+          }
+        },
+        {
+          "filename": "noto-sans-jp-117-wght-normal.woff2",
+          "bytes": 11808,
+          "sha256": "074c84a38757ac42c6825bc534688b3dea53e00b0fc8b1cfcbaad12ed6492c14",
+          "mappedCodepoints": 53,
+          "glyphs": 61,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 180
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vhal",
+              "vpal"
+            ],
+            "lookups": 7,
+            "decodedBytes": 748
+          }
+        },
+        {
+          "filename": "noto-sans-jp-118-wght-normal.woff2",
+          "bytes": 18336,
+          "sha256": "a2aa18b725c0fb81c765f89728c4230846c2775b94b506446cf6315598ce3b25",
+          "mappedCodepoints": 136,
+          "glyphs": 168,
+          "GSUB": {
+            "features": [
+              "ccmp",
+              "liga",
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 5,
+            "decodedBytes": 472
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 10808
+          }
+        },
+        {
+          "filename": "noto-sans-jp-119-wght-normal.woff2",
+          "bytes": 79100,
+          "sha256": "fd07c4945e573d1b70a4a6e5988256353146641737f93c853004908bfe4d7256",
+          "mappedCodepoints": 179,
+          "glyphs": 400,
+          "GSUB": {
+            "features": [
+              "ccmp",
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 3,
+            "decodedBytes": 930
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vert",
+              "vhal",
+              "vkrn",
+              "vpal"
+            ],
+            "lookups": 9,
+            "decodedBytes": 13424
+          }
+        },
+        {
+          "filename": "noto-sans-jp-84-wght-normal.woff2",
+          "bytes": 18980,
+          "sha256": "b8c29591eb03d83f2a91cdabecb1d03a8b740eccd83eb8c2c019649f0595800c",
+          "mappedCodepoints": 54,
+          "glyphs": 62,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 164
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vhal",
+              "vpal"
+            ],
+            "lookups": 7,
+            "decodedBytes": 724
+          }
+        },
+        {
+          "filename": "noto-sans-jp-92-wght-normal.woff2",
+          "bytes": 18856,
+          "sha256": "58435aaa4f34cb6c18a80459cf57b2351a28530ed79e24d1a869176a1bfff3f7",
+          "mappedCodepoints": 54,
+          "glyphs": 61,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 5,
+            "decodedBytes": 532
+          }
+        },
+        {
+          "filename": "noto-sans-jp-93-wght-normal.woff2",
+          "bytes": 17160,
+          "sha256": "054d204ecae11fbab9917e62f8982bd15aa7e196adb254d7100c2ac767fd0f24",
+          "mappedCodepoints": 54,
+          "glyphs": 58,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 164
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vhal",
+              "vpal"
+            ],
+            "lookups": 7,
+            "decodedBytes": 716
+          }
+        },
+        {
+          "filename": "noto-sans-jp-94-wght-normal.woff2",
+          "bytes": 18116,
+          "sha256": "a8d9b30729f1a7cd3c7a9e2cc9805d049bb687d97af198f264ba4a020f3ecf3d",
+          "mappedCodepoints": 54,
+          "glyphs": 60,
+          "GSUB": {
+            "features": [
+              "ccmp",
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 3,
+            "decodedBytes": 232
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 152
+          }
+        },
+        {
+          "filename": "noto-sans-jp-95-wght-normal.woff2",
+          "bytes": 17352,
+          "sha256": "54578621ee47de9d62c6b34e92b90e7e06358e68b3ad1b2f6b886b76b2198614",
+          "mappedCodepoints": 54,
+          "glyphs": 60,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 172
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vhal",
+              "vpal"
+            ],
+            "lookups": 7,
+            "decodedBytes": 810
+          }
+        },
+        {
+          "filename": "noto-sans-jp-latin-wght-normal.woff2",
+          "bytes": 24840,
+          "sha256": "2df3e31f5fbf0357d1b7018d82f028ec84a31e43e35098931a975c2fc769d7e1",
+          "mappedCodepoints": 218,
+          "glyphs": 255,
+          "GSUB": {
+            "features": [
+              "ccmp",
+              "liga",
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 5,
+            "decodedBytes": 552
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 12762
+          }
+        }
+      ],
+      "currentUi": {
+        "filename": "japanese-ui.woff2",
+        "bytes": 125004,
+        "sha256": "2837de7afbf8a97cfb4dd1d69bab0bc069f0f5e3635a5c56636dd5fd40d52bf9",
+        "mappedCodepoints": 303,
+        "glyphs": 546,
+        "GSUB": {
+          "features": [
+            "aalt",
+            "dlig",
+            "fwid",
+            "hwid",
+            "jp78",
+            "jp83",
+            "locl",
+            "pwid",
+            "vert",
+            "vrt2"
+          ],
+          "lookups": 11,
+          "decodedBytes": 2384
+        },
+        "GPOS": {
+          "features": [
+            "halt",
+            "kern",
+            "palt",
+            "vhal",
+            "vkrn",
+            "vpal"
+          ],
+          "lookups": 8,
+          "decodedBytes": 8488
+        }
+      },
+      "asciiCandidate": {
+        "filename": "japanese-ui.woff2",
+        "bytes": 165020,
+        "sha256": "bdc398889af18f5a1dc0705d98cae6d1a76a9a24b844fa80c2e79dad8468f504",
+        "mappedCodepoints": 379,
+        "glyphs": 942,
+        "GSUB": {
+          "features": [
+            "aalt",
+            "dlig",
+            "fwid",
+            "hwid",
+            "jp78",
+            "jp83",
+            "liga",
+            "locl",
+            "pwid",
+            "vert",
+            "vrt2"
+          ],
+          "lookups": 13,
+          "decodedBytes": 6984
+        },
+        "GPOS": {
+          "features": [
+            "halt",
+            "kern",
+            "palt",
+            "vhal",
+            "vkrn",
+            "vpal"
+          ],
+          "lookups": 8,
+          "decodedBytes": 18142
+        }
+      },
+      "featureComparison": {
+        "GSUB": {
+          "originalUnion": [
+            "ccmp",
+            "liga",
+            "locl",
+            "vert",
+            "vrt2"
+          ],
+          "currentUiOnly": [
+            "aalt",
+            "dlig",
+            "fwid",
+            "hwid",
+            "jp78",
+            "jp83",
+            "pwid"
+          ],
+          "asciiUiOnly": [
+            "aalt",
+            "dlig",
+            "fwid",
+            "hwid",
+            "jp78",
+            "jp83",
+            "pwid"
+          ],
+          "originalNotCurrentUi": [
+            "ccmp",
+            "liga"
+          ],
+          "originalNotAsciiUi": [
+            "ccmp"
+          ]
+        },
+        "GPOS": {
+          "originalUnion": [
+            "halt",
+            "kern",
+            "palt",
+            "vert",
+            "vhal",
+            "vkrn",
+            "vpal"
+          ],
+          "currentUiOnly": [],
+          "asciiUiOnly": [],
+          "originalNotCurrentUi": [
+            "vert"
+          ],
+          "originalNotAsciiUi": [
+            "vert"
+          ]
+        }
+      }
+    },
+    {
+      "profile": "simplified-chinese",
+      "originalShardCount": 15,
+      "originalShards": [
+        {
+          "filename": "noto-sans-sc-107-wght-normal.woff2",
+          "bytes": 61076,
+          "sha256": "a42eff5010de7b0d6922a14734dd06c9b495655ac6e4397506f44c8e3eaee10c",
+          "mappedCodepoints": 187,
+          "glyphs": 189,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 162
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "vhal"
+            ],
+            "lookups": 3,
+            "decodedBytes": 232
+          }
+        },
+        {
+          "filename": "noto-sans-sc-108-wght-normal.woff2",
+          "bytes": 64552,
+          "sha256": "91882203459867be07157e9c8d433372b65cd4ce484fda26b97b05ed2cf6290d",
+          "mappedCodepoints": 191,
+          "glyphs": 192,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 152
+          }
+        },
+        {
+          "filename": "noto-sans-sc-109-wght-normal.woff2",
+          "bytes": 60372,
+          "sha256": "a91f8b038e5ce10805a173a293484c8c49552c275cf901cdf21324d6dca3ed17",
+          "mappedCodepoints": 190,
+          "glyphs": 191,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern",
+              "palt",
+              "vpal"
+            ],
+            "lookups": 5,
+            "decodedBytes": 442
+          }
+        },
+        {
+          "filename": "noto-sans-sc-110-wght-normal.woff2",
+          "bytes": 61472,
+          "sha256": "bbca9081655c45233a25c4cca030c47ebcf2e156eeedd48110836658adb31fa0",
+          "mappedCodepoints": 191,
+          "glyphs": 195,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 164
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vhal",
+              "vpal"
+            ],
+            "lookups": 7,
+            "decodedBytes": 598
+          }
+        },
+        {
+          "filename": "noto-sans-sc-111-wght-normal.woff2",
+          "bytes": 62664,
+          "sha256": "372be010ac0e87cb12065a861da39821104a43d68345a62ca95d3d3e2fb2c269",
+          "mappedCodepoints": 192,
+          "glyphs": 194,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 162
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 152
+          }
+        },
+        {
+          "filename": "noto-sans-sc-112-wght-normal.woff2",
+          "bytes": 57648,
+          "sha256": "34a4580239eae8dc54b726a1e1e9fec266e74225b112063ed93b412d54b97ccd",
+          "mappedCodepoints": 192,
+          "glyphs": 193,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 152
+          }
+        },
+        {
+          "filename": "noto-sans-sc-113-wght-normal.woff2",
+          "bytes": 58648,
+          "sha256": "614ab8f616352583f92cc2130fe8812c5aaaa8560b3828de45eefb318be7b503",
+          "mappedCodepoints": 193,
+          "glyphs": 194,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 152
+          }
+        },
+        {
+          "filename": "noto-sans-sc-114-wght-normal.woff2",
+          "bytes": 57964,
+          "sha256": "cf7b8344807a316e8db054500a2b44ad9346ffa00763fec203ab5aa1c99ff602",
+          "mappedCodepoints": 192,
+          "glyphs": 195,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 3,
+            "decodedBytes": 212
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 204
+          }
+        },
+        {
+          "filename": "noto-sans-sc-115-wght-normal.woff2",
+          "bytes": 56508,
+          "sha256": "fb29957c7adccb9a89e34fb28d3d1c7d12bd7401f80c0dba6e1c9e5259cb3262",
+          "mappedCodepoints": 192,
+          "glyphs": 196,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 3,
+            "decodedBytes": 192
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt"
+            ],
+            "lookups": 3,
+            "decodedBytes": 356
+          }
+        },
+        {
+          "filename": "noto-sans-sc-116-wght-normal.woff2",
+          "bytes": 52984,
+          "sha256": "a98dc5a726f82141f74a827c443e120709a12fe737fabacf2530927a275fce0d",
+          "mappedCodepoints": 192,
+          "glyphs": 195,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 2,
+            "decodedBytes": 164
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vhal",
+              "vpal"
+            ],
+            "lookups": 7,
+            "decodedBytes": 616
+          }
+        },
+        {
+          "filename": "noto-sans-sc-117-wght-normal.woff2",
+          "bytes": 52464,
+          "sha256": "d94b5af0c14838af99bf9855f91e851878726558531ddef5bd2100b70dfbe90c",
+          "mappedCodepoints": 192,
+          "glyphs": 199,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 4,
+            "decodedBytes": 228
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vhal",
+              "vpal"
+            ],
+            "lookups": 7,
+            "decodedBytes": 778
+          }
+        },
+        {
+          "filename": "noto-sans-sc-118-wght-normal.woff2",
+          "bytes": 46192,
+          "sha256": "76c9ddb85ae4578cccd35ae4f6e6bbffaa2c8c2aec0fea17d3c17c84a3c6f7d1",
+          "mappedCodepoints": 191,
+          "glyphs": 196,
+          "GSUB": {
+            "features": [
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 3,
+            "decodedBytes": 202
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vhal",
+              "vpal"
+            ],
+            "lookups": 7,
+            "decodedBytes": 698
+          }
+        },
+        {
+          "filename": "noto-sans-sc-119-wght-normal.woff2",
+          "bytes": 76800,
+          "sha256": "b3b2374881f4cd93f239820dfd91f0fde8d52f8f92ba2888f7ab9cba21e4d7eb",
+          "mappedCodepoints": 277,
+          "glyphs": 445,
+          "GSUB": {
+            "features": [
+              "ccmp",
+              "liga",
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 6,
+            "decodedBytes": 790
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "mark",
+              "palt",
+              "vert",
+              "vhal",
+              "vkrn",
+              "vpal"
+            ],
+            "lookups": 11,
+            "decodedBytes": 21164
+          }
+        },
+        {
+          "filename": "noto-sans-sc-44-wght-normal.woff2",
+          "bytes": 54244,
+          "sha256": "acaa6195041b1a928d35c7e80365a4e653ffc5cba556c0a1443ee3a561228eb8",
+          "mappedCodepoints": 142,
+          "glyphs": 143,
+          "GSUB": {
+            "features": [
+              "locl"
+            ],
+            "lookups": 1,
+            "decodedBytes": 114
+          },
+          "GPOS": {
+            "features": [
+              "kern"
+            ],
+            "lookups": 1,
+            "decodedBytes": 152
+          }
+        },
+        {
+          "filename": "noto-sans-sc-latin-wght-normal.woff2",
+          "bytes": 25240,
+          "sha256": "c1d919c8701a86ed7f33a8044f7c4e5675db2fce8b754091e97b2c0792f9782c",
+          "mappedCodepoints": 218,
+          "glyphs": 256,
+          "GSUB": {
+            "features": [
+              "ccmp",
+              "liga",
+              "locl",
+              "vert",
+              "vrt2"
+            ],
+            "lookups": 6,
+            "decodedBytes": 574
+          },
+          "GPOS": {
+            "features": [
+              "halt",
+              "kern",
+              "palt",
+              "vhal",
+              "vpal"
+            ],
+            "lookups": 7,
+            "decodedBytes": 12442
+          }
+        }
+      ],
+      "currentUi": {
+        "filename": "simplified-chinese-ui.woff2",
+        "bytes": 92296,
+        "sha256": "515301430c98496fa9de4e9b5ede8d8f24408309764176d4d9fd8dedf00331fa",
+        "mappedCodepoints": 322,
+        "glyphs": 393,
+        "GSUB": {
+          "features": [
+            "aalt",
+            "dlig",
+            "fwid",
+            "hwid",
+            "locl",
+            "pwid",
+            "vert",
+            "vrt2"
+          ],
+          "lookups": 8,
+          "decodedBytes": 1442
+        },
+        "GPOS": {
+          "features": [
+            "halt",
+            "kern",
+            "palt",
+            "vhal",
+            "vpal"
+          ],
+          "lookups": 7,
+          "decodedBytes": 2396
+        }
+      },
+      "asciiCandidate": {
+        "filename": "simplified-chinese-ui.woff2",
+        "bytes": 132384,
+        "sha256": "b7d60cc1910517ff5cb728f6102ab89a26ffe22ef252ffab22ecc02feb21bb9b",
+        "mappedCodepoints": 398,
+        "glyphs": 795,
+        "GSUB": {
+          "features": [
+            "aalt",
+            "dlig",
+            "fwid",
+            "hwid",
+            "liga",
+            "locl",
+            "pwid",
+            "vert",
+            "vrt2"
+          ],
+          "lookups": 11,
+          "decodedBytes": 6090
+        },
+        "GPOS": {
+          "features": [
+            "halt",
+            "kern",
+            "palt",
+            "vhal",
+            "vpal"
+          ],
+          "lookups": 7,
+          "decodedBytes": 10896
+        }
+      },
+      "featureComparison": {
+        "GSUB": {
+          "originalUnion": [
+            "ccmp",
+            "liga",
+            "locl",
+            "vert",
+            "vrt2"
+          ],
+          "currentUiOnly": [
+            "aalt",
+            "dlig",
+            "fwid",
+            "hwid",
+            "pwid"
+          ],
+          "asciiUiOnly": [
+            "aalt",
+            "dlig",
+            "fwid",
+            "hwid",
+            "pwid"
+          ],
+          "originalNotCurrentUi": [
+            "ccmp",
+            "liga"
+          ],
+          "originalNotAsciiUi": [
+            "ccmp"
+          ]
+        },
+        "GPOS": {
+          "originalUnion": [
+            "halt",
+            "kern",
+            "mark",
+            "palt",
+            "vert",
+            "vhal",
+            "vkrn",
+            "vpal"
+          ],
+          "currentUiOnly": [],
+          "asciiUiOnly": [],
+          "originalNotCurrentUi": [
+            "mark",
+            "vert",
+            "vkrn"
+          ],
+          "originalNotAsciiUi": [
+            "mark",
+            "vert",
+            "vkrn"
+          ]
+        }
+      }
+    }
+  ]
+}

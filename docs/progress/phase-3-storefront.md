@@ -31,6 +31,26 @@
 
 已于 2026-09-05 依据用户明确视觉接受与继续开发指令解锁；尚未达到退出门禁。
 
+## P3-06 性能收尾继续登记（2026-09-08）
+
+- Owner：Codex `/root`，继续 Lane D 唯一 executor；开始 2026-09-08T01:39:31.426931Z，基线 `fd19144d9b19c6fe7752b635dbc99cef117660b3`。用户授权继续下一阶段；先完成当前 ACTIVE 的 P3-06 可执行性能缺口，Phase 4 保持 LOCKED，不重复领取任务。
+- 范围：在已验收简洁管理中心基础上，针对真实编译版移动首屏 LCP、字体请求及公共详情等待链做有证据的优化；保持现有视觉、七语言任意内容、当前发布/权利/价格/库存校验。先保存同条件 trace/devtoolsLog，区分 observed 与 simulated 指标，再以失败实验/测试约束实施。
+- 隔离：当前管理预览仍运行于原 checkout；在本仓库忽略的 `.turbo/p3-06-performance-worktree` 建立独立 `codex/p3-06-performance-final` worktree，避免 build 覆盖预览 `.next`。三个代理先只读分析实际性能报告、前端依赖和后端链路；root 独占进度/共享文件/Git，实施分工另行明确。
+- 实施文件所有权：storefront_read 独占 gift-detail-page-reads、gift-page-factory、gift-detail、gift-page-scheduling test、新 gift-detail 异步 section/test 与 gift-detail.css；storefront_directory 独占 site-header 与新 lazy 语言组件/test、packages/ui/src/menu.tsx、selection-controls.tsx 及受控入口测试；storefront_e2e 独占本轮 trace-preflight/test。root 独占字体诊断、构建入口、进度/证据/整合；生产改变均在 baseline 编译冻结且有效 RED 后执行。
+- 后续分工：依据第一轮 trace，storefront_directory 延伸负责三个默认关闭抽屉的本地懒加载入口与 overlay 可选受控入口；storefront_read 独占 Menu 受控入口的静态门兼容、独立复核及干净工作区 P2-03/04/05；storefront_e2e 负责字体真实字节探针、最终 63 样本只读复算。root 仍独占字体产物/最终冻结/Git 和整仓验证，没有并发修改同一产品文件。
+- 验证计划：准确保留 baseline 与每次样本，不改预算/协议/挑最好一次；定向 RED→GREEN、受影响测试、全仓静态/构建门、真实 PG/S3/worker/Next/Chrome 七语言双端与 21×3 Lighthouse，独立复核及 S.U.P.E.R。人工运营计时/读屏/正式关键译文与生产发布证据仍分开。
+- 保护与同步：新增开始未跟踪清单见 `output/checks/p3-06-performance-final/untracked-baseline.json`；不回滚已有工作，不推送 GitHub，不停止用户正在使用的预览。仅完成实际验证后做本地检查点。
+
+### P3-06 首屏优化实际结果（2026-09-08，Phase 未退出）
+
+- 实现提交：本地 `7db722b4f5480ffb78eb19f5e2eec7675e50b1bd`。当前发布与报价先确认，艺人目录/市场政策独立 SSR 流式返回；语言菜单与三个抽屉按实际使用下载；中日文 UI 字体从固定官方来源生成，并保留任意动态内容的原字体回退。五个 API 验收/预览命令补齐原有 design-tokens 构建依赖，不增加运行依赖或新业务流程。
+- 最终编译来源：995 项实现/样式/资产/构建输入 SHA256 `df759a88a8dd62d8f08a08eccf87f2e29781e867ffffe955e4f554b7cadce62e`，逐项与该提交相同。该清单排除测试、验证脚本和生成的 Next 声明；与早期 1640/1664 项全源码清单范围不同，不能混用。
+- 真实前台：同一 PG/TLS S3/worker/API fixture 32,461 准备/协议断言通过；最终 browser-attempt-6 七语双端 88 场景/88 PNG、22,705 callback 断言、85 axe 零 violations、30 incomplete、零页面错误。发布/回退 9,177/9,368ms 可见；Header 11 场景/67 断言、Drawer 23 场景/153 断言，另 34 PNG 通过，包括触屏、冷键盘、取消、重试与嵌套。首轮触屏焦点检查捕获原 Base UI 帧间哨兵，依据既有 P2 焦点稳定等待修正探针时机，最终仍断言真实焦点回到弹层内，不接受哨兵为成功；失败证据保留。
+- 字体：全部 149 个静态 UI 文案，日文 303 / 中文 322 码点，最终 96,956/84,152 B；7 产物可重复生成逐字节相同。真实 Chrome 3,692 组像素/字宽/DOM 尺寸一致、42 响应 SHA 正确；中文 weight700 的 20 个完整字符串 Canvas descent 有微小浮点差，严格零容差探针仍 FAIL/exit1，不冒称所有 metrics 相同。完整原 WebFont GSUB/GPOS 功能集合及原许可保留。OFL 上游行尾空白为精确字节许可的限定例外，不扩展到代码。
+- 完整性能：browser-attempt-7 共 63 次原始 Lighthouse、21 组三次中位数，不剔除样本。评分 18/21、LCP 3/21、CLS 21/21 达标，整体 **COLLECTED_BUDGET_FAILED**；84 页首屏 JS gzip 148,428–152,024 B，14 页达 150,000 B SHOULD、70 页略超；234 张图片均达预算。礼物 JS 相比本轮基线 207,283 B 减少约 26.7%；英文/日文礼物 LCP 中位数约 2.61/3.76 秒仍未达 2.5 秒。独立逐报告复算与构建字节校验通过，实验室结论不等于 RUM。进一步确认 62 次 LCP 为内容图片，ja-artist-mobile-2 为真实临时不可用页；原三次中位数保留，不能把该次当作艺人内容成功，日志不足以归因，见 remaining-performance-diagnosis。
+- 共享与整仓验证：前台 442 / UI 100 项测试、format/lint/typecheck 通过；干净 detached `7db722b4` 顺序 P2-03/04/05 浏览器通过，共 55 PNG/21 axe，保留物理设备门。原共享证据已归档再替换，真实服务/Chrome 清理证据完整。整条 `pnpm check` attempt1 在旧 P2-04 证据过期处退出1；刷新后 attempt2 的 preflight 夹具准备阶段失败，原 cause 未保留，原样166断言独立复验通过但原因未确定。最终 attempt3 于03:31:05–03:50:51 UTC单条exit0（1186.146秒）：真实PG/API/TLS S3/worker、format/lint、类型58/58（57cache）、测试58/58（53cache）、构建35/35（34cache）及31实际Node出口通过。没有改源/放宽断言，原失败完整保留；最终995输入及全部tracked代码仍与7db相同，详见本轮 `validation.json`。
+- 保留与入口：`output/checks/p3-06-performance-final/README.md`、`validation.json`、`final-independent-review.md`。原 1,376 未跟踪文件中 1,375 不变；旧管理预览在预定到期附近更新其 state 后 exit0，该一项更新另记 SHA 并保留。独立审查未发现必须修复的代码问题；S.U.P.E.R 前九项通过，第十项因性能与诊断原门仍未全过。P3-06 IN_PROGRESS、22 DONE/1 IN_PROGRESS/26 PENDING（49）、Phase3 ACTIVE/Phase4 LOCKED；仍只本地提交。后续继续最终报告所支持的性能缺口、简洁管理中心真人计时、实际读屏与关键译文批准，不增新生产/PSP/真机证据。
+
 ## P3-06 用户反馈修正：简洁管理中心（2026-09-08）
 
 - Owner：Codex `/root`，仍为 P3-06 的唯一协调 executor；承接本地 e38297a。用户明确否定复杂操作卡/角色切换/翻译包流程，要求艺人图+名+描述提交即展示、礼物图+名+描述+价格+分类上架、海报上传替换并可历史恢复；本次用户要求覆盖旧日常内容运营步骤与强制多语独立审核交互，不再请求同一授权。

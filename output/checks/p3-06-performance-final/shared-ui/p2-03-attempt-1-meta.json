@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "workspace": "/Users/mario/Desktop/\u4e0b\u5355/.turbo/p3-06-shared-ui-check",
+  "expectedCommit": "7db722b4f5480ffb78eb19f5e2eec7675e50b1bd",
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "scripts/verify-ui-interactions-browser.mjs"
+  ],
+  "startedAt": "2026-09-08T03:14:27.199005+00:00",
+  "runnerPid": 19854,
+  "status": "PASS",
+  "finishedAt": "2026-09-08T03:15:40.244657+00:00",
+  "durationSeconds": 73.046,
+  "exitCode": 0,
+  "observedProcesses": [
+    {
+      "pid": 19854,
+      "command": "runner"
+    },
+    {
+      "pid": 19861,
+      "command": "node"
+    },
+    {
+      "pid": 19862,
+      "command": "node"
+    },
+    {
+      "pid": 19900,
+      "command": "/Users/mario/Desktop/\u4e0b\u5355/.turbo/p3-06-shared-ui-check/node_modules/.pnpm/@turbo+darwin-arm64@2.10.12/node_modules/@turbo/darwin-arm64/bin/turbo"
+    },
+    {
+      "pid": 19904,
+      "command": "/bin/sh"
+    },
+    {
+      "pid": 19917,
+      "command": "/Users/mario/Library/pnpm/.tools/pnpm-exe/10.33.0/pnpm"
+    },
+    {
+      "pid": 19939,
+      "command": "node"
+    },
+    {
+      "pid": 19955,
+      "command": "/bin/sh"
+    },
+    {
+      "pid": 19956,
+      "command": "/bin/sh"
+    },
+    {
+      "pid": 19957,
+      "command": "/bin/sh"
+    },
+    {
+      "pid": 19958,
+      "command": "/bin/sh"
+    },
+    {
+      "pid": 19979,
+      "command": "/Users/mario/Library/pnpm/.tools/pnpm-exe/10.33.0/pnpm"
+    },
+    {
+      "pid": 19980,
+      "command": "/Users/mario/Library/pnpm/.tools/pnpm-exe/10.33.0/pnpm"
+    },
+    {
+      "pid": 19981,
+      "command": "/Users/mario/Library/pnpm/.tools/pnpm-exe/10.33.0/pnpm"
+    },
+    {
+      "pid": 19982,
+      "command": "/Users/mario/Library/pnpm/.tools/pnpm-exe/10.33.0/pnpm"
+    },
+    {
+      "pid": 19997,
+      "command": "node"
+    },
+    {
+      "pid": 20010,
+      "command": "node"
+    },
+    {
+      "pid": 20022,
+      "command": "node"
+    },
+    {
+      "pid": 20034,
+      "command": "node"
+    },
+    {
+      "pid": 20062,
+      "command": "/bin/sh"
+    },
+    {
+      "pid": 20068,
+      "command": "/Users/mario/Library/pnpm/.tools/pnpm-exe/10.33.0/pnpm"
+    },
+    {
+      "pid": 20080,
+      "command": "next-build (v16.3.4)"
+    },
+    {
+      "pid": 20088,
+      "command": "node"
+    },
+    {
+      "pid": 20090,
+      "command": "node"
+    },
+    {
+      "pid": 20104,
+      "command": "/Users/mario/.local/share/mise/installs/node/24.20.0/bin/node"
+    },
+    {
+      "pid": 20158,
+      "command": "next-server (v16.3.4)"
+    },
+    {
+      "pid": 20161,
+      "command": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    },
+    {
+      "pid": 20167,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (GPU).app/Contents/MacOS/Google Chrome Helper (GPU)"
+    },
+    {
+      "pid": 20168,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper"
+    },
+    {
+      "pid": 20169,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper"
+    },
+    {
+      "pid": 20175,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20177,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20179,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20202,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20203,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20204,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20217,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20226,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20227,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20228,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20235,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20236,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20237,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20326,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20329,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20331,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20332,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20333,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20345,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20346,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20347,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20364,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20365,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20366,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20389,
+      "command": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    },
+    {
+      "pid": 20393,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (GPU).app/Contents/MacOS/Google Chrome Helper (GPU)"
+    },
+    {
+      "pid": 20394,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper"
+    },
+    {
+      "pid": 20395,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper"
+    },
+    {
+      "pid": 20397,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20398,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20399,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20400,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/152.0.7977.82/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"
+    },
+    {
+      "pid": 20422,
+      "command": "/Users/mario/.local/share/mise/installs/node/24.20.0/bin/node"
+    }
+  ],
+  "remainingObservedProcesses": []
+}

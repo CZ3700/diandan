@@ -1,0 +1,76 @@
+{
+  "status": "ARCHIVED_BEFORE_ANY_REPLACEMENT",
+  "files": [
+    {
+      "path": "output/playwright/p2-03/logs/server-staging.log",
+      "sha256": "5cd37c9e9599f7fd082ca9d90da299ea82463017dd684303d3627625e63d16d9",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-03/logs/server-staging.log"
+    },
+    {
+      "path": "output/playwright/p2-03/logs/build-storefront-closure.log",
+      "sha256": "1fa2e8422e0471f6d61e9da7a69872f259a5385591201ec3f8ccc357060193ae",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-03/logs/build-storefront-closure.log"
+    },
+    {
+      "path": "output/playwright/p2-03/logs/server-production.log",
+      "sha256": "a04bba31e1e9205b19a338a27de1a2ee574f741c4713a1e1d52f164e261ee6a5",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-03/logs/server-production.log"
+    },
+    {
+      "path": "output/playwright/p2-03/logs/server-preview.log",
+      "sha256": "6dbc449ba8453e6226aee2d0ca2aa6ff5027a342266ed00b7103feb0b9279841",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-03/logs/server-preview.log"
+    },
+    {
+      "path": "output/playwright/p2-04/logs/server-staging.log",
+      "sha256": "a8a052aaa468a2757920b7b086ddc861920144fed37f1ce051c87177cd5e3f48",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-04/logs/server-staging.log"
+    },
+    {
+      "path": "output/playwright/p2-04/logs/build-ui.log",
+      "sha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-04/logs/build-ui.log"
+    },
+    {
+      "path": "output/playwright/p2-04/logs/build-storefront.log",
+      "sha256": "5c807b052bb8cdfb5ea9090b622f383c92b0a61aafe74c4ce85dc2c7e4c055e7",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-04/logs/build-storefront.log"
+    },
+    {
+      "path": "output/playwright/p2-04/logs/server-production.log",
+      "sha256": "241211bb0b5236a8aa78d6d9fcda87e949e8a2c7a4240c5e668d5594290c7cf9",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-04/logs/server-production.log"
+    },
+    {
+      "path": "output/playwright/p2-04/logs/server-preview.log",
+      "sha256": "d5aa108cb2e0999b6396a795f8e1f2c41272d262dfd64073d6cfb041db17262d",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-04/logs/server-preview.log"
+    },
+    {
+      "path": "output/playwright/p2-05/logs/server-staging.log",
+      "sha256": "1194bcc0ca9eb2e10206eb4a40e649e9865c3098d10295b6b537568bacb48806",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-05/logs/server-staging.log"
+    },
+    {
+      "path": "output/playwright/p2-05/logs/build-ui.log",
+      "sha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-05/logs/build-ui.log"
+    },
+    {
+      "path": "output/playwright/p2-05/logs/build-storefront.log",
+      "sha256": "8f1e6f4ff6820dc4d84c26557c7391f82d9a774bd71774d7a2aadfb1b69bda14",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-05/logs/build-storefront.log"
+    },
+    {
+      "path": "output/playwright/p2-05/logs/server-production.log",
+      "sha256": "d160117bbe1c8b32077ad8eeb1d9c37c924f1e60f0e89b0e866f2bc9a6d8641c",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-05/logs/server-production.log"
+    },
+    {
+      "path": "output/playwright/p2-05/logs/server-preview.log",
+      "sha256": "8e17e2d77854da3f513fb4615a7d986850439486067a90ac7f50315499227422",
+      "archive": "output/checks/p3-06-performance-final/shared-ui/original-checkout-previous-logs/p2-05/logs/server-preview.log"
+    }
+  ],
+  "scope": "Ignored prior shared UI logs in the original checkout were not part of the 1376 untracked baseline. Preserve exact copies before importing new report-linked logs."
+}
