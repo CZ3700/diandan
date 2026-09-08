@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "scope": "Collector-only HTTP fixtures; not product performance evidence",
+  "domCases": [
+    {
+      "name": "normal",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": true,
+          "localeMatches": true,
+          "contentVisible": true,
+          "errorVisible": false
+        },
+        "valid": true
+      }
+    },
+    {
+      "name": "error-with-hidden-marker",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": true,
+          "localeMatches": true,
+          "contentVisible": false,
+          "errorVisible": true
+        },
+        "valid": false
+      }
+    },
+    {
+      "name": "opacity-zero-marker",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": true,
+          "localeMatches": true,
+          "contentVisible": false,
+          "errorVisible": false
+        },
+        "valid": false
+      }
+    },
+    {
+      "name": "wrong-locale",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": true,
+          "localeMatches": false,
+          "contentVisible": true,
+          "errorVisible": false
+        },
+        "valid": false
+      }
+    },
+    {
+      "name": "wrong-route",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": false,
+          "localeMatches": true,
+          "contentVisible": true,
+          "errorVisible": false
+        },
+        "valid": false
+      }
+    },
+    {
+      "name": "missing-marker",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": true,
+          "localeMatches": true,
+          "contentVisible": false,
+          "errorVisible": false
+        },
+        "valid": false
+      }
+    },
+    {
+      "name": "empty-marker-box",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": true,
+          "localeMatches": true,
+          "contentVisible": false,
+          "errorVisible": false
+        },
+        "valid": false
+      }
+    },
+    {
+      "name": "directory-error",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": true,
+          "localeMatches": true,
+          "contentVisible": true,
+          "errorVisible": true
+        },
+        "valid": false
+      }
+    },
+    {
+      "name": "home-content",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": true,
+          "localeMatches": true,
+          "contentVisible": true,
+          "errorVisible": false
+        },
+        "valid": true
+      }
+    },
+    {
+      "name": "home-empty-directory",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": true,
+          "localeMatches": true,
+          "contentVisible": false,
+          "errorVisible": false
+        },
+        "valid": false
+      }
+    },
+    {
+      "name": "gift-content",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": true,
+          "localeMatches": true,
+          "contentVisible": true,
+          "errorVisible": false
+        },
+        "valid": true
+      }
+    },
+    {
+      "name": "gift-empty-container",
+      "value": {
+        "schemaVersion": 1,
+        "observed": {
+          "urlMatches": true,
+          "localeMatches": true,
+          "contentVisible": false,
+          "errorVisible": false
+        },
+        "valid": false
+      }
+    }
+  ],
+  "lighthouse": [
+    {
+      "name": "normal",
+      "audit": {
+        "id": "storefront-content",
+        "title": "Measured navigation contains the expected storefront content",
+        "description": "Checks the actual Lighthouse document, locale and visible content before accepting its performance sample.",
+        "score": 1,
+        "scoreDisplayMode": "binary",
+        "details": {
+          "type": "debugdata",
+          "content": {
+            "schemaVersion": 1,
+            "observed": {
+              "urlMatches": true,
+              "localeMatches": true,
+              "contentVisible": true,
+              "errorVisible": false
+            },
+            "valid": true
+          }
+        }
+      },
+      "runtimeError": null
+    },
+    {
+      "name": "alternating",
+      "audit": {
+        "id": "storefront-content",
+        "title": "Measured navigation is missing expected storefront content",
+        "description": "Checks the actual Lighthouse document, locale and visible content before accepting its performance sample.",
+        "score": 0,
+        "scoreDisplayMode": "binary",
+        "details": {
+          "type": "debugdata",
+          "content": {
+            "schemaVersion": 1,
+            "observed": {
+              "urlMatches": true,
+              "localeMatches": true,
+              "contentVisible": false,
+              "errorVisible": true
+            },
+            "valid": false
+          }
+        }
+      },
+      "runtimeError": null
+    }
+  ],
+  "alternatingRequests": 2
+}

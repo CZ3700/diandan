@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { EventEmitter } from "node:events";
 import { Buffer } from "node:buffer";
+import { AcceptanceContentAudit } from "./storefront-acceptance-content.mjs";
 import {
   aggregateAcceptanceLighthouse,
   summarizeAcceptancePerformanceBudget,
@@ -32,9 +33,29 @@ const run = (lcp, cls, score = 0.9) => ({
   lighthouseVersion: "13.4.1",
   categories: { performance: { score } },
   audits: {
+    "storefront-content": { score: 1 },
     "largest-contentful-paint": { numericValue: lcp },
     "cumulative-layout-shift": { numericValue: cls },
   },
+});
+test("content audit rejects incomplete or contradictory observations", () => {
+  for (const observed of [
+    undefined,
+    {},
+    {
+      urlMatches: false,
+      localeMatches: true,
+      contentVisible: true,
+      errorVisible: false,
+    },
+  ]) {
+    assert.equal(
+      AcceptanceContentAudit.audit({
+        StorefrontContent: { schemaVersion: 1, valid: true, observed },
+      }).score,
+      0,
+    );
+  }
 });
 test("three-run aggregation retains worst run and reports median instead of selecting the best", () => {
   const summary = aggregateAcceptanceLighthouse([
@@ -72,6 +93,22 @@ test("incomplete or failed lighthouse runs cannot be hidden in an aggregate", ()
           run(1000, 0, 0.95),
         ]),
       /score/,
+    );
+  }
+});
+test("an HTTP-successful Lighthouse error page cannot count as valid storefront content", () => {
+  for (const content of [
+    undefined,
+    { score: 0 },
+    { score: null },
+    { score: 1, errorMessage: "gather failed" },
+  ]) {
+    const invalid = run(1000, 0);
+    invalid.audits["storefront-content"] = content;
+    assert.throws(
+      () =>
+        aggregateAcceptanceLighthouse([run(1000, 0), invalid, run(1000, 0)]),
+      /content/,
     );
   }
 });

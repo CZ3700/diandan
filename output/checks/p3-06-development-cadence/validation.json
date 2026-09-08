@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "baseline": "020379c",
+  "scope": "P3-06 development tools and performance sample validity only",
+  "status": "PASS_SCOPED_CHECKPOINT",
+  "fullCheckRunThisTurn": false,
+  "oldFullCheckAndCIUnchanged": true,
+  "productCodeOrDatabaseChanged": false,
+  "developmentCheck": {
+    "command": "mise exec node@24.20.0 -- corepack pnpm check:dev",
+    "attempt": 2,
+    "exitCode": 0,
+    "wallSeconds": 28.16,
+    "typecheck": {
+      "successful": 58,
+      "cached": 57
+    },
+    "test": {
+      "successful": 58,
+      "cached": 56
+    },
+    "build": {
+      "successful": 35,
+      "cached": 33
+    },
+    "firstAttempt": "FAIL at lint: bare fetch in new browser harness; globalThis.fetch corrected; log retained"
+  },
+  "nodeToolTests": {
+    "command": "mise exec node@24.20.0 -- node --test apps/api/scripts/storefront-acceptance-*.test.mjs scripts/check-development.test.mjs",
+    "exitCode": 0,
+    "passed": 28,
+    "failed": 0
+  },
+  "browser": {
+    "command": "mise exec node@24.20.0 -- node apps/api/scripts/storefront-acceptance-content-browser.mjs",
+    "exitCode": 0,
+    "results": "output/checks/p3-06-development-cadence/content-browser-2026-09-08T07-54-54.003Z/results.json",
+    "domCases": 12,
+    "lighthouseRuns": 2,
+    "normalScore": 1,
+    "http200ErrorContentScore": 0,
+    "scope": "collector fixtures only; not product performance acceptance"
+  },
+  "review": {
+    "fastCheck": "storefront_read ACCEPT source review",
+    "contentSampling": "storefront_directory ACCEPT source review"
+  },
+  "source": [
+    {
+      "path": "package.json",
+      "sha256": "5caaa639b36eef5f519d8067a49146383ac29da48cc74bd090df1e7fe5d345c2"
+    },
+    {
+      "path": "scripts/check-development.mjs",
+      "sha256": "9d27ab15552621bf107eda59283b24e5b44f3dc4fdf7225b92a893ef83358210"
+    },
+    {
+      "path": "scripts/check-development.test.mjs",
+      "sha256": "c75816bfcf4486f70ccd728b8f0aeecd7156856cd37756ea9865fc99446345bc"
+    },
+    {
+      "path": "apps/api/scripts/storefront-acceptance-content.mjs",
+      "sha256": "ecc0e1713e3a7733cb9de5ac70cd995fc862e59d972525661f04d43640e0129b"
+    },
+    {
+      "path": "apps/api/scripts/storefront-acceptance-content-browser.mjs",
+      "sha256": "eb643e861f2687b422f6dc4a59543362e207ccaf67242f46a9ba2059d72a0b14"
+    },
+    {
+      "path": "apps/api/scripts/storefront-acceptance-performance.mjs",
+      "sha256": "7a6d1d0a8247963b9f95ccf0f48a0a0d766b0b00de95830f5746efcbf06fa70f"
+    },
+    {
+      "path": "apps/api/scripts/storefront-acceptance-performance.test.mjs",
+      "sha256": "da803af3baf02e0bc79fa8c8ee16ee7748f6cc4ae3a6eda8a20ce3adea4d7a6b"
+    }
+  ],
+  "retainedArtifacts": [
+    {
+      "path": "output/checks/p3-06-development-cadence/check-development-red.log",
+      "bytes": 6669,
+      "sha256": "52152bea3da83e968933898ea31bdcde2be5df866f5c6885e7c178e62c723af0"
+    },
+    {
+      "path": "output/checks/p3-06-development-cadence/check-development-green.log",
+      "bytes": 695,
+      "sha256": "129cb7d8da8cdf55699bd3f4610c1d8ee6297227a100378b3d99ad74857ee3c9"
+    },
+    {
+      "path": "output/checks/p3-06-development-cadence/content-red.log",
+      "bytes": 1693,
+      "sha256": "04ecac8fef41df9642dc6e4a6cde758c3ab1ed46ceb0dfebd4a1aba33ca80600"
+    },
+    {
+      "path": "output/checks/p3-06-development-cadence/content-observations-red.log",
+      "bytes": 1767,
+      "sha256": "dd5cf7db880f0971fc661c32cf5df2023d9280b7f102a6e0f60ca782e747355d"
+    },
+    {
+      "path": "output/checks/p3-06-development-cadence/content-browser-red.log",
+      "bytes": 548,
+      "sha256": "6bb03500dc2718cd47ece529c04898dadc5d590a95fd49f1874d5303c4b94af4"
+    },
+    {
+      "path": "output/checks/p3-06-development-cadence/content-browser-final.log",
+      "bytes": 138,
+      "sha256": "f1fe3726c482e21ed190232140b9bbe2f0b1ad8961cee243a0314bcd838a0024"
+    },
+    {
+      "path": "output/checks/p3-06-development-cadence/check-dev-attempt-1.log",
+      "bytes": 1126,
+      "sha256": "16a16cadf4707c8dc823eadf30d367aee1d367a0b024884c8ee9a32a9670c47e"
+    },
+    {
+      "path": "output/checks/p3-06-development-cadence/check-dev-attempt-2.log",
+      "bytes": 4244,
+      "sha256": "53b6786fdce925064d2f0c78c0bb8e3d756d9fa621b17b8caa3e35453ff41c45"
+    },
+    {
+      "path": "output/checks/p3-06-development-cadence/acceptance-tools-tests.log",
+      "bytes": 2758,
+      "sha256": "ccd2c0c858a015c9930b7f4e6764e851906fb2f96a79a850d15b1ee7e2fdb5c9"
+    },
+    {
+      "path": "output/checks/p3-06-development-cadence/content-browser-2026-09-08T07-54-54.003Z/normal.json",
+      "bytes": 329882,
+      "sha256": "bb3faf0a060468e495ac6b20a85e72b30c1e5c313f7082b237a64fdfbec331a3"
+    },
+    {
+      "path": "output/checks/p3-06-development-cadence/content-browser-2026-09-08T07-54-54.003Z/results.json",
+      "bytes": 5086,
+      "sha256": "f15161e2c4c353b8efbb5b4567e79e0b4ca2c1525ce8d7226394b7efe732fb50"
+    },
+    {
+      "path": "output/checks/p3-06-development-cadence/content-browser-2026-09-08T07-54-54.003Z/alternating.json",
+      "bytes": 310394,
+      "sha256": "bd8f93152a69feb61d6ca16cac9ebe1fff59c2fed50ccbc0882560f6517c6d56"
+    }
+  ],
+  "remaining": [
+    "P3-06 mobile performance budget",
+    "Cause of prior unavailable sample undetermined",
+    "Human operations timing and screenreader acceptance",
+    "Critical translation approvals",
+    "P4 development-order proposal awaiting user reply; Phase 4 LOCKED"
+  ],
+  "gitPush": false,
+  "finalChecks": {
+    "sourceHashesUnchanged": true,
+    "formatExitCode": 0,
+    "gitDiffCheckExitCode": 0,
+    "secretScanExitCode": 0
+  }
+}

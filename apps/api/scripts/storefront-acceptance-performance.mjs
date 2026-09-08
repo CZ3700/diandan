@@ -6,6 +6,7 @@ import { createRequire } from "node:module";
 import path from "node:path";
 import { gzipSync } from "node:zlib";
 import { withAcceptanceBrowser } from "./storefront-acceptance-browser.mjs";
+import { createAcceptanceLighthouseConfig } from "./storefront-acceptance-content.mjs";
 import {
   acceptancePages,
   acceptanceViewports,
@@ -64,6 +65,12 @@ export function aggregateAcceptanceLighthouse(runs) {
         run.categories.performance.score >= 0 &&
         run.categories.performance.score <= 1,
       "each retained Lighthouse run must have a finite performance score between zero and one",
+    );
+  for (const run of runs)
+    assert.ok(
+      run.audits?.["storefront-content"]?.score === 1 &&
+        !run.audits["storefront-content"].errorMessage,
+      "each performance sample requires successful same-navigation content evidence",
     );
   const metric = (values) => {
     const sorted = [...values].sort((left, right) => left - right);
@@ -196,6 +203,8 @@ export async function verifyAcceptancePerformance({
       lighthouseThrottling:
         "Pinned Lighthouse 13.4.1 default mobile simulated slow 4G and CPU settings, actual settings retained per raw report",
       noEagerImageMutation: true,
+      contentValidity:
+        "Read-only gatherer checks the measured Lighthouse document URL, locale, visible target and absence of visible error/loading state; no separate navigation or retry",
     },
     realUserEvidence: false,
     physicalDeviceEvidence: false,
@@ -322,19 +331,24 @@ export async function verifyAcceptancePerformance({
             `Lighthouse mobile ${target.locale}/${target.kind} attempt ${attempt}/3`,
           );
           const name = `${target.locale}-${target.kind}-mobile-${attempt}`;
-          const result = await lighthouse(origin + target.path, {
-            port: chrome.port,
-            logLevel: "error",
-            output: ["json", "html"],
-            onlyCategories: [
-              "performance",
-              "accessibility",
-              "best-practices",
-              "seo",
-            ],
-            formFactor: "mobile",
-            throttlingMethod: "simulate",
-          });
+          const result = await lighthouse(
+            origin + target.path,
+            {
+              port: chrome.port,
+              logLevel: "error",
+              output: ["json", "html"],
+              onlyCategories: [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo",
+                "storefront",
+              ],
+              formFactor: "mobile",
+              throttlingMethod: "simulate",
+            },
+            createAcceptanceLighthouseConfig(target, origin + target.path),
+          );
           check(Boolean(result), "Lighthouse produces a real report");
           await writeFile(
             path.join(directory, `${name}.json`),
@@ -351,6 +365,7 @@ export async function verifyAcceptancePerformance({
             html: html ? `${name}.html` : null,
             lighthouseVersion: result.lhr.lighthouseVersion,
             runtimeError: result.lhr.runtimeError ?? null,
+            contentValidity: result.lhr.audits["storefront-content"] ?? null,
             runWarnings: result.lhr.runWarnings,
             configSettings: result.lhr.configSettings,
           };
@@ -363,6 +378,11 @@ export async function verifyAcceptancePerformance({
           check(
             !result.lhr.runtimeError,
             "failed Lighthouse navigation remains a failed attempt",
+          );
+          check(
+            result.lhr.audits["storefront-content"]?.score === 1 &&
+              !result.lhr.audits["storefront-content"].errorMessage,
+            "Lighthouse measured navigation must contain the expected storefront content",
           );
           runs.push(result.lhr);
         }
