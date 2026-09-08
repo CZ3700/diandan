@@ -148,7 +148,7 @@ export function createCartRuntimeRepository(
          item.version::text,item.quantity,item.observed_price_id,item.display_mode,item.has_fan_message
          FROM public.cart_items item LEFT JOIN public.support_intents intent ON intent.cart_item_id=item.id
          LEFT JOIN public.gift_variants variant ON variant.id=item.gift_variant_id
-         WHERE item.cart_id=$1 ORDER BY item.created_at,item.id`,
+         WHERE item.cart_id=$1 AND intent.status IS DISTINCT FROM 'CANCELED' ORDER BY item.created_at,item.id`,
           [cartId],
         );
         return rows.map(cartItemRecord);

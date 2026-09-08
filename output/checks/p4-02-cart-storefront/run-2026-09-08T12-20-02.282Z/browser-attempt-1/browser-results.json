@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "scope": "Production-compiled storefront under local TEST runtime, real PostgreSQL/API/TLS media and TEST KMS boundary",
+  "browserVersion": "152.0.7977.82",
+  "cases": [],
+  "screenshots": [
+    "en-390-empty.png",
+    "en-390-add-form.png",
+    "failure-current-screen.png"
+  ],
+  "axe": [],
+  "pageErrors": 0,
+  "touchTargets": [
+    {
+      "locale": "en",
+      "viewport": 390,
+      "kind": "add-radio-labels",
+      "targets": [
+        {
+          "width": 101.34375,
+          "height": 22
+        },
+        {
+          "width": 129.59375,
+          "height": 22
+        }
+      ]
+    }
+  ],
+  "actualAwsKms": false,
+  "privatePlaintextPersisted": false,
+  "physicalDeviceEvidence": false,
+  "failure": {
+    "stage": "fresh-390",
+    "locale": "en",
+    "viewport": 390,
+    "kind": "ASSERTION"
+  }
+}

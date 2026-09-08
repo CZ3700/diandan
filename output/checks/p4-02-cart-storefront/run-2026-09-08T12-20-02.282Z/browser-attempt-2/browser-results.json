@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "scope": "Production-compiled storefront under local TEST runtime, real PostgreSQL/API/TLS media and TEST KMS boundary",
+  "browserVersion": "152.0.7977.82",
+  "cases": [],
+  "screenshots": [
+    "en-390-empty.png",
+    "en-390-add-form.png",
+    "en-390-cart.png",
+    "failure-current-screen.png"
+  ],
+  "axe": [
+    {
+      "name": "en-390-cart",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "pageErrors": 0,
+  "touchTargets": [
+    {
+      "locale": "en",
+      "viewport": 390,
+      "kind": "add-radio-labels",
+      "targets": [
+        {
+          "width": 109.34375,
+          "height": 44
+        },
+        {
+          "width": 137.59375,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "viewport": 390,
+      "kind": "add-quantity-buttons",
+      "targets": [
+        {
+          "width": 48,
+          "height": 48
+        },
+        {
+          "width": 48,
+          "height": 48
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "viewport": 390,
+      "kind": "add-submit",
+      "targets": [
+        {
+          "width": 358,
+          "height": 49.8125
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "viewport": 390,
+      "kind": "cart-quantity-buttons",
+      "targets": [
+        {
+          "width": 44,
+          "height": 48
+        },
+        {
+          "width": 44,
+          "height": 48
+        },
+        {
+          "width": 44,
+          "height": 48
+        },
+        {
+          "width": 44,
+          "height": 48
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "viewport": 390,
+      "kind": "cart-save-edit-remove",
+      "targets": [
+        {
+          "width": 120.90625,
+          "height": 44
+        },
+        {
+          "width": 176.34375,
+          "height": 44
+        },
+        {
+          "width": 59.546875,
+          "height": 44
+        },
+        {
+          "width": 120.90625,
+          "height": 44
+        },
+        {
+          "width": 176.34375,
+          "height": 44
+        },
+        {
+          "width": 59.546875,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "viewport": 390,
+      "kind": "cart-header-trigger",
+      "targets": [
+        {
+          "width": 47.453125,
+          "height": 44
+        }
+      ]
+    }
+  ],
+  "actualAwsKms": false,
+  "privatePlaintextPersisted": false,
+  "physicalDeviceEvidence": false,
+  "failure": {
+    "stage": "matrix-en-390",
+    "locale": "en",
+    "viewport": 390,
+    "kind": "ASSERTION"
+  }
+}

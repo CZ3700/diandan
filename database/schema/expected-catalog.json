@@ -215,7 +215,19 @@
       "kind": "TABLE"
     },
     {
+      "name": "cart_edit_outbox_events",
+      "kind": "TABLE"
+    },
+    {
+      "name": "cart_item_mutation_receipts",
+      "kind": "TABLE"
+    },
+    {
       "name": "cart_items",
+      "kind": "TABLE"
+    },
+    {
+      "name": "cart_private_access_receipts",
       "kind": "TABLE"
     },
     {
@@ -1751,6 +1763,356 @@
       "generation": ""
     },
     {
+      "table": "cart_edit_outbox_events",
+      "position": 1,
+      "name": "event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "position": 3,
+      "name": "receipt_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "position": 4,
+      "name": "event_type",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "position": 5,
+      "name": "aggregate_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "position": 6,
+      "name": "cart_item_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "position": 7,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "position": 8,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "position": 9,
+      "name": "occurred_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "position": 10,
+      "name": "status",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": "'PENDING'::text",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 1,
+      "name": "receipt_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 3,
+      "name": "event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 4,
+      "name": "cart_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 5,
+      "name": "cart_item_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 6,
+      "name": "support_intent_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 7,
+      "name": "mutation_kind",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 8,
+      "name": "expected_cart_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 9,
+      "name": "expected_item_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 10,
+      "name": "expected_intent_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 11,
+      "name": "cart_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 12,
+      "name": "item_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 13,
+      "name": "intent_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 14,
+      "name": "quantity",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 15,
+      "name": "observed_price_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 16,
+      "name": "display_mode",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 17,
+      "name": "has_fan_message",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 18,
+      "name": "fan_message_locale",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 19,
+      "name": "private_material_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 20,
+      "name": "presentation_locale",
+      "dataType": "supported_locale",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 21,
+      "name": "market",
+      "dataType": "market_code",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 22,
+      "name": "currency",
+      "dataType": "currency_code",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 23,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 24,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "position": 25,
+      "name": "occurred_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "cart_items",
       "position": 1,
       "name": "id",
@@ -1877,6 +2239,116 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "position": 1,
+      "name": "access_audit_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "position": 3,
+      "name": "cart_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "position": 4,
+      "name": "cart_item_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "position": 5,
+      "name": "support_intent_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "position": 6,
+      "name": "cart_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "position": 7,
+      "name": "item_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "position": 8,
+      "name": "intent_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "position": 9,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "position": 10,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "position": 11,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
       "identity": "",
       "generation": ""
     },
@@ -20531,6 +21003,478 @@
       "initiallyDeferred": false
     },
     {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_aggregate_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (aggregate_id) REFERENCES carts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_aggregate_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL aggregate_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_cart_item_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (cart_item_id) REFERENCES cart_items(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_cart_item_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_item_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_event_type_check",
+      "kind": "CHECK",
+      "definition": "CHECK (event_type = ANY (ARRAY['CART_ITEM_UPDATED'::text, 'CART_ITEM_REMOVED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_event_type_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL event_type",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_occurred_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL occurred_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_receipt_id_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (receipt_id, event_id) REFERENCES cart_item_mutation_receipts(receipt_id, event_id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_receipt_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (receipt_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_receipt_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL receipt_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_status_check",
+      "kind": "CHECK",
+      "definition": "CHECK (status = 'PENDING'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_status_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL status",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_cart_id_cart_version_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (cart_id, cart_version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_cart_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (cart_id) REFERENCES carts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_cart_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_cart_item_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (cart_item_id) REFERENCES cart_items(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_cart_item_id_item_version_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (cart_item_id, item_version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_cart_item_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_item_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_cart_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_check",
+      "kind": "CHECK",
+      "definition": "CHECK (cart_version::bigint = (expected_cart_version::bigint + 1) AND item_version::bigint = (expected_item_version::bigint + 1))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (intent_version::bigint = (expected_intent_version::bigint +\nCASE\n    WHEN mutation_kind = 'QUANTITY'::text THEN 0\n    ELSE 1\nEND))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_currency_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL currency",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_display_mode_check",
+      "kind": "CHECK",
+      "definition": "CHECK (display_mode = ANY (ARRAY['anonymous'::text, 'nickname'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_display_mode_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL display_mode",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_event_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_expected_cart_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expected_cart_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_expected_intent_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expected_intent_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_expected_item_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expected_item_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_fan_message_locale_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL fan_message_locale",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_has_fan_message_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL has_fan_message",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_intent_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL intent_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_item_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL item_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_market_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL market",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_mutation_kind_check",
+      "kind": "CHECK",
+      "definition": "CHECK (mutation_kind = ANY (ARRAY['QUANTITY'::text, 'PERSONALIZATION'::text, 'REMOVE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_mutation_kind_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL mutation_kind",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_observed_price_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (observed_price_id) REFERENCES prices(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_observed_price_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL observed_price_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_occurred_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL occurred_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (receipt_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_presentation_locale_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL presentation_locale",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_private_material_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL private_material_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_quantity_check",
+      "kind": "CHECK",
+      "definition": "CHECK (quantity > 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_quantity_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL quantity",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_receipt_id_event_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (receipt_id, event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_receipt_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL receipt_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_support_intent_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (support_intent_id) REFERENCES support_intents(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_support_intent_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL support_intent_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_mutation_receipt_head",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
       "table": "cart_items",
       "name": "cart_item_support_intent_consistency_trigger",
       "kind": "CONSTRAINT_TRIGGER",
@@ -20719,6 +21663,142 @@
       "name": "cart_items_version_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_access_audit_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (access_audit_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_access_audit_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL access_audit_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_cart_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (cart_id) REFERENCES carts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_cart_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_cart_item_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (cart_item_id) REFERENCES cart_items(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_cart_item_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_item_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_cart_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_intent_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL intent_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_item_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL item_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (access_audit_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_support_intent_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (support_intent_id) REFERENCES support_intents(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_support_intent_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL support_intent_id",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -45225,6 +46305,78 @@
       "valid": true
     },
     {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_pending_idx",
+      "definition": "CREATE INDEX cart_edit_outbox_events_pending_idx ON public.cart_edit_outbox_events USING btree (occurred_at, event_id)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_pkey",
+      "definition": "CREATE UNIQUE INDEX cart_edit_outbox_events_pkey ON public.cart_edit_outbox_events USING btree (event_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_receipt_id_key",
+      "definition": "CREATE UNIQUE INDEX cart_edit_outbox_events_receipt_id_key ON public.cart_edit_outbox_events USING btree (receipt_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_cart_id_cart_version_key",
+      "definition": "CREATE UNIQUE INDEX cart_item_mutation_receipts_cart_id_cart_version_key ON public.cart_item_mutation_receipts USING btree (cart_id, cart_version)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_cart_item_id_item_version_key",
+      "definition": "CREATE UNIQUE INDEX cart_item_mutation_receipts_cart_item_id_item_version_key ON public.cart_item_mutation_receipts USING btree (cart_item_id, item_version)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_event_id_key",
+      "definition": "CREATE UNIQUE INDEX cart_item_mutation_receipts_event_id_key ON public.cart_item_mutation_receipts USING btree (event_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX cart_item_mutation_receipts_pkey ON public.cart_item_mutation_receipts USING btree (receipt_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_receipt_id_event_id_key",
+      "definition": "CREATE UNIQUE INDEX cart_item_mutation_receipts_receipt_id_event_id_key ON public.cart_item_mutation_receipts USING btree (receipt_id, event_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "cart_items",
       "name": "cart_items_cart_idx",
       "definition": "CREATE INDEX cart_items_cart_idx ON public.cart_items USING btree (cart_id, created_at, id)",
@@ -45255,6 +46407,15 @@
       "table": "cart_items",
       "name": "cart_items_pkey",
       "definition": "CREATE UNIQUE INDEX cart_items_pkey ON public.cart_items USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX cart_private_access_receipts_pkey ON public.cart_private_access_receipts USING btree (access_audit_id)",
       "unique": true,
       "primary": true,
       "exclusion": false,
@@ -49244,6 +50405,48 @@
       "enabled": "O"
     },
     {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_event_authority",
+      "definition": "CREATE TRIGGER cart_edit_event_authority BEFORE INSERT ON cart_edit_outbox_events FOR EACH ROW EXECUTE FUNCTION assert_cart_edit_event()",
+      "enabled": "O"
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_append_only",
+      "definition": "CREATE TRIGGER cart_edit_outbox_events_append_only BEFORE DELETE OR UPDATE ON cart_edit_outbox_events FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "cart_edit_outbox_events",
+      "name": "cart_edit_outbox_events_no_truncate",
+      "definition": "CREATE TRIGGER cart_edit_outbox_events_no_truncate BEFORE TRUNCATE ON cart_edit_outbox_events FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_append_only",
+      "definition": "CREATE TRIGGER cart_item_mutation_receipts_append_only BEFORE DELETE OR UPDATE ON cart_item_mutation_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_item_mutation_receipts_no_truncate",
+      "definition": "CREATE TRIGGER cart_item_mutation_receipts_no_truncate BEFORE TRUNCATE ON cart_item_mutation_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_mutation_receipt_head",
+      "definition": "CREATE CONSTRAINT TRIGGER cart_mutation_receipt_head AFTER INSERT ON cart_item_mutation_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_cart_mutation_head()",
+      "enabled": "O"
+    },
+    {
+      "table": "cart_item_mutation_receipts",
+      "name": "cart_mutation_receipt_prior",
+      "definition": "CREATE TRIGGER cart_mutation_receipt_prior BEFORE INSERT ON cart_item_mutation_receipts FOR EACH ROW EXECUTE FUNCTION assert_cart_mutation_prior()",
+      "enabled": "O"
+    },
+    {
       "table": "cart_items",
       "name": "cart_item_support_intent_consistency_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER cart_item_support_intent_consistency_trigger AFTER INSERT OR UPDATE ON cart_items DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_cart_support_intent_consistency()",
@@ -49265,6 +50468,24 @@
       "table": "cart_items",
       "name": "cart_items_mutation_trigger",
       "definition": "CREATE TRIGGER cart_items_mutation_trigger BEFORE UPDATE ON cart_items FOR EACH ROW EXECUTE FUNCTION guard_cart_item_mutation()",
+      "enabled": "O"
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_authority",
+      "definition": "CREATE TRIGGER cart_private_access_authority BEFORE INSERT ON cart_private_access_receipts FOR EACH ROW EXECUTE FUNCTION assert_cart_private_access()",
+      "enabled": "O"
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_append_only",
+      "definition": "CREATE TRIGGER cart_private_access_receipts_append_only BEFORE DELETE OR UPDATE ON cart_private_access_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "cart_private_access_receipts",
+      "name": "cart_private_access_receipts_no_truncate",
+      "definition": "CREATE TRIGGER cart_private_access_receipts_no_truncate BEFORE TRUNCATE ON cart_private_access_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
     },
     {
@@ -52612,6 +53833,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_base_content_review_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE kind text; parent_column text; translation_column text; review_id uuid; event jsonb; translation jsonb; parent jsonb; previous jsonb; audit public.audit_logs%ROWTYPE; english_hash public.sha256_hex; authored boolean; action text;\nBEGIN\n  IF NEW.idol_review_id IS NOT NULL THEN kind:='idol'; parent_column:='idol_revision_id'; translation_column:='idol_translation_id'; review_id:=NEW.idol_review_id;\n  ELSIF NEW.gift_review_id IS NOT NULL THEN kind:='gift'; parent_column:='gift_revision_id'; translation_column:='gift_translation_id'; review_id:=NEW.gift_review_id;\n  ELSIF NEW.homepage_review_id IS NOT NULL THEN kind:='homepage'; parent_column:='homepage_revision_id'; translation_column:='homepage_translation_id'; review_id:=NEW.homepage_review_id;\n  ELSIF NEW.policy_review_id IS NOT NULL THEN kind:='policy'; parent_column:='policy_revision_id'; translation_column:='policy_translation_id'; review_id:=NEW.policy_review_id;\n  ELSIF NEW.media_metadata_review_id IS NOT NULL THEN kind:='media_metadata'; parent_column:='media_metadata_revision_id'; translation_column:='media_metadata_translation_id'; review_id:=NEW.media_metadata_review_id;\n  END IF;\n  EXECUTE format('SELECT to_jsonb(r.*),to_jsonb(t.*),to_jsonb(p.*) FROM public.%I r JOIN public.%I t ON t.id=r.%I JOIN public.%I p ON p.id=t.%I WHERE r.id=$1',kind||'_translation_reviews',kind||'_revision_translations',translation_column,kind||'_revisions',parent_column) INTO event,translation,parent USING review_id;\n  IF event IS NULL THEN RAISE EXCEPTION 'base review receipt requires its exact event' USING ERRCODE='23503'; END IF;\n  EXECUTE format('SELECT EXISTS(SELECT 1 FROM public.content_authoring_receipts WHERE %I=$1)',parent_column) INTO authored USING (parent->>'id')::uuid;\n  IF NOT authored OR parent->>'lifecycle'<>'DRAFT' OR event->>'status' NOT IN ('IN_REVIEW','APPROVED') THEN\n    RAISE EXCEPTION 'new base review requires an authored draft' USING ERRCODE='23514';\n  END IF;\n  EXECUTE format('SELECT source_hash FROM public.%I WHERE %I=$1 AND locale=''en''',kind||'_revision_translations',parent_column) INTO english_hash USING (parent->>'id')::uuid;\n  IF english_hash IS NULL OR translation->>'translated_from_source_hash'<>english_hash THEN\n    RAISE EXCEPTION 'base review requires actual current English source' USING ERRCODE='23514';\n  END IF;\n  EXECUTE format('SELECT to_jsonb(r.*) FROM public.%I r WHERE %I=$1 AND sequence<$2 ORDER BY sequence DESC LIMIT 1',kind||'_translation_reviews',translation_column) INTO previous USING (translation->>'id')::uuid,(event->>'sequence')::bigint;\n  IF NEW.created_at<>(event->>'created_at')::timestamptz OR NEW.created_at<GREATEST((parent->>'created_at')::timestamptz,(translation->>'edited_at')::timestamptz,(previous->>'created_at')::timestamptz,(previous->>'submitted_at')::timestamptz,(previous->>'reviewed_at')::timestamptz)\n    OR NEW.field_paths IS DISTINCT FROM ARRAY['translations.'||(translation->>'locale')||'.review'] THEN\n    RAISE EXCEPTION 'base review receipt requires exact causal time and field path' USING ERRCODE='23514';\n  END IF;\n  action:=CASE WHEN event->>'status'='IN_REVIEW' THEN 'BASE_CONTENT_REVIEW_SUBMIT' ELSE 'BASE_CONTENT_REVIEW_APPROVE' END;\n  SELECT * INTO audit FROM public.audit_logs WHERE id=NEW.audit_log_id;\n  IF audit.id IS NULL OR audit.actor_type<>'ADMIN' OR audit.action<>action OR audit.subject_type<>'BASE_CONTENT_TRANSLATION_REVIEW' OR audit.subject_id<>review_id\n    OR audit.outcome<>'SUCCEEDED' OR audit.created_at<>NEW.created_at OR audit.reason_code IS NULL OR audit.request_id IS NULL OR audit.correlation_id IS NULL OR audit.field_category IS DISTINCT FROM 'CONTENT_TRANSLATION'\n    OR NOT EXISTS(SELECT 1 FROM public.admin_identities WHERE id=audit.actor_id AND status='ACTIVE') THEN\n    RAISE EXCEPTION 'base review receipt requires exact active actor audit' USING ERRCODE='23514';\n  END IF;\n  IF event->>'status'='IN_REVIEW' THEN\n    IF audit.actor_id IS DISTINCT FROM (translation->>'editor_id')::uuid OR (event->>'submitted_at')::timestamptz IS DISTINCT FROM NEW.created_at THEN\n      RAISE EXCEPTION 'only original translation editor may submit its draft' USING ERRCODE='23514';\n    END IF;\n  ELSIF audit.actor_id IS DISTINCT FROM (event->>'reviewer_id')::uuid OR audit.actor_id=(translation->>'editor_id')::uuid OR audit.actor_id=(parent->>'created_by')::uuid\n    OR (event->>'reviewed_at')::timestamptz IS DISTINCT FROM NEW.created_at OR event->>'reviewed_source_hash'<>english_hash OR event->>'reviewed_content_hash'<>translation->>'source_hash' THEN\n    RAISE EXCEPTION 'base approval must be independent of structure and translation authors' USING ERRCODE='23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
     },
     {
+      "name": "assert_cart_edit_event",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_cart_edit_event()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NOT EXISTS (SELECT 1 FROM public.cart_item_mutation_receipts receipt\n    WHERE receipt.receipt_id=NEW.receipt_id AND receipt.event_id=NEW.event_id\n      AND receipt.cart_id=NEW.aggregate_id AND receipt.cart_item_id=NEW.cart_item_id\n      AND receipt.request_id=NEW.request_id AND receipt.correlation_id=NEW.correlation_id AND receipt.occurred_at=NEW.occurred_at\n      AND NEW.event_type=CASE WHEN receipt.mutation_kind='REMOVE' THEN 'CART_ITEM_REMOVED' ELSE 'CART_ITEM_UPDATED' END) THEN\n    RAISE EXCEPTION 'cart edit event must match its immutable receipt' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
       "name": "assert_cart_item_added_outbox",
       "identityArguments": "",
       "resultType": "trigger",
@@ -52620,6 +53851,36 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_cart_item_added_outbox()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  event_count integer;\nBEGIN\n  SELECT count(*) INTO event_count\n  FROM public.carts cart\n  JOIN public.outbox_events event\n    ON event.event_type = 'CART_ITEM_ADDED'\n   AND event.aggregate_type = 'CART'\n   AND event.aggregate_id = cart.id\n   AND event.aggregate_version = cart.version\n   AND event.primary_subject_id = cart.id\n   AND event.secondary_subject_id = NEW.id\n   AND event.request_id = NEW.request_id\n   AND event.correlation_id = NEW.correlation_id\n   AND event.occurred_at = NEW.created_at\n   AND event.locale = cart.presentation_locale\n   AND event.market = cart.market\n   AND event.currency = cart.currency\n  WHERE cart.id = NEW.cart_id;\n  IF event_count <> 1 THEN\n    RAISE EXCEPTION 'cart item and outbox record must commit together'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
+    },
+    {
+      "name": "assert_cart_mutation_head",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_cart_mutation_head()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NOT EXISTS (\n    SELECT 1 FROM public.carts c JOIN public.cart_items i ON i.cart_id=c.id\n    JOIN public.support_intents s ON s.cart_item_id=i.id\n    JOIN public.cart_edit_outbox_events event ON event.receipt_id=NEW.receipt_id AND event.event_id=NEW.event_id\n    WHERE c.id=NEW.cart_id AND i.id=NEW.cart_item_id AND s.id=NEW.support_intent_id\n      AND c.version=NEW.cart_version AND i.version=NEW.item_version AND s.version=NEW.intent_version\n      AND c.status='ACTIVE' AND s.status=CASE WHEN NEW.mutation_kind='REMOVE' THEN 'CANCELED' ELSE 'ACTIVE' END AND s.privacy_state='ACTIVE'\n      AND c.presentation_locale=NEW.presentation_locale AND c.market=NEW.market AND c.currency=NEW.currency\n      AND c.updated_at=NEW.occurred_at AND i.updated_at=NEW.occurred_at\n      AND (NEW.mutation_kind='QUANTITY' OR s.updated_at=NEW.occurred_at)\n      AND i.quantity=NEW.quantity AND i.observed_price_id=NEW.observed_price_id\n      AND i.display_mode=NEW.display_mode AND i.has_fan_message=NEW.has_fan_message AND s.fan_message_locale=NEW.fan_message_locale\n      AND public.cart_private_material_hash(s.fan_message_ciphertext,s.display_mode,s.display_name_ciphertext,s.encrypted_data_key,s.encryption_key_version,s.fan_message_locale)=NEW.private_material_hash\n      AND (NEW.mutation_kind<>'PERSONALIZATION' OR s.moderation_status='PENDING')\n  ) THEN\n    RAISE EXCEPTION 'cart mutation receipt must match its final head and event' USING ERRCODE='23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_cart_mutation_prior",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_cart_mutation_prior()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE c public.carts%ROWTYPE; i public.cart_items%ROWTYPE; s public.support_intents%ROWTYPE;\nBEGIN\n  SELECT * INTO c FROM public.carts WHERE id=NEW.cart_id FOR UPDATE;\n  SELECT * INTO i FROM public.cart_items WHERE id=NEW.cart_item_id FOR UPDATE;\n  SELECT * INTO s FROM public.support_intents WHERE id=NEW.support_intent_id FOR UPDATE;\n  IF c.id IS NULL OR i.id IS NULL OR s.id IS NULL OR i.cart_id<>c.id OR s.cart_item_id<>i.id\n    OR c.status<>'ACTIVE' OR s.status<>'ACTIVE' OR s.privacy_state<>'ACTIVE'\n    OR c.expires_at<=clock_timestamp() OR s.expires_at<=clock_timestamp()\n    OR c.version<>NEW.expected_cart_version OR i.version<>NEW.expected_item_version OR s.version<>NEW.expected_intent_version\n    OR c.market<>NEW.market OR c.currency<>NEW.currency\n    OR NEW.occurred_at<GREATEST(c.updated_at,i.updated_at,s.updated_at) THEN\n    RAISE EXCEPTION 'cart mutation must bind the current editable head' USING ERRCODE='23514';\n  END IF;\n  IF NEW.mutation_kind<>'QUANTITY' AND (NEW.quantity<>i.quantity OR NEW.observed_price_id<>i.observed_price_id) THEN\n    RAISE EXCEPTION 'private or removal mutation cannot change the item price or quantity' USING ERRCODE='23514';\n  END IF;\n  IF NEW.mutation_kind<>'PERSONALIZATION' AND (\n    NEW.display_mode<>i.display_mode OR NEW.has_fan_message<>i.has_fan_message OR NEW.fan_message_locale<>s.fan_message_locale\n    OR NEW.private_material_hash<>public.cart_private_material_hash(s.fan_message_ciphertext,s.display_mode,s.display_name_ciphertext,s.encrypted_data_key,s.encryption_key_version,s.fan_message_locale)) THEN\n    RAISE EXCEPTION 'quantity or removal mutation cannot replace private material' USING ERRCODE='23514';\n  END IF;\n  IF NOT EXISTS (SELECT 1 FROM public.prices price JOIN public.price_books book ON book.id=price.price_book_id AND book.revision=price.price_book_revision\n    WHERE price.id=NEW.observed_price_id AND price.gift_variant_id=i.gift_variant_id AND book.market=c.market AND book.currency=c.currency) THEN\n    RAISE EXCEPTION 'cart mutation price must belong to its variant and scope' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
+      "name": "assert_cart_private_access",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_cart_private_access()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NOT EXISTS (SELECT 1 FROM public.carts c JOIN public.cart_items i ON i.cart_id=c.id JOIN public.support_intents s ON s.cart_item_id=i.id\n    JOIN public.audit_logs audit ON audit.id=NEW.access_audit_id\n    WHERE c.id=NEW.cart_id AND i.id=NEW.cart_item_id AND s.id=NEW.support_intent_id\n      AND c.version=NEW.cart_version AND i.version=NEW.item_version AND s.version=NEW.intent_version\n      AND c.status='ACTIVE' AND s.status='ACTIVE' AND s.privacy_state='ACTIVE'\n      AND c.expires_at>clock_timestamp() AND s.expires_at>clock_timestamp()\n      AND audit.actor_type='SYSTEM' AND audit.task_name='cart-private-editor' AND audit.action='AUTHORIZE_PRIVATE_EDIT_READ'\n      AND audit.subject_type='SUPPORT_INTENT' AND audit.subject_id=s.id AND audit.field_category='SUPPORT_INTENT_PRIVATE'\n      AND audit.outcome='SUCCEEDED' AND audit.request_id=NEW.request_id AND audit.correlation_id=NEW.correlation_id) THEN\n    RAISE EXCEPTION 'cart private access must bind an authorized current intent and audit' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND; $function$"
     },
     {
       "name": "assert_cart_support_intent_consistency",
@@ -53520,6 +54781,16 @@
       "volatility": "IMMUTABLE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.canonical_publication_json(value jsonb)\n RETURNS text\n LANGUAGE plpgsql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE result text;\nBEGIN\n  IF jsonb_typeof(value)='object' THEN\n    SELECT '{'||coalesce(string_agg(to_json(key)::text||':'||public.canonical_publication_json(child),',' ORDER BY key COLLATE \"C\"),'')||'}' INTO result FROM jsonb_each(value) AS entry(key,child);\n  ELSIF jsonb_typeof(value)='array' THEN\n    SELECT '['||coalesce(string_agg(public.canonical_publication_json(child),',' ORDER BY position),'')||']' INTO result FROM jsonb_array_elements(value) WITH ORDINALITY AS entry(child,position);\n  ELSE result:=value::text;\n  END IF;\n  RETURN result;\nEND; $function$"
+    },
+    {
+      "name": "cart_private_material_hash",
+      "identityArguments": "message bytea, display_mode text, display_name bytea, data_key bytea, key_version text, message_locale text",
+      "resultType": "sha256_hex",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.cart_private_material_hash(message bytea, display_mode text, display_name bytea, data_key bytea, key_version text, message_locale text)\n RETURNS sha256_hex\n LANGUAGE sql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$ SELECT encode(sha256(convert_to(jsonb_build_array(encode(message,'hex'),display_mode,encode(display_name,'hex'),encode(data_key,'hex'),key_version,message_locale)::text,'UTF8')),'hex')::public.sha256_hex $function$"
     },
     {
       "name": "content_authoring_revision_sealed",

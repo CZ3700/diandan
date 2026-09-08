@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-08T13:16:17.444641+00:00",
+  "secretScan": {
+    "command": "mise exec node@24.20.0 -- corepack pnpm security:secrets",
+    "log": "secrets-final-2.log",
+    "exitCode": 0,
+    "observation": "Completed unified exec session 20678 exit 0 after final font/CSS/source updates"
+  },
+  "dependencyAudit": {
+    "log": "dependency-audit.log",
+    "level": "high",
+    "exitCode": 0,
+    "result": "No known vulnerabilities found",
+    "scope": "Earlier in this task; dependency manifests and lock unchanged since that pass"
+  },
+  "lockfile": {
+    "unchangedFromBase": "c6ca6ba",
+    "sha256": "ab3aaf4030b3353fff8d268300967678ba8186cf0746217ae8bf5067c2cfe06d"
+  }
+}

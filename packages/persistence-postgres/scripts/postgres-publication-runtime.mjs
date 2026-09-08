@@ -101,6 +101,21 @@ async function verifySeoPurgeRollback({
       )
     ).rows[0].jobs;
   const before = await jobs();
+  const editReverted = await runMigrations({
+    clientConfig,
+    workspaceRoot,
+    command: { direction: "down", confirmVersion: "0024" },
+  });
+  equal(
+    [editReverted.revertedVersions, editReverted.currentVersion],
+    [["0024"], "0023"],
+    "0024 rolls back before the existing cart, daily and SEO probes",
+  );
+  equal(
+    await jobs(),
+    before,
+    "0024 down preserves every existing purge job exactly",
+  );
   const cartReverted = await runMigrations({
     clientConfig,
     workspaceRoot,
@@ -520,7 +535,7 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
               "SELECT max(version) AS version FROM public.schema_migrations",
             )
           ).rows[0].version,
-          "0023",
+          "0024",
           "runtime business checks ran against the current migration head",
         );
         equal(

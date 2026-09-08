@@ -251,6 +251,7 @@ test("safe item read preserves every persisted row without selecting any private
     /ciphertext|encrypted_data_key|encryption_key_version/iu,
   );
   expect(sql).toContain("LEFT JOIN");
+  expect(sql).toContain("intent.status IS DISTINCT FROM 'CANCELED'");
 });
 
 test("append refuses an expired, locked, changed or foreign cart before writing either child", async () => {

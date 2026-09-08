@@ -1,3 +1,4 @@
+import { cartEditPaths } from "./cart-edit-openapi.js";
 import { managementCenterPaths } from "./management-center-openapi.js";
 import { cartRuntimePaths } from "./cart-runtime-openapi.js";
 import { storefrontCommercePaths } from "./storefront-commerce-openapi.js";
@@ -202,6 +203,7 @@ export function createContractArtifactDocuments(): Readonly<{
       },
       paths: {
         ...cartRuntimePaths(),
+        ...cartEditPaths(),
         ...managementCenterPaths(),
         ...storefrontHomepagePaths(),
         ...storefrontCommercePaths(),

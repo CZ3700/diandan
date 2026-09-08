@@ -1,0 +1,37 @@
+{
+  "baseline": "c6ca6ba",
+  "oldRoots": 448,
+  "addedRoots": [
+    "CartEditCommand",
+    "CartEditConfirmPrivateCommand",
+    "CartEditEvent",
+    "CartEditFailure",
+    "CartEditFindMutationReceiptCommand",
+    "CartEditItemSnapshot",
+    "CartEditLoadItemCommand",
+    "CartEditLoadPrivateCommand",
+    "CartEditMutationReceipt",
+    "CartEditPrivateSnapshot",
+    "CartEditRemoveCommand",
+    "CartEditRemoveRequest",
+    "CartEditResponse",
+    "CartEditUpdateCommand",
+    "CartEditUpdateRequest",
+    "CartEditWriteMutationCommand",
+    "CartEditorReadCommand",
+    "CartEditorReadRequest",
+    "CartEditorResponse",
+    "CartRuntimeCurrentResponse"
+  ],
+  "changedOldRoots": [],
+  "changedOldComponents": [],
+  "addedPaths": [
+    "/api/v1/cart/items/{itemId}",
+    "/api/v1/cart/items/{itemId}/editor"
+  ],
+  "changedOldPaths": [
+    "/api/v1/cart",
+    "/api/v1/cart/items",
+    "/api/v1/carts"
+  ]
+}

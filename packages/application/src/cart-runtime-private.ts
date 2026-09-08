@@ -3,7 +3,7 @@ import { Buffer } from "node:buffer";
 import {
   generateSupportIntentKeyResponseSchema,
   keyManagementPortResponseSchema,
-  type CartRuntimeAddCommand,
+  type CartEditorContent,
   type CartRuntimePrivateContent,
 } from "@fan-support/contracts";
 import type {
@@ -15,7 +15,7 @@ import { CartRuntimeRepositoryError } from "@fan-support/persistence-port";
 /** Encryption is completed before opening the atomic cart write transaction. */
 export async function encryptCartRuntimeIntent(
   keys: KeyManagementPort & SupportIntentKeyPort,
-  command: CartRuntimeAddCommand,
+  command: CartEditorContent,
   subjectId: string,
 ): Promise<CartRuntimePrivateContent> {
   const fields: {

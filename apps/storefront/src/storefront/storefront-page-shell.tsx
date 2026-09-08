@@ -2,6 +2,8 @@ import "server-only";
 import { Suspense, type ComponentProps, type ReactNode } from "react";
 import { PolicyLinks } from "./commerce-context";
 import { readCommerceContext } from "./storefront-page-reads";
+import { CartProvider } from "./cart-provider";
+import "./cart.css";
 import { SiteHeader } from "./site-header";
 import { SiteFooter } from "./page-parts";
 
@@ -27,10 +29,12 @@ export function StorefrontPageShell({
 }: ShellProps) {
   return (
     <div className="storefront" lang={props.locale}>
-      <SiteHeader {...props} active={active} />
-      <main id="main-content" tabIndex={-1}>
-        {children}
-      </main>
+      <CartProvider key={props.locale} locale={props.locale}>
+        <SiteHeader {...props} active={active} />
+        <main id="main-content" tabIndex={-1}>
+          {children}
+        </main>
+      </CartProvider>
       <SiteFooter
         {...props}
         policyLinks={

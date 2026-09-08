@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 1,
+  "reason": "Preserve successful first refresh before current-copy font resource regeneration",
+  "capturedAt": "2026-09-08T12:49:31.254819+00:00",
+  "files": [
+    {
+      "path": "output/playwright/p2-04/README.md",
+      "sha256": "890f44c08c47d2afe305eaec296b0c4a3c9eb709a615dffcae75c8ad6d4e3008"
+    },
+    {
+      "path": "output/playwright/p2-04/axe-results/baseline-desktop.json",
+      "sha256": "254375e6f795dc1cf855e93994ad31941a3340028cda4991edf6f44b736ef74c"
+    },
+    {
+      "path": "output/playwright/p2-04/axe-results/baseline-mobile.json",
+      "sha256": "3f9fc46ce65d36cf7a94089b3c3cdd3ecd286a6e4aad7c60f9de0f04f534db8d"
+    },
+    {
+      "path": "output/playwright/p2-04/axe-results/cart-line.json",
+      "sha256": "dacb246a92f77b3c6d6fc2651ee00398a3723c67cfcf40bbbc898d6bf70c8de3"
+    },
+    {
+      "path": "output/playwright/p2-04/axe-results/empty-error.json",
+      "sha256": "1da617106d700282c7f0fc07eb4b895a5c6cf64e3a7ff58e83920d1158700fbc"
+    },
+    {
+      "path": "output/playwright/p2-04/axe-results/image-error.json",
+      "sha256": "2b6e0f12f2fb44cf256f0cea8ebcfeb09f63e7b2ff208963e28cf0e2afcad1e9"
+    },
+    {
+      "path": "output/playwright/p2-04/axe-results/loading.json",
+      "sha256": "4d564496bd16d5c14ed7ea7e7101e37a7d4a956b638a06c51a904978e09f57ef"
+    },
+    {
+      "path": "output/playwright/p2-04/axe-results/pseudo.json",
+      "sha256": "a931d34b932b7b77e618e4c60f89f4575e565779e88eddd421b35ba7b5c0cf2f"
+    },
+    {
+      "path": "output/playwright/p2-04/axe-results/reduced-motion.json",
+      "sha256": "ed0a61fcc34e5b6c0fcce9e39b36f0c5e7d7179ed858d82d5140544c2d9015ee"
+    },
+    {
+      "path": "output/playwright/p2-04/axe-results/timeline.json",
+      "sha256": "0b82dd6bf886db12db0f63218f9d4b2aaade3906a734a770d20a880d6d97ae47"
+    },
+    {
+      "path": "output/playwright/p2-04/axe-results/unavailable.json",
+      "sha256": "a593fb21b96c345785ed528e945d18c05347b074e7debf1031c4e15e1a4821ab"
+    },
+    {
+      "path": "output/playwright/p2-04/browser-results.json",
+      "sha256": "cb2166c13a5929dd71762a332dc45cf6a4c15dff5e2c71ba372e5bfd56821e92"
+    },
+    {
+      "path": "output/playwright/p2-04/interactions/1440x900-en-hover.png",
+      "sha256": "e94aa7a2a7719ea7bcf7627baf697cccca1db0a931fc187e00ed038e1b438094"
+    },
+    {
+      "path": "output/playwright/p2-04/logs/build-storefront.log",
+      "sha256": "4124555b94a3ccfa084c4dfe7f6a7cb5dace650f0ff00e7e6643eec6a0383d0c"
+    },
+    {
+      "path": "output/playwright/p2-04/logs/build-ui.log",
+      "sha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8"
+    },
+    {
+      "path": "output/playwright/p2-04/logs/server-preview.log",
+      "sha256": "9b927866fc9566926eb2ffb9d91238e52d7ec9ec68d4e0ec0e924a2a31f261b0"
+    },
+    {
+      "path": "output/playwright/p2-04/logs/server-production.log",
+      "sha256": "dcb62ae144004c51145a66db20da62bad86176513d3b4a3bf25ddabbd4de36df"
+    },
+    {
+      "path": "output/playwright/p2-04/logs/server-staging.log",
+      "sha256": "bd5eefe70ef7f0a75cb94ad7a8c81eb75b11a698e32cbf1dc503a872968805e6"
+    },
+    {
+      "path": "output/playwright/p2-04/reduced-motion/1440x900-en.png",
+      "sha256": "76024aeffb42410fa9a71ec19e4844eaaea8b53cf79b85e0a915915e87ebb35b"
+    },
+    {
+      "path": "output/playwright/p2-04/reduced-motion/390x844-en.png",
+      "sha256": "d6be4c23036ab6eb37dbda81d2c6d6d5069d71763265de17fa7007499c692b7a"
+    },
+    {
+      "path": "output/playwright/p2-04/responsive/1023x900-en-XA.png",
+      "sha256": "be11759f7bbd5461571515dcd82a06cbf17c0eabaa19b86fc5fb94e374a59214"
+    },
+    {
+      "path": "output/playwright/p2-04/responsive/767x900-pt.png",
+      "sha256": "7fa3a9bfc36ad6c86f863a1700cbe9eee9d0b8e99e2308f894f96125861a37c0"
+    },
+    {
+      "path": "output/playwright/p2-04/rtl/1440x900-en.png",
+      "sha256": "908ae7b3a52a280cce443286e2517137c5335c9f15fa081d38847fea8bdf35a9"
+    },
+    {
+      "path": "output/playwright/p2-04/rtl/390x844-en.png",
+      "sha256": "39936c3e84aedeb7f93d774b00c497ca5693dbdad5aaf8d44e67d79e76a781cd"
+    },
+    {
+      "path": "output/playwright/p2-04/screenshots.sha256",
+      "sha256": "89a0c5c0f46c9468d5e135a4a6e15721f7b7b5beb44d848fb0a319fb9cad8bc3"
+    },
+    {
+      "path": "output/playwright/p2-04/states/390x844-en.png",
+      "sha256": "de165241341c56d107f3258781e3186527f0827980abf78845529e5bcc0b8306"
+    },
+    {
+      "path": "output/playwright/p2-04/stress/320x800-en-XA.png",
+      "sha256": "aab4ff7728a331d472133a4e319c5132b6d8e7b49d863b4b4269cc4c2698124f"
+    },
+    {
+      "path": "output/playwright/p2-04/stress/320x800-pt-long.png",
+      "sha256": "bba454c78cd46246921cef020934dedf70570ab9593e1aa2cade455a4d752b08"
+    },
+    {
+      "path": "output/playwright/p2-04/viewports/1024x768-zh-CN.png",
+      "sha256": "f3eebfb7354acc273ab176d464b4b66f4ecdc7e62847c43269f1ae5886bdf082"
+    },
+    {
+      "path": "output/playwright/p2-04/viewports/1440x900-ja.png",
+      "sha256": "b0e55f70f0e388c1f99c0408610c8237ef60dbb3a3b3566922f02d6759dbdad6"
+    },
+    {
+      "path": "output/playwright/p2-04/viewports/1920x1080-es.png",
+      "sha256": "fa7bbe23c814a29d82b90f7540ab97f9f61509136602299ac59529da17344f1b"
+    },
+    {
+      "path": "output/playwright/p2-04/viewports/360x800-en.png",
+      "sha256": "deb21036e29bfe7ee2bbf44d0f3f7b370c254d2578f8969663f530ea0c934a53"
+    },
+    {
+      "path": "output/playwright/p2-04/viewports/390x844-vi.png",
+      "sha256": "465cccbf08d6e42ba9a92c8dd414b069ebda1948920702a2d6d1bce9c74f8da7"
+    },
+    {
+      "path": "output/playwright/p2-04/viewports/768x1024-th.png",
+      "sha256": "addd8f241ba7111c1b0dad09bac60796a597c469fe57b56b578869e2649cbfe2"
+    },
+    {
+      "path": "output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
+      "sha256": "11641640511eebf681a2b414b2cbabfb3f07dc55c07e7711d5de38ec9fcf0a59"
+    },
+    {
+      "path": "output/playwright/p2-04/zoom/google-chrome-baseline-pt.png",
+      "sha256": "8f905c8969f182c1461aa4d02f360733a8b8d50595c2334a73fa75970abcf02f"
+    },
+    {
+      "path": "output/playwright/p2-05/README.md",
+      "sha256": "0c0b289023dd5dbe7d33c18b14c9b8636f5babc57a45654e843a8832083c9758"
+    },
+    {
+      "path": "output/playwright/p2-05/axe-results/baseline-desktop.json",
+      "sha256": "1e2ed887bf0504baf75d3005621d2a2e3333f3cad73b94076a2472c36de05382"
+    },
+    {
+      "path": "output/playwright/p2-05/axe-results/baseline-mobile.json",
+      "sha256": "e8a27deab0777c342292e2be1bad86a4894f493edd788b845b873333659b535e"
+    },
+    {
+      "path": "output/playwright/p2-05/axe-results/pseudo-320.json",
+      "sha256": "8e47385a2fdf976a8234eb7c7a426d43240330454333dd71210332683a790d39"
+    },
+    {
+      "path": "output/playwright/p2-05/browser-results.json",
+      "sha256": "4d94386b2950a9aa2773394eed5c0b54b07ea3948be9b717d66193624f523539"
+    },
+    {
+      "path": "output/playwright/p2-05/hero/1440x900-end.png",
+      "sha256": "575af8798fb1100c478fc172d9efe81cb9f0a91b86fce07ecfede19a81d2cae0"
+    },
+    {
+      "path": "output/playwright/p2-05/hero/1440x900-mid.png",
+      "sha256": "9ed6c16abc8adf723d54f2635644ce7d075dbd30c24dde723b4ad241e652f78a"
+    },
+    {
+      "path": "output/playwright/p2-05/hero/1440x900-start.png",
+      "sha256": "ce716e9d593c5f9a8bd7cd8f5afd6b33d8d3b656d5b5cacf270cf4bf42bc8cb8"
+    },
+    {
+      "path": "output/playwright/p2-05/hero/390x844-end.png",
+      "sha256": "277f3bb5bdfab76b5e56545e348e421dd8d8689ab9cf0b8b98040d4f7aa32044"
+    },
+    {
+      "path": "output/playwright/p2-05/hero/390x844-mid.png",
+      "sha256": "f8f862a92aa998338fec85a9471a0a5b06618e48d6f745ea19162cc3c05cb3e5"
+    },
+    {
+      "path": "output/playwright/p2-05/hero/390x844-start.png",
+      "sha256": "5067429ab8295478a8ac2eda5c7301b3312a0e8e09d9e6d6e73211897af98072"
+    },
+    {
+      "path": "output/playwright/p2-05/logs/build-storefront.log",
+      "sha256": "e7b376b4a6bb3da454608c6a1ab0bd387b535062ee349ea53e19cb5a6d24d73b"
+    },
+    {
+      "path": "output/playwright/p2-05/logs/build-ui.log",
+      "sha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8"
+    },
+    {
+      "path": "output/playwright/p2-05/logs/server-preview.log",
+      "sha256": "7a291b453238fe796e5ee5fac9ad920a25f331417633fc2589e2e50727f86280"
+    },
+    {
+      "path": "output/playwright/p2-05/logs/server-production.log",
+      "sha256": "4e30331faefc469f1dfd22414169f639b54d26f2dd2ff84bb2ab1263675ecbfa"
+    },
+    {
+      "path": "output/playwright/p2-05/logs/server-staging.log",
+      "sha256": "8a4deda4224163a9861d82e24ef8567f009127fc9ab12f76dedc9cc8ecc35fa3"
+    },
+    {
+      "path": "output/playwright/p2-05/motion/add-confirmed-390.png",
+      "sha256": "bb12e022473d29a537b63942eb3507d2e86751940d4517278b3b25bbd3910ce9"
+    },
+    {
+      "path": "output/playwright/p2-05/motion/idol-keyboard-instant-1440.png",
+      "sha256": "32da896b16ddb55039c52d75f1d2a0a7c456ecf5fcad152267eebb19f28b357e"
+    },
+    {
+      "path": "output/playwright/p2-05/motion/idol-latest-wins-1440.png",
+      "sha256": "261191bf7c68a0a865aa71cdc9eacf63a25b112d01d1fe590fc7162d43dda86e"
+    },
+    {
+      "path": "output/playwright/p2-05/motion/idol-mouse-spatial-1440.png",
+      "sha256": "0bd7a996bee6926626b03ea17bc70083662df1ccd2af6215741f413966774e33"
+    },
+    {
+      "path": "output/playwright/p2-05/motion/idol-touch-opacity-390.png",
+      "sha256": "84e66060476d9c738363f04c33bb28f643efabbff8b6427fc6c40968e36d1aaa"
+    },
+    {
+      "path": "output/playwright/p2-05/motion/success-end-1440.png",
+      "sha256": "fe03e4379ae0b1f159c210572b6e16e16566097553e3298a9c4d0ebbb8687d60"
+    },
+    {
+      "path": "output/playwright/p2-05/raw/motion-checks.json",
+      "sha256": "9bba511566a247cfd8413a3faf5ad8e472419e2f67038e256d3b6fbf13a3e66b"
+    },
+    {
+      "path": "output/playwright/p2-05/raw/reduced-motion.json",
+      "sha256": "80292ba07b123f73573121bec6eede2ddc14eac20817f236e6f27801b8ed28b3"
+    },
+    {
+      "path": "output/playwright/p2-05/raw/scenario-results.json",
+      "sha256": "bfcbcd586d09310af0e6f9ad1c7f400e6b4a2f6fe1a6dcc87d3c3e0366d4e3e9"
+    },
+    {
+      "path": "output/playwright/p2-05/reduced-motion/1440x900.png",
+      "sha256": "97aaca202347f51bc64c6a7f52fb18aad12c6e5299f60211b59746e1763e85a9"
+    },
+    {
+      "path": "output/playwright/p2-05/reduced-motion/390x844.png",
+      "sha256": "6ffc7a0f84f5f46e683d0b336fc298d2750ecb51b05d08fee3fecbf8f169e8a8"
+    },
+    {
+      "path": "output/playwright/p2-05/screenshots.sha256",
+      "sha256": "b003360f19a93b3a8f10481639c0fee9ba33b406ed7f21eb17a0b16f1bdb5890"
+    },
+    {
+      "path": "output/playwright/p2-05/stress/320x800-en-XA.png",
+      "sha256": "d2d1c42cadf0af8bea9f5323f77ad4b672fc2d9a98b2a296ed921a3127100e14"
+    },
+    {
+      "path": "output/playwright/p2-05/stress/320x800-pt-long.png",
+      "sha256": "88669082c576ba8410dc519a9d06ae2864a30371e03581e7dd40e7d61fd98c38"
+    },
+    {
+      "path": "output/playwright/p2-05/viewports/1024x768-zh-CN.png",
+      "sha256": "f7d662d97f6a3f271a7d552cab142b0320309f8aa0f163c910a2ac1a3bfb5d94"
+    },
+    {
+      "path": "output/playwright/p2-05/viewports/1440x900-ja.png",
+      "sha256": "ba0ff4f6016ab56e33c6a8dcd0b5946aad5d4931727ad6c0f07bd44932dba3d6"
+    },
+    {
+      "path": "output/playwright/p2-05/viewports/1920x1080-es.png",
+      "sha256": "d36a9becbd9951b1dbfb975003b442bf19de5a231f17594da0031c8b806177a7"
+    },
+    {
+      "path": "output/playwright/p2-05/viewports/360x800-en.png",
+      "sha256": "aed65a6e0846cc3d770caa151b35a0c1611c36dc04a2d4ef0c0879860f47c7bf"
+    },
+    {
+      "path": "output/playwright/p2-05/viewports/390x844-vi.png",
+      "sha256": "51d35e6dae454aefd2e4970e675fe5ebd796bd518e12ce7e84f00942777628f4"
+    },
+    {
+      "path": "output/playwright/p2-05/viewports/768x1024-th.png",
+      "sha256": "4c74ed2577b828e445d2c45f45628fe03a575257f5a8eee8b41e70d707cec237"
+    }
+  ]
+}

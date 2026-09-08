@@ -85,6 +85,39 @@ const addBody = {
   fanMessageLocale: "en",
 };
 
+test("a historical add replay for a removed item remains an explicit permanent conflict", async () => {
+  const { app, initialize, useCases } = setup();
+  try {
+    const first = await initialize();
+    useCases.add.mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "CART_ITEM_REMOVED",
+    });
+    const response = await app.inject({
+      method: "POST",
+      url: "/api/v1/cart/items",
+      headers: {
+        origin,
+        "content-type": "application/json",
+        cookie: (first.headers["set-cookie"] as string).split(";")[0]!,
+        "x-csrf-token": first.headers["x-csrf-token"] as string,
+        "idempotency-key": "cart-old-removed-add-001",
+      },
+      payload: addBody,
+    });
+    expect(response.statusCode).toBe(409);
+    expect(response.json()).toEqual({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "CART_ITEM_REMOVED",
+    });
+    expect(useCases.add).toHaveBeenCalledTimes(1);
+  } finally {
+    await app.close();
+  }
+});
+
 test("initialize issues a secure opaque cookie while only digest candidates reach Application", async () => {
   const { app, initialize, useCases } = setup();
   try {

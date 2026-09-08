@@ -1,0 +1,486 @@
+{
+  "schemaVersion": 1,
+  "status": "INCOMPLETE_RETAINED_WITH_KEYBOARD_EVIDENCE",
+  "source": "output/checks/p4-02-cart-storefront/run-2026-09-08T12-20-02.282Z/browser-attempt-5/browser-results.json",
+  "entries": [
+    {
+      "name": "en-390-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "zh-CN-390-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "th-390-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "vi-390-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ja-390-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "es-390-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pt-390-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "en-1440-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "zh-CN-1440-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "th-1440-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "vi-1440-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ja-1440-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "es-1440-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pt-1440-drawer",
+      "rules": [
+        {
+          "id": "aria-hidden-focus",
+          "impact": "serious",
+          "targets": [
+            [".storefront-skip"],
+            [".storefront-header"],
+            [
+              "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+            ],
+            [
+              "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+            ],
+            [".cart-footer[aria-hidden=\"true\"]"],
+            ["footer"],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+            ],
+            [
+              "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "Each drawer retains eight hidden-background node targets and two Base UI inside focus sentinels; explicit two-direction keyboard checks and Escape return passed. No screen-reader or physical-device claim.",
+  "focusCycles": [
+    {
+      "locale": "en",
+      "viewport": 390,
+      "focusableCount": 13,
+      "stepsEachDirection": 20,
+      "status": "PASS"
+    },
+    {
+      "locale": "en",
+      "viewport": 1440,
+      "focusableCount": 13,
+      "stepsEachDirection": 20,
+      "status": "PASS"
+    }
+  ]
+}

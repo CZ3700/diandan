@@ -74,6 +74,10 @@ import { registerFastifyObservability } from "@fan-support/observability/fastify
 import { AppModule } from "./app.module.js";
 import { registerCartRoute, type CartRouteDependencies } from "./cart-route.js";
 import {
+  registerCartEditRoute,
+  type CartEditRouteDependencies,
+} from "./cart-edit-route.js";
+import {
   registerCatalogDirectoryRoute,
   type CatalogDirectoryRouteOptions,
 } from "./catalog-directory-route.js";
@@ -96,6 +100,7 @@ export type ApiLifecycleResource = Readonly<{
 
 export type CreateApiApplicationOptions = Readonly<{
   cartRoute?: CartRouteDependencies;
+  cartEditRoute?: CartEditRouteDependencies;
   cartRuntime?: ApiLifecycleResource;
   managementCenterRoute?: ManagementCenterRouteDependencies;
   managementCenterRuntime?: ApiLifecycleResource;
@@ -189,20 +194,20 @@ export async function createApiApplication(
     logger,
   });
   registerApiLifecycle(adapter, options.cartRuntime, "API cart");
+  const unavailable = (_request: unknown, reply: FastifyReply) =>
+    reply
+      .header("cache-control", "private, no-store")
+      .header("x-robots-tag", "noindex, nofollow")
+      .header("referrer-policy", "no-referrer")
+      .code(503)
+      .send({
+        schemaVersion: 1,
+        outcome: "FAILURE",
+        code: "TEMPORARY_UNAVAILABLE",
+      });
   if (options.cartRoute)
     registerCartRoute(adapter.getInstance(), options.cartRoute);
   else {
-    const unavailable = (_request: unknown, reply: FastifyReply) =>
-      reply
-        .header("cache-control", "private, no-store")
-        .header("x-robots-tag", "noindex, nofollow")
-        .header("referrer-policy", "no-referrer")
-        .code(503)
-        .send({
-          schemaVersion: 1,
-          outcome: "FAILURE",
-          code: "TEMPORARY_UNAVAILABLE",
-        });
     for (const [url, method] of [
       ["/api/v1/carts", "POST"],
       ["/api/v1/cart", "GET"],
@@ -218,6 +223,22 @@ export async function createApiApplication(
       });
     }
   }
+  if (options.cartEditRoute)
+    registerCartEditRoute(adapter.getInstance(), options.cartEditRoute);
+  else
+    for (const [url, method] of [
+      ["/api/v1/cart/items/:itemId", "PATCH"],
+      ["/api/v1/cart/items/:itemId", "DELETE"],
+      ["/api/v1/cart/items/:itemId/editor", "POST"],
+    ] as const)
+      adapter.getInstance().route({
+        url,
+        method,
+        bodyLimit: 8192,
+        exposeHeadRoute: false,
+        onRequest: async (request, reply) => unavailable(request, reply),
+        handler: unavailable,
+      });
   registerApiLifecycle(
     adapter,
     options.adminSessionRuntime,

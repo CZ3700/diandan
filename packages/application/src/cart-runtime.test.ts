@@ -357,3 +357,18 @@ test("ambiguous commit retains reconciliation status instead of claiming definit
     code: "TRANSACTION_OUTCOME_UNKNOWN",
   });
 });
+
+test("replaying an add after its item was removed never revives the line", async () => {
+  const h = harness();
+  expect(await h.app.add(h.f.command, h.context)).toMatchObject({
+    action: "ADDED",
+  });
+  h.repositories.cartRuntime.listItems.mockResolvedValue([]);
+  expect(await h.app.add(h.f.command, h.context)).toEqual({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "CART_ITEM_REMOVED",
+  });
+  expect(h.appended).toHaveLength(1);
+  expect(h.keyManagement.generateSupportIntentKey).toHaveBeenCalledOnce();
+});

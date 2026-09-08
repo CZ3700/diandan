@@ -321,6 +321,8 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/translation-workspace/read",
     "/api/v1/cart",
     "/api/v1/cart/items",
+    "/api/v1/cart/items/{itemId}",
+    "/api/v1/cart/items/{itemId}/editor",
     "/api/v1/carts",
     "/api/v1/content-review-preview/read",
     "/api/v1/gift-content/{handle}",

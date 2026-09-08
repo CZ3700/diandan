@@ -10,24 +10,20 @@ import {
   cartRuntimeAddCommandSchema,
   cartRuntimeHeaderSchema,
   cartRuntimeInitializeCommandSchema,
-  cartRuntimeItemRecordSchema,
   cartRuntimeReadCommandSchema,
   cartRuntimeReceiptSchema,
   cartRuntimeRequestContextSchema,
-  cartRuntimeResponseSchema,
+  cartRuntimeCurrentResponseSchema,
   persistencePortResponseSchema,
   type CartRuntimeAddCommand,
   type CartRuntimeFailureCode,
   type CartRuntimeHeader,
   type CartRuntimeRequestContext,
-  type CartRuntimeResponse,
-  type StorefrontGiftResponse,
-  type SupportedLocale,
+  type CartRuntimeCurrentResponse,
 } from "@fan-support/contracts";
 import {
   canonicalCartRuntimeRequest,
   decideCartRuntimeAdd,
-  projectCartRuntimeView,
 } from "@fan-support/cart";
 import type {
   KeyManagementPort,
@@ -40,7 +36,10 @@ import {
   type CartRuntimeTransactionManager,
   type JsonValue,
 } from "@fan-support/persistence-port";
-import { createStorefrontCommerceUseCases } from "./storefront-commerce.js";
+import {
+  readCartRuntimeView as readView,
+  readCartRuntimeGift as currentGift,
+} from "./cart-runtime-view.js";
 import { encryptCartRuntimeIntent } from "./cart-runtime-private.js";
 
 const fail = (code: CartRuntimeFailureCode) =>
@@ -94,15 +93,20 @@ async function beginAdd(
   if (!stored) return reject("TEMPORARY_UNAVAILABLE");
   const receipt = cartRuntimeReceiptSchema.parse(stored);
   if (receipt.cartId !== cart.id) return reject("TEMPORARY_UNAVAILABLE");
+  const view = await readView(repos, cart, command.presentationLocale);
   return {
     kind: "REPLAY",
-    response: {
-      schemaVersion: 1,
-      outcome: "SUCCESS",
-      action: "REPLAYED",
-      cartItemId: receipt.cartItemId,
-      cart: await readView(repos, cart, command.presentationLocale),
-    },
+    response: view.items.some(
+      (item) => item.id.toLowerCase() === receipt.cartItemId.toLowerCase(),
+    )
+      ? {
+          schemaVersion: 1,
+          outcome: "SUCCESS",
+          action: "REPLAYED",
+          cartItemId: receipt.cartItemId,
+          cart: view,
+        }
+      : { schemaVersion: 1, outcome: "FAILURE", code: "CART_ITEM_REMOVED" },
   } as const;
 }
 function usable(cart: CartRuntimeHeader | null): CartRuntimeHeader {
@@ -130,60 +134,6 @@ async function authenticate(
       accesses: context.accesses,
     }),
   );
-}
-async function currentGift(
-  repos: CartRuntimeRepositories,
-  cart: CartRuntimeHeader,
-  locale: SupportedLocale,
-  target: { giftId: string; giftVariantId: string; idolId: string },
-): Promise<StorefrontGiftResponse> {
-  const resolved = await repos.cartRuntime.resolveGiftHandle({
-    schemaVersion: 1,
-    giftId: target.giftId as CartRuntimeAddCommand["giftId"],
-    giftVariantId:
-      target.giftVariantId as CartRuntimeAddCommand["giftVariantId"],
-  });
-  if (!resolved)
-    return { schemaVersion: 1, outcome: "FAILURE", code: "NOT_FOUND" };
-  // Bind the established publication/price validator to this already-open write transaction.
-  const reader = createStorefrontCommerceUseCases({
-    transactions: {
-      runInStorefrontCommerceTransaction: (work) =>
-        work({ storefrontCommerce: repos.storefrontCommerce }),
-    },
-  });
-  const current = await reader.readGift({
-    schemaVersion: 1,
-    handle: resolved.handle,
-    locale,
-    market: cart.market,
-    currency: cart.currency,
-    idolId: target.idolId,
-  });
-  if (current.outcome === "FAILURE" && current.code === "CONTENT_UNAVAILABLE")
-    reject(current.code);
-  return current;
-}
-async function readView(
-  repos: CartRuntimeRepositories,
-  cart: CartRuntimeHeader,
-  locale: SupportedLocale,
-) {
-  const stored = await repos.cartRuntime.listItems({
-    schemaVersion: 1,
-    cartId: cart.id,
-  });
-  const items = [];
-  for (const row of stored) {
-    const item = cartRuntimeItemRecordSchema.parse(row);
-    items.push({ item, current: await currentGift(repos, cart, locale, item) });
-  }
-  return projectCartRuntimeView({
-    schemaVersion: 1,
-    cart,
-    presentationLocale: locale,
-    items,
-  });
 }
 function persistenceSuccess(input: unknown) {
   const result = persistencePortResponseSchema.parse(input);
@@ -243,9 +193,9 @@ export function createCartRuntimeUseCases({
   }
   async function execute(
     work: () => Promise<unknown>,
-  ): Promise<CartRuntimeResponse> {
+  ): Promise<CartRuntimeCurrentResponse> {
     try {
-      return cartRuntimeResponseSchema.parse(await work());
+      return cartRuntimeCurrentResponseSchema.parse(await work());
     } catch (error) {
       if (error instanceof CartRuntimeRepositoryError) return fail(error.code);
       if (
@@ -260,7 +210,7 @@ export function createCartRuntimeUseCases({
     async initialize(
       input: unknown,
       trusted: unknown,
-    ): Promise<CartRuntimeResponse> {
+    ): Promise<CartRuntimeCurrentResponse> {
       const command = cartRuntimeInitializeCommandSchema.safeParse(input),
         context = cartRuntimeRequestContextSchema.safeParse(trusted);
       if (!command.success) return fail("INVALID_COMMAND");
@@ -294,7 +244,10 @@ export function createCartRuntimeUseCases({
         }),
       );
     },
-    async read(input: unknown, trusted: unknown): Promise<CartRuntimeResponse> {
+    async read(
+      input: unknown,
+      trusted: unknown,
+    ): Promise<CartRuntimeCurrentResponse> {
       const command = cartRuntimeReadCommandSchema.safeParse(input),
         context = cartRuntimeRequestContextSchema.safeParse(trusted);
       if (!command.success) return fail("INVALID_COMMAND");
@@ -312,7 +265,10 @@ export function createCartRuntimeUseCases({
         })),
       );
     },
-    async add(input: unknown, trusted: unknown): Promise<CartRuntimeResponse> {
+    async add(
+      input: unknown,
+      trusted: unknown,
+    ): Promise<CartRuntimeCurrentResponse> {
       const parsed = cartRuntimeAddCommandSchema.safeParse(input),
         context = cartRuntimeRequestContextSchema.safeParse(trusted);
       if (

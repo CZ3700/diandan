@@ -50,8 +50,27 @@ export async function verifyCartRuntimeRollbackProtection({
     ).rows[0]?.version;
     assert.equal(
       head,
-      "0023",
+      "0024",
       "rollback proof requires the exact current migration",
+    );
+    const editCounts = (
+      await client.query(
+        "SELECT (SELECT count(*) FROM public.cart_item_mutation_receipts)::integer mutations,(SELECT count(*) FROM public.cart_private_access_receipts)::integer accesses,(SELECT count(*) FROM public.cart_edit_outbox_events)::integer events",
+      )
+    ).rows[0];
+    assert.deepEqual(
+      editCounts,
+      { mutations: 0, accesses: 0, events: 0 },
+      "historical rollback proof cannot discard edit evidence",
+    );
+    const editDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0024" },
+    });
+    assert.deepEqual(
+      [editDown.revertedVersions, editDown.currentVersion],
+      [["0024"], "0023"],
     );
     const dynamicCount = Number(
       (
@@ -137,6 +156,16 @@ export async function verifyCartRuntimeRollbackProtection({
       before,
       "the normal migration runner preserves all existing data after rejection",
     );
+    const restored = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "up" },
+    });
+    assert.equal(
+      restored.currentVersion,
+      "0024",
+      "restore the empty edit migration after the exact legacy rollback proof",
+    );
     return {
       schemaVersion: 1,
       status: "PASS",
@@ -148,7 +177,7 @@ export async function verifyCartRuntimeRollbackProtection({
       ...(mode === "DYNAMIC"
         ? { dynamicOnlyIntents: count }
         : { pendingIntents: count }),
-      assertions: mode === "DYNAMIC" ? 7 : 8,
+      assertions: mode === "DYNAMIC" ? 10 : 11,
       before,
       after,
     };

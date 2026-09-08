@@ -5,7 +5,8 @@ import type {
   SupportedLocale,
 } from "@fan-support/contracts";
 import { Price } from "@fan-support/ui";
-import { GiftQuantity } from "./gift-quantity";
+import { CART_RUNTIME_MAX_QUANTITY } from "@fan-support/contracts";
+import { GiftAdd } from "./gift-add";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
 import { giftSelectionHref, selectGiftOffer } from "./gift-selection-values";
 
@@ -154,15 +155,23 @@ function Offer({
       {offer.requiresRecipient && (
         <p className="gift-offer-notice">{copy.giftRecipientMissing}</p>
       )}
-      {offer.availability !== "UNAVAILABLE" && !offer.requiresRecipient && (
-        <GiftQuantity
-          key={`${offer.giftVariantId}:${offer.maxQuantity}:${gift.recipient.kind}`}
-          label={copy.giftQuantity}
-          decreaseLabel={copy.giftQuantityDecrease}
-          increaseLabel={copy.giftQuantityIncrease}
-          max={offer.maxQuantity}
-        />
-      )}
+      {offer.availability !== "UNAVAILABLE" &&
+        !offer.requiresRecipient &&
+        offer.price &&
+        gift.recipient.kind === "PUBLISHED" && (
+          <GiftAdd
+            key={`${offer.giftVariantId}:${offer.maxQuantity}:${gift.recipient.idol.id}`}
+            locale={locale}
+            copy={copy}
+            giftId={gift.content.view.id}
+            giftVariantId={offer.giftVariantId}
+            idolId={gift.recipient.idol.id}
+            observedPriceId={offer.price.priceId}
+            market={gift.market}
+            currency={gift.currency}
+            max={Math.min(offer.maxQuantity, CART_RUNTIME_MAX_QUANTITY)}
+          />
+        )}
     </div>
   );
 }

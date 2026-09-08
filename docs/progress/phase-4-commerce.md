@@ -13,8 +13,8 @@
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
 | P4-01 | DONE | Codex `/root` | P1-03/04/05、P3-05 | 匿名 cart + presentation/fan-message locale + cart_item/support_intent 原子事务 |
-| P4-02 | READY | — | P2-03/04、P4-01 | Cart UI |
-| P4-03 | PENDING | — | P4-01、P4-02 | Preflight/quote+amount + order presentation locale + per-object TranslationSnapshotRef + policy revision |
+| P4-02 | DONE | Codex `/root` | P2-03/04、P4-01 | 七语真实加购/抽屉/页、数量/删除/私密编辑、冲突与同键恢复 |
+| P4-03 | READY | — | P4-01、P4-02 | Preflight/quote+amount + order presentation locale + per-object TranslationSnapshotRef + policy revision |
 | P4-04 | PENDING | — | P1-06、P4-03 | PaymentProvider/provider locale mapping/idempotent create Saga/hosted action/reconcile |
 | P4-05 | PENDING | — | P4-04 | Provider evidence/order/reservation/locale-preserving token exchange |
 | P4-06 | PENDING | — | P4-05、P1-06 | 七语言 Notification/fallback alert/expiry cleanup |
@@ -57,3 +57,42 @@
 ## Phase 退出证据
 
 已按 ADR-013 激活本地开发；尚无 Phase 4 退出证据，P3 也未退出。
+
+## P4-02 执行登记（2026-09-08T11:34:42.903443+00:00）
+
+- Owner：Codex `/root`，Lane B 唯一 executor；从 `c6ca6ba` 与干净跟踪工作区领取本轮唯一 READY 任务，分支 `codex/p4-02-cart-storefront`。P3-06 无 executor、未完验收保留。
+- 范围：七语言真实购物车抽屉/页、礼物详情加购、数量调整、删除、私密留言/署名编辑、多艺人行隔离、失败回滚和同键恢复；补齐必要 PATCH/DELETE 与最小授权私密编辑协议。复用 P4-01 PostgreSQL/KMS/Cookie/Origin/CSRF，不把购物车放入浏览器存储。
+- 视觉：沿用黑金与原色摄影；礼物和收礼艺人作为每行主信息，轻分隔、清晰金额与唯一主动作；复用抽屉过渡、加购确认和 reduced-motion，避免新装饰动效。
+- 顺序：先审计并冻结合同/端口；独占文件边界后并行后端、界面和协议验收，root 负责整合与真实浏览器。修改前失败测试。
+- 验证：并发版本冲突、授权/隐私、重复请求/断网恢复、原子更新/删除及真实PG；七语390×844与1440×900，键盘/焦点/live region、错误/空/加载/reduced-motion；受影响测试→format/lint/typecheck/build→原集成门与非作者S.U.P.E.R复核。
+- 边界：结账、预占、订单与支付仍属P4-03及以后；不改批准视觉、原P3性能门或生产发布门。风险R-01/02/03/07/17；本地Docker PG自然时钟回退已知，保留失败原证据。只本地提交，不push。
+
+## P4-02 整合评审（2026-09-08）
+
+- 合同/PG/Application/API/BFF 与七语 UI 已实现，非作者分责复核当前范围 ACCEPT。448 个旧合同根、旧 OpenAPI components 和 0001–0023 迁移保持；仅增加编辑协议与 0024 审计/回执/独立事件，旧 cart 响应引用有记录地扩展删除后重放错误。
+- `check-dev-2.log` exit 0：类型60/60、测试60/60、构建35/35，格式/lint通过；首轮仅测试文件格式失败，保留原证据后格式化修复。密钥扫描、high 依赖审计通过。此开发门不替代实际 PG/浏览器/正式整仓门。
+- 真实协议最新 `run-2026-09-08T12-20-02.282Z`：5757准备断言/1902准备请求 +167协议断言/33cart请求，共5924；另0024拒退8断言。真实并发同版本不同键严格一成功一冲突，同键一更新一重放；已确认事务中止的恢复保持原规则。
+- 浏览器首轮检出礼物详情独立布局未接 CartProvider/CSS，实际radio高度22px；补齐礼物系列独立布局接线，保留流式加载/404/SEO。新增页面回归RED5FAIL→定向86PASS、types/lint/format通过。第二轮实际首购、Secure/HttpOnly Cookie、双艺人行隔离、44px触控和en390cart axe通过；抽屉初始焦点仍在诊断，尚不称浏览器矩阵完成。
+- 证据入口 `output/checks/p4-02-cart-storefront/final-verification.md`、`contract-persistence-review.md`、`api-bff-review.md`、`ui-implementation-review.md`；待最终浏览器、原P2-04/05刷新、实现输入冻结与完整check后决定DONE。当前Lane B仍由root持有。
+
+### P4-02 最终门复核中（2026-09-08T12:53Z）
+
+- 已完成七语两视口16cases/40PNG/30axe零违规与端到端并发、丢响应同键恢复；14个drawer的aria-hidden-focus incomplete保留，不能宣称人工无障碍通过。原浏览器四次失败均记录分类与对应修复，未跳过原门。
+- 原完整 `pnpm check` 首次入口1.34秒失败：新ja/zh词库使旧字体子集失效；按现有锁定输入生成器重建两CSS、两WOFF2和manifest。无缓存首尝试失败被保留，随后精确SHA固定下载并生成通过。41个字体/设计单测通过后，原设计门另发现cart.css两处尺寸未使用token；改用现有layout/space变量，41tests和原设计门最终通过，没有修改检查器或阈值。
+- 再次刷新P2-04→P2-05，严格顺序使用原collector，两项exit0。初始72项共享证据与第一次已通过刷新分别完整归档，未改旧报告hash来代替采集。字体后购物车矩阵正在以原命令重新编译验证。
+- 最终实现输入1799项冻结于 `final-source-snapshot-3.json`，SHA `315b79316cff1cd681f16113d2e4d0dc3a54c2afff40913a46c7d5579dc4bdac`；相对首版只变字体5产物与cart.css的2处token替换。P4-02进入REVIEW，Lane B仍由root持有，等最终整仓门结果再验收。
+
+### P4-02 原整仓门续验说明
+
+最终字体后的新run12:52:45.960Z已一次通过全部16cases/40PNG/30axe零违规与5924协议断言，进程清理exit0。full2原单条check在351.162秒于旧0017资源管理same-recipe并发case失败（SQLSTATE23514，96断言），冻结1799输入无变更；未改原脚本的定向129断言exit0，但不能称精确根因已修。正在以实际package scripts逐字派生的原后缀继续：失败节点及剩余PG包链→其余API PG链→完整quality后缀，所有命令/组退出保存check-resume-1.json/log。保留原失败，只在全部原门同源覆盖后验收，不伪称单条check全绿。
+
+续验PG12命令45.763秒、API14链846.065秒均exit0。第三组开始前防漂移发现仅admin/next-env.d.ts两条Next自动导入转为dev路径；来源是原admin-workspace的next dev。保存暂态并精确恢复冻结字节，1798其他输入保持；不称1799全过程无漂移。quality组原未执行，现以正确pnpm PATH启动原8项完整后缀（含S3），结果待check-quality-suffix-1.json。
+
+## P4-02 验收完成（2026-09-08T13:25:34.507306+00:00）
+
+- 交付：礼物详情实际加购，七语言购物车抽屉/页面，多艺人独立行，数量、删除、私密留言/署名编辑与加密审计，版本冲突显式确认、失败回滚和原key/body恢复。按单礼物保持独立库存策略；不因零现货阻止重复售卖。结账仍准确提示准备中，不包含预占、订单或支付。
+- 真实浏览器：最终字体/CSS版本run12:52:45.960Z，16cases/40PNG/30axe零violation、0pageErrors；172触控目标最小44×44，双端20Tab+20ShiftTab与删除焦点/live region通过。14项drawer incomplete保留，桌面正常motion/移动reduced motion；全程TEST身份，已清理。P2-04/05原collector最终顺序刷新并保持当前fingerprint，既有moderate/真机门边界不改。
+- 全部原检查步骤有通过证据：full2在351.162秒因旧0017资源并发23514失败，未改原脚本定向129PASS；原PG后缀12命令45.763秒exit0、API14链846.065秒exit0；最后原8项质量后缀108.613秒exit0。包含24迁移/162表、实际PG/HTTP/TLS S3与媒体423断言、新cart5924断言含5757准备及33协议请求、独立0024拒退8项。类型60/60（56缓存）、测试60/60（56缓存）、构建35/35（33缓存）、31Node出口、format/lint/架构/合同、secret与high依赖审计通过。不是单条完整check exit0。
+- 一致性：1799最终输入集合与字节匹配冻结SHA315b79316cff1cd681f16113d2e4d0dc3a54c2afff40913a46c7d5579dc4bdac。原后台next dev曾仅改自动next-env两条类型导入，防漂移中止后已存暂态并精确恢复；不称全过程零漂移。2260原未跟踪文件逐SHA完整保留。非作者实际复核原命令全覆盖/源/七語浏览器/共享证据，ACCEPT；S.U.P.E.R10项PASS。
+- 证据入口：`output/checks/p4-02-cart-storefront/final-verification.md`、`gate-coverage.json`、`final-independent-review.md`；续作运行命令在 `docs/runbooks/cart-runtime.md`。旧资源并发首次23514确切根因仍未定位；旧环境时钟观测不能直接当成本次解释。七语人工译审、P3-06性能/人工运营/VoiceOver、正式资产，以及AWS/IAM、PSP、生产域名/真机/部署证据均不在本轮完成范围。
+- P4-02 DONE，释放Lane B；只解锁直接后继P4-03 READY、Lane A无executor。P3-06仍IN_PROGRESS/无executor，Phase3与Phase4保持ACTIVE。当前24DONE/1READY/1IN_PROGRESS/23PENDING=49。按用户偏好只创建本地检查点，不push/PR/merge。

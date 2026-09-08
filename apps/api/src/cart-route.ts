@@ -2,7 +2,7 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import {
   cartRuntimeCommandSchema,
   cartRuntimeAccessesSchema,
-  cartRuntimeResponseSchema,
+  cartRuntimeCurrentResponseSchema,
   cartRuntimeFailureSchema,
   idempotencyKeySchema,
   type CartRuntimeAccesses,
@@ -41,7 +41,7 @@ export type CartRouteDependencies = Readonly<{
   };
 }>;
 const cookieName = "__Host-fan-cart";
-function singleHeader(
+export function singleHeader(
   request: FastifyRequest,
   name: string,
 ): string | undefined {
@@ -51,7 +51,9 @@ function singleHeader(
   const value = request.headers[name];
   return count === 1 && typeof value === "string" ? value : undefined;
 }
-function cookieToken(request: FastifyRequest): string | null | undefined {
+export function cookieToken(
+  request: FastifyRequest,
+): string | null | undefined {
   if (request.headers.cookie === undefined) return undefined;
   const header = singleHeader(request, "cookie");
   if (!header) return null;
@@ -69,16 +71,16 @@ function cookieToken(request: FastifyRequest): string | null | undefined {
       ? result
       : null;
 }
-function privacy(reply: FastifyReply): void {
+export function privacy(reply: FastifyReply): void {
   void reply
     .header("cache-control", "private, no-store")
     .header("x-robots-tag", "noindex, nofollow")
     .header("referrer-policy", "no-referrer");
 }
-function failureStatus(code: CartRuntimeFailureCode): number {
+export function failureStatus(code: string): number {
   if (code === "INVALID_COMMAND") return 400;
   if (code === "INVALID_ACCESS") return 401;
-  if (code === "CART_NOT_FOUND") return 404;
+  if (code === "CART_NOT_FOUND" || code === "ITEM_NOT_FOUND") return 404;
   if (
     [
       "CONTENT_UNAVAILABLE",
@@ -103,7 +105,7 @@ function fail(
     }),
   );
 }
-function clearCookie(reply: FastifyReply): void {
+export function clearCookie(reply: FastifyReply): void {
   void reply.header(
     "set-cookie",
     `${cookieName}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`,
@@ -246,7 +248,7 @@ export function registerCartRoute(
                 correlationId: requestId,
                 ...(idempotencyKey ? { idempotencyKey } : {}),
               };
-              const result = cartRuntimeResponseSchema.parse(
+              const result = cartRuntimeCurrentResponseSchema.parse(
                 await options.useCases[action](command, context),
               );
               if (result.outcome === "FAILURE") {

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import type { SupportedLocale } from "@fan-support/contracts";
-import { Icon } from "@fan-support/ui";
+import { CartHeader } from "./cart-header";
 import { LazyDrawer } from "./lazy-drawer";
 import { HeaderLanguage } from "./site-header-language";
 import {
@@ -90,13 +90,7 @@ export function SiteHeader({
         <div className="storefront-desktop-nav">{navigation}</div>
         <div className="storefront-header-utilities">
           <div className="storefront-desktop-language">{language()}</div>
-          <a
-            className="storefront-bag"
-            href={storefrontHref(locale, "/cart", contextQuery)}
-            aria-label={copy.bag}
-          >
-            <Icon name="shopping-bag" decorative />
-          </a>
+          <CartHeader locale={locale} copy={copy} contextQuery={contextQuery} />
           <div className="storefront-mobile-menu">
             <LazyDrawer
               loadingLabel={copy.loading}

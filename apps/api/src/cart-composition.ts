@@ -1,4 +1,7 @@
-import { createCartRuntimeUseCases } from "@fan-support/application";
+import {
+  createCartRuntimeUseCases,
+  createCartEditUseCases,
+} from "@fan-support/application";
 import {
   createKmsKeyManagementAdapter,
   type KmsKeyManagementAdapterConfig,
@@ -15,11 +18,12 @@ import {
 } from "@fan-support/persistence-postgres";
 import type { ApiLifecycleResource } from "./bootstrap.js";
 import type { CartRouteDependencies } from "./cart-route.js";
+import type { CartEditRouteDependencies } from "./cart-edit-route.js";
 import { createCartSessionCredentials } from "./cart-session-credentials.js";
 
 type CartPersistence = Pick<
   PostgresPersistence,
-  "cartRuntimeTransactionManager" | "close"
+  "cartRuntimeTransactionManager" | "cartEditTransactionManager" | "close"
 >;
 type Factories = Readonly<{
   createPersistence?: (
@@ -42,6 +46,7 @@ type Injected = Common &
   }>;
 export type CartRuntimeComposition = Readonly<{
   cartRoute: CartRouteDependencies;
+  cartEditRoute: CartEditRouteDependencies;
   cartRuntime: ApiLifecycleResource;
 }>;
 function validOrigin(value: string, httpsOnly = false): void {
@@ -76,11 +81,20 @@ function compose(
         ? { cartTtlMs: options.cartTtlMs }
         : {}),
     });
+    const editUseCases = createCartEditUseCases({
+      transactions: persistence.cartEditTransactionManager,
+      keyManagement: options.keyManagement,
+    });
     return Object.freeze({
       cartRoute: {
         allowedOrigin: options.allowedOrigin,
         credentials,
         useCases,
+      },
+      cartEditRoute: {
+        allowedOrigin: options.allowedOrigin,
+        credentials,
+        useCases: editUseCases,
       },
       cartRuntime: { start: async () => undefined, stop },
     });

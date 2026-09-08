@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "scope": "P4-02 storefront UI and draft copy, cart.css final alignment by root",
+  "files": [
+    {
+      "path": "apps/storefront/src/app/(public)/(japanese)/ja/cart/page.tsx",
+      "sha256": "422010e0156ecf8ff5de7caf804317f7c76e440cc9ffec220727c9ef98168d4d"
+    },
+    {
+      "path": "apps/storefront/src/app/(public)/(latin)/en/cart/page.tsx",
+      "sha256": "62270cf7c1d68a561d2b9780d3434f7ad38fde0b3f18eac1b9d6485d02cba78e"
+    },
+    {
+      "path": "apps/storefront/src/app/(public)/(latin)/es/cart/page.tsx",
+      "sha256": "0db17b1a92f00f19e846a7e2504cfe4c55f80ea7819c26f105cb7ea7d0710cbc"
+    },
+    {
+      "path": "apps/storefront/src/app/(public)/(latin)/pt/cart/page.tsx",
+      "sha256": "f98fb70d04fe0c855bbfcbd52541a60d759066817dd4215a8e03c894bf8c4ade"
+    },
+    {
+      "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/cart/page.tsx",
+      "sha256": "9da4813b620f55a89151e90c2e103a4217baa4f6442ce8a5840e39f5fafed6c5"
+    },
+    {
+      "path": "apps/storefront/src/app/(public)/(thai)/th/cart/page.tsx",
+      "sha256": "b7feb3d669e7911c8bde0ba9ccddca55b7961d17dbac6cca9ba85a9c60f5ce90"
+    },
+    {
+      "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/cart/page.tsx",
+      "sha256": "f83769bc6c3c5e055fb5c3de96f354221fc3f61bd17b3fef32f2eea6b3ecd52a"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-body.tsx",
+      "sha256": "b762ee5db44fcac6679a761bb80cd12f9b01977992b2f83be9ae00ad5d2ef275"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-editor-concurrency.test.tsx",
+      "sha256": "b42e00b544c04523f09d3eab7d8e2cf7d24e3ac609dbff421b42f174334066eb"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-editor-lifecycle.test.tsx",
+      "sha256": "e23c0600fc462fb30efa30199b303a765bed7e4545dc032b18ea5c146bae6747"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-editor.tsx",
+      "sha256": "9518380bd917a15c9be944243d5261ba4c94d460251fc966e4e6b0074a43b84a"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-error.test.ts",
+      "sha256": "798995a10d4970056a8fcac7df18b9cbc96ce4afea49849275a286efbb486711"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-error.ts",
+      "sha256": "809850efce75855f5ab483c8d789df5a3194bb65fbb1c7e62f4f9a94e878373b"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-header.tsx",
+      "sha256": "3fb73f0b3ade7d40a6648e4cd9c7d6b0aba22482fd79e5c2b48a27ec472404ad"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-item.test.tsx",
+      "sha256": "58742e2c98c51302414594f15d98735d4c2b281a654ca471e28d8290a2555d02"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-item.tsx",
+      "sha256": "082ad7a00719313cbdf87127f6da72c7e52a21d320c5955dad14db68a1f97a47"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-page-factory.tsx",
+      "sha256": "a10cf7a5a7851c069d6fa247fe4c5a618e3005f5e8cb58066d1dba034b0539b5"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-panel.tsx",
+      "sha256": "c01721a3302858ebfb9b25f600e736aee246a063f23f6860b004278f1a28ef13"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-personalization.test.tsx",
+      "sha256": "1191d55d9f4076262e0e12135ca81a09c619c0593ecaa16c9c5f7bcdd344441b"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-personalization.tsx",
+      "sha256": "3f59f99cc88eee6bb50c7df9a6d10ac35c12cac0868fa987d9099234ba2909b3"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-provider.tsx",
+      "sha256": "074a8cdefedc395537c309bb4128cecd5167b18c7f6901e81e00cbefff386559"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-removal-focus.test.ts",
+      "sha256": "d4a93cfe62ea940ddfd62c008720803888210f6811c4b3295e94d272ad9b2bc9"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-removal-focus.ts",
+      "sha256": "eb847a838108a6d98c3489ea0ab16465f10a4bbeb5b4c3b094e77cf6a896595a"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-session.test.ts",
+      "sha256": "dc893f65c9abbf0bd25a4cc6b9c01bc656f75489a10cc25d753c4fb6d42228cd"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-session.ts",
+      "sha256": "3a59fa1c1f7ce343111e96ab044f08b551e9502c1a2761b9bcdbb628149d226d"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart-validation.ts",
+      "sha256": "456376a073e102bd44d787a58511bb93faea299de97eac9198b7e6cca3d42dfc"
+    },
+    {
+      "path": "apps/storefront/src/storefront/cart.css",
+      "sha256": "228b42aa4482f3137a2633b0f92691342a7990bbeb6dce88513c6b7d94525ccc"
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-add.tsx",
+      "sha256": "77d335a7742c95df3a4c1b057902e62dafcd4762ed0378ddd7a5ae5cd39a1ac4"
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-purchase.test.tsx",
+      "sha256": "5ad17c48f534c64d8d3aa6ba2fa4fed98b2e8667a2caa4bf2cedbdb8fa90e54b"
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-purchase.tsx",
+      "sha256": "b1e825bfd97d16eeb0f7afbfd21e98ed812e9cff6e24c8739a23b24a847dff99"
+    },
+    {
+      "path": "apps/storefront/src/storefront/site-header.tsx",
+      "sha256": "2cbe988358de63dfab5df3fa8625fbb5b525e367fafdf927ec749c838b06b5e3"
+    },
+    {
+      "path": "apps/storefront/src/storefront/storefront-page-shell.tsx",
+      "sha256": "69a3763629e7d83be6b714ae54ef28250fc67dc6eae5243ffa951d7dd47be7d2"
+    },
+    {
+      "path": "packages/i18n/src/storefront/en.review.ts",
+      "sha256": "75a290cb88ed1c838a719cad46b3d10234701496f67c4d56e8d2c502232b0069"
+    },
+    {
+      "path": "packages/i18n/src/storefront/en.ts",
+      "sha256": "f9719e23ff5811811d2b65d049b09310ac41d51f06950f6e8d6147732e89cebb"
+    },
+    {
+      "path": "packages/i18n/src/storefront/es.review.ts",
+      "sha256": "e00f4a22ddacc4dac36463ecdf4377df87a3653fb55795e142dd7d6a2b9eed4d"
+    },
+    {
+      "path": "packages/i18n/src/storefront/es.ts",
+      "sha256": "bf69bad64eabad0e30e07c1d466d73b72f3d96b20a8d760c7f4281bd17a2c99b"
+    },
+    {
+      "path": "packages/i18n/src/storefront/ja.review.ts",
+      "sha256": "20984f972029a587a6b3e72c04c092d906b5892fa0b50709f37c41ffe7bd893f"
+    },
+    {
+      "path": "packages/i18n/src/storefront/ja.ts",
+      "sha256": "304ed70dda8ada68185ecd03211dfec86b2ba0cf6f75ac2e0a8ffd3659459d22"
+    },
+    {
+      "path": "packages/i18n/src/storefront/pt.review.ts",
+      "sha256": "ef3696ca489c1cfebbe1594e07b3cf7631a32bc30e2a09b22ddc9d4b6d6cbef9"
+    },
+    {
+      "path": "packages/i18n/src/storefront/pt.ts",
+      "sha256": "e82a4b1ad6377cfd45f9bcb9b407ea01a42dcca8c42786937998bd093c475b70"
+    },
+    {
+      "path": "packages/i18n/src/storefront/th.review.ts",
+      "sha256": "f5ff50b1256400e2570d2ba4360c858bac01d082aaccc7dfdea289c0e76531fb"
+    },
+    {
+      "path": "packages/i18n/src/storefront/th.ts",
+      "sha256": "79e64d92b4df5c6edc737b880f6208c723ed2414c7a3be4643cf87fac6e32e00"
+    },
+    {
+      "path": "packages/i18n/src/storefront/vi.review.ts",
+      "sha256": "1134609cbf7a7b2942b2dd7eb9c771842388349ea2bb6426c272337e8240be4b"
+    },
+    {
+      "path": "packages/i18n/src/storefront/vi.ts",
+      "sha256": "39c58e9347d65772829f5f1372401cf0db924489aa445606bf4eeae08f4c9dc8"
+    },
+    {
+      "path": "packages/i18n/src/storefront/zh-CN.review.ts",
+      "sha256": "aa7932ddbf2d61ea46e0e61d48e9fe5732d3a44998a8eb2506d9c8f5e4edcd0f"
+    },
+    {
+      "path": "packages/i18n/src/storefront/zh-CN.ts",
+      "sha256": "11263f06c4e15372cfc6f30e8ad8e346cabb8b03f9d1d336185feeb43d23e05c"
+    }
+  ],
+  "count": 46,
+  "sha256": "3a923b2adcd487ff31ecbb4db55517550d675cfd2e0b0bc380acf89bf99ed9da"
+}

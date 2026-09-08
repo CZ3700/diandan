@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "assertions": 139,
+  "setupAssertions": 5757,
+  "setupRequests": 1902,
+  "protocol": {
+    "status": "PASS",
+    "requests": 27,
+    "cases": [
+      "versioned-quantity-replay-and-cross-cart-isolation",
+      "audited-private-edit-encryption-and-replay",
+      "logical-removal-audited-receipts-and-no-revival"
+    ],
+    "mutationReceipts": 3,
+    "durableEvents": 3,
+    "privateReads": 2,
+    "privatePlaintextPersistedInEvidence": false,
+    "actualAwsKms": false
+  },
+  "rollback": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "assertions": 8,
+    "scope": "actual accepted edits and private audits block destructive rollback; all ten table counts and bytes preserved",
+    "before": {
+      "carts": {
+        "count": 2,
+        "sha256": "417a73aea5a0ab82c9ece5d8f9485c1502240fee528893681fe9989bfc4bbee8"
+      },
+      "cart_items": {
+        "count": 2,
+        "sha256": "81432c7404a0a581c916344e07c5fcf223b064ed8ee10df13cec3eecb7aa5cf6"
+      },
+      "support_intents": {
+        "count": 2,
+        "sha256": "be3820076242090738aa401637d71ff7758ab649edd4564b3a3fdf8676e096e7"
+      },
+      "cart_item_mutation_receipts": {
+        "count": 3,
+        "sha256": "7a638b348f92af72dfa9641594c215517d2d8ba55582cc26762c21099df0219b"
+      },
+      "cart_edit_outbox_events": {
+        "count": 3,
+        "sha256": "30acc8a5142860e1ab6802536e54920c7a260591be32b6c45fa6b3111d084bc0"
+      },
+      "cart_private_access_receipts": {
+        "count": 2,
+        "sha256": "29bd583f25ad67b8a998d46d2d7c92766f48e6142bcc03dc4197cfe347946507"
+      },
+      "audit_logs": {
+        "count": 1066,
+        "sha256": "1f79c8ba43c7a04d9712a3283a84b0b6ea179e1452b9cf16ab7cdc3f893fccdd"
+      },
+      "outbox_events": {
+        "count": 298,
+        "sha256": "9a7ab23387fe4b16a6023222e46cae46e8b436c6914389eacad5ceba1a9d1f3e"
+      },
+      "idempotency_records": {
+        "count": 1021,
+        "sha256": "b4552ac7bdeffe103422de9faa7c39069747b3d1d62912b1f85594adbbc237cd"
+      },
+      "schema_migrations": {
+        "count": 24,
+        "sha256": "4d96c00dc5df228d900fc12533cbaf1e14af62eb38d24b254b6abbb3e0ef0eb9"
+      }
+    },
+    "after": {
+      "carts": {
+        "count": 2,
+        "sha256": "417a73aea5a0ab82c9ece5d8f9485c1502240fee528893681fe9989bfc4bbee8"
+      },
+      "cart_items": {
+        "count": 2,
+        "sha256": "81432c7404a0a581c916344e07c5fcf223b064ed8ee10df13cec3eecb7aa5cf6"
+      },
+      "support_intents": {
+        "count": 2,
+        "sha256": "be3820076242090738aa401637d71ff7758ab649edd4564b3a3fdf8676e096e7"
+      },
+      "cart_item_mutation_receipts": {
+        "count": 3,
+        "sha256": "7a638b348f92af72dfa9641594c215517d2d8ba55582cc26762c21099df0219b"
+      },
+      "cart_edit_outbox_events": {
+        "count": 3,
+        "sha256": "30acc8a5142860e1ab6802536e54920c7a260591be32b6c45fa6b3111d084bc0"
+      },
+      "cart_private_access_receipts": {
+        "count": 2,
+        "sha256": "29bd583f25ad67b8a998d46d2d7c92766f48e6142bcc03dc4197cfe347946507"
+      },
+      "audit_logs": {
+        "count": 1066,
+        "sha256": "1f79c8ba43c7a04d9712a3283a84b0b6ea179e1452b9cf16ab7cdc3f893fccdd"
+      },
+      "outbox_events": {
+        "count": 298,
+        "sha256": "9a7ab23387fe4b16a6023222e46cae46e8b436c6914389eacad5ceba1a9d1f3e"
+      },
+      "idempotency_records": {
+        "count": 1021,
+        "sha256": "b4552ac7bdeffe103422de9faa7c39069747b3d1d62912b1f85594adbbc237cd"
+      },
+      "schema_migrations": {
+        "count": 24,
+        "sha256": "4d96c00dc5df228d900fc12533cbaf1e14af62eb38d24b254b6abbb3e0ef0eb9"
+      }
+    }
+  },
+  "actualPostgres": true,
+  "actualTlsS3": true,
+  "actualKmsAdapter": true,
+  "actualAwsKms": false,
+  "browserEvidence": false
+}

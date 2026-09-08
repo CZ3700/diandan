@@ -1,4 +1,6 @@
 import "server-only";
+import "./cart.css";
+import { CartProvider } from "./cart-provider";
 import { Suspense, type ReactNode } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -199,24 +201,26 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
     }
     return (
       <div className="storefront" lang={locale}>
-        <SiteHeader
-          locale={locale}
-          copy={copy}
-          name={name}
-          contextQuery={contextQuery}
-          active={kind === "gifts" || kind === "gift" ? "gifts" : "other"}
-        />
-        <main id="main-content" tabIndex={-1}>
-          <Suspense fallback={null}>
-            <GiftPageSeo
-              locale={locale}
-              kind={kind}
-              values={values}
-              {...(routeParams.handle ? { handle: routeParams.handle } : {})}
-            />
-          </Suspense>
-          {content}
-        </main>
+        <CartProvider key={locale} locale={locale}>
+          <SiteHeader
+            locale={locale}
+            copy={copy}
+            name={name}
+            contextQuery={contextQuery}
+            active={kind === "gifts" || kind === "gift" ? "gifts" : "other"}
+          />
+          <main id="main-content" tabIndex={-1}>
+            <Suspense fallback={null}>
+              <GiftPageSeo
+                locale={locale}
+                kind={kind}
+                values={values}
+                {...(routeParams.handle ? { handle: routeParams.handle } : {})}
+              />
+            </Suspense>
+            {content}
+          </main>
+        </CartProvider>
         <SiteFooter
           locale={locale}
           copy={copy}

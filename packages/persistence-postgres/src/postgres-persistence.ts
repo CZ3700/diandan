@@ -1,3 +1,8 @@
+import { createCartEditRepository } from "./cart-edit-repository.js";
+import type {
+  CartEditRepositories,
+  CartEditTransactionManager,
+} from "@fan-support/persistence-port";
 import { createGiftCommerceAuthorizationRepository } from "./gift-commerce-authorization-repository.js";
 import { createManagementCenterOperationRepository } from "./management-center-operation-repository.js";
 import { createDailyPublicationRepository } from "./daily-publication-repository.js";
@@ -137,6 +142,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly cartEditTransactionManager: CartEditTransactionManager;
   readonly cartRuntimeTransactionManager: CartRuntimeTransactionManager;
   readonly managementCenterTransactionManager: ManagementCenterTransactionManager;
   readonly managementMediaTransactionManager: ManagementMediaTransactionManager;
@@ -294,6 +300,23 @@ export function createPostgresPersistenceWithPoolFactory(
     createRepositories: (client, scope) => {
       const database = createPostgresQueryLayer(client as NodePgClient);
       return {
+        cartRuntime: createCartRuntimeRepository(client, scope),
+        storefrontCommerce: createStorefrontCommerceRepository(
+          client,
+          scope,
+          options!.catalogPublicMediaBaseUrl!,
+        ),
+        idempotency: createIdempotencyRepository(database, scope),
+        outbox: createOutboxRepository(database, scope),
+      };
+    },
+  });
+  const cartEditRunner = createTransactionRunner<CartEditRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => {
+      const database = createPostgresQueryLayer(client as NodePgClient);
+      return {
+        cartEdit: createCartEditRepository(client, scope),
         cartRuntime: createCartRuntimeRepository(client, scope),
         storefrontCommerce: createStorefrontCommerceRepository(
           client,
@@ -945,6 +968,22 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return cartRuntimeRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    cartEditTransactionManager: {
+      async runInCartEditTransaction(work) {
+        if (
+          lifecycle !== "OPEN" ||
+          options?.catalogPublicMediaBaseUrl === undefined
+        )
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return cartEditRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
           work,
         );

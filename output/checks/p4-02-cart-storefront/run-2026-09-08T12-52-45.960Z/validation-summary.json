@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_SCOPED",
+  "command": "mise exec node@24.20.0 -- pnpm verify:cart:browser",
+  "exitCode": 0,
+  "log": "../font-refresh-browser.log",
+  "sourceSnapshot": "../final-source-snapshot-3.json",
+  "sourceCount": 1799,
+  "sourceSha256": "315b79316cff1cd681f16113d2e4d0dc3a54c2afff40913a46c7d5579dc4bdac",
+  "sourceFilesUnchangedAfterRun": true,
+  "protocol": {
+    "setupAssertions": 5757,
+    "setupRequests": 1902,
+    "assertions": 167,
+    "httpRequests": 33,
+    "rollbackAssertionsSeparate": 8,
+    "serialMutationReceipts": 3,
+    "serialEvents": 3,
+    "explicitPrivateReadAudits": 2,
+    "concurrentMutationReceipts": 2,
+    "concurrentEvents": 2
+  },
+  "browser": {
+    "report": "browser-attempt-1/browser-results.json",
+    "reportSha256": "9a1c885257f4eb9d9f06bd7d1da3fec47e990c1d96535014e984e9cd2fca4f75",
+    "cases": 16,
+    "screenshots": 40,
+    "axeScans": 30,
+    "violations": 0,
+    "incompleteEntries": 14,
+    "incompleteNodes": 140,
+    "incompleteRules": ["aria-hidden-focus"],
+    "pageErrors": 0,
+    "touchTargets": 172,
+    "minimumTouchWidth": 44,
+    "minimumTouchHeight": 44,
+    "focusCycles": [
+      {
+        "locale": "en",
+        "viewport": 390,
+        "focusableCount": 13,
+        "stepsEachDirection": 20,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "viewport": 1440,
+        "focusableCount": 13,
+        "stepsEachDirection": 20,
+        "status": "PASS"
+      }
+    ],
+    "visualInspection": ["browser-attempt-1/ja-390-cart.png"]
+  },
+  "cleanup": {
+    "wrapperExitCode": 0,
+    "normalFinallyCompleted": true,
+    "nextRuntimeStoppedAt": "2026-09-08T12:54:37.545Z",
+    "nextPort": 61763,
+    "noNextPortListener": true,
+    "retainedService": false,
+    "browserClosedByFinally": true
+  },
+  "scope": {
+    "actualPostgres": true,
+    "actualApi": true,
+    "actualTlsS3": true,
+    "realPublishedTestFixtures": true,
+    "productionCompiledNext": true,
+    "loopbackHttpStorefront": true,
+    "actualChromeSecureHttpOnlyCookie": true,
+    "kmsEncryptionAdapterWithLocalTestBoundary": true,
+    "actualAwsKms": false,
+    "physicalDevice": false,
+    "screenReader": false,
+    "humanTranslationApproval": false,
+    "performanceAcceptance": false,
+    "productionRelease": false,
+    "payment": false
+  },
+  "recordedAt": "2026-09-08T12:56:30.566785+00:00"
+}

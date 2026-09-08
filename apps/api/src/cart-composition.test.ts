@@ -2,9 +2,15 @@ import { expect, test, vi } from "vitest";
 import { createTestCartRuntimeComposition } from "./cart-composition.js";
 const observed = vi.hoisted(() => ({
   create: vi.fn(() => ({ initialize: vi.fn(), read: vi.fn(), add: vi.fn() })),
+  edit: vi.fn(() => ({
+    update: vi.fn(),
+    remove: vi.fn(),
+    readEditor: vi.fn(),
+  })),
 }));
 vi.mock("@fan-support/application", () => ({
   createCartRuntimeUseCases: observed.create,
+  createCartEditUseCases: observed.edit,
 }));
 const database = { connectionString: "postgresql://fixture.invalid/cart" };
 const keyManagement = {
@@ -26,6 +32,7 @@ const options = {
 function factory() {
   return {
     cartRuntimeTransactionManager: { runInCartRuntimeTransaction: vi.fn() },
+    cartEditTransactionManager: { runInCartEditTransaction: vi.fn() },
     close: vi.fn(async () => {}),
   };
 }
@@ -43,6 +50,12 @@ test("composition shares authenticated cart transactions and key port, and close
     keyManagement,
   });
   expect(result.cartRoute.allowedOrigin).toBe(options.allowedOrigin);
+  expect(observed.edit).toHaveBeenLastCalledWith({
+    transactions: persistence.cartEditTransactionManager,
+    keyManagement,
+  });
+  expect(result.cartEditRoute.credentials).toBe(result.cartRoute.credentials);
+  expect(result.cartEditRoute.allowedOrigin).toBe(options.allowedOrigin);
   await result.cartRuntime.start();
   await Promise.all([result.cartRuntime.stop(), result.cartRuntime.stop()]);
   expect(persistence.close).toHaveBeenCalledTimes(1);

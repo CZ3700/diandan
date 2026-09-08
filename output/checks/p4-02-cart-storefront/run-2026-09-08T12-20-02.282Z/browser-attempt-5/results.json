@@ -1,0 +1,1980 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "browser": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "scope": "Production-compiled storefront under local TEST runtime, real PostgreSQL/API/TLS media and TEST KMS boundary",
+    "browserVersion": "152.0.7977.82",
+    "cases": [
+      {
+        "name": "cart-and-drawer",
+        "locale": "en",
+        "viewport": 390
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "zh-CN",
+        "viewport": 390
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "th",
+        "viewport": 390
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "vi",
+        "viewport": 390
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "ja",
+        "viewport": 390
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "es",
+        "viewport": 390
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "pt",
+        "viewport": 390
+      },
+      {
+        "name": "fresh-add-private-conflict-quantity-recovery-delete",
+        "viewport": 390,
+        "reducedMotion": true,
+        "mutationReceipts": 5
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "en",
+        "viewport": 1440
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "zh-CN",
+        "viewport": 1440
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "th",
+        "viewport": 1440
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "vi",
+        "viewport": 1440
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "ja",
+        "viewport": 1440
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "es",
+        "viewport": 1440
+      },
+      {
+        "name": "cart-and-drawer",
+        "locale": "pt",
+        "viewport": 1440
+      },
+      {
+        "name": "fresh-add-private-conflict-quantity-recovery-delete",
+        "viewport": 1440,
+        "reducedMotion": false,
+        "mutationReceipts": 5
+      }
+    ],
+    "screenshots": [
+      "en-390-empty.png",
+      "en-390-add-form.png",
+      "en-390-cart.png",
+      "en-390-drawer.png",
+      "zh-CN-390-cart.png",
+      "zh-CN-390-drawer.png",
+      "th-390-cart.png",
+      "th-390-drawer.png",
+      "vi-390-cart.png",
+      "vi-390-drawer.png",
+      "ja-390-cart.png",
+      "ja-390-drawer.png",
+      "es-390-cart.png",
+      "es-390-drawer.png",
+      "pt-390-cart.png",
+      "pt-390-drawer.png",
+      "en-390-private-saved.png",
+      "en-390-quantity-error.png",
+      "en-390-removed.png",
+      "en-390-last-removed.png",
+      "en-1440-empty.png",
+      "en-1440-add-form.png",
+      "en-1440-cart.png",
+      "en-1440-drawer.png",
+      "zh-CN-1440-cart.png",
+      "zh-CN-1440-drawer.png",
+      "th-1440-cart.png",
+      "th-1440-drawer.png",
+      "vi-1440-cart.png",
+      "vi-1440-drawer.png",
+      "ja-1440-cart.png",
+      "ja-1440-drawer.png",
+      "es-1440-cart.png",
+      "es-1440-drawer.png",
+      "pt-1440-cart.png",
+      "pt-1440-drawer.png",
+      "en-1440-private-saved.png",
+      "en-1440-quantity-error.png",
+      "en-1440-removed.png",
+      "en-1440-last-removed.png"
+    ],
+    "axe": [
+      {
+        "name": "en-390-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "en-390-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "zh-CN-390-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "zh-CN-390-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "th-390-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "th-390-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "vi-390-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "vi-390-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ja-390-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "ja-390-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "es-390-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "es-390-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "pt-390-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "pt-390-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "en-390-removed",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "en-1440-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "en-1440-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "zh-CN-1440-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "zh-CN-1440-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "th-1440-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "th-1440-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "vi-1440-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "vi-1440-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ja-1440-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "ja-1440-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "es-1440-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "es-1440-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "pt-1440-cart",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "pt-1440-drawer",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-hidden-focus",
+            "impact": "serious",
+            "targets": [
+              [
+                ".storefront-skip"
+              ],
+              [
+                ".storefront-header"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(1) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > div[data-cart-quantity=\"true\"][aria-hidden=\"true\"]"
+              ],
+              [
+                "article:nth-child(2) > .cart-item-main > .cart-actions[aria-hidden=\"true\"]"
+              ],
+              [
+                ".cart-footer[aria-hidden=\"true\"]"
+              ],
+              [
+                "footer"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(1)"
+              ],
+              [
+                "span[data-type=\"inside\"][data-base-ui-focus-guard=\"\"][data-base-ui-inert=\"\"]:nth-child(3)"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "en-1440-removed",
+        "violations": [],
+        "incomplete": []
+      }
+    ],
+    "pageErrors": 0,
+    "touchTargets": [
+      {
+        "locale": "en",
+        "viewport": 390,
+        "kind": "add-radio-labels",
+        "targets": [
+          {
+            "width": 109.34375,
+            "height": 44
+          },
+          {
+            "width": 137.59375,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 390,
+        "kind": "add-quantity-buttons",
+        "targets": [
+          {
+            "width": 48,
+            "height": 48
+          },
+          {
+            "width": 48,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 390,
+        "kind": "add-submit",
+        "targets": [
+          {
+            "width": 358,
+            "height": 49.8125
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 390,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 390,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 120.90625,
+            "height": 44
+          },
+          {
+            "width": 176.34375,
+            "height": 44
+          },
+          {
+            "width": 59.546875,
+            "height": 44
+          },
+          {
+            "width": 120.90625,
+            "height": 44
+          },
+          {
+            "width": 176.34375,
+            "height": 44
+          },
+          {
+            "width": 59.546875,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 390,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.453125,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "zh-CN",
+        "viewport": 390,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "zh-CN",
+        "viewport": 390,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 64.5625,
+            "height": 44
+          },
+          {
+            "width": 112.984375,
+            "height": 44
+          },
+          {
+            "width": 44,
+            "height": 44
+          },
+          {
+            "width": 64.5625,
+            "height": 44
+          },
+          {
+            "width": 112.984375,
+            "height": 44
+          },
+          {
+            "width": 44,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "zh-CN",
+        "viewport": 390,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.5625,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "th",
+        "viewport": 390,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "th",
+        "viewport": 390,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 90.546875,
+            "height": 44
+          },
+          {
+            "width": 136.578125,
+            "height": 44
+          },
+          {
+            "width": 46.609375,
+            "height": 44
+          },
+          {
+            "width": 90.546875,
+            "height": 44
+          },
+          {
+            "width": 136.578125,
+            "height": 44
+          },
+          {
+            "width": 46.609375,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "th",
+        "viewport": 390,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.5625,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "vi",
+        "viewport": 390,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "vi",
+        "viewport": 390,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 134.4375,
+            "height": 44
+          },
+          {
+            "width": 138.453125,
+            "height": 44
+          },
+          {
+            "width": 44,
+            "height": 44
+          },
+          {
+            "width": 134.4375,
+            "height": 44
+          },
+          {
+            "width": 138.453125,
+            "height": 44
+          },
+          {
+            "width": 44,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "vi",
+        "viewport": 390,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.453125,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "ja",
+        "viewport": 390,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "ja",
+        "viewport": 390,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 80.703125,
+            "height": 44
+          },
+          {
+            "width": 177.546875,
+            "height": 44
+          },
+          {
+            "width": 44,
+            "height": 44
+          },
+          {
+            "width": 80.703125,
+            "height": 44
+          },
+          {
+            "width": 177.546875,
+            "height": 44
+          },
+          {
+            "width": 44,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "ja",
+        "viewport": 390,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.5625,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "es",
+        "viewport": 390,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "es",
+        "viewport": 390,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 143.5625,
+            "height": 44
+          },
+          {
+            "width": 182.734375,
+            "height": 44
+          },
+          {
+            "width": 58.5625,
+            "height": 44
+          },
+          {
+            "width": 143.5625,
+            "height": 44
+          },
+          {
+            "width": 182.734375,
+            "height": 44
+          },
+          {
+            "width": 58.5625,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "es",
+        "viewport": 390,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.453125,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "pt",
+        "viewport": 390,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "pt",
+        "viewport": 390,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 154.015625,
+            "height": 44
+          },
+          {
+            "width": 187.359375,
+            "height": 44
+          },
+          {
+            "width": 65.375,
+            "height": 44
+          },
+          {
+            "width": 154.015625,
+            "height": 44
+          },
+          {
+            "width": 187.359375,
+            "height": 44
+          },
+          {
+            "width": 65.375,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "pt",
+        "viewport": 390,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.453125,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 390,
+        "kind": "editor-radio-labels",
+        "targets": [
+          {
+            "width": 109.34375,
+            "height": 44
+          },
+          {
+            "width": 137.59375,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 390,
+        "kind": "editor-save-close",
+        "targets": [
+          {
+            "width": 156.328125,
+            "height": 49.8125
+          },
+          {
+            "width": 51.953125,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 1440,
+        "kind": "add-radio-labels",
+        "targets": [
+          {
+            "width": 119.515625,
+            "height": 44
+          },
+          {
+            "width": 151.03125,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 1440,
+        "kind": "add-quantity-buttons",
+        "targets": [
+          {
+            "width": 48,
+            "height": 48
+          },
+          {
+            "width": 48,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 1440,
+        "kind": "add-submit",
+        "targets": [
+          {
+            "width": 589.078125,
+            "height": 52.796875
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 1440,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 1440,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 134.828125,
+            "height": 44.796875
+          },
+          {
+            "width": 196.671875,
+            "height": 44.796875
+          },
+          {
+            "width": 66.421875,
+            "height": 44.796875
+          },
+          {
+            "width": 134.828125,
+            "height": 44.796875
+          },
+          {
+            "width": 196.671875,
+            "height": 44.796875
+          },
+          {
+            "width": 66.421875,
+            "height": 44.796875
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 1440,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.453125,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "zh-CN",
+        "viewport": 1440,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "zh-CN",
+        "viewport": 1440,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 72,
+            "height": 44.796875
+          },
+          {
+            "width": 126,
+            "height": 44.796875
+          },
+          {
+            "width": 44,
+            "height": 44.796875
+          },
+          {
+            "width": 72,
+            "height": 44.796875
+          },
+          {
+            "width": 126,
+            "height": 44.796875
+          },
+          {
+            "width": 44,
+            "height": 44.796875
+          }
+        ]
+      },
+      {
+        "locale": "zh-CN",
+        "viewport": 1440,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.5625,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "th",
+        "viewport": 1440,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "th",
+        "viewport": 1440,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 100.96875,
+            "height": 44.796875
+          },
+          {
+            "width": 152.3125,
+            "height": 44.796875
+          },
+          {
+            "width": 51.984375,
+            "height": 44.796875
+          },
+          {
+            "width": 100.96875,
+            "height": 44.796875
+          },
+          {
+            "width": 152.3125,
+            "height": 44.796875
+          },
+          {
+            "width": 51.984375,
+            "height": 44.796875
+          }
+        ]
+      },
+      {
+        "locale": "th",
+        "viewport": 1440,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.5625,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "vi",
+        "viewport": 1440,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "vi",
+        "viewport": 1440,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 149.921875,
+            "height": 44.796875
+          },
+          {
+            "width": 154.40625,
+            "height": 44.796875
+          },
+          {
+            "width": 44,
+            "height": 44.796875
+          },
+          {
+            "width": 149.921875,
+            "height": 44.796875
+          },
+          {
+            "width": 154.40625,
+            "height": 44.796875
+          },
+          {
+            "width": 44,
+            "height": 44.796875
+          }
+        ]
+      },
+      {
+        "locale": "vi",
+        "viewport": 1440,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.453125,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "ja",
+        "viewport": 1440,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "ja",
+        "viewport": 1440,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 90,
+            "height": 44.796875
+          },
+          {
+            "width": 198,
+            "height": 44.796875
+          },
+          {
+            "width": 44,
+            "height": 44.796875
+          },
+          {
+            "width": 90,
+            "height": 44.796875
+          },
+          {
+            "width": 198,
+            "height": 44.796875
+          },
+          {
+            "width": 44,
+            "height": 44.796875
+          }
+        ]
+      },
+      {
+        "locale": "ja",
+        "viewport": 1440,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.5625,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "es",
+        "viewport": 1440,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "es",
+        "viewport": 1440,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 160.109375,
+            "height": 44.796875
+          },
+          {
+            "width": 203.796875,
+            "height": 44.796875
+          },
+          {
+            "width": 65.3125,
+            "height": 44.796875
+          },
+          {
+            "width": 160.109375,
+            "height": 44.796875
+          },
+          {
+            "width": 203.796875,
+            "height": 44.796875
+          },
+          {
+            "width": 65.3125,
+            "height": 44.796875
+          }
+        ]
+      },
+      {
+        "locale": "es",
+        "viewport": 1440,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.453125,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "pt",
+        "viewport": 1440,
+        "kind": "cart-quantity-buttons",
+        "targets": [
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          },
+          {
+            "width": 44,
+            "height": 48
+          }
+        ]
+      },
+      {
+        "locale": "pt",
+        "viewport": 1440,
+        "kind": "cart-save-edit-remove",
+        "targets": [
+          {
+            "width": 171.75,
+            "height": 44.796875
+          },
+          {
+            "width": 208.9375,
+            "height": 44.796875
+          },
+          {
+            "width": 72.90625,
+            "height": 44.796875
+          },
+          {
+            "width": 171.75,
+            "height": 44.796875
+          },
+          {
+            "width": 208.9375,
+            "height": 44.796875
+          },
+          {
+            "width": 72.90625,
+            "height": 44.796875
+          }
+        ]
+      },
+      {
+        "locale": "pt",
+        "viewport": 1440,
+        "kind": "cart-header-trigger",
+        "targets": [
+          {
+            "width": 47.453125,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 1440,
+        "kind": "editor-radio-labels",
+        "targets": [
+          {
+            "width": 119.515625,
+            "height": 44
+          },
+          {
+            "width": 151.03125,
+            "height": 44
+          }
+        ]
+      },
+      {
+        "locale": "en",
+        "viewport": 1440,
+        "kind": "editor-save-close",
+        "targets": [
+          {
+            "width": 168.8125,
+            "height": 52.796875
+          },
+          {
+            "width": 57.9375,
+            "height": 44.796875
+          }
+        ]
+      }
+    ],
+    "focusCycles": [
+      {
+        "locale": "en",
+        "viewport": 390,
+        "focusableCount": 13,
+        "stepsEachDirection": 20,
+        "status": "PASS"
+      },
+      {
+        "locale": "en",
+        "viewport": 1440,
+        "focusableCount": 13,
+        "stepsEachDirection": 20,
+        "status": "PASS"
+      }
+    ],
+    "drawerVisualStates": [
+      {
+        "locale": "en",
+        "viewport": 390,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "zh-CN",
+        "viewport": 390,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "th",
+        "viewport": 390,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "vi",
+        "viewport": 390,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "ja",
+        "viewport": 390,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "es",
+        "viewport": 390,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "pt",
+        "viewport": 390,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "en",
+        "viewport": 1440,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "zh-CN",
+        "viewport": 1440,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "th",
+        "viewport": 1440,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "vi",
+        "viewport": 1440,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "ja",
+        "viewport": 1440,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "es",
+        "viewport": 1440,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      },
+      {
+        "locale": "pt",
+        "viewport": 1440,
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "runningAnimations": 0
+      }
+    ],
+    "actualAwsKms": false,
+    "privatePlaintextPersisted": false,
+    "physicalDeviceEvidence": false
+  }
+}

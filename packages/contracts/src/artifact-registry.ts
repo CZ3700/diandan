@@ -1,4 +1,30 @@
 import {
+  cartEditUpdateCommandSchema,
+  cartEditRemoveCommandSchema,
+  cartEditorReadCommandSchema,
+  cartEditCommandSchema,
+  cartEditFailureSchema,
+  cartEditResponseSchema,
+  cartEditorResponseSchema,
+  cartRuntimeCurrentResponseSchema,
+} from "./cart-edit.js";
+import {
+  cartEditLoadItemCommandSchema,
+  cartEditItemSnapshotSchema,
+  cartEditLoadPrivateCommandSchema,
+  cartEditPrivateSnapshotSchema,
+  cartEditConfirmPrivateCommandSchema,
+  cartEditWriteMutationCommandSchema,
+  cartEditFindMutationReceiptCommandSchema,
+  cartEditMutationReceiptSchema,
+} from "./cart-edit-internal.js";
+import {
+  cartEditUpdateRequestSchema,
+  cartEditRemoveRequestSchema,
+  cartEditorReadRequestSchema,
+} from "./cart-edit-http.js";
+import { cartEditEventSchema } from "./cart-edit-events.js";
+import {
   cartRuntimeInitializeCommandSchema,
   cartRuntimeReadCommandSchema,
   cartRuntimeAddCommandSchema,
@@ -578,6 +604,103 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "CartEditUpdateCommand",
+    audience: "internal",
+    schema: cartEditUpdateCommandSchema,
+  },
+  {
+    name: "CartEditRemoveCommand",
+    audience: "internal",
+    schema: cartEditRemoveCommandSchema,
+  },
+  {
+    name: "CartEditorReadCommand",
+    audience: "internal",
+    schema: cartEditorReadCommandSchema,
+  },
+  {
+    name: "CartEditCommand",
+    audience: "internal",
+    schema: cartEditCommandSchema,
+  },
+  {
+    name: "CartEditFailure",
+    audience: "public-http",
+    schema: cartEditFailureSchema,
+  },
+  {
+    name: "CartEditResponse",
+    audience: "public-http",
+    schema: cartEditResponseSchema,
+  },
+  {
+    name: "CartEditorResponse",
+    audience: "public-http",
+    schema: cartEditorResponseSchema,
+  },
+  {
+    name: "CartRuntimeCurrentResponse",
+    audience: "public-http",
+    schema: cartRuntimeCurrentResponseSchema,
+  },
+  {
+    name: "CartEditLoadItemCommand",
+    audience: "internal",
+    schema: cartEditLoadItemCommandSchema,
+  },
+  {
+    name: "CartEditItemSnapshot",
+    audience: "internal",
+    schema: cartEditItemSnapshotSchema,
+  },
+  {
+    name: "CartEditLoadPrivateCommand",
+    audience: "internal",
+    schema: cartEditLoadPrivateCommandSchema,
+  },
+  {
+    name: "CartEditPrivateSnapshot",
+    audience: "internal",
+    schema: cartEditPrivateSnapshotSchema,
+  },
+  {
+    name: "CartEditConfirmPrivateCommand",
+    audience: "internal",
+    schema: cartEditConfirmPrivateCommandSchema,
+  },
+  {
+    name: "CartEditWriteMutationCommand",
+    audience: "internal",
+    schema: cartEditWriteMutationCommandSchema,
+  },
+  {
+    name: "CartEditFindMutationReceiptCommand",
+    audience: "internal",
+    schema: cartEditFindMutationReceiptCommandSchema,
+  },
+  {
+    name: "CartEditMutationReceipt",
+    audience: "internal",
+    schema: cartEditMutationReceiptSchema,
+  },
+  {
+    name: "CartEditUpdateRequest",
+    audience: "public-http",
+    schema: cartEditUpdateRequestSchema,
+  },
+  {
+    name: "CartEditRemoveRequest",
+    audience: "public-http",
+    schema: cartEditRemoveRequestSchema,
+  },
+  {
+    name: "CartEditorReadRequest",
+    audience: "public-http",
+    schema: cartEditorReadRequestSchema,
+  },
+  { name: "CartEditEvent", audience: "internal", schema: cartEditEventSchema },
+
   {
     name: "CartRuntimeInitializeCommand",
     audience: "internal",

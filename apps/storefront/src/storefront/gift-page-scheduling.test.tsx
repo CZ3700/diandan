@@ -1,5 +1,14 @@
 import { PassThrough } from "node:stream";
-import type { ReactElement } from "react";
+import {
+  Children,
+  isValidElement,
+  Suspense,
+  type ReactElement,
+  type ReactNode,
+} from "react";
+import { readFileSync } from "node:fs";
+import { CartProvider } from "./cart-provider";
+import { SiteHeader } from "./site-header";
 import { renderToPipeableStream } from "react-dom/server";
 import { beforeEach, expect, test, vi } from "vitest";
 import {
@@ -28,6 +37,7 @@ const reads = vi.hoisted(() => ({
   gift: vi.fn(),
   commerce: vi.fn(),
   artists: vi.fn(),
+  policy: vi.fn(),
 }));
 vi.mock("../server/storefront-copy", () => ({
   loadStorefrontCopy: reads.copy,
@@ -37,7 +47,7 @@ vi.mock("./gift-page-reads", () => ({
   giftRead: reads.gift,
   commerceRead: reads.commerce,
   artistRead: reads.artists,
-  policyRead: vi.fn(),
+  policyRead: reads.policy,
   giftDirectoryRead: vi.fn(),
 }));
 vi.mock("./site-header", () => ({ SiteHeader: () => null }));
@@ -218,6 +228,11 @@ beforeEach(() => {
     loadStorefrontCopy(locale, { requireApproved: false }),
   );
   useFixture();
+  reads.policy.mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "CONTENT_UNAVAILABLE",
+  });
 });
 
 test("a policy context rejection is consumed immediately while copy is still pending", async () => {
@@ -628,3 +643,55 @@ test.each(["en", "zh-CN"] as const)(
     expect(rendered.errors).toEqual([]);
   },
 );
+
+function elements(node: ReactNode): ReactElement<Record<string, unknown>>[] {
+  const result: ReactElement<Record<string, unknown>>[] = [];
+  Children.forEach(node, (child) => {
+    if (isValidElement<Record<string, unknown>>(child))
+      result.push(child, ...elements(child.props["children"] as ReactNode));
+  });
+  return result;
+}
+test.each(["gift", "gifts", "policy", "region"] as const)(
+  "%s keeps its header and main inside exactly one shared cart provider",
+  async (kind) => {
+    const Entry = createGiftStorefrontPage("en", kind);
+    let tree = await Entry({
+      params: Promise.resolve({
+        handle: kind === "policy" ? "studio-delivery" : "rose-palace",
+      }),
+      searchParams: Promise.resolve(query),
+    });
+    if (tree.type === Suspense) {
+      const child = tree.props.children as ReactElement;
+      const renderPage = child.type as (
+        props: unknown,
+      ) => Promise<ReactElement>;
+      tree = await renderPage(child.props);
+    }
+    const providers = elements(tree).filter(
+      (element) => element.type === CartProvider,
+    );
+    expect(providers).toHaveLength(1);
+    const provider = providers[0]!;
+    expect(provider.key).toBe("en");
+    expect(provider.props["locale"]).toBe("en");
+    const contents = elements(provider.props["children"] as ReactNode);
+    expect(
+      contents.filter((element) => element.type === SiteHeader),
+    ).toHaveLength(1);
+    expect(
+      contents.filter(
+        (element) =>
+          element.type === "main" && element.props["id"] === "main-content",
+      ),
+    ).toHaveLength(1);
+  },
+);
+test("the independent gift-family shell loads its own cart styles", () => {
+  const source = readFileSync(
+    new URL("./gift-page-factory.tsx", import.meta.url),
+    "utf8",
+  );
+  expect(source).toMatch(/import ["']\.\/cart\.css["'];/u);
+});

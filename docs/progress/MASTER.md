@@ -3,9 +3,9 @@
 > 最后更新：2026-09-08
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3（验收待续）、Phase 4（ADR-013 本地开发）
-> 当前任务：P4-01 DONE；P4-02 READY、无 executor；P3-06 保留 IN_PROGRESS、验收待续且无 executor
-> 下一入口：P4-02 购物车抽屉/页与真实后端接入，数量、删除、留言编辑和失败恢复
-> 当前检查点：P4-01 本地技术验收完成。全部PG/HTTP/TLS S3、购物车6029断言含准备及3次新礼物首次加购通过；P2-04/05刷新通过。末端output诊断脚本lint修正后，未改的完整质量后缀通过，1734实现输入与集成时一致；分段结果覆盖全部原门。环境时钟回退与原间歇失败证据保留，不称已根治。
+> 当前任务：P4-02 DONE；P4-03 READY、Lane A 无 executor；P3-06 保留 IN_PROGRESS、验收待续且无 executor
+> 下一入口：领取 P4-03，实施 checkout preflight、报价/金额快照、库存预占与待付款订单
+> 当前检查点：P4-02 本地验收完成。七语购物车真实加购/编辑、16cases/40PNG/30axe零violation与真实PG/API/S3通过；旧并发失败保留，原门按同源前缀+完整后缀覆盖。1799最终输入一致，Next自动类型导入暂态与恢复已记录；只本地提交。
 
 ## 1. 开工入口
 
@@ -17,18 +17,18 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，root 本轮从 READY 领取 P4-01、Lane A 独占。正式品牌资产与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 与 P4-02 已完成并释放对应 Lane；下一任务 P4-03 为 READY，Lane A 无 executor。正式品牌资产与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 24 |
+| PENDING | 23 |
 | READY | 1 |
 | IN_PROGRESS | 1 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
-| DONE | 23 |
+| DONE | 24 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-08 P4-02 DONE：礼物实际加购、七语购物车抽屉/页、多艺人独立行、数量/删除/私密编辑、版本冲突与原key恢复完成。最终浏览器16cases/40PNG/30axe零violation（14incomplete保留），真实新cart5924断言含准备、33协议请求及独立拒退8项通过。旧0017资源并发23514首次失败保留，原样复验129PASS，冻结源的PG/API后缀与最终8项质量门全部通过，未称单条check exit0；Next自动声明两import暂态已归档恢复。最终1799字节/集合一致，2260旧未跟踪文件无变化，非作者终验ACCEPT、S.U.P.E.R10项与secret/high audit通过。详见 `output/checks/p4-02-cart-storefront/final-verification.md`；无支付/新真机/生产发布结论。P4-03 READY，P3-06未完验收保持，总计24DONE/1READY/1IN_PROGRESS/23PENDING=49。
 
 2026-09-08 P4-01 DONE：匿名cart、私密加密与原子加购实现通过本地技术验收。全部原PG/HTTP/TLS S3与浏览器回归通过，购物车6029断言含准备/1905准备请求、3件新上架礼物无预读首次加购通过；旧421合同根不变，23迁移/159表往返与两类历史数据拒绝回退通过。整条full3在1247.50秒仅因output-only诊断脚本URL导入缺失而exit1；修正后原质量后缀33.578秒exit0，类型60/60、测试60/60、构建35/35及31出口通过，1734实现输入逐SHA不变。非作者确认两段覆盖完整原门，S.U.P.E.R 10项PASS，secret/high audit通过；未宣称单次整条exit0或冷缓存。自然PG时钟回退与原间歇失败未根治、P3未完门继续保留。详见 `docs/progress/phase-4-commerce.md` 与 `output/checks/p4-01-cart-runtime/final-verification.md`；23DONE/1READY/1IN_PROGRESS/24PENDING=49，P4-02 READY。本轮仅本地Git交付，无push/merge/生产发布。
 

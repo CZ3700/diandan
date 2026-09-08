@@ -9,7 +9,7 @@ import {
 } from "@fan-support/contracts";
 import copy from "../../../../packages/i18n/src/storefront/en";
 import { GiftPurchase } from "./gift-purchase";
-import * as quantity from "./gift-quantity";
+import * as add from "./gift-add";
 
 vi.mock("server-only", () => ({}));
 
@@ -147,6 +147,37 @@ function render(gift: ReturnType<typeof fixture>, variant?: string) {
 }
 
 describe("gift purchase presentation against canonical offer contracts", () => {
+  it("exposes a real add form only after the current recipient and offer are eligible", () => {
+    const html = render(fixture());
+    expect(html).toContain("data-cart-add");
+    expect(html).toContain("data-cart-personalization");
+    expect(html).not.toContain('data-cart-add="disabled"');
+  });
+  it("does not expose the add form for a missing recipient, unavailable price, or exhausted stock", () => {
+    expect(render(fixture({}, { kind: "NONE" }))).not.toContain(
+      "data-cart-add",
+    );
+    expect(
+      render(
+        fixture({
+          availability: "UNAVAILABLE",
+          reason: "OUT_OF_STOCK",
+          stock: { kind: "TRACKED", availableQuantity: 0 },
+          maxQuantity: 0,
+        }),
+      ),
+    ).not.toContain("data-cart-add");
+    expect(
+      render(
+        fixture({
+          price: null,
+          availability: "UNAVAILABLE",
+          reason: "PRICE_UNAVAILABLE",
+          maxQuantity: 0,
+        }),
+      ),
+    ).not.toContain("data-cart-add");
+  });
   it("keeps offer, price and ICU presentation outside the client entry", () => {
     const source = readFileSync(
       new URL("./gift-purchase.tsx", import.meta.url),
@@ -155,24 +186,28 @@ describe("gift purchase presentation against canonical offer contracts", () => {
     expect(source).not.toMatch(/^["']use client["'];/u);
     expect(source).toContain('import "server-only"');
   });
-  it("only sends the quantity ceiling and three labels to the interactive boundary", () => {
-    const client = vi.spyOn(quantity, "GiftQuantity");
+  it("sends current identity and price hints with the PostgreSQL quantity ceiling to the form", () => {
+    const client = vi.spyOn(add, "GiftAdd");
     try {
       render(fixture());
       expect(client).toHaveBeenCalledOnce();
       expect(client.mock.calls[0]?.[0]).toEqual({
         max: 3,
-        label: copy.giftQuantity,
-        decreaseLabel: copy.giftQuantityDecrease,
-        increaseLabel: copy.giftQuantityIncrease,
+        locale: "en",
+        copy,
+        giftId: "10000000-0000-4000-8000-000000000001",
+        giftVariantId: variantId,
+        idolId,
+        observedPriceId: "40000000-0000-4000-8000-000000000001",
+        market: "TEST",
+        currency: "USD",
       });
       const source = readFileSync(
-        new URL("./gift-quantity.tsx", import.meta.url),
+        new URL("./gift-add.tsx", import.meta.url),
         "utf8",
       );
       expect(source).toMatch(/^["']use client["'];/u);
-      expect(source).not.toContain("@fan-support/contracts");
-      expect(source).not.toContain("./copy");
+      expect(source).not.toContain("formatStorefrontMessage");
       expect(source).not.toContain("@fan-support/i18n");
     } finally {
       client.mockRestore();
@@ -205,7 +240,9 @@ describe("gift purchase presentation against canonical offer contracts", () => {
       expect(html).toContain('value="1200"');
       expect(html).toContain("$12.00");
       expect(html).toContain('role="spinbutton"');
-      expect(html).toContain(`aria-valuemax="${maxQuantity}"`);
+      expect(html).toContain(
+        `aria-valuemax="${Math.min(maxQuantity, 2_147_483_647)}"`,
+      );
       expect(html).toContain('aria-valuemin="1"');
       if (kind === "TRACKED") expect(html).toContain("data-stock-remaining");
       else {

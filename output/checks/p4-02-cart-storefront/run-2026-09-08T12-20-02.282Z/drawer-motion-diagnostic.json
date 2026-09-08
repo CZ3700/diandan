@@ -1,0 +1,120 @@
+{
+  "records": [
+    {
+      "label": "focus-ready",
+      "opacity": "0",
+      "transform": "matrix(1, 0, 0, 1, 456, 0)",
+      "transitionDuration": "0.36s, 0.36s",
+      "rect": {
+        "x": 984,
+        "y": 0,
+        "width": 456,
+        "height": 900
+      },
+      "animations": [
+        {
+          "playState": "running",
+          "currentTime": 0,
+          "endTime": 360
+        },
+        {
+          "playState": "running",
+          "currentTime": 0,
+          "endTime": 360
+        }
+      ],
+      "inside": true
+    },
+    {
+      "label": "after-50ms",
+      "opacity": "0.375032",
+      "transform": "matrix(1, 0, 0, 1, 284.985, 0)",
+      "transitionDuration": "0.36s, 0.36s",
+      "rect": {
+        "x": 983.9854736328125,
+        "y": 0,
+        "width": 456,
+        "height": 900
+      },
+      "animations": [
+        {
+          "playState": "running",
+          "currentTime": 33.277999272942616,
+          "endTime": 360
+        },
+        {
+          "playState": "running",
+          "currentTime": 33.277999272942616,
+          "endTime": 360
+        }
+      ],
+      "inside": true
+    },
+    {
+      "label": "after-100ms",
+      "opacity": "0.897271",
+      "transform": "matrix(1, 0, 0, 1, 46.8443, 0)",
+      "transitionDuration": "0.36s, 0.36s",
+      "rect": {
+        "x": 983.84423828125,
+        "y": 0,
+        "width": 456,
+        "height": 900
+      },
+      "animations": [
+        {
+          "playState": "running",
+          "currentTime": 133.27799927294248,
+          "endTime": 360
+        },
+        {
+          "playState": "running",
+          "currentTime": 133.27799927294248,
+          "endTime": 360
+        }
+      ],
+      "inside": true
+    },
+    {
+      "label": "after-200ms",
+      "opacity": "0.999937",
+      "transform": "matrix(1, 0, 0, 1, 0.0289306, 0)",
+      "transitionDuration": "0.36s, 0.36s",
+      "rect": {
+        "x": 984.0289306640625,
+        "y": 0,
+        "width": 456,
+        "height": 900
+      },
+      "animations": [
+        {
+          "playState": "running",
+          "currentTime": 333.27799927294245,
+          "endTime": 360
+        },
+        {
+          "playState": "running",
+          "currentTime": 333.27799927294245,
+          "endTime": 360
+        }
+      ],
+      "inside": true
+    },
+    {
+      "label": "after-400ms",
+      "opacity": "1",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "transitionDuration": "0.36s, 0.36s",
+      "rect": {
+        "x": 984,
+        "y": 0,
+        "width": 456,
+        "height": 900
+      },
+      "animations": [],
+      "inside": true
+    }
+  ],
+  "axe": [],
+  "browserClosed": true
+}

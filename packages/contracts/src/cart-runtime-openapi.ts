@@ -12,7 +12,7 @@ export function cartRuntimePaths() {
     },
     content: {
       "application/json": {
-        schema: { $ref: "#/components/schemas/CartRuntimeResponse" },
+        schema: { $ref: "#/components/schemas/CartRuntimeCurrentResponse" },
       },
     },
   });
