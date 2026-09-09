@@ -1058,6 +1058,8 @@ Webhook 验签必须通过独立的 endpoint-scoped `PaymentWebhookVerifier` 产
 
 开发期必须实现 `FakePaymentAdapter` 供确定性测试；首个生产 adapter 只能在经营主体和首发市场确定后选择。新增服务商不得修改 `domain`、礼物页面、购物车或订单状态机。
 
+2026-09-09 用户确认先交付通用接入基础，暂缓具体商户资料：Visa/Mastercard 作为 PSP 提供的卡网络；USDT 独立建模资产、网络、精确数量、报价期限与确认；聚合平台通过各自已部署 adapter 归一化。可先实现静态工厂与版本化配置投影、托管 HTTP 协议和 raw webhook 验签，不得把仓库自有协议声称为所有厂商共用 API，或把配置投影称作已完成的持久发布/商户启用入口。真实 PSP 选择、sandbox、小额与上线门仍保留，细节见 `docs/operations/payment-connectors.md`。
+
 自研 checkout 负责：重新定价、库存预占、订单草稿、联系邮箱、条款同意、payment attempt 与回跳页面。PSP 只负责托管支付认证与资金结果；其 SDK 对象不得成为订单模型。
 
 支付创建必须使用下面的 crash-recoverable Saga：

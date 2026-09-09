@@ -2,7 +2,6 @@ import {
   cartRuntimeRequestContextSchema,
   paymentRuntimeCommandSchema,
   paymentRuntimeConfigurationSchema,
-  paymentRuntimeProviderBindingSchema,
   paymentRuntimeResponseSchema,
   paymentRuntimeCurrentCheckoutSchema,
   paymentRuntimeRecoveryRunResponseSchema,
@@ -12,11 +11,15 @@ import {
 } from "@fan-support/contracts";
 import { projectCheckoutSession } from "@fan-support/domain";
 import type { KeyManagementPort } from "@fan-support/key-management-port";
-import type { PaymentRuntimeProviderRegistration } from "@fan-support/payment-port";
+import type {
+  PaymentRuntimeProviderDirectory,
+  PaymentRuntimeProviderRegistration,
+} from "@fan-support/payment-port";
 import type { PaymentRuntimeTransactionManager } from "@fan-support/persistence-port";
 import { readAuthorizedPayment } from "./payment-runtime-action.js";
 import { listPaymentCapabilities } from "./payment-runtime-capabilities.js";
 import { createRuntimePayment } from "./payment-runtime-create.js";
+import { paymentProviderRegistrations } from "./payment-runtime-provider.js";
 import {
   recoverNextRuntimePayment,
   recoverRuntimePayment,
@@ -32,32 +35,22 @@ export function createPaymentRuntimeUseCases({
   transactions,
   keyManagement,
   providers,
+  providerDirectory,
   configuration,
 }: {
   transactions: PaymentRuntimeTransactionManager;
   keyManagement: KeyManagementPort;
   providers: readonly PaymentRuntimeProviderRegistration[];
+  providerDirectory?: PaymentRuntimeProviderDirectory;
   configuration: PaymentRuntimeConfiguration;
 }) {
-  const registered = providers.map((entry) => ({
-    configuration: paymentRuntimeProviderBindingSchema.parse(
-      entry.configuration,
-    ),
-    provider: entry.provider,
-  }));
-  if (
-    new Set(
-      registered.map(
-        ({ configuration: binding }) =>
-          `${binding.environment}/${binding.providerAccountId.toLowerCase()}`,
-      ),
-    ).size !== registered.length
-  )
-    throw new TypeError("Duplicate payment provider registration");
+  const registered = paymentProviderRegistrations(providers, providerDirectory);
   const runtime: PaymentRuntime = {
     run: paymentTransactions(transactions),
     keys: keyManagement,
-    providers: registered,
+    get providers() {
+      return registered();
+    },
     configuration: paymentRuntimeConfigurationSchema.parse(configuration),
   };
   const execute = async (

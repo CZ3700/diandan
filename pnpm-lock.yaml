@@ -585,6 +585,22 @@ importers:
         specifier: 24.13.3
         version: 24.13.3
 
+  packages/payment-gateway:
+    dependencies:
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@fan-support/payment-port':
+        specifier: workspace:*
+        version: link:../payment-port
+      zod:
+        specifier: 4.5.4
+        version: 4.5.4
+    devDependencies:
+      '@types/node':
+        specifier: 24.13.3
+        version: 24.13.3
+
   packages/payment-port:
     dependencies:
       '@fan-support/contracts':

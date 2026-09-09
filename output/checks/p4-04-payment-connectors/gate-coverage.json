@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "originalStepCount": 38,
+  "allStepsHavePassingEvidence": true,
+  "singleFullCheckExitZero": false,
+  "sourceSha256": "dcaf38f0a4cb8e926b3477c4db212a24d46085a6fd248dbe290e733e10c27ea2",
+  "steps": [
+    {
+      "ordinal": 1,
+      "command": "node ./scripts/check-workspace.mjs",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 2,
+      "command": "corepack pnpm check:design-foundations",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 3,
+      "command": "corepack pnpm check:ui-primitives",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 4,
+      "command": "corepack pnpm check:ui-interactions",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 5,
+      "command": "corepack pnpm check:ui-composites",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 6,
+      "command": "corepack pnpm check:ui-motion",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 7,
+      "command": "node --test ./scripts/check-domain-boundaries.test.mjs",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 8,
+      "command": "node ./scripts/check-domain-boundaries.mjs",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 9,
+      "command": "node --test ./scripts/check-adapter-boundaries.test.mjs",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 10,
+      "command": "node ./scripts/check-ci.mjs",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 11,
+      "command": "node ./scripts/check-runtime.mjs",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 12,
+      "command": "node ./scripts/check-observability.mjs",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 13,
+      "command": "corepack pnpm check:contracts",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 14,
+      "command": "corepack pnpm --filter @fan-support/persistence-postgres test:postgres",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 15,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:catalog",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 16,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:admin-content",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 17,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:content-authoring",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 18,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:base-content",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 19,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:resource-management",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 20,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:publication-preflight",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 21,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:publication-runtime",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 22,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:admin-workspace",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 23,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:gift-commerce",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 24,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:storefront",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 25,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:gift-storefront",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 26,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:storefront-acceptance",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 27,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:cart",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 28,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:cart-storefront",
+      "source": "check-full.log",
+      "phase": "original prefix"
+    },
+    {
+      "ordinal": 29,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:checkout-preflight",
+      "source": "check-remainder-result.json",
+      "seconds": 107.775,
+      "exitCode": 0
+    },
+    {
+      "ordinal": 30,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:payment-runtime",
+      "source": "check-remainder-result.json",
+      "seconds": 79.796,
+      "exitCode": 0
+    },
+    {
+      "ordinal": 31,
+      "command": "corepack pnpm test:s3",
+      "source": "check-remainder-result.json",
+      "seconds": 73.381,
+      "exitCode": 0
+    },
+    {
+      "ordinal": 32,
+      "command": "prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
+      "source": "quality-final-result.json",
+      "seconds": 5.799,
+      "exitCode": 0
+    },
+    {
+      "ordinal": 33,
+      "command": "eslint . --max-warnings=0",
+      "source": "quality-final-result.json",
+      "seconds": 5.95,
+      "exitCode": 0
+    },
+    {
+      "ordinal": 34,
+      "command": "turbo run typecheck --output-logs=errors-only",
+      "source": "quality-final-result.json",
+      "seconds": 17.792,
+      "exitCode": 0
+    },
+    {
+      "ordinal": 35,
+      "command": "turbo run test --output-logs=errors-only",
+      "source": "quality-recheck-result.json",
+      "seconds": 7.61,
+      "exitCode": 0
+    },
+    {
+      "ordinal": 36,
+      "command": "turbo run build --output-logs=errors-only",
+      "source": "quality-recheck-result.json",
+      "seconds": 8.917,
+      "exitCode": 0
+    },
+    {
+      "ordinal": 37,
+      "command": "node ./scripts/check-adapter-boundaries.mjs",
+      "source": "quality-recheck-result.json",
+      "seconds": 3.634,
+      "exitCode": 0
+    },
+    {
+      "ordinal": 38,
+      "command": "node ./scripts/check-build-artifacts.mjs",
+      "source": "quality-recheck-result.json",
+      "seconds": 0.581,
+      "exitCode": 0
+    }
+  ],
+  "failures": [
+    {
+      "source": "check-full-result.json",
+      "kind": "old daily READ_OPERATION permission check",
+      "exitCode": 1,
+      "detail": "run-2026-09-09T10-11-38.814Z/failure.json ASSERTION ERR_ASSERTION: daily cart READ_OPERATION succeeds (FORBIDDEN); 7161 assertions; same source retry passed in107.775s; exact authorization miss cause unknown"
+    },
+    {
+      "source": "check-remainder-result.json",
+      "kind": "orchestration PATH",
+      "exitCode": 127,
+      "detail": "standalone sh lacked local prettier executable; original quality commands repeated in pnpm exec environment; no project command or dependency changed"
+    },
+    {
+      "source": "quality-final-result.json",
+      "kind": "known default unit test timeout",
+      "exitCode": 1,
+      "detail": "artifact-documents deterministic generation 7224ms exceeded unchanged 5000ms; same-source same-threshold original turbo test passed on recheck with 60/61 cached"
+    }
+  ]
+}

@@ -148,3 +148,60 @@ test("absent configuration has no implicit PSP and partially configured deployme
     }),
   ).toBeUndefined();
 });
+
+test("a running composition observes validated deployed directory additions without replacing historical origins", async () => {
+  let entries = options.providers;
+  const providerDirectory = { getRegistrations: () => entries };
+  const result = createTestPaymentRuntimeComposition(
+    { ...options, providers: [], providerDirectory } as never,
+    {
+      createPersistence: () => ({
+        paymentRuntimeTransactionManager: {
+          runInPaymentRuntimeTransaction: vi.fn(),
+        },
+        close: vi.fn(),
+      }),
+    },
+  );
+  expect(result.paymentRuntimeRoute.actionOrigins).toEqual(
+    binding.allowedActionOrigins,
+  );
+  entries = [
+    ...entries,
+    {
+      configuration: {
+        ...binding,
+        providerAccountId: "10000000-0000-4000-8000-000000000002",
+        allowedActionOrigins: ["https://second-payments.example.invalid"],
+      },
+      provider,
+    },
+  ];
+  expect(result.paymentRuntimeRoute.actionOrigins).toEqual([
+    ...binding.allowedActionOrigins,
+    "https://second-payments.example.invalid",
+  ]);
+  expect(observed.create.mock.lastCall).toEqual([
+    expect.objectContaining({ providerDirectory: expect.any(Object) }),
+  ]);
+  await result.paymentRuntime.stop();
+});
+
+test("TEST composition rejects a LIVE directory before opening a pool", () => {
+  const createPersistence = vi.fn();
+  expect(() =>
+    createTestPaymentRuntimeComposition(
+      {
+        ...options,
+        providers: [],
+        providerDirectory: {
+          getRegistrations: () => [
+            { configuration: { ...binding, environment: "LIVE" }, provider },
+          ],
+        },
+      } as never,
+      { createPersistence },
+    ),
+  ).toThrow();
+  expect(createPersistence).not.toHaveBeenCalled();
+});

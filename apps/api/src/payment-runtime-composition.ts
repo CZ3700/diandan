@@ -15,7 +15,10 @@ import {
   type KmsKeyManagementAdapterConfig,
 } from "@fan-support/key-management-kms";
 import type { KeyManagementPort } from "@fan-support/key-management-port";
-import type { PaymentRuntimeProviderRegistration } from "@fan-support/payment-port";
+import type {
+  PaymentRuntimeProviderRegistration,
+  PaymentRuntimeProviderDirectory,
+} from "@fan-support/payment-port";
 import {
   createPostgresPersistence,
   type PostgresConnectionConfig,
@@ -42,6 +45,7 @@ type Common = {
   publicMediaBaseUrl: string;
   configuration: PaymentRuntimeConfiguration;
   providers: readonly PaymentRuntimeProviderRegistration[];
+  providerDirectory?: PaymentRuntimeProviderDirectory;
 };
 type Injected = Common & {
   keyManagement: KeyManagementPort;
@@ -96,6 +100,16 @@ function compose(
   );
   paymentRuntimeOriginSchema.parse(options.publicMediaBaseUrl);
   const providers = registrations(options.providers);
+  const configuredDirectory = options.providerDirectory;
+  const providerDirectory =
+    configuredDirectory === undefined
+      ? undefined
+      : {
+          getRegistrations: () =>
+            registrations(configuredDirectory.getRegistrations()),
+        };
+  // Validate before creating database resources; the application also guards historical bindings.
+  providerDirectory?.getRegistrations();
   const credentials = createCartSessionCredentials(options);
   const persistence = (
     factories.createPersistence ?? createPostgresPersistence
@@ -110,6 +124,7 @@ function compose(
       transactions: persistence.paymentRuntimeTransactionManager,
       keyManagement: options.keyManagement,
       providers,
+      ...(providerDirectory === undefined ? {} : { providerDirectory }),
       configuration,
     });
     return Object.freeze({
@@ -117,13 +132,16 @@ function compose(
         allowedOrigin: configuration.publicStorefrontOrigin,
         credentials,
         useCases,
-        actionOrigins: [
-          ...new Set(
-            providers.flatMap(
-              (entry) => entry.configuration.allowedActionOrigins,
+        get actionOrigins() {
+          return [
+            ...new Set(
+              [
+                ...providers,
+                ...(providerDirectory?.getRegistrations() ?? []),
+              ].flatMap((entry) => entry.configuration.allowedActionOrigins),
             ),
-          ),
-        ],
+          ];
+        },
       },
       paymentRuntime: createPaymentRecoveryLifecycle({
         recoverNext: useCases.recoverNext,
@@ -143,12 +161,35 @@ export function createTestPaymentRuntimeComposition(
 ): PaymentRuntimeComposition {
   if (
     options.environment !== "TEST" ||
-    options.providers.some(
-      (entry) => entry.configuration.environment !== "TEST",
-    )
+    [
+      ...options.providers,
+      ...(options.providerDirectory?.getRegistrations() ?? []),
+    ].some((entry) => entry.configuration.environment !== "TEST")
   )
     throw new TypeError("Invalid TEST payment environment");
-  return compose(options, factories);
+  const directory = options.providerDirectory;
+  return compose(
+    {
+      ...options,
+      ...(directory === undefined
+        ? {}
+        : {
+            providerDirectory: {
+              getRegistrations() {
+                const entries = directory.getRegistrations();
+                if (
+                  entries.some(
+                    (entry) => entry.configuration.environment !== "TEST",
+                  )
+                )
+                  throw new TypeError("Invalid TEST payment environment");
+                return entries;
+              },
+            },
+          }),
+    },
+    factories,
+  );
 }
 export function createPaymentRuntimeComposition(
   options: Common & { keyManagementConfig: KmsKeyManagementAdapterConfig },

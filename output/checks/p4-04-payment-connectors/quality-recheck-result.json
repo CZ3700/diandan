@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "originalCommands": [
+    "turbo run test --output-logs=errors-only",
+    "turbo run build --output-logs=errors-only",
+    "node ./scripts/check-adapter-boundaries.mjs",
+    "node ./scripts/check-build-artifacts.mjs"
+  ],
+  "results": [
+    {
+      "command": "turbo run test --output-logs=errors-only",
+      "startedAt": "2026-09-09T10:24:23.512737+00:00",
+      "seconds": 7.61,
+      "exitCode": 0
+    },
+    {
+      "command": "turbo run build --output-logs=errors-only",
+      "startedAt": "2026-09-09T10:24:31.122955+00:00",
+      "seconds": 8.917,
+      "exitCode": 0
+    },
+    {
+      "command": "node ./scripts/check-adapter-boundaries.mjs",
+      "startedAt": "2026-09-09T10:24:40.039631+00:00",
+      "seconds": 3.634,
+      "exitCode": 0
+    },
+    {
+      "command": "node ./scripts/check-build-artifacts.mjs",
+      "startedAt": "2026-09-09T10:24:43.673744+00:00",
+      "seconds": 0.581,
+      "exitCode": 0
+    }
+  ],
+  "complete": true,
+  "thresholdsChanged": false
+}

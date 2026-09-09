@@ -15,6 +15,7 @@ const adapterPackageNames = new Set([
   "media-image",
   "notification-provider",
   "payment-fake",
+  "payment-gateway",
   "persistence-postgres",
 ]);
 const legacyWebhookCompatibilityRoots = new Set([

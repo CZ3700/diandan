@@ -53,6 +53,23 @@ async function writeInnerPackageFixture(root, directoryName, source = "") {
   );
 }
 
+test("payment gateway remains an outer adapter and cannot be imported by application", async (context) => {
+  const validateAdapterBoundaries = await loadValidator();
+  const root = await fixture();
+  context.after(() => rm(root, { recursive: true, force: true }));
+  await writeAdapterPackageFixture(root, "payment-gateway");
+  await writeInnerPackageFixture(
+    root,
+    "application",
+    'import { gateway } from "@fan-support/payment-gateway";\nexport const adapter = gateway;\n',
+  );
+  const errors = await validateAdapterBoundaries(root);
+  assert.ok(
+    errors.some((error) => error.includes("payment-gateway")),
+    JSON.stringify(errors),
+  );
+});
+
 async function writeAdapterPackageFixture(root, directoryName, source = "") {
   await writePackageManifest(
     root,

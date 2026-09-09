@@ -6,3 +6,8 @@ export type PaymentRuntimeProviderRegistration = Readonly<{
   configuration: PaymentRuntimeProviderBinding;
   provider: PaymentProvider;
 }>;
+
+/** Trusted, deployed adapters only. PostgreSQL remains the authority for routing and eligibility. */
+export type PaymentRuntimeProviderDirectory = Readonly<{
+  getRegistrations(): readonly PaymentRuntimeProviderRegistration[];
+}>;

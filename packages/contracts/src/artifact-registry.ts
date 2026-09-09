@@ -1,6 +1,8 @@
 import * as paymentRuntimeInternal from "./payment-runtime-internal.js";
 import * as paymentRuntime from "./payment-runtime.js";
 import * as paymentRuntimeConfig from "./payment-runtime-config.js";
+import * as paymentConnector from "./payment-connector.js";
+import * as paymentStablecoin from "./payment-stablecoin.js";
 import {
   checkoutTranslationSnapshotSchema,
   checkoutMediaSnapshotSchema,
@@ -652,6 +654,61 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "PaymentStablecoinConfig",
+    audience: "internal",
+    schema: paymentStablecoin.paymentStablecoinConfigSchema,
+  },
+  {
+    name: "PaymentStablecoinQuote",
+    audience: "internal",
+    schema: paymentStablecoin.paymentStablecoinQuoteSchema,
+  },
+  {
+    name: "PaymentStablecoinObservation",
+    audience: "internal",
+    schema: paymentStablecoin.paymentStablecoinObservationSchema,
+  },
+  {
+    name: "PaymentStablecoinEvaluationCommand",
+    audience: "internal",
+    schema: paymentStablecoin.paymentStablecoinEvaluationCommandSchema,
+  },
+  {
+    name: "PaymentStablecoinEvaluation",
+    audience: "internal",
+    schema: paymentStablecoin.paymentStablecoinEvaluationSchema,
+  },
+  {
+    name: "PaymentStablecoinDecimalToAtomicCommand",
+    audience: "internal",
+    schema: paymentStablecoin.paymentStablecoinDecimalToAtomicCommandSchema,
+  },
+  {
+    name: "PaymentStablecoinAtomicToDecimalCommand",
+    audience: "internal",
+    schema: paymentStablecoin.paymentStablecoinAtomicToDecimalCommandSchema,
+  },
+  {
+    name: "DeployedPaymentAdapter",
+    audience: "internal",
+    schema: paymentConnector.deployedPaymentAdapterSchema,
+  },
+  {
+    name: "PaymentAccountConnection",
+    audience: "internal",
+    schema: paymentConnector.paymentAccountConnectionSchema,
+  },
+  {
+    name: "PaymentConnectorSnapshot",
+    audience: "internal",
+    schema: paymentConnector.paymentConnectorSnapshotSchema,
+  },
+  {
+    name: "PaymentGatewayWebhookConfig",
+    audience: "internal",
+    schema: paymentConnector.paymentGatewayWebhookConfigSchema,
+  },
   {
     name: "PaymentRuntimeRecoveryRunResponse",
     audience: "internal",

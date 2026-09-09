@@ -1,0 +1,31 @@
+{
+  "contracts": {
+    "previous": 539,
+    "current": 550,
+    "oldEntriesIdentical": true,
+    "newRoots": [
+      "DeployedPaymentAdapter",
+      "PaymentAccountConnection",
+      "PaymentConnectorSnapshot",
+      "PaymentGatewayWebhookConfig",
+      "PaymentStablecoinAtomicToDecimalCommand",
+      "PaymentStablecoinConfig",
+      "PaymentStablecoinDecimalToAtomicCommand",
+      "PaymentStablecoinEvaluation",
+      "PaymentStablecoinEvaluationCommand",
+      "PaymentStablecoinObservation",
+      "PaymentStablecoinQuote"
+    ]
+  },
+  "paths": {
+    "previous": 92,
+    "current": 92,
+    "oldEntriesIdentical": true
+  },
+  "components": {
+    "previous": 171,
+    "current": 171,
+    "oldEntriesIdentical": true
+  },
+  "unchangedSQL": 52
+}

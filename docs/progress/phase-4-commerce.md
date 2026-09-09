@@ -151,3 +151,22 @@
 - 原合同门发现TEST seed重复locale表，改为复用已有copy并以真实正常PG配置/HTTP复验；原adapter门发现新增private factory公开导出，移除多余barrel export并加负例，有效RED→GREEN，正式事务manager接线不变。最终1979输入SHA `88c0bbbac1a1299885cafc7f27dd8999f4197518e55e0fcb4dd8f13dd80ee744`；浏览器后这两次源差异均记录，不混同各轮构建。旧50SQL、502合同根/87路径/161components及2349原未跟踪文件完整保持。Next自动类型文件曾暂态变化，已归档并精确恢复。
 - 非作者复核与本地范围S.U.P.E.R10项通过；证据入口 `output/checks/p4-04-payment-runtime/final-verification.md`、`final-independent-review.md`、`gate-coverage.json`；复验及故障恢复入口 `docs/operations/checkout-payments.md`。
 - 这不代表实际收款：首个批准PSP/商户主体/首发市场币种与sandbox账号仍OPEN；不包含PAID终结、库存commit/release、查单通知、正式译审、真机/VoiceOver、云或生产部署。P4-04继续IN_PROGRESS，Lane A由root持有；P4-05仍PENDING，25DONE/2IN_PROGRESS/22PENDING=49不变。按用户偏好仅本地Git检查点，不push/PR/merge。
+
+## P4-04 通用支付接入续作（2026-09-09T09:26:00Z）
+
+- 用户明确：先完成 Visa/Mastercard、USDT 与聚合平台的通用接入基础，具体商户与协议差异待取得资料后对接；本轮继续 P4-04，不领取 P4-05。Owner `/root`，Lane A，基线 `53340ca`，只本地提交。
+- 范围：版本化连接合同、静态适配器工厂/可重建配置投影、独立 Secret 引用解析边界、可运行的仓库标准网关协议客户端与 raw webhook 验签、USDT 精确数量/网络/报价/到账评估及接入说明。银行卡保持 PSP 托管；不接触卡号/CVV/私钥。
+- 设计边界：仓库的标准网关协议不是所有厂商通用 API；厂商差异由已部署 adapter 处理。账户协议与商户绑定不可就地改写，旧支付恢复必须保留原账户。PostgreSQL 已发布路由仍是业务真相，配置注册器只做可重建投影，不自行授予商户或支付方式可用性。真实管理中心商户发布、首家 PSP sandbox 与最终收款验收仍 OPEN。
+- 验证：先合同与有效失败测试；独占文件并行；配置原子更新/拒绝未知 adapter/旧账户保留/凭据轮换；HTTPS 实际传输、超时/丢响应/禁止重定向、严格响应关联、签名/时间/错账户；USDT 少付/多付/迟到/错链/确认与大整数；受影响测试后执行原整仓门及非作者 S.U.P.E.R。无前台视觉修改。
+- 证据目录 `output/checks/p4-04-payment-connectors/`，既有未跟踪文件已按 SHA 保护。P4-04 与所有真实支付门保持 IN_PROGRESS，计数不变。
+
+### P4-04 通用接入本地检查点验收（2026-09-09）
+
+- 新payment-gateway：版本化连接/静态工厂/全量配置投影原子切换、旧连接保留、Secret引用解析与轮换、七操作HTTPS协议、来自固定配置的CARD品牌/3DS/capture要求、总截止和回调raw字节验签。Application/API已支持运行中目录新增，PG路由与订单金融权威不变。
+- USDT新增独立资产/网络/token/精度/报价/认证观察合同及BigInt/微秒评估；匹配仅为MATCHED_EVIDENCE。通用HTTP工厂仅CARD/LOCAL_PAYMENT，具体USDT mapper/持久报价绑定与实际商户接入仍待，不冒称可启用链上收款。
+- 定向：新包8文件97测试、合同3文件53测试、Application3文件30测试、API5测试通过；真实TLS七操作/七断连一次dispatch/坏CA和SAN/过大正文/总截止/签名固定向量通过。非作者复核与S.U.P.E.R10项本地范围通过。
+- 原38检查步骤全部有通过证据，但不是原单条check全绿。首条1350.252秒失败在旧daily READ_OPERATION FORBIDDEN（7161断言，权限JOIN未命中，具体原因未知）；同源checkout107.775秒复验7405断言/195请求通过。实际payment-runtime6562断言及11项独立TEST PSP验证、26迁移/168表、原PG/API/TLS S3和媒体423断言通过。原5秒合同测试限时出现7224ms失败，同源同阈值原turbo test复验通过。原后缀runner的PATH错误亦单独保留，未改项目命令。
+- 质量：format/lint、types61/61（29缓存）、tests61/61（60缓存）、build36/36（31缓存）、adapter边界、32Node出口通过；secret scan与官方registry high audit通过。原P2-04/05采集器通过，旧moderate/incomplete/真机门保留；首次P205并行工作区状态守卫失败后，冻结再跑原命令通过，守卫未改。
+- 兼容：539旧合同根、92paths/171public components与全部52旧SQL保持，新增11内部合同根。1998实现输入SHA `dcaf38f0a4cb8e926b3477c4db212a24d46085a6fd248dbe290e733e10c27ea2` 最终逐字保持；2361原未跟踪文件完整保持。Next自动dev类型导入已归档精确恢复。
+- 证据 `output/checks/p4-04-payment-connectors/final-verification.md`、`gate-coverage.json`、`final-independent-review.md`；续作 `docs/operations/payment-connectors.md`。真实PSP/商户资料、USDT专属接入、Secret Store实际云配置、PG商户发布/广播和管理中心简化表单、P4-05订单终结仍未完成；不扩大本轮为生产验收。
+- P4-04继续IN_PROGRESS，root持有Lane A；P4-05仍PENDING，25DONE/2IN_PROGRESS/22PENDING=49。用户已明确暂缓商户细节，继续保留通用接入检查点；仅本地提交、不push/PR/merge/部署。

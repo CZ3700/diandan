@@ -21,6 +21,7 @@ const packageNames = [
   "content",
   "payment-port",
   "payment-fake",
+  "payment-gateway",
   "payment-routing",
   "persistence-port",
   "persistence-postgres",
