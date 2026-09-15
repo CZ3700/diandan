@@ -95431,6 +95431,2627 @@
         ],
         "x-fan-support-audience": "admin-http"
       },
+      "OrderAccessBootstrapRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "OrderAccessDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "additionalProperties": false,
+            "properties": {
+              "currency": {
+                "pattern": "^[A-Z]{3}$",
+                "type": "string"
+              },
+              "discountAmountMinor": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "feeAmountMinor": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "shippingAmountMinor": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "subtotalMinor": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "taxAmountMinor": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "totalAmountMinor": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "currency",
+              "subtotalMinor",
+              "taxAmountMinor",
+              "shippingAmountMinor",
+              "feeAmountMinor",
+              "discountAmountMinor",
+              "totalAmountMinor"
+            ],
+            "type": "object",
+            "x-runtime-invariants": [
+              "totalAmountMinor = subtotalMinor + taxAmountMinor + shippingAmountMinor + feeAmountMinor - discountAmountMinor"
+            ]
+          },
+          "createdAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+            "type": "string"
+          },
+          "disputeStatus": {
+            "enum": [
+              "NONE",
+              "OPEN",
+              "WON",
+              "LOST"
+            ],
+            "type": "string"
+          },
+          "fulfillmentStatus": {
+            "enum": [
+              "PENDING",
+              "PREPARING",
+              "DELIVERED",
+              "ON_HOLD",
+              "CANCELED"
+            ],
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "currency": {
+                  "pattern": "^[A-Z]{3}$",
+                  "type": "string"
+                },
+                "discountAmountMinor": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "displayMode": {
+                  "enum": [
+                    "anonymous",
+                    "nickname"
+                  ],
+                  "type": "string"
+                },
+                "fulfillmentStatus": {
+                  "enum": [
+                    "PENDING",
+                    "PREPARING",
+                    "DELIVERED",
+                    "ON_HOLD",
+                    "CANCELED"
+                  ],
+                  "type": "string"
+                },
+                "gift": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "image": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "alt": {
+                          "maxLength": 300,
+                          "minLength": 1,
+                          "type": "string",
+                          "x-runtime-invariants": [
+                            "Only valid Unicode scalar values; original text is preserved"
+                          ]
+                        },
+                        "locale": {
+                          "oneOf": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "fallbackUsed": {
+                                  "type": "boolean"
+                                },
+                                "mode": {
+                                  "const": "APPROVED",
+                                  "type": "string"
+                                },
+                                "requestedLocale": {
+                                  "enum": [
+                                    "en",
+                                    "zh-CN",
+                                    "th",
+                                    "vi",
+                                    "ja",
+                                    "es",
+                                    "pt"
+                                  ],
+                                  "type": "string"
+                                },
+                                "resolvedLocale": {
+                                  "enum": [
+                                    "en",
+                                    "zh-CN",
+                                    "th",
+                                    "vi",
+                                    "ja",
+                                    "es",
+                                    "pt"
+                                  ],
+                                  "type": "string"
+                                },
+                                "schemaVersion": {
+                                  "const": 1,
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "requestedLocale",
+                                "resolvedLocale",
+                                "fallbackUsed",
+                                "mode"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "fallbackUsed": {
+                                  "type": "boolean"
+                                },
+                                "mode": {
+                                  "const": "DAILY",
+                                  "type": "string"
+                                },
+                                "requestedLocale": {
+                                  "enum": [
+                                    "en",
+                                    "zh-CN",
+                                    "th",
+                                    "vi",
+                                    "ja",
+                                    "es",
+                                    "pt"
+                                  ],
+                                  "type": "string"
+                                },
+                                "resolvedLocale": {
+                                  "enum": [
+                                    "en",
+                                    "zh-CN",
+                                    "th",
+                                    "vi",
+                                    "ja",
+                                    "es",
+                                    "pt"
+                                  ],
+                                  "type": "string"
+                                },
+                                "schemaVersion": {
+                                  "const": 1,
+                                  "type": "number"
+                                },
+                                "sourceLocale": {
+                                  "enum": [
+                                    "en",
+                                    "zh-CN",
+                                    "th",
+                                    "vi",
+                                    "ja",
+                                    "es",
+                                    "pt"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "requestedLocale",
+                                "resolvedLocale",
+                                "fallbackUsed",
+                                "mode",
+                                "sourceLocale"
+                              ],
+                              "type": "object"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "format": "uri",
+                          "maxLength": 8192,
+                          "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                          "type": "string",
+                          "x-runtime-invariants": [
+                            "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                            "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                            "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                            "storage and CDN signing credentials are rejected"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "url",
+                        "alt",
+                        "locale"
+                      ],
+                      "type": "object"
+                    },
+                    "locale": {
+                      "oneOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "fallbackUsed": {
+                              "type": "boolean"
+                            },
+                            "mode": {
+                              "const": "APPROVED",
+                              "type": "string"
+                            },
+                            "requestedLocale": {
+                              "enum": [
+                                "en",
+                                "zh-CN",
+                                "th",
+                                "vi",
+                                "ja",
+                                "es",
+                                "pt"
+                              ],
+                              "type": "string"
+                            },
+                            "resolvedLocale": {
+                              "enum": [
+                                "en",
+                                "zh-CN",
+                                "th",
+                                "vi",
+                                "ja",
+                                "es",
+                                "pt"
+                              ],
+                              "type": "string"
+                            },
+                            "schemaVersion": {
+                              "const": 1,
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "schemaVersion",
+                            "requestedLocale",
+                            "resolvedLocale",
+                            "fallbackUsed",
+                            "mode"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "fallbackUsed": {
+                              "type": "boolean"
+                            },
+                            "mode": {
+                              "const": "DAILY",
+                              "type": "string"
+                            },
+                            "requestedLocale": {
+                              "enum": [
+                                "en",
+                                "zh-CN",
+                                "th",
+                                "vi",
+                                "ja",
+                                "es",
+                                "pt"
+                              ],
+                              "type": "string"
+                            },
+                            "resolvedLocale": {
+                              "enum": [
+                                "en",
+                                "zh-CN",
+                                "th",
+                                "vi",
+                                "ja",
+                                "es",
+                                "pt"
+                              ],
+                              "type": "string"
+                            },
+                            "schemaVersion": {
+                              "const": 1,
+                              "type": "number"
+                            },
+                            "sourceLocale": {
+                              "enum": [
+                                "en",
+                                "zh-CN",
+                                "th",
+                                "vi",
+                                "ja",
+                                "es",
+                                "pt"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "schemaVersion",
+                            "requestedLocale",
+                            "resolvedLocale",
+                            "fallbackUsed",
+                            "mode",
+                            "sourceLocale"
+                          ],
+                          "type": "object"
+                        }
+                      ]
+                    },
+                    "title": {
+                      "maxLength": 160,
+                      "minLength": 1,
+                      "type": "string",
+                      "x-runtime-invariants": [
+                        "Only valid Unicode scalar values; original text is preserved"
+                      ]
+                    },
+                    "variantLabel": {
+                      "anyOf": [
+                        {
+                          "maxLength": 80,
+                          "minLength": 1,
+                          "type": "string",
+                          "x-runtime-invariants": [
+                            "Only valid Unicode scalar values; original text is preserved"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "variantLabel",
+                    "locale",
+                    "image"
+                  ],
+                  "type": "object"
+                },
+                "idol": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "displayName": {
+                      "maxLength": 40,
+                      "minLength": 1,
+                      "type": "string",
+                      "x-runtime-invariants": [
+                        "Only valid Unicode scalar values; original text is preserved"
+                      ]
+                    },
+                    "handle": {
+                      "maxLength": 96,
+                      "minLength": 1,
+                      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                      "type": "string"
+                    },
+                    "locale": {
+                      "oneOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "fallbackUsed": {
+                              "type": "boolean"
+                            },
+                            "mode": {
+                              "const": "APPROVED",
+                              "type": "string"
+                            },
+                            "requestedLocale": {
+                              "enum": [
+                                "en",
+                                "zh-CN",
+                                "th",
+                                "vi",
+                                "ja",
+                                "es",
+                                "pt"
+                              ],
+                              "type": "string"
+                            },
+                            "resolvedLocale": {
+                              "enum": [
+                                "en",
+                                "zh-CN",
+                                "th",
+                                "vi",
+                                "ja",
+                                "es",
+                                "pt"
+                              ],
+                              "type": "string"
+                            },
+                            "schemaVersion": {
+                              "const": 1,
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "schemaVersion",
+                            "requestedLocale",
+                            "resolvedLocale",
+                            "fallbackUsed",
+                            "mode"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "fallbackUsed": {
+                              "type": "boolean"
+                            },
+                            "mode": {
+                              "const": "DAILY",
+                              "type": "string"
+                            },
+                            "requestedLocale": {
+                              "enum": [
+                                "en",
+                                "zh-CN",
+                                "th",
+                                "vi",
+                                "ja",
+                                "es",
+                                "pt"
+                              ],
+                              "type": "string"
+                            },
+                            "resolvedLocale": {
+                              "enum": [
+                                "en",
+                                "zh-CN",
+                                "th",
+                                "vi",
+                                "ja",
+                                "es",
+                                "pt"
+                              ],
+                              "type": "string"
+                            },
+                            "schemaVersion": {
+                              "const": 1,
+                              "type": "number"
+                            },
+                            "sourceLocale": {
+                              "enum": [
+                                "en",
+                                "zh-CN",
+                                "th",
+                                "vi",
+                                "ja",
+                                "es",
+                                "pt"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "schemaVersion",
+                            "requestedLocale",
+                            "resolvedLocale",
+                            "fallbackUsed",
+                            "mode",
+                            "sourceLocale"
+                          ],
+                          "type": "object"
+                        }
+                      ]
+                    },
+                    "portrait": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "alt": {
+                          "maxLength": 300,
+                          "minLength": 1,
+                          "type": "string",
+                          "x-runtime-invariants": [
+                            "Only valid Unicode scalar values; original text is preserved"
+                          ]
+                        },
+                        "locale": {
+                          "oneOf": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "fallbackUsed": {
+                                  "type": "boolean"
+                                },
+                                "mode": {
+                                  "const": "APPROVED",
+                                  "type": "string"
+                                },
+                                "requestedLocale": {
+                                  "enum": [
+                                    "en",
+                                    "zh-CN",
+                                    "th",
+                                    "vi",
+                                    "ja",
+                                    "es",
+                                    "pt"
+                                  ],
+                                  "type": "string"
+                                },
+                                "resolvedLocale": {
+                                  "enum": [
+                                    "en",
+                                    "zh-CN",
+                                    "th",
+                                    "vi",
+                                    "ja",
+                                    "es",
+                                    "pt"
+                                  ],
+                                  "type": "string"
+                                },
+                                "schemaVersion": {
+                                  "const": 1,
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "requestedLocale",
+                                "resolvedLocale",
+                                "fallbackUsed",
+                                "mode"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "fallbackUsed": {
+                                  "type": "boolean"
+                                },
+                                "mode": {
+                                  "const": "DAILY",
+                                  "type": "string"
+                                },
+                                "requestedLocale": {
+                                  "enum": [
+                                    "en",
+                                    "zh-CN",
+                                    "th",
+                                    "vi",
+                                    "ja",
+                                    "es",
+                                    "pt"
+                                  ],
+                                  "type": "string"
+                                },
+                                "resolvedLocale": {
+                                  "enum": [
+                                    "en",
+                                    "zh-CN",
+                                    "th",
+                                    "vi",
+                                    "ja",
+                                    "es",
+                                    "pt"
+                                  ],
+                                  "type": "string"
+                                },
+                                "schemaVersion": {
+                                  "const": 1,
+                                  "type": "number"
+                                },
+                                "sourceLocale": {
+                                  "enum": [
+                                    "en",
+                                    "zh-CN",
+                                    "th",
+                                    "vi",
+                                    "ja",
+                                    "es",
+                                    "pt"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "requestedLocale",
+                                "resolvedLocale",
+                                "fallbackUsed",
+                                "mode",
+                                "sourceLocale"
+                              ],
+                              "type": "object"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "format": "uri",
+                          "maxLength": 8192,
+                          "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                          "type": "string",
+                          "x-runtime-invariants": [
+                            "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                            "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                            "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                            "storage and CDN signing credentials are rejected"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "url",
+                        "alt",
+                        "locale"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "handle",
+                    "displayName",
+                    "locale",
+                    "portrait"
+                  ],
+                  "type": "object"
+                },
+                "lineSubtotalMinor": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "lineTotalMinor": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "position": {
+                  "maximum": 500,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "quantity": {
+                  "maximum": 2147483647,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "schemaVersion": {
+                  "const": 1,
+                  "type": "number"
+                },
+                "taxAmountMinor": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "unitAmountMinor": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "position",
+                "idol",
+                "gift",
+                "quantity",
+                "unitAmountMinor",
+                "lineSubtotalMinor",
+                "taxAmountMinor",
+                "discountAmountMinor",
+                "lineTotalMinor",
+                "currency",
+                "displayMode",
+                "fulfillmentStatus"
+              ],
+              "type": "object"
+            },
+            "maxItems": 500,
+            "minItems": 1,
+            "type": "array"
+          },
+          "orderStatus": {
+            "enum": [
+              "DRAFT",
+              "PENDING_PAYMENT",
+              "OPEN",
+              "CLOSED",
+              "CANCELED"
+            ],
+            "type": "string"
+          },
+          "paymentStatus": {
+            "enum": [
+              "UNPAID",
+              "PENDING",
+              "PAID",
+              "PARTIALLY_REFUNDED",
+              "REFUNDED"
+            ],
+            "type": "string"
+          },
+          "presentationLocale": {
+            "enum": [
+              "en",
+              "zh-CN",
+              "th",
+              "vi",
+              "ja",
+              "es",
+              "pt"
+            ],
+            "type": "string"
+          },
+          "publicOrderId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "publicOrderId",
+          "presentationLocale",
+          "orderStatus",
+          "paymentStatus",
+          "disputeStatus",
+          "fulfillmentStatus",
+          "amount",
+          "items",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "OrderAccessExchangeRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "token": {
+            "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "token"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "OrderAccessGrant": {
+        "additionalProperties": false,
+        "properties": {
+          "expiresAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+            "type": "string"
+          },
+          "publicOrderId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "publicOrderId",
+          "expiresAt"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "OrderAccessItem": {
+        "additionalProperties": false,
+        "properties": {
+          "currency": {
+            "pattern": "^[A-Z]{3}$",
+            "type": "string"
+          },
+          "discountAmountMinor": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "displayMode": {
+            "enum": [
+              "anonymous",
+              "nickname"
+            ],
+            "type": "string"
+          },
+          "fulfillmentStatus": {
+            "enum": [
+              "PENDING",
+              "PREPARING",
+              "DELIVERED",
+              "ON_HOLD",
+              "CANCELED"
+            ],
+            "type": "string"
+          },
+          "gift": {
+            "additionalProperties": false,
+            "properties": {
+              "image": {
+                "additionalProperties": false,
+                "properties": {
+                  "alt": {
+                    "maxLength": 300,
+                    "minLength": 1,
+                    "type": "string",
+                    "x-runtime-invariants": [
+                      "Only valid Unicode scalar values; original text is preserved"
+                    ]
+                  },
+                  "locale": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "fallbackUsed": {
+                            "type": "boolean"
+                          },
+                          "mode": {
+                            "const": "APPROVED",
+                            "type": "string"
+                          },
+                          "requestedLocale": {
+                            "enum": [
+                              "en",
+                              "zh-CN",
+                              "th",
+                              "vi",
+                              "ja",
+                              "es",
+                              "pt"
+                            ],
+                            "type": "string"
+                          },
+                          "resolvedLocale": {
+                            "enum": [
+                              "en",
+                              "zh-CN",
+                              "th",
+                              "vi",
+                              "ja",
+                              "es",
+                              "pt"
+                            ],
+                            "type": "string"
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "requestedLocale",
+                          "resolvedLocale",
+                          "fallbackUsed",
+                          "mode"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "fallbackUsed": {
+                            "type": "boolean"
+                          },
+                          "mode": {
+                            "const": "DAILY",
+                            "type": "string"
+                          },
+                          "requestedLocale": {
+                            "enum": [
+                              "en",
+                              "zh-CN",
+                              "th",
+                              "vi",
+                              "ja",
+                              "es",
+                              "pt"
+                            ],
+                            "type": "string"
+                          },
+                          "resolvedLocale": {
+                            "enum": [
+                              "en",
+                              "zh-CN",
+                              "th",
+                              "vi",
+                              "ja",
+                              "es",
+                              "pt"
+                            ],
+                            "type": "string"
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          },
+                          "sourceLocale": {
+                            "enum": [
+                              "en",
+                              "zh-CN",
+                              "th",
+                              "vi",
+                              "ja",
+                              "es",
+                              "pt"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "requestedLocale",
+                          "resolvedLocale",
+                          "fallbackUsed",
+                          "mode",
+                          "sourceLocale"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "url": {
+                    "format": "uri",
+                    "maxLength": 8192,
+                    "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                    "type": "string",
+                    "x-runtime-invariants": [
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                      "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                      "storage and CDN signing credentials are rejected"
+                    ]
+                  }
+                },
+                "required": [
+                  "url",
+                  "alt",
+                  "locale"
+                ],
+                "type": "object"
+              },
+              "locale": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "fallbackUsed": {
+                        "type": "boolean"
+                      },
+                      "mode": {
+                        "const": "APPROVED",
+                        "type": "string"
+                      },
+                      "requestedLocale": {
+                        "enum": [
+                          "en",
+                          "zh-CN",
+                          "th",
+                          "vi",
+                          "ja",
+                          "es",
+                          "pt"
+                        ],
+                        "type": "string"
+                      },
+                      "resolvedLocale": {
+                        "enum": [
+                          "en",
+                          "zh-CN",
+                          "th",
+                          "vi",
+                          "ja",
+                          "es",
+                          "pt"
+                        ],
+                        "type": "string"
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "requestedLocale",
+                      "resolvedLocale",
+                      "fallbackUsed",
+                      "mode"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "fallbackUsed": {
+                        "type": "boolean"
+                      },
+                      "mode": {
+                        "const": "DAILY",
+                        "type": "string"
+                      },
+                      "requestedLocale": {
+                        "enum": [
+                          "en",
+                          "zh-CN",
+                          "th",
+                          "vi",
+                          "ja",
+                          "es",
+                          "pt"
+                        ],
+                        "type": "string"
+                      },
+                      "resolvedLocale": {
+                        "enum": [
+                          "en",
+                          "zh-CN",
+                          "th",
+                          "vi",
+                          "ja",
+                          "es",
+                          "pt"
+                        ],
+                        "type": "string"
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      },
+                      "sourceLocale": {
+                        "enum": [
+                          "en",
+                          "zh-CN",
+                          "th",
+                          "vi",
+                          "ja",
+                          "es",
+                          "pt"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "requestedLocale",
+                      "resolvedLocale",
+                      "fallbackUsed",
+                      "mode",
+                      "sourceLocale"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "title": {
+                "maxLength": 160,
+                "minLength": 1,
+                "type": "string",
+                "x-runtime-invariants": [
+                  "Only valid Unicode scalar values; original text is preserved"
+                ]
+              },
+              "variantLabel": {
+                "anyOf": [
+                  {
+                    "maxLength": 80,
+                    "minLength": 1,
+                    "type": "string",
+                    "x-runtime-invariants": [
+                      "Only valid Unicode scalar values; original text is preserved"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "title",
+              "variantLabel",
+              "locale",
+              "image"
+            ],
+            "type": "object"
+          },
+          "idol": {
+            "additionalProperties": false,
+            "properties": {
+              "displayName": {
+                "maxLength": 40,
+                "minLength": 1,
+                "type": "string",
+                "x-runtime-invariants": [
+                  "Only valid Unicode scalar values; original text is preserved"
+                ]
+              },
+              "handle": {
+                "maxLength": 96,
+                "minLength": 1,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                "type": "string"
+              },
+              "locale": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "fallbackUsed": {
+                        "type": "boolean"
+                      },
+                      "mode": {
+                        "const": "APPROVED",
+                        "type": "string"
+                      },
+                      "requestedLocale": {
+                        "enum": [
+                          "en",
+                          "zh-CN",
+                          "th",
+                          "vi",
+                          "ja",
+                          "es",
+                          "pt"
+                        ],
+                        "type": "string"
+                      },
+                      "resolvedLocale": {
+                        "enum": [
+                          "en",
+                          "zh-CN",
+                          "th",
+                          "vi",
+                          "ja",
+                          "es",
+                          "pt"
+                        ],
+                        "type": "string"
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "requestedLocale",
+                      "resolvedLocale",
+                      "fallbackUsed",
+                      "mode"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "fallbackUsed": {
+                        "type": "boolean"
+                      },
+                      "mode": {
+                        "const": "DAILY",
+                        "type": "string"
+                      },
+                      "requestedLocale": {
+                        "enum": [
+                          "en",
+                          "zh-CN",
+                          "th",
+                          "vi",
+                          "ja",
+                          "es",
+                          "pt"
+                        ],
+                        "type": "string"
+                      },
+                      "resolvedLocale": {
+                        "enum": [
+                          "en",
+                          "zh-CN",
+                          "th",
+                          "vi",
+                          "ja",
+                          "es",
+                          "pt"
+                        ],
+                        "type": "string"
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      },
+                      "sourceLocale": {
+                        "enum": [
+                          "en",
+                          "zh-CN",
+                          "th",
+                          "vi",
+                          "ja",
+                          "es",
+                          "pt"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "requestedLocale",
+                      "resolvedLocale",
+                      "fallbackUsed",
+                      "mode",
+                      "sourceLocale"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "portrait": {
+                "additionalProperties": false,
+                "properties": {
+                  "alt": {
+                    "maxLength": 300,
+                    "minLength": 1,
+                    "type": "string",
+                    "x-runtime-invariants": [
+                      "Only valid Unicode scalar values; original text is preserved"
+                    ]
+                  },
+                  "locale": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "fallbackUsed": {
+                            "type": "boolean"
+                          },
+                          "mode": {
+                            "const": "APPROVED",
+                            "type": "string"
+                          },
+                          "requestedLocale": {
+                            "enum": [
+                              "en",
+                              "zh-CN",
+                              "th",
+                              "vi",
+                              "ja",
+                              "es",
+                              "pt"
+                            ],
+                            "type": "string"
+                          },
+                          "resolvedLocale": {
+                            "enum": [
+                              "en",
+                              "zh-CN",
+                              "th",
+                              "vi",
+                              "ja",
+                              "es",
+                              "pt"
+                            ],
+                            "type": "string"
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "requestedLocale",
+                          "resolvedLocale",
+                          "fallbackUsed",
+                          "mode"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "fallbackUsed": {
+                            "type": "boolean"
+                          },
+                          "mode": {
+                            "const": "DAILY",
+                            "type": "string"
+                          },
+                          "requestedLocale": {
+                            "enum": [
+                              "en",
+                              "zh-CN",
+                              "th",
+                              "vi",
+                              "ja",
+                              "es",
+                              "pt"
+                            ],
+                            "type": "string"
+                          },
+                          "resolvedLocale": {
+                            "enum": [
+                              "en",
+                              "zh-CN",
+                              "th",
+                              "vi",
+                              "ja",
+                              "es",
+                              "pt"
+                            ],
+                            "type": "string"
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          },
+                          "sourceLocale": {
+                            "enum": [
+                              "en",
+                              "zh-CN",
+                              "th",
+                              "vi",
+                              "ja",
+                              "es",
+                              "pt"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "requestedLocale",
+                          "resolvedLocale",
+                          "fallbackUsed",
+                          "mode",
+                          "sourceLocale"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "url": {
+                    "format": "uri",
+                    "maxLength": 8192,
+                    "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                    "type": "string",
+                    "x-runtime-invariants": [
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                      "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                      "storage and CDN signing credentials are rejected"
+                    ]
+                  }
+                },
+                "required": [
+                  "url",
+                  "alt",
+                  "locale"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "handle",
+              "displayName",
+              "locale",
+              "portrait"
+            ],
+            "type": "object"
+          },
+          "lineSubtotalMinor": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "lineTotalMinor": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "position": {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "quantity": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "taxAmountMinor": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "unitAmountMinor": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "position",
+          "idol",
+          "gift",
+          "quantity",
+          "unitAmountMinor",
+          "lineSubtotalMinor",
+          "taxAmountMinor",
+          "discountAmountMinor",
+          "lineTotalMinor",
+          "currency",
+          "displayMode",
+          "fulfillmentStatus"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "OrderAccessLocale": {
+        "oneOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "fallbackUsed": {
+                "type": "boolean"
+              },
+              "mode": {
+                "const": "APPROVED",
+                "type": "string"
+              },
+              "requestedLocale": {
+                "enum": [
+                  "en",
+                  "zh-CN",
+                  "th",
+                  "vi",
+                  "ja",
+                  "es",
+                  "pt"
+                ],
+                "type": "string"
+              },
+              "resolvedLocale": {
+                "enum": [
+                  "en",
+                  "zh-CN",
+                  "th",
+                  "vi",
+                  "ja",
+                  "es",
+                  "pt"
+                ],
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "requestedLocale",
+              "resolvedLocale",
+              "fallbackUsed",
+              "mode"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "fallbackUsed": {
+                "type": "boolean"
+              },
+              "mode": {
+                "const": "DAILY",
+                "type": "string"
+              },
+              "requestedLocale": {
+                "enum": [
+                  "en",
+                  "zh-CN",
+                  "th",
+                  "vi",
+                  "ja",
+                  "es",
+                  "pt"
+                ],
+                "type": "string"
+              },
+              "resolvedLocale": {
+                "enum": [
+                  "en",
+                  "zh-CN",
+                  "th",
+                  "vi",
+                  "ja",
+                  "es",
+                  "pt"
+                ],
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "sourceLocale": {
+                "enum": [
+                  "en",
+                  "zh-CN",
+                  "th",
+                  "vi",
+                  "ja",
+                  "es",
+                  "pt"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "requestedLocale",
+              "resolvedLocale",
+              "fallbackUsed",
+              "mode",
+              "sourceLocale"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "public-http"
+      },
+      "OrderAccessResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "INVALID_REQUEST",
+                  "ACCESS_DENIED",
+                  "PAYMENT_NOT_CONFIRMED",
+                  "RATE_LIMITED",
+                  "TEMPORARY_UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "GRANTED",
+                "type": "string"
+              },
+              "grant": {
+                "additionalProperties": false,
+                "properties": {
+                  "expiresAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "publicOrderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "publicOrderId",
+                  "expiresAt"
+                ],
+                "type": "object"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "action",
+              "grant"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "READ",
+                "type": "string"
+              },
+              "order": {
+                "additionalProperties": false,
+                "properties": {
+                  "amount": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "currency": {
+                        "pattern": "^[A-Z]{3}$",
+                        "type": "string"
+                      },
+                      "discountAmountMinor": {
+                        "maximum": 9007199254740991,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "feeAmountMinor": {
+                        "maximum": 9007199254740991,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      },
+                      "shippingAmountMinor": {
+                        "maximum": 9007199254740991,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "subtotalMinor": {
+                        "maximum": 9007199254740991,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "taxAmountMinor": {
+                        "maximum": 9007199254740991,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "totalAmountMinor": {
+                        "maximum": 9007199254740991,
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "currency",
+                      "subtotalMinor",
+                      "taxAmountMinor",
+                      "shippingAmountMinor",
+                      "feeAmountMinor",
+                      "discountAmountMinor",
+                      "totalAmountMinor"
+                    ],
+                    "type": "object",
+                    "x-runtime-invariants": [
+                      "totalAmountMinor = subtotalMinor + taxAmountMinor + shippingAmountMinor + feeAmountMinor - discountAmountMinor"
+                    ]
+                  },
+                  "createdAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "disputeStatus": {
+                    "enum": [
+                      "NONE",
+                      "OPEN",
+                      "WON",
+                      "LOST"
+                    ],
+                    "type": "string"
+                  },
+                  "fulfillmentStatus": {
+                    "enum": [
+                      "PENDING",
+                      "PREPARING",
+                      "DELIVERED",
+                      "ON_HOLD",
+                      "CANCELED"
+                    ],
+                    "type": "string"
+                  },
+                  "items": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "currency": {
+                          "pattern": "^[A-Z]{3}$",
+                          "type": "string"
+                        },
+                        "discountAmountMinor": {
+                          "maximum": 9007199254740991,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "displayMode": {
+                          "enum": [
+                            "anonymous",
+                            "nickname"
+                          ],
+                          "type": "string"
+                        },
+                        "fulfillmentStatus": {
+                          "enum": [
+                            "PENDING",
+                            "PREPARING",
+                            "DELIVERED",
+                            "ON_HOLD",
+                            "CANCELED"
+                          ],
+                          "type": "string"
+                        },
+                        "gift": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "image": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "alt": {
+                                  "maxLength": 300,
+                                  "minLength": 1,
+                                  "type": "string",
+                                  "x-runtime-invariants": [
+                                    "Only valid Unicode scalar values; original text is preserved"
+                                  ]
+                                },
+                                "locale": {
+                                  "oneOf": [
+                                    {
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "fallbackUsed": {
+                                          "type": "boolean"
+                                        },
+                                        "mode": {
+                                          "const": "APPROVED",
+                                          "type": "string"
+                                        },
+                                        "requestedLocale": {
+                                          "enum": [
+                                            "en",
+                                            "zh-CN",
+                                            "th",
+                                            "vi",
+                                            "ja",
+                                            "es",
+                                            "pt"
+                                          ],
+                                          "type": "string"
+                                        },
+                                        "resolvedLocale": {
+                                          "enum": [
+                                            "en",
+                                            "zh-CN",
+                                            "th",
+                                            "vi",
+                                            "ja",
+                                            "es",
+                                            "pt"
+                                          ],
+                                          "type": "string"
+                                        },
+                                        "schemaVersion": {
+                                          "const": 1,
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "schemaVersion",
+                                        "requestedLocale",
+                                        "resolvedLocale",
+                                        "fallbackUsed",
+                                        "mode"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    {
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "fallbackUsed": {
+                                          "type": "boolean"
+                                        },
+                                        "mode": {
+                                          "const": "DAILY",
+                                          "type": "string"
+                                        },
+                                        "requestedLocale": {
+                                          "enum": [
+                                            "en",
+                                            "zh-CN",
+                                            "th",
+                                            "vi",
+                                            "ja",
+                                            "es",
+                                            "pt"
+                                          ],
+                                          "type": "string"
+                                        },
+                                        "resolvedLocale": {
+                                          "enum": [
+                                            "en",
+                                            "zh-CN",
+                                            "th",
+                                            "vi",
+                                            "ja",
+                                            "es",
+                                            "pt"
+                                          ],
+                                          "type": "string"
+                                        },
+                                        "schemaVersion": {
+                                          "const": 1,
+                                          "type": "number"
+                                        },
+                                        "sourceLocale": {
+                                          "enum": [
+                                            "en",
+                                            "zh-CN",
+                                            "th",
+                                            "vi",
+                                            "ja",
+                                            "es",
+                                            "pt"
+                                          ],
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "schemaVersion",
+                                        "requestedLocale",
+                                        "resolvedLocale",
+                                        "fallbackUsed",
+                                        "mode",
+                                        "sourceLocale"
+                                      ],
+                                      "type": "object"
+                                    }
+                                  ]
+                                },
+                                "url": {
+                                  "format": "uri",
+                                  "maxLength": 8192,
+                                  "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                  "type": "string",
+                                  "x-runtime-invariants": [
+                                    "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                    "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                    "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                    "storage and CDN signing credentials are rejected"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "url",
+                                "alt",
+                                "locale"
+                              ],
+                              "type": "object"
+                            },
+                            "locale": {
+                              "oneOf": [
+                                {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "fallbackUsed": {
+                                      "type": "boolean"
+                                    },
+                                    "mode": {
+                                      "const": "APPROVED",
+                                      "type": "string"
+                                    },
+                                    "requestedLocale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "resolvedLocale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "schemaVersion": {
+                                      "const": 1,
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "schemaVersion",
+                                    "requestedLocale",
+                                    "resolvedLocale",
+                                    "fallbackUsed",
+                                    "mode"
+                                  ],
+                                  "type": "object"
+                                },
+                                {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "fallbackUsed": {
+                                      "type": "boolean"
+                                    },
+                                    "mode": {
+                                      "const": "DAILY",
+                                      "type": "string"
+                                    },
+                                    "requestedLocale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "resolvedLocale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "schemaVersion": {
+                                      "const": 1,
+                                      "type": "number"
+                                    },
+                                    "sourceLocale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "schemaVersion",
+                                    "requestedLocale",
+                                    "resolvedLocale",
+                                    "fallbackUsed",
+                                    "mode",
+                                    "sourceLocale"
+                                  ],
+                                  "type": "object"
+                                }
+                              ]
+                            },
+                            "title": {
+                              "maxLength": 160,
+                              "minLength": 1,
+                              "type": "string",
+                              "x-runtime-invariants": [
+                                "Only valid Unicode scalar values; original text is preserved"
+                              ]
+                            },
+                            "variantLabel": {
+                              "anyOf": [
+                                {
+                                  "maxLength": 80,
+                                  "minLength": 1,
+                                  "type": "string",
+                                  "x-runtime-invariants": [
+                                    "Only valid Unicode scalar values; original text is preserved"
+                                  ]
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "title",
+                            "variantLabel",
+                            "locale",
+                            "image"
+                          ],
+                          "type": "object"
+                        },
+                        "idol": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "displayName": {
+                              "maxLength": 40,
+                              "minLength": 1,
+                              "type": "string",
+                              "x-runtime-invariants": [
+                                "Only valid Unicode scalar values; original text is preserved"
+                              ]
+                            },
+                            "handle": {
+                              "maxLength": 96,
+                              "minLength": 1,
+                              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                              "type": "string"
+                            },
+                            "locale": {
+                              "oneOf": [
+                                {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "fallbackUsed": {
+                                      "type": "boolean"
+                                    },
+                                    "mode": {
+                                      "const": "APPROVED",
+                                      "type": "string"
+                                    },
+                                    "requestedLocale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "resolvedLocale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "schemaVersion": {
+                                      "const": 1,
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "schemaVersion",
+                                    "requestedLocale",
+                                    "resolvedLocale",
+                                    "fallbackUsed",
+                                    "mode"
+                                  ],
+                                  "type": "object"
+                                },
+                                {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "fallbackUsed": {
+                                      "type": "boolean"
+                                    },
+                                    "mode": {
+                                      "const": "DAILY",
+                                      "type": "string"
+                                    },
+                                    "requestedLocale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "resolvedLocale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "schemaVersion": {
+                                      "const": 1,
+                                      "type": "number"
+                                    },
+                                    "sourceLocale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "schemaVersion",
+                                    "requestedLocale",
+                                    "resolvedLocale",
+                                    "fallbackUsed",
+                                    "mode",
+                                    "sourceLocale"
+                                  ],
+                                  "type": "object"
+                                }
+                              ]
+                            },
+                            "portrait": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "alt": {
+                                  "maxLength": 300,
+                                  "minLength": 1,
+                                  "type": "string",
+                                  "x-runtime-invariants": [
+                                    "Only valid Unicode scalar values; original text is preserved"
+                                  ]
+                                },
+                                "locale": {
+                                  "oneOf": [
+                                    {
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "fallbackUsed": {
+                                          "type": "boolean"
+                                        },
+                                        "mode": {
+                                          "const": "APPROVED",
+                                          "type": "string"
+                                        },
+                                        "requestedLocale": {
+                                          "enum": [
+                                            "en",
+                                            "zh-CN",
+                                            "th",
+                                            "vi",
+                                            "ja",
+                                            "es",
+                                            "pt"
+                                          ],
+                                          "type": "string"
+                                        },
+                                        "resolvedLocale": {
+                                          "enum": [
+                                            "en",
+                                            "zh-CN",
+                                            "th",
+                                            "vi",
+                                            "ja",
+                                            "es",
+                                            "pt"
+                                          ],
+                                          "type": "string"
+                                        },
+                                        "schemaVersion": {
+                                          "const": 1,
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "schemaVersion",
+                                        "requestedLocale",
+                                        "resolvedLocale",
+                                        "fallbackUsed",
+                                        "mode"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    {
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "fallbackUsed": {
+                                          "type": "boolean"
+                                        },
+                                        "mode": {
+                                          "const": "DAILY",
+                                          "type": "string"
+                                        },
+                                        "requestedLocale": {
+                                          "enum": [
+                                            "en",
+                                            "zh-CN",
+                                            "th",
+                                            "vi",
+                                            "ja",
+                                            "es",
+                                            "pt"
+                                          ],
+                                          "type": "string"
+                                        },
+                                        "resolvedLocale": {
+                                          "enum": [
+                                            "en",
+                                            "zh-CN",
+                                            "th",
+                                            "vi",
+                                            "ja",
+                                            "es",
+                                            "pt"
+                                          ],
+                                          "type": "string"
+                                        },
+                                        "schemaVersion": {
+                                          "const": 1,
+                                          "type": "number"
+                                        },
+                                        "sourceLocale": {
+                                          "enum": [
+                                            "en",
+                                            "zh-CN",
+                                            "th",
+                                            "vi",
+                                            "ja",
+                                            "es",
+                                            "pt"
+                                          ],
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "schemaVersion",
+                                        "requestedLocale",
+                                        "resolvedLocale",
+                                        "fallbackUsed",
+                                        "mode",
+                                        "sourceLocale"
+                                      ],
+                                      "type": "object"
+                                    }
+                                  ]
+                                },
+                                "url": {
+                                  "format": "uri",
+                                  "maxLength": 8192,
+                                  "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                  "type": "string",
+                                  "x-runtime-invariants": [
+                                    "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                    "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                    "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                    "storage and CDN signing credentials are rejected"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "url",
+                                "alt",
+                                "locale"
+                              ],
+                              "type": "object"
+                            }
+                          },
+                          "required": [
+                            "handle",
+                            "displayName",
+                            "locale",
+                            "portrait"
+                          ],
+                          "type": "object"
+                        },
+                        "lineSubtotalMinor": {
+                          "maximum": 9007199254740991,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "lineTotalMinor": {
+                          "maximum": 9007199254740991,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "position": {
+                          "maximum": 500,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "quantity": {
+                          "maximum": 2147483647,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "schemaVersion": {
+                          "const": 1,
+                          "type": "number"
+                        },
+                        "taxAmountMinor": {
+                          "maximum": 9007199254740991,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "unitAmountMinor": {
+                          "maximum": 9007199254740991,
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "schemaVersion",
+                        "position",
+                        "idol",
+                        "gift",
+                        "quantity",
+                        "unitAmountMinor",
+                        "lineSubtotalMinor",
+                        "taxAmountMinor",
+                        "discountAmountMinor",
+                        "lineTotalMinor",
+                        "currency",
+                        "displayMode",
+                        "fulfillmentStatus"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 500,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "orderStatus": {
+                    "enum": [
+                      "DRAFT",
+                      "PENDING_PAYMENT",
+                      "OPEN",
+                      "CLOSED",
+                      "CANCELED"
+                    ],
+                    "type": "string"
+                  },
+                  "paymentStatus": {
+                    "enum": [
+                      "UNPAID",
+                      "PENDING",
+                      "PAID",
+                      "PARTIALLY_REFUNDED",
+                      "REFUNDED"
+                    ],
+                    "type": "string"
+                  },
+                  "presentationLocale": {
+                    "enum": [
+                      "en",
+                      "zh-CN",
+                      "th",
+                      "vi",
+                      "ja",
+                      "es",
+                      "pt"
+                    ],
+                    "type": "string"
+                  },
+                  "publicOrderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "updatedAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "publicOrderId",
+                  "presentationLocale",
+                  "orderStatus",
+                  "paymentStatus",
+                  "disputeStatus",
+                  "fulfillmentStatus",
+                  "amount",
+                  "items",
+                  "createdAt",
+                  "updatedAt"
+                ],
+                "type": "object"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "action",
+              "order"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "REVOKED",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "publicOrderId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "action",
+              "publicOrderId"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "public-http"
+      },
+      "OrderAccessRevokeRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "publicOrderId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "publicOrderId"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "OrderAccessRevoked": {
+        "additionalProperties": false,
+        "properties": {
+          "publicOrderId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "publicOrderId"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
       "PaymentAction": {
         "oneOf": [
           {
@@ -128157,6 +130778,18 @@
         "name": "__Host-fan-cart",
         "type": "apiKey"
       },
+      "OrderCsrf": {
+        "description": "Purpose-separated KMS MAC bound to the order session; exact Origin is also required.",
+        "in": "header",
+        "name": "x-csrf-token",
+        "type": "apiKey"
+      },
+      "OrderSession": {
+        "description": "256-bit opaque Secure HttpOnly SameSite=Strict host-only credential bound to one order.",
+        "in": "cookie",
+        "name": "__Host-fan-order",
+        "type": "apiKey"
+      },
       "PaymentWebhookSignature": {
         "description": "Provider signature calculated over the exact request bytes; required together with PaymentWebhookTimestamp.",
         "in": "header",
@@ -160265,6 +162898,437 @@
         ]
       }
     },
+    "/api/v1/checkout/sessions/{checkoutSessionId}/order-access": {
+      "post": {
+        "description": "Reauthenticate the original unexpired cart and independently verify the persisted paid order aggregate before atomically granting access. An expired quote does not erase an already paid order. Never trusts a browser payment flag.",
+        "operationId": "bootstrapOrderAccess",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "checkoutSessionId",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderAccessBootstrapRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CartCsrf": [],
+            "CartSession": []
+          }
+        ]
+      }
+    },
     "/api/v1/checkout/sessions/{checkoutSessionId}/status": {
       "get": {
         "description": "Read the current cart's persisted checkout history. No query or body is accepted; requested UI locale cannot change historical snapshots. An expired quote is identified without rewriting the order. Cookie ownership is mandatory. This endpoint cannot confirm payment.",
@@ -162908,6 +165972,1265 @@
         },
         "security": [],
         "summary": "Read the current published content in one explicit locale"
+      }
+    },
+    "/api/v1/order-access/exchange": {
+      "post": {
+        "description": "Exchange a canonical 256-bit single-use link credential for a Secure HttpOnly SameSite=Strict host-only order cookie. No token in URL/query. Consumption and session rotation are atomic; replay never grants a new session. An existing cookie and the already-known publicOrderId can recover with a protected GET after a lost JSON response; the cookie alone cannot discover the order.",
+        "operationId": "exchangeOrderAccess",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderAccessExchangeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/order-access/revoke": {
+      "post": {
+        "description": "Authenticate this order session and its independent CSRF proof, then revoke it and active links atomically. Unknown or cross-order credentials never revoke another order.",
+        "operationId": "revokeOrderAccess",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderAccessRevokeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OrderCsrf": [],
+            "OrderSession": []
+          }
+        ]
+      }
+    },
+    "/api/v1/orders/{publicOrderId}": {
+      "get": {
+        "description": "Authorize the exact order scope before reading immutable purchase-time names, language provenance, media and amounts. No query/body; no private intent, contact address, internal IDs or credential material. Current catalog publication is irrelevant to historical access.",
+        "operationId": "readProtectedOrder",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": false,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "publicOrderId",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OrderSession": []
+          }
+        ]
       }
     },
     "/api/v1/policies/{policyKey}": {

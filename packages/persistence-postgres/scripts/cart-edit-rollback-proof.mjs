@@ -45,7 +45,17 @@ export async function verifyCartEditRollbackProtection({
         "SELECT version FROM public.schema_migrations ORDER BY version DESC LIMIT 1",
       )
     ).rows[0]?.version;
-    assert.equal(head, "0027");
+    assert.equal(head, "0028");
+    const orderAccessDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0028" },
+    });
+    assert.deepEqual(
+      [orderAccessDown.revertedVersions, orderAccessDown.currentVersion],
+      [["0028"], "0027"],
+      "empty order-access migration rolls back before preserved history probes",
+    );
     const orderPaymentDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -129,11 +139,11 @@ export async function verifyCartEditRollbackProtection({
       workspaceRoot,
       command: { direction: "up" },
     });
-    assert.equal(restored.currentVersion, "0027");
+    assert.equal(restored.currentVersion, "0028");
     return {
       schemaVersion: 1,
       status: "PASS",
-      assertions: 12,
+      assertions: 13,
       scope:
         "actual accepted edits and private audits block destructive rollback; all ten table counts and bytes preserved",
       before,

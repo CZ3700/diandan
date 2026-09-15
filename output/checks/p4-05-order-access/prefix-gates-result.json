@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "sourceManifest": "source-third.json",
+  "startedAt": "2026-09-15T14:17:54.160629+00:00",
+  "updatedAt": "2026-09-15T14:18:11.266540+00:00",
+  "durationSeconds": 17.106,
+  "steps": [
+    {
+      "ordinal": 1,
+      "command": "node ./scripts/check-workspace.mjs",
+      "exitCode": 0,
+      "durationSeconds": 0.269,
+      "log": "prefix-01.log"
+    },
+    {
+      "ordinal": 2,
+      "command": "corepack pnpm check:design-foundations",
+      "exitCode": 0,
+      "durationSeconds": 1.616,
+      "log": "prefix-02.log"
+    },
+    {
+      "ordinal": 3,
+      "command": "corepack pnpm check:ui-primitives",
+      "exitCode": 0,
+      "durationSeconds": 1.135,
+      "log": "prefix-03.log"
+    },
+    {
+      "ordinal": 4,
+      "command": "corepack pnpm check:ui-interactions",
+      "exitCode": 0,
+      "durationSeconds": 1.864,
+      "log": "prefix-04.log"
+    },
+    {
+      "ordinal": 5,
+      "command": "corepack pnpm check:ui-composites",
+      "exitCode": 0,
+      "durationSeconds": 1.811,
+      "log": "prefix-05.log"
+    },
+    {
+      "ordinal": 6,
+      "command": "corepack pnpm check:ui-motion",
+      "exitCode": 0,
+      "durationSeconds": 2.626,
+      "log": "prefix-06.log"
+    },
+    {
+      "ordinal": 7,
+      "command": "node --test ./scripts/check-domain-boundaries.test.mjs",
+      "exitCode": 0,
+      "durationSeconds": 0.348,
+      "log": "prefix-07.log"
+    },
+    {
+      "ordinal": 8,
+      "command": "node ./scripts/check-domain-boundaries.mjs",
+      "exitCode": 0,
+      "durationSeconds": 0.338,
+      "log": "prefix-08.log"
+    },
+    {
+      "ordinal": 9,
+      "command": "node --test ./scripts/check-adapter-boundaries.test.mjs",
+      "exitCode": 0,
+      "durationSeconds": 0.526,
+      "log": "prefix-09.log"
+    },
+    {
+      "ordinal": 10,
+      "command": "node ./scripts/check-ci.mjs",
+      "exitCode": 0,
+      "durationSeconds": 0.235,
+      "log": "prefix-10.log"
+    },
+    {
+      "ordinal": 11,
+      "command": "node ./scripts/check-runtime.mjs",
+      "exitCode": 0,
+      "durationSeconds": 1.114,
+      "log": "prefix-11.log"
+    },
+    {
+      "ordinal": 12,
+      "command": "node ./scripts/check-observability.mjs",
+      "exitCode": 0,
+      "durationSeconds": 0.273,
+      "log": "prefix-12.log"
+    },
+    {
+      "ordinal": 13,
+      "command": "corepack pnpm check:contracts",
+      "exitCode": 0,
+      "durationSeconds": 4.948,
+      "log": "prefix-13.log"
+    }
+  ]
+}

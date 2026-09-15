@@ -50,8 +50,18 @@ export async function verifyCartRuntimeRollbackProtection({
     ).rows[0]?.version;
     assert.equal(
       head,
-      "0027",
+      "0028",
       "rollback proof requires the exact current migration",
+    );
+    const orderAccessDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0028" },
+    });
+    assert.deepEqual(
+      [orderAccessDown.revertedVersions, orderAccessDown.currentVersion],
+      [["0028"], "0027"],
+      "empty order-access migration rolls back before preserved history probes",
     );
     const orderPaymentDown = await runMigrations({
       clientConfig,
@@ -192,7 +202,7 @@ export async function verifyCartRuntimeRollbackProtection({
     });
     assert.equal(
       restored.currentVersion,
-      "0027",
+      "0028",
       "restore the empty edit and checkout migrations after the exact legacy rollback proof",
     );
     return {
@@ -206,7 +216,7 @@ export async function verifyCartRuntimeRollbackProtection({
       ...(mode === "DYNAMIC"
         ? { dynamicOnlyIntents: count }
         : { pendingIntents: count }),
-      assertions: mode === "DYNAMIC" ? 13 : 14,
+      assertions: mode === "DYNAMIC" ? 14 : 15,
       before,
       after,
     };

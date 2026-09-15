@@ -82,3 +82,5 @@ export * from "./cart-edit.js";
 
 export { createCheckoutPreflightUseCases } from "./checkout-preflight.js";
 export { createPaymentRuntimeUseCases } from "./payment-runtime.js";
+
+export * from "./order-access.js";

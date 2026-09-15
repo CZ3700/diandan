@@ -874,6 +874,27 @@ await withEphemeralPostgres(async (clientConfig) => {
       (SELECT jsonb_agg(jsonb_build_object('id',id,'version',version,'status',status,'draft',draft_revision_id,'published',published_revision_id) ORDER BY id) FROM public.gifts) AS gift_versions
     `)
       ).rows[0];
+    const beforeOrderAccessDown = await retainedHistory();
+    equal(
+      beforeOrderAccessDown.version,
+      "0028",
+      "admin operations use current order access schema",
+    );
+    const orderAccessDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0028" },
+    });
+    equal(
+      [orderAccessDown.revertedVersions, orderAccessDown.currentVersion],
+      [["0028"], "0027"],
+      "empty order access rolls back before old admin proof",
+    );
+    equal(
+      await retainedHistory(),
+      { ...beforeOrderAccessDown, version: "0027" },
+      "order access rollback preserves exact admin history",
+    );
     const beforeOrderPaymentDown = await retainedHistory();
     equal(
       beforeOrderPaymentDown.version,
@@ -1075,6 +1096,17 @@ await withEphemeralPostgres(async (clientConfig) => {
       await retainedHistory(),
       beforeDown,
       "rejected downgrade preserves migration head and identity, profile, import, export and publication history",
+    );
+    const restored = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "up" },
+    });
+    equal(restored.currentVersion, "0028", "admin proof restores current head");
+    equal(
+      await retainedHistory(),
+      beforeOrderAccessDown,
+      "restoring current head preserves exact admin history",
     );
     process.stdout.write(
       `admin catalog PostgreSQL checks: ${assertions} assertions PASS\n`,

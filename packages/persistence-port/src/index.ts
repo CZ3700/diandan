@@ -350,3 +350,5 @@ export * from "./cart-runtime.js";
 export * from "./cart-edit.js";
 export * from "./checkout-preflight.js";
 export * from "./payment-runtime.js";
+
+export * from "./order-access.js";

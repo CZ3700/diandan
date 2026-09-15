@@ -322,11 +322,11 @@
       "Noto Sans Variable"
     ]
   },
-  "generatedAt": "2026-09-09T18:37:50.354Z",
+  "generatedAt": "2026-09-15T13:16:21.467Z",
   "git": {
     "after": {
-      "sha": "acbdedcd96478f58b151fe28f15bb7f4a64e9bb6",
-      "sourceFingerprint": "af2da419b3b7fb2540f8e147e234a36b5fdc25fbc66480b8fc7e70962225cbb9",
+      "sha": "ab0b1375544b32313cfd4ac1cc184f63975b8e87",
+      "sourceFingerprint": "37da1c2d5aaed61f1ea1c29ebf5ab15962b4912e22cef98b9a2e7d535b348d21",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -1899,7 +1899,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "429a8a4da28253b41905aed0218bf40fc797fd64cce1eccc1ac635ec90debd1b"
+          "sha256": "ec9f9079c8b86dc7078de7c66239f39c652b35e8fb08f387ac0510c12da4f316"
         },
         {
           "path": "packages/config/package.json",
@@ -1975,11 +1975,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "03eb11f199f75aad37bb51065fb703797227d64eb9edaf5a2d911cb8d297ce32"
+          "sha256": "67110f7a358f7ccc6e13c0deae7ef850f86ad3805126175eb01c8db0990e1bc0"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "2379da7a074d93dafcbda5247bae7aac8a78adf187f23c1629d37931be8aa4f4"
+          "sha256": "09f906d8652dc4eae1efaa9fd8a6a2d9e8ea8e2dda463914869bed5f59f42b34"
         },
         {
           "path": "packages/contracts/package.json",
@@ -2035,11 +2035,11 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "bf41511a32b5365135382f89037af8776ee75cb134ec8ba175f5360d415421d4"
+          "sha256": "0d8cdf867e72ccd4c8c580940cf8ba0f296a69fc153a7d396cbe37c233e1b980"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "d4aac9af329856dd7181790fc24d0b5db0db43d4a12b03c2bae3adb5dace28f4"
+          "sha256": "7ea9cee21f4be0619d2c8e535e99758cb1c2f8f7aad137c703df1cb8b9760d27"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -2047,7 +2047,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "eedf6cffa1a32db4f099a16f959d729f1e3fb8f5fec747c1888e145ccf6949b1"
+          "sha256": "8cabc6dc761c6ed74dc6bb37b190c9e810fbd3930da3aaf5e5e9a1fb94e5b342"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -2367,7 +2367,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "73943bb4723371231d1deff6f2f842a2f974248959e563246e0548f3a7d323d0"
+          "sha256": "1948eefcf9fcb89e2c41a92b178c0c99699e77a1cc2dc9f676d7d784480f9f00"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -2444,6 +2444,18 @@
         {
           "path": "packages/contracts/src/notification-port-contracts.ts",
           "sha256": "e73b33971e1294f0e37b2d6985ee99f10ef27f4e6e5f69046e199525eb36a630"
+        },
+        {
+          "path": "packages/contracts/src/order-access-openapi.ts",
+          "sha256": "06e3cd08ba7c27c307b7af832abd2544dab51b17f3bee2334e1aee85b4f415e1"
+        },
+        {
+          "path": "packages/contracts/src/order-access.test.ts",
+          "sha256": "9c30b7d2ea28318ba6f601ff5fe0429bcccc2e2eada4938b9043b0b650fd248d"
+        },
+        {
+          "path": "packages/contracts/src/order-access.ts",
+          "sha256": "f1ae15c7e7fe3bee0fd243a9d3e6f91a49197a5e473311db88bd05d468ec476f"
         },
         {
           "path": "packages/contracts/src/order-payment-application.test.ts",
@@ -3192,22 +3204,14 @@
       ],
       "status": [
         " M apps/api/package.json",
-        " M apps/api/scripts/payment-runtime-psp-process.mjs",
-        " M apps/api/scripts/payment-runtime-psp-server.mjs",
-        " M apps/api/scripts/payment-runtime-psp-store.mjs",
-        " M apps/api/scripts/payment-runtime-runtime.mjs",
-        " M apps/worker/src/reliable-events-composition.test.ts",
-        " M apps/worker/src/reliable-events-composition.ts",
-        " M apps/worker/src/reliable-events-runtime.test.ts",
-        " M apps/worker/src/reliable-events-runtime.ts",
+        " M apps/api/src/bootstrap.ts",
+        " M apps/api/src/production-application.ts",
         " M database/migrations/manifest.json",
         " M database/schema/expected-catalog.json",
-        " M docs/FAN_SUPPORT_PLATFORM_SPEC.md",
-        " M docs/plan/dependency-graph.md",
-        " M docs/plan/development-cadence.md",
+        " M docs/operations/order-payments.md",
         " M docs/plan/p4-05-order-completion.md",
-        " M docs/plan/task-breakdown.md",
         " M docs/progress/MASTER.md",
+        " M docs/progress/current-overview.md",
         " M docs/progress/phase-4-commerce.md",
         " M output/playwright/p2-04/README.md",
         " M output/playwright/p2-04/axe-results/baseline-desktop.json",
@@ -3221,50 +3225,45 @@
         " M output/playwright/p2-04/axe-results/timeline.json",
         " M output/playwright/p2-04/axe-results/unavailable.json",
         " M output/playwright/p2-04/browser-results.json",
-        " M output/playwright/p2-04/responsive/767x900-pt.png",
+        " M output/playwright/p2-04/reduced-motion/1440x900-en.png",
         " M output/playwright/p2-04/rtl/390x844-en.png",
         " M output/playwright/p2-04/screenshots.sha256",
-        " M output/playwright/p2-04/states/390x844-en.png",
         " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
         " M package.json",
         " M packages/application/src/index.ts",
         " M packages/contracts/generated/contracts.schema.json",
+        " M packages/contracts/generated/openapi.json",
+        " M packages/contracts/src/artifact-documents.test.ts",
+        " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/persistence-port/src/index.test.ts",
         " M packages/persistence-port/src/index.ts",
         " M packages/persistence-postgres/package.json",
-        " M packages/persistence-postgres/scripts/cart-edit-rollback-proof.mjs",
-        " M packages/persistence-postgres/scripts/cart-runtime-rollback-proof.mjs",
-        " M packages/persistence-postgres/scripts/checkout-preflight-rollback-proof.mjs",
-        " M packages/persistence-postgres/scripts/payment-runtime-rollback-proof.mjs",
-        " M packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
-        " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
-        " M packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs",
-        " M packages/persistence-postgres/scripts/postgres-payment-runtime-parameters.mjs",
-        " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
-        " M packages/persistence-postgres/scripts/postgres-publication-validation-time-cases.mjs",
-        " M packages/persistence-postgres/src/inventory-repository.ts",
-        " M packages/persistence-postgres/src/payment-runtime-data.ts",
-        " M packages/persistence-postgres/src/payment-runtime-evidence.test.ts",
-        " M packages/persistence-postgres/src/payment-runtime-evidence.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
-        " M packages/persistence-postgres/src/reliable-event-repositories.test.ts",
-        " M packages/persistence-postgres/src/reliable-event-repositories.ts",
-        " M pnpm-lock.yaml",
-        "?? apps/api/scripts/order-payment-client.mjs",
-        "?? apps/api/scripts/order-payment-commit-faults.mjs",
-        "?? apps/api/scripts/order-payment-http.mjs",
-        "?? apps/api/scripts/order-payment-protocol.mjs",
-        "?? apps/api/scripts/order-payment-psp.test.mjs",
-        "?? apps/api/scripts/order-payment-queue.mjs",
-        "?? apps/api/scripts/order-payment-queue.test.mjs",
-        "?? apps/api/scripts/order-payment-runtime.mjs",
-        "?? apps/api/scripts/order-payment-sql.test.mjs",
-        "?? database/migrations/0027_order-payment-application.down.sql",
-        "?? database/migrations/0027_order-payment-application.up.sql",
-        "?? docs/decisions/014-local-order-completion.md",
-        "?? docs/operations/order-payments.md",
+        "?? apps/api/scripts/order-access-client.mjs",
+        "?? apps/api/scripts/order-access-commit-faults.mjs",
+        "?? apps/api/scripts/order-access-gateway.mjs",
+        "?? apps/api/scripts/order-access-gateway.test.mjs",
+        "?? apps/api/scripts/order-access-history.mjs",
+        "?? apps/api/scripts/order-access-http.mjs",
+        "?? apps/api/scripts/order-access-ingress.test.mjs",
+        "?? apps/api/scripts/order-access-media.mjs",
+        "?? apps/api/scripts/order-access-media.test.mjs",
+        "?? apps/api/scripts/order-access-observers.mjs",
+        "?? apps/api/scripts/order-access-observers.test.mjs",
+        "?? apps/api/scripts/order-access-protocol.mjs",
+        "?? apps/api/scripts/order-access-runtime.mjs",
+        "?? apps/api/src/order-access-bootstrap.test.ts",
+        "?? apps/api/src/order-access-composition.test.ts",
+        "?? apps/api/src/order-access-composition.ts",
+        "?? apps/api/src/order-access-credentials.test.ts",
+        "?? apps/api/src/order-access-credentials.ts",
+        "?? apps/api/src/order-access-observability.test.ts",
+        "?? apps/api/src/order-access-route.test.ts",
+        "?? apps/api/src/order-access-route.ts",
+        "?? database/migrations/0028_order-access.down.sql",
+        "?? database/migrations/0028_order-access.up.sql",
+        "?? docs/operations/order-access.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -5140,6 +5139,9 @@
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T10-04-37-990Z/concurrent-public-reads-1788948550823.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T10-04-37-990Z/fixture-manifest.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T10-04-37-990Z/protocol-results.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T19-00-52-647Z/concurrent-public-reads-1788980718661.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T19-00-52-647Z/fixture-manifest.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T19-00-52-647Z/protocol-results.json",
         "?? output/checks/p3-06-storefront-acceptance/seo-contract-proposal.md",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.config.mjs",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.test.ts",
@@ -5161,12 +5163,18 @@
         "?? output/checks/p4-01-cart/http-2026-09-09T10-09-27.363Z/pending-rollback-results.json",
         "?? output/checks/p4-01-cart/http-2026-09-09T10-09-27.363Z/protocol-results.json",
         "?? output/checks/p4-01-cart/http-2026-09-09T10-09-27.363Z/results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-09T19-05-35.604Z/daily-immediate-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-09T19-05-35.604Z/pending-rollback-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-09T19-05-35.604Z/protocol-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-09T19-05-35.604Z/results.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-08T15-07-09.936Z/fixture-manifest.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-08T15-07-09.936Z/protocol-results.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-08T20-08-58.449Z/fixture-manifest.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-08T20-08-58.449Z/protocol-results.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-09T10-10-38.008Z/fixture-manifest.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-09T10-10-38.008Z/protocol-results.json",
+        "?? output/checks/p4-02-cart-storefront/run-2026-09-09T19-06-48.237Z/fixture-manifest.json",
+        "?? output/checks/p4-02-cart-storefront/run-2026-09-09T19-06-48.237Z/protocol-results.json",
         "?? output/checks/p4-03-checkout-preflight/application-outbox-final.json",
         "?? output/checks/p4-03-checkout-preflight/commit-evidence-candidates.json",
         "?? output/checks/p4-03-checkout-preflight/commit-paths.nul",
@@ -5174,6 +5182,9 @@
         "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T20-09-57.449Z/fixture-manifest.json",
         "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T20-09-57.449Z/protocol-results.json",
         "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T20-09-57.449Z/run-result.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-09T19-07-47.485Z/fixture-manifest.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-09T19-07-47.485Z/protocol-results.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-09T19-07-47.485Z/run-result.json",
         "?? output/checks/p4-03-checkout-preflight/secrets-before-final.json",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/manifest.json",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/README.md",
@@ -5244,17 +5255,68 @@
         "?? output/checks/p4-03-checkout-preflight/source-mid-full.json",
         "?? output/checks/p4-03-checkout-preflight/untracked-midpoint.json",
         "?? output/checks/p4-04-payment-connectors/commit-paths.nul",
-        "?? output/checks/p4-05-order-completion/browser-refresh.json",
-        "?? output/checks/p4-05-order-completion/compatibility.json",
-        "?? output/checks/p4-05-order-completion/final-verification.md",
-        "?? output/checks/p4-05-order-completion/independent-review.md",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-09T19-09-35.180Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-09T19-09-35.180Z/protocol-checkpoint.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-09T19-09-35.180Z/protocol-results.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-09T19-09-35.180Z/recovery-observations.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-09T19-09-35.180Z/run-result.json",
+        "?? output/checks/p4-05-order-access/api-handoff.md",
+        "?? output/checks/p4-05-order-access/api-independent-review.md",
+        "?? output/checks/p4-05-order-access/compatibility-and-protection.json",
+        "?? output/checks/p4-05-order-access/final-verification.md",
+        "?? output/checks/p4-05-order-access/independent-review.md",
+        "?? output/checks/p4-05-order-access/initial-untracked.json",
+        "?? output/checks/p4-05-order-access/postgres-design.md",
+        "?? output/checks/p4-05-order-access/protocol-handoff.md",
+        "?? output/checks/p4-05-order-access/protocol-notes.md",
+        "?? output/checks/p4-05-order-access/review-api-rate-faults.mjs",
+        "?? output/checks/p4-05-order-access/review-rose-master-probe.mjs",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-48-01.915Z/failure.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-48-01.915Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-48-01.915Z/run-result.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-52-30.807Z/failure.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-52-30.807Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-52-30.807Z/run-result.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-56-27.662Z/failure.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-56-27.662Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-56-27.662Z/run-result.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-03-30.485Z/failure.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-03-30.485Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-03-30.485Z/run-result.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-07-28.737Z/failure.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-07-28.737Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-07-28.737Z/run-result.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-11-19.689Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-11-19.689Z/protocol-checkpoint.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-11-19.689Z/protocol-results.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-11-19.689Z/run-result.json",
+        "?? output/checks/p4-05-order-access/source-candidate.json",
+        "?? output/checks/p4-05-order-access/source-development.json",
+        "?? output/checks/p4-05-order-access/verify-candidate.py",
+        "?? output/checks/p4-05-order-completion/admin-next-env-generated.txt",
+        "?? output/checks/p4-05-order-completion/check-prefix-result.json",
+        "?? output/checks/p4-05-order-completion/checkpoint-stage.paths",
+        "?? output/checks/p4-05-order-completion/commit-verification.json",
         "?? output/checks/p4-05-order-completion/initial-untracked.json",
-        "?? output/checks/p4-05-order-completion/postgres-compatibility.md",
         "?? output/checks/p4-05-order-completion/run-2026-09-09T18-24-19.186Z/failure.json",
         "?? output/checks/p4-05-order-completion/run-2026-09-09T18-24-19.186Z/run-result.json",
         "?? output/checks/p4-05-order-completion/run-2026-09-09T18-33-00.441Z/failure.json",
         "?? output/checks/p4-05-order-completion/run-2026-09-09T18-33-00.441Z/fixture-manifest.json",
         "?? output/checks/p4-05-order-completion/run-2026-09-09T18-33-00.441Z/run-result.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-44-29.817Z/failure.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-44-29.817Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-44-29.817Z/run-result.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-55-01.734Z/failure.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-55-01.734Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-55-01.734Z/run-result.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-00-55.816Z/failure.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-00-55.816Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-00-55.816Z/run-result.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-07-38.723Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-07-38.723Z/protocol-checkpoint.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-10-51.808Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-10-51.808Z/protocol-checkpoint.json",
+        "?? output/checks/p4-05-order-completion/source-candidate.json",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -5647,32 +5709,26 @@
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-detail.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-directory.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-policy.png",
-        "?? packages/application/src/order-payment-application.test.ts",
-        "?? packages/application/src/order-payment-application.ts",
-        "?? packages/application/src/order-payment-webhook.test.ts",
-        "?? packages/application/src/order-payment-webhook.ts",
-        "?? packages/contracts/src/order-payment-application.test.ts",
-        "?? packages/contracts/src/order-payment-application.ts",
-        "?? packages/persistence-port/src/order-payment-application.ts",
-        "?? packages/persistence-postgres/scripts/order-payment-expiry-fixture.mjs",
-        "?? packages/persistence-postgres/scripts/order-payment-rollback-proof.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-order-payment-parameters.mjs",
-        "?? packages/persistence-postgres/src/inventory-repository.test.ts",
-        "?? packages/persistence-postgres/src/inventory-timestamp.ts",
-        "?? packages/persistence-postgres/src/order-payment-application.test.ts",
-        "?? packages/persistence-postgres/src/order-payment-application.ts",
-        "?? packages/persistence-postgres/src/order-payment-data.ts",
-        "?? packages/persistence-postgres/src/order-payment-inventory.test.ts",
-        "?? packages/persistence-postgres/src/order-payment-inventory.ts",
-        "?? packages/persistence-postgres/src/order-payment-write.test.ts",
-        "?? packages/persistence-postgres/src/order-payment-write.ts",
-        "?? packages/persistence-postgres/src/payment-transaction-canonical.test.ts",
-        "?? packages/persistence-postgres/src/payment-transaction-canonical.ts"
+        "?? packages/application/src/order-access.test.ts",
+        "?? packages/application/src/order-access.ts",
+        "?? packages/contracts/src/order-access-openapi.ts",
+        "?? packages/contracts/src/order-access.test.ts",
+        "?? packages/contracts/src/order-access.ts",
+        "?? packages/persistence-port/src/order-access.ts",
+        "?? packages/persistence-postgres/scripts/postgres-order-access-constraints.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-order-access-parameters.mjs",
+        "?? packages/persistence-postgres/src/order-access-data.ts",
+        "?? packages/persistence-postgres/src/order-access-rate.ts",
+        "?? packages/persistence-postgres/src/order-access-read.test.ts",
+        "?? packages/persistence-postgres/src/order-access-read.ts",
+        "?? packages/persistence-postgres/src/order-access-repository.test.ts",
+        "?? packages/persistence-postgres/src/order-access-repository.ts",
+        "?? packages/persistence-postgres/src/order-access-write.ts"
       ]
     },
     "before": {
-      "sha": "acbdedcd96478f58b151fe28f15bb7f4a64e9bb6",
-      "sourceFingerprint": "af2da419b3b7fb2540f8e147e234a36b5fdc25fbc66480b8fc7e70962225cbb9",
+      "sha": "ab0b1375544b32313cfd4ac1cc184f63975b8e87",
+      "sourceFingerprint": "37da1c2d5aaed61f1ea1c29ebf5ab15962b4912e22cef98b9a2e7d535b348d21",
       "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
       "sourceFingerprintFiles": [
         {
@@ -7245,7 +7301,7 @@
         },
         {
           "path": "package.json",
-          "sha256": "429a8a4da28253b41905aed0218bf40fc797fd64cce1eccc1ac635ec90debd1b"
+          "sha256": "ec9f9079c8b86dc7078de7c66239f39c652b35e8fb08f387ac0510c12da4f316"
         },
         {
           "path": "packages/config/package.json",
@@ -7321,11 +7377,11 @@
         },
         {
           "path": "packages/contracts/generated/contracts.schema.json",
-          "sha256": "03eb11f199f75aad37bb51065fb703797227d64eb9edaf5a2d911cb8d297ce32"
+          "sha256": "67110f7a358f7ccc6e13c0deae7ef850f86ad3805126175eb01c8db0990e1bc0"
         },
         {
           "path": "packages/contracts/generated/openapi.json",
-          "sha256": "2379da7a074d93dafcbda5247bae7aac8a78adf187f23c1629d37931be8aa4f4"
+          "sha256": "09f906d8652dc4eae1efaa9fd8a6a2d9e8ea8e2dda463914869bed5f59f42b34"
         },
         {
           "path": "packages/contracts/package.json",
@@ -7381,11 +7437,11 @@
         },
         {
           "path": "packages/contracts/src/artifact-documents.test.ts",
-          "sha256": "bf41511a32b5365135382f89037af8776ee75cb134ec8ba175f5360d415421d4"
+          "sha256": "0d8cdf867e72ccd4c8c580940cf8ba0f296a69fc153a7d396cbe37c233e1b980"
         },
         {
           "path": "packages/contracts/src/artifact-documents.ts",
-          "sha256": "d4aac9af329856dd7181790fc24d0b5db0db43d4a12b03c2bae3adb5dace28f4"
+          "sha256": "7ea9cee21f4be0619d2c8e535e99758cb1c2f8f7aad137c703df1cb8b9760d27"
         },
         {
           "path": "packages/contracts/src/artifact-registry.test.ts",
@@ -7393,7 +7449,7 @@
         },
         {
           "path": "packages/contracts/src/artifact-registry.ts",
-          "sha256": "eedf6cffa1a32db4f099a16f959d729f1e3fb8f5fec747c1888e145ccf6949b1"
+          "sha256": "8cabc6dc761c6ed74dc6bb37b190c9e810fbd3930da3aaf5e5e9a1fb94e5b342"
         },
         {
           "path": "packages/contracts/src/base-content-openapi.test.ts",
@@ -7713,7 +7769,7 @@
         },
         {
           "path": "packages/contracts/src/index.ts",
-          "sha256": "73943bb4723371231d1deff6f2f842a2f974248959e563246e0548f3a7d323d0"
+          "sha256": "1948eefcf9fcb89e2c41a92b178c0c99699e77a1cc2dc9f676d7d784480f9f00"
         },
         {
           "path": "packages/contracts/src/key-management-port-contracts.ts",
@@ -7790,6 +7846,18 @@
         {
           "path": "packages/contracts/src/notification-port-contracts.ts",
           "sha256": "e73b33971e1294f0e37b2d6985ee99f10ef27f4e6e5f69046e199525eb36a630"
+        },
+        {
+          "path": "packages/contracts/src/order-access-openapi.ts",
+          "sha256": "06e3cd08ba7c27c307b7af832abd2544dab51b17f3bee2334e1aee85b4f415e1"
+        },
+        {
+          "path": "packages/contracts/src/order-access.test.ts",
+          "sha256": "9c30b7d2ea28318ba6f601ff5fe0429bcccc2e2eada4938b9043b0b650fd248d"
+        },
+        {
+          "path": "packages/contracts/src/order-access.ts",
+          "sha256": "f1ae15c7e7fe3bee0fd243a9d3e6f91a49197a5e473311db88bd05d468ec476f"
         },
         {
           "path": "packages/contracts/src/order-payment-application.test.ts",
@@ -8538,22 +8606,14 @@
       ],
       "status": [
         " M apps/api/package.json",
-        " M apps/api/scripts/payment-runtime-psp-process.mjs",
-        " M apps/api/scripts/payment-runtime-psp-server.mjs",
-        " M apps/api/scripts/payment-runtime-psp-store.mjs",
-        " M apps/api/scripts/payment-runtime-runtime.mjs",
-        " M apps/worker/src/reliable-events-composition.test.ts",
-        " M apps/worker/src/reliable-events-composition.ts",
-        " M apps/worker/src/reliable-events-runtime.test.ts",
-        " M apps/worker/src/reliable-events-runtime.ts",
+        " M apps/api/src/bootstrap.ts",
+        " M apps/api/src/production-application.ts",
         " M database/migrations/manifest.json",
         " M database/schema/expected-catalog.json",
-        " M docs/FAN_SUPPORT_PLATFORM_SPEC.md",
-        " M docs/plan/dependency-graph.md",
-        " M docs/plan/development-cadence.md",
+        " M docs/operations/order-payments.md",
         " M docs/plan/p4-05-order-completion.md",
-        " M docs/plan/task-breakdown.md",
         " M docs/progress/MASTER.md",
+        " M docs/progress/current-overview.md",
         " M docs/progress/phase-4-commerce.md",
         " M output/playwright/p2-04/README.md",
         " M output/playwright/p2-04/axe-results/baseline-desktop.json",
@@ -8567,50 +8627,45 @@
         " M output/playwright/p2-04/axe-results/timeline.json",
         " M output/playwright/p2-04/axe-results/unavailable.json",
         " M output/playwright/p2-04/browser-results.json",
-        " M output/playwright/p2-04/responsive/767x900-pt.png",
+        " M output/playwright/p2-04/reduced-motion/1440x900-en.png",
         " M output/playwright/p2-04/rtl/390x844-en.png",
         " M output/playwright/p2-04/screenshots.sha256",
-        " M output/playwright/p2-04/states/390x844-en.png",
         " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
         " M package.json",
         " M packages/application/src/index.ts",
         " M packages/contracts/generated/contracts.schema.json",
+        " M packages/contracts/generated/openapi.json",
+        " M packages/contracts/src/artifact-documents.test.ts",
+        " M packages/contracts/src/artifact-documents.ts",
         " M packages/contracts/src/artifact-registry.ts",
         " M packages/contracts/src/index.ts",
-        " M packages/persistence-port/src/index.test.ts",
         " M packages/persistence-port/src/index.ts",
         " M packages/persistence-postgres/package.json",
-        " M packages/persistence-postgres/scripts/cart-edit-rollback-proof.mjs",
-        " M packages/persistence-postgres/scripts/cart-runtime-rollback-proof.mjs",
-        " M packages/persistence-postgres/scripts/checkout-preflight-rollback-proof.mjs",
-        " M packages/persistence-postgres/scripts/payment-runtime-rollback-proof.mjs",
-        " M packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
-        " M packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
-        " M packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs",
-        " M packages/persistence-postgres/scripts/postgres-payment-runtime-parameters.mjs",
-        " M packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
-        " M packages/persistence-postgres/scripts/postgres-publication-validation-time-cases.mjs",
-        " M packages/persistence-postgres/src/inventory-repository.ts",
-        " M packages/persistence-postgres/src/payment-runtime-data.ts",
-        " M packages/persistence-postgres/src/payment-runtime-evidence.test.ts",
-        " M packages/persistence-postgres/src/payment-runtime-evidence.ts",
         " M packages/persistence-postgres/src/postgres-persistence.ts",
-        " M packages/persistence-postgres/src/reliable-event-repositories.test.ts",
-        " M packages/persistence-postgres/src/reliable-event-repositories.ts",
-        " M pnpm-lock.yaml",
-        "?? apps/api/scripts/order-payment-client.mjs",
-        "?? apps/api/scripts/order-payment-commit-faults.mjs",
-        "?? apps/api/scripts/order-payment-http.mjs",
-        "?? apps/api/scripts/order-payment-protocol.mjs",
-        "?? apps/api/scripts/order-payment-psp.test.mjs",
-        "?? apps/api/scripts/order-payment-queue.mjs",
-        "?? apps/api/scripts/order-payment-queue.test.mjs",
-        "?? apps/api/scripts/order-payment-runtime.mjs",
-        "?? apps/api/scripts/order-payment-sql.test.mjs",
-        "?? database/migrations/0027_order-payment-application.down.sql",
-        "?? database/migrations/0027_order-payment-application.up.sql",
-        "?? docs/decisions/014-local-order-completion.md",
-        "?? docs/operations/order-payments.md",
+        "?? apps/api/scripts/order-access-client.mjs",
+        "?? apps/api/scripts/order-access-commit-faults.mjs",
+        "?? apps/api/scripts/order-access-gateway.mjs",
+        "?? apps/api/scripts/order-access-gateway.test.mjs",
+        "?? apps/api/scripts/order-access-history.mjs",
+        "?? apps/api/scripts/order-access-http.mjs",
+        "?? apps/api/scripts/order-access-ingress.test.mjs",
+        "?? apps/api/scripts/order-access-media.mjs",
+        "?? apps/api/scripts/order-access-media.test.mjs",
+        "?? apps/api/scripts/order-access-observers.mjs",
+        "?? apps/api/scripts/order-access-observers.test.mjs",
+        "?? apps/api/scripts/order-access-protocol.mjs",
+        "?? apps/api/scripts/order-access-runtime.mjs",
+        "?? apps/api/src/order-access-bootstrap.test.ts",
+        "?? apps/api/src/order-access-composition.test.ts",
+        "?? apps/api/src/order-access-composition.ts",
+        "?? apps/api/src/order-access-credentials.test.ts",
+        "?? apps/api/src/order-access-credentials.ts",
+        "?? apps/api/src/order-access-observability.test.ts",
+        "?? apps/api/src/order-access-route.test.ts",
+        "?? apps/api/src/order-access-route.ts",
+        "?? database/migrations/0028_order-access.down.sql",
+        "?? database/migrations/0028_order-access.up.sql",
+        "?? docs/operations/order-access.md",
         "?? output/checks/github-sync-candidate.paths",
         "?? output/checks/p3-01-admin-content/contracts-before.json",
         "?? output/checks/p3-01-admin-content/implementation-source-before-clock-fix.json",
@@ -10486,6 +10541,9 @@
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T10-04-37-990Z/concurrent-public-reads-1788948550823.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T10-04-37-990Z/fixture-manifest.json",
         "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T10-04-37-990Z/protocol-results.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T19-00-52-647Z/concurrent-public-reads-1788980718661.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T19-00-52-647Z/fixture-manifest.json",
+        "?? output/checks/p3-06-storefront-acceptance/run-2026-09-09T19-00-52-647Z/protocol-results.json",
         "?? output/checks/p3-06-storefront-acceptance/seo-contract-proposal.md",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.config.mjs",
         "?? output/checks/p3-06-storefront-acceptance/seo-projection-benchmark.test.ts",
@@ -10507,12 +10565,18 @@
         "?? output/checks/p4-01-cart/http-2026-09-09T10-09-27.363Z/pending-rollback-results.json",
         "?? output/checks/p4-01-cart/http-2026-09-09T10-09-27.363Z/protocol-results.json",
         "?? output/checks/p4-01-cart/http-2026-09-09T10-09-27.363Z/results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-09T19-05-35.604Z/daily-immediate-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-09T19-05-35.604Z/pending-rollback-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-09T19-05-35.604Z/protocol-results.json",
+        "?? output/checks/p4-01-cart/http-2026-09-09T19-05-35.604Z/results.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-08T15-07-09.936Z/fixture-manifest.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-08T15-07-09.936Z/protocol-results.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-08T20-08-58.449Z/fixture-manifest.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-08T20-08-58.449Z/protocol-results.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-09T10-10-38.008Z/fixture-manifest.json",
         "?? output/checks/p4-02-cart-storefront/run-2026-09-09T10-10-38.008Z/protocol-results.json",
+        "?? output/checks/p4-02-cart-storefront/run-2026-09-09T19-06-48.237Z/fixture-manifest.json",
+        "?? output/checks/p4-02-cart-storefront/run-2026-09-09T19-06-48.237Z/protocol-results.json",
         "?? output/checks/p4-03-checkout-preflight/application-outbox-final.json",
         "?? output/checks/p4-03-checkout-preflight/commit-evidence-candidates.json",
         "?? output/checks/p4-03-checkout-preflight/commit-paths.nul",
@@ -10520,6 +10584,9 @@
         "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T20-09-57.449Z/fixture-manifest.json",
         "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T20-09-57.449Z/protocol-results.json",
         "?? output/checks/p4-03-checkout-preflight/run-2026-09-08T20-09-57.449Z/run-result.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-09T19-07-47.485Z/fixture-manifest.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-09T19-07-47.485Z/protocol-results.json",
+        "?? output/checks/p4-03-checkout-preflight/run-2026-09-09T19-07-47.485Z/run-result.json",
         "?? output/checks/p4-03-checkout-preflight/secrets-before-final.json",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/manifest.json",
         "?? output/checks/p4-03-checkout-preflight/shared-ui-previous/output/playwright/p2-04/README.md",
@@ -10590,17 +10657,68 @@
         "?? output/checks/p4-03-checkout-preflight/source-mid-full.json",
         "?? output/checks/p4-03-checkout-preflight/untracked-midpoint.json",
         "?? output/checks/p4-04-payment-connectors/commit-paths.nul",
-        "?? output/checks/p4-05-order-completion/browser-refresh.json",
-        "?? output/checks/p4-05-order-completion/compatibility.json",
-        "?? output/checks/p4-05-order-completion/final-verification.md",
-        "?? output/checks/p4-05-order-completion/independent-review.md",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-09T19-09-35.180Z/fixture-manifest.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-09T19-09-35.180Z/protocol-checkpoint.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-09T19-09-35.180Z/protocol-results.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-09T19-09-35.180Z/recovery-observations.json",
+        "?? output/checks/p4-04-payment-runtime/run-2026-09-09T19-09-35.180Z/run-result.json",
+        "?? output/checks/p4-05-order-access/api-handoff.md",
+        "?? output/checks/p4-05-order-access/api-independent-review.md",
+        "?? output/checks/p4-05-order-access/compatibility-and-protection.json",
+        "?? output/checks/p4-05-order-access/final-verification.md",
+        "?? output/checks/p4-05-order-access/independent-review.md",
+        "?? output/checks/p4-05-order-access/initial-untracked.json",
+        "?? output/checks/p4-05-order-access/postgres-design.md",
+        "?? output/checks/p4-05-order-access/protocol-handoff.md",
+        "?? output/checks/p4-05-order-access/protocol-notes.md",
+        "?? output/checks/p4-05-order-access/review-api-rate-faults.mjs",
+        "?? output/checks/p4-05-order-access/review-rose-master-probe.mjs",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-48-01.915Z/failure.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-48-01.915Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-48-01.915Z/run-result.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-52-30.807Z/failure.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-52-30.807Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-52-30.807Z/run-result.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-56-27.662Z/failure.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-56-27.662Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T12-56-27.662Z/run-result.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-03-30.485Z/failure.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-03-30.485Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-03-30.485Z/run-result.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-07-28.737Z/failure.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-07-28.737Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-07-28.737Z/run-result.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-11-19.689Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-11-19.689Z/protocol-checkpoint.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-11-19.689Z/protocol-results.json",
+        "?? output/checks/p4-05-order-access/run-2026-09-15T13-11-19.689Z/run-result.json",
+        "?? output/checks/p4-05-order-access/source-candidate.json",
+        "?? output/checks/p4-05-order-access/source-development.json",
+        "?? output/checks/p4-05-order-access/verify-candidate.py",
+        "?? output/checks/p4-05-order-completion/admin-next-env-generated.txt",
+        "?? output/checks/p4-05-order-completion/check-prefix-result.json",
+        "?? output/checks/p4-05-order-completion/checkpoint-stage.paths",
+        "?? output/checks/p4-05-order-completion/commit-verification.json",
         "?? output/checks/p4-05-order-completion/initial-untracked.json",
-        "?? output/checks/p4-05-order-completion/postgres-compatibility.md",
         "?? output/checks/p4-05-order-completion/run-2026-09-09T18-24-19.186Z/failure.json",
         "?? output/checks/p4-05-order-completion/run-2026-09-09T18-24-19.186Z/run-result.json",
         "?? output/checks/p4-05-order-completion/run-2026-09-09T18-33-00.441Z/failure.json",
         "?? output/checks/p4-05-order-completion/run-2026-09-09T18-33-00.441Z/fixture-manifest.json",
         "?? output/checks/p4-05-order-completion/run-2026-09-09T18-33-00.441Z/run-result.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-44-29.817Z/failure.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-44-29.817Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-44-29.817Z/run-result.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-55-01.734Z/failure.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-55-01.734Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T18-55-01.734Z/run-result.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-00-55.816Z/failure.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-00-55.816Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-00-55.816Z/run-result.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-07-38.723Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-07-38.723Z/protocol-checkpoint.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-10-51.808Z/fixture-manifest.json",
+        "?? output/checks/p4-05-order-completion/run-2026-09-09T19-10-51.808Z/protocol-checkpoint.json",
+        "?? output/checks/p4-05-order-completion/source-candidate.json",
         "?? output/playwright/p2-05-device/README.md",
         "?? output/playwright/p2-05-device/connection-check.json",
         "?? output/playwright/p2-05-device/device-results.json",
@@ -10993,27 +11111,21 @@
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-detail.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-directory.png",
         "?? output/playwright/p3-05-gift-storefront/run-2026-09-07T07-23-22-566Z/browser-attempt-6/zh-CN-390-policy.png",
-        "?? packages/application/src/order-payment-application.test.ts",
-        "?? packages/application/src/order-payment-application.ts",
-        "?? packages/application/src/order-payment-webhook.test.ts",
-        "?? packages/application/src/order-payment-webhook.ts",
-        "?? packages/contracts/src/order-payment-application.test.ts",
-        "?? packages/contracts/src/order-payment-application.ts",
-        "?? packages/persistence-port/src/order-payment-application.ts",
-        "?? packages/persistence-postgres/scripts/order-payment-expiry-fixture.mjs",
-        "?? packages/persistence-postgres/scripts/order-payment-rollback-proof.mjs",
-        "?? packages/persistence-postgres/scripts/postgres-order-payment-parameters.mjs",
-        "?? packages/persistence-postgres/src/inventory-repository.test.ts",
-        "?? packages/persistence-postgres/src/inventory-timestamp.ts",
-        "?? packages/persistence-postgres/src/order-payment-application.test.ts",
-        "?? packages/persistence-postgres/src/order-payment-application.ts",
-        "?? packages/persistence-postgres/src/order-payment-data.ts",
-        "?? packages/persistence-postgres/src/order-payment-inventory.test.ts",
-        "?? packages/persistence-postgres/src/order-payment-inventory.ts",
-        "?? packages/persistence-postgres/src/order-payment-write.test.ts",
-        "?? packages/persistence-postgres/src/order-payment-write.ts",
-        "?? packages/persistence-postgres/src/payment-transaction-canonical.test.ts",
-        "?? packages/persistence-postgres/src/payment-transaction-canonical.ts"
+        "?? packages/application/src/order-access.test.ts",
+        "?? packages/application/src/order-access.ts",
+        "?? packages/contracts/src/order-access-openapi.ts",
+        "?? packages/contracts/src/order-access.test.ts",
+        "?? packages/contracts/src/order-access.ts",
+        "?? packages/persistence-port/src/order-access.ts",
+        "?? packages/persistence-postgres/scripts/postgres-order-access-constraints.mjs",
+        "?? packages/persistence-postgres/scripts/postgres-order-access-parameters.mjs",
+        "?? packages/persistence-postgres/src/order-access-data.ts",
+        "?? packages/persistence-postgres/src/order-access-rate.ts",
+        "?? packages/persistence-postgres/src/order-access-read.test.ts",
+        "?? packages/persistence-postgres/src/order-access-read.ts",
+        "?? packages/persistence-postgres/src/order-access-repository.test.ts",
+        "?? packages/persistence-postgres/src/order-access-repository.ts",
+        "?? packages/persistence-postgres/src/order-access-write.ts"
       ]
     }
   },
@@ -11130,7 +11242,7 @@
   "motionChecks": {
     "addToCart": {
       "buttonFocused": true,
-      "stateDelayMs": 48.80000019073486,
+      "stateDelayMs": 49.19999980926514,
       "liveAnnouncement": true,
       "pendingObserved": true,
       "countDelta": 1,
@@ -11198,7 +11310,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           },
@@ -11211,7 +11323,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           },
@@ -11224,7 +11336,7 @@
             "rect": {
               "height": 810,
               "left": 0,
-              "top": 232.96875,
+              "top": 204.171875,
               "width": 1440
             }
           }
@@ -11365,33 +11477,33 @@
           "activeLayout": {
             "height": 1038,
             "left": 48,
-            "top": 1304,
+            "top": 1276,
             "width": 830
           },
           "activeOpacity": 0,
           "activeRect": {
             "height": 1042.6875,
             "left": 62.524993896484375,
-            "top": 487.734375,
+            "top": 486.9375,
             "width": 834.1500244140625
           },
           "outgoingLayout": {
             "height": 1038,
             "left": 48,
-            "top": 1304,
+            "top": 1276,
             "width": 830
           },
           "outgoingOpacity": 1,
           "outgoingRect": {
             "height": 1037.5,
             "left": 48,
-            "top": 490.328125,
+            "top": 489.53125,
             "width": 830
           },
           "visualRect": {
             "height": 1037.5,
             "left": 48,
-            "top": 490.328125,
+            "top": 489.53125,
             "width": 830
           },
           "coverage": true
@@ -11716,7 +11828,7 @@
         200,
         200
       ],
-      "origin": "http://127.0.0.1:58934"
+      "origin": "http://127.0.0.1:62709"
     },
     {
       "environment": "staging",
@@ -11731,7 +11843,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:59098"
+      "origin": "http://127.0.0.1:62841"
     },
     {
       "environment": "production",
@@ -11746,7 +11858,7 @@
         404,
         404
       ],
-      "origin": "http://127.0.0.1:59121"
+      "origin": "http://127.0.0.1:62868"
     }
   ],
   "scenarioResults": [
@@ -11763,91 +11875,85 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58934/_internal/design-foundations/en/motion"
+            "url": "http://127.0.0.1:62709/_internal/design-foundations/en/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58934/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:62709/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -11863,7 +11969,7 @@
           {
             "height": 51.71875,
             "label": "Replay hero entrance",
-            "width": 198.921875
+            "width": 199.1875
           },
           {
             "height": 48,
@@ -11878,22 +11984,22 @@
           {
             "height": 51.71875,
             "label": "Add gift to cartAdded to cart",
-            "width": 171.8125
+            "width": 170.890625
           },
           {
             "height": 51.71875,
             "label": "Reset confirmation",
-            "width": 181.859375
+            "width": 184.328125
           },
           {
             "height": 51.71875,
             "label": "Show recoverable error",
-            "width": 215.390625
+            "width": 214.71875
           },
           {
             "height": 51.71875,
             "label": "Replay confirmed success",
-            "width": 237.828125
+            "width": 236.765625
           }
         ],
         "document": {
@@ -11908,7 +12014,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 100,
+        "lcpMs": 68,
         "longTasks": [],
         "observers": {
           "event": {
@@ -11929,8 +12035,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.799999999999955,
+          "maxFrameDeltaMs": 16.700000000000045,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -12093,115 +12199,109 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58934/_internal/design-foundations/vi/motion"
+            "url": "http://127.0.0.1:62709/_internal/design-foundations/vi/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/manrope-vietnamese-wght-normal.3xvzy9_grgcx4.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-vietnamese-wght-normal.1s0ar0m2bmdjg.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58934/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:62709/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -12217,7 +12317,7 @@
           {
             "height": 51.8125,
             "label": "Phát lại hiệu ứng ảnh chính",
-            "width": 242.578125
+            "width": 242.9375
           },
           {
             "height": 48,
@@ -12232,22 +12332,22 @@
           {
             "height": 51.8125,
             "label": "Thêm quà vào giỏĐã thêm vào giỏ",
-            "width": 190.84375
+            "width": 190.109375
           },
           {
             "height": 51.8125,
             "label": "Đặt lại xác nhận",
-            "width": 157
+            "width": 156.921875
           },
           {
             "height": 51.8125,
             "label": "Hiển thị lỗi có thể khắc phục",
-            "width": 252.671875
+            "width": 251
           },
           {
             "height": 51.8125,
             "label": "Phát lại xác nhận thành công",
-            "width": 256.765625
+            "width": 257.40625
           }
         ],
         "document": {
@@ -12257,12 +12357,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 32,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 104,
+        "lcpMs": 84,
         "longTasks": [],
         "observers": {
           "event": {
@@ -12284,7 +12384,7 @@
         },
         "raf": {
           "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -12343,97 +12443,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58934/_internal/design-foundations/th/motion"
+            "url": "http://127.0.0.1:62709/_internal/design-foundations/th/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2lg-l7asikrc3.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2lg-l7asikrc3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-thai-latin-wght-normal.3sa71yz_9i4ni.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-thai-thai-wght-normal.35a9qnauvobla.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58934/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:62709/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -12449,7 +12549,7 @@
           {
             "height": 53.015625,
             "label": "เล่นการปรากฏของภาพหลักอีกครั้ง",
-            "width": 273.390625
+            "width": 271.390625
           },
           {
             "height": 48,
@@ -12464,22 +12564,22 @@
           {
             "height": 53.015625,
             "label": "เพิ่มของขวัญลงรถเข็นเพิ่มลงรถเข็นแล้ว",
-            "width": 185.140625
+            "width": 183.15625
           },
           {
             "height": 53.015625,
             "label": "รีเซ็ตการยืนยัน",
-            "width": 137.953125
+            "width": 136.34375
           },
           {
             "height": 53.015625,
             "label": "แสดงข้อผิดพลาดที่แก้ไขได้",
-            "width": 223.546875
+            "width": 218.265625
           },
           {
             "height": 53.015625,
             "label": "เล่นการยืนยันสำเร็จอีกครั้ง",
-            "width": 217.328125
+            "width": 215.9375
           }
         ],
         "document": {
@@ -12494,7 +12594,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 84,
+        "lcpMs": 80,
         "longTasks": [],
         "observers": {
           "event": {
@@ -12515,8 +12615,8 @@
           }
         },
         "raf": {
-          "maxFrameDeltaMs": 16.700000000000045,
-          "p95FrameDeltaMs": 16.700000000000045,
+          "maxFrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -12573,175 +12673,175 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58934/_internal/design-foundations/zh-CN/motion"
+            "url": "http://127.0.0.1:62709/_internal/design-foundations/zh-CN/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1unpb6xqhrxa3.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1unpb6xqhrxa3.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/simplified-chinese-ui.3q8dv_-6r4bj3.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/simplified-chinese-ui.3q8dv_-6r4bj3.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-118-wght-normal.35kki43rrysx_.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-111-wght-normal.1elhdyp0hximn.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-114-wght-normal.3naf47xc68q03.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-109-wght-normal.1y2t1ibqaj0br.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-102-wght-normal.2m_jv3-ws9872.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-110-wght-normal.01_ricus9pfmr.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-sc-29-wght-normal.03si-uinwb6db.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58934/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:62709/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -12797,7 +12897,7 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 40,
+          "maxMs": 48,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
@@ -12824,7 +12924,7 @@
         },
         "raf": {
           "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.799999999999955,
+          "p95FrameDeltaMs": 16.700000000000045,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -12985,211 +13085,211 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58934/_internal/design-foundations/ja/motion"
+            "url": "http://127.0.0.1:62709/_internal/design-foundations/ja/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2fik9m_pfu2i-.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2fik9m_pfu2i-.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-latin-wght-normal.2sl21lk8la3ib.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/japanese-ui.2_4uhplx016zg.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/japanese-ui.2_4uhplx016zg.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-116-wght-normal.1gp7bm-b-h926.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-114-wght-normal.1d7nlvsz1gxwk.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-109-wght-normal.0hgenvuz2-_ss.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-104-wght-normal.0b-572e08h35c.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-106-wght-normal.3odm4lr_fgm90.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-117-wght-normal.23wxnpmo_8taf.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-89-wght-normal.2acsvcx7blxiu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-107-wght-normal.18hdjsnz81a1q.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-96-wght-normal.381_jjxr112sd.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-99-wght-normal.1k4evo4c064e8.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-119-wght-normal.10tjw6v2_t6ku.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-102-wght-normal.3tvvdrxm1fx2m.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-69-wght-normal.2_o7otac5yliy.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-115-wght-normal.3mbbbwu1f5tin.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-101-wght-normal.0wuu-fsn85ag0.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-110-wght-normal.1bl5fa9yn6-ij.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-103-wght-normal.2m3bpd7-jq5ue.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-111-wght-normal.2qdc9y0kqst9i.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-jp-95-wght-normal.18n8mwukvxvwu.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58934/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:62709/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -13245,12 +13345,12 @@
         },
         "fontsStatus": "loaded",
         "interactionLatency": {
-          "maxMs": 48,
+          "maxMs": 40,
           "sampleCount": 15,
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 64,
+        "lcpMs": 80,
         "longTasks": [],
         "observers": {
           "event": {
@@ -13329,91 +13429,91 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58934/_internal/design-foundations/es/motion"
+            "url": "http://127.0.0.1:62709/_internal/design-foundations/es/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-desktop.png"
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-desktop.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58934/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:62709/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -13474,7 +13574,7 @@
           "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
         },
         "jsTransferBytes": 138012,
-        "lcpMs": 64,
+        "lcpMs": 44,
         "longTasks": [],
         "observers": {
           "event": {
@@ -13496,7 +13596,7 @@
         },
         "raf": {
           "maxFrameDeltaMs": 16.800000000000182,
-          "p95FrameDeltaMs": 16.800000000000182,
+          "p95FrameDeltaMs": 16.799999999999955,
           "sampleCount": 30
         },
         "rawLayoutShift": 0
@@ -13659,103 +13759,97 @@
             "allowed": true,
             "method": "GET",
             "resourceType": "document",
-            "url": "http://127.0.0.1:58934/_internal/design-foundations/en-XA/motion"
+            "url": "http://127.0.0.1:62709/_internal/design-foundations/en-XA/motion"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/40bq4a1qmkc-o.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/40bq4a1qmkc-o.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/3tr2shtlm_24p.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/3tr2shtlm_24p.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/0yiwot5m383w1.css"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/0yiwot5m383w1.css"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-mobile.png"
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-mobile.png"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1eb2a8tunus1g.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1eb2a8tunus1g.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2m1evm08ad2z8.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2m1evm08ad2z8.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2p07cckado7sy.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2p07cckado7sy.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1oktdg9jp8u14.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1oktdg9jp8u14.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2fs_h3_2bp3zu.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2fs_h3_2bp3zu.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2qun_6obf6abx.js"
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2qun_6obf6abx.js"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/manrope-latin-ext-wght-normal.0-hru0xfwhnbp.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-latin-wght-normal.05o5-i1cea2yx.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
+            "url": "http://127.0.0.1:62709/_next/static/media/noto-sans-latin-ext-wght-normal.2-7eoaijxl5dw.woff2"
           },
           {
             "allowed": true,
             "method": "GET",
             "resourceType": "other",
-            "url": "http://127.0.0.1:58934/icon.svg?icon.3fse5yyfsi15o.svg"
+            "url": "http://127.0.0.1:62709/icon.svg?icon.3fse5yyfsi15o.svg"
           }
         ]
       },
@@ -13771,12 +13865,12 @@
           {
             "height": 51.59375,
             "label": "[!! Řëpļàÿ hëřö ëñţřàñçë !!]",
-            "width": 240.890625
+            "width": 242.390625
           },
           {
             "height": 48,
             "label": "Mira Vale[!! Šëļëçţëd !!]",
-            "width": 187.265625
+            "width": 184.5
           },
           {
             "height": 48,
@@ -13786,241 +13880,21 @@
           {
             "height": 51.59375,
             "label": "[!! Àdd ğïfţ ţö çàřţ !!][!! Àddëd ţö çàřţ !!]",
-            "width": 213.8125
+            "width": 213.15625
           },
           {
             "height": 51.59375,
             "label": "[!! Řëšëţ çöñfïřmàţïöñ !!]",
-            "width": 223.921875
+            "width": 225.890625
           },
           {
             "height": 51.59375,
             "label": "[!! Šhöw řëçövëřàbļë ëřřöř !!]",
-            "width": 257.40625
+            "width": 258.875
           },
           {
             "height": 77.1875,
             "label": "[!! Řëpļàÿ çöñfïřmëd šüççëšš !!]",
-            "width": 256
-          }
-        ],
-        "document": {
-          "bodyScrollWidth": 320,
-          "clientWidth": 320,
-          "scrollWidth": 320
-        },
-        "fontsStatus": "loaded",
-        "interactionLatency": {
-          "maxMs": 40,
-          "sampleCount": 15,
-          "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
-        },
-        "jsTransferBytes": 138012,
-        "lcpMs": 60,
-        "longTasks": [],
-        "observers": {
-          "event": {
-            "installed": true,
-            "supported": true
-          },
-          "layoutShift": {
-            "installed": true,
-            "supported": true
-          },
-          "longTask": {
-            "installed": true,
-            "supported": true
-          },
-          "lcp": {
-            "installed": true,
-            "supported": true
-          }
-        },
-        "raf": {
-          "maxFrameDeltaMs": 16.799999999999955,
-          "p95FrameDeltaMs": 16.799999999999955,
-          "sampleCount": 30
-        },
-        "rawLayoutShift": 0
-      },
-      "runtimeFonts": {
-        "computed": {
-          "fontFamily": "\"Manrope Variable\", \"Noto Sans Variable\", system-ui, sans-serif",
-          "primaryFamily": "Manrope Variable"
-        },
-        "cssom": {
-          "displays": [
-            "optional"
-          ],
-          "families": [
-            "Manrope Variable",
-            "Noto Sans Variable"
-          ],
-          "fontFaces": 14,
-          "importantDescriptors": 0,
-          "imports": 0,
-          "styleSheets": 3,
-          "unreadableStyleSheets": []
-        },
-        "fontFaceSet": {
-          "displays": [
-            "optional"
-          ],
-          "faceCount": 14,
-          "families": [
-            "Manrope Variable",
-            "Noto Sans Variable"
-          ],
-          "statuses": [
-            "loaded",
-            "unloaded"
-          ]
-        },
-        "source": "document.fonts + CSSOM + computedStyle"
-      },
-      "screenshot": "stress/320x800-en-XA.png",
-      "viewport": {
-        "height": 800,
-        "width": 320
-      }
-    },
-    {
-      "axeSummaries": [],
-      "diagnostics": {
-        "console": [],
-        "externalResources": [],
-        "httpErrors": [],
-        "pageErrors": [],
-        "requestFailures": [],
-        "requests": [
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "document",
-            "url": "http://127.0.0.1:58934/_internal/design-foundations/pt/motion"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/40bq4a1qmkc-o.css"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/3tr2shtlm_24p.css"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "stylesheet",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/0yiwot5m383w1.css"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "image",
-            "url": "http://127.0.0.1:58934/ui-composites/fictional-performer-hero-mobile.png"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1eb2a8tunus1g.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2m1evm08ad2z8.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2p07cckado7sy.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/1oktdg9jp8u14.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2fs_h3_2bp3zu.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "script",
-            "url": "http://127.0.0.1:58934/_next/static/chunks/2qun_6obf6abx.js"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "font",
-            "url": "http://127.0.0.1:58934/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
-          },
-          {
-            "allowed": true,
-            "method": "GET",
-            "resourceType": "other",
-            "url": "http://127.0.0.1:58934/icon.svg?icon.3fse5yyfsi15o.svg"
-          }
-        ]
-      },
-      "errors": [],
-      "fixtureUrl": "/_internal/design-foundations/pt/motion",
-      "group": "stress",
-      "id": "stress-320x800-pt",
-      "locale": "pt",
-      "performance": {
-        "clippedText": [],
-        "cls": 0,
-        "controls": [
-          {
-            "height": 77.1875,
-            "label": "Reproduzir novamente a entrada do cartaz",
-            "width": 288
-          },
-          {
-            "height": 48,
-            "label": "Mira ValeSelecionado",
-            "width": 172.125
-          },
-          {
-            "height": 48,
-            "label": "Noa Aster",
-            "width": 160
-          },
-          {
-            "height": 51.59375,
-            "label": "Adicionar presente ao carrinhoAdicionado ao carrinho",
-            "width": 272.125
-          },
-          {
-            "height": 51.59375,
-            "label": "Redefinir a confirmação",
-            "width": 218.796875
-          },
-          {
-            "height": 51.59375,
-            "label": "Mostrar erro recuperável",
-            "width": 225.609375
-          },
-          {
-            "height": 77.1875,
-            "label": "Reproduzir novamente a confirmação concluída",
             "width": 256
           }
         ],
@@ -14098,6 +13972,226 @@
         },
         "source": "document.fonts + CSSOM + computedStyle"
       },
+      "screenshot": "stress/320x800-en-XA.png",
+      "viewport": {
+        "height": 800,
+        "width": 320
+      }
+    },
+    {
+      "axeSummaries": [],
+      "diagnostics": {
+        "console": [],
+        "externalResources": [],
+        "httpErrors": [],
+        "pageErrors": [],
+        "requestFailures": [],
+        "requests": [
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "document",
+            "url": "http://127.0.0.1:62709/_internal/design-foundations/pt/motion"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:62709/_next/static/chunks/40bq4a1qmkc-o.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:62709/_next/static/chunks/3tr2shtlm_24p.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "stylesheet",
+            "url": "http://127.0.0.1:62709/_next/static/chunks/0yiwot5m383w1.css"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "image",
+            "url": "http://127.0.0.1:62709/ui-composites/fictional-performer-hero-mobile.png"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1eb2a8tunus1g.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2m1evm08ad2z8.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2p07cckado7sy.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:62709/_next/static/chunks/turbopack-1pg5k1_i15usm.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:62709/_next/static/chunks/1oktdg9jp8u14.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2fs_h3_2bp3zu.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "script",
+            "url": "http://127.0.0.1:62709/_next/static/chunks/2qun_6obf6abx.js"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "font",
+            "url": "http://127.0.0.1:62709/_next/static/media/manrope-latin-wght-normal.1p_a2k8qd5zhp.woff2"
+          },
+          {
+            "allowed": true,
+            "method": "GET",
+            "resourceType": "other",
+            "url": "http://127.0.0.1:62709/icon.svg?icon.3fse5yyfsi15o.svg"
+          }
+        ]
+      },
+      "errors": [],
+      "fixtureUrl": "/_internal/design-foundations/pt/motion",
+      "group": "stress",
+      "id": "stress-320x800-pt",
+      "locale": "pt",
+      "performance": {
+        "clippedText": [],
+        "cls": 0,
+        "controls": [
+          {
+            "height": 77.1875,
+            "label": "Reproduzir novamente a entrada do cartaz",
+            "width": 288
+          },
+          {
+            "height": 48,
+            "label": "Mira ValeSelecionado",
+            "width": 172.125
+          },
+          {
+            "height": 48,
+            "label": "Noa Aster",
+            "width": 160
+          },
+          {
+            "height": 51.59375,
+            "label": "Adicionar presente ao carrinhoAdicionado ao carrinho",
+            "width": 272.125
+          },
+          {
+            "height": 51.59375,
+            "label": "Redefinir a confirmação",
+            "width": 218.796875
+          },
+          {
+            "height": 51.59375,
+            "label": "Mostrar erro recuperável",
+            "width": 225.609375
+          },
+          {
+            "height": 77.1875,
+            "label": "Reproduzir novamente a confirmação concluída",
+            "width": 256
+          }
+        ],
+        "document": {
+          "bodyScrollWidth": 320,
+          "clientWidth": 320,
+          "scrollWidth": 320
+        },
+        "fontsStatus": "loaded",
+        "interactionLatency": {
+          "maxMs": 40,
+          "sampleCount": 15,
+          "source": "PerformanceEventTiming duration proxy (desktop Chrome; not field INP)"
+        },
+        "jsTransferBytes": 138012,
+        "lcpMs": 60,
+        "longTasks": [],
+        "observers": {
+          "event": {
+            "installed": true,
+            "supported": true
+          },
+          "layoutShift": {
+            "installed": true,
+            "supported": true
+          },
+          "longTask": {
+            "installed": true,
+            "supported": true
+          },
+          "lcp": {
+            "installed": true,
+            "supported": true
+          }
+        },
+        "raf": {
+          "maxFrameDeltaMs": 16.700000000000045,
+          "p95FrameDeltaMs": 16.700000000000045,
+          "sampleCount": 30
+        },
+        "rawLayoutShift": 0
+      },
+      "runtimeFonts": {
+        "computed": {
+          "fontFamily": "\"Manrope Variable\", \"Noto Sans Variable\", system-ui, sans-serif",
+          "primaryFamily": "Manrope Variable"
+        },
+        "cssom": {
+          "displays": [
+            "optional"
+          ],
+          "families": [
+            "Manrope Variable",
+            "Noto Sans Variable"
+          ],
+          "fontFaces": 14,
+          "importantDescriptors": 0,
+          "imports": 0,
+          "styleSheets": 3,
+          "unreadableStyleSheets": []
+        },
+        "fontFaceSet": {
+          "displays": [
+            "optional"
+          ],
+          "faceCount": 14,
+          "families": [
+            "Manrope Variable",
+            "Noto Sans Variable"
+          ],
+          "statuses": [
+            "loaded",
+            "unloaded"
+          ]
+        },
+        "source": "document.fonts + CSSOM + computedStyle"
+      },
       "screenshot": "stress/320x800-pt-long.png",
       "viewport": {
         "height": 800,
@@ -14111,19 +14205,19 @@
       "path": "viewports/360x800-en.png",
       "pixelHeight": 800,
       "pixelWidth": 360,
-      "sha256": "ae673b3d372584ff556365b15d9b127e5f2bca1a7cc519be706cbe465aa3c776"
+      "sha256": "aed65a6e0846cc3d770caa151b35a0c1611c36dc04a2d4ef0c0879860f47c7bf"
     },
     {
       "path": "viewports/390x844-vi.png",
       "pixelHeight": 844,
       "pixelWidth": 390,
-      "sha256": "51d35e6dae454aefd2e4970e675fe5ebd796bd518e12ce7e84f00942777628f4"
+      "sha256": "ba91c7eb3947a2d20458d6d7fc41992c4d6ffe651aee67b35dc1439bd1ac8e13"
     },
     {
       "path": "viewports/768x1024-th.png",
       "pixelHeight": 1024,
       "pixelWidth": 768,
-      "sha256": "e09f759ad25319d8899a5d64189bd324c396fe2dc89b56e2e9e470a41d0ec697"
+      "sha256": "4c74ed2577b828e445d2c45f45628fe03a575257f5a8eee8b41e70d707cec237"
     },
     {
       "path": "viewports/1024x768-zh-CN.png",
@@ -14145,9 +14239,9 @@
     },
     {
       "path": "stress/320x800-en-XA.png",
-      "pixelHeight": 2971,
+      "pixelHeight": 3011,
       "pixelWidth": 320,
-      "sha256": "b55b05c0566221c7d0c882f699882fa86857895fcc6b247b5aaaf9d81e397568"
+      "sha256": "d2d1c42cadf0af8bea9f5323f77ad4b672fc2d9a98b2a296ed921a3127100e14"
     },
     {
       "path": "stress/320x800-pt-long.png",
@@ -14165,49 +14259,49 @@
       "path": "hero/390x844-mid.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "4ede52dd28f18ea31d2911edb4b771acf3873106b0b4b1b4ab212af7a537bcc7"
+      "sha256": "a2f5e5547a7332eb71189ab07e0aa0784f7daf50bbaa7625a8e241f4f95755b5"
     },
     {
       "path": "hero/390x844-end.png",
       "pixelHeight": 545,
       "pixelWidth": 390,
-      "sha256": "277f3bb5bdfab76b5e56545e348e421dd8d8689ab9cf0b8b98040d4f7aa32044"
+      "sha256": "383055592a2da62f334728ae66f6102c08b07fb5ac23bf8260cc33a1f73d2ac9"
     },
     {
       "path": "hero/1440x900-start.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "d2e45cf35def194737948bfaca425432ba7b810808956c58036e2f29afa56027"
+      "sha256": "ce716e9d593c5f9a8bd7cd8f5afd6b33d8d3b656d5b5cacf270cf4bf42bc8cb8"
     },
     {
       "path": "hero/1440x900-mid.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "1d525f7b8290e09a85fd44860b2b15b5621ffae142139ff6b1b642c8bba3abbf"
+      "sha256": "9ed6c16abc8adf723d54f2635644ce7d075dbd30c24dde723b4ad241e652f78a"
     },
     {
       "path": "hero/1440x900-end.png",
       "pixelHeight": 811,
       "pixelWidth": 1440,
-      "sha256": "1ecad14a71380baf2eda1982cb3b0f154ea1fa6a987eba6294816bb558b9a6f2"
+      "sha256": "575af8798fb1100c478fc172d9efe81cb9f0a91b86fce07ecfede19a81d2cae0"
     },
     {
       "path": "motion/idol-mouse-spatial-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "746a52afd251366363a4f09d2d9843f216d8b28435e56ee67c7747c44f62f8cd"
+      "sha256": "0bd7a996bee6926626b03ea17bc70083662df1ccd2af6215741f413966774e33"
     },
     {
       "path": "motion/idol-keyboard-instant-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "19e65387317b6e488d9adc434fb103dcae4380786c6929d65e783ef368171403"
+      "sha256": "7ad1ab49b562b41eef5ff35ab152f7179f13bb2fdce1c09f97a6488146cc2616"
     },
     {
       "path": "motion/idol-latest-wins-1440.png",
       "pixelHeight": 900,
       "pixelWidth": 1440,
-      "sha256": "b48d2a78075258628d869f1d6e90a09a491e51ee8600ba3fd67ffc98fc3e5f20"
+      "sha256": "1ff8e78d3bd54ae7d6f60bbc70aba3960e7eb8c7112cf1fec5a99e2b4b8aeca0"
     },
     {
       "path": "motion/success-end-1440.png",
@@ -14235,14 +14329,14 @@
     },
     {
       "path": "reduced-motion/1440x900.png",
-      "pixelHeight": 3345,
+      "pixelHeight": 3373,
       "pixelWidth": 1440,
-      "sha256": "2732cfbf59719753fb35dcb3b29bc1aede8d4396fc11d2de68084a972ea9eb02"
+      "sha256": "97aaca202347f51bc64c6a7f52fb18aad12c6e5299f60211b59746e1763e85a9"
     }
   ],
   "versions": {
     "axe": "4.13.0",
-    "browser": "Google Chrome 152.0.7977.83",
+    "browser": "Google Chrome 152.0.7977.84",
     "next": "16.3.4",
     "node": "v24.20.0",
     "playwright": "1.62.1",

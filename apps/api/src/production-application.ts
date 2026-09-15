@@ -6,6 +6,7 @@ import {
 } from "./published-content-composition.js";
 
 import { createApiApplication } from "./bootstrap.js";
+import { createOptionalOrderAccessComposition } from "./order-access-composition.js";
 import { createOptionalCartRuntimeComposition } from "./cart-production.js";
 import { createOptionalCheckoutPreflightComposition } from "./checkout-composition.js";
 import { createOptionalPaymentRuntimeComposition } from "./payment-runtime-composition.js";
@@ -30,6 +31,7 @@ export type ProductionApiApplicationOptions = Readonly<{
   logger: StructuredLogger;
   factories?: Readonly<{
     createCartComposition?: typeof createOptionalCartRuntimeComposition;
+    createOrderAccessComposition?: typeof createOptionalOrderAccessComposition;
     createCheckoutComposition?: typeof createOptionalCheckoutPreflightComposition;
     createPaymentComposition?: typeof createOptionalPaymentRuntimeComposition;
     createApplication?: ApiApplicationFactory;
@@ -62,6 +64,7 @@ export async function createProductionApiApplication(
   let catalog: CatalogDirectoryComposition | undefined;
   let published: PublishedContentComposition | undefined;
   let cart: ReturnType<typeof createOptionalCartRuntimeComposition>;
+  let orderAccess: ReturnType<typeof createOptionalOrderAccessComposition>;
   let checkout: ReturnType<typeof createOptionalCheckoutPreflightComposition>;
   let payment: ReturnType<typeof createOptionalPaymentRuntimeComposition>;
   try {
@@ -82,7 +85,12 @@ export async function createProductionApiApplication(
       options.factories?.createPaymentComposition ??
       createOptionalPaymentRuntimeComposition
     )(environment);
+    orderAccess = (
+      options.factories?.createOrderAccessComposition ??
+      createOptionalOrderAccessComposition
+    )(environment);
     return await createApplication(environment, {
+      ...(orderAccess ?? {}),
       ...(cart ?? {}),
       ...(checkout ?? {}),
       ...(payment ?? {}),
@@ -105,6 +113,7 @@ export async function createProductionApiApplication(
       Promise.resolve().then(() => cart?.cartRuntime.stop()),
       Promise.resolve().then(() => checkout?.checkoutPreflightRuntime.stop()),
       Promise.resolve().then(() => payment?.paymentRuntime.stop()),
+      Promise.resolve().then(() => orderAccess?.orderAccessRuntime.stop()),
     ]);
     throw error;
   }

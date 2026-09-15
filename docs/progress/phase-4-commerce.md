@@ -193,3 +193,25 @@
 - 最终2031输入SHA388a14d506e6e3423cb2ea6e0b528b158254b3307da2a47a917644915ef950e5；恢复只改一条测试预期，原生产/集成输入保持。550旧合同、OpenAPI、52历史SQL、2371原未跟踪文件不变；secret scan0，同lockfile原high audit通过。原共享浏览器P204/205分别18/22PNG已刷新，既有moderate/incomplete/真机门保持。
 - 非作者resume-independent-review接受并解除两旧P1，S.U.P.E.R10项本地范围通过；根级质量/兼容/源码证据入口output/checks/p4-05-order-completion/final-verification.md与gate-coverage.json。运行入口docs/operations/order-payments.md，完整路线docs/progress/current-overview.md。
 - 下一顺序子检查点：安全查单token/session及兼容DAILY v2原文的历史读模型，随后七语成功/订单时间线。P4-05保持IN_PROGRESS；P3-06/P4-04未完验收与P4-06/Phase5门保持，25/3/21=49。仅本地Git提交，不推送或部署。
+
+## P4-05 安全查单执行登记（2026-09-15）
+
+- 接续本地ab0b137，开始基线采集2026-09-15T12:29:16Z，跟踪工作区干净；Owner `/root`保持Lane A唯一executor，仅执行P4-05第二顺序检查点。
+- 范围：安全凭证签发/消费/会话轮换与撤销，已付款checkout会话bootstrap，受保护历史快照读取（含DAILY v2），可靠限流与真实PG/HTTP验证。成功页/时间线在下一UI检查点，邮件在P4-06。
+- 先冻结新兼容合同和端口，再按PG、API、HTTP协议独占文件并行；root拥有合同/Application/共享配置与生成物/进度/Git。凭证仅transport内存，业务仅接keyed摘要。
+- 验证：有效RED→GREEN；跨订单/跨cookie/Origin/CSRF/重复header/过期/撤销/并发消费与丢响应、限流持久性、七语言与真实原文历史保持、只读零PSP/金融/通知副作用；相关质量门、实际PG与非作者S.U.P.E.R。本地提交不推送，原验收与生产门保留，25/3/21不变。
+
+### 安全查单验收中发现的 webhook 保留期修正（2026-09-15）
+
+- 第二原完整check在1416.464秒exit1：前30项已通过（含实际PG和购物车/结账/payment-runtime），第31项旧webhook短测503而非202。相同源码两次定向复验及只读SQL观察确认第一条payload INSERT触发原webhook_payloads_retention_check；原签名、事件时间、队列与请求不变。不能把该失败简单归为偶发时钟回退。
+- Owner仍root/P4-05/Lane A；为解除已定位的相邻订单入口阻断，范围增加最小PG适配修正：存储expiry不晚于调用方授权期限，且不晚于PG事务created_at的原七天上限。先真实生产参数SQL RED→GREEN，保留0005原约束/校验/时间阈值，独立非作者复核后跑受影响原PG与剩余订单协议、S3/全仓质量门。所有原失败保留；若分段复验，不声明单条完整check通过。
+
+### P4-05 安全查单服务端检查点验收（2026-09-15）
+
+- 四个受保护API、内部签发、原子一次性消费/会话轮换与撤销、已付款checkout授权、历史只读快照和持久限流完成。严格Origin/CSRF/重复头/限额/日志隐私，原图不公开；内容改名/换图/价格变化后历史保持。
+- 实际PG/HTTP/TLS S3/独立TEST PSP两轮6860断言（5763准备+1097协议）、9cases含七语言与DAILY；8份历史DTO与原衍生图不变。新7短测、原4支付短测+6827入账协议、28迁移/172表、整个PG再跑376.188秒与媒体423断言均过。
+- 保留期旧bug为原webhook_payloads_retention_check精确拒绝；一SQL表达式收紧到期到调用方与PG七天上限的较早者，原SQL/时间/验签不变。生产SQL5case/13断言RED→GREEN、原仓储9tests与原失败HTTP测试202通过。
+- 原40项门差分分段通过：最终候选24项复跑（前缀1–13、PG14、31–40），16项未受影响HTTP沿用第二候选。后缀689.053秒含PG/协议/S3，最后7质量门37.550秒：types61/61（58cache）、tests61/61（58cache）、build36/36（36cache）、32出口；前缀17.106秒exit0。不是单条全check或所有门同源一次全绿；161.330秒旧head失败与1416.464秒旧webhook失败及全部开发失败保留。
+- 最终2070源集合/字节一致，SHA9603ad3c5123470fda4b5e30440eef836a3c049698190b1aa2c772ea693b6dd4。555旧合同/92路径/171组件/54旧SQL及2412原未跟踪保持；Next自动两声明与wrapper失败已归档精确恢复。原P204/205采集器18/22PNG通过，当前渲染输入一致；保留既有人工/physical-device门。最终secret scan与官方high audit通过，无依赖版本改动。
+- 非作者ACCEPT、S.U.P.E.R10项通过；证据`output/checks/p4-05-order-access/final-verification.md`、`gate-coverage.json`、两份独立review；运行/恢复入口`docs/operations/order-access.md`。真实数据库故障为提交前callback注入+回滚，不称COMMIT网络断连；Cookie恢复需已知订单号，EXCHANGE跨实例限流范围如实限定。
+- 下一顺序检查点为订单BFF/transport、七语言付款成功/确认中/待工作室处理、查单页面与真实事件时间线；未实现邮件/fragment浏览器验收。P4-05仍IN_PROGRESS、P4-06未开启、Phase5保持锁定；25 DONE /3 IN_PROGRESS /21 PENDING=49。仅本地Git提交，不推送或部署。

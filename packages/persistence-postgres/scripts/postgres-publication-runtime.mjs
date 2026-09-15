@@ -101,6 +101,21 @@ async function verifySeoPurgeRollback({
       )
     ).rows[0].jobs;
   const before = await jobs();
+  const orderAccessDown = await runMigrations({
+    clientConfig,
+    workspaceRoot,
+    command: { direction: "down", confirmVersion: "0028" },
+  });
+  equal(
+    [orderAccessDown.revertedVersions, orderAccessDown.currentVersion],
+    [["0028"], "0027"],
+    "empty order access rolls back before existing history probes",
+  );
+  equal(
+    await jobs(),
+    before,
+    "order access rollback preserves existing purge jobs exactly",
+  );
   const orderPaymentDown = await runMigrations({
     clientConfig,
     workspaceRoot,
@@ -575,7 +590,7 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
               "SELECT max(version) AS version FROM public.schema_migrations",
             )
           ).rows[0].version,
-          "0027",
+          "0028",
           "runtime business checks ran against the current migration head",
         );
         equal(
@@ -675,6 +690,21 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
           proof.count,
           7,
           "failed down preserves all five publications and two rollback events",
+        );
+        const restored = await runMigrations({
+          clientConfig,
+          workspaceRoot,
+          command: { direction: "up" },
+        });
+        equal(
+          restored.currentVersion,
+          "0028",
+          "publication runtime proof restores current head",
+        );
+        equal(
+          await retainedHistory(),
+          { ...beforeDown, version: "0028" },
+          "restoring current head preserves all publication and purge history",
         );
       }
       process.stdout.write(

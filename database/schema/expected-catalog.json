@@ -619,6 +619,14 @@
       "kind": "TABLE"
     },
     {
+      "name": "order_access_audits",
+      "kind": "TABLE"
+    },
+    {
+      "name": "order_access_rate_limits",
+      "kind": "TABLE"
+    },
+    {
       "name": "order_access_sessions",
       "kind": "TABLE"
     },
@@ -13371,6 +13379,186 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_audits",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_audits",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_audits",
+      "position": 3,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_audits",
+      "position": 4,
+      "name": "token_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_audits",
+      "position": 5,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_audits",
+      "position": 6,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_audits",
+      "position": 7,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_audits",
+      "position": 8,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_audits",
+      "position": 9,
+      "name": "task_name",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_audits",
+      "position": 10,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_rate_limits",
+      "position": 1,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_rate_limits",
+      "position": 2,
+      "name": "scope",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_rate_limits",
+      "position": 3,
+      "name": "bucket_digest",
+      "dataType": "bytea",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_rate_limits",
+      "position": 4,
+      "name": "pepper_version",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_rate_limits",
+      "position": 5,
+      "name": "request_count",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_rate_limits",
+      "position": 6,
+      "name": "window_started_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_rate_limits",
+      "position": 7,
+      "name": "window_expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_rate_limits",
+      "position": 8,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
       "identity": "",
       "generation": ""
     },
@@ -38263,6 +38451,270 @@
       "initiallyDeferred": false
     },
     {
+      "table": "order_access_audits",
+      "name": "order_access_audits_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['ISSUE'::text, 'EXCHANGE'::text, 'BOOTSTRAP'::text, 'REVOKE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = 'ISSUE'::text AND token_id IS NOT NULL AND session_id IS NULL OR (action = ANY (ARRAY['EXCHANGE'::text, 'BOOTSTRAP'::text])) AND token_id IS NOT NULL AND session_id IS NOT NULL OR action = 'REVOKE'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_scope",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES order_access_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_task_name_check",
+      "kind": "CHECK",
+      "definition": "CHECK (length(task_name) >= 1 AND length(task_name) <= 128 AND task_name ~ '^[a-z][a-z0-9]*([-_:][a-z0-9]+)*$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_task_name_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL task_name",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_token_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (token_id) REFERENCES order_access_tokens(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_bucket_digest_check",
+      "kind": "CHECK",
+      "definition": "CHECK (octet_length(bucket_digest) = 32)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_bucket_digest_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL bucket_digest",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_check",
+      "kind": "CHECK",
+      "definition": "CHECK (window_expires_at::timestamp with time zone > window_started_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (updated_at::timestamp with time zone >= window_started_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_pepper_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (pepper_version ~ '^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_pepper_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL pepper_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (scope, bucket_digest, pepper_version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_request_count_check",
+      "kind": "CHECK",
+      "definition": "CHECK (request_count >= 1 AND request_count <= 1000000)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_request_count_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_count",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_scope_check",
+      "kind": "CHECK",
+      "definition": "CHECK (scope = ANY (ARRAY['EXCHANGE'::text, 'BOOTSTRAP'::text, 'READ'::text, 'REVOKE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_scope_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL scope",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_window_expires_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL window_expires_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_window_started_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL window_started_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "order_access_sessions",
       "name": "order_access_sessions_created_at_not_null",
       "kind": "NOT_NULL",
@@ -51189,6 +51641,42 @@
       "valid": true
     },
     {
+      "table": "order_access_audits",
+      "name": "order_access_audits_order_created_idx",
+      "definition": "CREATE INDEX order_access_audits_order_created_idx ON public.order_access_audits USING btree (order_id, created_at, id)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_pkey",
+      "definition": "CREATE UNIQUE INDEX order_access_audits_pkey ON public.order_access_audits USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_expiry_idx",
+      "definition": "CREATE INDEX order_access_rate_limits_expiry_idx ON public.order_access_rate_limits USING btree (window_expires_at)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "order_access_rate_limits",
+      "name": "order_access_rate_limits_pkey",
+      "definition": "CREATE UNIQUE INDEX order_access_rate_limits_pkey ON public.order_access_rate_limits USING btree (scope, bucket_digest, pepper_version)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "order_access_sessions",
       "name": "order_access_sessions_active_expiry_idx",
       "definition": "CREATE INDEX order_access_sessions_active_expiry_idx ON public.order_access_sessions USING btree (expires_at) WHERE (status = 'ACTIVE'::text)",
@@ -55160,6 +55648,24 @@
       "enabled": "O"
     },
     {
+      "table": "order_access_audits",
+      "name": "order_access_audits_append_only",
+      "definition": "CREATE TRIGGER order_access_audits_append_only BEFORE DELETE OR UPDATE ON order_access_audits FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_no_truncate",
+      "definition": "CREATE TRIGGER order_access_audits_no_truncate BEFORE TRUNCATE ON order_access_audits FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "order_access_audits",
+      "name": "order_access_audits_scope",
+      "definition": "CREATE CONSTRAINT TRIGGER order_access_audits_scope AFTER INSERT ON order_access_audits DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION validate_order_access_audit_scope()",
+      "enabled": "O"
+    },
+    {
       "table": "order_access_sessions",
       "name": "order_access_sessions_delete_guard_trigger",
       "definition": "CREATE TRIGGER order_access_sessions_delete_guard_trigger BEFORE DELETE ON order_access_sessions FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
@@ -58412,6 +58918,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.validate_notification_delivery_attempt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  expected_sequence bigint;\nBEGIN\n  SELECT COALESCE(max(sequence), 0) + 1 INTO expected_sequence\n  FROM notification_delivery_attempts\n  WHERE notification_delivery_id = NEW.notification_delivery_id;\n\n  IF NEW.sequence <> expected_sequence THEN\n    RAISE EXCEPTION 'notification delivery attempt sequence must be contiguous'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
+    },
+    {
+      "name": "validate_order_access_audit_scope",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.validate_order_access_audit_scope()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.token_id IS NOT NULL AND NOT EXISTS (\n    SELECT 1 FROM public.order_access_tokens token\n    WHERE token.id = NEW.token_id AND token.order_id = NEW.order_id\n  ) THEN\n    RAISE EXCEPTION 'order access audit token must belong to its order' USING ERRCODE = '23514';\n  END IF;\n  IF NEW.session_id IS NOT NULL AND NOT EXISTS (\n    SELECT 1 FROM public.order_access_sessions session\n    WHERE session.id = NEW.session_id AND session.order_id = NEW.order_id\n      AND (NEW.token_id IS NULL OR session.exchanged_token_id = NEW.token_id)\n  ) THEN\n    RAISE EXCEPTION 'order access audit session must belong to its order and token' USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
       "name": "validate_order_access_session_exchange",

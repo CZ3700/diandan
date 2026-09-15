@@ -1,0 +1,64 @@
+{
+  "dueObservations": [
+    {
+      "phase": "RECONCILE",
+      "due": false,
+      "lease_available": true
+    },
+    {
+      "phase": "RECONCILE",
+      "due": false,
+      "lease_available": true
+    },
+    {
+      "phase": "RECONCILE",
+      "due": false,
+      "lease_available": true
+    },
+    {
+      "phase": "RECONCILE",
+      "due": false,
+      "lease_available": true
+    },
+    {
+      "phase": "RECONCILE",
+      "due": false,
+      "lease_available": true
+    },
+    {
+      "phase": "RECONCILE",
+      "due": false,
+      "lease_available": true
+    },
+    {
+      "phase": "RECONCILE",
+      "due": false,
+      "lease_available": true
+    },
+    {
+      "phase": "RECONCILE",
+      "due": false,
+      "lease_available": true
+    },
+    {
+      "phase": "RECONCILE",
+      "due": false,
+      "lease_available": true
+    },
+    {
+      "phase": "RECONCILE",
+      "due": true,
+      "lease_available": true
+    }
+  ],
+  "after": {
+    "status": "REQUIRES_ACTION",
+    "recovery": "EVIDENCE_PENDING"
+  },
+  "psp": {
+    "payments": 9,
+    "captures": 1,
+    "createCalls": 9,
+    "reconcileCalls": 12
+  }
+}

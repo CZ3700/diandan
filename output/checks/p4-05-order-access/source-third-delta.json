@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "previousSha256": "64bda86ea10ee7565e1e6565e70c7b8eda5d6de75d0f3e6d5eb3c134621d7f1d",
+  "sha256": "9603ad3c5123470fda4b5e30440eef836a3c049698190b1aa2c772ea693b6dd4",
+  "changedPaths": [
+    "packages/persistence-postgres/package.json",
+    "packages/persistence-postgres/scripts/postgres-webhook-retention-time.mjs",
+    "packages/persistence-postgres/src/reliable-event-repositories.ts"
+  ],
+  "note": "One existing payload INSERT retention expression, its real SQL regression, and additive PG gate registration. Earlier 30 gate results are scoped reuse, not one final-source full run."
+}

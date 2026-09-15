@@ -628,7 +628,7 @@ async function insertVerifiedReceipt(
            encryption_key_version, payload_sha256, status,
            retention_expires_at
          ) values ($1::uuid, 1, $2::bytea, $3::bytea, $4, $5, 'RETAINED',
-                   $6::timestamptz)
+                   least($6::timestamptz, transaction_timestamp() + interval '7 days'))
          returning id::text as id`,
         [
           command.webhookPayload.webhookPayloadId,

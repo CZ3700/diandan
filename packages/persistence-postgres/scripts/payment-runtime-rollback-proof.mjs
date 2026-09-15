@@ -66,7 +66,17 @@ export async function verifyPaymentRuntimeRollbackProtection({
           "SELECT max(version) version FROM public.schema_migrations",
         )
       ).rows[0].version,
-      "0027",
+      "0028",
+    );
+    const orderAccessDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0028" },
+    });
+    assert.deepEqual(
+      [orderAccessDown.revertedVersions, orderAccessDown.currentVersion],
+      [["0028"], "0027"],
+      "empty order-access migration rolls back before preserved history probes",
     );
     const applicationDown = await runMigrations({
       clientConfig,
@@ -145,11 +155,11 @@ export async function verifyPaymentRuntimeRollbackProtection({
       workspaceRoot,
       command: { direction: "up" },
     });
-    assert.equal(restored.currentVersion, "0027");
+    assert.equal(restored.currentVersion, "0028");
     return {
       schemaVersion: 1,
       status: "PASS",
-      assertions: 10,
+      assertions: 11,
       tableCount: tables.length,
       before,
       after,

@@ -1,0 +1,729 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "protocol": {
+    "schemaVersion": 1,
+    "locales": [
+      {
+        "locale": "en",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": false
+      },
+      {
+        "locale": "zh-CN",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      },
+      {
+        "locale": "th",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      },
+      {
+        "locale": "vi",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      },
+      {
+        "locale": "ja",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      },
+      {
+        "locale": "es",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      },
+      {
+        "locale": "pt",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      }
+    ],
+    "checkoutRequests": [
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      }
+    ],
+    "paymentRequests": [
+      {
+        "category": "CURRENT",
+        "status": 401,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 404,
+        "code": "ATTEMPT_NOT_FOUND"
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "RECOVER_ATTEMPT",
+        "status": 403,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "RECOVER_ATTEMPT",
+        "status": 200,
+        "code": null
+      }
+    ],
+    "psp": {
+      "payments": 9,
+      "captures": 1,
+      "createCalls": 9,
+      "reconcileCalls": 12
+    },
+    "actualPostgres": true,
+    "actualAuthenticatedHttps": true,
+    "actualPspProcessRestart": true,
+    "actualPspSandbox": false,
+    "paidAggregateImplemented": false,
+    "retry": {
+      "schemaVersion": 1,
+      "status": "PASS",
+      "canceledThenRetry": true,
+      "sameOrder": true,
+      "permanentOldKey": true,
+      "normalHealthEvent": "CHANGED",
+      "healthRestored": true,
+      "requests": [
+        {
+          "category": "CAPABILITIES",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "CREATE_ATTEMPT",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "RECOVER_ATTEMPT",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "CAPABILITIES",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "CREATE_ATTEMPT",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "CREATE_ATTEMPT",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "CREATE_ATTEMPT",
+          "status": 200,
+          "code": null
+        }
+      ]
+    },
+    "commitFaults": {
+      "schemaVersion": 1,
+      "status": "PASS",
+      "assertions": 110,
+      "cases": [
+        {
+          "boundary": "beginCreate",
+          "status": "PASS",
+          "injectedAfterCommittedTransaction": 1,
+          "createCallsBeforeRecovery": 0,
+          "totalCreateCalls": 1,
+          "originalOrderAndAttemptPreserved": true
+        },
+        {
+          "boundary": "settleCreate",
+          "status": "PASS",
+          "injectedAfterCommittedTransaction": 1,
+          "createCallsBeforeRecovery": 1,
+          "totalCreateCalls": 1,
+          "originalOrderAndAttemptPreserved": true
+        }
+      ],
+      "scope": "Actual PostgreSQL transactions and normal HTTP/TEST PSP; only the successful COMMIT response boundary is fault injected"
+    }
+  },
+  "assertions": 801,
+  "setupAssertions": 5761,
+  "scope": "Actual HTTP/PG/TEST PSP protocol before browser and migration checks"
+}

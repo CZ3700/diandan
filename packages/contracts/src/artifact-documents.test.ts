@@ -331,6 +331,7 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/checkout/sessions/{checkoutSessionId}/attempts/{attemptId}",
     "/api/v1/checkout/sessions/{checkoutSessionId}/attempts/{attemptId}/recover",
     "/api/v1/checkout/sessions/{checkoutSessionId}/capabilities",
+    "/api/v1/checkout/sessions/{checkoutSessionId}/order-access",
     "/api/v1/checkout/sessions/{checkoutSessionId}/status",
     "/api/v1/content-review-preview/read",
     "/api/v1/gift-content/{handle}",
@@ -340,6 +341,9 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/idols",
     "/api/v1/idols/{handle}",
     "/api/v1/media/{mediaAssetId}",
+    "/api/v1/order-access/exchange",
+    "/api/v1/order-access/revoke",
+    "/api/v1/orders/{publicOrderId}",
     "/api/v1/policies/{policyKey}",
     "/api/v1/storefront-context",
     "/api/v1/storefront-gifts/{handle}",
@@ -357,6 +361,16 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     },
   ]);
   expect(securitySchemes).toEqual({
+    OrderSession: expect.objectContaining({
+      type: "apiKey",
+      in: "cookie",
+      name: "__Host-fan-order",
+    }),
+    OrderCsrf: expect.objectContaining({
+      type: "apiKey",
+      in: "header",
+      name: "x-csrf-token",
+    }),
     CartSession: expect.objectContaining({
       type: "apiKey",
       in: "cookie",

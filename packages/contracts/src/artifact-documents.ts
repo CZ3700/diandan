@@ -1,3 +1,4 @@
+import { orderAccessPaths } from "./order-access-openapi.js";
 import { checkoutPreflightPaths } from "./checkout-preflight-openapi.js";
 import { paymentRuntimePaths } from "./payment-runtime-openapi.js";
 import { cartEditPaths } from "./cart-edit-openapi.js";
@@ -208,6 +209,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...cartEditPaths(),
         ...checkoutPreflightPaths(),
         ...paymentRuntimePaths(),
+        ...orderAccessPaths(),
         ...managementCenterPaths(),
         ...storefrontHomepagePaths(),
         ...storefrontCommercePaths(),
@@ -238,6 +240,20 @@ export function createContractArtifactDocuments(): Readonly<{
           },
         },
         securitySchemes: {
+          OrderSession: {
+            type: "apiKey",
+            in: "cookie",
+            name: "__Host-fan-order",
+            description:
+              "256-bit opaque Secure HttpOnly SameSite=Strict host-only credential bound to one order.",
+          },
+          OrderCsrf: {
+            type: "apiKey",
+            in: "header",
+            name: "x-csrf-token",
+            description:
+              "Purpose-separated KMS MAC bound to the order session; exact Origin is also required.",
+          },
           CartSession: {
             type: "apiKey",
             in: "cookie",

@@ -86,3 +86,5 @@ export * from "./payment-runtime-internal.js";
 export * from "./payment-connector.js";
 export * from "./order-payment-application.js";
 export * from "./payment-stablecoin.js";
+
+export * from "./order-access.js";

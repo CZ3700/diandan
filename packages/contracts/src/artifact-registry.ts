@@ -1,3 +1,4 @@
+import * as orderAccess from "./order-access.js";
 import * as orderPaymentApplication from "./order-payment-application.js";
 import * as paymentRuntimeInternal from "./payment-runtime-internal.js";
 import * as paymentRuntime from "./payment-runtime.js";
@@ -655,6 +656,97 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "OrderAccessCredential",
+    audience: "internal",
+    schema: orderAccess.orderAccessCredentialSchema,
+  },
+  {
+    name: "OrderAccessIssueCommand",
+    audience: "internal",
+    schema: orderAccess.orderAccessIssueCommandSchema,
+  },
+  {
+    name: "OrderAccessExchangeCommand",
+    audience: "internal",
+    schema: orderAccess.orderAccessExchangeCommandSchema,
+  },
+  {
+    name: "OrderAccessBootstrapCommand",
+    audience: "internal",
+    schema: orderAccess.orderAccessBootstrapCommandSchema,
+  },
+  {
+    name: "OrderAccessReadCommand",
+    audience: "internal",
+    schema: orderAccess.orderAccessReadCommandSchema,
+  },
+  {
+    name: "OrderAccessRevokeCommand",
+    audience: "internal",
+    schema: orderAccess.orderAccessRevokeCommandSchema,
+  },
+  {
+    name: "OrderAccessGrant",
+    audience: "public-http",
+    schema: orderAccess.orderAccessGrantSchema,
+  },
+  {
+    name: "OrderAccessRevoked",
+    audience: "public-http",
+    schema: orderAccess.orderAccessRevokedSchema,
+  },
+  {
+    name: "OrderAccessLocale",
+    audience: "public-http",
+    schema: orderAccess.orderAccessLocaleSchema,
+  },
+  {
+    name: "OrderAccessItem",
+    audience: "public-http",
+    schema: orderAccess.orderAccessItemSchema,
+  },
+  {
+    name: "OrderAccessDetail",
+    audience: "public-http",
+    schema: orderAccess.orderAccessDetailSchema,
+  },
+  {
+    name: "OrderAccessResponse",
+    audience: "public-http",
+    schema: orderAccess.orderAccessResponseSchema,
+  },
+  {
+    name: "OrderAccessRateCommand",
+    audience: "internal",
+    schema: orderAccess.orderAccessRateCommandSchema,
+  },
+  {
+    name: "OrderAccessRateResult",
+    audience: "internal",
+    schema: orderAccess.orderAccessRateResultSchema,
+  },
+  {
+    name: "OrderAccessConfiguration",
+    audience: "internal",
+    schema: orderAccess.orderAccessConfigurationSchema,
+  },
+  {
+    name: "OrderAccessExchangeRequest",
+    audience: "public-http",
+    schema: orderAccess.orderAccessExchangeRequestSchema,
+  },
+  {
+    name: "OrderAccessBootstrapRequest",
+    audience: "public-http",
+    schema: orderAccess.orderAccessBootstrapRequestSchema,
+  },
+  {
+    name: "OrderAccessRevokeRequest",
+    audience: "public-http",
+    schema: orderAccess.orderAccessRevokeRequestSchema,
+  },
+
   {
     name: "PaymentStablecoinConfig",
     audience: "internal",

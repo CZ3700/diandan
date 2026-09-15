@@ -72,6 +72,10 @@ import {
 import { registerFastifyObservability } from "@fan-support/observability/fastify";
 
 import { AppModule } from "./app.module.js";
+import {
+  registerOrderAccessRoute,
+  type OrderAccessRouteDependencies,
+} from "./order-access-route.js";
 import { registerCartRoute, type CartRouteDependencies } from "./cart-route.js";
 import {
   registerCartEditRoute,
@@ -107,6 +111,8 @@ export type ApiLifecycleResource = Readonly<{
 }>;
 
 export type CreateApiApplicationOptions = Readonly<{
+  orderAccessRoute?: OrderAccessRouteDependencies;
+  orderAccessRuntime?: ApiLifecycleResource;
   cartRoute?: CartRouteDependencies;
   cartEditRoute?: CartEditRouteDependencies;
   cartRuntime?: ApiLifecycleResource;
@@ -156,6 +162,7 @@ function registerApiLifecycle(
   name:
     | "API admin session"
     | "API cart"
+    | "API order access"
     | "API checkout preflight"
     | "API payment runtime"
     | "API admin workspace"
@@ -208,6 +215,7 @@ export async function createApiApplication(
     logger,
   });
   registerApiLifecycle(adapter, options.cartRuntime, "API cart");
+  registerApiLifecycle(adapter, options.orderAccessRuntime, "API order access");
   registerApiLifecycle(adapter, options.paymentRuntime, "API payment runtime");
   registerApiLifecycle(
     adapter,
@@ -224,6 +232,23 @@ export async function createApiApplication(
         schemaVersion: 1,
         outcome: "FAILURE",
         code: "TEMPORARY_UNAVAILABLE",
+      });
+  if (options.orderAccessRoute)
+    registerOrderAccessRoute(adapter.getInstance(), options.orderAccessRoute);
+  else
+    for (const [url, method] of [
+      ["/api/v1/order-access/exchange", "POST"],
+      ["/api/v1/checkout/sessions/:checkoutSessionId/order-access", "POST"],
+      ["/api/v1/order-access/revoke", "POST"],
+      ["/api/v1/orders/:publicOrderId", "GET"],
+    ] as const)
+      adapter.getInstance().route({
+        url,
+        method,
+        bodyLimit: 1024,
+        exposeHeadRoute: false,
+        onRequest: async (request, reply) => unavailable(request, reply),
+        handler: unavailable,
       });
   if (options.paymentRuntimeRoute)
     registerPaymentRuntimeRoute(

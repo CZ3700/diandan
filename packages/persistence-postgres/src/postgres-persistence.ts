@@ -1,3 +1,8 @@
+import { createOrderAccessRepository } from "./order-access-repository.js";
+import type {
+  OrderAccessRepository,
+  OrderAccessTransactionManager,
+} from "@fan-support/persistence-port";
 import { createOrderPaymentApplicationRepository } from "./order-payment-application.js";
 import type {
   OrderPaymentApplicationRepository,
@@ -157,6 +162,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly orderAccessTransactionManager: OrderAccessTransactionManager;
   readonly orderPaymentApplicationTransactionManager: OrderPaymentApplicationTransactionManager;
   readonly paymentRuntimeTransactionManager: PaymentRuntimeTransactionManager;
   readonly checkoutPreflightTransactionManager: CheckoutPreflightTransactionManager;
@@ -312,6 +318,15 @@ export function createPostgresPersistenceWithPoolFactory(
         inventory: createInventoryRepository(database, transactionScope),
       };
     },
+  });
+  const orderAccessRunner = createTransactionRunner<OrderAccessRepository>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) =>
+      createOrderAccessRepository(
+        client,
+        scope,
+        options?.catalogPublicMediaBaseUrl ?? "",
+      ),
   });
   const orderPaymentApplicationRunner =
     createTransactionRunner<OrderPaymentApplicationRepository>({
@@ -1025,6 +1040,19 @@ export function createPostgresPersistenceWithPoolFactory(
           });
         return publishedContentRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    orderAccessTransactionManager: {
+      async runInOrderAccessTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return orderAccessRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );
       },

@@ -270,6 +270,16 @@
         "up": "750db6afe5e47760842e964755b4e27172ee2cc3e4d36a1898f3587b87a9966b",
         "down": "026b13b7aec874baa3617707241ae31612b7b5c394b21e4894958a2fc525b009"
       }
+    },
+    {
+      "version": "0028",
+      "name": "order-access",
+      "up": "database/migrations/0028_order-access.up.sql",
+      "down": "database/migrations/0028_order-access.down.sql",
+      "sha256": {
+        "up": "12a71cb2fb745920184f1caae286f2cdeb53202bde66a4ec0560d59acb8943a2",
+        "down": "8e6ab1b9bc5efd88c1f0311cdb5f53f697d1d9ff694cfd46e61cfe23877641ea"
+      }
     }
   ]
 }
