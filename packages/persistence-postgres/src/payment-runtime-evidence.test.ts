@@ -273,7 +273,7 @@ test("a database rejection escapes for the owning transaction to roll back, with
       recordedAt,
     ),
   ).rejects.toBe(rejected);
-  expect(query).toHaveBeenCalledTimes(3);
+  expect(query).toHaveBeenCalledTimes(4);
   expect(
     query.mock.calls.some(([sql]) =>
       sql.includes("INSERT INTO public.provider_event_associations"),
@@ -297,5 +297,5 @@ test("invalid recording instants and incomplete database writes cannot claim per
   await expect(
     loaded.persistPaymentRuntimeEvidence!(client, command(), recordedAt),
   ).rejects.toMatchObject({ code: "CONTENT_UNAVAILABLE" });
-  expect(query).toHaveBeenCalledTimes(2);
+  expect(query).toHaveBeenCalledTimes(3);
 });

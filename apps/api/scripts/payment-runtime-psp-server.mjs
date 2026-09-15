@@ -197,6 +197,46 @@ export async function createPaymentTestPspServer(options) {
     binding: { ...options.binding, allowedActionOrigins: [origin] },
     counts: () => store.counts(),
     observations: () => observations.map((entry) => ({ ...entry })),
+    hostedAction: (attemptId) => store.readHostedAction(attemptId),
+    async webhook(value) {
+      if (
+        !value ||
+        Object.keys(value).sort().join(",") !==
+          "attemptId,verificationSecret" ||
+        typeof value.verificationSecret !== "string" ||
+        !/^[A-Za-z0-9_-]{43}$/u.test(value.verificationSecret)
+      )
+        throw new TypeError("Invalid owned TEST webhook request");
+      const verificationSecret = Buffer.from(
+        value.verificationSecret,
+        "base64url",
+      );
+      try {
+        if (
+          verificationSecret.length !== 32 ||
+          verificationSecret.toString("base64url") !== value.verificationSecret
+        )
+          throw new TypeError("Invalid TEST webhook key");
+        const rawBody = JSON.stringify(
+          await store.readWebhook(value.attemptId),
+        );
+        const timestamp = String(Math.floor(Date.now() / 1000));
+        const signature = createHmac("sha256", verificationSecret)
+          .update(timestamp)
+          .update(".")
+          .update(rawBody)
+          .digest("hex");
+        return {
+          rawBody,
+          headers: {
+            "x-fan-support-timestamp": timestamp,
+            "x-fan-support-signature": `v1=${signature}`,
+          },
+        };
+      } finally {
+        verificationSecret.fill(0);
+      }
+    },
     arm(value) {
       if (
         fault ||

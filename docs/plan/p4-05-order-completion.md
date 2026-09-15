@@ -1,13 +1,16 @@
 # P4-05 — 订单结果与安全查单接续方案
 
-> 状态：PROPOSED，2026-09-09。只读审计后的实施准备，不是任务领取、实现完成或开发顺序批准。
-> 当前基线：`7d3f9d9`；P4-04 本地 TEST 支付运行时已验收，实际 PSP 仍待确定。P4-05 仍为 PENDING。
+> 状态：ACTIVE，本地实施（2026-09-10，ADR-014）；基线 `acbdedc`。
 
-## 待确认的开发顺序
+## 顺序检查点状态
 
-建议在现有独立持久 TEST PSP 上继续开发付款结果、库存结算和安全查单。真实支付商选择、adapter、sandbox 与后续实际收款验收保留，不将 P4-04、Phase 4 或生产支付标为完成。
+- 付款证据原子应用：2026-09-15本地验收通过，39项原门分段覆盖；详见本轮final-verification。
+- 安全查单：下一实施入口，合同与会话恢复设计准备；尚无运行时API。
+- 七语言成功页与时间线：依赖查单授权和历史读模型，尚未接通。
 
-该方案需要明确调整当前“P4-04 全部 DONE 才领取 P4-05”的依赖门。当前已向用户询问是否先用 TEST 支付推进，尚未收到答复；本文件不据此自行解锁。确认后先同步调度决策、MASTER、Phase 4、依赖图与任务分解，释放 P4-04 executor，再只领取 P4-05 的本地范围。P3 未完验收与 Phase 5 退出门继续保持。
+## 开发顺序
+
+用户先明确商户资料后补，再要求继续下一阶段；据 ADR-014 接续已验收 TEST 支付与通用接口检查点。P4-04 保留未完商户验收且无 executor，P4-05 本地范围已从 READY 领取；实际 PSP、P3 验收和 Phase 5 门不变。按证据原子应用、安全查单、界面三个顺序检查点开发，同一候选统一验证。
 
 ## 粉丝将得到的行为
 
@@ -23,10 +26,10 @@
 |:--|:--|
 | 订单及媒体/金额/语言快照 | P4-03 已创建 orders/order_items、联系人、政策与履约初始记录；`packages/contracts/src/order.ts` 已提供内部快照及移除内部 ID/object key 的公开映射，不重复创建订单。 |
 | 原始验签与持久 inbox | `packages/application/src/receive-payment-webhook.ts` 在验签后原子保存加密原文、provider event、UNMATCHED 关联和 ID-only job。验签 candidate 不是可直接入账的最终证据。 |
-| Worker 幂等骨架 | `packages/application/src/process-webhook-inbox.ts` 在同事务记录 effect 和处理结果；`apps/worker/src/reliable-events-composition.ts` 的默认业务 handler 尚未注册，不能把队列骨架称作付款推进已完成。 |
+| Worker 幂等骨架 | `packages/application/src/process-webhook-inbox.ts` 在同事务记录 effect 和处理结果；`apps/worker/src/reliable-events-composition.ts` 已注册默认订单付款 handler，并以真实协议证明原子应用与维护扫描恢复。 |
 | 认证 reconcile 证据 | P4-04 已持久化真实查询证据、关联与 capture 流水；EVIDENCE_PENDING 仍表示等待订单应用，普通 GET 没有处理副作用。 |
 | 金融与库存规则 | `packages/domain/src/order-state-machine.ts`、`inventory-reservation.ts` 和 `late-payment-success.ts` 已有纯决策；晚到成功使用协调 planner，不能给普通订单状态函数放开 CANCELED→OPEN。 |
-| 查单存储 | 原 0004 已有 order_access_tokens/order_access_sessions、摘要、作用域、唯一性、消费/过期约束；现有七语言 `/orders/lookup` 页面还是 unavailable 占位，需要真正的受保护流程。 |
+| 查单存储 | 原 0004 已有 order_access_tokens/order_access_sessions、摘要、作用域、唯一性、消费/过期约束；现有七语言 `/orders/lookup` 页面还是 unavailable 占位。新读模型必须支持0025的DAILY v2原文快照，旧v1 mapper不能直接复用。 |
 
 ## 必须先解决的衔接点
 
@@ -85,6 +88,6 @@ P4-04 的可信失败目前终结 attempt，保留有效预占，因此可以受
 - 七语言 × 390×844/1440×900，键盘、焦点、加载/空/错误与 reduced motion；截图不含凭证或私密信息。
 - 真实 PostgreSQL、独立 TEST PSP、队列、HTTP 与浏览器；随后原 format/lint/typecheck/test/build/架构/出口门和非作者 S.U.P.E.R 复核。旧证据只按明确输入范围复用。
 
-## 当前准备结果
+## 当前执行入口
 
-本文件只把原代码衔接点、必须合同和验收范围具体化；本轮尚未修改业务源码、数据库、任务状态或 Git 分支，也没有运行新测试或推送仓库。用户确认开发顺序后可直接据此细化合同并开工；真实支付商信息不会由代理猜测。
+执行登记与实际证据以 `docs/progress/phase-4-commerce.md` 为准。正式 PSP 及支付账户信息不由代理猜测，本地验收不等于生产发布。

@@ -1,11 +1,11 @@
 # Progress Master
 
-> 最后更新：2026-09-09
+> 最后更新：2026-09-15
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3（验收待续）、Phase 4（ADR-013 本地开发）
-> 当前任务：P4-04 IN_PROGRESS，Lane A 唯一 executor `/root`；P3-06 保留 IN_PROGRESS、验收待续且无 executor
-> 下一入口：按用户 2026-09-09 指示继续 P4-04 通用支付接入基础；具体商户与首个真实 PSP 适配/sandbox 暂缓到资料齐备，不解除实际支付验收门
-> 当前检查点：P4-04通用支付接入本地验收完成：97项新包测试，原38步骤均有通过证据（分段复验，非单条check全绿）；固定连接动态装配、HTTPS/验签与USDT精确核账合同已落地。具体商户/USDT mapper/真实PSP验收与管理中心商户发布仍待；P4-04保持IN_PROGRESS、P4-05未解锁，只本地提交。
+> 当前任务：P4-05 IN_PROGRESS，Lane A 唯一 executor `/root`；P4-04 商户验收与 P3-06 浏览验收均待续、无 executor
+> 下一入口：ADR-014 允许使用已验收的 TEST 支付运行时与通用接口推进订单闭环，真实 PSP 与上线门保留
+> 当前检查点：P4-05付款证据原子应用已本地验收；下一入口为安全查单、成功页与时间线。完整概览见 `current-overview.md`；仅本地提交。
 
 ## 1. 开工入口
 
@@ -17,15 +17,15 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；当前 P4-04 已领取，Lane A 唯一 executor `/root`。正式品牌资产与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；P4-04 本地检查点已验收、商户门待续且无 executor；按 ADR-014 将 P4-05 本地范围置 READY 后领取，Lane A 唯一 executor `/root`。正式品牌资产与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 22 |
+| PENDING | 21 |
 | READY | 0 |
-| IN_PROGRESS | 2 |
+| IN_PROGRESS | 3 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
 | DONE | 25 |
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-15恢复P4-05：核对完整规范、阶段、代码与原验收后完成付款证据原子应用检查点。真实协议两次6827断言、27迁移/170表与原PG/API/S3已通过；原全仓check在旧manager键集断言exit1，窄修后20PASS。恢复原7项质量后缀最终41.952秒exit0（types/tests61、build36、32出口），合同5秒超时原失败保留、同源同阈值复验通过。39原门分段有通过证据，不称单条全绿；550旧合同/52旧SQL/OpenAPI、2371原未跟踪文件保持，最终2031输入SHA388a14d506e6e3423cb2ea6e0b528b158254b3307da2a47a917644915ef950e5。非作者及S.U.P.E.R通过，下一为安全查单/历史原文读模型/成功UI；P405仍IN_PROGRESS，25/3/21不变。详见phase卡、current-overview及本轮final-verification。
 
 2026-09-09 领取P4-04：从本地 `f1f702f` 接续支付能力、两事务创建、托管动作、回跳与UNKNOWN恢复，root独占Lane A。首个PSP/收款主体仍待实际输入，先实施TEST链路；25DONE/2IN_PROGRESS/22PENDING=49，P3未完验收保留，仅本地提交。
 

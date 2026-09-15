@@ -45,12 +45,14 @@ for (const name of files) {
         "checkoutReceiptColumns",
         "validPaymentReservationsSql",
         "runtimeOperationColumns",
+        "canonical",
         `return ${raw}`,
       )(
         cartTimestamp,
         checkoutReceiptColumns,
         validPaymentReservationsSql,
         runtimeOperationColumns,
+        { supported: true, canonicalId: null },
       );
       if (/^(SELECT|WITH|INSERT|UPDATE|DELETE)\b/u.test(query.trim()))
         queries.push({ name, query });

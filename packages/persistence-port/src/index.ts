@@ -4,6 +4,7 @@ export * from "./admin-preview-media.js";
 export * from "./admin-catalog.js";
 export * from "./admin-session.js";
 export * from "./publication-preflight.js";
+import type { OrderPaymentApplicationRepository } from "./order-payment-application.js";
 import type {
   AppendOutboxEventCommand,
   AppendOutboxEventResponse,
@@ -253,6 +254,7 @@ export interface WebhookPayloadRetentionRepository {
 }
 
 export type ReliableEventTransactionRepositories = Readonly<{
+  orderPaymentApplication?: OrderPaymentApplicationRepository;
   paymentWebhookEndpoints: PaymentWebhookEndpointRepository;
   verifiedWebhookReceipts: VerifiedWebhookReceiptRepository;
   webhookProcessing: WebhookProcessingRepository;
@@ -296,6 +298,11 @@ export interface ReliableEventTransactionManager {
 }
 
 export const workspacePackageName = "@fan-support/persistence-port" as const;
+
+export type {
+  OrderPaymentApplicationRepository,
+  OrderPaymentApplicationTransactionManager,
+} from "./order-payment-application.js";
 
 export type {
   CatalogDirectoryRepository,

@@ -1,3 +1,4 @@
+import { resolveCanonicalPaymentTransaction } from "./payment-transaction-canonical.js";
 import { randomUUID } from "node:crypto";
 import {
   auditLogIdSchema,
@@ -80,7 +81,9 @@ export async function persistPaymentRuntimeEvidence(
           AND association.payment_attempt_id=$11::uuid)
       AND ((e.provider_transaction_type IS NULL AND NOT EXISTS(
         SELECT 1 FROM public.payment_transactions ledger WHERE ledger.provider_event_id=e.id))
-        OR (e.provider_transaction_type IS NOT NULL
+        OR (e.provider_transaction_type IS NOT NULL AND to_jsonb(e)->>'canonical_transaction_event_id' IS NOT NULL
+          AND EXISTS(SELECT 1 FROM public.payment_transactions ledger WHERE ledger.provider_event_id=(to_jsonb(e)->>'canonical_transaction_event_id')::uuid AND ledger.payment_attempt_id=$11::uuid AND ledger.transaction_type=e.provider_transaction_type AND ledger.provider_transaction_reference=e.provider_transaction_reference AND ledger.amount_minor=e.amount_minor AND ledger.currency=e.currency))
+        OR (e.provider_transaction_type IS NOT NULL AND to_jsonb(e)->>'canonical_transaction_event_id' IS NULL
           AND (SELECT count(*) FROM public.payment_transactions ledger WHERE ledger.provider_event_id=e.id)=1
           AND EXISTS(SELECT 1 FROM public.payment_transactions ledger
             WHERE ledger.provider_event_id=e.id AND ledger.payment_attempt_id=$11::uuid
@@ -115,6 +118,17 @@ export async function persistPaymentRuntimeEvidence(
     return { providerEventId: eventId.data, auditLogId: auditId.data };
   }
 
+  const canonical = await resolveCanonicalPaymentTransaction(client, {
+    knownAttemptId: claim.attempt.id,
+    providerAccountId: event.providerAccountId,
+    environment: event.environment,
+    eventType: event.eventType,
+    status: event.status,
+    externalReference: event.association.externalReference,
+    amountMinor: event.amountMinor,
+    currency: event.currency,
+    ...(event.transaction ? { transaction: event.transaction } : {}),
+  });
   await insert(
     client,
     `INSERT INTO public.audit_logs
@@ -135,8 +149,8 @@ export async function persistPaymentRuntimeEvidence(
     `INSERT INTO public.provider_events
     (id,schema_version,provider_account_id,environment,provider_event_id,evidence_kind,reconcile_audit_log_id,
      event_type,normalized_status,external_payment_reference,provider_transaction_type,provider_transaction_reference,
-     amount_minor,currency,occurred_at,normalized_at)
-    VALUES($1::uuid,1,$2::uuid,$3,$4,'AUTHENTICATED_RECONCILE',$5::uuid,'PAYMENT_STATUS',$6,$7,$8,$9,$10::bigint,$11,$12::timestamptz,$13::timestamptz)
+     amount_minor,currency,occurred_at,normalized_at${canonical.supported ? ",canonical_transaction_event_id" : ""})
+    VALUES($1::uuid,1,$2::uuid,$3,$4,'AUTHENTICATED_RECONCILE',$5::uuid,'PAYMENT_STATUS',$6,$7,$8,$9,$10::bigint,$11,$12::timestamptz,$13::timestamptz${canonical.supported ? ",$14::uuid" : ""})
     RETURNING id`,
     [
       command.providerEventId,
@@ -152,6 +166,7 @@ export async function persistPaymentRuntimeEvidence(
       event.currency,
       event.occurredAt,
       recordedAt,
+      ...(canonical.supported ? [canonical.canonicalId] : []),
     ],
   );
   await insert(
@@ -167,7 +182,7 @@ export async function persistPaymentRuntimeEvidence(
       recordedAt,
     ],
   );
-  if (event.transaction)
+  if (event.transaction && canonical.canonicalId === null)
     await insert(
       client,
       `INSERT INTO public.payment_transactions

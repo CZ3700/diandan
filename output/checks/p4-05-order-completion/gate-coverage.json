@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_SEGMENTED",
+  "singleFullCheckPassed": false,
+  "fullCheckExitCode": 1,
+  "fullCheckDurationSeconds": 1653.618,
+  "sourceFinal": "source-final.json",
+  "sourceSha256": "388a14d506e6e3423cb2ea6e0b528b158254b3307da2a47a917644915ef950e5",
+  "sourceFiles": 2031,
+  "sourceDeltaSinceFinalCandidate": {
+    "changed": [
+      "packages/persistence-postgres/src/postgres-persistence.test.ts"
+    ],
+    "added": [],
+    "removed": []
+  },
+  "steps": [
+    {
+      "ordinal": 1,
+      "command": "node ./scripts/check-workspace.mjs",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 2,
+      "command": "corepack pnpm check:design-foundations",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 3,
+      "command": "corepack pnpm check:ui-primitives",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 4,
+      "command": "corepack pnpm check:ui-interactions",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 5,
+      "command": "corepack pnpm check:ui-composites",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 6,
+      "command": "corepack pnpm check:ui-motion",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 7,
+      "command": "node --test ./scripts/check-domain-boundaries.test.mjs",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 8,
+      "command": "node ./scripts/check-domain-boundaries.mjs",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 9,
+      "command": "node --test ./scripts/check-adapter-boundaries.test.mjs",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 10,
+      "command": "node ./scripts/check-ci.mjs",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 11,
+      "command": "node ./scripts/check-runtime.mjs",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 12,
+      "command": "node ./scripts/check-observability.mjs",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 13,
+      "command": "corepack pnpm check:contracts",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 14,
+      "command": "corepack pnpm --filter @fan-support/persistence-postgres test:postgres",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 15,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:catalog",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 16,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:admin-content",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 17,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:content-authoring",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 18,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:base-content",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 19,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:resource-management",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 20,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:publication-preflight",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 21,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:publication-runtime",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 22,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:admin-workspace",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 23,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:gift-commerce",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 24,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:storefront",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 25,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:gift-storefront",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 26,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:storefront-acceptance",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 27,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:cart",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 28,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:cart-storefront",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 29,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:checkout-preflight",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 30,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:payment-runtime",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 31,
+      "command": "corepack pnpm --filter @fan-support/api test:postgres:order-payment",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 32,
+      "command": "corepack pnpm test:s3",
+      "result": "PASS",
+      "evidence": "check-full.log"
+    },
+    {
+      "ordinal": 33,
+      "command": "prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
+      "result": "PASS",
+      "evidence": "resume-quality-suffix-2.log"
+    },
+    {
+      "ordinal": 34,
+      "command": "eslint . --max-warnings=0",
+      "result": "PASS",
+      "evidence": "resume-quality-suffix-2.log"
+    },
+    {
+      "ordinal": 35,
+      "command": "turbo run typecheck --output-logs=errors-only",
+      "result": "PASS",
+      "evidence": "resume-quality-suffix-2.log"
+    },
+    {
+      "ordinal": 36,
+      "command": "turbo run test --output-logs=errors-only",
+      "result": "PASS",
+      "evidence": "resume-quality-suffix-2.log"
+    },
+    {
+      "ordinal": 37,
+      "command": "turbo run build --output-logs=errors-only",
+      "result": "PASS",
+      "evidence": "resume-quality-suffix-2.log"
+    },
+    {
+      "ordinal": 38,
+      "command": "node ./scripts/check-adapter-boundaries.mjs",
+      "result": "PASS",
+      "evidence": "resume-quality-suffix-2.log"
+    },
+    {
+      "ordinal": 39,
+      "command": "node ./scripts/check-build-artifacts.mjs",
+      "result": "PASS",
+      "evidence": "resume-quality-suffix-2.log"
+    }
+  ],
+  "qualitySuffix": {
+    "schemaVersion": 1,
+    "commands": [
+      "prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts",
+      "eslint . --max-warnings=0",
+      "turbo run typecheck --output-logs=errors-only",
+      "turbo run test --output-logs=errors-only",
+      "turbo run build --output-logs=errors-only",
+      "node ./scripts/check-adapter-boundaries.mjs",
+      "node ./scripts/check-build-artifacts.mjs"
+    ],
+    "commandCount": 7,
+    "startedAt": "2026-09-15T12:13:05.449108+00:00",
+    "exitCode": 0,
+    "durationSeconds": 41.952,
+    "changesSinceFirstSuffix": [],
+    "scope": "Exact seven original quality steps, unchanged source and original timeout; full check failure remains recorded"
+  },
+  "integrationRuntimeUnchangedSinceFullCheck": true,
+  "secretScan": {
+    "command": "mise exec node@24.20.0 -- corepack pnpm security:secrets",
+    "exitCode": 0,
+    "log": "resume-secrets.log"
+  },
+  "dependencyAudit": {
+    "evidence": "audit-high.log",
+    "scope": "Prior same-lockfile official registry audit, no dependency version edits on resume"
+  }
+}

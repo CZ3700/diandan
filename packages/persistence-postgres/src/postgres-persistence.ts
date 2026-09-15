@@ -1,3 +1,8 @@
+import { createOrderPaymentApplicationRepository } from "./order-payment-application.js";
+import type {
+  OrderPaymentApplicationRepository,
+  OrderPaymentApplicationTransactionManager,
+} from "@fan-support/persistence-port";
 import { createPaymentRuntimeRepository } from "./payment-runtime-repository.js";
 import type {
   PaymentRuntimeRepositories,
@@ -152,6 +157,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly orderPaymentApplicationTransactionManager: OrderPaymentApplicationTransactionManager;
   readonly paymentRuntimeTransactionManager: PaymentRuntimeTransactionManager;
   readonly checkoutPreflightTransactionManager: CheckoutPreflightTransactionManager;
   readonly cartEditTransactionManager: CartEditTransactionManager;
@@ -307,6 +313,19 @@ export function createPostgresPersistenceWithPoolFactory(
       };
     },
   });
+  const orderPaymentApplicationRunner =
+    createTransactionRunner<OrderPaymentApplicationRepository>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => {
+        const database = createPostgresQueryLayer(client as NodePgClient);
+        return createOrderPaymentApplicationRepository(
+          client,
+          createInventoryRepository(database, scope),
+          createOutboxRepository(database, scope),
+          scope,
+        );
+      },
+    });
   const paymentRuntimeRunner =
     createTransactionRunner<PaymentRuntimeRepositories>({
       acquireClient: async () => pool.connect(),
@@ -389,6 +408,12 @@ export function createPostgresPersistenceWithPoolFactory(
       createRepositories: (client, transactionScope) => {
         const database = createPostgresQueryLayer(client as NodePgClient);
         return {
+          orderPaymentApplication: createOrderPaymentApplicationRepository(
+            client,
+            createInventoryRepository(database, transactionScope),
+            createOutboxRepository(database, transactionScope),
+            transactionScope,
+          ),
           ...createReliableEventRepositories(client, {
             transactionScope,
             publishWebhookInbox,
@@ -999,6 +1024,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return publishedContentRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    orderPaymentApplicationTransactionManager: {
+      async runInOrderPaymentApplicationTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return orderPaymentApplicationRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
           work,
         );

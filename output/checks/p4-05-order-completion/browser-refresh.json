@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "mise",
+      "exec",
+      "node@24.20.0",
+      "--",
+      "node",
+      "scripts/verify-ui-composites-browser.mjs"
+    ],
+    "exitCode": 0,
+    "durationSeconds": 27.602
+  },
+  {
+    "command": [
+      "mise",
+      "exec",
+      "node@24.20.0",
+      "--",
+      "node",
+      "scripts/verify-ui-motion-browser.mjs"
+    ],
+    "exitCode": 0,
+    "durationSeconds": 37.401
+  }
+]

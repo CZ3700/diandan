@@ -1,5 +1,48 @@
 import { expect, test, vi } from "vitest";
 
+test("maintenance applies durable order evidence and waits for it on shutdown", async () => {
+  const harness = createHarness();
+  let release!: () => void;
+  const applyPendingOrderPayments = vi.fn(
+    () =>
+      new Promise<void>((resolve) => {
+        release = resolve;
+      }),
+  );
+  const factory = await loadRuntimeFactory();
+  const runtime = factory!({ ...harness.options, applyPendingOrderPayments });
+  await runtime.start();
+  const pass = runtime.runMaintenanceOnce();
+  await vi.waitFor(() =>
+    expect(applyPendingOrderPayments).toHaveBeenCalledTimes(1),
+  );
+  const stopped = runtime.stop();
+  expect(harness.queue.stop).not.toHaveBeenCalled();
+  release();
+  await Promise.all([pass, stopped]);
+  expect(harness.queue.stop).toHaveBeenCalledTimes(1);
+});
+
+test("order evidence maintenance failure is reported without losing other maintenance", async () => {
+  const harness = createHarness();
+  const factory = await loadRuntimeFactory();
+  const runtime = factory!({
+    ...harness.options,
+    applyPendingOrderPayments: async () => {
+      throw new Error("private payload");
+    },
+  });
+  await runtime.start();
+  await runtime.runMaintenanceOnce();
+  expect(harness.notices).toContainEqual({
+    schemaVersion: 1,
+    severity: "WARNING",
+    code: "ORDER_PAYMENT_APPLICATION_FAILED",
+  });
+  expect(harness.purgeExpiredWebhookPayloads).toHaveBeenCalledTimes(1);
+  await runtime.stop();
+});
+
 const outboxJob = Object.freeze({
   schemaVersion: 1 as const,
   jobType: "DISPATCH_OUTBOX_EVENT" as const,

@@ -146,7 +146,8 @@ export function paymentAttemptRecord(row: DraftRow) {
     providerCallStarted: row["provider_call_started"],
     action,
     recovery:
-      row["phase"] === "EVIDENCE_PENDING"
+      row["phase"] === "EVIDENCE_PENDING" &&
+      row["payment_application_complete"] !== true
         ? "EVIDENCE_PENDING"
         : status === "CREATED"
           ? "CREATE_PENDING"
@@ -168,6 +169,7 @@ export async function loadPaymentAttempt(
   const rows = await draftRows(
     client,
     `SELECT a.*,o.cart_id,o.checkout_session_id,o.market,p.adapter_key,operation.phase,
+    EXISTS(SELECT 1 FROM public.order_payment_application_receipts receipt WHERE receipt.attempt_id=a.id AND receipt.decision='APPLIED' AND receipt.outcome IN('PAID','PAID_REVIEW') AND a.status='SUCCEEDED') payment_application_complete,
     ${cartTimestamp("a.created_at")} created_at,${cartTimestamp("a.updated_at")} updated_at,${cartTimestamp("a.action_expires_at")} action_expires_at,
     (a.action_expires_at IS NOT NULL AND a.action_expires_at<=clock_timestamp()) action_expired,
     (a.status IN('FAILED','CANCELED','EXPIRED') AND o.order_status='PENDING_PAYMENT' AND o.payment_status IN('UNPAID','PENDING') AND o.quote_expires_at>clock_timestamp() AND ${validPaymentReservationsSql}) can_retry

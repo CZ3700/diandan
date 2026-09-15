@@ -289,6 +289,7 @@ test("writes and publishes a new receipt atomically on the same client", async (
       marker: "reliable-event:insert-webhook-inbox",
       rows: [{ id: IDS.inbox }],
     },
+    { marker: "FROM pg_attribute", rows: [{ supported: false }] },
     {
       marker: "reliable-event:insert-provider-event",
       rows: [{ id: IDS.providerEvent }],
@@ -327,7 +328,7 @@ test("writes and publishes a new receipt atomically on the same client", async (
     },
   });
   expect(publisher).toHaveBeenCalledWith(client, JOB);
-  expect(publishOrder).toEqual([6]);
+  expect(publishOrder).toEqual([7]);
   const inboxInsert = client
     .dataCalls()
     .find((call) => call.text.includes("reliable-event:insert-webhook-inbox"));
@@ -589,6 +590,7 @@ test("turns a concurrent identity collision into replay and rolls back a failed 
       marker: "reliable-event:insert-webhook-inbox",
       rows: [{ id: IDS.inbox }],
     },
+    { marker: "FROM pg_attribute", rows: [{ supported: false }] },
     {
       marker: "reliable-event:insert-provider-event",
       rows: [{ id: IDS.providerEvent }],

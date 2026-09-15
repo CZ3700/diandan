@@ -485,6 +485,16 @@ async function verify(clientConfig) {
     const immutableBefore = await observer.query(
       "SELECT jsonb_agg(jsonb_build_array(id,source_hash,translated_from_source_hash,display_name) ORDER BY id) AS translations FROM public.idol_revision_translations",
     );
+    const orderPaymentDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0027" },
+    });
+    assert.deepEqual(
+      [orderPaymentDown.revertedVersions, orderPaymentDown.currentVersion],
+      [["0027"], "0026"],
+      "empty order-payment application rolls back before existing history probes",
+    );
     const paymentDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -615,9 +625,9 @@ async function verify(clientConfig) {
       "SELECT count(*)::integer AS count, max(version) AS version FROM public.schema_migrations",
     );
     check(
-      migrationHead.rows[0].count === 26 &&
-        migrationHead.rows[0].version === "0026",
-      "data-bearing up/down/up restores all 26 migrations through payment runtime",
+      migrationHead.rows[0].count === 27 &&
+        migrationHead.rows[0].version === "0027",
+      "data-bearing up/down/up restores all 27 migrations through order-payment application",
     );
     check(
       (await idols()).code === "CATALOG_UNAVAILABLE",

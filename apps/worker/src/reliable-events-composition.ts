@@ -2,6 +2,8 @@ import { randomBytes, randomUUID } from "node:crypto";
 
 import {
   createDispatchOutboxEvent,
+  createOrderPaymentApplication,
+  createOrderPaymentWebhookHandler,
   createListReadyOutboxJobs,
   createProcessWebhookInbox,
   createPurgeExpiredWebhookPayloads,
@@ -162,7 +164,10 @@ function reportWorkerNotice(
 }
 
 const defaultBindings: WorkerReliableEventsBindings = Object.freeze({
-  handlerForEvent: () => undefined,
+  handlerForEvent: (eventType) =>
+    eventType === "PAYMENT_STATUS"
+      ? createOrderPaymentWebhookHandler()
+      : undefined,
   consumerForKey: () => undefined,
   consumerKeys: Object.freeze([]),
 });
@@ -233,6 +238,10 @@ export function createWorkerReliableEventsComposition(
             reportPersistenceFailure(logger, failure),
         });
   const transactionManager = persistence.reliableEventTransactionManager;
+  const orderPayments = createOrderPaymentApplication({
+    transactions: persistence.orderPaymentApplicationTransactionManager,
+    createId: factories.createId,
+  });
   const runtime: ReliableEventsWorkerRuntime = factories.createRuntime({
     schemaVersion: 1,
     queue,
@@ -254,6 +263,16 @@ export function createWorkerReliableEventsComposition(
     purgeExpiredWebhookPayloads: createPurgeExpiredWebhookPayloads({
       transactionManager,
     }),
+    applyPendingOrderPayments: async () => {
+      const result = await orderPayments.runPending(MAINTENANCE_BATCH_SIZE);
+      if (result.failed > 0)
+        throw new Error("Order payment maintenance failed");
+      if (result.review > 0)
+        contextLogger.warn("order_payment.review_required", {
+          outcome: "failure",
+          errorCode: "PAYMENT_REVIEW_REQUIRED",
+        });
+    },
     consumerKeys: bindings.consumerKeys,
     now: factories.now,
     createPropagation: factories.createPropagation,

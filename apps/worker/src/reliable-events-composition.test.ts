@@ -148,6 +148,7 @@ test("wires PostgreSQL, pg-boss VERIFY mode, application handlers, and maintenan
       runWithQueueContext: expect.any(Function),
       listReadyOutboxJobs: expect.any(Function),
       purgeExpiredWebhookPayloads: expect.any(Function),
+      applyPendingOrderPayments: expect.any(Function),
       now: expect.any(Function),
       createPropagation: expect.any(Function),
     }),

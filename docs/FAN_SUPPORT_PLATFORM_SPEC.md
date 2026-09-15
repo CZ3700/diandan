@@ -1060,6 +1060,8 @@ Webhook 验签必须通过独立的 endpoint-scoped `PaymentWebhookVerifier` 产
 
 2026-09-09 用户确认先交付通用接入基础，暂缓具体商户资料：Visa/Mastercard 作为 PSP 提供的卡网络；USDT 独立建模资产、网络、精确数量、报价期限与确认；聚合平台通过各自已部署 adapter 归一化。可先实现静态工厂与版本化配置投影、托管 HTTP 协议和 raw webhook 验签，不得把仓库自有协议声称为所有厂商共用 API，或把配置投影称作已完成的持久发布/商户启用入口。真实 PSP 选择、sandbox、小额与上线门仍保留，细节见 `docs/operations/payment-connectors.md`。
 
+2026-09-10 用户继续下一阶段，按 ADR-014 使用已验收的 P4-04 TEST 运行时与通用接口检查点开展 P4-05 本地订单闭环；实际 PSP 待定不阻止这一开发顺序，但不解除 P4-04、Phase 4 或任何上线验收门。
+
 自研 checkout 负责：重新定价、库存预占、订单草稿、联系邮箱、条款同意、payment attempt 与回跳页面。PSP 只负责托管支付认证与资金结果；其 SDK 对象不得成为订单模型。
 
 支付创建必须使用下面的 crash-recoverable Saga：

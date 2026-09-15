@@ -66,7 +66,17 @@ export async function verifyPaymentRuntimeRollbackProtection({
           "SELECT max(version) version FROM public.schema_migrations",
         )
       ).rows[0].version,
-      "0026",
+      "0027",
+    );
+    const applicationDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0027" },
+    });
+    assert.deepEqual(
+      [applicationDown.revertedVersions, applicationDown.currentVersion],
+      [["0027"], "0026"],
+      "empty application migration preserves old payment-history rollback proof",
     );
     const before = await snapshot(client);
     assert.ok(
@@ -130,10 +140,16 @@ export async function verifyPaymentRuntimeRollbackProtection({
       ).rows[0].version,
       "0026",
     );
+    const restored = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "up" },
+    });
+    assert.equal(restored.currentVersion, "0027");
     return {
       schemaVersion: 1,
       status: "PASS",
-      assertions: 8,
+      assertions: 10,
       tableCount: tables.length,
       before,
       after,

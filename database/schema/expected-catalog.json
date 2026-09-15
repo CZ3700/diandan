@@ -635,6 +635,14 @@
       "kind": "TABLE"
     },
     {
+      "name": "order_payment_application_receipts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "order_payment_application_schedule",
+      "kind": "TABLE"
+    },
+    {
       "name": "orders",
       "kind": "TABLE"
     },
@@ -14387,6 +14395,176 @@
       "generation": ""
     },
     {
+      "table": "order_payment_application_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 3,
+      "name": "provider_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 4,
+      "name": "canonical_provider_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 5,
+      "name": "attempt_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 6,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 7,
+      "name": "decision",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 8,
+      "name": "outcome",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 9,
+      "name": "reason_code",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 10,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 11,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 12,
+      "name": "task_name",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 13,
+      "name": "result",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "position": 14,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "position": 1,
+      "name": "provider_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "position": 2,
+      "name": "next_attempt_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "position": 3,
+      "name": "attempt_count",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "orders",
       "position": 1,
       "name": "id",
@@ -18773,6 +18951,16 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "provider_events",
+      "position": 20,
+      "name": "canonical_transaction_event_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
       "identity": "",
       "generation": ""
     },
@@ -39379,6 +39567,254 @@
       "initiallyDeferred": false
     },
     {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_r_canonical_provider_event_i_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL canonical_provider_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_rece_canonical_provider_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (canonical_provider_event_id) REFERENCES provider_events(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipt_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_attempt_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (attempt_id) REFERENCES payment_attempts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_check",
+      "kind": "CHECK",
+      "definition": "CHECK ((attempt_id IS NULL) = (order_id IS NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (decision = 'APPLIED'::text AND attempt_id IS NOT NULL AND outcome IS NOT NULL AND reason_code IS NULL OR (decision = ANY (ARRAY['REVIEW'::text, 'IGNORED'::text])) AND outcome IS NULL AND reason_code IS NOT NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_check2",
+      "kind": "CHECK",
+      "definition": "CHECK (result = (jsonb_build_object('schemaVersion', 1, 'receiptId', id, 'providerEventId', provider_event_id, 'decision', decision, 'attemptId', attempt_id, 'orderId', order_id) ||\nCASE\n    WHEN decision = 'APPLIED'::text THEN jsonb_build_object('outcome', outcome)\n    ELSE jsonb_build_object('reasonCode', reason_code)\nEND))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_decision_check",
+      "kind": "CHECK",
+      "definition": "CHECK (decision = ANY (ARRAY['APPLIED'::text, 'REVIEW'::text, 'IGNORED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_decision_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL decision",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_outcome_check",
+      "kind": "CHECK",
+      "definition": "CHECK (outcome = ANY (ARRAY['PAID'::text, 'PAID_REVIEW'::text, 'FAILED_RELEASED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_provider_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (provider_event_id) REFERENCES provider_events(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_provider_event_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (provider_event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_provider_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL provider_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_reason_code_check",
+      "kind": "CHECK",
+      "definition": "CHECK (reason_code ~ '^[A-Z][A-Z0-9_]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_result_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL result",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_task_name_check",
+      "kind": "CHECK",
+      "definition": "CHECK (task_name ~ '^[a-z][a-z0-9]*([-_:][a-z0-9]+)*$'::text AND length(task_name) <= 128)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_task_name_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL task_name",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "name": "order_payment_application_schedule_attempt_count_check",
+      "kind": "CHECK",
+      "definition": "CHECK (attempt_count > 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "name": "order_payment_application_schedule_attempt_count_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL attempt_count",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "name": "order_payment_application_schedule_next_attempt_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL next_attempt_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "name": "order_payment_application_schedule_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (provider_event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "name": "order_payment_application_schedule_provider_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (provider_event_id) REFERENCES provider_events(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "name": "order_payment_application_schedule_provider_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL provider_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "orders",
       "name": "fulfillment_aggregate_from_order_trigger",
       "kind": "CONSTRAINT_TRIGGER",
@@ -45292,6 +45728,14 @@
     },
     {
       "table": "provider_events",
+      "name": "provider_events_canonical_transaction_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (canonical_transaction_event_id) REFERENCES provider_events(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "provider_events",
       "name": "provider_events_currency_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL currency",
@@ -45489,14 +45933,6 @@
       "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
       "deferrable": true,
       "initiallyDeferred": true
-    },
-    {
-      "table": "provider_events",
-      "name": "provider_events_transaction_reference_unique",
-      "kind": "UNIQUE",
-      "definition": "UNIQUE (provider_account_id, environment, provider_transaction_type, provider_transaction_reference)",
-      "deferrable": false,
-      "initiallyDeferred": false
     },
     {
       "table": "provider_events",
@@ -50897,6 +51333,42 @@
       "valid": true
     },
     {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX order_payment_application_receipts_pkey ON public.order_payment_application_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipts_provider_event_id_key",
+      "definition": "CREATE UNIQUE INDEX order_payment_application_receipts_provider_event_id_key ON public.order_payment_application_receipts USING btree (provider_event_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "name": "order_payment_application_due_idx",
+      "definition": "CREATE INDEX order_payment_application_due_idx ON public.order_payment_application_schedule USING btree (next_attempt_at, provider_event_id)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "name": "order_payment_application_schedule_pkey",
+      "definition": "CREATE UNIQUE INDEX order_payment_application_schedule_pkey ON public.order_payment_application_schedule USING btree (provider_event_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "orders",
       "name": "orders_checkout_session_unique",
       "definition": "CREATE UNIQUE INDEX orders_checkout_session_unique ON public.orders USING btree (checkout_session_id)",
@@ -51988,7 +52460,7 @@
     {
       "table": "provider_events",
       "name": "provider_events_transaction_reference_unique",
-      "definition": "CREATE UNIQUE INDEX provider_events_transaction_reference_unique ON public.provider_events USING btree (provider_account_id, environment, provider_transaction_type, provider_transaction_reference)",
+      "definition": "CREATE UNIQUE INDEX provider_events_transaction_reference_unique ON public.provider_events USING btree (provider_account_id, environment, provider_transaction_type, provider_transaction_reference) WHERE (canonical_transaction_event_id IS NULL)",
       "unique": true,
       "primary": false,
       "exclusion": false,
@@ -54790,6 +55262,36 @@
       "enabled": "O"
     },
     {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_application_receipt_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER order_payment_application_receipt_validate AFTER INSERT ON order_payment_application_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_order_payment_application_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_receipt_immutable",
+      "definition": "CREATE TRIGGER order_payment_receipt_immutable BEFORE DELETE OR UPDATE ON order_payment_application_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "order_payment_application_receipts",
+      "name": "order_payment_receipt_no_truncate",
+      "definition": "CREATE TRIGGER order_payment_receipt_no_truncate BEFORE TRUNCATE ON order_payment_application_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "name": "order_payment_schedule_no_delete",
+      "definition": "CREATE TRIGGER order_payment_schedule_no_delete BEFORE DELETE ON order_payment_application_schedule FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "order_payment_application_schedule",
+      "name": "order_payment_schedule_no_truncate",
+      "definition": "CREATE TRIGGER order_payment_schedule_no_truncate BEFORE TRUNCATE ON order_payment_application_schedule FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "orders",
       "name": "fulfillment_aggregate_from_order_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER fulfillment_aggregate_from_order_trigger AFTER INSERT OR UPDATE ON orders DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_fulfillment_aggregate()",
@@ -55579,6 +56081,12 @@
       "table": "provider_event_associations",
       "name": "provider_event_associations_validate_trigger",
       "definition": "CREATE TRIGGER provider_event_associations_validate_trigger BEFORE INSERT ON provider_event_associations FOR EACH ROW EXECUTE FUNCTION validate_provider_event_association()",
+      "enabled": "O"
+    },
+    {
+      "table": "provider_events",
+      "name": "provider_event_canonical_alias_validate",
+      "definition": "CREATE TRIGGER provider_event_canonical_alias_validate BEFORE INSERT ON provider_events FOR EACH ROW EXECUTE FUNCTION validate_provider_event_canonical_alias()",
       "enabled": "O"
     },
     {
@@ -56616,6 +57124,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_order_event_head()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  target_order_id uuid;\n  current_order orders%ROWTYPE;\n  head_event order_events%ROWTYPE;\nBEGIN\n  target_order_id := COALESCE(\n    (to_jsonb(NEW) ->> 'order_id')::uuid,\n    (to_jsonb(OLD) ->> 'order_id')::uuid,\n    (to_jsonb(NEW) ->> 'id')::uuid,\n    (to_jsonb(OLD) ->> 'id')::uuid\n  );\n\n  SELECT * INTO current_order FROM orders WHERE id = target_order_id;\n  IF current_order.id IS NULL THEN\n    RETURN NULL;\n  END IF;\n\n  SELECT * INTO head_event\n  FROM order_events\n  WHERE order_id = target_order_id\n  ORDER BY sequence DESC\n  LIMIT 1;\n\n  IF head_event.id IS NULL\n     OR head_event.sequence <> current_order.version\n     OR head_event.to_order_status <> current_order.order_status\n     OR head_event.to_payment_status <> current_order.payment_status\n     OR head_event.to_dispute_status <> current_order.dispute_status\n     OR head_event.to_fulfillment_status <> current_order.fulfillment_status\n     OR head_event.to_payment_attempt_id IS DISTINCT FROM current_order.current_payment_attempt_id THEN\n    RAISE EXCEPTION 'order event head must equal the versioned order aggregate'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
+      "name": "assert_order_payment_application_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_order_payment_application_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NOT EXISTS(SELECT 1 FROM provider_events e WHERE e.id=NEW.provider_event_id AND coalesce(e.canonical_transaction_event_id,e.id)=NEW.canonical_provider_event_id)\n    OR (NEW.attempt_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM payment_attempts a WHERE a.id=NEW.attempt_id AND a.order_id=NEW.order_id)) THEN\n    RAISE EXCEPTION 'order payment receipt must retain exact source and aggregate identity' USING ERRCODE='23514';\n  END IF;\n  IF NEW.decision<>'APPLIED' THEN RETURN NULL; END IF;\n  -- A later source observes the already completed effect; later fulfillment/refund progression does not revoke that history.\n  IF NEW.provider_event_id<>NEW.canonical_provider_event_id THEN\n    IF NOT EXISTS(SELECT 1 FROM order_payment_application_receipts canonical\n      WHERE canonical.provider_event_id=NEW.canonical_provider_event_id AND canonical.canonical_provider_event_id=canonical.provider_event_id\n        AND canonical.decision='APPLIED' AND canonical.attempt_id=NEW.attempt_id AND canonical.order_id=NEW.order_id AND canonical.outcome=NEW.outcome) THEN\n      RAISE EXCEPTION 'capture alias receipt requires the permanent canonical application' USING ERRCODE='23514';\n    END IF;\n    RETURN NULL;\n  END IF;\n  IF NOT EXISTS(SELECT 1 FROM provider_events e JOIN provider_event_associations matched ON matched.provider_event_id=e.id AND matched.association_status='MATCHED' AND matched.payment_attempt_id=NEW.attempt_id JOIN payment_attempts a ON a.id=NEW.attempt_id JOIN orders o ON o.id=a.order_id\n    WHERE e.id=NEW.canonical_provider_event_id AND e.event_type='PAYMENT_STATUS' AND e.normalized_status=a.status\n      AND a.provider_event_id=e.id AND a.status_evidence_kind=e.evidence_kind AND a.evidence_audit_log_id IS NOT DISTINCT FROM e.reconcile_audit_log_id\n      AND a.provider_account_id=e.provider_account_id AND a.environment=e.environment AND a.external_reference=e.external_payment_reference AND a.amount_minor=e.amount_minor AND a.currency=e.currency\n      AND o.id=NEW.order_id AND o.current_payment_attempt_id=a.id\n      AND ((NEW.outcome IN('PAID','PAID_REVIEW') AND a.status='SUCCEEDED' AND o.order_status='OPEN' AND o.payment_status='PAID'\n        AND EXISTS(SELECT 1 FROM carts c WHERE c.id=o.cart_id AND c.status='CONVERTED' AND c.locked_order_id=o.id)\n        AND NOT EXISTS(SELECT 1 FROM order_items i JOIN support_intents s ON s.id=i.support_intent_id WHERE i.order_id=o.id AND s.status<>'CONVERTED')\n        AND NOT EXISTS(SELECT 1 FROM fulfillments f WHERE f.order_id=o.id AND f.status<>CASE WHEN NEW.outcome='PAID_REVIEW' THEN 'ON_HOLD' ELSE 'PENDING' END))\n      OR (NEW.outcome='FAILED_RELEASED' AND a.status IN('FAILED','CANCELED','EXPIRED') AND o.payment_status='PENDING'))\n      AND NOT EXISTS(SELECT 1 FROM inventory_reservations r WHERE r.locked_order_id=o.id AND r.status='ACTIVE')\n  ) THEN RAISE EXCEPTION 'order payment receipt requires the complete canonical aggregate' USING ERRCODE='23514'; END IF;\n  RETURN NULL;\nEND;\n$function$"
+    },
+    {
       "name": "assert_outbox_event_authority",
       "identityArguments": "",
       "resultType": "trigger",
@@ -56773,7 +57291,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.assert_provider_transaction_ledger()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  target_event_id uuid;\n  event_row public.provider_events%ROWTYPE;\n  matched_count integer;\n  ledger_count integer;\nBEGIN\n  IF TG_TABLE_NAME = 'provider_events' THEN\n    target_event_id := NEW.id;\n  ELSIF TG_TABLE_NAME = 'provider_event_associations' THEN\n    target_event_id := NEW.provider_event_id;\n  ELSE\n    RAISE EXCEPTION 'unsupported provider transaction ledger source: %', TG_TABLE_NAME\n      USING ERRCODE = '23514';\n  END IF;\n\n  SELECT * INTO event_row\n  FROM public.provider_events\n  WHERE id = target_event_id;\n\n  SELECT count(*) INTO matched_count\n  FROM public.provider_event_associations association\n  WHERE association.provider_event_id = target_event_id\n    AND association.association_status = 'MATCHED';\n\n  SELECT count(*) INTO ledger_count\n  FROM public.payment_transactions transaction_row\n  JOIN public.provider_event_associations association\n    ON association.provider_event_id = target_event_id\n   AND association.association_status = 'MATCHED'\n   AND association.payment_attempt_id = transaction_row.payment_attempt_id\n  WHERE transaction_row.provider_event_id = target_event_id\n    AND transaction_row.transaction_type = event_row.provider_transaction_type\n    AND transaction_row.provider_transaction_reference = event_row.provider_transaction_reference\n    AND transaction_row.amount_minor = event_row.amount_minor\n    AND transaction_row.currency = event_row.currency\n    AND transaction_row.evidence_kind = event_row.evidence_kind\n    AND transaction_row.reconcile_audit_log_id IS NOT DISTINCT FROM event_row.reconcile_audit_log_id\n    AND transaction_row.occurred_at = event_row.occurred_at;\n\n  IF event_row.id IS NULL\n     OR (matched_count = 0 AND ledger_count <> 0)\n     OR (matched_count = 1 AND event_row.provider_transaction_type IS NULL\n       AND ledger_count <> 0)\n     OR (matched_count = 1 AND event_row.provider_transaction_type IS NOT NULL\n       AND ledger_count <> 1) THEN\n    RAISE EXCEPTION 'provider transaction evidence and exact ledger record must commit together'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_provider_transaction_ledger()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  target_event_id uuid;\n  event_row public.provider_events%ROWTYPE;\n  matched_count integer;\n  ledger_count integer;\nBEGIN\n  IF TG_TABLE_NAME = 'provider_events' THEN\n    target_event_id := NEW.id;\n  ELSIF TG_TABLE_NAME = 'provider_event_associations' THEN\n    target_event_id := NEW.provider_event_id;\n  ELSE\n    RAISE EXCEPTION 'unsupported provider transaction ledger source: %', TG_TABLE_NAME\n      USING ERRCODE = '23514';\n  END IF;\n\n  SELECT * INTO event_row\n  FROM public.provider_events\n  WHERE id = target_event_id;\n\n  SELECT count(*) INTO matched_count\n  FROM public.provider_event_associations association\n  WHERE association.provider_event_id = target_event_id\n    AND association.association_status = 'MATCHED';\n\n  IF event_row.canonical_transaction_event_id IS NOT NULL THEN\n    IF EXISTS(SELECT 1 FROM payment_transactions WHERE provider_event_id=target_event_id)\n      OR NOT EXISTS(SELECT 1 FROM provider_events canonical JOIN payment_transactions ledger ON ledger.provider_event_id=canonical.id\n        WHERE canonical.id=event_row.canonical_transaction_event_id AND canonical.canonical_transaction_event_id IS NULL\n          AND ledger.transaction_type=event_row.provider_transaction_type AND ledger.provider_transaction_reference=event_row.provider_transaction_reference\n          AND ledger.amount_minor=event_row.amount_minor AND ledger.currency=event_row.currency\n          AND (matched_count=0 OR EXISTS(SELECT 1 FROM provider_event_associations a WHERE a.provider_event_id=target_event_id AND a.association_status='MATCHED' AND a.payment_attempt_id=ledger.payment_attempt_id))) THEN\n      RAISE EXCEPTION 'payment capture alias must reuse its exact canonical ledger' USING ERRCODE='23514';\n    END IF;\n    RETURN NULL;\n  END IF;\n\n  SELECT count(*) INTO ledger_count\n  FROM public.payment_transactions transaction_row\n  JOIN public.provider_event_associations association\n    ON association.provider_event_id = target_event_id\n   AND association.association_status = 'MATCHED'\n   AND association.payment_attempt_id = transaction_row.payment_attempt_id\n  WHERE transaction_row.provider_event_id = target_event_id\n    AND transaction_row.transaction_type = event_row.provider_transaction_type\n    AND transaction_row.provider_transaction_reference = event_row.provider_transaction_reference\n    AND transaction_row.amount_minor = event_row.amount_minor\n    AND transaction_row.currency = event_row.currency\n    AND transaction_row.evidence_kind = event_row.evidence_kind\n    AND transaction_row.reconcile_audit_log_id IS NOT DISTINCT FROM event_row.reconcile_audit_log_id\n    AND transaction_row.occurred_at = event_row.occurred_at;\n\n  IF event_row.id IS NULL\n     OR (matched_count = 0 AND ledger_count <> 0)\n     OR (matched_count = 1 AND event_row.provider_transaction_type IS NULL\n       AND ledger_count <> 0)\n     OR (matched_count = 1 AND event_row.provider_transaction_type IS NOT NULL\n       AND ledger_count <> 1) THEN\n    RAISE EXCEPTION 'provider transaction evidence and exact ledger record must commit together'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
       "name": "assert_publication_admin_audit",
@@ -57993,7 +58511,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.validate_payment_transaction_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NOT EXISTS (\n    SELECT 1\n    FROM provider_events event\n    JOIN provider_event_associations association\n      ON association.provider_event_id = event.id\n      AND association.association_status = 'MATCHED'\n      AND association.payment_attempt_id = NEW.payment_attempt_id\n    WHERE event.id = NEW.provider_event_id\n      AND event.evidence_kind = NEW.evidence_kind\n      AND event.reconcile_audit_log_id IS NOT DISTINCT FROM NEW.reconcile_audit_log_id\n      AND event.amount_minor = NEW.amount_minor\n      AND event.currency = NEW.currency\n      AND event.provider_transaction_type = NEW.transaction_type\n      AND event.provider_transaction_reference = NEW.provider_transaction_reference\n      AND event.occurred_at = NEW.occurred_at\n  ) THEN\n    RAISE EXCEPTION 'payment transaction requires exact normalized provider evidence'\n      USING ERRCODE = '23514';\n  END IF;\n  IF NOT EXISTS (\n    SELECT 1\n    FROM public.provider_events event\n    WHERE event.id = NEW.provider_event_id\n      AND (\n        (NEW.transaction_type = 'AUTHORIZATION'\n          AND event.event_type = 'PAYMENT_STATUS'\n          AND event.normalized_status IN ('PROCESSING', 'SUCCEEDED'))\n        OR (NEW.transaction_type = 'CAPTURE'\n          AND event.event_type = 'PAYMENT_STATUS'\n          AND event.normalized_status = 'SUCCEEDED')\n        OR (NEW.transaction_type = 'VOID'\n          AND event.event_type = 'PAYMENT_STATUS'\n          AND event.normalized_status = 'CANCELED')\n        OR (NEW.transaction_type = 'REFUND'\n          AND event.event_type = 'REFUND_STATUS'\n          AND event.normalized_status = 'SUCCEEDED')\n        OR (NEW.transaction_type = 'CHARGEBACK'\n          AND event.event_type = 'DISPUTE_STATUS'\n          AND event.normalized_status IN ('OPEN', 'LOST'))\n        OR (NEW.transaction_type = 'ADJUSTMENT'\n          AND event.event_type = 'PAYMENT_STATUS'\n          AND event.normalized_status = 'SUCCEEDED'\n          AND NEW.evidence_kind = 'AUTHENTICATED_RECONCILE')\n      )\n  ) THEN\n    RAISE EXCEPTION 'payment transaction type does not match provider evidence'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.validate_payment_transaction_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF EXISTS(SELECT 1 FROM provider_events WHERE id=NEW.provider_event_id AND canonical_transaction_event_id IS NOT NULL) THEN\n    RAISE EXCEPTION 'capture aliases cannot create financial ledger rows' USING ERRCODE='23514';\n  END IF;\n  IF NOT EXISTS (\n    SELECT 1\n    FROM provider_events event\n    JOIN provider_event_associations association\n      ON association.provider_event_id = event.id\n      AND association.association_status = 'MATCHED'\n      AND association.payment_attempt_id = NEW.payment_attempt_id\n    WHERE event.id = NEW.provider_event_id\n      AND event.evidence_kind = NEW.evidence_kind\n      AND event.reconcile_audit_log_id IS NOT DISTINCT FROM NEW.reconcile_audit_log_id\n      AND event.amount_minor = NEW.amount_minor\n      AND event.currency = NEW.currency\n      AND event.provider_transaction_type = NEW.transaction_type\n      AND event.provider_transaction_reference = NEW.provider_transaction_reference\n      AND event.occurred_at = NEW.occurred_at\n  ) THEN\n    RAISE EXCEPTION 'payment transaction requires exact normalized provider evidence'\n      USING ERRCODE = '23514';\n  END IF;\n  IF NOT EXISTS (\n    SELECT 1\n    FROM public.provider_events event\n    WHERE event.id = NEW.provider_event_id\n      AND (\n        (NEW.transaction_type = 'AUTHORIZATION'\n          AND event.event_type = 'PAYMENT_STATUS'\n          AND event.normalized_status IN ('PROCESSING', 'SUCCEEDED'))\n        OR (NEW.transaction_type = 'CAPTURE'\n          AND event.event_type = 'PAYMENT_STATUS'\n          AND event.normalized_status = 'SUCCEEDED')\n        OR (NEW.transaction_type = 'VOID'\n          AND event.event_type = 'PAYMENT_STATUS'\n          AND event.normalized_status = 'CANCELED')\n        OR (NEW.transaction_type = 'REFUND'\n          AND event.event_type = 'REFUND_STATUS'\n          AND event.normalized_status = 'SUCCEEDED')\n        OR (NEW.transaction_type = 'CHARGEBACK'\n          AND event.event_type = 'DISPUTE_STATUS'\n          AND event.normalized_status IN ('OPEN', 'LOST'))\n        OR (NEW.transaction_type = 'ADJUSTMENT'\n          AND event.event_type = 'PAYMENT_STATUS'\n          AND event.normalized_status = 'SUCCEEDED'\n          AND NEW.evidence_kind = 'AUTHENTICATED_RECONCILE')\n      )\n  ) THEN\n    RAISE EXCEPTION 'payment transaction type does not match provider evidence'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
     },
     {
       "name": "validate_policy_acceptance",
@@ -58024,6 +58542,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.validate_provider_event_association()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  event_row provider_events%ROWTYPE;\n  attempt_row payment_attempts%ROWTYPE;\nBEGIN\n  SELECT * INTO event_row FROM provider_events WHERE id = NEW.provider_event_id;\n  IF event_row.id IS NULL THEN\n    RAISE EXCEPTION 'provider event association references missing event'\n      USING ERRCODE = '23503';\n  END IF;\n  IF EXISTS (\n    SELECT 1 FROM provider_event_associations\n    WHERE provider_event_id = NEW.provider_event_id AND association_status = 'MATCHED'\n  ) THEN\n    RAISE EXCEPTION 'matched provider event association is terminal'\n      USING ERRCODE = '55000';\n  END IF;\n  IF NEW.association_status = 'MATCHED' THEN\n    SELECT * INTO attempt_row FROM payment_attempts WHERE id = NEW.payment_attempt_id;\n    IF attempt_row.id IS NULL\n       OR attempt_row.provider_account_id <> event_row.provider_account_id\n       OR attempt_row.environment <> event_row.environment\n       OR attempt_row.currency <> event_row.currency\n       OR (attempt_row.external_reference IS NOT NULL\n          AND attempt_row.external_reference <> event_row.external_payment_reference)\n       OR (event_row.event_type = 'PAYMENT_STATUS'\n          AND attempt_row.amount_minor <> event_row.amount_minor) THEN\n      RAISE EXCEPTION 'provider event does not match the persisted payment attempt'\n        USING ERRCODE = '23514';\n    END IF;\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
+    },
+    {
+      "name": "validate_provider_event_canonical_alias",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.validate_provider_event_canonical_alias()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.canonical_transaction_event_id IS NULL THEN RETURN NEW; END IF;\n  IF NEW.id=NEW.canonical_transaction_event_id OR NEW.provider_transaction_type IS DISTINCT FROM 'CAPTURE'\n    OR NOT EXISTS (\n      SELECT 1 FROM provider_events canonical\n      JOIN provider_event_associations association ON association.provider_event_id=canonical.id AND association.association_status='MATCHED'\n      JOIN payment_transactions ledger ON ledger.provider_event_id=canonical.id AND ledger.payment_attempt_id=association.payment_attempt_id\n      WHERE canonical.id=NEW.canonical_transaction_event_id AND canonical.canonical_transaction_event_id IS NULL\n        AND canonical.provider_account_id=NEW.provider_account_id AND canonical.environment=NEW.environment\n        AND canonical.event_type=NEW.event_type AND canonical.normalized_status=NEW.normalized_status\n        AND canonical.external_payment_reference=NEW.external_payment_reference\n        AND canonical.provider_transaction_type=NEW.provider_transaction_type\n        AND canonical.provider_transaction_reference=NEW.provider_transaction_reference\n        AND canonical.amount_minor=NEW.amount_minor AND canonical.currency=NEW.currency\n        AND ledger.transaction_type=canonical.provider_transaction_type AND ledger.provider_transaction_reference=canonical.provider_transaction_reference\n        AND ledger.amount_minor=canonical.amount_minor AND ledger.currency=canonical.currency\n        AND ledger.evidence_kind=canonical.evidence_kind AND ledger.reconcile_audit_log_id IS NOT DISTINCT FROM canonical.reconcile_audit_log_id\n        AND ledger.occurred_at=canonical.occurred_at\n    ) THEN\n    RAISE EXCEPTION 'payment capture alias requires exact canonical authenticated ledger' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
     },
     {
       "name": "validate_provider_event_evidence",

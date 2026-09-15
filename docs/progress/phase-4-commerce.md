@@ -15,8 +15,8 @@
 | P4-01 | DONE | Codex `/root` | P1-03/04/05、P3-05 | 匿名 cart + presentation/fan-message locale + cart_item/support_intent 原子事务 |
 | P4-02 | DONE | Codex `/root` | P2-03/04、P4-01 | 七语真实加购/抽屉/页、数量/删除/私密编辑、冲突与同键恢复 |
 | P4-03 | DONE | Codex `/root` | P4-01、P4-02 | Preflight/quote+amount + order presentation locale + per-object TranslationSnapshotRef + policy revision |
-| P4-04 | IN_PROGRESS | Codex `/root` | P1-06、P4-03 | PaymentProvider/provider locale mapping/idempotent create Saga/hosted action/reconcile |
-| P4-05 | PENDING | — | P4-04 | Provider evidence/order/reservation/locale-preserving token exchange |
+| P4-04 | IN_PROGRESS | 无 executor，商户验收待续 | P1-06、P4-03 | TEST/通用接口本地检查点通过；真实 PSP 等门保留 |
+| P4-05 | IN_PROGRESS | Codex `/root` | P4-04 本地检查点（ADR-014） | Provider evidence/order/reservation/locale-preserving token exchange |
 | P4-06 | PENDING | — | P4-05、P1-06 | 七语言 Notification/fallback alert/expiry cleanup |
 
 ## P4-01 执行登记（2026-09-08）
@@ -170,3 +170,26 @@
 - 兼容：539旧合同根、92paths/171public components与全部52旧SQL保持，新增11内部合同根。1998实现输入SHA `dcaf38f0a4cb8e926b3477c4db212a24d46085a6fd248dbe290e733e10c27ea2` 最终逐字保持；2361原未跟踪文件完整保持。Next自动dev类型导入已归档精确恢复。
 - 证据 `output/checks/p4-04-payment-connectors/final-verification.md`、`gate-coverage.json`、`final-independent-review.md`；续作 `docs/operations/payment-connectors.md`。真实PSP/商户资料、USDT专属接入、Secret Store实际云配置、PG商户发布/广播和管理中心简化表单、P4-05订单终结仍未完成；不扩大本轮为生产验收。
 - P4-04继续IN_PROGRESS，root持有Lane A；P4-05仍PENDING，25DONE/2IN_PROGRESS/22PENDING=49。用户已明确暂缓商户细节，继续保留通用接入检查点；仅本地提交、不push/PR/merge/部署。
+
+## P4-05 执行登记（2026-09-10）
+
+- Owner：Codex `/root`，Lane A 唯一 executor；开始 2026-09-09T17:55:09.429808+00:00，基线 `acbdedc`、干净跟踪工作区，分支 `codex/p4-05-order-completion`。按 ADR-014 从 READY 领取本地范围，P4-04 与 P3-06 均无 executor。
+- 范围：可信持久证据关联及订单/支付/预占/意图/历史/Outbox 原子推进，然后安全查单与七语言成功/时间线；复用既有订单快照，不重复创建订单。按单礼物不伪造库存，迟到成功 ON_HOLD。
+- 顺序与分工：合同/端口先冻结；root 独占调度文档、Application、Worker 接线、共享 exports/生成物。Erdos 独占 PG 实现及新迁移；Hilbert 独占真实协议及回归脚本；Noether 先独立审计合同/查单边界，冻结后分配明确文件。子步骤属于同一 Task，不另占 Lane。
+- 验证：有效 RED→GREEN；实际 PostgreSQL、独立 TEST PSP、重复/乱序/错绑定/事务回滚/并发库存及断点恢复；受影响质量检查和全仓门，非作者复核及 S.U.P.E.R；界面变更须七语双端、键盘与 reduced motion。
+- 边界：P4-04 实际商户/PSP、P3 未完验收及生产门不解除；本地原未跟踪清单 `output/checks/p4-05-order-completion/initial-untracked.json` 逐 SHA 保护；不 push/PR/merge/部署。25 DONE /3 IN_PROGRESS /21 PENDING =49。
+
+## P4-05 恢复执行登记（2026-09-15）
+
+- 用户要求完整核对大纲、进度与后续任务后继续；当前工作区仍为 `codex/p4-05-order-completion` / `acbdedc`，接续原未提交付款应用检查点，未领取其他 Task。Owner `/root` 保持 Lane A 唯一 executor。
+- 已复核原完整 check 实际退出 1（1653.618 秒）：PG、全部 API 协议、6827 项新订单协议、TLS S3 / 媒体423断言、format/lint/types已通过；最后 PG composition 旧测试遗漏新增仓储键，原 legacy 三键断言仍正确。先保留并复现该失败，仅更新扩展 manager 的精确键集，再跑原质量后缀、兼容/源码保护与非作者复核。
+- 本轮检查点收口后接续安全查单设计；凭证/会话、受保护历史读取与七语 UI 按原顺序推进。真实商户、P3未完验收、P4-06通知及Phase5门继续保留，总数25/3/21不变。
+
+### P4-05 付款证据原子应用检查点验收（2026-09-15）
+
+- 已交付可信证据关联、订单/attempt/cart/intent/inventory/history/audit/Outbox同事务应用，永久回执、双来源唯一capture与默认Worker持久恢复。按单/预售不伪库存，失败直接回调释放，真实过期后迟到收款PAID_REVIEW/ON_HOLD。
+- 真实协议两轮均6827断言（5763准备+1064协议）、18case/96checkout+74payment请求，另0027拒退8项/35表hash不变；27迁移/170表往返，全部原PG/API/TLS S3、媒体423断言通过。COMMIT边界是注入，非真实网络断连；准确范围在final-verification。
+- 原完整check exit1/1653.618秒末端漏manager新键；恢复先复现1FAIL/19PASS，仅补扩展键后20PASS。第一次后缀合同5000ms超时不改阈值，定向6PASS后原7项最终41.952秒exit0：types61/61（61cache）、tests61/61（60cache）、build36/36（29cache）、32出口；39项原门分段覆盖，不称单次全绿。
+- 最终2031输入SHA388a14d506e6e3423cb2ea6e0b528b158254b3307da2a47a917644915ef950e5；恢复只改一条测试预期，原生产/集成输入保持。550旧合同、OpenAPI、52历史SQL、2371原未跟踪文件不变；secret scan0，同lockfile原high audit通过。原共享浏览器P204/205分别18/22PNG已刷新，既有moderate/incomplete/真机门保持。
+- 非作者resume-independent-review接受并解除两旧P1，S.U.P.E.R10项本地范围通过；根级质量/兼容/源码证据入口output/checks/p4-05-order-completion/final-verification.md与gate-coverage.json。运行入口docs/operations/order-payments.md，完整路线docs/progress/current-overview.md。
+- 下一顺序子检查点：安全查单token/session及兼容DAILY v2原文的历史读模型，随后七语成功/订单时间线。P4-05保持IN_PROGRESS；P3-06/P4-04未完验收与P4-06/Phase5门保持，25/3/21=49。仅本地Git提交，不推送或部署。

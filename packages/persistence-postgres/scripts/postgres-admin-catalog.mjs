@@ -874,6 +874,27 @@ await withEphemeralPostgres(async (clientConfig) => {
       (SELECT jsonb_agg(jsonb_build_object('id',id,'version',version,'status',status,'draft',draft_revision_id,'published',published_revision_id) ORDER BY id) FROM public.gifts) AS gift_versions
     `)
       ).rows[0];
+    const beforeOrderPaymentDown = await retainedHistory();
+    equal(
+      beforeOrderPaymentDown.version,
+      "0027",
+      "admin operations use current order-payment application schema",
+    );
+    const orderPaymentDown = await runMigrations({
+      clientConfig,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: "0027" },
+    });
+    equal(
+      [orderPaymentDown.revertedVersions, orderPaymentDown.currentVersion],
+      [["0027"], "0026"],
+      "empty order-payment application rolls back before old admin proof",
+    );
+    equal(
+      await retainedHistory(),
+      { ...beforeOrderPaymentDown, version: "0026" },
+      "order-payment application rollback preserves exact admin history",
+    );
     const beforePaymentDown = await retainedHistory();
     equal(
       beforePaymentDown.version,

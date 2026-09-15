@@ -1,3 +1,4 @@
+import { resolveCanonicalPaymentTransaction } from "./payment-transaction-canonical.js";
 import { Buffer } from "node:buffer";
 
 import {
@@ -671,6 +672,16 @@ async function insertVerifiedReceipt(
     );
 
     const candidate = command.candidate;
+    const canonical = await resolveCanonicalPaymentTransaction(client, {
+      providerAccountId: command.endpoint.providerAccountId,
+      environment: command.endpoint.environment,
+      eventType: candidate.eventType,
+      status: candidate.status,
+      externalReference: candidate.externalReference,
+      amountMinor: candidate.amountMinor,
+      currency: candidate.currency,
+      ...(candidate.transaction ? { transaction: candidate.transaction } : {}),
+    });
     exactlyOneId(
       await queryRows(
         client,
@@ -681,10 +692,10 @@ async function insertVerifiedReceipt(
            normalized_status, external_payment_reference,
            provider_refund_reference, provider_dispute_reference,
            provider_transaction_type, provider_transaction_reference,
-           amount_minor, currency, occurred_at
+           amount_minor, currency, occurred_at${canonical.supported ? ", canonical_transaction_event_id" : ""}
          ) select
            $1::uuid, 1, $2::uuid, $3, $4, 'VERIFIED_WEBHOOK', $5::uuid,
-           $6, $7, $8, $9, $10, $11, $12, $13, $14, $15::timestamptz
+           $6, $7, $8, $9, $10, $11, $12, $13, $14, $15::timestamptz${canonical.supported ? ", $16::uuid" : ""}
           where $15::timestamptz <= transaction_timestamp()
          returning id::text as id`,
         [
@@ -707,6 +718,7 @@ async function insertVerifiedReceipt(
           candidate.amountMinor,
           candidate.currency,
           candidate.occurredAt,
+          ...(canonical.supported ? [canonical.canonicalId] : []),
         ],
       ),
       command.providerEventRowId,

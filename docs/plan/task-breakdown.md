@@ -125,7 +125,7 @@ P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字�
 | P4-02 | P2-03, P2-04, P4-01 | 实现购物车抽屉/页：多偶像隔离、数量、删除、留言编辑、乐观回滚 | 同 variant 不同 idol 不合并；失败解释；键盘/live region | R-01, R-07 |
 | P4-03 | P4-01, P4-02 | 实现 checkout preflight：重验并锁 cart version，持久化 CheckoutQuote/OrderAmount、库存预占、PENDING_PAYMENT 订单 `presentation_locale`、偶像/礼物/媒体各自 TranslationSnapshotRef、政策及其 translation revision | 金额算术/过期报价；五类变化阻止旧数据；并发不超卖；各对象 fallback provenance 可重现；切换 UI 不改历史快照；浏览器金额不入账 | R-01, R-05, R-06, R-17 |
 | P4-04 | P1-06, P4-03 | 实现 PaymentProvider、Fake/首个批准 PSP adapter、平台→provider locale 映射、session-scoped capability、首事务固化 provider/rule 的两事务幂等 create Saga、托管 next action、return/UNKNOWN reconcile | provider locale fallback 只改托管 UI；超时/崩溃恢复同一 account+attempt；仅失败终态可重试；回跳不能成功/自动换路 | R-03, R-05, R-17 |
-| P4-05 | P4-04 | 用 endpointId 路由的可信 provider evidence 推进既有 payment/order、关联早到事件、commit/release reservation，并实现保持订单 locale 的查单 token exchange、成功页 | 最终一致；UNMATCHED 可恢复；迟到成功 ON_HOLD；token 安全；公共 DTO 无内部 intent ID；历史本地化快照不漂移 | R-02, R-03, R-06, R-09, R-17 |
+| P4-05 | P4-04（ADR-014 允许先依赖其已验收 TEST/通用接口检查点开展本地开发） | 用 endpointId 路由的可信 provider evidence 推进既有 payment/order、关联早到事件、commit/release reservation，并实现保持订单 locale 的查单 token exchange、成功页 | 最终一致；UNMATCHED 可恢复；迟到成功 ON_HOLD；token 安全；公共 DTO 无内部 intent ID；历史本地化快照不漂移 | R-02, R-03, R-06, R-09, R-17 |
 | P4-06 | P4-05, P1-06 | 实现按订单固化 locale 与不可变 templateVersion 的七语言付款/准备/送达事务通知、英文事故 fallback 告警、重试、幂等及过期 reservation/intent/cart/token 清理 | 七语言 subject/preheader/HTML/text/变量与 review manifest 完整；旧版本可重现；每事件只发一次；fallback 可观测；清理与 webhook 无竞态 | R-02, R-11, R-17 |
 
 ## Phase 5 — 运营与支付扩展（8）

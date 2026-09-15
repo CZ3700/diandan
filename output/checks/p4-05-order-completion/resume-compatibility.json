@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "base": "acbdedc",
+  "oldContractRoots": 550,
+  "currentContractRoots": 555,
+  "addedRoots": [
+    "OrderPaymentApplyCommand",
+    "OrderPaymentApplyResult",
+    "OrderPaymentListPendingCommand",
+    "OrderPaymentPendingEvents",
+    "OrderPaymentRunResult"
+  ],
+  "changedOldContractRoots": [],
+  "openApiFiles": [
+    "packages/contracts/generated/openapi.json"
+  ],
+  "changedOpenApi": [],
+  "oldSqlCount": 52,
+  "changedOldSql": [],
+  "originalUntracked": 2371,
+  "changedOriginalUntracked": [],
+  "status": "PASS"
+}

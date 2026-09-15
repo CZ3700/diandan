@@ -1,0 +1,6 @@
+{
+  "changed": [
+    "packages/persistence-postgres/scripts/order-payment-expiry-fixture.mjs"
+  ],
+  "reason": "TEST expiry negative transactions separated before dynamic import; production source unchanged"
+}

@@ -1,0 +1,154 @@
+[
+  {
+    "name": "p2-04",
+    "result": "passed",
+    "scenarios": 16,
+    "screenshots": 18,
+    "fingerprint": "0daed1fb76b1bf06a89b188aca1cc29a3f88c83d765b7f0dfd91bbe0e7401291",
+    "axe": [
+      {
+        "id": "baseline-mobile",
+        "counts": {
+          "inapplicable": 47,
+          "incomplete": 1,
+          "passes": 42,
+          "violations": 0
+        },
+        "blocking": []
+      },
+      {
+        "id": "baseline-desktop",
+        "counts": {
+          "inapplicable": 47,
+          "incomplete": 1,
+          "passes": 42,
+          "violations": 0
+        },
+        "blocking": []
+      },
+      {
+        "id": "pseudo",
+        "counts": {
+          "inapplicable": 47,
+          "incomplete": 1,
+          "passes": 42,
+          "violations": 0
+        },
+        "blocking": []
+      },
+      {
+        "id": "loading",
+        "counts": {
+          "inapplicable": 77,
+          "incomplete": 0,
+          "passes": 11,
+          "violations": 0
+        },
+        "blocking": []
+      },
+      {
+        "id": "empty-error",
+        "counts": {
+          "inapplicable": 86,
+          "incomplete": 0,
+          "passes": 2,
+          "violations": 0
+        },
+        "blocking": []
+      },
+      {
+        "id": "unavailable",
+        "counts": {
+          "inapplicable": 69,
+          "incomplete": 0,
+          "passes": 19,
+          "violations": 0
+        },
+        "blocking": []
+      },
+      {
+        "id": "image-error",
+        "counts": {
+          "inapplicable": 75,
+          "incomplete": 0,
+          "passes": 13,
+          "violations": 0
+        },
+        "blocking": []
+      },
+      {
+        "id": "cart-line",
+        "counts": {
+          "inapplicable": 63,
+          "incomplete": 0,
+          "passes": 25,
+          "violations": 0
+        },
+        "blocking": []
+      },
+      {
+        "id": "timeline",
+        "counts": {
+          "inapplicable": 73,
+          "incomplete": 0,
+          "passes": 15,
+          "violations": 0
+        },
+        "blocking": []
+      },
+      {
+        "id": "reduced-motion",
+        "counts": {
+          "inapplicable": 47,
+          "incomplete": 1,
+          "passes": 42,
+          "violations": 0
+        },
+        "blocking": []
+      }
+    ],
+    "remainingGate": null,
+    "scope": "Original design-system fixtures, not a new order-success UI or physical-device acceptance"
+  },
+  {
+    "name": "p2-05",
+    "result": "passed-with-physical-device-gate",
+    "scenarios": 8,
+    "screenshots": 22,
+    "fingerprint": "af2da419b3b7fb2540f8e147e234a36b5fdc25fbc66480b8fc7e70962225cbb9",
+    "axe": [
+      {
+        "id": "baseline-mobile",
+        "counts": {
+          "inapplicable": 50,
+          "incomplete": 1,
+          "passes": 39,
+          "violations": 1
+        },
+        "blocking": []
+      },
+      {
+        "id": "baseline-desktop",
+        "counts": {
+          "inapplicable": 50,
+          "incomplete": 1,
+          "passes": 39,
+          "violations": 1
+        },
+        "blocking": []
+      },
+      {
+        "id": "pseudo-320",
+        "counts": {
+          "inapplicable": 50,
+          "incomplete": 1,
+          "passes": 39,
+          "violations": 1
+        },
+        "blocking": []
+      }
+    ],
+    "remainingGate": "Real mobile-device recording and frame-rate evidence is still required.",
+    "scope": "Original design-system fixtures, not a new order-success UI or physical-device acceptance"
+  }
+]

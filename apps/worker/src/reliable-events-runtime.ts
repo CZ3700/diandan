@@ -15,6 +15,7 @@ export type ReliableEventsWorkerNotice = Readonly<{
   code:
     | "OUTBOX_RELAY_FAILED"
     | "PAYLOAD_PURGE_FAILED"
+    | "ORDER_PAYMENT_APPLICATION_FAILED"
     | "MAINTENANCE_CONTEXT_UNAVAILABLE";
 }>;
 
@@ -52,6 +53,7 @@ export type ReliableEventsWorkerRuntimeOptions = Readonly<{
   ): Promise<void>;
   listReadyOutboxJobs(command: unknown): Promise<readonly OutboxDispatchJob[]>;
   purgeExpiredWebhookPayloads(command: unknown): Promise<unknown>;
+  applyPendingOrderPayments?(): Promise<void>;
   consumerKeys: readonly string[];
   now(): string;
   createPropagation(): QueuePropagationCarrier | undefined;
@@ -115,7 +117,10 @@ function validateOptions(options: ReliableEventsWorkerRuntimeOptions): void {
     options.batchSize > 1_000 ||
     (options.schedule !== undefined &&
       typeof options.schedule !== "function") ||
-    (options.onNotice !== undefined && typeof options.onNotice !== "function")
+    (options.onNotice !== undefined &&
+      typeof options.onNotice !== "function") ||
+    (options.applyPendingOrderPayments !== undefined &&
+      typeof options.applyPendingOrderPayments !== "function")
   ) {
     throw new ReliableEventsWorkerRuntimeError("INVALID_CONFIGURATION");
   }
@@ -209,6 +214,13 @@ export function createReliableEventsWorkerRuntime(
       await relayReadyOutbox(now, propagation);
     }
     await purgeExpiredPayloads(now);
+    if (options.applyPendingOrderPayments) {
+      try {
+        await options.applyPendingOrderPayments();
+      } catch {
+        emitNotice("ORDER_PAYMENT_APPLICATION_FAILED");
+      }
+    }
   };
 
   const runMaintenanceOnce = (): Promise<void> => {

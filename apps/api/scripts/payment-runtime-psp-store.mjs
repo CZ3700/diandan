@@ -317,6 +317,39 @@ export async function createPaymentTestPspStore(options) {
     execute,
     readHosted,
     settleHosted,
+    async readHostedAction(attemptId) {
+      if (typeof attemptId !== "string" || !/^[a-f\d-]{36}$/iu.test(attemptId))
+        throw new TypeError("Invalid owned TEST hosted read");
+      const row = await load(pool, attemptId);
+      if (!row) throw new TypeError("Missing owned TEST payment");
+      return observe(row).action ?? null;
+    },
+    async readWebhook(attemptId) {
+      if (typeof attemptId !== "string" || !/^[a-f\d-]{36}$/iu.test(attemptId))
+        throw new TypeError("Invalid TEST webhook payment");
+      const row = await load(pool, attemptId);
+      if (!row) throw new TypeError("Missing TEST webhook payment");
+      return {
+        event_id: `test-webhook/${row.attempt_id}/${row.status}`,
+        created_at: utc(row.updated_at),
+        resource: {
+          kind: "payment",
+          payment_reference: row.external_reference,
+          state:
+            row.status === "SUCCEEDED" ? "captured" : row.status.toLowerCase(),
+          amount_minor: row.command.amountMinor,
+          currency: row.command.currency,
+          ...(row.capture_reference
+            ? {
+                transaction: {
+                  kind: "capture",
+                  reference: row.capture_reference,
+                },
+              }
+            : {}),
+        },
+      };
+    },
     async counts() {
       const {
         rows: [row],

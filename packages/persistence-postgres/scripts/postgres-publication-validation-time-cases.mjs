@@ -243,7 +243,7 @@ export async function verifyPublicationValidationTimeCase({
           "SELECT max(version) AS version FROM public.schema_migrations",
         )
       ).rows[0].version,
-      "0026",
+      "0027",
       "validation time regression uses the current schema",
     );
     check(

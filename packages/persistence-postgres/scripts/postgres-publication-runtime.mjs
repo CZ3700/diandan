@@ -101,6 +101,16 @@ async function verifySeoPurgeRollback({
       )
     ).rows[0].jobs;
   const before = await jobs();
+  const orderPaymentDown = await runMigrations({
+    clientConfig,
+    workspaceRoot,
+    command: { direction: "down", confirmVersion: "0027" },
+  });
+  equal(
+    [orderPaymentDown.revertedVersions, orderPaymentDown.currentVersion],
+    [["0027"], "0026"],
+    "empty order-payment application rolls back before existing history probes",
+  );
   const paymentDown = await runMigrations({
     clientConfig,
     workspaceRoot,
@@ -565,7 +575,7 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
               "SELECT max(version) AS version FROM public.schema_migrations",
             )
           ).rows[0].version,
-          "0026",
+          "0027",
           "runtime business checks ran against the current migration head",
         );
         equal(

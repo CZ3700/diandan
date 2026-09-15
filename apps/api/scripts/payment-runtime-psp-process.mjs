@@ -83,6 +83,8 @@ export async function startPaymentTestPspProcess(options) {
       arm: (value) => call("ARM", value),
       counts: () => call("COUNTS"),
       observations: () => call("OBSERVATIONS"),
+      webhook: (value) => call("WEBHOOK", value),
+      hostedAction: (attemptId) => call("HOSTED_ACTION", attemptId),
       close,
     };
   } catch (error) {
@@ -114,6 +116,10 @@ if (process.argv[2] === "--owned-test-psp" && process.send) {
       else if (operation === "COUNTS" && server) result = await server.counts();
       else if (operation === "OBSERVATIONS" && server)
         result = server.observations();
+      else if (operation === "WEBHOOK" && server)
+        result = await server.webhook(value);
+      else if (operation === "HOSTED_ACTION" && server)
+        result = await server.hostedAction(value);
       else if (operation === "STOP") await close();
       else throw new Error("Unknown owned TEST PSP command");
       process.send?.({ id, ok: true, value: result });

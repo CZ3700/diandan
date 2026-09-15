@@ -1,3 +1,4 @@
+import * as orderPaymentApplication from "./order-payment-application.js";
 import * as paymentRuntimeInternal from "./payment-runtime-internal.js";
 import * as paymentRuntime from "./payment-runtime.js";
 import * as paymentRuntimeConfig from "./payment-runtime-config.js";
@@ -658,6 +659,31 @@ const registrations = [
     name: "PaymentStablecoinConfig",
     audience: "internal",
     schema: paymentStablecoin.paymentStablecoinConfigSchema,
+  },
+  {
+    name: "OrderPaymentApplyCommand",
+    audience: "internal",
+    schema: orderPaymentApplication.orderPaymentApplyCommandSchema,
+  },
+  {
+    name: "OrderPaymentApplyResult",
+    audience: "internal",
+    schema: orderPaymentApplication.orderPaymentApplyResultSchema,
+  },
+  {
+    name: "OrderPaymentListPendingCommand",
+    audience: "internal",
+    schema: orderPaymentApplication.orderPaymentListPendingCommandSchema,
+  },
+  {
+    name: "OrderPaymentPendingEvents",
+    audience: "internal",
+    schema: orderPaymentApplication.orderPaymentPendingEventsSchema,
+  },
+  {
+    name: "OrderPaymentRunResult",
+    audience: "internal",
+    schema: orderPaymentApplication.orderPaymentRunResultSchema,
   },
   {
     name: "PaymentStablecoinQuote",

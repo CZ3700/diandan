@@ -11,6 +11,10 @@ import type {
 
 import type { PostgresQueryLayer } from "./query-layer.js";
 import {
+  canonicalInventoryTimestamp,
+  sameInventoryTimestamp,
+} from "./inventory-timestamp.js";
+import {
   parseRepositoryCommand,
   repositoryFailure,
   repositorySuccess,
@@ -60,16 +64,8 @@ function sameUuid(left: string, right: string): boolean {
   return left.toLowerCase() === right.toLowerCase();
 }
 
-function sameTimestamp(left: string | Date, right: string): boolean {
-  return new Date(left).getTime() === Date.parse(right);
-}
-
 function canonicalUuid<Value extends string>(value: Value): Value {
   return value.toLowerCase() as Value;
-}
-
-function canonicalTimestamp<Value extends string>(value: Value): Value {
-  return new Date(value).toISOString() as Value;
 }
 
 function stableTargets(targets: readonly LockTarget[]): readonly LockTarget[] {
@@ -90,7 +86,7 @@ function mapReservation(row: ReservationRow) {
     inventoryLocationId: row.locationId,
     quantity: row.quantity,
     status: row.status,
-    expiresAt: new Date(row.expiresAt).toISOString(),
+    expiresAt: canonicalInventoryTimestamp(row.expiresAt),
     version: row.version,
   };
 }
@@ -235,7 +231,7 @@ function reservationMatchesTransition(
     row.quantity === previous.quantity &&
     row.status === previous.status &&
     row.version === decision.expectedReservationVersion &&
-    sameTimestamp(row.expiresAt, previous.expiresAt)
+    sameInventoryTimestamp(row.expiresAt, previous.expiresAt)
   );
 }
 
@@ -331,7 +327,7 @@ function inventoryWriteValue(
       cartItemId: canonicalUuid(reservation.cartItemId),
       giftVariantId: canonicalUuid(reservation.giftVariantId),
       inventoryLocationId: canonicalUuid(reservation.inventoryLocationId),
-      expiresAt: canonicalTimestamp(reservation.expiresAt),
+      expiresAt: canonicalInventoryTimestamp(reservation.expiresAt),
     },
     ledgerEntry: {
       ...ledgerEntry,
@@ -339,7 +335,7 @@ function inventoryWriteValue(
       inventoryItemId: canonicalUuid(ledgerEntry.inventoryItemId),
       inventoryLocationId: canonicalUuid(ledgerEntry.inventoryLocationId),
       actor,
-      occurredAt: canonicalTimestamp(ledgerEntry.occurredAt),
+      occurredAt: canonicalInventoryTimestamp(ledgerEntry.occurredAt),
     },
   };
 }

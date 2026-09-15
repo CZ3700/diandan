@@ -167,6 +167,8 @@ export async function withPaymentRuntimeFixture(options) {
             arm: (value) => psp.arm(value),
             counts: () => psp.counts(),
             observations: () => psp.observations(),
+            webhook: (value) => psp.webhook(value),
+            hostedAction: (attemptId) => psp.hostedAction(attemptId),
             async restart() {
               const port = Number(new globalThis.URL(psp.origin).port),
                 oldPid = psp.pid;
