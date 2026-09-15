@@ -64,6 +64,7 @@ const sourceFingerprintPathspec = Object.freeze([
   "apps/storefront/public/ui-composites",
   "apps/storefront/src/app/globals.css",
   "apps/storefront/src/app/layout.tsx",
+  "apps/storefront/src/order-entry.ts",
   "apps/storefront/src/app/ui-composites-*",
   "apps/storefront/src/app/%5Finternal/design-foundations/layout.tsx",
   "apps/storefront/src/app/%5Finternal/design-foundations/(japanese)/layout.tsx",

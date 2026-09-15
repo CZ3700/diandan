@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "--test",
+    "scripts/verify-ui-composites-browser.test.mjs",
+    "scripts/verify-ui-motion-browser.test.mjs"
+  ],
+  "startedAt": "2026-09-15T20:02:34.187204+00:00",
+  "completedAt": "2026-09-15T20:02:37.033499+00:00",
+  "elapsedSeconds": 2.846,
+  "exitCode": 0
+}

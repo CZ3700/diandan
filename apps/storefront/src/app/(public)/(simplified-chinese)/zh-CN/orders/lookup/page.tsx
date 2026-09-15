@@ -1,10 +1,7 @@
 import {
-  createStorefrontPage,
-  createStorefrontMetadata,
-} from "../../../../../../storefront/page-factory";
+  createOrderPage,
+  createOrderMetadata,
+} from "../../../../../../storefront/order-page-factory";
 export const dynamic = "force-dynamic";
-export const generateMetadata = createStorefrontMetadata(
-  "zh-CN",
-  "unavailable",
-);
-export default createStorefrontPage("zh-CN", "unavailable");
+export const generateMetadata = createOrderMetadata("zh-CN", "lookup");
+export default createOrderPage("zh-CN", "lookup");

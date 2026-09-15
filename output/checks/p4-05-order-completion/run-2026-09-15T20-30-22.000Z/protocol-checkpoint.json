@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "setupAssertions": 5763,
+  "assertions": 1064,
+  "result": {
+    "schemaVersion": 1,
+    "cases": [
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "en",
+        "outcome": "PAID",
+        "immutableSnapshot": "fc8f5fba615a03621e939309ccac7e07aba65aac7b3024e2514019b8ab2e53fe"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "zh-CN",
+        "outcome": "PAID",
+        "immutableSnapshot": "aa7d5f5238ca1f9e3194a0242cbf612c5e68df9832437ed4eb6fcea9d5308feb"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "th",
+        "outcome": "PAID",
+        "immutableSnapshot": "02d62f0718d0839d3f4b96e20faa9f13db08796450948143d4e780cadf1238c3"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "vi",
+        "outcome": "PAID",
+        "immutableSnapshot": "5e6b2d1f4b784da0c414d81c32a46f03ea9571e02c4cd9119b9413f972e41701"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "ja",
+        "outcome": "PAID",
+        "immutableSnapshot": "1ed6bf577c0b1469f3bdd5430d21c0f9bcb9a599b56380b4bbad78ba63fcff02"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "es",
+        "outcome": "PAID",
+        "immutableSnapshot": "5e7259180492ba8e401c6271602e4979f8d0a732df86853c86384b9102cf0ee7"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "pt",
+        "outcome": "PAID",
+        "immutableSnapshot": "8ef470cd93880850e59e6e40fb0beabdf0d13180770a59ba3b615df366b53bf3"
+      },
+      {
+        "kind": "PREORDER",
+        "outcome": "PAID",
+        "reservations": 0
+      },
+      {
+        "kind": "SHARED_TRACKED",
+        "outcome": "PAID",
+        "reservations": 2
+      },
+      {
+        "kind": "WEBHOOK_FIRST_AND_DUPLICATE",
+        "outcome": "PAID"
+      },
+      {
+        "kind": "DOUBLE_SOURCE_WEBHOOK_FIRST",
+        "outcome": "PAID",
+        "initialApplications": [
+          {
+            "status": "fulfilled",
+            "decision": "ALREADY_APPLIED",
+            "sqlStates": []
+          },
+          {
+            "status": "rejected",
+            "code": "PERSISTENCE_FAILURE",
+            "sqlStates": [
+              "40001"
+            ]
+          }
+        ],
+        "finalSourceReceipts": 2
+      },
+      {
+        "kind": "DOUBLE_SOURCE_RECONCILE_FIRST",
+        "outcome": "PAID",
+        "initialApplications": [
+          {
+            "status": "fulfilled",
+            "decision": "APPLIED",
+            "sqlStates": []
+          },
+          {
+            "status": "rejected",
+            "code": "PERSISTENCE_FAILURE",
+            "sqlStates": [
+              "40001"
+            ]
+          }
+        ],
+        "finalSourceReceipts": 2
+      },
+      {
+        "kind": "DOUBLE_SOURCE_CONCURRENT",
+        "outcome": "PAID",
+        "initialApplications": [
+          {
+            "status": "rejected",
+            "code": "PERSISTENCE_FAILURE",
+            "sqlStates": [
+              "40001"
+            ]
+          },
+          {
+            "status": "fulfilled",
+            "decision": "APPLIED",
+            "sqlStates": []
+          }
+        ],
+        "finalSourceReceipts": 2
+      },
+      {
+        "kind": "UNMATCHED_RECOVERY",
+        "outcome": "PENDING"
+      },
+      {
+        "kind": "UNMATCHED_SCAN_FAIRNESS",
+        "limit": 2,
+        "unmatched": 3,
+        "outcome": "PAID"
+      },
+      {
+        "kind": "WEBHOOK_FAILED_RELEASED",
+        "outcome": "FAILED_RELEASED"
+      },
+      {
+        "kind": "WEBHOOK_CANCELED_RELEASED",
+        "outcome": "FAILED_RELEASED"
+      },
+      {
+        "kind": "EXPIRED_LATE_CAPTURE",
+        "outcome": "PAID_REVIEW",
+        "expiry": {
+          "schemaVersion": 1,
+          "status": "PASS",
+          "transitioned": 1,
+          "scope": "Real elapsed expiry and domain/repository transition; inventory on-hand preserved, exactly one expiry ledger per reservation"
+        }
+      }
+    ],
+    "commitFaults": {
+      "cases": [
+        "BEFORE_COMMIT_ROLLBACK",
+        "AFTER_COMMIT_RESULT_UNKNOWN"
+      ],
+      "actualPostgresCommit": true,
+      "actualNetworkDisconnect": false
+    },
+    "checkoutRequests": 96,
+    "paymentRequests": 74,
+    "actualPostgres": true,
+    "actualIndependentTestPsp": true,
+    "actualPspSandbox": false,
+    "orderLookupImplemented": false,
+    "browserEvidence": false
+  }
+}

@@ -1,11 +1,11 @@
 # Progress Master
 
-> 最后更新：2026-09-15
+> 最后更新：2026-09-16
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3（验收待续）、Phase 4（ADR-013 本地开发）
-> 当前任务：P4-05 IN_PROGRESS，Lane A 唯一 executor `/root`；P4-04 商户验收与 P3-06 浏览验收均待续、无 executor
-> 下一入口：ADR-014 允许使用已验收的 TEST 支付运行时与通用接口推进订单闭环，真实 PSP 与上线门保留
-> 当前检查点：P4-05付款证据原子应用已本地验收；安全查单服务端已通过本地差分验收，下一步接七语言成功页与订单界面。完整概览见 `current-overview.md`；仅本地提交。
+> 当前任务：P4-05 DONE；P4-06 READY，Lane D 无 executor；P4-04 商户验收与 P3-06 浏览验收均待续、无 executor
+> 下一入口：P4-06 七语言事务通知、幂等重试与过期清理；真实 PSP、P3未完验收与上线门保留
+> 当前检查点：P4-05可信入账、安全查单与七语言订单界面完成本地验收，原单条完整check通过。完整概览见 `current-overview.md`；仅本地提交。
 
 ## 1. 开工入口
 
@@ -17,18 +17,18 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；P4-04 本地检查点已验收、商户门待续且无 executor；按 ADR-014 将 P4-05 本地范围置 READY 后领取，Lane A 唯一 executor `/root`。正式品牌资产与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；P4-04 本地检查点已验收、商户门待续且无 executor；按 ADR-014 完成P4-05本地范围并释放Lane A，下一任务P4-06 READY且Lane D无executor。正式品牌资产与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 21 |
-| READY | 0 |
-| IN_PROGRESS | 3 |
+| PENDING | 20 |
+| READY | 1 |
+| IN_PROGRESS | 2 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
-| DONE | 25 |
+| DONE | 26 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-16 P4-05 DONE：七语言安全查单、历史订单/状态进度与canonical付款结果接通；实际浏览器7373断言、25场景/55PNG/55axe零问题。原单条完整check1737.580秒exit0，40原门、28迁移/172表、入账6827/查单6860、TLS S3/媒体423及types/tests61、build36/32出口通过（有缓存）。最终2131输入SHA6e746b77a95fefd3b771e8603bcaed361a6fa54e55bffa2a6c1d320753072176，573旧合同/56SQL/2412初始未跟踪保持；非作者与S.U.P.E.R通过。原失败、JSON丢正文注入及未命中真实bfcache如实保留。详见`output/checks/p4-05-order-storefront/final-verification.md`。Lane A释放，P4-06 READY，26DONE/1READY/2IN_PROGRESS/20PENDING=49；真实PSP/P3验收/Phase5门保留，仅本地提交。
 
 2026-09-15 P4-05安全查单服务端检查点验收：四API、原子凭证/会话、只读历史快照与持久限流完成；实际协议两轮6860、原入账6827、28迁移/172表与TLS S3媒体423通过。原40门按差分分段覆盖（24项最终候选复跑、16项未受影响HTTP复用），两原完整check失败及窄修完整保留，不称单条全绿。验收发现并修复旧webhook七天保留期跨钟源写入失败，原0005/签名/事件时间不改。最终2070源SHA9603ad3c5123470fda4b5e30440eef836a3c049698190b1aa2c772ea693b6dd4、旧555合同/54SQL/2412原未跟踪保持；非作者ACCEPT与S.U.P.E.R10项通过。下一为成功/查单UI，P4-05仍IN_PROGRESS，25/3/21不变，仅本地提交。详见`output/checks/p4-05-order-access/final-verification.md`与phase卡。
 

@@ -887,3 +887,22 @@ test("writes a self-contained evidence summary", async () => {
   assert.match(markdown, /not deployment/u);
   assert.match(markdown, /Source fingerprint: c{64}/u);
 });
+
+test("binds composite evidence to the root layout order-entry dependency", async (context) => {
+  const { collectCompositeSourceFingerprint } = await loadRunner();
+  const root = await mkdtemp(path.join(os.tmpdir(), "order-entry-composite-"));
+  context.after(() => rm(root, { force: true, recursive: true }));
+  await mkdir(path.join(root, "apps/storefront/src/app"), { recursive: true });
+  await writeFile(
+    path.join(root, "apps/storefront/src/app/layout.tsx"),
+    'import "../order-entry";\n',
+  );
+  const entryPath = "apps/storefront/src/order-entry.ts";
+  await writeFile(path.join(root, entryPath), "entry-v1\n");
+  await runGit(root, ["init", "--quiet"]);
+  const initial = await collectCompositeSourceFingerprint(root);
+  assert.ok(initial.files.some((file) => file.path === entryPath));
+  await writeFile(path.join(root, entryPath), "entry-v2\n");
+  const changed = await collectCompositeSourceFingerprint(root);
+  assert.notEqual(changed.digest, initial.digest);
+});

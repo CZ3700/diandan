@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "scripts/verify-ui-composites-browser.mjs"
+  ],
+  "startedAt": "2026-09-15T20:03:03.473445+00:00",
+  "completedAt": "2026-09-15T20:03:31.619948+00:00",
+  "elapsedSeconds": 28.147,
+  "exitCode": 1
+}

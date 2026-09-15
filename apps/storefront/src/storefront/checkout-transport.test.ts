@@ -84,3 +84,34 @@ it("advertises REDIRECT only, without inferring country or sending schemaVersion
     ["supportedActionTypes", "REDIRECT"],
   ]);
 });
+
+it("uses cart CSRF only in the explicit order bootstrap bridge and clears it on dispose", async () => {
+  const loaded = await load();
+  if (!loaded) throw new Error("Missing transport");
+  const transport = loaded.createCheckoutTransport(
+    "en",
+    vi.fn().mockResolvedValue(
+      new Response(JSON.stringify(currentFixture), {
+        headers: {
+          "content-type": "application/json",
+          "x-csrf-token": "A".repeat(43),
+        },
+      }),
+    ),
+  );
+  const bootstrap = vi.fn().mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "PAYMENT_NOT_CONFIRMED",
+  });
+  expect(
+    (transport as unknown as { authorizeOrder?: unknown }).authorizeOrder,
+  ).toBeTypeOf("function");
+  if (!("authorizeOrder" in transport)) return;
+  await transport.request(loaded.checkoutCalls.current());
+  await transport.authorizeOrder(checkoutTestId, bootstrap);
+  expect(bootstrap).toHaveBeenCalledWith(checkoutTestId, "A".repeat(43));
+  transport.dispose();
+  await transport.authorizeOrder(checkoutTestId, bootstrap);
+  expect(bootstrap).toHaveBeenCalledTimes(1);
+});

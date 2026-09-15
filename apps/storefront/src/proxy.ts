@@ -12,7 +12,15 @@ import {
 } from "@fan-support/observability";
 
 function checkoutPrivacy(response: NextResponse, pathname: string) {
+  const orderPage = /^\/[^/]+\/(?:order-access|orders|thank-you)(?:\/|$)/u.test(
+    pathname,
+  );
+  const orderApi = /^\/api\/storefront\/(?:order-access|orders)(?:\/|$)/u.test(
+    pathname,
+  );
   if (
+    !orderPage &&
+    !orderApi &&
     !/^\/(?:[^/]+\/checkout(?:\/|$)|api\/storefront\/checkout(?:\/|$)|api\/storefront\/cart\/validate(?:\/|$))/u.test(
       pathname,
     )
@@ -40,7 +48,7 @@ function checkoutPrivacy(response: NextResponse, pathname: string) {
   response.headers.set("referrer-policy", "no-referrer");
   response.headers.set(
     "content-security-policy",
-    `frame-ancestors 'none'; frame-src ${origins.length ? origins.join(" ") : "'none'"}; object-src 'none'; base-uri 'self'; form-action 'self'`,
+    `${orderPage ? "script-src 'self' 'unsafe-inline'; connect-src 'self'; " : ""}frame-ancestors 'none'; frame-src ${!orderPage && !orderApi && origins.length ? origins.join(" ") : "'none'"}; object-src 'none'; base-uri 'self'; form-action 'self'`,
   );
   return response;
 }
@@ -51,6 +59,7 @@ export function proxy(request: NextRequest): NextResponse {
   requestHeaders.set(REQUEST_ID_HEADER, requestId);
 
   requestHeaders.delete("x-storefront-locale");
+  requestHeaders.delete("x-storefront-order-access");
   const segment = request.nextUrl.pathname.split("/")[1];
   const locale = SUPPORTED_LOCALES.find(
     (value) => value.toLowerCase() === segment?.toLowerCase(),
@@ -78,6 +87,8 @@ export function proxy(request: NextRequest): NextResponse {
     return checkoutPrivacy(redirect, request.nextUrl.pathname);
   }
   if (locale) requestHeaders.set("x-storefront-locale", locale);
+  if (locale && request.nextUrl.pathname === `/${locale}/order-access`)
+    requestHeaders.set("x-storefront-order-access", "1");
   const response = NextResponse.next({
     request: { headers: requestHeaders },
   });

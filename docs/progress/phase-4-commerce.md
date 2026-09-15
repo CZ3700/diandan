@@ -16,8 +16,8 @@
 | P4-02 | DONE | Codex `/root` | P2-03/04、P4-01 | 七语真实加购/抽屉/页、数量/删除/私密编辑、冲突与同键恢复 |
 | P4-03 | DONE | Codex `/root` | P4-01、P4-02 | Preflight/quote+amount + order presentation locale + per-object TranslationSnapshotRef + policy revision |
 | P4-04 | IN_PROGRESS | 无 executor，商户验收待续 | P1-06、P4-03 | TEST/通用接口本地检查点通过；真实 PSP 等门保留 |
-| P4-05 | IN_PROGRESS | Codex `/root` | P4-04 本地检查点（ADR-014） | Provider evidence/order/reservation/locale-preserving token exchange |
-| P4-06 | PENDING | — | P4-05、P1-06 | 七语言 Notification/fallback alert/expiry cleanup |
+| P4-05 | DONE | Codex `/root`（已释放 Lane A） | P4-04 本地检查点（ADR-014） | 可信入账、安全查单、七语言订单结果与历史状态进度完成本地验收 |
+| P4-06 | READY | 无 executor | P4-05、P1-06 | 七语言 Notification/fallback alert/expiry cleanup |
 
 ## P4-01 执行登记（2026-09-08）
 
@@ -215,3 +215,28 @@
 - 最终2070源集合/字节一致，SHA9603ad3c5123470fda4b5e30440eef836a3c049698190b1aa2c772ea693b6dd4。555旧合同/92路径/171组件/54旧SQL及2412原未跟踪保持；Next自动两声明与wrapper失败已归档精确恢复。原P204/205采集器18/22PNG通过，当前渲染输入一致；保留既有人工/physical-device门。最终secret scan与官方high audit通过，无依赖版本改动。
 - 非作者ACCEPT、S.U.P.E.R10项通过；证据`output/checks/p4-05-order-access/final-verification.md`、`gate-coverage.json`、两份独立review；运行/恢复入口`docs/operations/order-access.md`。真实数据库故障为提交前callback注入+回滚，不称COMMIT网络断连；Cookie恢复需已知订单号，EXCHANGE跨实例限流范围如实限定。
 - 下一顺序检查点为订单BFF/transport、七语言付款成功/确认中/待工作室处理、查单页面与真实事件时间线；未实现邮件/fragment浏览器验收。P4-05仍IN_PROGRESS、P4-06未开启、Phase5保持锁定；25 DONE /3 IN_PROGRESS /21 PENDING=49。仅本地Git提交，不推送或部署。
+
+## P4-05 订单界面执行登记（2026-09-16）
+
+- Owner：Codex `/root`，Lane A 唯一 executor；开始 2026-09-15T19:27:00.037205+00:00，基线 `ae625e1`、跟踪工作区干净，接续本任务第三顺序检查点。
+- 范围：独立订单 BFF/transport、付款结果与已付款 checkout 授权、fragment 一次性交换/受保护查单、七语言历史订单详情与状态进度、失效/撤销/网络恢复。保留真实历史图文/金额/语言；进度仅展示已保存事实，不推算准备或送达时间。
+- 视觉：沿用原色黑金；状态与艺人礼物照片为主，订单明细轻分隔，单一明确下一步；复用按钮/焦点/克制过渡与 reduced motion，不追加装饰动画。
+- 分工：root拥有控制器/页面路由/结算衔接与共享登记；BFF/客户端传输、历史详情视图/七语文案、实际浏览器夹具分别独占文件；复用已冻结订单服务端合同，不另领Task。
+- 验证：有效失败测试先行；授权/令牌清除/响应作用域/会话恢复/异步生命周期；真实PG、TLS S3、独立TEST PSP与七语言390×844/1440×900，键盘/错误/reduced motion；相关质量门、原整仓门及非作者S.U.P.E.R复核。
+- 边界：邮件继续属于P4-06，不显示未实际发送的邮件或没有依据的履约时刻；P3/P4商户/生产门保留。25/3/21=49不变，仅本地提交不推送。初始未跟踪文件清单见`output/checks/p4-05-order-storefront/initial-untracked.json`。
+
+### P4-05 订单界面整合 REVIEW（2026-09-16）
+
+实现和非作者源码复核完成，进入最终整仓门。第四轮实际浏览器7373断言（6187准备+1186浏览器）、25场景/55截图/55 axe零违规零incomplete通过；原生Back重新加载与授权通过，pageshow.persisted=false，不称真实bfcache命中。三轮原失败和精确测试夹具修正保留。令牌fragment、历史原文、语言切换、真实过期与撤销丢正文恢复均已覆盖。
+
+P204 collector补入root layout的order-entry依赖，先有效RED再整组GREEN；P205原已涵盖全storefront，无实现修改。共享P204/P205原采集器通过，保留既有moderate/人工/真机门。P204首轮工作区状态守卫失败（同期新建output文件），原源字节无变化；冻结全部文件创建后原命令通过，不改守卫。最终2131源SHA `6e746b77a95fefd3b771e8603bcaed361a6fa54e55bffa2a6c1d320753072176`；完整check执行中，最终验收前不标DONE。25DONE/1REVIEW/2IN_PROGRESS/21PENDING=49。
+
+### P4-05 订单界面与任务本地验收完成（2026-09-16）
+
+- 七语言查找/fragment授权/详情/付款结果、独立BFF/transport及checkout衔接完成。付款结果只来自授权canonical历史订单；购买时图文/规格/金额/原文保持，进度只显示当前状态和真实下单时间。隐藏/恢复重新验证，撤销未知保留关闭意图，UUID大小写等价；原合同/数据库/金融权威不变。
+- 第四轮实际PG/TLS S3/独立TEST PSP/Next浏览器7373断言（6187准备+1186浏览器）、25场景/55PNG/55axe零violation/incomplete；七语言双端、真实菜单同单切换、跨单/重放/到期/轮换/丢正文恢复通过，金融/库存/履约/通知/PSP计数保持。三轮原测试脚本失败完整保留。
+- 原单条完整`pnpm check`于2026-09-15T20:35:28.036400Z结束，1737.580秒exit0：40项原门、28迁移/172表、全部原PG/API/TLS S3、媒体423、入账6827/查单6860断言通过。最终类型61/61（59cache）、单测61/61（59cache）、构建36/36（34cache）和32实际Node出口通过；不宣称冷缓存或CI远端验收。
+- P204补真实渲染依赖指纹，53工具测试通过；原共享浏览器P204/P205已刷新，既有moderate/incomplete/人工/真机门保留。首P204状态守卫失败后冻结文件创建，原命令通过；Next两条临时dev声明精确归档恢复，不掩盖原失败。
+- 最终2131输入SHA `6e746b77a95fefd3b771e8603bcaed361a6fa54e55bffa2a6c1d320753072176`，前后集合/字节一致。573合同根/96公开API路径/180组件/56旧SQL与2412原未跟踪文件不变；secret scan与官方registry high audit通过。独立源码/证据复核与S.U.P.E.R10项通过，根证据`output/checks/p4-05-order-storefront/final-verification.md`、`gate-coverage.json`；续作运行手册`docs/operations/order-access.md`。
+- 范围：JSON正文丢失是Next响应边界注入；实际原生Back重新加载通过但pageshow.persisted=false，无真实bfcache命中。真实商户/PSP、邮件、云/staging/生产、人工译审/读屏与物理手机仍未验收；预计准备时间待批准SLA，邮件提示待P4-06实际投递，P5-02实际履约时再记录准备/送达事件时间。
+- 合并前两顺序检查点，本地P4-05最低验收已满足，现DONE并释放Lane A；P4-06 READY，Lane D无executor。P3-06/P4-04仍待验收且无executor，Phase5仍LOCKED。26DONE/1READY/2IN_PROGRESS/20PENDING=49。只本地Git提交，不push/PR/merge/部署。

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "browserSourceManifest": "browser-run-4-source-before.json",
+  "finalSourceManifest": "source-final.json",
+  "changedExistingInputs": [
+    "scripts/verify-ui-composites-browser.mjs",
+    "scripts/verify-ui-composites-browser.test.mjs",
+    "scripts/verify-ui-motion-browser.test.mjs"
+  ],
+  "productionUiChanged": false,
+  "scope": "Only collector input coverage and its tests changed after the browser run; no rendered application source changed."
+}

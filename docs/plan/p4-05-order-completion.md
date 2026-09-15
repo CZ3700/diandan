@@ -1,12 +1,12 @@
 # P4-05 — 订单结果与安全查单接续方案
 
-> 状态：ACTIVE，本地实施（2026-09-10，ADR-014）；基线 `acbdedc`。
+> 状态：DONE，本地验收（2026-09-16，ADR-014）；起始基线 `acbdedc`。
 
 ## 顺序检查点状态
 
 - 付款证据原子应用：2026-09-15本地验收通过，39项原门分段覆盖；详见本轮final-verification。
 - 安全查单：2026-09-15服务端检查点本地验收通过；实际PG/HTTP、历史图片与原文、凭证会话完成，40门按差分分段覆盖，详见安全查单final-verification。
-- 七语言成功页与时间线：依赖查单授权和历史读模型，尚未接通。
+- 七语言付款完成页、安全查单与订单状态进度：2026-09-16界面和实际浏览器通过，原完整check已于1737.580秒exit0。当前只显示真实下单时间与当前状态，未声称已验证准备/送达事件时间线。
 
 ## 开发顺序
 
@@ -29,9 +29,9 @@
 | Worker 幂等骨架 | `packages/application/src/process-webhook-inbox.ts` 在同事务记录 effect 和处理结果；`apps/worker/src/reliable-events-composition.ts` 已注册默认订单付款 handler，并以真实协议证明原子应用与维护扫描恢复。 |
 | 认证 reconcile 证据 | P4-04 已持久化真实查询证据、关联与 capture 流水；EVIDENCE_PENDING 仍表示等待订单应用，普通 GET 没有处理副作用。 |
 | 金融与库存规则 | `packages/domain/src/order-state-machine.ts`、`inventory-reservation.ts` 和 `late-payment-success.ts` 已有纯决策；晚到成功使用协调 planner，不能给普通订单状态函数放开 CANCELED→OPEN。 |
-| 查单存储 | 原 0004 已有 order_access_tokens/order_access_sessions、摘要、作用域、唯一性、消费/过期约束；现有七语言 `/orders/lookup` 页面还是 unavailable 占位。新读模型必须支持0025的DAILY v2原文快照，旧v1 mapper不能直接复用。 |
+| 查单存储 | 复用原0004的摘要/作用域/消费/过期约束及0028限流审计；七语言 `/orders/lookup` 已接真实授权读取。历史读模型支持0025的DAILY v2原文，v1未保存的规格标签保持null。 |
 
-## 必须先解决的衔接点
+## 实施时的衔接约束（保留原设计依据）
 
 ### 1. 把关联、入账与副作用放在同一事务
 
@@ -88,9 +88,9 @@ P4-04 的可信失败目前终结 attempt，保留有效预占，因此可以受
 - 七语言 × 390×844/1440×900，键盘、焦点、加载/空/错误与 reduced motion；截图不含凭证或私密信息。
 - 真实 PostgreSQL、独立 TEST PSP、队列、HTTP 与浏览器；随后原 format/lint/typecheck/test/build/架构/出口门和非作者 S.U.P.E.R 复核。旧证据只按明确输入范围复用。
 
-## 下一个界面检查点的具体范围
+## 已验收的界面检查点范围（完整证据见执行卡）
 
-安全查单服务端验收后，继续同一 P4-05，使用现有黑金组件与七语言文案，不引入新的后台操作流程。
+安全查单服务端验收后，已在同一 P4-05 接通现有黑金组件与七语言订单界面；无新增后台操作流程。
 
 1. 增加独立订单 BFF/transport，仅允许四个已定义 API；订单 Cookie、CSRF 与购物车隔离，严格校验 Set-Cookie、正文大小、返回动作/订单范围及 Retry-After。沿用 no-store/no-referrer/noindex。
 2. 付款结果以 canonical 已入账订单为准：确认中保留等待状态；成功后通过原有效 checkout 获取受保护授权，报价过期不阻断已付款查单。避免每次渲染或自动重试都重新轮换会话。
@@ -98,6 +98,14 @@ P4-04 的可信失败目前终结 attempt，保留有效预占，因此可以受
 4. 订单展示使用新历史 DTO：保留购买时艺人/礼物/规格/图片/金额及真实内容语言；旧 v1 规格 null 如实处理。切换七语言仅改变界面外壳，不改订单价格、币种或原文来源。
 5. 覆盖 abort、过期/撤销、后退恢复、并发响应顺序；重新进入页面要重新验证授权，旧响应不能覆盖新的订单状态。时间线只能使用真实已保存的事件时刻；当前仅有状态的字段不得编造准备/送达时间，必要时先补兼容事件读合同。
 6. 验证七语言 × 390×844/1440×900、键盘、错误恢复和 reduced motion，包含真实浏览器 Secure/HttpOnly Cookie、fragment 清除及跨订单拒绝。实际邮件发送继续属于 P4-06。
+
+## 界面实际验证与后续
+
+2026-09-16第四轮实际浏览器7373断言、25场景/55截图/55axe通过；使用真实PG/TLS S3/独立TEST PSP与实际worker。三轮原失败、JSON丢正文注入边界和未命中真实bfcache均保留。历史进度只显示当前状态与真实下单时间，不通过虚构事件时间来补齐时间线。最终整仓门、源码指纹及独立复核见 `output/checks/p4-05-order-storefront/final-verification.md`。
+
+规范§5.8的预计准备时间等待批准SLA，邮件发送提示等待P4-06实际投递；P5-02实际准备/送达时再记录准确事件时刻，不把当前PENDING当成履约演练。
+
+P4-05正式DONE后，直接后继为P4-06：七语言不可变版本事务邮件、英文事故fallback告警、持久重试与幂等、过期reservation/intent/cart/token清理。该任务不能绕过未完成的真实PSP、P3验收及Phase5门。
 
 ## 当前执行入口
 

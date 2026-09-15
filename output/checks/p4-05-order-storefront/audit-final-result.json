@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "audit",
+    "--audit-level",
+    "high",
+    "--registry=https://registry.npmjs.org"
+  ],
+  "startedAt": "2026-09-15T20:06:43.549452+00:00",
+  "completedAt": "2026-09-15T20:06:44.249614+00:00",
+  "elapsedSeconds": 0.7,
+  "exitCode": 0
+}

@@ -45,7 +45,10 @@ const uncertain = (reply: CheckoutReply) =>
 /** Coordinates UI requests only. All prices, eligibility and payment decisions remain server facts. */
 export function createCheckoutController(
   locale: SupportedLocale,
-  transport: CheckoutTransport = createCheckoutTransport(locale),
+  transport: Pick<
+    CheckoutTransport,
+    "request" | "dispose"
+  > = createCheckoutTransport(locale),
 ) {
   let state = initial();
   let epoch = 0;

@@ -1,6 +1,6 @@
 # P2-04 UI composite browser verification
 
-Generated: 2026-09-15T13:15:04.420Z
+Generated: 2026-09-15T20:04:31.207Z
 
 ## Outcome
 
@@ -8,7 +8,7 @@ Generated: 2026-09-15T13:15:04.420Z
 - Screenshots: 18
 - Axe scans: 10; critical/serious blocking findings: 0
 - Native Chrome zoom: 200.0% detected for requested 200%
-- Source fingerprint: b2746f4698a798495a8218351227fd6bb82d87e3e5b2417c2444c64a22340c33 (p2-04-render-inputs-v1)
+- Source fingerprint: ca5d405b6c04197fe2c4e69577dcb0c59cf123740bb7a022a9d347bb2b5add7b (p2-04-render-inputs-v1)
 
 ## Runtime gates
 
@@ -27,15 +27,15 @@ Generated: 2026-09-15T13:15:04.420Z
 - responsive/767x900-pt.png (7fa3a9bfc36ad6c86f863a1700cbe9eee9d0b8e99e2308f894f96125861a37c0)
 - responsive/1023x900-en-XA.png (be11759f7bbd5461571515dcd82a06cbf17c0eabaa19b86fc5fb94e374a59214)
 - stress/320x800-en-XA.png (aab4ff7728a331d472133a4e319c5132b6d8e7b49d863b4b4269cc4c2698124f)
-- stress/320x800-pt-long.png (7afdec5d6fa080bc44e276b8300d4d19d75819bc873cea580b26364bb25169ea)
+- stress/320x800-pt-long.png (bba454c78cd46246921cef020934dedf70570ab9593e1aa2cade455a4d752b08)
 - states/390x844-en.png (de165241341c56d107f3258781e3186527f0827980abf78845529e5bcc0b8306)
 - interactions/1440x900-en-hover.png (e94aa7a2a7719ea7bcf7627baf697cccca1db0a931fc187e00ed038e1b438094)
-- rtl/390x844-en.png (39936c3e84aedeb7f93d774b00c497ca5693dbdad5aaf8d44e67d79e76a781cd)
+- rtl/390x844-en.png (bdab96d95651618fcd6fa1b49afdc49ae86bb35f53f6970fe032862bf7dc6b6a)
 - rtl/1440x900-en.png (908ae7b3a52a280cce443286e2517137c5335c9f15fa081d38847fea8bdf35a9)
 - reduced-motion/390x844-en.png (d6be4c23036ab6eb37dbda81d2c6d6d5069d71763265de17fa7007499c692b7a)
-- reduced-motion/1440x900-en.png (5879c6eeb1816d75fc6a54bf9c385b8db7136247370084f35b15c212712737ee)
+- reduced-motion/1440x900-en.png (76024aeffb42410fa9a71ec19e4844eaaea8b53cf79b85e0a915915e87ebb35b)
 - zoom/google-chrome-baseline-pt.png (8f905c8969f182c1461aa4d02f360733a8b8d50595c2334a73fa75970abcf02f)
-- zoom/google-chrome-200-percent-pt.png (95d272a65e15a3f69e3567f8a408993becee3588e8ec6c333c006259259ad819)
+- zoom/google-chrome-200-percent-pt.png (ed864f5115e493e2440e0df3d932d48612d62dac533589a4fbc4bb5bcc01ccfd)
 
 Rerun: `mise exec node@24.20.0 -- node scripts/verify-ui-composites-browser.mjs`
 

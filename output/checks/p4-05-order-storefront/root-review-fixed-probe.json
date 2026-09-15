@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "controllerSha256": "579b84b7e0f8e52496448b7212a4ccf81ca91cf53842c1016dbdf7d96c4d6861",
+  "checks": [
+    "uppercase authorized READ normalizes and succeeds",
+    "uppercase link hint grants once and reads original order",
+    "revoke accepts canonical UUID after uppercase entry",
+    "different actual order scope remains denied",
+    "retry continues uncertain revoke without intermediate order display",
+    "suspend/resume continues uncertain revoke without intermediate order display",
+    "denied current order access ends local close recovery without resurrecting data",
+    "late revoke reply after suspension is ignored; resume completes preserved close intent"
+  ]
+}

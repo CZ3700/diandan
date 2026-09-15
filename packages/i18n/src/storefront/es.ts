@@ -1,4 +1,67 @@
 const copy = {
+  orderTitle: "Tu pedido",
+  orderThankYou: "Gracias por tu apoyo.",
+  orderLoading: "Abriendo tu pedido…",
+  orderLookupTitle: "Encuentra tu pedido",
+  orderLookupHelp:
+    "Abre la página de finalización del pago o utiliza un enlace seguro de pedido válido.",
+  orderIdLabel: "Número de pedido",
+  orderOpen: "Abrir pedido",
+  orderAccessDenied: "Tu acceso actual no permite abrir este pedido.",
+  orderUnavailable:
+    "Tu pedido no está disponible temporalmente. Inténtalo de nuevo más tarde.",
+  orderPaymentPending:
+    "El pago sigue pendiente de confirmación. Vuelve a consultarlo en unos momentos.",
+  orderRateLimited:
+    "Espera {seconds, number} segundos antes de volver a intentarlo.",
+  orderRetry: "Reintentar",
+  orderRevoke: "Cerrar acceso seguro",
+  orderRevoked: "Se ha cerrado el acceso seguro a este pedido.",
+  orderBack: "Seguir explorando",
+  orderView: "Ver pedido",
+  orderLinkInvalid:
+    "Este enlace de pedido no es válido, ha caducado o ya se ha utilizado.",
+  orderRecoveryHelp:
+    "Vuelve a la página de finalización del pago o abre un nuevo enlace seguro de pedido válido.",
+  orderCreated: "Fecha del pedido",
+  orderItems: "Tus regalos",
+  orderSummary: "Resumen del pedido",
+  orderProgress: "Estado del pedido",
+  orderPaymentLabel: "Pago",
+  orderFulfillmentLabel: "Preparación y entrega",
+  orderDisputeLabel: "Disputa del pago",
+  orderStateLabel: "Pedido",
+  orderPaid: "Pagado",
+  orderUnpaid: "Sin pagar",
+  orderPaymentProcessing: "Pago pendiente",
+  orderPartiallyRefunded: "Reembolso parcial",
+  orderRefunded: "Reembolsado",
+  orderPending: "Pendiente de preparación",
+  orderPreparing: "En preparación",
+  orderDelivered: "Entregado al artista",
+  orderOnHold: "En espera",
+  orderCanceled: "Cancelado",
+  orderDraft: "Borrador",
+  orderAwaitingPayment: "Pendiente de pago",
+  orderClosed: "Cerrado",
+  orderStateOpen: "Abierto",
+  orderDisputeNone: "Sin disputa",
+  orderDisputeOpen: "Disputa en curso",
+  orderDisputeWon: "Disputa resuelta a favor del estudio",
+  orderDisputeLost: "Disputa resuelta a favor del titular de la tarjeta",
+  orderReviewHelp:
+    "El estudio necesita revisar este pedido antes de continuar con la preparación.",
+  orderPreparationHelp:
+    "El estudio prepara tus regalos y se los entrega al artista. Consulta aquí el progreso.",
+  orderDeliveredHelp:
+    "El estudio ha marcado estos regalos como entregados al artista.",
+  orderHistoryHelp:
+    "Los detalles y precios de los regalos se conservan tal como estaban al realizar el pedido.",
+  orderOriginalLanguage: "Contenido original: {language}",
+  orderSnapshotLanguage: "Contenido guardado al realizar el pedido: {language}",
+  orderUnitPrice: "Precio unitario",
+  orderItemTotal: "Total del regalo",
+
   checkoutTitle: "Finalizar pedido",
   checkoutReview: "Revisa tus regalos",
   checkoutEmail: "Correo electrónico",

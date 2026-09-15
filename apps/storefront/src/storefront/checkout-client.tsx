@@ -5,6 +5,10 @@ import type { StorefrontCopy } from "./copy";
 import { createCheckoutController } from "./checkout-controller";
 import { CheckoutReview } from "./checkout-review";
 import { CheckoutForm } from "./checkout-form";
+import {
+  CheckoutOrderResult,
+  canOpenOrderResult,
+} from "./checkout-order-result";
 import { PaymentStatus } from "./payment-status";
 import { startPaymentPolling } from "./payment-polling";
 import { storefrontHref } from "./navigation";
@@ -127,6 +131,14 @@ export function CheckoutClient({
       focusFrame.current = window.requestAnimationFrame(restore);
     }
   }
+  if (canOpenOrderResult(state.checkout, attempt))
+    return (
+      <CheckoutOrderResult
+        checkout={state.checkout!}
+        locale={locale}
+        copy={copy}
+      />
+    );
   return (
     <div
       className="checkout-content"

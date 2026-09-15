@@ -51,7 +51,8 @@
     "preview:management-center": "corepack pnpm --filter @fan-support/api preview:management-center",
     "verify:management-center": "corepack pnpm --filter @fan-support/api test:browser:management-center",
     "verify:cart:browser": "corepack pnpm --filter @fan-support/api test:browser:cart-storefront",
-    "verify:payment:browser": "corepack pnpm --filter @fan-support/api test:browser:payment-runtime"
+    "verify:payment:browser": "corepack pnpm --filter @fan-support/api test:browser:payment-runtime",
+    "verify:orders:browser": "corepack pnpm --filter @fan-support/api test:browser:order-storefront"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

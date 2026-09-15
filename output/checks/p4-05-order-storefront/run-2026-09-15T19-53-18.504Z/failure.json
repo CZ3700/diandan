@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "stage": "actual order read network failure and retry",
+  "assertions": 7290,
+  "kind": "RUNTIME",
+  "name": "TimeoutError",
+  "code": null,
+  "strictLocator": false,
+  "timeout": true,
+  "callsites": [
+    "order-storefront-recovery.mjs:23:44",
+    "order-storefront-browser.mjs:523:7",
+    "order-storefront-http.mjs:101:24",
+    "order-storefront-http.mjs:57:5",
+    "order-storefront-http.mjs:154:7"
+  ]
+}

@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "setupAssertions": 5763,
+  "assertions": 1064,
+  "result": {
+    "schemaVersion": 1,
+    "cases": [
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "en",
+        "outcome": "PAID",
+        "immutableSnapshot": "fc8f5fba615a03621e939309ccac7e07aba65aac7b3024e2514019b8ab2e53fe"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "zh-CN",
+        "outcome": "PAID",
+        "immutableSnapshot": "aa7d5f5238ca1f9e3194a0242cbf612c5e68df9832437ed4eb6fcea9d5308feb"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "th",
+        "outcome": "PAID",
+        "immutableSnapshot": "02d62f0718d0839d3f4b96e20faa9f13db08796450948143d4e780cadf1238c3"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "vi",
+        "outcome": "PAID",
+        "immutableSnapshot": "5e6b2d1f4b784da0c414d81c32a46f03ea9571e02c4cd9119b9413f972e41701"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "ja",
+        "outcome": "PAID",
+        "immutableSnapshot": "1ed6bf577c0b1469f3bdd5430d21c0f9bcb9a599b56380b4bbad78ba63fcff02"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "es",
+        "outcome": "PAID",
+        "immutableSnapshot": "5e7259180492ba8e401c6271602e4979f8d0a732df86853c86384b9102cf0ee7"
+      },
+      {
+        "kind": "RECONCILE_THEN_APPLY",
+        "locale": "pt",
+        "outcome": "PAID",
+        "immutableSnapshot": "8ef470cd93880850e59e6e40fb0beabdf0d13180770a59ba3b615df366b53bf3"
+      },
+      {
+        "kind": "PREORDER",
+        "outcome": "PAID",
+        "reservations": 0
+      },
+      {
+        "kind": "SHARED_TRACKED",
+        "outcome": "PAID",
+        "reservations": 2
+      },
+      {
+        "kind": "WEBHOOK_FIRST_AND_DUPLICATE",
+        "outcome": "PAID"
+      },
+      {
+        "kind": "DOUBLE_SOURCE_WEBHOOK_FIRST",
+        "outcome": "PAID",
+        "initialApplications": [
+          {
+            "status": "fulfilled",
+            "decision": "ALREADY_APPLIED",
+            "sqlStates": []
+          },
+          {
+            "status": "rejected",
+            "code": "PERSISTENCE_FAILURE",
+            "sqlStates": [
+              "40001"
+            ]
+          }
+        ],
+        "finalSourceReceipts": 2
+      },
+      {
+        "kind": "DOUBLE_SOURCE_RECONCILE_FIRST",
+        "outcome": "PAID",
+        "initialApplications": [
+          {
+            "status": "fulfilled",
+            "decision": "APPLIED",
+            "sqlStates": []
+          },
+          {
+            "status": "rejected",
+            "code": "PERSISTENCE_FAILURE",
+            "sqlStates": [
+              "40001"
+            ]
+          }
+        ],
+        "finalSourceReceipts": 2
+      },
+      {
+        "kind": "DOUBLE_SOURCE_CONCURRENT",
+        "outcome": "PAID",
+        "initialApplications": [
+          {
+            "status": "rejected",
+            "code": "PERSISTENCE_FAILURE",
+            "sqlStates": [
+              "40001"
+            ]
+          },
+          {
+            "status": "fulfilled",
+            "decision": "APPLIED",
+            "sqlStates": []
+          }
+        ],
+        "finalSourceReceipts": 2
+      },
+      {
+        "kind": "UNMATCHED_RECOVERY",
+        "outcome": "PENDING"
+      },
+      {
+        "kind": "UNMATCHED_SCAN_FAIRNESS",
+        "limit": 2,
+        "unmatched": 3,
+        "outcome": "PAID"
+      },
+      {
+        "kind": "WEBHOOK_FAILED_RELEASED",
+        "outcome": "FAILED_RELEASED"
+      },
+      {
+        "kind": "WEBHOOK_CANCELED_RELEASED",
+        "outcome": "FAILED_RELEASED"
+      },
+      {
+        "kind": "EXPIRED_LATE_CAPTURE",
+        "outcome": "PAID_REVIEW",
+        "expiry": {
+          "schemaVersion": 1,
+          "status": "PASS",
+          "transitioned": 1,
+          "scope": "Real elapsed expiry and domain/repository transition; inventory on-hand preserved, exactly one expiry ledger per reservation"
+        }
+      }
+    ],
+    "commitFaults": {
+      "cases": [
+        "BEFORE_COMMIT_ROLLBACK",
+        "AFTER_COMMIT_RESULT_UNKNOWN"
+      ],
+      "actualPostgresCommit": true,
+      "actualNetworkDisconnect": false
+    },
+    "checkoutRequests": 96,
+    "paymentRequests": 74,
+    "actualPostgres": true,
+    "actualIndependentTestPsp": true,
+    "actualPspSandbox": false,
+    "orderLookupImplemented": false,
+    "browserEvidence": false
+  },
+  "rollback": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "assertions": 10,
+    "tableCount": 35,
+    "before": {
+      "schema_migrations": {
+        "count": 27,
+        "sha256": "512ecbdc11ae404b703f00e1157938d4cc5515ded42dc879bab5de008a479ff1"
+      },
+      "carts": {
+        "count": 22,
+        "sha256": "3f08a0fc681d1d3c1d1a6fbceb6b2f703dbaa14232b85036053fd19c8ababa77"
+      },
+      "cart_items": {
+        "count": 23,
+        "sha256": "0881b44aa74afb90a9894eeb979ba3b60b6add18939e8cb4c087ec036aa6564b"
+      },
+      "support_intents": {
+        "count": 23,
+        "sha256": "23093a0f33484ea0569276dbd21f7c88e3682bdcbcd851d34cb4cd1f8b271fca"
+      },
+      "customer_contacts": {
+        "count": 22,
+        "sha256": "b5f291e7d822e40af1c8855bedc867849880201c09a008626d41542052b098d6"
+      },
+      "checkout_preflight_observations": {
+        "count": 22,
+        "sha256": "f636090139352fffaaf3de6d3ed7b57c633c264319435fb9f447ad65fc6707fc"
+      },
+      "checkout_preflight_receipts": {
+        "count": 22,
+        "sha256": "8c6b9d0bda7bd330ad8f863c425647550ff9bfdbe0b98fa62e7479918e1c6425"
+      },
+      "checkout_outbox_events": {
+        "count": 22,
+        "sha256": "afaf1016b93ce50f96facfd05c1858798f999cdce6ad936f16cb87650b969b0d"
+      },
+      "checkout_sessions": {
+        "count": 22,
+        "sha256": "9aa5fc5ea7755ecdfab91213b05bbdc590132ad126abd4dc8fe4105bb525b4fb"
+      },
+      "checkout_quote_lines": {
+        "count": 23,
+        "sha256": "22045d2ec535ff060d3098a387c970bc0574fa29d451e11464a958cd0fd51c7a"
+      },
+      "orders": {
+        "count": 22,
+        "sha256": "ebf5192d69a9f46da93e440245da4bfb931ec6e1a3b7c6da13baa0d98b7d49e1"
+      },
+      "order_items": {
+        "count": 23,
+        "sha256": "bfd6ca099ba0fb92df8d21b7badbe11fda3264e173aae17d12b084c28941718e"
+      },
+      "order_events": {
+        "count": 82,
+        "sha256": "55d81c1c4459567c9cc0bf55105b297dcb99ee27f20f487025e1fee61f23d504"
+      },
+      "policy_acceptances": {
+        "count": 88,
+        "sha256": "b393915c145b2dc4e3a768f7cfeba45d7b21d7ea31290b6fd4d5832132de840c"
+      },
+      "fulfillments": {
+        "count": 23,
+        "sha256": "91f96b9eeef448fce751fb1960d212cfcf4b2966e265d68f2def58f6b931dbb3"
+      },
+      "fulfillment_events": {
+        "count": 24,
+        "sha256": "8a1a6f28f769a5b007d0b932243e8b5615ac401c0fe4d7c143aa579cc4c977fe"
+      },
+      "inventory_balances": {
+        "count": 5,
+        "sha256": "4fc853b88ea470c730246ebd9644e824c360ddb22b90b687b0637d2f9cdb2eb9"
+      },
+      "inventory_reservations": {
+        "count": 5,
+        "sha256": "44ce69c70328fb83d8432a589d1700b82ce65813738a0659a8e16af6a75aac49"
+      },
+      "inventory_ledger": {
+        "count": 16,
+        "sha256": "cfa3fe3ad46f0dcdf333ad23f1b74f9c63dd0557c3a8d1f3772f37743f09a163"
+      },
+      "payment_attempts": {
+        "count": 22,
+        "sha256": "d6928701686169717cb0507abdb85be06669300e689a83181bad0a6890494828"
+      },
+      "payment_attempt_events": {
+        "count": 63,
+        "sha256": "a41e65fa25dc8baf8f51828f479d3da570a968dd6a3326a927d75bac7345f16a"
+      },
+      "payment_create_receipts": {
+        "count": 22,
+        "sha256": "590a1d94e4483e8af486e81c461db0966a7327d533635680405a42bafb5a78fc"
+      },
+      "payment_runtime_operations": {
+        "count": 22,
+        "sha256": "d60e40ddfab274f3727e4a930ca5a3f4a3a520d1a1da8654a20a6f7ef4185756"
+      },
+      "payment_reconcile_receipts": {
+        "count": 16,
+        "sha256": "39adac3d1849969307be9c0a7705662767b9e4d8c6427f79a90cb413fcb51e0a"
+      },
+      "order_payment_application_receipts": {
+        "count": 24,
+        "sha256": "4fe379af261f43b458ffc3ecd549d4dd15aa2074925c7b62d09652924a2c36f9"
+      },
+      "order_payment_application_schedule": {
+        "count": 9,
+        "sha256": "5b5faf1ed6b2107247cc4e032a0945749017bef5157d616160d3e842eef2f6de"
+      },
+      "webhook_inbox": {
+        "count": 11,
+        "sha256": "5dfaf7f64bbbcf7e2885b2bf682fa3a3e50a9ef191b88d7799be0f444567a27a"
+      },
+      "webhook_processing_attempts": {
+        "count": 11,
+        "sha256": "b0a1281b1ff5395cc6dd20c417107e189f09d134cb045249adb58893b7b2f068"
+      },
+      "webhook_effects": {
+        "count": 8,
+        "sha256": "e53df8029ce7bd6fde4380ffec94cdb137200fae6273e2be6fcff704fdbb924f"
+      },
+      "provider_events": {
+        "count": 27,
+        "sha256": "cedba6b4a869e81b577a9a72995d51897b3de56d37843e418f87940d8334cc25"
+      },
+      "provider_event_associations": {
+        "count": 35,
+        "sha256": "4aad97c1d6e037cd7b1be89f1fcd25af96072ef336e4886329748f04a2a09284"
+      },
+      "payment_transactions": {
+        "count": 16,
+        "sha256": "af0e634965858f29135e33e7a6136041b68607ea53ff038ec82ef31c672deebe"
+      },
+      "audit_logs": {
+        "count": 1083,
+        "sha256": "0ce27088e7de7964f509e85437f8d364e53bcab493aa4899afb77af78b6a060d"
+      },
+      "outbox_events": {
+        "count": 423,
+        "sha256": "5e647e54a1c6d7855dcab22a558b81da60767f742f4514bd7bb019abebc70a47"
+      },
+      "idempotency_records": {
+        "count": 1099,
+        "sha256": "cee5d2a8079f9e7ddd25c9068e1bf3b90fe80af3345ca0cc24f2a181b0fe8a89"
+      }
+    },
+    "after": {
+      "schema_migrations": {
+        "count": 27,
+        "sha256": "512ecbdc11ae404b703f00e1157938d4cc5515ded42dc879bab5de008a479ff1"
+      },
+      "carts": {
+        "count": 22,
+        "sha256": "3f08a0fc681d1d3c1d1a6fbceb6b2f703dbaa14232b85036053fd19c8ababa77"
+      },
+      "cart_items": {
+        "count": 23,
+        "sha256": "0881b44aa74afb90a9894eeb979ba3b60b6add18939e8cb4c087ec036aa6564b"
+      },
+      "support_intents": {
+        "count": 23,
+        "sha256": "23093a0f33484ea0569276dbd21f7c88e3682bdcbcd851d34cb4cd1f8b271fca"
+      },
+      "customer_contacts": {
+        "count": 22,
+        "sha256": "b5f291e7d822e40af1c8855bedc867849880201c09a008626d41542052b098d6"
+      },
+      "checkout_preflight_observations": {
+        "count": 22,
+        "sha256": "f636090139352fffaaf3de6d3ed7b57c633c264319435fb9f447ad65fc6707fc"
+      },
+      "checkout_preflight_receipts": {
+        "count": 22,
+        "sha256": "8c6b9d0bda7bd330ad8f863c425647550ff9bfdbe0b98fa62e7479918e1c6425"
+      },
+      "checkout_outbox_events": {
+        "count": 22,
+        "sha256": "afaf1016b93ce50f96facfd05c1858798f999cdce6ad936f16cb87650b969b0d"
+      },
+      "checkout_sessions": {
+        "count": 22,
+        "sha256": "9aa5fc5ea7755ecdfab91213b05bbdc590132ad126abd4dc8fe4105bb525b4fb"
+      },
+      "checkout_quote_lines": {
+        "count": 23,
+        "sha256": "22045d2ec535ff060d3098a387c970bc0574fa29d451e11464a958cd0fd51c7a"
+      },
+      "orders": {
+        "count": 22,
+        "sha256": "ebf5192d69a9f46da93e440245da4bfb931ec6e1a3b7c6da13baa0d98b7d49e1"
+      },
+      "order_items": {
+        "count": 23,
+        "sha256": "bfd6ca099ba0fb92df8d21b7badbe11fda3264e173aae17d12b084c28941718e"
+      },
+      "order_events": {
+        "count": 82,
+        "sha256": "55d81c1c4459567c9cc0bf55105b297dcb99ee27f20f487025e1fee61f23d504"
+      },
+      "policy_acceptances": {
+        "count": 88,
+        "sha256": "b393915c145b2dc4e3a768f7cfeba45d7b21d7ea31290b6fd4d5832132de840c"
+      },
+      "fulfillments": {
+        "count": 23,
+        "sha256": "91f96b9eeef448fce751fb1960d212cfcf4b2966e265d68f2def58f6b931dbb3"
+      },
+      "fulfillment_events": {
+        "count": 24,
+        "sha256": "8a1a6f28f769a5b007d0b932243e8b5615ac401c0fe4d7c143aa579cc4c977fe"
+      },
+      "inventory_balances": {
+        "count": 5,
+        "sha256": "4fc853b88ea470c730246ebd9644e824c360ddb22b90b687b0637d2f9cdb2eb9"
+      },
+      "inventory_reservations": {
+        "count": 5,
+        "sha256": "44ce69c70328fb83d8432a589d1700b82ce65813738a0659a8e16af6a75aac49"
+      },
+      "inventory_ledger": {
+        "count": 16,
+        "sha256": "cfa3fe3ad46f0dcdf333ad23f1b74f9c63dd0557c3a8d1f3772f37743f09a163"
+      },
+      "payment_attempts": {
+        "count": 22,
+        "sha256": "d6928701686169717cb0507abdb85be06669300e689a83181bad0a6890494828"
+      },
+      "payment_attempt_events": {
+        "count": 63,
+        "sha256": "a41e65fa25dc8baf8f51828f479d3da570a968dd6a3326a927d75bac7345f16a"
+      },
+      "payment_create_receipts": {
+        "count": 22,
+        "sha256": "590a1d94e4483e8af486e81c461db0966a7327d533635680405a42bafb5a78fc"
+      },
+      "payment_runtime_operations": {
+        "count": 22,
+        "sha256": "d60e40ddfab274f3727e4a930ca5a3f4a3a520d1a1da8654a20a6f7ef4185756"
+      },
+      "payment_reconcile_receipts": {
+        "count": 16,
+        "sha256": "39adac3d1849969307be9c0a7705662767b9e4d8c6427f79a90cb413fcb51e0a"
+      },
+      "order_payment_application_receipts": {
+        "count": 24,
+        "sha256": "4fe379af261f43b458ffc3ecd549d4dd15aa2074925c7b62d09652924a2c36f9"
+      },
+      "order_payment_application_schedule": {
+        "count": 9,
+        "sha256": "5b5faf1ed6b2107247cc4e032a0945749017bef5157d616160d3e842eef2f6de"
+      },
+      "webhook_inbox": {
+        "count": 11,
+        "sha256": "5dfaf7f64bbbcf7e2885b2bf682fa3a3e50a9ef191b88d7799be0f444567a27a"
+      },
+      "webhook_processing_attempts": {
+        "count": 11,
+        "sha256": "b0a1281b1ff5395cc6dd20c417107e189f09d134cb045249adb58893b7b2f068"
+      },
+      "webhook_effects": {
+        "count": 8,
+        "sha256": "e53df8029ce7bd6fde4380ffec94cdb137200fae6273e2be6fcff704fdbb924f"
+      },
+      "provider_events": {
+        "count": 27,
+        "sha256": "cedba6b4a869e81b577a9a72995d51897b3de56d37843e418f87940d8334cc25"
+      },
+      "provider_event_associations": {
+        "count": 35,
+        "sha256": "4aad97c1d6e037cd7b1be89f1fcd25af96072ef336e4886329748f04a2a09284"
+      },
+      "payment_transactions": {
+        "count": 16,
+        "sha256": "af0e634965858f29135e33e7a6136041b68607ea53ff038ec82ef31c672deebe"
+      },
+      "audit_logs": {
+        "count": 1083,
+        "sha256": "0ce27088e7de7964f509e85437f8d364e53bcab493aa4899afb77af78b6a060d"
+      },
+      "outbox_events": {
+        "count": 423,
+        "sha256": "5e647e54a1c6d7855dcab22a558b81da60767f742f4514bd7bb019abebc70a47"
+      },
+      "idempotency_records": {
+        "count": 1099,
+        "sha256": "cee5d2a8079f9e7ddd25c9068e1bf3b90fe80af3345ca0cc24f2a181b0fe8a89"
+      }
+    },
+    "scope": "Existing TEST order-payment application receipts prevent destructive 0027 rollback; no status, keys or raw rows emitted"
+  },
+  "actualAwsKms": false,
+  "actualPspSandbox": false
+}

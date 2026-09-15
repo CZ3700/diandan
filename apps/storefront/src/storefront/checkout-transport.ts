@@ -31,6 +31,7 @@ export type CheckoutCall = Readonly<{
   locale?: SupportedLocale;
   cartVersion?: number;
 }>;
+import type { OrderReply, OrderTransport } from "./order-transport";
 const base = "/api/storefront/checkout";
 const sessionPath = (id: string) =>
   `${base}/sessions/${encodeURIComponent(id)}`;
@@ -202,6 +203,14 @@ export function createCheckoutTransport(
   }
   return {
     request,
+    async authorizeOrder(
+      sessionId: string,
+      bootstrap: OrderTransport["bootstrap"],
+    ): Promise<OrderReply> {
+      if (!csrf)
+        return { schemaVersion: 1, outcome: "FAILURE", code: "ACCESS_DENIED" };
+      return bootstrap(sessionId, csrf);
+    },
     dispose() {
       generation++;
       csrf = null;

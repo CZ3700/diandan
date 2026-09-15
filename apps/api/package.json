@@ -52,7 +52,8 @@
     "test:postgres:payment-runtime": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/payment-runtime-*.test.mjs && node ./scripts/payment-runtime-config-postgres.mjs && node ./scripts/payment-runtime-http.mjs",
     "test:browser:payment-runtime": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/payment-runtime-http.mjs --production --ui",
     "test:postgres:order-payment": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/order-payment-*.test.mjs && node ./scripts/order-payment-http.mjs",
-    "test:postgres:order-access": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/order-access-*.test.mjs && node ./scripts/order-access-http.mjs"
+    "test:postgres:order-access": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/order-access-*.test.mjs && node ./scripts/order-access-http.mjs",
+    "test:browser:order-storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/order-storefront-http.mjs"
   },
   "dependencies": {
     "@fan-support/payment-port": "workspace:*",

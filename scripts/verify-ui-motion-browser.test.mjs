@@ -1989,3 +1989,22 @@ test("a second signal forces termination when graceful cleanup is stuck", async 
   });
   assert.deepEqual(exit, { code: null, signal: "SIGINT" });
 });
+
+test("binds motion evidence to the root layout order-entry dependency", async (context) => {
+  const { collectMotionSourceFingerprint } = await loadRunner();
+  const root = await mkdtemp(path.join(os.tmpdir(), "order-entry-motion-"));
+  context.after(() => rm(root, { force: true, recursive: true }));
+  await mkdir(path.join(root, "apps/storefront/src/app"), { recursive: true });
+  await writeFile(
+    path.join(root, "apps/storefront/src/app/layout.tsx"),
+    'import "../order-entry";\n',
+  );
+  const entryPath = "apps/storefront/src/order-entry.ts";
+  await writeFile(path.join(root, entryPath), "entry-v1\n");
+  await runGit(root, ["init", "--quiet"]);
+  const initial = await collectMotionSourceFingerprint(root);
+  assert.ok(initial.files.some((file) => file.path === entryPath));
+  await writeFile(path.join(root, entryPath), "entry-v2\n");
+  const changed = await collectMotionSourceFingerprint(root);
+  assert.notEqual(changed.digest, initial.digest);
+});

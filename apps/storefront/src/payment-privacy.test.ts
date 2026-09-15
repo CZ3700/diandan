@@ -9,6 +9,12 @@ test("checkout and return HTML, locale redirects and BFF failures are always pri
     "/ZH-cn/checkout/return?session=test",
     "/api/storefront/checkout/current/status",
     "/api/storefront/cart/validate",
+    "/zh-CN/order-access",
+    "/en/orders/lookup",
+    "/ja/orders/10000000-0000-4000-8000-000000000001",
+    "/pt/thank-you/10000000-0000-4000-8000-000000000001",
+    "/api/storefront/order-access/exchange",
+    "/api/storefront/orders/10000000-0000-4000-8000-000000000001",
   ]) {
     const response = proxy(
       new NextRequest("https://shop.example.invalid" + path),
@@ -47,4 +53,27 @@ test("payment frame CSP permits only exact configured HTTPS origins; malformed c
       "frame-src 'none';",
     );
   }
+});
+
+test("order pages allow no third-party scripts or frames, and strip forged early-entry request headers", () => {
+  const entry = proxy(
+    new NextRequest("https://shop.example.invalid/en/order-access"),
+  );
+  expect(entry.headers.get("content-security-policy")).toContain(
+    "script-src 'self' 'unsafe-inline'",
+  );
+  expect(entry.headers.get("content-security-policy")).toContain(
+    "frame-src 'none'",
+  );
+  expect(
+    entry.headers.get("x-middleware-request-x-storefront-order-access"),
+  ).toBe("1");
+  const other = proxy(
+    new NextRequest("https://shop.example.invalid/en/gifts", {
+      headers: { "x-storefront-order-access": "1" },
+    }),
+  );
+  expect(
+    other.headers.get("x-middleware-request-x-storefront-order-access"),
+  ).toBeNull();
 });
