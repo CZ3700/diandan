@@ -2,6 +2,7 @@ import { describe, expect, test } from "vitest";
 
 import {
   createTransactionRunner,
+  persistenceTransactionFailureFromPostgres,
   type TransactionClient,
   type TransactionScopeControl,
 } from "./transaction-runner.js";
@@ -61,6 +62,167 @@ class RecordingTransactionClient implements TransactionClient {
     this.releaseArguments.push(destroy);
   }
 }
+
+describe("nested persistence failure translation", () => {
+  test.each([
+    ["40001", "TRANSACTION_ABORTED", "RETRY_SAME_COMMAND"],
+    ["40P01", "TRANSACTION_ABORTED", "RETRY_SAME_COMMAND"],
+    ["08006", "TEMPORARY_UNAVAILABLE", "RETRY_SAME_COMMAND"],
+    ["55P03", "TEMPORARY_UNAVAILABLE", "RETRY_SAME_COMMAND"],
+    ["23505", "ALREADY_EXISTS", "NONE"],
+    ["23514", "INTEGRITY_VIOLATION", "NONE"],
+    ["42P01", "CONFIGURATION_ERROR", "NONE"],
+  ] as const)(
+    "retains %s classification and recovery across nested repository boundaries",
+    (sqlState, code, recovery) => {
+      const inner = persistenceTransactionFailureFromPostgres({
+        code: sqlState,
+        message: "RAW_DATABASE_DETAIL",
+        detail: "PRIVATE_QUERY_PARAMETERS",
+      });
+      const outer = persistenceTransactionFailureFromPostgres(inner);
+      expect(outer.toJSON()).toEqual({
+        schemaVersion: 1,
+        operation: "RUN_TRANSACTION",
+        outcome: "FAILURE",
+        error: {
+          schemaVersion: 1,
+          code,
+          recovery,
+          ...(recovery === "RETRY_SAME_COMMAND" ? { retryAfterMs: 250 } : {}),
+        },
+      });
+      expect(persistenceTransactionFailureFromPostgres(outer).toJSON()).toEqual(
+        inner.toJSON(),
+      );
+      expect(JSON.stringify(outer)).not.toMatch(/RAW_DATABASE|PRIVATE_QUERY/);
+    },
+  );
+
+  test("retains unknown transaction outcome without converting reconciliation to retry", () => {
+    const inner = new PersistenceTransactionFailureError({
+      schemaVersion: 1,
+      operation: "RUN_TRANSACTION",
+      outcome: "FAILURE",
+      error: {
+        schemaVersion: 1,
+        code: "TRANSACTION_OUTCOME_UNKNOWN",
+        recovery: "RECONCILE_REQUIRED",
+      },
+    });
+    expect(persistenceTransactionFailureFromPostgres(inner).toJSON()).toEqual(
+      inner.toJSON(),
+    );
+  });
+
+  test("preserves validated retry delay while discarding attached adapter details", () => {
+    const inner = new PersistenceTransactionFailureError({
+      schemaVersion: 1,
+      operation: "RUN_TRANSACTION",
+      outcome: "FAILURE",
+      error: {
+        schemaVersion: 1,
+        code: "TEMPORARY_UNAVAILABLE",
+        recovery: "RETRY_SAME_COMMAND",
+        retryAfterMs: 750,
+      },
+    });
+    Object.assign(inner, {
+      message: "RAW_DATABASE_DETAIL",
+      cause: "PRIVATE_QUERY_PARAMETERS",
+    });
+    const translated = persistenceTransactionFailureFromPostgres(inner);
+    expect(translated.toJSON()).toEqual(inner.toJSON());
+    expect(translated.message).toBe("persistence transaction failed");
+    expect(translated.cause).toBeUndefined();
+  });
+
+  test("fails closed when an unknown error rejects prototype inspection", () => {
+    const error = new Proxy(
+      {},
+      {
+        getPrototypeOf() {
+          throw new Error("RAW_PROVIDER_PROTOTYPE_TRAP");
+        },
+      },
+    );
+    expect(persistenceTransactionFailureFromPostgres(error).code).toBe(
+      "UNEXPECTED_ADAPTER_FAILURE",
+    );
+    const revoked = Proxy.revocable({}, {});
+    revoked.revoke();
+    expect(persistenceTransactionFailureFromPostgres(revoked.proxy).code).toBe(
+      "UNEXPECTED_ADAPTER_FAILURE",
+    );
+  });
+
+  test("does not execute a replaced canonical failure accessor", () => {
+    const error = persistenceTransactionFailureFromPostgres({ code: "40001" });
+    let reads = 0;
+    Object.defineProperty(error, "failure", {
+      get() {
+        reads++;
+        throw new Error("RAW_CANONICAL_FAILURE_GETTER");
+      },
+    });
+    expect(persistenceTransactionFailureFromPostgres(error).code).toBe(
+      "UNEXPECTED_ADAPTER_FAILURE",
+    );
+    expect(reads).toBe(0);
+  });
+
+  test("fails closed without reading fields on a replaced canonical payload", () => {
+    const error = persistenceTransactionFailureFromPostgres({ code: "40001" });
+    let reads = 0;
+    Object.defineProperty(error, "failure", {
+      value: {
+        get schemaVersion() {
+          reads++;
+          throw new Error("RAW_PAYLOAD_GETTER");
+        },
+      },
+    });
+    expect(persistenceTransactionFailureFromPostgres(error).code).toBe(
+      "UNEXPECTED_ADAPTER_FAILURE",
+    );
+    expect(reads).toBe(0);
+  });
+
+  test("fails closed for a malformed canonical payload", () => {
+    const error = persistenceTransactionFailureFromPostgres({ code: "40001" });
+    Object.defineProperty(error, "failure", { value: { schemaVersion: 99 } });
+    expect(persistenceTransactionFailureFromPostgres(error).code).toBe(
+      "UNEXPECTED_ADAPTER_FAILURE",
+    );
+  });
+
+  test("does not accept a driver object that only claims a canonical code", () => {
+    const failure = persistenceTransactionFailureFromPostgres({
+      name: "PersistenceTransactionFailureError",
+      code: "TRANSACTION_ABORTED",
+      recovery: "NONE",
+      failure: { outcome: "FAILURE" },
+    });
+    expect(failure.code).toBe("UNEXPECTED_ADAPTER_FAILURE");
+  });
+
+  test("does not read canonical or SQLSTATE accessors on unknown driver errors", () => {
+    let reads = 0;
+    const error = {};
+    for (const key of ["failure", "code", "cause"]) {
+      Object.defineProperty(error, key, {
+        get() {
+          reads++;
+          throw new Error("UNSAFE_ERROR_GETTER");
+        },
+      });
+    }
+    expect(persistenceTransactionFailureFromPostgres(error).code).toBe(
+      "UNEXPECTED_ADAPTER_FAILURE",
+    );
+    expect(reads).toBe(0);
+  });
+});
 
 describe("transaction runner", () => {
   test("uses one acquired client through callback and commit", async () => {

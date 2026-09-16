@@ -33,6 +33,7 @@ import { verifyPublicationClockCases } from "./postgres-publication-clock-cases.
 import { verifyPublicationRuntimeCases } from "./postgres-publication-runtime-cases.mjs";
 import { verifyPublicationPurgeCases } from "./postgres-publication-purge-cases.mjs";
 import { verifyPublicationRevisionProof } from "./postgres-publication-proof-cases.mjs";
+import { verifyPublicationReadFailureCases } from "./postgres-publication-read-failure-cases.mjs";
 
 const workspaceRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -564,6 +565,13 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
         );
       }
       if (process.env["PUBLICATION_RUNTIME_PROOF_CASES"] !== "1") {
+        stage = "public read canonical lock failure";
+        await verifyPublicationReadFailureCases({
+          client,
+          clientConfig,
+          fixtures,
+          check: equal,
+        });
         stage = "purge guards and fencing";
         await verifyPublicationPurgeCases({
           client,

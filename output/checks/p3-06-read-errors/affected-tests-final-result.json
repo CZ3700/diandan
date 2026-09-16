@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "--filter",
+    "@fan-support/persistence-port",
+    "--filter",
+    "@fan-support/persistence-postgres",
+    "--filter",
+    "@fan-support/application",
+    "--filter",
+    "@fan-support/api",
+    "test"
+  ],
+  "startedAt": "2026-09-16T17:02:19.405969+00:00",
+  "completedAt": "2026-09-16T17:02:39.523836+00:00",
+  "elapsedSeconds": 20.118,
+  "exitCode": 0
+}

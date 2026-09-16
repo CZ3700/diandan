@@ -31,6 +31,23 @@
 
 已于 2026-09-05 依据用户明确视觉接受与继续开发指令解锁；尚未达到退出门禁。
 
+## P3-06 读取错误保真检查点登记（2026-09-16）
+
+- Owner：Codex `/root`，继续唯一 Lane D executor；开始 2026-09-16T16:56:18.865802+00:00，基线 `75751e1`，分支 `codex/p3-06-performance-resume`。延续已有任务，27 DONE /2 IN_PROGRESS /20 PENDING 保持，Phase 5 不解锁。
+- 范围：修正已证明的 PostgreSQL 错误跨内容读取嵌套边界后二次误分类，保留明确中止/暂时不可用与恢复语义；不增加自动重试、不改变事务隔离/COMMIT未知结果/发布资格、公开合同或视觉。旧自然内容错误尚不能归因为该缺陷。
+- 分工：root 独占事务转换函数、读取回归测试、实际PG脚本、检查入口、文档与Git；read_error_audit 只读审查错误传播/调用者风险；first_paint_audit 只读分析已有首屏trace和SSR/bundle，不并行构建/PG/浏览器。
+- 子步骤所有权补充：read_error_audit 经授权独占新 `postgres-publication-read-failure-cases.mjs` 与原 `postgres-publication-runtime.mjs` 的导入/调用；复用实际已发布艺人、独立连接真实持有行锁，原 preflight FOR SHARE 触发55P03。root继续独占构建与PG执行，error_fix_review非作者复核；先保留旧dist实际RED，再构建候选GREEN。
+- 验证：先新失败单测及真实 PostgreSQL 故障传播，再最小实现、受影响包测试、原事务COMMIT/回滚保护与实际公开读取回归；全仓format/lint/typecheck/build及非作者复核、S.U.P.E.R。性能分析若无充分证据不加推测补丁，不重复已通过UI矩阵作为新功能。
+- 保护：初始未跟踪 3767 项 SHA 保存在 `output/checks/p3-06-read-errors/initial-untracked.json`，已有证据不覆盖。只本地提交；R-08/R-12/R-13/R-17与原PSP/真机/人工/性能门保留。
+
+### 读取错误保真检查点结果（2026-09-16 UTC）
+
+- 已修复嵌套仓储重复转换标准数据库错误的缺陷，保留原code/recovery/retryAfterMs；使用现有JSON快照与合同解析清理附带信息。未知Proxy/篡改getter的初版回归经独立复核发现，新增RED后修复。没有自动重试、COMMIT/事务/发布/合同/视觉变更。
+- 单测先9FAIL/68PASS，再77PASS；边界4FAIL/77PASS后81PASS。最终受影响四包1424tests PASS，独立5文件116tests ACCEPT。真实PG旧dist准确在仓储分类RED，最终原发布487断言（含新增10项55P03真实行锁与回滚/同连接恢复）及原事件时间30断言通过；事务manager原本已保留首个inner错误，不能扩大为HTTP根因结论。
+- 真实HTTP目录49请求/331断言覆盖七语言、实际数据库故障503与同进程恢复；全仓check:dev45.86秒exit0（type/test62各59缓存，build36/34缓存）。本轮未跑完整pnpm check、UI或LH；前端源码全部不变。没有新增媒体字节/手机/正式支付/上线证据。
+- 2207输入SHA `d10c5da1cc5c2193bb41ae34319109bdbeb5387668646cb42da8d30c09e6fd93`一致，仅3旧文件改动/1新PG测试；初始3767未跟踪逐SHA保持。最终secrets36.252秒/diff通过；S.U.P.E.R本检查点10项通过，整项P3-06仍IN_PROGRESS，27/2/20和Phase5 LOCKED不变。只本地提交，验证/复跑入口 `output/checks/p3-06-read-errors/README.md`。
+- 下一具体候选：正文与SEO共用完整scoped礼物读取，减少正常市场页面重复发布证明请求；先失败测试，再保留无市场/不可售/404/当前版本不一致/七语与SEO边界，实际同条件性能测量。只读报告 `output/checks/p3-06-read-errors/performance-audit.md`；本轮未实施或宣称收益。旧自然不可用根因、性能及人工/商户门继续保留。
+
 ## P3-06 读取稳定性与首屏续验登记（2026-09-16）
 
 - Owner：Codex `/root` 继续唯一 Lane D executor；开始 2026-09-16T09:32:59.586772+00:00，基线 `995d1c5`，分支 `codex/p3-06-performance-resume`，跟踪工作区干净。继续已有任务，不领取 Phase 5。

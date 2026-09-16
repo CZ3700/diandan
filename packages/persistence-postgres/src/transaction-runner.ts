@@ -2,6 +2,7 @@ import { classifyPostgresFailure } from "./errors.js";
 
 import {
   persistencePortResponseSchema,
+  parsePersistenceTransactionFailure,
   PersistenceTransactionFailureError,
   type PersistencePortFailure,
 } from "@fan-support/persistence-port";
@@ -40,6 +41,23 @@ export function createPersistenceTransactionFailureError(
 export function persistenceTransactionFailureFromPostgres(
   error: unknown,
 ): PersistenceTransactionFailureError {
+  // Nested repositories may already have translated the driver error. Rebuild
+  // from the validated port failure, preserving recovery without driver details.
+  try {
+    if (error instanceof PersistenceTransactionFailureError) {
+      const descriptor = Object.getOwnPropertyDescriptor(error, "failure");
+      if (descriptor && "value" in descriptor) {
+        const snapshot = createCanonicalJsonSnapshot(descriptor.value);
+        if (snapshot !== invalidJsonSnapshot) {
+          const canonical = parsePersistenceTransactionFailure(snapshot);
+          if (canonical)
+            return new PersistenceTransactionFailureError(canonical);
+        }
+      }
+    }
+  } catch {
+    // Unknown errors may reject prototype inspection; retain the safe SQLSTATE path.
+  }
   return createPersistenceTransactionFailureError(
     classifyPostgresFailure(error),
   );

@@ -2,7 +2,7 @@
 
 更新：2026-09-16。依据当前工作区、Git提交、MASTER与实际验收记录。正式计数27 DONE /2 IN_PROGRESS /20 PENDING，共49项；约55%是任务完成比例，不是上线准备度。
 
-当前续验检查点：P3-06完成TEST网关连接头修正与默认关闭的Next读取诊断，55项定向测试、全仓check:dev及修正后真实七语言双视口88场景通过。原有首访购物车/CJK优化保留。性能仍未通过：本轮旧加载网关的63次诊断采样内容正常，仅5/21组达预算；不能当成修正后或关闭诊断的正式性能结果。旧偶发读取根因继续调查，正式计数仍27/49 DONE，Phase5未解锁。证据入口 `output/checks/p3-06-read-stability/final-verification.md`。
+当前续验检查点：P3-06已修复嵌套仓储丢失数据库错误分类与恢复语义。受影响1424tests、真实PG行锁/回滚/同连接恢复、HTTP数据库故障503与恢复、全仓check:dev通过。它不证明旧自然不可用页面的根因已解决；性能和人工验收仍开放。下一具体候选为礼物正文与SEO共用完整scoped读取、减少重复发布证明请求，尚未实施。正式计数27/49 DONE、Phase5未解锁，证据入口 `output/checks/p3-06-read-errors/README.md`。
 
 ## 产品与已确认约束
 
@@ -25,7 +25,7 @@
 
 ## 这次接续点
 
-当前分支 `codex/p3-06-performance-resume`，本轮检查点起点 `995d1c5`。P4-05/P4-06已DONE；root恢复Lane D接续P3-06浏览性能验收，P4-04商户验收仍待续、无执行者。暂无READY任务，Phase5仍LOCKED。
+当前分支 `codex/p3-06-performance-resume`，本轮检查点起点 `75751e1`。P4-05/P4-06已DONE；root恢复Lane D接续P3-06浏览性能验收，P4-04商户验收仍待续、无执行者。暂无READY任务，Phase5仍LOCKED。
 
 1. 已验收可信付款证据应用：付款、订单、购物车、意图、真实库存和事件同事务提交；重复/乱序/双来源只入账一次，失败释放，迟到收款进入履约待处理。
 2. 安全查单服务端已本地验收：为后续fragment页面提供一次性凭证交换短期HttpOnly会话的API，付款浏览器通过受保护结账会话取得订单范围授权；只读不可变历史快照，保护真实原文与七语言来源。
@@ -39,7 +39,8 @@
 ## 续作入口
 
 - 权威状态：[MASTER](MASTER.md)、[P3执行卡](phase-3-storefront.md)与[P4执行卡](phase-4-commerce.md)。
-- 当前稳定性检查点：[最终验证](../../output/checks/p3-06-read-stability/final-verification.md)；TEST修正与实际整合通过，性能和旧偶发读取错误继续调查。上轮性能优化证据保留于 [原检查点](../../output/checks/p3-06-performance-resume/final-verification.md)。
+- 当前错误保真检查点：[验证与复跑](../../output/checks/p3-06-read-errors/README.md)；后续性能候选见同目录审计。
+- 上轮稳定性检查点：[最终验证](../../output/checks/p3-06-read-stability/final-verification.md)；TEST修正与实际整合通过，性能和旧偶发读取错误继续调查。上轮性能优化证据保留于 [原检查点](../../output/checks/p3-06-performance-resume/final-verification.md)。
 - 订单闭环：[P4-05实施计划](../plan/p4-05-order-completion.md)与[付款运行手册](../operations/order-payments.md)、[查单运行手册](../operations/order-access.md)。
 - 验证与原失败：[付款应用验收](../../output/checks/p4-05-order-completion/final-verification.md)与[安全查单验收](../../output/checks/p4-05-order-access/final-verification.md)与[订单界面验收](../../output/checks/p4-05-order-storefront/final-verification.md)。
 - 通知与清理：[运行手册](../operations/order-notifications.md)与[本地验收/原失败](../../output/checks/p4-06-notifications/final-verification.md)。
