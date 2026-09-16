@@ -17,7 +17,7 @@
 | P4-03 | DONE | Codex `/root` | P4-01、P4-02 | Preflight/quote+amount + order presentation locale + per-object TranslationSnapshotRef + policy revision |
 | P4-04 | IN_PROGRESS | 无 executor，商户验收待续 | P1-06、P4-03 | TEST/通用接口本地检查点通过；真实 PSP 等门保留 |
 | P4-05 | DONE | Codex `/root`（已释放 Lane A） | P4-04 本地检查点（ADR-014） | 可信入账、安全查单、七语言订单结果与历史状态进度完成本地验收 |
-| P4-06 | READY | 无 executor | P4-05、P1-06 | 七语言 Notification/fallback alert/expiry cleanup |
+| P4-06 | DONE | Codex `/root`（已释放 Lane D） | P4-05、P1-06 | 七语言事务通知、安全邮件查单、幂等重试与到期竞争完成本地验收 |
 
 ## P4-01 执行登记（2026-09-08）
 
@@ -240,3 +240,35 @@ P204 collector补入root layout的order-entry依赖，先有效RED再整组GREEN
 - 最终2131输入SHA `6e746b77a95fefd3b771e8603bcaed361a6fa54e55bffa2a6c1d320753072176`，前后集合/字节一致。573合同根/96公开API路径/180组件/56旧SQL与2412原未跟踪文件不变；secret scan与官方registry high audit通过。独立源码/证据复核与S.U.P.E.R10项通过，根证据`output/checks/p4-05-order-storefront/final-verification.md`、`gate-coverage.json`；续作运行手册`docs/operations/order-access.md`。
 - 范围：JSON正文丢失是Next响应边界注入；实际原生Back重新加载通过但pageshow.persisted=false，无真实bfcache命中。真实商户/PSP、邮件、云/staging/生产、人工译审/读屏与物理手机仍未验收；预计准备时间待批准SLA，邮件提示待P4-06实际投递，P5-02实际履约时再记录准备/送达事件时间。
 - 合并前两顺序检查点，本地P4-05最低验收已满足，现DONE并释放Lane A；P4-06 READY，Lane D无executor。P3-06/P4-04仍待验收且无executor，Phase5仍LOCKED。26DONE/1READY/2IN_PROGRESS/20PENDING=49。只本地Git提交，不push/PR/merge/部署。
+
+
+## P4-06 执行登记（2026-09-16）
+
+- Owner：Codex `/root`，Lane D 唯一 executor；开始 2026-09-16T01:31:27Z，基线 `7c63148`，跟踪工作区干净，分支 `codex/p4-06-notifications`。从依赖完成的 READY 领取唯一任务；P3-06/P4-04 无 executor。
+- 范围：订单快照与固化 locale 驱动的付款/准备/送达七语言事务通知，不可变模板及译审清单、可观测英文事故 fallback、持久发送幂等/重试/未知结果恢复；受条件锁保护的 reservation/intent/cart/token 过期清理。沿用现有支付权威与一次性查单链接，不伪造准备/送达事实。
+- 顺序：先审计既有合同、通知端口、KMS/联系人与 token、Outbox/Worker、清理锁序；冻结兼容新增合同后按文件独占并行。root拥有共享合同、Application/Worker组合、进度与整合，子任务不另领 Lane。
+- 验证：有效 RED→GREEN；实际 PostgreSQL、持久队列及本地收件协议，重复/并发/崩溃重试/故障恢复、旧模板重现和 fallback 告警、清理与 webhook 竞争；七语模板双视口浏览器；受影响测试和原整仓门、独立评审及 S.U.P.E.R10项。
+- 边界：正式发信服务/域名和人工译审仍 OPEN，本地收件不对真实用户发信；真实商户、P3未完验收、Phase5/上线门保留。26DONE/3IN_PROGRESS/20PENDING=49；只本地提交，不push/部署。2413项初始未跟踪文件 SHA 清单见 `output/checks/p4-06-notifications/initial-untracked.json`。
+
+### P4-06 整合 REVIEW（2026-09-16）
+
+- 付款、准备、送达七语言历史模板，固化传输/内容/收件身份的幂等发送与 UNKNOWN 恢复、真实 Worker 消费及资源到期清理已实现。全部模板 DRAFT；生产装配仍要求人工 APPROVED，TEST 不向真实邮箱发信。
+- 实际 PG/TLS/持久队列/真实邮件 href 浏览器整合 6812 断言通过（5763 准备、1048 协议、1 输入一致性），22 cases；七语言模板 44 浏览器场景/842 断言/44 axe 零违规和 incomplete。390 与 1440 实际查单截图已复核，金额清楚可见。
+- 实际过期/库存竞争主夹具 6105 断言通过；额外真实 UNKNOWN→ACTION 与 SQL 更新时间截止竞争 5843 断言通过。修复到期资源重新开放支付入口的问题：过期后保持 UNKNOWN 继续对账，可信成功仍入账 PAID/ON_HOLD。
+- 独立复核指出凭据应提前校验，现已在启动时校验并固定所有活动/保留 profile 的凭据；7 项组合测试通过。旧合同/公开 API/旧迁移/2413 初始未跟踪文件保持；待共享浏览器刷新、完整 check 和最终非作者验收后决定 DONE。
+- 当前 26 DONE /1 REVIEW /2 IN_PROGRESS /20 PENDING=49，Lane D 仍由 root 持有。
+
+- 全仓首轮 25.097 秒失败于旧参数 SQL 提取器缺少 `restoresNonterminal` 变量；修为分别展开两个分支并实际 PostgreSQL PREPARE，45 断言/38 SQL 与原 action guard 10 断言通过。第二轮 174.870 秒失败于旧目录回退测试确认头仍为0028；集中更新旧回退入口和当前头断言，先证明0029新历史为空、再正常回退，原防丢历史检查全部保留。原失败日志不覆盖。
+- CI Quality 预算从30改45分钟（上一轮1737.580秒，本次再增加约367秒实际集成），精确配置检查 RED→GREEN；Security20分钟保持。Ubuntu运行前提和TEST收件边界独立源码复核通过，不等于实际远程CI通过。
+
+## P4-06 验收完成（2026-09-16T03:45:04.935533+00:00）
+
+- 交付：三类七语言不可变事务通知、历史内容/固定 locale、事故英语 fallback 告警、固定传输/正文/收件身份的持久幂等与 UNKNOWN 恢复；实际 Worker 消费、一次性邮件查单及独立 checkout bootstrap；cart/intent/reservation/token/session 到期清理。修复过期 UNKNOWN 重新开放支付入口的风险，提交时重验截止，可信迟到收款仍入账 PAID/ON_HOLD。
+- 实际通知整合：`mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/persistence-postgres test:postgres:notifications`；最终6814断言（5763准备+1050协议+1输入），实际PG/TLS独立接收器/pg-boss Worker/生产构建Next邮件CTA均通过。`persistence/run-2026-09-16T03-30-06.970Z/`有双端390×844/1440×900、4PNG、键盘/reduced motion/可见金额与2axe零violation/incomplete。
+- 实际清理：同环境 `pnpm --filter @fan-support/persistence-postgres test:postgres:commerce-expiry`；action5843与expiry6105断言通过，分别见`output/checks/p4-06-commerce-expiry/action-2026-09-16T03-26-33.604Z/`及`run-2026-09-16T03-27-47.921Z/`。涵盖真实截止跨过UPDATE、UNKNOWN后续CAPTURE、webhook两种锁顺序和CREATE在途竞争，不能释放正在付款的资源或吞掉可信成功。
+- 模板：七语三事件双端与500项订单摘要共44场景/842断言，44axe零violation/incomplete；证据`templates/browser-2026-09-16T02-27-19-394Z/`。21条人工译审均DRAFT，生产启用门仍关闭。root与非作者复核模板和真实查单截图。原P2-04/05 collector刷新通过，18/22PNG，既存moderate/人工真机门保留。
+- 原完整check第三轮2220.017秒exit1：29迁移/174表、全部实际PG/API/TLS S3/媒体423、新通知/清理、format/lint/types已通过；旧`translation-transfer-repository.test.ts`首次动态import超过原5000ms，包639/640通过。原测试与阈值未改，定向两项0.899秒exit0。初次后缀包装PATH失败0.011秒exit127保留；修正输出目录包装器后原七项质量后缀46.254秒exit0：types62/62（62cache）、tests62/62（59cache）、build36/36（32cache）、32实际Node出口与边界通过。43原门按root22步骤仅展开PG/S3的口径全部分段覆盖，不称单条全绿，偶发超时根因未定位。
+- 中途变化准确保留：通知fixture执行前补齐API/Worker/Storefront依赖的28项构建，实际最终命令通过；Next admin dev生成的两条声明import已归档并精确恢复。最终冻结2190实现输入SHA`fdfeb7436391fd492f5484f0cd1b769755ee8f6f27a4b5b1e372f061de26db91`一致，不称全程零漂移。573旧合同根、96API路径/180组件、56SQL及2413初始未跟踪文件保持。
+- 非作者最终ACCEPT，无未闭环P1/P2；启动校验/固定所有保留发信凭据的P2已闭环。S.U.P.E.R10项通过（测试为同源分段证据），secret scan26.561秒/high dependency audit0.693秒exit0。精确argv、缓存、原失败、review、完整门映射及剩余风险见`output/checks/p4-06-notifications/final-verification.md`与`gate-coverage.json`；运行入口`docs/operations/order-notifications.md`。
+- 范围：TEST网关只持久接收回执，无真实SMTP/收件箱；准备/送达是正常付款订单上受约束测试事件，不代表P5运营或实物送达。正式域名/邮件、人工译审、云KMS、实际PSP、小额支付退款、物理手机/读屏、staging/生产均未验收；Linux/GitHub CI也未运行。
+- P4-06 DONE并释放Lane D；27DONE/2IN_PROGRESS/20PENDING=49，无READY。P3-06/P4-04继续待验收且无executor，Phase5仍LOCKED。按用户偏好只保存本地Git检查点，不push/PR/merge/部署。

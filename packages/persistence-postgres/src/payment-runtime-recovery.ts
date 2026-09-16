@@ -12,6 +12,7 @@ import {
   loadPaymentAttempt,
   paymentEventTime,
   rejectPayment,
+  validPaymentReservationsSql,
 } from "./payment-runtime-data.js";
 import { paymentCheckoutReadiness } from "./payment-runtime-context.js";
 import {
@@ -120,7 +121,10 @@ export async function recordPaymentReconcile(
     command.action?.type !== "WAIT"
       ? command.action
       : undefined;
-  const canApply =
+  const restoresNonterminal =
+    claim.attempt.status === "UNKNOWN" &&
+    (recoveredAction !== undefined || target === "PROCESSING");
+  let canApply =
     (!prior ||
       (prior["disposition"] === "OBSERVED" && recoveredAction !== undefined)) &&
     !pending &&
@@ -129,9 +133,19 @@ export async function recordPaymentReconcile(
       ["FAILED", "CANCELED", "EXPIRED"].includes(target) ||
       (target === "PROCESSING" &&
         ["UNKNOWN", "REQUIRES_ACTION"].includes(claim.attempt.status)));
+  if (canApply && restoresNonterminal) {
+    // The claim already holds the order/attempt. Lock its intent/reservation rows without requesting the cart in reverse order.
+    const order = await paymentCheckoutReadiness(client, claim.attempt.orderId);
+    canApply =
+      order["resources_valid"] === true &&
+      order["order_status"] === "PENDING_PAYMENT" &&
+      order["payment_status"] === "PENDING" &&
+      order["current_payment_attempt_id"] === claim.attempt.id;
+  }
   if (canApply) {
-    await client.query(
-      `UPDATE public.payment_attempts SET status=$2,provider_call_started=true,external_reference=coalesce(external_reference,$3),action_type=$7,action_ciphertext=$8::bytea,action_encrypted_data_key=$9::bytea,action_key_version=$10,action_expires_at=$11::timestamptz,action_poll_after_ms=NULL,status_evidence_kind='AUTHENTICATED_RECONCILE',provider_event_id=$4::uuid,evidence_audit_log_id=$5::uuid,evidence_reason_code='PAYMENT_STATUS_RECONCILED',version=version+1,updated_at=$6::timestamptz,terminated_at=CASE WHEN $2::text IN('FAILED','CANCELED','EXPIRED') THEN $6::timestamptz ELSE NULL END WHERE id=$1::uuid`,
+    const changed = await draftRows(
+      client,
+      `UPDATE public.payment_attempts SET status=$2,provider_call_started=true,external_reference=coalesce(external_reference,$3),action_type=$7,action_ciphertext=$8::bytea,action_encrypted_data_key=$9::bytea,action_key_version=$10,action_expires_at=$11::timestamptz,action_poll_after_ms=NULL,status_evidence_kind='AUTHENTICATED_RECONCILE',provider_event_id=$4::uuid,evidence_audit_log_id=$5::uuid,evidence_reason_code='PAYMENT_STATUS_RECONCILED',version=version+1,updated_at=$6::timestamptz,terminated_at=CASE WHEN $2::text IN('FAILED','CANCELED','EXPIRED') THEN $6::timestamptz ELSE NULL END WHERE id=$1::uuid${restoresNonterminal ? ` AND EXISTS(SELECT 1 FROM public.orders o WHERE o.id=payment_attempts.order_id AND o.current_payment_attempt_id=$1::uuid AND o.order_status='PENDING_PAYMENT' AND o.payment_status='PENDING' AND o.quote_expires_at>clock_timestamp() AND ${validPaymentReservationsSql})` : ""} RETURNING id`,
       [
         claim.attempt.id,
         target,
@@ -152,6 +166,14 @@ export async function recordPaymentReconcile(
         recoveredAction?.expiresAt ?? null,
       ],
     );
+    // A deadline may pass after readiness. Preserve the observation and UNKNOWN when the guarded write loses that race.
+    if (changed.length !== 1) {
+      if (!restoresNonterminal || changed.length !== 0)
+        return rejectPayment("CONTENT_UNAVAILABLE");
+      canApply = false;
+    }
+  }
+  if (canApply) {
     await appendPaymentHistory(client, outbox, {
       attempt: claim.attempt,
       eventId: command.eventId,

@@ -32,17 +32,19 @@ export async function insertAccessToken(
   orderId: unknown,
   credential: OrderAccessCredential,
   ttlSeconds: number,
+  purpose: "LINK" | "CHECKOUT_BOOTSTRAP" = "LINK",
 ) {
   return oneAccessRow(
     await draftRows(
       client,
-      `WITH instant AS MATERIALIZED(SELECT clock_timestamp() now) INSERT INTO public.order_access_tokens(id,order_id,token_digest,token_pepper_version,status,expires_at,created_at) SELECT $1::uuid,$2::uuid,decode($3,'hex'),$4,'ACTIVE',instant.now+($5::integer*interval '1 second'),instant.now FROM instant RETURNING id,${cartTimestamp("expires_at")} expires_at`,
+      `WITH instant AS MATERIALIZED(SELECT clock_timestamp() now) INSERT INTO public.order_access_tokens(id,order_id,token_digest,token_pepper_version,status,expires_at,created_at,purpose) SELECT $1::uuid,$2::uuid,decode($3,'hex'),$4,'ACTIVE',instant.now+($5::integer*interval '1 second'),instant.now,$6 FROM instant RETURNING id,${cartTimestamp("expires_at")} expires_at`,
       [
         randomUUID(),
         orderId,
         credential.tokenDigest,
         credential.pepperVersion,
         ttlSeconds,
+        purpose,
       ],
     ),
   );

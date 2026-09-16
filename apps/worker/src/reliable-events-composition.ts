@@ -3,6 +3,7 @@ import { randomBytes, randomUUID } from "node:crypto";
 import {
   createDispatchOutboxEvent,
   createOrderPaymentApplication,
+  createCommerceExpiryUseCases,
   createOrderPaymentWebhookHandler,
   createListReadyOutboxJobs,
   createProcessWebhookInbox,
@@ -34,6 +35,7 @@ import {
   type ReliableEventsWorkerNotice,
   type ReliableEventsWorkerRuntime,
 } from "./reliable-events-runtime.js";
+import { prepareOptionalWorkerNotifications } from "./notification-composition.js";
 
 const QUEUE_SCHEMA = "pgboss";
 const LOCAL_CONCURRENCY = 4;
@@ -57,6 +59,7 @@ export type WorkerReliableEventsCompositionFactories = Readonly<{
   createId(): string;
   now(): string;
   createPropagation(): QueuePropagationCarrier | undefined;
+  prepareNotifications: typeof prepareOptionalWorkerNotifications;
 }>;
 
 export type WorkerReliableEventsCompositionOptions = Readonly<{
@@ -180,6 +183,7 @@ const defaultFactories: WorkerReliableEventsCompositionFactories =
     createId: randomUUID,
     now: () => new Date().toISOString(),
     createPropagation: createMaintenancePropagation,
+    prepareNotifications: prepareOptionalWorkerNotifications,
   });
 
 export function createWorkerReliableEventsComposition(
@@ -202,6 +206,9 @@ export function createWorkerReliableEventsComposition(
     createPropagation:
       suppliedFactories?.createPropagation ??
       defaultFactories.createPropagation,
+    prepareNotifications:
+      suppliedFactories?.prepareNotifications ??
+      defaultFactories.prepareNotifications,
   };
   const suppliedBindings = options.bindings;
   const bindings: WorkerReliableEventsBindings = {
@@ -214,6 +221,15 @@ export function createWorkerReliableEventsComposition(
     ]),
   };
 
+  // Validate mail configuration and approvals before allocating infrastructure.
+  const bindNotifications = factories.prepareNotifications(environment);
+  const notificationConsumerKey = "order-notifications-v1";
+  if (
+    bindNotifications &&
+    bindings.consumerKeys.includes(notificationConsumerKey)
+  ) {
+    throw new TypeError("Reserved notification consumer key");
+  }
   const queue = factories.createQueue({
     schemaVersion: 1,
     connectionString: database.url,
@@ -238,6 +254,14 @@ export function createWorkerReliableEventsComposition(
             reportPersistenceFailure(logger, failure),
         });
   const transactionManager = persistence.reliableEventTransactionManager;
+  const notifications = bindNotifications?.({
+    notificationTransactionManager: persistence.notificationTransactionManager,
+    ...(logger ? { logger } : {}),
+  });
+  const expiry = createCommerceExpiryUseCases({
+    transactions: persistence.commerceExpiryTransactionManager,
+    createId: factories.createId,
+  });
   const orderPayments = createOrderPaymentApplication({
     transactions: persistence.orderPaymentApplicationTransactionManager,
     createId: factories.createId,
@@ -253,7 +277,10 @@ export function createWorkerReliableEventsComposition(
     }),
     dispatchOutboxEvent: createDispatchOutboxEvent({
       transactionManager,
-      consumerForKey: bindings.consumerForKey,
+      consumerForKey: (key) =>
+        notifications && key === notificationConsumerKey
+          ? notifications.consumer
+          : bindings.consumerForKey(key),
       createId: factories.createId,
       now: factories.now,
     }),
@@ -273,7 +300,24 @@ export function createWorkerReliableEventsComposition(
           errorCode: "PAYMENT_REVIEW_REQUIRED",
         });
     },
-    consumerKeys: bindings.consumerKeys,
+    ...(notifications
+      ? {
+          runPendingNotifications: async () => {
+            const result = await notifications.runPending(
+              MAINTENANCE_BATCH_SIZE,
+            );
+            if (result.failed > 0)
+              throw new Error("Notification maintenance failed");
+          },
+        }
+      : {}),
+    expireCommerceResources: async () => {
+      const result = await expiry.runPending(MAINTENANCE_BATCH_SIZE);
+      if (result.failed > 0) throw new Error("Commerce expiry failed");
+    },
+    consumerKeys: notifications
+      ? [...bindings.consumerKeys, notificationConsumerKey]
+      : bindings.consumerKeys,
     now: factories.now,
     createPropagation: factories.createPropagation,
     intervalMs: MAINTENANCE_INTERVAL_MS,

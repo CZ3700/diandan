@@ -16,6 +16,8 @@ export type ReliableEventsWorkerNotice = Readonly<{
     | "OUTBOX_RELAY_FAILED"
     | "PAYLOAD_PURGE_FAILED"
     | "ORDER_PAYMENT_APPLICATION_FAILED"
+    | "NOTIFICATION_MAINTENANCE_FAILED"
+    | "COMMERCE_EXPIRY_FAILED"
     | "MAINTENANCE_CONTEXT_UNAVAILABLE";
 }>;
 
@@ -54,6 +56,8 @@ export type ReliableEventsWorkerRuntimeOptions = Readonly<{
   listReadyOutboxJobs(command: unknown): Promise<readonly OutboxDispatchJob[]>;
   purgeExpiredWebhookPayloads(command: unknown): Promise<unknown>;
   applyPendingOrderPayments?(): Promise<void>;
+  runPendingNotifications?(): Promise<void>;
+  expireCommerceResources?(): Promise<void>;
   consumerKeys: readonly string[];
   now(): string;
   createPropagation(): QueuePropagationCarrier | undefined;
@@ -120,7 +124,11 @@ function validateOptions(options: ReliableEventsWorkerRuntimeOptions): void {
     (options.onNotice !== undefined &&
       typeof options.onNotice !== "function") ||
     (options.applyPendingOrderPayments !== undefined &&
-      typeof options.applyPendingOrderPayments !== "function")
+      typeof options.applyPendingOrderPayments !== "function") ||
+    (options.runPendingNotifications !== undefined &&
+      typeof options.runPendingNotifications !== "function") ||
+    (options.expireCommerceResources !== undefined &&
+      typeof options.expireCommerceResources !== "function")
   ) {
     throw new ReliableEventsWorkerRuntimeError("INVALID_CONFIGURATION");
   }
@@ -219,6 +227,16 @@ export function createReliableEventsWorkerRuntime(
         await options.applyPendingOrderPayments();
       } catch {
         emitNotice("ORDER_PAYMENT_APPLICATION_FAILED");
+      }
+    }
+    for (const [run, code] of [
+      [options.runPendingNotifications, "NOTIFICATION_MAINTENANCE_FAILED"],
+      [options.expireCommerceResources, "COMMERCE_EXPIRY_FAILED"],
+    ] as const) {
+      try {
+        await run?.();
+      } catch {
+        emitNotice(code);
       }
     }
   };

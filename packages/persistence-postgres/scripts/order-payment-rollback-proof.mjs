@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { Client } from "pg";
 import { runMigrations } from "../dist/index.js";
+import { rollbackEmptyNotifications } from "./notification-rollback-prefix.mjs";
 const tables = [
   "schema_migrations",
   "carts",
@@ -71,8 +72,9 @@ export async function verifyOrderPaymentRollbackProtection({
           "SELECT max(version) version FROM public.schema_migrations",
         )
       ).rows[0].version,
-      "0028",
+      "0029",
     );
+    await rollbackEmptyNotifications({ client, clientConfig, workspaceRoot });
     const orderAccessDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -149,11 +151,11 @@ export async function verifyOrderPaymentRollbackProtection({
       workspaceRoot,
       command: { direction: "up" },
     });
-    assert.equal(restored.currentVersion, "0028");
+    assert.equal(restored.currentVersion, "0029");
     return {
       schemaVersion: 1,
       status: "PASS",
-      assertions: 10,
+      assertions: 12,
       tableCount: tables.length,
       before,
       after,

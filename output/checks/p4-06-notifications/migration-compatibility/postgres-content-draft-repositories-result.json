@@ -1,0 +1,14 @@
+{
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs"
+  ],
+  "startedAt": "2026-09-16T02:56:26.324664+00:00",
+  "completedAt": "2026-09-16T02:56:29.098448+00:00",
+  "elapsedSeconds": 2.774,
+  "exitCode": 0
+}

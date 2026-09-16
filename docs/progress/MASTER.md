@@ -3,9 +3,9 @@
 > 最后更新：2026-09-16
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3（验收待续）、Phase 4（ADR-013 本地开发）
-> 当前任务：P4-05 DONE；P4-06 READY，Lane D 无 executor；P4-04 商户验收与 P3-06 浏览验收均待续、无 executor
-> 下一入口：P4-06 七语言事务通知、幂等重试与过期清理；真实 PSP、P3未完验收与上线门保留
-> 当前检查点：P4-05可信入账、安全查单与七语言订单界面完成本地验收，原单条完整check通过。完整概览见 `current-overview.md`；仅本地提交。
+> 当前任务：P4-06 DONE，Lane D 已释放；P4-04 商户验收与 P3-06 浏览验收均待续、无 executor
+> 下一入口：补齐 P3-06 浏览/性能/人工验收与 P4-04 实际 PSP 验收；Phase 5 与上线门保留
+> 当前检查点：P4-06七语言事务通知、安全邮件查单与到期清理完成本地验收；原检查43项分段通过，单条完整check的旧测试超时如实保留。完整概览见 `current-overview.md`；仅本地提交。
 
 ## 1. 开工入口
 
@@ -17,18 +17,18 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；P4-04 本地检查点已验收、商户门待续且无 executor；按 ADR-014 完成P4-05本地范围并释放Lane A，下一任务P4-06 READY且Lane D无executor。正式品牌资产与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；P4-04 本地检查点已验收、商户门待续且无 executor；按 ADR-014 完成P4-05本地范围并释放Lane A，P4-06已DONE并释放Lane D。暂无READY任务，后续接续上述未完验收；Phase5保持LOCKED。正式品牌资产、邮件服务与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
 | PENDING | 20 |
-| READY | 1 |
+| READY | 0 |
 | IN_PROGRESS | 2 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
-| DONE | 26 |
+| DONE | 27 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -79,6 +79,10 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-16 P4-06 DONE：七语言不可变事务通知、持久幂等/UNKNOWN重试、安全邮件查单与资源到期清理完成。真实PG/TLS/队列/邮件CTA6814断言，实际expiry6105/action5843，七语模板44浏览器场景/842断言及44axe零问题通过。第三轮完整check2220.017秒exit1，原动态import测试超过5秒；原配置定向两项0.899秒通过，原七项质量后缀46.254秒exit0，types/tests62、build36/32出口通过（含缓存），43门按明确展开口径分段覆盖，不称单条全绿。最终2190输入SHAfdfeb7436391fd492f5484f0cd1b769755ee8f6f27a4b5b1e372f061de26db91，573旧合同/56SQL/2413初始未跟踪保持；非作者ACCEPT、S.U.P.E.R与secret/high audit通过。详见`output/checks/p4-06-notifications/final-verification.md`。27DONE/2IN_PROGRESS/20PENDING=49；LaneD释放，P3/P4未完验收和Phase5门保留，正式邮件/人工译审未启用，仅本地提交。
+
+2026-09-16 领取P4-06：从本地 `7c63148` 接续通知与过期清理，root独占Lane D；先冻结合同并保留订单locale、不可变模板和隐私/支付权威。26DONE/3IN_PROGRESS/20PENDING=49；正式邮件/译审、真实PSP、P3与Phase5门保持，仅本地开发。详见phase执行登记。
 
 2026-09-16 P4-05 DONE：七语言安全查单、历史订单/状态进度与canonical付款结果接通；实际浏览器7373断言、25场景/55PNG/55axe零问题。原单条完整check1737.580秒exit0，40原门、28迁移/172表、入账6827/查单6860、TLS S3/媒体423及types/tests61、build36/32出口通过（有缓存）。最终2131输入SHA6e746b77a95fefd3b771e8603bcaed361a6fa54e55bffa2a6c1d320753072176，573旧合同/56SQL/2412初始未跟踪保持；非作者与S.U.P.E.R通过。原失败、JSON丢正文注入及未命中真实bfcache如实保留。详见`output/checks/p4-05-order-storefront/final-verification.md`。Lane A释放，P4-06 READY，26DONE/1READY/2IN_PROGRESS/20PENDING=49；真实PSP/P3验收/Phase5门保留，仅本地提交。
 

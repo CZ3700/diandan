@@ -31,7 +31,7 @@ export async function tokenOwner(
   return oneAccessRow(
     await draftRows(
       client,
-      `SELECT token.order_id,o.cart_id FROM public.order_access_tokens token JOIN public.orders o ON o.id=token.order_id WHERE EXISTS(SELECT 1 FROM jsonb_to_recordset($1::jsonb) AS candidate(digest text,version text) WHERE token.token_digest=decode(candidate.digest,'hex') AND token.token_pepper_version=candidate.version) LIMIT 2`,
+      `SELECT token.order_id,o.cart_id FROM public.order_access_tokens token JOIN public.orders o ON o.id=token.order_id WHERE token.purpose='LINK' AND EXISTS(SELECT 1 FROM jsonb_to_recordset($1::jsonb) AS candidate(digest text,version text) WHERE token.token_digest=decode(candidate.digest,'hex') AND token.token_pepper_version=candidate.version) LIMIT 2`,
       [candidateBindings(candidates)],
     ),
   );
@@ -86,7 +86,7 @@ export async function activeAccessToken(
   const token = oneAccessRow(
     await draftRows(
       client,
-      `SELECT token.id,token.status,token.created_at>clock_timestamp() future,token.expires_at<=clock_timestamp() expired FROM public.order_access_tokens token WHERE token.order_id=$1::uuid AND EXISTS(SELECT 1 FROM jsonb_to_recordset($2::jsonb) AS candidate(digest text,version text) WHERE token.token_digest=decode(candidate.digest,'hex') AND token.token_pepper_version=candidate.version) ORDER BY token.id FOR UPDATE OF token`,
+      `SELECT token.id,token.status,token.created_at>clock_timestamp() future,token.expires_at<=clock_timestamp() expired FROM public.order_access_tokens token WHERE token.order_id=$1::uuid AND token.purpose='LINK' AND EXISTS(SELECT 1 FROM jsonb_to_recordset($2::jsonb) AS candidate(digest text,version text) WHERE token.token_digest=decode(candidate.digest,'hex') AND token.token_pepper_version=candidate.version) ORDER BY token.id FOR UPDATE OF token`,
       [orderId, candidateBindings(candidates)],
     ),
   );

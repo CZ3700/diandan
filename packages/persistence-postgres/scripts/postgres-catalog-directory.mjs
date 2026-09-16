@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { rollbackEmptyNotifications } from "./notification-rollback-prefix.mjs";
 
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
@@ -485,6 +486,12 @@ async function verify(clientConfig) {
     const immutableBefore = await observer.query(
       "SELECT jsonb_agg(jsonb_build_array(id,source_hash,translated_from_source_hash,display_name) ORDER BY id) AS translations FROM public.idol_revision_translations",
     );
+    await rollbackEmptyNotifications({
+      client: observer,
+      clientConfig,
+      workspaceRoot,
+    });
+    assertions += 2;
     const orderAccessDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -636,9 +643,9 @@ async function verify(clientConfig) {
       "SELECT count(*)::integer AS count, max(version) AS version FROM public.schema_migrations",
     );
     check(
-      migrationHead.rows[0].count === 28 &&
-        migrationHead.rows[0].version === "0028",
-      "data-bearing up/down/up restores all 28 migrations through order access",
+      migrationHead.rows[0].count === 29 &&
+        migrationHead.rows[0].version === "0029",
+      "data-bearing up/down/up restores all 29 migrations through notifications",
     );
     check(
       (await idols()).code === "CATALOG_UNAVAILABLE",

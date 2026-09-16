@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { rollbackEmptyNotifications } from "./notification-rollback-prefix.mjs";
 import assert from "node:assert/strict";
 import { randomBytes, randomUUID } from "node:crypto";
 import { performance } from "node:perf_hooks";
@@ -874,7 +875,19 @@ await withEphemeralPostgres(async (clientConfig) => {
       (SELECT jsonb_agg(jsonb_build_object('id',id,'version',version,'status',status,'draft',draft_revision_id,'published',published_revision_id) ORDER BY id) FROM public.gifts) AS gift_versions
     `)
       ).rows[0];
+    const beforeNotificationsDown = await retainedHistory();
+    await rollbackEmptyNotifications({
+      client,
+      clientConfig,
+      workspaceRoot,
+      check: equal,
+    });
     const beforeOrderAccessDown = await retainedHistory();
+    equal(
+      beforeOrderAccessDown,
+      { ...beforeNotificationsDown, version: "0028" },
+      "notification rollback preserves exact admin history",
+    );
     equal(
       beforeOrderAccessDown.version,
       "0028",
@@ -1102,10 +1115,10 @@ await withEphemeralPostgres(async (clientConfig) => {
       workspaceRoot,
       command: { direction: "up" },
     });
-    equal(restored.currentVersion, "0028", "admin proof restores current head");
+    equal(restored.currentVersion, "0029", "admin proof restores current head");
     equal(
       await retainedHistory(),
-      beforeOrderAccessDown,
+      beforeNotificationsDown,
       "restoring current head preserves exact admin history",
     );
     process.stdout.write(

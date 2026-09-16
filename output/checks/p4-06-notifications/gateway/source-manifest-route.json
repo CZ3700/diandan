@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "packages/notification-provider/src/gateway.ts",
+      "sha256": "057c6767d216e42ca234cc5a103b6e7a78ee7deff3d61b4590fc82e2cf94c2a7"
+    },
+    {
+      "path": "packages/notification-provider/src/gateway.test.ts",
+      "sha256": "28e424f8fed80fcb028c041ba51f010c5d0f5be2ea713876e804770804a59beb"
+    },
+    {
+      "path": "packages/notification-provider/src/gateway.tls.test.ts",
+      "sha256": "3aa779e67d559b052223f118ab02eb8e5fdb159c294bb4070d57d4eab026fb3f"
+    },
+    {
+      "path": "packages/notification-provider/src/harness.tls.ts",
+      "sha256": "809f58da7534911ee5c4c2dc26a19752f2d8b054ec312fcd50b83ac8147f9028"
+    },
+    {
+      "path": "packages/notification-provider/package.json",
+      "sha256": "bc2ab64580948efa065b98bdf30d0c6b66d32cf2c9e9c765de73ab588631f404"
+    },
+    {
+      "path": "packages/notification-provider/tsconfig.json",
+      "sha256": "a26f4b51ac2dac4a9a3c05a975d936028a379035e509973e4180b87741342a4e"
+    },
+    {
+      "path": "packages/notification-provider/tsconfig.build.json",
+      "sha256": "b2b39959c55bc0cf0fd39825be188f31785132feffebad0ecd0f2945e3ca781d"
+    },
+    {
+      "path": "apps/worker/scripts/notification-gateway-harness.md",
+      "sha256": "9e33364c2bf77753731478a5932ed06413ef8d9d7ba295fe316b381b5c522776"
+    },
+    {
+      "path": "apps/worker/scripts/notification-gateway-harness.mjs",
+      "sha256": "fd19f522220a45ee68cac83fabadcf03865041aa06fac078eb9ee7cc11ef335e"
+    },
+    {
+      "path": "apps/worker/scripts/notification-gateway-harness.test.mjs",
+      "sha256": "1ee74f434f8aa93682e2f22b1ae336fbbed3e8a8a8622850998123a46ada0c35"
+    },
+    {
+      "path": "apps/worker/scripts/notification-gateway-receiver.mjs",
+      "sha256": "08fd10127d404ce1a66b62c61c98d8d29261b26af0ae5a92d674a653eb590e93"
+    },
+    {
+      "path": "apps/worker/scripts/notification-link-browser.mjs",
+      "sha256": "00764dfb0d8dc7db786779e8bcf012fe96b84c38a15df9d7012604374679b620"
+    },
+    {
+      "path": "apps/worker/scripts/notification-link-browser.test.mjs",
+      "sha256": "075f4842554e85ab8df242b7989ac289e7411d9e3726a0a7ed122c94d4d28d30"
+    }
+  ]
+}

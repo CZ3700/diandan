@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { Client } from "pg";
 import { runMigrations } from "../dist/index.js";
+import { rollbackEmptyNotifications } from "./notification-rollback-prefix.mjs";
 
 // Test-only verification against the caller's real, already-published fixture.
 // Raw rows, credentials and ciphertext never enter the returned evidence.
@@ -50,9 +51,10 @@ export async function verifyCartRuntimeRollbackProtection({
     ).rows[0]?.version;
     assert.equal(
       head,
-      "0028",
+      "0029",
       "rollback proof requires the exact current migration",
     );
+    await rollbackEmptyNotifications({ client, clientConfig, workspaceRoot });
     const orderAccessDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -202,7 +204,7 @@ export async function verifyCartRuntimeRollbackProtection({
     });
     assert.equal(
       restored.currentVersion,
-      "0028",
+      "0029",
       "restore the empty edit and checkout migrations after the exact legacy rollback proof",
     );
     return {
@@ -216,7 +218,7 @@ export async function verifyCartRuntimeRollbackProtection({
       ...(mode === "DYNAMIC"
         ? { dynamicOnlyIntents: count }
         : { pendingIntents: count }),
-      assertions: mode === "DYNAMIC" ? 14 : 15,
+      assertions: mode === "DYNAMIC" ? 16 : 17,
       before,
       after,
     };

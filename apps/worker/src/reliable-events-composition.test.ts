@@ -149,6 +149,7 @@ test("wires PostgreSQL, pg-boss VERIFY mode, application handlers, and maintenan
       listReadyOutboxJobs: expect.any(Function),
       purgeExpiredWebhookPayloads: expect.any(Function),
       applyPendingOrderPayments: expect.any(Function),
+      expireCommerceResources: expect.any(Function),
       now: expect.any(Function),
       createPropagation: expect.any(Function),
     }),
@@ -290,4 +291,22 @@ test("restores allowlisted queue propagation into a child worker span and reject
   } finally {
     await telemetry.shutdown();
   }
+});
+
+test("invalid notification configuration fails before creating infrastructure", async () => {
+  const harness = createHarness();
+  const factory = await loadFactory();
+  expect(() =>
+    factory!(
+      { ...validEnvironment, FAN_SUPPORT_NOTIFICATION_CONFIG_JSON: "invalid" },
+      {
+        factories: {
+          createQueue: harness.createQueue,
+          createPersistence: harness.createPersistence,
+        },
+      },
+    ),
+  ).toThrow("Invalid notification worker configuration");
+  expect(harness.createQueue).not.toHaveBeenCalled();
+  expect(harness.createPersistence).not.toHaveBeenCalled();
 });

@@ -1,11 +1,19 @@
 import { Buffer } from "node:buffer";
 import type * as PaymentRuntimeData from "./payment-runtime-data.js";
-import { expect, test, vi } from "vitest";
+import { beforeEach, expect, test, vi } from "vitest";
 import { paymentRuntimeRecordReconcileCommandSchema } from "@fan-support/contracts";
 import type { OutboxRepository } from "@fan-support/persistence-port";
 import { recordPaymentReconcile } from "./payment-runtime-recovery.js";
 import type { TransactionClient } from "./transaction-runner.js";
-const mocks = vi.hoisted(() => ({ history: vi.fn(), insert: vi.fn() }));
+const mocks = vi.hoisted(() => ({
+  history: vi.fn(),
+  insert: vi.fn(),
+  readiness: vi.fn(),
+  evidence: vi.fn(),
+}));
+vi.mock("./payment-runtime-context.js", () => ({
+  paymentCheckoutReadiness: mocks.readiness,
+}));
 vi.mock("./payment-runtime-fence.js", () => ({
   requirePaymentClaim: async (value: unknown, claim: unknown) => {
     void value;
@@ -13,10 +21,7 @@ vi.mock("./payment-runtime-fence.js", () => ({
   },
 }));
 vi.mock("./payment-runtime-evidence.js", () => ({
-  persistPaymentRuntimeEvidence: async () => ({
-    providerEventId: "00000000-0000-4000-8000-000000000013",
-    auditLogId: "00000000-0000-4000-8000-000000000010",
-  }),
+  persistPaymentRuntimeEvidence: mocks.evidence,
 }));
 vi.mock("./payment-runtime-history.js", () => ({
   appendPaymentHistory: mocks.history,
@@ -29,6 +34,30 @@ vi.mock("./payment-runtime-data.js", async (original) => ({
 }));
 const id = (n: number) =>
   `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
+beforeEach(() => {
+  mocks.history.mockClear();
+  mocks.insert.mockClear();
+  mocks.readiness.mockReset().mockResolvedValue({
+    resources_valid: true,
+    order_status: "PENDING_PAYMENT",
+    payment_status: "PENDING",
+    current_payment_attempt_id: id(2),
+  });
+  mocks.evidence
+    .mockReset()
+    .mockResolvedValue({ providerEventId: id(13), auditLogId: id(10) });
+});
+function queries(updated = true) {
+  return vi.fn(async (sql: string, values?: unknown[]) => {
+    void values;
+    return {
+      rows:
+        sql.startsWith("UPDATE public.payment_attempts") && updated
+          ? [{ id: id(2) }]
+          : [],
+    };
+  });
+}
 function command(withAction: boolean) {
   const attempt = {
     schemaVersion: 1,
@@ -133,12 +162,7 @@ function command(withAction: boolean) {
   });
 }
 test("authenticated UNKNOWN action recovery writes real encrypted action with evidence and history", async () => {
-  mocks.history.mockClear();
-  mocks.insert.mockClear();
-  const query = vi.fn(async (...args: [string, unknown[]?]) => {
-    void args;
-    return { rows: [] };
-  });
+  const query = queries();
   await recordPaymentReconcile(
     { query, release: vi.fn() } as TransactionClient,
     {} as OutboxRepository,
@@ -161,12 +185,7 @@ test("authenticated UNKNOWN action recovery writes real encrypted action with ev
   );
 });
 test("an actionless reconcile cannot claim the customer action was recovered", async () => {
-  mocks.history.mockClear();
-  mocks.insert.mockClear();
-  const query = vi.fn(async (...args: [string, unknown[]?]) => {
-    void args;
-    return { rows: [] };
-  });
+  const query = queries();
   await recordPaymentReconcile(
     { query, release: vi.fn() } as TransactionClient,
     {} as OutboxRepository,
@@ -184,3 +203,94 @@ test("an actionless reconcile cannot claim the customer action was recovered", a
     expect.objectContaining({ disposition: "OBSERVED" }),
   );
 });
+
+for (const status of ["REQUIRES_ACTION", "PROCESSING"] as const)
+  test(`expired original resources preserve UNKNOWN after authenticated ${status}`, async () => {
+    mocks.readiness.mockResolvedValue({
+      resources_valid: false,
+      order_status: "PENDING_PAYMENT",
+      payment_status: "PENDING",
+      current_payment_attempt_id: id(2),
+    });
+    const source = command(status === "REQUIRES_ACTION");
+    const input = paymentRuntimeRecordReconcileCommandSchema.parse({
+      ...source,
+      event: { ...source.event, status },
+    });
+    const query = queries();
+    await recordPaymentReconcile(
+      { query, release: vi.fn() },
+      {} as OutboxRepository,
+      input,
+    );
+    expect(mocks.evidence).toHaveBeenCalledOnce();
+    expect(
+      query.mock.calls.some(([sql]) =>
+        sql.startsWith("UPDATE public.payment_attempts"),
+      ),
+    ).toBe(false);
+    expect(mocks.history).not.toHaveBeenCalled();
+    expect(mocks.insert).toHaveBeenCalledWith(
+      expect.anything(),
+      "payment_reconcile_receipts",
+      expect.objectContaining({ disposition: "OBSERVED" }),
+    );
+    expect(
+      query.mock.calls.find(([sql]) =>
+        sql.startsWith("UPDATE public.payment_runtime_operations"),
+      )?.[1],
+    ).toContain("RECONCILE");
+  });
+
+test("resources expiring between readiness and the conditional update cannot restore an action", async () => {
+  const query = queries(false);
+  await recordPaymentReconcile(
+    { query, release: vi.fn() },
+    {} as OutboxRepository,
+    command(true),
+  );
+  expect(mocks.evidence).toHaveBeenCalledOnce();
+  expect(mocks.history).not.toHaveBeenCalled();
+  expect(mocks.insert).toHaveBeenCalledWith(
+    expect.anything(),
+    "payment_reconcile_receipts",
+    expect.objectContaining({ disposition: "OBSERVED" }),
+  );
+});
+
+for (const status of ["SUCCEEDED", "FAILED", "CANCELED", "EXPIRED"] as const)
+  test(`${status} evidence is retained even when original resources expired`, async () => {
+    mocks.readiness.mockResolvedValue({ resources_valid: false });
+    const source = command(false);
+    const input = paymentRuntimeRecordReconcileCommandSchema.parse({
+      ...source,
+      event: {
+        ...source.event,
+        status,
+        ...(status === "SUCCEEDED"
+          ? {
+              transaction: {
+                type: "CAPTURE",
+                providerReference: "capture-after-real-expiry",
+              },
+            }
+          : {}),
+      },
+    });
+    const query = queries();
+    await recordPaymentReconcile(
+      { query, release: vi.fn() },
+      {} as OutboxRepository,
+      input,
+    );
+    expect(mocks.evidence).toHaveBeenCalledOnce();
+    expect(mocks.readiness).not.toHaveBeenCalled();
+    expect(mocks.insert).toHaveBeenCalledWith(
+      expect.anything(),
+      "payment_reconcile_receipts",
+      expect.objectContaining({
+        disposition:
+          status === "SUCCEEDED" ? "PENDING" : "APPLIED_NONFINANCIAL",
+      }),
+    );
+  });

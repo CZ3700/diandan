@@ -1,6 +1,6 @@
 # 安全查单运行与恢复
 
-P4-05 提供订单范围授权、历史只读视图、PostgreSQL 持久限流，以及七语言付款完成/查单页面。实际邮件发送属于 P4-06。当前完整验收状态以 phase-4-commerce 与本轮 final-verification 为准。
+P4-05 提供订单范围授权、历史只读视图、PostgreSQL 持久限流，以及七语言付款完成/查单页面。邮件编排与 TEST 网关见 [订单通知与到期清理](order-notifications.md)。当前完整验收状态以 phase-4-commerce 与本轮 final-verification 为准。
 
 ## 接口与权限
 
@@ -37,11 +37,11 @@ Cookie 为 `__Host-fan-order`，Secure、HttpOnly、SameSite=Strict、Path=/、�
 
 ## 历史数据与数据库
 
-原 0004 的 token/session 表继续使用，仅保存 keyed digest。0028 新增持久计数与不可变访问审计，不改 0001–0027。访问写入遵循 cart→order→token/session 的锁顺序，READ COMMITTED 配合明确行锁；消费、轮换、审计与返回值校验在同事务完成。bootstrap 在锁后和授予前再次按数据库 clock_timestamp 校验原购物车有效期。
+原 0004 的 token/session 表继续使用，仅保存 keyed digest。0028 新增持久计数与不可变访问审计，不改 0001–0027。访问写入遵循 cart→order→token/session 的锁顺序，READ COMMITTED 配合明确行锁；消费、轮换、审计与返回值校验在同事务完成。bootstrap 在锁后和授予前再次按数据库 clock_timestamp 校验原购物车有效期。0029 将 checkout bootstrap token 与邮件 LINK 分开；bootstrap 同事务消费临时 token，不撤销活动邮件链接。
 
 订单名称、原始语言、媒体 alt、数量、价格与金额来自不可变订单行，v2 规格标签来自原 checkout observation；v1 未保存规格标签时返回 null，不读取今天的商品标签。DAILY 保持实际原文来源，与已审批英语 fallback 分开。展示图必须绑定订单固化的原媒体资产与校验和，解析该资产的 READY 展示衍生图；不能将私有 SOURCE 原图路径当作公开图，也不能跟随当前商品换图。
 
-数据库若已有新的计数或审计数据，0028 down 会拒绝丢失数据的回退。不要删除授权审计来绕过保护。过期凭证即时拒绝；批量清理/保留策略随 P4-06 接续。
+数据库若已有新的计数或审计数据，0028 down 会拒绝丢失数据的回退。不要删除授权审计来绕过保护。过期凭证即时拒绝；批量状态到期由 P4-06 的数据库维护任务执行；个人数据删除策略仍独立。
 
 ## 启用配置
 

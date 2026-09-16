@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "sh",
+    "-c",
+    "node scripts/check-workspace.mjs && node scripts/check-ui-composites.mjs && node scripts/check-ui-motion.mjs && corepack pnpm exec prettier --check packages/persistence-postgres/package.json"
+  ],
+  "startedAt": "2026-09-16T03:04:50.470340+00:00",
+  "completedAt": "2026-09-16T03:04:51.552913+00:00",
+  "elapsedSeconds": 1.082,
+  "exitCode": 0
+}

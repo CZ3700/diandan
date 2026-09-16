@@ -199,3 +199,7 @@ export function createFakeNotificationProvider(
 
 export const workspacePackageName =
   "@fan-support/notification-provider" as const;
+export {
+  createNotificationGatewayTransport,
+  type NotificationGatewayOptions,
+} from "./gateway.js";

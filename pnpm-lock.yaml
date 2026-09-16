@@ -248,6 +248,15 @@ importers:
       '@fan-support/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@fan-support/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
+      '@fan-support/key-management-kms':
+        specifier: workspace:*
+        version: link:../../packages/key-management-kms
+      '@fan-support/key-management-port':
+        specifier: workspace:*
+        version: link:../../packages/key-management-port
       '@fan-support/media-image':
         specifier: workspace:*
         version: link:../../packages/media-image
@@ -257,6 +266,12 @@ importers:
       '@fan-support/media-s3':
         specifier: workspace:*
         version: link:../../packages/media-s3
+      '@fan-support/notification-port':
+        specifier: workspace:*
+        version: link:../../packages/notification-port
+      '@fan-support/notification-provider':
+        specifier: workspace:*
+        version: link:../../packages/notification-provider
       '@fan-support/observability':
         specifier: workspace:*
         version: link:../../packages/observability
@@ -284,6 +299,9 @@ importers:
       rxjs:
         specifier: 7.8.2
         version: 7.8.2
+      zod:
+        specifier: 4.5.4
+        version: 4.5.4
     devDependencies:
       pg:
         specifier: 8.23.0
@@ -321,6 +339,9 @@ importers:
       '@fan-support/media-port':
         specifier: workspace:*
         version: link:../media-port
+      '@fan-support/notification-port':
+        specifier: workspace:*
+        version: link:../notification-port
       '@fan-support/payment-port':
         specifier: workspace:*
         version: link:../payment-port
@@ -529,6 +550,9 @@ importers:
 
   packages/notification-provider:
     dependencies:
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../contracts
       '@fan-support/notification-port':
         specifier: workspace:*
         version: link:../notification-port
@@ -536,6 +560,9 @@ importers:
       '@fan-support/testing':
         specifier: workspace:*
         version: link:../testing
+      '@types/node':
+        specifier: 24.13.3
+        version: 24.13.3
 
   packages/observability:
     dependencies:

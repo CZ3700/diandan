@@ -221,6 +221,70 @@ test("real authenticated HTTPS preserves acceptance after lost response/restart 
       assert.equal(captured.value.event.status, "SUCCEEDED");
       assert.equal(captured.value.event.transaction.type, "CAPTURE");
       assert.equal((await psp.counts()).captures, 1);
+      const expiringAttempt = randomUUID();
+      const expiring = await adapter().createPayment({
+        ...command,
+        attemptId: expiringAttempt,
+        merchantReference: expiringAttempt,
+        providerIdempotencyKey: expiringAttempt,
+        returnUrl: command.returnUrl.replace(attempt, expiringAttempt),
+        cancelUrl: command.cancelUrl.replace(attempt, expiringAttempt),
+      });
+      assert.equal(expiring.outcome, "SUCCESS");
+      const expiredPage = await tls.fetcher(expiring.value.action.url);
+      const expiredHtml = await expiredPage.text();
+      const expiredCsrf = /name="csrf" value="([A-Za-z0-9_-]+)"/u.exec(
+        expiredHtml,
+      )[1];
+      const expiredResponse = await tls.fetcher(expiring.value.action.url, {
+        method: "POST",
+        headers: {
+          origin: psp.origin,
+          "content-type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          csrf: expiredCsrf,
+          outcome: "EXPIRED",
+        }).toString(),
+      });
+      console.log(
+        JSON.stringify({
+          nativeExpiredOutcome: true,
+          status: expiredResponse.status,
+        }),
+      );
+      assert.equal(
+        expiredResponse.status,
+        303,
+        "owned TEST PSP accepts its native simulated expiry outcome",
+      );
+      assert.match(expiredHtml, /data-test-psp-expire/u);
+      const expiredObservation = await adapter().reconcilePayment({
+        ...reconcile,
+        attemptId: expiringAttempt,
+        merchantReference: expiringAttempt,
+        providerIdempotencyKey: expiringAttempt,
+        auditLogId: randomUUID(),
+      });
+      assert.equal(expiredObservation.outcome, "SUCCESS");
+      assert.equal(expiredObservation.value.event.status, "EXPIRED");
+      const expiredWebhook = await psp.webhook({
+        attemptId: expiringAttempt,
+        verificationSecret: randomBytes(32).toString("base64url"),
+      });
+      assert.equal(
+        JSON.parse(expiredWebhook.rawBody).resource.state,
+        "expired",
+      );
+      assert.equal(
+        JSON.parse(expiredWebhook.rawBody).resource.transaction,
+        undefined,
+      );
+      assert.equal(
+        (await psp.counts()).captures,
+        1,
+        "provider expiry never creates a capture",
+      );
       assert.equal(
         (await psp.observations()).some((entry) => entry.unexpectedCredentials),
         false,

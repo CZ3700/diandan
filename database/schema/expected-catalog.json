@@ -607,6 +607,10 @@
       "kind": "TABLE"
     },
     {
+      "name": "notification_contact_access_receipts",
+      "kind": "TABLE"
+    },
+    {
       "name": "notification_content_revision_refs",
       "kind": "TABLE"
     },
@@ -616,6 +620,10 @@
     },
     {
       "name": "notification_delivery_attempts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "notification_runtime_state",
       "kind": "TABLE"
     },
     {
@@ -12993,6 +13001,66 @@
       "generation": ""
     },
     {
+      "table": "notification_contact_access_receipts",
+      "position": 1,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "position": 2,
+      "name": "notification_delivery_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "position": 3,
+      "name": "customer_contact_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "position": 4,
+      "name": "lease_token",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "position": 5,
+      "name": "generation",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "position": 6,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "notification_content_revision_refs",
       "position": 1,
       "name": "notification_delivery_id",
@@ -13379,6 +13447,216 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 1,
+      "name": "notification_delivery_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 2,
+      "name": "source_outbox_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 3,
+      "name": "event_rank",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 4,
+      "name": "base_variables",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 5,
+      "name": "public_storefront_origin",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 6,
+      "name": "transport_key",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 7,
+      "name": "contact_lookup_hmac",
+      "dataType": "bytea",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 8,
+      "name": "contact_lookup_key_version",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 9,
+      "name": "link_nonce",
+      "dataType": "bytea",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 10,
+      "name": "link_pepper_version",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 11,
+      "name": "link_ttl_seconds",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 12,
+      "name": "dedupe_until",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 13,
+      "name": "fallback_reason_code",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 14,
+      "name": "link_token_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 15,
+      "name": "content_hash",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 16,
+      "name": "lease_token",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 17,
+      "name": "lease_expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 18,
+      "name": "lease_started_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 19,
+      "name": "generation",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 20,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "notification_runtime_state",
+      "position": 21,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
       "identity": "",
       "generation": ""
     },
@@ -13819,6 +14097,16 @@
       "dataType": "timestamp with time zone",
       "notNull": false,
       "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "order_access_tokens",
+      "position": 13,
+      "name": "purpose",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": "'LINK'::text",
       "identity": "",
       "generation": ""
     },
@@ -37923,6 +38211,94 @@
       "initiallyDeferred": false
     },
     {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_r_notification_delivery_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL notification_delivery_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_recei_notification_delivery_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (notification_delivery_id) REFERENCES notification_deliveries(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_receip_customer_contact_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL customer_contact_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_receipts_customer_contact_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (customer_contact_id) REFERENCES customer_contacts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_receipts_generation_check",
+      "kind": "CHECK",
+      "definition": "CHECK (generation > 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_receipts_generation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL generation",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_receipts_lease_token_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL lease_token",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "notification_content_revision_refs",
       "name": "notification_content_revision_notification_delivery_id_not_null",
       "kind": "NOT_NULL",
@@ -38315,6 +38691,14 @@
       "initiallyDeferred": false
     },
     {
+      "table": "notification_deliveries",
+      "name": "notification_runtime_delivery_consistency",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
       "table": "notification_delivery_attempts",
       "name": "notification_attempt_consistency_from_attempt_trigger",
       "kind": "CONSTRAINT_TRIGGER",
@@ -38447,6 +38831,302 @@
       "name": "notification_delivery_attempts_time_check",
       "kind": "CHECK",
       "definition": "CHECK (completed_at >= started_at AND created_at >= completed_at)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_consistency",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_base_variables_check",
+      "kind": "CHECK",
+      "definition": "CHECK (jsonb_typeof(base_variables) = 'object'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_base_variables_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL base_variables",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_check",
+      "kind": "CHECK",
+      "definition": "CHECK (dedupe_until::timestamp with time zone > created_at::timestamp with time zone AND dedupe_until::timestamp with time zone <= (created_at::timestamp with time zone + '7 days'::interval))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (updated_at::timestamp with time zone >= created_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_check2",
+      "kind": "CHECK",
+      "definition": "CHECK (lease_token IS NULL AND lease_expires_at IS NULL AND lease_started_at IS NULL OR lease_token IS NOT NULL AND lease_expires_at::timestamp with time zone > lease_started_at::timestamp with time zone AND lease_started_at::timestamp with time zone >= created_at::timestamp with time zone AND generation > 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_contact_lookup_hmac_check",
+      "kind": "CHECK",
+      "definition": "CHECK (octet_length(contact_lookup_hmac) = 32)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_contact_lookup_hmac_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL contact_lookup_hmac",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_contact_lookup_key_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (contact_lookup_key_version ~ '^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_contact_lookup_key_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL contact_lookup_key_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_content_hash_check",
+      "kind": "CHECK",
+      "definition": "CHECK (content_hash ~ '^[a-f0-9]{64}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_dedupe_until_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL dedupe_until",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_event_rank_check",
+      "kind": "CHECK",
+      "definition": "CHECK (event_rank >= 1 AND event_rank <= 3)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_event_rank_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL event_rank",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_fallback_reason_code_check",
+      "kind": "CHECK",
+      "definition": "CHECK (fallback_reason_code ~ '^[A-Z][A-Z0-9_]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_generation_check",
+      "kind": "CHECK",
+      "definition": "CHECK (generation >= 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_generation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL generation",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_link_nonce_check",
+      "kind": "CHECK",
+      "definition": "CHECK (octet_length(link_nonce) = 32)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_link_nonce_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL link_nonce",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_link_pepper_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (link_pepper_version ~ '^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_link_pepper_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL link_pepper_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_link_token_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (link_token_id) REFERENCES order_access_tokens(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_link_token_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (link_token_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_link_ttl_seconds_check",
+      "kind": "CHECK",
+      "definition": "CHECK (link_ttl_seconds >= 1 AND link_ttl_seconds <= 604800)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_link_ttl_seconds_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL link_ttl_seconds",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_notification_delivery_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (notification_delivery_id) REFERENCES notification_deliveries(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_notification_delivery_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL notification_delivery_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (notification_delivery_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_public_storefront_origin_check",
+      "kind": "CHECK",
+      "definition": "CHECK (public_storefront_origin ~ '^https://[^/?#@]+$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_public_storefront_origin_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL public_storefront_origin",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_source_outbox_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (source_outbox_event_id) REFERENCES outbox_events(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_source_outbox_event_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (source_outbox_event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_source_outbox_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL source_outbox_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_transport_key_check",
+      "kind": "CHECK",
+      "definition": "CHECK (transport_key ~ '^[a-f0-9]{64}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_transport_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL transport_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -38908,6 +39588,14 @@
     },
     {
       "table": "order_access_tokens",
+      "name": "order_access_bootstrap_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "order_access_tokens",
       "name": "order_access_tokens_created_at_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL created_at",
@@ -38959,6 +39647,22 @@
       "name": "order_access_tokens_pkey",
       "kind": "PRIMARY_KEY",
       "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_tokens",
+      "name": "order_access_tokens_purpose_check",
+      "kind": "CHECK",
+      "definition": "CHECK (purpose = ANY (ARRAY['LINK'::text, 'CHECKOUT_BOOTSTRAP'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "order_access_tokens",
+      "name": "order_access_tokens_purpose_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL purpose",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -39049,6 +39753,14 @@
       "definition": "NOT NULL version",
       "deferrable": false,
       "initiallyDeferred": false
+    },
+    {
+      "table": "order_events",
+      "name": "checkout_expiry_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
     },
     {
       "table": "order_events",
@@ -51533,6 +52245,15 @@
       "valid": true
     },
     {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX notification_contact_access_receipts_pkey ON public.notification_contact_access_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "notification_content_revision_refs",
       "name": "notification_content_gift_revision_unique_idx",
       "definition": "CREATE UNIQUE INDEX notification_content_gift_revision_unique_idx ON public.notification_content_revision_refs USING btree (notification_delivery_id, gift_revision_id) WHERE (content_type = 'GIFT'::text)",
@@ -51641,6 +52362,42 @@
       "valid": true
     },
     {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_lease_due",
+      "definition": "CREATE INDEX notification_runtime_lease_due ON public.notification_runtime_state USING btree (lease_expires_at) WHERE (lease_token IS NOT NULL)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_link_token_id_key",
+      "definition": "CREATE UNIQUE INDEX notification_runtime_state_link_token_id_key ON public.notification_runtime_state USING btree (link_token_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_pkey",
+      "definition": "CREATE UNIQUE INDEX notification_runtime_state_pkey ON public.notification_runtime_state USING btree (notification_delivery_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_state_source_outbox_event_id_key",
+      "definition": "CREATE UNIQUE INDEX notification_runtime_state_source_outbox_event_id_key ON public.notification_runtime_state USING btree (source_outbox_event_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "order_access_audits",
       "name": "order_access_audits_order_created_idx",
       "definition": "CREATE INDEX order_access_audits_order_created_idx ON public.order_access_audits USING btree (order_id, created_at, id)",
@@ -51742,7 +52499,7 @@
     {
       "table": "order_access_tokens",
       "name": "order_access_tokens_one_active_per_order_idx",
-      "definition": "CREATE UNIQUE INDEX order_access_tokens_one_active_per_order_idx ON public.order_access_tokens USING btree (order_id) WHERE (status = 'ACTIVE'::text)",
+      "definition": "CREATE UNIQUE INDEX order_access_tokens_one_active_per_order_idx ON public.order_access_tokens USING btree (order_id) WHERE ((status = 'ACTIVE'::text) AND (purpose = 'LINK'::text))",
       "unique": true,
       "primary": false,
       "exclusion": false,
@@ -55570,6 +56327,24 @@
       "enabled": "O"
     },
     {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_authority",
+      "definition": "CREATE TRIGGER notification_contact_access_authority BEFORE INSERT ON notification_contact_access_receipts FOR EACH ROW EXECUTE FUNCTION assert_notification_contact_access_authority()",
+      "enabled": "O"
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_no_modify",
+      "definition": "CREATE TRIGGER notification_contact_access_no_modify BEFORE DELETE OR UPDATE ON notification_contact_access_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "notification_contact_access_receipts",
+      "name": "notification_contact_access_no_truncate",
+      "definition": "CREATE TRIGGER notification_contact_access_no_truncate BEFORE TRUNCATE ON notification_contact_access_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "notification_content_revision_refs",
       "name": "notification_content_refs_append_only_trigger",
       "definition": "CREATE TRIGGER notification_content_refs_append_only_trigger BEFORE DELETE OR UPDATE ON notification_content_revision_refs FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
@@ -55624,6 +56399,12 @@
       "enabled": "O"
     },
     {
+      "table": "notification_deliveries",
+      "name": "notification_runtime_delivery_consistency",
+      "definition": "CREATE CONSTRAINT TRIGGER notification_runtime_delivery_consistency AFTER INSERT OR UPDATE ON notification_deliveries DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_notification_runtime_consistency()",
+      "enabled": "O"
+    },
+    {
       "table": "notification_delivery_attempts",
       "name": "notification_attempt_consistency_from_attempt_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER notification_attempt_consistency_from_attempt_trigger AFTER INSERT OR DELETE OR UPDATE ON notification_delivery_attempts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_notification_attempt_consistency()",
@@ -55645,6 +56426,30 @@
       "table": "notification_delivery_attempts",
       "name": "notification_attempts_validate_trigger",
       "definition": "CREATE TRIGGER notification_attempts_validate_trigger BEFORE INSERT ON notification_delivery_attempts FOR EACH ROW EXECUTE FUNCTION validate_notification_delivery_attempt()",
+      "enabled": "O"
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_consistency",
+      "definition": "CREATE CONSTRAINT TRIGGER notification_runtime_consistency AFTER INSERT OR UPDATE ON notification_runtime_state DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_notification_runtime_consistency()",
+      "enabled": "O"
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_immutable",
+      "definition": "CREATE TRIGGER notification_runtime_immutable BEFORE UPDATE ON notification_runtime_state FOR EACH ROW EXECUTE FUNCTION guard_notification_runtime_immutable()",
+      "enabled": "O"
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_no_delete",
+      "definition": "CREATE TRIGGER notification_runtime_no_delete BEFORE DELETE ON notification_runtime_state FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "notification_runtime_state",
+      "name": "notification_runtime_no_truncate",
+      "definition": "CREATE TRIGGER notification_runtime_no_truncate BEFORE TRUNCATE ON notification_runtime_state FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
     },
     {
@@ -55691,6 +56496,12 @@
     },
     {
       "table": "order_access_tokens",
+      "name": "order_access_bootstrap_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER order_access_bootstrap_complete AFTER INSERT OR UPDATE ON order_access_tokens DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_order_access_bootstrap_complete()",
+      "enabled": "O"
+    },
+    {
+      "table": "order_access_tokens",
       "name": "order_access_tokens_delete_guard_trigger",
       "definition": "CREATE TRIGGER order_access_tokens_delete_guard_trigger BEFORE DELETE ON order_access_tokens FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
@@ -55705,6 +56516,12 @@
       "table": "order_access_tokens",
       "name": "order_access_tokens_transition_trigger",
       "definition": "CREATE TRIGGER order_access_tokens_transition_trigger BEFORE INSERT OR UPDATE ON order_access_tokens FOR EACH ROW EXECUTE FUNCTION guard_order_access_token_transition()",
+      "enabled": "O"
+    },
+    {
+      "table": "order_events",
+      "name": "checkout_expiry_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER checkout_expiry_complete AFTER INSERT ON order_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_checkout_expiry_complete()",
       "enabled": "O"
     },
     {
@@ -57060,6 +57877,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_cart_support_intent_consistency()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  item_id uuid := COALESCE(\n    (to_jsonb(NEW) ->> 'cart_item_id')::uuid,\n    (to_jsonb(OLD) ->> 'cart_item_id')::uuid,\n    (to_jsonb(NEW) ->> 'id')::uuid,\n    (to_jsonb(OLD) ->> 'id')::uuid\n  );\n  item_mode text;\n  item_has_message boolean;\n  intent_mode text;\n  intent_has_message boolean;\n  is_eligible boolean;\n  intent_privacy_state text;\nBEGIN\n  SELECT display_mode, has_fan_message INTO item_mode, item_has_message\n    FROM cart_items WHERE id = item_id;\n  SELECT display_mode, fan_message_ciphertext IS NOT NULL, privacy_state\n    INTO intent_mode, intent_has_message, intent_privacy_state\n    FROM support_intents WHERE cart_item_id = item_id;\n  SELECT EXISTS (\n    SELECT 1\n    FROM cart_items ci\n    JOIN support_intents si ON si.cart_item_id = ci.id\n    WHERE ci.id = item_id\n      AND (EXISTS (\n        SELECT 1 FROM gift_variant_idol_eligibility eligibility\n        WHERE eligibility.gift_variant_id = ci.gift_variant_id\n          AND eligibility.idol_id = si.idol_id\n      ) OR EXISTS (\n        SELECT 1 FROM gift_variant_recipient_rules eligibility\n        WHERE eligibility.gift_variant_id = ci.gift_variant_id\n          AND eligibility.rule = 'ALL_ACTIVE_ARTISTS'\n      ))\n  ) INTO is_eligible;\n\n  IF item_mode IS NULL OR intent_mode IS NULL\n     OR item_mode <> intent_mode\n     OR (intent_privacy_state <> 'PURGED' AND item_has_message <> intent_has_message)\n     OR NOT is_eligible THEN\n    RAISE EXCEPTION 'cart item and support intent privacy projection diverge'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
+      "name": "assert_checkout_expiry_complete",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_checkout_expiry_complete()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.authority_kind='SYSTEM' AND NEW.reason_code='CHECKOUT_QUOTE_EXPIRED' THEN\n    IF NOT EXISTS(SELECT 1 FROM public.orders o JOIN public.carts c ON c.id=o.cart_id JOIN public.checkout_sessions s ON s.id=o.checkout_session_id\n      WHERE o.id=NEW.order_id AND o.order_status='CANCELED' AND c.status='EXPIRED' AND s.status='EXPIRED')\n      OR EXISTS(SELECT 1 FROM public.inventory_reservations r WHERE r.locked_order_id=NEW.order_id AND r.status='ACTIVE')\n      OR EXISTS(SELECT 1 FROM public.order_items i JOIN public.support_intents s ON s.id=i.support_intent_id WHERE i.order_id=NEW.order_id AND s.status<>'CANCELED')\n    THEN RAISE EXCEPTION 'checkout expiry must atomically close its original locked aggregate' USING ERRCODE='23514'; END IF;\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
+    },
+    {
       "name": "assert_checkout_observation",
       "identityArguments": "",
       "resultType": "trigger",
@@ -57600,6 +58427,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_notification_attempt_consistency()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  target_delivery_id uuid;\n  delivery notification_deliveries%ROWTYPE;\n  actual_count bigint;\n  latest_outcome text;\nBEGIN\n  target_delivery_id := COALESCE(\n    (to_jsonb(NEW) ->> 'notification_delivery_id')::uuid,\n    (to_jsonb(OLD) ->> 'notification_delivery_id')::uuid,\n    (to_jsonb(NEW) ->> 'id')::uuid,\n    (to_jsonb(OLD) ->> 'id')::uuid\n  );\n\n  SELECT * INTO delivery FROM notification_deliveries WHERE id = target_delivery_id;\n  IF delivery.id IS NULL THEN\n    RETURN NULL;\n  END IF;\n\n  SELECT count(*) INTO actual_count\n  FROM notification_delivery_attempts\n  WHERE notification_delivery_id = target_delivery_id;\n  SELECT outcome INTO latest_outcome\n  FROM notification_delivery_attempts\n  WHERE notification_delivery_id = target_delivery_id\n  ORDER BY sequence DESC\n  LIMIT 1;\n\n  IF actual_count <> delivery.attempt_count\n     OR (delivery.status = 'SENT' AND latest_outcome IS DISTINCT FROM 'SUCCEEDED')\n     OR (delivery.status IN ('RETRY_SCHEDULED', 'FAILED')\n       AND latest_outcome NOT IN ('FAILED', 'UNKNOWN')) THEN\n    RAISE EXCEPTION 'notification delivery and append-only attempts diverge'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
+      "name": "assert_notification_contact_access_authority",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_notification_contact_access_authority()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NOT EXISTS(SELECT 1 FROM public.notification_deliveries d\n    JOIN public.notification_runtime_state r ON r.notification_delivery_id=d.id\n    JOIN public.customer_contacts c ON c.id=d.customer_contact_id\n    JOIN public.audit_logs a ON a.id=NEW.audit_log_id\n    WHERE d.id=NEW.notification_delivery_id AND d.status='PROCESSING'\n      AND c.id=NEW.customer_contact_id AND c.retention_status='ACTIVE' AND c.email_lookup_hmac=r.contact_lookup_hmac AND c.lookup_key_version=r.contact_lookup_key_version\n      AND r.lease_token=NEW.lease_token AND r.generation=NEW.generation AND r.lease_expires_at>clock_timestamp()\n      AND a.actor_type='WORKER' AND a.action='AUTHORIZE_NOTIFICATION_CONTACT_READ' AND a.subject_type='CUSTOMER_CONTACT'\n      AND a.subject_id=c.id AND a.field_category='CUSTOMER_CONTACT_EMAIL' AND a.outcome='SUCCEEDED'\n      AND a.request_id=d.request_id AND a.correlation_id=d.correlation_id AND a.created_at=NEW.created_at)\n  THEN RAISE EXCEPTION 'notification contact access requires a current scoped delivery and audit' USING ERRCODE='23514'; END IF;\n  RETURN NEW;\nEND;\n$function$"
+    },
+    {
       "name": "assert_notification_request_outbox",
       "identityArguments": "",
       "resultType": "trigger",
@@ -57608,6 +58445,26 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_notification_request_outbox()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  event_count integer;\nBEGIN\n  SELECT count(*) INTO event_count\n  FROM public.orders order_row\n  JOIN public.outbox_events event\n    ON event.event_type = 'NOTIFICATION_REQUESTED'\n   AND event.aggregate_type = 'NOTIFICATION_DELIVERY'\n   AND event.aggregate_id = NEW.id\n   AND event.aggregate_version = NEW.version\n   AND event.primary_subject_id = NEW.id\n   AND event.secondary_subject_id = NEW.order_id\n   AND event.request_id = NEW.request_id\n   AND event.correlation_id = NEW.correlation_id\n   AND event.occurred_at = NEW.created_at\n   AND event.locale = NEW.resolved_locale\n   AND event.market = order_row.market\n   AND event.currency = order_row.currency\n  WHERE order_row.id = NEW.order_id\n    AND NEW.status = 'REQUESTED'\n    AND NEW.attempt_count = 0;\n  IF event_count <> 1 THEN\n    RAISE EXCEPTION 'notification request and outbox record must commit together'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
+    },
+    {
+      "name": "assert_notification_runtime_consistency",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_notification_runtime_consistency()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE target_id uuid; runtime public.notification_runtime_state%ROWTYPE; delivery public.notification_deliveries%ROWTYPE;\nBEGIN\n  target_id:=COALESCE((to_jsonb(NEW)->>'notification_delivery_id')::uuid,(to_jsonb(NEW)->>'id')::uuid);\n  SELECT * INTO runtime FROM public.notification_runtime_state WHERE notification_delivery_id=target_id;\n  IF runtime.notification_delivery_id IS NULL THEN RETURN NULL; END IF;\n  SELECT * INTO delivery FROM public.notification_deliveries WHERE id=target_id;\n  IF NOT EXISTS(SELECT 1 FROM public.notification_source_authority(runtime.source_outbox_event_id) s\n    WHERE s.order_id=delivery.order_id AND s.event_type=delivery.event_type AND s.event_rank=runtime.event_rank)\n    OR runtime.base_variables IS DISTINCT FROM public.notification_order_snapshot(delivery.order_id,runtime.base_variables->>'siteName')\n    OR runtime.created_at<>delivery.created_at\n    OR ((delivery.status='PROCESSING') IS DISTINCT FROM (runtime.lease_token IS NOT NULL))\n    OR ((runtime.fallback_reason_code IS NOT NULL) IS DISTINCT FROM delivery.fallback_used)\n    OR NOT EXISTS(SELECT 1 FROM public.orders o WHERE o.id=delivery.order_id AND o.customer_contact_id=delivery.customer_contact_id\n      AND o.presentation_locale=delivery.requested_locale AND runtime.base_variables->>'publicOrderId'=o.public_order_id::text\n      AND runtime.base_variables->>'currency'=o.currency AND (runtime.base_variables->>'totalMinor')::bigint=o.total_amount_minor)\n    OR (runtime.link_token_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM public.order_access_tokens t WHERE t.id=runtime.link_token_id\n      AND t.order_id=delivery.order_id AND t.purpose='LINK' AND t.token_pepper_version=runtime.link_pepper_version))\n  THEN RAISE EXCEPTION 'notification runtime must bind its exact source, lease and order link' USING ERRCODE='23514'; END IF;\n  IF TG_TABLE_NAME='notification_runtime_state' AND TG_OP='INSERT' AND NOT EXISTS(SELECT 1 FROM public.customer_contacts c WHERE c.id=delivery.customer_contact_id AND c.email_lookup_hmac=runtime.contact_lookup_hmac AND c.lookup_key_version=runtime.contact_lookup_key_version) THEN RAISE EXCEPTION 'notification must freeze its exact recipient lookup identity' USING ERRCODE='23514'; END IF;\n  RETURN NULL;\nEND;\n$function$"
+    },
+    {
+      "name": "assert_order_access_bootstrap_complete",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_order_access_bootstrap_complete()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE token public.order_access_tokens%ROWTYPE;\nBEGIN\n  SELECT * INTO token FROM public.order_access_tokens WHERE id=NEW.id;\n  IF token.purpose='CHECKOUT_BOOTSTRAP' AND (token.status<>'EXCHANGED' OR token.version<>2 OR NOT EXISTS(\n    SELECT 1 FROM public.order_access_sessions s JOIN public.order_access_audits a\n      ON a.session_id=s.id AND a.token_id=token.id AND a.order_id=token.order_id AND a.action='BOOTSTRAP'\n    WHERE s.exchanged_token_id=token.id AND s.order_id=token.order_id\n      AND token.exchanged_at=s.created_at\n  )) THEN RAISE EXCEPTION 'internal bootstrap must atomically consume its token and audit its session' USING ERRCODE='23514'; END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
       "name": "assert_order_aggregate",
@@ -58450,6 +59307,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_notification_delivery_transition()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP = 'INSERT' THEN\n    IF NEW.version <> 1 OR NEW.status <> 'REQUESTED' OR NEW.attempt_count <> 0 THEN\n      RAISE EXCEPTION 'notification delivery must start REQUESTED with zero attempts'\n        USING ERRCODE = '23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n\n  IF NEW.version <> OLD.version + 1 THEN\n    RAISE EXCEPTION 'notification delivery version must increment exactly once'\n      USING ERRCODE = '23514';\n  END IF;\n  IF (to_jsonb(NEW)\n        - 'status' - 'attempt_count' - 'next_attempt_at' - 'sent_at'\n        - 'last_error_code' - 'version' - 'updated_at')\n     IS DISTINCT FROM\n     (to_jsonb(OLD)\n        - 'status' - 'attempt_count' - 'next_attempt_at' - 'sent_at'\n        - 'last_error_code' - 'version' - 'updated_at') THEN\n    RAISE EXCEPTION 'notification order, locale, template, and idempotency identity are immutable'\n      USING ERRCODE = '55000';\n  END IF;\n  IF NOT (\n    (OLD.status = 'REQUESTED' AND NEW.status IN ('PROCESSING', 'CANCELED'))\n    OR (OLD.status = 'PROCESSING' AND NEW.status IN ('SENT', 'RETRY_SCHEDULED', 'FAILED'))\n    OR (OLD.status = 'RETRY_SCHEDULED' AND NEW.status IN ('PROCESSING', 'CANCELED', 'FAILED'))\n  ) THEN\n    RAISE EXCEPTION 'invalid notification delivery transition' USING ERRCODE = '23514';\n  END IF;\n  IF OLD.status = 'PROCESSING' AND NEW.status IN ('SENT', 'RETRY_SCHEDULED', 'FAILED') THEN\n    IF NEW.attempt_count <> OLD.attempt_count + 1 THEN\n      RAISE EXCEPTION 'completed notification attempt must increment attempt count once'\n        USING ERRCODE = '23514';\n    END IF;\n  ELSIF NEW.attempt_count <> OLD.attempt_count THEN\n    RAISE EXCEPTION 'notification attempt count may change only after processing'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
     },
     {
+      "name": "guard_notification_runtime_immutable",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_notification_runtime_immutable()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF (to_jsonb(NEW)-'lease_token'-'lease_expires_at'-'lease_started_at'-'generation'-'updated_at'-'link_token_id'-'content_hash')\n    IS DISTINCT FROM (to_jsonb(OLD)-'lease_token'-'lease_expires_at'-'lease_started_at'-'generation'-'updated_at'-'link_token_id'-'content_hash')\n    OR (OLD.link_token_id IS NOT NULL AND NEW.link_token_id IS DISTINCT FROM OLD.link_token_id)\n    OR (OLD.content_hash IS NOT NULL AND NEW.content_hash IS DISTINCT FROM OLD.content_hash)\n    OR NEW.generation<OLD.generation OR NEW.generation>OLD.generation+1\n    OR NEW.updated_at<OLD.updated_at\n    OR (NEW.lease_token IS DISTINCT FROM OLD.lease_token AND NEW.lease_token IS NOT NULL AND NEW.generation<>OLD.generation+1)\n  THEN RAISE EXCEPTION 'notification frozen source and dispatch identity are immutable' USING ERRCODE='55000'; END IF;\n  RETURN NEW;\nEND;\n$function$"
+    },
+    {
       "name": "guard_order_access_session_transition",
       "identityArguments": "",
       "resultType": "trigger",
@@ -58668,6 +59535,26 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.lock_base_content_review_parent()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE parent_id uuid; translation_id uuid;\nBEGIN\n  translation_id := (to_jsonb(NEW)->>TG_ARGV[1])::uuid;\n  EXECUTE format('SELECT %I FROM %s WHERE id=$1',TG_ARGV[3],TG_ARGV[0]::regclass) INTO parent_id USING translation_id;\n  EXECUTE format('SELECT id FROM %s WHERE id=$1 FOR UPDATE',TG_ARGV[2]::regclass) USING parent_id;\n  EXECUTE format('SELECT id FROM %s WHERE id=$1 FOR UPDATE',TG_ARGV[0]::regclass) USING translation_id;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
+      "name": "notification_order_snapshot",
+      "identityArguments": "target_order_id uuid, site_name text",
+      "resultType": "jsonb",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "STABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.notification_order_snapshot(target_order_id uuid, site_name text)\n RETURNS jsonb\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n  SELECT jsonb_build_object('schemaVersion',1,'siteName',site_name,'publicOrderId',o.public_order_id,\n    'orderedAt',to_char(o.created_at AT TIME ZONE 'UTC','YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"'),\n    'currency',o.currency,'totalMinor',o.total_amount_minor,'items',(\n      SELECT jsonb_agg(jsonb_build_object('idolName',i.idol_display_name,'idolLocale',i.idol_translation_resolved_locale,\n        'giftName',i.gift_title,'giftLocale',i.gift_translation_resolved_locale,\n        'variantName',CASE WHEN i.schema_version=1 THEN NULL ELSE original.line->>'giftVariantLabel' END,\n        'variantLocale',CASE WHEN i.schema_version=1 THEN NULL ELSE i.gift_translation_resolved_locale END,\n        'quantity',i.quantity,'lineTotalMinor',i.line_total_minor) ORDER BY i.created_at,i.id)\n      FROM public.order_items i LEFT JOIN public.checkout_preflight_observations observation ON observation.id=i.checkout_preflight_id\n      LEFT JOIN LATERAL(SELECT line FROM jsonb_array_elements(observation.observation#>'{consent,lines}') line\n        WHERE (line->>'cartItemId')::uuid=i.cart_item_id) original ON true WHERE i.order_id=o.id))\n  FROM public.orders o WHERE o.id=target_order_id\n$function$"
+    },
+    {
+      "name": "notification_source_authority",
+      "identityArguments": "source_id uuid",
+      "resultType": "TABLE(order_id uuid, event_type text, event_rank integer, source_sequence bigint)",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "STABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.notification_source_authority(source_id uuid)\n RETURNS TABLE(order_id uuid, event_type text, event_rank integer, source_sequence bigint)\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n  SELECT o.id,'PAYMENT_CONFIRMED'::text,1,e.sequence\n  FROM public.outbox_events x JOIN public.orders o ON o.id=x.aggregate_id\n  JOIN public.order_events e ON e.order_id=o.id AND e.sequence=x.aggregate_version\n    AND e.request_id=x.request_id AND e.correlation_id=x.correlation_id AND e.occurred_at=x.occurred_at\n    AND e.to_payment_status='PAID' AND e.to_payment_attempt_id=x.secondary_subject_id\n  JOIN public.order_payment_application_receipts receipt ON receipt.order_id=o.id\n    AND receipt.attempt_id=e.to_payment_attempt_id AND receipt.provider_event_id=e.provider_event_id\n    AND receipt.provider_event_id=receipt.canonical_provider_event_id\n    AND receipt.decision='APPLIED' AND receipt.outcome IN('PAID','PAID_REVIEW')\n  JOIN public.provider_events evidence ON evidence.id=receipt.provider_event_id\n    AND evidence.canonical_transaction_event_id IS NULL AND evidence.normalized_status='SUCCEEDED'\n  JOIN public.payment_transactions ledger ON ledger.provider_event_id=evidence.id\n    AND ledger.payment_attempt_id=receipt.attempt_id AND ledger.transaction_type='CAPTURE'\n    AND ledger.currency=o.currency AND ledger.amount_minor=o.total_amount_minor\n  WHERE x.id=source_id AND x.event_type='ORDER_PAYMENT_CONFIRMED'\n    AND x.primary_subject_id=o.id AND x.locale=o.presentation_locale\n    AND x.market=o.market AND x.currency=o.currency\n  UNION ALL\n  SELECT o.id,e.to_status,CASE e.to_status WHEN 'PREPARING' THEN 2 ELSE 3 END,e.sequence\n  FROM public.outbox_events x JOIN public.fulfillment_events e ON e.fulfillment_id=x.aggregate_id\n    AND e.order_id=x.secondary_subject_id AND e.sequence=x.aggregate_version\n    AND e.request_id=x.request_id AND e.correlation_id=x.correlation_id AND e.occurred_at=x.occurred_at\n    AND e.to_status=x.payload_status\n  JOIN public.orders o ON o.id=e.order_id\n  WHERE x.id=source_id AND x.event_type='FULFILLMENT_STATUS_CHANGED' AND e.to_status IN('PREPARING','DELIVERED')\n    AND x.primary_subject_id=e.fulfillment_id AND x.locale=o.presentation_locale\n    AND x.market=o.market AND x.currency=o.currency\n    AND EXISTS(SELECT 1 FROM public.order_payment_application_receipts paid WHERE paid.order_id=o.id AND paid.provider_event_id=paid.canonical_provider_event_id AND paid.decision='APPLIED' AND paid.outcome IN('PAID','PAID_REVIEW'))\n    AND EXISTS(SELECT 1 FROM public.order_events oe WHERE oe.order_id=o.id\n      AND oe.to_fulfillment_status=e.to_status AND oe.occurred_at<=e.occurred_at)\n$function$"
     },
     {
       "name": "publication_approval",
@@ -58907,7 +59794,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.validate_notification_delivery()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NOT EXISTS (\n    SELECT 1\n    FROM orders o\n    WHERE o.id = NEW.order_id\n      AND o.customer_contact_id = NEW.customer_contact_id\n      AND o.presentation_locale = NEW.requested_locale\n      AND (\n        (NEW.event_type = 'PAYMENT_CONFIRMED'\n          AND o.payment_status IN ('PAID', 'PARTIALLY_REFUNDED', 'REFUNDED'))\n        OR (NEW.event_type = 'PREPARING'\n          AND o.fulfillment_status IN ('PREPARING', 'DELIVERED'))\n        OR (NEW.event_type = 'DELIVERED' AND o.fulfillment_status = 'DELIVERED')\n      )\n  ) THEN\n    RAISE EXCEPTION 'notification must use the order contact, locale, and achieved state'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.validate_notification_delivery()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NOT EXISTS (\n    SELECT 1\n    FROM orders o\n    WHERE o.id = NEW.order_id\n      AND o.customer_contact_id = NEW.customer_contact_id\n      AND o.presentation_locale = NEW.requested_locale\n      AND (\n        (NEW.event_type = 'PAYMENT_CONFIRMED'\n          AND o.payment_status IN ('PAID', 'PARTIALLY_REFUNDED', 'REFUNDED'))\n        OR (NEW.event_type = 'PREPARING'\n          AND o.fulfillment_status IN ('PREPARING', 'DELIVERED'))\n        OR (NEW.event_type = 'DELIVERED' AND o.fulfillment_status = 'DELIVERED')\n        OR EXISTS(SELECT 1 FROM public.notification_runtime_state runtime\n          CROSS JOIN LATERAL public.notification_source_authority(runtime.source_outbox_event_id) source\n          WHERE runtime.notification_delivery_id=NEW.id AND source.order_id=o.id AND source.event_type=NEW.event_type)\n      )\n  ) THEN\n    RAISE EXCEPTION 'notification must use the order contact, locale, and achieved state'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
     },
     {
       "name": "validate_notification_delivery_attempt",
@@ -58947,7 +59834,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.validate_order_event()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  previous_event order_events%ROWTYPE;\n  authority_and_fields_valid boolean;\nBEGIN\n  IF NEW.authority_kind = 'ADMIN' THEN\n    PERFORM 1 FROM audit_logs audit\n    WHERE audit.id = NEW.audit_log_id\n    FOR UPDATE;\n\n    IF NOT EXISTS (\n      SELECT 1 FROM audit_logs audit\n      WHERE audit.id = NEW.audit_log_id\n        AND audit.actor_type = 'ADMIN'\n        AND audit.actor_id = NEW.admin_identity_id\n        AND audit.action = 'ORDER_CANCELED'\n        AND audit.subject_type = 'ORDER'\n        AND audit.subject_id = NEW.order_id\n        AND audit.reason_code = NEW.reason_code\n        AND audit.request_id = NEW.request_id\n        AND audit.correlation_id = NEW.correlation_id\n        AND audit.outcome = 'SUCCEEDED'\n        AND audit.created_at = NEW.occurred_at\n        AND NEW.occurred_at = transaction_timestamp()\n    ) THEN\n      RAISE EXCEPTION 'admin order event requires exact fresh successful audit evidence'\n        USING ERRCODE = '23514';\n    END IF;\n\n    IF EXISTS (\n      SELECT 1 FROM order_events event WHERE event.audit_log_id = NEW.audit_log_id\n      UNION ALL\n      SELECT 1 FROM fulfillment_events event WHERE event.audit_log_id = NEW.audit_log_id\n    ) THEN\n      RAISE EXCEPTION 'admin authority audit evidence was already consumed'\n        USING ERRCODE = '23514';\n    END IF;\n  END IF;\n\n  IF NEW.sequence = 1 THEN\n    IF NEW.event_type <> 'ORDER_CREATED'\n       OR NEW.authority_kind <> 'CHECKOUT'\n       OR NEW.from_order_status IS NOT NULL\n       OR NEW.from_payment_status IS NOT NULL\n       OR NEW.from_dispute_status IS NOT NULL\n       OR NEW.from_fulfillment_status IS NOT NULL\n       OR NEW.from_payment_attempt_id IS NOT NULL\n       OR NEW.to_order_status <> 'DRAFT'\n       OR NEW.to_payment_status <> 'UNPAID'\n       OR NEW.to_dispute_status <> 'NONE'\n       OR NEW.to_fulfillment_status <> 'PENDING'\n       OR NEW.to_payment_attempt_id IS NOT NULL THEN\n      RAISE EXCEPTION 'first order event must be an origin snapshot' USING ERRCODE = '23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n\n  SELECT * INTO previous_event\n  FROM order_events\n  WHERE order_id = NEW.order_id AND sequence = NEW.sequence - 1;\n\n  IF previous_event.id IS NULL THEN\n    RAISE EXCEPTION 'order event sequence must be contiguous' USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.event_type = 'ORDER_CREATED'\n     OR NEW.from_order_status <> previous_event.to_order_status\n     OR NEW.from_payment_status <> previous_event.to_payment_status\n     OR NEW.from_dispute_status <> previous_event.to_dispute_status\n     OR NEW.from_fulfillment_status <> previous_event.to_fulfillment_status\n     OR NEW.from_payment_attempt_id IS DISTINCT FROM previous_event.to_payment_attempt_id THEN\n    RAISE EXCEPTION 'order event must continue the prior aggregate snapshot'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_order_status = NEW.from_order_status\n    OR (NEW.from_order_status = 'DRAFT' AND NEW.to_order_status = 'PENDING_PAYMENT')\n    OR (NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status IN ('OPEN', 'CANCELED'))\n    OR (NEW.from_order_status = 'OPEN' AND NEW.to_order_status = 'CLOSED')\n    OR (NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN')\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid lifecycle edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_payment_status = NEW.from_payment_status\n    OR (NEW.from_payment_status = 'UNPAID' AND NEW.to_payment_status = 'PENDING')\n    OR (NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID')\n    OR (NEW.from_payment_status = 'PAID' AND NEW.to_payment_status IN ('PARTIALLY_REFUNDED', 'REFUNDED'))\n    OR (NEW.from_payment_status = 'PARTIALLY_REFUNDED' AND NEW.to_payment_status = 'REFUNDED')\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid payment edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_dispute_status = NEW.from_dispute_status\n    OR (NEW.from_dispute_status = 'NONE' AND NEW.to_dispute_status = 'OPEN')\n    OR (NEW.from_dispute_status = 'OPEN' AND NEW.to_dispute_status IN ('WON', 'LOST'))\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid dispute edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.to_order_status = NEW.from_order_status\n     AND NEW.to_payment_status = NEW.from_payment_status\n     AND NEW.to_dispute_status = NEW.from_dispute_status\n     AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n     AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id THEN\n    RAISE EXCEPTION 'order event must record a state or attempt binding change'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.event_type = 'LIFECYCLE_CHANGED' AND NEW.to_order_status = NEW.from_order_status THEN\n    RAISE EXCEPTION 'lifecycle event must change lifecycle status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'PAYMENT_STATUS_CHANGED' AND NEW.to_payment_status = NEW.from_payment_status THEN\n    RAISE EXCEPTION 'payment event must change payment status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'DISPUTE_STATUS_CHANGED' AND NEW.to_dispute_status = NEW.from_dispute_status THEN\n    RAISE EXCEPTION 'dispute event must change dispute status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'FULFILLMENT_AGGREGATE_CHANGED'\n        AND NEW.to_fulfillment_status = NEW.from_fulfillment_status THEN\n    RAISE EXCEPTION 'fulfillment aggregate event must change fulfillment status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'PAYMENT_ATTEMPT_BOUND'\n        AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id THEN\n    RAISE EXCEPTION 'attempt binding event must change payment attempt' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'LATE_PAYMENT_RECOVERED'\n        AND NOT (NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN') THEN\n    RAISE EXCEPTION 'late payment recovery must reopen a canceled order' USING ERRCODE = '23514';\n  END IF;\n\n  authority_and_fields_valid := CASE NEW.event_type\n    WHEN 'LIFECYCLE_CHANGED' THEN\n      NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND (\n        (NEW.from_order_status = 'DRAFT' AND NEW.to_order_status = 'PENDING_PAYMENT'\n          AND NEW.authority_kind = 'CHECKOUT' AND NEW.reason_code = 'ORDER_CHECKOUT_CREATED')\n        OR (NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status = 'CANCELED'\n          AND NEW.authority_kind IN ('PROVIDER_EVIDENCE', 'ADMIN')\n          AND NEW.reason_code = 'ORDER_CANCELED')\n        OR (NEW.from_order_status = 'OPEN' AND NEW.to_order_status = 'CLOSED'\n          AND NEW.authority_kind = 'FULFILLMENT'\n          AND NEW.reason_code = 'ORDER_FULFILLMENT_COMPLETED')\n      )\n    WHEN 'PAYMENT_STATUS_CHANGED' THEN\n      NEW.to_dispute_status = NEW.from_dispute_status\n      AND (\n        (NEW.from_payment_status = 'UNPAID' AND NEW.to_payment_status = 'PENDING'\n          AND NEW.to_order_status = NEW.from_order_status\n          AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n          AND NEW.from_payment_attempt_id IS NULL\n          AND NEW.to_payment_attempt_id IS NOT NULL\n          AND NEW.authority_kind = 'CHECKOUT'\n          AND NEW.reason_code = 'ORDER_PAYMENT_ATTEMPT_CREATED')\n        OR (NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID'\n          AND NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status = 'OPEN'\n          AND NEW.from_fulfillment_status = 'PENDING'\n          AND NEW.to_fulfillment_status IN ('PENDING', 'ON_HOLD')\n          AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n          AND NEW.to_payment_attempt_id IS NOT NULL\n          AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n          AND NEW.reason_code = 'ORDER_PAYMENT_CONFIRMED')\n        OR (NEW.from_payment_status IN ('PAID', 'PARTIALLY_REFUNDED')\n          AND NEW.to_payment_status IN ('PARTIALLY_REFUNDED', 'REFUNDED')\n          AND NEW.to_order_status = NEW.from_order_status\n          AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n          AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n          AND NEW.authority_kind = 'REFUND_AGGREGATE'\n          AND NEW.reason_code = 'ORDER_REFUND_TOTAL_CONFIRMED')\n      )\n    WHEN 'DISPUTE_STATUS_CHANGED' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n    WHEN 'FULFILLMENT_AGGREGATE_CHANGED' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND NEW.authority_kind = 'FULFILLMENT'\n    WHEN 'PAYMENT_ATTEMPT_BOUND' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.authority_kind IN ('CHECKOUT', 'SYSTEM')\n      AND NEW.reason_code = 'PAYMENT_ATTEMPT_BOUND'\n    WHEN 'LATE_PAYMENT_RECOVERED' THEN\n      NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN'\n      AND NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID'\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_payment_attempt_id IS NOT NULL\n      AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n      AND NEW.reason_code IN ('PAYMENT_SUCCESS_RECONCILED', 'LATE_PAYMENT_INVENTORY_UNAVAILABLE')\n    ELSE false\n  END;\n\n  IF NOT authority_and_fields_valid THEN\n    RAISE EXCEPTION 'order event authority or changed-field set is invalid'\n      USING ERRCODE = '23514';\n  END IF;\n\n  RETURN NEW;\nEND;\n$function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.validate_order_event()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  previous_event order_events%ROWTYPE;\n  authority_and_fields_valid boolean;\nBEGIN\n  IF NEW.authority_kind = 'ADMIN' THEN\n    PERFORM 1 FROM audit_logs audit\n    WHERE audit.id = NEW.audit_log_id\n    FOR UPDATE;\n\n    IF NOT EXISTS (\n      SELECT 1 FROM audit_logs audit\n      WHERE audit.id = NEW.audit_log_id\n        AND audit.actor_type = 'ADMIN'\n        AND audit.actor_id = NEW.admin_identity_id\n        AND audit.action = 'ORDER_CANCELED'\n        AND audit.subject_type = 'ORDER'\n        AND audit.subject_id = NEW.order_id\n        AND audit.reason_code = NEW.reason_code\n        AND audit.request_id = NEW.request_id\n        AND audit.correlation_id = NEW.correlation_id\n        AND audit.outcome = 'SUCCEEDED'\n        AND audit.created_at = NEW.occurred_at\n        AND NEW.occurred_at = transaction_timestamp()\n    ) THEN\n      RAISE EXCEPTION 'admin order event requires exact fresh successful audit evidence'\n        USING ERRCODE = '23514';\n    END IF;\n\n    IF EXISTS (\n      SELECT 1 FROM order_events event WHERE event.audit_log_id = NEW.audit_log_id\n      UNION ALL\n      SELECT 1 FROM fulfillment_events event WHERE event.audit_log_id = NEW.audit_log_id\n    ) THEN\n      RAISE EXCEPTION 'admin authority audit evidence was already consumed'\n        USING ERRCODE = '23514';\n    END IF;\n  END IF;\n\n  IF NEW.sequence = 1 THEN\n    IF NEW.event_type <> 'ORDER_CREATED'\n       OR NEW.authority_kind <> 'CHECKOUT'\n       OR NEW.from_order_status IS NOT NULL\n       OR NEW.from_payment_status IS NOT NULL\n       OR NEW.from_dispute_status IS NOT NULL\n       OR NEW.from_fulfillment_status IS NOT NULL\n       OR NEW.from_payment_attempt_id IS NOT NULL\n       OR NEW.to_order_status <> 'DRAFT'\n       OR NEW.to_payment_status <> 'UNPAID'\n       OR NEW.to_dispute_status <> 'NONE'\n       OR NEW.to_fulfillment_status <> 'PENDING'\n       OR NEW.to_payment_attempt_id IS NOT NULL THEN\n      RAISE EXCEPTION 'first order event must be an origin snapshot' USING ERRCODE = '23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n\n  SELECT * INTO previous_event\n  FROM order_events\n  WHERE order_id = NEW.order_id AND sequence = NEW.sequence - 1;\n\n  IF previous_event.id IS NULL THEN\n    RAISE EXCEPTION 'order event sequence must be contiguous' USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.event_type = 'ORDER_CREATED'\n     OR NEW.from_order_status <> previous_event.to_order_status\n     OR NEW.from_payment_status <> previous_event.to_payment_status\n     OR NEW.from_dispute_status <> previous_event.to_dispute_status\n     OR NEW.from_fulfillment_status <> previous_event.to_fulfillment_status\n     OR NEW.from_payment_attempt_id IS DISTINCT FROM previous_event.to_payment_attempt_id THEN\n    RAISE EXCEPTION 'order event must continue the prior aggregate snapshot'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_order_status = NEW.from_order_status\n    OR (NEW.from_order_status = 'DRAFT' AND NEW.to_order_status = 'PENDING_PAYMENT')\n    OR (NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status IN ('OPEN', 'CANCELED'))\n    OR (NEW.from_order_status = 'OPEN' AND NEW.to_order_status = 'CLOSED')\n    OR (NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN')\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid lifecycle edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_payment_status = NEW.from_payment_status\n    OR (NEW.from_payment_status = 'UNPAID' AND NEW.to_payment_status = 'PENDING')\n    OR (NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID')\n    OR (NEW.from_payment_status = 'PAID' AND NEW.to_payment_status IN ('PARTIALLY_REFUNDED', 'REFUNDED'))\n    OR (NEW.from_payment_status = 'PARTIALLY_REFUNDED' AND NEW.to_payment_status = 'REFUNDED')\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid payment edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_dispute_status = NEW.from_dispute_status\n    OR (NEW.from_dispute_status = 'NONE' AND NEW.to_dispute_status = 'OPEN')\n    OR (NEW.from_dispute_status = 'OPEN' AND NEW.to_dispute_status IN ('WON', 'LOST'))\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid dispute edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.to_order_status = NEW.from_order_status\n     AND NEW.to_payment_status = NEW.from_payment_status\n     AND NEW.to_dispute_status = NEW.from_dispute_status\n     AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n     AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id THEN\n    RAISE EXCEPTION 'order event must record a state or attempt binding change'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.event_type = 'LIFECYCLE_CHANGED' AND NEW.to_order_status = NEW.from_order_status THEN\n    RAISE EXCEPTION 'lifecycle event must change lifecycle status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'PAYMENT_STATUS_CHANGED' AND NEW.to_payment_status = NEW.from_payment_status THEN\n    RAISE EXCEPTION 'payment event must change payment status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'DISPUTE_STATUS_CHANGED' AND NEW.to_dispute_status = NEW.from_dispute_status THEN\n    RAISE EXCEPTION 'dispute event must change dispute status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'FULFILLMENT_AGGREGATE_CHANGED'\n        AND NEW.to_fulfillment_status = NEW.from_fulfillment_status THEN\n    RAISE EXCEPTION 'fulfillment aggregate event must change fulfillment status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'PAYMENT_ATTEMPT_BOUND'\n        AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id THEN\n    RAISE EXCEPTION 'attempt binding event must change payment attempt' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'LATE_PAYMENT_RECOVERED'\n        AND NOT (NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN') THEN\n    RAISE EXCEPTION 'late payment recovery must reopen a canceled order' USING ERRCODE = '23514';\n  END IF;\n\n  authority_and_fields_valid := CASE NEW.event_type\n    WHEN 'LIFECYCLE_CHANGED' THEN\n      NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND (\n        (NEW.from_order_status = 'DRAFT' AND NEW.to_order_status = 'PENDING_PAYMENT'\n          AND NEW.authority_kind = 'CHECKOUT' AND NEW.reason_code = 'ORDER_CHECKOUT_CREATED')\n        OR (NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status = 'CANCELED'\n          AND NEW.authority_kind IN ('PROVIDER_EVIDENCE', 'ADMIN')\n          AND NEW.reason_code = 'ORDER_CANCELED')\n        OR (NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status = 'CANCELED'\n          AND NEW.authority_kind = 'SYSTEM' AND NEW.reason_code = 'CHECKOUT_QUOTE_EXPIRED'\n          AND NEW.occurred_at = transaction_timestamp()\n          AND EXISTS (SELECT 1 FROM public.orders o WHERE o.id=NEW.order_id\n            AND o.quote_expires_at<=transaction_timestamp() AND o.payment_status IN('UNPAID','PENDING')\n            AND NOT EXISTS(SELECT 1 FROM public.payment_attempts a WHERE a.order_id=o.id AND a.status NOT IN('FAILED','CANCELED','EXPIRED'))\n            AND ((o.current_payment_attempt_id IS NULL AND NOT EXISTS(SELECT 1 FROM public.payment_attempts a WHERE a.order_id=o.id))\n              OR EXISTS(SELECT 1 FROM public.payment_attempts a WHERE a.id=o.current_payment_attempt_id AND a.order_id=o.id AND a.status IN('FAILED','CANCELED','EXPIRED'))))\n          AND EXISTS (SELECT 1 FROM public.audit_logs a WHERE a.id=NEW.audit_log_id\n            AND a.actor_type='SYSTEM' AND a.actor_id IS NULL AND a.task_name IS NOT NULL\n            AND a.action='ORDER_CHECKOUT_EXPIRED' AND a.subject_type='ORDER' AND a.subject_id=NEW.order_id\n            AND a.reason_code='CHECKOUT_QUOTE_EXPIRED' AND a.request_id=NEW.request_id AND a.correlation_id=NEW.correlation_id\n            AND a.outcome='SUCCEEDED' AND a.created_at=NEW.occurred_at)\n          AND NOT EXISTS(SELECT 1 FROM public.order_events e WHERE e.audit_log_id=NEW.audit_log_id)\n          AND NOT EXISTS(SELECT 1 FROM public.fulfillment_events e WHERE e.audit_log_id=NEW.audit_log_id))\n        OR (NEW.from_order_status = 'OPEN' AND NEW.to_order_status = 'CLOSED'\n          AND NEW.authority_kind = 'FULFILLMENT'\n          AND NEW.reason_code = 'ORDER_FULFILLMENT_COMPLETED')\n      )\n    WHEN 'PAYMENT_STATUS_CHANGED' THEN\n      NEW.to_dispute_status = NEW.from_dispute_status\n      AND (\n        (NEW.from_payment_status = 'UNPAID' AND NEW.to_payment_status = 'PENDING'\n          AND NEW.to_order_status = NEW.from_order_status\n          AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n          AND NEW.from_payment_attempt_id IS NULL\n          AND NEW.to_payment_attempt_id IS NOT NULL\n          AND NEW.authority_kind = 'CHECKOUT'\n          AND NEW.reason_code = 'ORDER_PAYMENT_ATTEMPT_CREATED')\n        OR (NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID'\n          AND NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status = 'OPEN'\n          AND NEW.from_fulfillment_status = 'PENDING'\n          AND NEW.to_fulfillment_status IN ('PENDING', 'ON_HOLD')\n          AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n          AND NEW.to_payment_attempt_id IS NOT NULL\n          AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n          AND NEW.reason_code = 'ORDER_PAYMENT_CONFIRMED')\n        OR (NEW.from_payment_status IN ('PAID', 'PARTIALLY_REFUNDED')\n          AND NEW.to_payment_status IN ('PARTIALLY_REFUNDED', 'REFUNDED')\n          AND NEW.to_order_status = NEW.from_order_status\n          AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n          AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n          AND NEW.authority_kind = 'REFUND_AGGREGATE'\n          AND NEW.reason_code = 'ORDER_REFUND_TOTAL_CONFIRMED')\n      )\n    WHEN 'DISPUTE_STATUS_CHANGED' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n    WHEN 'FULFILLMENT_AGGREGATE_CHANGED' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND NEW.authority_kind = 'FULFILLMENT'\n    WHEN 'PAYMENT_ATTEMPT_BOUND' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.authority_kind IN ('CHECKOUT', 'SYSTEM')\n      AND NEW.reason_code = 'PAYMENT_ATTEMPT_BOUND'\n    WHEN 'LATE_PAYMENT_RECOVERED' THEN\n      NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN'\n      AND NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID'\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_payment_attempt_id IS NOT NULL\n      AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n      AND NEW.reason_code IN ('PAYMENT_SUCCESS_RECONCILED', 'LATE_PAYMENT_INVENTORY_UNAVAILABLE')\n    ELSE false\n  END;\n\n  IF NOT authority_and_fields_valid THEN\n    RAISE EXCEPTION 'order event authority or changed-field set is invalid'\n      USING ERRCODE = '23514';\n  END IF;\n\n  RETURN NEW;\nEND;\n$function$"
     },
     {
       "name": "validate_order_item_snapshot",

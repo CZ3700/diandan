@@ -155,13 +155,13 @@ export function createOrderAccessRepository(
         if (cart.status !== "CONVERTED")
           return rejectOrderAccess("PAYMENT_NOT_CONFIRMED");
         await confirmBootstrapCart(client, cart.id);
-        await retireAccessTokens(client, order["id"]);
         await retireAccessSessions(client, order["id"]);
         const token = await insertAccessToken(
           client,
           order["id"],
           command.tokenCredential,
           command.sessionTtlSeconds,
+          "CHECKOUT_BOOTSTRAP",
         );
         const session = await consumeAccessToken(
           client,

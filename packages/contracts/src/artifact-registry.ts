@@ -1,3 +1,4 @@
+import * as orderNotification from "./order-notification.js";
 import * as orderAccess from "./order-access.js";
 import * as orderPaymentApplication from "./order-payment-application.js";
 import * as paymentRuntimeInternal from "./payment-runtime-internal.js";
@@ -638,6 +639,7 @@ export type ContractRegistration = Readonly<{
 // Scalars and embedded snapshot value objects follow their versioned parent;
 // they must never be used as standalone API, event, or queue roots.
 const unversionedValueObjectNames = new Set([
+  "OrderNotificationUrl",
   "CheckoutPolicyAcceptance",
   "CheckoutEncryptedContact",
   "CheckoutInventoryAssignment",
@@ -656,6 +658,171 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "CommerceExpiryRunResult",
+    audience: "internal",
+    schema: orderNotification.commerceExpiryRunResultSchema,
+  },
+  {
+    name: "OrderNotificationBaseVariables",
+    audience: "internal",
+    schema: orderNotification.orderNotificationBaseVariablesSchema,
+  },
+  {
+    name: "OrderNotificationUrl",
+    audience: "internal",
+    schema: orderNotification.orderNotificationUrlSchema,
+  },
+  {
+    name: "OrderNotificationVariables",
+    audience: "internal",
+    schema: orderNotification.orderNotificationVariablesSchema,
+  },
+  {
+    name: "OrderNotificationTemplateSelection",
+    audience: "internal",
+    schema: orderNotification.orderNotificationTemplateSelectionSchema,
+  },
+  {
+    name: "OrderNotificationRenderCommand",
+    audience: "internal",
+    schema: orderNotification.orderNotificationRenderCommandSchema,
+  },
+  {
+    name: "NotificationEmailDispatch",
+    audience: "internal",
+    schema: orderNotification.notificationEmailDispatchSchema,
+  },
+  {
+    name: "NotificationGatewayProfile",
+    audience: "internal",
+    schema: orderNotification.notificationGatewayProfileSchema,
+  },
+  {
+    name: "NotificationGatewayReceipt",
+    audience: "internal",
+    schema: orderNotification.notificationGatewayReceiptSchema,
+  },
+  {
+    name: "NotificationTemplateReview",
+    audience: "internal",
+    schema: orderNotification.notificationTemplateReviewSchema,
+  },
+  {
+    name: "NotificationSourceCommand",
+    audience: "internal",
+    schema: orderNotification.notificationSourceCommandSchema,
+  },
+  {
+    name: "NotificationSourceResult",
+    audience: "internal",
+    schema: orderNotification.notificationSourceResultSchema,
+  },
+  {
+    name: "NotificationRequestCommand",
+    audience: "internal",
+    schema: orderNotification.notificationRequestCommandSchema,
+  },
+  {
+    name: "NotificationRequestResult",
+    audience: "internal",
+    schema: orderNotification.notificationRequestResultSchema,
+  },
+  {
+    name: "NotificationLeaseCommand",
+    audience: "internal",
+    schema: orderNotification.notificationLeaseCommandSchema,
+  },
+  {
+    name: "NotificationClaimCommand",
+    audience: "internal",
+    schema: orderNotification.notificationClaimCommandSchema,
+  },
+  {
+    name: "NotificationDeliveryPlan",
+    audience: "internal",
+    schema: orderNotification.notificationDeliveryPlanSchema,
+  },
+  {
+    name: "NotificationClaimResult",
+    audience: "internal",
+    schema: orderNotification.notificationClaimResultSchema,
+  },
+  {
+    name: "NotificationAttachLinkCommand",
+    audience: "internal",
+    schema: orderNotification.notificationAttachLinkCommandSchema,
+  },
+  {
+    name: "NotificationAttachLinkResult",
+    audience: "internal",
+    schema: orderNotification.notificationAttachLinkResultSchema,
+  },
+  {
+    name: "NotificationRecipientResult",
+    audience: "internal",
+    schema: orderNotification.notificationRecipientResultSchema,
+  },
+  {
+    name: "NotificationConfirmSendCommand",
+    audience: "internal",
+    schema: orderNotification.notificationConfirmSendCommandSchema,
+  },
+  {
+    name: "NotificationConfirmSendResult",
+    audience: "internal",
+    schema: orderNotification.notificationConfirmSendResultSchema,
+  },
+  {
+    name: "NotificationFinishCommand",
+    audience: "internal",
+    schema: orderNotification.notificationFinishCommandSchema,
+  },
+  {
+    name: "NotificationFinishResult",
+    audience: "internal",
+    schema: orderNotification.notificationFinishResultSchema,
+  },
+  {
+    name: "NotificationListPendingCommand",
+    audience: "internal",
+    schema: orderNotification.notificationListPendingCommandSchema,
+  },
+  {
+    name: "NotificationListPendingResult",
+    audience: "internal",
+    schema: orderNotification.notificationListPendingResultSchema,
+  },
+  {
+    name: "NotificationRunResult",
+    audience: "internal",
+    schema: orderNotification.notificationRunResultSchema,
+  },
+  {
+    name: "NotificationRuntimeConfiguration",
+    audience: "internal",
+    schema: orderNotification.notificationRuntimeConfigurationSchema,
+  },
+  {
+    name: "CommerceExpiryListCommand",
+    audience: "internal",
+    schema: orderNotification.commerceExpiryListCommandSchema,
+  },
+  {
+    name: "CommerceExpiryListResult",
+    audience: "internal",
+    schema: orderNotification.commerceExpiryListResultSchema,
+  },
+  {
+    name: "CommerceExpiryCommand",
+    audience: "internal",
+    schema: orderNotification.commerceExpiryCommandSchema,
+  },
+  {
+    name: "CommerceExpiryResult",
+    audience: "internal",
+    schema: orderNotification.commerceExpiryResultSchema,
+  },
   {
     name: "OrderAccessCredential",
     audience: "internal",

@@ -12,6 +12,10 @@
     "./storefront": {
       "types": "./dist/storefront/messages.d.ts",
       "import": "./dist/storefront/messages.js"
+    },
+    "./notifications": {
+      "types": "./dist/notifications/index.d.ts",
+      "import": "./dist/notifications/index.js"
     }
   },
   "scripts": {

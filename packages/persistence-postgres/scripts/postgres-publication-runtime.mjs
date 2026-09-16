@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { rollbackEmptyNotifications } from "./notification-rollback-prefix.mjs";
 import assert from "node:assert/strict";
 import { randomBytes, randomUUID } from "node:crypto";
 import path from "node:path";
@@ -101,6 +102,17 @@ async function verifySeoPurgeRollback({
       )
     ).rows[0].jobs;
   const before = await jobs();
+  await rollbackEmptyNotifications({
+    client,
+    clientConfig,
+    workspaceRoot,
+    check: equal,
+  });
+  equal(
+    await jobs(),
+    before,
+    "notification rollback preserves existing purge jobs exactly",
+  );
   const orderAccessDown = await runMigrations({
     clientConfig,
     workspaceRoot,
@@ -590,7 +602,7 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
               "SELECT max(version) AS version FROM public.schema_migrations",
             )
           ).rows[0].version,
-          "0028",
+          "0029",
           "runtime business checks ran against the current migration head",
         );
         equal(
@@ -698,12 +710,12 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
         });
         equal(
           restored.currentVersion,
-          "0028",
+          "0029",
           "publication runtime proof restores current head",
         );
         equal(
           await retainedHistory(),
-          { ...beforeDown, version: "0028" },
+          { ...beforeDown, version: "0029" },
           "restoring current head preserves all publication and purge history",
         );
       }

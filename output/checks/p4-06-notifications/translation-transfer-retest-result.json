@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "--filter",
+    "@fan-support/persistence-postgres",
+    "test",
+    "src/translation-transfer-repository.test.ts"
+  ],
+  "startedAt": "2026-09-16T03:35:10.243873+00:00",
+  "completedAt": "2026-09-16T03:35:11.142935+00:00",
+  "elapsedSeconds": 0.899,
+  "exitCode": 0
+}

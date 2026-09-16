@@ -16,6 +16,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@fan-support/notification-port": "workspace:*",
     "@fan-support/catalog": "workspace:*",
     "@fan-support/content": "workspace:*",
     "@fan-support/contracts": "workspace:*",

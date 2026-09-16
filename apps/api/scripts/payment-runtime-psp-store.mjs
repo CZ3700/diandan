@@ -291,7 +291,9 @@ export async function createPaymentTestPspStore(options) {
   async function settleHosted(attemptId, token, status) {
     if (
       !authorized(attemptId, token) ||
-      !["SUCCEEDED", "FAILED", "CANCELED", "PROCESSING"].includes(status)
+      !["SUCCEEDED", "FAILED", "CANCELED", "EXPIRED", "PROCESSING"].includes(
+        status,
+      )
     )
       throw new TypeError("Invalid hosted TEST outcome");
     return transaction(async (client) => {

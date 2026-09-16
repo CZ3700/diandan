@@ -1,3 +1,11 @@
+import { createNotificationRepository } from "./notification-repository.js";
+import { createCommerceExpiryRepository } from "./commerce-expiry-repository.js";
+import type {
+  NotificationRepository,
+  NotificationTransactionManager,
+  CommerceExpiryRepository,
+  CommerceExpiryTransactionManager,
+} from "@fan-support/persistence-port";
 import { createOrderAccessRepository } from "./order-access-repository.js";
 import type {
   OrderAccessRepository,
@@ -162,6 +170,8 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly notificationTransactionManager: NotificationTransactionManager;
+  readonly commerceExpiryTransactionManager: CommerceExpiryTransactionManager;
   readonly orderAccessTransactionManager: OrderAccessTransactionManager;
   readonly orderPaymentApplicationTransactionManager: OrderPaymentApplicationTransactionManager;
   readonly paymentRuntimeTransactionManager: PaymentRuntimeTransactionManager;
@@ -319,6 +329,31 @@ export function createPostgresPersistenceWithPoolFactory(
       };
     },
   });
+  const notificationRunner = createTransactionRunner<NotificationRepository>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) =>
+      createNotificationRepository(
+        client,
+        scope,
+        createOutboxRepository(
+          createPostgresQueryLayer(client as NodePgClient),
+          scope,
+        ),
+      ),
+  });
+  const commerceExpiryRunner =
+    createTransactionRunner<CommerceExpiryRepository>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) =>
+        createCommerceExpiryRepository(
+          client,
+          createInventoryRepository(
+            createPostgresQueryLayer(client as NodePgClient),
+            scope,
+          ),
+          scope,
+        ),
+    });
   const orderAccessRunner = createTransactionRunner<OrderAccessRepository>({
     acquireClient: async () => pool.connect(),
     createRepositories: (client, scope) =>
@@ -1040,6 +1075,32 @@ export function createPostgresPersistenceWithPoolFactory(
           });
         return publishedContentRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    notificationTransactionManager: {
+      async runInNotificationTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return notificationRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    commerceExpiryTransactionManager: {
+      async runInCommerceExpiryTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return commerceExpiryRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );
       },

@@ -504,6 +504,7 @@ test("marks every registered top-level contract with an explicit version policy"
     "$defs"
   ] as JsonObject;
   const unversionedValueObjects = new Set([
+    "OrderNotificationUrl",
     "CheckoutPolicyAcceptance",
     "CheckoutEncryptedContact",
     "CheckoutInventoryAssignment",

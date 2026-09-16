@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "actualEmail": false,
+  "actualPostgres": true,
+  "actualProductionNext": true,
+  "actualMailHref": true,
+  "locale": "vi",
+  "cases": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": true,
+      "keyboard": true,
+      "status": "PASS",
+      "axeViolations": 0,
+      "axeIncomplete": 0
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": true,
+      "keyboard": true,
+      "status": "PASS",
+      "axeViolations": 0,
+      "axeIncomplete": 0
+    }
+  ],
+  "screenshots": [
+    "mail-order-vi-390.png",
+    "mail-order-vi-1440.png"
+  ],
+  "browserClosed": true,
+  "observations": {
+    "requests": [
+      {
+        "method": "GET",
+        "category": "OTHER"
+      },
+      {
+        "method": "POST",
+        "category": "ACCESS"
+      },
+      {
+        "method": "GET",
+        "category": "READ"
+      },
+      {
+        "method": "GET",
+        "category": "OTHER"
+      },
+      {
+        "method": "GET",
+        "category": "READ"
+      },
+      {
+        "method": "GET",
+        "category": "READ"
+      },
+      {
+        "method": "GET",
+        "category": "OTHER"
+      },
+      {
+        "method": "GET",
+        "category": "READ"
+      },
+      {
+        "method": "GET",
+        "category": "READ"
+      }
+    ],
+    "responses": [
+      {
+        "category": "EXCHANGE",
+        "status": 200,
+        "action": "GRANTED",
+        "code": null,
+        "privateCache": true,
+        "noReferrer": true,
+        "noIndex": true
+      },
+      {
+        "category": "READ",
+        "status": 200,
+        "action": null,
+        "code": null,
+        "privateCache": true,
+        "noReferrer": true,
+        "noIndex": true
+      },
+      {
+        "category": "READ",
+        "status": 200,
+        "action": "READ",
+        "code": null,
+        "privateCache": true,
+        "noReferrer": true,
+        "noIndex": true
+      },
+      {
+        "category": "READ",
+        "status": 200,
+        "action": "READ",
+        "code": null,
+        "privateCache": true,
+        "noReferrer": true,
+        "noIndex": true
+      },
+      {
+        "category": "READ",
+        "status": 200,
+        "action": "READ",
+        "code": null,
+        "privateCache": true,
+        "noReferrer": true,
+        "noIndex": true
+      },
+      {
+        "category": "READ",
+        "status": 200,
+        "action": "READ",
+        "code": null,
+        "privateCache": true,
+        "noReferrer": true,
+        "noIndex": true
+      }
+    ],
+    "fragmentEvents": [
+      {
+        "stage": "REPLACE",
+        "cleared": true
+      },
+      {
+        "stage": "REPLACE",
+        "cleared": true
+      },
+      {
+        "stage": "EXCHANGE",
+        "cleared": true
+      }
+    ],
+    "pageErrors": 0,
+    "leaked": false
+  }
+}

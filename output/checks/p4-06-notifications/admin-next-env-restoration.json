@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "at": "2026-09-16T03:08:12.219480+00:00",
+  "path": "apps/admin/next-env.d.ts",
+  "generatedHash": "0f70629890b72a0a82e91972cc032c04b658b26c265373cb711cf576bfbf8fcc",
+  "restoredHash": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b",
+  "exactlyTwoGeneratedDevImports": true,
+  "reason": "Existing admin-workspace Next dev fixture generated declarations; archived then restored to frozen candidate after that fixture completed, before final quality gates. Not a claim of zero mid-run source drift."
+}

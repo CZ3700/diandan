@@ -23,6 +23,12 @@
     "test:media-processing": "pnpm turbo run build --filter @fan-support/worker --output-logs=errors-only && node ./scripts/media-processing-integration.mjs"
   },
   "dependencies": {
+    "@fan-support/i18n": "workspace:*",
+    "@fan-support/key-management-kms": "workspace:*",
+    "@fan-support/key-management-port": "workspace:*",
+    "@fan-support/notification-port": "workspace:*",
+    "@fan-support/notification-provider": "workspace:*",
+    "zod": "4.5.4",
     "@fan-support/application": "workspace:*",
     "@fan-support/config": "workspace:*",
     "@fan-support/contracts": "workspace:*",

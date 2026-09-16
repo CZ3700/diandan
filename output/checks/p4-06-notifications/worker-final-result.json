@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "exec",
+    "turbo",
+    "run",
+    "test",
+    "typecheck",
+    "build",
+    "--filter",
+    "@fan-support/worker",
+    "--output-logs=errors-only"
+  ],
+  "startedAt": "2026-09-16T02:39:36.300589+00:00",
+  "completedAt": "2026-09-16T02:40:00.627878+00:00",
+  "elapsedSeconds": 24.327,
+  "exitCode": 0
+}

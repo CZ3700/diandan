@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "expiry": {
+    "canceledIntents": 0,
+    "canceledOrders": 0,
+    "decision": "APPLIED",
+    "expiredCart": false,
+    "expiredCheckoutSessions": 0,
+    "expiredIntents": 0,
+    "expiredReservations": 1,
+    "expiredSessions": 0,
+    "expiredTokens": 0,
+    "schemaVersion": 1
+  },
+  "recovery": {
+    "attemptStatus": "UNKNOWN",
+    "hasAction": false,
+    "cartStatus": "LOCKED",
+    "orderStatus": "PENDING_PAYMENT"
+  },
+  "application": {
+    "decision": "ALREADY_APPLIED",
+    "reasonCode": null,
+    "outcome": "PAID_REVIEW"
+  },
+  "final": {
+    "attemptStatus": "SUCCEEDED",
+    "paymentStatus": "PAID",
+    "fulfillmentStatus": "ON_HOLD",
+    "captures": 1,
+    "committed": 0,
+    "decrements": 0
+  },
+  "actualPostgres": true,
+  "ownedTestPsp": true,
+  "actualPspSandbox": false
+}

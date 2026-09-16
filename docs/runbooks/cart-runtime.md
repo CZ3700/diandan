@@ -43,7 +43,7 @@ AWS SDK 使用服务器凭据链。运行角色需要相应 key 的 GenerateMac�
 - 七语言真实购物车浏览器：`mise exec node@24.20.0 -- corepack pnpm verify:cart:browser`。临时预览使用 `mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/api preview:cart-storefront`，保留至停止信号；URL以本次启动输出为准。
 - 证据：`output/checks/p4-01-cart-runtime/`、`output/checks/p4-01-cart/` 与 `output/checks/p4-02-cart-storefront/`；进度与限制以 `docs/progress/phase-4-commerce.md` 为准。P4-02每次独立输出到 `run-*`；所有数据来自显式 TEST 夹具，不是生产内容。
 
-CI 的 Quality 执行预算调整为 30 分钟：已有完整本地回归耗时 1186–1207 秒，本阶段还增加真实购物车链路；原检查步骤不减，Security 保留 20 分钟。该配置修改和本地检查不构成远程 CI 已通过。
+P4-01 曾将 CI Quality 执行预算调整为 30 分钟。P4-06 新增通知与到期竞争的真实集成后，预算为 45 分钟；原检查步骤不减，Security 保留 20 分钟。当前依据和入口见 `docs/operations/order-notifications.md`。该配置修改和本地检查不构成远程 CI 已通过。
 
 0023 扩展购物车历史资格守卫，以支持正常管理中心的全部艺人规则；同时修复旧自动审核守卫把 NULL 待审状态误当自动审核的问题。真正的自动审核仍需精确不可变证据。存在仅靠动态资格合法的历史意图，或仍有待审意图时，回退到有缺陷的旧守卫会被明确拒绝；不能删历史数据、假审核或伪造显式资格来强行回退。空库 up/down/up 与带业务数据的拒绝回退需分别验证。
 

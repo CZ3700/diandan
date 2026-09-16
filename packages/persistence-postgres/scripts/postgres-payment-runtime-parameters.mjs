@@ -39,23 +39,31 @@ for (const name of files) {
       node.getText(ast).includes("public.")
     ) {
       const raw = node.getText(ast);
-      // These are only source-owned static SQL expressions; parameters remain placeholders.
-      const query = Function(
+      // Expand both recovery predicates; parameters remain placeholders in source-owned SQL.
+      const render = Function(
         "cartTimestamp",
         "checkoutReceiptColumns",
         "validPaymentReservationsSql",
         "runtimeOperationColumns",
         "canonical",
+        "restoresNonterminal",
         `return ${raw}`,
-      )(
-        cartTimestamp,
-        checkoutReceiptColumns,
-        validPaymentReservationsSql,
-        runtimeOperationColumns,
-        { supported: true, canonicalId: null },
       );
-      if (/^(SELECT|WITH|INSERT|UPDATE|DELETE)\b/u.test(query.trim()))
-        queries.push({ name, query });
+      const branches = raw.includes("restoresNonterminal")
+        ? [false, true]
+        : [undefined];
+      for (const restoresNonterminal of branches) {
+        const query = render(
+          cartTimestamp,
+          checkoutReceiptColumns,
+          validPaymentReservationsSql,
+          runtimeOperationColumns,
+          { supported: true, canonicalId: null },
+          restoresNonterminal,
+        );
+        if (/^(SELECT|WITH|INSERT|UPDATE|DELETE)\b/u.test(query.trim()))
+          queries.push({ name, query, restoresNonterminal });
+      }
     }
     if (
       ts.isCallExpression(node) &&
@@ -80,6 +88,26 @@ for (const name of files) {
   walk(ast);
 }
 assert.ok(queries.length >= 25, "all payment module queries are inventoried");
+const recoveryBranches = queries.filter(
+  (entry) => entry.restoresNonterminal !== undefined,
+);
+assert.deepEqual(
+  recoveryBranches.map((entry) => entry.restoresNonterminal),
+  [false, true],
+  "both complete recovery UPDATE branches must be inventoried",
+);
+for (const entry of recoveryBranches) {
+  assert.equal(entry.name, "recovery");
+  assert.match(entry.query, /^UPDATE public\.payment_attempts\b/u);
+  assert.equal(
+    entry.query.includes("o.quote_expires_at>clock_timestamp()"),
+    entry.restoresNonterminal,
+  );
+  assert.equal(
+    entry.query.includes(validPaymentReservationsSql),
+    entry.restoresNonterminal,
+  );
+}
 let stage = "MIGRATIONS",
   assertions = 0;
 await withEphemeralPostgres(async (configuration) => {
@@ -121,11 +149,33 @@ await withEphemeralPostgres(async (configuration) => {
   const client = new Client(configuration);
   await client.connect();
   try {
+    const preparedRecoveryBranches = [];
     for (const [index, entry] of queries.entries()) {
-      stage = `PREPARE_${index}_${entry.name}`;
+      stage = `PREPARE_${index}_${entry.name}${entry.restoresNonterminal === undefined ? "" : `_RESTORES_${entry.restoresNonterminal}`}`;
       await client.query(`PREPARE payment_runtime_${index} AS ${entry.query}`);
       assertions++;
+      if (entry.restoresNonterminal !== undefined) {
+        const { types } = (
+          await client.query(
+            "SELECT parameter_types::text[] types FROM pg_prepared_statements WHERE name=$1",
+            [`payment_runtime_${index}`],
+          )
+        ).rows[0];
+        assert.equal(types.length, 11);
+        assert.ok(types.every((type) => type !== "unknown"));
+        preparedRecoveryBranches.push({
+          restoresNonterminal: entry.restoresNonterminal,
+          parameterTypes: types,
+        });
+        assertions += 2;
+      }
     }
+    assert.deepEqual(
+      preparedRecoveryBranches[0].parameterTypes,
+      preparedRecoveryBranches[1].parameterTypes,
+      "both actual PostgreSQL branches infer the same complete parameter contract",
+    );
+    assertions++;
     const routeQuery = queries.find(
       (entry) =>
         entry.name === "config" && entry.query.includes("ARRAY(SELECT country"),
@@ -159,6 +209,7 @@ await withEphemeralPostgres(async (configuration) => {
         status: "PASS",
         assertions,
         preparedStatements: queries.length,
+        preparedRecoveryBranches,
         scope:
           "Actual full migrated PostgreSQL parameter and column validation; no PSP or complete checkout fixture",
       }) + "\n",

@@ -280,6 +280,16 @@
         "up": "12a71cb2fb745920184f1caae286f2cdeb53202bde66a4ec0560d59acb8943a2",
         "down": "8e6ab1b9bc5efd88c1f0311cdb5f53f697d1d9ff694cfd46e61cfe23877641ea"
       }
+    },
+    {
+      "version": "0029",
+      "name": "notifications",
+      "up": "database/migrations/0029_notifications.up.sql",
+      "down": "database/migrations/0029_notifications.down.sql",
+      "sha256": {
+        "up": "36197cb238761ac26837d0e54a97d32480186a021302ba9a7d5e2b52bc768a66",
+        "down": "fae422f0ccf28dc2b16afee6c8760431989bf8b4bc418820f4c72d410d9e7cb0"
+      }
     }
   ]
 }

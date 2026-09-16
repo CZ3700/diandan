@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "changedSourceDuringCheck": [
+    "packages/persistence-postgres/package.json"
+  ],
+  "reason": "Standalone notification integration explicitly builds UI before top-level browser helper import. The active full check has not reached this command yet; it will read the final script when invoked. Existing prior admin/storefront steps already build UI.",
+  "dryRunTasks": [
+    "@fan-support/api#build",
+    "@fan-support/application#build",
+    "@fan-support/cache-purge-cdn#build",
+    "@fan-support/cache-purge-port#build",
+    "@fan-support/cart#build",
+    "@fan-support/catalog#build",
+    "@fan-support/config#build",
+    "@fan-support/content#build",
+    "@fan-support/contracts#build",
+    "@fan-support/domain#build",
+    "@fan-support/i18n#build",
+    "@fan-support/identity-port#build",
+    "@fan-support/key-management-kms#build",
+    "@fan-support/key-management-port#build",
+    "@fan-support/media-image#build",
+    "@fan-support/media-port#build",
+    "@fan-support/media-s3#build",
+    "@fan-support/notification-port#build",
+    "@fan-support/notification-provider#build",
+    "@fan-support/observability#build",
+    "@fan-support/payment-fake#build",
+    "@fan-support/payment-port#build",
+    "@fan-support/persistence-port#build",
+    "@fan-support/persistence-postgres#build",
+    "@fan-support/testing#build",
+    "@fan-support/ui#build",
+    "@fan-support/worker#build"
+  ],
+  "productSourceChanged": false,
+  "followup": "Workspace, UI evidence fingerprint and formatting checks rerun; final package script executes later within full check. Do not describe entire run as zero source drift."
+}

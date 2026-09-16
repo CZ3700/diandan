@@ -19,6 +19,35 @@ const validConfig = {
   password: "test-password",
 } as const;
 
+test("notification and expiry transactions share managed shutdown and roll back failed callbacks", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    undefined,
+    () => pool,
+  );
+  expect(persistence).toHaveProperty("notificationTransactionManager");
+  expect(persistence).toHaveProperty("commerceExpiryTransactionManager");
+  for (const run of [
+    persistence.notificationTransactionManager.runInNotificationTransaction,
+    persistence.commerceExpiryTransactionManager.runInCommerceExpiryTransaction,
+  ]) {
+    await expect(
+      run(async () => {
+        throw new Error("rollback probe");
+      }),
+    ).rejects.toThrow("rollback probe");
+  }
+  expect(pool.client.queries).toContain("ROLLBACK");
+  expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL READ COMMITTED");
+  await persistence.close();
+  await expect(
+    persistence.notificationTransactionManager.runInNotificationTransaction(
+      async () => null,
+    ),
+  ).rejects.toMatchObject({ name: "PersistenceTransactionFailureError" });
+});
+
 test("payment runtime composes one serializable client and closes with persistence", async () => {
   const pool = new TransactionPool();
   const persistence = createPostgresPersistenceWithPoolFactory(

@@ -352,3 +352,4 @@ export * from "./checkout-preflight.js";
 export * from "./payment-runtime.js";
 
 export * from "./order-access.js";
+export * from "./order-notification.js";

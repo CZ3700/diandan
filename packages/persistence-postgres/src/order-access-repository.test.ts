@@ -159,6 +159,61 @@ test("public order ID alone cannot read an order", async () => {
   ).rejects.toMatchObject({ code: "ACCESS_DENIED" });
   expect(query).toHaveBeenCalledTimes(1);
 });
+
+test("checkout bootstrap consumes an internal grant without retiring a pending notification link", async () => {
+  const { repo, query } = setup([]);
+  query.mockImplementation(async (sql) => {
+    if (sql.includes("current_access_valid"))
+      return { rows: [{ current_access_valid: true }] };
+    if (sql.includes("FROM public.carts"))
+      return {
+        rows: [
+          {
+            id: id(2),
+            version: "4",
+            status: "CONVERTED",
+            expired: false,
+            presentation_locale: "en",
+            market: "TEST",
+            currency: "USD",
+            expires_at: "2026-09-17T00:00:00Z",
+            created_at: "2026-09-16T00:00:00Z",
+            updated_at: "2026-09-16T00:00:00Z",
+          },
+        ],
+      };
+    if (sql.includes("FROM public.orders")) return { rows: [order] };
+    if (sql.includes("INSERT INTO public.order_access_tokens"))
+      return { rows: [{ id: id(4), expires_at: "2026-09-17T00:00:00Z" }] };
+    if (sql.includes("exchanged_at=instant.now"))
+      return { rows: [{ id: id(4), exchanged_at: "2026-09-16T00:00:00Z" }] };
+    if (sql.includes("INSERT INTO public.order_access_sessions"))
+      return { rows: [{ id: id(5), expires_at: "2026-09-17T00:00:00Z" }] };
+    return { rows: [] };
+  });
+  await expect(
+    repo.bootstrap(
+      orderAccessBootstrapCommandSchema.parse({
+        schemaVersion: 1,
+        checkoutSessionId: id(5),
+        cartAccesses: [credential],
+        tokenCredential: credential,
+        sessionCredential: { ...credential, tokenDigest: "b".repeat(64) },
+        sessionTtlSeconds: 900,
+        ...trace,
+      }),
+    ),
+  ).resolves.toMatchObject({ publicOrderId: order.public_order_id });
+  expect(
+    query.mock.calls.some(([sql]) =>
+      sql.includes("UPDATE public.order_access_tokens token SET status=CASE"),
+    ),
+  ).toBe(false);
+  const insert = query.mock.calls.find(([sql]) =>
+    sql.includes("INSERT INTO public.order_access_tokens"),
+  );
+  expect(insert?.[1]).toContain("CHECKOUT_BOOTSTRAP");
+});
 test("rate-limit consumers use one parameterized statement and return a bounded denial", async () => {
   const { repo, query } = setup([[{ allowed: false, retry_after_seconds: 7 }]]);
   await expect(

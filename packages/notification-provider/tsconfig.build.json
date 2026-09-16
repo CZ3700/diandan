@@ -10,6 +10,7 @@
   "exclude": [
     "dist",
     "node_modules",
+    "src/**/harness*.ts",
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
     "src/**/*.spec.ts",

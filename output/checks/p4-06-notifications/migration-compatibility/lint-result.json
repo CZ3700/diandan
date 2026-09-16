@@ -1,0 +1,28 @@
+{
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "exec",
+    "eslint",
+    "packages/persistence-postgres/scripts/notification-rollback-prefix.mjs",
+    "packages/persistence-postgres/scripts/cart-runtime-rollback-proof.mjs",
+    "packages/persistence-postgres/scripts/cart-edit-rollback-proof.mjs",
+    "packages/persistence-postgres/scripts/checkout-preflight-rollback-proof.mjs",
+    "packages/persistence-postgres/scripts/payment-runtime-rollback-proof.mjs",
+    "packages/persistence-postgres/scripts/order-payment-rollback-proof.mjs",
+    "packages/persistence-postgres/scripts/postgres-catalog-directory.mjs",
+    "packages/persistence-postgres/scripts/postgres-admin-catalog.mjs",
+    "packages/persistence-postgres/scripts/postgres-publication-runtime.mjs",
+    "packages/persistence-postgres/scripts/postgres-content-draft-repositories.mjs",
+    "packages/persistence-postgres/scripts/postgres-publication-validation-time-cases.mjs",
+    "--max-warnings=0"
+  ],
+  "startedAt": "2026-09-16T02:57:36.549051+00:00",
+  "completedAt": "2026-09-16T02:57:37.527292+00:00",
+  "elapsedSeconds": 0.978,
+  "exitCode": 0
+}

@@ -269,3 +269,41 @@ test("is idempotent and waits for an in-flight maintenance pass before stopping"
   expect(harness.queue.stop).toHaveBeenCalledTimes(1);
   expect(runtime.stop()).toBe(stop);
 });
+
+test("notification and expiry maintenance remain independent and are awaited on stop", async () => {
+  const harness = createHarness();
+  const order: string[] = [];
+  let release!: () => void;
+  const factory = await loadRuntimeFactory();
+  const runtime = factory!({
+    ...harness.options,
+    applyPendingOrderPayments: async () => {
+      order.push("payments");
+    },
+    runPendingNotifications: async () => {
+      order.push("notifications");
+      throw new Error("PRIVATE");
+    },
+    expireCommerceResources: async () => {
+      order.push("expiry");
+      await new Promise<void>((resolve) => {
+        release = resolve;
+      });
+    },
+  });
+  await runtime.start();
+  const pass = runtime.runMaintenanceOnce();
+  await vi.waitFor(() =>
+    expect(order).toEqual(["payments", "notifications", "expiry"]),
+  );
+  const stop = runtime.stop();
+  expect(harness.queue.stop).not.toHaveBeenCalled();
+  release();
+  await Promise.all([pass, stop]);
+  expect(harness.notices).toContainEqual({
+    schemaVersion: 1,
+    severity: "WARNING",
+    code: "NOTIFICATION_MAINTENANCE_FAILED",
+  });
+  expect(JSON.stringify(harness.notices)).not.toContain("PRIVATE");
+});

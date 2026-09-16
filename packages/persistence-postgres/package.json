@@ -32,7 +32,9 @@
     "test:postgres:publication-runtime": "pnpm run build:with-dependencies && node ./scripts/postgres-publication-runtime.mjs && node ./scripts/postgres-publication-event-time.mjs",
     "test:postgres:admin-catalog": "pnpm run build:with-dependencies && node ./scripts/postgres-admin-catalog.mjs && node ./scripts/postgres-admin-catalog-time.mjs",
     "test:postgres:gift-commerce": "pnpm run build:with-dependencies && node ./scripts/postgres-gift-commerce.mjs && node ./scripts/postgres-gift-commerce-constraints.mjs && node ./scripts/postgres-gift-commerce-pricing-rollback.mjs",
-    "test:postgres:management-publication": "pnpm run build:with-dependencies && node ./scripts/postgres-daily-publication-clock.mjs && node ./scripts/postgres-daily-publication-outbox.mjs && node ./scripts/postgres-management-operation-clock.mjs"
+    "test:postgres:management-publication": "pnpm run build:with-dependencies && node ./scripts/postgres-daily-publication-clock.mjs && node ./scripts/postgres-daily-publication-outbox.mjs && node ./scripts/postgres-management-operation-clock.mjs",
+    "test:postgres:notifications": "pnpm turbo run build --filter @fan-support/api --filter @fan-support/worker --filter @fan-support/storefront^... --output-logs=errors-only && node ./scripts/notification-integration.mjs",
+    "test:postgres:commerce-expiry": "pnpm turbo run build --filter @fan-support/api --filter @fan-support/worker --output-logs=errors-only && node ./scripts/commerce-expiry-action-probe.mjs && node ./scripts/commerce-expiry-fixture.mjs"
   },
   "dependencies": {
     "@fan-support/catalog": "workspace:*",

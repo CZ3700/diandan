@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { Client } from "pg";
 import { runMigrations } from "../dist/index.js";
+import { rollbackEmptyNotifications } from "./notification-rollback-prefix.mjs";
 
 async function snapshot(client) {
   const result = {};
@@ -57,8 +58,9 @@ export async function verifyCheckoutPreflightRollbackProtection({
           "SELECT max(version) version FROM public.schema_migrations",
         )
       ).rows[0].version,
-      "0028",
+      "0029",
     );
+    await rollbackEmptyNotifications({ client, clientConfig, workspaceRoot });
     const orderAccessDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -152,11 +154,11 @@ export async function verifyCheckoutPreflightRollbackProtection({
       workspaceRoot,
       command: { direction: "up" },
     });
-    assert.equal(restored.currentVersion, "0028");
+    assert.equal(restored.currentVersion, "0029");
     return {
       schemaVersion: 1,
       status: "PASS",
-      assertions: 12,
+      assertions: 14,
       scope:
         "Accepted checkout blocks destructive 0025 rollback; 21 table counts and hashes remain exact",
       before,

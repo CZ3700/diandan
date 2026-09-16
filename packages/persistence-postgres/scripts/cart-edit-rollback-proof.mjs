@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { Client } from "pg";
 import { runMigrations } from "../dist/index.js";
+import { rollbackEmptyNotifications } from "./notification-rollback-prefix.mjs";
 
 async function snapshot(client) {
   const result = {};
@@ -45,7 +46,8 @@ export async function verifyCartEditRollbackProtection({
         "SELECT version FROM public.schema_migrations ORDER BY version DESC LIMIT 1",
       )
     ).rows[0]?.version;
-    assert.equal(head, "0028");
+    assert.equal(head, "0029");
+    await rollbackEmptyNotifications({ client, clientConfig, workspaceRoot });
     const orderAccessDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -139,11 +141,11 @@ export async function verifyCartEditRollbackProtection({
       workspaceRoot,
       command: { direction: "up" },
     });
-    assert.equal(restored.currentVersion, "0028");
+    assert.equal(restored.currentVersion, "0029");
     return {
       schemaVersion: 1,
       status: "PASS",
-      assertions: 13,
+      assertions: 15,
       scope:
         "actual accepted edits and private audits block destructive rollback; all ten table counts and bytes preserved",
       before,

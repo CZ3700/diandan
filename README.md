@@ -12,6 +12,10 @@ mise exec node@24.20.0 -- corepack pnpm preview:management-center
 
 这是隔离的本地体验环境，运行时会先验证实际上传与前台读取；最多运行 110 分钟，结束后清理测试数据。正式内容请使用后续部署的持久环境。
 
+## 订单通知与查单
+
+订单授权入口见 [安全查单运行说明](docs/operations/order-access.md)，七语言通知、重试及过期清理见 [订单通知运行说明](docs/operations/order-notifications.md)。通知目前仅通过本地 TEST 网关验收，正式发信仍需邮件服务与译审配置。
+
 ## 前置条件
 
 - Node.js 24.20.0（建议由 `mise` 选择）

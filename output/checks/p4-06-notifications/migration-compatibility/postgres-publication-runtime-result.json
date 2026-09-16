@@ -1,0 +1,14 @@
+{
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "packages/persistence-postgres/scripts/postgres-publication-runtime.mjs"
+  ],
+  "startedAt": "2026-09-16T02:56:17.424567+00:00",
+  "completedAt": "2026-09-16T02:56:29.511506+00:00",
+  "elapsedSeconds": 12.087,
+  "exitCode": 0
+}

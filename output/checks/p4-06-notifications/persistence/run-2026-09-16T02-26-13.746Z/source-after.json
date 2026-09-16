@@ -1,0 +1,270 @@
+[
+  {
+    "name": "apps/api/scripts/checkout-preflight-client.mjs",
+    "sha256": "5ff8699b2da7fee25650bd715d0c97324e8b817b075fc31c69523080f5d811e9"
+  },
+  {
+    "name": "apps/api/scripts/order-access-runtime.mjs",
+    "sha256": "22f881ed934621dba9fcef0be04decf24c3097b8574a6df8c3c5165d1ac185e6"
+  },
+  {
+    "name": "apps/api/scripts/order-payment-client.mjs",
+    "sha256": "a1fc32aeb7a8b1805bc9b3c430c4b3c94b86643353c953903259e45708573aae"
+  },
+  {
+    "name": "apps/worker/dist/reliable-events-composition.js",
+    "sha256": "1b219bf0cb466669f09d7ceceef7b69da9f3958833af353a87855dac04a32085"
+  },
+  {
+    "name": "apps/worker/dist/reliable-events-runtime.js",
+    "sha256": "da677460fd2b180b5a91149ccd6f2b1ab6edb7cf47c13f7d2a58bd87da8ca19c"
+  },
+  {
+    "name": "apps/worker/scripts/notification-gateway-harness.mjs",
+    "sha256": "fd19f522220a45ee68cac83fabadcf03865041aa06fac078eb9ee7cc11ef335e"
+  },
+  {
+    "name": "apps/worker/scripts/notification-gateway-receiver.mjs",
+    "sha256": "08fd10127d404ce1a66b62c61c98d8d29261b26af0ae5a92d674a653eb590e93"
+  },
+  {
+    "name": "apps/worker/scripts/notification-worker-fixture.mjs",
+    "sha256": "7ec642ab48c783e0e592be45fada1d7c684e0a760ad67ad39aaecb3a29596bbd"
+  },
+  {
+    "name": "apps/worker/src/reliable-events-composition.ts",
+    "sha256": "9c5b9b9652a4d50ee1032356bb2bb8d7a6e3ef8d3bf48d591fcea21c83f59dc6"
+  },
+  {
+    "name": "apps/worker/src/reliable-events-runtime.ts",
+    "sha256": "76db966f2be136e5e2434a887c4a6723b6d24b95c21c468db844e5cd2fac8742"
+  },
+  {
+    "name": "database/migrations/0029_notifications.up.sql",
+    "sha256": "36197cb238761ac26837d0e54a97d32480186a021302ba9a7d5e2b52bc768a66"
+  },
+  {
+    "name": "packages/application/dist/notification-credentials.js",
+    "sha256": "73582899fd682257bb9b302ce4a9b1276f413f2c6f56882ca8a617cc284b8ac1"
+  },
+  {
+    "name": "packages/application/dist/notification-recipient.js",
+    "sha256": "4598b5cd79b6cc4c4f5f293ac8b826fda87622e6dca53e55ac4c5657f26deec9"
+  },
+  {
+    "name": "packages/application/dist/order-notifications.js",
+    "sha256": "3baa339f830f9a414c791b3510c432775a80b6ee8de7e2585c6f90dbb6d8d02c"
+  },
+  {
+    "name": "packages/application/src/notification-credentials.ts",
+    "sha256": "29811dcc6a559ec4b02f99651381c8d57b6d523434a5d2ef3e9cec3d9e50eaf5"
+  },
+  {
+    "name": "packages/application/src/notification-recipient.ts",
+    "sha256": "4effc65c1936b54e24c55dd09c29d78aff5ff8439d90e60bf173f7cef0efd9a0"
+  },
+  {
+    "name": "packages/application/src/order-notifications.ts",
+    "sha256": "ae216d69e8abc1ec1f3580ff558a09b5ed0c907ac8e8a6faa8b942af07df02cc"
+  },
+  {
+    "name": "packages/contracts/dist/order-notification.js",
+    "sha256": "f47d2960013bc945ae1990efbd872b90378ed3d16a9ecbc8cb71c47a1a6bf2ee"
+  },
+  {
+    "name": "packages/contracts/src/order-notification.ts",
+    "sha256": "c839977153205aedd66e9bba8382148e55a6f8c0e1dd2ee9dca9e1e30c1307ca"
+  },
+  {
+    "name": "packages/i18n/dist/notifications/index.js",
+    "sha256": "fcee111e9a055cf61c9ce20f6d7d53fb5f6720ce8b88410b86540eed15d4718e"
+  },
+  {
+    "name": "packages/i18n/dist/notifications/review.js",
+    "sha256": "42758b03b520dc334f7e329ab8b8427527048f2898c7d9f6f61afa884c671cb1"
+  },
+  {
+    "name": "packages/i18n/dist/notifications/v1/copy.js",
+    "sha256": "ab8303dec6845ee88328b43bc94fe1993087c9186da7309ae37f7ae381add576"
+  },
+  {
+    "name": "packages/i18n/dist/notifications/v1/copy.json",
+    "sha256": "b92951d916be6fb18c33837ce051ca90fddbf7971297c5cb5597aa374d2e89c9"
+  },
+  {
+    "name": "packages/i18n/dist/notifications/v1/identity.js",
+    "sha256": "7cf0538904edc47906d59dbb36ec745ea48650ee97195df91665e37d7954c42b"
+  },
+  {
+    "name": "packages/i18n/dist/notifications/v1/layout.js",
+    "sha256": "74a164119d7003b5cd403ee6ab476d0414c2d313464e97671919f694e671ecc1"
+  },
+  {
+    "name": "packages/i18n/dist/notifications/v1/render.js",
+    "sha256": "6a7f5fef8166eecaae157b2ada53296bfa8eb0059ae04cb8f2f292c57237ca6b"
+  },
+  {
+    "name": "packages/i18n/dist/notifications/v1/reviews.json",
+    "sha256": "e6cb764eb69a5eed37581e0330399ce30ae83358da49aa1a9457c81f6a4d9079"
+  },
+  {
+    "name": "packages/i18n/dist/notifications/v1/variables.schema.json",
+    "sha256": "ce06202d92b90f4de4e61b3ce99717f417f3036c6d1b229f216671d698da0c08"
+  },
+  {
+    "name": "packages/i18n/src/notifications/index.ts",
+    "sha256": "2da76d058f87fb3966350dbea6de68ed064cf61e8f5fc097acf9cbc1bed933a3"
+  },
+  {
+    "name": "packages/i18n/src/notifications/review.ts",
+    "sha256": "55210ed26ff1e5aa461593e7828d40321bd9e3e48cbe28e382383361a2e6cc5a"
+  },
+  {
+    "name": "packages/i18n/src/notifications/v1/copy.json",
+    "sha256": "0ffdadd9c4e526d430da4dff91af920e61c2114d9dc7b24d83ce939b60c9dee0"
+  },
+  {
+    "name": "packages/i18n/src/notifications/v1/copy.ts",
+    "sha256": "872a45b5e56c627612d7149b152812b0771d8cc75d576a18861709d530346fe0"
+  },
+  {
+    "name": "packages/i18n/src/notifications/v1/history.fixture.json",
+    "sha256": "fafdc1ab75f4a9f31a7984853e0bcb17b95152fd010e02a352493aca4a4c5564"
+  },
+  {
+    "name": "packages/i18n/src/notifications/v1/identity.fixture.json",
+    "sha256": "952361300d8427705158af2825c7adfb227f450981467a2df3192c9838b65ad2"
+  },
+  {
+    "name": "packages/i18n/src/notifications/v1/identity.ts",
+    "sha256": "9e4a666fd2e41b5fea2d5390c60d1508ee1165808ea506916f5e0b2061d539f7"
+  },
+  {
+    "name": "packages/i18n/src/notifications/v1/layout.ts",
+    "sha256": "f9817b02f83d9973b38e39e79164b96261f0c91399a2428af42b5a784e5c6c4c"
+  },
+  {
+    "name": "packages/i18n/src/notifications/v1/render.ts",
+    "sha256": "d835acbee97476f582e271e07b3a85e386f6c56d153f3a2d654253b83290da42"
+  },
+  {
+    "name": "packages/i18n/src/notifications/v1/reviews.json",
+    "sha256": "bcb535c433476e2c287a3f6d3f0e4407cf6e58826951d63ffab4d5633a510ae1"
+  },
+  {
+    "name": "packages/i18n/src/notifications/v1/variables.schema.json",
+    "sha256": "7412af1c6d5287286de13806bec0c638fd8c27130787697f2209f5945b8f005f"
+  },
+  {
+    "name": "packages/notification-provider/dist/gateway.js",
+    "sha256": "7dc42321570e26f42d716ffb05de1e2f5d4c817d26ddb8fa65cc37af8711ca39"
+  },
+  {
+    "name": "packages/notification-provider/src/gateway.ts",
+    "sha256": "057c6767d216e42ca234cc5a103b6e7a78ee7deff3d61b4590fc82e2cf94c2a7"
+  },
+  {
+    "name": "packages/persistence-port/dist/order-notification.js",
+    "sha256": "b4f892ea556354fcfd3d0b45ffceaae8078cfa3333e112390681b2081ed90e5d"
+  },
+  {
+    "name": "packages/persistence-port/src/order-notification.ts",
+    "sha256": "32b1e1b2b980bb43eeab5e6ecc6aa867793b983c1e902113b6b5c9c7683aae18"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/notification-access.js",
+    "sha256": "129a93056f6356cd7eaa73c66a2308fdc488088aff37201a8fa616eaa227afa4"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/notification-data.js",
+    "sha256": "13e2dd6784fcf1f387fd3f555b419f3c3ea4705e226659ec9c1074d35f23a80d"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/notification-lifecycle.js",
+    "sha256": "8a4ed661b47899b93496517e4153891054534c44b4b02094d1a489de3d2195ff"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/notification-repository.js",
+    "sha256": "9ca6ba2fbb7454b9b6bd7474678affefbb0616ec96172507b068af0c8a553a13"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/notification-request.js",
+    "sha256": "7d3e6a8230778f9bf4ce0f933a9b0189e0971c01bd6d85c7cc240e87f17b7e50"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/order-access-data.js",
+    "sha256": "90d94b727917a457dd327d829416016176e9635338deefe5a2770ccfe4443db1"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/order-access-rate.js",
+    "sha256": "efe2350121bc42e15293096c320cfd32743f65cb4e9edc07154ea918488cfeda"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/order-access-read.js",
+    "sha256": "7e20636ab2f36ebfa3c735f4da8e87f5662dc83d9e44fee02789f8004b2e5162"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/order-access-repository.js",
+    "sha256": "38619035aef4225cee78d5e4e6a840587dfbe7b0c6544ed46283343cfa11cd75"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/order-access-write.js",
+    "sha256": "e68d19a3a85e993041f4d797bc835cb5bf459cccec7ee1b29af0ada01ca8db4e"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/postgres-persistence.js",
+    "sha256": "0a53e637c1e9dcef8fc849b2f1783b9cf5b99ed27177cb41f939431399a0f3f2"
+  },
+  {
+    "name": "packages/persistence-postgres/scripts/notification-fixture.mjs",
+    "sha256": "05f3848105f13c3077a70be8d6bfc04d356ede7cdffdb8720d763773ce60da0e"
+  },
+  {
+    "name": "packages/persistence-postgres/scripts/notification-integration.mjs",
+    "sha256": "fc8557615628d1574389278a08fb58e7ace3834e64373e0ea609913e3498be31"
+  },
+  {
+    "name": "packages/persistence-postgres/src/notification-access.ts",
+    "sha256": "9c4c627fa6bc445d9cae95a520b77abbd1a46fd340a35d328c807dfcb8d929ae"
+  },
+  {
+    "name": "packages/persistence-postgres/src/notification-data.ts",
+    "sha256": "7e2f2b94b1740a5d8ba9aeb36f35636cc8edc08023e196c1fcd5b6035a156a5f"
+  },
+  {
+    "name": "packages/persistence-postgres/src/notification-lifecycle.ts",
+    "sha256": "2698d2359597005fc7fed8373eaa29982a5233757cf24d57c0efbf2565d7e09b"
+  },
+  {
+    "name": "packages/persistence-postgres/src/notification-repository.ts",
+    "sha256": "b6b548b5c77bb0a3e1e1422f4c4cfe211909f6bea4b28bb0ef596aa95e499214"
+  },
+  {
+    "name": "packages/persistence-postgres/src/notification-request.ts",
+    "sha256": "4e471a15ff391ee121db8380f77d900b03f371520c757ef1f18f88a0bd4aedfa"
+  },
+  {
+    "name": "packages/persistence-postgres/src/order-access-data.ts",
+    "sha256": "ec81db799fdde7ac2b706e8c2e85a581105bbbd03a99fa0e2d38112033c8974e"
+  },
+  {
+    "name": "packages/persistence-postgres/src/order-access-rate.ts",
+    "sha256": "151e2b78146be7015866afa78d1bf0964d849de81c1e4d772336cebe35e6a48e"
+  },
+  {
+    "name": "packages/persistence-postgres/src/order-access-read.ts",
+    "sha256": "bb40901b58475bbf7222e3364b399cf8966517023d74c40f49dc19c909e3f384"
+  },
+  {
+    "name": "packages/persistence-postgres/src/order-access-repository.ts",
+    "sha256": "467618cb1cd822ed8fe9784f2dc56ebc05061e200f4c04f4cddf44e95eb753e4"
+  },
+  {
+    "name": "packages/persistence-postgres/src/order-access-write.ts",
+    "sha256": "d0b1925c42c405ded9e2185cfb465b3e03cb7fd3f509074cf6e077c9ef8275c7"
+  },
+  {
+    "name": "packages/persistence-postgres/src/postgres-persistence.ts",
+    "sha256": "492c9dea214f6a19b21566a4f06827dc5291a7640d4c06d8fd49a6932848a3d1"
+  }
+]

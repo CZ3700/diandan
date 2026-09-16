@@ -13,3 +13,25 @@ it("accepts declared server payment metadata while retaining environment precede
   };
   expect(resolveConfigLayers(sources, [key])).toEqual({ [key]: "environment" });
 });
+
+it("recognizes notification and order access server metadata without permitting misspelled keys", () => {
+  const key = "FAN_SUPPORT_NOTIFICATION_CONFIG_JSON";
+  expect(
+    resolveConfigLayers(
+      {
+        environment: {
+          [key]: "metadata",
+          FAN_SUPPORT_ORDER_ACCESS_CONFIG_JSON: "access",
+          MAIL_GATEWAY_CREDENTIAL: "private",
+        },
+      },
+      [key],
+    ),
+  ).toEqual({ [key]: "metadata" });
+  expect(() =>
+    resolveConfigLayers(
+      { environment: { FAN_SUPPORT_NOTIFICATON_CONFIG_JSON: "typo" } },
+      [],
+    ),
+  ).toThrow();
+});
