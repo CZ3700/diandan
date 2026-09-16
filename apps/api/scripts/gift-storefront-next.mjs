@@ -6,6 +6,23 @@ import { createServer } from "node:http";
 import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 
+function forwardedResponseHeaders(headers) {
+  const hopHeaders = new Set([
+    "connection",
+    "keep-alive",
+    "proxy-connection",
+    "te",
+    "trailer",
+    "transfer-encoding",
+    "upgrade",
+  ]);
+  for (const token of (headers.get("connection") ?? "").split(","))
+    hopHeaders.add(token.trim().toLowerCase());
+  return Object.fromEntries(
+    [...headers].filter(([name]) => !hopHeaders.has(name.toLowerCase())),
+  );
+}
+
 /** This gateway injects transport errors only. Successful business responses come from the actual API. */
 export async function createGiftStorefrontFaultGateway(
   base,
@@ -37,7 +54,11 @@ export async function createGiftStorefrontFaultGateway(
         redirect: "manual",
         signal: globalThis.AbortSignal.timeout(30_000),
       });
-      response.writeHead(upstream.status, Object.fromEntries(upstream.headers));
+      // The downstream socket has its own lifetime and framing policy.
+      response.writeHead(
+        upstream.status,
+        forwardedResponseHeaders(upstream.headers),
+      );
       const bytes = Buffer.from(await upstream.arrayBuffer());
       response.end(bytes);
       observe(captured, {
@@ -79,6 +100,7 @@ export function createGiftStorefrontNext({
   gateway,
   output,
   production,
+  readDiagnostics = false,
   secrets,
   check,
 }) {
@@ -91,7 +113,12 @@ export function createGiftStorefrontNext({
   const cwd = path.join(workspaceRoot, "apps/storefront");
   const environment = Object.fromEntries(
     Object.entries(process.env).filter(
-      ([key]) => !key.startsWith("FAN_SUPPORT_"),
+      ([key]) =>
+        !key.startsWith("FAN_SUPPORT_") &&
+        ![
+          "STOREFRONT_TEST_FETCH_DIAGNOSTICS",
+          "STOREFRONT_TEST_FETCH_DIAGNOSTICS_ORIGIN",
+        ].includes(key),
     ),
   );
   Object.assign(environment, {
@@ -147,6 +174,16 @@ export function createGiftStorefrontNext({
         "Next artifact builds with the exact current media origin and strict preview configuration",
       );
     }
+    // The optional native observer belongs only to the owned TEST server, never its build.
+    const startEnvironment =
+      readDiagnostics && environment.FAN_SUPPORT_DEPLOYMENT_ENV === "test"
+        ? {
+            ...environment,
+            STOREFRONT_TEST_FETCH_DIAGNOSTICS: "1",
+            STOREFRONT_TEST_FETCH_DIAGNOSTICS_ORIGIN: proxy.origin,
+            NODE_OPTIONS: `${environment.NODE_OPTIONS} --import=${new globalThis.URL("./storefront-test-fetch-diagnostics.mjs", import.meta.url).href}`,
+          }
+        : environment;
     child = spawn(
       process.execPath,
       [
@@ -159,7 +196,7 @@ export function createGiftStorefrontNext({
       ],
       {
         cwd,
-        env: environment,
+        env: startEnvironment,
         stdio: ["ignore", "pipe", "pipe"],
       },
     );

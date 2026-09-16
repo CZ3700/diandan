@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "scope": "Raw owned HTTP connection; peer closes through unchanged gateway default timeout, no forced idle close",
+  "node": "v24.20.0",
+  "advertisedKeepAlive": "timeout=72",
+  "endAfterFirstByteMs": 6003,
+  "totalMs": 6020
+}

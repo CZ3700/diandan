@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "fixture": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T09-33-37-503Z",
+  "scope": "Old loaded gateway after original full UI history; diagnostics ON, not strict performance acceptance",
+  "status": "COLLECTED_BUDGET_FAILED",
+  "resourcePages": 84,
+  "resourceFailures": 0,
+  "lighthouseSamples": 63,
+  "validContentSamples": 63,
+  "budget": {
+    "labTargetsMet": false,
+    "scoreMedianMinimum": 0.9,
+    "lcpLabMedianExclusiveMaximumMs": 2500,
+    "clsLabMedianExclusiveMaximum": 0.1,
+    "javascriptShouldMet": false,
+    "imagesShouldMet": true,
+    "javascriptPagesExceedingRecommendation": 84,
+    "imagesExceedingRecommendation": 0,
+    "fieldCwvEvidence": false
+  },
+  "failure": {
+    "name": "AssertionError",
+    "assertion": "all twenty-one three-run mobile lab medians meet score, LCP and CLS targets after retaining all sixty-three reports"
+  },
+  "apiDiagnostics": {
+    "schemaVersion": 1,
+    "scope": "TEST_ONLY",
+    "phase": "browser-attempt-3",
+    "counts": {
+      "HOMEPAGE:API_REQUEST:SUCCESS:NOT_CHECKED:NONE:200": 35,
+      "SEO:API_REQUEST:SUCCESS:NOT_CHECKED:NONE:200": 119,
+      "IDOL_DIRECTORY:API_REQUEST:SUCCESS:NOT_CHECKED:NONE:200": 84,
+      "IDOL:API_REQUEST:SUCCESS:NOT_CHECKED:NONE:200": 35,
+      "GIFT_DIRECTORY:API_REQUEST:SUCCESS:NOT_CHECKED:NONE:200": 49
+    },
+    "failures": [],
+    "truncated": false,
+    "droppedFailures": 0,
+    "observationErrors": 0,
+    "writeFailed": false
+  },
+  "persistenceDiagnostics": {
+    "schemaVersion": 1,
+    "scope": "TEST_ONLY",
+    "phase": "browser-attempt-3",
+    "counts": {
+      "HOMEPAGE:LOAD_RETURN:SUCCESS:VALID:NONE:NONE": 35,
+      "HOMEPAGE:WORK_RETURN:SUCCESS:VALID:NONE:NONE": 35,
+      "HOMEPAGE:TX_RETURN:SUCCESS:VALID:NONE:NONE": 35,
+      "HOMEPAGE:GATEWAY_RESPONSE:SUCCESS:VALID:NONE:200": 35,
+      "SEO:LOAD_RETURN:SUCCESS:VALID:NONE:NONE": 119,
+      "SEO:WORK_RETURN:SUCCESS:VALID:NONE:NONE": 119,
+      "SEO:TX_RETURN:SUCCESS:VALID:NONE:NONE": 119,
+      "SEO:GATEWAY_RESPONSE:SUCCESS:VALID:NONE:200": 119,
+      "IDOL_DIRECTORY:GATEWAY_RESPONSE:SUCCESS:VALID:NONE:200": 84,
+      "CONTENT:LOAD_RETURN:SUCCESS:VALID:NONE:NONE": 49,
+      "CONTENT:WORK_RETURN:SUCCESS:VALID:NONE:NONE": 49,
+      "CONTENT:TX_RETURN:SUCCESS:VALID:NONE:NONE": 49,
+      "IDOL:GATEWAY_RESPONSE:SUCCESS:VALID:NONE:200": 35,
+      "GIFT_DIRECTORY:GATEWAY_RESPONSE:SUCCESS:VALID:NONE:200": 49
+    },
+    "failures": [],
+    "truncated": false,
+    "droppedFailures": 0,
+    "observationErrors": 0,
+    "writeFailed": false
+  },
+  "groups": [
+    {
+      "name": "en-artist",
+      "score": 0.98,
+      "lcpMs": 2320.661,
+      "cls": 0,
+      "passed": true
+    },
+    {
+      "name": "en-gift",
+      "score": 0.96,
+      "lcpMs": 2628.9973,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "en-home",
+      "score": 0.96,
+      "lcpMs": 2750.4030000000002,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "es-artist",
+      "score": 0.98,
+      "lcpMs": 2316.1975,
+      "cls": 0,
+      "passed": true
+    },
+    {
+      "name": "es-gift",
+      "score": 0.96,
+      "lcpMs": 2613.2636500000003,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "es-home",
+      "score": 0.96,
+      "lcpMs": 2841.37325,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "ja-artist",
+      "score": 0.84,
+      "lcpMs": 3612.0029999999997,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "ja-gift",
+      "score": 0.84,
+      "lcpMs": 3757.7115,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "ja-home",
+      "score": 0.91,
+      "lcpMs": 3390.25095,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "pt-artist",
+      "score": 0.98,
+      "lcpMs": 2353.4334999999996,
+      "cls": 0,
+      "passed": true
+    },
+    {
+      "name": "pt-gift",
+      "score": 0.96,
+      "lcpMs": 2612.11365,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "pt-home",
+      "score": 0.96,
+      "lcpMs": 2844.027,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "th-artist",
+      "score": 0.96,
+      "lcpMs": 2616.9535,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "th-gift",
+      "score": 0.95,
+      "lcpMs": 2764.0370000000003,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "th-home",
+      "score": 0.95,
+      "lcpMs": 2976.2195999999994,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "vi-artist",
+      "score": 0.98,
+      "lcpMs": 2108.9326,
+      "cls": 0,
+      "passed": true
+    },
+    {
+      "name": "vi-gift",
+      "score": 0.95,
+      "lcpMs": 2762.1070000000004,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "vi-home",
+      "score": 0.95,
+      "lcpMs": 2823.6299,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "zh-CN-artist",
+      "score": 0.97,
+      "lcpMs": 2409.7619999999997,
+      "cls": 0,
+      "passed": true
+    },
+    {
+      "name": "zh-CN-gift",
+      "score": 0.95,
+      "lcpMs": 2768.6663,
+      "cls": 0,
+      "passed": false
+    },
+    {
+      "name": "zh-CN-home",
+      "score": 0.97,
+      "lcpMs": 2546.0031,
+      "cls": 0,
+      "passed": false
+    }
+  ],
+  "passedGroups": 5,
+  "serveProcessExitCode": 0,
+  "serveExitIsNotBudgetVerdict": true
+}

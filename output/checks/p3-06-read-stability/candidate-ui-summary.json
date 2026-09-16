@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "fixture": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T10-06-50-383Z",
+  "sourceManifest": "candidate-source-final.json",
+  "origin": "http://localhost:53355",
+  "ownerPid": 2620,
+  "diagnosticsEnabled": true,
+  "protocolAssertions": 32461,
+  "protocolSetupApiRequests": 6090,
+  "actualPostgres": true,
+  "actualTlsS3": true,
+  "actualImageWorker": true,
+  "browserAssertions": 22705,
+  "cases": 88,
+  "screenshots": 88,
+  "actualPngFiles": 88,
+  "axeRuns": 85,
+  "axeViolations": 0,
+  "axeIncompleteRules": 30,
+  "pageErrors": 0,
+  "metadataPages": 84,
+  "publicationVisibility": [
+    {
+      "kind": "PUBLISH",
+      "pass": true,
+      "elapsedMs": 15636
+    },
+    {
+      "kind": "ROLLBACK",
+      "pass": true,
+      "elapsedMs": 12263
+    }
+  ],
+  "physicalDeviceEvidence": false,
+  "humanEvidence": false,
+  "productionReleaseEvidence": false,
+  "performanceExecutedOnThisCandidate": false
+}

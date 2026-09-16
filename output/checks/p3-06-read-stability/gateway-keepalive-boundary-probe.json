@@ -1,0 +1,382 @@
+{
+  "schemaVersion": 1,
+  "scope": "Real local Node24 HTTP, unchanged original gateway, native fetch, normal idle timeout; no forced socket destruction during trials",
+  "node": "v24.20.0",
+  "serverDefaults": {
+    "keepAliveTimeout": 5000,
+    "keepAliveTimeoutBuffer": 1000
+  },
+  "upstreamKeepAliveTimeout": 72000,
+  "trials": [
+    {
+      "index": 0,
+      "waitMs": 5900,
+      "elapsedBeforeFetchMs": 5903,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 1,
+      "waitMs": 5905,
+      "elapsedBeforeFetchMs": 5910,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 2,
+      "waitMs": 5910,
+      "elapsedBeforeFetchMs": 5913,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 3,
+      "waitMs": 5915,
+      "elapsedBeforeFetchMs": 5919,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 4,
+      "waitMs": 5920,
+      "elapsedBeforeFetchMs": 5925,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 5,
+      "waitMs": 5925,
+      "elapsedBeforeFetchMs": 5929,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 6,
+      "waitMs": 5930,
+      "elapsedBeforeFetchMs": 5933,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 7,
+      "waitMs": 5935,
+      "elapsedBeforeFetchMs": 5939,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 8,
+      "waitMs": 5940,
+      "elapsedBeforeFetchMs": 5943,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 9,
+      "waitMs": 5945,
+      "elapsedBeforeFetchMs": 5949,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 10,
+      "waitMs": 5950,
+      "elapsedBeforeFetchMs": 5954,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 11,
+      "waitMs": 5955,
+      "elapsedBeforeFetchMs": 5959,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 12,
+      "waitMs": 5960,
+      "elapsedBeforeFetchMs": 5964,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 13,
+      "waitMs": 5965,
+      "elapsedBeforeFetchMs": 5969,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 14,
+      "waitMs": 5970,
+      "elapsedBeforeFetchMs": 5974,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 15,
+      "waitMs": 5975,
+      "elapsedBeforeFetchMs": 5978,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 16,
+      "waitMs": 5980,
+      "elapsedBeforeFetchMs": 5984,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 17,
+      "waitMs": 5985,
+      "elapsedBeforeFetchMs": 5989,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 18,
+      "waitMs": 5990,
+      "elapsedBeforeFetchMs": 5993,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 19,
+      "waitMs": 5995,
+      "elapsedBeforeFetchMs": 5998,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 20,
+      "waitMs": 6000,
+      "elapsedBeforeFetchMs": 6007,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 21,
+      "waitMs": 6005,
+      "elapsedBeforeFetchMs": 6008,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 22,
+      "waitMs": 6010,
+      "elapsedBeforeFetchMs": 6013,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 23,
+      "waitMs": 6015,
+      "elapsedBeforeFetchMs": 6018,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 24,
+      "waitMs": 6020,
+      "elapsedBeforeFetchMs": 6023,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 25,
+      "waitMs": 6025,
+      "elapsedBeforeFetchMs": 6028,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 26,
+      "waitMs": 6030,
+      "elapsedBeforeFetchMs": 6033,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 27,
+      "waitMs": 6035,
+      "elapsedBeforeFetchMs": 6038,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 28,
+      "waitMs": 6040,
+      "elapsedBeforeFetchMs": 6042,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 29,
+      "waitMs": 6045,
+      "elapsedBeforeFetchMs": 6048,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 30,
+      "waitMs": 6050,
+      "elapsedBeforeFetchMs": 6053,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 31,
+      "waitMs": 6055,
+      "elapsedBeforeFetchMs": 6057,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 32,
+      "waitMs": 6060,
+      "elapsedBeforeFetchMs": 6063,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 33,
+      "waitMs": 6065,
+      "elapsedBeforeFetchMs": 6068,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 34,
+      "waitMs": 6070,
+      "elapsedBeforeFetchMs": 6073,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 35,
+      "waitMs": 6075,
+      "elapsedBeforeFetchMs": 6078,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 36,
+      "waitMs": 6080,
+      "elapsedBeforeFetchMs": 6083,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 37,
+      "waitMs": 6085,
+      "elapsedBeforeFetchMs": 6088,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 38,
+      "waitMs": 6090,
+      "elapsedBeforeFetchMs": 6093,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 39,
+      "waitMs": 6095,
+      "elapsedBeforeFetchMs": 6098,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    },
+    {
+      "index": 40,
+      "waitMs": 6100,
+      "elapsedBeforeFetchMs": 6102,
+      "advertised": "timeout=72",
+      "status": 200,
+      "bodyMatches": true,
+      "outcome": "SUCCESS"
+    }
+  ],
+  "failures": 0
+}

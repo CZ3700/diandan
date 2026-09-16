@@ -225,6 +225,7 @@ export async function withAcceptanceFixture({
           gateway,
           output,
           production: true,
+          readDiagnostics: Boolean(diagnostics),
           check,
           secrets: [
             database.password,

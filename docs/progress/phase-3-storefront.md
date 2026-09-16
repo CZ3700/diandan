@@ -31,6 +31,26 @@
 
 已于 2026-09-05 依据用户明确视觉接受与继续开发指令解锁；尚未达到退出门禁。
 
+## P3-06 读取稳定性与首屏续验登记（2026-09-16）
+
+- Owner：Codex `/root` 继续唯一 Lane D executor；开始 2026-09-16T09:32:59.586772+00:00，基线 `995d1c5`，分支 `codex/p3-06-performance-resume`，跟踪工作区干净。继续已有任务，不领取 Phase 5。
+- 范围：按上轮原始失败与 TEST 安全观测复现公共内容读取偶发不可用，区分持久层、投影、传输与 SSR；并行只读分析保留 trace 的中文礼物真实绘制延迟。先复现/失败测试再做证据支持的最小修复，保留当前发布证明、七语言、价格和权限边界。
+- 分工：root 独占运行 fixture/浏览器/构建、进度/Git及整合；order_bff 只读分析证明/事务失败条件；order_browser 只读分析现有首屏 trace；order_view 只读审查诊断覆盖与复现方案。确定根因后登记具体实现所有权，不并行改共享文件。
+- 诊断子步骤：order_view 独占新增 `apps/api/scripts/gift-storefront-gateway.test.mjs`，以真实本地 HTTP 检查 TEST gateway 是否错误转发上游连接头；先记录失败，暂不修改实现。root 继续独占实际 PG/Next fixture，独立轻量 HTTP 复现不影响其数据。
+- 已复现协议缺陷后的实施分工：真实 HTTP RED 证明 gateway 将上游72秒保活声明转发为自身声明，实际自身默认5秒加1秒缓冲；41次自然边界探针未出现reset，故不能归因为旧内容错误。order_view 现独占 `gift-storefront-next.mjs` 中该 gateway 的逐跳头处理及上述测试，按RFC移除连接及其指定字段，让Node按自身策略生成；不加重试、不改预算或生产读取。root负责接入原检查入口与最终真实验收。
+- 下游观测补齐：现有API/gateway观察不能识别Next侧连接错误；order_view独占新 `storefront-test-fetch-diagnostics.mjs`/test、gift-storefront-next 的 start-only启用及acceptance runtime的显式Boolean接线。默认关闭，只订阅原生Undici诊断channel观察本次owned proxy的首页/艺人GET，固定字段与有界记录；不修改fetch/正文/headers/重试/timeout，不加载到build或生产运行。root负责原检查入口串接。
+- 实际整合失败与窄修：首个候选真实协议32461通过，但Next健康500；新增两项 `FAN_SUPPORT_*` 诊断环境键被原严格配置白名单拒绝，尚未进入浏览器。原失败/源码冻结保留；order_view先加真实config解析兼容RED，再仅将新TEST私有键改独立 `STOREFRONT_TEST_FETCH_DIAGNOSTICS*` 前缀，不放宽生产配置。root新建修正后的实际fixture复验。
+- 验证：保留新旧失败，比较等同 UI 变更历史及存活时间；受影响测试、format/lint/typecheck/build和必要真实 PG/HTTP/浏览器。生产 UI 改动再跑七语言双视口/键盘/错误/reduced-motion，性能报告必须通过同导航内容验证；不放宽预算、不拼接样本。
+- 保护：本轮开始未跟踪文件 SHA 清单见 `output/checks/p3-06-read-stability/initial-untracked.json`。只做本地提交；27 DONE /2 IN_PROGRESS /20 PENDING 不变，真人/真机/PSP/Phase 5/上线门保留。风险 R-08/R-12/R-13/R-17。
+
+### 本轮实际结果（2026-09-16）
+
+- 修正后的最终候选输入2206项，SHA `692608036c21db82ec3a874843c275443dbb3700d38f5584202ee5d09060bae0`；相对995d1c5只改3个TEST/检查入口、增3个TEST文件，2200原输入不变。初始3386未跟踪逐SHA保持，本轮自有fixture均清理。
+- 55/55定向测试、全仓check:dev27.609秒exit0（类型/测试62各61缓存，构建36/35缓存）；新实际PG/TLS S3/worker协议32461断言、Next UI22705断言/88场景/88PNG/85axe零violations、0pageErrors通过，30incomplete规则保留。发布15636ms/回退12263ms。Next观察201条/67请求，未截断，build无记录，原生HTTP完成不代表schema或故障因果。
+- 首个候选健康500与config兼容RED均保留；仅更名TEST私有env解决该新冲突，生产config守卫不改。网关实际逐跳协议问题已修，但41次自然边界probe未重现旧内容错误；旧读取故障不能宣称修复。
+- 原网关已加载的基线重演UI历史后84资源页/63次内容有效，仅5/21组全部预算通过，诊断ON且未重演旧44–57分钟fixture年龄，不作正式性能或候选对比。最终候选本轮没有再跑完整性能矩阵；原失败不合并或覆盖。无依据的CSS/字体补丁未实施。
+- S.U.P.E.R1–9本次TEST范围ACCEPT，第10受影响/开发/协议/UI通过但任务正式性能与人工门未过。本轮未重新执行完整pnpm check，不将上轮43门当作本轮重跑。27/2/20保持，P3-06 IN_PROGRESS、Phase5 LOCKED，商户/真人/真机/上线门保持；只本地提交。最终记录 `output/checks/p3-06-read-stability/final-verification.md`，复验入口同目录README。
+
 ## P3-06 性能续验登记（2026-09-16）
 
 - Owner：Codex `/root`，恢复本任务唯一 Lane D executor；开始 2026-09-16T06:55:54.011415+00:00，基线 `7d1a539`，跟踪工作区干净，分支 `codex/p3-06-performance-resume`。承接已有 IN_PROGRESS 任务，依赖 P3-02/03/04/05 已完成；不另领任务。

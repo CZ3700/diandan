@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-16T10:21:18.005211+00:00",
+  "status": "LOCAL_CHECKPOINT_ACCEPTED_PHASE_IN_PROGRESS",
+  "baseCommit": "995d1c5b8ca2285f2064820c772a0fb6345cab80",
+  "task": "P3-06",
+  "taskCounts": {
+    "DONE": 27,
+    "IN_PROGRESS": 2,
+    "PENDING": 20,
+    "total": 49
+  },
+  "phase5": "LOCKED",
+  "source": {
+    "manifest": "candidate-source-final.json",
+    "count": 2206,
+    "sha256": "692608036c21db82ec3a874843c275443dbb3700d38f5584202ee5d09060bae0",
+    "modifiedExisting": 3,
+    "added": 3,
+    "unchangedExisting": 2200
+  },
+  "targetedTests": {
+    "result": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "--test",
+        "apps/api/scripts/storefront-acceptance-concurrency.test.mjs",
+        "apps/api/scripts/storefront-acceptance-diagnostics.test.mjs",
+        "apps/api/scripts/storefront-acceptance-fixtures.test.mjs",
+        "apps/api/scripts/storefront-acceptance-lifecycle.test.mjs",
+        "apps/api/scripts/storefront-acceptance-performance.test.mjs",
+        "apps/api/scripts/storefront-acceptance-seo.test.mjs",
+        "apps/api/scripts/storefront-acceptance-visibility.test.mjs",
+        "apps/api/scripts/storefront-operations-uat-control.test.mjs",
+        "apps/api/scripts/storefront-operations-uat-fixtures.test.mjs",
+        "apps/api/scripts/storefront-operations-uat-material-view.test.mjs",
+        "apps/api/scripts/storefront-operations-uat.test.mjs",
+        "apps/api/scripts/gift-storefront-gateway.test.mjs",
+        "apps/api/scripts/storefront-test-fetch-diagnostics.test.mjs"
+      ],
+      "startedAt": "2026-09-16T10:06:10.290511+00:00",
+      "completedAt": "2026-09-16T10:06:10.715179+00:00",
+      "elapsedSeconds": 0.425,
+      "exitCode": 0
+    },
+    "passed": 55,
+    "failed": 0
+  },
+  "developmentCheck": {
+    "result": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "check:dev"
+      ],
+      "startedAt": "2026-09-16T10:06:10.753878+00:00",
+      "completedAt": "2026-09-16T10:06:38.363327+00:00",
+      "elapsedSeconds": 27.609,
+      "exitCode": 0
+    },
+    "typecheck": {
+      "successful": 62,
+      "cached": 61
+    },
+    "test": {
+      "successful": 62,
+      "cached": 61
+    },
+    "build": {
+      "successful": 36,
+      "cached": 35
+    },
+    "fullPnpmCheckExecutedThisTurn": false
+  },
+  "actualCandidate": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "fixture": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T10-06-50-383Z",
+    "sourceManifest": "candidate-source-final.json",
+    "origin": "http://localhost:53355",
+    "ownerPid": 2620,
+    "diagnosticsEnabled": true,
+    "protocolAssertions": 32461,
+    "protocolSetupApiRequests": 6090,
+    "actualPostgres": true,
+    "actualTlsS3": true,
+    "actualImageWorker": true,
+    "browserAssertions": 22705,
+    "cases": 88,
+    "screenshots": 88,
+    "actualPngFiles": 88,
+    "axeRuns": 85,
+    "axeViolations": 0,
+    "axeIncompleteRules": 30,
+    "pageErrors": 0,
+    "metadataPages": 84,
+    "publicationVisibility": [
+      {
+        "kind": "PUBLISH",
+        "pass": true,
+        "elapsedMs": 15636
+      },
+      {
+        "kind": "ROLLBACK",
+        "pass": true,
+        "elapsedMs": 12263
+      }
+    ],
+    "physicalDeviceEvidence": false,
+    "humanEvidence": false,
+    "productionReleaseEvidence": false,
+    "performanceExecutedOnThisCandidate": false
+  },
+  "nativeNextDiagnostics": {
+    "schemaVersion": 1,
+    "status": "PASS_SCOPED",
+    "fixture": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T10-06-50-383Z",
+    "records": 201,
+    "stages": {
+      "CREATE": 67,
+      "HEADERS": 67,
+      "COMPLETE": 67
+    },
+    "targets": {
+      "IDOL": 49,
+      "HOMEPAGE": 18
+    },
+    "httpStatuses": {
+      "200": 60,
+      "404": 7
+    },
+    "safeFieldsOnly": true,
+    "buildDiagnosticRecords": 0,
+    "truncated": false,
+    "firstObservedAt": "2026-09-16T10:12:07.101Z",
+    "lastObservedAt": "2026-09-16T10:17:31.660Z",
+    "transportErrors": [],
+    "interpretation": "Actual compiled Next observer integration over original full UI callback. COMPLETE means HTTP completion only; no natural old failure captured. Not a performance run or old-cause proof.",
+    "expected404Evidence": "Original seven-locale missing idol handle checks in apps/api/scripts/storefront-acceptance-matrix.mjs:592; full browser cases PASS. No raw URL/locale is captured in the native observer, so counters are not strict per-request joins."
+  },
+  "candidateProcessResult": {
+    "schemaVersion": 1,
+    "command": [
+      "mise",
+      "exec",
+      "node@24.20.0",
+      "--",
+      "corepack",
+      "pnpm",
+      "--filter",
+      "@fan-support/api",
+      "preview:storefront-acceptance",
+      "--ui"
+    ],
+    "startedAt": "2026-09-16T10:06:47.826294+00:00",
+    "completedAt": "2026-09-16T10:18:59.737883+00:00",
+    "elapsedSeconds": 731.923,
+    "exitCode": 0
+  },
+  "baselinePerformance": {
+    "file": "baseline-performance-summary.json",
+    "loadedGateway": "original pre-change gateway",
+    "diagnosticsEnabled": true,
+    "resourcePages": 84,
+    "validContentSamples": 63,
+    "groups": 21,
+    "groupsMeetingAllBudgets": 5,
+    "status": "COLLECTED_BUDGET_FAILED",
+    "strictFormalAcceptance": false,
+    "usedAsCandidatePerformanceProof": false
+  },
+  "retainedFailures": [
+    "gateway header RED",
+    "native observer RED and intermediate abort-name classification failure",
+    "candidate-attempt-1-failure.json",
+    "next-fetch-config-result.json RED",
+    "old formal content errors and all previous performance failures"
+  ],
+  "protection": {
+    "schemaVersion": 1,
+    "startedAt": "2026-09-16T10:19:58.663252+00:00",
+    "initialUntracked": {
+      "checked": 3386,
+      "unchanged": 3386,
+      "issues": []
+    },
+    "candidateSource": {
+      "checked": 2206,
+      "unchanged": 2206,
+      "issues": []
+    },
+    "sourceSha256": "692608036c21db82ec3a874843c275443dbb3700d38f5584202ee5d09060bae0",
+    "ownedFixtureProcesses": [
+      {
+        "pid": 90358,
+        "alive": false
+      },
+      {
+        "pid": 98791,
+        "alive": false
+      },
+      {
+        "pid": 2620,
+        "alive": false
+      }
+    ],
+    "completedAt": "2026-09-16T10:20:00.340439+00:00",
+    "status": "PASS"
+  },
+  "supER": {
+    "checks1To9": "ACCEPT scoped TEST code",
+    "check10": "New affected tests, development checks and actual protocol/UI pass; formal performance/human task gates remain open"
+  },
+  "limitations": [
+    "Confirmed TEST gateway protocol defect is not proven cause of the old natural content failures. 41 boundary probes did not reproduce them.",
+    "Old-gateway baseline replay included original UI history but did not reproduce the old 44-57 minute fixture age.",
+    "Final candidate has actual UI integration evidence, not a new post-fix performance matrix.",
+    "Native COMPLETE means HTTP completion only. Fixed fields do not provide a strict cross-layer trace ID.",
+    "30 axe incomplete rules still need human review. No current physical phone, screen-reader, translation sign-off, PSP merchant, staging or production evidence.",
+    "The read-only PG canonical double-classification finding remains unmodified and unproven as the old incident cause."
+  ],
+  "gitPolicy": "Local commit only; no push, merge or deployment",
+  "nextEntry": "README.md diagnosis reproduction entry; original performance matrix still required with diagnostics OFF after evidence-based product optimizations.",
+  "secretScan": {
+    "schemaVersion": 1,
+    "command": [
+      "mise",
+      "exec",
+      "node@24.20.0",
+      "--",
+      "corepack",
+      "pnpm",
+      "security:secrets"
+    ],
+    "startedAt": "2026-09-16T10:23:37.901380+00:00",
+    "completedAt": "2026-09-16T10:24:12.261922+00:00",
+    "elapsedSeconds": 34.36,
+    "exitCode": 0
+  }
+}
