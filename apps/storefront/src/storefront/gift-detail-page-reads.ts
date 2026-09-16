@@ -4,27 +4,18 @@ import type {
   StorefrontGiftReadCommand,
   SupportedLocale,
 } from "@fan-support/contracts";
-import { artistRead, commerceRead, giftRead } from "./gift-page-reads";
+import { artistRead } from "./gift-page-reads";
+import { readSelectedGiftContent } from "./gift-content-read";
 import { parseGiftSelection } from "./gift-selection";
 
-/** Only current gift and scoped offer proofs gate the page's first response. */
+/** Only the selected gift's complete current proof gates the first response. */
 export async function readGiftDetailPage(
   locale: SupportedLocale,
   handle: StorefrontGiftReadCommand["handle"],
   values: Parameters<typeof parseGiftSelection>[0],
 ) {
   const selection = parseGiftSelection(values);
-  const resultRead = giftRead(locale, handle);
-  const scopedRead =
-    selection.kind === "VALID"
-      ? commerceRead(
-          locale,
-          handle,
-          selection.market,
-          selection.currency,
-          selection.idolId,
-        )
-      : undefined;
+  const content = readSelectedGiftContent(locale, handle, selection);
   const artists = artistRead(
     locale,
     typeof values["idol"] === "string" ? values["idol"] : undefined,
@@ -33,6 +24,6 @@ export async function readGiftDetailPage(
     outcome: "FAILURE",
     code: "CATALOG_UNAVAILABLE",
   }));
-  const [result, scoped] = await Promise.all([resultRead, scopedRead]);
+  const { result, scoped } = await content;
   return { handle, selection, result, scoped, artists };
 }

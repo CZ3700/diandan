@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "command": "mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/storefront test src/storefront/gift-page-scheduling.test.tsx src/storefront/gift-seo.test.tsx",
+  "exitCode": 1,
+  "tests": {
+    "passed": 53,
+    "failed": 23,
+    "total": 76
+  },
+  "sourceState": "Production source remains baseline 587b3a2; only two behavior test files modified before execution. Extra boundary tests were added after this RED and have not yet run.",
+  "log": "gift-reads-red.log",
+  "scope": "Behavior and SSR scheduling; React request memoization is not proven by non-RSC unit tests."
+}

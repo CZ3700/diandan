@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "scope": "Six reviewed storefront source/test files only; readonly review, no test/build/browser run",
+  "candidateSourceSha256": "ae070dff1fc4ea83caff72f08f0e0a2b85beae365fb3391a04c1ef85c49e7590",
+  "candidateInputCount": 2212,
+  "allSixMatch": true,
+  "files": [
+    {
+      "path": "apps/storefront/src/storefront/gift-content-read.ts",
+      "sha256": "daba229db6fdc0f011733bca662dab817eb7d9b4585617f850eb053fdb657515",
+      "matchesCandidate": true
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-detail-page-reads.ts",
+      "sha256": "3f65e77df84f71c82af6210b13d55d89db3967af4d21dc53aa9fa3416f6cc9fe",
+      "matchesCandidate": true
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-seo.tsx",
+      "sha256": "0604cd4aa64c407633fdff6a7182377a3ab4ba2f3d4d8ebed2a46aec74f89272",
+      "matchesCandidate": true
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-content-read.test.ts",
+      "sha256": "2ed4e20a338f499a44aedac320ce1a3469a84b32a5612d49d36f5b0c9d8093f8",
+      "matchesCandidate": true
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-page-scheduling.test.tsx",
+      "sha256": "d7bda124ab664f37720e251106f0e03ef9e3efe97076c90cad777f8b04bb3399",
+      "matchesCandidate": true
+    },
+    {
+      "path": "apps/storefront/src/storefront/gift-seo.test.tsx",
+      "sha256": "862b1f7518b47bbe51fe623aad3a11243ed36618161ef2911027c14c5798eccb",
+      "matchesCandidate": true
+    }
+  ]
+}

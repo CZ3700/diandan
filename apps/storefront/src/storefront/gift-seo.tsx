@@ -14,12 +14,11 @@ import {
 } from "../server/runtime-config";
 import { readSeoEntity } from "../server/storefront-seo";
 import {
-  giftRead,
   policyRead,
-  commerceRead,
   giftDirectoryRead,
   readCommerceContext,
 } from "./gift-page-reads";
+import { readSelectedGiftContent } from "./gift-content-read";
 import { parseGiftSelection, selectGiftOffer } from "./gift-selection";
 import { prepareGiftQuery } from "./gift-query";
 import { isMarketAvailable } from "./commerce-context";
@@ -55,8 +54,9 @@ const load = cache(
     if (kind === "gift") {
       const handle = slugSchema.safeParse(rawHandle);
       if (handle.success) {
-        const [content, entity] = await Promise.all([
-          giftRead(locale, handle.data),
+        const selection = parseGiftSelection(values);
+        const [{ result: content, scoped }, entity] = await Promise.all([
+          readSelectedGiftContent(locale, handle.data, selection),
           readSeoEntity({ kind: "GIFT", handle: handle.data }),
         ]);
         if (content.outcome === "SUCCESS") {
@@ -69,24 +69,9 @@ const load = cache(
             content.publication,
             gift.localeContext,
           );
-          const selection = parseGiftSelection(values);
           if (selection.kind === "INVALID_QUERY") indexable = false;
           if (selection.kind === "VALID") {
-            const scoped = await commerceRead(
-              locale,
-              handle.data,
-              selection.market,
-              selection.currency,
-              selection.idolId,
-            );
-            if (
-              scoped.outcome === "SUCCESS" &&
-              provenSeoLocales(
-                entity,
-                scoped.publication,
-                scoped.content.view.localeContext,
-              ).includes(locale)
-            ) {
+            if (scoped?.outcome === "SUCCESS" && locales.includes(locale)) {
               const offer = selectGiftOffer(scoped.offers, selection.variantId);
               if (
                 !offer ||

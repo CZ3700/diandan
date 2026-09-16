@@ -31,6 +31,27 @@
 
 已于 2026-09-05 依据用户明确视觉接受与继续开发指令解锁；尚未达到退出门禁。
 
+## P3-06 礼物正文与SEO共享读取登记（2026-09-17）
+
+- Owner：Codex `/root`，继续 Lane D 唯一 executor；开始 2026-09-16T17:12:05.392997+00:00，基线 `587b3a2`，分支 `codex/p3-06-performance-resume`。延续P3-06，27/2/20与Phase5 LOCKED保持。
+- 范围：请求内复用完整scoped礼物内容，正文/metadata/JSON-LD选择同一发布版本；正常市场页移除冗余unscoped发布读取。没有市场保留unscoped，MARKET_UNAVAILABLE才回退介绍，404/其余失败仍封闭；不增加跨请求缓存、不改API/合同/价格/库存/支付/视觉。
+- 分工：gift_read_impl 独占 `gift-detail-page-reads.ts`、新共享读取模块、`gift-seo.tsx`及直接调度/SEO/共享读取测试（必要page-factory类型适配）；先只写失败测试，root完成旧版编译后再允许生产源码。root独占真实fixture/Next构建/Chrome/证据、TEST原生观测补充及计数/performance比较脚本、进度与Git。gift_read_review先只读独立审查合同与错误/SEO边界，后审最终diff；不并行构建/Chrome/PG。
+- 测量子模块分工：gift_read_measure 独占TEST原生观察器与测试（新增两个礼物GET固定target），新 `storefront-gift-read-comparison.mjs` 及其专用helper；先真实HTTP RED，再以既有fixture/浏览器/Lighthouse内容校验器采集相同条件的有限诊断样本。root仍为唯一实际PG/Next/Chrome执行者。所有原指标/容量/TEST与隐私限制不变，诊断比较不充作正式关闭观测的完整性能门。
+- 验证：先RED，核对scoped完整证明、无市场/非法query/不可售/404/失败/版本变化/七语言，真实Next SSR请求计数；保留同fixture前后有限样本及原始LHR，不预承诺LCP达标；候选全七语言390×844/1440×900、SEO/发布回退/键盘/错误/reduced-motion、全仓开发门与必要真实协议，独立复核/S.U.P.E.R。正式门未全过不标DONE。
+- 保护：初始 3770 未跟踪逐SHA存于 `output/checks/p3-06-gift-read-reuse/initial-untracked.json`；只本地提交，无push/部署。R-08/R-12/R-13/R-17及人工/手机/PSP/上线边界保持。
+
+### 共享读取功能检查点与性能复验（2026-09-17）
+
+- 生产变更限3文件：新 `gift-content-read.ts` 用React请求内primitive键复用完整scoped响应，正文与SEO共同使用；只有MARKET_UNAVAILABLE随后读取介绍。404/其他失败不旁路恢复，无市场/非法query/原文lang/库存/recipient/variant保护不变。独立SEO entity仍严格比对发布/翻译版本；无跨请求缓存或新重试。
+- RED：原生产代码下23/76失败；GREEN：3文件88 tests。观测工具新增真实HTTP礼物target以及异步落盘序号回归，root独立12/12 PASS。全仓开发门首轮因新测试格式exit1，修正后57.564秒exit0；62 typecheck/62 test/36 build，缓存60/60/34，本轮Storefront651/API245 tests通过。构建产物与adapter边界另有exit0证据。
+- 原生TEST观察保持默认关闭、owned loopback与TEST限定、256请求/768记录容量和无URL/正文/隐私字段。实测首轮日志12先于11落盘，修正解析器按唯一连续序号重建事件，仍拒绝缺失/ERROR/TRUNCATED，保留原失败；不修改fetch/时序/响应。
+- 实际fixture `output/checks/p3-06-storefront-acceptance/run-2026-09-16T17-15-30-987Z`，真实PG/TLS S3/图片worker、120艺人与26礼物seed，32,461协议断言PASS。attempt2/4旧版，attempt3/5候选；四轮56次七语言双端正常导航，旧版1 unscoped+1 scoped，候选0+1；36次Lighthouse导航也逐次确认同样计数和真实可见内容。候选四分支各复验两次：scoped404/503零unscoped、无市场只unscoped、市场409后仅介绍无offer。
+- attempt3原完整UI PASS：88场景/88截图/85 axe（0 violations、30 incomplete待人工）/0 pageErrors；包含七语言390×844/1440×900、SEO、键盘/搜索/分页/返回/错误/reduced-motion。真实发布12,322ms与回退11,655ms可见，均小于60秒。不是手机/VoiceOver/人工运营计时证据。
+- 性能未通过：三语言各3次×A1/B1/A2/B2共36份报告完整保留，诊断ON且不是正式63次门。A1→B1模拟LCP中位en2629→2632、zh2677→5573、ja2886→3913ms；A2→B2为2616→2626、3315→4359、2709→2711ms。B1三次约1秒实际绘制等待在B2未复现；旧版也有模拟高值，但不足以排除时序回归或声称提速。接受功能/内容一致性范围，性能保持OPEN，下一步有限成对trace/devtools取证，不降低阈值或修改浏览器特性刷分。
+- 独立代码/证据审查ACCEPT，code-simplifier无额外重构。S.U.P.E.R 1单责/2职责/3依赖方向/4无环/5既有类型合同/6可序列化结果/7无新增生产硬编码/8无新依赖/9替换边界/10所选功能测试均PASS；第10不等于完整pnpm check或P3退出门已通过。
+- 秘密扫描36.33秒exit0；开工前3770个未跟踪文件逐SHA无改动，owned fixture已正常清理。只本地checkpoint，无push/merge/部署。
+- 复跑、原失败、四轮完整路径和输入SHA见 `output/checks/p3-06-gift-read-reuse/README.md`、`comparison-summary.json`、`performance-analysis.md`、`final-verification.json`。当前候选2212输入SHA `ae070dff1fc4ea83caff72f08f0e0a2b85beae365fb3391a04c1ef85c49e7590`；旧源仅在owned编译交叉期间临时恢复，已逐字恢复候选。P3-06仍IN_PROGRESS，27/2/20不变，Phase5保持LOCKED。
+
 ## P3-06 读取错误保真检查点登记（2026-09-16）
 
 - Owner：Codex `/root`，继续唯一 Lane D executor；开始 2026-09-16T16:56:18.865802+00:00，基线 `75751e1`，分支 `codex/p3-06-performance-resume`。延续已有任务，27 DONE /2 IN_PROGRESS /20 PENDING 保持，Phase 5 不解锁。

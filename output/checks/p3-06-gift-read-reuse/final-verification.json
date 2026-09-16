@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "status": "LOCAL_FUNCTIONAL_CHECKPOINT_ACCEPTED_PERFORMANCE_REMAINS_OPEN",
+  "task": "P3-06",
+  "baseCommit": "587b3a2681ca6b899abdf6cadafcb263980dd1b6",
+  "changes": {
+    "productionFiles": 3,
+    "publicContractChanges": 0,
+    "crossRequestCacheAdded": false,
+    "automaticRetriesAdded": 0,
+    "scopedPageGiftReadsBefore": 2,
+    "scopedPageGiftReadsAfter": 1
+  },
+  "verification": {
+    "targetedTests": 88,
+    "freshStorefrontTests": 651,
+    "freshApiTests": 245,
+    "observerAndParserTests": 12,
+    "actualProtocolAssertions": 32461,
+    "compiledBrowserCases": 88,
+    "browserScreenshots": 88,
+    "axeScans": 85,
+    "axeViolations": 0,
+    "axeIncomplete": 30,
+    "browserErrors": 0,
+    "normalDiagnosticNavigations": 56,
+    "diagnosticErrorNavigations": 8,
+    "lighthouseSamples": 36,
+    "allContentValidityPassed": true,
+    "performanceBudgetPassed": false,
+    "typecheckTasks": 62,
+    "testTasks": 62,
+    "buildTasks": 36,
+    "secretScanPassed": true
+  },
+  "commands": {
+    "gift-reads-red": {
+      "schemaVersion": 1,
+      "command": "mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/storefront test src/storefront/gift-page-scheduling.test.tsx src/storefront/gift-seo.test.tsx",
+      "exitCode": 1,
+      "tests": {
+        "passed": 53,
+        "failed": 23,
+        "total": 76
+      },
+      "sourceState": "Production source remains baseline 587b3a2; only two behavior test files modified before execution. Extra boundary tests were added after this RED and have not yet run.",
+      "log": "gift-reads-red.log",
+      "scope": "Behavior and SSR scheduling; React request memoization is not proven by non-RSC unit tests."
+    },
+    "measurement-tests": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "--test",
+        "apps/api/scripts/storefront-test-fetch-diagnostics.test.mjs",
+        "apps/api/scripts/storefront-gift-read-verification.test.mjs"
+      ],
+      "startedAt": "2026-09-16T17:26:32.848501+00:00",
+      "completedAt": "2026-09-16T17:26:33.237472+00:00",
+      "elapsedSeconds": 0.389,
+      "exitCode": 0
+    },
+    "check-dev": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "check:dev"
+      ],
+      "startedAt": "2026-09-16T17:27:11.587746+00:00",
+      "completedAt": "2026-09-16T17:27:23.439623+00:00",
+      "elapsedSeconds": 11.852,
+      "exitCode": 1
+    },
+    "check-dev-final": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "check:dev"
+      ],
+      "startedAt": "2026-09-16T17:28:12.038339+00:00",
+      "completedAt": "2026-09-16T17:29:09.602175+00:00",
+      "elapsedSeconds": 57.564,
+      "exitCode": 0
+    },
+    "adapter-boundaries": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "scripts/check-adapter-boundaries.mjs"
+      ],
+      "startedAt": "2026-09-16T17:42:27.527106+00:00",
+      "completedAt": "2026-09-16T17:42:31.490148+00:00",
+      "elapsedSeconds": 3.963,
+      "exitCode": 0
+    },
+    "artifact-boundaries": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "scripts/check-build-artifacts.mjs"
+      ],
+      "startedAt": "2026-09-16T17:42:27.519987+00:00",
+      "completedAt": "2026-09-16T17:42:28.128176+00:00",
+      "elapsedSeconds": 0.608,
+      "exitCode": 0
+    },
+    "comparison-fixture": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "apps/api/scripts/storefront-gift-read-comparison.mjs"
+      ],
+      "startedAt": "2026-09-16T17:15:28.186632+00:00",
+      "completedAt": "2026-09-16T17:41:12.422472+00:00",
+      "elapsedSeconds": 1544.239,
+      "exitCode": 0
+    },
+    "secrets-staged": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "security:secrets"
+      ],
+      "startedAt": "2026-09-16T17:45:50.574486+00:00",
+      "completedAt": "2026-09-16T17:46:26.904106+00:00",
+      "elapsedSeconds": 36.33,
+      "exitCode": 0
+    }
+  },
+  "boundaries": [
+    "Functional and read-consistency checkpoint only; P3-06 remains IN_PROGRESS",
+    "No full pnpm check this turn; check:dev plus targeted real protocols and browser were run",
+    "Diagnostic observation remained ON; this is not the full 63-run official performance gate",
+    "Both candidate rounds have slower zh-CN simulated LCP medians; regression has not been ruled out",
+    "B1 three actual render stalls not reproduced by B2; root cause remains unexplained",
+    "Crossover shared fixture after publication rollback, not the same immutable database snapshot",
+    "No physical-device, VoiceOver, human operations, merchant PSP or production acceptance",
+    "27 DONE / 2 IN_PROGRESS / 20 PENDING; Phase 5 remains LOCKED",
+    "Local checkpoint only; no push, merge or deployment"
+  ],
+  "protection": {
+    "schemaVersion": 1,
+    "checkedAt": "2026-09-16T17:45:22.486110+00:00",
+    "initialUntrackedCount": 3770,
+    "changedInitialUntracked": [],
+    "sourceInputs": 2212,
+    "sourceSha256": "ae070dff1fc4ea83caff72f08f0e0a2b85beae365fb3391a04c1ef85c49e7590",
+    "sourceMismatches": [],
+    "ownedFixtureProcessGone": true
+  }
+}

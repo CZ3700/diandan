@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "scripts/check-adapter-boundaries.mjs"
+  ],
+  "startedAt": "2026-09-16T17:42:27.527106+00:00",
+  "completedAt": "2026-09-16T17:42:31.490148+00:00",
+  "elapsedSeconds": 3.963,
+  "exitCode": 0
+}

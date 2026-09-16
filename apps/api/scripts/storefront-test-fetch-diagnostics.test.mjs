@@ -62,7 +62,7 @@ function observe(t, origin, overrides = {}, write) {
   };
 }
 
-test("real HTTP success preserves fetch, body and response headers; matches only owned home/artist GET", async (t) => {
+test("real HTTP success preserves fetch, body and response headers; matches only owned public content GET", async (t) => {
   const origin = await serverFor(t, (_request, response) =>
     response
       .writeHead(200, {
@@ -79,6 +79,8 @@ test("real HTTP success preserves fetch, body and response headers; matches only
   for (const pathname of [
     "/api/v1/storefront-homepage",
     `/api/v1/idols/${canary}`,
+    `/api/v1/gift-content/${canary}`,
+    `/api/v1/storefront-gifts/${canary}`,
   ]) {
     const response = await globalThis.fetch(
       `${origin}${pathname}?private=${canary}`,
@@ -91,6 +93,15 @@ test("real HTTP success preserves fetch, body and response headers; matches only
     [`${otherOrigin}/api/v1/storefront-homepage`],
     [`${origin}/api/v1/gifts`],
     [`${origin}/api/v1/idols/one/private`],
+    [`${origin}/api/v1/gift-content/one/private`],
+    [`${origin}/api/v1/storefront-gifts/one/private`],
+    [`${origin}/api/v1/gift-content`],
+    [`${origin}/api/v1/storefront-gifts`],
+    [`${otherOrigin}/api/v1/gift-content/${canary}`],
+    [
+      `${origin}/api/v1/storefront-gifts/${canary}`,
+      { method: "POST", body: canary },
+    ],
     [`${origin}/api/v1/storefront-homepage`, { method: "POST", body: canary }],
   ])
     await (await globalThis.fetch(url, options)).text();
@@ -105,6 +116,12 @@ test("real HTTP success preserves fetch, body and response headers; matches only
       ["IDOL", "CREATE"],
       ["IDOL", "HEADERS"],
       ["IDOL", "COMPLETE"],
+      ["GIFT_CONTENT", "CREATE"],
+      ["GIFT_CONTENT", "HEADERS"],
+      ["GIFT_CONTENT", "COMPLETE"],
+      ["STOREFRONT_GIFT", "CREATE"],
+      ["STOREFRONT_GIFT", "HEADERS"],
+      ["STOREFRONT_GIFT", "COMPLETE"],
     ],
   );
   assert.ok(
@@ -117,7 +134,7 @@ test("real HTTP success preserves fetch, body and response headers; matches only
     records
       .filter(({ stage }) => stage === "HEADERS")
       .map(({ status }) => status),
-    [200, 200],
+    [200, 200, 200, 200],
   );
   assert.equal(observed.lines.join("").includes(canary), false);
   assert.equal(observed.lines.join("").includes(origin), false);

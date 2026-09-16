@@ -266,7 +266,7 @@ test("a policy context rejection is consumed immediately while copy is still pen
   }
 });
 
-test.each(["context", "gift", "commerce"] as const)(
+test.each(["context", "commerce"] as const)(
   "a slow %s read does not serialize independent gift page reads",
   async (blocked) => {
     const data = fixture();
@@ -277,7 +277,7 @@ test.each(["context", "gift", "commerce"] as const)(
       // All inputs are resolved promises; allow the page's scheduling work to settle.
       for (let turn = 0; turn < 20; turn++) await Promise.resolve();
       expect(reads.context).toHaveBeenCalledOnce();
-      expect(reads.gift).toHaveBeenCalledWith("en", "rose-palace");
+      expect(reads.gift).not.toHaveBeenCalled();
       expect(reads.commerce).toHaveBeenCalledWith(
         "en",
         "rose-palace",
@@ -297,7 +297,9 @@ test.each(["gift", "commerce"] as const)(
   "a missing %s never returns a page shell",
   async (read) => {
     reads[read].mockResolvedValue(missing);
-    await expect(render()).rejects.toThrow("NEXT_NOT_FOUND");
+    await expect(render(read === "gift" ? {} : query)).rejects.toThrow(
+      "NEXT_NOT_FOUND",
+    );
   },
 );
 
@@ -319,7 +321,9 @@ test.each(["gift", "commerce"] as const)(
   "an unexpected %s rejection never returns a page shell",
   async (read) => {
     reads[read].mockRejectedValue(new Error("read unavailable"));
-    await expect(render()).rejects.toThrow("read unavailable");
+    await expect(render(read === "gift" ? {} : query)).rejects.toThrow(
+      "read unavailable",
+    );
   },
 );
 
@@ -390,7 +394,7 @@ test.each(["context", "artists"] as const)(
     const data = fixture();
     const slow = deferred<(typeof data)[typeof key]>();
     reads[key].mockReturnValue(slow.promise);
-    reads.gift.mockResolvedValue(missing);
+    reads.commerce.mockResolvedValue(missing);
     let error: unknown;
     const pending = Promise.resolve(render()).catch((caught: unknown) => {
       error = caught;
@@ -416,11 +420,13 @@ test.each(["gift", "commerce"] as const)(
     const rendered = stream(
       <Page
         params={Promise.resolve({ handle: "rose-palace" })}
-        searchParams={Promise.resolve({ ...query, idol: data.artist.id })}
+        searchParams={Promise.resolve(
+          key === "gift" ? {} : { ...query, idol: data.artist.id },
+        )}
       />,
     );
     try {
-      await vi.waitFor(() => expect(reads.commerce).toHaveBeenCalledOnce());
+      await vi.waitFor(() => expect(reads[key]).toHaveBeenCalledOnce());
       expect(rendered.html()).toBe("");
     } finally {
       critical.resolve(data[key]);
@@ -429,7 +435,8 @@ test.each(["gift", "commerce"] as const)(
     }
     expect(rendered.errors).toEqual([]);
     expect(rendered.html()).toContain("Verified gift before directory");
-    expect(rendered.html()).toContain('value="1200"');
+    if (key === "commerce") expect(rendered.html()).toContain('value="1200"');
+    else expect(rendered.html()).not.toContain('value="1200"');
   },
 );
 
@@ -587,9 +594,14 @@ test("an unavailable requested market never invents an offer while its real choi
   expect(rendered.html()).not.toContain("data-gift-purchase=");
 });
 
-test.each(["en", "zh-CN"] as const)(
-  "%s streaming preserves the daily gift's actual original language",
-  async (locale) => {
+test.each([
+  ["en", false],
+  ["en", true],
+  ["zh-CN", false],
+  ["zh-CN", true],
+] as const)(
+  "%s streaming preserves the daily gift's actual original language with scoped=%s",
+  async (locale, scoped) => {
     const data = useFixture(locale);
     const localeContext = {
       schemaVersion: 2,
@@ -617,6 +629,13 @@ test.each(["en", "zh-CN"] as const)(
       },
     });
     reads.gift.mockResolvedValue(daily);
+    if (daily.outcome !== "SUCCESS") throw new Error("Missing daily gift");
+    reads.commerce.mockResolvedValue(
+      storefrontGiftResponseSchema.parse({
+        ...data.commerce,
+        content: daily.content,
+      }),
+    );
     const artists = deferred<typeof data.artists>();
     const context = deferred<typeof data.context>();
     reads.artists.mockReturnValue(artists.promise);
@@ -625,7 +644,7 @@ test.each(["en", "zh-CN"] as const)(
     const rendered = stream(
       <Entry
         params={Promise.resolve({ handle: "rose-palace" })}
-        searchParams={Promise.resolve({})}
+        searchParams={Promise.resolve(scoped ? query : {})}
       />,
     );
     try {
@@ -637,7 +656,10 @@ test.each(["en", "zh-CN"] as const)(
         { timeout: 300 },
       );
       expect(rendered.html()).toContain(`class="storefront" lang="${locale}"`);
-      expect(rendered.html()).not.toContain("data-gift-purchase=");
+      if (scoped) {
+        expect(reads.gift).not.toHaveBeenCalled();
+        expect(rendered.html()).toContain('value="1200"');
+      } else expect(rendered.html()).not.toContain("data-gift-purchase=");
     } finally {
       artists.resolve(data.artists);
       context.resolve(data.context);
@@ -712,3 +734,128 @@ test("the independent gift-family shell loads its own cart styles", () => {
   );
   expect(source).toMatch(/import ["']\.\/cart\.css["'];/u);
 });
+
+test.each(SUPPORTED_LOCALES)(
+  "%s streams the complete scoped gift without waiting for an unused unscoped read",
+  async (locale) => {
+    const data = useFixture(locale, true);
+    const unused = deferred<typeof data.gift>();
+    reads.gift.mockReturnValue(unused.promise);
+    const Entry = createGiftStorefrontPage(locale, "gift");
+    const rendered = stream(
+      <Entry
+        params={Promise.resolve({ handle: "rose-palace" })}
+        searchParams={Promise.resolve({ ...query, idol: data.artist.id })}
+      />,
+    );
+    try {
+      await vi.waitFor(
+        () =>
+          expect(rendered.html()).toContain("Verified gift before directory"),
+        { timeout: 300 },
+      );
+      expect(rendered.html()).toContain('value="1200"');
+      expect(reads.commerce).toHaveBeenCalledOnce();
+      expect(reads.gift).not.toHaveBeenCalled();
+    } finally {
+      unused.resolve(data.gift);
+      await rendered.ended;
+      rendered.abort();
+    }
+    expect(rendered.errors).toEqual([]);
+  },
+);
+
+test.each(["CONTENT_UNAVAILABLE", "INVALID_QUERY"] as const)(
+  "a scoped %s cannot be replaced by an independently successful content read",
+  async (code) => {
+    reads.commerce.mockResolvedValue({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code,
+    });
+    const rendered = stream(
+      <Page
+        params={Promise.resolve({ handle: "rose-palace" })}
+        searchParams={Promise.resolve(query)}
+      />,
+    );
+    await rendered.ended;
+    rendered.abort();
+    const copy = await loadStorefrontCopy("en", { requireApproved: false });
+    expect(rendered.errors).toEqual([]);
+    expect(rendered.html()).toContain(copy.contentErrorBody);
+    expect(rendered.html()).not.toContain("Verified gift before directory");
+    expect(rendered.html()).not.toContain('value="1200"');
+    expect(reads.gift).not.toHaveBeenCalled();
+  },
+);
+
+test("the unavailable-market introduction waits for its own published proof", async () => {
+  const data = useFixture();
+  reads.commerce.mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "MARKET_UNAVAILABLE",
+  });
+  const content = deferred<typeof data.gift>();
+  reads.gift.mockReturnValue(content.promise);
+  const rendered = stream(
+    <Page
+      params={Promise.resolve({ handle: "rose-palace" })}
+      searchParams={Promise.resolve(query)}
+    />,
+  );
+  try {
+    await vi.waitFor(() => expect(reads.gift).toHaveBeenCalledOnce());
+    expect(rendered.html()).toBe("");
+  } finally {
+    content.resolve(data.gift);
+    await rendered.ended;
+    rendered.abort();
+  }
+  expect(rendered.errors).toEqual([]);
+  expect(rendered.html()).toContain("Verified gift before directory");
+  expect(rendered.html()).not.toContain('value="1200"');
+});
+
+test.each(["NOT_FOUND", "CONTENT_UNAVAILABLE", "reject"])(
+  "unavailable-market introduction preserves its %s result",
+  async (code) => {
+    reads.commerce.mockResolvedValue({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "MARKET_UNAVAILABLE",
+    });
+    if (code === "reject")
+      reads.gift.mockRejectedValue(new Error("Synthetic introduction failure"));
+    else
+      reads.gift.mockResolvedValue({
+        schemaVersion: 1,
+        outcome: "FAILURE",
+        code,
+      });
+    if (code === "NOT_FOUND" || code === "reject") {
+      await expect(render()).rejects.toThrow(
+        code === "NOT_FOUND"
+          ? "NEXT_NOT_FOUND"
+          : "Synthetic introduction failure",
+      );
+    } else {
+      const rendered = stream(
+        <Page
+          params={Promise.resolve({ handle: "rose-palace" })}
+          searchParams={Promise.resolve(query)}
+        />,
+      );
+      await rendered.ended;
+      rendered.abort();
+      const copy = await loadStorefrontCopy("en", { requireApproved: false });
+      expect(rendered.errors).toEqual([]);
+      expect(rendered.html()).toContain(copy.contentErrorBody);
+      expect(rendered.html()).not.toContain("Verified gift before directory");
+      expect(rendered.html()).not.toContain('value="1200"');
+    }
+    expect(reads.gift).toHaveBeenCalledExactlyOnceWith("en", "rose-palace");
+  },
+);

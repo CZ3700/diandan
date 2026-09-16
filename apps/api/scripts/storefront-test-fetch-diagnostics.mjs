@@ -155,7 +155,11 @@ export function installStorefrontTestFetchDiagnostics({
         ? "HOMEPAGE"
         : /^\/api\/v1\/idols\/[^/]+$/u.test(pathname)
           ? "IDOL"
-          : null;
+          : /^\/api\/v1\/gift-content\/[^/]+$/u.test(pathname)
+            ? "GIFT_CONTENT"
+            : /^\/api\/v1\/storefront-gifts\/[^/]+$/u.test(pathname)
+              ? "STOREFRONT_GIFT"
+              : null;
     if (!target) return;
     const state = {
       sequence: ++requestSequence,
