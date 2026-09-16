@@ -31,7 +31,7 @@ const FONT_COPYRIGHT_NOTICES = Object.freeze({
 });
 const FONT_PROFILES = Object.freeze({
   "japanese.css": [
-    "@fontsource-variable/noto-sans-jp/wght.css",
+    "./generated/japanese-fallback.css",
     "./generated/japanese-ui.css",
   ],
   "latin.css": [
@@ -39,7 +39,7 @@ const FONT_PROFILES = Object.freeze({
     "@fontsource-variable/noto-sans/wght.css",
   ],
   "simplified-chinese.css": [
-    "@fontsource-variable/noto-sans-sc/wght.css",
+    "./generated/simplified-chinese-fallback.css",
     "./generated/simplified-chinese-ui.css",
   ],
   "thai.css": ["@fontsource-variable/noto-sans-thai/wght.css"],

@@ -1,4 +1,5 @@
 import "server-only";
+import { CART_COOKIE_NAME as cookieName } from "./cart-cookie-name";
 import { matchesConfiguredRequestOrigin } from "./request-origin";
 import {
   cartRuntimeCommandSchema,
@@ -13,7 +14,6 @@ import {
   resolveServerRuntimeConfig,
 } from "@fan-support/config/server";
 
-const cookieName = "__Host-fan-cart";
 const credential = /^[A-Za-z0-9_-]{43}$/u;
 const privateHeaders = {
   "cache-control": "private, no-store",

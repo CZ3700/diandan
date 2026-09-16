@@ -63,6 +63,7 @@ export async function withAcceptanceFixture({
   check,
   progress,
   verify,
+  diagnostics,
 }) {
   if (typeof verify !== "function")
     throw new TypeError("Acceptance verification callback is required");
@@ -97,7 +98,7 @@ export async function withAcceptanceFixture({
     };
     const logger = createStructuredLogger({
       service: "api",
-      write: () => undefined,
+      write: diagnostics?.observeApiLog ?? (() => undefined),
     });
     const environment = {
       ...publicationMediaEnvironment(preflightEnvironment(database), s3),
@@ -130,10 +131,17 @@ export async function withAcceptanceFixture({
     add(createTestResourceManagementComposition({ ...common, ...media }));
     add(createTestPublicationPreflightComposition(common));
     add(
-      createTestPublicationRuntimeComposition({
-        ...common,
-        publicMediaBaseUrl: gateway.origin,
-      }),
+      createTestPublicationRuntimeComposition(
+        { ...common, publicMediaBaseUrl: gateway.origin },
+        diagnostics
+          ? {
+              createPersistence: (config, options) =>
+                diagnostics.wrapPersistence(
+                  createPostgresPersistence(config, options),
+                ),
+            }
+          : undefined,
+      ),
     );
     add(
       createTestGiftCommerceComposition({
@@ -205,7 +213,10 @@ export async function withAcceptanceFixture({
     let next, proxy;
     async function startStorefront() {
       if (!next) {
-        proxy = await createGiftStorefrontFaultGateway(base);
+        proxy = await createGiftStorefrontFaultGateway(base, {
+          observer: diagnostics?.observeGateway,
+          captureObserver: diagnostics?.captureGatewayObserver,
+        });
         own("owned API fault gateway", () => proxy.close());
         next = createGiftStorefrontNext({
           workspaceRoot,

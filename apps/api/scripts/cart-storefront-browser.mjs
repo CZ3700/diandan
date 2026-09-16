@@ -282,7 +282,72 @@ export async function verifyCartStorefrontBrowser({
           const gift = fixtures.gifts[0];
           const giftUrl = (artist, targetLocale = "en") =>
             `${origin}/${targetLocale}/gifts/${gift.handle}?${new globalThis.URLSearchParams({ ...fixtures.markets[0], idol: artist.id, variant: gift.variants[0].id })}`;
-          await goto(giftUrl(fixtures.artists[0]));
+          let backgroundCartReads = 0;
+          const countCartReads = (request) => {
+            const url = new globalThis.URL(request.url());
+            if (
+              request.method() === "GET" &&
+              url.origin === origin &&
+              url.pathname === cartPath
+            )
+              backgroundCartReads++;
+          };
+          page.on("request", countCartReads);
+          const freshBrowse = await goto(giftUrl(fixtures.artists[0]));
+          check(
+            backgroundCartReads === 0,
+            "browsing without a cart cookie does not restore an absent cart",
+          );
+          check(
+            freshBrowse.headers()["cache-control"]?.includes("private") &&
+              freshBrowse.headers()["cache-control"]?.includes("no-store"),
+            "public browse HTML with a restoration hint stays private and uncached",
+          );
+          report.cases.push({
+            name: "first-visitor-browse-without-cart-read",
+            viewport: viewport.width,
+            cartReads: backgroundCartReads,
+          });
+          const firstCartTrigger = page
+            .locator("[data-cart-trigger] button")
+            .first();
+          await page.locator("form[data-cart-add]").waitFor();
+          await firstCartTrigger.focus();
+          check(
+            backgroundCartReads === 0,
+            "no cart restoration request occurs before the first explicit opening",
+          );
+          const emptyCart = await observe(
+            "GET",
+            "",
+            () => page.keyboard.press("Enter"),
+            404,
+          );
+          check(
+            emptyCart.outcome === "FAILURE" &&
+              emptyCart.code === "CART_NOT_FOUND",
+            "first opening uses the strictly validated absent-cart response",
+          );
+          await page.locator("[data-cart-drawer] .cart-empty").waitFor();
+          check(
+            backgroundCartReads === 1,
+            "first keyboard opening still reads and validates the current cart",
+          );
+          check(
+            !(await context.cookies()).some(
+              (value) => value.name === "__Host-fan-cart",
+            ),
+            "explicit empty-cart reading does not create a session cookie",
+          );
+          await containedFocus();
+          await page.keyboard.press("Escape");
+          await page.getByRole("dialog").waitFor({ state: "hidden" });
+          check(
+            await firstCartTrigger.evaluate(
+              (element) => element === globalThis.document.activeElement,
+            ),
+            "closing the first empty cart returns keyboard focus",
+          );
           const form = page.locator("form[data-cart-add]");
           await form.waitFor();
           await capture(`en-${viewport.width}-add-form`);
@@ -353,7 +418,30 @@ export async function verifyCartStorefrontBrowser({
             ),
             "cart token is inaccessible to document JavaScript",
           );
-          await goto(giftUrl(fixtures.artists[1]));
+          backgroundCartReads = 0;
+          const returningBrowse = await goto(giftUrl(fixtures.artists[1]));
+          await page.locator("[data-cart-count]").waitFor();
+          check(
+            backgroundCartReads === 1 &&
+              (await page.locator("[data-cart-count]").innerText()) ===
+                added.cart.items
+                  .reduce((sum, item) => sum + BigInt(item.quantity), 0n)
+                  .toLocaleString("en"),
+            "an established cart restores its real badge once on a browse page",
+          );
+          const returningCache = returningBrowse.headers()["cache-control"];
+          check(
+            returningCache?.includes("private") &&
+              returningCache.includes("no-store") &&
+              !(await returningBrowse.text()).includes(cookie.value),
+            "restoration serializes no cart credential and cannot enter a shared HTML cache",
+          );
+          page.off("request", countCartReads);
+          report.cases.push({
+            name: "returning-visitor-browse-restores-cart-badge",
+            viewport: viewport.width,
+            cartReads: backgroundCartReads,
+          });
           const second = await observe("POST", "/items", () =>
             page.locator("[data-cart-add-state]").click(),
           );

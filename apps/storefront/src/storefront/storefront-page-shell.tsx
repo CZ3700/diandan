@@ -1,4 +1,5 @@
 import "server-only";
+import { readCartRestorationHint } from "../server/cart-restoration-hint";
 import { Suspense, type ComponentProps, type ReactNode } from "react";
 import { PolicyLinks } from "./commerce-context";
 import { readCommerceContext } from "./storefront-page-reads";
@@ -22,14 +23,19 @@ async function FooterPolicyLinks(props: PolicyProps) {
   return <PolicyLinks {...props} context={await readCommerceContext()} />;
 }
 
-export function StorefrontPageShell({
+export async function StorefrontPageShell({
   children,
   active,
   ...props
 }: ShellProps) {
+  const restoreOnLoad = await readCartRestorationHint();
   return (
     <div className="storefront" lang={props.locale}>
-      <CartProvider key={props.locale} locale={props.locale}>
+      <CartProvider
+        key={props.locale}
+        locale={props.locale}
+        restoreOnLoad={restoreOnLoad}
+      >
         <SiteHeader {...props} active={active} />
         <main id="main-content" tabIndex={-1}>
           {children}

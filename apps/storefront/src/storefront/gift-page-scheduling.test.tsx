@@ -38,6 +38,10 @@ const reads = vi.hoisted(() => ({
   commerce: vi.fn(),
   artists: vi.fn(),
   policy: vi.fn(),
+  cookieHas: vi.fn(() => false),
+}));
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ has: reads.cookieHas }),
 }));
 vi.mock("../server/storefront-copy", () => ({
   loadStorefrontCopy: reads.copy,
@@ -676,6 +680,7 @@ test.each(["gift", "gifts", "policy", "region"] as const)(
     const provider = providers[0]!;
     expect(provider.key).toBe("en");
     expect(provider.props["locale"]).toBe("en");
+    expect(provider.props["restoreOnLoad"]).toBe(false);
     const contents = elements(provider.props["children"] as ReactNode);
     expect(
       contents.filter((element) => element.type === SiteHeader),
@@ -688,6 +693,18 @@ test.each(["gift", "gifts", "policy", "region"] as const)(
     ).toHaveLength(1);
   },
 );
+test("the gift page preserves automatic restoration for a returning visitor", async () => {
+  reads.cookieHas.mockReturnValueOnce(true);
+  const Entry = createGiftStorefrontPage("en", "gift");
+  const tree = await Entry({
+    params: Promise.resolve({ handle: "rose-palace" }),
+    searchParams: Promise.resolve(query),
+  });
+  const provider = elements(tree).find(
+    (element) => element.type === CartProvider,
+  );
+  expect(provider?.props["restoreOnLoad"]).toBe(true);
+});
 test("the independent gift-family shell loads its own cart styles", () => {
   const source = readFileSync(
     new URL("./gift-page-factory.tsx", import.meta.url),

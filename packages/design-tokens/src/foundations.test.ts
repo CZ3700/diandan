@@ -212,8 +212,8 @@ describe("locale font profiles", () => {
   test.each([
     ["latin.css", "@fontsource-variable/manrope/wght.css"],
     ["vietnamese.css", "@fontsource-variable/manrope/wght.css"],
-    ["simplified-chinese.css", "@fontsource-variable/noto-sans-sc/wght.css"],
-    ["japanese.css", "@fontsource-variable/noto-sans-jp/wght.css"],
+    ["simplified-chinese.css", "./generated/simplified-chinese-fallback.css"],
+    ["japanese.css", "./generated/japanese-fallback.css"],
     ["thai.css", "@fontsource-variable/noto-sans-thai/wght.css"],
   ])(
     "keeps %s self-hosted and profile-specific",
@@ -225,6 +225,20 @@ describe("locale font profiles", () => {
       expect(css).not.toMatch(/https?:\/\//u);
     },
   );
+  test.each([
+    ["japanese", "noto-sans-jp"],
+    ["simplified-chinese", "noto-sans-sc"],
+  ])("keeps %s UI and fallback font sources local", async (profile, source) => {
+    const css = await readPackageFile(`styles/fonts/${profile}.css`);
+    expect(css).toContain(`./generated/${profile}-ui.css`);
+    const fallback = await readPackageFile(
+      `styles/fonts/generated/${profile}-fallback.css`,
+    );
+    expect(fallback).toContain(
+      `node_modules/@fontsource-variable/${source}/files/`,
+    );
+    expect(fallback).not.toMatch(/https?:\/\//u);
+  });
 });
 
 describe("idol accent protection", () => {

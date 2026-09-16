@@ -286,6 +286,17 @@ def main():
         ],
         check=True,
     )
+    subprocess.run(
+        [
+            args.node,
+            str(ROOT / "scripts/fonts/generate-fallback-css.mjs"),
+            "--output-dir",
+            str(args.output_dir),
+            "--ui-dir",
+            str(args.output_dir),
+        ],
+        check=True,
+    )
     print(
         json.dumps(
             [

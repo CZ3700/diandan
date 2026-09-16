@@ -1,6 +1,6 @@
 import { PassThrough } from "node:stream";
 import { isValidElement, type ReactElement } from "react";
-import { renderToPipeableStream, renderToStaticMarkup } from "react-dom/server";
+import { renderToPipeableStream } from "react-dom/server";
 import { beforeAll, beforeEach, expect, test, vi } from "vitest";
 import {
   SUPPORTED_LOCALES,
@@ -22,6 +22,9 @@ const reads = vi.hoisted(() => ({
   gifts: vi.fn(),
 }));
 vi.mock("server-only", () => ({}));
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ has: () => false }),
+}));
 vi.mock("./browse-seo", () => ({
   BrowsePageSeo: reads.seo,
   loadBrowseSeo: vi.fn(),
@@ -482,7 +485,10 @@ test.each(SUPPORTED_LOCALES)(
       currency: "JPY",
       tracking: ["first", "second"],
     });
-    const html = renderToStaticMarkup(page);
+    const rendered = stream(page);
+    await rendered.ended;
+    const html = rendered.html();
+    rendered.abort();
     expect(html).toContain(`lang="${locale}"`);
     expect(html).toContain(
       `/${locale}/idols?market=TEST_MARKET&amp;currency=JPY&amp;tracking=first&amp;tracking=second`,

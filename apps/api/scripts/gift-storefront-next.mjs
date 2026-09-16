@@ -7,12 +7,29 @@ import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 
 /** This gateway injects transport errors only. Successful business responses come from the actual API. */
-export async function createGiftStorefrontFaultGateway(base) {
+export async function createGiftStorefrontFaultGateway(
+  base,
+  { observer, captureObserver } = {},
+) {
+  function observe(captured, event) {
+    try {
+      captured?.(event);
+    } catch {
+      /* Diagnostics cannot change the original transport result. */
+    }
+  }
   let failurePath = null;
   const server = createServer(async (request, response) => {
+    let captured = observer;
+    try {
+      captured = captureObserver?.() ?? observer;
+    } catch {
+      /* Optional observation must not interfere with forwarding. */
+    }
     const url = new globalThis.URL(request.url, base);
     if (failurePath && url.pathname.startsWith(failurePath)) {
       response.writeHead(503, { "cache-control": "no-store" }).end();
+      observe(captured, { url, phase: "GATEWAY_FAULT", status: 503 });
       return;
     }
     try {
@@ -21,9 +38,22 @@ export async function createGiftStorefrontFaultGateway(base) {
         signal: globalThis.AbortSignal.timeout(30_000),
       });
       response.writeHead(upstream.status, Object.fromEntries(upstream.headers));
-      response.end(Buffer.from(await upstream.arrayBuffer()));
-    } catch {
+      const bytes = Buffer.from(await upstream.arrayBuffer());
+      response.end(bytes);
+      observe(captured, {
+        url,
+        phase: "GATEWAY_RESPONSE",
+        status: upstream.status,
+        bytes,
+      });
+    } catch (error) {
       response.writeHead(503, { "cache-control": "no-store" }).end();
+      observe(captured, {
+        url,
+        phase: "GATEWAY_TRANSPORT_ERROR",
+        status: 503,
+        error,
+      });
     }
   });
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));

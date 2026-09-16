@@ -16,7 +16,7 @@ const fontPackages = [
 
 const fontProfiles = {
   "japanese.css": [
-    "@fontsource-variable/noto-sans-jp/wght.css",
+    "./generated/japanese-fallback.css",
     "./generated/japanese-ui.css",
   ],
   "latin.css": [
@@ -24,7 +24,7 @@ const fontProfiles = {
     "@fontsource-variable/noto-sans/wght.css",
   ],
   "simplified-chinese.css": [
-    "@fontsource-variable/noto-sans-sc/wght.css",
+    "./generated/simplified-chinese-fallback.css",
     "./generated/simplified-chinese-ui.css",
   ],
   "thai.css": ["@fontsource-variable/noto-sans-thai/wght.css"],
@@ -1037,3 +1037,25 @@ test("requires complete font notices in both distributable web images", async (c
     ),
   );
 });
+
+for (const [profile, source] of [
+  ["japanese", "noto-sans-jp"],
+  ["simplified-chinese", "noto-sans-sc"],
+]) {
+  test(`rejects overlapping original ranges in the ${profile} entry`, async (context) => {
+    const root = await fixture();
+    context.after(() => rm(root, { recursive: true, force: true }));
+    await write(
+      root,
+      `packages/design-tokens/styles/fonts/${profile}.css`,
+      `@import "@fontsource-variable/${source}/wght.css";\n@import "./generated/${profile}-ui.css";\n`,
+    );
+    const errors = await validateDesignFoundations(root);
+    assert.ok(
+      errors.some((error) =>
+        error.includes(`${profile}.css profile imports must be exactly`),
+      ),
+      "the entry must use the repertoire-preserving disjoint fallback",
+    );
+  });
+}

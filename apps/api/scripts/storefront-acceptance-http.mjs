@@ -11,6 +11,7 @@ import {
   prepareEphemeralS3Buckets,
 } from "../../../packages/media-s3/scripts/ephemeral-s3-harness.mjs";
 import { withAcceptanceFixture } from "./storefront-acceptance-runtime.mjs";
+import { createAcceptanceReadDiagnostics } from "./storefront-acceptance-diagnostics.mjs";
 
 const workspaceRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -89,6 +90,10 @@ export async function runAcceptanceFixture(
   const progress = (stage) => console.log(`Acceptance fixture: ${stage}`);
   const control = signals();
   const started = globalThis.performance.now();
+  const diagnostics =
+    process.env.FAN_SUPPORT_ACCEPTANCE_READ_DIAGNOSTICS === "1"
+      ? createAcceptanceReadDiagnostics({ output })
+      : undefined;
   try {
     return await withAcceptanceFixture({
       database,
@@ -97,6 +102,7 @@ export async function runAcceptanceFixture(
       output,
       check,
       progress,
+      diagnostics,
       verify: async (context) => {
         await writeFile(
           path.join(output, "fixture-manifest.json"),
@@ -108,6 +114,7 @@ export async function runAcceptanceFixture(
         let protocol,
           protocolAttempt = 0;
         while (!protocol) {
+          diagnostics?.beginPhase("protocol");
           try {
             protocolAttempt++;
             protocol = await verifyProtocol(context);
@@ -175,6 +182,7 @@ export async function runAcceptanceFixture(
               output,
               `browser-attempt-${++attempt}`,
             );
+            diagnostics?.beginPhase(`browser-attempt-${attempt}`);
             await mkdir(attemptOutput, { recursive: true });
             try {
               const before = assertions;

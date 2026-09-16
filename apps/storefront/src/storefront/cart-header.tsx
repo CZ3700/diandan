@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import type { SupportedLocale } from "@fan-support/contracts";
 import { Icon } from "@fan-support/ui";
 import type { StorefrontCopy } from "./copy";
-import { useCartSession, useCartSnapshot } from "./cart-provider";
+import {
+  useCartSession,
+  useCartSnapshot,
+  useCartRestorationHint,
+} from "./cart-provider";
 import { LazyDrawer } from "./lazy-drawer";
 import { CartPanel } from "./cart-panel";
 import { storefrontHref } from "./navigation";
@@ -30,8 +34,10 @@ export function CartHeader(props: Props) {
 function CartControl({ session, ...props }: Props & { session: CartSession }) {
   const { copy, locale, contextQuery } = props;
   const state = useCartSnapshot(session);
+  const restoreOnLoad = useCartRestorationHint();
   const [open, setOpen] = useState(false);
   useEffect(() => {
+    if (!restoreOnLoad) return;
     // Cart restoration is private and does not compete with the public hero load.
     const restore = () => {
       if (session.snapshot().status === "idle") void session.read();
@@ -39,7 +45,7 @@ function CartControl({ session, ...props }: Props & { session: CartSession }) {
     if (document.readyState === "complete") restore();
     else window.addEventListener("load", restore, { once: true });
     return () => window.removeEventListener("load", restore);
-  }, [session]);
+  }, [session, restoreOnLoad]);
   const count = state.cart?.items.reduce(
     (sum, item) => sum + BigInt(item.quantity),
     0n,

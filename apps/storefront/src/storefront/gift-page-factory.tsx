@@ -1,4 +1,5 @@
 import "server-only";
+import { readCartRestorationHint } from "../server/cart-restoration-hint";
 import "./cart.css";
 import { CartProvider } from "./cart-provider";
 import { Suspense, type ReactNode } from "react";
@@ -56,11 +57,12 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
         };
       },
     );
-    const [copy, detail] = await Promise.all([
+    const [copy, detail, restoreOnLoad] = await Promise.all([
       loadStorefrontCopy(locale),
       handle?.success
         ? readGiftDetailPage(locale, handle.data, values)
         : undefined,
+      readCartRestorationHint(),
       kind === "gift" ? undefined : contextRead,
     ]);
     const contextQuery = queryString(values);
@@ -201,7 +203,11 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
     }
     return (
       <div className="storefront" lang={locale}>
-        <CartProvider key={locale} locale={locale}>
+        <CartProvider
+          key={locale}
+          locale={locale}
+          restoreOnLoad={restoreOnLoad}
+        >
           <SiteHeader
             locale={locale}
             copy={copy}
