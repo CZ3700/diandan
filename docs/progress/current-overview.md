@@ -2,6 +2,8 @@
 
 更新：2026-09-16。依据当前工作区、Git提交、MASTER与实际验收记录。正式计数27 DONE /2 IN_PROGRESS /20 PENDING，共49项；约55%是任务完成比例，不是上线准备度。
 
+当前续验检查点：本地 `0dabba9` 完成首访购物车恢复与 CJK 字体范围优化；共有冷资源页面减少 152,421 gzip 字节、4 个脚本请求。真实七语言双视口 88 场景与购物车 20 场景通过。P3-06 性能仍未通过：两轮正式采样遇到内容错误，新 27 次诊断正常但只 3/9 组达预算，不能抵消旧失败；共享 UI 三项原自动脚本与单条完整仓库43门已通过（2144.195秒exit0）。证据入口 `output/checks/p3-06-performance-resume/README.md`。正式计数仍 27/49 DONE，Phase 5 未解锁。
+
 ## 产品与已确认约束
 
 精品艺人礼物商城：浏览艺人 → 选礼物 → 私密留言/署名 → 游客付款 → 安全查单 → 工作室准备并交给艺人。沿用已批准黑金视觉，人物和礼物摄影保持原色。无社区、榜单、积分、众筹、艺人登录、分账或原生App。
@@ -23,7 +25,7 @@
 
 ## 这次接续点
 
-当前分支 `codex/p4-06-notifications`，检查点起点 `7c63148`。P4-05/P4-06已DONE，Lane A/D已释放。P3-06和P4-04保留未完验收，无执行者；暂无READY任务，Phase5仍LOCKED。
+当前分支 `codex/p3-06-performance-resume`，检查点起点 `7d1a539`。P4-05/P4-06已DONE；root恢复Lane D接续P3-06浏览性能验收，P4-04商户验收仍待续、无执行者。暂无READY任务，Phase5仍LOCKED。
 
 1. 已验收可信付款证据应用：付款、订单、购物车、意图、真实库存和事件同事务提交；重复/乱序/双来源只入账一次，失败释放，迟到收款进入履约待处理。
 2. 安全查单服务端已本地验收：为后续fragment页面提供一次性凭证交换短期HttpOnly会话的API，付款浏览器通过受保护结账会话取得订单范围授权；只读不可变历史快照，保护真实原文与七语言来源。
@@ -36,7 +38,8 @@
 
 ## 续作入口
 
-- 权威状态：[MASTER](MASTER.md)与[P4执行卡](phase-4-commerce.md)。
+- 权威状态：[MASTER](MASTER.md)、[P3执行卡](phase-3-storefront.md)与[P4执行卡](phase-4-commerce.md)。
+- 当前性能检查点：[最终验证](../../output/checks/p3-06-performance-resume/final-verification.md)；代码与本地回归通过，性能和旧偶发读取错误继续调查。
 - 订单闭环：[P4-05实施计划](../plan/p4-05-order-completion.md)与[付款运行手册](../operations/order-payments.md)、[查单运行手册](../operations/order-access.md)。
 - 验证与原失败：[付款应用验收](../../output/checks/p4-05-order-completion/final-verification.md)与[安全查单验收](../../output/checks/p4-05-order-access/final-verification.md)与[订单界面验收](../../output/checks/p4-05-order-storefront/final-verification.md)。
 - 通知与清理：[运行手册](../operations/order-notifications.md)与[本地验收/原失败](../../output/checks/p4-06-notifications/final-verification.md)。

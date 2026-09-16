@@ -3,9 +3,9 @@
 > 最后更新：2026-09-16
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3（验收待续）、Phase 4（ADR-013 本地开发）
-> 当前任务：P4-06 DONE，Lane D 已释放；P4-04 商户验收与 P3-06 浏览验收均待续、无 executor
-> 下一入口：补齐 P3-06 浏览/性能/人工验收与 P4-04 实际 PSP 验收；Phase 5 与上线门保留
-> 当前检查点：P4-06七语言事务通知、安全邮件查单与到期清理完成本地验收；原检查43项分段通过，单条完整check的旧测试超时如实保留。完整概览见 `current-overview.md`；仅本地提交。
+> 当前任务：P4-06 DONE；接续 P3-06 性能验收，Codex `/root` 持有 Lane D；P4-04 商户验收待续、无 executor
+> 下一入口：P3-06性能超标页与偶发内容读取调查；人工验收、Phase 5 与上线门保留
+> 当前检查点：P3-06首访购物车恢复与CJK字体加载优化已本地提交0dabba9，七语言真实UI/购物车通过；性能未过，保留两轮内容错误。共享UI三项原自动脚本与完整43项仓库检查通过，性能/人工门仍未过。完整概览见 `current-overview.md`；仅本地提交。
 
 ## 1. 开工入口
 
@@ -17,7 +17,7 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 保留未完验收但无 executor；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；P4-04 本地检查点已验收、商户门待续且无 executor；按 ADR-014 完成P4-05本地范围并释放Lane A，P4-06已DONE并释放Lane D。暂无READY任务，后续接续上述未完验收；Phase5保持LOCKED。正式品牌资产、邮件服务与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 由 root 恢复 Lane D 性能续验；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；P4-04 本地检查点已验收、商户门待续且无 executor；按 ADR-014 完成P4-05本地范围并释放Lane A，P4-06已DONE，Lane D已交由P3-06续验。暂无READY任务，当前接续上述未完验收；Phase5保持LOCKED。正式品牌资产、邮件服务与译文的上线批准继续独立保留。
 
 ## 2. 总体状态
 
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-16 P3-06本地优化检查点：实施提交`0dabba9`，无Cookie首访跳过自动cart恢复、CJK字体范围互斥，旧字节与动态字集保留。共有页面JS减少152,421gzip字节与4请求；七语实际UI88场景/购物车20场景、共享三原自动门通过。原单条完整check2144.195秒exit0，43门连续通过，types/tests62、build36/32出口（含缓存）。最终2203输入SHA78f4b75ccb4d5e0a9fb30057fa81587aece51562f8023a5f36d1f87bfbc206ab，旧606合同/96paths/180schemas/58SQL及2438原未跟踪保持。**性能仍未通过**：两formal轮10/63、41/63遇真实内容错误，新27次诊断正常但3/9组预算通过，旧错误未重现/未修复；warm原严格FAIL保留。源码ACCEPT，S.U.P.E.R10/真人/真机/PSP/上线门不升级；27/2/20计数不变，仅本地提交。详见`output/checks/p3-06-performance-resume/final-verification.md`。
 
 2026-09-16 P4-06 DONE：七语言不可变事务通知、持久幂等/UNKNOWN重试、安全邮件查单与资源到期清理完成。真实PG/TLS/队列/邮件CTA6814断言，实际expiry6105/action5843，七语模板44浏览器场景/842断言及44axe零问题通过。第三轮完整check2220.017秒exit1，原动态import测试超过5秒；原配置定向两项0.899秒通过，原七项质量后缀46.254秒exit0，types/tests62、build36/32出口通过（含缓存），43门按明确展开口径分段覆盖，不称单条全绿。最终2190输入SHAfdfeb7436391fd492f5484f0cd1b769755ee8f6f27a4b5b1e372f061de26db91，573旧合同/56SQL/2413初始未跟踪保持；非作者ACCEPT、S.U.P.E.R与secret/high audit通过。详见`output/checks/p4-06-notifications/final-verification.md`。27DONE/2IN_PROGRESS/20PENDING=49；LaneD释放，P3/P4未完验收和Phase5门保留，正式邮件/人工译审未启用，仅本地提交。
 

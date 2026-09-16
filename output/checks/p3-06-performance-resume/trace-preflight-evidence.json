@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-16T07:02:24.216139+00:00",
+  "status": "TOOL_UNIT_VALIDATED",
+  "scope": "New output-only trace collector, reusing the current same-navigation content gatherer. No product source changed; no service, build, browser or performance sampling started by this agent.",
+  "files": [
+    {
+      "path": "output/checks/p3-06-performance-resume/trace-preflight.mjs",
+      "sha256": "2c8cd81d239397b5cbf1e44c0306211cac537db91e116161f824066d6ff1e4c9"
+    },
+    {
+      "path": "output/checks/p3-06-performance-resume/trace-preflight.test.mjs",
+      "sha256": "c9cd4f2627ecd2ca676dc7878a00c852bb12b639dd7b00514dd15755d9d69ec2"
+    }
+  ],
+  "red": {
+    "command": "mise exec node@24.20.0 -- node --test output/checks/p3-06-performance-resume/trace-preflight.test.mjs",
+    "exitCode": 1,
+    "tests": 4,
+    "passed": 1,
+    "failed": 3,
+    "log": "trace-preflight-red.log",
+    "observed": "Historical diagnostic rejected zh-CN; the new testable same-navigation collection boundary was absent. Existing immutable trace preservation test passed."
+  },
+  "green": {
+    "command": "mise exec node@24.20.0 -- node --test output/checks/p3-06-performance-resume/trace-preflight.test.mjs",
+    "exitCode": 0,
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "log": "trace-preflight-green.log"
+  },
+  "format": {
+    "command": "mise exec node@24.20.0 -- corepack pnpm exec prettier --check output/checks/p3-06-performance-resume/trace-preflight.mjs output/checks/p3-06-performance-resume/trace-preflight.test.mjs",
+    "exitCode": 0,
+    "log": "trace-preflight-format.log"
+  },
+  "lint": {
+    "command": "mise exec node@24.20.0 -- corepack pnpm exec eslint --no-ignore output/checks/p3-06-performance-resume/trace-preflight.mjs output/checks/p3-06-performance-resume/trace-preflight.test.mjs --max-warnings=0",
+    "exitCode": 0,
+    "log": "trace-preflight-lint.log"
+  },
+  "verified": [
+    "en/ja/zh-CN and home/artist/gift supported; unknown/duplicate scopes rejected",
+    "Current createAcceptanceLighthouseConfig and storefront category passed into the single measured navigation",
+    "Standard Lighthouse mobile simulate settings and categories retained",
+    "Missing/failed/error content proof rejected despite otherwise finite performance metrics",
+    "Original JSON/HTML/trace/devtools/lantern evidence written before validation; existing files never overwritten"
+  ],
+  "unperformed": [
+    "No real Chrome or Lighthouse navigation in these unit tests",
+    "No shared build or runtime startup",
+    "No new performance or seven-language acceptance result"
+  ],
+  "baselineSource": {
+    "sha256": "fdfeb7436391fd492f5484f0cd1b769755ee8f6f27a4b5b1e372f061de26db91",
+    "inputCount": 2190,
+    "authority": "Parent root supplied frozen baseline; collector records but does not independently verify source identity"
+  },
+  "invocation": {
+    "positionalInputs": [
+      "origin http://localhost:<owned-port>",
+      "fixture-manifest.json",
+      "owned storefront-media.crt",
+      "new output directory",
+      "source snapshot JSON with top-level sha256"
+    ],
+    "nineRunFlags": [
+      "--locales=en,ja,zh-CN",
+      "--kinds=home,artist,gift",
+      "--repeats=1"
+    ],
+    "nineRunScope": "Nine diagnostic samples only; repeats=1 has no three-sample median or complete acceptance verdict",
+    "threeRunComparison": "Use identical selected locale/kind and --repeats=3 before/after; every attempt remains. Formal seven-language 63-run gate is unchanged."
+  },
+  "runtimeCertificateObservation": {
+    "path": "/var/folders/l0/06pxlwtj2x9462b96qcz481h0000gn/T/fan-support-media-s3-it-4Trsma/storefront-media.crt",
+    "modifiedAt": "2026-09-16T06:56:33.630464+00:00",
+    "observation": "Only matching public media certificate currently present; directory names and public certificate metadata inspected, no credential config or private keys read"
+  },
+  "conditions": [
+    "Serialize sampling; no concurrent build or heavy checks",
+    "Fresh owned Chrome/SPKI exception limited to fixture certificate; no blanket TLS bypass",
+    "Resource pass uses cache-disabled isolated contexts before scrolling/eager mutation; server optimizer may be warm",
+    "Do not use serve cleanup exit 0 as a passing budget verdict; inspect retained per-attempt status/failure",
+    "Old output/checks/p3-06-performance-final evidence and scripts were not modified"
+  ]
+}

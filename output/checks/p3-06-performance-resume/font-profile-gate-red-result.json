@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "--test",
+    "scripts/check-design-foundations.test.mjs"
+  ],
+  "startedAt": "2026-09-16T07:20:56.566460+00:00",
+  "completedAt": "2026-09-16T07:20:57.495690+00:00",
+  "elapsedSeconds": 0.929,
+  "exitCode": 1
+}

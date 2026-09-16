@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "output/checks/p3-06-performance-resume/trace-preflight.mjs",
+    "http://localhost:57469",
+    "output/checks/p3-06-storefront-acceptance/run-2026-09-16T06-56-33-163Z/fixture-manifest.json",
+    "/var/folders/l0/06pxlwtj2x9462b96qcz481h0000gn/T/fan-support-media-s3-it-4Trsma/storefront-media.crt",
+    "output/checks/p3-06-performance-resume/baseline-trace",
+    "output/checks/p3-06-performance-resume/source-baseline.json",
+    "--locales=en,ja,zh-CN",
+    "--kinds=home,artist,gift",
+    "--repeats=1"
+  ],
+  "startedAt": "2026-09-16T07:01:52.026394+00:00",
+  "completedAt": "2026-09-16T07:03:05.783896+00:00",
+  "elapsedSeconds": 73.757,
+  "exitCode": 0
+}

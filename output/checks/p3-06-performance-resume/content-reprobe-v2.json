@@ -1,0 +1,627 @@
+{
+  "schemaVersion": 1,
+  "passed": false,
+  "scope": "Sequential API/gateway/SSR public fixture diagnosis after the retained invalid Lighthouse navigation. Does not explain the historical failure or replace performance samples.",
+  "records": [
+    {
+      "attempt": 1,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:07.271Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 339
+    },
+    {
+      "attempt": 1,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:07.611Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 326
+    },
+    {
+      "attempt": 1,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:07.936Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 682
+    },
+    {
+      "attempt": 2,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:08.619Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 230
+    },
+    {
+      "attempt": 2,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:08.849Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 243
+    },
+    {
+      "attempt": 2,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:09.092Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 651
+    },
+    {
+      "attempt": 3,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:09.743Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 347
+    },
+    {
+      "attempt": 3,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:10.090Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 351
+    },
+    {
+      "attempt": 3,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:10.441Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 670
+    },
+    {
+      "attempt": 4,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:11.111Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 287
+    },
+    {
+      "attempt": 4,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:11.398Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 305
+    },
+    {
+      "attempt": 4,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:11.703Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 713
+    },
+    {
+      "attempt": 5,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:12.416Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 324
+    },
+    {
+      "attempt": 5,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:12.739Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 308
+    },
+    {
+      "attempt": 5,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:13.048Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 649
+    },
+    {
+      "attempt": 6,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:13.696Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 228
+    },
+    {
+      "attempt": 6,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:13.924Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 243
+    },
+    {
+      "attempt": 6,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:14.167Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 732
+    },
+    {
+      "attempt": 7,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:14.899Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 306
+    },
+    {
+      "attempt": 7,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:15.205Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 307
+    },
+    {
+      "attempt": 7,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:15.512Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 770
+    },
+    {
+      "attempt": 8,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:16.282Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 321
+    },
+    {
+      "attempt": 8,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:16.603Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 273
+    },
+    {
+      "attempt": 8,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:16.876Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 837
+    },
+    {
+      "attempt": 9,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:17.713Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 281
+    },
+    {
+      "attempt": 9,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:17.994Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 282
+    },
+    {
+      "attempt": 9,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:18.276Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 750
+    },
+    {
+      "attempt": 10,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:19.026Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 247
+    },
+    {
+      "attempt": 10,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:19.273Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 279
+    },
+    {
+      "attempt": 10,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:19.552Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 751
+    },
+    {
+      "attempt": 11,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:20.303Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 325
+    },
+    {
+      "attempt": 11,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:20.628Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 259
+    },
+    {
+      "attempt": 11,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:20.887Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 749
+    },
+    {
+      "attempt": 12,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:21.636Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 291
+    },
+    {
+      "attempt": 12,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:21.927Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 297
+    },
+    {
+      "attempt": 12,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:22.224Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 772
+    },
+    {
+      "attempt": 13,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:22.995Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 258
+    },
+    {
+      "attempt": 13,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:23.253Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 315
+    },
+    {
+      "attempt": 13,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:23.567Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 726
+    },
+    {
+      "attempt": 14,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:24.293Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 254
+    },
+    {
+      "attempt": 14,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:24.547Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 254
+    },
+    {
+      "attempt": 14,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:24.801Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 717
+    },
+    {
+      "attempt": 15,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:25.519Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 250
+    },
+    {
+      "attempt": 15,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:25.768Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 282
+    },
+    {
+      "attempt": 15,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:26.050Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 743
+    },
+    {
+      "attempt": 16,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:26.794Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 303
+    },
+    {
+      "attempt": 16,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:27.097Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 311
+    },
+    {
+      "attempt": 16,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:27.408Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 731
+    },
+    {
+      "attempt": 17,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:28.139Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 307
+    },
+    {
+      "attempt": 17,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:28.446Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 293
+    },
+    {
+      "attempt": 17,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:28.739Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 725
+    },
+    {
+      "attempt": 18,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:29.464Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 260
+    },
+    {
+      "attempt": 18,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:29.724Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 282
+    },
+    {
+      "attempt": 18,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:30.006Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 741
+    },
+    {
+      "attempt": 19,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:30.747Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 307
+    },
+    {
+      "attempt": 19,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:31.054Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 271
+    },
+    {
+      "attempt": 19,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:31.325Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 782
+    },
+    {
+      "attempt": 20,
+      "layer": "api",
+      "startedAt": "2026-09-16T07:44:32.106Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 307
+    },
+    {
+      "attempt": 20,
+      "layer": "gateway",
+      "startedAt": "2026-09-16T07:44:32.413Z",
+      "status": 200,
+      "schemaValid": true,
+      "outcome": "SUCCESS",
+      "code": null,
+      "issues": [],
+      "elapsedMs": 308
+    },
+    {
+      "attempt": 20,
+      "layer": "html",
+      "startedAt": "2026-09-16T07:44:32.722Z",
+      "status": 200,
+      "heroPresent": true,
+      "stateElementPresent": true,
+      "elapsedMs": 773
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+{
+  "capturedAt": "2026-09-16T08:34:36.755318+00:00",
+  "gateReports": [
+    {
+      "gate": "p2-03",
+      "result": "passed",
+      "scenarioCount": 13,
+      "pngCount": 15,
+      "axe": [
+        {
+          "artifact": "axe-results/base-desktop.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/base-mobile.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/dialog.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/drawer.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/menu.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/pseudo-320.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/reduced-motion.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/toast.json",
+          "violations": [],
+          "incomplete": []
+        }
+      ],
+      "git": {
+        "dirty": false,
+        "sha": "0dabba96e88d421d4679f6891e9e237efc3ef24d",
+        "status": [],
+        "rechecked": true
+      }
+    },
+    {
+      "gate": "p2-04",
+      "result": "passed",
+      "scenarioCount": 16,
+      "pngCount": 18,
+      "axe": [
+        {
+          "artifact": "axe-results/baseline-desktop.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/baseline-mobile.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/cart-line.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/empty-error.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/image-error.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/loading.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/pseudo.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/reduced-motion.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/timeline.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/unavailable.json",
+          "violations": [],
+          "incomplete": []
+        }
+      ],
+      "git": {
+        "sha": "0dabba96e88d421d4679f6891e9e237efc3ef24d",
+        "sourceFingerprint": "7bc50168f25c722bf9e827c65880ffeee52b8772cdb8455592fd37450cd3187a",
+        "sourceFingerprintAlgorithm": "p2-04-render-inputs-v1",
+        "fileCount": 352,
+        "normalizedGitStatusLines": 15,
+        "beforeAfterIdentical": true
+      }
+    },
+    {
+      "gate": "p2-05",
+      "result": "passed-with-physical-device-gate",
+      "scenarioCount": 8,
+      "pngCount": 22,
+      "axe": [
+        {
+          "artifact": "axe-results/baseline-desktop.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/baseline-mobile.json",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "artifact": "axe-results/pseudo-320.json",
+          "violations": [],
+          "incomplete": []
+        }
+      ],
+      "git": {
+        "sha": "0dabba96e88d421d4679f6891e9e237efc3ef24d",
+        "sourceFingerprint": "5f653b29fdf70594da2a3e563518f6ed70e5c811daac62bcc1558cda5f9b0050",
+        "sourceFingerprintAlgorithm": "p2-05-render-inputs-v1",
+        "fileCount": 780,
+        "normalizedGitStatusLines": 30,
+        "beforeAfterIdentical": true
+      }
+    }
+  ],
+  "runtimePorts": [
+    {
+      "gate": "p2-03",
+      "environment": "preview",
+      "port": 49303,
+      "closedAtInspection": true
+    },
+    {
+      "gate": "p2-03",
+      "environment": "staging",
+      "port": 49466,
+      "closedAtInspection": true
+    },
+    {
+      "gate": "p2-03",
+      "environment": "production",
+      "port": 49480,
+      "closedAtInspection": true
+    },
+    {
+      "gate": "p2-04",
+      "environment": "preview",
+      "port": 49503,
+      "closedAtInspection": true
+    },
+    {
+      "gate": "p2-04",
+      "environment": "staging",
+      "port": 49700,
+      "closedAtInspection": true
+    },
+    {
+      "gate": "p2-04",
+      "environment": "production",
+      "port": 49724,
+      "closedAtInspection": true
+    },
+    {
+      "gate": "p2-05",
+      "environment": "preview",
+      "port": 49750,
+      "closedAtInspection": true
+    },
+    {
+      "gate": "p2-05",
+      "environment": "staging",
+      "port": 49906,
+      "closedAtInspection": true
+    },
+    {
+      "gate": "p2-05",
+      "environment": "production",
+      "port": 49936,
+      "closedAtInspection": true
+    }
+  ],
+  "ownedCheckoutProcessesAtInspection": [],
+  "gitStatusAfter": [
+    " M output/playwright/p2-03/README.md",
+    " M output/playwright/p2-03/axe-results/base-desktop.json",
+    " M output/playwright/p2-03/axe-results/base-mobile.json",
+    " M output/playwright/p2-03/axe-results/dialog.json",
+    " M output/playwright/p2-03/axe-results/drawer.json",
+    " M output/playwright/p2-03/axe-results/menu.json",
+    " M output/playwright/p2-03/axe-results/pseudo-320.json",
+    " M output/playwright/p2-03/axe-results/reduced-motion.json",
+    " M output/playwright/p2-03/axe-results/toast.json",
+    " M output/playwright/p2-03/browser-results.json",
+    " M output/playwright/p2-03/reduced-motion/1440x900-pt-drawer.png",
+    " M output/playwright/p2-03/screenshots.sha256",
+    " M output/playwright/p2-03/stress/320x800-en-XA-menu.png",
+    " M output/playwright/p2-03/viewports/360x800-en.png",
+    " M output/playwright/p2-03/viewports/390x844-vi-drawer.png",
+    " M output/playwright/p2-04/README.md",
+    " M output/playwright/p2-04/axe-results/baseline-desktop.json",
+    " M output/playwright/p2-04/axe-results/baseline-mobile.json",
+    " M output/playwright/p2-04/axe-results/cart-line.json",
+    " M output/playwright/p2-04/axe-results/empty-error.json",
+    " M output/playwright/p2-04/axe-results/image-error.json",
+    " M output/playwright/p2-04/axe-results/loading.json",
+    " M output/playwright/p2-04/axe-results/pseudo.json",
+    " M output/playwright/p2-04/axe-results/reduced-motion.json",
+    " M output/playwright/p2-04/axe-results/timeline.json",
+    " M output/playwright/p2-04/axe-results/unavailable.json",
+    " M output/playwright/p2-04/browser-results.json",
+    " M output/playwright/p2-04/screenshots.sha256",
+    " M output/playwright/p2-04/stress/320x800-pt-long.png",
+    " M output/playwright/p2-04/zoom/google-chrome-200-percent-pt.png",
+    " M output/playwright/p2-05/README.md",
+    " M output/playwright/p2-05/axe-results/baseline-desktop.json",
+    " M output/playwright/p2-05/axe-results/baseline-mobile.json",
+    " M output/playwright/p2-05/axe-results/pseudo-320.json",
+    " M output/playwright/p2-05/browser-results.json",
+    " M output/playwright/p2-05/hero/1440x900-end.png",
+    " M output/playwright/p2-05/hero/1440x900-mid.png",
+    " M output/playwright/p2-05/hero/1440x900-start.png",
+    " M output/playwright/p2-05/motion/idol-latest-wins-1440.png",
+    " M output/playwright/p2-05/motion/success-end-1440.png",
+    " M output/playwright/p2-05/raw/motion-checks.json",
+    " M output/playwright/p2-05/raw/scenario-results.json",
+    " M output/playwright/p2-05/reduced-motion/1440x900.png",
+    " M output/playwright/p2-05/reduced-motion/390x844.png",
+    " M output/playwright/p2-05/screenshots.sha256",
+    " M output/playwright/p2-05/stress/320x800-pt-long.png",
+    " M output/playwright/p2-05/viewports/1440x900-ja.png",
+    " M output/playwright/p2-05/viewports/390x844-vi.png"
+  ],
+  "nonEvidenceChanges": [],
+  "mainCanonicalMatchesImported": {
+    "p2-03": true,
+    "p2-04": true,
+    "p2-05": true
+  }
+}

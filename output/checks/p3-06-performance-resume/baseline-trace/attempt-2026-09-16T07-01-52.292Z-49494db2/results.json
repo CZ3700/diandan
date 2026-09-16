@@ -1,0 +1,3742 @@
+{
+  "schemaVersion": 1,
+  "status": "DIAGNOSTIC_COMPLETE",
+  "startedAt": "2026-09-16T07:01:52.292Z",
+  "sourceSha256": "fdfeb7436391fd492f5484f0cd1b769755ee8f6f27a4b5b1e372f061de26db91",
+  "scope": "Finite diagnostic of the production-compiled artifact under TEST runtime. Not the complete 63-run acceptance gate, RUM or production release evidence. Every requested attempt is retained, including errors and budget failures.",
+  "options": {
+    "locales": [
+      "en",
+      "ja",
+      "zh-CN"
+    ],
+    "kinds": [
+      "home",
+      "artist",
+      "gift"
+    ],
+    "repeats": 1
+  },
+  "expectedRuns": 9,
+  "conditions": {
+    "sourcePath": "output/checks/p3-06-performance-resume/source-baseline.json",
+    "sourceVerifiedByCollector": false,
+    "fixtureManifest": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T06-56-33-163Z/fixture-manifest.json",
+    "lighthouseVersion": "13.4.1",
+    "lighthouseThrottling": "default mobile simulate, identical explicit flags to the formal collector",
+    "contentValidity": "Current formal same-navigation content gatherer/audit; expected URL, locale, visible content and absence of loading/error. Failed raw reports are retained, never replaced.",
+    "browserStorageReset": "Lighthouse default disableStorageReset=false",
+    "serverOptimizerMayBeWarm": true,
+    "resourceThrottling": "none",
+    "resourceViewport": {
+      "width": 390,
+      "height": 844
+    },
+    "initialNavigationOnly": true,
+    "resourceWindow": "networkidle plus document.fonts.ready, before scrolling or eager forcing",
+    "execution": "Serial diagnostics; operator must ensure no concurrent task build or sampling. Existing user desktop applications remain untouched.",
+    "authentication": "Fresh dedicated browser without supplied cookies or authorization; public TEST routes only"
+  },
+  "resources": [
+    {
+      "locale": "en",
+      "kind": "home",
+      "path": "/en",
+      "selector": "[data-artist-directory]",
+      "javascriptGzipBytes": 304791,
+      "javascriptRecommendationBytes": 150000,
+      "javascriptRecommendationMet": false,
+      "scriptCount": 12,
+      "images": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "FIRST_VIEWPORT_HERO",
+          "shouldBudgetBytes": 600000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 9908,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 4933,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F42f611e59c1393c8f216c30977b8f2c767e71db9609a91c9595a061bfd489da9%2F2b69ad15323b4da2d7dc6b638765ed0e8bc39412ecc8efabde1167e9f3a3dae8.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 3840,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F5bb12ac8e05bca23f73ce8eab444f101245711be63215e1c06f850cd1bc7c729%2Fe31df8a0856b8353402cf01840f87ac7f7d4c53526ad6ca922d89173573a34f1.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5017,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        }
+      ],
+      "resources": [
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1eb2a8tunus1g.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 15995,
+          "gzipBytes": 5545,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/turbopack-264kn-mbs3jz9.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9688,
+          "gzipBytes": 3832,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2qun_6obf6abx.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 752,
+          "gzipBytes": 415,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/3rrddfj_zf4lv.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 14378,
+          "gzipBytes": 3661,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2c4nlk_2vrv0p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 178998,
+          "gzipBytes": 47193,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0khagzihg94ls.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16177,
+          "gzipBytes": 5681,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2n0i5vo6bbnsn.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 37815,
+          "gzipBytes": 12708,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2p07cckado7sy.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 234156,
+          "gzipBytes": 73278,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 9908,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 4933,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0zlweblnn26ct.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16617,
+          "gzipBytes": 4899,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1oj-fwvzt3wrs.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 56864,
+          "gzipBytes": 27993,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2i81y3a6b2au3.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 168681,
+          "gzipBytes": 33845,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/066uch4wt2mh4.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 375392,
+          "gzipBytes": 85741,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F42f611e59c1393c8f216c30977b8f2c767e71db9609a91c9595a061bfd489da9%2F2b69ad15323b4da2d7dc6b638765ed0e8bc39412ecc8efabde1167e9f3a3dae8.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 3840,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F5bb12ac8e05bca23f73ce8eab444f101245711be63215e1c06f850cd1bc7c729%2Fe31df8a0856b8353402cf01840f87ac7f7d4c53526ad6ca922d89173573a34f1.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5017,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        }
+      ],
+      "measurement": "Actual initial navigation responses through network idle and fonts ready, before scrolling or forcing eager; decompressed JS response bodies recompressed with Node gzip for comparable budget, independent from actual wire encoding",
+      "realUserEvidence": false,
+      "failures": []
+    },
+    {
+      "locale": "en",
+      "kind": "artist",
+      "path": "/en/idols/mira-vale?market=GLOBAL&currency=USD",
+      "selector": ".storefront-story",
+      "javascriptGzipBytes": 302448,
+      "javascriptRecommendationBytes": 150000,
+      "javascriptRecommendationMet": false,
+      "scriptCount": 12,
+      "images": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "FIRST_VIEWPORT_HERO",
+          "shouldBudgetBytes": 600000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 2764,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5425,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 6887,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        }
+      ],
+      "resources": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1eb2a8tunus1g.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 15995,
+          "gzipBytes": 5545,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/turbopack-264kn-mbs3jz9.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9688,
+          "gzipBytes": 3832,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/3rrddfj_zf4lv.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 14378,
+          "gzipBytes": 3661,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2qun_6obf6abx.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 752,
+          "gzipBytes": 415,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2c4nlk_2vrv0p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 178998,
+          "gzipBytes": 47193,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2u4kv003tl85p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9573,
+          "gzipBytes": 3338,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2n0i5vo6bbnsn.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 37815,
+          "gzipBytes": 12708,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2p07cckado7sy.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 234156,
+          "gzipBytes": 73278,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0zlweblnn26ct.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16617,
+          "gzipBytes": 4899,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1oj-fwvzt3wrs.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 56864,
+          "gzipBytes": 27993,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2i81y3a6b2au3.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 168681,
+          "gzipBytes": 33845,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/066uch4wt2mh4.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 375392,
+          "gzipBytes": 85741,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 2764,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5425,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 6887,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        }
+      ],
+      "measurement": "Actual initial navigation responses through network idle and fonts ready, before scrolling or forcing eager; decompressed JS response bodies recompressed with Node gzip for comparable budget, independent from actual wire encoding",
+      "realUserEvidence": false,
+      "failures": []
+    },
+    {
+      "locale": "en",
+      "kind": "gift",
+      "path": "/en/gifts/studio-gift-001?market=GLOBAL&currency=USD",
+      "selector": "[data-gift-detail]",
+      "javascriptGzipBytes": 307789,
+      "javascriptRecommendationBytes": 150000,
+      "javascriptRecommendationMet": false,
+      "scriptCount": 12,
+      "images": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 36018,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        }
+      ],
+      "resources": [
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1eb2a8tunus1g.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 15995,
+          "gzipBytes": 5545,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/turbopack-264kn-mbs3jz9.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9688,
+          "gzipBytes": 3832,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/3rrddfj_zf4lv.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 14378,
+          "gzipBytes": 3661,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2qun_6obf6abx.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 752,
+          "gzipBytes": 415,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2c4nlk_2vrv0p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 178998,
+          "gzipBytes": 47193,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/40tqntsixbaba.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 27559,
+          "gzipBytes": 8679,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2p07cckado7sy.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 234156,
+          "gzipBytes": 73278,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2n0i5vo6bbnsn.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 37815,
+          "gzipBytes": 12708,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 36018,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0zlweblnn26ct.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16617,
+          "gzipBytes": 4899,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1oj-fwvzt3wrs.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 56864,
+          "gzipBytes": 27993,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2i81y3a6b2au3.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 168681,
+          "gzipBytes": 33845,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/066uch4wt2mh4.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 375392,
+          "gzipBytes": 85741,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "measurement": "Actual initial navigation responses through network idle and fonts ready, before scrolling or forcing eager; decompressed JS response bodies recompressed with Node gzip for comparable budget, independent from actual wire encoding",
+      "realUserEvidence": false,
+      "failures": []
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "home",
+      "path": "/zh-CN",
+      "selector": "[data-artist-directory]",
+      "javascriptGzipBytes": 304791,
+      "javascriptRecommendationBytes": 150000,
+      "javascriptRecommendationMet": false,
+      "scriptCount": 12,
+      "images": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "FIRST_VIEWPORT_HERO",
+          "shouldBudgetBytes": 600000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 9908,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 4933,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F42f611e59c1393c8f216c30977b8f2c767e71db9609a91c9595a061bfd489da9%2F2b69ad15323b4da2d7dc6b638765ed0e8bc39412ecc8efabde1167e9f3a3dae8.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 3840,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F5bb12ac8e05bca23f73ce8eab444f101245711be63215e1c06f850cd1bc7c729%2Fe31df8a0856b8353402cf01840f87ac7f7d4c53526ad6ca922d89173573a34f1.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5017,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        }
+      ],
+      "resources": [
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1eb2a8tunus1g.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 15995,
+          "gzipBytes": 5545,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2qun_6obf6abx.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 752,
+          "gzipBytes": 415,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/3rrddfj_zf4lv.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 14378,
+          "gzipBytes": 3661,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/turbopack-264kn-mbs3jz9.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9688,
+          "gzipBytes": 3832,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0khagzihg94ls.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16177,
+          "gzipBytes": 5681,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2c4nlk_2vrv0p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 178998,
+          "gzipBytes": 47193,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2n0i5vo6bbnsn.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 37815,
+          "gzipBytes": 12708,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2p07cckado7sy.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 234156,
+          "gzipBytes": 73278,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 9908,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 4933,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0zlweblnn26ct.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16617,
+          "gzipBytes": 4899,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1oj-fwvzt3wrs.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 56864,
+          "gzipBytes": 27993,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2i81y3a6b2au3.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 168681,
+          "gzipBytes": 33845,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/066uch4wt2mh4.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 375392,
+          "gzipBytes": 85741,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F42f611e59c1393c8f216c30977b8f2c767e71db9609a91c9595a061bfd489da9%2F2b69ad15323b4da2d7dc6b638765ed0e8bc39412ecc8efabde1167e9f3a3dae8.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 3840,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F5bb12ac8e05bca23f73ce8eab444f101245711be63215e1c06f850cd1bc7c729%2Fe31df8a0856b8353402cf01840f87ac7f7d4c53526ad6ca922d89173573a34f1.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5017,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        }
+      ],
+      "measurement": "Actual initial navigation responses through network idle and fonts ready, before scrolling or forcing eager; decompressed JS response bodies recompressed with Node gzip for comparable budget, independent from actual wire encoding",
+      "realUserEvidence": false,
+      "failures": []
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "artist",
+      "path": "/zh-CN/idols/mira-vale?market=GLOBAL&currency=USD",
+      "selector": ".storefront-story",
+      "javascriptGzipBytes": 302448,
+      "javascriptRecommendationBytes": 150000,
+      "javascriptRecommendationMet": false,
+      "scriptCount": 12,
+      "images": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "FIRST_VIEWPORT_HERO",
+          "shouldBudgetBytes": 600000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 6887,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5425,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 2764,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        }
+      ],
+      "resources": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1eb2a8tunus1g.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 15995,
+          "gzipBytes": 5545,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/turbopack-264kn-mbs3jz9.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9688,
+          "gzipBytes": 3832,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2qun_6obf6abx.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 752,
+          "gzipBytes": 415,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/3rrddfj_zf4lv.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 14378,
+          "gzipBytes": 3661,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2u4kv003tl85p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9573,
+          "gzipBytes": 3338,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2n0i5vo6bbnsn.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 37815,
+          "gzipBytes": 12708,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2c4nlk_2vrv0p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 178998,
+          "gzipBytes": 47193,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2p07cckado7sy.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 234156,
+          "gzipBytes": 73278,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0zlweblnn26ct.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16617,
+          "gzipBytes": 4899,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1oj-fwvzt3wrs.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 56864,
+          "gzipBytes": 27993,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2i81y3a6b2au3.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 168681,
+          "gzipBytes": 33845,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/066uch4wt2mh4.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 375392,
+          "gzipBytes": 85741,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 6887,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5425,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 2764,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        }
+      ],
+      "measurement": "Actual initial navigation responses through network idle and fonts ready, before scrolling or forcing eager; decompressed JS response bodies recompressed with Node gzip for comparable budget, independent from actual wire encoding",
+      "realUserEvidence": false,
+      "failures": []
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gift",
+      "path": "/zh-CN/gifts/studio-gift-001?market=GLOBAL&currency=USD",
+      "selector": "[data-gift-detail]",
+      "javascriptGzipBytes": 307789,
+      "javascriptRecommendationBytes": 150000,
+      "javascriptRecommendationMet": false,
+      "scriptCount": 12,
+      "images": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 36018,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        }
+      ],
+      "resources": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 36018,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1eb2a8tunus1g.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 15995,
+          "gzipBytes": 5545,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/turbopack-264kn-mbs3jz9.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9688,
+          "gzipBytes": 3832,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/3rrddfj_zf4lv.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 14378,
+          "gzipBytes": 3661,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2qun_6obf6abx.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 752,
+          "gzipBytes": 415,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2c4nlk_2vrv0p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 178998,
+          "gzipBytes": 47193,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/40tqntsixbaba.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 27559,
+          "gzipBytes": 8679,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2n0i5vo6bbnsn.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 37815,
+          "gzipBytes": 12708,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2p07cckado7sy.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 234156,
+          "gzipBytes": 73278,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0zlweblnn26ct.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16617,
+          "gzipBytes": 4899,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1oj-fwvzt3wrs.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 56864,
+          "gzipBytes": 27993,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2i81y3a6b2au3.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 168681,
+          "gzipBytes": 33845,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/066uch4wt2mh4.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 375392,
+          "gzipBytes": 85741,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "measurement": "Actual initial navigation responses through network idle and fonts ready, before scrolling or forcing eager; decompressed JS response bodies recompressed with Node gzip for comparable budget, independent from actual wire encoding",
+      "realUserEvidence": false,
+      "failures": []
+    },
+    {
+      "locale": "ja",
+      "kind": "home",
+      "path": "/ja",
+      "selector": "[data-artist-directory]",
+      "javascriptGzipBytes": 304791,
+      "javascriptRecommendationBytes": 150000,
+      "javascriptRecommendationMet": false,
+      "scriptCount": 12,
+      "images": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "FIRST_VIEWPORT_HERO",
+          "shouldBudgetBytes": 600000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 9908,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 4933,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F42f611e59c1393c8f216c30977b8f2c767e71db9609a91c9595a061bfd489da9%2F2b69ad15323b4da2d7dc6b638765ed0e8bc39412ecc8efabde1167e9f3a3dae8.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 3840,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F5bb12ac8e05bca23f73ce8eab444f101245711be63215e1c06f850cd1bc7c729%2Fe31df8a0856b8353402cf01840f87ac7f7d4c53526ad6ca922d89173573a34f1.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5017,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        }
+      ],
+      "resources": [
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1eb2a8tunus1g.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 15995,
+          "gzipBytes": 5545,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/turbopack-264kn-mbs3jz9.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9688,
+          "gzipBytes": 3832,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/3rrddfj_zf4lv.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 14378,
+          "gzipBytes": 3661,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2qun_6obf6abx.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 752,
+          "gzipBytes": 415,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2c4nlk_2vrv0p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 178998,
+          "gzipBytes": 47193,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0khagzihg94ls.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16177,
+          "gzipBytes": 5681,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2n0i5vo6bbnsn.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 37815,
+          "gzipBytes": 12708,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2p07cckado7sy.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 234156,
+          "gzipBytes": 73278,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 9908,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 4933,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0zlweblnn26ct.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16617,
+          "gzipBytes": 4899,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1oj-fwvzt3wrs.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 56864,
+          "gzipBytes": 27993,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2i81y3a6b2au3.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 168681,
+          "gzipBytes": 33845,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/066uch4wt2mh4.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 375392,
+          "gzipBytes": 85741,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F42f611e59c1393c8f216c30977b8f2c767e71db9609a91c9595a061bfd489da9%2F2b69ad15323b4da2d7dc6b638765ed0e8bc39412ecc8efabde1167e9f3a3dae8.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 3840,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F5bb12ac8e05bca23f73ce8eab444f101245711be63215e1c06f850cd1bc7c729%2Fe31df8a0856b8353402cf01840f87ac7f7d4c53526ad6ca922d89173573a34f1.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5017,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        }
+      ],
+      "measurement": "Actual initial navigation responses through network idle and fonts ready, before scrolling or forcing eager; decompressed JS response bodies recompressed with Node gzip for comparable budget, independent from actual wire encoding",
+      "realUserEvidence": false,
+      "failures": []
+    },
+    {
+      "locale": "ja",
+      "kind": "artist",
+      "path": "/ja/idols/mira-vale?market=GLOBAL&currency=USD",
+      "selector": ".storefront-story",
+      "javascriptGzipBytes": 302448,
+      "javascriptRecommendationBytes": 150000,
+      "javascriptRecommendationMet": false,
+      "scriptCount": 12,
+      "images": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "FIRST_VIEWPORT_HERO",
+          "shouldBudgetBytes": 600000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 6887,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 2764,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5425,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        }
+      ],
+      "resources": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F8480cda8430b0c6db4457583dea7b92ebf9f6adf6eecbb269ea630d4b6f74749%2F08ba1714b248fc549d901fd3bbbc7cedaf24eaf7da64d7e890fe0a19a99ea41a.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 12944,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1eb2a8tunus1g.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 15995,
+          "gzipBytes": 5545,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/turbopack-264kn-mbs3jz9.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9688,
+          "gzipBytes": 3832,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2qun_6obf6abx.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 752,
+          "gzipBytes": 415,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/3rrddfj_zf4lv.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 14378,
+          "gzipBytes": 3661,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2u4kv003tl85p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9573,
+          "gzipBytes": 3338,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2c4nlk_2vrv0p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 178998,
+          "gzipBytes": 47193,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2n0i5vo6bbnsn.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 37815,
+          "gzipBytes": 12708,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2p07cckado7sy.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 234156,
+          "gzipBytes": 73278,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0zlweblnn26ct.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16617,
+          "gzipBytes": 4899,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1oj-fwvzt3wrs.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 56864,
+          "gzipBytes": 27993,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2i81y3a6b2au3.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 168681,
+          "gzipBytes": 33845,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/066uch4wt2mh4.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 375392,
+          "gzipBytes": 85741,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 6887,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F31f1cd8ca3fe41462e5edd10e16f13e0427d6bfe61509781d3eed618beee56ae%2Fbc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 2764,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F708019fabe1da1b29c2f4ab17b58888011b3bbad807320542df81d904d8b25bc%2F01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad.webp&w=256&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 5425,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        }
+      ],
+      "measurement": "Actual initial navigation responses through network idle and fonts ready, before scrolling or forcing eager; decompressed JS response bodies recompressed with Node gzip for comparable budget, independent from actual wire encoding",
+      "realUserEvidence": false,
+      "failures": []
+    },
+    {
+      "locale": "ja",
+      "kind": "gift",
+      "path": "/ja/gifts/studio-gift-001?market=GLOBAL&currency=USD",
+      "selector": "[data-gift-detail]",
+      "javascriptGzipBytes": 307789,
+      "javascriptRecommendationBytes": 150000,
+      "javascriptRecommendationMet": false,
+      "scriptCount": 12,
+      "images": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 36018,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity",
+          "role": "REGULAR_IMAGE",
+          "shouldBudgetBytes": 400000,
+          "shouldBudgetMet": true
+        }
+      ],
+      "resources": [
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=640&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 36018,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1eb2a8tunus1g.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 15995,
+          "gzipBytes": 5545,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/turbopack-264kn-mbs3jz9.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 9688,
+          "gzipBytes": 3832,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2qun_6obf6abx.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 752,
+          "gzipBytes": 415,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/3rrddfj_zf4lv.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 14378,
+          "gzipBytes": 3661,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/40tqntsixbaba.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 27559,
+          "gzipBytes": 8679,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2n0i5vo6bbnsn.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 37815,
+          "gzipBytes": 12708,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2c4nlk_2vrv0p.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 178998,
+          "gzipBytes": 47193,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2p07cckado7sy.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 234156,
+          "gzipBytes": 73278,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2Fv1%2F3abb3dc4b88f0169797003f755cabb3a23aeef6c2bc20546f620ff1866b96018%2F9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa.webp&w=384&q=75",
+          "type": "image",
+          "status": 200,
+          "bodyBytes": 14323,
+          "gzipBytes": null,
+          "contentEncoding": "identity"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/0zlweblnn26ct.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 16617,
+          "gzipBytes": 4899,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/1oj-fwvzt3wrs.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 56864,
+          "gzipBytes": 27993,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/2i81y3a6b2au3.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 168681,
+          "gzipBytes": 33845,
+          "contentEncoding": "gzip"
+        },
+        {
+          "url": "http://localhost:57469/_next/static/chunks/066uch4wt2mh4.js",
+          "type": "script",
+          "status": 200,
+          "bodyBytes": 375392,
+          "gzipBytes": 85741,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "measurement": "Actual initial navigation responses through network idle and fonts ready, before scrolling or forcing eager; decompressed JS response bodies recompressed with Node gzip for comparable budget, independent from actual wire encoding",
+      "realUserEvidence": false,
+      "failures": []
+    }
+  ],
+  "lighthouse": [
+    {
+      "locale": "en",
+      "kind": "home",
+      "path": "/en",
+      "selector": "[data-artist-directory]",
+      "repeat": 1,
+      "files": {
+        "json": {
+          "path": "en-home-mobile-1.json",
+          "bytes": 590506,
+          "sha256": "1002e9f718d05188a8b322983bf72aaf92ed5bd0510a576a7336c73a0b5c073f"
+        },
+        "html": {
+          "path": "en-home-mobile-1.html",
+          "bytes": 663036,
+          "sha256": "4c7be0d4812b6dfa0be791f763a6a1faecaebb120c29afa1fb13541e4c8891cd"
+        },
+        "trace": {
+          "path": "en-home-mobile-1.trace.json",
+          "bytes": 6896097,
+          "sha256": "582e93a659a185520107086735a88a63038e88aa2ce7df213e2ff7e73e180b09",
+          "events": 16238
+        },
+        "devtoolsLog": {
+          "path": "en-home-mobile-1.devtoolslog.json",
+          "bytes": 228767,
+          "sha256": "d6bdb3b046e6a7a731d1e25664671196dba2a6a6bc5198f4c31c656b9e8e1b5d",
+          "events": 248
+        },
+        "lanternInputs": {
+          "path": "en-home-mobile-1.lantern-inputs.json",
+          "bytes": 2102,
+          "sha256": "43f0da0bb4f74cb1241fd2d04f679e5cfc150490220fabe33ab48b08903204b6"
+        }
+      },
+      "score": 0.96,
+      "lcpMs": 2762.951,
+      "cls": 0,
+      "tbtMs": 23.5,
+      "runtimeError": null,
+      "contentValidity": {
+        "id": "storefront-content",
+        "title": "Measured navigation contains the expected storefront content",
+        "description": "Checks the actual Lighthouse document, locale and visible content before accepting its performance sample.",
+        "score": 1,
+        "scoreDisplayMode": "binary",
+        "details": {
+          "type": "debugdata",
+          "content": {
+            "schemaVersion": 1,
+            "observed": {
+              "urlMatches": true,
+              "localeMatches": true,
+              "contentVisible": true,
+              "errorVisible": false
+            },
+            "valid": true
+          }
+        }
+      },
+      "runWarnings": [],
+      "configSettings": {
+        "output": [
+          "json",
+          "html"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "node",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo",
+          "storefront"
+        ],
+        "skipAudits": null
+      },
+      "observedMetrics": {
+        "firstContentfulPaint": 1057,
+        "largestContentfulPaint": 2763,
+        "interactive": 3806,
+        "speedIndex": 1057,
+        "totalBlockingTime": 24,
+        "maxPotentialFID": 91,
+        "cumulativeLayoutShift": 0,
+        "cumulativeLayoutShiftMainFrame": 0,
+        "lcpLoadDelay": 2008,
+        "lcpLoadDuration": 2589,
+        "timeToFirstByte": 453,
+        "observedTimeOrigin": 0,
+        "observedTimeOriginTs": 4982512436255,
+        "observedNavigationStart": 0,
+        "observedNavigationStartTs": 4982512436255,
+        "observedFirstPaint": 47,
+        "observedFirstPaintTs": 4982512482900,
+        "observedFirstContentfulPaint": 47,
+        "observedFirstContentfulPaintTs": 4982512482900,
+        "observedFirstContentfulPaintAllFrames": 47,
+        "observedFirstContentfulPaintAllFramesTs": 4982512482900,
+        "observedLargestContentfulPaint": 524,
+        "observedLargestContentfulPaintTs": 4982512959894,
+        "observedLargestContentfulPaintAllFrames": 524,
+        "observedLargestContentfulPaintAllFramesTs": 4982512959894,
+        "observedTraceEnd": 3071,
+        "observedTraceEndTs": 4982515507504,
+        "observedLoad": 744,
+        "observedLoadTs": 4982513180170,
+        "observedDomContentLoaded": 743,
+        "observedDomContentLoadedTs": 4982513179103,
+        "observedCumulativeLayoutShift": 0,
+        "observedCumulativeLayoutShiftMainFrame": 0,
+        "observedFirstVisualChange": 49,
+        "observedFirstVisualChangeTs": 4982512485255,
+        "observedLastVisualChange": 1092,
+        "observedLastVisualChangeTs": 4982513528255,
+        "observedSpeedIndex": 426,
+        "observedSpeedIndexTs": 4982512862108
+      },
+      "observedLcpBreakdown": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "label",
+                "valueType": "text",
+                "label": "Subpart"
+              },
+              {
+                "key": "duration",
+                "valueType": "ms",
+                "label": "Duration"
+              }
+            ],
+            "items": [
+              {
+                "subpart": "timeToFirstByte",
+                "label": "Time to first byte",
+                "duration": 4.857
+              },
+              {
+                "subpart": "resourceLoadDelay",
+                "label": "Resource load delay",
+                "duration": 375.442
+              },
+              {
+                "subpart": "resourceLoadDuration",
+                "label": "Resource load duration",
+                "duration": 110.301
+              },
+              {
+                "subpart": "elementRenderDelay",
+                "label": "Element render delay",
+                "duration": 33.039
+              }
+            ]
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,2,DIV,2,MAIN,3,SECTION,1,DIV,0,PICTURE,1,IMG",
+            "selector": "section.storefront-hero > div.storefront-hero-image > picture > img",
+            "boundingRect": {
+              "top": 65,
+              "bottom": 580,
+              "left": 0,
+              "right": 412,
+              "width": 412,
+              "height": 515
+            },
+            "snippet": "<img src=\"http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid…\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2…\" sizes=\"100vw\" width=\"1080\" height=\"1350\" alt=\"Mira Vale independent mobile · en\" decoding=\"async\" fetchpriority=\"high\" loading=\"eager\">",
+            "nodeLabel": "Mira Vale independent mobile · en"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "en",
+      "kind": "artist",
+      "path": "/en/idols/mira-vale?market=GLOBAL&currency=USD",
+      "selector": ".storefront-story",
+      "repeat": 1,
+      "files": {
+        "json": {
+          "path": "en-artist-mobile-1.json",
+          "bytes": 606455,
+          "sha256": "35f2b4e8643d28edbcc1d225050f47f7e57bc81b5f6fe605a9507971cc93fab8"
+        },
+        "html": {
+          "path": "en-artist-mobile-1.html",
+          "bytes": 683716,
+          "sha256": "651f4a8ef1f4f00dfb0677ff027f14891a204da66b0c76e4baa95c6f93a68ca5"
+        },
+        "trace": {
+          "path": "en-artist-mobile-1.trace.json",
+          "bytes": 5847731,
+          "sha256": "da255fcdb01c69398f670f6d02dc77106ba47d21ef3b1bce158b9b9ab0fdef57",
+          "events": 12958
+        },
+        "devtoolsLog": {
+          "path": "en-artist-mobile-1.devtoolslog.json",
+          "bytes": 216474,
+          "sha256": "0307a1dcfb90e034f0e90a4b347f5cb6f40425a3b4a23c3f89a795ede811b995",
+          "events": 232
+        },
+        "lanternInputs": {
+          "path": "en-artist-mobile-1.lantern-inputs.json",
+          "bytes": 2231,
+          "sha256": "c76f0e124b22b7f4188881c2db990d215c48b4d6e2d60adab559fb2c7b6e6964"
+        }
+      },
+      "score": 0.98,
+      "lcpMs": 2312.934,
+      "cls": 0,
+      "tbtMs": 26.5,
+      "runtimeError": null,
+      "contentValidity": {
+        "id": "storefront-content",
+        "title": "Measured navigation contains the expected storefront content",
+        "description": "Checks the actual Lighthouse document, locale and visible content before accepting its performance sample.",
+        "score": 1,
+        "scoreDisplayMode": "binary",
+        "details": {
+          "type": "debugdata",
+          "content": {
+            "schemaVersion": 1,
+            "observed": {
+              "urlMatches": true,
+              "localeMatches": true,
+              "contentVisible": true,
+              "errorVisible": false
+            },
+            "valid": true
+          }
+        }
+      },
+      "runWarnings": [],
+      "configSettings": {
+        "output": [
+          "json",
+          "html"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "node",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo",
+          "storefront"
+        ],
+        "skipAudits": null
+      },
+      "observedMetrics": {
+        "firstContentfulPaint": 1509,
+        "largestContentfulPaint": 2313,
+        "interactive": 3646,
+        "speedIndex": 1509,
+        "totalBlockingTime": 27,
+        "maxPotentialFID": 95,
+        "cumulativeLayoutShift": 0,
+        "cumulativeLayoutShiftMainFrame": 0,
+        "lcpLoadDelay": 1758,
+        "lcpLoadDuration": 1848,
+        "timeToFirstByte": 453,
+        "observedTimeOrigin": 0,
+        "observedTimeOriginTs": 4982518776858,
+        "observedNavigationStart": 0,
+        "observedNavigationStartTs": 4982518776858,
+        "observedFirstPaint": 86,
+        "observedFirstPaintTs": 4982518862559,
+        "observedFirstContentfulPaint": 86,
+        "observedFirstContentfulPaintTs": 4982518862559,
+        "observedFirstContentfulPaintAllFrames": 86,
+        "observedFirstContentfulPaintAllFramesTs": 4982518862559,
+        "observedLargestContentfulPaint": 86,
+        "observedLargestContentfulPaintTs": 4982518862559,
+        "observedLargestContentfulPaintAllFrames": 86,
+        "observedLargestContentfulPaintAllFramesTs": 4982518862559,
+        "observedTraceEnd": 3012,
+        "observedTraceEndTs": 4982521788730,
+        "observedLoad": 461,
+        "observedLoadTs": 4982519238090,
+        "observedDomContentLoaded": 460,
+        "observedDomContentLoadedTs": 4982519237026,
+        "observedCumulativeLayoutShift": 0,
+        "observedCumulativeLayoutShiftMainFrame": 0,
+        "observedFirstVisualChange": 88,
+        "observedFirstVisualChangeTs": 4982518864858,
+        "observedLastVisualChange": 733,
+        "observedLastVisualChangeTs": 4982519509858,
+        "observedSpeedIndex": 116,
+        "observedSpeedIndexTs": 4982518893283
+      },
+      "observedLcpBreakdown": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "label",
+                "valueType": "text",
+                "label": "Subpart"
+              },
+              {
+                "key": "duration",
+                "valueType": "ms",
+                "label": "Duration"
+              }
+            ],
+            "items": [
+              {
+                "subpart": "timeToFirstByte",
+                "label": "Time to first byte",
+                "duration": 61.573
+              },
+              {
+                "subpart": "resourceLoadDelay",
+                "label": "Resource load delay",
+                "duration": 3.465
+              },
+              {
+                "subpart": "resourceLoadDuration",
+                "label": "Resource load duration",
+                "duration": 3.428
+              },
+              {
+                "subpart": "elementRenderDelay",
+                "label": "Element render delay",
+                "duration": 17.235
+              }
+            ]
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,3,SECTION,1,DIV,0,PICTURE,1,IMG",
+            "selector": "section.storefront-hero > div.storefront-hero-image > picture > img",
+            "boundingRect": {
+              "top": 65,
+              "bottom": 580,
+              "left": 0,
+              "right": 412,
+              "width": 412,
+              "height": 515
+            },
+            "snippet": "<img src=\"http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid…\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2…\" sizes=\"100vw\" width=\"1080\" height=\"1350\" alt=\"Mira Vale independent mobile · en\" decoding=\"async\" fetchpriority=\"high\" loading=\"eager\">",
+            "nodeLabel": "Mira Vale independent mobile · en"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "en",
+      "kind": "gift",
+      "path": "/en/gifts/studio-gift-001?market=GLOBAL&currency=USD",
+      "selector": "[data-gift-detail]",
+      "repeat": 1,
+      "files": {
+        "json": {
+          "path": "en-gift-mobile-1.json",
+          "bytes": 669757,
+          "sha256": "baad97aad29e152e2f7592c1b96cbafc7674d67a69742dff67977b5d68db1d8e"
+        },
+        "html": {
+          "path": "en-gift-mobile-1.html",
+          "bytes": 749818,
+          "sha256": "068e2a677636db72e164061cc3eee15db4f2d7529d74f816e16acba0755f0f75"
+        },
+        "trace": {
+          "path": "en-gift-mobile-1.trace.json",
+          "bytes": 5412497,
+          "sha256": "567d897e4c3ebd6b3a3bd74a1fabc0b42be09803295002ec83f8f9b149e942a1",
+          "events": 12173
+        },
+        "devtoolsLog": {
+          "path": "en-gift-mobile-1.devtoolslog.json",
+          "bytes": 192023,
+          "sha256": "57f3b71be1eebf1eeddecea0b9239b5480a243dfa2e9a811a5d50da30175a51f",
+          "events": 207
+        },
+        "lanternInputs": {
+          "path": "en-gift-mobile-1.lantern-inputs.json",
+          "bytes": 2249,
+          "sha256": "9e012999e94c77fa03dea8a20e6e5cb6e7878f4d1ad8becf422fb8e94849cd51"
+        }
+      },
+      "score": 0.95,
+      "lcpMs": 2783.0245,
+      "cls": 0,
+      "tbtMs": 37.5,
+      "runtimeError": null,
+      "contentValidity": {
+        "id": "storefront-content",
+        "title": "Measured navigation contains the expected storefront content",
+        "description": "Checks the actual Lighthouse document, locale and visible content before accepting its performance sample.",
+        "score": 1,
+        "scoreDisplayMode": "binary",
+        "details": {
+          "type": "debugdata",
+          "content": {
+            "schemaVersion": 1,
+            "observed": {
+              "urlMatches": true,
+              "localeMatches": true,
+              "contentVisible": true,
+              "errorVisible": false
+            },
+            "valid": true
+          }
+        }
+      },
+      "runWarnings": [],
+      "configSettings": {
+        "output": [
+          "json",
+          "html"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "node",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo",
+          "storefront"
+        ],
+        "skipAudits": null
+      },
+      "observedMetrics": {
+        "firstContentfulPaint": 1672,
+        "largestContentfulPaint": 2783,
+        "interactive": 3682,
+        "speedIndex": 1672,
+        "totalBlockingTime": 38,
+        "maxPotentialFID": 103,
+        "cumulativeLayoutShift": 0,
+        "cumulativeLayoutShiftMainFrame": 0,
+        "lcpLoadDelay": 1542,
+        "lcpLoadDuration": 2637,
+        "timeToFirstByte": 457,
+        "observedTimeOrigin": 0,
+        "observedTimeOriginTs": 4982525096562,
+        "observedNavigationStart": 0,
+        "observedNavigationStartTs": 4982525096562,
+        "observedFirstPaint": 287,
+        "observedFirstPaintTs": 4982525383844,
+        "observedFirstContentfulPaint": 287,
+        "observedFirstContentfulPaintTs": 4982525383844,
+        "observedFirstContentfulPaintAllFrames": 287,
+        "observedFirstContentfulPaintAllFramesTs": 4982525383844,
+        "observedLargestContentfulPaint": 419,
+        "observedLargestContentfulPaintTs": 4982525515217,
+        "observedLargestContentfulPaintAllFrames": 419,
+        "observedLargestContentfulPaintAllFramesTs": 4982525515217,
+        "observedTraceEnd": 3060,
+        "observedTraceEndTs": 4982528156485,
+        "observedLoad": 733,
+        "observedLoadTs": 4982525829847,
+        "observedDomContentLoaded": 733,
+        "observedDomContentLoadedTs": 4982525829113,
+        "observedCumulativeLayoutShift": 0,
+        "observedCumulativeLayoutShiftMainFrame": 0,
+        "observedFirstVisualChange": 289,
+        "observedFirstVisualChangeTs": 4982525385562,
+        "observedLastVisualChange": 882,
+        "observedLastVisualChangeTs": 4982525978562,
+        "observedSpeedIndex": 355,
+        "observedSpeedIndexTs": 4982525451180
+      },
+      "observedLcpBreakdown": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "label",
+                "valueType": "text",
+                "label": "Subpart"
+              },
+              {
+                "key": "duration",
+                "valueType": "ms",
+                "label": "Duration"
+              }
+            ],
+            "items": [
+              {
+                "subpart": "timeToFirstByte",
+                "label": "Time to first byte",
+                "duration": 227.5170009765625
+              },
+              {
+                "subpart": "resourceLoadDelay",
+                "label": "Resource load delay",
+                "duration": 4.2579990234375
+              },
+              {
+                "subpart": "resourceLoadDuration",
+                "label": "Resource load duration",
+                "duration": 164.909
+              },
+              {
+                "subpart": "elementRenderDelay",
+                "label": "Element render delay",
+                "duration": 21.971
+              }
+            ]
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,4,ARTICLE,1,DIV,0,SECTION,0,FIGURE,0,DIV,0,IMG",
+            "selector": "section.gift-detail-gallery > figure.gift-main-image > div.fs-media > img.fs-media__image",
+            "boundingRect": {
+              "top": 161,
+              "bottom": 541,
+              "left": 16,
+              "right": 396,
+              "width": 380,
+              "height": 380
+            },
+            "snippet": "<img alt=\"Rose Palace · en\" class=\"fs-media__image\" decoding=\"async\" fetchpriority=\"high\" height=\"1200\" loading=\"eager\" sizes=\"(max-width: 48rem) 100vw, 55vw\" src=\"http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid…\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2…\" style=\"object-position:50% 45%\" width=\"1200\">",
+            "nodeLabel": "Rose Palace · en"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "home",
+      "path": "/zh-CN",
+      "selector": "[data-artist-directory]",
+      "repeat": 1,
+      "files": {
+        "json": {
+          "path": "zh-CN-home-mobile-1.json",
+          "bytes": 600401,
+          "sha256": "8c2388711986f36182ae5b8a9040b65f3afa8d343bf179186179de4e8d17e942"
+        },
+        "html": {
+          "path": "zh-CN-home-mobile-1.html",
+          "bytes": 666702,
+          "sha256": "e7b2bd4a948a1b328fa71e870413400bc37c1c0c5e7d8a2860e1e4f1c4b3001d"
+        },
+        "trace": {
+          "path": "zh-CN-home-mobile-1.trace.json",
+          "bytes": 6838713,
+          "sha256": "52382cb585f677526d9e411b2d828b95f6723866f47559d97584c12807e1f5ea",
+          "events": 16024
+        },
+        "devtoolsLog": {
+          "path": "zh-CN-home-mobile-1.devtoolslog.json",
+          "bytes": 326411,
+          "sha256": "0c47469cea0c7d42dbfda5cfd4526e2b630a0688956d1d7acfa77784d70b801b",
+          "events": 357
+        },
+        "lanternInputs": {
+          "path": "zh-CN-home-mobile-1.lantern-inputs.json",
+          "bytes": 2111,
+          "sha256": "5aa90922068d2c6da50f93476ef5336fa1ac99a9590d7df163678e5e917f3d9b"
+        }
+      },
+      "score": 0.76,
+      "lcpMs": 6916.397499999999,
+      "cls": 0,
+      "tbtMs": 46,
+      "runtimeError": null,
+      "contentValidity": {
+        "id": "storefront-content",
+        "title": "Measured navigation contains the expected storefront content",
+        "description": "Checks the actual Lighthouse document, locale and visible content before accepting its performance sample.",
+        "score": 1,
+        "scoreDisplayMode": "binary",
+        "details": {
+          "type": "debugdata",
+          "content": {
+            "schemaVersion": 1,
+            "observed": {
+              "urlMatches": true,
+              "localeMatches": true,
+              "contentVisible": true,
+              "errorVisible": false
+            },
+            "valid": true
+          }
+        }
+      },
+      "runWarnings": [],
+      "configSettings": {
+        "output": [
+          "json",
+          "html"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "node",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo",
+          "storefront"
+        ],
+        "skipAudits": null
+      },
+      "observedMetrics": {
+        "firstContentfulPaint": 1507,
+        "largestContentfulPaint": 6916,
+        "interactive": 7664,
+        "speedIndex": 1724,
+        "totalBlockingTime": 46,
+        "maxPotentialFID": 122,
+        "cumulativeLayoutShift": 0,
+        "cumulativeLayoutShiftMainFrame": 0,
+        "lcpLoadDelay": 6500,
+        "lcpLoadDuration": 6528,
+        "timeToFirstByte": 453,
+        "observedTimeOrigin": 0,
+        "observedTimeOriginTs": 4982531416224,
+        "observedNavigationStart": 0,
+        "observedNavigationStartTs": 4982531416224,
+        "observedFirstPaint": 33,
+        "observedFirstPaintTs": 4982531449280,
+        "observedFirstContentfulPaint": 33,
+        "observedFirstContentfulPaintTs": 4982531449280,
+        "observedFirstContentfulPaintAllFrames": 33,
+        "observedFirstContentfulPaintAllFramesTs": 4982531449280,
+        "observedLargestContentfulPaint": 594,
+        "observedLargestContentfulPaintTs": 4982532010107,
+        "observedLargestContentfulPaintAllFrames": 594,
+        "observedLargestContentfulPaintAllFramesTs": 4982532010107,
+        "observedTraceEnd": 3201,
+        "observedTraceEndTs": 4982534617568,
+        "observedLoad": 796,
+        "observedLoadTs": 4982532211973,
+        "observedDomContentLoaded": 795,
+        "observedDomContentLoadedTs": 4982532210895,
+        "observedCumulativeLayoutShift": 0,
+        "observedCumulativeLayoutShiftMainFrame": 0,
+        "observedFirstVisualChange": 35,
+        "observedFirstVisualChangeTs": 4982531451224,
+        "observedLastVisualChange": 1263,
+        "observedLastVisualChangeTs": 4982532679224,
+        "observedSpeedIndex": 471,
+        "observedSpeedIndexTs": 4982531887132
+      },
+      "observedLcpBreakdown": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "label",
+                "valueType": "text",
+                "label": "Subpart"
+              },
+              {
+                "key": "duration",
+                "valueType": "ms",
+                "label": "Duration"
+              }
+            ],
+            "items": [
+              {
+                "subpart": "timeToFirstByte",
+                "label": "Time to first byte",
+                "duration": 5.14
+              },
+              {
+                "subpart": "resourceLoadDelay",
+                "label": "Resource load delay",
+                "duration": 552.792
+              },
+              {
+                "subpart": "resourceLoadDuration",
+                "label": "Resource load duration",
+                "duration": 2.573
+              },
+              {
+                "subpart": "elementRenderDelay",
+                "label": "Element render delay",
+                "duration": 33.378
+              }
+            ]
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,2,DIV,2,MAIN,3,SECTION,1,DIV,0,PICTURE,1,IMG",
+            "selector": "section.storefront-hero > div.storefront-hero-image > picture > img",
+            "boundingRect": {
+              "top": 65,
+              "bottom": 580,
+              "left": 0,
+              "right": 412,
+              "width": 412,
+              "height": 515
+            },
+            "snippet": "<img src=\"http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid…\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2…\" sizes=\"100vw\" width=\"1080\" height=\"1350\" alt=\"Mira Vale independent mobile · zh-CN\" decoding=\"async\" fetchpriority=\"high\" loading=\"eager\">",
+            "nodeLabel": "Mira Vale independent mobile · zh-CN"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "artist",
+      "path": "/zh-CN/idols/mira-vale?market=GLOBAL&currency=USD",
+      "selector": ".storefront-story",
+      "repeat": 1,
+      "files": {
+        "json": {
+          "path": "zh-CN-artist-mobile-1.json",
+          "bytes": 612906,
+          "sha256": "d7eaf6cdeddf534c1feaa8b922094c96cbd316f8c26b2563bc66cc518edab2ab"
+        },
+        "html": {
+          "path": "zh-CN-artist-mobile-1.html",
+          "bytes": 686323,
+          "sha256": "ef4db15cff6c3e798104eb39e89306bb29f831e9508cbe6276a7fb6ca34f2dbd"
+        },
+        "trace": {
+          "path": "zh-CN-artist-mobile-1.trace.json",
+          "bytes": 6645985,
+          "sha256": "4682f2d2ff6cb765edb59f8a42ef91b4742e04da95ee63221ac13cf330fa5f47",
+          "events": 16136
+        },
+        "devtoolsLog": {
+          "path": "zh-CN-artist-mobile-1.devtoolslog.json",
+          "bytes": 308359,
+          "sha256": "3266cc24445baa2bd23a04ee5ec8950ef636b6f271c1c0abe2af1f787286a84c",
+          "events": 337
+        },
+        "lanternInputs": {
+          "path": "zh-CN-artist-mobile-1.lantern-inputs.json",
+          "bytes": 2240,
+          "sha256": "9067804b8574164cd19909cae161671532898698c14921c8873d681f18efe7f3"
+        }
+      },
+      "score": 0.99,
+      "lcpMs": 1956.762,
+      "cls": 0,
+      "tbtMs": 36.5,
+      "runtimeError": null,
+      "contentValidity": {
+        "id": "storefront-content",
+        "title": "Measured navigation contains the expected storefront content",
+        "description": "Checks the actual Lighthouse document, locale and visible content before accepting its performance sample.",
+        "score": 1,
+        "scoreDisplayMode": "binary",
+        "details": {
+          "type": "debugdata",
+          "content": {
+            "schemaVersion": 1,
+            "observed": {
+              "urlMatches": true,
+              "localeMatches": true,
+              "contentVisible": true,
+              "errorVisible": false
+            },
+            "valid": true
+          }
+        }
+      },
+      "runWarnings": [],
+      "configSettings": {
+        "output": [
+          "json",
+          "html"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "node",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo",
+          "storefront"
+        ],
+        "skipAudits": null
+      },
+      "observedMetrics": {
+        "firstContentfulPaint": 1507,
+        "largestContentfulPaint": 1957,
+        "interactive": 5004,
+        "speedIndex": 1507,
+        "totalBlockingTime": 37,
+        "maxPotentialFID": 103,
+        "cumulativeLayoutShift": 0,
+        "cumulativeLayoutShiftMainFrame": 0,
+        "lcpLoadDelay": 1307,
+        "lcpLoadDuration": 1405,
+        "timeToFirstByte": 453,
+        "observedTimeOrigin": 0,
+        "observedTimeOriginTs": 4982537883080,
+        "observedNavigationStart": 0,
+        "observedNavigationStartTs": 4982537883080,
+        "observedFirstPaint": 101,
+        "observedFirstPaintTs": 4982537984292,
+        "observedFirstContentfulPaint": 101,
+        "observedFirstContentfulPaintTs": 4982537984292,
+        "observedFirstContentfulPaintAllFrames": 101,
+        "observedFirstContentfulPaintAllFramesTs": 4982537984292,
+        "observedLargestContentfulPaint": 101,
+        "observedLargestContentfulPaintTs": 4982537984292,
+        "observedLargestContentfulPaintAllFrames": 101,
+        "observedLargestContentfulPaintAllFramesTs": 4982537984292,
+        "observedTraceEnd": 3019,
+        "observedTraceEndTs": 4982540901628,
+        "observedLoad": 516,
+        "observedLoadTs": 4982538399019,
+        "observedDomContentLoaded": 515,
+        "observedDomContentLoadedTs": 4982538397792,
+        "observedCumulativeLayoutShift": 0,
+        "observedCumulativeLayoutShiftMainFrame": 0,
+        "observedFirstVisualChange": 105,
+        "observedFirstVisualChangeTs": 4982537988080,
+        "observedLastVisualChange": 781,
+        "observedLastVisualChangeTs": 4982538664080,
+        "observedSpeedIndex": 134,
+        "observedSpeedIndexTs": 4982538017560
+      },
+      "observedLcpBreakdown": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "label",
+                "valueType": "text",
+                "label": "Subpart"
+              },
+              {
+                "key": "duration",
+                "valueType": "ms",
+                "label": "Duration"
+              }
+            ],
+            "items": [
+              {
+                "subpart": "timeToFirstByte",
+                "label": "Time to first byte",
+                "duration": 63.3139990234375
+              },
+              {
+                "subpart": "resourceLoadDelay",
+                "label": "Resource load delay",
+                "duration": 4.1460009765625
+              },
+              {
+                "subpart": "resourceLoadDuration",
+                "label": "Resource load duration",
+                "duration": 5.223
+              },
+              {
+                "subpart": "elementRenderDelay",
+                "label": "Element render delay",
+                "duration": 28.529
+              }
+            ]
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,3,SECTION,1,DIV,0,PICTURE,1,IMG",
+            "selector": "section.storefront-hero > div.storefront-hero-image > picture > img",
+            "boundingRect": {
+              "top": 65,
+              "bottom": 580,
+              "left": 0,
+              "right": 412,
+              "width": 412,
+              "height": 515
+            },
+            "snippet": "<img src=\"http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid…\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2…\" sizes=\"100vw\" width=\"1080\" height=\"1350\" alt=\"Mira Vale independent mobile · zh-CN\" decoding=\"async\" fetchpriority=\"high\" loading=\"eager\">",
+            "nodeLabel": "Mira Vale independent mobile · zh-CN"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gift",
+      "path": "/zh-CN/gifts/studio-gift-001?market=GLOBAL&currency=USD",
+      "selector": "[data-gift-detail]",
+      "repeat": 1,
+      "files": {
+        "json": {
+          "path": "zh-CN-gift-mobile-1.json",
+          "bytes": 685463,
+          "sha256": "9a4bc2c22685ce855bbe350ba61078ca4bd67ab3cac4a1f11c1baba5bb6897d5"
+        },
+        "html": {
+          "path": "zh-CN-gift-mobile-1.html",
+          "bytes": 762102,
+          "sha256": "98aa48745841c40aca8f17646d44cd13f1a5e492ba0770145b61dce3592e12df"
+        },
+        "trace": {
+          "path": "zh-CN-gift-mobile-1.trace.json",
+          "bytes": 5640027,
+          "sha256": "90330d8559e36bb0fd1115e25409e268ddfe22741b6d22ae5c5e58e3cf999007",
+          "events": 12998
+        },
+        "devtoolsLog": {
+          "path": "zh-CN-gift-mobile-1.devtoolslog.json",
+          "bytes": 267929,
+          "sha256": "3431b7cfb937ed1f57420bb54d5e1399ae38657bb2d000b0b695c79e7b28c1e6",
+          "events": 292
+        },
+        "lanternInputs": {
+          "path": "zh-CN-gift-mobile-1.lantern-inputs.json",
+          "bytes": 2258,
+          "sha256": "54310e1b72668aadb6bfaa2bbd05293d61eb99958c8873796623d28e444146a9"
+        }
+      },
+      "score": 0.96,
+      "lcpMs": 2621.4575000000004,
+      "cls": 0,
+      "tbtMs": 36,
+      "runtimeError": null,
+      "contentValidity": {
+        "id": "storefront-content",
+        "title": "Measured navigation contains the expected storefront content",
+        "description": "Checks the actual Lighthouse document, locale and visible content before accepting its performance sample.",
+        "score": 1,
+        "scoreDisplayMode": "binary",
+        "details": {
+          "type": "debugdata",
+          "content": {
+            "schemaVersion": 1,
+            "observed": {
+              "urlMatches": true,
+              "localeMatches": true,
+              "contentVisible": true,
+              "errorVisible": false
+            },
+            "valid": true
+          }
+        }
+      },
+      "runWarnings": [],
+      "configSettings": {
+        "output": [
+          "json",
+          "html"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "node",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo",
+          "storefront"
+        ],
+        "skipAudits": null
+      },
+      "observedMetrics": {
+        "firstContentfulPaint": 1508,
+        "largestContentfulPaint": 2621,
+        "interactive": 5009,
+        "speedIndex": 1508,
+        "totalBlockingTime": 36,
+        "maxPotentialFID": 104,
+        "cumulativeLayoutShift": 0,
+        "cumulativeLayoutShiftMainFrame": 0,
+        "lcpLoadDelay": 2252,
+        "lcpLoadDuration": 2334,
+        "timeToFirstByte": 454,
+        "observedTimeOrigin": 0,
+        "observedTimeOriginTs": 4982544180997,
+        "observedNavigationStart": 0,
+        "observedNavigationStartTs": 4982544180997,
+        "observedFirstPaint": 283,
+        "observedFirstPaintTs": 4982544464180,
+        "observedFirstContentfulPaint": 283,
+        "observedFirstContentfulPaintTs": 4982544464180,
+        "observedFirstContentfulPaintAllFrames": 283,
+        "observedFirstContentfulPaintAllFramesTs": 4982544464180,
+        "observedLargestContentfulPaint": 283,
+        "observedLargestContentfulPaintTs": 4982544464180,
+        "observedLargestContentfulPaintAllFrames": 283,
+        "observedLargestContentfulPaintAllFramesTs": 4982544464180,
+        "observedTraceEnd": 3008,
+        "observedTraceEndTs": 4982547189309,
+        "observedLoad": 682,
+        "observedLoadTs": 4982544862961,
+        "observedDomContentLoaded": 681,
+        "observedDomContentLoadedTs": 4982544862202,
+        "observedCumulativeLayoutShift": 0,
+        "observedCumulativeLayoutShiftMainFrame": 0,
+        "observedFirstVisualChange": 286,
+        "observedFirstVisualChangeTs": 4982544466997,
+        "observedLastVisualChange": 318,
+        "observedLastVisualChangeTs": 4982544498997,
+        "observedSpeedIndex": 304,
+        "observedSpeedIndexTs": 4982544485095
+      },
+      "observedLcpBreakdown": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "label",
+                "valueType": "text",
+                "label": "Subpart"
+              },
+              {
+                "key": "duration",
+                "valueType": "ms",
+                "label": "Duration"
+              }
+            ],
+            "items": [
+              {
+                "subpart": "timeToFirstByte",
+                "label": "Time to first byte",
+                "duration": 239.195
+              },
+              {
+                "subpart": "resourceLoadDelay",
+                "label": "Resource load delay",
+                "duration": 3.902
+              },
+              {
+                "subpart": "resourceLoadDuration",
+                "label": "Resource load duration",
+                "duration": 9.052
+              },
+              {
+                "subpart": "elementRenderDelay",
+                "label": "Element render delay",
+                "duration": 31.034
+              }
+            ]
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,4,ARTICLE,1,DIV,0,SECTION,0,FIGURE,0,DIV,0,IMG",
+            "selector": "section.gift-detail-gallery > figure.gift-main-image > div.fs-media > img.fs-media__image",
+            "boundingRect": {
+              "top": 161,
+              "bottom": 541,
+              "left": 16,
+              "right": 396,
+              "width": 380,
+              "height": 380
+            },
+            "snippet": "<img alt=\"Rose Palace · zh-CN\" class=\"fs-media__image\" decoding=\"async\" fetchpriority=\"high\" height=\"1200\" loading=\"eager\" sizes=\"(max-width: 48rem) 100vw, 55vw\" src=\"http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid…\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2…\" style=\"object-position:50% 45%\" width=\"1200\">",
+            "nodeLabel": "Rose Palace · zh-CN"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "ja",
+      "kind": "home",
+      "path": "/ja",
+      "selector": "[data-artist-directory]",
+      "repeat": 1,
+      "files": {
+        "json": {
+          "path": "ja-home-mobile-1.json",
+          "bytes": 617430,
+          "sha256": "3a658ddaeefba1b8af8903e5e6dacce58fa9fdd27f9ee1c27f4741b815190937"
+        },
+        "html": {
+          "path": "ja-home-mobile-1.html",
+          "bytes": 680462,
+          "sha256": "a99b9005c629300f8f6b5b9039c2814aa89be7af1c6c08dc02f73a6cd40a1379"
+        },
+        "trace": {
+          "path": "ja-home-mobile-1.trace.json",
+          "bytes": 7180801,
+          "sha256": "56124e201b092b154883515802d1a79b0dfe258959747ad8757aee703712ba03",
+          "events": 16986
+        },
+        "devtoolsLog": {
+          "path": "ja-home-mobile-1.devtoolslog.json",
+          "bytes": 378001,
+          "sha256": "adac3c1a684c2f51f94d238c981858e612136107f2eac3cd90c86fb6e3b84593",
+          "events": 414
+        },
+        "lanternInputs": {
+          "path": "ja-home-mobile-1.lantern-inputs.json",
+          "bytes": 2102,
+          "sha256": "d05d25c9926492c46388d3a8b924ba6ead669bc50eafbe07bbe93bb33a543726"
+        }
+      },
+      "score": 0.91,
+      "lcpMs": 3381.6000000000004,
+      "cls": 0,
+      "tbtMs": 24,
+      "runtimeError": null,
+      "contentValidity": {
+        "id": "storefront-content",
+        "title": "Measured navigation contains the expected storefront content",
+        "description": "Checks the actual Lighthouse document, locale and visible content before accepting its performance sample.",
+        "score": 1,
+        "scoreDisplayMode": "binary",
+        "details": {
+          "type": "debugdata",
+          "content": {
+            "schemaVersion": 1,
+            "observed": {
+              "urlMatches": true,
+              "localeMatches": true,
+              "contentVisible": true,
+              "errorVisible": false
+            },
+            "valid": true
+          }
+        }
+      },
+      "runWarnings": [],
+      "configSettings": {
+        "output": [
+          "json",
+          "html"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "node",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo",
+          "storefront"
+        ],
+        "skipAudits": null
+      },
+      "observedMetrics": {
+        "firstContentfulPaint": 1504,
+        "largestContentfulPaint": 3382,
+        "interactive": 5752,
+        "speedIndex": 1693,
+        "totalBlockingTime": 24,
+        "maxPotentialFID": 92,
+        "cumulativeLayoutShift": 0,
+        "cumulativeLayoutShiftMainFrame": 0,
+        "lcpLoadDelay": 3232,
+        "lcpLoadDuration": 3249,
+        "timeToFirstByte": 452,
+        "observedTimeOrigin": 0,
+        "observedTimeOriginTs": 4982550389061,
+        "observedNavigationStart": 0,
+        "observedNavigationStartTs": 4982550389061,
+        "observedFirstPaint": 29,
+        "observedFirstPaintTs": 4982550417574,
+        "observedFirstContentfulPaint": 29,
+        "observedFirstContentfulPaintTs": 4982550417574,
+        "observedFirstContentfulPaintAllFrames": 29,
+        "observedFirstContentfulPaintAllFramesTs": 4982550417574,
+        "observedLargestContentfulPaint": 507,
+        "observedLargestContentfulPaintTs": 4982550896225,
+        "observedLargestContentfulPaintAllFrames": 507,
+        "observedLargestContentfulPaintAllFramesTs": 4982550896225,
+        "observedTraceEnd": 3130,
+        "observedTraceEndTs": 4982553519116,
+        "observedLoad": 714,
+        "observedLoadTs": 4982551103280,
+        "observedDomContentLoaded": 713,
+        "observedDomContentLoadedTs": 4982551102293,
+        "observedCumulativeLayoutShift": 0,
+        "observedCumulativeLayoutShiftMainFrame": 0,
+        "observedFirstVisualChange": 30,
+        "observedFirstVisualChangeTs": 4982550419061,
+        "observedLastVisualChange": 1177,
+        "observedLastVisualChangeTs": 4982551566061,
+        "observedSpeedIndex": 425,
+        "observedSpeedIndexTs": 4982550814487
+      },
+      "observedLcpBreakdown": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "label",
+                "valueType": "text",
+                "label": "Subpart"
+              },
+              {
+                "key": "duration",
+                "valueType": "ms",
+                "label": "Duration"
+              }
+            ],
+            "items": [
+              {
+                "subpart": "timeToFirstByte",
+                "label": "Time to first byte",
+                "duration": 4.2170009765625
+              },
+              {
+                "subpart": "resourceLoadDelay",
+                "label": "Resource load delay",
+                "duration": 480.3899990234375
+              },
+              {
+                "subpart": "resourceLoadDuration",
+                "label": "Resource load duration",
+                "duration": 2.739
+              },
+              {
+                "subpart": "elementRenderDelay",
+                "label": "Element render delay",
+                "duration": 19.818
+              }
+            ]
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,2,DIV,2,MAIN,3,SECTION,1,DIV,0,PICTURE,1,IMG",
+            "selector": "section.storefront-hero > div.storefront-hero-image > picture > img",
+            "boundingRect": {
+              "top": 65,
+              "bottom": 580,
+              "left": 0,
+              "right": 412,
+              "width": 412,
+              "height": 515
+            },
+            "snippet": "<img src=\"http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid…\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2…\" sizes=\"100vw\" width=\"1080\" height=\"1350\" alt=\"Mira Vale independent mobile · ja\" decoding=\"async\" fetchpriority=\"high\" loading=\"eager\">",
+            "nodeLabel": "Mira Vale independent mobile · ja"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "ja",
+      "kind": "artist",
+      "path": "/ja/idols/mira-vale?market=GLOBAL&currency=USD",
+      "selector": ".storefront-story",
+      "repeat": 1,
+      "files": {
+        "json": {
+          "path": "ja-artist-mobile-1.json",
+          "bytes": 631475,
+          "sha256": "57b77bf009bdb8e88441b18ed45864e68a4322d4c4cbff56b0dabd3824c452f4"
+        },
+        "html": {
+          "path": "ja-artist-mobile-1.html",
+          "bytes": 702106,
+          "sha256": "24686476a212b8f57aace2bd35f9f2945dc8b82d6ce88702fd3958dc0adf1883"
+        },
+        "trace": {
+          "path": "ja-artist-mobile-1.trace.json",
+          "bytes": 6995498,
+          "sha256": "55628f3da0840f687f18e59266a93838b22c8831d33c374903996b2d7f1f6928",
+          "events": 16127
+        },
+        "devtoolsLog": {
+          "path": "ja-artist-mobile-1.devtoolslog.json",
+          "bytes": 373696,
+          "sha256": "464d3c202caa36b0f73ce6a826939f5f932a866062cea4dd31c0b799a1087126",
+          "events": 405
+        },
+        "lanternInputs": {
+          "path": "ja-artist-mobile-1.lantern-inputs.json",
+          "bytes": 2231,
+          "sha256": "349234f101caced8e9b2110a655bb313f0a8ab052075dc275c105b19d9fefaff"
+        }
+      },
+      "score": 0.85,
+      "lcpMs": 3609.459,
+      "cls": 0,
+      "tbtMs": 25,
+      "runtimeError": null,
+      "contentValidity": {
+        "id": "storefront-content",
+        "title": "Measured navigation contains the expected storefront content",
+        "description": "Checks the actual Lighthouse document, locale and visible content before accepting its performance sample.",
+        "score": 1,
+        "scoreDisplayMode": "binary",
+        "details": {
+          "type": "debugdata",
+          "content": {
+            "schemaVersion": 1,
+            "observed": {
+              "urlMatches": true,
+              "localeMatches": true,
+              "contentVisible": true,
+              "errorVisible": false
+            },
+            "valid": true
+          }
+        }
+      },
+      "runWarnings": [],
+      "configSettings": {
+        "output": [
+          "json",
+          "html"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "node",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo",
+          "storefront"
+        ],
+        "skipAudits": null
+      },
+      "observedMetrics": {
+        "firstContentfulPaint": 3009,
+        "largestContentfulPaint": 3609,
+        "interactive": 4990,
+        "speedIndex": 3009,
+        "totalBlockingTime": 25,
+        "maxPotentialFID": 90,
+        "cumulativeLayoutShift": 0,
+        "cumulativeLayoutShiftMainFrame": 0,
+        "lcpLoadDelay": 2082,
+        "lcpLoadDuration": 2187,
+        "timeToFirstByte": 453,
+        "observedTimeOrigin": 0,
+        "observedTimeOriginTs": 4982556639012,
+        "observedNavigationStart": 0,
+        "observedNavigationStartTs": 4982556639012,
+        "observedFirstPaint": 105,
+        "observedFirstPaintTs": 4982556744032,
+        "observedFirstContentfulPaint": 105,
+        "observedFirstContentfulPaintTs": 4982556744032,
+        "observedFirstContentfulPaintAllFrames": 105,
+        "observedFirstContentfulPaintAllFramesTs": 4982556744032,
+        "observedLargestContentfulPaint": 105,
+        "observedLargestContentfulPaintTs": 4982556744032,
+        "observedLargestContentfulPaintAllFrames": 105,
+        "observedLargestContentfulPaintAllFramesTs": 4982556744032,
+        "observedTraceEnd": 3026,
+        "observedTraceEndTs": 4982559665293,
+        "observedLoad": 443,
+        "observedLoadTs": 4982557081740,
+        "observedDomContentLoaded": 442,
+        "observedDomContentLoadedTs": 4982557080672,
+        "observedCumulativeLayoutShift": 0,
+        "observedCumulativeLayoutShiftMainFrame": 0,
+        "observedFirstVisualChange": 105,
+        "observedFirstVisualChangeTs": 4982556744012,
+        "observedLastVisualChange": 756,
+        "observedLastVisualChangeTs": 4982557395012,
+        "observedSpeedIndex": 112,
+        "observedSpeedIndexTs": 4982556751050
+      },
+      "observedLcpBreakdown": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "label",
+                "valueType": "text",
+                "label": "Subpart"
+              },
+              {
+                "key": "duration",
+                "valueType": "ms",
+                "label": "Duration"
+              }
+            ],
+            "items": [
+              {
+                "subpart": "timeToFirstByte",
+                "label": "Time to first byte",
+                "duration": 56.896
+              },
+              {
+                "subpart": "resourceLoadDelay",
+                "label": "Resource load delay",
+                "duration": 3.568
+              },
+              {
+                "subpart": "resourceLoadDuration",
+                "label": "Resource load duration",
+                "duration": 3.182
+              },
+              {
+                "subpart": "elementRenderDelay",
+                "label": "Element render delay",
+                "duration": 41.374
+              }
+            ]
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,3,SECTION,1,DIV,0,PICTURE,1,IMG",
+            "selector": "section.storefront-hero > div.storefront-hero-image > picture > img",
+            "boundingRect": {
+              "top": 65,
+              "bottom": 580,
+              "left": 0,
+              "right": 412,
+              "width": 412,
+              "height": 515
+            },
+            "snippet": "<img src=\"http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid…\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2…\" sizes=\"100vw\" width=\"1080\" height=\"1350\" alt=\"Mira Vale independent mobile · ja\" decoding=\"async\" fetchpriority=\"high\" loading=\"eager\">",
+            "nodeLabel": "Mira Vale independent mobile · ja"
+          }
+        ]
+      }
+    },
+    {
+      "locale": "ja",
+      "kind": "gift",
+      "path": "/ja/gifts/studio-gift-001?market=GLOBAL&currency=USD",
+      "selector": "[data-gift-detail]",
+      "repeat": 1,
+      "files": {
+        "json": {
+          "path": "ja-gift-mobile-1.json",
+          "bytes": 707229,
+          "sha256": "9896b6321044801b67c6a403be3dfc251278d95cfc8edac887b5c40ff73b83ca"
+        },
+        "html": {
+          "path": "ja-gift-mobile-1.html",
+          "bytes": 781132,
+          "sha256": "d611fd8f4335cc973c2d2dc100d23d95dcd922214c0902a105a569a373ca1b7c"
+        },
+        "trace": {
+          "path": "ja-gift-mobile-1.trace.json",
+          "bytes": 6046034,
+          "sha256": "95325f709aa3afdf0f35b608144e7ecb0888433ac644764f281133dbdf1d2528",
+          "events": 13889
+        },
+        "devtoolsLog": {
+          "path": "ja-gift-mobile-1.devtoolslog.json",
+          "bytes": 334490,
+          "sha256": "b4c1ab51cc7d2f6b5c579a33ae48fad1be742674c3014f75a84f7b3f8891e81b",
+          "events": 364
+        },
+        "lanternInputs": {
+          "path": "ja-gift-mobile-1.lantern-inputs.json",
+          "bytes": 2249,
+          "sha256": "bb1d0254bce1ce8d0378d3173a198ddb07edb429bc8e15b610a162075f98ba2a"
+        }
+      },
+      "score": 0.85,
+      "lcpMs": 3610.4010000000003,
+      "cls": 0,
+      "tbtMs": 25.5,
+      "runtimeError": null,
+      "contentValidity": {
+        "id": "storefront-content",
+        "title": "Measured navigation contains the expected storefront content",
+        "description": "Checks the actual Lighthouse document, locale and visible content before accepting its performance sample.",
+        "score": 1,
+        "scoreDisplayMode": "binary",
+        "details": {
+          "type": "debugdata",
+          "content": {
+            "schemaVersion": 1,
+            "observed": {
+              "urlMatches": true,
+              "localeMatches": true,
+              "contentVisible": true,
+              "errorVisible": false
+            },
+            "valid": true
+          }
+        }
+      },
+      "runWarnings": [],
+      "configSettings": {
+        "output": [
+          "json",
+          "html"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "node",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo",
+          "storefront"
+        ],
+        "skipAudits": null
+      },
+      "observedMetrics": {
+        "firstContentfulPaint": 2860,
+        "largestContentfulPaint": 3610,
+        "interactive": 4993,
+        "speedIndex": 2860,
+        "totalBlockingTime": 26,
+        "maxPotentialFID": 91,
+        "cumulativeLayoutShift": 0,
+        "cumulativeLayoutShiftMainFrame": 0,
+        "lcpLoadDelay": 3109,
+        "lcpLoadDuration": 3162,
+        "timeToFirstByte": 453,
+        "observedTimeOrigin": 0,
+        "observedTimeOriginTs": 4982562894495,
+        "observedNavigationStart": 0,
+        "observedNavigationStartTs": 4982562894495,
+        "observedFirstPaint": 235,
+        "observedFirstPaintTs": 4982563129255,
+        "observedFirstContentfulPaint": 235,
+        "observedFirstContentfulPaintTs": 4982563129255,
+        "observedFirstContentfulPaintAllFrames": 235,
+        "observedFirstContentfulPaintAllFramesTs": 4982563129255,
+        "observedLargestContentfulPaint": 235,
+        "observedLargestContentfulPaintTs": 4982563129255,
+        "observedLargestContentfulPaintAllFrames": 235,
+        "observedLargestContentfulPaintAllFramesTs": 4982563129255,
+        "observedTraceEnd": 2992,
+        "observedTraceEndTs": 4982565886577,
+        "observedLoad": 627,
+        "observedLoadTs": 4982563521752,
+        "observedDomContentLoaded": 626,
+        "observedDomContentLoadedTs": 4982563520923,
+        "observedCumulativeLayoutShift": 0,
+        "observedCumulativeLayoutShiftMainFrame": 0,
+        "observedFirstVisualChange": 236,
+        "observedFirstVisualChangeTs": 4982563130495,
+        "observedLastVisualChange": 253,
+        "observedLastVisualChangeTs": 4982563147495,
+        "observedSpeedIndex": 247,
+        "observedSpeedIndexTs": 4982563141355
+      },
+      "observedLcpBreakdown": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "label",
+                "valueType": "text",
+                "label": "Subpart"
+              },
+              {
+                "key": "duration",
+                "valueType": "ms",
+                "label": "Duration"
+              }
+            ],
+            "items": [
+              {
+                "subpart": "timeToFirstByte",
+                "label": "Time to first byte",
+                "duration": 198.573
+              },
+              {
+                "subpart": "resourceLoadDelay",
+                "label": "Resource load delay",
+                "duration": 3.483
+              },
+              {
+                "subpart": "resourceLoadDuration",
+                "label": "Resource load duration",
+                "duration": 3.552
+              },
+              {
+                "subpart": "elementRenderDelay",
+                "label": "Element render delay",
+                "duration": 29.152
+              }
+            ]
+          },
+          {
+            "type": "node",
+            "lhId": "page-0-IMG",
+            "path": "1,HTML,1,BODY,1,DIV,2,MAIN,4,ARTICLE,1,DIV,0,SECTION,0,FIGURE,0,DIV,0,IMG",
+            "selector": "section.gift-detail-gallery > figure.gift-main-image > div.fs-media > img.fs-media__image",
+            "boundingRect": {
+              "top": 161,
+              "bottom": 541,
+              "left": 16,
+              "right": 396,
+              "width": 380,
+              "height": 380
+            },
+            "snippet": "<img alt=\"Rose Palace · ja\" class=\"fs-media__image\" decoding=\"async\" fetchpriority=\"high\" height=\"1200\" loading=\"eager\" sizes=\"(max-width: 48rem) 100vw, 55vw\" src=\"http://localhost:57469/_next/image?url=https%3A%2F%2Fmedia.example.invalid…\" srcset=\"/_next/image?url=https%3A%2F%2Fmedia.example.invalid%3A57470%2Fprocessed%2…\" style=\"object-position:50% 45%\" width=\"1200\">",
+            "nodeLabel": "Rose Palace · ja"
+          }
+        ]
+      }
+    }
+  ],
+  "aggregates": [],
+  "failures": [],
+  "chromeClosed": true,
+  "browserVersion": "152.0.7977.84",
+  "partialLabTargetsMet": null,
+  "javascriptShouldMet": false,
+  "imagesShouldMet": true,
+  "completedAt": "2026-09-16T07:03:02.535Z"
+}

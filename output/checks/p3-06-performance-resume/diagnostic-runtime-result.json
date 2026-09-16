@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "--filter",
+    "@fan-support/api",
+    "preview:storefront-acceptance"
+  ],
+  "startedAt": "2026-09-16T08:15:46.294184+00:00",
+  "completedAt": "2026-09-16T08:25:42.290490+00:00",
+  "elapsedSeconds": 595.994,
+  "exitCode": 0
+}

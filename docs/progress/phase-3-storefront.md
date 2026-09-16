@@ -17,7 +17,7 @@
 | P3-03 | DONE | Codex `/root` | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
 | P3-04 | DONE | Codex `/root` | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
 | P3-05 | DONE | Codex `/root` | P2-04、P3-01、P3-04 | 真实七语礼物分页/筛选/详情/选择艺人/政策；完整check、PG/HTTP、浏览器与独立复核通过，见P3-05验收记录 |
-| P3-06 | IN_PROGRESS | Codex `/root`（验收待续、无 executor） | P3-02/03/04/05 | 未完性能/人工验收保留；ADR-013 允许先做 P4 本地开发，不计 DONE |
+| P3-06 | IN_PROGRESS | Codex `/root`（Lane D，性能续验） | P3-02/03/04/05 | 未完性能/人工验收保留；ADR-013 允许先做 P4 本地开发，不计 DONE |
 
 ## 必须证明
 
@@ -30,6 +30,24 @@
 ## Phase 退出证据
 
 已于 2026-09-05 依据用户明确视觉接受与继续开发指令解锁；尚未达到退出门禁。
+
+## P3-06 性能续验登记（2026-09-16）
+
+- Owner：Codex `/root`，恢复本任务唯一 Lane D executor；开始 2026-09-16T06:55:54.011415+00:00，基线 `7d1a539`，跟踪工作区干净，分支 `codex/p3-06-performance-resume`。承接已有 IN_PROGRESS 任务，依赖 P3-02/03/04/05 已完成；不另领任务。
+- 输入与范围：保持已确认视觉及当前真实内容/价格/库存/支付规则，核对旧性能报告与最新实现后，针对首屏图片/LCP等待链做有证据的最小优化。先保存当前生产编译版baseline与trace，编写失败测试，再实现和同条件比较；不把旧样本当新结果。
+- 分工：三个子代理只读审计旧trace、服务端读链与真实harness；root拥有进度/Git、实际运行与整合。写入分工待根因和合同确认后逐文件登记；测试/构建与资源采样由root统一串行调度。
+- 验证：受影响测试、format/lint/typecheck/build；真实PG/S3/API/Next/Chrome两视口/七语言、键盘/错误/reduced-motion及21组三次Lighthouse；所有失败样本保留，不能修改预算或以错误页当成功性能。非作者复核和S.U.P.E.R，按实际范围保留人工门。
+- 实施所有权补充：新基线已冻结后，order_view 独占 server cart cookie名/恢复hint及测试、cart-proxy常量引用、StorefrontPageShell/GiftPageFactory/CartProvider/CartHeader及直接测试；root独占真实cart browser回归、进度/Git和统一验证。hint仅允许自动恢复，缺cookie不代表授权为空；手动打开/加购仍完整验证。order_browser只读字体trace，order_bff只读证明链，未并行改共享文件。
+- 字体范围补充：真实trace与16页隔离实验确认同族UI/fallback unicode-range重叠可触发额外分片，现授权仅CSS范围互斥分配，保留原字体二进制、全部动态字集与non-UI原资源选择。order_view独占新fallback CSS生成器/测试、两profile及生成CSS、原Python生成入口尾部集成/字体README；order_browser独占font-ui-subset语义检查（总覆盖/原字形资源/互斥）及本轮隔离验证。root另独占check-design-foundations及其测试的profile入口兼容、package.json串接新生成器测试、design-tokens基础测试的旧import假设兼容，仍统一构建、Chrome性能和实际完整矩阵；冷optional系统字体像素相同不作为Noto字形证明。
+- 读取故障诊断补充：两轮正式采样分别在中文首页及日文艺人页遇到真实不可用，全部失败保留。order_view 独占 TEST 验收 runtime 的已有 createPersistence 工厂观察器、新安全诊断 helper/测试及测试 gateway 的可选观察器，先 RED 后接线；只记录固定层级/枚举/计数，不记录上下文、token、原文、SQL或错误message，不增加重试、不改生产catch/守卫/预算。root统一新fixture与回归，order_bff只读原因审核，order_browser只读部分性能复算。
+- 边界：P3性能及人工运营/读屏/关键译审未通过，不预先DONE；P4-04商户验收待续无executor，Phase5仍LOCKED。计数27DONE/2IN_PROGRESS/20PENDING=49；只本地提交，原2438未跟踪文件保持，详见本轮initial-untracked.json，不push/部署。
+
+### 本轮本地实施检查点（2026-09-16，验收仍未通过）
+
+- 本地实施提交 `0dabba9`：无 Cookie 首访跳过自动购物车恢复，手动操作及已有会话恢复仍严格验证；CJK fallback 与完整 UI 字库 CSS 范围互斥，保留旧字体字节与全部动态字集。两轮各84页资源测量中共有页面减少152,421 gzip字节、4个script请求，JS仍有超过150,000字节建议线的页面。
+- 定向cart 100tests、全Storefront606tests、字体/设计静态门51tests，七语言双视口真实UI88场景/88PNG/85axe及实际cart20场景/40PNG/30axe通过；axe incomplete和字体原始严格warm FAIL分别保留。新TEST诊断14tests及接线后的check:dev通过，源码独立ACCEPT；未将开发组合门当完整check。
+- 正式性能attempt-3在10/63、attempt-4在41/63遇真实内容不可用，原失败和未达标组保留。新诊断fixture协议32,461断言通过，27次页面内容正常、分层零失败，3/9组预算通过，整体仍exit1；有观测开销且缺原UI发布/回退历史，不能证明旧错误修复或充作完整63次验收。共享UI三原自动脚本已按clean-checkout顺序首轮通过，55PNG/102文件SHA相同；手机门与原moderate/incomplete保留。随后单条完整check2144.195秒exit0，43门连续通过、types/tests62（61缓存）、build36（35缓存）/32出口。最终2203输入SHA78f4b75ccb4d5e0a9fb30057fa81587aece51562f8023a5f36d1f87bfbc206ab，606旧合同/96paths/180schemas/58SQL/2438初始未跟踪保持；所有结果入口 `output/checks/p3-06-performance-resume/final-verification.md`。
+- P3-06仍IN_PROGRESS，27/2/20计数不变；PSP商户、真人运营/读屏/译审和Phase5门保留，不push/部署。S.U.P.E.R第10项不预先全PASS。
 
 ## P3-06 开发效率与采样有效性登记（2026-09-08）
 

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-16T08:25:37.093983+00:00",
+  "diagnosticsEnabled": true,
+  "scope": "TEST extra schema validation and synchronous I/O; not formal comparable performance evidence",
+  "fixture": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T08-15-50-568Z",
+  "protocolAssertions": 32461,
+  "diagnosticTrace": "diagnostic-trace/attempt-2026-09-16T08-21-29.460Z-32df9e34/results.json",
+  "lighthouseValidRuns": 27,
+  "collectionFailures": 0,
+  "allBudgetGroupsPassed": 3,
+  "totalGroups": 9,
+  "status": "COLLECTED_DIAGNOSTIC_BUDGET_FAILED",
+  "browserPhaseReadFailures": 0,
+  "originalIntermittentCause": "NOT_REPRODUCED_NOT_FIXED",
+  "files": [
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T08-15-50-568Z/001-setup-public-read-api-diagnostics.json",
+      "archived": "output/checks/p3-06-performance-resume/read-diagnostics/actual-fixture/001-setup-public-read-api-diagnostics.json",
+      "sha256": "eae3c69c7f4936c12b796096372b4abafad5fdb6488d3233e2687eef8f733464"
+    },
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T08-15-50-568Z/001-setup-public-read-diagnostics.json",
+      "archived": "output/checks/p3-06-performance-resume/read-diagnostics/actual-fixture/001-setup-public-read-diagnostics.json",
+      "sha256": "eae3c69c7f4936c12b796096372b4abafad5fdb6488d3233e2687eef8f733464"
+    },
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T08-15-50-568Z/002-protocol-public-read-api-diagnostics.json",
+      "archived": "output/checks/p3-06-performance-resume/read-diagnostics/actual-fixture/002-protocol-public-read-api-diagnostics.json",
+      "sha256": "59c1154b945277606bc84578f1ced8241f1533d023551e6a8a09b969b2344035"
+    },
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T08-15-50-568Z/002-protocol-public-read-diagnostics.json",
+      "archived": "output/checks/p3-06-performance-resume/read-diagnostics/actual-fixture/002-protocol-public-read-diagnostics.json",
+      "sha256": "e74cea7a2d08b6d515412c40f6a26719412eb2c012e4f1d2ba007b63f05196de"
+    },
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T08-15-50-568Z/003-browser-attempt-1-public-read-api-diagnostics.json",
+      "archived": "output/checks/p3-06-performance-resume/read-diagnostics/actual-fixture/003-browser-attempt-1-public-read-api-diagnostics.json",
+      "sha256": "a9266909ae30a8c65876569ab08b3fe95b3cd8f2801ce718f9c4b9a0df2fc712"
+    },
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T08-15-50-568Z/003-browser-attempt-1-public-read-diagnostics.json",
+      "archived": "output/checks/p3-06-performance-resume/read-diagnostics/actual-fixture/003-browser-attempt-1-public-read-diagnostics.json",
+      "sha256": "3368f6eda1ada9062c01b4291e0eb440dd854ec21895e71e15d857260cff64f6"
+    },
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T08-15-50-568Z/public-read-api-diagnostics.json",
+      "archived": "output/checks/p3-06-performance-resume/read-diagnostics/actual-fixture/public-read-api-diagnostics.json",
+      "sha256": "a9266909ae30a8c65876569ab08b3fe95b3cd8f2801ce718f9c4b9a0df2fc712"
+    },
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-16T08-15-50-568Z/public-read-diagnostics.json",
+      "archived": "output/checks/p3-06-performance-resume/read-diagnostics/actual-fixture/public-read-diagnostics.json",
+      "sha256": "3368f6eda1ada9062c01b4291e0eb440dd854ec21895e71e15d857260cff64f6"
+    }
+  ]
+}

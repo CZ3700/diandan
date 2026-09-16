@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "output/checks/p3-06-performance-resume/content-reprobe.mjs"
+  ],
+  "startedAt": "2026-09-16T07:44:07.177460+00:00",
+  "completedAt": "2026-09-16T07:44:33.501121+00:00",
+  "elapsedSeconds": 26.324,
+  "exitCode": 1
+}

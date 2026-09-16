@@ -1,0 +1,810 @@
+{
+  "schemaVersion": 1,
+  "candidateDelta": {
+    "decision": "PASS",
+    "scope": "Only this CSS unicode-range partition change compared with the existing overlapping UI profile, using identical WOFF2 bytes. No threshold/tolerance and no performance claim.",
+    "comparisonCount": 16,
+    "sourceInputs": 462,
+    "sourceUnchanged": true,
+    "evidence": [
+      {
+        "locale": "ja",
+        "dataset": "ui",
+        "variant": "actual-profile",
+        "weight": 100,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin",
+                "isCustomFont": true,
+                "glyphCount": 3
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"279\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin",
+                "isCustomFont": true,
+                "glyphCount": 29
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 29,
+        "candidateLoaded": 1,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-baseline-overlap-ui.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-actual-profile-ui.json"
+      },
+      {
+        "locale": "ja",
+        "dataset": "ui",
+        "variant": "actual-profile",
+        "weight": 400,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Regular",
+                "isCustomFont": true,
+                "glyphCount": 3
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"279\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Regular",
+                "isCustomFont": true,
+                "glyphCount": 29
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 29,
+        "candidateLoaded": 1,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-baseline-overlap-ui.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-actual-profile-ui.json"
+      },
+      {
+        "locale": "ja",
+        "dataset": "ui",
+        "variant": "actual-profile",
+        "weight": 700,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Bold",
+                "isCustomFont": true,
+                "glyphCount": 3
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"279\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Bold",
+                "isCustomFont": true,
+                "glyphCount": 29
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 29,
+        "candidateLoaded": 1,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-baseline-overlap-ui.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-actual-profile-ui.json"
+      },
+      {
+        "locale": "ja",
+        "dataset": "ui",
+        "variant": "actual-profile",
+        "weight": 900,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Black",
+                "isCustomFont": true,
+                "glyphCount": 3
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"279\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Black",
+                "isCustomFont": true,
+                "glyphCount": 29
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 29,
+        "candidateLoaded": 1,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-baseline-overlap-ui.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-actual-profile-ui.json"
+      },
+      {
+        "locale": "ja",
+        "dataset": "mixed",
+        "variant": "actual-profile",
+        "weight": 100,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin",
+                "isCustomFont": true,
+                "glyphCount": 3
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"280\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin",
+                "isCustomFont": true,
+                "glyphCount": 8
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 37,
+        "candidateLoaded": 9,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-baseline-overlap-mixed.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-actual-profile-mixed.json"
+      },
+      {
+        "locale": "ja",
+        "dataset": "mixed",
+        "variant": "actual-profile",
+        "weight": 400,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Regular",
+                "isCustomFont": true,
+                "glyphCount": 3
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"280\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Regular",
+                "isCustomFont": true,
+                "glyphCount": 8
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 37,
+        "candidateLoaded": 9,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-baseline-overlap-mixed.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-actual-profile-mixed.json"
+      },
+      {
+        "locale": "ja",
+        "dataset": "mixed",
+        "variant": "actual-profile",
+        "weight": 700,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Bold",
+                "isCustomFont": true,
+                "glyphCount": 3
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"280\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Bold",
+                "isCustomFont": true,
+                "glyphCount": 8
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 37,
+        "candidateLoaded": 9,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-baseline-overlap-mixed.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-actual-profile-mixed.json"
+      },
+      {
+        "locale": "ja",
+        "dataset": "mixed",
+        "variant": "actual-profile",
+        "weight": 900,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Black",
+                "isCustomFont": true,
+                "glyphCount": 3
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"280\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans JP Thin",
+                "postScriptName": "NotoSansJP-Thin_Black",
+                "isCustomFont": true,
+                "glyphCount": 8
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 37,
+        "candidateLoaded": 9,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-baseline-overlap-mixed.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/ja-actual-profile-mixed.json"
+      },
+      {
+        "locale": "zh-CN",
+        "dataset": "ui",
+        "variant": "actual-profile",
+        "weight": 100,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin",
+                "isCustomFont": true,
+                "glyphCount": 4
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"279\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin",
+                "isCustomFont": true,
+                "glyphCount": 28
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 16,
+        "candidateLoaded": 1,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-baseline-overlap-ui.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-actual-profile-ui.json"
+      },
+      {
+        "locale": "zh-CN",
+        "dataset": "ui",
+        "variant": "actual-profile",
+        "weight": 400,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Regular",
+                "isCustomFont": true,
+                "glyphCount": 4
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"279\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Regular",
+                "isCustomFont": true,
+                "glyphCount": 28
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 16,
+        "candidateLoaded": 1,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-baseline-overlap-ui.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-actual-profile-ui.json"
+      },
+      {
+        "locale": "zh-CN",
+        "dataset": "ui",
+        "variant": "actual-profile",
+        "weight": 700,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Bold",
+                "isCustomFont": true,
+                "glyphCount": 4
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"279\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Bold",
+                "isCustomFont": true,
+                "glyphCount": 28
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 16,
+        "candidateLoaded": 1,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-baseline-overlap-ui.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-actual-profile-ui.json"
+      },
+      {
+        "locale": "zh-CN",
+        "dataset": "ui",
+        "variant": "actual-profile",
+        "weight": 900,
+        "notoVerified": true,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Black",
+                "isCustomFont": true,
+                "glyphCount": 4
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"279\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Black",
+                "isCustomFont": true,
+                "glyphCount": 28
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 16,
+        "candidateLoaded": 1,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-baseline-overlap-ui.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-actual-profile-ui.json"
+      },
+      {
+        "locale": "zh-CN",
+        "dataset": "mixed",
+        "variant": "actual-profile",
+        "weight": 100,
+        "notoVerified": false,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin",
+                "isCustomFont": true,
+                "glyphCount": 4
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"280\"]",
+            "fonts": [
+              {
+                "familyName": "PingFang SC",
+                "postScriptName": "PingFangSC-Ultralight",
+                "isCustomFont": false,
+                "glyphCount": 1
+              },
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin",
+                "isCustomFont": true,
+                "glyphCount": 7
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 23,
+        "candidateLoaded": 9,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-baseline-overlap-mixed.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-actual-profile-mixed.json"
+      },
+      {
+        "locale": "zh-CN",
+        "dataset": "mixed",
+        "variant": "actual-profile",
+        "weight": 400,
+        "notoVerified": false,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Regular",
+                "isCustomFont": true,
+                "glyphCount": 4
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"280\"]",
+            "fonts": [
+              {
+                "familyName": "PingFang SC",
+                "postScriptName": "PingFangSC-Regular",
+                "isCustomFont": false,
+                "glyphCount": 1
+              },
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Regular",
+                "isCustomFont": true,
+                "glyphCount": 7
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 23,
+        "candidateLoaded": 9,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-baseline-overlap-mixed.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-actual-profile-mixed.json"
+      },
+      {
+        "locale": "zh-CN",
+        "dataset": "mixed",
+        "variant": "actual-profile",
+        "weight": 700,
+        "notoVerified": false,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Bold",
+                "isCustomFont": true,
+                "glyphCount": 4
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"280\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Bold",
+                "isCustomFont": true,
+                "glyphCount": 7
+              },
+              {
+                "familyName": "PingFang SC",
+                "postScriptName": "PingFangSC-Semibold",
+                "isCustomFont": false,
+                "glyphCount": 1
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 23,
+        "candidateLoaded": 9,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-baseline-overlap-mixed.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-actual-profile-mixed.json"
+      },
+      {
+        "locale": "zh-CN",
+        "dataset": "mixed",
+        "variant": "actual-profile",
+        "weight": 900,
+        "notoVerified": false,
+        "pixelEqual": true,
+        "boundsEqual": true,
+        "widthsEqual": true,
+        "metricsEqual": true,
+        "platformFontsExactlyEqual": true,
+        "platforms": [
+          {
+            "selector": "[data-probe=\"0\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Black",
+                "isCustomFont": true,
+                "glyphCount": 4
+              }
+            ]
+          },
+          {
+            "selector": "[data-probe=\"280\"]",
+            "fonts": [
+              {
+                "familyName": "Noto Sans SC Thin",
+                "postScriptName": "NotoSansSC-Thin_Black",
+                "isCustomFont": true,
+                "glyphCount": 7
+              },
+              {
+                "familyName": "PingFang SC",
+                "postScriptName": "PingFangSC-Semibold",
+                "isCustomFont": false,
+                "glyphCount": 1
+              }
+            ]
+          }
+        ],
+        "baselineLoaded": 23,
+        "candidateLoaded": 9,
+        "fontLoadChecked": true,
+        "baselineFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-baseline-overlap-mixed.json",
+        "candidateFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-actual-profile-mixed.json"
+      }
+    ]
+  },
+  "overallStrictDiagnostic": {
+    "decision": "FAIL",
+    "processExitCode": 1,
+    "rawReport": "warm/attempt-2026-09-16T07-25-54.302Z/results.json",
+    "passField": false,
+    "failuresRetained": true,
+    "reasons": [
+      "Chinese mixed test includes U+9FFF, advertised in original CSS but absent from the selected original WOFF2 cmap. Original, overlapping baseline and actual candidate all use identical PingFang fallback for that one character.",
+      "The third-reference complete original fonts differ from the existing UI subset in some Chinese exact descent measurements at weights 100/400. Maximum difference is 0.0000019073486328125 CSS px; raw strict comparisons remain false."
+    ]
+  },
+  "originalCmapEvidence": {
+    "schemaVersion": 1,
+    "tool": "fonttools 4.64.0 getBestCmap / brotli 1.2.0",
+    "checks": [
+      {
+        "file": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-21-wght-normal.woff2",
+        "sha256": "c1409c43e55ecff21bd7eee9327e71a6f4c66449842861b368dcdfe14445aab3",
+        "point": 40959,
+        "hex": "U+9FFF",
+        "character": "鿿",
+        "present": false,
+        "glyph": null,
+        "cmapCodepoints": 25,
+        "fontVersion": "Version 2.004-H2;hotconv 1.0.118;makeotfexe 2.5.65603"
+      },
+      {
+        "file": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-31-wght-normal.woff2",
+        "sha256": "e6c25be1bb08a63a0f4cd0cea425fc90b65df538be8505e3cf4010bec2853b64",
+        "point": 37265,
+        "hex": "U+9191",
+        "character": "醑",
+        "present": true,
+        "glyph": "uni9191",
+        "cmapCodepoints": 142,
+        "fontVersion": "Version 2.004-H2;hotconv 1.0.118;makeotfexe 2.5.65603"
+      },
+      {
+        "file": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-85-wght-normal.woff2",
+        "sha256": "e87e0a1342e1778c69040e768b5ad1d615068cec94579ba0176a875cb4170bde",
+        "point": 13364,
+        "hex": "U+3434",
+        "character": "㐴",
+        "present": true,
+        "glyph": "uni3434",
+        "cmapCodepoints": 132,
+        "fontVersion": "Version 2.004-H2;hotconv 1.0.118;makeotfexe 2.5.65603"
+      }
+    ]
+  },
+  "originalReferenceMetricDifferences": [
+    {
+      "locale": "zh-CN",
+      "dataset": "ui",
+      "weight": 100,
+      "differenceCount": 21,
+      "maximumAbsoluteDelta": 0.0000019073486328125,
+      "firstDifference": {
+        "key": "descent",
+        "text": "订单暂时无法查看，请稍后重试。",
+        "original": 1.8240013122558594,
+        "baseline": 1.8239994049072266,
+        "absoluteDelta": 0.0000019073486328125
+      },
+      "originalFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-original-ui.json"
+    },
+    {
+      "locale": "zh-CN",
+      "dataset": "ui",
+      "weight": 400,
+      "differenceCount": 26,
+      "maximumAbsoluteDelta": 0.0000019073486328125,
+      "firstDifference": {
+        "key": "descent",
+        "text": "订单暂时无法查看，请稍后重试。",
+        "original": 2.5635013580322266,
+        "baseline": 2.5634994506835938,
+        "absoluteDelta": 0.0000019073486328125
+      },
+      "originalFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-original-ui.json"
+    },
+    {
+      "locale": "zh-CN",
+      "dataset": "mixed",
+      "weight": 100,
+      "differenceCount": 21,
+      "maximumAbsoluteDelta": 0.0000019073486328125,
+      "firstDifference": {
+        "key": "descent",
+        "text": "订单暂时无法查看，请稍后重试。",
+        "original": 1.8240013122558594,
+        "baseline": 1.8239994049072266,
+        "absoluteDelta": 0.0000019073486328125
+      },
+      "originalFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-original-mixed.json"
+    },
+    {
+      "locale": "zh-CN",
+      "dataset": "mixed",
+      "weight": 400,
+      "differenceCount": 26,
+      "maximumAbsoluteDelta": 0.0000019073486328125,
+      "firstDifference": {
+        "key": "descent",
+        "text": "订单暂时无法查看，请稍后重试。",
+        "original": 2.5635013580322266,
+        "baseline": 2.5634994506835938,
+        "absoluteDelta": 0.0000019073486328125
+      },
+      "originalFile": "warm/attempt-2026-09-16T07-25-54.302Z/zh-CN-original-mixed.json"
+    }
+  ],
+  "limitations": [
+    "Static CSS coverage means declared repertoire, not proof that every declared glyph exists in the original upstream binary. This diagnostic found one pre-existing upstream range/cmap gap.",
+    "Cold optional-display request reduction is a separate retained experiment. Forced block/display and font loads here prove equality only under controlled availability.",
+    "Actual compiled storefront UI and unmodified Lighthouse acceptance are owned by root and still required."
+  ],
+  "sourceChangedByThisReview": false
+}

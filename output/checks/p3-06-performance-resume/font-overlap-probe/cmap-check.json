@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "tool": "fonttools 4.64.0 getBestCmap / brotli 1.2.0",
+  "checks": [
+    {
+      "file": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-21-wght-normal.woff2",
+      "sha256": "c1409c43e55ecff21bd7eee9327e71a6f4c66449842861b368dcdfe14445aab3",
+      "point": 40959,
+      "hex": "U+9FFF",
+      "character": "鿿",
+      "present": false,
+      "glyph": null,
+      "cmapCodepoints": 25,
+      "fontVersion": "Version 2.004-H2;hotconv 1.0.118;makeotfexe 2.5.65603"
+    },
+    {
+      "file": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-31-wght-normal.woff2",
+      "sha256": "e6c25be1bb08a63a0f4cd0cea425fc90b65df538be8505e3cf4010bec2853b64",
+      "point": 37265,
+      "hex": "U+9191",
+      "character": "醑",
+      "present": true,
+      "glyph": "uni9191",
+      "cmapCodepoints": 142,
+      "fontVersion": "Version 2.004-H2;hotconv 1.0.118;makeotfexe 2.5.65603"
+    },
+    {
+      "file": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-85-wght-normal.woff2",
+      "sha256": "e87e0a1342e1778c69040e768b5ad1d615068cec94579ba0176a875cb4170bde",
+      "point": 13364,
+      "hex": "U+3434",
+      "character": "㐴",
+      "present": true,
+      "glyph": "uni3434",
+      "cmapCodepoints": 132,
+      "fontVersion": "Version 2.004-H2;hotconv 1.0.118;makeotfexe 2.5.65603"
+    }
+  ]
+}

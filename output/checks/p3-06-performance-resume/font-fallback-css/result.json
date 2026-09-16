@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "scope": "P3-06 CSS-only disjoint fallback ranges; no font binaries regenerated",
+  "baselineCommit": "7d1a5391a70c655da2d0a654d47c79c11e37b04d",
+  "tests": {
+    "generator": {
+      "passed": 8,
+      "failed": 0,
+      "evidence": "generator-green-final.log"
+    },
+    "productionCoverage": {
+      "passed": 9,
+      "failed": 0,
+      "evidence": "../font-overlap-probe/production-coverage-green.log"
+    },
+    "lint": {
+      "exitCode": 0,
+      "evidence": "lint.log"
+    },
+    "format": {
+      "exitCode": 0,
+      "evidence": "format-check.log"
+    }
+  },
+  "redEvidence": [
+    {
+      "path": "../font-overlap-probe/production-coverage-red.log",
+      "meaning": "Two real overlap violations before CSS change; other three source-selection tests pass"
+    },
+    {
+      "path": "generator-red.log",
+      "meaning": "Initial missing generator import, not claimed as behavior proof"
+    },
+    {
+      "path": "temporary-output-red.log",
+      "meaning": "Existing generator incorrectly required UI manifest in temporary output; fixed by separate --ui-dir"
+    }
+  ],
+  "profiles": [
+    {
+      "profile": "japanese",
+      "originalFaces": 124,
+      "fallbackFaces": 124,
+      "originalCodepoints": 17929,
+      "uiCodepoints": 384,
+      "fallbackCodepoints": 17545,
+      "cssSha256": "9b2f5c0999902d9dee6e46b8f2c702b61d463b9d6d64611d35c3d4884994d549",
+      "originalResources": 124
+    },
+    {
+      "profile": "simplified-chinese",
+      "originalFaces": 101,
+      "fallbackFaces": 101,
+      "originalCodepoints": 15605,
+      "uiCodepoints": 416,
+      "fallbackCodepoints": 15189,
+      "cssSha256": "8ef2949b2235a1eafb425f8da5cda87279a4a2839ce50e03e451107157a466be",
+      "originalResources": 101
+    }
+  ],
+  "unchanged": [
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/manifest.json",
+      "bytes": 17651,
+      "sha256": "e63dda1145664bb67baf376690feb8cb572a916916b1e9889a529bc8c2b27fd4",
+      "equalToHead": true
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/japanese-ui.css",
+      "bytes": 2984,
+      "sha256": "323a48fd6cf7a6f121155cc328a5e1f101b76f7474aa9a839b8e9d44f18c9d38",
+      "equalToHead": true
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/japanese-ui.woff2",
+      "bytes": 117776,
+      "sha256": "4df0994714c870602575e2d33707fac69bc993c973c06cc8aeca0cce7cf06fa5",
+      "equalToHead": true
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/japanese-OFL.txt",
+      "bytes": 4388,
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+      "equalToHead": true
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.css",
+      "bytes": 3543,
+      "sha256": "e1d0463eb218b85fb47eafd914011d56872e49509fa254df7c9bdddffc53e2d7",
+      "equalToHead": true
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.woff2",
+      "bytes": 108856,
+      "sha256": "81845c8fa4179a07c75d239cbe3807b92ff6985ac032dc209859d87d1473f873",
+      "equalToHead": true
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-OFL.txt",
+      "bytes": 4388,
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+      "equalToHead": true
+    }
+  ],
+  "limitations": [
+    "Browser download/render evidence is independently owned by order_browser.",
+    "No full Python/font regeneration was needed or run.",
+    "No global build or overall performance acceptance claimed.",
+    "Prior approximate pixel evidence remains approximate."
+  ]
+}
