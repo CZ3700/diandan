@@ -1,5 +1,13 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  login: "เข้าสู่ระบบ",
+  loginHint: "เข้าสู่ระบบเพื่อจัดการศิลปิน ของขวัญ และโปสเตอร์",
+  loginFailed: "เข้าสู่ระบบไม่สำเร็จ โปรดลองอีกครั้ง",
+  sessionExpired: "เซสชันสิ้นสุดแล้ว โปรดเข้าสู่ระบบอีกครั้ง",
+  sessionUnavailable: "ยังตรวจสอบเซสชันไม่ได้ โปรดลองอีกครั้ง",
+  logout: "ออกจากระบบ",
+  logoutFailed: "ยังยืนยันการออกจากระบบไม่ได้ โปรดลองอีกครั้ง",
+
   center: "ศูนย์จัดการ",
   artists: "ศิลปิน",
   gifts: "ของขวัญ",

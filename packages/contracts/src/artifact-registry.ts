@@ -1,3 +1,4 @@
+import * as adminAccess from "./admin-access.js";
 import * as orderNotification from "./order-notification.js";
 import * as orderAccess from "./order-access.js";
 import * as orderPaymentApplication from "./order-payment-application.js";
@@ -3071,6 +3072,96 @@ const registrations = [
     name: "PublicationPurgeRunResult",
     audience: "internal",
     schema: publicationPurgeRunResultSchema,
+  },
+  {
+    name: "AdminAccessSettings",
+    audience: "internal",
+    schema: adminAccess.adminAccessSettingsSchema,
+  },
+  {
+    name: "AdminAccessFailure",
+    audience: "internal",
+    schema: adminAccess.adminAccessFailureSchema,
+  },
+  {
+    name: "AdminAccessBeginRequest",
+    audience: "internal",
+    schema: adminAccess.adminAccessBeginRequestSchema,
+  },
+  {
+    name: "AdminAccessCallbackRequest",
+    audience: "internal",
+    schema: adminAccess.adminAccessCallbackRequestSchema,
+  },
+  {
+    name: "AdminAccessLogoutRequest",
+    audience: "internal",
+    schema: adminAccess.adminAccessLogoutRequestSchema,
+  },
+  {
+    name: "AdminAccessBeginBrowserResponse",
+    audience: "internal",
+    schema: adminAccess.adminAccessBeginBrowserResponseSchema,
+  },
+  {
+    name: "AdminAccessBeginResponse",
+    audience: "internal",
+    schema: adminAccess.adminAccessBeginResponseSchema,
+  },
+  {
+    name: "AdminAccessCallbackResponse",
+    audience: "internal",
+    schema: adminAccess.adminAccessCallbackResponseSchema,
+  },
+  {
+    name: "AdminAccessLogoutResponse",
+    audience: "internal",
+    schema: adminAccess.adminAccessLogoutResponseSchema,
+  },
+  {
+    name: "AdminAccessCreateCommand",
+    audience: "internal",
+    schema: adminAccess.adminAccessCreateCommandSchema,
+  },
+  {
+    name: "AdminAccessCreateResponse",
+    audience: "internal",
+    schema: adminAccess.adminAccessCreateResponseSchema,
+  },
+  {
+    name: "AdminAccessClaimCommand",
+    audience: "internal",
+    schema: adminAccess.adminAccessClaimCommandSchema,
+  },
+  {
+    name: "AdminAccessClaimResponse",
+    audience: "internal",
+    schema: adminAccess.adminAccessClaimResponseSchema,
+  },
+  {
+    name: "AdminAccessCompleteCommand",
+    audience: "internal",
+    schema: adminAccess.adminAccessCompleteCommandSchema,
+  },
+  {
+    name: "AdminAccessCompleteResponse",
+    audience: "internal",
+    schema: adminAccess.adminAccessCompleteResponseSchema,
+  },
+  {
+    name: "AdminAccessRevokeCommand",
+    audience: "internal",
+    schema: adminAccess.adminAccessRevokeCommandSchema,
+  },
+  {
+    name: "AdminAccessRejectCommand",
+    audience: "internal",
+    schema: adminAccess.adminAccessRejectCommandSchema,
+  },
+  {
+    name: "AdminAccessRejectResponse",
+    audience: "internal",
+    schema: adminAccess.adminAccessRejectResponseSchema,
   },
   {
     name: "AdminSessionCommand",

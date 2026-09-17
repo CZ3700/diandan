@@ -1,0 +1,431 @@
+{
+  "schemaVersion": 1,
+  "stage": "browser",
+  "checks": [
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "daily authenticated with real OIDC",
+      "passed": true
+    },
+    {
+      "label": "daily resolves platform identity",
+      "passed": true
+    },
+    {
+      "label": "daily exact database permissions",
+      "passed": true
+    },
+    {
+      "label": "daily management authorization",
+      "passed": true
+    },
+    {
+      "label": "daily catalog permission and locale boundary",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "editor authenticated with real OIDC",
+      "passed": true
+    },
+    {
+      "label": "editor resolves platform identity",
+      "passed": true
+    },
+    {
+      "label": "editor exact database permissions",
+      "passed": true
+    },
+    {
+      "label": "editor management authorization",
+      "passed": true
+    },
+    {
+      "label": "editor catalog permission and locale boundary",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "reviewer authenticated with real OIDC",
+      "passed": true
+    },
+    {
+      "label": "reviewer resolves platform identity",
+      "passed": true
+    },
+    {
+      "label": "reviewer exact database permissions",
+      "passed": true
+    },
+    {
+      "label": "reviewer management authorization",
+      "passed": true
+    },
+    {
+      "label": "reviewer catalog permission and locale boundary",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "order authenticated with real OIDC",
+      "passed": true
+    },
+    {
+      "label": "order resolves platform identity",
+      "passed": true
+    },
+    {
+      "label": "order exact database permissions",
+      "passed": true
+    },
+    {
+      "label": "order management authorization",
+      "passed": true
+    },
+    {
+      "label": "order catalog permission and locale boundary",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "manager authenticated with real OIDC",
+      "passed": true
+    },
+    {
+      "label": "manager resolves platform identity",
+      "passed": true
+    },
+    {
+      "label": "manager exact database permissions",
+      "passed": true
+    },
+    {
+      "label": "manager management authorization",
+      "passed": true
+    },
+    {
+      "label": "manager catalog permission and locale boundary",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "developer authenticated with real OIDC",
+      "passed": true
+    },
+    {
+      "label": "developer resolves platform identity",
+      "passed": true
+    },
+    {
+      "label": "developer exact database permissions",
+      "passed": true
+    },
+    {
+      "label": "developer management authorization",
+      "passed": true
+    },
+    {
+      "label": "developer catalog permission and locale boundary",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "manager authenticated with real OIDC",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "callback replay rejected",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "cross-browser callback rejected",
+      "passed": true
+    },
+    {
+      "label": "cross-browser rejection never redeems code",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "concurrent callback issues one session",
+      "passed": true
+    },
+    {
+      "label": "logout no-store",
+      "passed": true
+    },
+    {
+      "label": "logout CSRF mismatch rejected",
+      "passed": true
+    },
+    {
+      "label": "failed logout preserves live session",
+      "passed": true
+    },
+    {
+      "label": "logout no-store",
+      "passed": true
+    },
+    {
+      "label": "logout succeeds",
+      "passed": true
+    },
+    {
+      "label": "old session immediately rejected after logout",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "unknown verified identity cannot self-enroll",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "no-mfa cannot issue session",
+      "passed": true
+    },
+    {
+      "label": "no-mfa code exchange not retried",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "wrong-signature cannot issue session",
+      "passed": true
+    },
+    {
+      "label": "wrong-signature code exchange not retried",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "disconnect cannot issue session",
+      "passed": true
+    },
+    {
+      "label": "disconnect code exchange not retried",
+      "passed": true
+    },
+    {
+      "label": "begin no-store",
+      "passed": true
+    },
+    {
+      "label": "login authorization created",
+      "passed": true
+    },
+    {
+      "label": "callback no-store",
+      "passed": true
+    },
+    {
+      "label": "editor authenticated with real OIDC",
+      "passed": true
+    },
+    {
+      "label": "existing session observes role removal immediately",
+      "passed": true
+    },
+    {
+      "label": "suspended identity cannot retain access",
+      "passed": true
+    },
+    {
+      "label": "browser only accepts owned local HTTPS fixture origins",
+      "passed": true
+    },
+    {
+      "label": "en management entry responds HTTP 200",
+      "passed": true
+    },
+    {
+      "label": "en document language is correct",
+      "passed": true
+    },
+    {
+      "label": "en reduced-motion preference is active",
+      "passed": true
+    },
+    {
+      "label": "en uses one identity login action without local password fields",
+      "passed": true
+    },
+    {
+      "label": "en document language is correct",
+      "passed": true
+    },
+    {
+      "label": "en reduced-motion preference is active",
+      "passed": true
+    },
+    {
+      "label": "en login fits 390 CSS pixels",
+      "passed": true
+    },
+    {
+      "label": "en login has no automated axe violations",
+      "passed": true
+    },
+    {
+      "label": "en login is keyboard reachable with visible focus",
+      "passed": true
+    },
+    {
+      "label": "begin browser response keeps authentication private",
+      "passed": true
+    }
+  ],
+  "errorName": "EphemeralPostgresError"
+}

@@ -117,6 +117,9 @@ importers:
       '@fan-support/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@fan-support/identity-oidc':
+        specifier: workspace:*
+        version: link:../../packages/identity-oidc
       '@fan-support/key-management-kms':
         specifier: workspace:*
         version: link:../../packages/key-management-kms
@@ -333,6 +336,9 @@ importers:
       '@fan-support/domain':
         specifier: workspace:*
         version: link:../domain
+      '@fan-support/identity-port':
+        specifier: workspace:*
+        version: link:../identity-port
       '@fan-support/key-management-port':
         specifier: workspace:*
         version: link:../key-management-port
@@ -390,6 +396,9 @@ importers:
 
   packages/config:
     dependencies:
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../contracts
       zod:
         specifier: 4.5.4
         version: 4.5.4
@@ -470,6 +479,9 @@ importers:
       '@fan-support/identity-port':
         specifier: workspace:*
         version: link:../identity-port
+      openid-client:
+        specifier: 6.8.8
+        version: 6.8.8
     devDependencies:
       '@fan-support/testing':
         specifier: workspace:*
@@ -2687,6 +2699,9 @@ packages:
     resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
     hasBin: true
 
+  jose@6.2.12:
+    resolution: {integrity: sha512-9NiFmJEex0sy2Dk58j2UGBSHgUs2ypF9eZSu4L6vjOX3Dp96Sw1F3uL+H+D1sx02jZZdzUT0HgvCy59CuvXcWw==}
+
   jpeg-js@0.4.4:
     resolution: {integrity: sha512-WZzeDOEtTOBK4Mdsar0IqEU5sMr3vSV2RqkAIzUEV2BHnUfKGyswWFPFwK5EeDo93K3FohSHbLAjj0s1Wzd+dg==}
 
@@ -2999,6 +3014,9 @@ packages:
     resolution: {integrity: sha512-RWk+PI433eESQ7ounYxIp67CYuVsS1uYSonX3kA6ps/3LWfjVQa/ptEg6Y3T6uAMq1mWpX9PQ+qx+QaHpsc7gQ==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
+  oauth4webapi@3.8.8:
+    resolution: {integrity: sha512-8N28E+a/oxfXWBgOMt+ZP/JUf/XR+IFbvkAEPP3gznXOMv9BpAAwiIj0TFNz3tGTPc0ZQ8zmWBNgN1nAys0gng==}
+
   obug@2.1.4:
     resolution: {integrity: sha512-4a+OsYv9UktOJKE+l1A4OufDgdRF9PifWj+tJnHURo/P+WOxpG4GzUFL9qCalmWauao6ogiG+QvnCovwPoyAWA==}
     engines: {node: '>=12.20.0'}
@@ -3010,6 +3028,9 @@ packages:
   open@8.4.2:
     resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
     engines: {node: '>=12'}
+
+  openid-client@6.8.8:
+    resolution: {integrity: sha512-ZsucJA5Ad04Uv7YN4ql+s4GXNmb9uAYQwyJTsJx7CH/MX3JZioLE2pVKi1SC+YrbSLA4Px3Gi30dMjgOZtb6pA==}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -5527,6 +5548,8 @@ snapshots:
 
   jiti@2.7.0: {}
 
+  jose@6.2.12: {}
+
   jpeg-js@0.4.4: {}
 
   js-library-detector@6.7.0: {}
@@ -5806,6 +5829,8 @@ snapshots:
       semver: 7.8.5
       validate-npm-package-license: 3.0.4
 
+  oauth4webapi@3.8.8: {}
+
   obug@2.1.4: {}
 
   on-exit-leak-free@2.1.2: {}
@@ -5815,6 +5840,11 @@ snapshots:
       define-lazy-prop: 2.0.0
       is-docker: 2.2.1
       is-wsl: 2.2.0
+
+  openid-client@6.8.8:
+    dependencies:
+      jose: 6.2.12
+      oauth4webapi: 3.8.8
 
   optionator@0.9.4:
     dependencies:

@@ -13,13 +13,16 @@ export type PreviewSearchParams = Readonly<
   Record<string, string | string[] | undefined>
 >;
 function requireWorkspace() {
-  if (loadAdminWorkspaceConfig().mode !== "TEST") notFound();
+  const config = loadAdminWorkspaceConfig();
+  if (config.mode === "DISABLED") notFound();
+  return config;
 }
 export function WorkspacePage({ locale }: { locale: SupportedLocale }) {
-  requireWorkspace();
+  const config = requireWorkspace();
   return (
     <ManagementCenter
       locale={locale}
+      authenticationAvailable={config.mode === "LOCAL_OIDC"}
       storefrontOrigin={getManagementStorefrontOrigin()}
     />
   );

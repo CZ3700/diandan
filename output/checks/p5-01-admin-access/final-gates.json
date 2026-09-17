@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-17T18:36:05.333070+00:00",
+  "scope": "Summary of commands actually completed in this task; no new execution or fabrication of raw logs. Local logs are ignored by Git; hashes preserve references.",
+  "result": "PASS",
+  "sourceFingerprint": "ca3403c0e8056211bdb202b24b752f4a689a05e0c92b83e485bfdd9e34c8fc98",
+  "sourceInputCount": 2268,
+  "gates": [
+    {
+      "log": "output/checks/p5-01-admin-access/check-dev-final.log",
+      "sha256": "c568a79d03d8a5149b52655449b8d973257356373a7e35818594273ad4b288bc",
+      "bytes": 4316,
+      "exitCode": 0
+    },
+    {
+      "log": "output/checks/p5-01-admin-access/contracts-gate-3.log",
+      "sha256": "7a5cb029389f33e5eb0203024eb763ca97e9ce0445e9cf8d156e520cc579a8a7",
+      "bytes": 202,
+      "exitCode": 0
+    },
+    {
+      "log": "output/checks/p5-01-admin-access/adapter-final.log",
+      "sha256": "360ebfcae9aea3200bb9c177b8cbe7aad839b167bcbdceb6cdb98cc49e9c89b2",
+      "bytes": 170,
+      "exitCode": 0
+    },
+    {
+      "log": "output/checks/p5-01-admin-access/artifacts-final.log",
+      "sha256": "3ea4930d8fccf6fbcd51b53d744119d247eef442e94ecaa858048c1597a26df7",
+      "bytes": 71,
+      "exitCode": 0
+    },
+    {
+      "log": "output/checks/p5-01-admin-access/browser-fixtures-final-tests.log",
+      "sha256": "9d532bc3c59b0908c60fc6f86d950f7cdbcd36ead166c2ac2f1734f0b9c351cd",
+      "bytes": 448,
+      "exitCode": 0
+    },
+    {
+      "log": "output/checks/p5-01-admin-access/secrets-staged.log",
+      "sha256": "c5de5c7294bce3c849ea5b4d2c4df1edc669c7858437ffd95fa7af48e078d2c1",
+      "bytes": 34,
+      "exitCode": 0
+    },
+    {
+      "log": "output/checks/p5-01-admin-access/dependency-audit-final.log",
+      "sha256": "15950a68a7ed99c59779717acefdceb3f69cfd31bde67d2c954f2a3cea4d7955",
+      "bytes": 31,
+      "exitCode": 0
+    },
+    {
+      "log": "output/checks/p5-01-admin-access/frozen-install.log",
+      "sha256": "0d7d6c459eb8ab6295a31b1012439327a3eb33ed9a10cd6022386bc4d3d0f108",
+      "bytes": 385,
+      "exitCode": 0
+    },
+    {
+      "log": "output/checks/p5-01-admin-access/management-regression-2.log",
+      "sha256": "d945f4261030d22b99473e95bd088028ee4494ced77e643e61a3fadcaa0bea95",
+      "bytes": 6124,
+      "exitCode": 0
+    },
+    {
+      "log": "output/checks/p5-01-admin-access/ui-integration-6.log",
+      "sha256": "13f67681d0dc6d978eed9814f45395a92b4b4082a0da3f9f69e77dabeb78ce3a",
+      "bytes": 128,
+      "exitCode": 0
+    }
+  ],
+  "checkDevTasks": {
+    "typecheck": {
+      "passed": 63,
+      "cached": 62
+    },
+    "test": {
+      "passed": 63,
+      "cached": 62
+    },
+    "build": {
+      "passed": 36,
+      "cached": 36
+    }
+  },
+  "fullPnpmCheckExecuted": false,
+  "superReview": {
+    "checks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "result": "PASS",
+    "scope": "Local task acceptance; production/manual gates remain open"
+  },
+  "productionRelease": false
+}

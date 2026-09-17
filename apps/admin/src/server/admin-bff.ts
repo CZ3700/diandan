@@ -49,7 +49,7 @@ export function createAdminBff(
   options: Readonly<{ config: AdminRuntimeConfig; fetch?: typeof fetch }>,
 ) {
   function boundary(request: Request, bootstrap = false): Response | undefined {
-    if (options.config.mode !== "TEST") return adminError("NOT_FOUND", 404);
+    if (options.config.mode === "DISABLED") return adminError("NOT_FOUND", 404);
     const url = new URL(request.url);
     if (url.search) return adminError("INVALID_COMMAND", 400);
     if (url.origin !== options.config.siteOrigin)
@@ -77,7 +77,8 @@ export function createAdminBff(
       const credentials = readAdminCookies(request.headers.get("cookie"));
       if (!credentials) return adminError("UNAUTHENTICATED", 401);
       const operation = getAdminOperation("session")!;
-      if (options.config.mode !== "TEST") return adminError("NOT_FOUND", 404);
+      if (options.config.mode === "DISABLED")
+        return adminError("NOT_FOUND", 404);
       const response = await callAdminApi({
         config: options.config,
         operation,
@@ -128,7 +129,8 @@ export function createAdminBff(
           error instanceof RangeError ? 413 : 400,
         );
       }
-      if (options.config.mode !== "TEST") return adminError("NOT_FOUND", 404);
+      if (options.config.mode === "DISABLED")
+        return adminError("NOT_FOUND", 404);
       return callAdminApi({
         config: options.config,
         operation,

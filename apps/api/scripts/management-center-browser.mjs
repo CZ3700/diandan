@@ -5,6 +5,7 @@ import path from "node:path";
 import { chromium, expect } from "@playwright/test";
 import {
   SUPPORTED_LOCALES,
+  CART_RUNTIME_MAX_QUANTITY,
   managementCenterResponseSchema,
 } from "@fan-support/contracts";
 import { createManagementResponseObserver } from "./management-center-response-observer.mjs";
@@ -60,6 +61,7 @@ export async function verifyManagementCenterBrowser({
       "Desktop Chrome with emulated viewports; not a physical phone",
       "Automated accessibility is not a screen-reader or human translation approval",
       "No payment, real customer data, operator timing or production deployment",
+      "Public gift checks cover the current add-to-cart entry and quantity contract; this content fixture does not compose cart, checkout or payment runtimes",
     ],
   };
   const assert = (condition, label) => {
@@ -937,21 +939,61 @@ export async function verifyManagementCenterBrowser({
               ),
             ).toHaveText(artistName);
             publicCheck.stage = "QUANTITY";
-            await expect(offer.getByRole("spinbutton")).toBeEnabled();
-            await expect(offer.getByRole("spinbutton")).toHaveAttribute(
+            const quantity = offer.getByRole("spinbutton");
+            await expect(quantity).toBeEnabled();
+            await expect(quantity).toHaveAttribute("aria-valuemin", "1");
+            await expect(quantity).toHaveAttribute(
               "aria-valuemax",
-              String(Number.MAX_SAFE_INTEGER),
+              String(CART_RUNTIME_MAX_QUANTITY),
             );
+            await quantity.press("End");
+            await expect(quantity).toHaveValue(
+              String(CART_RUNTIME_MAX_QUANTITY),
+            );
+            await expect(
+              offer.locator('[data-quantity-action="increase"]'),
+            ).toBeDisabled();
+            await quantity.press("ArrowUp");
+            await expect(quantity).toHaveValue(
+              String(CART_RUNTIME_MAX_QUANTITY),
+            );
+            await quantity.press("Home");
+            await expect(quantity).toHaveValue("1");
+            await expect(
+              offer.locator('[data-quantity-action="decrease"]'),
+            ).toBeDisabled();
             assert(
               (await offer.locator("[data-stock-remaining]").count()) === 0,
               `${locale} ${gift.giftKind} on-demand offer does not claim fabricated stock`,
             );
-            publicCheck.stage = "CHECKOUT";
+            publicCheck.stage = "PURCHASE_ENTRY";
+            const addForm = offer.locator("form[data-cart-add]");
+            await expect(addForm).toHaveCount(1);
+            await expect(
+              addForm.locator('button[type="submit"]'),
+            ).toBeEnabled();
+            await expect(
+              addForm.locator('button[type="submit"]'),
+            ).toHaveAttribute("data-cart-add-state", "idle");
+            await expect(
+              addForm.locator("[data-cart-personalization]"),
+            ).toBeEnabled();
+            await expect(
+              addForm.locator('input[type="radio"]').first(),
+            ).toBeChecked();
+            await expect(addForm.locator("[data-cart-name]")).toHaveCount(0);
+            await expect(addForm.locator("[data-cart-message]")).toHaveValue(
+              "",
+            );
+            await expect(
+              addForm.locator("[data-cart-message-locale]"),
+            ).toHaveValue(locale);
+            await expect(
+              publicPage.locator("[data-checkout-unavailable]"),
+            ).toHaveCount(0);
             assert(
-              await publicPage
-                .locator("[data-checkout-unavailable]")
-                .isDisabled(),
-              `${locale} ${gift.giftKind} keeps the unimplemented checkout disabled`,
+              (await addForm.locator('a[href*="/checkout"]').count()) === 0,
+              `${locale} ${gift.giftKind} offers cart entry without bypassing cart validation`,
             );
             publicCheck.stage = "CONTENT";
             await expect(
@@ -989,6 +1031,9 @@ export async function verifyManagementCenterBrowser({
                   recipientId: artist.result.targetId,
                   availability: "AVAILABLE",
                   inventoryPolicy: "PROCURE_ON_DEMAND",
+                  quantityCeiling: CART_RUNTIME_MAX_QUANTITY,
+                  purchaseEntry: "ADD_TO_CART_FORM",
+                  commerceTransactionVerified: false,
                 }
               : { originalDescriptionUpdated: true }),
           });

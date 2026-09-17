@@ -1,4 +1,8 @@
 import {
+  registerAdminAccessRoute,
+  type AdminAccessRouteDependencies,
+} from "./admin-access-route.js";
+import {
   registerStorefrontCommerceRoute,
   type StorefrontCommerceRouteDependencies,
 } from "./storefront-commerce-route.js";
@@ -125,6 +129,8 @@ export type CreateApiApplicationOptions = Readonly<{
   giftCommerceRoute?: GiftCommerceRouteDependencies;
   giftCommerceRuntime?: ApiLifecycleResource;
   publishedGiftCommerceRoute?: PublishedGiftCommerceRouteDependencies;
+  adminAccessRoute?: AdminAccessRouteDependencies;
+  adminAccessRuntime?: ApiLifecycleResource;
   adminSessionRoute?: AdminSessionRouteDependencies;
   adminSessionRuntime?: ApiLifecycleResource;
   adminCatalogRoute?: AdminCatalogRouteDependencies;
@@ -160,6 +166,7 @@ function registerApiLifecycle(
   adapter: FastifyAdapter,
   runtime: ApiLifecycleResource | undefined,
   name:
+    | "API admin access"
     | "API admin session"
     | "API cart"
     | "API order access"
@@ -331,6 +338,7 @@ export async function createApiApplication(
         onRequest: async (request, reply) => unavailable(request, reply),
         handler: unavailable,
       });
+  registerApiLifecycle(adapter, options.adminAccessRuntime, "API admin access");
   registerApiLifecycle(
     adapter,
     options.adminSessionRuntime,
@@ -353,6 +361,8 @@ export async function createApiApplication(
     options.adminWorkspaceRuntime,
     "API admin workspace",
   );
+  if (options.adminAccessRoute)
+    registerAdminAccessRoute(adapter.getInstance(), options.adminAccessRoute);
   if (options.adminSessionRoute)
     registerAdminSessionRoute(adapter.getInstance(), options.adminSessionRoute);
   if (options.adminCatalogRoute)

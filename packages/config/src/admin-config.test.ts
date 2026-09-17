@@ -42,3 +42,32 @@ test("the explicit management storefront link does not break Admin runtime confi
     }).mode,
   ).toBe("TEST");
 });
+
+test("local OIDC access requires HTTPS, an internal secret, explicit issuer and development tier", () => {
+  const oidc = {
+    ...local,
+    FAN_SUPPORT_ADMIN_MODE: "LOCAL_OIDC",
+    FAN_SUPPORT_SITE_ORIGIN: "https://admin.example.invalid",
+    FAN_SUPPORT_ADMIN_ACCESS_KEY: "a".repeat(64),
+    FAN_SUPPORT_ADMIN_OIDC_ISSUER: "https://identity.example.invalid",
+  };
+  expect(resolveAdminRuntimeConfig({ environment: oidc })).toEqual({
+    schemaVersion: 1,
+    mode: "LOCAL_OIDC",
+    siteOrigin: oidc.FAN_SUPPORT_SITE_ORIGIN,
+    internalApiOrigin: local.FAN_SUPPORT_INTERNAL_API_ORIGIN,
+    adminAccessKey: oidc.FAN_SUPPORT_ADMIN_ACCESS_KEY,
+    oidcIssuer: oidc.FAN_SUPPORT_ADMIN_OIDC_ISSUER,
+  });
+  for (const patch of [
+    { FAN_SUPPORT_ADMIN_ACCESS_KEY: "" },
+    { FAN_SUPPORT_ADMIN_OIDC_ISSUER: "http://identity.example.invalid" },
+    { FAN_SUPPORT_ADMIN_OIDC_ISSUER: "https://identity.example.invalid?x=y" },
+    { FAN_SUPPORT_SITE_ORIGIN: "http://localhost:3100" },
+    { FAN_SUPPORT_INTERNAL_API_ORIGIN: "https://api.example.invalid" },
+    { NODE_ENV: "production", FAN_SUPPORT_DEPLOYMENT_ENV: "production" },
+  ])
+    expect(() =>
+      resolveAdminRuntimeConfig({ environment: { ...oidc, ...patch } }),
+    ).toThrow();
+});

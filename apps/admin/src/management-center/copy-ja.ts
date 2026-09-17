@@ -1,5 +1,14 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  login: "ログイン",
+  loginHint: "ログインしてアーティスト、ギフト、ポスターを管理します。",
+  loginFailed: "ログインできませんでした。もう一度お試しください。",
+  sessionExpired: "セッションが終了しました。再度ログインしてください。",
+  sessionUnavailable:
+    "セッションを確認できませんでした。もう一度お試しください。",
+  logout: "ログアウト",
+  logoutFailed: "ログアウトを確認できませんでした。もう一度お試しください。",
+
   center: "管理センター",
   artists: "アーティスト",
   gifts: "ギフト",

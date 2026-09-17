@@ -1,4 +1,12 @@
 export const copy = {
+  login: "Sign in",
+  loginHint: "Sign in to manage artists, gifts and posters.",
+  loginFailed: "We could not sign you in. Please try again.",
+  sessionExpired: "Your session has ended. Sign in again to continue.",
+  sessionUnavailable: "We could not check your session. Please try again.",
+  logout: "Sign out",
+  logoutFailed: "We could not confirm sign-out. Please try again.",
+
   center: "Management center",
   artists: "Artists",
   gifts: "Gifts",

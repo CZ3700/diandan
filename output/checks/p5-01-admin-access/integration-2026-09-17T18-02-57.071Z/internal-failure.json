@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "stage": "browser",
+  "errorName": "Error",
+  "frames": [
+    "    at verifyAdminAccessBrowser (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/admin-access-browser.mjs:684:11)",
+    "    at async file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/admin-access-http.mjs:378:24",
+    "    at async withEphemeralPostgres (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:155:16)",
+    "    at async file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/admin-access-http.mjs:39:3"
+  ]
+}

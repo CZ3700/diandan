@@ -45,3 +45,6 @@ export {
   createOptionalPaymentRuntimeComposition,
   type PaymentRuntimeComposition,
 } from "./payment-runtime-composition.js";
+
+export * from "./admin-access-route.js";
+export * from "./admin-access-composition.js";

@@ -1,11 +1,11 @@
 # Progress Master
 
-> 最后更新：2026-09-17
+> 最后更新：2026-09-18
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
-> 当前 ACTIVE Phase：Phase 3（验收待续）、Phase 4（ADR-013 本地开发）
-> 当前任务：P4-06 DONE；接续 P3-06 性能验收，Codex `/root` 持有 Lane D；P4-04 商户验收待续、无 executor
-> 下一入口：P3-06 沿已捕获慢导航的renderer→Viz flow核对FrameSink和BeginFrame交付；不再无界随机采样，性能/人工/Phase5及上线门保留
-> 当前检查点：固定12次中复现一次975.560ms激活后提交等待；前帧ACK已结束，排除该样本持续pending-submit解释，进一步定位需求保持开启时约1017ms无真实BeginImplFrame记录。根因尚未确认/修复，4组LCP预算均FAILED。25工具测试、check:dev、32,461真实协议及24指标官方复算通过；生产应用未改。P3-06继续IN_PROGRESS，仅本地提交。
+> 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-015，仅本地 P5-01→P5-02）
+> 当前任务：P5-01 DONE；P5-02 READY，Lane C 无 executor；P3-06/P4-04 验收待续、无 executor
+> 下一入口：P5-02 在原管理中心接入订单列表/详情、留言审核、准备与送达、内部备注及通知重发
+> 当前检查点：P5-01 本地完整验收 DONE，P5-02 依赖已满足。P3 性能及 P4 商户门保留；仅本地提交，不解锁其余 P5 或 Phase 6/7。
 
 ## 1. 开工入口
 
@@ -13,22 +13,22 @@
 
 1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md`
 2. 本文件
-3. 候选任务所在的 `ACTIVE` phase 文件（当前为 `docs/progress/phase-3-storefront.md` 与 `docs/progress/phase-4-commerce.md`）
+3. 候选任务所在的 `ACTIVE` phase 文件（Phase 3/4保留未完验收；ADR-015仅允许 `docs/progress/phase-5-operations-payments.md` 的P5-01→P5-02本地范围）
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线；当前 P3-01 至 P3-05 均已完成本地验收，P3-06 由 root 恢复 Lane D 性能续验；用户继续下一阶段后按 ADR-013 激活 Phase 4 的本地开发，P4-01 至 P4-03 已完成并释放对应 Lane；P4-04 本地检查点已验收、商户门待续且无 executor；按 ADR-014 完成P4-05本地范围并释放Lane A，P4-06已DONE，Lane D已交由P3-06续验。暂无READY任务，当前接续上述未完验收；Phase5保持LOCKED。正式品牌资产、邮件服务与译文的上线批准继续独立保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线，P3-01至P3-05及P4-01至P4-03已DONE；P4-05按ADR-014完成本地范围、P4-06也已DONE。2026-09-18 用户确认 ADR-015 后，P5-01 已完成本地登录/权限/会话及管理回归验收，root 释放 Lane C；P5-02 READY。P3-06 性能/人工验收、P4-04 真实商户验收仍 IN_PROGRESS 且无 executor，其他 P5 任务不在例外内。正式品牌资产、身份源/MFA恢复、邮件服务与译文的上线批准继续保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 20 |
-| READY | 0 |
+| PENDING | 18 |
+| READY | 1 |
 | IN_PROGRESS | 2 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
-| DONE | 27 |
+| DONE | 28 |
 | DEFERRED | 0 |
 | **总计** | **49** |
 
@@ -41,7 +41,7 @@
 | 2 设计系统 | 6 | CLOSED | `phase-2-design-system.md` | 品牌样板、视觉、axe、设备性能 |
 | 3 自研 Admin、内容与浏览前台 | 6 | ACTIVE | `phase-3-storefront.md` | 七语言自研后台、真实内容、发布、SEO/cache、性能 |
 | 4 购买闭环 | 6 | ACTIVE | `phase-4-commerce.md` | 七语言测试支付、订单 locale、查单、通知 |
-| 5 运营与支付 | 8 | LOCKED | `phase-5-operations-payments.md` | RBAC、退款、配置回退、重放、production-like staging |
+| 5 运营与支付 | 8 | ACTIVE（ADR-015有限本地） | `phase-5-operations-payments.md` | RBAC、退款、配置回退、重放、production-like staging |
 | 6 加固与恢复 | 6 | LOCKED | `phase-6-hardening.md` | Release Gate 技术证据 |
 | 7 上线与灰度 | 6 | LOCKED | `phase-7-launch.md` | 正式签署、灰度、复盘 |
 
@@ -55,11 +55,11 @@
 | Phase 0 | Phase 1、Phase 2 | Phase 0 |
 | Phase 1 与 Phase 2 | Phase 3 | Phase 1、Phase 2 |
 | Phase 3；或 ADR-013 已确认的本地开发例外 | Phase 4 | 正常路径关闭 Phase 3；例外保留未完验收 |
-| Phase 3 与 Phase 4 | Phase 5 | Phase 3、Phase 4 |
+| Phase 3 与 Phase 4；或 ADR-015 已确认的 P5-01→P5-02 本地例外 | Phase 5（例外仅允许白名单任务） | 正常路径关闭 Phase 3、Phase 4；例外保留未完验收 |
 | Phase 5 | Phase 6 | Phase 5 |
 | Phase 6 | Phase 7 | Phase 6 |
 
-除 Phase 1/2 与 ADR-013 的 Phase 3/4 本地开发例外外，不允许两个 Phase 同时为 `ACTIVE`。协调者还必须执行“每个 Lane 同时最多一个 executor”的并行门禁。
+除 Phase 1/2、ADR-013 的 Phase 3/4 与 ADR-015 的有限本地运营开发例外外，不允许多个 Phase 同时为 `ACTIVE`。协调者还必须执行“每个 Lane 同时最多一个 executor”的并行门禁。
 
 ## 4. 决策状态
 
@@ -79,6 +79,10 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-18 P5-01 本地验收 DONE：原管理中心七语 OIDC 登录/退出、预授权平台身份、服务端可撤销会话、MFA/CSRF/一次性挑战与审计接通。18 新 roots、606 旧 roots/OpenAPI/58 旧 SQL 保持；真实 PG 115 checks、30 migrations/175 tables、登录组合 859 checks（537 浏览器 assertions、34 PNG/axe、零违规或 incomplete）、原管理上传/发布回归 7,345 checks（1,481 浏览器 assertions、98 PNG/axe、零违规，既有照片叠字 1 项 incomplete 留给 P3 人工门）通过。最终 check:dev 63/63/36 tasks（缓存 62/62/36）、合同/adapter/artifact/secret/frozen-install/high audit 均通过，非作者复核 ACCEPT、S.U.P.E.R 10 项 PASS。2,268 源输入 SHA `ca3403c0e8056211bdb202b24b752f4a689a05e0c92b83e485bfdd9e34c8fc98`，原 4,633 个未跟踪文件重查不变；详见 `output/checks/p5-01-admin-access/final-verification.md`。P5-02 READY，28 DONE / 2 IN_PROGRESS / 1 READY / 18 PENDING = 49；无生产 IdP/PSP/真机/云发布结论，仅本地提交、不 push。
+
+2026-09-18 用户确认ADR-015：按“P5-01管理中心身份权限→验收后P5-02订单运营”开展本地开发。直接依赖P0-04/P1-04与后续P4-05/06已DONE；P3-06/P4-04未完验收与原失败保留。root释放Lane D，P5-01由READY领取为IN_PROGRESS并独占Lane C；27DONE/3IN_PROGRESS/19PENDING=49。其余P5、Phase6/7、生产身份/真实商户/云部署未解锁，不push。提案/依赖核对与执行范围见ADR-015及phase-5登记。
 
 2026-09-17 P3-06 固定十二次复现检查点：同真实PG/TLS S3/worker/Next构建四组三次，108原始文件SHA/长度、十二份同导航内容/设置/0+1读取和24个官方FCP/LCP复算差0通过。G1-1首次文字FCP帧激活后等待975.560ms，末图LCP属于后帧；前一笔pending在346.449ms随ACK结束，等待中无持续待ACK，真实BeginImplFrame331.708→1348.571ms而需求保持1。调查已缩窄到调度交付链，未宣布最终原因或修复；四组模拟LCP中位2572.0995/2629.872/4061.5365/2629.133ms均FAILED。25工具tests、check:dev exit0/15.854秒（types62/tests62/build36全缓存）、adapter/artifact、32,461真实协议通过；fixture402.135秒exit0，已记录Next及4Chrome端口清理。原4479未跟踪/2229输入SHA保持，生产无改动；详细报告与最终复核/秘密扫描结果见 `output/checks/p3-06-compositor-repro/README.md` / `final-verification.json`。27/2/20与Phase5 LOCKED不变，仅本地提交。
 

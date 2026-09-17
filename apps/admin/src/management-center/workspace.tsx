@@ -20,6 +20,7 @@ import { OperationProgress } from "./operation-progress";
 import { managementError } from "./errors";
 import { canStartManagementWrite } from "./workspace-state";
 import { scheduleManagementFocus } from "./focus";
+import { ManagementLogout } from "./logout";
 
 function publishedHref(
   operation: ManagementCenterOperation,
@@ -42,10 +43,12 @@ export function ManagementWorkspace({
   api,
   locale,
   storefrontOrigin,
+  onLogout,
 }: {
   api: ManagementApi;
   locale: SupportedLocale;
   storefrontOrigin?: string | undefined;
+  onLogout?: (() => Promise<void>) | undefined;
 }) {
   const copy = managementCopy(locale);
   const [section, setSection] = useState<ManagementSection>("ARTISTS");
@@ -199,6 +202,15 @@ export function ManagementWorkspace({
       section={section}
       onSection={chooseSection}
       disabled={busy}
+      accountAction={
+        onLogout ? (
+          <ManagementLogout
+            locale={locale}
+            onLogout={onLogout}
+            disabled={busy}
+          />
+        ) : undefined
+      }
     >
       <header className="mc-workspace-header">
         <div>

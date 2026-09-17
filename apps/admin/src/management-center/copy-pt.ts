@@ -1,5 +1,13 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  login: "Entrar",
+  loginHint: "Entre para gerenciar artistas, presentes e cartazes.",
+  loginFailed: "Não foi possível entrar. Tente novamente.",
+  sessionExpired: "Sua sessão terminou. Entre novamente para continuar.",
+  sessionUnavailable: "Não foi possível verificar sua sessão. Tente novamente.",
+  logout: "Sair",
+  logoutFailed: "Não foi possível confirmar a saída. Tente novamente.",
+
   center: "Centro de gestão",
   artists: "Artistas",
   gifts: "Presentes",

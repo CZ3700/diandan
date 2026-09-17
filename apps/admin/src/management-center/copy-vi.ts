@@ -1,5 +1,13 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  login: "Đăng nhập",
+  loginHint: "Đăng nhập để quản lý nghệ sĩ, quà tặng và áp phích.",
+  loginFailed: "Không thể đăng nhập. Vui lòng thử lại.",
+  sessionExpired: "Phiên đã kết thúc. Vui lòng đăng nhập lại.",
+  sessionUnavailable: "Chưa thể kiểm tra phiên. Vui lòng thử lại.",
+  logout: "Đăng xuất",
+  logoutFailed: "Chưa thể xác nhận đăng xuất. Vui lòng thử lại.",
+
   center: "Trung tâm quản lý",
   artists: "Nghệ sĩ",
   gifts: "Quà tặng",

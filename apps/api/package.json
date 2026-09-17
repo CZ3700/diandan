@@ -53,14 +53,20 @@
     "test:browser:payment-runtime": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/payment-runtime-http.mjs --production --ui",
     "test:postgres:order-payment": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/order-payment-*.test.mjs && node ./scripts/order-payment-http.mjs",
     "test:postgres:order-access": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/order-access-*.test.mjs && node ./scripts/order-access-http.mjs",
-    "test:browser:order-storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/order-storefront-http.mjs"
+    "test:browser:order-storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/order-storefront-http.mjs",
+    "test:postgres:admin-access": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/admin^... --output-logs=errors-only && node ./scripts/admin-access-http.mjs",
+    "test:browser:admin-access": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-access-browser-diagnostics.test.mjs ./scripts/admin-access-test-dns.test.mjs && node ./scripts/admin-access-http.mjs --ui"
   },
   "dependencies": {
-    "@fan-support/payment-port": "workspace:*",
     "@fan-support/application": "workspace:*",
     "@fan-support/config": "workspace:*",
     "@fan-support/contracts": "workspace:*",
+    "@fan-support/identity-oidc": "workspace:*",
+    "@fan-support/key-management-kms": "workspace:*",
+    "@fan-support/key-management-port": "workspace:*",
+    "@fan-support/media-port": "workspace:*",
     "@fan-support/observability": "workspace:*",
+    "@fan-support/payment-port": "workspace:*",
     "@fan-support/persistence-postgres": "workspace:*",
     "@nestjs/common": "12.0.1",
     "@nestjs/core": "12.0.1",
@@ -68,21 +74,18 @@
     "fastify": "5.12.1",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
-    "@fan-support/media-port": "workspace:*",
-    "@fan-support/key-management-port": "workspace:*",
-    "@fan-support/key-management-kms": "workspace:*",
     "zod": "4.5.4"
   },
   "devDependencies": {
-    "@fan-support/content": "workspace:*",
-    "@fan-support/payment-fake": "workspace:*",
-    "tsx": "4.23.13",
-    "pg": "8.23.0",
-    "@fan-support/media-s3": "workspace:*",
-    "@fan-support/media-image": "workspace:*",
-    "sharp": "0.35.4",
     "@aws-sdk/client-s3": "3.1119.0",
+    "@fan-support/content": "workspace:*",
+    "@fan-support/i18n": "workspace:*",
+    "@fan-support/media-image": "workspace:*",
+    "@fan-support/media-s3": "workspace:*",
+    "@fan-support/payment-fake": "workspace:*",
     "@playwright/test": "1.62.1",
-    "@fan-support/i18n": "workspace:*"
+    "pg": "8.23.0",
+    "sharp": "0.35.4",
+    "tsx": "4.23.13"
   }
 }

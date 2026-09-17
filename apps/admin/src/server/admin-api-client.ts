@@ -19,10 +19,10 @@ export function adminError(code: string, status: number): Response {
     { status, headers: ADMIN_PRIVACY_HEADERS },
   );
 }
-export async function readBoundedJson(
+export async function readBoundedText(
   body: ReadableStream<Uint8Array> | null,
   limit: number,
-): Promise<unknown> {
+): Promise<string> {
   if (!body) throw new Error("Invalid JSON");
   const reader = body.getReader();
   const decoder = new TextDecoder("utf-8", { fatal: true });
@@ -39,14 +39,20 @@ export async function readBoundedJson(
       }
       text += decoder.decode(chunk.value, { stream: true });
     }
-    return JSON.parse(text + decoder.decode()) as unknown;
+    return text + decoder.decode();
   } finally {
     reader.releaseLock();
   }
 }
+export async function readBoundedJson(
+  body: ReadableStream<Uint8Array> | null,
+  limit: number,
+): Promise<unknown> {
+  return JSON.parse(await readBoundedText(body, limit)) as unknown;
+}
 export async function callAdminApi(
   options: Readonly<{
-    config: Extract<AdminRuntimeConfig, { mode: "TEST" }>;
+    config: Exclude<AdminRuntimeConfig, { mode: "DISABLED" }>;
     operation: AdminOperation;
     credentials: AdminCredentials;
     command: unknown;

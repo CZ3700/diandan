@@ -1,3 +1,8 @@
+import { createAdminAccessRepository } from "./admin-access-repository.js";
+import type {
+  AdminAccessRepositories,
+  AdminAccessTransactionManager,
+} from "@fan-support/persistence-port";
 import { createNotificationRepository } from "./notification-repository.js";
 import { createCommerceExpiryRepository } from "./commerce-expiry-repository.js";
 import type {
@@ -170,6 +175,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly adminAccessTransactionManager: AdminAccessTransactionManager;
   readonly notificationTransactionManager: NotificationTransactionManager;
   readonly commerceExpiryTransactionManager: CommerceExpiryTransactionManager;
   readonly orderAccessTransactionManager: OrderAccessTransactionManager;
@@ -648,6 +654,12 @@ export function createPostgresPersistenceWithPoolFactory(
         resources: createResourceManagementRepository(client, scope),
       }),
     });
+  const adminAccessRunner = createTransactionRunner<AdminAccessRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      adminAccess: createAdminAccessRepository(client, scope),
+    }),
+  });
   const adminSessionRunner = createTransactionRunner<AdminSessionRepositories>({
     acquireClient: async () => pool.connect(),
     createRepositories: (client, scope) => ({
@@ -1004,6 +1016,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return publishedGiftCommerceRunner.run(
+          { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    adminAccessTransactionManager: {
+      async runInAdminAccessTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminAccessRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
           work,
         );

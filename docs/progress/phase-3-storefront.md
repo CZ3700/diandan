@@ -4,6 +4,10 @@
 > 任务：6  
 > 解锁条件：Phase 1 与 Phase 2 退出门禁均通过
 
+## 2026-09-18 排期接续
+
+用户明确确认ADR-015后，root释放Lane D并转入P5-01；本任务继续IN_PROGRESS、未完性能/人工门与所有失败证据保留，不计DONE。后续沿已捕获异常继续有界验证，不因本地运营开发例外降低验收标准。
+
 ## P3-06 提交等待定向复现（2026-09-17）
 
 - Owner：Codex `/root`，继续唯一 Lane D executor；开始 2026-09-17T16:31:12Z，基线 `a01cefe`，分支 `codex/p3-06-performance-resume`。继续原P3-06，27/2/20及Phase5 LOCKED不变。
@@ -82,7 +86,7 @@
 | P3-03 | DONE | Codex `/root` | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
 | P3-04 | DONE | Codex `/root` | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
 | P3-05 | DONE | Codex `/root` | P2-04、P3-01、P3-04 | 真实七语礼物分页/筛选/详情/选择艺人/政策；完整check、PG/HTTP、浏览器与独立复核通过，见P3-05验收记录 |
-| P3-06 | IN_PROGRESS | Codex `/root`（Lane D，性能续验） | P3-02/03/04/05 | 未完性能/人工验收保留；ADR-013 允许先做 P4 本地开发，不计 DONE |
+| P3-06 | IN_PROGRESS | —（验收待续，ADR-015） | P3-02/03/04/05 | 未完性能/人工验收保留；ADR-013 允许先做 P4 本地开发，不计 DONE |
 
 ## 必须证明
 

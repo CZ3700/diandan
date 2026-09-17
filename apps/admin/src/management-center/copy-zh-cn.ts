@@ -1,5 +1,13 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  login: "登录",
+  loginHint: "登录后管理艺人、礼物和海报。",
+  loginFailed: "登录未成功，请重试。",
+  sessionExpired: "会话已结束，请重新登录。",
+  sessionUnavailable: "暂时无法检查会话，请重试。",
+  logout: "退出登录",
+  logoutFailed: "暂时无法确认退出，请重试。",
+
   center: "管理中心",
   artists: "艺人",
   gifts: "礼物",

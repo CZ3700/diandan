@@ -290,6 +290,16 @@
         "up": "36197cb238761ac26837d0e54a97d32480186a021302ba9a7d5e2b52bc768a66",
         "down": "fae422f0ccf28dc2b16afee6c8760431989bf8b4bc418820f4c72d410d9e7cb0"
       }
+    },
+    {
+      "version": "0030",
+      "name": "admin-access",
+      "up": "database/migrations/0030_admin-access.up.sql",
+      "down": "database/migrations/0030_admin-access.down.sql",
+      "sha256": {
+        "up": "742666f369c2241de916644252635782ba2624661865c4533f8ada685a639016",
+        "down": "d40199305da7ee2142129a98791af75ba4a21ee38742007af8adbf62a7aa8cf0"
+      }
     }
   ]
 }

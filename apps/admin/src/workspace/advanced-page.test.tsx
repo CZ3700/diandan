@@ -61,3 +61,14 @@ test("all seven advanced routes keep their actual locale and TEST-only server bo
     state.mode = "TEST";
   }
 });
+
+test("LOCAL_OIDC keeps both existing workspaces available without changing the ordinary entry", async () => {
+  state.mode = "LOCAL_OIDC";
+  const { AdvancedWorkspacePage, WorkspacePage } = await import("./pages");
+  expect(renderToStaticMarkup(<WorkspacePage locale="en" />)).toContain(
+    'data-daily-center="en"',
+  );
+  expect(renderToStaticMarkup(<AdvancedWorkspacePage locale="en" />)).toContain(
+    'data-advanced-workspace="en"',
+  );
+});

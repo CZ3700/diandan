@@ -1,5 +1,11 @@
 /// <reference types="node" />
 
+export {
+  createOidcIdentityProvider,
+  type OidcIdentityProviderOptions,
+  type OidcIdentityProviderDependencies,
+} from "./real-oidc.js";
+
 import { createHash } from "node:crypto";
 
 import {

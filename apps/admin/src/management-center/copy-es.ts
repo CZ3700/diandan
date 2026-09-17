@@ -1,5 +1,13 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  login: "Iniciar sesión",
+  loginHint: "Inicia sesión para gestionar artistas, regalos y carteles.",
+  loginFailed: "No se pudo iniciar sesión. Inténtalo de nuevo.",
+  sessionExpired: "Tu sesión ha finalizado. Vuelve a iniciar sesión.",
+  sessionUnavailable: "No se pudo comprobar tu sesión. Inténtalo de nuevo.",
+  logout: "Cerrar sesión",
+  logoutFailed: "No se pudo confirmar el cierre de sesión. Inténtalo de nuevo.",
+
   center: "Centro de gestión",
   artists: "Artistas",
   gifts: "Regalos",

@@ -9,12 +9,14 @@ export function ManagementShell({
   onSection,
   children,
   disabled = false,
+  accountAction,
 }: {
   locale: SupportedLocale;
   section: ManagementSection;
   onSection: (section: ManagementSection) => void;
   children: ReactNode;
   disabled?: boolean;
+  accountAction?: ReactNode;
 }) {
   const copy = managementCopy(locale);
   return (
@@ -50,6 +52,7 @@ export function ManagementShell({
             {copy.posters}
           </button>
         </nav>
+        {accountAction}
       </aside>
       <main className="mc-main" id="management-main">
         {children}

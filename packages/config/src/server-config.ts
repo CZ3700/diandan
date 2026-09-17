@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { identityPortCommandSchema } from "@fan-support/contracts";
 
 import {
   resolveConfigLayers,
@@ -771,6 +772,14 @@ export function resolveCachePurgeRuntimeConfig(
 }
 
 export type AdminRuntimeConfig = Readonly<
+  | {
+      schemaVersion: 1;
+      mode: "LOCAL_OIDC";
+      siteOrigin: string;
+      internalApiOrigin: string;
+      adminAccessKey: string;
+      oidcIssuer: string;
+    }
   | { schemaVersion: 1; mode: "DISABLED" }
   | {
       schemaVersion: 1;
@@ -779,27 +788,59 @@ export type AdminRuntimeConfig = Readonly<
       internalApiOrigin: string;
     }
 >;
-/** No production identity provider is installed. TEST access is deliberately local. */
+/** Production identity remains closed pending UAT; TEST and OIDC protocol access are development-only. */
 export function resolveAdminRuntimeConfig(
   sources: RuntimeConfigSources,
 ): AdminRuntimeConfig {
-  const layered = resolveConfigLayers(sources, ["FAN_SUPPORT_ADMIN_MODE"]);
+  const layered = resolveConfigLayers(sources, [
+    "FAN_SUPPORT_ADMIN_MODE",
+    "FAN_SUPPORT_ADMIN_ACCESS_KEY",
+    "FAN_SUPPORT_ADMIN_OIDC_ISSUER",
+  ]);
   if (
     layered.FAN_SUPPORT_ADMIN_MODE === undefined ||
     layered.FAN_SUPPORT_ADMIN_MODE === "DISABLED"
   )
     return Object.freeze({ schemaVersion: 1, mode: "DISABLED" });
-  if (layered.FAN_SUPPORT_ADMIN_MODE !== "TEST")
+  if (
+    layered.FAN_SUPPORT_ADMIN_MODE !== "TEST" &&
+    layered.FAN_SUPPORT_ADMIN_MODE !== "LOCAL_OIDC"
+  )
     throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
   const runtime = resolveServerRuntimeConfig(sources);
   const internal = resolveInternalApiRuntimeConfig(sources);
   if (
     runtime.deploymentEnvironment !== "development" ||
     runtime.nodeEnvironment !== "development" ||
-    !isLoopbackHttpOrigin(runtime.siteOrigin) ||
+    (layered.FAN_SUPPORT_ADMIN_MODE === "TEST"
+      ? !isLoopbackHttpOrigin(runtime.siteOrigin)
+      : !isPublicSiteOrigin(runtime.siteOrigin) ||
+        new URL(runtime.siteOrigin).protocol !== "https:") ||
     !isLoopbackHttpOrigin(internal.origin)
   )
     throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
+  if (layered.FAN_SUPPORT_ADMIN_MODE === "LOCAL_OIDC") {
+    const key = z
+      .string()
+      .regex(/^[a-f0-9]{64}$/u)
+      .safeParse(layered.FAN_SUPPORT_ADMIN_ACCESS_KEY);
+    const issuer = identityPortCommandSchema.options[0].shape.issuer.safeParse(
+      layered.FAN_SUPPORT_ADMIN_OIDC_ISSUER,
+    );
+    if (!key.success || !issuer.success)
+      throw new ConfigValidationError([
+        "FAN_SUPPORT_ADMIN_ACCESS_KEY",
+        "FAN_SUPPORT_ADMIN_OIDC_ISSUER",
+      ]);
+    return Object.freeze({
+      schemaVersion: 1,
+      mode: "LOCAL_OIDC",
+      siteOrigin: runtime.siteOrigin,
+      internalApiOrigin: internal.origin,
+      adminAccessKey: key.data,
+      oidcIssuer: issuer.data,
+    });
+  }
   return Object.freeze({
     schemaVersion: 1,
     mode: "TEST",

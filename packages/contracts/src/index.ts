@@ -89,3 +89,5 @@ export * from "./payment-stablecoin.js";
 
 export * from "./order-access.js";
 export * from "./order-notification.js";
+
+export * from "./admin-access.js";

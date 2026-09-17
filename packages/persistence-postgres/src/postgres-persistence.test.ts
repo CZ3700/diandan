@@ -19,6 +19,28 @@ const validConfig = {
   password: "test-password",
 } as const;
 
+test("admin access uses serializable transactions and respects managed shutdown", async () => {
+  const pool = new TransactionPool();
+  const persistence = createPostgresPersistenceWithPoolFactory(
+    validConfig,
+    undefined,
+    () => pool,
+  );
+  expect(persistence).toHaveProperty("adminAccessTransactionManager");
+  await expect(
+    persistence.adminAccessTransactionManager.runInAdminAccessTransaction(
+      async (repositories) => Object.keys(repositories),
+    ),
+  ).resolves.toEqual(["adminAccess"]);
+  expect(pool.client.queries).toContain("BEGIN ISOLATION LEVEL SERIALIZABLE");
+  await persistence.close();
+  await expect(
+    persistence.adminAccessTransactionManager.runInAdminAccessTransaction(
+      async () => null,
+    ),
+  ).rejects.toMatchObject({ name: "PersistenceTransactionFailureError" });
+});
+
 test("notification and expiry transactions share managed shutdown and roll back failed callbacks", async () => {
   const pool = new TransactionPool();
   const persistence = createPostgresPersistenceWithPoolFactory(

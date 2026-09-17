@@ -19,6 +19,13 @@
   display: grid;
   gap: var(--space-2);
 }
+.mc-account {
+  margin-block-start: var(--space-6);
+  padding-inline: var(--space-3);
+}
+.mc-account .fs-button {
+  width: 100%;
+}
 .mc-sidebar button {
   padding: var(--space-3);
   min-height: var(--space-12);

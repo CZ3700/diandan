@@ -148,3 +148,29 @@ test("valid read returns its safe DTO and forwarded requests never inherit brows
   expect(new Headers(options.headers).has("authorization")).toBe(false);
   expect(new Headers(options.headers).has("x-forwarded-host")).toBe(false);
 });
+
+test("LOCAL_OIDC sessions use the same canonical authorization endpoint without exposing the access key", async () => {
+  const oidc = {
+    ...config,
+    mode: "LOCAL_OIDC",
+    siteOrigin: "https://admin.example.invalid",
+    adminAccessKey: "a".repeat(64),
+    oidcIssuer: "https://identity.example.invalid",
+  } as const;
+  const fetcher = vi.fn(async () => Response.json(context));
+  const response = await createAdminBff({
+    config: oidc,
+    fetch: fetcher,
+  }).session(
+    new Request(`${oidc.siteOrigin}/api/admin/session`, {
+      headers: { cookie, "sec-fetch-site": "same-origin" },
+    }),
+  );
+  expect(response.status).toBe(200);
+  expect(await response.json()).toEqual({ ...context, csrfToken: csrf });
+  expect(
+    new Headers(
+      (fetcher.mock.calls[0]! as unknown as [string, RequestInit])[1].headers,
+    ).has("x-admin-access-key"),
+  ).toBe(false);
+});

@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-17T18:01:54.062Z",
+  "evidenceKind": "Retrospective transcription of actual tool stdout/exit status in the gift_read_measure agent session. No raw log files were retained and no checks were rerun to create this summary.",
+  "rawLogPath": null,
+  "workingDirectory": "/Users/mario/Desktop/下单",
+  "results": [
+    {
+      "name": "final PostgreSQL access integration",
+      "command": "mise exec node@24.20.0 -- node packages/persistence-postgres/scripts/postgres-admin-access.mjs",
+      "toolSessionId": 69491,
+      "exitCode": 0,
+      "stdout": "{\"result\":\"PASS\",\"checks\":115}",
+      "coverage": "Claim/complete/reject/revoke races; real lock waits crossing TTL; current expired/suspended and all-live rules; CSRF; linked immutable fields; one-way revocation; exact per-session audit; mismatched actor/subject/time/action/correlation/request/reason; future revocation; legacy compatibility."
+    },
+    {
+      "name": "affected unit tests",
+      "command": "mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/persistence-postgres exec vitest run --config ../../vitest.config.ts --root . src/admin-access-repository.test.ts src/postgres-persistence.test.ts src/admin-session-repository.test.ts src/admin-authorization-repository.test.ts",
+      "toolSessionId": 56637,
+      "exitCode": 0,
+      "stdout": "Test Files 4 passed (4); Tests 40 passed (40); Duration 1.01s"
+    },
+    {
+      "name": "final migration catalog round trip",
+      "command": "mise exec node@24.20.0 -- node packages/persistence-postgres/scripts/postgres-integration.mjs --write-catalog",
+      "toolSessionId": 69491,
+      "exitCode": 0,
+      "stdout": "PostgreSQL migration round-trip passed (30 migrations, 175 tables).",
+      "scope": "Empty ephemeral PostgreSQL: all up, 0030 down, 0030 up, equality of recaptured catalog, generated expected-catalog.json."
+    },
+    {
+      "name": "typecheck",
+      "command": "mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/persistence-postgres typecheck",
+      "toolSessionId": 56637,
+      "exitCode": 0,
+      "stdout": "$ tsc -p tsconfig.json"
+    },
+    {
+      "name": "build",
+      "command": "mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/persistence-postgres build",
+      "toolSessionId": 35489,
+      "exitCode": 0,
+      "stdout": "$ tsc -p tsconfig.build.json"
+    },
+    {
+      "name": "final format",
+      "command": "mise exec node@24.20.0 -- corepack pnpm exec prettier --check packages/persistence-postgres/src/admin-access-repository.ts packages/persistence-postgres/src/admin-access-repository.test.ts packages/persistence-postgres/src/postgres-persistence.ts packages/persistence-postgres/src/postgres-persistence.test.ts packages/persistence-postgres/scripts/postgres-admin-access.mjs database/migrations/manifest.json database/schema/expected-catalog.json",
+      "toolSessionId": 11605,
+      "exitCode": 0,
+      "stdout": "All matched files use Prettier code style!"
+    },
+    {
+      "name": "final lint",
+      "command": "mise exec node@24.20.0 -- corepack pnpm exec eslint packages/persistence-postgres/src/admin-access-repository.ts packages/persistence-postgres/src/admin-access-repository.test.ts packages/persistence-postgres/src/postgres-persistence.ts packages/persistence-postgres/src/postgres-persistence.test.ts packages/persistence-postgres/scripts/postgres-admin-access.mjs",
+      "toolSessionId": 11605,
+      "exitCode": 0,
+      "stdout": ""
+    },
+    {
+      "name": "final migration manifest check",
+      "command": "mise exec node@24.20.0 -- node packages/persistence-postgres/scripts/migration-manifest.mjs --check",
+      "toolSessionId": 11605,
+      "exitCode": 0,
+      "stdout": ""
+    }
+  ],
+  "redEvidence": [
+    {
+      "toolSessionId": 55859,
+      "command": "mise exec node@24.20.0 -- node packages/persistence-postgres/scripts/postgres-admin-access.mjs",
+      "exitCode": 1,
+      "stdout": "{\"result\":\"FAIL\",\"stage\":\"logout-all lock-time expiry\",\"checks\":26,\"check\":\"logout-all waiting for row lock rechecks database expiry\",\"failure\":\"ASSERTION\"}"
+    },
+    {
+      "toolSessionId": 21694,
+      "command": "mise exec node@24.20.0 -- node packages/persistence-postgres/scripts/postgres-admin-access.mjs",
+      "exitCode": 1,
+      "stdout": "{\"result\":\"FAIL\",\"stage\":\"linked session evidence guards\",\"checks\":72,\"check\":\"linked session session_token_digest cannot be rewritten\",\"failure\":\"ASSERTION\"}"
+    },
+    {
+      "toolSessionId": 38035,
+      "command": "mise exec node@24.20.0 -- node packages/persistence-postgres/scripts/postgres-admin-access.mjs",
+      "exitCode": 1,
+      "stdout": "{\"result\":\"FAIL\",\"stage\":\"linked session evidence guards\",\"checks\":90,\"check\":\"current self-correlation / future revocation rejected: false/false\",\"failure\":\"ASSERTION\"}"
+    },
+    {
+      "command": "mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/persistence-postgres exec vitest run --config ../../vitest.config.ts --root . src/admin-access-repository.test.ts",
+      "exitCode": 1,
+      "stdoutSummary": "1 failed / 5 passed: expired known matching-CSRF current logout returned UNAUTHENTICATED rather than LOGGED_OUT.",
+      "toolSessionId": null,
+      "limitation": "Exact session id not retained across context compaction; result recorded in same-session handoff summary."
+    }
+  ],
+  "finalSourceSha256": {
+    "packages/persistence-postgres/src/admin-access-repository.ts": "98ba37cfede075ed0e4019ff8d7f91e2d3e256200caa1f3792bfe0683793d5a1",
+    "packages/persistence-postgres/src/admin-access-repository.test.ts": "10d2b6ccccd4e713ea86a87ab481b6d6729fd49d755aab70cd548a145cc65d92",
+    "database/migrations/0030_admin-access.up.sql": "742666f369c2241de916644252635782ba2624661865c4533f8ada685a639016",
+    "database/migrations/0030_admin-access.down.sql": "d40199305da7ee2142129a98791af75ba4a21ee38742007af8adbf62a7aa8cf0",
+    "database/migrations/manifest.json": "32320dfd41de8d952b2ee1f4af8e567cc02acc70c585715afd62e0daac971c46",
+    "database/schema/expected-catalog.json": "d0a0edc3a293e5fb525c0bb5da9eab5c7f47ae3c005787ca06d240e32bd4f9da",
+    "packages/persistence-postgres/scripts/postgres-admin-access.mjs": "2df52ee7879a54810e01602b7be15d82fc1f490176058235e60921bda6452bf6"
+  },
+  "rerunPrerequisite": "Use Node24.20.0 via mise. Build contracts/ports and @fan-support/persistence-postgres before PG script; migration-manifest --check must match SQL. The PG script creates and cleans its own ephemeral PostgreSQL; do not point at production.",
+  "limitations": [
+    "Tool session ids identify original command output, not on-disk raw logs.",
+    "No full repository or browser tests were run by this evidence transcription.",
+    "Production IdP/MFA/recovery/UAT/PSP/staging remain outside these checks."
+  ]
+}

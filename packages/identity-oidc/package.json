@@ -5,7 +5,8 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@fan-support/identity-port": "workspace:*"
+    "@fan-support/identity-port": "workspace:*",
+    "openid-client": "6.8.8"
   },
   "devDependencies": {
     "@fan-support/testing": "workspace:*",

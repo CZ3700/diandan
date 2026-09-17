@@ -86,3 +86,9 @@ export { createPaymentRuntimeUseCases } from "./payment-runtime.js";
 export * from "./order-access.js";
 export * from "./order-notifications.js";
 export * from "./commerce-expiry.js";
+export {
+  createAdminAccessUseCases,
+  type AdminAccessDependencies,
+  type AdminAccessUseCases,
+} from "./admin-access.js";
+export { digestAdminIdentitySubject } from "./admin-access-tokens.js";

@@ -50,6 +50,8 @@ test("documents every runtime environment variable once", () => {
     "FAN_SUPPORT_SITE_ORIGIN",
     "FAN_SUPPORT_INTERNAL_API_ORIGIN",
     "FAN_SUPPORT_ADMIN_MODE",
+    "FAN_SUPPORT_ADMIN_ACCESS_KEY",
+    "FAN_SUPPORT_ADMIN_OIDC_ISSUER",
     "FAN_SUPPORT_STOREFRONT_ORIGIN",
     "FAN_SUPPORT_STOREFRONT_NAME",
     "FAN_SUPPORT_DATABASE_URL",
@@ -89,6 +91,7 @@ test("leaves credential-bearing example values empty", () => {
   const { values } = readExample();
 
   expect(values["FAN_SUPPORT_DATABASE_URL"]).toBe("");
+  expect(values["FAN_SUPPORT_ADMIN_ACCESS_KEY"]).toBe("");
   expect(values["FAN_SUPPORT_OBJECT_STORAGE_ACCESS_KEY_ID"]).toBe("");
   expect(values["FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY"]).toBe("");
 });

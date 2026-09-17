@@ -64,7 +64,21 @@ import * as ja from "../app/(public)/(japanese)/ja/gifts/page";
 import * as es from "../app/(public)/(latin)/es/gifts/page";
 import * as pt from "../app/(public)/(latin)/pt/gifts/page";
 
-const routes = { en, "zh-CN": zh, th, vi: viRoute, ja, es, pt };
+// Route modules are test fixtures; contracts remain the locale inventory.
+const routes = new Map<SupportedLocale, typeof en>([
+  ["en", en],
+  ["zh-CN", zh],
+  ["th", th],
+  ["vi", viRoute],
+  ["ja", ja],
+  ["es", es],
+  ["pt", pt],
+]);
+function routeFor(locale: SupportedLocale) {
+  const route = routes.get(locale);
+  if (!route) throw new Error(`Missing route fixture for ${locale}`);
+  return route;
+}
 const context = storefrontContextResponseSchema.parse({
   schemaVersion: 1,
   outcome: "SUCCESS",
@@ -117,7 +131,7 @@ function descendants(node: ReactNode): ReactElement<Record<string, unknown>>[] {
   return elements;
 }
 async function page(locale: SupportedLocale, values = query) {
-  const entry = await routes[locale].default({
+  const entry = await routeFor(locale).default({
     params: Promise.resolve({}),
     searchParams: Promise.resolve(values),
   });
@@ -162,7 +176,7 @@ test.each(SUPPORTED_LOCALES)(
     const tree = await page(locale);
     const html = await directoryMarkup(tree);
     const copy = await loadStorefrontCopy(locale, { requireApproved: false });
-    expect(routes[locale].dynamic).toBe("force-dynamic");
+    expect(routeFor(locale).dynamic).toBe("force-dynamic");
     expect(html).toContain(`<h1>${copy.giftTitle}</h1>`);
     expect(html).toContain(`data-directory-recipient="${selectedArtist.id}"`);
     expect(html).toContain(selectedArtist.displayName);
@@ -205,7 +219,7 @@ test.each(SUPPORTED_LOCALES)(
     const metadata = { title: `Fixture ${locale}` };
     reads.seo.mockResolvedValue({ metadata });
     await expect(
-      routes[locale].generateMetadata({
+      routeFor(locale).generateMetadata({
         params: Promise.resolve({}),
         searchParams: Promise.resolve(query),
       }),
