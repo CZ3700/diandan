@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "output/checks/p3-06-compositor-repro/run-diagnostic.mjs"
+  ],
+  "startedAt": "2026-09-17T16:33:55.983168+00:00",
+  "completedAt": "2026-09-17T16:40:38.121411+00:00",
+  "elapsedSeconds": 402.135,
+  "exitCode": 0
+}

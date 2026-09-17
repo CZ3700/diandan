@@ -4,8 +4,8 @@
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3（验收待续）、Phase 4（ADR-013 本地开发）
 > 当前任务：P4-06 DONE；接续 P3-06 性能验收，Codex `/root` 持有 Lane D；P4-04 商户验收待续、无 executor
-> 下一入口：P3-06 使用现有扩展追踪定向复现提交等待，关联pending/ACK与BeginFrame需求；性能/人工/Phase5及上线门保留
-> 当前检查点：原约一秒等待已定位为compositor激活后至提交前983.518ms，根因尚未定位/修复；TEST扩展追踪固定3次已采集，原48报告另保留，预算仍失败。25工具测试、check:dev、32,461真实协议检查通过；修复原始响应误入lint的范围，生产应用未改。P3-06继续IN_PROGRESS，仅本地提交。
+> 下一入口：P3-06 沿已捕获慢导航的renderer→Viz flow核对FrameSink和BeginFrame交付；不再无界随机采样，性能/人工/Phase5及上线门保留
+> 当前检查点：固定12次中复现一次975.560ms激活后提交等待；前帧ACK已结束，排除该样本持续pending-submit解释，进一步定位需求保持开启时约1017ms无真实BeginImplFrame记录。根因尚未确认/修复，4组LCP预算均FAILED。25工具测试、check:dev、32,461真实协议及24指标官方复算通过；生产应用未改。P3-06继续IN_PROGRESS，仅本地提交。
 
 ## 1. 开工入口
 
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-17 P3-06 固定十二次复现检查点：同真实PG/TLS S3/worker/Next构建四组三次，108原始文件SHA/长度、十二份同导航内容/设置/0+1读取和24个官方FCP/LCP复算差0通过。G1-1首次文字FCP帧激活后等待975.560ms，末图LCP属于后帧；前一笔pending在346.449ms随ACK结束，等待中无持续待ACK，真实BeginImplFrame331.708→1348.571ms而需求保持1。调查已缩窄到调度交付链，未宣布最终原因或修复；四组模拟LCP中位2572.0995/2629.872/4061.5365/2629.133ms均FAILED。25工具tests、check:dev exit0/15.854秒（types62/tests62/build36全缓存）、adapter/artifact、32,461真实协议通过；fixture402.135秒exit0，已记录Next及4Chrome端口清理。原4479未跟踪/2229输入SHA保持，生产无改动；详细报告与最终复核/秘密扫描结果见 `output/checks/p3-06-compositor-repro/README.md` / `final-verification.json`。27/2/20与Phase5 LOCKED不变，仅本地提交。
 
 2026-09-17 P3-06 目录入口隔离检查点：七语言目录专属server入口移除详情实际下载中的筛选实现，9生产文件保留原读取/SEO/Suspense/图像与字体策略。旧21/47 RED、候选142 affected tests；全仓check:dev exit0（34.624秒，62/62/36，缓存61/61/35）、adapter/artifact门、真实协议32,461与完整88UI/88截图/85axe（0violations、30incomplete待人工）/0pageErrors通过，发布/回退10084/10310ms。固定3+3中文导航均确认JS少5,825B、实际transfer少1,379B；54原文件与12官方FCP/LCP复算通过。两组LCP中位5441.416/4817.547ms仍失败，旧入口再次复现1069.145ms绘制等待、尚未修复；共48诊断不代替正式63次或RUM。原4210未跟踪/2229candidate输入SHA保护、fixture清理exit0；独立复核ACCEPT局部实现，秘密扫描exit0/40.534秒；细节与收尾结果见 `output/checks/p3-06-image-response/README.md` / `final-verification.json`。27 DONE/2 IN_PROGRESS/20 PENDING（49）、P3-06/人工/商户门及Phase5 LOCKED保持，仅本地提交。
 

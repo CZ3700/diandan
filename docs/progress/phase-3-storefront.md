@@ -4,6 +4,23 @@
 > 任务：6  
 > 解锁条件：Phase 1 与 Phase 2 退出门禁均通过
 
+## P3-06 提交等待定向复现（2026-09-17）
+
+- Owner：Codex `/root`，继续唯一 Lane D executor；开始 2026-09-17T16:31:12Z，基线 `a01cefe`，分支 `codex/p3-06-performance-resume`。继续原P3-06，27/2/20及Phase5 LOCKED不变。
+- 范围/假设：利用已验证的compositor-diagnostic profile，检验内容激活后是否因pending帧/ACK或BeginFrame需求/调度状态迟迟不能提交。固定4组×3次共12次中文礼物导航，同一个真实fixture/构建；每组按现有入口启动独立Chrome且一次公开API证明。所有样本保留，无额外预热、优选重试或采到通过为止。额外观测有开销，本组只诊断，不替代原48默认及3扩展报告/正式矩阵/RUM。
+- 所有权：root独占真实PG/S3/Next/Chrome、采集/构建/进度/Git；gift_read_measure只读解析本轮trace并关联目标pipeline/pending/ACK；gift_read_impl只读审计现有Lighthouse模拟关键路径及可证实的最小应用优化；gift_read_review独立审核采集及根因推断。各自仅写新output目录命名报告，不运行并行构建/Chrome/重测试，不领取其他Task。
+- 验证：先复用现有工具，不修改生产或浏览器行为；若有明确代码缺陷，再单独登记文件并先RED→GREEN，补受影响tests/check:dev及实际七语言双端UI。纯取证检查原文件SHA、同导航内容/读取/设置、源码保护及独立review；如未复现则按上限停止，不将0异常当修复。只做本地检查点，不push/merge/部署。
+- 风险：R-08/R-12/R-13/R-17；初始未跟踪逐SHA见 `output/checks/p3-06-compositor-repro/initial-untracked.json`，旧证据不覆盖；人工/商户及性能门仍OPEN。
+
+### 固定十二次复现结果（2026-09-17，未退出任务）
+
+- 同一个真实fixture/构建按预定顺序完成4×3次，无额外预热或优选重采。108原始文件长度/SHA、12份同导航内容/配置/0+1成功读取全部通过；官方24个FCP/LCP离线复算误差0。组间各自独立Chrome，但共享服务/图像缓存可能随顺序变化，扩展profile不能与默认采样作性能收益对照。
+- G1-1的首次文字FCP内容帧复现975.560ms激活后→提交前等待（373.422→1348.982ms），最终图片LCP1367.335ms属于后一帧。前次pending_submit_frames已在346.449ms随ACK结束；慢区间无持续待ACK。真实BeginImplFrame331.708→1348.571ms约1017ms无交付记录，而needsBeginFrame保持1。这个样本反驳持续renderer pending/ACK占用解释，调查转向renderer→Viz flow与帧调度来源；尚未确认最终根因/修复，也不把通用Viz节流事件直接归到目标FrameSink。
+- 其他11次在LCP前扫描到的同renderer已激活帧无>500ms同阶段等待；不等于没有其他异常。四组模拟LCP中位2572.0995/2629.872/4061.5365/2629.133ms全部预算FAILED。原48默认和此前3扩展报告继续保留，本轮12扩展报告不代替正式七语63次或RUM。
+- 只读预算审计确认无长提交等待时仍可能由字体/框架脚本/图片不同模型截止触发失败；CSS内联仅为未实施的可证伪候选，现有收益证据不足，不为压分数改变生产图片、字体、框架或Chrome行为。本轮仅新增一次性运行入口和证据，2229实现输入保持SHA `b9d3fb5b842c6a6ac028018a0063e3bd0fcfa45fa30553e776b6c83342f9cf7c`，4479原未跟踪文件逐SHA不变。
+- 真实PG/TLS S3/worker协议32,461断言PASS，fixture402.135秒正常exit0；25工具tests、check:dev exit0/15.854秒（types62/tests62/build36全部缓存）、adapter3.691秒/artifact0.564秒通过。实际记录的Next与四Chrome端口无监听；未重跑完整pnpm check、七语双端UI、真机、读屏、真人运营、译审、正式PSP。首个离线复算因输出父目录缺失而ENOENT，失败保留；创建目录后全部成功，不涉及重采。
+- 最终非作者局部ACCEPT、S.U.P.E.R十项按诊断范围通过；显式暂存后秘密扫描exit0/47.165秒，离线提取复跑除生成时间外完全相同。完整根因边界、独立复核、S.U.P.E.R与暂存后秘密扫描记录见 `output/checks/p3-06-compositor-repro/README.md`、`trace-audit.md`、`independent-review.md`及`final-verification.json`；原始目录 `run-2026-09-17T16-33-58-576Z`。停止本轮随机补采，继续已捕获异常的明确关联或单变量有界复现。P3-06仍IN_PROGRESS，27/2/20、人工/商户与Phase5锁定保持，仅本地提交。
+
 ## P3-06 首次绘制等待定位（2026-09-17）
 
 - Owner：Codex `/root`，继续 Lane D 唯一 executor；开始 2026-09-17T12:29:17Z，基线 `a560ac7`，分支 `codex/p3-06-performance-resume`。27 DONE / 2 IN_PROGRESS / 20 PENDING 与 Phase5 LOCKED 保持。
