@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "ignoredResponseBodies": [
+    "output/checks/p3-06-image-response/script-comparison/bodies/0fd4b9297b1249a8ca29517725ff81db610718a80558c99a2df7f9ad8e853597.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/2a0c8d94bfdaeb5511e610106b757c775f9872c14348d3d6f2b53a05b0532eeb.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/2a22dc37ba2a7bec1956a7d402601129dae9908cd12de6447cb3f0f07cc17de2.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/364865a6938c1435d4b1b86a57eacc404b687f7e58d30676ac545ce1f838bcef.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/3814cddd18b2095e01abb745a99e5ada90178e709c09879324c3b623f2d829ea.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/3b1d23c8cd320e6e298efd099225e893a8977a14d433d0c5afbf090f4921abf4.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/4009527b06902e2fcd3c2ce78c0652caf43bda1783d1577198d0c3919782c607.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/419bc429e76336094d33cb6541e569506e76f55380c4fea95a0c362e5decfbd6.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/4b718a8eecb875936bd0467876b703b90f712fe69f56b40c9019141292700b70.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/54dddec02bdaa1c800eb8997f1250981f00661eaf57cfd6c591ec3c0cd4e1cef.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/615743df5230886d0d04e94ab6a63b51dd0f9971cfb11945fd1dc1e77c6b8b2e.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/8f2259eb4e67f02a6f5b8cc000519e5903a0fa460a7bc8aa0330c3284b9b278f.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/a2de2e58c50b3a040444955e5bed514b82e241acde87d5586be2336f0097e375.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/a7b184efc6db3070eb138216ce988c4adb40b13a54bbbc308b9ff0be71f9e0eb.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/a9d47715956dae14de6c98b3ad5601a090cd8f2c647dbcbefba8c4fdc5244de8.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/adc5d39d49d1d306676f0bea78291d735a9dc2b0a7caeecc92f63d6fe6a682b8.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/b1464d4c2f9f074abc94520a7884378b9ca7909959d95b97041c93ca483b0c61.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/ee6bb81f4e9fc030a39a7c71affc4d1f2b900baa4b4c7af83361388d7c39599b.js",
+    "output/checks/p3-06-image-response/script-comparison/bodies/efa718a2d0a807125b267bd25c65039c1a62a714eade5e3959a3f46a08ba221f.js"
+  ],
+  "stillChecked": [
+    "output/checks/p3-06-image-response/analyze-entry-scripts.mjs",
+    "output/checks/p3-06-paint-delay/run-diagnostic.mjs",
+    "apps/api/scripts/storefront-gift-trace-verification.mjs",
+    "apps/storefront/src/storefront/gift-page-factory.tsx"
+  ]
+}

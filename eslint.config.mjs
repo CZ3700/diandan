@@ -13,6 +13,8 @@ export default tseslint.config(
       "coverage/**",
       "docs/**",
       "research/**",
+      // Archived browser response bodies are generated evidence, not source.
+      "output/checks/p3-06-image-response/script-comparison/bodies/**",
     ],
   },
   eslint.configs.recommended,

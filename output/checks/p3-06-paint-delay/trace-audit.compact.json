@@ -1,0 +1,1450 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Read-only same-source slow sample2 versus fast sample3 trace audit; not a new performance measurement.",
+  "clock": "All trace/devtools times are milliseconds since selected trace navigationStart; do not mix LHR network audit relative times.",
+  "generatedAt": "2026-09-17T12:41:29.364522+00:00",
+  "captureManifest": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/results.json",
+  "captureManifestSha256": "6990355a9b3d95b5913130cfdfb1728c059d6030decd20730e3b4ba140f34690",
+  "samples": [
+    {
+      "sample": 2,
+      "bindings": [
+        {
+          "file": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/zh-CN-gift-mobile-2.json",
+          "bytes": 573939,
+          "sha256": "77ce78eeaf4145dd49ae9bde0a9f74faff260b2bad0085ea68602c794667ad54",
+          "captureManifestVerified": true
+        },
+        {
+          "file": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/zh-CN-gift-mobile-2-trace.json",
+          "bytes": 5058367,
+          "sha256": "50883ab9cedb177d1019e4c6deb4ea8f6d206c4fc40d84adc984859ced9c1710",
+          "captureManifestVerified": true
+        },
+        {
+          "file": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/zh-CN-gift-mobile-2-devtools.json",
+          "bytes": 192565,
+          "sha256": "0b9b5bf1293349b83b2805d93fc88e55f71129cb834411ace976361a4f01964c",
+          "captureManifestVerified": true
+        },
+        {
+          "file": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/zh-CN-gift-mobile-2-artifacts.json",
+          "bytes": 7284432,
+          "sha256": "e729d7e5895a8615430890e5313e5db370cdf25e0bfb5c62c9cd0701043ac9d6",
+          "captureManifestVerified": true
+        },
+        {
+          "file": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/zh-CN-gift-mobile-2-config.json",
+          "bytes": 5335,
+          "sha256": "2844aacc91cdcd8f9795ad8c77b2772e8629b65779550a9daf758dcf725ba392",
+          "captureManifestVerified": true
+        }
+      ],
+      "navigation": {
+        "originUs": 5075199708563,
+        "pid": 86626,
+        "mainTid": 79521794,
+        "frame": "45167DB5AD0F228668B84B3D3724405C",
+        "navigationId": "2AB059CC72FCF64CDF243417E2926789"
+      },
+      "observed": {
+        "firstPaintMs": 1597.291,
+        "fcpMs": 1597.291,
+        "lcpMs": 1597.291,
+        "lcpNodeId": 8,
+        "targetImageNetwork": {
+          "requestId": "86626.6",
+          "type": "Image",
+          "startMs": 515.276,
+          "urlSha256": "80fb7c1f07b95ecb4d0b9a801e2ef1972ab8952449f5d4f66c144fc23456b462",
+          "responseMs": 527.865,
+          "mimeType": "image/avif",
+          "status": 200,
+          "finishMs": 528.146,
+          "encodedDataLength": 48415
+        },
+        "targetNodePaints": [
+          {
+            "name": "PaintImage",
+            "phase": "X",
+            "startMs": 600.411,
+            "pid": 86626,
+            "tid": 79521794,
+            "args": {
+              "frame": "45167DB5AD0F228668B84B3D3724405C",
+              "nodeId": 8
+            },
+            "durationMs": 0.086
+          },
+          {
+            "name": "PaintImage",
+            "phase": "X",
+            "startMs": 1594.351,
+            "pid": 86626,
+            "tid": 79521794,
+            "args": {
+              "frame": "45167DB5AD0F228668B84B3D3724405C",
+              "nodeId": 8
+            },
+            "durationMs": 0.044
+          }
+        ]
+      },
+      "simulatedSeparate": {
+        "fcpMs": 4986.192,
+        "lcpMs": 5586.192
+      },
+      "firstPresentedMainContentPipeline": {
+        "pid": 86626,
+        "tid": 79521807,
+        "localId": "0x40",
+        "startMs": 558.942,
+        "endMs": 1597.358,
+        "reporter": {
+          "affects_smoothness": false,
+          "checkerboarded_needs_raster": false,
+          "checkerboarded_needs_record": false,
+          "display_trace_id": "-1250639095077377300",
+          "frame_sequence": 530,
+          "frame_source": 4294967296,
+          "has_compositor_animation": false,
+          "has_high_latency": true,
+          "has_main_animation": false,
+          "has_missing_content": false,
+          "has_smooth_input_main": false,
+          "layer_tree_host_id": 1,
+          "scroll_state": "SCROLL_NONE",
+          "state": "STATE_PRESENTED_ALL",
+          "surface_frame_trace_id": "-1250639095077378000"
+        },
+        "stages": [
+          {
+            "name": "BeginImplFrameToSendBeginMainFrame",
+            "startMs": 559.549,
+            "endMs": 559.564,
+            "durationMs": 0.015
+          },
+          {
+            "name": "SendBeginMainFrameToCommit",
+            "startMs": 559.564,
+            "endMs": 601.925,
+            "durationMs": 42.361
+          },
+          {
+            "name": "Commit",
+            "startMs": 601.925,
+            "endMs": 602.017,
+            "durationMs": 0.092
+          },
+          {
+            "name": "EndCommitToActivation",
+            "startMs": 602.017,
+            "endMs": 610.369,
+            "durationMs": 8.352
+          },
+          {
+            "name": "Activation",
+            "startMs": 610.369,
+            "endMs": 610.49,
+            "durationMs": 0.121
+          },
+          {
+            "name": "EndActivateToSubmitCompositorFrame",
+            "startMs": 610.49,
+            "endMs": 1594.008,
+            "durationMs": 983.518
+          },
+          {
+            "name": "SubmitCompositorFrameToPresentationCompositorFrame",
+            "startMs": 1594.008,
+            "endMs": 1597.291,
+            "durationMs": 3.283
+          },
+          {
+            "name": "SubmitToReceiveCompositorFrame",
+            "startMs": 1594.008,
+            "endMs": 1594.091,
+            "durationMs": 0.083
+          },
+          {
+            "name": "ReceiveCompositorFrameToStartDraw",
+            "startMs": 1594.091,
+            "endMs": 1594.186,
+            "durationMs": 0.095
+          },
+          {
+            "name": "StartDrawToSwapStart",
+            "startMs": 1594.186,
+            "endMs": 1597.286,
+            "durationMs": 3.1
+          },
+          {
+            "name": "BufferAvailableToBufferReady",
+            "startMs": 1597.286,
+            "endMs": 1597.289,
+            "durationMs": 0.003
+          },
+          {
+            "name": "BufferReadyToLatch",
+            "startMs": 1597.289,
+            "endMs": 1597.291,
+            "durationMs": 0.002
+          }
+        ]
+      },
+      "priorSubmittedDroppedPipeline": {
+        "pid": 86626,
+        "tid": 79521807,
+        "localId": "0x41",
+        "startMs": 575.608,
+        "endMs": 1594.295,
+        "reporter": {
+          "affects_smoothness": false,
+          "checkerboarded_needs_raster": false,
+          "checkerboarded_needs_record": false,
+          "frame_sequence": 531,
+          "frame_source": 4294967296,
+          "has_compositor_animation": false,
+          "has_high_latency": true,
+          "has_main_animation": false,
+          "has_missing_content": false,
+          "has_smooth_input_main": false,
+          "layer_tree_host_id": 1,
+          "scroll_state": "SCROLL_NONE",
+          "state": "STATE_DROPPED",
+          "surface_frame_trace_id": "-1250639095077378000"
+        },
+        "stages": [
+          {
+            "name": "BeginImplFrameToSendBeginMainFrame",
+            "startMs": 576.129,
+            "endMs": 591.203,
+            "durationMs": 15.074
+          },
+          {
+            "name": "EndActivateToSubmitCompositorFrame",
+            "startMs": 591.203,
+            "endMs": 591.268,
+            "durationMs": 0.065
+          },
+          {
+            "name": "SubmitCompositorFrameToPresentationCompositorFrame",
+            "startMs": 591.268,
+            "endMs": 1594.295,
+            "durationMs": 1003.027
+          },
+          {
+            "name": "SubmitToReceiveCompositorFrame",
+            "startMs": 591.268,
+            "endMs": 591.396,
+            "durationMs": 0.128
+          }
+        ]
+      },
+      "droppedFrames": {
+        "count": 59,
+        "firstMs": 608.94,
+        "lastMs": 1575.568,
+        "sequences": [
+          533,
+          534,
+          535,
+          536,
+          537,
+          538,
+          539,
+          540,
+          541,
+          542,
+          543,
+          544,
+          545,
+          546,
+          547,
+          548,
+          549,
+          550,
+          551,
+          552,
+          553,
+          554,
+          555,
+          556,
+          557,
+          558,
+          559,
+          560,
+          561,
+          562,
+          563,
+          564,
+          565,
+          566,
+          567,
+          568,
+          569,
+          570,
+          571,
+          572,
+          573,
+          574,
+          575,
+          576,
+          577,
+          578,
+          579,
+          580,
+          581,
+          582,
+          583,
+          584,
+          585,
+          586,
+          587,
+          588,
+          589,
+          590,
+          591
+        ],
+        "reporterTypes": {
+          "BACKFILL": 59
+        },
+        "reporterStates": {
+          "STATE_DROPPED": 59
+        }
+      },
+      "longestMainTasksBeforeLcp": [
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 560.665,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {},
+          "durationMs": 41.537
+        },
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 602.442,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {},
+          "durationMs": 31.487
+        },
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 649.856,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {},
+          "durationMs": 6.055
+        },
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 510.188,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {},
+          "durationMs": 5.848
+        },
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 636.351,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {},
+          "durationMs": 5.409
+        },
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 641.941,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {},
+          "durationMs": 5.025
+        }
+      ],
+      "rafAndTimersNearLcp": [
+        {
+          "name": "RequestAnimationFrame",
+          "phase": "I",
+          "startMs": 546.318,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frame": "45167DB5AD0F228668B84B3D3724405C",
+            "id": 1
+          }
+        },
+        {
+          "name": "RequestAnimationFrame",
+          "phase": "I",
+          "startMs": 546.987,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frame": "45167DB5AD0F228668B84B3D3724405C",
+            "id": 2
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "phase": "X",
+          "startMs": 560.717,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frame": "45167DB5AD0F228668B84B3D3724405C",
+            "id": 1
+          },
+          "durationMs": 0.081
+        },
+        {
+          "name": "FireAnimationFrame",
+          "phase": "X",
+          "startMs": 560.8,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frame": "45167DB5AD0F228668B84B3D3724405C",
+            "id": 2
+          },
+          "durationMs": 0.23
+        },
+        {
+          "name": "TimerInstall",
+          "phase": "I",
+          "startMs": 1236.585,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frame": "45167DB5AD0F228668B84B3D3724405C",
+            "timerId": 1,
+            "timeout": 0,
+            "singleShot": true
+          }
+        },
+        {
+          "name": "TimerFire",
+          "phase": "X",
+          "startMs": 1237.028,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frame": "45167DB5AD0F228668B84B3D3724405C",
+            "timerId": 1
+          },
+          "durationMs": 0.146
+        },
+        {
+          "name": "RequestAnimationFrame",
+          "phase": "I",
+          "startMs": 1237.147,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frame": "45167DB5AD0F228668B84B3D3724405C",
+            "id": 3
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "phase": "X",
+          "startMs": 1593.83,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frame": "45167DB5AD0F228668B84B3D3724405C",
+            "id": 3
+          },
+          "durationMs": 0.148
+        }
+      ],
+      "network": [
+        {
+          "requestId": "2AB059CC72FCF64CDF243417E2926789",
+          "type": "Document",
+          "startMs": 0.911,
+          "urlSha256": "c4c1b2970a9e6f09f17266977f02d24c28724f3cf5a89301324200b92a420ac1",
+          "responseMs": 508.644,
+          "mimeType": "text/html",
+          "status": 200,
+          "finishMs": 1235.079,
+          "encodedDataLength": 19046
+        },
+        {
+          "requestId": "86626.2",
+          "type": "Stylesheet",
+          "startMs": 511.817,
+          "urlSha256": "9a8fbdccd66eb652ab181327fa347d52d3fc83e54db66e777a1c0f44c3413e87",
+          "responseMs": 525.653,
+          "mimeType": "text/css",
+          "status": 200,
+          "finishMs": 526.305,
+          "encodedDataLength": 8116
+        },
+        {
+          "requestId": "86626.3",
+          "type": "Stylesheet",
+          "startMs": 512.005,
+          "urlSha256": "abfb795f016a5571d3c11ec328476a89bbe27b430fa165e2ecf4b2261b3fede1",
+          "responseMs": 533.112,
+          "mimeType": "text/css",
+          "status": 200,
+          "finishMs": 544.982,
+          "encodedDataLength": 33363
+        },
+        {
+          "requestId": "86626.4",
+          "type": "Stylesheet",
+          "startMs": 512.046,
+          "urlSha256": "1e23e15599c5b414c4e9f48e043cccb08e11ead63fcb95cbb9ac1a2a6652fd61",
+          "responseMs": 526.125,
+          "mimeType": "text/css",
+          "status": 200,
+          "finishMs": 526.739,
+          "encodedDataLength": 4508
+        },
+        {
+          "requestId": "86626.5",
+          "type": "Stylesheet",
+          "startMs": 512.105,
+          "urlSha256": "f1aed658e7bb27ad4b4df8f8249602ab718427ff5c2b723542397e5882a08875",
+          "responseMs": 526.224,
+          "mimeType": "text/css",
+          "status": 200,
+          "finishMs": 527.156,
+          "encodedDataLength": 2507
+        },
+        {
+          "requestId": "86626.6",
+          "type": "Image",
+          "startMs": 515.276,
+          "urlSha256": "80fb7c1f07b95ecb4d0b9a801e2ef1972ab8952449f5d4f66c144fc23456b462",
+          "responseMs": 527.865,
+          "mimeType": "image/avif",
+          "status": 200,
+          "finishMs": 528.146,
+          "encodedDataLength": 48415
+        },
+        {
+          "requestId": "86626.11",
+          "type": "Script",
+          "startMs": 515.407,
+          "urlSha256": "3825ea3f05b6b99065bae00a86d8bf82f35bf06b260441b521e8a598eae1aaeb",
+          "responseMs": 537.237,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 536.472,
+          "encodedDataLength": 5994
+        },
+        {
+          "requestId": "86626.12",
+          "type": "Script",
+          "startMs": 515.445,
+          "urlSha256": "2fd55cccae6d1807824e0129bfb1d0b945fb8c51598cc4d2778e34599e85c9ca",
+          "responseMs": 552.87,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 551.252,
+          "encodedDataLength": 47667
+        },
+        {
+          "requestId": "86626.13",
+          "type": "Script",
+          "startMs": 515.483,
+          "urlSha256": "6d7d6504b2d9ae45867e8b54a2cc99e850747fb9ef713c06bb89ea8102c7f819",
+          "responseMs": 558.317,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 553.427,
+          "encodedDataLength": 73777
+        },
+        {
+          "requestId": "86626.14",
+          "type": "Script",
+          "startMs": 515.514,
+          "urlSha256": "0dc00898d401451ba4d3894ac8b808b5e2388f1cb2d5a26a783a61a60a8c2ed9",
+          "responseMs": 541.184,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 540.543,
+          "encodedDataLength": 4280
+        },
+        {
+          "requestId": "86626.15",
+          "type": "Script",
+          "startMs": 515.545,
+          "urlSha256": "9413ff0a0292e4d232dde815fba955a38510ef0812beee9bc8d80058bd5f5043",
+          "responseMs": 546.428,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 545.867,
+          "encodedDataLength": 4109
+        },
+        {
+          "requestId": "86626.16",
+          "type": "Script",
+          "startMs": 515.572,
+          "urlSha256": "44d99c11f8f9b09e44a219d0f681102d47841de2ddc019ae9c4e796493415dc9",
+          "responseMs": 550.147,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 549.86,
+          "encodedDataLength": 1151
+        },
+        {
+          "requestId": "86626.17",
+          "type": "Script",
+          "startMs": 515.604,
+          "urlSha256": "35985cfe5fdb410add2b8dd40428bfa42f93f18f80b1937e1ce7923b91a92f8f",
+          "responseMs": 558.065,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 552.631,
+          "encodedDataLength": 9128
+        },
+        {
+          "requestId": "86626.18",
+          "type": "Script",
+          "startMs": 515.628,
+          "urlSha256": "cbf0772cba0e90b4fcd605f313ba4c928c6dda184d748c54c9274f14eb41a633",
+          "responseMs": 558.219,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 554.328,
+          "encodedDataLength": 13214
+        },
+        {
+          "requestId": "86626.141",
+          "type": "Font",
+          "startMs": 569.26,
+          "urlSha256": "361cded7f0f60029a5ed7c6af6f5d08521e996e750e60dc3896ee3d0f635a8a0",
+          "responseMs": 634.039,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 613.055,
+          "encodedDataLength": 25592
+        },
+        {
+          "requestId": "86626.142",
+          "type": "Font",
+          "startMs": 571.512,
+          "urlSha256": "2d86264bb5b15175c8b9a7168ca814fdcfe74169c4792cbdae753373fde7a76b",
+          "responseMs": 635.007,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 615.036,
+          "encodedDataLength": 109210
+        },
+        {
+          "requestId": "86626.135",
+          "type": "Font",
+          "startMs": 589.163,
+          "urlSha256": "1772be28da85fa068d717351f138ceb4ce884040de21d0bd19cd41d56d474b55",
+          "responseMs": 634.383,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 613.494,
+          "encodedDataLength": 52816
+        },
+        {
+          "requestId": "86626.130",
+          "type": "Font",
+          "startMs": 589.284,
+          "urlSha256": "61ef438446759f61a894fe2535d0415a745aff100ace81d8bce72f1109b09e36",
+          "responseMs": 634.81,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 615.191,
+          "encodedDataLength": 58000
+        },
+        {
+          "requestId": "86626.134",
+          "type": "Font",
+          "startMs": 596.164,
+          "urlSha256": "f8c74030a46f4cfaa95a65d4c8ac6343a0e714eaadf7b5b767774e2179efc308",
+          "responseMs": 634.622,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 615.314,
+          "encodedDataLength": 53336
+        },
+        {
+          "requestId": "86626.133",
+          "type": "Font",
+          "startMs": 596.254,
+          "urlSha256": "87607bc7296d459dcf65b0b5c4775cbfd37f56675b950b8e923212e101ea7ec0",
+          "responseMs": 635.487,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 622.643,
+          "encodedDataLength": 56860
+        },
+        {
+          "requestId": "86626.131",
+          "type": "Font",
+          "startMs": 596.285,
+          "urlSha256": "2afb873ffffaea9b568c9dcc3de250d5008b21206c572bcb9400e6d60e054bc1",
+          "responseMs": 635.296,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 622.87,
+          "encodedDataLength": 59000
+        },
+        {
+          "requestId": "86626.137",
+          "type": "Font",
+          "startMs": 647.207,
+          "urlSha256": "62c732a292c8731cab61fc5597898e4aff658dc52b9b00a4c014d826a023c14c",
+          "responseMs": 659.965,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 655.606,
+          "encodedDataLength": 77153
+        },
+        {
+          "requestId": "86626.126",
+          "type": "Font",
+          "startMs": 648.351,
+          "urlSha256": "9357bbc649802877423d8d83d93526dfddbbb6d5cc8f45a2737ccba3804d6d10",
+          "responseMs": 659.608,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 655.767,
+          "encodedDataLength": 64904
+        }
+      ],
+      "renderEvents": [
+        {
+          "name": "BeginMainThreadFrame",
+          "phase": "I",
+          "startMs": 560.673,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frameId": 4
+          }
+        },
+        {
+          "name": "BeginCommitCompositorFrame",
+          "phase": "I",
+          "startMs": 601.898,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frame": "45167DB5AD0F228668B84B3D3724405C"
+          }
+        },
+        {
+          "name": "ActivateLayerTree",
+          "phase": "I",
+          "startMs": 610.479,
+          "pid": 86626,
+          "tid": 79521807,
+          "args": {
+            "frameId": 4,
+            "layerTreeId": 1
+          }
+        },
+        {
+          "name": "ImageDecodeTask",
+          "phase": "X",
+          "startMs": 610.622,
+          "pid": 86626,
+          "tid": 79521803,
+          "args": {
+            "pixelRefId": 1116692781400
+          },
+          "durationMs": 11.364
+        },
+        {
+          "name": "BeginMainThreadFrame",
+          "phase": "I",
+          "startMs": 1593.796,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frameId": 5
+          }
+        },
+        {
+          "name": "BeginCommitCompositorFrame",
+          "phase": "I",
+          "startMs": 1595.058,
+          "pid": 86626,
+          "tid": 79521794,
+          "args": {
+            "frame": "45167DB5AD0F228668B84B3D3724405C"
+          }
+        },
+        {
+          "name": "ActivateLayerTree",
+          "phase": "I",
+          "startMs": 1596.075,
+          "pid": 86626,
+          "tid": 79521807,
+          "args": {
+            "frameId": 5,
+            "layerTreeId": 1
+          }
+        }
+      ]
+    },
+    {
+      "sample": 3,
+      "bindings": [
+        {
+          "file": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/zh-CN-gift-mobile-3.json",
+          "bytes": 674355,
+          "sha256": "e391a8c68b70b0d7e1e842bbdb94e5c3614c137ac09a94d9e5eb57bc8f13926e",
+          "captureManifestVerified": true
+        },
+        {
+          "file": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/zh-CN-gift-mobile-3-trace.json",
+          "bytes": 4691875,
+          "sha256": "34f836f5f54cc3844c2f239bf7973daa7fe180420fd3a6173edf877eea7df9ce",
+          "captureManifestVerified": true
+        },
+        {
+          "file": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/zh-CN-gift-mobile-3-devtools.json",
+          "bytes": 192174,
+          "sha256": "e2c1481e79dc2a8709854690932f916e19fbf2cbf7fd6b0be7fcd00f91f57a4a",
+          "captureManifestVerified": true
+        },
+        {
+          "file": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/zh-CN-gift-mobile-3-artifacts.json",
+          "bytes": 6872568,
+          "sha256": "39740dd282e370b95654871fa4a90af4bca5b0f5527d92c7bc4270a4aa9d1bb6",
+          "captureManifestVerified": true
+        },
+        {
+          "file": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/zh-CN-gift-mobile-3-config.json",
+          "bytes": 5335,
+          "sha256": "2844aacc91cdcd8f9795ad8c77b2772e8629b65779550a9daf758dcf725ba392",
+          "captureManifestVerified": true
+        }
+      ],
+      "navigation": {
+        "originUs": 5075206782701,
+        "pid": 86662,
+        "mainTid": 79522321,
+        "frame": "CFC3CA98D4AB3BD17FEEE415D23DC384",
+        "navigationId": "D77F6ABF7A724F14DA8D962DC09D4DDB"
+      },
+      "observed": {
+        "firstPaintMs": 316.253,
+        "fcpMs": 316.253,
+        "lcpMs": 316.253,
+        "lcpNodeId": 8,
+        "targetImageNetwork": {
+          "requestId": "86662.6",
+          "type": "Image",
+          "startMs": 265.454,
+          "urlSha256": "80fb7c1f07b95ecb4d0b9a801e2ef1972ab8952449f5d4f66c144fc23456b462",
+          "responseMs": 274.302,
+          "mimeType": "image/avif",
+          "status": 200,
+          "finishMs": 274.438,
+          "encodedDataLength": 48415
+        },
+        "targetNodePaints": [
+          {
+            "name": "PaintImage",
+            "phase": "X",
+            "startMs": 308.613,
+            "pid": 86662,
+            "tid": 79522321,
+            "args": {
+              "frame": "CFC3CA98D4AB3BD17FEEE415D23DC384",
+              "nodeId": 8
+            },
+            "durationMs": 0.048
+          },
+          {
+            "name": "PaintImage",
+            "phase": "X",
+            "startMs": 339.489,
+            "pid": 86662,
+            "tid": 79522321,
+            "args": {
+              "frame": "CFC3CA98D4AB3BD17FEEE415D23DC384",
+              "nodeId": 8
+            },
+            "durationMs": 0.029
+          },
+          {
+            "name": "PaintImage",
+            "phase": "X",
+            "startMs": 355.669,
+            "pid": 86662,
+            "tid": 79522321,
+            "args": {
+              "frame": "CFC3CA98D4AB3BD17FEEE415D23DC384",
+              "nodeId": 8
+            },
+            "durationMs": 0.024
+          }
+        ]
+      },
+      "simulatedSeparate": {
+        "fcpMs": 3463.8239999999996,
+        "lcpMs": 4363.824
+      },
+      "firstPresentedMainContentPipeline": {
+        "pid": 86662,
+        "tid": 79522334,
+        "localId": "0x3b",
+        "startMs": 284.532,
+        "endMs": 316.297,
+        "reporter": {
+          "affects_smoothness": false,
+          "checkerboarded_needs_raster": false,
+          "checkerboarded_needs_record": false,
+          "display_trace_id": "-1250639095077376000",
+          "frame_sequence": 939,
+          "frame_source": 4294967296,
+          "has_compositor_animation": false,
+          "has_high_latency": false,
+          "has_main_animation": false,
+          "has_missing_content": false,
+          "has_smooth_input_main": false,
+          "layer_tree_host_id": 1,
+          "scroll_state": "SCROLL_NONE",
+          "state": "STATE_PRESENTED_ALL",
+          "surface_frame_trace_id": "-1250639095077376000"
+        },
+        "stages": [
+          {
+            "name": "BeginImplFrameToSendBeginMainFrame",
+            "startMs": 285.957,
+            "endMs": 285.965,
+            "durationMs": 0.008
+          },
+          {
+            "name": "SendBeginMainFrameToCommit",
+            "startMs": 285.965,
+            "endMs": 309.428,
+            "durationMs": 23.463
+          },
+          {
+            "name": "Commit",
+            "startMs": 309.428,
+            "endMs": 309.476,
+            "durationMs": 0.048
+          },
+          {
+            "name": "EndCommitToActivation",
+            "startMs": 309.476,
+            "endMs": 314.388,
+            "durationMs": 4.912
+          },
+          {
+            "name": "Activation",
+            "startMs": 314.388,
+            "endMs": 314.419,
+            "durationMs": 0.031
+          },
+          {
+            "name": "EndActivateToSubmitCompositorFrame",
+            "startMs": 314.419,
+            "endMs": 314.592,
+            "durationMs": 0.173
+          },
+          {
+            "name": "SubmitCompositorFrameToPresentationCompositorFrame",
+            "startMs": 314.592,
+            "endMs": 316.253,
+            "durationMs": 1.661
+          },
+          {
+            "name": "SubmitToReceiveCompositorFrame",
+            "startMs": 314.592,
+            "endMs": 314.657,
+            "durationMs": 0.065
+          },
+          {
+            "name": "ReceiveCompositorFrameToStartDraw",
+            "startMs": 314.657,
+            "endMs": 314.744,
+            "durationMs": 0.087
+          },
+          {
+            "name": "StartDrawToSwapStart",
+            "startMs": 314.744,
+            "endMs": 316.25,
+            "durationMs": 1.506
+          },
+          {
+            "name": "BufferAvailableToBufferReady",
+            "startMs": 316.25,
+            "endMs": 316.251,
+            "durationMs": 0.001
+          },
+          {
+            "name": "BufferReadyToLatch",
+            "startMs": 316.251,
+            "endMs": 316.253,
+            "durationMs": 0.002
+          }
+        ]
+      },
+      "priorSubmittedDroppedPipeline": null,
+      "droppedFrames": {
+        "count": 0,
+        "firstMs": null,
+        "lastMs": null,
+        "sequences": [],
+        "reporterTypes": {},
+        "reporterStates": {}
+      },
+      "longestMainTasksBeforeLcp": [
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 286.438,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {},
+          "durationMs": 23.146
+        },
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 314.65,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {},
+          "durationMs": 21.238
+        },
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 262.181,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {},
+          "durationMs": 3.758
+        },
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 310.577,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {},
+          "durationMs": 3.283
+        },
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 280.314,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {},
+          "durationMs": 1.489
+        },
+        {
+          "name": "RunTask",
+          "phase": "X",
+          "startMs": 282.437,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {},
+          "durationMs": 0.898
+        }
+      ],
+      "rafAndTimersNearLcp": [
+        {
+          "name": "RequestAnimationFrame",
+          "phase": "I",
+          "startMs": 280.266,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {
+            "frame": "CFC3CA98D4AB3BD17FEEE415D23DC384",
+            "id": 1
+          }
+        },
+        {
+          "name": "RequestAnimationFrame",
+          "phase": "I",
+          "startMs": 280.662,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {
+            "frame": "CFC3CA98D4AB3BD17FEEE415D23DC384",
+            "id": 2
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "phase": "X",
+          "startMs": 286.469,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {
+            "frame": "CFC3CA98D4AB3BD17FEEE415D23DC384",
+            "id": 1
+          },
+          "durationMs": 0.045
+        },
+        {
+          "name": "FireAnimationFrame",
+          "phase": "X",
+          "startMs": 286.515,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {
+            "frame": "CFC3CA98D4AB3BD17FEEE415D23DC384",
+            "id": 2
+          },
+          "durationMs": 0.141
+        }
+      ],
+      "network": [
+        {
+          "requestId": "D77F6ABF7A724F14DA8D962DC09D4DDB",
+          "type": "Document",
+          "startMs": 0.574,
+          "urlSha256": "c4c1b2970a9e6f09f17266977f02d24c28724f3cf5a89301324200b92a420ac1",
+          "responseMs": 261.43,
+          "mimeType": "text/html",
+          "status": 200,
+          "finishMs": 791.2,
+          "encodedDataLength": 19046
+        },
+        {
+          "requestId": "86662.2",
+          "type": "Stylesheet",
+          "startMs": 263.235,
+          "urlSha256": "9a8fbdccd66eb652ab181327fa347d52d3fc83e54db66e777a1c0f44c3413e87",
+          "responseMs": 269.963,
+          "mimeType": "text/css",
+          "status": 200,
+          "finishMs": 271.303,
+          "encodedDataLength": 8116
+        },
+        {
+          "requestId": "86662.3",
+          "type": "Stylesheet",
+          "startMs": 263.353,
+          "urlSha256": "abfb795f016a5571d3c11ec328476a89bbe27b430fa165e2ecf4b2261b3fede1",
+          "responseMs": 273.427,
+          "mimeType": "text/css",
+          "status": 200,
+          "finishMs": 279.255,
+          "encodedDataLength": 33363
+        },
+        {
+          "requestId": "86662.4",
+          "type": "Stylesheet",
+          "startMs": 263.381,
+          "urlSha256": "1e23e15599c5b414c4e9f48e043cccb08e11ead63fcb95cbb9ac1a2a6652fd61",
+          "responseMs": 271.915,
+          "mimeType": "text/css",
+          "status": 200,
+          "finishMs": 273.465,
+          "encodedDataLength": 4508
+        },
+        {
+          "requestId": "86662.5",
+          "type": "Stylesheet",
+          "startMs": 263.439,
+          "urlSha256": "f1aed658e7bb27ad4b4df8f8249602ab718427ff5c2b723542397e5882a08875",
+          "responseMs": 273.324,
+          "mimeType": "text/css",
+          "status": 200,
+          "finishMs": 273.783,
+          "encodedDataLength": 2507
+        },
+        {
+          "requestId": "86662.6",
+          "type": "Image",
+          "startMs": 265.454,
+          "urlSha256": "80fb7c1f07b95ecb4d0b9a801e2ef1972ab8952449f5d4f66c144fc23456b462",
+          "responseMs": 274.302,
+          "mimeType": "image/avif",
+          "status": 200,
+          "finishMs": 274.438,
+          "encodedDataLength": 48415
+        },
+        {
+          "requestId": "86662.11",
+          "type": "Script",
+          "startMs": 265.545,
+          "urlSha256": "3825ea3f05b6b99065bae00a86d8bf82f35bf06b260441b521e8a598eae1aaeb",
+          "responseMs": 278.197,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 277.64,
+          "encodedDataLength": 5994
+        },
+        {
+          "requestId": "86662.12",
+          "type": "Script",
+          "startMs": 265.569,
+          "urlSha256": "2fd55cccae6d1807824e0129bfb1d0b945fb8c51598cc4d2778e34599e85c9ca",
+          "responseMs": 309.78,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 285.931,
+          "encodedDataLength": 47667
+        },
+        {
+          "requestId": "86662.13",
+          "type": "Script",
+          "startMs": 265.594,
+          "urlSha256": "6d7d6504b2d9ae45867e8b54a2cc99e850747fb9ef713c06bb89ea8102c7f819",
+          "responseMs": 310.181,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 287.979,
+          "encodedDataLength": 73777
+        },
+        {
+          "requestId": "86662.14",
+          "type": "Script",
+          "startMs": 265.614,
+          "urlSha256": "0dc00898d401451ba4d3894ac8b808b5e2388f1cb2d5a26a783a61a60a8c2ed9",
+          "responseMs": 282.322,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 280.01,
+          "encodedDataLength": 4280
+        },
+        {
+          "requestId": "86662.15",
+          "type": "Script",
+          "startMs": 265.638,
+          "urlSha256": "9413ff0a0292e4d232dde815fba955a38510ef0812beee9bc8d80058bd5f5043",
+          "responseMs": 284.026,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 283.709,
+          "encodedDataLength": 4109
+        },
+        {
+          "requestId": "86662.16",
+          "type": "Script",
+          "startMs": 265.655,
+          "urlSha256": "44d99c11f8f9b09e44a219d0f681102d47841de2ddc019ae9c4e796493415dc9",
+          "responseMs": 283.811,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 283.526,
+          "encodedDataLength": 1151
+        },
+        {
+          "requestId": "86662.17",
+          "type": "Script",
+          "startMs": 265.674,
+          "urlSha256": "35985cfe5fdb410add2b8dd40428bfa42f93f18f80b1937e1ce7923b91a92f8f",
+          "responseMs": 285.813,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 285.377,
+          "encodedDataLength": 9128
+        },
+        {
+          "requestId": "86662.18",
+          "type": "Script",
+          "startMs": 265.694,
+          "urlSha256": "cbf0772cba0e90b4fcd605f313ba4c928c6dda184d748c54c9274f14eb41a633",
+          "responseMs": 310.083,
+          "mimeType": "application/javascript",
+          "status": 200,
+          "finishMs": 287.117,
+          "encodedDataLength": 13214
+        },
+        {
+          "requestId": "86662.141",
+          "type": "Font",
+          "startMs": 292.092,
+          "urlSha256": "361cded7f0f60029a5ed7c6af6f5d08521e996e750e60dc3896ee3d0f635a8a0",
+          "responseMs": 335.938,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 314.513,
+          "encodedDataLength": 25592
+        },
+        {
+          "requestId": "86662.142",
+          "type": "Font",
+          "startMs": 293.139,
+          "urlSha256": "2d86264bb5b15175c8b9a7168ca814fdcfe74169c4792cbdae753373fde7a76b",
+          "responseMs": 336.578,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 315.374,
+          "encodedDataLength": 109210
+        },
+        {
+          "requestId": "86662.135",
+          "type": "Font",
+          "startMs": 302.24,
+          "urlSha256": "1772be28da85fa068d717351f138ceb4ce884040de21d0bd19cd41d56d474b55",
+          "responseMs": 336.139,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 314.905,
+          "encodedDataLength": 52816
+        },
+        {
+          "requestId": "86662.130",
+          "type": "Font",
+          "startMs": 302.308,
+          "urlSha256": "61ef438446759f61a894fe2535d0415a745aff100ace81d8bce72f1109b09e36",
+          "responseMs": 336.291,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 315.253,
+          "encodedDataLength": 58000
+        },
+        {
+          "requestId": "86662.134",
+          "type": "Font",
+          "startMs": 306.092,
+          "urlSha256": "f8c74030a46f4cfaa95a65d4c8ac6343a0e714eaadf7b5b767774e2179efc308",
+          "responseMs": 336.44,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 315.664,
+          "encodedDataLength": 53336
+        },
+        {
+          "requestId": "86662.133",
+          "type": "Font",
+          "startMs": 306.129,
+          "urlSha256": "87607bc7296d459dcf65b0b5c4775cbfd37f56675b950b8e923212e101ea7ec0",
+          "responseMs": 336.781,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 319.812,
+          "encodedDataLength": 56860
+        },
+        {
+          "requestId": "86662.131",
+          "type": "Font",
+          "startMs": 306.149,
+          "urlSha256": "2afb873ffffaea9b568c9dcc3de250d5008b21206c572bcb9400e6d60e054bc1",
+          "responseMs": 336.92,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 319.88,
+          "encodedDataLength": 59000
+        },
+        {
+          "requestId": "86662.137",
+          "type": "Font",
+          "startMs": 337.48,
+          "urlSha256": "62c732a292c8731cab61fc5597898e4aff658dc52b9b00a4c014d826a023c14c",
+          "responseMs": 345.821,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 343.853,
+          "encodedDataLength": 77153
+        },
+        {
+          "requestId": "86662.126",
+          "type": "Font",
+          "startMs": 338.236,
+          "urlSha256": "9357bbc649802877423d8d83d93526dfddbbb6d5cc8f45a2737ccba3804d6d10",
+          "responseMs": 345.595,
+          "mimeType": "font/woff2",
+          "status": 200,
+          "finishMs": 343.988,
+          "encodedDataLength": 64904
+        }
+      ],
+      "renderEvents": [
+        {
+          "name": "BeginMainThreadFrame",
+          "phase": "I",
+          "startMs": 286.442,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {
+            "frameId": 4
+          }
+        },
+        {
+          "name": "BeginCommitCompositorFrame",
+          "phase": "I",
+          "startMs": 309.404,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {
+            "frame": "CFC3CA98D4AB3BD17FEEE415D23DC384"
+          }
+        },
+        {
+          "name": "BeginMainThreadFrame",
+          "phase": "I",
+          "startMs": 310.373,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {
+            "frameId": 5
+          }
+        },
+        {
+          "name": "BeginCommitCompositorFrame",
+          "phase": "I",
+          "startMs": 310.551,
+          "pid": 86662,
+          "tid": 79522321,
+          "args": {
+            "frame": "CFC3CA98D4AB3BD17FEEE415D23DC384"
+          }
+        },
+        {
+          "name": "ActivateLayerTree",
+          "phase": "I",
+          "startMs": 314.415,
+          "pid": 86662,
+          "tid": 79522334,
+          "args": {
+            "frameId": 4,
+            "layerTreeId": 1
+          }
+        },
+        {
+          "name": "ActivateLayerTree",
+          "phase": "I",
+          "startMs": 314.645,
+          "pid": 86662,
+          "tid": 79522334,
+          "args": {
+            "frameId": 5,
+            "layerTreeId": 1
+          }
+        },
+        {
+          "name": "ImageDecodeTask",
+          "phase": "X",
+          "startMs": 318.536,
+          "pid": 86662,
+          "tid": 79522330,
+          "args": {
+            "pixelRefId": 1322851204696
+          },
+          "durationMs": 5.512
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "PaintImage is recording evidence, not presentation.",
+    "Pipeline stages are bound by pid/tid/id2.local, reporter interval and frame sequence.",
+    "BACKFILL is not delivered per-vsync callback evidence.",
+    "Missing unenabled events prove neither CPU idle nor page visibility.",
+    "Prior frame531 long outstanding interval does not expose ACK or reason.",
+    "All old samples and performance budgets remain valid."
+  ]
+}

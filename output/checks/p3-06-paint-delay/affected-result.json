@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "--test",
+    "apps/api/scripts/storefront-gift-trace-verification.test.mjs",
+    "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+    "apps/api/scripts/storefront-gift-trace-analysis.test.mjs",
+    "apps/api/scripts/storefront-gift-read-verification.test.mjs"
+  ],
+  "startedAt": "2026-09-17T12:45:31.815512+00:00",
+  "completedAt": "2026-09-17T12:45:32.325130+00:00",
+  "elapsedSeconds": 0.51,
+  "exitCode": 0
+}

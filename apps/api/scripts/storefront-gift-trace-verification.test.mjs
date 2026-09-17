@@ -6,6 +6,7 @@ import test from "node:test";
 import {
   collectGiftTraceAttempts,
   giftTraceChromeOptions,
+  verifyGiftTraceComparison,
 } from "./storefront-gift-trace-verification.mjs";
 
 const prefix = "STOREFRONT_TEST_FETCH_DIAGNOSTIC ";
@@ -230,6 +231,161 @@ for (const corruption of [
         assert.equal(saved.status, "FAIL");
         assert.equal(saved.attempts.length, 3);
         assert.ok(saved.attempts[0].failure);
+      },
+    );
+  });
+
+const compositorCategories = [
+  "cc",
+  "disabled-by-default-cc.debug",
+  "renderer.scheduler",
+  "disabled-by-default-renderer.scheduler",
+  "blink",
+  "viz",
+];
+
+function compositorResult(raw) {
+  for (const settings of [raw.lhr.configSettings, raw.artifacts.settings])
+    settings.additionalTraceCategories = compositorCategories.join(",");
+  return raw;
+}
+
+test("default and explicit standard profiles preserve the original Lighthouse inputs", async () => {
+  for (const traceProfile of [undefined, "standard"])
+    await harness("candidate", undefined, async ({ context, run, inputs }) => {
+      const report = await collectGiftTraceAttempts(
+        { ...context, ...(traceProfile ? { traceProfile } : {}) },
+        run,
+      );
+      assert.equal(report.conditions.traceProfile, "standard");
+      assert.equal(report.conditions.defaultTraceCategories, true);
+      assert.deepEqual(report.conditions.additionalTraceCategories, []);
+      for (const [, options] of inputs)
+        assert.deepEqual(options, {
+          port: 12345,
+          logLevel: "error",
+          output: ["json", "html"],
+          onlyCategories: [
+            "performance",
+            "accessibility",
+            "best-practices",
+            "seo",
+            "storefront",
+          ],
+          formFactor: "mobile",
+          throttlingMethod: "simulate",
+        });
+    });
+});
+
+test("compositor diagnostics append only explicit trace categories and retain the exact options", async () => {
+  await harness(
+    "candidate",
+    compositorResult,
+    async ({ directory, context, run, inputs, calls }) => {
+      const report = await collectGiftTraceAttempts(
+        { ...context, traceProfile: "compositor-diagnostic" },
+        run,
+      );
+      assert.equal(calls(), 3);
+      assert.equal(report.status, "COLLECTED_DIAGNOSTIC_BUDGET_FAILED");
+      assert.equal(report.conditions.traceProfile, "compositor-diagnostic");
+      assert.equal(report.conditions.defaultTraceCategories, false);
+      assert.equal(report.conditions.formalPerformanceAcceptance, false);
+      assert.deepEqual(
+        report.conditions.additionalTraceCategories,
+        compositorCategories,
+      );
+      for (const entry of report.attempts) {
+        const input = inputs[entry.attempt - 1][1];
+        assert.equal(
+          input.additionalTraceCategories,
+          compositorCategories.join(","),
+        );
+        const saved = JSON.parse(
+          await readFile(
+            path.join(directory, entry.name + "-config.json"),
+            "utf8",
+          ),
+        );
+        assert.deepEqual(saved.options, input);
+        assert.deepEqual(
+          saved.launchOptions,
+          giftTraceChromeOptions("test-pin"),
+        );
+        assert.equal(
+          saved.lhrSettings.additionalTraceCategories,
+          input.additionalTraceCategories,
+        );
+        assert.equal(
+          saved.artifactSettings.additionalTraceCategories,
+          input.additionalTraceCategories,
+        );
+      }
+    },
+  );
+});
+
+test("unknown trace profiles fail closed before collecting or starting the TEST fixture callback", async () => {
+  await harness("candidate", undefined, async ({ context, run, calls }) => {
+    await assert.rejects(
+      collectGiftTraceAttempts({ ...context, traceProfile: "invented" }, run),
+      /Unknown gift trace profile/u,
+    );
+    assert.equal(calls(), 0);
+  });
+  const previous = process.env.FAN_SUPPORT_ACCEPTANCE_READ_DIAGNOSTICS;
+  process.env.FAN_SUPPORT_ACCEPTANCE_READ_DIAGNOSTICS = "1";
+  try {
+    await assert.rejects(
+      verifyGiftTraceComparison({
+        manifest: { environment: "TEST" },
+        traceProfile: "invented",
+      }),
+      /Unknown gift trace profile/u,
+    );
+  } finally {
+    if (previous === undefined)
+      delete process.env.FAN_SUPPORT_ACCEPTANCE_READ_DIAGNOSTICS;
+    else process.env.FAN_SUPPORT_ACCEPTANCE_READ_DIAGNOSTICS = previous;
+  }
+});
+
+for (const source of ["lhr", "artifacts"])
+  test(`diagnostic ${source} settings must confirm the requested categories after all samples are retained`, async () => {
+    await harness(
+      "candidate",
+      (raw, attempt) => {
+        compositorResult(raw);
+        if (attempt === 1) {
+          const settings =
+            source === "lhr" ? raw.lhr.configSettings : raw.artifacts.settings;
+          settings.additionalTraceCategories = "cc";
+        }
+        return raw;
+      },
+      async ({ directory, context, run, calls }) => {
+        await assert.rejects(
+          collectGiftTraceAttempts(
+            { ...context, traceProfile: "compositor-diagnostic" },
+            run,
+          ),
+          AggregateError,
+        );
+        assert.equal(calls(), 3);
+        const saved = JSON.parse(
+          await readFile(path.join(directory, "results.json"), "utf8"),
+        );
+        assert.equal(saved.status, "FAIL");
+        assert.equal(saved.attempts.length, 3);
+        assert.match(saved.attempts[0].failure.assertion, /trace categories/u);
+        const raw = JSON.parse(
+          await readFile(
+            path.join(directory, "zh-CN-gift-mobile-1-artifacts.json"),
+            "utf8",
+          ),
+        );
+        assert.ok(raw.Trace.traceEvents.length > 0);
       },
     );
   });

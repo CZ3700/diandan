@@ -4,6 +4,26 @@
 > 任务：6  
 > 解锁条件：Phase 1 与 Phase 2 退出门禁均通过
 
+## P3-06 首次绘制等待定位（2026-09-17）
+
+- Owner：Codex `/root`，继续 Lane D 唯一 executor；开始 2026-09-17T12:29:17Z，基线 `a560ac7`，分支 `codex/p3-06-performance-resume`。27 DONE / 2 IN_PROGRESS / 20 PENDING 与 Phase5 LOCKED 保持。
+- 范围：优先离线对照同一构建的慢/快原始样本，定位图片完成至首次绘制约1069ms等待；仅在证据支持时实施最小修复。不修改性能阈值、图片质量、字体覆盖、Chrome设置或支付边界。
+- 所有权：root 独占进度/Git、必要真实运行与最终集成；gift_read_impl 只读审计页面/CSS/SSR显示时序；gift_read_measure 只读对照原始trace慢快事件；gift_read_review 只读审核测量机制与根因推断。报告仅写新 `output/checks/p3-06-paint-delay/` 各自命名文件，后续代码修改另行登记，不领取其他任务。
+- 取证增补：原trace已将983.518ms定位在同一PipelineReporter的激活后至提交前；尚缺调度原因。gift_read_impl仅拥有 `apps/api/scripts/storefront-gift-trace-verification.mjs` 及其 `.test.mjs`，为TEST采集增加显式compositor诊断profile（默认设置不变），先RED→GREEN；新增profile只追加trace类别并在结果标注，不改Chrome运行行为或预算。root在当前生产源码固定3次采集该profile，所有样本保留，不与默认trace直接声称性能收益。
+- 验证：先给出单一可证伪假设；行为修改先RED后GREEN并跑受影响测试与check:dev。生产页面若修改则补真实七语言双端/键盘/错误/reduced-motion回归和固定数量同配置诊断；纯调查准确记录局限。独立复核及S.U.P.E.R后仅本地提交。
+- 验证修复增补：首次check:dev在lint失败，2333错误全部来自上轮保留的19份下载压缩脚本（`output/checks/p3-06-image-response/script-comparison/bodies/`），不是本轮源码。root仅在eslint全局ignore增加该准确原始响应目录，保留旧文件逐SHA；用ESLint API证明该目录被当数据、相邻分析器与生产源码仍被检查，再完整重跑check:dev。该配置调整发生在固定3次采集结束后，单独记录源码差异，不改浏览器构建或采样。
+- 保护：当前未跟踪逐文件SHA保存在该目录 `initial-untracked.json`，旧证据不覆盖。R-08/R-12/R-13/R-17、性能/人工/真实商户门保留，不push/merge/部署。
+
+### 首次绘制等待检查点结果（2026-09-17）
+
+- 原同构建慢/快样本已按同renderer/compositor/local reporter/frame sequence绑定：激活后至提交983.518/0.173ms，提交至呈现3.283/1.661ms并精确对应FP/FCP/LCP。主图不在隐藏边界，页面/CSS/字体网络与长JS等待不能解释该阶段；59个DroppedFrame是BACKFILL，不冒充实际帧回调。只定位环节，根因UNKNOWN、未修复。
+- TEST工具新增显式compositor-diagnostic profile，默认完整options与Chrome参数不变，只追加六类追踪；未知profile拒绝，返回settings不符也先保留3份固定原证据再FAIL。RED为9通过/5预期失败，GREEN14/14；相关4工具文件25 tests通过。
+- 当前生产应用无修改，固定3次真实PG/TLS S3/worker/Next扩展取证：32,461协议断言PASS，27原文件长度/SHA/配置/同导航内容/0+1读取通过；官方6个FCP/LCP复算差0。实际LCP628.637/433.427/371.471ms，激活后至提交0.225/0.389/0.341ms，未复现旧异常；已取得pending/ACK及真实BeginImplFrame。模拟LCP5273.910/2785.393/2110.707ms、预算FAILED，额外观测有成本，不与默认profile声明收益。原48报告与本轮3扩展报告分列，不是正式矩阵/RUM。
+- check:dev首次lint误扫上轮19份压缩脚本原始响应，2333错误全部限于该目录。root只增加精确目录ignore，ESLint API确认相邻4分析器/源码仍检查；原证据未动。最终全仓check:dev exit0/28.463秒，typecheck/test62/62、build36/36；adapter/artifact边界通过。
+- 原4419未跟踪逐SHA不变，2229采集输入仅在采集后增加eslint配置差异（单列post-capture-source-delta）。fixture正常exit0，API/媒体/Next端口65486/65487/65488无监听。无生产UI变化，不重复上轮七语言UI；本轮不声称手机/VoiceOver/人工/商户或完整pnpm check通过。
+- 显式暂存30个准确路径后秘密扫描exit0/40.430秒；最终非作者独立复核ACCEPT局部检查点。保留首失败/最终通过日志与全部固定样本。S.U.P.E.R十项按本轮工具及局部验证范围通过，完整阶段性能仍FAILED，不把取证通过当产品修复。
+- 证据与复跑：`output/checks/p3-06-paint-delay/README.md`、trace/profile/源码绑定/保护与final-verification；全部原trace留在 `run-2026-09-17T12-38-57-411Z`。仅本地检查点；P3-06仍IN_PROGRESS、27/2/20不变。下一入口为异常同导航pending/ACK与BeginFrame需求关联，不降低预算或调整Chrome特性。
+
 ## P3-06 目录入口隔离与图片响应调查（2026-09-17）
 
 - Owner：Codex `/root`，继续唯一 Lane D executor；开始 2026-09-17T08:32:54.203796+00:00，本地基线 `92ae73c`，分支 `codex/p3-06-performance-resume`。仅接续 ACTIVE P3-06，27/2/20 与 Phase5 LOCKED 保持。

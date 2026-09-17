@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "status": "ALL_REPLAYS_MATCHED",
+  "input": "/Users/mario/Desktop/下单/output/checks/p3-06-storefront-acceptance/run-2026-09-17T12-38-57-411Z/browser-attempt-1/gift-render-trace",
+  "generatedAt": "2026-09-17T12:45:31.902Z",
+  "runs": [
+    {
+      "name": "zh-CN-gift-mobile-1",
+      "status": "REPLAY_MATCHED",
+      "equivalence": {
+        "matched": true,
+        "toleranceMs": 0.000001,
+        "values": [
+          {
+            "metric": "FCP",
+            "expectedMs": 1511.955,
+            "replayMs": 1511.955,
+            "differenceMs": 0
+          },
+          {
+            "metric": "LCP",
+            "expectedMs": 5273.91,
+            "replayMs": 5273.91,
+            "differenceMs": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "zh-CN-gift-mobile-2",
+      "status": "REPLAY_MATCHED",
+      "equivalence": {
+        "matched": true,
+        "toleranceMs": 0.000001,
+        "values": [
+          {
+            "metric": "FCP",
+            "expectedMs": 1671.393,
+            "replayMs": 1671.393,
+            "differenceMs": 0
+          },
+          {
+            "metric": "LCP",
+            "expectedMs": 2785.393,
+            "replayMs": 2785.393,
+            "differenceMs": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "zh-CN-gift-mobile-3",
+      "status": "REPLAY_MATCHED",
+      "equivalence": {
+        "matched": true,
+        "toleranceMs": 0.000001,
+        "values": [
+          {
+            "metric": "FCP",
+            "expectedMs": 1510.707,
+            "replayMs": 1510.707,
+            "differenceMs": 0
+          },
+          {
+            "metric": "LCP",
+            "expectedMs": 2110.707,
+            "replayMs": 2110.707,
+            "differenceMs": 0
+          }
+        ]
+      }
+    }
+  ],
+  "performanceAcceptance": false
+}

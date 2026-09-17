@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-17T12:52:41.338436+00:00",
+  "scope": "Local diagnostic tooling and archive lint boundary only; production application unchanged",
+  "source": "source-binding.json",
+  "postCaptureConfigDelta": "post-capture-source-delta.json",
+  "red": {
+    "tests": 14,
+    "passed": 9,
+    "failed": 5,
+    "exitCode": 1
+  },
+  "green": {
+    "tests": 14,
+    "passed": 14,
+    "exitCode": 0
+  },
+  "affected": {
+    "schemaVersion": 1,
+    "command": [
+      "mise",
+      "exec",
+      "node@24.20.0",
+      "--",
+      "node",
+      "--test",
+      "apps/api/scripts/storefront-gift-trace-verification.test.mjs",
+      "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+      "apps/api/scripts/storefront-gift-trace-analysis.test.mjs",
+      "apps/api/scripts/storefront-gift-read-verification.test.mjs"
+    ],
+    "startedAt": "2026-09-17T12:45:31.815512+00:00",
+    "completedAt": "2026-09-17T12:45:32.325130+00:00",
+    "elapsedSeconds": 0.51,
+    "exitCode": 0,
+    "tests": 25
+  },
+  "developmentGateFirst": {
+    "schemaVersion": 1,
+    "command": [
+      "mise",
+      "exec",
+      "node@24.20.0",
+      "--",
+      "corepack",
+      "pnpm",
+      "check:dev"
+    ],
+    "startedAt": "2026-09-17T12:45:38.992657+00:00",
+    "completedAt": "2026-09-17T12:45:54.085967+00:00",
+    "elapsedSeconds": 15.093,
+    "exitCode": 1
+  },
+  "developmentGateFinal": {
+    "schemaVersion": 1,
+    "command": [
+      "mise",
+      "exec",
+      "node@24.20.0",
+      "--",
+      "corepack",
+      "pnpm",
+      "check:dev"
+    ],
+    "startedAt": "2026-09-17T12:47:18.051047+00:00",
+    "completedAt": "2026-09-17T12:47:46.513889+00:00",
+    "elapsedSeconds": 28.463,
+    "exitCode": 0
+  },
+  "workspaceTasks": {
+    "typecheck": {
+      "successful": 62,
+      "total": 62,
+      "cached": 61
+    },
+    "test": {
+      "successful": 62,
+      "total": 62,
+      "cached": 61
+    },
+    "build": {
+      "successful": 36,
+      "total": 36,
+      "cached": 35
+    }
+  },
+  "boundaries": [
+    {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "scripts/check-adapter-boundaries.mjs"
+      ],
+      "startedAt": "2026-09-17T12:48:26.497449+00:00",
+      "completedAt": "2026-09-17T12:48:30.512542+00:00",
+      "elapsedSeconds": 4.015,
+      "exitCode": 0
+    },
+    {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "scripts/check-build-artifacts.mjs"
+      ],
+      "startedAt": "2026-09-17T12:48:26.499173+00:00",
+      "completedAt": "2026-09-17T12:48:27.059332+00:00",
+      "elapsedSeconds": 0.56,
+      "exitCode": 0
+    }
+  ],
+  "realFixture": {
+    "schemaVersion": 1,
+    "command": [
+      "mise",
+      "exec",
+      "node@24.20.0",
+      "--",
+      "node",
+      "output/checks/p3-06-paint-delay/run-diagnostic.mjs"
+    ],
+    "startedAt": "2026-09-17T12:38:54.821782+00:00",
+    "completedAt": "2026-09-17T12:44:36.862812+00:00",
+    "elapsedSeconds": 341.989,
+    "exitCode": 0,
+    "protocolAssertions": 32461,
+    "traceProfile": "compositor-diagnostic",
+    "fixedNavigations": 3,
+    "rawFilesVerified": 27,
+    "formalPerformanceAcceptance": false,
+    "status": "COLLECTED_DIAGNOSTIC_BUDGET_FAILED",
+    "servicePortChecks": [
+      {
+        "port": 65486,
+        "listening": false,
+        "checkExitCode": 1
+      },
+      {
+        "port": 65488,
+        "listening": false,
+        "checkExitCode": 1
+      },
+      {
+        "port": 65487,
+        "listening": false,
+        "checkExitCode": 1
+      }
+    ]
+  },
+  "offlineReplay": {
+    "status": "ALL_REPLAYS_MATCHED",
+    "metricComparisons": 6,
+    "maximumDifferenceMs": 0
+  },
+  "protection": {
+    "schemaVersion": 1,
+    "checkedAt": "2026-09-17T12:48:54.557621+00:00",
+    "initialUntrackedCount": 4419,
+    "changedInitialFiles": [],
+    "captureInputsCount": 2229,
+    "allowedPostCaptureSourceChanges": [
+      {
+        "path": "eslint.config.mjs",
+        "sha256": "58c76f5768685041331be9e157794e19f2facf09987fac473e8d35f22435023b"
+      }
+    ],
+    "allOtherCaptureInputsUnchanged": true,
+    "productionApplicationFilesChanged": false
+  },
+  "rootCause": "UNKNOWN; wait localized after compositor activation before submission; not reproduced in three expanded traces; not fixed",
+  "secrets": {
+    "schemaVersion": 1,
+    "command": [
+      "mise",
+      "exec",
+      "node@24.20.0",
+      "--",
+      "corepack",
+      "pnpm",
+      "security:secrets"
+    ],
+    "startedAt": "2026-09-17T12:51:16.159621+00:00",
+    "completedAt": "2026-09-17T12:51:56.589658+00:00",
+    "elapsedSeconds": 40.43,
+    "exitCode": 0,
+    "scope": "All workspace and explicitly staged checkpoint files"
+  },
+  "independentReview": "ACCEPT local diagnostic tools, integrity and development checks; root cause UNKNOWN; formal phase performance/manual/merchant gates OPEN",
+  "super": {
+    "oneThroughNine": "PASS static review",
+    "ten": "25 affected, check:dev, actual protocol and trace integrity PASS; full phase performance remains FAILED"
+  },
+  "fullPnpmCheckRun": false,
+  "freshSevenLocaleUiRun": false,
+  "physicalDeviceEvidence": false,
+  "gitPolicy": "Local commit only; no push/merge/deploy",
+  "phaseStatus": "P3-06 IN_PROGRESS; Phase5 LOCKED; 27 DONE / 2 IN_PROGRESS / 20 PENDING",
+  "status": "LOCAL_DIAGNOSTIC_CHECKPOINT_ACCEPTED_PHASE_REMAINS_OPEN"
+}

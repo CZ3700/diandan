@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "reference": "output/checks/p3-06-image-response/candidate-source.json",
+  "referenceFileSha256": "7ee4eb8e380c8b3bceba4650237a1a088820599ef2a91456b7557898aa67b7ee",
+  "referenceReconstruction": "output/checks/p3-06-image-response/source-binding.json candidate",
+  "head": "a560ac7abfea6fb019baf32912269843c43ba30d",
+  "capturedAt": "2026-09-17T12:38:54.789417+00:00",
+  "fileCount": 2229,
+  "aggregateSha256": "4fc3d0aa480b058cd9127edf575d96077e37977f15b4a8a4d4b8bf197697fcc3",
+  "changedOrAdded": [
+    {
+      "path": "apps/api/scripts/storefront-gift-trace-verification.mjs",
+      "sha256": "5c72cf5ef39c2aac454ee04eb5d22e12c21a1b3cf862bbca17363f7cd77c16a9"
+    },
+    {
+      "path": "apps/api/scripts/storefront-gift-trace-verification.test.mjs",
+      "sha256": "bcd398a0ca8d43eeb181c7c09c93ab18d3e3300e1fcfdf7e10bfb93eb58171f0"
+    }
+  ],
+  "productionApplicationFilesChanged": false
+}

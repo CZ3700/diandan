@@ -15,6 +15,22 @@ const safeFailure = (error) => ({
   name: error?.name ?? "UnknownFailure",
   assertion: error?.name === "AssertionError" ? error.message : null,
 });
+const compositorTraceCategories = [
+  "cc",
+  "disabled-by-default-cc.debug",
+  "renderer.scheduler",
+  "disabled-by-default-renderer.scheduler",
+  "blink",
+  "viz",
+];
+
+function traceCategoriesFor(profile) {
+  assert.ok(
+    ["standard", "compositor-diagnostic"].includes(profile),
+    "Unknown gift trace profile",
+  );
+  return profile === "compositor-diagnostic" ? compositorTraceCategories : [];
+}
 
 /** Keep the original comparison launcher unchanged; no renderer experiment flags. */
 export function giftTraceChromeOptions(pin) {
@@ -31,7 +47,8 @@ export function giftTraceChromeOptions(pin) {
   };
 }
 
-function optionsFor(port) {
+function optionsFor(port, traceProfile = "standard") {
+  const categories = traceCategoriesFor(traceProfile);
   return {
     port,
     logLevel: "error",
@@ -45,6 +62,9 @@ function optionsFor(port) {
     ],
     formFactor: "mobile",
     throttlingMethod: "simulate",
+    ...(categories.length > 0
+      ? { additionalTraceCategories: categories.join(",") }
+      : {}),
   };
 }
 
@@ -130,7 +150,7 @@ async function retainAttempt({
   return files;
 }
 
-function validateAttempt(raw, reads, mode, url) {
+function validateAttempt(raw, reads, mode, url, traceProfile) {
   assert.ok(
     raw?.lhr && raw.artifacts,
     "Lighthouse must return its LHR and original artifacts",
@@ -179,6 +199,19 @@ function validateAttempt(raw, reads, mode, url) {
   );
   assert.equal(raw.lhr.configSettings?.formFactor, "mobile");
   assert.equal(raw.lhr.configSettings?.throttlingMethod, "simulate");
+  if (traceProfile === "compositor-diagnostic") {
+    const categories = traceCategoriesFor(traceProfile).join(",");
+    assert.equal(
+      raw.lhr.configSettings?.additionalTraceCategories,
+      categories,
+      "LHR trace categories must match the diagnostic profile",
+    );
+    assert.equal(
+      raw.artifacts.settings?.additionalTraceCategories,
+      categories,
+      "artifact trace categories must match the diagnostic profile",
+    );
+  }
   assert.deepEqual(
     reads.counts,
     { GIFT_CONTENT: mode === "baseline" ? 1 : 0, STOREFRONT_GIFT: 1 },
@@ -195,6 +228,7 @@ export async function collectGiftTraceAttempts(
   {
     directory,
     mode,
+    traceProfile = "standard",
     target,
     url,
     options,
@@ -204,11 +238,12 @@ export async function collectGiftTraceAttempts(
   },
   runLighthouse,
 ) {
+  const additionalTraceCategories = traceCategoriesFor(traceProfile);
   assert.ok(["baseline", "candidate"].includes(mode));
   assert.equal(target.locale, "zh-CN");
   assert.equal(target.kind, "gift");
   await mkdir(directory, { recursive: true });
-  const flags = optionsFor(options.port);
+  const flags = optionsFor(options.port, traceProfile);
   const config = createAcceptanceLighthouseConfig(target, url);
   const report = {
     schemaVersion: 1,
@@ -225,7 +260,9 @@ export async function collectGiftTraceAttempts(
       publicApiPublicationReadsBeforeGroup: 1,
       browserPrewarming: false,
       allScheduledAttemptsRetained: true,
-      defaultTraceCategories: true,
+      traceProfile,
+      defaultTraceCategories: traceProfile === "standard",
+      additionalTraceCategories,
       serverAndImageCacheMayBeWarm: true,
     },
     attempts: [],
@@ -291,7 +328,7 @@ export async function collectGiftTraceAttempts(
         path.join(directory, name + "-reads.json"),
         json(entry.reads),
       );
-      validateAttempt(raw, entry.reads, mode, url);
+      validateAttempt(raw, entry.reads, mode, url, traceProfile);
       runs.push(raw.lhr);
     } catch (error) {
       entry.failure = safeFailure(error);
@@ -380,6 +417,7 @@ export async function verifyGiftTraceComparison({
   output,
   next,
   mode,
+  traceProfile = "standard",
   progress,
 }) {
   assert.equal(
@@ -388,6 +426,7 @@ export async function verifyGiftTraceComparison({
     "trace callback requires explicit TEST diagnostics",
   );
   assert.equal(manifest.environment, "TEST");
+  traceCategoriesFor(traceProfile);
   const directory = path.join(output, "gift-render-trace");
   await mkdir(directory, { recursive: true });
   const target = acceptancePages(fixtures).find(
@@ -430,9 +469,10 @@ export async function verifyGiftTraceComparison({
       {
         directory,
         mode,
+        traceProfile,
         target,
         url: origin + target.path,
-        options: optionsFor(chrome.port),
+        options: optionsFor(chrome.port, traceProfile),
         launchOptions,
         readNativeLog: () => readFile(runtimeFile, "utf8"),
         progress,
