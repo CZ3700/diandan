@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-17T04:40:37.500571+00:00",
+  "status": "LOCAL_DIAGNOSTIC_CHECKPOINT_ACCEPTED_PERFORMANCE_OPEN",
+  "task": "P3-06",
+  "lane": "D",
+  "baseCommit": "0fd6fd0019ee2c993651bb59f02698b44d5cb90e",
+  "scope": "Six TEST diagnostic tool/test files; production inputs unchanged; local-only checkpoint",
+  "counts": {
+    "done": 27,
+    "inProgress": 2,
+    "pending": 20,
+    "total": 49
+  },
+  "phase5": "LOCKED",
+  "measurements": {
+    "navigations": 6,
+    "baselineNavigations": 3,
+    "candidateNavigations": 3,
+    "captureFileHashesVerified": 54,
+    "sameNavigationContentValid": 6,
+    "officialReplayMetrics": 12,
+    "metricsWithExactZeroDifference": 12,
+    "baselineLcpMedianMs": 3311.5965,
+    "candidateLcpMedianMs": 2620.4388,
+    "budgetLcpMs": 2500,
+    "groupStatuses": [
+      "COLLECTED_DIAGNOSTIC_BUDGET_FAILED",
+      "COLLECTED_DIAGNOSTIC_BUDGET_FAILED"
+    ],
+    "priorDiagnosticSamplesRetained": 36,
+    "formalPerformanceAcceptance": false,
+    "historicalOneSecondPaintGapResolved": false
+  },
+  "checks": {
+    "combinedToolTests": 28,
+    "protocolAssertions": 32461,
+    "developmentCheck": {
+      "exitCode": 0,
+      "typecheckTasks": 62,
+      "testTasks": 62,
+      "buildTasks": 36,
+      "typecheckCached": 61,
+      "testCached": 61,
+      "buildCached": 35
+    },
+    "sourceProtection": "protection-final.json",
+    "sourceManifest": "final-source.json",
+    "captureProof": "capture-verification.json",
+    "replayDetails": "analysis-summary.json",
+    "testFirstDetails": [
+      "trace-tools-implementation.md",
+      "lantern-notes.md"
+    ],
+    "independentReview": {
+      "record": "independent-review.md",
+      "status": "ACCEPT_FOR_DIAGNOSTIC_TOOL_SCOPE",
+      "superChecksPassed": 10
+    },
+    "secretScan": {
+      "exitCode": 0,
+      "elapsedSeconds": 36.899,
+      "record": "secrets-staged-result.json"
+    }
+  },
+  "commands": {
+    "adapter-boundaries-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "scripts/check-adapter-boundaries.mjs"
+      ],
+      "startedAt": "2026-09-17T04:27:59.830972+00:00",
+      "completedAt": "2026-09-17T04:28:03.604348+00:00",
+      "elapsedSeconds": 3.773,
+      "exitCode": 0
+    },
+    "all-diagnostic-tests-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "--test",
+        "apps/api/scripts/storefront-test-fetch-diagnostics.test.mjs",
+        "apps/api/scripts/storefront-gift-read-verification.test.mjs",
+        "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+        "apps/api/scripts/storefront-gift-trace-verification.test.mjs",
+        "apps/api/scripts/storefront-gift-trace-analysis.test.mjs"
+      ],
+      "startedAt": "2026-09-17T04:25:58.352896+00:00",
+      "completedAt": "2026-09-17T04:25:58.736838+00:00",
+      "elapsedSeconds": 0.384,
+      "exitCode": 0
+    },
+    "artifact-boundaries-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "scripts/check-build-artifacts.mjs"
+      ],
+      "startedAt": "2026-09-17T04:27:59.830959+00:00",
+      "completedAt": "2026-09-17T04:28:00.430784+00:00",
+      "elapsedSeconds": 0.6,
+      "exitCode": 0
+    },
+    "baseline-lantern-replay-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "apps/api/scripts/storefront-gift-trace-analysis.mjs",
+        "--input",
+        "output/checks/p3-06-storefront-acceptance/run-2026-09-17T04-12-40-212Z/browser-attempt-1/gift-render-trace",
+        "--output",
+        "output/checks/p3-06-gift-render-trace/baseline-analysis"
+      ],
+      "startedAt": "2026-09-17T04:21:18.499707+00:00",
+      "completedAt": "2026-09-17T04:21:19.031793+00:00",
+      "elapsedSeconds": 0.532,
+      "exitCode": 0
+    },
+    "candidate-lantern-replay-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "apps/api/scripts/storefront-gift-trace-analysis.mjs",
+        "--input",
+        "output/checks/p3-06-storefront-acceptance/run-2026-09-17T04-12-40-212Z/browser-attempt-2/gift-render-trace",
+        "--output",
+        "output/checks/p3-06-gift-render-trace/candidate-analysis"
+      ],
+      "startedAt": "2026-09-17T04:21:25.559091+00:00",
+      "completedAt": "2026-09-17T04:21:25.930712+00:00",
+      "elapsedSeconds": 0.372,
+      "exitCode": 0
+    },
+    "check-dev-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "check:dev"
+      ],
+      "startedAt": "2026-09-17T04:26:11.738386+00:00",
+      "completedAt": "2026-09-17T04:26:43.871641+00:00",
+      "elapsedSeconds": 32.134,
+      "exitCode": 0
+    },
+    "comparison-fixture-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "apps/api/scripts/storefront-gift-trace-comparison.mjs"
+      ],
+      "startedAt": "2026-09-17T04:12:37.403670+00:00",
+      "completedAt": "2026-09-17T04:25:18.885595+00:00",
+      "elapsedSeconds": 761.5,
+      "exitCode": 0
+    },
+    "existing-observer-tests-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "--test",
+        "apps/api/scripts/storefront-test-fetch-diagnostics.test.mjs",
+        "apps/api/scripts/storefront-gift-read-verification.test.mjs"
+      ],
+      "startedAt": "2026-09-17T04:11:15.603917+00:00",
+      "completedAt": "2026-09-17T04:11:16.061382+00:00",
+      "elapsedSeconds": 0.457,
+      "exitCode": 0
+    },
+    "trace-tools-format-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "exec",
+        "prettier",
+        "--write",
+        "apps/api/scripts/storefront-gift-trace-comparison.mjs",
+        "apps/api/scripts/storefront-gift-trace-verification.mjs",
+        "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+        "apps/api/scripts/storefront-gift-trace-verification.test.mjs"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.3667059997096658
+    },
+    "trace-tools-green-attempt-1-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "--test",
+        "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+        "apps/api/scripts/storefront-gift-trace-verification.test.mjs"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.47896841634064913
+    },
+    "trace-tools-green-final-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "--test",
+        "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+        "apps/api/scripts/storefront-gift-trace-verification.test.mjs"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.38727333303540945
+    },
+    "trace-tools-lint-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "exec",
+        "eslint",
+        "apps/api/scripts/storefront-gift-trace-comparison.mjs",
+        "apps/api/scripts/storefront-gift-trace-verification.mjs",
+        "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+        "apps/api/scripts/storefront-gift-trace-verification.test.mjs",
+        "--max-warnings=0"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.9149628328159451
+    },
+    "trace-tools-red-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "--test",
+        "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+        "apps/api/scripts/storefront-gift-trace-verification.test.mjs"
+      ],
+      "exitCode": 1,
+      "durationSeconds": 0.08186991699039936
+    },
+    "secrets-staged-result.json": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "security:secrets"
+      ],
+      "startedAt": "2026-09-17T04:37:50.607424+00:00",
+      "completedAt": "2026-09-17T04:38:27.506226+00:00",
+      "elapsedSeconds": 36.899,
+      "exitCode": 0
+    }
+  },
+  "notRun": [
+    "full pnpm check",
+    "new seven-locale dual-viewport 88-scenario UI acceptance",
+    "formal seven-locale 63-navigation performance matrix",
+    "physical-device/manual/screen-reader/translation/PSP merchant acceptance"
+  ],
+  "interpretationLimits": [
+    "Exact model replay explains dependency selection, not complete observed browser causality",
+    "MISS/STALE/HIT correlation does not isolate codec or server costs",
+    "Two pre-group publication responses are point proofs, not complete per-navigation revision binding",
+    "No production performance improvement or historical paint-gap fix claimed"
+  ],
+  "nextEntry": "Bounded investigation of first/stale image response and shared-script initialization, followed by a justified minimal candidate",
+  "delivery": {
+    "localCommitOnly": true,
+    "pushed": false,
+    "deployed": false,
+    "rawTraces": "retained locally, compact SHA-bound summaries staged"
+  }
+}

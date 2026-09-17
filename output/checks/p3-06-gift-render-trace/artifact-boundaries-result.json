@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "scripts/check-build-artifacts.mjs"
+  ],
+  "startedAt": "2026-09-17T04:27:59.830959+00:00",
+  "completedAt": "2026-09-17T04:28:00.430784+00:00",
+  "elapsedSeconds": 0.6,
+  "exitCode": 0
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "--test",
+    "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+    "apps/api/scripts/storefront-gift-trace-verification.test.mjs"
+  ],
+  "exitCode": 1,
+  "durationSeconds": 0.08186991699039936
+}
