@@ -80,6 +80,8 @@
 
 ## 5. 最新证据
 
+2026-09-17 P3-06 目录入口隔离检查点：七语言目录专属server入口移除详情实际下载中的筛选实现，9生产文件保留原读取/SEO/Suspense/图像与字体策略。旧21/47 RED、候选142 affected tests；全仓check:dev exit0（34.624秒，62/62/36，缓存61/61/35）、adapter/artifact门、真实协议32,461与完整88UI/88截图/85axe（0violations、30incomplete待人工）/0pageErrors通过，发布/回退10084/10310ms。固定3+3中文导航均确认JS少5,825B、实际transfer少1,379B；54原文件与12官方FCP/LCP复算通过。两组LCP中位5441.416/4817.547ms仍失败，旧入口再次复现1069.145ms绘制等待、尚未修复；共48诊断不代替正式63次或RUM。原4210未跟踪/2229candidate输入SHA保护、fixture清理exit0；独立复核ACCEPT局部实现，秘密扫描exit0/40.534秒；细节与收尾结果见 `output/checks/p3-06-image-response/README.md` / `final-verification.json`。27 DONE/2 IN_PROGRESS/20 PENDING（49）、P3-06/人工/商户门及Phase5 LOCKED保持，仅本地提交。
+
 2026-09-17 P3-06 绘制追踪检查点：同一真实 PG/TLS S3/worker seed，旧/当前礼物读取入口各三次中文 Lighthouse；54原始文件长度/SHA、6同导航内容、配置与读取计数通过，12个FCP/LCP官方离线复算误差0。两组模拟LCP中位3311.5965/2620.4388ms仍失败；实际图片完成后呈现1.7–53.8ms，历史约1秒异常未重现也未修复。已明确模型截止引入字体/脚本的多条路径及图片MISS/STALE/HIT相关差异，未凭推测修改生产字体/图片配置。28工具tests、check:dev exit0（32.134秒，type/test62/62、build36/36，缓存61/61/35）、边界检查、真实协议32,461通过；fixture已清理exit0。仅新增6诊断脚本/测试，原2,212输入与0fd6fd0相同，旧4,117未跟踪文件逐SHA保护；详细证据 `output/checks/p3-06-gift-render-trace/README.md`。P3-06/商户/人工门保留，27 DONE/2 IN_PROGRESS/20 PENDING（49），Phase5 LOCKED，只本地检查点、不push/merge。
 
 2026-09-16 UTC P3-06读取错误保真检查点：修复已标准化数据库错误跨嵌套仓储时被误分类，保留恢复语义、清理原生细节；COMMIT未知结果与原事务保护不改。15项新增单测先RED后81定向PASS，受影响1424tests、独立116tests通过。旧编译代码真实55P03仓储分类RED，修复后发布PG487及事件时间30断言、真实HTTP49请求/331断言通过；全仓check:dev45.86秒exit0（type/test62各59缓存、build36/34缓存）。2207输入SHAd10c5da1cc5c2193bb41ae34319109bdbeb5387668646cb42da8d30c09e6fd93，3767初始未跟踪保持。本轮非完整check/浏览器/性能验收，不能归因旧自然HTTP故障；27/2/20和Phase5锁定不变。下一候选正文/SEO共用完整礼物读取，尚未实施。证据 `output/checks/p3-06-read-errors/README.md`，只本地提交。

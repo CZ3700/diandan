@@ -1,7 +1,5 @@
-import {
-  createGiftStorefrontPage,
-  createGiftStorefrontMetadata,
-} from "../../../../../storefront/gift-page-factory";
+import { createGiftDirectoryPage } from "../../../../../storefront/gift-directory-page-factory";
+import { createGiftStorefrontMetadata } from "../../../../../storefront/gift-page-factory";
 export const dynamic = "force-dynamic";
 export const generateMetadata = createGiftStorefrontMetadata("th", "gifts");
-export default createGiftStorefrontPage("th", "gifts");
+export default createGiftDirectoryPage("th");

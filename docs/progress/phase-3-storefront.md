@@ -4,6 +4,26 @@
 > 任务：6  
 > 解锁条件：Phase 1 与 Phase 2 退出门禁均通过
 
+## P3-06 目录入口隔离与图片响应调查（2026-09-17）
+
+- Owner：Codex `/root`，继续唯一 Lane D executor；开始 2026-09-17T08:32:54.203796+00:00，本地基线 `92ae73c`，分支 `codex/p3-06-performance-resume`。仅接续 ACTIVE P3-06，27/2/20 与 Phase5 LOCKED 保持。
+- 输入与范围：上一轮六次同导航 trace/精确 Lantern 复算与当前真实媒体链；先区分首次、过期、命中图片响应的服务端成本，并核对共享脚本初始化。形成可证实的单一假设后，才实现最小优化；保留图片质量/尺寸/来源、全部语言字形、当前内容/价格/支付边界。
+- 所有权：root 独占真实 fixture、构建/Chrome/性能采样、图片响应测量与进度/Git；gift_read_impl 只读分析共享脚本与可消减入口；gift_read_measure 只读分析 pinned Next 图像缓存/编码与可测分段；gift_read_review 独立只读复核测量计划和后续候选。进一步写入按精确文件另行登记，不领取其他任务。
+- 单一候选登记：礼物目录入口隔离；图像只完成源码审计，不并入格式/TTL/质量修改。gift_read_impl 独占 `gift-directory-page-factory.tsx`（新）、`gift-page-factory.tsx`、七语言 `gifts/page.tsx`、`gift-page-scheduling.test.tsx` 与新 `gift-page-entry-isolation.test.ts` / `gift-directory-page-entry.test.tsx`；先写测试，root保存旧版编译与3次样本并验证RED后才实现。新目录入口向共用server factory提供服务端目录组件，非目录入口无目录运行时依赖；保持原SSR/读取/metadata/Suspense行为。gift_read_measure 仅拥有新output目录的离线脚本分析器，gift_read_review仅写独立报告。
+- 有界比较计划：`output/checks/p3-06-image-response/plan.md`；旧/候选各固定3次zh-CN原参数LH后再跑候选完整UI。两组均使用当前0+1共享读取，沿用collector的candidate读取模式并单独标注入口stage；不把旧baseline模式的1+1语义用于本轮。主要验证实际下载脚本去除目录过滤器，LCP仅诊断；图像缓存可能不同，不作单因果收益推断。
+- 验证：先固定小范围对照与失败测试，原测量设置/预算不变、全部样本留档；不以预热或延长TTL制造通过。生产修改需受影响tests、check:dev、真实七语言390×844/1440×900/键盘/错误/reduced-motion及有界原参数性能对照；没有修改则准确记录调查范围。非作者复核、S.U.P.E.R与秘密扫描后本地提交。
+- 保护与边界：初始 4210 个未跟踪文件逐SHA记录 `output/checks/p3-06-image-response/untracked-baseline.json`；不覆盖旧证据，不push/merge/部署。R-08/R-12/R-13/R-17、历史绘制异常、正式性能/人工/商户门保留。
+
+### 目录入口隔离检查点结果（2026-09-17）
+
+- 生产改动9文件：新增9行server-only目录factory，七语言目录route注入原GiftDirectorySection；共享factory仅保留type-only引用，判别tuple强制目录传入组件。原读取/await、404、SEO、Suspense、CartProvider与图片/字体/质量/TTL均保持。新增47 tests，原生产下21隔离断言RED、26通过；候选6文件142 affected tests通过。
+- 同真实fixture前后各固定3次中文LH，0+1读取保持、两组前完整公开响应相同、54原文件SHA/长度与6同导航内容/设置通过。8个脚本请求保持，实际下载JS 519,533→513,708B（少5,825B），实际transfer159,320→157,941B（少1,379B），三次均一致；候选全部parsed Scripts含inline均无目录筛选特征。不是按旧chunk文件名推断，也不以本机gzip冒充传输量。
+- 性能门仍失败：旧/候选模拟LCP中位5441.416/4817.547ms，不声明稳定提速/无回归；12个官方FCP/LCP复算差0。旧入口sample2图片结束528.146ms至实际LCP1597.291ms，再次复现1069.145ms间隔，未定位/未修复；候选三次较小间隔不能证明消失。累计48诊断报告保留，不充作正式63次或RUM。图片STALE提前响应/后台复用已由pinned源码确认，尚未完成服务端分段实测，不把等待归因编码。
+- 全仓check:dev最终exit0、34.624秒，type/test62/62、build36/36，缓存61/61/35；首轮output分析器URL/Buffer缺导入的lint失败保留并修正。adapter/artifact门exit0。真实PG/TLS S3/worker协议32,461 PASS；候选完整7语言390×844/1440×900与搜索/分页/金额排序/返回/抽屉键盘/错误/reduced-motion/SEO回归88场景、88截图、85axe（0violations/30incomplete留人工）、0pageErrors。实际发布10084ms/回退10310ms可见。
+- root已查看中/英/泰/葡四张对应双端截图，无本改动布局回归。原4,210未跟踪逐SHA未变；2,229源码输入SHA `29dff37087657cfd1abf0b89c95acec0c98496632fc2ada5f0b694a8314405ce` 在全部验证后未变。fixture正常清理exit0，owned端口无监听。未运行完整pnpm check/物理设备/VoiceOver/人工运营/译审/商户门。
+- 最终独立复核ACCEPT本补丁与局部S.U.P.E.R十项，未将性能门计通过；显式暂存后秘密扫描exit0、40.534秒。
+- 证据及复跑入口：`output/checks/p3-06-image-response/README.md`、`capture-summary.json`、`source-binding.json`、`final-verification.json`与独立报告；原始数据留在 `output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/`。本地检查点，不push/merge/部署；任务与27/2/20计数保持，下一步继续定位重复出现的实际绘制等待及首次响应边界，不降低原性能阈值。
+
 ## P3-06 礼物页绘制追踪继续登记（2026-09-17）
 
 - Owner：Codex `/root`，延续 Lane D 唯一 executor；开始 2026-09-17T04:07:33.455997+00:00，基线本地 `0fd6fd0`，分支 `codex/p3-06-performance-resume`。继续当前 ACTIVE P3-06；27 DONE / 2 IN_PROGRESS / 20 PENDING 不变，不解锁 Phase 5。

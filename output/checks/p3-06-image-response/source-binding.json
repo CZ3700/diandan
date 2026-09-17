@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "reference": "output/checks/p3-06-gift-read-reuse/candidate-source.json",
+  "referenceFileSha256": "0cb15805d1f64abd71ea499c447f375d7158231ff4ddef15b4e7d08afd64bde2",
+  "baseline": {
+    "manifestFile": "output/checks/p3-06-image-response/baseline-source.json",
+    "manifestSha256": "4ceb4f7c2307270a371dcf22fbaaa9cce289c7457dc292e57a5afd02c921afaf",
+    "head": "92ae73ce51871422e7b79c13ddbb47cd4f3ea6a0",
+    "capturedAt": "2026-09-17T08:41:15.136459+00:00",
+    "fileCount": 2226,
+    "aggregateSha256": "1d9852d8d3be53afc75b11c76c8753c786ed6841b3b4f7838cd9f4d78871a981",
+    "aggregateEncoding": "sha256(UTF8(JSON.stringify style compact [{path,sha256}] sorted by path; Python json.dumps separators comma/colon ensure_ascii true))",
+    "removedFromReference": [
+      ".github/workflows/ci.yml"
+    ],
+    "changedOrAdded": [
+      {
+        "path": ".dockerignore",
+        "sha256": "a3f6ab783e59ae51d62a02e3464ef34c71edd2c933c7533c3ef560a74a3bafc4"
+      },
+      {
+        "path": ".env.example",
+        "sha256": "08d48effd8fe3ec078722bf171524001c9c824849ba2bdd68356535301210bab"
+      },
+      {
+        "path": ".gitignore",
+        "sha256": "45e7f945225c7373eff0819703e4a8b0893a0c426a4bd74e86fdfe743d6b3d7d"
+      },
+      {
+        "path": ".prettierignore",
+        "sha256": "e09c8149133209acddf5a99780c66aa25e1cf65ec58cf5e984e80681d1b55a40"
+      },
+      {
+        "path": ".secretlintignore",
+        "sha256": "f15e3386a4f6cefbbb14be0f3e504e0505217dc1963cd0d0b7284d979df952fc"
+      },
+      {
+        "path": ".secretlintrc.json",
+        "sha256": "1c0e86ca72216c22cc77b1c94c27f975b731aa9e104167f5d57a5befa654c10e"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "fea3e7830b1f007504a80ae75c208077c817191fc36e3f9ba6d4b7c4637103d7"
+      },
+      {
+        "path": "CLAUDE.md",
+        "sha256": "40508b45f3627a7a635060935e77e5e37df0bdefa27fd6ba46ac1dead01c2bd0"
+      },
+      {
+        "path": "README.md",
+        "sha256": "dcd14ba803c9856d19952ac51838de5bd7f8bf9d4757435919140875dac889a4"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-analysis.mjs",
+        "sha256": "e937f7ad1fa28bb8b20492c7f2647c9d745294b0f1ef58e58fa0138ee3f2efe9"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-analysis.test.mjs",
+        "sha256": "21899958b2405e166f1a0130c98c8c199689487d8540377d62ca6ba75743a9de"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-comparison.mjs",
+        "sha256": "498577dd2a00bfaa28705f805e787ffd7ee344c1dce154379796979a17d48002"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+        "sha256": "e6ae523766d4f1911a756a7a267a57afab91aab1dec463acb5c13dac414bc56b"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-verification.mjs",
+        "sha256": "43e5c303054d75b48e547bc6e6314493dd7aa897ad707138a7266fea7d25894b"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-verification.test.mjs",
+        "sha256": "5dcdddc120f7f46b6a210060da12ced348464def7e2cd2641834336ab7c4c973"
+      }
+    ]
+  },
+  "candidate": {
+    "manifestFile": "output/checks/p3-06-image-response/candidate-source.json",
+    "manifestSha256": "7ee4eb8e380c8b3bceba4650237a1a088820599ef2a91456b7557898aa67b7ee",
+    "head": "92ae73ce51871422e7b79c13ddbb47cd4f3ea6a0",
+    "capturedAt": "2026-09-17T08:52:17.676629+00:00",
+    "fileCount": 2229,
+    "aggregateSha256": "29dff37087657cfd1abf0b89c95acec0c98496632fc2ada5f0b694a8314405ce",
+    "aggregateEncoding": "sha256(UTF8(JSON.stringify style compact [{path,sha256}] sorted by path; Python json.dumps separators comma/colon ensure_ascii true))",
+    "removedFromReference": [
+      ".github/workflows/ci.yml"
+    ],
+    "changedOrAdded": [
+      {
+        "path": ".dockerignore",
+        "sha256": "a3f6ab783e59ae51d62a02e3464ef34c71edd2c933c7533c3ef560a74a3bafc4"
+      },
+      {
+        "path": ".env.example",
+        "sha256": "08d48effd8fe3ec078722bf171524001c9c824849ba2bdd68356535301210bab"
+      },
+      {
+        "path": ".gitignore",
+        "sha256": "45e7f945225c7373eff0819703e4a8b0893a0c426a4bd74e86fdfe743d6b3d7d"
+      },
+      {
+        "path": ".prettierignore",
+        "sha256": "e09c8149133209acddf5a99780c66aa25e1cf65ec58cf5e984e80681d1b55a40"
+      },
+      {
+        "path": ".secretlintignore",
+        "sha256": "f15e3386a4f6cefbbb14be0f3e504e0505217dc1963cd0d0b7284d979df952fc"
+      },
+      {
+        "path": ".secretlintrc.json",
+        "sha256": "1c0e86ca72216c22cc77b1c94c27f975b731aa9e104167f5d57a5befa654c10e"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "fea3e7830b1f007504a80ae75c208077c817191fc36e3f9ba6d4b7c4637103d7"
+      },
+      {
+        "path": "CLAUDE.md",
+        "sha256": "40508b45f3627a7a635060935e77e5e37df0bdefa27fd6ba46ac1dead01c2bd0"
+      },
+      {
+        "path": "README.md",
+        "sha256": "dcd14ba803c9856d19952ac51838de5bd7f8bf9d4757435919140875dac889a4"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-analysis.mjs",
+        "sha256": "e937f7ad1fa28bb8b20492c7f2647c9d745294b0f1ef58e58fa0138ee3f2efe9"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-analysis.test.mjs",
+        "sha256": "21899958b2405e166f1a0130c98c8c199689487d8540377d62ca6ba75743a9de"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-comparison.mjs",
+        "sha256": "498577dd2a00bfaa28705f805e787ffd7ee344c1dce154379796979a17d48002"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+        "sha256": "e6ae523766d4f1911a756a7a267a57afab91aab1dec463acb5c13dac414bc56b"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-verification.mjs",
+        "sha256": "43e5c303054d75b48e547bc6e6314493dd7aa897ad707138a7266fea7d25894b"
+      },
+      {
+        "path": "apps/api/scripts/storefront-gift-trace-verification.test.mjs",
+        "sha256": "5dcdddc120f7f46b6a210060da12ced348464def7e2cd2641834336ab7c4c973"
+      },
+      {
+        "path": "apps/storefront/src/app/(public)/(japanese)/ja/gifts/page.tsx",
+        "sha256": "57941e1048d9ba4435afab982bc4ced98e9913edeb3d6aa08b8f3bb56503db65"
+      },
+      {
+        "path": "apps/storefront/src/app/(public)/(latin)/en/gifts/page.tsx",
+        "sha256": "728a321d49d063ba0789f93bce17dcecd839dd79ee2b40f4bb10075f0bdb6435"
+      },
+      {
+        "path": "apps/storefront/src/app/(public)/(latin)/es/gifts/page.tsx",
+        "sha256": "653a43bb42ae9bbf9b54e8ee287303591f6ad01308bde4b3dc84cf198c59b104"
+      },
+      {
+        "path": "apps/storefront/src/app/(public)/(latin)/pt/gifts/page.tsx",
+        "sha256": "79c047641db80cd1adab66b39b5a1b99376b51aed77e5e47de98380eed7413f6"
+      },
+      {
+        "path": "apps/storefront/src/app/(public)/(simplified-chinese)/zh-CN/gifts/page.tsx",
+        "sha256": "343b3456468b2d92deabd7a85d574b682a64eeabf40c9008dd557f301c7f0107"
+      },
+      {
+        "path": "apps/storefront/src/app/(public)/(thai)/th/gifts/page.tsx",
+        "sha256": "8c62f10da009d27967410b884175e5314a4bb8b4c219cc7bc5152b47bc20bf5d"
+      },
+      {
+        "path": "apps/storefront/src/app/(public)/(vietnamese)/vi/gifts/page.tsx",
+        "sha256": "c2fd1a3d0f788bafe749643d3ba26c7d78ab7fd3b5c0a26acb6f74deab164d02"
+      },
+      {
+        "path": "apps/storefront/src/storefront/gift-directory-page-entry.test.tsx",
+        "sha256": "ca06b912e5cd99d6cf313b0a9122bce9a5bacc8ccc78208ad93e0ba278b6f32e"
+      },
+      {
+        "path": "apps/storefront/src/storefront/gift-directory-page-factory.tsx",
+        "sha256": "db9080b8a7d03c31058d32d9764a4fe4af3ad1e9948be8f68db82d81c6a1db90"
+      },
+      {
+        "path": "apps/storefront/src/storefront/gift-page-entry-isolation.test.ts",
+        "sha256": "ab28133e733042d9361391ee0713cc10afbab7b49fb30c7afd374b36c63a13d5"
+      },
+      {
+        "path": "apps/storefront/src/storefront/gift-page-factory.tsx",
+        "sha256": "a8c7a0688c04c8744cf980ec109de32b55fc85f2a41c6b5eec13a4e7856a8e16"
+      },
+      {
+        "path": "apps/storefront/src/storefront/gift-page-scheduling.test.tsx",
+        "sha256": "9ada2abcd0ccc73c293038a63db88a8f0876d3c249ec78f79b192672b96cf49a"
+      }
+    ]
+  }
+}

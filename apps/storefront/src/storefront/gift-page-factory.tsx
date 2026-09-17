@@ -22,7 +22,7 @@ import { readGiftDetailPage } from "./gift-detail-page-reads";
 import { SiteHeader } from "./site-header";
 import { SiteFooter, PageState } from "./page-parts";
 import { MarketChoices, PolicyLinks } from "./commerce-context";
-import { GiftDirectorySection } from "./gift-directory-section";
+import type { GiftDirectorySection } from "./gift-directory-section";
 import { GiftDetail } from "./gift-detail";
 import { GiftDetailPolicyLinks } from "./gift-detail-context-section";
 import { PolicyBody } from "./gift-content";
@@ -33,13 +33,19 @@ import { createStorefrontLoading } from "./route-states";
 import { GiftPageSeo, loadGiftSeo } from "./gift-seo";
 
 type Kind = "gifts" | "gift" | "policy" | "region";
+type PageDefinition =
+  | [kind: Exclude<Kind, "gifts">]
+  | [kind: "gifts", DirectorySection: typeof GiftDirectorySection];
 type Props = Readonly<{
   searchParams: Promise<
     Readonly<Record<string, string | string[] | undefined>>
   >;
   params: Promise<{ handle?: string }>;
 }>;
-export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
+export function createGiftStorefrontPage(
+  locale: SupportedLocale,
+  ...[kind, DirectorySection]: PageDefinition
+) {
   async function Page({ searchParams, params }: Props) {
     loadStorefrontRuntimeConfig();
     const name = loadStorefrontPresentationConfig().name;
@@ -80,7 +86,7 @@ export function createGiftStorefrontPage(locale: SupportedLocale, kind: Kind) {
             )
           : undefined;
       content = (
-        <GiftDirectorySection
+        <DirectorySection
           locale={locale}
           copy={copy}
           values={values}

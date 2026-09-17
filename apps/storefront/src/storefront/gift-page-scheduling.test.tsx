@@ -64,6 +64,7 @@ vi.mock("./gift-seo", () => ({
 }));
 
 import { createGiftStorefrontPage } from "./gift-page-factory";
+import { createGiftDirectoryPage } from "./gift-directory-page-factory";
 
 const variantId = "2abc0000-0000-4000-8000-000000000001";
 function fixture(locale: SupportedLocale = "en", selected = false) {
@@ -681,7 +682,10 @@ function elements(node: ReactNode): ReactElement<Record<string, unknown>>[] {
 test.each(["gift", "gifts", "policy", "region"] as const)(
   "%s keeps its header and main inside exactly one shared cart provider",
   async (kind) => {
-    const Entry = createGiftStorefrontPage("en", kind);
+    const Entry =
+      kind === "gifts"
+        ? createGiftDirectoryPage("en")
+        : createGiftStorefrontPage("en", kind);
     let tree = await Entry({
       params: Promise.resolve({
         handle: kind === "policy" ? "studio-delivery" : "rose-palace",

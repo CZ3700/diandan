@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-17T08:48:10.393891+00:00",
+  "fixture": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z",
+  "ownerPid": 84799,
+  "sessionId": 34858,
+  "productionBaseline": "92ae73c",
+  "productionEditsAllowedOnlyAfterBaselineAndRed": true,
+  "red": {
+    "exitCode": 1,
+    "failed": 21,
+    "passed": 26,
+    "total": 47
+  },
+  "files": [
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/protocol-results.json",
+      "bytes": 26494,
+      "sha256": "15e13317ebadcac735eef88745e028d506ca40607c2d05e532bcec2e561ad366"
+    },
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/next-build-1.log",
+      "bytes": 6403,
+      "sha256": "bb03404da3b8968cddaa69186df7e06e5bf782e54de62e9cb464e342538baf7e"
+    },
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/entry-isolation-stage.json",
+      "bytes": 183,
+      "sha256": "68168eba6772590bd833e8f7eee18709e5ff34b69f0355cca8a98e18962770a8"
+    },
+    {
+      "path": "output/checks/p3-06-storefront-acceptance/run-2026-09-17T08-41-18-090Z/browser-attempt-1/gift-render-trace/results.json",
+      "bytes": 12966,
+      "sha256": "6990355a9b3d95b5913130cfdfb1728c059d6030decd20730e3b4ba140f34690"
+    },
+    {
+      "path": "output/checks/p3-06-image-response/red.log",
+      "bytes": 5495,
+      "sha256": "191ab86f770c3b05481fc582516fcbbd6b924f57e30a81ce19c1a48999b037a3"
+    },
+    {
+      "path": "output/checks/p3-06-image-response/baseline-source.json",
+      "bytes": 364868,
+      "sha256": "4ceb4f7c2307270a371dcf22fbaaa9cce289c7457dc292e57a5afd02c921afaf"
+    }
+  ]
+}
