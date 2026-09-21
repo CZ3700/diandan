@@ -1,0 +1,12 @@
+✔ route failures settle without exposing private error details (0.682916ms)
+✔ teardown waits for a held route and records its safe failure after release (0.150917ms)
+✔ an already loaded matching search needs no new network response (0.060459ms)
+✔ search completion rejects old input, busy results and an unfiltered list (0.052958ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 225.368042

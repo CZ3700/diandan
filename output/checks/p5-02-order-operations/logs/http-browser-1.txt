@@ -1,0 +1,76 @@
+Admin orders: processing original fictional Mira Vale independent media
+Admin orders: processing original fictional Kai Ren independent media
+Admin orders: processing original fictional Rose Palace gift artwork
+Admin orders: processing original fictional Blue Orbit gift artwork
+Admin orders: processing original fictional Ruby Bouquet gift artwork
+Admin orders: authoring real gift 1/27
+Admin orders: authoring real gift 2/27
+Admin orders: authoring real gift 3/27
+Admin orders: authoring real gift 4/27
+Admin orders: authoring real gift 5/27
+Admin orders: authoring real gift 6/27
+Admin orders: authoring real gift 7/27
+Admin orders: authoring real gift 8/27
+Admin orders: authoring real gift 9/27
+Admin orders: authoring real gift 10/27
+Admin orders: authoring real gift 11/27
+Admin orders: authoring real gift 12/27
+Admin orders: authoring real gift 13/27
+Admin orders: authoring real gift 14/27
+Admin orders: authoring real gift 15/27
+Admin orders: authoring real gift 16/27
+Admin orders: authoring real gift 17/27
+Admin orders: authoring real gift 18/27
+Admin orders: authoring real gift 19/27
+Admin orders: authoring real gift 20/27
+Admin orders: authoring real gift 21/27
+Admin orders: authoring real gift 22/27
+Admin orders: authoring real gift 23/27
+Admin orders: authoring real gift 24/27
+Admin orders: authoring real gift 25/27
+Admin orders: authoring real gift 26/27
+Admin orders: authoring real gift 27/27
+Admin orders: reading actual PostgreSQL price activation time
+Admin orders: creating complete TEST price book 1/2
+Admin orders: publishing complete TEST price book 1/2
+Admin orders: creating complete TEST price book 2/2
+Admin orders: publishing complete TEST price book 2/2
+Admin orders: creating actual inventory location
+Admin orders: stock, review and publication for gift 1/26
+Admin orders: stock, review and publication for gift 2/26
+Admin orders: stock, review and publication for gift 3/26
+Admin orders: stock, review and publication for gift 4/26
+Admin orders: stock, review and publication for gift 5/26
+Admin orders: stock, review and publication for gift 6/26
+Admin orders: stock, review and publication for gift 7/26
+Admin orders: stock, review and publication for gift 8/26
+Admin orders: stock, review and publication for gift 9/26
+Admin orders: stock, review and publication for gift 10/26
+Admin orders: stock, review and publication for gift 11/26
+Admin orders: stock, review and publication for gift 12/26
+Admin orders: stock, review and publication for gift 13/26
+Admin orders: stock, review and publication for gift 14/26
+Admin orders: stock, review and publication for gift 15/26
+Admin orders: stock, review and publication for gift 16/26
+Admin orders: stock, review and publication for gift 17/26
+Admin orders: stock, review and publication for gift 18/26
+Admin orders: stock, review and publication for gift 19/26
+Admin orders: stock, review and publication for gift 20/26
+Admin orders: stock, review and publication for gift 21/26
+Admin orders: stock, review and publication for gift 22/26
+Admin orders: stock, review and publication for gift 23/26
+Admin orders: stock, review and publication for gift 24/26
+Admin orders: stock, review and publication for gift 25/26
+Admin orders: stock, review and publication for gift 26/26
+Admin orders: proving tracked availability is one location's maximum, never a sum
+Admin orders: publishing actual TEST terms policy
+Admin orders: publishing actual TEST privacy policy
+Admin orders: publishing actual TEST refund policy
+Admin orders: publishing actual TEST delivery policy
+Admin orders: normal TEST webhook endpoint configuration
+Admin orders: provision owned durable event queue before VERIFY runtimes
+Admin orders: start actual signed webhook HTTP ingress
+Admin orders: OIDC and admin orders API composition
+Admin orders failure {"stage":"OIDC and admin orders API composition","name":"TypeError","code":"ERR_INVALID_URL","frames":["/apps/api/scripts/admin-orders-runtime.mjs:30:85","/apps/api/scripts/admin-orders-protocol.mjs:8:16","/apps/api/scripts/admin-orders-http.mjs:26:18","/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14","/apps/api/scripts/payment-runtime-runtime.mjs:29:12"]}
+FAIL admin orders {"name":"EphemeralPostgresError","code":null,"frames":["/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161:15","/apps/api/scripts/admin-orders-http.mjs:58:125"]}
+FAIL admin orders {"name":"Error","code":null,"frames":["/packages/media-s3/scripts/ephemeral-s3-harness.mjs:448:16"]}

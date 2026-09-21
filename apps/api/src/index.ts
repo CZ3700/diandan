@@ -1,3 +1,7 @@
+export {
+  createLocalAdminOrdersComposition,
+  type LocalAdminOrdersCompositionOptions,
+} from "./admin-orders-composition.js";
 export * from "./publication-preflight-composition.js";
 export {
   createTestAdminContentComposition,

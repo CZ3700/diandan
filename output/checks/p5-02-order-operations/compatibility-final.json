@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "baseline": "aa922bc",
+  "checkedAt": "2026-09-21T11:10:17.688571+00:00",
+  "contracts": {
+    "oldRootsUnchanged": 624,
+    "newRoots": 21,
+    "total": 645,
+    "comparison": "structural JSON equality, excluding serialization key order"
+  },
+  "openapi": {
+    "paths": {
+      "oldEntriesUnchanged": 96,
+      "newEntries": 12
+    },
+    "components.headers": {
+      "oldEntriesUnchanged": 2,
+      "newEntries": 0
+    },
+    "components.schemas": {
+      "oldEntriesUnchanged": 180,
+      "newEntries": 11
+    },
+    "components.securitySchemes": {
+      "oldEntriesUnchanged": 8,
+      "newEntries": 0
+    }
+  },
+  "migrations": {
+    "oldManifestEntriesUnchanged": 30,
+    "oldSqlFilesByteIdentical": 60,
+    "newMigrations": 2
+  },
+  "status": "PASS"
+}

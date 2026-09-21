@@ -52,14 +52,12 @@ export async function verifyCheckoutPreflightRollbackProtection({
   await client.connect();
   let open = false;
   try {
-    assert.equal(
-      (
-        await client.query(
-          "SELECT max(version) version FROM public.schema_migrations",
-        )
-      ).rows[0].version,
-      "0029",
-    );
+    const head = (
+      await client.query(
+        "SELECT max(version) version FROM public.schema_migrations",
+      )
+    ).rows[0].version;
+    // The shared prefix guard rejects unknown heads or retained history.
     await rollbackEmptyNotifications({ client, clientConfig, workspaceRoot });
     const orderAccessDown = await runMigrations({
       clientConfig,
@@ -154,7 +152,7 @@ export async function verifyCheckoutPreflightRollbackProtection({
       workspaceRoot,
       command: { direction: "up" },
     });
-    assert.equal(restored.currentVersion, "0029");
+    assert.equal(restored.currentVersion, head);
     return {
       schemaVersion: 1,
       status: "PASS",

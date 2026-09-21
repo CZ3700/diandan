@@ -1,0 +1,3 @@
+[ERR_PNPM_AUDIT_ENDPOINT_NOT_EXISTS] The audit endpoint (at https://registry.npmmirror.com/-/npm/v1/security/advisories/bulk) doesn't exist.
+
+This issue is probably because you are using a private npm registry and that endpoint doesn't have an implementation of audit.

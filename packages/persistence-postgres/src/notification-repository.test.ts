@@ -85,6 +85,54 @@ test("invalid commands fail before any SQL", async () => {
   expect(query).not.toHaveBeenCalled();
 });
 
+test("an automatic later stage waits for a pending operator resend", async () => {
+  const query = vi.fn(async (sql: string) => {
+    if (sql.includes("SELECT d.order_id,o.cart_id"))
+      return { rows: [{ order_id: id(3), cart_id: id(4) }] };
+    if (sql.includes("FOR UPDATE OF d,r"))
+      return {
+        rows: [
+          {
+            id: id(1),
+            order_id: id(3),
+            status: "REQUESTED",
+            attempt_count: 0,
+            event_rank: 3,
+            next_attempt_at: null,
+            dedupe_until: "2099-01-01T00:00:00Z",
+          },
+        ],
+      };
+    if (sql.includes("SELECT to_char(clock_timestamp()"))
+      return { rows: [{ now: "2026-09-21T01:00:00.000000Z" }] };
+    if (
+      sql.includes("admin_notification_resends") &&
+      sql.includes("PROCESSING")
+    )
+      return { rows: [{ blocked: true }] };
+    return { rows: [] };
+  });
+  const repo = module!.createNotificationRepository(
+    { query, release: vi.fn() },
+    scope,
+    outbox,
+  );
+  expect(
+    await repo.claim({
+      schemaVersion: 1,
+      notificationId: id(1),
+      leaseToken: id(2),
+      leaseSeconds: 30,
+      maxAttempts: 6,
+    }),
+  ).toEqual({ schemaVersion: 1, decision: "SKIP" });
+  expect(
+    query.mock.calls.some(([sql]) =>
+      sql.includes("UPDATE public.notification_deliveries"),
+    ),
+  ).toBe(false);
+});
+
 function stateful(row: Record<string, unknown>) {
   expect(module).toBeDefined();
   const query = vi.fn(async (sql: string) => {

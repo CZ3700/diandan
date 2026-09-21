@@ -38,6 +38,7 @@ export function createAdminClient(
       command: Readonly<Record<string, unknown>>,
       schema: Parser<T>,
       mutation = false,
+      explicitMutationKey?: string,
     ): Promise<Success<T>> {
       const token = csrf();
       if (!token) throw new AdminClientError("UNAUTHENTICATED");
@@ -53,7 +54,8 @@ export function createAdminClient(
         "X-CSRF-Token": token,
       };
       if (mutation)
-        headers["Idempotency-Key"] = keys.forCommand(operation, body);
+        headers["Idempotency-Key"] =
+          explicitMutationKey ?? keys.forCommand(operation, body);
       let response: Response;
       try {
         response = await transport(`/api/admin/${operation}`, {
@@ -91,7 +93,8 @@ export function createAdminClient(
           envelope.issues,
         );
       }
-      if (mutation) keys.succeeded(operation, body);
+      if (mutation && explicitMutationKey === undefined)
+        keys.succeeded(operation, body);
       return result as Success<T>;
     },
   };

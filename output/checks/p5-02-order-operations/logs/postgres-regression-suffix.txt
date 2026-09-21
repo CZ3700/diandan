@@ -1,0 +1,87 @@
+1/20 node ./scripts/postgres-catalog-directory.mjs
+PostgreSQL catalog directory integration passed: {"artists":120,"gifts":120,"assertions":315,"seeding":"normal triggers; no replica bypass","locales":7}
+2/20 node ./scripts/postgres-media-processing.mjs
+media PG: retry backoff passed; waiting for real lease expiration
+media PG: stale fencing passed; waiting for final lease exhaustion
+media PostgreSQL integration passed (152 assertions; actual lease expiry; normal triggers; synthetic output metadata)
+3/20 node ./scripts/postgres-content-drafts.mjs
+{"probe":"maximum-detail-draft","blocks":32,"itemsPerBlock":24,"locales":7,"elapsedMs":2129,"commitMs":5}
+Migration diagnostic: code=55000; position=none; constraint=none
+PostgreSQL content drafts: 103 assertions passed
+4/20 node ./scripts/postgres-content-draft-repositories.mjs
+content draft repository integration: step=migrations; code=ERR_ASSERTION; guard=UNCLASSIFIED
+legacy extension repository runs against the current notification schema
+
+'0032' !== '0029'
+
+content draft repository failed at migrations: EphemeralPostgresError
+4/20 node ./scripts/postgres-content-draft-repositories.mjs (resumed)
+{"schemaVersion":1,"suite":"content-draft-repositories","assertions":64,"locales":["en","zh-CN","th","vi","ja","es","pt"],"tables":10,"result":"PASS"}
+5/20 node ./scripts/postgres-admin-content.mjs (resumed)
+{"stage":"required grant tables","grants":true,"previews":true}
+{"result":"PASS","assertions":112}
+6/20 node ./scripts/postgres-content-authoring.mjs (resumed)
+{"result":"PASS","assertions":211,"normalTriggers":true,"kinds":5,"locales":7,"stage":"complete"}
+7/20 node ./scripts/postgres-base-content.mjs (resumed)
+{"result":"PASS","assertions":910,"kinds":5,"locales":7,"seeding":"normal triggers; no replica bypass"}
+8/20 node ./scripts/postgres-resource-management.mjs (resumed)
+Safe SQL diagnostic: code=40001; position=none; marker=media-processing:enqueue.
+Safe SQL diagnostic: code=40001; position=none; marker=none.
+Safe SQL diagnostic: code=40001; position=none; marker=none.
+Safe SQL diagnostic: code=40001; position=none; marker=none.
+Safe SQL diagnostic: code=P0001; position=none; marker=none.
+Safe SQL diagnostic: code=P0001; position=none; marker=none.
+Safe SQL diagnostic: code=P0001; position=none; marker=none.
+Safe SQL diagnostic: code=P0001; position=none; marker=none.
+PostgreSQL resource management: 129 assertions PASS.
+9/20 node ./scripts/postgres-publication-preflight.mjs (resumed)
+publication preflight PostgreSQL checks: 166 assertions PASS
+10/20 node ./scripts/postgres-publication-runtime.mjs (resumed)
+{"stage":"unreceipted publication insert","check":"new publication requires manifest","observed":"23514"}
+PostgreSQL publication runtime: 2 assertions PASS
+{"stage":"VALIDATE idol","postgresCode":"23514","tables":[]}
+{"stage":"VALIDATE idol","postgresCode":"23514","tables":[]}
+{"stage":"VALIDATE idol","postgresCode":"23514","tables":[]}
+{"stage":"VALIDATE idol","postgresCode":"23514","tables":[]}
+PostgreSQL publication runtime: 488 assertions PASS
+PostgreSQL publication runtime: 490 assertions PASS
+11/20 node ./scripts/postgres-publication-event-time.mjs (resumed)
+file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161
+        throw new EphemeralPostgresError("ephemeral PostgreSQL operation failed");
+              ^
+
+EphemeralPostgresError: ephemeral PostgreSQL operation failed
+    at withEphemeralPostgres (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/postgres-publication-event-time.mjs:31:1
+
+Node.js v24.20.0
+11/20 node ./scripts/postgres-publication-event-time.mjs (second resume)
+publication event time PostgreSQL: 30 assertions PASS (event clock, preflight observation, manual retry; real guards and expiry unchanged)
+12/20 node ./scripts/postgres-admin-catalog.mjs (second resume)
+admin catalog PostgreSQL checks: 288 assertions PASS
+13/20 node ./scripts/postgres-gift-commerce.mjs (second resume)
+{"stage":"ownership probe uses an existing legacy relation for the same idol","code":"55000","routine":"exec_stmt_raise","giftCommerceSessionGuard":false,"statementKind":"UPDATE public.gift_variant_idol_eligibility SET"}
+{"stage":"WRONG_KIND: no new revision survived rejection","code":"55000","routine":"exec_stmt_raise","giftCommerceSessionGuard":false,"statementKind":"UPDATE public.gift_revision_profiles SET"}
+{"stage":"explicit legacy draft source can be copied and sealed","code":"55000","constraint":"gift_price_membership_sealed","routine":"exec_stmt_raise","giftCommerceSessionGuard":false,"statementKind":"DELETE FROM public.prices"}
+{"stage":"explicit legacy draft source can be copied and sealed","code":"55000","constraint":"gift_price_membership_sealed","routine":"exec_stmt_raise","giftCommerceSessionGuard":false,"statementKind":"DELETE FROM public.prices"}
+{"stage":"canonical authorized mutation","code":"P0001","routine":"exec_stmt_raise","giftCommerceSessionGuard":false,"statementKind":"INSERT INTO EXPRESSION"}
+{"stage":"canonical authorized mutation","code":"P0001","routine":"exec_stmt_raise","giftCommerceSessionGuard":false,"statementKind":"INSERT INTO EXPRESSION"}
+{"probe":"CONTENT_AUTHORIZATION_CLOCK","observations":2,"outcome":"SUCCESS","code":"NONE"}
+gift commerce PostgreSQL: 117 assertions PASS
+14/20 node ./scripts/postgres-gift-commerce-constraints.mjs (second resume)
+{"stage":"constraint boundaries","assertions":4,"missingGuards":[]}
+gift commerce constraint PostgreSQL: 4 assertions PASS
+15/20 node ./scripts/postgres-gift-commerce-pricing-rollback.mjs (second resume)
+gift commerce price rollback PostgreSQL: 6 assertions PASS
+16/20 node ./scripts/postgres-admin-catalog-time.mjs (second resume)
+{"probe":"CATALOG_IDENTITY_TIME","mode":"EXPIRED_SESSION","phase":"COMMIT","sqlstate":"23514","guard":"CATALOG_SESSION_TIME","beforeCommit":{"same_actor":true,"active_identity":true,"mfa":true,"unrevoked":true,"session_started":true,"session_current":false,"event_after_start":true,"event_before_expiry":false,"event_within_bound":true}}
+admin catalog causal time PostgreSQL: 10 assertions PASS (earlier wall clock observation, prior identity, actual canonical expiry; all normal triggers retained)
+17/20 node ./scripts/postgres-daily-publication-clock.mjs (second resume)
+{"schemaVersion":1,"result":"PASS","assertions":4,"database":"real isolated PostgreSQL","clockExpression":"clock_timestamp()"}
+18/20 node ./scripts/postgres-daily-publication-outbox.mjs (second resume)
+{"schemaVersion":1,"result":"PASS","assertions":17,"scope":"real PostgreSQL, actual isolated outbox relationship trigger"}
+19/20 node ./scripts/postgres-management-operation-clock.mjs (second resume)
+{"schemaVersion":1,"result":"PASS","assertions":12,"database":"real isolated PostgreSQL","guard":"unmodified 0022","scope":"controlled prior-event ordering, not natural wall-clock observation"}
+20/20 node ./scripts/postgres-admin-access.mjs (second resume)
+{"result":"PASS","checks":115}

@@ -11,8 +11,8 @@ const state = vi.hoisted(() => ({
   client: {},
 }));
 vi.mock("../workspace/client", () => ({ useAdminSession: () => state }));
-vi.mock("./workspace", () => ({
-  ManagementWorkspace: ({ onLogout }: { onLogout?: unknown }) => (
+vi.mock("./hub", () => ({
+  ManagementHub: ({ onLogout }: { onLogout?: unknown }) => (
     <div data-workspace data-logout-enabled={typeof onLogout === "function"} />
   ),
 }));

@@ -1,0 +1,286 @@
+{
+  "status": "PASS",
+  "setupAssertions": 5763,
+  "assertions": 1050,
+  "result": {
+    "schemaVersion": 1,
+    "cases": [
+      {
+        "kind": "THREE_HISTORICAL_STAGES",
+        "scope": "Guarded WORKER SQL fixture over normally paid, message-free checkout; no trigger bypass or physical delivery claim"
+      },
+      {
+        "kind": "LOCALE",
+        "locale": "en",
+        "decision": "SENT"
+      },
+      {
+        "kind": "LOCALE",
+        "locale": "zh-CN",
+        "decision": "SENT"
+      },
+      {
+        "kind": "LOCALE",
+        "locale": "th",
+        "decision": "SENT"
+      },
+      {
+        "kind": "LOCALE",
+        "locale": "vi",
+        "decision": "SENT"
+      },
+      {
+        "kind": "LOCALE",
+        "locale": "ja",
+        "decision": "SENT"
+      },
+      {
+        "kind": "LOCALE",
+        "locale": "es",
+        "decision": "SENT"
+      },
+      {
+        "kind": "LOCALE",
+        "locale": "pt",
+        "decision": "SENT"
+      },
+      {
+        "kind": "BOOTSTRAP_BOTH_ORDERS"
+      },
+      {
+        "kind": "DATABASE_IMMUTABILITY_AND_BOOTSTRAP_AUTHORITY"
+      },
+      {
+        "kind": "ACCEPTED_RESPONSE_LOST_AND_EXCHANGED"
+      },
+      {
+        "kind": "COMMIT_RESULT_LOST",
+        "scope": "Injected exception after a real successful COMMIT"
+      },
+      {
+        "kind": "CRASH_BEFORE_COMPLETION",
+        "scope": "Real elapsed one-second port lease; no SQL clock edits"
+      },
+      {
+        "kind": "CONCURRENT_DELIVERY"
+      },
+      {
+        "kind": "FALLBACK",
+        "requestedLocale": "th",
+        "resolvedLocale": "en"
+      },
+      {
+        "kind": "REVOKED",
+        "errorCode": "LINK_REVOKED"
+      },
+      {
+        "kind": "EXPIRED",
+        "errorCode": "LINK_EXPIRED"
+      },
+      {
+        "kind": "CONTENT_DRIFT",
+        "errorCode": "TEMPLATE_CONTENT_DRIFT"
+      },
+      {
+        "kind": "ATTEMPT_LIMIT",
+        "errorCode": "TIMEOUT_OUTCOME_UNKNOWN"
+      },
+      {
+        "kind": "CONTACT_RETENTION"
+      },
+      {
+        "kind": "UNKNOWN_DEDUPLICATION_WINDOW",
+        "scope": "Real sixty-second PostgreSQL/provider deadline; no time mutation"
+      },
+      {
+        "kind": "UNSENT_DEADLINE"
+      }
+    ],
+    "actualPostgres": true,
+    "actualMerchantPsp": false,
+    "clockMutations": false,
+    "transportScope": "Actual local TLS + PostgreSQL TEST mail receiver; durable receipt acceptance only, no real email. Receiver enforces fixed body/key/profile, absolute cutoff and finite retention.",
+    "acceptedCount": 23,
+    "providerCalls": 24,
+    "observedNotices": [
+      "NOTIFICATION_RETRY_SCHEDULED",
+      "NOTIFICATION_LOCALE_FALLBACK",
+      "NOTIFICATION_FAILED"
+    ],
+    "transportEvidence": {
+      "schemaVersion": 1,
+      "status": "PASS",
+      "actualPostgres": true,
+      "actualTls": true,
+      "processRestarted": true,
+      "processIds": [
+        53841,
+        54063
+      ],
+      "acceptedAfterLostResponse": 1,
+      "acceptedAfterConcurrentRequests": 1,
+      "firstSendAfterDeadline": 0,
+      "privateFieldsPersisted": false,
+      "immutableConflictRejected": true,
+      "oldReceiptReplayedAfterDeadline": true,
+      "expiredReceiptCannotCreateNewSend": true,
+      "finiteRetentionSeconds": 3600,
+      "receiptRemovalScope": "Only a TEST provider receipt is deleted to simulate finite-retention housekeeping; no order/financial facts or database clocks are changed.",
+      "actualEmail": false
+    }
+  },
+  "worker": {
+    "browser": {
+      "schemaVersion": 1,
+      "status": "PASS",
+      "actualEmail": false,
+      "actualPostgres": true,
+      "actualProductionNext": true,
+      "actualMailHref": true,
+      "locale": "vi",
+      "cases": [
+        {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "reducedMotion": true,
+          "keyboard": true,
+          "visibleMoney": true,
+          "status": "PASS",
+          "axeViolations": 0,
+          "axeIncomplete": 0
+        },
+        {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "reducedMotion": true,
+          "keyboard": true,
+          "visibleMoney": true,
+          "status": "PASS",
+          "axeViolations": 0,
+          "axeIncomplete": 0
+        }
+      ],
+      "screenshots": [
+        "mail-order-vi-390-summary.png",
+        "mail-order-vi-390.png",
+        "mail-order-vi-1440-summary.png",
+        "mail-order-vi-1440.png"
+      ],
+      "browserClosed": true,
+      "observations": {
+        "requests": [
+          {
+            "method": "POST",
+            "category": "ACCESS"
+          },
+          {
+            "method": "GET",
+            "category": "READ"
+          },
+          {
+            "method": "GET",
+            "category": "READ"
+          },
+          {
+            "method": "GET",
+            "category": "READ"
+          },
+          {
+            "method": "GET",
+            "category": "READ"
+          },
+          {
+            "method": "GET",
+            "category": "READ"
+          }
+        ],
+        "responses": [
+          {
+            "category": "EXCHANGE",
+            "status": 200,
+            "action": "GRANTED",
+            "code": null,
+            "privateCache": true,
+            "noReferrer": true,
+            "noIndex": true
+          },
+          {
+            "category": "READ",
+            "status": 200,
+            "action": null,
+            "code": null,
+            "privateCache": true,
+            "noReferrer": true,
+            "noIndex": true
+          },
+          {
+            "category": "READ",
+            "status": 200,
+            "action": "READ",
+            "code": null,
+            "privateCache": true,
+            "noReferrer": true,
+            "noIndex": true
+          },
+          {
+            "category": "READ",
+            "status": 200,
+            "action": "READ",
+            "code": null,
+            "privateCache": true,
+            "noReferrer": true,
+            "noIndex": true
+          },
+          {
+            "category": "READ",
+            "status": 200,
+            "action": "READ",
+            "code": null,
+            "privateCache": true,
+            "noReferrer": true,
+            "noIndex": true
+          },
+          {
+            "category": "READ",
+            "status": 200,
+            "action": "READ",
+            "code": null,
+            "privateCache": true,
+            "noReferrer": true,
+            "noIndex": true
+          }
+        ],
+        "fragmentEvents": [
+          {
+            "stage": "REPLACE",
+            "cleared": true
+          },
+          {
+            "stage": "REPLACE",
+            "cleared": true
+          },
+          {
+            "stage": "EXCHANGE",
+            "cleared": true
+          }
+        ],
+        "pageErrors": 0,
+        "leaked": false
+      }
+    },
+    "schemaVersion": 1,
+    "status": "PASS",
+    "actualWorkerComposition": true,
+    "actualPgBoss": true,
+    "actualPostgres": true,
+    "actualTls": true,
+    "consumerEffects": 2,
+    "mailAccepted": 1,
+    "scope": "Local TEST gateway acceptance; no real email or production approval"
+  },
+  "scope": "Actual Application, PostgreSQL, HTTPS receiver and owned TEST PSP; optional worker hook is reported separately, never implied."
+}

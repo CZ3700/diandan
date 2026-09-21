@@ -1,0 +1,288 @@
+Admin orders: processing original fictional Mira Vale independent media
+Admin orders: processing original fictional Kai Ren independent media
+Admin orders: processing original fictional Rose Palace gift artwork
+Admin orders: processing original fictional Blue Orbit gift artwork
+Admin orders: processing original fictional Ruby Bouquet gift artwork
+Admin orders: authoring real gift 1/27
+Admin orders: authoring real gift 2/27
+Admin orders: authoring real gift 3/27
+Admin orders: authoring real gift 4/27
+Admin orders: authoring real gift 5/27
+Admin orders: authoring real gift 6/27
+Admin orders: authoring real gift 7/27
+Admin orders: authoring real gift 8/27
+Admin orders: authoring real gift 9/27
+Admin orders: authoring real gift 10/27
+Admin orders: authoring real gift 11/27
+Admin orders: authoring real gift 12/27
+Admin orders: authoring real gift 13/27
+Admin orders: authoring real gift 14/27
+Admin orders: authoring real gift 15/27
+Admin orders: authoring real gift 16/27
+Admin orders: authoring real gift 17/27
+Admin orders: authoring real gift 18/27
+Admin orders: authoring real gift 19/27
+Admin orders: authoring real gift 20/27
+Admin orders: authoring real gift 21/27
+Admin orders: authoring real gift 22/27
+Admin orders: authoring real gift 23/27
+Admin orders: authoring real gift 24/27
+Admin orders: authoring real gift 25/27
+Admin orders: authoring real gift 26/27
+Admin orders: authoring real gift 27/27
+Admin orders: reading actual PostgreSQL price activation time
+Admin orders: creating complete TEST price book 1/2
+Admin orders: publishing complete TEST price book 1/2
+Admin orders: creating complete TEST price book 2/2
+Admin orders: publishing complete TEST price book 2/2
+Admin orders: creating actual inventory location
+Admin orders: stock, review and publication for gift 1/26
+Admin orders: stock, review and publication for gift 2/26
+Admin orders: stock, review and publication for gift 3/26
+Admin orders: stock, review and publication for gift 4/26
+Admin orders: stock, review and publication for gift 5/26
+Admin orders: stock, review and publication for gift 6/26
+Admin orders: stock, review and publication for gift 7/26
+Admin orders: stock, review and publication for gift 8/26
+Admin orders: stock, review and publication for gift 9/26
+Admin orders: stock, review and publication for gift 10/26
+Admin orders: stock, review and publication for gift 11/26
+Admin orders: stock, review and publication for gift 12/26
+Admin orders: stock, review and publication for gift 13/26
+Admin orders: stock, review and publication for gift 14/26
+Admin orders: stock, review and publication for gift 15/26
+Admin orders: stock, review and publication for gift 16/26
+Admin orders: stock, review and publication for gift 17/26
+Admin orders: stock, review and publication for gift 18/26
+Admin orders: stock, review and publication for gift 19/26
+Admin orders: stock, review and publication for gift 20/26
+Admin orders: stock, review and publication for gift 21/26
+Admin orders: stock, review and publication for gift 22/26
+Admin orders: stock, review and publication for gift 23/26
+Admin orders: stock, review and publication for gift 24/26
+Admin orders: stock, review and publication for gift 25/26
+Admin orders: stock, review and publication for gift 26/26
+Admin orders: proving tracked availability is one location's maximum, never a sum
+Admin orders: publishing actual TEST terms policy
+Admin orders: publishing actual TEST privacy policy
+Admin orders: publishing actual TEST refund policy
+Admin orders: publishing actual TEST delivery policy
+Admin orders: normal TEST webhook endpoint configuration
+Admin orders: provision owned durable event queue before VERIFY runtimes
+Admin orders: start actual signed webhook HTTP ingress
+Admin orders: OIDC and admin orders API composition
+Admin orders HTTP {"path":"context","status":200,"code":null}
+Admin orders HTTP {"path":"list","status":403,"code":"FORBIDDEN"}
+Admin orders HTTP {"path":"context","status":200,"code":null}
+Admin orders: admin en paid order and moderation
+Checkout HTTP {"ordinal":1,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":2,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":3,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":4,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":5,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":409,"code":"MODERATION_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":409,"code":"LANGUAGE_REVIEW_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":409,"code":"IDEMPOTENCY_CONFLICT"}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"deliver","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders: admin zh-CN paid order and moderation
+Checkout HTTP {"ordinal":6,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":7,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":8,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":9,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":10,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":409,"code":"MODERATION_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":409,"code":"LANGUAGE_REVIEW_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":409,"code":"IDEMPOTENCY_CONFLICT"}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"deliver","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders: admin th paid order and moderation
+Checkout HTTP {"ordinal":11,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":12,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":13,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":14,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":15,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":409,"code":"MODERATION_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":409,"code":"LANGUAGE_REVIEW_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":409,"code":"IDEMPOTENCY_CONFLICT"}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"deliver","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders: admin vi paid order and moderation
+Checkout HTTP {"ordinal":16,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":17,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":18,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":19,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":20,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":409,"code":"MODERATION_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":409,"code":"LANGUAGE_REVIEW_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":409,"code":"IDEMPOTENCY_CONFLICT"}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"deliver","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders: admin ja paid order and moderation
+Checkout HTTP {"ordinal":21,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":22,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":23,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":24,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":409,"code":"MODERATION_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":409,"code":"IDEMPOTENCY_CONFLICT"}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"deliver","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders: admin es paid order and moderation
+Checkout HTTP {"ordinal":25,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":26,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":27,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":28,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":29,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":409,"code":"MODERATION_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":409,"code":"LANGUAGE_REVIEW_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":409,"code":"IDEMPOTENCY_CONFLICT"}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"deliver","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders: admin pt paid order and moderation
+Checkout HTTP {"ordinal":30,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":31,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":32,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":33,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":34,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":409,"code":"MODERATION_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":409,"code":"LANGUAGE_REVIEW_REQUIRED"}
+Admin orders HTTP {"path":"message/read","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":200,"code":null}
+Admin orders HTTP {"path":"message/review","status":409,"code":"IDEMPOTENCY_CONFLICT"}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"deliver","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"note/add","status":200,"code":null}
+Admin orders HTTP {"path":"note/add","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"notes/read","status":200,"code":null}
+Checkout HTTP {"ordinal":35,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":36,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":37,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":38,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":39,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"hold","status":403,"code":"FORBIDDEN"}
+Admin orders HTTP {"path":"hold","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"resume","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"list","status":200,"code":null}
+Admin orders HTTP {"path":"list","status":200,"code":null}
+Admin orders HTTP {"path":"list","status":200,"code":null}
+Admin orders: durable original notification preparation
+Admin orders: browser fixture through real checkout
+Checkout HTTP {"ordinal":40,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":41,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":42,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":43,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Checkout HTTP {"ordinal":44,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":45,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":46,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":47,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":48,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Checkout HTTP {"ordinal":49,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":50,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":51,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":52,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":53,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Checkout HTTP {"ordinal":54,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":55,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":56,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":57,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":58,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Checkout HTTP {"ordinal":59,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":60,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":61,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":62,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":63,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders: seven-language real browser acceptance
+Admin orders failure {"stage":"seven-language real browser acceptance","name":"Error","code":null,"frames":["/apps/api/scripts/admin-orders-browser.mjs:582:11","/apps/api/scripts/admin-orders-http.mjs:156:26","/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14","/apps/api/scripts/payment-runtime-runtime.mjs:29:12","/apps/api/scripts/admin-orders-http.mjs:59:5","/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:155:16","/apps/api/scripts/admin-orders-http.mjs:249:5"]}
+FAIL admin orders {"name":"EphemeralPostgresError","code":null,"frames":["/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161:15","/apps/api/scripts/admin-orders-http.mjs:249:5"]}
+FAIL admin orders {"name":"Error","code":null,"frames":["/packages/media-s3/scripts/ephemeral-s3-harness.mjs:448:16"]}

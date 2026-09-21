@@ -1,4 +1,7 @@
-import { createOrderNotificationUseCases } from "@fan-support/application";
+import {
+  createOrderNotificationUseCases,
+  createAdminOrderResendUseCases,
+} from "@fan-support/application";
 import {
   notificationRuntimeConfigurationSchema,
   orderAccessConfigurationSchema,
@@ -19,12 +22,14 @@ import {
 type Environment = Readonly<Record<string, string | undefined>>;
 type Dependencies = Readonly<{
   notificationTransactionManager: NotificationTransactionManager;
+  adminOrderResendNotificationTransactionManager?: NotificationTransactionManager;
   logger?: StructuredLogger;
 }>;
 type Injected = Readonly<{
   configuration: WorkerNotificationConfiguration;
   credentials: Environment;
   transactions: NotificationTransactionManager;
+  resendTransactions?: NotificationTransactionManager;
   keyManagement: KeyManagementPort;
   logger?: StructuredLogger;
   transportFactory?: typeof createNotificationGatewayTransport;
@@ -77,19 +82,46 @@ function prepare(
   const transports = new Map(
     profiles.map((p) => [p.transportKey, p.transport]),
   );
-  return (dependencies: Dependencies) =>
-    createOrderNotificationUseCases({
-      transactions: dependencies.notificationTransactionManager,
+  return (dependencies: Dependencies) => {
+    const shared = {
       keyManagement: options.keyManagement,
       templates,
       configuration,
-      transportForKey: (key) => transports.get(key),
-      onNotice: (code) =>
+      transportForKey: (key: string) => transports.get(key),
+      onNotice: (code: string) =>
         dependencies.logger?.warn("order_notification.notice", {
           errorCode: code,
           outcome: "failure",
         }),
+    };
+    const automatic = createOrderNotificationUseCases({
+      ...shared,
+      transactions: dependencies.notificationTransactionManager,
     });
+    const manual = dependencies.adminOrderResendNotificationTransactionManager
+      ? createAdminOrderResendUseCases({
+          ...shared,
+          transactions:
+            dependencies.adminOrderResendNotificationTransactionManager,
+        })
+      : undefined;
+    return Object.freeze({
+      ...automatic,
+      runPending: async (limit: number) => {
+        const original = await automatic.runPending(limit);
+        if (!manual) return original;
+        const resends = await manual.runPending(limit);
+        return {
+          schemaVersion: 1 as const,
+          scanned: original.scanned + resends.scanned,
+          sent: original.sent + resends.sent,
+          scheduled: original.scheduled + resends.scheduled,
+          failed: original.failed + resends.failed,
+          skipped: original.skipped + resends.skipped,
+        };
+      },
+    });
+  };
 }
 /** Explicit TEST composition for local fixtures. It cannot choose a LIVE sender or production approval. */
 export function createTestWorkerNotifications(
@@ -109,6 +141,12 @@ export function createTestWorkerNotifications(
     "TEST_DRAFT",
   )({
     notificationTransactionManager: options.transactions,
+    ...(options.resendTransactions
+      ? {
+          adminOrderResendNotificationTransactionManager:
+            options.resendTransactions,
+        }
+      : {}),
     ...(options.logger ? { logger: options.logger } : {}),
   });
 }

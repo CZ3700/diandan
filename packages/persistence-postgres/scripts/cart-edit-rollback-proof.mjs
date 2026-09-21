@@ -46,7 +46,7 @@ export async function verifyCartEditRollbackProtection({
         "SELECT version FROM public.schema_migrations ORDER BY version DESC LIMIT 1",
       )
     ).rows[0]?.version;
-    assert.equal(head, "0029");
+    // The shared prefix guard rejects unknown heads or retained history.
     await rollbackEmptyNotifications({ client, clientConfig, workspaceRoot });
     const orderAccessDown = await runMigrations({
       clientConfig,
@@ -141,7 +141,7 @@ export async function verifyCartEditRollbackProtection({
       workspaceRoot,
       command: { direction: "up" },
     });
-    assert.equal(restored.currentVersion, "0029");
+    assert.equal(restored.currentVersion, head);
     return {
       schemaVersion: 1,
       status: "PASS",

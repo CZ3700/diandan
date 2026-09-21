@@ -1,3 +1,4 @@
+export { createAdminOrderResendUseCases } from "./admin-order-resends.js";
 export * from "./admin-preview-media.js";
 export * from "./admin-catalog.js";
 export * from "./translation-workspace.js";
@@ -92,3 +93,8 @@ export {
   type AdminAccessUseCases,
 } from "./admin-access.js";
 export { digestAdminIdentitySubject } from "./admin-access-tokens.js";
+export {
+  createAdminOrdersUseCases,
+  type AdminOrdersDependencies,
+  type AdminOrdersUseCases,
+} from "./admin-orders.js";

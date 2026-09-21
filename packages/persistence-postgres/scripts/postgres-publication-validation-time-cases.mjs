@@ -187,6 +187,7 @@ export async function verifyPublicationValidationTimeCase({
   clientConfig,
   credentials,
   fixtureCase,
+  expectedMigrationVersion,
   check,
 }) {
   let databaseFailure;
@@ -243,8 +244,8 @@ export async function verifyPublicationValidationTimeCase({
           "SELECT max(version) AS version FROM public.schema_migrations",
         )
       ).rows[0].version,
-      "0029",
-      "validation time regression uses the current schema",
+      expectedMigrationVersion,
+      "validation time regression uses the exact current migration head",
     );
     check(
       (

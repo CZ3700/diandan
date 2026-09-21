@@ -57,7 +57,7 @@ await withEphemeralPostgres(async (clientConfig) => {
       );
       legacyGiftDrafts.push(id);
     }
-    await runMigrations({
+    const currentMigration = await runMigrations({
       clientConfig,
       workspaceRoot,
       command: { direction: "up" },
@@ -68,8 +68,8 @@ await withEphemeralPostgres(async (clientConfig) => {
           "SELECT max(version) AS version FROM public.schema_migrations",
         )
       ).rows[0].version,
-      "0029",
-      "legacy extension repository runs against the current notification schema",
+      currentMigration.currentVersion,
+      "legacy extension repository runs against the exact current migration head",
     );
     equal(
       (

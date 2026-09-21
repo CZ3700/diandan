@@ -1,0 +1,17 @@
+{
+  "stage": "start actual signed webhook HTTP ingress",
+  "checks": 5763,
+  "name": "TypeError",
+  "code": null,
+  "guard": null,
+  "constraint": null,
+  "frames": [
+    "/packages/persistence-postgres/scripts/admin-notification-resend-fixture.mjs:89:5",
+    "/packages/persistence-postgres/scripts/admin-notification-resend-integration.mjs:62:18",
+    "/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14",
+    "/apps/api/scripts/payment-runtime-runtime.mjs:29:12",
+    "/packages/persistence-postgres/scripts/admin-notification-resend-integration.mjs:54:5",
+    "/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:155:16",
+    "/packages/persistence-postgres/scripts/admin-notification-resend-integration.mjs:95:5"
+  ]
+}

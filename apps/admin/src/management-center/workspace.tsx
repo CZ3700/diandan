@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import { Button, Icon } from "@fan-support/ui";
 import type {
   ManagementCenterListItem,
@@ -44,14 +45,20 @@ export function ManagementWorkspace({
   locale,
   storefrontOrigin,
   onLogout,
+  onOrders,
+  initialSection = "ARTISTS",
+  accessNotice,
 }: {
   api: ManagementApi;
   locale: SupportedLocale;
   storefrontOrigin?: string | undefined;
   onLogout?: (() => Promise<void>) | undefined;
+  onOrders?: (() => void) | undefined;
+  initialSection?: ManagementSection;
+  accessNotice?: ReactNode;
 }) {
   const copy = managementCopy(locale);
-  const [section, setSection] = useState<ManagementSection>("ARTISTS");
+  const [section, setSection] = useState<ManagementSection>(initialSection);
   const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(0);
   const [context, setContext] = useState<ManagementContext | null>(null);
@@ -200,7 +207,10 @@ export function ManagementWorkspace({
     <ManagementShell
       locale={locale}
       section={section}
-      onSection={chooseSection}
+      onSection={(next) =>
+        next === "ORDERS" ? onOrders?.() : chooseSection(next)
+      }
+      ordersAvailable={Boolean(onOrders)}
       disabled={busy}
       accountAction={
         onLogout ? (
@@ -212,6 +222,7 @@ export function ManagementWorkspace({
         ) : undefined
       }
     >
+      {accessNotice}
       <header className="mc-workspace-header">
         <div>
           {selection ? (

@@ -355,3 +355,4 @@ export * from "./order-access.js";
 export * from "./order-notification.js";
 
 export * from "./admin-access.js";
+export * from "./admin-orders.js";

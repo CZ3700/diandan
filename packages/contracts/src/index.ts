@@ -91,3 +91,6 @@ export * from "./order-access.js";
 export * from "./order-notification.js";
 
 export * from "./admin-access.js";
+export * from "./admin-orders.js";
+export * from "./admin-orders-persistence.js";
+export * from "./admin-order-note-key.js";

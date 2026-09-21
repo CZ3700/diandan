@@ -1,4 +1,8 @@
 import {
+  registerAdminOrdersRoute,
+  type AdminOrdersRouteDependencies,
+} from "./admin-orders-route.js";
+import {
   registerAdminAccessRoute,
   type AdminAccessRouteDependencies,
 } from "./admin-access-route.js";
@@ -129,6 +133,8 @@ export type CreateApiApplicationOptions = Readonly<{
   giftCommerceRoute?: GiftCommerceRouteDependencies;
   giftCommerceRuntime?: ApiLifecycleResource;
   publishedGiftCommerceRoute?: PublishedGiftCommerceRouteDependencies;
+  adminOrdersRoute?: AdminOrdersRouteDependencies;
+  adminOrdersRuntime?: ApiLifecycleResource;
   adminAccessRoute?: AdminAccessRouteDependencies;
   adminAccessRuntime?: ApiLifecycleResource;
   adminSessionRoute?: AdminSessionRouteDependencies;
@@ -167,6 +173,7 @@ function registerApiLifecycle(
   runtime: ApiLifecycleResource | undefined,
   name:
     | "API admin access"
+    | "API admin orders"
     | "API admin session"
     | "API cart"
     | "API order access"
@@ -361,6 +368,9 @@ export async function createApiApplication(
     options.adminWorkspaceRuntime,
     "API admin workspace",
   );
+  registerApiLifecycle(adapter, options.adminOrdersRuntime, "API admin orders");
+  if (options.adminOrdersRoute)
+    registerAdminOrdersRoute(adapter.getInstance(), options.adminOrdersRoute);
   if (options.adminAccessRoute)
     registerAdminAccessRoute(adapter.getInstance(), options.adminAccessRoute);
   if (options.adminSessionRoute)

@@ -1,0 +1,141 @@
+$ pnpm run build:with-dependencies && node ./scripts/migration-manifest.mjs --check && node ./scripts/postgres-integration.mjs && node ./scripts/postgres-cart-runtime-parameters.mjs && node ./scripts/postgres-payment-runtime-parameters.mjs && node ./scripts/postgres-order-payment-parameters.mjs && node ./scripts/postgres-order-access-parameters.mjs && node ./scripts/postgres-order-access-constraints.mjs && node ./scripts/postgres-payment-runtime-action-guard.mjs && node --test ./scripts/payment-runtime-health-fixture.test.mjs && node ./scripts/postgres-cart-moderation-guard.mjs && node ./scripts/postgres-key-version-upgrade.mjs && node ./scripts/postgres-media-object-key-upgrade.mjs && node ./scripts/postgres-outbox-status-upgrade.mjs && node ./scripts/postgres-constraints.mjs && node ./scripts/postgres-publication-upgrade.mjs && node ./scripts/postgres-repositories.mjs && node ./scripts/postgres-outbox-event-time.mjs && node ./scripts/postgres-webhook-retention-time.mjs && node ./scripts/postgres-reliable-events.mjs && node ./scripts/postgres-catalog-directory.mjs && node ./scripts/postgres-media-processing.mjs && node ./scripts/postgres-content-drafts.mjs && node ./scripts/postgres-content-draft-repositories.mjs && node ./scripts/postgres-admin-content.mjs && node ./scripts/postgres-content-authoring.mjs && node ./scripts/postgres-base-content.mjs && node ./scripts/postgres-resource-management.mjs && node ./scripts/postgres-publication-preflight.mjs && node ./scripts/postgres-publication-runtime.mjs && node ./scripts/postgres-publication-event-time.mjs && node ./scripts/postgres-admin-catalog.mjs && node ./scripts/postgres-gift-commerce.mjs && node ./scripts/postgres-gift-commerce-constraints.mjs && node ./scripts/postgres-gift-commerce-pricing-rollback.mjs && node ./scripts/postgres-admin-catalog-time.mjs && node ./scripts/postgres-daily-publication-clock.mjs && node ./scripts/postgres-daily-publication-outbox.mjs && node ./scripts/postgres-management-operation-clock.mjs && node ./scripts/postgres-admin-access.mjs
+
+> @fan-support/persistence-postgres@0.0.0 build:with-dependencies /Users/mario/Desktop/下单/packages/persistence-postgres
+> pnpm turbo run build --filter @fan-support/persistence-postgres --concurrency=1
+
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/persistence-postgres
+   • Running build in 1 packages
+   • Remote caching disabled
+
+@fan-support/contracts:build: cache hit, replaying logs 1c85f4722f4025d2
+@fan-support/contracts:build:
+@fan-support/contracts:build: > @fan-support/contracts@0.0.0 build /Users/mario/Desktop/下单/packages/contracts
+@fan-support/contracts:build: > tsc -p tsconfig.build.json
+@fan-support/contracts:build:
+@fan-support/media-port:build: cache hit, replaying logs 5f43cc1fc272fd58
+@fan-support/media-port:build:
+@fan-support/media-port:build: > @fan-support/media-port@0.0.0 build /Users/mario/Desktop/下单/packages/media-port
+@fan-support/media-port:build: > tsc -p tsconfig.build.json
+@fan-support/media-port:build:
+@fan-support/persistence-port:build: cache hit, replaying logs 96290c25e435e17d
+@fan-support/persistence-port:build:
+@fan-support/persistence-port:build: > @fan-support/persistence-port@0.0.0 build /Users/mario/Desktop/下单/packages/persistence-port
+@fan-support/persistence-port:build: > tsc -p tsconfig.build.json
+@fan-support/persistence-port:build:
+@fan-support/cache-purge-port:build: cache hit, replaying logs c8604028130e15e3
+@fan-support/cache-purge-port:build:
+@fan-support/cache-purge-port:build: > @fan-support/cache-purge-port@0.0.0 build /Users/mario/Desktop/下单/packages/cache-purge-port
+@fan-support/cache-purge-port:build: > tsc -p tsconfig.build.json
+@fan-support/cache-purge-port:build:
+@fan-support/cart:build: cache hit, replaying logs 86c3dd11f7fbaf0b
+@fan-support/cart:build:
+@fan-support/cart:build: > @fan-support/cart@0.0.0 build /Users/mario/Desktop/下单/packages/cart
+@fan-support/cart:build: > tsc -p tsconfig.build.json
+@fan-support/cart:build:
+@fan-support/catalog:build: cache hit, replaying logs 47bf41f0bea2b138
+@fan-support/catalog:build:
+@fan-support/catalog:build: > @fan-support/catalog@0.0.0 build /Users/mario/Desktop/下单/packages/catalog
+@fan-support/catalog:build: > tsc -p tsconfig.build.json
+@fan-support/catalog:build:
+@fan-support/identity-port:build: cache hit, replaying logs 8eb0a1c4bd4e3329
+@fan-support/identity-port:build:
+@fan-support/identity-port:build: > @fan-support/identity-port@0.0.0 build /Users/mario/Desktop/下单/packages/identity-port
+@fan-support/identity-port:build: > tsc -p tsconfig.build.json
+@fan-support/identity-port:build:
+@fan-support/notification-port:build: cache hit, replaying logs 8757a272a5edaa4c
+@fan-support/notification-port:build:
+@fan-support/notification-port:build: > @fan-support/notification-port@0.0.0 build /Users/mario/Desktop/下单/packages/notification-port
+@fan-support/notification-port:build: > tsc -p tsconfig.build.json
+@fan-support/notification-port:build:
+@fan-support/content:build: cache hit, replaying logs fb98388eb02e1f41
+@fan-support/content:build:
+@fan-support/content:build: > @fan-support/content@0.0.0 build /Users/mario/Desktop/下单/packages/content
+@fan-support/content:build: > tsc -p tsconfig.build.json
+@fan-support/content:build:
+@fan-support/key-management-port:build: cache hit, replaying logs 2ad1f0dd86649a97
+@fan-support/key-management-port:build:
+@fan-support/key-management-port:build: > @fan-support/key-management-port@0.0.0 build /Users/mario/Desktop/下单/packages/key-management-port
+@fan-support/key-management-port:build: > tsc -p tsconfig.build.json
+@fan-support/key-management-port:build:
+@fan-support/domain:build: cache hit, replaying logs 9587cc4ee37bb339
+@fan-support/domain:build:
+@fan-support/domain:build: > @fan-support/domain@0.0.0 build /Users/mario/Desktop/下单/packages/domain
+@fan-support/domain:build: > tsc -p tsconfig.build.json
+@fan-support/domain:build:
+@fan-support/payment-port:build: cache hit, replaying logs cd6a8585c5f6eadc
+@fan-support/payment-port:build:
+@fan-support/payment-port:build: > @fan-support/payment-port@0.0.0 build /Users/mario/Desktop/下单/packages/payment-port
+@fan-support/payment-port:build: > tsc -p tsconfig.build.json
+@fan-support/payment-port:build:
+@fan-support/testing:build: cache hit, replaying logs ec00749b4f1ce950
+@fan-support/testing:build:
+@fan-support/testing:build: > @fan-support/testing@0.0.0 build /Users/mario/Desktop/下单/packages/testing
+@fan-support/testing:build: > tsc -p tsconfig.build.json
+@fan-support/testing:build:
+@fan-support/application:build: cache hit, replaying logs c5e42ee513e2814d
+@fan-support/application:build:
+@fan-support/application:build: > @fan-support/application@0.0.0 build /Users/mario/Desktop/下单/packages/application
+@fan-support/application:build: > tsc -p tsconfig.build.json
+@fan-support/application:build:
+@fan-support/payment-fake:build: cache hit, replaying logs daa316f8d9dcd384
+@fan-support/payment-fake:build:
+@fan-support/payment-fake:build: > @fan-support/payment-fake@0.0.0 build /Users/mario/Desktop/下单/packages/payment-fake
+@fan-support/payment-fake:build: > tsc -p tsconfig.build.json
+@fan-support/payment-fake:build:
+@fan-support/persistence-postgres:build: cache miss, executing d2e4d240de2b2dc8
+@fan-support/persistence-postgres:build:
+@fan-support/persistence-postgres:build: > @fan-support/persistence-postgres@0.0.0 build /Users/mario/Desktop/下单/packages/persistence-postgres
+@fan-support/persistence-postgres:build: > tsc -p tsconfig.build.json
+@fan-support/persistence-postgres:build:
+
+ Tasks:    16 successful, 16 total
+Cached:    15 cached, 16 total
+  Time:    4.23s
+
+PostgreSQL migration round-trip passed (32 migrations, 186 tables).
+{"schemaVersion":1,"status":"PASS","assertions":14,"scope":"Actual repository SQL PostgreSQL parameter inference and cart INSERT; no commerce proof fixture"}
+{"schemaVersion":1,"status":"PASS","assertions":45,"preparedStatements":38,"preparedRecoveryBranches":[{"restoresNonterminal":false,"parameterTypes":["uuid","text","text","uuid","uuid","timestamp with time zone","text","bytea","bytea","text","timestamp with time zone"]},{"restoresNonterminal":true,"parameterTypes":["uuid","text","text","uuid","uuid","timestamp with time zone","text","bytea","bytea","text","timestamp with time zone"]}],"scope":"Actual full migrated PostgreSQL parameter and column validation; no PSP or complete checkout fixture"}
+{"schemaVersion":1,"status":"PASS","preparedStatements":30,"scope":"Actual PostgreSQL parses and binds each source-owned SQL statement; financial row behavior separately uses normal HTTP/PSP fixture"}
+{"schemaVersion":1,"status":"PASS","preparedStatements":17,"assertions":21,"actualPostgres":true,"twoIndependentPools":true,"financialRowsCreated":0}
+{"schemaVersion":1,"status":"PASS","assertions":10,"scope":"Actual PostgreSQL constraints and populated rate-limit rollback refusal; order-backed lifecycle and audit atomicity use the HTTP protocol"}
+{"schemaVersion":1,"status":"PASS","assertions":10,"scope":"Original mutation function plus real column checks on isolated LIKE table; complete authenticated evidence/FK/outbox validated separately by HTTP"}
+✔ health fixture records one real versioned transition and leaves configuration untouched (1.348625ms)
+✔ same health returns unchanged without inventing history (0.23075ms)
+✔ LIVE accounts are rejected before any mutation (0.272125ms)
+✔ commit rejection rolls back and closes without a success result (0.17675ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46.536875
+{"schemaVersion":1,"status":"PASS","assertions":3,"scope":"Actual installed moderation trigger with cloned column/check shape; no simulated approval evidence"}
+PostgreSQL key-version migration passed (1 forward migration reapplied).
+PostgreSQL media object-key migration passed (1 forward migration reapplied).
+PostgreSQL outbox-status migration passed (fail-closed backfill, typed authority, down/up).
+PostgreSQL constraint adversarial tests passed (9 migrations, 2 concurrency scenarios, 5 evidence assertions, 7 aggregate behavior assertions, 15 append-only assertions, 1 search-path assertion, 2 provenance assertions, 11 idempotency data-minimization assertions, 17 metadata boundary assertions, 20 webhook lifecycle assertions, 7 authority evidence assertions, 1 tamper assertion).
+PostgreSQL data-bearing publication migration passed (2 publications, 8 outbox rows, 1 migration audit).
+PostgreSQL repository integration passed (transactions, idempotency, outbox, inventory).
+{"schemaVersion":1,"status":"PASS","assertions":19,"scope":"Actual outbox repository and original guards with controlled post-BEGIN event, historical event, early-available and mismatched source-time checks; isolated TEST source fixture is not a full checkout"}
+{"schemaVersion":1,"status":"PASS","assertions":13,"results":[{"mode":"APPLICATION_CLOCK_LEADS_20MS","status":"PASS"},{"mode":"SHORTER_AUTHORIZED_EXPIRY","status":"PASS"},{"mode":"EXACT_DATABASE_RETENTION_LIMIT","status":"PASS"},{"mode":"ALREADY_EXPIRED","status":"PASS"},{"mode":"EXACT_CREATION_BOUNDARY","status":"PASS"}],"scope":"Actual parameterized production payload INSERT on the fully migrated original PostgreSQL table and triggers; controlled authorization expiry inputs, no sleeps or clock/constraint changes; webhook signature and concurrency use original suites"}
+PostgreSQL reliable-event gate passed (2 outside-tolerance rejections, 10 concurrent receipts with redacted diagnostics, 1 controlled SERIALIZABLE race, 2 VERIFY workers, 6 finite attempts, 114622 ms).
+Catalog fixture assertion at directory transaction: legacy rollback probe requires an exact current head without notification, bootstrap or SYSTEM expiry history
++ actual - expected
+
+  {
+    bootstraps: 0,
+    contact_accesses: 0,
+    expiries: 0,
+    notifications: 0,
++   version: '0032'
+-   version: '0029'
+  }
+; code=ERR_ASSERTION
+PostgreSQL catalog directory integration failed: ephemeral PostgreSQL operation failed
+/Users/mario/Desktop/下单/packages/persistence-postgres:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/persistence-postgres@0.0.0 test:postgres: `pnpm run build:with-dependencies && node ./scripts/migration-manifest.mjs --check && node ./scripts/postgres-integration.mjs && node ./scripts/postgres-cart-runtime-parameters.mjs && node ./scripts/postgres-payment-runtime-parameters.mjs && node ./scripts/postgres-order-payment-parameters.mjs && node ./scripts/postgres-order-access-parameters.mjs && node ./scripts/postgres-order-access-constraints.mjs && node ./scripts/postgres-payment-runtime-action-guard.mjs && node --test ./scripts/payment-runtime-health-fixture.test.mjs && node ./scripts/postgres-cart-moderation-guard.mjs && node ./scripts/postgres-key-version-upgrade.mjs && node ./scripts/postgres-media-object-key-upgrade.mjs && node ./scripts/postgres-outbox-status-upgrade.mjs && node ./scripts/postgres-constraints.mjs && node ./scripts/postgres-publication-upgrade.mjs && node ./scripts/postgres-repositories.mjs && node ./scripts/postgres-outbox-event-time.mjs && node ./scripts/postgres-webhook-retention-time.mjs && node ./scripts/postgres-reliable-events.mjs && node ./scripts/postgres-catalog-directory.mjs && node ./scripts/postgres-media-processing.mjs && node ./scripts/postgres-content-drafts.mjs && node ./scripts/postgres-content-draft-repositories.mjs && node ./scripts/postgres-admin-content.mjs && node ./scripts/postgres-content-authoring.mjs && node ./scripts/postgres-base-content.mjs && node ./scripts/postgres-resource-management.mjs && node ./scripts/postgres-publication-preflight.mjs && node ./scripts/postgres-publication-runtime.mjs && node ./scripts/postgres-publication-event-time.mjs && node ./scripts/postgres-admin-catalog.mjs && node ./scripts/postgres-gift-commerce.mjs && node ./scripts/postgres-gift-commerce-constraints.mjs && node ./scripts/postgres-gift-commerce-pricing-rollback.mjs && node ./scripts/postgres-admin-catalog-time.mjs && node ./scripts/postgres-daily-publication-clock.mjs && node ./scripts/postgres-daily-publication-outbox.mjs && node ./scripts/postgres-management-operation-clock.mjs && node ./scripts/postgres-admin-access.mjs`
+Exit status 1

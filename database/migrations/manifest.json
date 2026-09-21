@@ -300,6 +300,26 @@
         "up": "742666f369c2241de916644252635782ba2624661865c4533f8ada685a639016",
         "down": "d40199305da7ee2142129a98791af75ba4a21ee38742007af8adbf62a7aa8cf0"
       }
+    },
+    {
+      "version": "0031",
+      "name": "admin-orders",
+      "up": "database/migrations/0031_admin-orders.up.sql",
+      "down": "database/migrations/0031_admin-orders.down.sql",
+      "sha256": {
+        "up": "76dc33ce9529fa108c06d0f73fefd771527c009ab423de197a6d2b805b30bba5",
+        "down": "a5285150e0e18e35d6c43303356de94915e4313554b2c46bc429bed91ff70cac"
+      }
+    },
+    {
+      "version": "0032",
+      "name": "admin-order-resends",
+      "up": "database/migrations/0032_admin-order-resends.up.sql",
+      "down": "database/migrations/0032_admin-order-resends.down.sql",
+      "sha256": {
+        "up": "dea13c99e16e1cd4f46b3b968235c68fd8beb4e38550d92b0b1a4fcc0802923a",
+        "down": "1a0fad13b7d5263d04abe379099451c43d0f586b012c7f2be4ec87f7e8d03523"
+      }
     }
   ]
 }

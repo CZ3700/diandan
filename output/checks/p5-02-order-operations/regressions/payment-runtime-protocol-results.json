@@ -1,0 +1,989 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "assertions": 801,
+  "setupAssertions": 5761,
+  "setupRequests": 1902,
+  "protocolOperatorRequests": 0,
+  "protocol": {
+    "schemaVersion": 1,
+    "locales": [
+      {
+        "locale": "en",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": false
+      },
+      {
+        "locale": "zh-CN",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      },
+      {
+        "locale": "th",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      },
+      {
+        "locale": "vi",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      },
+      {
+        "locale": "ja",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      },
+      {
+        "locale": "es",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      },
+      {
+        "locale": "pt",
+        "status": "REQUIRES_ACTION",
+        "providerLocale": "en",
+        "fallbackUsed": true
+      }
+    ],
+    "checkoutRequests": [
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "INITIALIZE_CART",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "ADD_CART_ITEM",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "VALIDATE",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE",
+        "status": 200,
+        "code": null
+      }
+    ],
+    "paymentRequests": [
+      {
+        "category": "CURRENT",
+        "status": 401,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 404,
+        "code": "ATTEMPT_NOT_FOUND"
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 400,
+        "code": "INVALID_COMMAND"
+      },
+      {
+        "category": "RECOVER_ATTEMPT",
+        "status": 403,
+        "code": "INVALID_ACCESS"
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CURRENT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CAPABILITIES",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "CREATE_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "READ_ATTEMPT",
+        "status": 200,
+        "code": null
+      },
+      {
+        "category": "RECOVER_ATTEMPT",
+        "status": 200,
+        "code": null
+      }
+    ],
+    "psp": {
+      "payments": 9,
+      "captures": 1,
+      "createCalls": 9,
+      "reconcileCalls": 13
+    },
+    "actualPostgres": true,
+    "actualAuthenticatedHttps": true,
+    "actualPspProcessRestart": true,
+    "actualPspSandbox": false,
+    "paidAggregateImplemented": false,
+    "retry": {
+      "schemaVersion": 1,
+      "status": "PASS",
+      "canceledThenRetry": true,
+      "sameOrder": true,
+      "permanentOldKey": true,
+      "normalHealthEvent": "CHANGED",
+      "healthRestored": true,
+      "requests": [
+        {
+          "category": "CAPABILITIES",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "CREATE_ATTEMPT",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "RECOVER_ATTEMPT",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "CAPABILITIES",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "CREATE_ATTEMPT",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "CREATE_ATTEMPT",
+          "status": 200,
+          "code": null
+        },
+        {
+          "category": "CREATE_ATTEMPT",
+          "status": 200,
+          "code": null
+        }
+      ]
+    },
+    "commitFaults": {
+      "schemaVersion": 1,
+      "status": "PASS",
+      "assertions": 110,
+      "cases": [
+        {
+          "boundary": "beginCreate",
+          "status": "PASS",
+          "injectedAfterCommittedTransaction": 1,
+          "createCallsBeforeRecovery": 0,
+          "totalCreateCalls": 1,
+          "originalOrderAndAttemptPreserved": true
+        },
+        {
+          "boundary": "settleCreate",
+          "status": "PASS",
+          "injectedAfterCommittedTransaction": 1,
+          "createCallsBeforeRecovery": 1,
+          "totalCreateCalls": 1,
+          "originalOrderAndAttemptPreserved": true
+        }
+      ],
+      "scope": "Actual PostgreSQL transactions and normal HTTP/TEST PSP; only the successful COMMIT response boundary is fault injected"
+    }
+  },
+  "rollback": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "assertions": 13,
+    "tableCount": 30,
+    "before": {
+      "schema_migrations": {
+        "count": 26,
+        "sha256": "79006890132e93593b532e26ae80c0176e5fb98de93b57ca09cc57f8d82ad840"
+      },
+      "carts": {
+        "count": 13,
+        "sha256": "b044005865ce3927fd9d19e988a0ee2bdff86ae497da7d105a85a7d3df16c34b"
+      },
+      "cart_items": {
+        "count": 12,
+        "sha256": "34897166e2689309e11b7cdb86b903adc531b242e25b05d6de7476a96c7ecb43"
+      },
+      "support_intents": {
+        "count": 12,
+        "sha256": "1add1f9540c32c370ddf1302b7f329225d45384c765d63246148913b0ff5fff6"
+      },
+      "customer_contacts": {
+        "count": 12,
+        "sha256": "2e379eebee9e61f1941630ba92a31856ad657cadba4ccdffd57b940ead111906"
+      },
+      "checkout_preflight_observations": {
+        "count": 12,
+        "sha256": "848fef1ebe02490e828841ec8deebfdd728da7066808c677e4f9037dcfbb8076"
+      },
+      "checkout_preflight_receipts": {
+        "count": 12,
+        "sha256": "e458032086719ef7e6c584a300094a535f9fcd07203c17924a73a6359ff9d4ea"
+      },
+      "checkout_outbox_events": {
+        "count": 12,
+        "sha256": "23e2d86a3c1d190d5423c1511cd81d7bf62e90dfa90a1611bc3f923617194962"
+      },
+      "checkout_sessions": {
+        "count": 12,
+        "sha256": "ab8a3374df782a2949308643d36ab01003b7da4ca5ff59f6f86464eb828cad27"
+      },
+      "checkout_quote_lines": {
+        "count": 12,
+        "sha256": "3792a2ab88ff38cee6d024919f90a75e4d4a3bd502fa594963076fb49b4440b4"
+      },
+      "orders": {
+        "count": 12,
+        "sha256": "ae5a9d183443de78ab50a95599bb99a67d175bb6b461dc040fc0de7697120446"
+      },
+      "order_items": {
+        "count": 12,
+        "sha256": "16b5a11f72289562a7a67318b2f37874d3830d79f052acd2a7f7eb7cd61f286f"
+      },
+      "order_events": {
+        "count": 37,
+        "sha256": "358b9d98e9e45cf8558b3f99e175846900135a4e4f2e2437f936608a736d2d4f"
+      },
+      "policy_acceptances": {
+        "count": 48,
+        "sha256": "74381b8c146168677dce1ae0f61b8b5dd8500140ced3f49c68ec2d5670a2e8f4"
+      },
+      "fulfillments": {
+        "count": 12,
+        "sha256": "7f9bb223aea2ad76996b96a010bdd0967c440dcb7409a384c7e1cc5984327ee4"
+      },
+      "fulfillment_events": {
+        "count": 12,
+        "sha256": "2b9fcdb36e3e23874e90237379adaea03ada3bcb76e2a7c86da5f19ee2b0ecb5"
+      },
+      "inventory_balances": {
+        "count": 5,
+        "sha256": "1b8b0b6eefd619b81583faeef6d03d6d41ba7f106a78559c4126a7becfe32e60"
+      },
+      "inventory_reservations": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "inventory_ledger": {
+        "count": 6,
+        "sha256": "0868e7ef1fc4fa5b77463fd22752a9a066f5ac7cbf839fe59c85a60d9462d556"
+      },
+      "payment_attempts": {
+        "count": 13,
+        "sha256": "94e8fa93706197c52bc2a48437abfa34fb852f5196cfa6bfe0ee1c853c4724b8"
+      },
+      "payment_attempt_events": {
+        "count": 28,
+        "sha256": "95ea4bbc79c8edfc6d7d2ecaf561ed0e2b434d6bfceba01db3a539f51830a333"
+      },
+      "payment_create_receipts": {
+        "count": 13,
+        "sha256": "149cb2376d19d5da062037bdecbfada08be7770dca333ac8bc8f1ef933a5266e"
+      },
+      "payment_runtime_operations": {
+        "count": 13,
+        "sha256": "0974a330717a7a0745776c89e5db47263e9c505aa213349e610edd48ea3b1ccd"
+      },
+      "payment_reconcile_receipts": {
+        "count": 11,
+        "sha256": "4dd5fada41b225b8f57b7ed74957f008fac47bdb67e233359cd84f2831d07ca8"
+      },
+      "provider_events": {
+        "count": 11,
+        "sha256": "f774d379bd1da0b9d16d0f6255fa551d8fcee7c3f2f764eaaea7a43135947fb1"
+      },
+      "provider_event_associations": {
+        "count": 11,
+        "sha256": "e9f2bca5bb2fcb26e62bb1d0ea639d52390e89458703320c6cbff9de0072e9ac"
+      },
+      "payment_transactions": {
+        "count": 1,
+        "sha256": "b873a7ce987eda7168adbffe826a5b6c91a71691ae76ced3e2e4ba283cb48ba8"
+      },
+      "audit_logs": {
+        "count": 1076,
+        "sha256": "5e13ace505d9b80763a347522cdd346011ecdd79094d9e9bae8fb5804f39815a"
+      },
+      "outbox_events": {
+        "count": 349,
+        "sha256": "91500be5eaa4544bf81b1cb6a24f7ad08642c5d41d010cb7a56eb33169d03c0b"
+      },
+      "idempotency_records": {
+        "count": 1055,
+        "sha256": "2e8f8d48f9b42c06436c5db6eae4ad5d151cefe82864eee4cfa7dfc50af1e5f9"
+      }
+    },
+    "after": {
+      "schema_migrations": {
+        "count": 26,
+        "sha256": "79006890132e93593b532e26ae80c0176e5fb98de93b57ca09cc57f8d82ad840"
+      },
+      "carts": {
+        "count": 13,
+        "sha256": "b044005865ce3927fd9d19e988a0ee2bdff86ae497da7d105a85a7d3df16c34b"
+      },
+      "cart_items": {
+        "count": 12,
+        "sha256": "34897166e2689309e11b7cdb86b903adc531b242e25b05d6de7476a96c7ecb43"
+      },
+      "support_intents": {
+        "count": 12,
+        "sha256": "1add1f9540c32c370ddf1302b7f329225d45384c765d63246148913b0ff5fff6"
+      },
+      "customer_contacts": {
+        "count": 12,
+        "sha256": "2e379eebee9e61f1941630ba92a31856ad657cadba4ccdffd57b940ead111906"
+      },
+      "checkout_preflight_observations": {
+        "count": 12,
+        "sha256": "848fef1ebe02490e828841ec8deebfdd728da7066808c677e4f9037dcfbb8076"
+      },
+      "checkout_preflight_receipts": {
+        "count": 12,
+        "sha256": "e458032086719ef7e6c584a300094a535f9fcd07203c17924a73a6359ff9d4ea"
+      },
+      "checkout_outbox_events": {
+        "count": 12,
+        "sha256": "23e2d86a3c1d190d5423c1511cd81d7bf62e90dfa90a1611bc3f923617194962"
+      },
+      "checkout_sessions": {
+        "count": 12,
+        "sha256": "ab8a3374df782a2949308643d36ab01003b7da4ca5ff59f6f86464eb828cad27"
+      },
+      "checkout_quote_lines": {
+        "count": 12,
+        "sha256": "3792a2ab88ff38cee6d024919f90a75e4d4a3bd502fa594963076fb49b4440b4"
+      },
+      "orders": {
+        "count": 12,
+        "sha256": "ae5a9d183443de78ab50a95599bb99a67d175bb6b461dc040fc0de7697120446"
+      },
+      "order_items": {
+        "count": 12,
+        "sha256": "16b5a11f72289562a7a67318b2f37874d3830d79f052acd2a7f7eb7cd61f286f"
+      },
+      "order_events": {
+        "count": 37,
+        "sha256": "358b9d98e9e45cf8558b3f99e175846900135a4e4f2e2437f936608a736d2d4f"
+      },
+      "policy_acceptances": {
+        "count": 48,
+        "sha256": "74381b8c146168677dce1ae0f61b8b5dd8500140ced3f49c68ec2d5670a2e8f4"
+      },
+      "fulfillments": {
+        "count": 12,
+        "sha256": "7f9bb223aea2ad76996b96a010bdd0967c440dcb7409a384c7e1cc5984327ee4"
+      },
+      "fulfillment_events": {
+        "count": 12,
+        "sha256": "2b9fcdb36e3e23874e90237379adaea03ada3bcb76e2a7c86da5f19ee2b0ecb5"
+      },
+      "inventory_balances": {
+        "count": 5,
+        "sha256": "1b8b0b6eefd619b81583faeef6d03d6d41ba7f106a78559c4126a7becfe32e60"
+      },
+      "inventory_reservations": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "inventory_ledger": {
+        "count": 6,
+        "sha256": "0868e7ef1fc4fa5b77463fd22752a9a066f5ac7cbf839fe59c85a60d9462d556"
+      },
+      "payment_attempts": {
+        "count": 13,
+        "sha256": "94e8fa93706197c52bc2a48437abfa34fb852f5196cfa6bfe0ee1c853c4724b8"
+      },
+      "payment_attempt_events": {
+        "count": 28,
+        "sha256": "95ea4bbc79c8edfc6d7d2ecaf561ed0e2b434d6bfceba01db3a539f51830a333"
+      },
+      "payment_create_receipts": {
+        "count": 13,
+        "sha256": "149cb2376d19d5da062037bdecbfada08be7770dca333ac8bc8f1ef933a5266e"
+      },
+      "payment_runtime_operations": {
+        "count": 13,
+        "sha256": "0974a330717a7a0745776c89e5db47263e9c505aa213349e610edd48ea3b1ccd"
+      },
+      "payment_reconcile_receipts": {
+        "count": 11,
+        "sha256": "4dd5fada41b225b8f57b7ed74957f008fac47bdb67e233359cd84f2831d07ca8"
+      },
+      "provider_events": {
+        "count": 11,
+        "sha256": "f774d379bd1da0b9d16d0f6255fa551d8fcee7c3f2f764eaaea7a43135947fb1"
+      },
+      "provider_event_associations": {
+        "count": 11,
+        "sha256": "e9f2bca5bb2fcb26e62bb1d0ea639d52390e89458703320c6cbff9de0072e9ac"
+      },
+      "payment_transactions": {
+        "count": 1,
+        "sha256": "b873a7ce987eda7168adbffe826a5b6c91a71691ae76ced3e2e4ba283cb48ba8"
+      },
+      "audit_logs": {
+        "count": 1076,
+        "sha256": "5e13ace505d9b80763a347522cdd346011ecdd79094d9e9bae8fb5804f39815a"
+      },
+      "outbox_events": {
+        "count": 349,
+        "sha256": "91500be5eaa4544bf81b1cb6a24f7ad08642c5d41d010cb7a56eb33169d03c0b"
+      },
+      "idempotency_records": {
+        "count": 1055,
+        "sha256": "2e8f8d48f9b42c06436c5db6eae4ad5d151cefe82864eee4cfa7dfc50af1e5f9"
+      }
+    },
+    "scope": "Existing TEST payment writes prevent destructive 0026 rollback; no status, keys or raw rows emitted"
+  },
+  "actualPostgres": true,
+  "actualTlsS3": true,
+  "actualKmsAdapter": true,
+  "actualAwsKms": false,
+  "browserEvidence": false,
+  "browserSummary": null,
+  "paymentProviderEvidence": "PERSISTENT_TEST_PSP_ONLY",
+  "actualPspSandbox": false
+}

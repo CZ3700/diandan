@@ -429,7 +429,7 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
         persistence,
         { sessions: [{ name: "publisher", actor: "editor", ...credentials }] },
       );
-      await runMigrations({
+      const originalMigration = await runMigrations({
         clientConfig,
         workspaceRoot,
         command: { direction: "up" },
@@ -610,7 +610,7 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
               "SELECT max(version) AS version FROM public.schema_migrations",
             )
           ).rows[0].version,
-          "0029",
+          originalMigration.currentVersion,
           "runtime business checks ran against the current migration head",
         );
         equal(
@@ -718,12 +718,12 @@ if (process.env["PUBLICATION_RUNTIME_RED_BASELINE"] !== "1")
         });
         equal(
           restored.currentVersion,
-          "0029",
+          originalMigration.currentVersion,
           "publication runtime proof restores current head",
         );
         equal(
           await retainedHistory(),
-          { ...beforeDown, version: "0029" },
+          { ...beforeDown, version: originalMigration.currentVersion },
           "restoring current head preserves all publication and purge history",
         );
       }

@@ -1,0 +1,82 @@
+[
+  {
+    "source": "output/checks/p3-06-management-center/run-2026-09-21T11-12-19.746Z-a501edb4/validation.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/management-validation.json",
+    "sha256": "940bd3c4bf9ec7c46097c516359570b45973f96c4be44634abd2d9570e5f564b"
+  },
+  {
+    "source": "output/checks/p3-06-management-center/run-2026-09-21T11-12-19.746Z-a501edb4/browser-2026-09-21T11-13-14.088Z-f020c229/results.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/management-browser.json",
+    "sha256": "6e3cdd2e158e873810ebac412cdfe091ed2edac74033402574fec4358b2345a1"
+  },
+  {
+    "source": "output/checks/p4-06-notifications/persistence/run-2026-09-21T11-01-35.290Z/run-result.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/automatic-notifications-run.json",
+    "sha256": "b169088d290838e4a57757832df614d3ad0d65a7bc26afa3bcdf8962b50a2202"
+  },
+  {
+    "source": "output/checks/p4-06-notifications/persistence/run-2026-09-21T11-01-35.290Z/protocol-results.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/automatic-notifications-protocol.json",
+    "sha256": "ebfc05202e8417e3491f8e01228ca8c1fa667a796acfda1c5b28af89bdd7ab16"
+  },
+  {
+    "source": "output/checks/p4-01-cart/http-2026-09-21T11-30-03.444Z/results.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/cart-results.json",
+    "sha256": "522589816dc7fd1c74bae05d51dd7114a6a7c6f5134f6e0e5e7a9aafb6f0eb98"
+  },
+  {
+    "source": "output/checks/p4-01-cart/http-2026-09-21T11-30-03.444Z/protocol-results.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/cart-protocol-results.json",
+    "sha256": "c86a99e5212514963e5d3e3b4f65d2770d468df0013ba0826038cf5721269002"
+  },
+  {
+    "source": "output/checks/p4-01-cart/http-2026-09-21T11-30-03.444Z/pending-rollback-results.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/cart-pending-rollback-results.json",
+    "sha256": "43a197e8d782e9de4a90501c80d84e65ce4362d85a3a8120d95dd3a738bbcf89"
+  },
+  {
+    "source": "output/checks/p4-01-cart/http-2026-09-21T11-30-03.444Z/daily-immediate-results.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/cart-daily-immediate-results.json",
+    "sha256": "d5e7194ea07ccbcdf933a8785598de75e586a9105a73d0adfe6660e637abcbf9"
+  },
+  {
+    "source": "output/checks/p4-02-cart-storefront/run-2026-09-21T11-31-32.637Z/protocol-results.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/cart-edit-protocol-results.json",
+    "sha256": "ee804357312af6e8cda4d6a52ab23ea1cb85002ec3efcf170c2935247e22ef0e"
+  },
+  {
+    "source": "output/checks/p4-03-checkout-preflight/run-2026-09-21T11-30-20.320Z/protocol-results.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/checkout-protocol-results.json",
+    "sha256": "848f78cd9ee1b14a81b18d2cac4be574667df09fcd5a40a5727bd7cea0ebb9e0"
+  },
+  {
+    "source": "output/checks/p4-03-checkout-preflight/run-2026-09-21T11-30-20.320Z/run-result.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/checkout-run-result.json",
+    "sha256": "aa5da8b05733169afea7b4095939098567330794db9ceb5a818b7add0105f758"
+  },
+  {
+    "source": "output/checks/p4-05-order-completion/run-2026-09-21T11-30-20.339Z/protocol-results.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/order-payment-protocol-results.json",
+    "sha256": "207148791c632a0cf4889fa1a814711e052de3b951f0dbbf280ce2fee32b72b0"
+  },
+  {
+    "source": "output/checks/p4-05-order-completion/run-2026-09-21T11-30-20.339Z/run-result.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/order-payment-run-result.json",
+    "sha256": "6a9096605153bb4528f3801999542d0aaf6a8dac7309f781f4624ec5d197eab6"
+  },
+  {
+    "source": "output/checks/p4-04-payment-runtime/run-2026-09-21T11-32-14.431Z/recovery-observations.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/payment-runtime-recovery-observations.json",
+    "sha256": "e9e608cc762c012cb0a39ccb2379ef29dec50c85136a2726ac64e0a813ca8d21"
+  },
+  {
+    "source": "output/checks/p4-04-payment-runtime/run-2026-09-21T11-32-14.431Z/protocol-results.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/payment-runtime-protocol-results.json",
+    "sha256": "e77a3a84549c05e0cf46389bad6b09827fcd9bec91a9568d667c3d6b4a462526"
+  },
+  {
+    "source": "output/checks/p4-04-payment-runtime/run-2026-09-21T11-32-14.431Z/run-result.json",
+    "copy": "output/checks/p5-02-order-operations/regressions/payment-runtime-run-result.json",
+    "sha256": "99ce9cb6a9f14f3d889555fc4838ad87db1dc98fbea9714a47d3cd9c07eced93"
+  }
+]

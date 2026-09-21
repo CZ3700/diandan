@@ -1,6 +1,7 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import {
   adminContentFailureSchema,
+  adminOrdersFailureSchema,
   adminOpaqueTokenSchema,
 } from "@fan-support/contracts";
 import {
@@ -19,6 +20,7 @@ export type PrivateAdminEndpoint = Readonly<{
   path: string;
   allowedOrigin: string;
   bodyLimit: number;
+  unavailableCode?: "TEMPORARY_UNAVAILABLE";
   parseRequest(
     body: unknown,
     envelope: CredentialEnvelope,
@@ -48,6 +50,9 @@ export function adminFailureStatus(code: string): number {
     case "INVALID_COMMAND":
     case "INVALID_CONTENT":
       return 400;
+    case "RATE_LIMITED":
+      return 429;
+    case "TEMPORARY_UNAVAILABLE":
     case "CONTENT_UNAVAILABLE":
     case "COMMERCE_UNAVAILABLE":
     case "MANAGEMENT_UNAVAILABLE":
@@ -64,11 +69,15 @@ function failure(
     | "FORBIDDEN"
     | "CSRF_INVALID"
     | "NOT_FOUND"
-    | "CONTENT_UNAVAILABLE",
+    | "CONTENT_UNAVAILABLE"
+    | "TEMPORARY_UNAVAILABLE",
   status = adminFailureStatus(code),
 ) {
   return reply.code(status).send(
-    adminContentFailureSchema.parse({
+    (code === "TEMPORARY_UNAVAILABLE"
+      ? adminOrdersFailureSchema
+      : adminContentFailureSchema
+    ).parse({
       schemaVersion: 1,
       outcome: "FAILURE",
       code,
@@ -113,7 +122,7 @@ export function registerPrivateAdminEndpoint(
     throw new TypeError("Invalid administrative origin");
   void instance.register(
     async (scope) => {
-      installBoundary(scope, options.allowedOrigin);
+      installBoundary(scope, options.allowedOrigin, options.unavailableCode);
       scope.post(
         "",
         { bodyLimit: options.bodyLimit },
@@ -154,7 +163,10 @@ export function registerPrivateAdminEndpoint(
               )
               .send(result);
           } catch {
-            return failure(reply, "CONTENT_UNAVAILABLE");
+            return failure(
+              reply,
+              options.unavailableCode ?? "CONTENT_UNAVAILABLE",
+            );
           }
         },
       );
@@ -163,7 +175,12 @@ export function registerPrivateAdminEndpoint(
   );
 }
 
-function installBoundary(scope: FastifyInstance, allowedOrigin: string): void {
+function installBoundary(
+  scope: FastifyInstance,
+  allowedOrigin: string,
+  unavailableCode:
+    "CONTENT_UNAVAILABLE" | "TEMPORARY_UNAVAILABLE" = "CONTENT_UNAVAILABLE",
+): void {
   scope.addHook("onRequest", async (request, reply) => {
     privacy(reply);
     if ((request.raw.url ?? "").includes("?"))
@@ -198,7 +215,7 @@ function installBoundary(scope: FastifyInstance, allowedOrigin: string): void {
       value["statusCode"] < 500
     )
       return failure(reply, "INVALID_COMMAND");
-    return failure(reply, "CONTENT_UNAVAILABLE");
+    return failure(reply, unavailableCode);
   });
 }
 

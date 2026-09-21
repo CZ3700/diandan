@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "scope": "Synthetic isolated PG tables with exact application lock-query shape; no business data or database clock changes",
+  "actualPostgres": true,
+  "first": {
+    "kind": "revoke",
+    "ok": true
+  },
+  "outcomes": [
+    {
+      "kind": "authorize",
+      "ok": false,
+      "code": "40P01"
+    },
+    {
+      "kind": "revoke",
+      "ok": true
+    }
+  ]
+}

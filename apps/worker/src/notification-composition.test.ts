@@ -1,6 +1,10 @@
 import { workerNotificationConfigurationSchema } from "./notification-config.js";
 import { expect, test, vi } from "vitest";
 import * as module from "./notification-composition.js";
+import type {
+  NotificationRepository,
+  NotificationTransactionManager,
+} from "@fan-support/persistence-port";
 
 test("notification composition stays disabled without explicit approved configuration", () => {
   expect(module.createOptionalWorkerNotifications).toBeTypeOf("function");
@@ -142,4 +146,47 @@ test("freezes validated credentials for active and retained profiles", async () 
     }),
   ).toThrow("Invalid notification worker configuration");
   expect(transportFactory).not.toHaveBeenCalled();
+});
+
+test("maintenance consumes both automatic notifications and the durable operator resend outbox", async () => {
+  const automatic = vi.fn(async () => ({
+    schemaVersion: 1 as const,
+    notificationIds: [],
+  }));
+  const manual = vi.fn(async () => ({
+    schemaVersion: 1 as const,
+    notificationIds: [],
+  }));
+  const transactions = (
+    listPending: typeof automatic,
+  ): NotificationTransactionManager => ({
+    runInNotificationTransaction: (work) =>
+      work({ listPending } as unknown as NotificationRepository),
+  });
+  const app = module.createTestWorkerNotifications({
+    environment: "TEST",
+    configuration: testConfiguration(),
+    credentials: { TEST_MAIL_KEY: "test-credential-long-enough" },
+    transactions: transactions(automatic),
+    resendTransactions: transactions(manual),
+    keyManagement: {} as never,
+    transportFactory: () => ({
+      transportKey: "a".repeat(64),
+      transport: {
+        sendEmail: async () => {
+          throw new Error("must not send");
+        },
+      },
+    }),
+  });
+  expect(await app.runPending(10)).toEqual({
+    schemaVersion: 1,
+    scanned: 0,
+    sent: 0,
+    scheduled: 0,
+    failed: 0,
+    skipped: 0,
+  });
+  expect(automatic).toHaveBeenCalledOnce();
+  expect(manual).toHaveBeenCalledOnce();
 });

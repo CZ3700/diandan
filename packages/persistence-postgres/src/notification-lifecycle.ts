@@ -9,6 +9,7 @@ import { draftRows, type DraftRow } from "./content-draft-data.js";
 import {
   currentNotificationLease,
   hasLaterNotification,
+  hasPendingAdminNotificationResend,
   lockNotification,
   notificationClock,
   notificationFailed,
@@ -195,7 +196,8 @@ export async function claimNotification(
   if (
     (row["next_attempt_at"] !== null &&
       Date.parse(String(row["next_attempt_at"])) > time) ||
-    (await lowerNotificationPending(client, row))
+    (await lowerNotificationPending(client, row)) ||
+    (await hasPendingAdminNotificationResend(client, row["order_id"]))
   )
     return notificationSkip;
   await client.query(

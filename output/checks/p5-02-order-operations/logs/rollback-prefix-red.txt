@@ -1,0 +1,265 @@
+✖ empty known head 0029 uses the ordinary exact-version down sequence (0.813208ms)
+✖ empty known head 0030 uses the ordinary exact-version down sequence (0.442458ms)
+✖ empty known head 0031 uses the ordinary exact-version down sequence (0.109667ms)
+✖ empty known head 0032 uses the ordinary exact-version down sequence (0.08825ms)
+✔ retained notifications rejects before any migration is attempted (0.238ms)
+✔ retained contact_accesses rejects before any migration is attempted (0.097792ms)
+✔ retained bootstraps rejects before any migration is attempted (0.078167ms)
+✔ retained expiries rejects before any migration is attempted (0.064792ms)
+✔ retained login_challenges rejects before any migration is attempted (0.076458ms)
+✔ retained access_audits rejects before any migration is attempted (0.097375ms)
+✔ retained order_notes rejects before any migration is attempted (0.069ms)
+✔ retained private_accesses rejects before any migration is attempted (0.053ms)
+✔ retained private_confirmations rejects before any migration is attempted (0.062042ms)
+✔ retained message_reviews rejects before any migration is attempted (0.051708ms)
+✔ retained operation_receipts rejects before any migration is attempted (0.044875ms)
+✔ retained fulfillment_receipts rejects before any migration is attempted (0.051292ms)
+✔ retained review_locale_grants rejects before any migration is attempted (0.050709ms)
+✔ retained order_audits rejects before any migration is attempted (0.041834ms)
+✔ retained resends rejects before any migration is attempted (0.038667ms)
+✔ retained resend_outbox rejects before any migration is attempted (0.039833ms)
+✔ retained resend_attempts rejects before any migration is attempted (0.034375ms)
+✔ retained resend_contact_accesses rejects before any migration is attempted (0.047ms)
+✔ retained resend_audits rejects before any migration is attempted (0.035542ms)
+✖ unknown head null is not silently rewound (0.126458ms)
+✖ unknown head 0028 is not silently rewound (0.079625ms)
+✖ unknown head 0033 is not silently rewound (0.056334ms)
+✖ real PostgreSQL preserves login and audit history and rewinds only empty known prefixes (1248.082333ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 19
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1562.780166
+
+✖ failing tests:
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:35:3
+✖ empty known head 0029 uses the ordinary exact-version down sequence (0.813208ms)
+  Error [MigrationExecutionError]: migration configuration is invalid
+      at runMigrations (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/dist/migrations/runner.js:355:15)
+      at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:29:26)
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:37:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:35:3
+✖ empty known head 0030 uses the ordinary exact-version down sequence (0.442458ms)
+  AssertionError [ERR_ASSERTION]: legacy rollback probe requires an exact current head without notification, bootstrap or SYSTEM expiry history
+  + actual - expected
+
+    {
+      bootstraps: 0,
+      contact_accesses: 0,
+      expiries: 0,
+      notifications: 0,
+  +   version: '0030'
+  -   version: '0029'
+    }
+
+      at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:11:3)
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:37:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { version: '0030', notifications: 0, contact_accesses: 0, bootstraps: 0, expiries: 0 },
+    expected: { version: '0029', notifications: 0, contact_accesses: 0, bootstraps: 0, expiries: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:35:3
+✖ empty known head 0031 uses the ordinary exact-version down sequence (0.109667ms)
+  AssertionError [ERR_ASSERTION]: legacy rollback probe requires an exact current head without notification, bootstrap or SYSTEM expiry history
+  + actual - expected
+
+    {
+      bootstraps: 0,
+      contact_accesses: 0,
+      expiries: 0,
+      notifications: 0,
+  +   version: '0031'
+  -   version: '0029'
+    }
+
+      at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:11:3)
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:37:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { version: '0031', notifications: 0, contact_accesses: 0, bootstraps: 0, expiries: 0 },
+    expected: { version: '0029', notifications: 0, contact_accesses: 0, bootstraps: 0, expiries: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:35:3
+✖ empty known head 0032 uses the ordinary exact-version down sequence (0.08825ms)
+  AssertionError [ERR_ASSERTION]: legacy rollback probe requires an exact current head without notification, bootstrap or SYSTEM expiry history
+  + actual - expected
+
+    {
+      bootstraps: 0,
+      contact_accesses: 0,
+      expiries: 0,
+      notifications: 0,
+  +   version: '0032'
+  -   version: '0029'
+    }
+
+      at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:11:3)
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:37:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { version: '0032', notifications: 0, contact_accesses: 0, bootstraps: 0, expiries: 0 },
+    expected: { version: '0029', notifications: 0, contact_accesses: 0, bootstraps: 0, expiries: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:49:3
+✖ unknown head null is not silently rewound (0.126458ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /known .*head/u. Input:
+
+  'AssertionError [ERR_ASSERTION]: legacy rollback probe requires an exact current head without notification, bootstrap or SYSTEM expiry history\n' +
+    '+ actual - expected\n' +
+    '\n' +
+    '  {\n' +
+    '    bootstraps: 0,\n' +
+    '    contact_accesses: 0,\n' +
+    '    expiries: 0,\n' +
+    '    notifications: 0,\n' +
+    '+   version: null\n' +
+    "-   version: '0029'\n" +
+    '  }\n'
+
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:51:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AssertionError [ERR_ASSERTION]: legacy rollback probe requires an exact current head without notification, bootstrap or SYSTEM expiry history
+    + actual - expected
+
+      {
+        bootstraps: 0,
+        contact_accesses: 0,
+        expiries: 0,
+        notifications: 0,
+    +   version: null
+    -   version: '0029'
+      }
+
+        at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:11:3)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:51:5)
+        at async Test.run (node:internal/test_runner/test:1404:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:969:7),
+    expected: /known .*head/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:49:3
+✖ unknown head 0028 is not silently rewound (0.079625ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /known .*head/u. Input:
+
+  'AssertionError [ERR_ASSERTION]: legacy rollback probe requires an exact current head without notification, bootstrap or SYSTEM expiry history\n' +
+    '+ actual - expected\n' +
+    '\n' +
+    '  {\n' +
+    '    bootstraps: 0,\n' +
+    '    contact_accesses: 0,\n' +
+    '    expiries: 0,\n' +
+    '    notifications: 0,\n' +
+    "+   version: '0028'\n" +
+    "-   version: '0029'\n" +
+    '  }\n'
+
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:51:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AssertionError [ERR_ASSERTION]: legacy rollback probe requires an exact current head without notification, bootstrap or SYSTEM expiry history
+    + actual - expected
+
+      {
+        bootstraps: 0,
+        contact_accesses: 0,
+        expiries: 0,
+        notifications: 0,
+    +   version: '0028'
+    -   version: '0029'
+      }
+
+        at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:11:3)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:51:5)
+        at async Test.run (node:internal/test_runner/test:1404:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:969:7),
+    expected: /known .*head/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:49:3
+✖ unknown head 0033 is not silently rewound (0.056334ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /known .*head/u. Input:
+
+  'AssertionError [ERR_ASSERTION]: legacy rollback probe requires an exact current head without notification, bootstrap or SYSTEM expiry history\n' +
+    '+ actual - expected\n' +
+    '\n' +
+    '  {\n' +
+    '    bootstraps: 0,\n' +
+    '    contact_accesses: 0,\n' +
+    '    expiries: 0,\n' +
+    '    notifications: 0,\n' +
+    "+   version: '0033'\n" +
+    "-   version: '0029'\n" +
+    '  }\n'
+
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:51:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AssertionError [ERR_ASSERTION]: legacy rollback probe requires an exact current head without notification, bootstrap or SYSTEM expiry history
+    + actual - expected
+
+      {
+        bootstraps: 0,
+        contact_accesses: 0,
+        expiries: 0,
+        notifications: 0,
+    +   version: '0033'
+    -   version: '0029'
+      }
+
+        at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:11:3)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:51:5)
+        at async Test.run (node:internal/test_runner/test:1404:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:969:7),
+    expected: /known .*head/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:56:1
+✖ real PostgreSQL preserves login and audit history and rewinds only empty known prefixes (1248.082333ms)
+  Error [EphemeralPostgresError]: ephemeral PostgreSQL operation failed
+      at withEphemeralPostgres (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161:15)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:57:3)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7)

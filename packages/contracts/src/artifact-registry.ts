@@ -1,3 +1,6 @@
+import * as adminOrderNoteKey from "./admin-order-note-key.js";
+import * as adminOrdersPersistence from "./admin-orders-persistence.js";
+import * as adminOrders from "./admin-orders.js";
 import * as adminAccess from "./admin-access.js";
 import * as orderNotification from "./order-notification.js";
 import * as orderAccess from "./order-access.js";
@@ -640,6 +643,14 @@ export type ContractRegistration = Readonly<{
 // Scalars and embedded snapshot value objects follow their versioned parent;
 // they must never be used as standalone API, event, or queue roots.
 const unversionedValueObjectNames = new Set([
+  "AdminOrdersPermission",
+  "AdminOrdersListItem",
+  "AdminOrdersLine",
+  "AdminOrdersNoteMetadata",
+  "AdminOrdersNotification",
+  "AdminOrdersPrincipal",
+  "AdminOrdersNoteEnvelope",
+
   "OrderNotificationUrl",
   "CheckoutPolicyAcceptance",
   "CheckoutEncryptedContact",
@@ -659,6 +670,111 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "AdminOrdersPermission",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersPermissionSchema,
+  },
+  {
+    name: "AdminOrdersFailure",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersFailureSchema,
+  },
+  {
+    name: "AdminOrdersCommand",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersCommandSchema,
+  },
+  {
+    name: "AdminOrdersRequest",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersRequestSchema,
+  },
+  {
+    name: "AdminOrdersListItem",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersListItemSchema,
+  },
+  {
+    name: "AdminOrdersLine",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersLineSchema,
+  },
+  {
+    name: "AdminOrdersNoteMetadata",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersNoteMetadataSchema,
+  },
+  {
+    name: "AdminOrdersNotification",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersNotificationSchema,
+  },
+  {
+    name: "AdminOrdersMutationResponse",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersMutationResponseSchema,
+  },
+  {
+    name: "AdminOrdersResponse",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersResponseSchema,
+  },
+  {
+    name: "AdminOrdersPrivateResponse",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersPrivateResponseSchema,
+  },
+  {
+    name: "AdminOrdersAccess",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersAccessSchema,
+  },
+  {
+    name: "AdminOrdersPrincipal",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersPrincipalSchema,
+  },
+  {
+    name: "AdminOrdersNoteEnvelope",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersNoteEnvelopeSchema,
+  },
+  {
+    name: "AdminOrdersStoreCommand",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersStoreCommandSchema,
+  },
+  {
+    name: "AdminOrdersStoreRequest",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersStoreRequestSchema,
+  },
+  {
+    name: "AdminOrdersPrivateSnapshot",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersPrivateSnapshotSchema,
+  },
+  {
+    name: "AdminOrdersConfirmPrivate",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersConfirmPrivateSchema,
+  },
+  {
+    name: "AdminOrdersPrivateConfirmation",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersPrivateConfirmationSchema,
+  },
+  {
+    name: "AdminOrderNoteEncryptCommand",
+    audience: "internal",
+    schema: adminOrderNoteKey.adminOrderNoteEncryptCommandSchema,
+  },
+  {
+    name: "AdminOrderNoteDecryptCommand",
+    audience: "internal",
+    schema: adminOrderNoteKey.adminOrderNoteDecryptCommandSchema,
+  },
   {
     name: "CommerceExpiryRunResult",
     audience: "internal",

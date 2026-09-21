@@ -90,3 +90,25 @@ describe("browser administrative transport", () => {
     ).rejects.toThrow("INVALID_RESPONSE");
   });
 });
+it("explicit short-lived mutation keys do not enter the shared command cache", async () => {
+  const calls: RequestInit[] = [];
+  const client = createAdminClient(
+    () => "test-csrf",
+    () => {},
+    (async (_url, init) => {
+      calls.push(init!);
+      throw new Error("lost response");
+    }) as typeof fetch,
+  );
+  const schema = { parse: (value: unknown) => value };
+  const body = { schemaVersion: 1, note: "synthetic-private-note" };
+  const key = "10000000-0000-4000-8000-000000000007";
+  await expect(
+    client.call("orders-note-add", body, schema, true, key),
+  ).rejects.toThrow("NETWORK_ERROR");
+  await expect(
+    client.call("orders-note-add", body, schema, true),
+  ).rejects.toThrow("NETWORK_ERROR");
+  expect(new Headers(calls[0]!.headers).get("idempotency-key")).toBe(key);
+  expect(new Headers(calls[1]!.headers).get("idempotency-key")).not.toBe(key);
+});

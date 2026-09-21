@@ -1,0 +1,2487 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "environment": "LOCAL_TEST_SINGLE_OPERATOR",
+  "startedAt": "2026-09-21T11:13:14.088Z",
+  "assertions": 1513,
+  "cases": [
+    {
+      "name": "initial-entry-and-session",
+      "status": "PASS"
+    },
+    {
+      "name": "artist-validation-upload-retry-and-single-submit",
+      "status": "PASS"
+    },
+    {
+      "name": "four-gift-types-and-real-price",
+      "status": "PASS"
+    },
+    {
+      "name": "poster-replacement-and-history-restore",
+      "status": "PASS"
+    },
+    {
+      "name": "seven-language-admin-matrix",
+      "status": "PASS"
+    },
+    {
+      "name": "keyboard-reduced-motion-and-list-error",
+      "status": "PASS"
+    },
+    {
+      "name": "public-original-content-and-photo-provenance",
+      "status": "PASS"
+    }
+  ],
+  "screenshots": [
+    "zh-CN-1440-upload-error.png",
+    "en-1440-artists-list.png",
+    "en-1440-artists-form.png",
+    "en-1440-gifts-list.png",
+    "en-1440-gifts-form.png",
+    "en-1440-posters-list.png",
+    "en-1440-posters-form.png",
+    "en-390-artists-list.png",
+    "en-390-artists-form.png",
+    "en-390-gifts-list.png",
+    "en-390-gifts-form.png",
+    "en-390-posters-list.png",
+    "en-390-posters-form.png",
+    "zh-CN-1440-artists-list.png",
+    "zh-CN-1440-artists-form.png",
+    "zh-CN-1440-gifts-list.png",
+    "zh-CN-1440-gifts-form.png",
+    "zh-CN-1440-posters-list.png",
+    "zh-CN-1440-posters-form.png",
+    "zh-CN-390-artists-list.png",
+    "zh-CN-390-artists-form.png",
+    "zh-CN-390-gifts-list.png",
+    "zh-CN-390-gifts-form.png",
+    "zh-CN-390-posters-list.png",
+    "zh-CN-390-posters-form.png",
+    "th-1440-artists-list.png",
+    "th-1440-artists-form.png",
+    "th-1440-gifts-list.png",
+    "th-1440-gifts-form.png",
+    "th-1440-posters-list.png",
+    "th-1440-posters-form.png",
+    "th-390-artists-list.png",
+    "th-390-artists-form.png",
+    "th-390-gifts-list.png",
+    "th-390-gifts-form.png",
+    "th-390-posters-list.png",
+    "th-390-posters-form.png",
+    "vi-1440-artists-list.png",
+    "vi-1440-artists-form.png",
+    "vi-1440-gifts-list.png",
+    "vi-1440-gifts-form.png",
+    "vi-1440-posters-list.png",
+    "vi-1440-posters-form.png",
+    "vi-390-artists-list.png",
+    "vi-390-artists-form.png",
+    "vi-390-gifts-list.png",
+    "vi-390-gifts-form.png",
+    "vi-390-posters-list.png",
+    "vi-390-posters-form.png",
+    "ja-1440-artists-list.png",
+    "ja-1440-artists-form.png",
+    "ja-1440-gifts-list.png",
+    "ja-1440-gifts-form.png",
+    "ja-1440-posters-list.png",
+    "ja-1440-posters-form.png",
+    "ja-390-artists-list.png",
+    "ja-390-artists-form.png",
+    "ja-390-gifts-list.png",
+    "ja-390-gifts-form.png",
+    "ja-390-posters-list.png",
+    "ja-390-posters-form.png",
+    "es-1440-artists-list.png",
+    "es-1440-artists-form.png",
+    "es-1440-gifts-list.png",
+    "es-1440-gifts-form.png",
+    "es-1440-posters-list.png",
+    "es-1440-posters-form.png",
+    "es-390-artists-list.png",
+    "es-390-artists-form.png",
+    "es-390-gifts-list.png",
+    "es-390-gifts-form.png",
+    "es-390-posters-list.png",
+    "es-390-posters-form.png",
+    "pt-1440-artists-list.png",
+    "pt-1440-artists-form.png",
+    "pt-1440-gifts-list.png",
+    "pt-1440-gifts-form.png",
+    "pt-1440-posters-list.png",
+    "pt-1440-posters-form.png",
+    "pt-390-artists-list.png",
+    "pt-390-artists-form.png",
+    "pt-390-gifts-list.png",
+    "pt-390-gifts-form.png",
+    "pt-390-posters-list.png",
+    "pt-390-posters-form.png",
+    "zh-CN-390-list-error.png",
+    "zh-CN-1440-public-idols.png",
+    "zh-CN-1440-public-gifts-virtual.png",
+    "zh-CN-1440-public-gifts-physical.png",
+    "zh-CN-1440-public-gifts-wish.png",
+    "zh-CN-1440-public-gifts-merchandise.png",
+    "zh-CN-1440-public-poster-restored.png",
+    "zh-CN-390-public-idols.png",
+    "zh-CN-390-public-gifts-virtual.png",
+    "zh-CN-390-public-gifts-physical.png",
+    "zh-CN-390-public-gifts-wish.png",
+    "zh-CN-390-public-gifts-merchandise.png",
+    "zh-CN-390-public-poster-restored.png"
+  ],
+  "axe": [
+    {
+      "label": "zh-CN-1440-upload-error",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "en-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "th-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "vi-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "ja-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "es-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-1440-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-artists-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-artists-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-gifts-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-gifts-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-posters-list",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "pt-390-posters-form",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-list-error",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-public-idols",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-public-gifts-virtual",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-public-gifts-physical",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-public-gifts-wish",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-public-gifts-merchandise",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-1440-public-poster-restored",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-public-idols",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-public-gifts-virtual",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-public-gifts-physical",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-public-gifts-wish",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-public-gifts-merchandise",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "label": "zh-CN-390-public-poster-restored",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodeCount": 6,
+          "targets": [
+            [
+              "a[href$=\"kai-ren\"] > figure > figcaption > h3"
+            ],
+            [
+              "a[href$=\"kai-ren\"] > figure > figcaption > .artist-directory-module__X-IFka__availability"
+            ],
+            [
+              "a[href$=\"studio-guest\"] > figure > figcaption > h3"
+            ],
+            [
+              "a[href$=\"studio-guest\"] > figure > figcaption > .artist-directory-module__X-IFka__availability"
+            ],
+            [
+              ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(4) > a > figure > figcaption > h3"
+            ],
+            [
+              ".artist-directory-module__X-IFka__card[data-accepting=\"true\"]:nth-child(4) > a > figure > figcaption > .artist-directory-module__X-IFka__availability"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "reflow": [
+    {
+      "label": "zh-CN-1440-upload-error",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "en-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "en-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "en-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "en-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "en-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "en-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "th-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "th-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "vi-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "vi-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "ja-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "ja-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "es-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "es-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-1440-artists-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-1440-artists-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-1440-gifts-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-1440-gifts-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-1440-posters-list",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-1440-posters-form",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "pt-390-artists-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-390-artists-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-390-gifts-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-390-gifts-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-390-posters-list",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "pt-390-posters-form",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-list-error",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-1440-public-idols",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-public-gifts-virtual",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-public-gifts-physical",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-public-gifts-wish",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-public-gifts-merchandise",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-1440-public-poster-restored",
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "label": "zh-CN-390-public-idols",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-public-gifts-virtual",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-public-gifts-physical",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-public-gifts-wish",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-public-gifts-merchandise",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "label": "zh-CN-390-public-poster-restored",
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    }
+  ],
+  "operations": [
+    {
+      "operationId": "e79fa1a9-8cdd-49e8-b327-7d31578cc208",
+      "kind": "SAVE_ARTIST",
+      "status": "PUBLISHED",
+      "targetId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "handle": "idol-4a57d08fba2c4b188571185b634aa5d2",
+      "revisionId": "954271b4-9530-46b5-8fe1-c797b1d5be26",
+      "publicationId": "6954a25a-c93d-4e8f-a936-6316afe7a940",
+      "version": 2
+    },
+    {
+      "operationId": "273992b5-dc31-435b-88bc-f58e9d2f4d58",
+      "kind": "SAVE_ARTIST",
+      "status": "PUBLISHED",
+      "targetId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "handle": "idol-4a57d08fba2c4b188571185b634aa5d2",
+      "revisionId": "b5c8a2da-68b3-4e48-9243-4379ed7e2cbd",
+      "publicationId": "a1840a62-ea88-4483-ac1d-b754090c0b11",
+      "version": 3
+    },
+    {
+      "operationId": "bca7209f-5192-4e7a-ba6a-004e16c3f446",
+      "kind": "SAVE_GIFT",
+      "status": "PUBLISHED",
+      "targetId": "2f524c6c-abf1-4399-8aee-7f1cc85cce21",
+      "handle": "gift-2f524c6cabf143998aee7f1cc85cce21",
+      "revisionId": "d83f0c6b-8b91-453a-9a47-f429adab3671",
+      "publicationId": "344b1460-8cb8-4865-92f3-8b07400ee4e9",
+      "version": 2
+    },
+    {
+      "operationId": "d9da4667-c350-4f16-9f75-a1c57aaebf5a",
+      "kind": "SAVE_GIFT",
+      "status": "PUBLISHED",
+      "targetId": "3b6dcb9d-9952-420c-a5a2-2cb2708edf5f",
+      "handle": "gift-3b6dcb9d9952420ca5a22cb2708edf5f",
+      "revisionId": "4e000306-76a6-47f4-ad86-4fb3f0134285",
+      "publicationId": "0efeb6a7-31ed-45ff-928e-0240b939330c",
+      "version": 2
+    },
+    {
+      "operationId": "3b9a20b5-48a9-4c7b-bd70-b14ec394103c",
+      "kind": "SAVE_GIFT",
+      "status": "PUBLISHED",
+      "targetId": "6e1b0900-cdba-4db9-9317-7bad977fef17",
+      "handle": "gift-6e1b0900cdba4db993177bad977fef17",
+      "revisionId": "7c72cb51-9818-4bd1-8fa2-c0ba959b2866",
+      "publicationId": "8f9edd87-93c7-4857-b3ce-d8b08238d9c2",
+      "version": 2
+    },
+    {
+      "operationId": "978a3257-f2a9-4dd4-bc41-32bb067093b7",
+      "kind": "SAVE_GIFT",
+      "status": "PUBLISHED",
+      "targetId": "9aa0a99a-948b-4720-adac-5e3e33e2659a",
+      "handle": "gift-9aa0a99a948b4720adac5e3e33e2659a",
+      "revisionId": "157ae1c9-960b-431b-aae4-ef6d3492c1eb",
+      "publicationId": "ba115c29-0f21-487a-8c40-1346669aac38",
+      "version": 2
+    },
+    {
+      "operationId": "b8367115-07d9-45a6-a59d-f198f6657f32",
+      "kind": "SAVE_GIFT",
+      "status": "PUBLISHED",
+      "targetId": "2f524c6c-abf1-4399-8aee-7f1cc85cce21",
+      "handle": "gift-2f524c6cabf143998aee7f1cc85cce21",
+      "revisionId": "f53468df-8494-442c-93e7-880ef8430503",
+      "publicationId": "5b644dc3-437d-4cb3-8c4f-5877e43a885f",
+      "version": 3
+    },
+    {
+      "operationId": "4efe1201-2413-4fa7-9f31-38a933ac1881",
+      "kind": "REPLACE_POSTER",
+      "status": "PUBLISHED",
+      "targetId": "dbadbe94-f0d8-40f9-b9a4-38428bbf1f48",
+      "handle": null,
+      "revisionId": "dbadbe94-f0d8-40f9-b9a4-38428bbf1f48",
+      "publicationId": "5d6065a0-f4a7-4c69-bedc-aeab23ed4883",
+      "version": 2
+    },
+    {
+      "operationId": "99af7edc-eb11-4cbb-90d1-73e6bb088fe3",
+      "kind": "REPLACE_POSTER",
+      "status": "PUBLISHED",
+      "targetId": "6f31a43f-47ba-482f-ba77-431f6a17d9da",
+      "handle": null,
+      "revisionId": "6f31a43f-47ba-482f-ba77-431f6a17d9da",
+      "publicationId": "072d3cc8-0b8b-4083-87a9-3dbd5d3df3a5",
+      "version": 3
+    },
+    {
+      "operationId": "5ae382f0-a8d2-44e5-906e-90bbdb2988e8",
+      "kind": "RESTORE_POSTER",
+      "status": "PUBLISHED",
+      "targetId": "95ca83af-b726-4786-90c4-1603329d9440",
+      "handle": null,
+      "revisionId": "95ca83af-b726-4786-90c4-1603329d9440",
+      "publicationId": "cbed41e9-a85a-44d6-b106-229bb63865b8",
+      "version": 4
+    }
+  ],
+  "uploads": [
+    {
+      "operationId": "e79fa1a9-8cdd-49e8-b327-7d31578cc208",
+      "checksumSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "requiredRoles": [
+        "PORTRAIT",
+        "HERO_DESKTOP",
+        "HERO_MOBILE"
+      ]
+    },
+    {
+      "operationId": "bca7209f-5192-4e7a-ba6a-004e16c3f446",
+      "checksumSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "requiredRoles": [
+        "GIFT_PRIMARY"
+      ]
+    },
+    {
+      "operationId": "d9da4667-c350-4f16-9f75-a1c57aaebf5a",
+      "checksumSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "requiredRoles": [
+        "GIFT_PRIMARY"
+      ]
+    },
+    {
+      "operationId": "3b9a20b5-48a9-4c7b-bd70-b14ec394103c",
+      "checksumSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "requiredRoles": [
+        "GIFT_PRIMARY"
+      ]
+    },
+    {
+      "operationId": "978a3257-f2a9-4dd4-bc41-32bb067093b7",
+      "checksumSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "requiredRoles": [
+        "GIFT_PRIMARY"
+      ]
+    },
+    {
+      "operationId": "4efe1201-2413-4fa7-9f31-38a933ac1881",
+      "checksumSha256": "8f4a8277040f631829cff1d76beab63ab0f4ff0fc88df7aa328faffa2c5c47c1",
+      "requiredRoles": [
+        "HERO_DESKTOP",
+        "HERO_MOBILE"
+      ]
+    },
+    {
+      "operationId": "99af7edc-eb11-4cbb-90d1-73e6bb088fe3",
+      "checksumSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "requiredRoles": [
+        "HERO_DESKTOP",
+        "HERO_MOBILE"
+      ]
+    }
+  ],
+  "publicPages": [
+    {
+      "locale": "en",
+      "kind": "idols",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "en",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "en",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "en",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "en",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "en",
+      "kind": "idols",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "en",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "en",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "en",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "en",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "idols",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "idols",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "th",
+      "kind": "idols",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "th",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "th",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "th",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "th",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "th",
+      "kind": "idols",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "th",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "th",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "th",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "th",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "vi",
+      "kind": "idols",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "vi",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "vi",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "vi",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "vi",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "vi",
+      "kind": "idols",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "vi",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "vi",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "vi",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "vi",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "ja",
+      "kind": "idols",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "ja",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "ja",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "ja",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "ja",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "ja",
+      "kind": "idols",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "ja",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "ja",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "ja",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "ja",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "es",
+      "kind": "idols",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "es",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "es",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "es",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "es",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "es",
+      "kind": "idols",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "es",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "es",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "es",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "es",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "pt",
+      "kind": "idols",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "pt",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "pt",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "pt",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "pt",
+      "kind": "gifts",
+      "width": 1440,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "pt",
+      "kind": "idols",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "originalDescriptionUpdated": true
+    },
+    {
+      "locale": "pt",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "VIRTUAL",
+      "amountMinor": 2900,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "pt",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "PHYSICAL",
+      "amountMinor": 2100,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "pt",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "WISH",
+      "amountMinor": 2200,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    },
+    {
+      "locale": "pt",
+      "kind": "gifts",
+      "width": 390,
+      "status": 200,
+      "sourceLocale": "zh-CN",
+      "giftKind": "MERCHANDISE",
+      "amountMinor": 2300,
+      "market": "GLOBAL",
+      "currency": "USD",
+      "recipientId": "4a57d08f-ba2c-4b18-8571-185b634aa5d2",
+      "availability": "AVAILABLE",
+      "inventoryPolicy": "PROCURE_ON_DEMAND",
+      "quantityCeiling": 2147483647,
+      "purchaseEntry": "ADD_TO_CART_FORM",
+      "commerceTransactionVerified": false
+    }
+  ],
+  "pageErrors": [],
+  "observationFailures": [],
+  "limitations": [
+    "Desktop Chrome with emulated viewports; not a physical phone",
+    "Automated accessibility is not a screen-reader or human translation approval",
+    "No payment, real customer data, operator timing or production deployment",
+    "Public gift checks cover the current add-to-cart entry and quantity contract; this content fixture does not compose cart, checkout or payment runtimes"
+  ],
+  "browserVersion": "153.0.8010.48",
+  "finishedAt": "2026-09-21T11:15:12.591Z",
+  "counts": {
+    "cases": 7,
+    "screenshots": 98,
+    "axe": 98,
+    "incompleteRules": 1,
+    "violations": 0,
+    "observationFailures": 0
+  },
+  "browserClosed": true
+}

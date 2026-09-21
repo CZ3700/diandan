@@ -1,0 +1,109 @@
+{
+  "startedAt": "2026-09-21T11:20:41.266Z",
+  "updatedAt": "2026-09-21T11:27:52.720589+00:00",
+  "status": "PASS",
+  "results": [
+    {
+      "command": "node ./scripts/postgres-catalog-directory.mjs",
+      "exitCode": 0,
+      "elapsedMs": 23017
+    },
+    {
+      "command": "node ./scripts/postgres-media-processing.mjs",
+      "exitCode": 0,
+      "elapsedMs": 152956
+    },
+    {
+      "command": "node ./scripts/postgres-content-drafts.mjs",
+      "exitCode": 0,
+      "elapsedMs": 4384
+    },
+    {
+      "command": "node ./scripts/postgres-content-draft-repositories.mjs",
+      "exitCode": 0,
+      "elapsedMs": 2013
+    },
+    {
+      "command": "node ./scripts/postgres-admin-content.mjs",
+      "exitCode": 0,
+      "elapsedMs": 8919
+    },
+    {
+      "command": "node ./scripts/postgres-content-authoring.mjs",
+      "exitCode": 0,
+      "elapsedMs": 2604
+    },
+    {
+      "command": "node ./scripts/postgres-base-content.mjs",
+      "exitCode": 0,
+      "elapsedMs": 4935
+    },
+    {
+      "command": "node ./scripts/postgres-resource-management.mjs",
+      "exitCode": 0,
+      "elapsedMs": 2086
+    },
+    {
+      "command": "node ./scripts/postgres-publication-preflight.mjs",
+      "exitCode": 0,
+      "elapsedMs": 5673
+    },
+    {
+      "command": "node ./scripts/postgres-publication-runtime.mjs",
+      "exitCode": 0,
+      "elapsedMs": 9949
+    },
+    {
+      "command": "node ./scripts/postgres-publication-event-time.mjs",
+      "exitCode": 0,
+      "elapsedMs": 7060
+    },
+    {
+      "command": "node ./scripts/postgres-admin-catalog.mjs",
+      "exitCode": 0,
+      "elapsedMs": 7023
+    },
+    {
+      "command": "node ./scripts/postgres-gift-commerce.mjs",
+      "exitCode": 0,
+      "elapsedMs": 2429
+    },
+    {
+      "command": "node ./scripts/postgres-gift-commerce-constraints.mjs",
+      "exitCode": 0,
+      "elapsedMs": 1791
+    },
+    {
+      "command": "node ./scripts/postgres-gift-commerce-pricing-rollback.mjs",
+      "exitCode": 0,
+      "elapsedMs": 4843
+    },
+    {
+      "command": "node ./scripts/postgres-admin-catalog-time.mjs",
+      "exitCode": 0,
+      "elapsedMs": 1620
+    },
+    {
+      "command": "node ./scripts/postgres-daily-publication-clock.mjs",
+      "exitCode": 0,
+      "elapsedMs": 1059
+    },
+    {
+      "command": "node ./scripts/postgres-daily-publication-outbox.mjs",
+      "exitCode": 0,
+      "elapsedMs": 1135
+    },
+    {
+      "command": "node ./scripts/postgres-management-operation-clock.mjs",
+      "exitCode": 0,
+      "elapsedMs": 1571
+    },
+    {
+      "command": "node ./scripts/postgres-admin-access.mjs",
+      "exitCode": 0,
+      "elapsedMs": 31711
+    }
+  ],
+  "resumedAt": "2026-09-21T11:24:36.590647+00:00",
+  "secondResumedAt": "2026-09-21T11:26:52.472669+00:00"
+}

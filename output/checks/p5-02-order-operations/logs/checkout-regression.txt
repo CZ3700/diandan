@@ -1,0 +1,285 @@
+Checkout preflight: processing original fictional Mira Vale independent media
+Checkout preflight: processing original fictional Kai Ren independent media
+Checkout preflight: processing original fictional Rose Palace gift artwork
+Checkout preflight: processing original fictional Blue Orbit gift artwork
+Checkout preflight: processing original fictional Ruby Bouquet gift artwork
+Checkout preflight: authoring real gift 1/27
+Checkout preflight: authoring real gift 2/27
+Checkout preflight: authoring real gift 3/27
+Checkout preflight: authoring real gift 4/27
+Checkout preflight: authoring real gift 5/27
+Checkout preflight: authoring real gift 6/27
+Checkout preflight: authoring real gift 7/27
+Checkout preflight: authoring real gift 8/27
+Checkout preflight: authoring real gift 9/27
+Checkout preflight: authoring real gift 10/27
+Checkout preflight: authoring real gift 11/27
+Checkout preflight: authoring real gift 12/27
+Checkout preflight: authoring real gift 13/27
+Checkout preflight: authoring real gift 14/27
+Checkout preflight: authoring real gift 15/27
+Checkout preflight: authoring real gift 16/27
+Checkout preflight: authoring real gift 17/27
+Checkout preflight: authoring real gift 18/27
+Checkout preflight: authoring real gift 19/27
+Checkout preflight: authoring real gift 20/27
+Checkout preflight: authoring real gift 21/27
+Checkout preflight: authoring real gift 22/27
+Checkout preflight: authoring real gift 23/27
+Checkout preflight: authoring real gift 24/27
+Checkout preflight: authoring real gift 25/27
+Checkout preflight: authoring real gift 26/27
+Checkout preflight: authoring real gift 27/27
+Checkout preflight: reading actual PostgreSQL price activation time
+Checkout preflight: creating complete TEST price book 1/2
+Checkout preflight: publishing complete TEST price book 1/2
+Checkout preflight: creating complete TEST price book 2/2
+Checkout preflight: publishing complete TEST price book 2/2
+Checkout preflight: creating actual inventory location
+Checkout preflight: stock, review and publication for gift 1/26
+Checkout preflight: stock, review and publication for gift 2/26
+Checkout preflight: stock, review and publication for gift 3/26
+Checkout preflight: stock, review and publication for gift 4/26
+Checkout preflight: stock, review and publication for gift 5/26
+Checkout preflight: stock, review and publication for gift 6/26
+Checkout preflight: stock, review and publication for gift 7/26
+Checkout preflight: stock, review and publication for gift 8/26
+Checkout preflight: stock, review and publication for gift 9/26
+Checkout preflight: stock, review and publication for gift 10/26
+Checkout preflight: stock, review and publication for gift 11/26
+Checkout preflight: stock, review and publication for gift 12/26
+Checkout preflight: stock, review and publication for gift 13/26
+Checkout preflight: stock, review and publication for gift 14/26
+Checkout preflight: stock, review and publication for gift 15/26
+Checkout preflight: stock, review and publication for gift 16/26
+Checkout preflight: stock, review and publication for gift 17/26
+Checkout preflight: stock, review and publication for gift 18/26
+Checkout preflight: stock, review and publication for gift 19/26
+Checkout preflight: stock, review and publication for gift 20/26
+Checkout preflight: stock, review and publication for gift 21/26
+Checkout preflight: stock, review and publication for gift 22/26
+Checkout preflight: stock, review and publication for gift 23/26
+Checkout preflight: stock, review and publication for gift 24/26
+Checkout preflight: stock, review and publication for gift 25/26
+Checkout preflight: stock, review and publication for gift 26/26
+Checkout preflight: proving tracked availability is one location's maximum, never a sum
+Checkout preflight: publishing actual TEST terms policy
+Checkout preflight: publishing actual TEST privacy policy
+Checkout preflight: publishing actual TEST refund policy
+Checkout preflight: publishing actual TEST delivery policy
+Checkout preflight: real checkout protocol
+Checkout preflight: checkout authorization and untrusted input
+Checkout HTTP {"ordinal":1,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":2,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":3,"category":"NO_COOKIE","status":401,"code":"INVALID_ACCESS"}
+Checkout HTTP {"ordinal":4,"category":"INVALID_AUTHORIZATION","status":403,"code":"INVALID_ACCESS"}
+Checkout HTTP {"ordinal":5,"category":"INVALID_AUTHORIZATION","status":403,"code":"INVALID_ACCESS"}
+Checkout HTTP {"ordinal":6,"category":"INVALID_AUTHORIZATION","status":403,"code":"INVALID_ACCESS"}
+Checkout HTTP {"ordinal":7,"category":"MISSING_IDEMPOTENCY","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":8,"category":"NO_COOKIE","status":401,"code":"INVALID_ACCESS"}
+Checkout HTTP {"ordinal":9,"category":"INVALID_AUTHORIZATION","status":403,"code":"INVALID_ACCESS"}
+Checkout HTTP {"ordinal":10,"category":"INVALID_AUTHORIZATION","status":403,"code":"INVALID_ACCESS"}
+Checkout HTTP {"ordinal":11,"category":"INVALID_AUTHORIZATION","status":403,"code":"INVALID_ACCESS"}
+Checkout HTTP {"ordinal":12,"category":"MISSING_IDEMPOTENCY","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":13,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":14,"category":"REJECT_CLIENT_AUTHORITY","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":15,"category":"REJECT_CLIENT_AUTHORITY","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":16,"category":"REJECT_CLIENT_AUTHORITY","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":17,"category":"REJECT_CLIENT_AUTHORITY","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":18,"category":"REJECT_CLIENT_AUTHORITY","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":19,"category":"REJECT_CLIENT_AUTHORITY","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":20,"category":"REJECT_CLIENT_AUTHORITY","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":21,"category":"REJECT_CLIENT_AUTHORITY","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":22,"category":"UNCONFIRMED_POLICY","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":23,"category":"WRONG_POLICY_REVISION","status":409,"code":"POLICY_ACCEPTANCE_REQUIRED"}
+Checkout HTTP {"ordinal":24,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":25,"category":"WRONG_CART_VERSION","status":409,"code":"VERSION_CONFLICT"}
+Checkout HTTP {"ordinal":26,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":27,"category":"CREATE","status":404,"code":"PREFLIGHT_NOT_FOUND"}
+Checkout HTTP {"ordinal":28,"category":"STATUS","status":404,"code":"CHECKOUT_NOT_FOUND"}
+Checkout preflight: seven-language immutable order and policy snapshots
+Checkout HTTP {"ordinal":29,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":30,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":31,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":32,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":33,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":34,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":35,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":36,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":37,"category":"REJECT_STATUS_LOCALE_REWRITE","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":38,"category":"STATUS","status":404,"code":"CHECKOUT_NOT_FOUND"}
+Checkout HTTP {"ordinal":39,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":40,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":41,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":42,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":43,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":44,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":45,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":46,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":47,"category":"REJECT_STATUS_LOCALE_REWRITE","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":48,"category":"STATUS","status":404,"code":"CHECKOUT_NOT_FOUND"}
+Checkout HTTP {"ordinal":49,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":50,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":51,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":52,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":53,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":54,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":55,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":56,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":57,"category":"REJECT_STATUS_LOCALE_REWRITE","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":58,"category":"STATUS","status":404,"code":"CHECKOUT_NOT_FOUND"}
+Checkout HTTP {"ordinal":59,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":60,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":61,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":62,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":63,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":64,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":65,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":66,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":67,"category":"REJECT_STATUS_LOCALE_REWRITE","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":68,"category":"STATUS","status":404,"code":"CHECKOUT_NOT_FOUND"}
+Checkout HTTP {"ordinal":69,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":70,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":71,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":72,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":73,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":74,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":75,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":76,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":77,"category":"REJECT_STATUS_LOCALE_REWRITE","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":78,"category":"STATUS","status":404,"code":"CHECKOUT_NOT_FOUND"}
+Checkout HTTP {"ordinal":79,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":80,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":81,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":82,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":83,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":84,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":85,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":86,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":87,"category":"REJECT_STATUS_LOCALE_REWRITE","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":88,"category":"STATUS","status":404,"code":"CHECKOUT_NOT_FOUND"}
+Checkout HTTP {"ordinal":89,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":90,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":91,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":92,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":93,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":94,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":95,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":96,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":97,"category":"REJECT_STATUS_LOCALE_REWRITE","status":400,"code":"INVALID_COMMAND"}
+Checkout HTTP {"ordinal":98,"category":"STATUS","status":404,"code":"CHECKOUT_NOT_FOUND"}
+Checkout preflight: stock aggregation and genuine concurrent checkout
+Checkout HTTP {"ordinal":99,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":100,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":101,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":102,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":103,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":104,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":105,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":106,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout PostgreSQL {"operation":"COMMIT","code":"40001","guard":"assert_cart_support_intent_consistency","constraint":null}
+Checkout HTTP {"ordinal":107,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":108,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":109,"category":"VALIDATE","status":200,"code":null}
+Checkout PostgreSQL {"operation":"STATEMENT","code":"40P01","guard":null,"constraint":null}
+Checkout HTTP {"ordinal":110,"category":"CREATE","status":200,"code":null}
+Checkout PostgreSQL {"operation":"STATEMENT","code":"40001","guard":null,"constraint":null}
+Checkout HTTP {"ordinal":111,"category":"CREATE","status":409,"code":"INSUFFICIENT_STOCK"}
+Checkout HTTP {"ordinal":112,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":113,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":114,"category":"VALIDATE","status":200,"code":null}
+Checkout PostgreSQL {"operation":"STATEMENT","code":"40001","guard":null,"constraint":null}
+Checkout HTTP {"ordinal":115,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":116,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":117,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":118,"category":"CREATE","status":409,"code":"IDEMPOTENCY_CONFLICT"}
+Checkout HTTP {"ordinal":119,"category":"CREATE","status":409,"code":"CART_LOCKED"}
+Checkout preflight: actual successful response loss recovery
+Checkout HTTP {"ordinal":120,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":121,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":122,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":123,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":124,"category":"STATUS","status":200,"code":null}
+Checkout preflight: expired observations and KMS failure rollback
+Checkout HTTP {"ordinal":125,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":126,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":127,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":128,"category":"CREATE","status":503,"code":"TEMPORARY_UNAVAILABLE"}
+Checkout HTTP {"ordinal":129,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":130,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":131,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":132,"category":"CREATE","status":409,"code":"PREFLIGHT_EXPIRED"}
+Checkout HTTP {"ordinal":133,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":134,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":135,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":136,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":137,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":138,"category":"STATUS","status":200,"code":null}
+Checkout preflight: canonical artist, gift and inventory changes invalidate checkout
+Checkout HTTP {"ordinal":139,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":140,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":141,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":142,"category":"CREATE","status":409,"code":"IDOL_UNAVAILABLE"}
+Checkout HTTP {"ordinal":143,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":144,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":145,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":146,"category":"CREATE","status":409,"code":"GIFT_UNAVAILABLE"}
+Checkout HTTP {"ordinal":147,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":148,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":149,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":150,"category":"CREATE","status":409,"code":"INSUFFICIENT_STOCK"}
+Checkout preflight: normal revised artist and policy publication preserve old order snapshots
+Checkout HTTP {"ordinal":151,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":152,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":153,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":154,"category":"CREATE","status":409,"code":"PREFLIGHT_CHANGED"}
+Checkout HTTP {"ordinal":155,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":156,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":157,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":158,"category":"CREATE","status":409,"code":"POLICY_CHANGED"}
+Checkout preflight: normal daily publishing and price revision rejection
+Checkout HTTP {"ordinal":159,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":160,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":161,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":162,"category":"CREATE","status":409,"code":"PREFLIGHT_CHANGED"}
+Checkout HTTP {"ordinal":163,"category":"VALIDATE","status":409,"code":"PRICE_CHANGED"}
+Checkout HTTP {"ordinal":164,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":165,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":166,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":167,"category":"CREATE","status":200,"code":null}
+Checkout preflight: normal numeric price change requires a new confirmed quote
+Checkout HTTP {"ordinal":168,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":169,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":170,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":171,"category":"CREATE","status":409,"code":"PREFLIGHT_CHANGED"}
+Checkout HTTP {"ordinal":172,"category":"VALIDATE","status":409,"code":"PRICE_CHANGED"}
+Checkout HTTP {"ordinal":173,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":174,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":175,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":176,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":177,"category":"READ_CHANGED_CART_PRICE","status":200,"code":null}
+Checkout HTTP {"ordinal":178,"category":"CONFIRM_CHANGED_CART_PRICE","status":200,"code":null}
+Checkout HTTP {"ordinal":179,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":180,"category":"CREATE","status":200,"code":null}
+Checkout HTTP {"ordinal":181,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":182,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":183,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":184,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":185,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":186,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":187,"category":"STATUS","status":200,"code":null}
+Checkout HTTP {"ordinal":188,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout PostgreSQL {"operation":"STATEMENT","code":"40001","guard":null,"constraint":null}
+Checkout HTTP {"ordinal":189,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":190,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout PostgreSQL {"operation":"STATEMENT","code":"40001","guard":null,"constraint":null}
+Checkout HTTP {"ordinal":191,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":192,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":193,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":194,"category":"CREATE","status":200,"code":null}
+Checkout PostgreSQL {"operation":"COMMIT","code":"40001","guard":"validate_checkout_order_item","constraint":null}
+Checkout HTTP {"ordinal":195,"category":"CREATE","status":200,"code":null}
+Checkout preflight: actual checkout rollback protection
+Checkout PostgreSQL {"operation":"STATEMENT","code":"55000","guard":null,"constraint":null}
+Checkout PostgreSQL {"operation":"STATEMENT","code":"55000","guard":null,"constraint":null}
+PASS checkout preflight 7414 assertions; /Users/mario/Desktop/下单/output/checks/p4-03-checkout-preflight/run-2026-09-21T11-30-20.320Z

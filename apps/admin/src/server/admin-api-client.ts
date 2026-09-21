@@ -87,6 +87,15 @@ export async function callAdminApi(
         signal: AbortSignal.timeout(30_000),
       },
     );
+    // Older local API compositions have no orders capability. A real 404 at
+    // this discovery endpoint is distinct from an unavailable service.
+    if (
+      operation.path === "/api/v1/admin/orders/context" &&
+      response.status === 404
+    ) {
+      await response.body?.cancel();
+      return adminError("NOT_FOUND", 404);
+    }
     if (
       !/^application\/json(?:;|$)/iu.test(
         response.headers.get("content-type") ?? "",
@@ -99,7 +108,7 @@ export async function callAdminApi(
     if (
       value.outcome === "SUCCESS"
         ? response.status !== 200
-        : ![400, 401, 403, 404, 409, 413, 503].includes(response.status)
+        : ![400, 401, 403, 404, 409, 413, 429, 503].includes(response.status)
     )
       return adminError("CONTENT_UNAVAILABLE", 503);
     return Response.json(value, {

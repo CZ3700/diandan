@@ -203,6 +203,50 @@
       "kind": "TABLE"
     },
     {
+      "name": "admin_notification_resend_attempts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_notification_resend_contact_access",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_notification_resend_outbox",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_notification_resends",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_order_fulfillment_receipts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_order_message_locale_grants",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_order_message_reviews",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_order_notes",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_order_operation_receipts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_order_private_accesses",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_order_private_confirmations",
+      "kind": "TABLE"
+    },
+    {
       "name": "admin_sessions",
       "kind": "TABLE"
     },
@@ -1451,6 +1495,1416 @@
       "dataType": "uuid",
       "notNull": false,
       "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "position": 2,
+      "name": "resend_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "position": 3,
+      "name": "sequence",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "position": 4,
+      "name": "outcome",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "position": 5,
+      "name": "provider_delivery_reference",
+      "dataType": "opaque_provider_reference",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "position": 6,
+      "name": "error_code",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "position": 7,
+      "name": "started_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "position": 8,
+      "name": "completed_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "position": 1,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "position": 2,
+      "name": "resend_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "position": 3,
+      "name": "customer_contact_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "position": 4,
+      "name": "lease_token",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "position": 5,
+      "name": "generation",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "position": 6,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "position": 1,
+      "name": "resend_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "position": 3,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 3,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 4,
+      "name": "customer_contact_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 5,
+      "name": "base_notification_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 6,
+      "name": "source_outbox_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 7,
+      "name": "order_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 8,
+      "name": "resend_sequence",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 9,
+      "name": "event_type",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 10,
+      "name": "event_rank",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 11,
+      "name": "requested_locale",
+      "dataType": "supported_locale",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 12,
+      "name": "resolved_locale",
+      "dataType": "supported_locale",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 13,
+      "name": "fallback_used",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 14,
+      "name": "fallback_reason_code",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 15,
+      "name": "template_key",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 16,
+      "name": "template_version",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 17,
+      "name": "base_variables",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 18,
+      "name": "public_storefront_origin",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 19,
+      "name": "transport_key",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 20,
+      "name": "contact_lookup_hmac",
+      "dataType": "bytea",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 21,
+      "name": "contact_lookup_key_version",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 22,
+      "name": "link_nonce",
+      "dataType": "bytea",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 23,
+      "name": "link_pepper_version",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 24,
+      "name": "link_ttl_seconds",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 25,
+      "name": "dedupe_until",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 26,
+      "name": "link_token_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 27,
+      "name": "content_hash",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 28,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 29,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 30,
+      "name": "command_idempotency_key",
+      "dataType": "idempotency_key_value",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 31,
+      "name": "request_hash",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 32,
+      "name": "reason_code",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 33,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 34,
+      "name": "idempotency_key",
+      "dataType": "idempotency_key_value",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 35,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 36,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 37,
+      "name": "status",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 38,
+      "name": "attempt_count",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 39,
+      "name": "next_attempt_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 40,
+      "name": "sent_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 41,
+      "name": "last_error_code",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 42,
+      "name": "lease_token",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 43,
+      "name": "lease_expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 44,
+      "name": "lease_started_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 45,
+      "name": "generation",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 46,
+      "name": "version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 47,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_notification_resends",
+      "position": 48,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 2,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 3,
+      "name": "fulfillment_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 4,
+      "name": "fulfillment_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 5,
+      "name": "outbox_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 6,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 7,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 8,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 9,
+      "name": "expected_order_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 10,
+      "name": "expected_fulfillment_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 11,
+      "name": "reason_code",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 12,
+      "name": "confirmed",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 13,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "position": 14,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": "gen_random_uuid()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "position": 2,
+      "name": "admin_identity_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "position": 3,
+      "name": "locale",
+      "dataType": "supported_locale",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "position": 4,
+      "name": "granted_by",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "position": 5,
+      "name": "granted_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "position": 6,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "position": 7,
+      "name": "revoked_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "position": 8,
+      "name": "revoked_audit_log_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 2,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 3,
+      "name": "item_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 4,
+      "name": "support_intent_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 5,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 6,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 7,
+      "name": "access_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 8,
+      "name": "expected_intent_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 9,
+      "name": "result_intent_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 10,
+      "name": "review_locale",
+      "dataType": "supported_locale",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 11,
+      "name": "language_confirmed",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 12,
+      "name": "decision",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 13,
+      "name": "reason_code",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 14,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "position": 15,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_notes",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_notes",
+      "position": 2,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_notes",
+      "position": 3,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_notes",
+      "position": 4,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_notes",
+      "position": 5,
+      "name": "ciphertext",
+      "dataType": "ciphertext_bytes",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_notes",
+      "position": 6,
+      "name": "encrypted_data_key",
+      "dataType": "ciphertext_bytes",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_notes",
+      "position": 7,
+      "name": "key_version",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_notes",
+      "position": 8,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_notes",
+      "position": 9,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 2,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 3,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 4,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 5,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 6,
+      "name": "idempotency_key",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 7,
+      "name": "request_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 8,
+      "name": "result_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 9,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 10,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 11,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "position": 12,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 2,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 3,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 4,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 5,
+      "name": "kind",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 6,
+      "name": "item_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 7,
+      "name": "support_intent_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 8,
+      "name": "intent_version",
+      "dataType": "positive_version",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 9,
+      "name": "review_locale",
+      "dataType": "supported_locale",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 10,
+      "name": "material_hash",
+      "dataType": "sha256_hex",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 11,
+      "name": "note_ids",
+      "dataType": "uuid[]",
+      "notNull": true,
+      "defaultExpression": "'{}'::uuid[]",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 12,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 13,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 14,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 15,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "position": 16,
+      "name": "expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_confirmations",
+      "position": 1,
+      "name": "access_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_order_private_confirmations",
+      "position": 2,
+      "name": "confirmed_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
       "identity": "",
       "generation": ""
     },
@@ -22115,6 +23569,2006 @@
       "initiallyDeferred": false
     },
     {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempt_consistency",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_check",
+      "kind": "CHECK",
+      "definition": "CHECK (completed_at::timestamp with time zone >= started_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (outcome = 'SUCCEEDED'::text AND provider_delivery_reference IS NOT NULL AND error_code IS NULL OR (outcome = ANY (ARRAY['FAILED'::text, 'UNKNOWN'::text])) AND provider_delivery_reference IS NULL AND error_code ~ '^[A-Z][A-Z0-9_]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_completed_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL completed_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_outcome_check",
+      "kind": "CHECK",
+      "definition": "CHECK (outcome = ANY (ARRAY['SUCCEEDED'::text, 'FAILED'::text, 'UNKNOWN'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_outcome_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL outcome",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_resend_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (resend_id) REFERENCES admin_notification_resends(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_resend_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL resend_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_resend_id_sequence_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (resend_id, sequence)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_sequence_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL sequence",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_started_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL started_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact__customer_contact_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL customer_contact_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_acce_customer_contact_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (customer_contact_id) REFERENCES customer_contacts(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_access_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_access_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_access_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_access_generation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL generation",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_access_lease_token_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL lease_token",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_access_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_access_resend_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (resend_id) REFERENCES admin_notification_resends(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_access_resend_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL resend_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "name": "admin_notification_resend_outbox_consistency",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "name": "admin_notification_resend_outbox_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "name": "admin_notification_resend_outbox_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (resend_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "name": "admin_notification_resend_outbox_resend_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (resend_id) REFERENCES admin_notification_resends(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "name": "admin_notification_resend_outbox_resend_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL resend_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "name": "admin_notification_resend_outbox_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "name": "admin_notification_resend_outbox_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resend_consistency",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_actor_id_command_idempotency_key_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (actor_id, command_idempotency_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_attempt_count_check",
+      "kind": "CHECK",
+      "definition": "CHECK (attempt_count >= 0 AND attempt_count <= 6)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_attempt_count_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL attempt_count",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_base_notification_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (base_notification_id) REFERENCES notification_deliveries(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_base_notification_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL base_notification_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_base_variables_check",
+      "kind": "CHECK",
+      "definition": "CHECK (jsonb_typeof(base_variables) = 'object'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_base_variables_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL base_variables",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_check",
+      "kind": "CHECK",
+      "definition": "CHECK (dedupe_until::timestamp with time zone > created_at::timestamp with time zone AND dedupe_until::timestamp with time zone <= (created_at::timestamp with time zone + '7 days'::interval))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (updated_at::timestamp with time zone >= created_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_check2",
+      "kind": "CHECK",
+      "definition": "CHECK (status = 'PROCESSING'::text AND lease_token IS NOT NULL AND lease_expires_at::timestamp with time zone > lease_started_at::timestamp with time zone AND lease_started_at::timestamp with time zone >= created_at::timestamp with time zone AND generation > 0 OR status <> 'PROCESSING'::text AND lease_token IS NULL AND lease_expires_at IS NULL AND lease_started_at IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_check3",
+      "kind": "CHECK",
+      "definition": "CHECK ((status = ANY (ARRAY['REQUESTED'::text, 'PROCESSING'::text])) AND next_attempt_at IS NULL AND sent_at IS NULL AND last_error_code IS NULL OR status = 'RETRY_SCHEDULED'::text AND next_attempt_at IS NOT NULL AND sent_at IS NULL AND last_error_code IS NOT NULL OR status = 'SENT'::text AND next_attempt_at IS NULL AND sent_at IS NOT NULL AND last_error_code IS NULL OR (status = ANY (ARRAY['FAILED'::text, 'CANCELED'::text])) AND next_attempt_at IS NULL AND sent_at IS NULL AND last_error_code IS NOT NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_command_idempotency_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL command_idempotency_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_contact_lookup_hmac_check",
+      "kind": "CHECK",
+      "definition": "CHECK (octet_length(contact_lookup_hmac) = 32)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_contact_lookup_hmac_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL contact_lookup_hmac",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_contact_lookup_key_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL contact_lookup_key_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_content_hash_check",
+      "kind": "CHECK",
+      "definition": "CHECK (content_hash ~ '^[a-f0-9]{64}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_customer_contact_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (customer_contact_id) REFERENCES customer_contacts(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_customer_contact_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL customer_contact_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_dedupe_until_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL dedupe_until",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_event_rank_check",
+      "kind": "CHECK",
+      "definition": "CHECK (event_rank >= 1 AND event_rank <= 3)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_event_rank_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL event_rank",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_event_type_check",
+      "kind": "CHECK",
+      "definition": "CHECK (event_type = ANY (ARRAY['PAYMENT_CONFIRMED'::text, 'PREPARING'::text, 'DELIVERED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_event_type_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL event_type",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_fallback_used_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL fallback_used",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_generation_check",
+      "kind": "CHECK",
+      "definition": "CHECK (generation >= 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_generation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL generation",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_idempotency_key_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (idempotency_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_idempotency_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idempotency_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_last_error_code_check",
+      "kind": "CHECK",
+      "definition": "CHECK (last_error_code ~ '^[A-Z][A-Z0-9_]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_link_nonce_check",
+      "kind": "CHECK",
+      "definition": "CHECK (octet_length(link_nonce) = 32)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_link_nonce_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL link_nonce",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_link_pepper_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL link_pepper_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_link_token_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (link_token_id) REFERENCES order_access_tokens(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_link_token_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (link_token_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_link_ttl_seconds_check",
+      "kind": "CHECK",
+      "definition": "CHECK (link_ttl_seconds >= 1 AND link_ttl_seconds <= 604800)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_link_ttl_seconds_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL link_ttl_seconds",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_order_id_resend_sequence_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (order_id, resend_sequence)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_order_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_public_storefront_origin_check",
+      "kind": "CHECK",
+      "definition": "CHECK (public_storefront_origin ~ '^https://[^/?#@]+$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_public_storefront_origin_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL public_storefront_origin",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_reason_code_check",
+      "kind": "CHECK",
+      "definition": "CHECK (reason_code ~ '^[A-Z][A-Z0-9_]{1,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_reason_code_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL reason_code",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_request_hash_check",
+      "kind": "CHECK",
+      "definition": "CHECK (request_hash ~ '^[a-f0-9]{64}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_request_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_requested_locale_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL requested_locale",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_resend_sequence_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL resend_sequence",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_resolved_locale_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL resolved_locale",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_source_outbox_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (source_outbox_event_id) REFERENCES outbox_events(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_source_outbox_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL source_outbox_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_status_check",
+      "kind": "CHECK",
+      "definition": "CHECK (status = ANY (ARRAY['REQUESTED'::text, 'PROCESSING'::text, 'RETRY_SCHEDULED'::text, 'SENT'::text, 'FAILED'::text, 'CANCELED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_status_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL status",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_template_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL template_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_template_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL template_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_transport_key_check",
+      "kind": "CHECK",
+      "definition": "CHECK (transport_key ~ '^[a-f0-9]{64}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_transport_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL transport_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_authority",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_rec_expected_fulfillment_versi_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expected_fulfillment_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipt_expected_order_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expected_order_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['PREPARE'::text, 'DELIVER'::text, 'HOLD'::text, 'RESUME'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_check",
+      "kind": "CHECK",
+      "definition": "CHECK ((action <> ALL (ARRAY['HOLD'::text, 'RESUME'::text])) OR confirmed)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_confirmed_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL confirmed",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_fulfillment_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (fulfillment_event_id) REFERENCES fulfillment_events(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_fulfillment_event_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (fulfillment_event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_fulfillment_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL fulfillment_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_fulfillment_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (fulfillment_id) REFERENCES fulfillments(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_fulfillment_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL fulfillment_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_outbox_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (outbox_event_id) REFERENCES outbox_events(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_outbox_event_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (outbox_event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_outbox_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL outbox_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_reason_code_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL reason_code",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_admin_identity_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (admin_identity_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_admin_identity_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL admin_identity_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_check",
+      "kind": "CHECK",
+      "definition": "CHECK ((revoked_at IS NULL) = (revoked_audit_log_id IS NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (revoked_at IS NULL OR revoked_at::timestamp with time zone >= granted_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_granted_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL granted_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_granted_by_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (granted_by) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_granted_by_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL granted_by",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_locale_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL locale",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_revoked_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (revoked_audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_revoked_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (revoked_audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_access_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (access_id) REFERENCES admin_order_private_accesses(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_access_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (access_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_access_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL access_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_check",
+      "kind": "CHECK",
+      "definition": "CHECK (result_intent_version::bigint = (expected_intent_version::bigint + 1))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_decision_check",
+      "kind": "CHECK",
+      "definition": "CHECK (decision = ANY (ARRAY['APPROVED'::text, 'REJECTED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_decision_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL decision",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_expected_intent_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expected_intent_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_item_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL item_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_item_id_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (item_id, order_id) REFERENCES order_items(id, order_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_language_confirmed_check",
+      "kind": "CHECK",
+      "definition": "CHECK (language_confirmed)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_language_confirmed_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL language_confirmed",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_reason_code_check",
+      "kind": "CHECK",
+      "definition": "CHECK (reason_code ~ '^[A-Z][A-Z0-9_]{1,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_reason_code_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL reason_code",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_result_intent_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL result_intent_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_review_locale_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL review_locale",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_support_intent_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (support_intent_id) REFERENCES support_intents(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_support_intent_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL support_intent_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_support_intent_id_result_intent_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (support_intent_id, result_intent_version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_review_authority",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_review_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_note_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_authority",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_ciphertext_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL ciphertext",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_encrypted_data_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL encrypted_data_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_id_order_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (id, order_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_key_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (key_version ~ '^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_key_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL key_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipt_actor_id_action_idempotency_k_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (actor_id, action, idempotency_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['REVIEW_MESSAGE'::text, 'PREPARE'::text, 'DELIVER'::text, 'HOLD'::text, 'RESUME'::text, 'ADD_NOTE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_idempotency_key_check",
+      "kind": "CHECK",
+      "definition": "CHECK (length(idempotency_key) >= 1 AND length(idempotency_key) <= 200)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_idempotency_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idempotency_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_request_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_result_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL result_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_access_authority",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_access_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_check",
+      "kind": "CHECK",
+      "definition": "CHECK (expires_at::timestamp with time zone > created_at::timestamp with time zone AND expires_at::timestamp with time zone <= (created_at::timestamp with time zone + '00:05:00'::interval))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (kind = 'MESSAGE'::text AND num_nonnulls(item_id, support_intent_id, intent_version, review_locale, material_hash) = 5 AND cardinality(note_ids) = 0 OR kind = 'NOTES'::text AND num_nonnulls(item_id, support_intent_id, intent_version, review_locale, material_hash) = 0 AND cardinality(note_ids) <= 50)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_expires_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expires_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_item_id_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (item_id, order_id) REFERENCES order_items(id, order_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_kind_check",
+      "kind": "CHECK",
+      "definition": "CHECK (kind = ANY (ARRAY['MESSAGE'::text, 'NOTES'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_kind_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL kind",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_note_ids_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL note_ids",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_support_intent_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (support_intent_id) REFERENCES support_intents(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_confirmations",
+      "name": "admin_order_confirmation_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_order_private_confirmations",
+      "name": "admin_order_private_confirmations_access_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (access_id) REFERENCES admin_order_private_accesses(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_confirmations",
+      "name": "admin_order_private_confirmations_access_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL access_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_confirmations",
+      "name": "admin_order_private_confirmations_confirmed_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL confirmed_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_order_private_confirmations",
+      "name": "admin_order_private_confirmations_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (access_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "admin_sessions",
       "name": "admin_sessions_admin_identity_id_fkey",
       "kind": "FOREIGN_KEY",
@@ -27297,6 +30751,14 @@
       "definition": "NOT NULL version",
       "deferrable": false,
       "initiallyDeferred": false
+    },
+    {
+      "table": "fulfillment_events",
+      "name": "admin_order_admin_event_required",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
     },
     {
       "table": "fulfillment_events",
@@ -48748,6 +52210,14 @@
     },
     {
       "table": "support_intents",
+      "name": "admin_order_human_review_required",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "support_intents",
       "name": "support_intent_cart_item_consistency_trigger",
       "kind": "CONSTRAINT_TRIGGER",
       "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
@@ -50026,6 +53496,312 @@
       "definition": "CREATE UNIQUE INDEX admin_login_challenges_state_digest_key ON public.admin_login_challenges USING btree (state_digest)",
       "unique": true,
       "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_notification_resend_attempts_pkey ON public.admin_notification_resend_attempts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_resend_id_sequence_key",
+      "definition": "CREATE UNIQUE INDEX admin_notification_resend_attempts_resend_id_sequence_key ON public.admin_notification_resend_attempts USING btree (resend_id, sequence)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_access_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_notification_resend_contact_access_pkey ON public.admin_notification_resend_contact_access USING btree (audit_log_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "name": "admin_notification_resend_outbox_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_notification_resend_outbox_pkey ON public.admin_notification_resend_outbox USING btree (resend_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_one_pending_per_order",
+      "definition": "CREATE UNIQUE INDEX admin_notification_one_pending_per_order ON public.admin_notification_resends USING btree (order_id) WHERE (status = ANY (ARRAY['REQUESTED'::text, 'PROCESSING'::text, 'RETRY_SCHEDULED'::text]))",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resend_due",
+      "definition": "CREATE INDEX admin_notification_resend_due ON public.admin_notification_resends USING btree (next_attempt_at, created_at, id) WHERE (status = ANY (ARRAY['REQUESTED'::text, 'PROCESSING'::text, 'RETRY_SCHEDULED'::text]))",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_actor_id_command_idempotency_key_key",
+      "definition": "CREATE UNIQUE INDEX admin_notification_resends_actor_id_command_idempotency_key_key ON public.admin_notification_resends USING btree (actor_id, command_idempotency_key)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_notification_resends_audit_log_id_key ON public.admin_notification_resends USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_idempotency_key_key",
+      "definition": "CREATE UNIQUE INDEX admin_notification_resends_idempotency_key_key ON public.admin_notification_resends USING btree (idempotency_key)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_link_token_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_notification_resends_link_token_id_key ON public.admin_notification_resends USING btree (link_token_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_order_id_resend_sequence_key",
+      "definition": "CREATE UNIQUE INDEX admin_notification_resends_order_id_resend_sequence_key ON public.admin_notification_resends USING btree (order_id, resend_sequence)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resends_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_notification_resends_pkey ON public.admin_notification_resends USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_fulfillment_receipts_audit_log_id_key ON public.admin_order_fulfillment_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_fulfillment_event_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_fulfillment_receipts_fulfillment_event_id_key ON public.admin_order_fulfillment_receipts USING btree (fulfillment_event_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_outbox_event_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_fulfillment_receipts_outbox_event_id_key ON public.admin_order_fulfillment_receipts USING btree (outbox_event_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_order_fulfillment_receipts_pkey ON public.admin_order_fulfillment_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_active",
+      "definition": "CREATE UNIQUE INDEX admin_order_message_locale_active ON public.admin_order_message_locale_grants USING btree (admin_identity_id, locale) WHERE (revoked_at IS NULL)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_message_locale_grants_audit_log_id_key ON public.admin_order_message_locale_grants USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_order_message_locale_grants_pkey ON public.admin_order_message_locale_grants USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_grants_revoked_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_message_locale_grants_revoked_audit_log_id_key ON public.admin_order_message_locale_grants USING btree (revoked_audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_access_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_message_reviews_access_id_key ON public.admin_order_message_reviews USING btree (access_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_message_reviews_audit_log_id_key ON public.admin_order_message_reviews USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_order_message_reviews_pkey ON public.admin_order_message_reviews USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_support_intent_id_result_intent_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_message_reviews_support_intent_id_result_intent_key ON public.admin_order_message_reviews USING btree (support_intent_id, result_intent_version)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_notes_audit_log_id_key ON public.admin_order_notes USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_id_order_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_notes_id_order_id_key ON public.admin_order_notes USING btree (id, order_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_order",
+      "definition": "CREATE INDEX admin_order_notes_order ON public.admin_order_notes USING btree (order_id, created_at DESC, id DESC)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_order_notes_pkey ON public.admin_order_notes USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipt_actor_id_action_idempotency_k_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_operation_receipt_actor_id_action_idempotency_k_key ON public.admin_order_operation_receipts USING btree (actor_id, action, idempotency_key)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_operation_receipts_audit_log_id_key ON public.admin_order_operation_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_order_operation_receipts_pkey ON public.admin_order_operation_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_order_private_accesses_audit_log_id_key ON public.admin_order_private_accesses USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_order_private_accesses_pkey ON public.admin_order_private_accesses USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_order_private_confirmations",
+      "name": "admin_order_private_confirmations_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_order_private_confirmations_pkey ON public.admin_order_private_confirmations USING btree (access_id)",
+      "unique": true,
+      "primary": true,
       "exclusion": false,
       "valid": true
     },
@@ -54559,6 +58335,234 @@
       "enabled": "O"
     },
     {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempt_consistency",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_notification_resend_attempt_consistency AFTER INSERT ON admin_notification_resend_attempts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_notification_resend()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_immutable",
+      "definition": "CREATE TRIGGER admin_notification_resend_attempts_immutable BEFORE DELETE OR UPDATE ON admin_notification_resend_attempts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resend_attempts",
+      "name": "admin_notification_resend_attempts_no_truncate",
+      "definition": "CREATE TRIGGER admin_notification_resend_attempts_no_truncate BEFORE TRUNCATE ON admin_notification_resend_attempts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_access_immutable",
+      "definition": "CREATE TRIGGER admin_notification_resend_contact_access_immutable BEFORE DELETE OR UPDATE ON admin_notification_resend_contact_access FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_access_no_truncate",
+      "definition": "CREATE TRIGGER admin_notification_resend_contact_access_no_truncate BEFORE TRUNCATE ON admin_notification_resend_contact_access FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resend_contact_access",
+      "name": "admin_notification_resend_contact_guard",
+      "definition": "CREATE TRIGGER admin_notification_resend_contact_guard BEFORE INSERT ON admin_notification_resend_contact_access FOR EACH ROW EXECUTE FUNCTION guard_admin_notification_contact_access()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "name": "admin_notification_resend_outbox_consistency",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_notification_resend_outbox_consistency AFTER INSERT ON admin_notification_resend_outbox DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_notification_resend()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "name": "admin_notification_resend_outbox_immutable",
+      "definition": "CREATE TRIGGER admin_notification_resend_outbox_immutable BEFORE DELETE OR UPDATE ON admin_notification_resend_outbox FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resend_outbox",
+      "name": "admin_notification_resend_outbox_no_truncate",
+      "definition": "CREATE TRIGGER admin_notification_resend_outbox_no_truncate BEFORE TRUNCATE ON admin_notification_resend_outbox FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resend_consistency",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_notification_resend_consistency AFTER INSERT OR UPDATE ON admin_notification_resends DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_notification_resend()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resend_guard",
+      "definition": "CREATE TRIGGER admin_notification_resend_guard BEFORE INSERT OR UPDATE ON admin_notification_resends FOR EACH ROW EXECUTE FUNCTION guard_admin_notification_resend()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resend_no_delete",
+      "definition": "CREATE TRIGGER admin_notification_resend_no_delete BEFORE DELETE ON admin_notification_resends FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_notification_resends",
+      "name": "admin_notification_resend_no_truncate",
+      "definition": "CREATE TRIGGER admin_notification_resend_no_truncate BEFORE TRUNCATE ON admin_notification_resends FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_authority",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_fulfillment_authority AFTER INSERT ON admin_order_fulfillment_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_order_receipt_authority()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_fulfillment_complete AFTER INSERT ON admin_order_fulfillment_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_order_fulfillment()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_append_only",
+      "definition": "CREATE TRIGGER admin_order_fulfillment_receipts_append_only BEFORE DELETE OR UPDATE ON admin_order_fulfillment_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_fulfillment_receipts",
+      "name": "admin_order_fulfillment_receipts_no_truncate",
+      "definition": "CREATE TRIGGER admin_order_fulfillment_receipts_no_truncate BEFORE TRUNCATE ON admin_order_fulfillment_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_guard",
+      "definition": "CREATE TRIGGER admin_order_message_locale_guard BEFORE INSERT OR UPDATE ON admin_order_message_locale_grants FOR EACH ROW EXECUTE FUNCTION guard_admin_order_message_locale()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_no_delete",
+      "definition": "CREATE TRIGGER admin_order_message_locale_no_delete BEFORE DELETE ON admin_order_message_locale_grants FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_message_locale_grants",
+      "name": "admin_order_message_locale_no_truncate",
+      "definition": "CREATE TRIGGER admin_order_message_locale_no_truncate BEFORE TRUNCATE ON admin_order_message_locale_grants FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_append_only",
+      "definition": "CREATE TRIGGER admin_order_message_reviews_append_only BEFORE DELETE OR UPDATE ON admin_order_message_reviews FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_message_reviews_no_truncate",
+      "definition": "CREATE TRIGGER admin_order_message_reviews_no_truncate BEFORE TRUNCATE ON admin_order_message_reviews FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_review_authority",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_review_authority AFTER INSERT ON admin_order_message_reviews DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_order_receipt_authority()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_message_reviews",
+      "name": "admin_order_review_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_review_complete AFTER INSERT ON admin_order_message_reviews DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_order_review()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_note_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_note_complete AFTER INSERT ON admin_order_notes DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_order_note()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_append_only",
+      "definition": "CREATE TRIGGER admin_order_notes_append_only BEFORE DELETE OR UPDATE ON admin_order_notes FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_authority",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_notes_authority AFTER INSERT ON admin_order_notes DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_order_receipt_authority()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_notes",
+      "name": "admin_order_notes_no_truncate",
+      "definition": "CREATE TRIGGER admin_order_notes_no_truncate BEFORE TRUNCATE ON admin_order_notes FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_operation_complete AFTER INSERT ON admin_order_operation_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_order_operation()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_append_only",
+      "definition": "CREATE TRIGGER admin_order_operation_receipts_append_only BEFORE DELETE OR UPDATE ON admin_order_operation_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_operation_receipts",
+      "name": "admin_order_operation_receipts_no_truncate",
+      "definition": "CREATE TRIGGER admin_order_operation_receipts_no_truncate BEFORE TRUNCATE ON admin_order_operation_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_access_authority",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_access_authority AFTER INSERT ON admin_order_private_accesses DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_order_receipt_authority()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_access_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_access_complete AFTER INSERT ON admin_order_private_accesses DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_order_access()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_append_only",
+      "definition": "CREATE TRIGGER admin_order_private_accesses_append_only BEFORE DELETE OR UPDATE ON admin_order_private_accesses FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_private_accesses",
+      "name": "admin_order_private_accesses_no_truncate",
+      "definition": "CREATE TRIGGER admin_order_private_accesses_no_truncate BEFORE TRUNCATE ON admin_order_private_accesses FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_private_confirmations",
+      "name": "admin_order_confirmation_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_confirmation_complete AFTER INSERT ON admin_order_private_confirmations DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_order_confirmation()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_private_confirmations",
+      "name": "admin_order_private_confirmations_append_only",
+      "definition": "CREATE TRIGGER admin_order_private_confirmations_append_only BEFORE DELETE OR UPDATE ON admin_order_private_confirmations FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_order_private_confirmations",
+      "name": "admin_order_private_confirmations_no_truncate",
+      "definition": "CREATE TRIGGER admin_order_private_confirmations_no_truncate BEFORE TRUNCATE ON admin_order_private_confirmations FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "admin_sessions",
       "name": "linked_admin_session_guard",
       "definition": "CREATE TRIGGER linked_admin_session_guard BEFORE DELETE OR UPDATE ON admin_sessions FOR EACH ROW EXECUTE FUNCTION guard_linked_admin_session()",
@@ -55120,6 +59124,12 @@
       "table": "disputes",
       "name": "disputes_validate_trigger",
       "definition": "CREATE TRIGGER disputes_validate_trigger BEFORE INSERT OR UPDATE ON disputes FOR EACH ROW EXECUTE FUNCTION validate_dispute_mutation()",
+      "enabled": "O"
+    },
+    {
+      "table": "fulfillment_events",
+      "name": "admin_order_admin_event_required",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_admin_event_required AFTER INSERT ON fulfillment_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION require_admin_order_fulfillment_receipt()",
       "enabled": "O"
     },
     {
@@ -58070,6 +62080,12 @@
     },
     {
       "table": "support_intents",
+      "name": "admin_order_human_review_required",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_order_human_review_required AFTER UPDATE ON support_intents DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION require_admin_order_human_review()",
+      "enabled": "O"
+    },
+    {
+      "table": "support_intents",
       "name": "support_intent_cart_item_consistency_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER support_intent_cart_item_consistency_trigger AFTER INSERT OR UPDATE ON support_intents DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_cart_support_intent_consistency()",
       "enabled": "O"
@@ -58191,6 +62207,26 @@
   ],
   "functions": [
     {
+      "name": "admin_notification_current_event",
+      "identityArguments": "target uuid",
+      "resultType": "text",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "STABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.admin_notification_current_event(target uuid)\n RETURNS text\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT CASE fulfillment_status WHEN 'PENDING' THEN 'PAYMENT_CONFIRMED' WHEN 'PREPARING' THEN 'PREPARING' WHEN 'DELIVERED' THEN 'DELIVERED' END\n FROM public.orders WHERE id=target AND payment_status='PAID' AND dispute_status='NONE' AND order_status IN('OPEN','CLOSED')\n$function$"
+    },
+    {
+      "name": "admin_order_authorized",
+      "identityArguments": "session_id uuid, actor uuid, permission text, event_time timestamp with time zone",
+      "resultType": "boolean",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.admin_order_authorized(session_id uuid, actor uuid, permission text, event_time timestamp with time zone)\n RETURNS boolean\n LANGUAGE sql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT EXISTS(\n  SELECT 1 FROM public.admin_sessions s JOIN public.admin_identities i ON i.id=s.admin_identity_id\n  JOIN public.admin_identity_roles ar ON ar.admin_identity_id=i.id\n  JOIN public.role_permissions rp ON rp.role_id=ar.role_id JOIN public.permissions p ON p.id=rp.permission_id\n  WHERE s.id=session_id AND i.id=actor AND i.status='ACTIVE' AND s.authenticated_with_mfa\n   AND s.revoked_at IS NULL AND s.created_at<=event_time AND event_time<=clock_timestamp()\n   AND s.expires_at>clock_timestamp() AND p.permission_key=permission\n   AND ar.granted_at<=event_time AND rp.granted_at<=event_time\n );\n$function$"
+    },
+    {
       "name": "assert_admin_catalog_authority",
       "identityArguments": "actor uuid, session_id uuid, event_time timestamp with time zone, causal_bound timestamp with time zone, permission text, locales supported_locale[]",
       "resultType": "void",
@@ -58259,6 +62295,86 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_login_challenge_audit()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE a public.audit_logs%ROWTYPE; s public.admin_sessions%ROWTYPE;\nBEGIN\n  IF NEW.state<>'CONSUMED' THEN RETURN NEW; END IF;\n  SELECT * INTO a FROM public.audit_logs WHERE id=NEW.audit_log_id;\n  IF a.id IS NULL OR a.actor_type<>'SYSTEM' OR a.task_name<>'admin-access' OR a.subject_type<>'ADMIN_LOGIN_CHALLENGE'\n    OR a.subject_id<>NEW.id OR a.created_at<>NEW.completed_at OR a.request_id IS NULL OR a.correlation_id IS DISTINCT FROM NEW.id THEN\n    RAISE EXCEPTION 'login completion requires exact immutable audit' USING ERRCODE='23514';\n  END IF;\n  IF NEW.session_id IS NULL THEN\n    IF a.action<>'ADMIN_LOGIN_REJECTED' OR a.outcome<>'REJECTED' OR a.reason_code IS NULL OR a.reason_code NOT IN ('ACCESS_DENIED','LOGIN_EXPIRED','IDENTITY_REJECTED','MFA_REQUIRED','AUTHENTICATION_EXPIRED') THEN\n      RAISE EXCEPTION 'login rejection audit is required' USING ERRCODE='23514';\n    END IF;\n  ELSE\n    SELECT * INTO s FROM public.admin_sessions WHERE id=NEW.session_id;\n    IF a.action<>'ADMIN_LOGIN_SUCCEEDED' OR a.outcome<>'SUCCEEDED' OR a.reason_code IS DISTINCT FROM 'AUTHENTICATED'\n      OR NEW.completed_at>=NEW.expires_at OR s.id IS NULL OR NOT s.authenticated_with_mfa OR s.created_at<>NEW.completed_at OR s.revoked_at IS NOT NULL\n      OR s.expires_at<s.created_at+interval '60 seconds' OR s.expires_at>s.created_at+interval '28800 seconds'\n      OR octet_length(s.session_token_digest)<>32 OR octet_length(s.csrf_token_digest)<>32\n      OR NOT EXISTS(SELECT 1 FROM public.admin_identities WHERE id=s.admin_identity_id AND status='ACTIVE') THEN\n      RAISE EXCEPTION 'login success requires canonical active MFA session' USING ERRCODE='23514';\n    END IF;\n  END IF;\n  RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "assert_admin_notification_resend",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_notification_resend()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE target uuid; dispatch public.admin_notification_resends%ROWTYPE; attempts bigint; last_outcome text;\nBEGIN\n target:=coalesce((to_jsonb(NEW)->>'resend_id')::uuid,(to_jsonb(NEW)->>'id')::uuid);\n SELECT * INTO dispatch FROM public.admin_notification_resends WHERE id=target;\n SELECT count(*) INTO attempts FROM public.admin_notification_resend_attempts WHERE resend_id=target;\n SELECT outcome INTO last_outcome FROM public.admin_notification_resend_attempts WHERE resend_id=target ORDER BY sequence DESC LIMIT 1;\n IF dispatch.id IS NULL OR NOT EXISTS(SELECT 1 FROM public.admin_notification_resend_outbox q WHERE q.resend_id=target AND q.created_at=dispatch.created_at)\n OR attempts<>dispatch.attempt_count\n OR (attempts>0 AND (SELECT max(sequence) FROM public.admin_notification_resend_attempts WHERE resend_id=target)<>attempts)\n OR (dispatch.status='SENT' AND last_outcome IS DISTINCT FROM 'SUCCEEDED')\n OR (dispatch.status IN('FAILED','RETRY_SCHEDULED') AND last_outcome IS DISTINCT FROM 'FAILED' AND last_outcome IS DISTINCT FROM 'UNKNOWN')\n OR (dispatch.link_token_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM public.order_access_tokens t WHERE t.id=dispatch.link_token_id AND t.order_id=dispatch.order_id AND t.purpose='LINK' AND t.token_pepper_version=dispatch.link_pepper_version))\n THEN RAISE EXCEPTION 'resend queue, link and attempts must agree' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND $function$"
+    },
+    {
+      "name": "assert_admin_order_access",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_order_access()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE a public.audit_logs%ROWTYPE; s public.admin_sessions%ROWTYPE;\nBEGIN\n SELECT * INTO a FROM public.audit_logs WHERE id=NEW.audit_log_id;\n SELECT * INTO s FROM public.admin_sessions WHERE id=NEW.session_id;\n IF a.actor_type IS DISTINCT FROM 'ADMIN' OR a.actor_id IS DISTINCT FROM NEW.actor_id OR a.subject_type IS DISTINCT FROM 'ORDER' OR a.subject_id IS DISTINCT FROM NEW.order_id OR a.action IS DISTINCT FROM 'ORDER_PRIVATE_READ' OR a.field_category IS DISTINCT FROM 'ORDER_PRIVATE' OR a.outcome IS DISTINCT FROM 'SUCCEEDED' OR a.created_at IS DISTINCT FROM NEW.created_at OR a.request_id IS DISTINCT FROM NEW.request_id OR a.correlation_id IS DISTINCT FROM NEW.correlation_id OR s.admin_identity_id IS DISTINCT FROM NEW.actor_id THEN RAISE EXCEPTION 'private order read requires exact session and audit' USING ERRCODE='23514'; END IF;\n IF NEW.kind='MESSAGE' AND NOT EXISTS(SELECT 1 FROM public.order_items i JOIN public.support_intents intent ON intent.id=i.support_intent_id WHERE i.id=NEW.item_id AND i.order_id=NEW.order_id AND intent.id=NEW.support_intent_id AND intent.version=NEW.intent_version AND intent.privacy_state='ACTIVE' AND public.cart_private_material_hash(intent.fan_message_ciphertext,intent.display_mode,intent.display_name_ciphertext,intent.encrypted_data_key,intent.encryption_key_version,intent.fan_message_locale)=NEW.material_hash) THEN RAISE EXCEPTION 'private access must bind exact active content' USING ERRCODE='23514'; END IF;\n IF NEW.kind='NOTES' AND EXISTS(SELECT 1 FROM unnest(NEW.note_ids) id WHERE NOT EXISTS(SELECT 1 FROM public.admin_order_notes n WHERE n.id=id AND n.order_id=NEW.order_id)) THEN RAISE EXCEPTION 'note access must bind exact order membership' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_order_confirmation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_order_confirmation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM public.admin_order_private_accesses a JOIN public.admin_sessions s ON s.id=a.session_id JOIN public.admin_identities i ON i.id=a.actor_id WHERE a.id=NEW.access_id AND a.created_at<=NEW.confirmed_at AND a.expires_at>NEW.confirmed_at AND NEW.confirmed_at<=clock_timestamp() AND s.admin_identity_id=a.actor_id AND s.revoked_at IS NULL AND s.expires_at>NEW.confirmed_at AND i.status='ACTIVE') THEN RAISE EXCEPTION 'private confirmation requires live same-session access' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_order_fulfillment",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_order_fulfillment()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE e public.fulfillment_events%ROWTYPE; target text;\nBEGIN\n SELECT * INTO e FROM public.fulfillment_events WHERE id=NEW.fulfillment_event_id;\n target:=CASE NEW.action WHEN 'PREPARE' THEN 'PREPARING' WHEN 'DELIVER' THEN 'DELIVERED' WHEN 'HOLD' THEN 'ON_HOLD' ELSE e.to_status END;\n IF e.order_id IS DISTINCT FROM NEW.order_id OR e.fulfillment_id IS DISTINCT FROM NEW.fulfillment_id OR e.sequence IS DISTINCT FROM NEW.expected_fulfillment_version+1 OR e.authority_kind IS DISTINCT FROM 'ADMIN' OR e.admin_identity_id IS DISTINCT FROM NEW.actor_id OR e.audit_log_id IS DISTINCT FROM NEW.audit_log_id OR e.reason_code IS DISTINCT FROM NEW.reason_code OR e.occurred_at IS DISTINCT FROM NEW.created_at OR e.to_status IS DISTINCT FROM target THEN RAISE EXCEPTION 'order fulfillment receipt must bind exact event' USING ERRCODE='23514'; END IF;\n IF NEW.action='RESUME' AND NOT EXISTS(SELECT 1 FROM public.fulfillment_events previous JOIN public.admin_order_fulfillment_receipts receipt ON receipt.fulfillment_event_id=previous.id WHERE previous.fulfillment_id=e.fulfillment_id AND previous.sequence=e.sequence-1 AND previous.to_status='ON_HOLD' AND previous.from_status=e.to_status AND receipt.action='HOLD') THEN RAISE EXCEPTION 'only an owned manager hold may resume' USING ERRCODE='23514'; END IF;\n IF NOT EXISTS(SELECT 1 FROM public.outbox_events x WHERE x.id=NEW.outbox_event_id AND x.event_type='FULFILLMENT_STATUS_CHANGED' AND x.aggregate_id=e.fulfillment_id AND x.aggregate_version=e.sequence AND x.secondary_subject_id=e.order_id AND x.primary_subject_id=e.fulfillment_id AND x.payload_status=e.to_status AND x.request_id=e.request_id AND x.correlation_id=e.correlation_id AND x.occurred_at=e.occurred_at) THEN RAISE EXCEPTION 'fulfillment requires exact transactional outbox' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_order_note",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_order_note()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM public.audit_logs a WHERE a.id=NEW.audit_log_id AND a.actor_type='ADMIN' AND a.actor_id=NEW.actor_id\n  AND a.action='ORDER_NOTE_ADDED' AND a.subject_type='ORDER' AND a.subject_id=NEW.order_id AND a.field_category='ORDER_PRIVATE'\n  AND a.outcome='SUCCEEDED' AND a.reason_code IS NOT NULL AND a.request_id IS NOT NULL AND a.correlation_id IS NOT NULL AND a.created_at=NEW.created_at)\n OR NOT EXISTS(SELECT 1 FROM public.admin_order_operation_receipts r WHERE r.action='ADD_NOTE' AND r.result_id=NEW.id AND r.audit_log_id=NEW.audit_log_id) THEN\n  RAISE EXCEPTION 'private note requires exact audit and operation receipt' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_order_operation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_order_operation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE a public.audit_logs%ROWTYPE;\nBEGIN\n SELECT * INTO a FROM public.audit_logs WHERE id=NEW.audit_log_id;\n IF a.actor_type IS DISTINCT FROM 'ADMIN' OR a.actor_id IS DISTINCT FROM NEW.actor_id OR a.outcome IS DISTINCT FROM 'SUCCEEDED' OR a.created_at IS DISTINCT FROM NEW.created_at OR a.request_id IS DISTINCT FROM NEW.request_id OR a.correlation_id IS DISTINCT FROM NEW.correlation_id OR NOT EXISTS(SELECT 1 FROM public.admin_sessions WHERE id=NEW.session_id AND admin_identity_id=NEW.actor_id) THEN RAISE EXCEPTION 'order operation receipt requires exact authority' USING ERRCODE='23514'; END IF;\n IF NOT(CASE NEW.action WHEN 'ADD_NOTE' THEN EXISTS(SELECT 1 FROM public.admin_order_notes r WHERE r.id=NEW.result_id AND r.order_id=NEW.order_id AND r.actor_id=NEW.actor_id AND r.session_id=NEW.session_id AND r.audit_log_id=NEW.audit_log_id AND r.created_at=NEW.created_at)\n WHEN 'REVIEW_MESSAGE' THEN EXISTS(SELECT 1 FROM public.admin_order_message_reviews r WHERE r.id=NEW.result_id AND r.order_id=NEW.order_id AND r.actor_id=NEW.actor_id AND r.session_id=NEW.session_id AND r.audit_log_id=NEW.audit_log_id AND r.created_at=NEW.created_at)\n ELSE EXISTS(SELECT 1 FROM public.admin_order_fulfillment_receipts r WHERE r.id=NEW.result_id AND r.order_id=NEW.order_id AND r.actor_id=NEW.actor_id AND r.session_id=NEW.session_id AND r.action=NEW.action AND r.audit_log_id=NEW.audit_log_id AND r.created_at=NEW.created_at) END) THEN RAISE EXCEPTION 'order operation receipt result must be exact' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_order_receipt_authority",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_order_receipt_authority()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE required_permission text; intent public.support_intents%ROWTYPE; a public.admin_order_private_accesses%ROWTYPE;\nBEGIN\n required_permission:=CASE TG_TABLE_NAME WHEN 'admin_order_notes' THEN 'orders.note'\n WHEN 'admin_order_private_accesses' THEN CASE to_jsonb(NEW)->>'kind' WHEN 'MESSAGE' THEN 'orders.message.read' ELSE 'orders.note' END\n WHEN 'admin_order_message_reviews' THEN 'orders.message.review'\n WHEN 'admin_order_fulfillment_receipts' THEN CASE WHEN to_jsonb(NEW)->>'action' IN('HOLD','RESUME') THEN 'orders.manage' ELSE 'orders.fulfillment' END END;\n IF NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,'orders.read',NEW.created_at)\n OR NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,required_permission,NEW.created_at) THEN\n RAISE EXCEPTION 'order receipt requires current canonical session permission' USING ERRCODE='23514'; END IF;\n IF (TG_TABLE_NAME='admin_order_private_accesses' AND to_jsonb(NEW)->>'kind'='MESSAGE') OR TG_TABLE_NAME='admin_order_message_reviews' THEN\n  SELECT * INTO intent FROM public.support_intents WHERE id=NEW.support_intent_id;\n  IF NOT EXISTS(SELECT 1 FROM public.admin_order_message_locale_grants WHERE admin_identity_id=NEW.actor_id AND locale=NEW.review_locale AND revoked_at IS NULL AND granted_at<=NEW.created_at)\n   OR (intent.fan_message_locale<>NEW.review_locale AND NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,'orders.message.triage',NEW.created_at)) THEN\n   RAISE EXCEPTION 'order message requires explicit language and triage authority' USING ERRCODE='23514'; END IF;\n END IF;\n IF TG_TABLE_NAME='admin_order_private_accesses' THEN\n  IF NEW.expires_at>(SELECT expires_at FROM public.admin_sessions WHERE id=NEW.session_id) THEN\n   RAISE EXCEPTION 'private read may not outlive its session' USING ERRCODE='23514';\n  END IF;\n END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_order_review",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_order_review()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE intent public.support_intents%ROWTYPE; access public.admin_order_private_accesses%ROWTYPE; a public.audit_logs%ROWTYPE;\nBEGIN\n SELECT * INTO intent FROM public.support_intents WHERE id=NEW.support_intent_id;\n SELECT * INTO access FROM public.admin_order_private_accesses WHERE id=NEW.access_id;\n SELECT * INTO a FROM public.audit_logs WHERE id=NEW.audit_log_id;\n IF intent.version IS DISTINCT FROM NEW.result_intent_version OR intent.moderation_status IS DISTINCT FROM NEW.decision OR intent.moderation_decision_kind IS DISTINCT FROM 'HUMAN' OR intent.moderation_reviewer_id IS DISTINCT FROM NEW.actor_id OR intent.reviewed_at IS DISTINCT FROM NEW.created_at OR intent.privacy_state IS DISTINCT FROM 'ACTIVE'\n OR access.kind IS DISTINCT FROM 'MESSAGE' OR access.actor_id IS DISTINCT FROM NEW.actor_id OR access.session_id IS DISTINCT FROM NEW.session_id OR access.order_id IS DISTINCT FROM NEW.order_id OR access.item_id IS DISTINCT FROM NEW.item_id OR access.support_intent_id IS DISTINCT FROM NEW.support_intent_id OR access.intent_version IS DISTINCT FROM NEW.expected_intent_version OR access.review_locale IS DISTINCT FROM NEW.review_locale OR access.expires_at<=clock_timestamp() OR NOT EXISTS(SELECT 1 FROM public.admin_order_private_confirmations WHERE access_id=access.id)\n OR NOT EXISTS(SELECT 1 FROM public.admin_order_message_locale_grants WHERE admin_identity_id=NEW.actor_id AND locale=NEW.review_locale AND revoked_at IS NULL AND granted_at<=clock_timestamp())\n OR a.actor_type IS DISTINCT FROM 'ADMIN' OR a.actor_id IS DISTINCT FROM NEW.actor_id OR a.action IS DISTINCT FROM 'ORDER_MESSAGE_REVIEWED' OR a.subject_type IS DISTINCT FROM 'SUPPORT_INTENT' OR a.subject_id IS DISTINCT FROM NEW.support_intent_id OR a.reason_code IS DISTINCT FROM NEW.reason_code OR a.outcome IS DISTINCT FROM 'SUCCEEDED' OR a.created_at IS DISTINCT FROM NEW.created_at THEN RAISE EXCEPTION 'review requires exact private access, language, mutation and audit' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
     },
     {
       "name": "assert_base_content_preview_grant_audit",
@@ -59451,6 +63567,36 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_login_challenge()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP='INSERT' THEN\n    IF NEW.state<>'READY' OR NEW.created_at<transaction_timestamp() OR NEW.created_at>clock_timestamp() THEN\n      RAISE EXCEPTION 'login challenge must start ready at database time' USING ERRCODE='23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF (to_jsonb(NEW)-'state'-'claim_digest'-'claimed_at'-'completed_at'-'session_id'-'audit_log_id') IS DISTINCT FROM\n     (to_jsonb(OLD)-'state'-'claim_digest'-'claimed_at'-'completed_at'-'session_id'-'audit_log_id') THEN\n    RAISE EXCEPTION 'login challenge binding is immutable' USING ERRCODE='55000';\n  END IF;\n  IF OLD.state='READY' AND NEW.state='CLAIMED' THEN\n    IF NEW.claimed_at<transaction_timestamp() OR NEW.claimed_at>clock_timestamp() OR NEW.claimed_at>=NEW.expires_at OR clock_timestamp()>=NEW.expires_at THEN\n      RAISE EXCEPTION 'login claim requires fresh database time' USING ERRCODE='23514';\n    END IF;\n  ELSIF OLD.state='CLAIMED' AND NEW.state='CONSUMED' THEN\n    IF NEW.claim_digest IS DISTINCT FROM OLD.claim_digest OR NEW.claimed_at<>OLD.claimed_at\n      OR NEW.completed_at<transaction_timestamp() OR NEW.completed_at>clock_timestamp() THEN\n      RAISE EXCEPTION 'login completion must preserve claim and database time' USING ERRCODE='23514';\n    END IF;\n  ELSE\n    RAISE EXCEPTION 'login challenge is single use' USING ERRCODE='55000';\n  END IF;\n  RETURN NEW;\nEND $function$"
     },
     {
+      "name": "guard_admin_notification_contact_access",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_notification_contact_access()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM public.admin_notification_resends r JOIN public.customer_contacts c ON c.id=r.customer_contact_id JOIN public.audit_logs a ON a.id=NEW.audit_log_id\n  WHERE r.id=NEW.resend_id AND r.status='PROCESSING' AND r.lease_token=NEW.lease_token AND r.generation=NEW.generation AND r.lease_expires_at>clock_timestamp()\n  AND c.id=NEW.customer_contact_id AND c.retention_status='ACTIVE' AND c.email_lookup_hmac=r.contact_lookup_hmac AND c.lookup_key_version=r.contact_lookup_key_version\n  AND a.actor_type='WORKER' AND a.task_name='admin-order-resend' AND a.action='AUTHORIZE_NOTIFICATION_CONTACT_READ' AND a.subject_type='CUSTOMER_CONTACT'\n  AND a.subject_id=c.id AND a.field_category='CUSTOMER_CONTACT_EMAIL' AND a.outcome='SUCCEEDED' AND a.request_id=r.request_id AND a.correlation_id=r.correlation_id AND a.created_at=NEW.created_at)\n THEN RAISE EXCEPTION 'resend contact read requires scoped lease and audit' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_admin_notification_resend",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_notification_resend()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF TG_OP='INSERT' THEN\n  IF NEW.status<>'REQUESTED' OR NEW.version<>1 OR NEW.attempt_count<>0 OR NEW.generation<>0 OR NEW.link_token_id IS NOT NULL OR NEW.content_hash IS NOT NULL THEN\n   RAISE EXCEPTION 'resend must start as a fresh dispatch' USING ERRCODE='23514'; END IF;\n  IF NOT EXISTS(SELECT 1 FROM public.notification_deliveries d JOIN public.notification_runtime_state r ON r.notification_delivery_id=d.id\n    JOIN public.orders o ON o.id=d.order_id JOIN public.admin_sessions s ON s.id=NEW.session_id\n    JOIN public.admin_identities actor ON actor.id=s.admin_identity_id\n    JOIN public.audit_logs a ON a.id=NEW.audit_log_id\n    WHERE d.id=NEW.base_notification_id AND d.order_id=NEW.order_id AND d.customer_contact_id=NEW.customer_contact_id\n    AND d.status IN('SENT','FAILED','CANCELED') AND NEW.event_type=public.admin_notification_current_event(o.id)\n    AND o.version=NEW.order_version AND NEW.event_type=d.event_type AND NEW.event_rank=r.event_rank\n    AND NEW.source_outbox_event_id=r.source_outbox_event_id AND NEW.base_variables=r.base_variables\n    AND (NEW.requested_locale,NEW.resolved_locale,NEW.fallback_used,NEW.template_key,NEW.template_version)\n      =(d.requested_locale,d.resolved_locale,d.fallback_used,d.template_key,d.template_version)\n    AND NEW.public_storefront_origin=r.public_storefront_origin AND NEW.transport_key=r.transport_key\n    AND NEW.contact_lookup_hmac=r.contact_lookup_hmac AND NEW.contact_lookup_key_version=r.contact_lookup_key_version\n    AND NEW.link_pepper_version=r.link_pepper_version AND NEW.link_ttl_seconds=r.link_ttl_seconds\n    AND NEW.fallback_reason_code IS NOT DISTINCT FROM r.fallback_reason_code\n    AND NEW.dedupe_until-NEW.created_at=r.dedupe_until-r.created_at\n    AND NEW.link_nonce<>r.link_nonce AND NEW.idempotency_key<>d.idempotency_key\n    AND s.admin_identity_id=NEW.actor_id AND actor.status='ACTIVE' AND s.revoked_at IS NULL\n    AND s.authenticated_with_mfa AND s.expires_at>clock_timestamp() AND s.created_at<=clock_timestamp()\n    AND a.actor_type='ADMIN' AND a.actor_id=NEW.actor_id AND a.action='RESEND_ORDER_NOTIFICATION' AND a.subject_type='ORDER'\n    AND a.subject_id=NEW.order_id AND a.reason_code=NEW.reason_code AND a.outcome='SUCCEEDED'\n    AND a.request_id=NEW.request_id AND a.correlation_id=NEW.correlation_id AND a.created_at=NEW.created_at\n    AND (SELECT count(DISTINCT p.permission_key) FROM public.admin_identity_roles ar JOIN public.role_permissions rp ON rp.role_id=ar.role_id JOIN public.permissions p ON p.id=rp.permission_id WHERE ar.admin_identity_id=NEW.actor_id AND ar.granted_at<=clock_timestamp() AND rp.granted_at<=clock_timestamp() AND p.permission_key IN('orders.read','orders.notification.resend'))=2\n    AND EXISTS(SELECT 1 FROM public.notification_source_authority(r.source_outbox_event_id) authority WHERE authority.order_id=o.id AND authority.event_type=NEW.event_type)\n  ) THEN RAISE EXCEPTION 'resend requires current order, canonical snapshot and authorized audit' USING ERRCODE='23514'; END IF;\n  IF NEW.resend_sequence<>(SELECT coalesce(max(resend_sequence),0)+1 FROM public.admin_notification_resends WHERE order_id=NEW.order_id)\n    OR EXISTS(SELECT 1 FROM public.notification_deliveries WHERE order_id=NEW.order_id AND status IN('REQUESTED','PROCESSING','RETRY_SCHEDULED'))\n    OR EXISTS(SELECT 1 FROM public.admin_notification_resends WHERE order_id=NEW.order_id AND created_at>NEW.created_at-interval '60 seconds')\n    OR EXISTS(SELECT 1 FROM public.notification_delivery_attempts a JOIN public.notification_deliveries d ON d.id=a.notification_delivery_id WHERE d.order_id=NEW.order_id AND d.status<>'SENT' AND a.outcome='UNKNOWN')\n    OR EXISTS(SELECT 1 FROM public.admin_notification_resend_attempts a JOIN public.admin_notification_resends d ON d.id=a.resend_id WHERE d.order_id=NEW.order_id AND d.status<>'SENT' AND a.outcome='UNKNOWN')\n  THEN RAISE EXCEPTION 'resend cannot bypass pending, unknown or throttled dispatch' USING ERRCODE='23514'; END IF;\n  RETURN NEW;\n END IF;\n IF NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at OR OLD.status IN('SENT','FAILED','CANCELED')\n OR (to_jsonb(NEW)-ARRAY['status','attempt_count','next_attempt_at','sent_at','last_error_code','lease_token','lease_expires_at','lease_started_at','generation','version','updated_at','link_token_id','content_hash'])\n  IS DISTINCT FROM (to_jsonb(OLD)-ARRAY['status','attempt_count','next_attempt_at','sent_at','last_error_code','lease_token','lease_expires_at','lease_started_at','generation','version','updated_at','link_token_id','content_hash'])\n OR (OLD.link_token_id IS NOT NULL AND NEW.link_token_id IS DISTINCT FROM OLD.link_token_id)\n OR (OLD.content_hash IS NOT NULL AND NEW.content_hash IS DISTINCT FROM OLD.content_hash)\n THEN RAISE EXCEPTION 'resend snapshot and terminal history are immutable' USING ERRCODE='55000'; END IF;\n IF OLD.status IN('REQUESTED','RETRY_SCHEDULED') AND NEW.status='PROCESSING' THEN\n  IF NEW.generation<>OLD.generation+1 OR NEW.attempt_count<>OLD.attempt_count THEN RAISE EXCEPTION 'resend lease must fence claims' USING ERRCODE='23514'; END IF;\n ELSIF OLD.status='PROCESSING' AND NEW.status IN('SENT','FAILED','RETRY_SCHEDULED') THEN\n  IF NEW.attempt_count<>OLD.attempt_count+1 OR NEW.generation<>OLD.generation THEN RAISE EXCEPTION 'resend completion requires one attempt' USING ERRCODE='23514'; END IF;\n ELSIF OLD.status='PROCESSING' AND NEW.status='PROCESSING' THEN\n  IF (NEW.lease_token,NEW.generation,NEW.attempt_count,NEW.lease_started_at,NEW.lease_expires_at) IS DISTINCT FROM (OLD.lease_token,OLD.generation,OLD.attempt_count,OLD.lease_started_at,OLD.lease_expires_at) THEN RAISE EXCEPTION 'resend metadata cannot replace lease' USING ERRCODE='23514'; END IF;\n ELSIF OLD.status IN('REQUESTED','RETRY_SCHEDULED') AND NEW.status='CANCELED' THEN\n  IF NEW.attempt_count<>OLD.attempt_count OR NEW.generation<>OLD.generation THEN RAISE EXCEPTION 'resend cancellation cannot rewrite attempts' USING ERRCODE='23514'; END IF;\n ELSE RAISE EXCEPTION 'invalid resend transition' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_admin_order_message_locale",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_order_message_locale()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE a public.audit_logs%ROWTYPE;\nBEGIN\n IF TG_OP='INSERT' THEN\n  IF NEW.revoked_at IS NOT NULL OR NEW.granted_at>clock_timestamp() THEN RAISE EXCEPTION 'invalid initial order language grant' USING ERRCODE='23514'; END IF;\n  SELECT * INTO a FROM public.audit_logs WHERE id=NEW.audit_log_id;\n  IF a.action IS DISTINCT FROM 'ORDER_MESSAGE_LOCALE_GRANT' OR a.actor_id IS DISTINCT FROM NEW.granted_by OR a.created_at IS DISTINCT FROM NEW.granted_at THEN RAISE EXCEPTION 'order language grant requires exact audit' USING ERRCODE='23514'; END IF;\n ELSE\n  IF to_jsonb(NEW)-ARRAY['revoked_at','revoked_audit_log_id'] IS DISTINCT FROM to_jsonb(OLD)-ARRAY['revoked_at','revoked_audit_log_id'] OR OLD.revoked_at IS NOT NULL OR NEW.revoked_at IS NULL OR NEW.revoked_at>clock_timestamp() THEN RAISE EXCEPTION 'order language grant only permits one-way revocation' USING ERRCODE='55000'; END IF;\n  SELECT * INTO a FROM public.audit_logs WHERE id=NEW.revoked_audit_log_id;\n  IF a.action IS DISTINCT FROM 'ORDER_MESSAGE_LOCALE_REVOKE' OR a.created_at IS DISTINCT FROM NEW.revoked_at THEN RAISE EXCEPTION 'order language revocation requires exact audit' USING ERRCODE='23514'; END IF;\n END IF;\n IF a.actor_type IS DISTINCT FROM 'ADMIN' OR a.subject_type IS DISTINCT FROM 'ADMIN_ORDER_MESSAGE_LOCALE_GRANT' OR a.subject_id IS DISTINCT FROM NEW.admin_identity_id OR a.outcome IS DISTINCT FROM 'SUCCEEDED' OR a.reason_code IS NULL OR a.request_id IS NULL OR a.correlation_id IS NULL OR a.field_category IS DISTINCT FROM 'SUPPORT_INTENT_PRIVATE' OR NOT EXISTS(SELECT 1 FROM public.admin_identities WHERE id=a.actor_id AND status='ACTIVE') THEN RAISE EXCEPTION 'order language audit authority invalid' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND; $function$"
+    },
+    {
       "name": "guard_append_only",
       "identityArguments": "",
       "resultType": "trigger",
@@ -60169,6 +64315,26 @@
       "volatility": "IMMUTABLE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.publication_utc(value timestamp with time zone)\n RETURNS text\n LANGUAGE sql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$ SELECT to_char(value AT TIME ZONE 'UTC','YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"') $function$"
+    },
+    {
+      "name": "require_admin_order_fulfillment_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.require_admin_order_fulfillment_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NEW.authority_kind='ADMIN' AND NOT EXISTS(SELECT 1 FROM public.admin_order_fulfillment_receipts r WHERE r.fulfillment_event_id=NEW.id AND r.fulfillment_id=NEW.fulfillment_id AND r.order_id=NEW.order_id AND r.actor_id=NEW.admin_identity_id AND r.audit_log_id=NEW.audit_log_id) THEN\n  RAISE EXCEPTION 'admin fulfillment requires an exact operation receipt' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "require_admin_order_human_review",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.require_admin_order_human_review()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NEW.status='CONVERTED' AND NEW.moderation_decision_kind='HUMAN'\n AND ROW(NEW.moderation_status,NEW.moderation_reason_code,NEW.moderation_decision_kind,NEW.moderation_reviewer_id,NEW.reviewed_at)\n IS DISTINCT FROM ROW(OLD.moderation_status,OLD.moderation_reason_code,OLD.moderation_decision_kind,OLD.moderation_reviewer_id,OLD.reviewed_at)\n AND NOT EXISTS(SELECT 1 FROM public.admin_order_message_reviews r WHERE r.support_intent_id=NEW.id AND r.expected_intent_version=OLD.version AND r.result_intent_version=NEW.version AND r.actor_id=NEW.moderation_reviewer_id AND r.decision=NEW.moderation_status AND r.created_at=NEW.reviewed_at) THEN\n  RAISE EXCEPTION 'converted human moderation requires an exact audited review receipt' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
     },
     {
       "name": "validate_cart_item_commerce_context",

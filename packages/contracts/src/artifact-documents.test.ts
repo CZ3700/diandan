@@ -305,6 +305,18 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/management/operations/retry",
     "/api/v1/admin/management/submit",
     "/api/v1/admin/management/uploads/prepare",
+    "/api/v1/admin/orders/context",
+    "/api/v1/admin/orders/deliver",
+    "/api/v1/admin/orders/detail",
+    "/api/v1/admin/orders/hold",
+    "/api/v1/admin/orders/list",
+    "/api/v1/admin/orders/message/read",
+    "/api/v1/admin/orders/message/review",
+    "/api/v1/admin/orders/note/add",
+    "/api/v1/admin/orders/notes/read",
+    "/api/v1/admin/orders/notification/resend",
+    "/api/v1/admin/orders/prepare",
+    "/api/v1/admin/orders/resume",
     "/api/v1/admin/resources/media/read",
     "/api/v1/admin/resources/media/rights",
     "/api/v1/admin/resources/policies/read",
@@ -504,6 +516,14 @@ test("marks every registered top-level contract with an explicit version policy"
     "$defs"
   ] as JsonObject;
   const unversionedValueObjects = new Set([
+    "AdminOrdersPermission",
+    "AdminOrdersListItem",
+    "AdminOrdersLine",
+    "AdminOrdersNoteMetadata",
+    "AdminOrdersNotification",
+    "AdminOrdersPrincipal",
+    "AdminOrdersNoteEnvelope",
+
     "OrderNotificationUrl",
     "CheckoutPolicyAcceptance",
     "CheckoutEncryptedContact",

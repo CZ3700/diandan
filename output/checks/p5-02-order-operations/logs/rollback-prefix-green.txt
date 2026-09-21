@@ -1,0 +1,36 @@
+✔ empty known head 0029 uses the ordinary exact-version down sequence (0.85225ms)
+✔ empty known head 0030 uses the ordinary exact-version down sequence (0.118833ms)
+✔ empty known head 0031 uses the ordinary exact-version down sequence (0.095833ms)
+✔ empty known head 0032 uses the ordinary exact-version down sequence (0.093542ms)
+✔ retained notifications rejects before any migration is attempted (0.688125ms)
+✔ retained contact_accesses rejects before any migration is attempted (0.150417ms)
+✔ retained bootstraps rejects before any migration is attempted (0.119875ms)
+✔ retained expiries rejects before any migration is attempted (0.147958ms)
+✔ retained login_challenges rejects before any migration is attempted (0.216625ms)
+✔ retained access_audits rejects before any migration is attempted (0.16ms)
+✔ retained order_notes rejects before any migration is attempted (0.109ms)
+✔ retained private_accesses rejects before any migration is attempted (0.107334ms)
+✔ retained private_confirmations rejects before any migration is attempted (0.091416ms)
+✔ retained message_reviews rejects before any migration is attempted (0.091875ms)
+✔ retained operation_receipts rejects before any migration is attempted (0.087291ms)
+✔ retained fulfillment_receipts rejects before any migration is attempted (0.080791ms)
+✔ retained review_locale_grants rejects before any migration is attempted (0.08075ms)
+✔ retained order_audits rejects before any migration is attempted (0.071459ms)
+✔ retained resends rejects before any migration is attempted (0.072709ms)
+✔ retained resend_outbox rejects before any migration is attempted (0.077125ms)
+✔ retained resend_attempts rejects before any migration is attempted (0.081209ms)
+✔ retained resend_contact_accesses rejects before any migration is attempted (0.0695ms)
+✔ retained resend_audits rejects before any migration is attempted (0.06575ms)
+✔ retained resend_link_audits rejects before any migration is attempted (0.068542ms)
+✔ unknown head null is not silently rewound (0.084875ms)
+✔ unknown head 0028 is not silently rewound (0.060917ms)
+✔ unknown head 0033 is not silently rewound (0.033083ms)
+✔ real PostgreSQL preserves login and audit history and rewinds only empty known prefixes (1534.848208ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1833.938458

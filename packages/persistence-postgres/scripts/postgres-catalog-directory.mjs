@@ -84,6 +84,11 @@ async function verify(clientConfig) {
       workspaceRoot,
       command: { direction: "up" },
     });
+    const originalMigrationHead = (
+      await observer.query(
+        "SELECT count(*)::integer AS count, max(version) AS version FROM public.schema_migrations",
+      )
+    ).rows[0];
     diagnosticStep = "published price immutability";
     for (const assignment of [
       "amount_minor = amount_minor + 1",
@@ -643,9 +648,9 @@ async function verify(clientConfig) {
       "SELECT count(*)::integer AS count, max(version) AS version FROM public.schema_migrations",
     );
     check(
-      migrationHead.rows[0].count === 29 &&
-        migrationHead.rows[0].version === "0029",
-      "data-bearing up/down/up restores all 29 migrations through notifications",
+      migrationHead.rows[0].count === originalMigrationHead.count &&
+        migrationHead.rows[0].version === originalMigrationHead.version,
+      "data-bearing up/down/up restores the exact original migration head and count",
     );
     check(
       (await idols()).code === "CATALOG_UNAVAILABLE",

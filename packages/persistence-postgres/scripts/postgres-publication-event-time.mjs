@@ -114,7 +114,7 @@ await withEphemeralPostgres(async (config) => {
       persistence,
       fixtures,
     });
-    await runMigrations({
+    const currentMigration = await runMigrations({
       clientConfig: config,
       workspaceRoot,
       command: { direction: "up" },
@@ -124,6 +124,7 @@ await withEphemeralPostgres(async (config) => {
       clientConfig: config,
       credentials,
       fixtureCase: validationCase,
+      expectedMigrationVersion: currentMigration.currentVersion,
       check: equal,
     });
     const target = {

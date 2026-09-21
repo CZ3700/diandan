@@ -1,0 +1,27 @@
+{
+  "startedAt": "2026-09-21T11:20:41.266Z",
+  "updatedAt": "2026-09-21T11:23:43.373Z",
+  "status": "FAIL",
+  "results": [
+    {
+      "command": "node ./scripts/postgres-catalog-directory.mjs",
+      "exitCode": 0,
+      "elapsedMs": 23017
+    },
+    {
+      "command": "node ./scripts/postgres-media-processing.mjs",
+      "exitCode": 0,
+      "elapsedMs": 152956
+    },
+    {
+      "command": "node ./scripts/postgres-content-drafts.mjs",
+      "exitCode": 0,
+      "elapsedMs": 4384
+    },
+    {
+      "command": "node ./scripts/postgres-content-draft-repositories.mjs",
+      "exitCode": 1,
+      "elapsedMs": 1763
+    }
+  ]
+}

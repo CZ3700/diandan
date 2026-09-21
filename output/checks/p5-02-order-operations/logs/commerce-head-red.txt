@@ -1,0 +1,10 @@
+file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161
+        throw new EphemeralPostgresError("ephemeral PostgreSQL operation failed");
+              ^
+
+EphemeralPostgresError: ephemeral PostgreSQL operation failed
+    at withEphemeralPostgres (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/[eval1]:8:1
+
+Node.js v24.20.0

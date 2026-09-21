@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "checks": 6085,
+  "stage": "actual fixed deadline releases a later state without replaying an unknown dispatch",
+  "result": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "actualPostgres": true,
+    "actualTlsReceiver": true,
+    "actualSignedPayment": true,
+    "receiverRestart": true,
+    "freshTokenExchange": true,
+    "originalSessionRetainedUntilNewTokenExchange": true,
+    "actualWorkerComposition": true,
+    "actualPgBoss": true,
+    "actualUnknownCutoffSeconds": 60,
+    "transactionRollback": true,
+    "scope": "Synthetic local data and local TEST receiver; no production email or physical delivery"
+  },
+  "sourceUnchanged": true,
+  "fingerprintScope": "Selected manual and automatic notification sources, built runtime and local test scripts; whole-repository candidate provenance is separate.",
+  "completedAt": "2026-09-21T10:57:09.888Z"
+}

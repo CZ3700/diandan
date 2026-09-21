@@ -1,3 +1,10 @@
+import { createAdminOrdersRepository } from "./admin-orders-repository.js";
+import { createAdminOrderResendRepository } from "./admin-notification-resend-repository.js";
+import { createAdminOrderResendNotificationRepository } from "./admin-notification-resend-worker.js";
+import type {
+  AdminOrdersRepositories,
+  AdminOrdersTransactionManager,
+} from "@fan-support/persistence-port";
 import { createAdminAccessRepository } from "./admin-access-repository.js";
 import type {
   AdminAccessRepositories,
@@ -175,6 +182,8 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly adminOrdersTransactionManager: AdminOrdersTransactionManager;
+  readonly adminOrderResendNotificationTransactionManager: NotificationTransactionManager;
   readonly adminAccessTransactionManager: AdminAccessTransactionManager;
   readonly notificationTransactionManager: NotificationTransactionManager;
   readonly commerceExpiryTransactionManager: CommerceExpiryTransactionManager;
@@ -335,6 +344,21 @@ export function createPostgresPersistenceWithPoolFactory(
       };
     },
   });
+  const adminOrdersRunner = createTransactionRunner<AdminOrdersRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      adminOrders: createAdminOrdersRepository(client, scope, {
+        publicMediaBaseUrl: options?.catalogPublicMediaBaseUrl ?? "",
+      }),
+      adminOrderResends: createAdminOrderResendRepository(client, scope),
+    }),
+  });
+  const adminOrderResendRunner =
+    createTransactionRunner<NotificationRepository>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) =>
+        createAdminOrderResendNotificationRepository(client, scope),
+    });
   const notificationRunner = createTransactionRunner<NotificationRepository>({
     acquireClient: async () => pool.connect(),
     createRepositories: (client, scope) =>
@@ -1100,6 +1124,35 @@ export function createPostgresPersistenceWithPoolFactory(
           });
         return publishedContentRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    adminOrdersTransactionManager: {
+      async runInAdminOrdersTransaction(work) {
+        if (
+          lifecycle !== "OPEN" ||
+          options?.catalogPublicMediaBaseUrl === undefined
+        )
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminOrdersRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    adminOrderResendNotificationTransactionManager: {
+      async runInNotificationTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminOrderResendRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );
       },

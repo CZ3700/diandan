@@ -13,7 +13,7 @@
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
 | P5-01 | DONE | Codex `/root`（Lane C 已释放） | P0-04、P1-04 | 本地 OIDC/七语 UI/真实 PG/原管理回归与最终复核通过；见下方验收 |
-| P5-02 | READY | — | P5-01、P4-05/06 | Orders/七语言及低置信度 message moderation/fulfillment/notifications |
+| P5-02 | DONE | Codex `/root`（Lane C 已释放） | P5-01、P4-05/06 | 本地订单/七语人工审核/准备送达/加密备注/可靠通知重发完整验收；见下方 |
 | P5-03 | PENDING | — | P5-01、P4-04/05 | Refund/cancel/dispute/reconcile |
 | P5-04 | PENDING | — | P1-03、P4-04 | Capability/routing/conformance |
 | P5-05 | PENDING | — | P5-01、P5-04 | 七语言 payment label/config publish/rollback |
@@ -63,3 +63,34 @@
 - 兼容保护：18 新 roots、606 旧 roots 与 OpenAPI 字节不变、58 旧 SQL/29 旧 manifest entries 不变；2,268 源输入 SHA `ca3403c0e8056211bdb202b24b752f4a689a05e0c92b83e485bfdd9e34c8fc98` 复查保持。原 4,633 未跟踪文件逐一重查不变。
 - 剩余门：生产 IdP/MFA/账号恢复/紧急访问与 UAT、真实商户、邮件供应商/人工译审、P3 性能和人工可访问性、云/staging/灰度仍待各自任务。LOCAL_OIDC 仅 development；首版 RS256 与无 query 回调。仅本地提交，不 push/merge/部署。
 - 运维入口 `docs/runbooks/admin-access-local.md`；下一任务只读交接 `output/checks/p5-01-admin-access/p5-02-handoff.md`。保持一个简单管理中心、四类礼物均由工作室转交艺人，订单备注/重发/强制变更需独立合同与最小权限，不复用内容发布授权。
+
+## P5-02 执行登记（2026-09-19）
+
+- Owner：Codex `/root`，Lane C 唯一 executor；开始 `2026-09-18T18:20:38.678610+00:00`；基线 `aa922bc`，分支 `codex/p5-02-order-operations`。P5-01/P4-05/P4-06 全 DONE；按用户确认的 ADR-015 领取本地 P5-02，其他任务不领取。
+- 范围：同一简单管理中心的订单列表/详情、按需私密留言读取与七语/未知/低置信度人工审核、准备与送达、追加内部备注和受审计的最新状态通知重发；权限来自平台数据库，所有写入有幂等、版本与审计。
+- 实施顺序：复核已有订单/履约/通知约束 → 先冻结独立兼容合同和失败测试 → 并行持久化、应用/接口与管理 UI → 真实 PostgreSQL/HTTP/worker/浏览器闭环 → 非作者复核与本地提交。root 统一共享合同、迁移序号与最后整合门。
+- 边界：历史订单快照保持；四类礼物仍由工作室转交艺人，礼物类型与库存策略独立；解密前审计、事务外 KMS、返回前重验权限。Manager 异常操作仅明确白名单，不跳过付款/审核/终态；人工重发不重置历史 SENT 或绕过原通知唯一性。
+- 验证：RED→GREEN 合同/应用/仓储测试、真实 PG 并发/双击/失权/过期/事务回滚、未知或低置信度语言不可自动批准、未审核不可履约、通知失败不回滚状态与重发幂等；format/lint/typecheck/build、七语 390×844/1440×900、键盘/错误/reduced-motion、2 分钟操作演练、隐私 canary 与 S.U.P.E.R 10 项。
+- 保护：初始 tracked tree clean；原 4824 个未跟踪文件 SHA 清单在 `output/checks/p5-02-order-operations/preexisting-untracked.json`。不改历史迁移/已冻结 schema roots，不 push/merge/部署/真实收款/真实邮件。P3 性能与人工、P4 商户、生产身份/邮件与正式 UAT 门保持。
+- 当前计数：28 DONE / 3 IN_PROGRESS / 18 PENDING = 49；局部检查点不得标 P5-02 DONE。
+
+### P5-02 本地候选进入复核（2026-09-21）
+
+- 12 个订单操作、同一管理中心七语 UI、独立权限、私密审核、逐件准备/送达、加密内部备注和独立通知重发已实现。root 继续占用 Lane C 至最后验收结束。
+- 非作者复核已修复授权与退出登录的反向锁，真实退出并发 6 项、订单 PostgreSQL 5960、重发 PostgreSQL/TLS/worker 6085、原自动通知 6814 检查通过。原管理中心回归 7377 检查通过（1513 浏览器 assertions、98 PNG/axe、0 违规，既有照片文字 1 项 incomplete 留给 P3 人工门）。
+- 保留并修复浏览器脚本 DNS/响应生命周期/搜索重试等待问题；最终浏览器与全仓质量门继续验证。额外原 PostgreSQL 全回归遇旧 0029 head 夹具断言，正在在保留空数据/审计拒退保护前提下补齐 0030–0032。所有原失败保留，不把局部通过视为 DONE。
+- 28 DONE / 2 IN_PROGRESS / 1 REVIEW / 18 PENDING = 49；未解锁其余 P5 或后继 Phase，仅本地开发。
+
+### P5-02 最终本地验收（2026-09-21）
+
+- 结论：本地范围 DONE；非作者复核 ACCEPT，S.U.P.E.R 1–10 PASS。Lane C 释放，29 DONE / 2 IN_PROGRESS / 18 PENDING = 49。ADR-015 白名单 P5-01→P5-02 已闭合，其余 P5、Phase 6/7 未解锁；不领取其他任务。
+- 交付：同一管理中心的 12 个订单操作、列表/搜索/筛选/分页、历史详情、按需私密读取与七语/未知语言人工审核、逐件准备/送达、加密内部备注、独立 outbox 通知重发。Manager 暂停/恢复需权限、原因、确认，不能绕过付款/库存/审核；按单准备与有限库存均验证。
+- 命令统一前缀 `mise exec node@24.20.0 --`，pnpm 11.25.0。受影响测试先 RED 后 GREEN；`node packages/persistence-postgres/scripts/admin-orders-integration.mjs` 5960 checks、`admin-notification-resend-integration.mjs` 6085 checks，均 sourceUnchanged=true；实际退出/订单并发 6 checks、8 条 SQL PREPARE 通过。
+- `node apps/api/scripts/admin-orders-http.mjs --ui` 第六轮 exit 0：7113 checks、419 浏览器 assertions/8 场景/32 PNG/32 axe，全部七语 390×844/1440×900、键盘/reduced-motion/错误重试/私密内容清理/审核/准备/送达/备注/重发/Manager 操作通过，零违规/incomplete/页面错误/观察失败。合成数据自动操作路径小于 120 秒，不冒充真人阅读或实体手机验收。
+- 原 `pnpm verify:management-center` exit 0：7377 checks、1513 browser assertions/98 PNG/axe、7 上传/10 操作/70 公开页面，零违规/页面或观察错误；原照片叠字 1 项 incomplete 保留 P3 人工门。原自动通知 6814、旧购物车 6030、编辑 5924、结账 7414、支付 runtime 6562、付款入账 6827 完整实际回归全部 exit 0。
+- 新 0031/0032 与 catalog：32 migrations / 186 tables 往返通过；原持久层整条回归在旧 0029 版本夹具失败，补丁只在严格无新数据/审计的已知前缀下使用原 down 保护。其余 20 条原脚本后缀全 exit 0，28 项新增保护 tests/独立复验通过；五个 commerce proof 实际 PG RED 后，五条完整 HTTP GREEN。保留旧失败与复跑记录，不宣称原单条整仓 `pnpm check` 全绿。
+- 最终 `pnpm check:dev` exit 0：format/lint、typecheck 63/63（59 cached）、test 63/63（60 cached）、build 36/36（34 cached）；这是任务图数量。合同新鲜度、adapter/artifact、frozen install、官方 registry high audit、最终秘密扫描和暂存差异检查通过。
+- 兼容/保护：旧 624 合同根、96 paths、180 OpenAPI schemas 结构一致；60 旧 SQL 字节与 30 旧 manifest entries 保持。2346 最终源输入 SHA `9e5a27e3a618bce062e10b645aecd822d855e5f461781422048ca3f5c9b057c1` 与文件集合保持；原 4824 未跟踪逐 SHA 不变且未暂存。
+- 修复及限制如实记录：SQL 参数域类型、浏览器 DNS/异步清理/分页与搜索等待、授权/退出反向锁、人工 UNKNOWN 与自动通知排序、旧测试版本假设。历史 UNKNOWN 持续禁止新的人工重发；截止后继续的是后续自动通知，人工调查/解除不在本阶段。Worker 每队列 limit、两队列共 2×limit。
+- 证据：`output/checks/p5-02-order-operations/final-verification.md`、`final-gates.json`、`reviews.md`、`failure-history.md`；可重复运维入口 `docs/runbooks/admin-order-operations.md`。原 `.log` 本地保留，Git 文本副本及 SHA 见 `logs/` / `log-transcripts.json`。
+- 剩余正式门：P3 性能/人工可访问性、真实商户/小额支付、正式 IdP/MFA/恢复、正式邮件/人工译审、实体手机、云/staging/灰度。不推送、不 merge、不部署、不真实收款或发信，仅本地提交。下一入口回到 P3-06 未完验收，P4-04 商户资料门继续保留。

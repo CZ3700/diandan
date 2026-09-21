@@ -256,6 +256,8 @@ export function createWorkerReliableEventsComposition(
   const transactionManager = persistence.reliableEventTransactionManager;
   const notifications = bindNotifications?.({
     notificationTransactionManager: persistence.notificationTransactionManager,
+    adminOrderResendNotificationTransactionManager:
+      persistence.adminOrderResendNotificationTransactionManager,
     ...(logger ? { logger } : {}),
   });
   const expiry = createCommerceExpiryUseCases({

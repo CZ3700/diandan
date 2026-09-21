@@ -1,0 +1,18 @@
+{
+  "stage": "cross-order same-key race returns one logical resend and one stable conflict",
+  "checks": 6031,
+  "name": "AssertionError",
+  "code": "ERR_ASSERTION",
+  "guard": null,
+  "constraint": null,
+  "frames": [
+    "/packages/persistence-postgres/scripts/admin-notification-resend-integration.mjs:54:12",
+    "/packages/persistence-postgres/scripts/admin-notification-resend-fixture.mjs:398:3",
+    "/packages/persistence-postgres/scripts/admin-notification-resend-integration.mjs:69:18",
+    "/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14",
+    "/apps/api/scripts/payment-runtime-runtime.mjs:29:12",
+    "/packages/persistence-postgres/scripts/admin-notification-resend-integration.mjs:61:5",
+    "/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:155:16",
+    "/packages/persistence-postgres/scripts/admin-notification-resend-integration.mjs:102:5"
+  ]
+}

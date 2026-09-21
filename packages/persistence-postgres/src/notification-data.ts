@@ -95,8 +95,24 @@ export async function hasLaterNotification(
 ) {
   const [value] = await draftRows(
     client,
-    `SELECT EXISTS(SELECT 1 FROM public.notification_deliveries d JOIN public.notification_runtime_state r ON r.notification_delivery_id=d.id WHERE d.order_id=$1::uuid AND r.event_rank>$2::integer AND (d.status='SENT' OR r.link_token_id IS NOT NULL)) blocked`,
+    `SELECT EXISTS(SELECT 1 FROM public.notification_deliveries d JOIN public.notification_runtime_state r ON r.notification_delivery_id=d.id WHERE d.order_id=$1::uuid AND r.event_rank>$2::integer AND (d.status='SENT' OR r.link_token_id IS NOT NULL))
+      OR EXISTS(SELECT 1 FROM public.admin_notification_resends r WHERE r.order_id=$1::uuid AND r.event_rank>=$2::integer AND (r.status='SENT' OR r.link_token_id IS NOT NULL)) blocked`,
     [row["order_id"], row["event_rank"]],
   );
   return value?.["blocked"] === true;
+}
+
+/** A pending or still-acceptable UNKNOWN send must not arrive after a later stage. */
+export async function hasPendingAdminNotificationResend(
+  client: TransactionClient,
+  orderId: unknown,
+) {
+  const [row] = await draftRows(
+    client,
+    `SELECT EXISTS(SELECT 1 FROM public.admin_notification_resends manual WHERE manual.order_id=$1::uuid AND
+      (manual.status IN('REQUESTED','PROCESSING','RETRY_SCHEDULED') OR
+       (manual.status<>'SENT' AND manual.dedupe_until>clock_timestamp() AND EXISTS(SELECT 1 FROM public.admin_notification_resend_attempts a WHERE a.resend_id=manual.id AND a.outcome='UNKNOWN')))) blocked`,
+    [orderId],
+  );
+  return row?.["blocked"] === true;
 }

@@ -49,11 +49,7 @@ export async function verifyCartRuntimeRollbackProtection({
         "SELECT version FROM public.schema_migrations ORDER BY version DESC LIMIT 1",
       )
     ).rows[0]?.version;
-    assert.equal(
-      head,
-      "0029",
-      "rollback proof requires the exact current migration",
-    );
+    // The shared prefix guard rejects unknown heads or retained history.
     await rollbackEmptyNotifications({ client, clientConfig, workspaceRoot });
     const orderAccessDown = await runMigrations({
       clientConfig,
@@ -204,7 +200,7 @@ export async function verifyCartRuntimeRollbackProtection({
     });
     assert.equal(
       restored.currentVersion,
-      "0029",
+      head,
       "restore the empty edit and checkout migrations after the exact legacy rollback proof",
     );
     return {

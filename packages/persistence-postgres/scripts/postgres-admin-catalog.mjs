@@ -1115,7 +1115,11 @@ await withEphemeralPostgres(async (clientConfig) => {
       workspaceRoot,
       command: { direction: "up" },
     });
-    equal(restored.currentVersion, "0029", "admin proof restores current head");
+    equal(
+      restored.currentVersion,
+      beforeNotificationsDown.version,
+      "admin proof restores current head",
+    );
     equal(
       await retainedHistory(),
       beforeNotificationsDown,

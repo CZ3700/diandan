@@ -6,7 +6,8 @@ import { useAdminSession } from "../workspace/client";
 import { createManagementApi } from "./api";
 import { managementCopy } from "./copy";
 import { ManagementShell } from "./shell";
-import { ManagementWorkspace } from "./workspace";
+import { ManagementHub } from "./hub";
+import { createOrdersApi } from "../management-orders/api";
 import { ManagementLogin } from "./login";
 import "./management-center.css";
 
@@ -22,6 +23,7 @@ export function ManagementCenter({
   const { client, session, loading, reload, unavailable, expired, logout } =
     useAdminSession();
   const api = useMemo(() => createManagementApi(client), [client]);
+  const ordersApi = useMemo(() => createOrdersApi(client), [client]);
   const copy = managementCopy(locale);
   const [loginFailed, setLoginFailed] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -72,8 +74,9 @@ export function ManagementCenter({
       </ManagementShell>
     );
   return (
-    <ManagementWorkspace
+    <ManagementHub
       api={api}
+      ordersApi={ordersApi}
       locale={locale}
       storefrontOrigin={storefrontOrigin}
       onLogout={authenticationAvailable ? logout : undefined}

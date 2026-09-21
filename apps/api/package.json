@@ -55,7 +55,9 @@
     "test:postgres:order-access": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/order-access-*.test.mjs && node ./scripts/order-access-http.mjs",
     "test:browser:order-storefront": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/order-storefront-http.mjs",
     "test:postgres:admin-access": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/admin^... --output-logs=errors-only && node ./scripts/admin-access-http.mjs",
-    "test:browser:admin-access": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-access-browser-diagnostics.test.mjs ./scripts/admin-access-test-dns.test.mjs && node ./scripts/admin-access-http.mjs --ui"
+    "test:browser:admin-access": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-access-browser-diagnostics.test.mjs ./scripts/admin-access-test-dns.test.mjs && node ./scripts/admin-access-http.mjs --ui",
+    "test:postgres:admin-orders": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node ./scripts/admin-orders-http.mjs",
+    "test:browser:admin-orders": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-orders-browser-tasks.test.mjs && node ./scripts/admin-orders-http.mjs --ui"
   },
   "dependencies": {
     "@fan-support/application": "workspace:*",
