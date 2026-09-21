@@ -1,11 +1,11 @@
 # Progress Master
 
-> 最后更新：2026-09-21
+> 最后更新：2026-09-22（Asia/Bangkok）
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
-> 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-015，仅本地 P5-01→P5-02）
-> 当前任务：P3-06 七语言本地 H2 性能门通过，剩余真人/读屏/真机与正式内容验收；P4-04 真实商户验收待续；二者暂无 executor，Lane D 已释放
-> 下一入口：补齐 P3-06 人工验收及 P4-04 商户资料；其余18项的扩大本地排期见 `docs/plan/remaining-delivery.md`，尚待确认
-> 当前检查点：原84资源导航/63次Lighthouse/21组三次中位门全部通过；30条axe incomplete技术复核闭合，原记录与实际读屏门保留。29 DONE / 2 IN_PROGRESS / 18 PENDING，仅本地推进。
+> 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-016，逐项本地研发）；Phase 6/7 仍 LOCKED
+> 当前任务：P5-04 本地完整验收通过，保留真实 PSP 条件而维持 IN_PROGRESS、Lane A 已释放；P3-06/P4-04 同样保留原未完验收、无 executor
+> 下一入口：P5-03 READY（Lane A，退款/取消/拒付/对账）；P5-05 本地依赖已齐，待共享合同与文件归属冻结后按 Lane C 登记就绪，不同时领取
+> 当前检查点：P5-04 健康/稳定灰度/认证、实际 PG/HTTP/七语双端与独立复核通过。29 DONE / 3 IN_PROGRESS / 1 READY / 16 PENDING，仅本地推进。
 
 ## 1. 开工入口
 
@@ -13,19 +13,19 @@
 
 1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md`
 2. 本文件
-3. 候选任务所在的 `ACTIVE` phase 文件（Phase 3/4保留未完验收；ADR-015仅允许 `docs/progress/phase-5-operations-payments.md` 的P5-01→P5-02本地范围）
+3. 候选任务所在的 `ACTIVE` phase 文件（Phase 3/4保留未完验收；Phase 5 按 ADR-016 逐项本地推进，Phase 6/7 尚未激活）
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线，P3-01至P3-05及P4-01至P4-03已DONE；P4-05按ADR-014完成本地范围、P4-06也已DONE。2026-09-18 用户确认 ADR-015 后，P5-01 已完成本地登录/权限/会话及管理回归验收，P5-02 于 2026-09-21 完成本地完整验收，Lane C 已释放。P3-06 本地性能与无障碍补证通过后释放 Lane D，任务仍 IN_PROGRESS；P4-04 真实商户验收仍 IN_PROGRESS、无 executor。剩余20项已整理可审阅排期，扩大本地例外仍待用户答复，其他 P5/6/7 不据提案解锁。正式品牌资产、身份源/MFA恢复、邮件服务与译文的上线批准继续保留。
+只领取位于 `ACTIVE` Phase、依赖已完成（或满足 ADR-016 明确记录的本地完整验收与非作者复核条件）、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线，P3-01至P3-05及P4-01至P4-03已DONE；P4-05按ADR-014完成本地范围、P4-06也已DONE。P5-01/02 已按 ADR-015 完成本地验收，Lane C 已释放。P3-06 本地性能与无障碍补证通过后释放 Lane D，任务仍 IN_PROGRESS；P4-04 真实商户验收仍 IN_PROGRESS、无 executor。2026-09-22 用户以“那就继续按计划推进下一阶段”接受剩余20项本地排期，ADR-016 首先允许 P5-04；现已完成全部本地验收，Lane A 释放、P5-03 READY。P5-01/P4-05 的当前可消费代码与 P4-04 本地接口已有独立就绪核对，见 `output/checks/p5-04-payment-health/next-stage-readiness.md` 和最终复核。后继依次核对原直接依赖的本地完整成果，不把局部切片当可消费实现；Phase 6/7 保持 LOCKED，到对应波次满足条件后才登记有限 ACTIVE 范围，无需重复请求本次授权。正式品牌资产、身份源/MFA恢复、邮件服务与译文的上线批准继续保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 18 |
-| READY | 0 |
-| IN_PROGRESS | 2 |
+| PENDING | 16 |
+| READY | 1 |
+| IN_PROGRESS | 3 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
 | DONE | 29 |
@@ -41,7 +41,7 @@
 | 2 设计系统 | 6 | CLOSED | `phase-2-design-system.md` | 品牌样板、视觉、axe、设备性能 |
 | 3 自研 Admin、内容与浏览前台 | 6 | ACTIVE | `phase-3-storefront.md` | 七语言自研后台、真实内容、发布、SEO/cache、性能 |
 | 4 购买闭环 | 6 | ACTIVE | `phase-4-commerce.md` | 七语言测试支付、订单 locale、查单、通知 |
-| 5 运营与支付 | 8 | ACTIVE（ADR-015有限本地） | `phase-5-operations-payments.md` | RBAC、退款、配置回退、重放、production-like staging |
+| 5 运营与支付 | 8 | ACTIVE（ADR-016逐项本地） | `phase-5-operations-payments.md` | RBAC、退款、配置回退、重放、production-like staging |
 | 6 加固与恢复 | 6 | LOCKED | `phase-6-hardening.md` | Release Gate 技术证据 |
 | 7 上线与灰度 | 6 | LOCKED | `phase-7-launch.md` | 正式签署、灰度、复盘 |
 
@@ -55,11 +55,11 @@
 | Phase 0 | Phase 1、Phase 2 | Phase 0 |
 | Phase 1 与 Phase 2 | Phase 3 | Phase 1、Phase 2 |
 | Phase 3；或 ADR-013 已确认的本地开发例外 | Phase 4 | 正常路径关闭 Phase 3；例外保留未完验收 |
-| Phase 3 与 Phase 4；或 ADR-015 已确认的 P5-01→P5-02 本地例外 | Phase 5（例外仅允许白名单任务） | 正常路径关闭 Phase 3、Phase 4；例外保留未完验收 |
-| Phase 5 | Phase 6 | Phase 5 |
-| Phase 6 | Phase 7 | Phase 6 |
+| Phase 3 与 Phase 4；或已确认 ADR-015/016 的逐项本地条件 | Phase 5（ADR-016 当前 P5-03 READY） | 正常路径关闭 Phase 3、Phase 4；例外保留未完验收 |
+| Phase 5；或到 ADR-016 对应波次且候选原直接依赖本地完整验收/独立复核通过 | Phase 6（当前仍 LOCKED；例外须先登记有限本地 ACTIVE 范围） | 正常路径关闭 Phase 5；例外保留全部未完验收 |
+| Phase 6；或到 ADR-016 对应波次且候选原直接依赖本地完整验收/独立复核通过 | Phase 7（当前仍 LOCKED；例外仅文档/导入及 QA 工具准备） | 正常路径关闭 Phase 6；例外保留正式内容/交易/发布/观察门 |
 
-除 Phase 1/2、ADR-013 的 Phase 3/4 与 ADR-015 的有限本地运营开发例外外，不允许多个 Phase 同时为 `ACTIVE`。协调者还必须执行“每个 Lane 同时最多一个 executor”的并行门禁。
+除 Phase 1/2、ADR-013 的 Phase 3/4 与 ADR-015/016 已记录的本地排期例外外，不允许多个 Phase 同时为 `ACTIVE`。ADR-016 不一次性解锁后继或缩减原依赖/完整验收；协调者须先同步候选 phase 和证据，再逐项 READY，并执行“每个 Lane 同时最多一个 executor”。
 
 ## 4. 决策状态
 
@@ -79,6 +79,10 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-22 P5-04 本地完整验收闭合：PG 健康策略/观测/熔断/跨实例安全恢复、稳定部分灰度及 gateway 共用认证完成。实际健康 PG85、灰度8224/4099组、健康HTTP5869、灰度HTTP6071、原支付协议/七语双端7077（31cases/71PNG/57axe，0违规/incomplete/页面错误）通过；最后check:dev63/63/36（缓存62/62/35）、合同/结构/依赖/秘密扫描与非作者复核通过。645旧合同/OpenAPI/64旧SQL/32manifest条目、5717原未跟踪不变；2380源输入最终SHA见 `output/checks/p5-04-payment-health/final-verification.md`、`final-gates.json`。真实PSP/卡网络/USDT专属与原外部门保留，P5-04仍IN_PROGRESS无executor。P5-03原P5-01/P4-04本地接口/P4-05依赖经独立核对后置READY；P5-05待共享合同与文件归属冻结再登记。29 DONE / 3 IN_PROGRESS / 1 READY / 16 PENDING =49；不push/merge/部署，不领取Phase6/7。以下历史检查点按当时时点保留。
+
+2026-09-22 用户接受剩余20项扩大本地排期，ADR-016 ACCEPTED：复用 P1-03 DONE 和已独立核对的 P4-04 TEST runtime/connectors，P5-04 由 PENDING 转 READY，待 root 登记领取。29 DONE / 2 IN_PROGRESS / 1 READY / 17 PENDING =49；P3-06/P4-04 继续保留真实验收、无 executor，Phase6/7仍LOCKED。后继按原直接依赖本地完整实现及独立验收逐项激活，不把排期批准当任务完成；不批准云apply/真实资金/正式内容发布/push/生产发布。以下历史检查点按原时点保留。
 
 2026-09-21 P3-06 完整H2实验室门PASS：同冻结产品源码、原函数/参数/预算完成84资源导航与七语三页面各三次63 Lighthouse；21组score中位0.98–1、LCP中位1805.2408–2255.7256ms、CLS中位0。153原件SHA/目标/完整视口/配置/同导航内容/聚合及3356实际H2记录复核通过；保留5个慢单次（最大4357.5634ms）、JS150027–155368B建议超标及1次测量网络记录外的图片取消，不能宣称全部传输成功或真实RUM。原协议两次各32461；手机筛选专项127检查/60键盘/2PNG通过，说明文字7.7159:1，结合当前相同样式及历史实际目录样本完成30条incomplete技术复核，原axe仍保留。27工具tests、check:dev63/63/36全缓存及adapter/artifact通过；2349源文件、5587原未跟踪SHA保持，已记录3端口无监听，两fixture正常清理退出。详见 `output/checks/p3-06-h2-matrix/README.md`、最终验证和独立复核。29/2/18不变，人工/真机/商户/正式内容门保留，Lane D释放，仅本地提交、不push。后续扩大本地排期提案尚未接受。
 

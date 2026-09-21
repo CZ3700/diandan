@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "baseline": "40a57b47fee8de1e9babc7d0a66637b3251cb227",
+  "checkedAt": "2026-09-21T18:32:41.149314+00:00",
+  "oldContractRoots": 645,
+  "currentContractRoots": 659,
+  "addedRoots": [
+    "PaymentHealthCapabilitiesCommand",
+    "PaymentHealthClaimProbeCommand",
+    "PaymentHealthCompleteProbeCommand",
+    "PaymentHealthObservation",
+    "PaymentHealthPolicy",
+    "PaymentHealthProbeContext",
+    "PaymentHealthProbeLease",
+    "PaymentHealthProbeResult",
+    "PaymentHealthRecordResult",
+    "PaymentHealthSnapshot",
+    "PaymentHealthWindowInput",
+    "PaymentHealthWindowResult",
+    "PaymentRolloutDecision",
+    "PaymentRolloutInput"
+  ],
+  "changedOldRoots": [],
+  "openapiFiles": [
+    "packages/contracts/generated/openapi.json"
+  ],
+  "changedOpenapi": [],
+  "oldSqlFiles": 64,
+  "changedOldSql": [],
+  "oldManifestEntries": 32,
+  "oldManifestEntriesUnchanged": true
+}

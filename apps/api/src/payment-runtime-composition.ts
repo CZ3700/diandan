@@ -3,6 +3,8 @@ import {
   paymentRuntimeConfigurationSchema,
   paymentRuntimeProviderBindingSchema,
   paymentRuntimeOriginSchema,
+  paymentHealthPolicySchema,
+  type PaymentHealthPolicy,
   type PaymentRuntimeConfiguration,
 } from "@fan-support/contracts";
 import {
@@ -33,7 +35,9 @@ import type { PaymentRuntimeRouteDependencies } from "./payment-runtime-route.js
 type Persistence = Pick<
   PostgresPersistence,
   "paymentRuntimeTransactionManager" | "close"
->;
+> & {
+  paymentHealthTransactionManager?: PostgresPersistence["paymentHealthTransactionManager"];
+};
 type Factories = {
   createPersistence?: (
     database: PostgresConnectionConfig,
@@ -46,6 +50,7 @@ type Common = {
   configuration: PaymentRuntimeConfiguration;
   providers: readonly PaymentRuntimeProviderRegistration[];
   providerDirectory?: PaymentRuntimeProviderDirectory;
+  healthPolicies?: readonly PaymentHealthPolicy[];
 };
 type Injected = Common & {
   keyManagement: KeyManagementPort;
@@ -91,6 +96,25 @@ function registrations(
     throw new TypeError("Invalid payment provider registration");
   return parsed;
 }
+function healthPolicies(
+  input: readonly PaymentHealthPolicy[] | undefined,
+  providers: readonly PaymentRuntimeProviderRegistration[],
+) {
+  if (!Array.isArray(input) || input.length === 0 || input.length > 100)
+    throw new TypeError("Invalid payment health policies");
+  const policies = input.map((value) => paymentHealthPolicySchema.parse(value));
+  const identity = (
+    value: Pick<PaymentHealthPolicy, "providerAccountId" | "environment">,
+  ) => `${value.environment}/${value.providerAccountId.toLowerCase()}`;
+  const keys = new Set(policies.map(identity));
+  if (
+    keys.size !== policies.length ||
+    policies.length !== providers.length ||
+    providers.some((entry) => !keys.has(identity(entry.configuration)))
+  )
+    throw new TypeError("Invalid payment health policies");
+  return policies;
+}
 function compose(
   options: Injected,
   factories: Factories,
@@ -110,6 +134,13 @@ function compose(
         };
   // Validate before creating database resources; the application also guards historical bindings.
   providerDirectory?.getRegistrations();
+  const policies =
+    options.healthPolicies === undefined
+      ? undefined
+      : healthPolicies(options.healthPolicies, [
+          ...providers,
+          ...(providerDirectory?.getRegistrations() ?? []),
+        ]);
   const credentials = createCartSessionCredentials(options);
   const persistence = (
     factories.createPersistence ?? createPostgresPersistence
@@ -120,12 +151,25 @@ function compose(
   const close = () =>
     (closed ??= Promise.resolve().then(() => persistence.close()));
   try {
+    if (
+      policies !== undefined &&
+      persistence.paymentHealthTransactionManager === undefined
+    )
+      throw new TypeError("Payment health persistence is unavailable");
     const useCases = createPaymentRuntimeUseCases({
       transactions: persistence.paymentRuntimeTransactionManager,
       keyManagement: options.keyManagement,
       providers,
       ...(providerDirectory === undefined ? {} : { providerDirectory }),
       configuration,
+      ...(policies === undefined
+        ? {}
+        : {
+            health: {
+              policies,
+              transactions: persistence.paymentHealthTransactionManager!,
+            },
+          }),
     });
     return Object.freeze({
       paymentRuntimeRoute: {
@@ -145,6 +189,7 @@ function compose(
       },
       paymentRuntime: createPaymentRecoveryLifecycle({
         recoverNext: useCases.recoverNext,
+        ...(policies === undefined ? {} : { probeNext: useCases.probeNext }),
         close,
         delayMs: configuration.recoveryDelayMs,
         batchSize: configuration.recoveryBatchSize,
@@ -192,9 +237,16 @@ export function createTestPaymentRuntimeComposition(
   );
 }
 export function createPaymentRuntimeComposition(
-  options: Common & { keyManagementConfig: KmsKeyManagementAdapterConfig },
+  options: Common & {
+    keyManagementConfig: KmsKeyManagementAdapterConfig;
+    healthPolicies: readonly PaymentHealthPolicy[];
+  },
   factories: Factories = {},
 ): PaymentRuntimeComposition {
+  healthPolicies(options.healthPolicies, [
+    ...options.providers,
+    ...(options.providerDirectory?.getRegistrations() ?? []),
+  ]);
   return compose(
     {
       ...options,
@@ -214,10 +266,17 @@ export function createOptionalPaymentRuntimeComposition(
   deployedProviders: readonly PaymentRuntimeProviderRegistration[] = [],
 ): PaymentRuntimeComposition | undefined {
   const configText = environment["FAN_SUPPORT_PAYMENT_RUNTIME_CONFIG_JSON"],
-    bindingsText = environment["FAN_SUPPORT_PAYMENT_PROVIDER_BINDINGS_JSON"];
-  if (configText === undefined && bindingsText === undefined) return undefined;
+    bindingsText = environment["FAN_SUPPORT_PAYMENT_PROVIDER_BINDINGS_JSON"],
+    healthText = environment["FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON"];
+  if (
+    configText === undefined &&
+    bindingsText === undefined &&
+    healthText === undefined
+  )
+    return undefined;
   let configuration: PaymentRuntimeConfiguration;
   let providers: ReturnType<typeof registrations>;
+  let policies: PaymentHealthPolicy[];
   try {
     configuration = paymentRuntimeConfigurationSchema.parse(
       JSON.parse(configText ?? ""),
@@ -249,6 +308,15 @@ export function createOptionalPaymentRuntimeComposition(
       return entry;
     });
     if (providers.length === 0) return undefined;
+    const rawPolicies: unknown = JSON.parse(healthText ?? "");
+    if (!Array.isArray(rawPolicies))
+      throw new TypeError("Invalid payment health policies");
+    policies = healthPolicies(
+      rawPolicies.map((entry: unknown) =>
+        paymentHealthPolicySchema.parse(entry),
+      ),
+      providers,
+    );
   } catch {
     throw new TypeError("Invalid payment runtime configuration");
   }
@@ -268,5 +336,6 @@ export function createOptionalPaymentRuntimeComposition(
     keyManagementConfig: resolveCartRuntimeConfig(environment),
     configuration,
     providers,
+    healthPolicies: policies,
   });
 }

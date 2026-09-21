@@ -58,3 +58,16 @@ test("payment seed cannot infer a missing country from its market", async () => 
   delete value.scope.country;
   await assert.rejects(() => module.seedPaymentRuntimeConfiguration(value));
 });
+test("partial rollout seed rejects unsafe proportions before any SQL", async () => {
+  const module = await load();
+  for (const rollout of [
+    { providerBasisPoints: -1, ruleBasisPoints: 5000 },
+    { providerBasisPoints: 5000, ruleBasisPoints: 10001 },
+    { providerBasisPoints: 1.5, ruleBasisPoints: 5000 },
+    { providerBasisPoints: 5000 },
+  ])
+    await assert.rejects(
+      () => module.seedPaymentRuntimeConfiguration({ ...input(), rollout }),
+      /rollout/u,
+    );
+});

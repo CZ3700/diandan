@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-21T18:29:58.832255+00:00",
+  "scope": "Subagent rollout-owned files; root owns contract registry/exports, application, migration catalog and combined acceptance.",
+  "files": [
+    {
+      "path": "packages/contracts/src/payment-rollout.ts",
+      "sha256": "3ef1d1d4fe8e77b970515395c5a73f8017ec1edcefa2e754656204a5b2af4d20"
+    },
+    {
+      "path": "packages/contracts/src/payment-rollout.test.ts",
+      "sha256": "376bac9973fb35179f631038bf81ba18fbf99cdf31cf684b4f585a675886def7"
+    },
+    {
+      "path": "packages/domain/src/payment-rollout.ts",
+      "sha256": "4095b319dd9baee8dcc7be26e6136e0efdd5c92c01d420bf5d33a4d4656d1388"
+    },
+    {
+      "path": "packages/domain/src/payment-rollout.test.ts",
+      "sha256": "65407055058b2bba2865f909b36b61dcf07b5998a562c9e43859fb4ce9925563"
+    },
+    {
+      "path": "packages/persistence-postgres/src/payment-runtime-write.ts",
+      "sha256": "386be8181df9a5df211b67be459e4cd2e7c265c219f8376f1b159e0d9e0b80a7"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/payment-rollout-postgres.mjs",
+      "sha256": "399293d59b6a2c0d1f853f086c914731cb4d88a480feaa932892ca180f688f4c"
+    },
+    {
+      "path": "database/migrations/0034_payment-rollout.up.sql",
+      "sha256": "4e3348e106b753573ac3465b1d14d3eab65c413c8c079ea01b1a20271761b075"
+    },
+    {
+      "path": "database/migrations/0034_payment-rollout.down.sql",
+      "sha256": "aa36279d52058631cc948bdd6f5be8df0f57719f1e1467014f513123a3c2c9ba"
+    },
+    {
+      "path": "apps/api/scripts/payment-rollout-guard-proof.mjs",
+      "sha256": "b189741c2fcc9f5040696a08923e7d91d5516c8c0ba72969c24e3ecf04cc5aca"
+    },
+    {
+      "path": "apps/api/scripts/payment-rollout-publish-fixture.mjs",
+      "sha256": "9b5cd390286049a67eb87d7e487be468ec637028e5d696cf7471fa370d111d63"
+    }
+  ],
+  "verification": "rollout-http-2026-09-21T18-28-05.419Z/protocol-results.json; source unchanged after successful integration"
+}

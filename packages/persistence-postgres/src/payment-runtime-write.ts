@@ -77,8 +77,6 @@ export async function beginPaymentCreate(
     !["INTERNAL", "ACTIVE"].includes(route.accountStatus) ||
     route.merchantStatus !== "ACTIVE" ||
     route.healthStatus !== "HEALTHY" ||
-    route.rolloutBasisPoints !== 10000 ||
-    route.providerRolloutBasisPoints !== 10000 ||
     !route.rule.countries.includes(command.country) ||
     !route.rule.markets.includes(current.cart.market) ||
     !route.rule.currencies.includes(current.cart.currency) ||
@@ -88,6 +86,19 @@ export async function beginPaymentCreate(
     create.amountMinor < route.rule.minimumAmountMinor ||
     create.amountMinor > route.rule.maximumAmountMinor
   )
+    return rejectPayment("CAPABILITY_UNAVAILABLE");
+  const [admission] = await draftRows(
+    client,
+    `SELECT public.payment_rollout_bucket_v1('provider',$1::uuid,$2::uuid)<$4::integer AND public.payment_rollout_bucket_v1('rule',$1::uuid,$3::uuid)<$5::integer AS eligible`,
+    [
+      current.checkout.receipt.checkoutSessionId,
+      route.rule.providerAccountId,
+      route.rule.id,
+      route.providerRolloutBasisPoints,
+      route.rolloutBasisPoints,
+    ],
+  );
+  if (admission?.["eligible"] !== true)
     return rejectPayment("CAPABILITY_UNAVAILABLE");
   if (
     create.providerAccountId !== route.rule.providerAccountId ||

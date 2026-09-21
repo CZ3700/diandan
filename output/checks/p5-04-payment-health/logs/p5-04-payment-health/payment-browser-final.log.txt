@@ -1,0 +1,239 @@
+$ corepack pnpm --filter @fan-support/api test:browser:payment-runtime
+$ pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/payment-runtime-http.mjs --production --ui
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/api, @fan-support/application, @fan-support/cache-purge-cdn, @fan-support/cache-purge-port, @fan-support/cart, @fan-support/catalog, @fan-support/config, @fan-support/content, @fan-support/contracts, @fan-support/design-tokens, @fan-support/domain, @fan-support/i18n, @fan-support/identity-oidc, @fan-support/identity-port, @fan-support/key-management-kms, @fan-support/key-management-port, @fan-support/media-image, @fan-support/media-port, @fan-support/media-s3, @fan-support/notification-port, @fan-support/notification-provider, @fan-support/observability, @fan-support/payment-fake, @fan-support/payment-port, @fan-support/persistence-port, @fan-support/persistence-postgres, @fan-support/testing, @fan-support/ui, @fan-support/worker
+   • Running build in 29 packages
+   • Remote caching disabled
+
+
+ Tasks:    29 successful, 29 total
+Cached:    29 cached, 29 total
+  Time:    144ms >>> FULL TURBO
+
+Payment runtime: processing original fictional Mira Vale independent media
+Payment runtime: processing original fictional Kai Ren independent media
+Payment runtime: processing original fictional Rose Palace gift artwork
+Payment runtime: processing original fictional Blue Orbit gift artwork
+Payment runtime: processing original fictional Ruby Bouquet gift artwork
+Payment runtime: authoring real gift 1/27
+Payment runtime: authoring real gift 2/27
+Payment runtime: authoring real gift 3/27
+Payment runtime: authoring real gift 4/27
+Payment runtime: authoring real gift 5/27
+Payment runtime: authoring real gift 6/27
+Payment runtime: authoring real gift 7/27
+Payment runtime: authoring real gift 8/27
+Payment runtime: authoring real gift 9/27
+Payment runtime: authoring real gift 10/27
+Payment runtime: authoring real gift 11/27
+Payment runtime: authoring real gift 12/27
+Payment runtime: authoring real gift 13/27
+Payment runtime: authoring real gift 14/27
+Payment runtime: authoring real gift 15/27
+Payment runtime: authoring real gift 16/27
+Payment runtime: authoring real gift 17/27
+Payment runtime: authoring real gift 18/27
+Payment runtime: authoring real gift 19/27
+Payment runtime: authoring real gift 20/27
+Payment runtime: authoring real gift 21/27
+Payment runtime: authoring real gift 22/27
+Payment runtime: authoring real gift 23/27
+Payment runtime: authoring real gift 24/27
+Payment runtime: authoring real gift 25/27
+Payment runtime: authoring real gift 26/27
+Payment runtime: authoring real gift 27/27
+Payment runtime: reading actual PostgreSQL price activation time
+Payment runtime: creating complete TEST price book 1/2
+Payment runtime: publishing complete TEST price book 1/2
+Payment runtime: creating complete TEST price book 2/2
+Payment runtime: publishing complete TEST price book 2/2
+Payment runtime: creating actual inventory location
+Payment runtime: stock, review and publication for gift 1/26
+Payment runtime: stock, review and publication for gift 2/26
+Payment runtime: stock, review and publication for gift 3/26
+Payment runtime: stock, review and publication for gift 4/26
+Payment runtime: stock, review and publication for gift 5/26
+Payment runtime: stock, review and publication for gift 6/26
+Payment runtime: stock, review and publication for gift 7/26
+Payment runtime: stock, review and publication for gift 8/26
+Payment runtime: stock, review and publication for gift 9/26
+Payment runtime: stock, review and publication for gift 10/26
+Payment runtime: stock, review and publication for gift 11/26
+Payment runtime: stock, review and publication for gift 12/26
+Payment runtime: stock, review and publication for gift 13/26
+Payment runtime: stock, review and publication for gift 14/26
+Payment runtime: stock, review and publication for gift 15/26
+Payment runtime: stock, review and publication for gift 16/26
+Payment runtime: stock, review and publication for gift 17/26
+Payment runtime: stock, review and publication for gift 18/26
+Payment runtime: stock, review and publication for gift 19/26
+Payment runtime: stock, review and publication for gift 20/26
+Payment runtime: stock, review and publication for gift 21/26
+Payment runtime: stock, review and publication for gift 22/26
+Payment runtime: stock, review and publication for gift 23/26
+Payment runtime: stock, review and publication for gift 24/26
+Payment runtime: stock, review and publication for gift 25/26
+Payment runtime: stock, review and publication for gift 26/26
+Payment runtime: proving tracked availability is one location's maximum, never a sum
+Payment runtime: publishing actual TEST terms policy
+Payment runtime: publishing actual TEST privacy policy
+Payment runtime: publishing actual TEST refund policy
+Payment runtime: publishing actual TEST delivery policy
+Payment runtime: real checkout protocol
+Payment HTTP {"category":"CURRENT","status":401,"code":"INVALID_ACCESS"}
+Checkout HTTP {"ordinal":1,"category":"INITIALIZE_CART","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Checkout HTTP {"ordinal":2,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":3,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":4,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Checkout HTTP {"ordinal":5,"category":"INITIALIZE_CART","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Checkout HTTP {"ordinal":6,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":7,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":8,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Checkout HTTP {"ordinal":9,"category":"INITIALIZE_CART","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Checkout HTTP {"ordinal":10,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":11,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":12,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Checkout HTTP {"ordinal":13,"category":"INITIALIZE_CART","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Checkout HTTP {"ordinal":14,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":15,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":16,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Checkout HTTP {"ordinal":17,"category":"INITIALIZE_CART","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Checkout HTTP {"ordinal":18,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":19,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":20,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Checkout HTTP {"ordinal":21,"category":"INITIALIZE_CART","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Checkout HTTP {"ordinal":22,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":23,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":24,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Checkout HTTP {"ordinal":25,"category":"INITIALIZE_CART","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Checkout HTTP {"ordinal":26,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":27,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":28,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment runtime: payment concurrency and unknown recovery
+Checkout HTTP {"ordinal":29,"category":"INITIALIZE_CART","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Checkout HTTP {"ordinal":30,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":31,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":32,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Checkout PostgreSQL {"operation":"STATEMENT","code":"40001","guard":null,"constraint":null}
+Checkout PostgreSQL {"operation":"STATEMENT","code":"40001","guard":null,"constraint":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Checkout HTTP {"ordinal":33,"category":"INITIALIZE_CART","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":404,"code":"ATTEMPT_NOT_FOUND"}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":400,"code":"INVALID_COMMAND"}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":403,"code":"INVALID_ACCESS"}
+Checkout HTTP {"ordinal":34,"category":"INITIALIZE_CART","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Checkout HTTP {"ordinal":35,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":36,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":37,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"READ_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Checkout HTTP {"ordinal":1,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":2,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":3,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":4,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment runtime: real payment commit response loss: beginCreate
+Checkout HTTP {"ordinal":1,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":2,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":3,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":4,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":503,"code":"TRANSACTION_OUTCOME_UNKNOWN"}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Payment runtime: real payment commit response loss: settleCreate
+Checkout HTTP {"ordinal":5,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":6,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":7,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":8,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":503,"code":"TRANSACTION_OUTCOME_UNKNOWN"}
+Payment HTTP {"category":"CURRENT","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment runtime: compiled checkout website and actual hosted browser
+Payment runtime: actual payment rollback protection
+Checkout PostgreSQL {"operation":"STATEMENT","code":"55000","guard":null,"constraint":null}
+Checkout PostgreSQL {"operation":"STATEMENT","code":"55000","guard":null,"constraint":null}
+PASS payment runtime 7077 assertions; /Users/mario/Desktop/下单/output/checks/p4-04-payment-runtime/run-2026-09-21T18-34-09.039Z

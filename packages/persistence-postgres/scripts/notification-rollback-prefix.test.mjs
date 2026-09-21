@@ -7,7 +7,7 @@ import { runMigrations, withEphemeralPostgres } from "../dist/index.js";
 import { rollbackEmptyNotifications } from "./notification-rollback-prefix.mjs";
 
 const workspaceRoot = fileURLToPath(new URL("../../../", import.meta.url));
-const supportedHeads = ["0029", "0030", "0031", "0032"];
+const supportedHeads = ["0029", "0030", "0031", "0032", "0033", "0034"];
 const protectedHistory = [
   "notifications",
   "contact_accesses",
@@ -29,6 +29,9 @@ const protectedHistory = [
   "resend_contact_accesses",
   "resend_audits",
   "resend_link_audits",
+  "health_policies",
+  "health_state",
+  "health_observations",
 ];
 function fixture(version, retained) {
   const migrations = [];
@@ -75,7 +78,7 @@ for (const head of supportedHeads) {
 }
 for (const history of protectedHistory) {
   test(`retained ${history} rejects before any migration is attempted`, async () => {
-    const options = fixture("0032", history);
+    const options = fixture("0034", history);
     await assert.rejects(
       rollbackEmptyNotifications(options),
       /without .*history/u,
@@ -83,7 +86,7 @@ for (const history of protectedHistory) {
     assert.deepEqual(options.migrations, []);
   });
 }
-for (const head of [null, "0028", "0033"]) {
+for (const head of [null, "0028", "0035"]) {
   test(`unknown head ${head} is not silently rewound`, async () => {
     const options = fixture(head);
     await assert.rejects(rollbackEmptyNotifications(options), /known .*head/u);
@@ -108,7 +111,7 @@ test("real PostgreSQL preserves login and audit history and rewinds only empty k
             "SELECT max(version) AS version FROM schema_migrations",
           )
         ).rows[0].version;
-      assert.equal(await head(), "0032");
+      assert.equal(await head(), "0034");
       await client.query("BEGIN");
       await client.query(
         "INSERT INTO admin_login_challenges(id,state_digest,binding_digest,configuration_digest,locale,expires_at) VALUES($1,$2,$3,$4,'en',clock_timestamp()+interval '5 minutes')",
@@ -118,7 +121,7 @@ test("real PostgreSQL preserves login and audit history and rewinds only empty k
         rollbackEmptyNotifications(options),
         /without .*history/u,
       );
-      assert.equal(await head(), "0032");
+      assert.equal(await head(), "0034");
       await client.query("ROLLBACK");
       for (const [action, task] of [
         ...[
@@ -148,7 +151,7 @@ test("real PostgreSQL preserves login and audit history and rewinds only empty k
           /without .*history/u,
           action,
         );
-        assert.equal(await head(), "0032");
+        assert.equal(await head(), "0034");
         await client.query("ROLLBACK");
       }
       for (const version of [...supportedHeads].reverse()) {

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { runMigrations } from "../dist/index.js";
 
-const supportedHeads = ["0029", "0030", "0031", "0032"];
+const supportedHeads = ["0029", "0030", "0031", "0032", "0033", "0034"];
 
 /** Legacy probes may rewind only explicitly known, empty migration prefixes. */
 export async function rollbackEmptyNotifications({
@@ -57,6 +57,13 @@ export async function rollbackEmptyNotifications({
             "public.audit_logs WHERE action='RESEND_ORDER_NOTIFICATION' OR task_name='admin-order-resend'",
           resend_link_audits:
             "public.order_access_audits WHERE task_name='admin-order-resend'",
+        }
+      : {}),
+    ...(version >= "0033"
+      ? {
+          health_policies: "public.payment_provider_health_policies",
+          health_state: "public.payment_provider_health_state",
+          health_observations: "public.payment_provider_health_observations",
         }
       : {}),
   };

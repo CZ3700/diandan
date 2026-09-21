@@ -16,6 +16,7 @@ import {
   readPaymentRecoveryAction,
 } from "./payment-runtime-provider.js";
 import { type PaymentRuntime } from "./payment-runtime-context.js";
+import { observePaymentProvider } from "./payment-runtime-health.js";
 
 const defer = (
   runtime: PaymentRuntime,
@@ -43,7 +44,11 @@ async function executeCreate(
   try {
     const response = readPaymentCreateResult(
       claim.createCommand,
-      await provider.provider.createPayment(claim.createCommand),
+      (
+        await observePaymentProvider(runtime.health, claim.createCommand, () =>
+          provider.provider.createPayment(claim.createCommand),
+        )
+      ).response,
       provider.configuration,
       claim.supportedActionTypes,
       {
@@ -116,7 +121,11 @@ async function executeReconcile(
     return defer(runtime, claim, "INVALID_COMMAND");
   let input: unknown;
   try {
-    input = await provider.provider.reconcilePayment(command);
+    input = (
+      await observePaymentProvider(runtime.health, command, () =>
+        provider.provider.reconcilePayment(command),
+      )
+    ).response;
   } catch {
     return defer(runtime, claim, "PROVIDER_QUERY_UNAVAILABLE");
   }
@@ -158,7 +167,11 @@ async function executeReconcile(
     try {
       const action = readPaymentRecoveryAction(
         lookup,
-        await provider.provider.getPayment(lookup),
+        (
+          await observePaymentProvider(runtime.health, lookup, () =>
+            provider.provider.getPayment(lookup),
+          )
+        ).response,
         provider.configuration,
         claim.supportedActionTypes,
         {

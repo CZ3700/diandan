@@ -1,6 +1,19 @@
 import { expect, it } from "vitest";
 import { resolveConfigLayers } from "./config-layers.js";
 
+it("recognizes explicit server health bootstrap policy without tolerating a misspelled key", () => {
+  const key = "FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON";
+  expect(resolveConfigLayers({ environment: { [key]: "[]" } }, [key])).toEqual({
+    [key]: "[]",
+  });
+  expect(() =>
+    resolveConfigLayers(
+      { environment: { FAN_SUPPORT_PAYMENT_HEALTH_POLICES_JSON: "[]" } },
+      [],
+    ),
+  ).toThrow();
+});
+
 it("accepts declared server payment metadata while retaining environment precedence", () => {
   const key = "FAN_SUPPORT_PAYMENT_RUNTIME_CONFIG_JSON";
   const sources = {

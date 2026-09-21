@@ -183,6 +183,34 @@ function validateResponse(
 ): PaymentPortResponse {
   const operation = command.operation;
   const parsed = paymentPortResponseSchema.safeParse(input);
+  // A valid empty list describes no purchasable capability, not a broken transport.
+  if (
+    parsed.success &&
+    command.operation === "GET_CAPABILITIES" &&
+    parsed.data.operation === "GET_CAPABILITIES" &&
+    parsed.data.outcome === "SUCCESS"
+  ) {
+    const capabilities = parsed.data.value.capabilities;
+    if (capabilities.length === 0) return parsed.data;
+    if (
+      capabilities.every(
+        (entry) =>
+          entry.market === command.market &&
+          entry.country === command.country &&
+          entry.currency === command.currency &&
+          entry.actionTypes.every((action) =>
+            command.supportedActionTypes.includes(action),
+          ),
+      ) &&
+      !capabilities.some(
+        (entry) =>
+          entry.available &&
+          entry.minimumAmountMinor <= command.amountMinor &&
+          entry.maximumAmountMinor >= command.amountMinor,
+      )
+    )
+      return failure(operation, "CAPABILITY_UNAVAILABLE");
+  }
   if (
     !parsed.success ||
     !paymentPortResponseMatchesCommand(command, parsed.data)

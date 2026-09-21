@@ -1,0 +1,68 @@
+$ vitest run --config ../../vitest.config.ts --root . src/payment-runtime-health.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/application
+
+ ❯ src/payment-runtime-health.test.ts (22 tests | 1 failed) 114ms
+   × a correlated but unavailable capability is a business outcome 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/payment-runtime-health.test.ts > a correlated but unavailable capability is a business outcome
+AssertionError: expected last "vi.fn()" call to have been called with [ ObjectContaining{…} ]
+
+- Expected
++ Received
+
+  [
+    {
+-     "classification": "BUSINESS_OUTCOME",
+-     "code": null,
++     "classification": "TECHNICAL_FAILURE",
++     "code": "MALFORMED_PROVIDER_RESPONSE",
++     "environment": "TEST",
++     "observationId": "3369dfe3-f233-4060-b6bb-77590d8d261b",
++     "operation": "GET_CAPABILITIES",
++     "probeContext": {
++       "command": {
++         "amountMinor": 500,
++         "country": "US",
++         "currency": "USD",
++         "environment": "TEST",
++         "market": "TEST",
++         "operation": "GET_CAPABILITIES",
++         "providerAccountId": "ca000000-0000-4000-8000-000000000205",
++         "requestedLocale": "en",
++         "schemaVersion": 1,
++         "supportedActionTypes": [
++           "REDIRECT",
++         ],
++       },
++       "configVersion": 1,
++       "routeId": "ca000000-0000-4000-8000-000000000203",
++       "ruleVersion": 1,
++       "schemaVersion": 1,
++     },
++     "providerAccountId": "ca000000-0000-4000-8000-000000000205",
++     "schemaVersion": 1,
+    },
+  ]
+
+ ❯ src/payment-runtime-health.test.ts:154:29
+    152|   });
+    153|   expect(await app.capabilities(capabilities, h.context)).toMatchObjec…
+    154|   expect(repository.record).toHaveBeenLastCalledWith(expect.objectCont…
+       |                             ^
+    155| });
+    156|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 21 passed (22)
+   Start at  01:02:13
+   Duration  698ms (transform 385ms, setup 0ms, import 524ms, tests 114ms, environment 0ms)
+
+/Users/mario/Desktop/下单/packages/application:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/application@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/payment-runtime-health.test.ts`
+Exit status 1

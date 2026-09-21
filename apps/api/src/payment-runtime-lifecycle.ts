@@ -2,6 +2,7 @@ import type { ApiLifecycleResource } from "./bootstrap.js";
 import { paymentRuntimeRecoveryRunResponseSchema } from "@fan-support/contracts";
 export type PaymentRecoveryLifecycleOptions = {
   recoverNext(): Promise<unknown>;
+  probeNext?(): Promise<unknown>;
   close(): Promise<void>;
   delayMs: number;
   batchSize: number;
@@ -46,6 +47,14 @@ export function createPaymentRecoveryLifecycle(
     } catch {
       /* The durable due record remains pending. Never log raw provider exceptions or fabricate success. */
     } finally {
+      if (!stopping && options.probeNext) {
+        try {
+          // One independent slot per sweep prevents an empty payment queue from starving recovery.
+          await options.probeNext();
+        } catch {
+          /* A failed probe keeps its durable lease/backoff; financial recovery still runs next sweep. */
+        }
+      }
       if (!stopping) schedule(options.delayMs);
     }
   }

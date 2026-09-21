@@ -1,0 +1,17 @@
+{
+  "command": [
+    "pnpm",
+    "exec",
+    "prettier",
+    "--write",
+    "packages/contracts/src/payment-rollout.ts",
+    "packages/contracts/src/payment-rollout.test.ts",
+    "packages/domain/src/payment-rollout.ts",
+    "packages/domain/src/payment-rollout.test.ts",
+    "packages/persistence-postgres/src/payment-runtime-write.ts",
+    "packages/persistence-postgres/scripts/payment-rollout-postgres.mjs"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 1.47,
+  "at": "2026-09-21T18:15:13.446165+00:00"
+}

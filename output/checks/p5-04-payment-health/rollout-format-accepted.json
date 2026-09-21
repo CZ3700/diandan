@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "exec",
+    "prettier",
+    "--check",
+    "packages/contracts/src/payment-rollout.ts",
+    "packages/contracts/src/payment-rollout.test.ts",
+    "packages/domain/src/payment-rollout.ts",
+    "packages/domain/src/payment-rollout.test.ts",
+    "packages/persistence-postgres/src/payment-runtime-write.ts",
+    "packages/persistence-postgres/scripts/payment-rollout-postgres.mjs",
+    "apps/api/scripts/payment-rollout-guard-proof.mjs",
+    "apps/api/scripts/payment-rollout-publish-fixture.mjs"
+  ],
+  "startedAt": "2026-09-21T18:29:58.422512+00:00",
+  "exitCode": 0,
+  "elapsedSeconds": 0.409
+}

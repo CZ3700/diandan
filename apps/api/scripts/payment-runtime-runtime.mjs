@@ -83,6 +83,9 @@ export async function withPaymentRuntimeFixture(options) {
           bindings: [psp.binding],
           configuration,
           scope: { ...context.fixtures.markets[0], country: "US" },
+          ...(options.paymentRollout === undefined
+            ? {}
+            : { rollout: options.paymentRollout }),
           check: options.check,
         });
         const logger = createStructuredLogger({
@@ -92,6 +95,7 @@ export async function withPaymentRuntimeFixture(options) {
         async function createPaymentApi({
           recovery = true,
           createPersistence,
+          healthPolicies,
         } = {}) {
           const composition = createTestPaymentRuntimeComposition(
             {
@@ -103,6 +107,7 @@ export async function withPaymentRuntimeFixture(options) {
               pepperVersions: ["test-mac"],
               configuration,
               providers: [registration],
+              ...(healthPolicies === undefined ? {} : { healthPolicies }),
             },
             createPersistence ? { createPersistence } : {},
           );

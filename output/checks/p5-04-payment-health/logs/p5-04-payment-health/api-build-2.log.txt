@@ -1,0 +1,21 @@
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/api
+   • Running build in 1 packages
+   • Remote caching disabled
+
+@fan-support/api:build: cache miss, executing 6519962ac47b0c83
+@fan-support/api:build:
+@fan-support/api:build: > @fan-support/api@0.0.0 build /Users/mario/Desktop/下单/apps/api
+@fan-support/api:build: > tsc -p tsconfig.build.json
+@fan-support/api:build:
+@fan-support/api:build: src/payment-runtime-composition.ts(35,54): error TS2307: Cannot find module '@fan-support/persistence-port' or its corresponding type declarations.
+@fan-support/api:build:  ELIFECYCLE  Command failed with exit code 1.
+@fan-support/api#build:  ERROR  command (/Users/mario/Desktop/下单/apps/api) /Users/mario/Library/pnpm/pnpm run build exited (1)
+
+ Tasks:    23 successful, 24 total
+Cached:    0 cached, 24 total
+  Time:    18.391s
+Failed:    @fan-support/api#build
+
+ ERROR  run failed: command  exited (1)

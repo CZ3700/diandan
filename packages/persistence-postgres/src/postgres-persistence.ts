@@ -1,3 +1,9 @@
+import { acquirePaymentHealthClient } from "./payment-health-client.js";
+import { createPaymentHealthRepository } from "./payment-health-repository.js";
+import type {
+  PaymentHealthRepository,
+  PaymentHealthTransactionManager,
+} from "@fan-support/persistence-port";
 import { createAdminOrdersRepository } from "./admin-orders-repository.js";
 import { createAdminOrderResendRepository } from "./admin-notification-resend-repository.js";
 import { createAdminOrderResendNotificationRepository } from "./admin-notification-resend-worker.js";
@@ -182,6 +188,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly paymentHealthTransactionManager: PaymentHealthTransactionManager;
   readonly adminOrdersTransactionManager: AdminOrdersTransactionManager;
   readonly adminOrderResendNotificationTransactionManager: NotificationTransactionManager;
   readonly adminAccessTransactionManager: AdminAccessTransactionManager;
@@ -224,6 +231,8 @@ export interface PostgresPersistence {
 export type PersistenceFailureNotice = PersistenceFailureClassification;
 
 export type PostgresPersistenceOptions = Readonly<{
+  /** Total acquisition/query/COMMIT budget for optional health telemetry only. */
+  paymentHealthTimeoutMs?: number;
   onInfrastructureFailure?: (
     failure: PersistenceFailureNotice,
   ) => void | Promise<void>;
@@ -286,8 +295,14 @@ function isPersistenceOptions(
       (key) =>
         key === "onInfrastructureFailure" ||
         key === "publishWebhookInbox" ||
-        key === "catalogPublicMediaBaseUrl",
+        key === "catalogPublicMediaBaseUrl" ||
+        key === "paymentHealthTimeoutMs",
     ) &&
+    (record["paymentHealthTimeoutMs"] === undefined ||
+      (typeof record["paymentHealthTimeoutMs"] === "number" &&
+        Number.isSafeInteger(record["paymentHealthTimeoutMs"]) &&
+        record["paymentHealthTimeoutMs"] >= 100 &&
+        record["paymentHealthTimeoutMs"] <= 30000)) &&
     (record["onInfrastructureFailure"] === undefined ||
       typeof record["onInfrastructureFailure"] === "function") &&
     (record["catalogPublicMediaBaseUrl"] === undefined ||
@@ -406,6 +421,15 @@ export function createPostgresPersistenceWithPoolFactory(
         );
       },
     });
+  const paymentHealthRunner = createTransactionRunner<PaymentHealthRepository>({
+    acquireClient: () =>
+      acquirePaymentHealthClient(
+        () => pool.connect(),
+        options?.paymentHealthTimeoutMs ?? 3000,
+      ),
+    createRepositories: (client, scope) =>
+      createPaymentHealthRepository(client, scope),
+  });
   const paymentRuntimeRunner =
     createTransactionRunner<PaymentRuntimeRepositories>({
       acquireClient: async () => pool.connect(),
@@ -1205,6 +1229,19 @@ export function createPostgresPersistenceWithPoolFactory(
           });
         return orderPaymentApplicationRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    paymentHealthTransactionManager: {
+      async runInPaymentHealthTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return paymentHealthRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );
       },

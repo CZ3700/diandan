@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "packages/persistence-postgres/scripts/payment-rollout-postgres.mjs"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 1.756,
+  "startedAt": "2026-09-21T18:16:08.224497+00:00"
+}

@@ -17,6 +17,7 @@ import {
 } from "@fan-support/persistence-port";
 import type { KeyManagementPort } from "@fan-support/key-management-port";
 import type { PaymentRuntimeProviderRegistration } from "@fan-support/payment-port";
+import type { PaymentRuntimeHealth } from "./payment-runtime-health.js";
 
 export type PaymentRuntime = Readonly<{
   run<Result extends JsonValue>(
@@ -25,6 +26,7 @@ export type PaymentRuntime = Readonly<{
   keys: KeyManagementPort;
   providers: readonly PaymentRuntimeProviderRegistration[];
   configuration: PaymentRuntimeConfiguration;
+  health?: PaymentRuntimeHealth;
 }>;
 export const paymentFailure = (
   code: PaymentRuntimeFailureCode,

@@ -8,11 +8,11 @@
 
 1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md`
 2. `docs/progress/MASTER.md`
-3. 候选任务所在的 `ACTIVE` phase 文件；并行 ACTIVE 范围以 `MASTER.md` 为准（含用户确认的 ADR-013 与有限 ADR-015 本地开发例外）
+3. 候选任务所在的 `ACTIVE` phase 文件；并行 ACTIVE 范围以 `MASTER.md` 为准（含用户确认的 ADR-013/015/016 本地开发排期）
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取一个位于 `ACTIVE` phase、依赖已完成、状态为 `READY` 且对应 Lane 当前无 executor 的任务。先在 phase 文件登记 owner、开始时间、范围和验证计划，再修改代码。
+只领取一个位于 `ACTIVE` phase、依赖已完成（或满足 ADR-016 明确记录的本地完整验收与独立复核条件）、状态为 `READY` 且对应 Lane 当前无 executor 的任务。Phase 6/7 须按 ADR-016 逐项登记本地激活范围，不因排期批准全部解锁。先在 phase 文件登记 owner、开始时间、范围和验证计划，再修改代码。
 
 ## 权威与范围
 

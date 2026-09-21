@@ -9,7 +9,10 @@ import {
   type PaymentRuntimeCapabilityView,
   type PaymentDeviceCapability,
 } from "@fan-support/contracts";
-import { selectPaymentRoute } from "@fan-support/domain";
+import {
+  evaluatePaymentRollout,
+  selectPaymentRoute,
+} from "@fan-support/domain";
 import {
   findPaymentProvider,
   readPaymentCapabilities,
@@ -18,6 +21,7 @@ import {
   rejectPayment,
   type PaymentRuntime,
 } from "./payment-runtime-context.js";
+import { observePaymentProvider } from "./payment-runtime-health.js";
 
 export async function loadPaymentContext(
   runtime: PaymentRuntime,
@@ -55,8 +59,14 @@ export function eligiblePaymentRoute(
     !route.providerEnabled ||
     !["ACTIVE", "INTERNAL"].includes(route.accountStatus) ||
     route.merchantStatus !== "ACTIVE" ||
-    route.rolloutBasisPoints !== 10000 ||
-    route.providerRolloutBasisPoints !== 10000 ||
+    evaluatePaymentRollout({
+      schemaVersion: 1,
+      checkoutSessionId: current.checkout.receipt.checkoutSessionId,
+      providerAccountId: route.rule.providerAccountId,
+      routeRuleId: route.rule.id,
+      providerRolloutBasisPoints: route.providerRolloutBasisPoints,
+      ruleRolloutBasisPoints: route.rolloutBasisPoints,
+    }).kind !== "ELIGIBLE" ||
     (route.accountStatus === "INTERNAL" && route.environment !== "TEST")
   )
     return false;
@@ -122,10 +132,22 @@ export async function availablePaymentActions(
   });
   if (command.operation !== "GET_CAPABILITIES") return [];
   try {
-    const capabilities = readPaymentCapabilities(
+    if (runtime.health && !(await runtime.health.initialize(command)))
+      return [];
+    const observed = await observePaymentProvider(
+      runtime.health,
       command,
-      await provider.provider.getCapabilities(command),
+      () => provider.provider.getCapabilities(command),
+      {
+        schemaVersion: 1,
+        routeId: route.rule.id,
+        configVersion: current.routing!.configVersion,
+        ruleVersion: route.ruleVersion,
+        command,
+      },
     );
+    if (!observed.healthAvailable) return [];
+    const capabilities = readPaymentCapabilities(command, observed.response);
     return [
       ...new Set(
         (capabilities ?? [])

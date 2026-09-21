@@ -1,8 +1,8 @@
 # Phase 5 — 运营、退款与支付扩展边界
 
-> 状态：ACTIVE（ADR-015，仅P5-01→P5-02本地开发）
+> 状态：ACTIVE（ADR-016，逐项本地研发；P5-01→P5-02 已按 ADR-015 完成）
 > 任务：8
-> 正常解锁条件：Phase 3与Phase 4退出门禁通过；当前有限例外见ADR-015
+> 正常解锁条件：Phase 3与Phase 4退出门禁通过；当前本地依赖验收与领取顺序见ADR-016
 
 ## 目标
 
@@ -14,9 +14,9 @@
 |:--|:--|:--|:--|:--|
 | P5-01 | DONE | Codex `/root`（Lane C 已释放） | P0-04、P1-04 | 本地 OIDC/七语 UI/真实 PG/原管理回归与最终复核通过；见下方验收 |
 | P5-02 | DONE | Codex `/root`（Lane C 已释放） | P5-01、P4-05/06 | 本地订单/七语人工审核/准备送达/加密备注/可靠通知重发完整验收；见下方 |
-| P5-03 | PENDING | — | P5-01、P4-04/05 | Refund/cancel/dispute/reconcile |
-| P5-04 | PENDING | — | P1-03、P4-04 | Capability/routing/conformance |
-| P5-05 | PENDING | — | P5-01、P5-04 | 七语言 payment label/config publish/rollback |
+| P5-03 | READY | —（Lane A 空闲） | P5-01、P4-04 已验收本地接口、P4-05 | 直接依赖与当前源经独立核对；下一项退款/取消/拒付/对账 |
+| P5-04 | IN_PROGRESS | —（本地完整验收，Lane A 已释放） | P1-03 DONE；P4-04 本地输入按 ADR-016 独立核对 | 本地 capability/稳定灰度/健康/conformance 全验收；真实 PSP 条件保留 |
+| P5-05 | PENDING | — | P5-01、P5-04 本地完整验收 | 本地依赖已齐；共享合同/归属冻结后按 Lane C 登记就绪 |
 | P5-06 | PENDING | — | P5-01、P1-06、P5-03 | Replay/DLQ/UNKNOWN queue |
 | P5-07 | PENDING | — | P5-04/05/06 | New PSP runbook/fake adapter drill |
 | P5-08 | PENDING | — | P0-05、P1-05、P3-06、P4-06、P5-05/06/07 | ADR-007 OpenTofu + production-like staging + immutable deployment |
@@ -32,7 +32,35 @@
 
 ## Phase 退出证据
 
-仅ADR-015本地白名单已激活；尚无Phase退出证据。其余六项P5任务、Phase6/7仍不可按本例外领取。
+尚无完整 Phase 退出证据。ADR-016 已获用户确认，P5-04 已完整本地验收、保留真实 PSP 条件并释放 executor；本次仅 P5-03 READY，P5-05 等共享合同与文件归属冻结后登记，其余任务继续按原直接依赖/非作者复核/Lane 顺序就绪。Phase 6/7 当前仍 LOCKED，后续按 ADR-016 登记有限本地激活范围；原真实 PSP、资金、云、人工与发布门不变。
+
+## ADR-016 当前排期登记（2026-09-22）
+
+- 用户接受剩余20项本地研发顺序。P1-03 已 DONE；独立审计已核对 P4-04 `payment-runtime` 与 `payment-connectors` 两个本地验收及复核记录，适用于 P5-04 的能力/PG 路由/两事务/原账户恢复/通用七操作输入；不代表真实商户、USDT 专属接入或配置管理已完成。
+- 当前计数：29 DONE / 2 IN_PROGRESS / 1 READY / 17 PENDING = 49。P5-04 尚无 owner，root 必须先记录开始时间、范围及失败测试/真实本地验证计划，再改代码。依赖依据和后续顺序见 ADR-016、`docs/plan/remaining-delivery.md`；历史验收不改写。
+- 后继只消费已独立验收的本地完整成果；本地完成但外部待验收仍 IN_PROGRESS、无 executor。保留简单管理中心与日常原文模式；不 push、不部署、不触发真实资金或正式内容发布。
+
+## P5-04 执行登记（2026-09-22）
+
+- Owner：Codex `/root`，Lane A 唯一 executor；开始 `2026-09-21T17:52:46.168707+00:00`，基线 `40a57b47fee8de1e9babc7d0a66637b3251cb227`。用户已接受 ADR-016，直接依赖的本地适用范围已独立核对；不领取其他任务。
+- 范围：复用已验收能力/确定性选路/规则版本，补 PG 权威健康政策、幂等观测、技术故障熔断、跨实例有界只读恢复探测，以及通用 gateway 共用认证测试。旧支付与 UNKNOWN 坚持原账户恢复；不实现 P5-05 管理发布 UI，不触发真实资金。
+- 验证：独立兼容合同和 RED→GREEN；真实 PostgreSQL 并发/去重/冲突/窗口/过期 lease/迟到结果/路由资格与既有支付恢复，实际 HTTP/TLS payment 回归；受影响测试→format/lint/typecheck/build→非作者复核/S.U.P.E.R，统一最后质量门。
+- 同任务分工：root 合同/整合/回归；health_storage 0033 与持久层；health_runtime 应用健康观察与 API 生命周期；remaining_task_audit 通用 adapter 认证测试。均不独立领取其他 Task。
+- 保护：已保存 5717 个原未跟踪文件及 2347 个源文件 SHA 清单到 `output/checks/p5-04-payment-health/`；旧迁移/合同根不可修改，不 push/merge/部署。当前 29 DONE / 3 IN_PROGRESS / 17 PENDING = 49，部分通过不标 DONE。
+
+### P5-04 最终本地验收（2026-09-22）
+
+- 本地完整范围通过独立复核与 S.U.P.E.R 10 项；正式 PSP 能力/认证条件保留，Task 仍 IN_PROGRESS、无 executor，Lane A 释放。下一项 P5-03 READY；P5-05 本地依赖已齐，但共享合同/文件归属冻结后才按 Lane C 登记就绪。29 DONE / 3 IN_PROGRESS / 1 READY / 16 PENDING =49。
+- 交付：不可变 PG 健康策略、幂等观测与固定窗口、技术故障隔离、跨实例安全 GET_CAPABILITIES 探测；账户/政策/代际/上下文栅栏；默认3秒总健康I/O预算与每轮单账户初始化。稳定双桶部分比例在应用/PG准入/deferred guard分别重算，关闭新渠道不影响已有 UNKNOWN 原账户/原键恢复。
+- 复用既有能力、规则版本和永久回执；通用 gateway 经真实 CA 校验 TLS TEST 上游通过共用15场景及五种不合规注入。没有操作真实资金、商户配置或新增支付代码上传；P5-05 管理发布、政策热激活与目录传播尚未实现。
+- Node 24.20.0/pnpm11.25.0：最终 check:dev format/lint、types63/63、tests63/63、build36/36（缓存62/62/35）；这是任务图数量。contracts85files/497tests、domain25/183、gateway9/106；实际健康PG85、灰度8224断言/4099组TS↔PG、34迁移/189表往返、rollback-prefix33tests通过。
+- 最后健康 HTTP 5869=5761准备+108专项；灰度 HTTP 6071=5761+310专项，含合法新0比例publication与旧UNKNOWN恢复、双PG防绕过和单安全probe；只有1次PSPcreate，未重复创建。两API在同Node、独立pool/lifecycle，PSP独立进程，不冒充部署级多进程或真实商户。
+- 原支付生产构建与七语390×844/1440×900回归7077=5761准备+1316协议/浏览器；31cases、71PNG、57axe，0违规/incomplete/页面错误，键盘/减弱动态/空状态/错误与语言冻结通过。root实际查阅中文手机和英文桌面截图；没有实体手机或人工读屏结论。
+- 原12个fixture tests、39条SQL PREPARE/46断言、10 action guard、真实PG正常trigger七语配置发布、合同/adapter/artifact32exports/CI/runtime/observability/manifest、frozen install/high audit/秘密扫描通过。未声称整条pnpm check或所有仓库PG/S3脚本通过。
+- 兼容：新增14根，总659；645旧根/OpenAPI/64旧SQL/32旧manifest条目不变；2380源输入最终SHA `e866fd6218c2f6b655e5fca37201f12e7a96dadcd60e1fb0af27e63b5b3b34a5`；原5717未跟踪逐SHA不变且未暂存。保留真实RED、旧导出断言、PG锁超时、部分比例上下文、发布fixture23505/23514与adapter边界原失败；最终均复验闭合，没有放宽保护。
+- 证据与命令：`output/checks/p5-04-payment-health/final-verification.md`、`final-gates.json`、`final-independent-review.md`；原.log本地保持，Git文本副本仅规范化行尾/尾随空白，双SHA见`log-transcripts.json`。复验入口`docs/runbooks/payment-health-local.md`。
+- 后继依赖：独立审查选取P5-01当前23文件与原验收相同；P4-05相关39文件与P5-02最新验收相同；P4-04通用接口变化由本轮完整回归承接。详见`next-stage-readiness.md`，其历史待验收条件已由最终复核闭合。先领取P5-03，不同时领取P5-05。
+- 剩余门：批准PSP/商户、真实sandbox/小额、USDT专属映射、正式Secret/政策/七语关键译审、多进程/staging、P3人工/真机/素材及云/发布门。P5-04外部解除条件由经营主体提供商户与批准接口后在P4-04/本任务补验；不把本地结果标正式DONE。仅本地提交，不push/merge/部署。
 
 ## P5-01 历史执行登记（2026-09-18）
 

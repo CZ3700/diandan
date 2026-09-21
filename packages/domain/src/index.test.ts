@@ -8,6 +8,7 @@ test("exposes the domain workspace boundary", () => {
 
 test("exports the complete public domain decision surface", () => {
   expect(Object.keys(domain).sort()).toEqual([
+    "advancePaymentHealthWindow",
     "calculateLineAmounts",
     "calculateOrderAmounts",
     "decideDisputeTransitionCommand",
@@ -18,6 +19,7 @@ test("exports the complete public domain decision surface", () => {
     "decidePaymentAttemptTransitionCommand",
     "decideRefundTransitionCommand",
     "evaluateGiftEligibility",
+    "evaluatePaymentRollout",
     "evaluateRefundCapacity",
     "planCheckoutInventory",
     "planInventoryReservationCreation",

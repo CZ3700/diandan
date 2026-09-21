@@ -1,0 +1,41 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/application
+
+ ❯ src/payment-runtime-rollout.test.ts (3 tests | 1 failed) 44ms
+     × a permanent create receipt remains replayable after cohort closure 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/payment-runtime-rollout.test.ts > payment runtime consumes deterministic rollout eligibility > a permanent create receipt remains replayable after cohort closure
+AssertionError: expected { schemaVersion: 1, …(2) } to match object { action: 'REPLAYED' }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "action": "REPLAYED",
++   "code": "PAYMENT_IN_PROGRESS",
++   "outcome": "FAILURE",
++   "schemaVersion": 1,
+  }
+
+ ❯ src/payment-runtime-rollout.test.ts:47:20
+     45|     h.state().current.routing!.routes[0]!.providerRolloutBasisPoints =…
+     46|     const second = await app.create(h.create, h.freshContext());
+     47|     expect(second).toMatchObject({action: "REPLAYED"});
+       |                    ^
+     48|     expect(h.provider.createPayment).toHaveBeenCalledOnce();
+     49|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  01:12:18
+   Duration  598ms (transform 365ms, setup 0ms, import 497ms, tests 44ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/packages/application:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config ../../vitest.config.ts --root . src/payment-runtime-rollout.test.ts

@@ -10,11 +10,11 @@ description: Implement and maintain this repository's fully source-owned global 
 Always read `docs/progress/MASTER.md` first. Then read, in order:
 
 1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md`
-2. The selected task's ACTIVE file in `docs/progress/` (concurrent ACTIVE phases are allowed only by the current `MASTER.md` matrix, including the user-approved ADR-013 and limited ADR-015 local-development exceptions)
+2. The selected task's ACTIVE file in `docs/progress/` (concurrent ACTIVE phases are allowed only by the current `MASTER.md` matrix, including the user-approved ADR-013/015/016 local-development schedules)
 3. The selected Task ID in `docs/plan/task-breakdown.md`
 4. Its direct dependencies and linked risk IDs in `docs/analysis/risk-assessment.md`
 
-Resume from recorded evidence; do not repeat completed work or infer completion from files alone. Claim exactly one READY task only when its Phase is ACTIVE and its Lane has no executor; record owner and start time, and stop at that task boundary unless explicitly asked to continue.
+Resume from recorded evidence; do not repeat completed work or infer completion from files alone. Claim exactly one READY task only when its Phase is ACTIVE, its original direct dependencies are DONE or meet ADR-016's explicitly recorded complete local acceptance and independent-review conditions, and its Lane has no executor. Record owner and start time. The user has authorized continued work within ADR-016; proceed task by task without requesting the same scheduling approval again.
 
 ## S.U.P.E.R Architecture — Mandatory Coding Standard
 
@@ -167,7 +167,8 @@ Do not write “done” without observable evidence. A local pass is not product
 ## 7. Parallel Execution Protocol
 
 - Read `docs/plan/dependency-graph.md` and `task-breakdown.md` before delegating.
-- Treat Phase status as a hard gate; task dependencies never unlock a task inside a LOCKED Phase. Follow user-approved scheduling exceptions explicitly recorded in MASTER/ADR-013/014/015; ADR-015 only permits local P5-01 and, after its complete acceptance, P5-02; they do not waive outstanding acceptance or release gates.
+- Treat Phase status as a hard gate; never claim a task inside a LOCKED Phase. Follow user-approved scheduling exceptions recorded in MASTER/ADR-013/014/015/016. ADR-015 covered P5-01→P5-02; ADR-016 now permits the recorded remaining local sequence, beginning with P5-04. Before each successor, independently verify the complete local implementation of every original direct dependency; a partial slice or code alone is insufficient. Phase 6/7 remain LOCKED until their scheduled local inputs pass, then explicitly record the limited ACTIVE scope in MASTER/phase before setting individual tasks READY. Do not activate all successors at once or waive full acceptance/release gates.
+- Under ADR-016, a task with complete local acceptance but outstanding external evidence remains IN_PROGRESS with documented conditions and no executor. Only all original acceptance permits DONE. No cloud apply, real funds, formal content publication, Git push, production release or formal business decisions are authorized by this schedule. Keep SPEC §9.0/ADR-012's simple management center and original-language daily publication; strict policy/payment/order/email/key-UI approval remains unchanged.
 - Run at most one executor per independent lane; assign explicit Task IDs and exclusive file ownership.
 - Freeze shared contracts before parallel consumers begin.
 - Never let two executors edit the same migration sequence, schemaVersion, global tokens, published content schema or root lockfile concurrently.

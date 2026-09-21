@@ -1,0 +1,7 @@
+Scope: 3 of 37 workspace projects
+packages/contracts build$ tsc -p tsconfig.build.json
+packages/contracts build: Done
+packages/domain build$ tsc -p tsconfig.build.json
+packages/persistence-port build$ tsc -p tsconfig.build.json
+packages/persistence-port build: Done
+packages/domain build: Done

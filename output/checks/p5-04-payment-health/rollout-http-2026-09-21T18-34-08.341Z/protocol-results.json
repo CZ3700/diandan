@@ -1,0 +1,297 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "assertions": 310,
+  "setupAssertions": 5761,
+  "actualPostgres": true,
+  "actualApiHttp": true,
+  "actualTlsTestPsp": true,
+  "actualMerchant": false,
+  "actualRollout": {
+    "provider": 10000,
+    "rule": 5000
+  },
+  "maximumCheckouts": 30,
+  "cohorts": [
+    {
+      "ordinal": 1,
+      "schemaVersion": 1,
+      "algorithmVersion": 1,
+      "kind": "ELIGIBLE",
+      "providerBucket": 8845,
+      "ruleBucket": 1251
+    },
+    {
+      "ordinal": 2,
+      "schemaVersion": 1,
+      "algorithmVersion": 1,
+      "kind": "EXCLUDED",
+      "providerBucket": 3127,
+      "ruleBucket": 8122
+    }
+  ],
+  "presentationLocales": [
+    "en",
+    "zh-CN",
+    "th",
+    "vi",
+    "ja",
+    "es",
+    "pt"
+  ],
+  "twoInstances": true,
+  "recoveryReads": 1,
+  "guardProof": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "cases": [
+      {
+        "boundary": "POSTGRES_BEGIN_CREATE",
+        "status": "PASS",
+        "projectionChanges": 1,
+        "beginCalls": 1,
+        "beginCompleted": 0,
+        "rejectedAdmission": 1,
+        "bucketSelects": 1,
+        "excludedSqlResults": 1,
+        "admissionChanges": 0,
+        "deferredFailures": 0
+      },
+      {
+        "boundary": "DEFERRED_RECEIPT_GUARD",
+        "status": "PASS",
+        "projectionChanges": 1,
+        "beginCalls": 1,
+        "beginCompleted": 1,
+        "rejectedAdmission": 0,
+        "bucketSelects": 1,
+        "excludedSqlResults": 1,
+        "admissionChanges": 1,
+        "deferredFailures": 1
+      }
+    ]
+  },
+  "closedPublication": {
+    "configVersion": 2,
+    "ruleVersion": 2,
+    "rollout": {
+      "providerBasisPoints": 0,
+      "ruleBasisPoints": 0
+    },
+    "oldRowsUnchanged": true
+  },
+  "healthObservations": 24,
+  "paymentCounts": {
+    "payments": 1,
+    "captures": 0,
+    "createCalls": 1,
+    "reconcileCalls": 1
+  },
+  "requests": [
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 409,
+      "code": "CAPABILITY_UNAVAILABLE"
+    },
+    {
+      "category": "CREATE_ATTEMPT",
+      "status": 409,
+      "code": "CAPABILITY_UNAVAILABLE"
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 409,
+      "code": "CAPABILITY_UNAVAILABLE"
+    },
+    {
+      "category": "CREATE_ATTEMPT",
+      "status": 409,
+      "code": "CAPABILITY_UNAVAILABLE"
+    },
+    {
+      "category": "CREATE_ATTEMPT",
+      "status": 400,
+      "code": "INVALID_COMMAND"
+    },
+    {
+      "category": "FORGED_ROLLOUT_QUERY",
+      "status": 400,
+      "code": "INVALID_COMMAND"
+    },
+    {
+      "category": "CREATE_ATTEMPT",
+      "status": 409,
+      "code": "CAPABILITY_UNAVAILABLE"
+    },
+    {
+      "category": "CREATE_ATTEMPT",
+      "status": 503,
+      "code": "TEMPORARY_UNAVAILABLE"
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CREATE_ATTEMPT",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CREATE_ATTEMPT",
+      "status": 409,
+      "code": "CAPABILITY_UNAVAILABLE"
+    },
+    {
+      "category": "CREATE_ATTEMPT",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "RECOVER_ATTEMPT",
+      "status": 200,
+      "code": null
+    }
+  ]
+}

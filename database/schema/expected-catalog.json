@@ -763,6 +763,18 @@
       "kind": "TABLE"
     },
     {
+      "name": "payment_provider_health_observations",
+      "kind": "TABLE"
+    },
+    {
+      "name": "payment_provider_health_policies",
+      "kind": "TABLE"
+    },
+    {
+      "name": "payment_provider_health_state",
+      "kind": "TABLE"
+    },
+    {
       "name": "payment_reconcile_receipts",
       "kind": "TABLE"
     },
@@ -18725,6 +18737,326 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "position": 1,
+      "name": "observation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "position": 2,
+      "name": "policy_version",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "position": 3,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "position": 4,
+      "name": "provider_account_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "position": 5,
+      "name": "environment",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "position": 6,
+      "name": "observation",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "position": 7,
+      "name": "observation_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "position": 8,
+      "name": "source",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": "'CALL'::text",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "position": 9,
+      "name": "probe_generation",
+      "dataType": "positive_version",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "position": 10,
+      "name": "lease_account_version",
+      "dataType": "positive_version",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "position": 11,
+      "name": "recorded_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "position": 1,
+      "name": "provider_account_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "position": 2,
+      "name": "environment",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "position": 3,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "position": 4,
+      "name": "policy_version",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "position": 5,
+      "name": "policy",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "position": 6,
+      "name": "policy_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "position": 7,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 1,
+      "name": "provider_account_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 2,
+      "name": "policy_version",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 3,
+      "name": "environment",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 4,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 5,
+      "name": "failure_count",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 6,
+      "name": "window_started_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 7,
+      "name": "generation",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 8,
+      "name": "probe_due_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 9,
+      "name": "probe_context",
+      "dataType": "jsonb",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 10,
+      "name": "probe_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 11,
+      "name": "probe_expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 12,
+      "name": "lease_account_version",
+      "dataType": "positive_version",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 13,
+      "name": "lease_policy_version",
+      "dataType": "integer",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "payment_provider_health_state",
+      "position": 14,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
       "identity": "",
       "generation": ""
     },
@@ -47689,6 +48021,462 @@
       "initiallyDeferred": false
     },
     {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_obser_provider_account_id_environm_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (provider_account_id, environment, policy_version) REFERENCES payment_provider_health_policies(provider_account_id, environment, policy_version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observatio_provider_account_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL provider_account_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_check",
+      "kind": "CHECK",
+      "definition": "CHECK (source = 'CALL'::text AND probe_generation IS NULL AND lease_account_version IS NULL OR source = 'PROBE'::text AND probe_generation IS NOT NULL AND lease_account_version IS NOT NULL AND (observation ->> 'operation'::text) = 'GET_CAPABILITIES'::text AND (observation -> 'probeContext'::text) <> 'null'::jsonb)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (observation_hash::text = encode(sha256(convert_to(canonical_publication_json(observation), 'UTF8'::name)), 'hex'::text))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_check2",
+      "kind": "CHECK",
+      "definition": "CHECK (((observation -> 'schemaVersion'::text) = '1'::jsonb AND (observation ->> 'observationId'::text) = observation_id::text AND (observation ->> 'providerAccountId'::text) = provider_account_id::text AND (observation ->> 'environment'::text) = environment) IS TRUE)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_check3",
+      "kind": "CHECK",
+      "definition": "CHECK (((observation -> 'probeContext'::text) = 'null'::jsonb OR (observation ->> 'operation'::text) = 'GET_CAPABILITIES'::text AND payment_health_context_is_safe(observation -> 'probeContext'::text) AND (((observation -> 'probeContext'::text) -> 'command'::text) ->> 'providerAccountId'::text) = provider_account_id::text AND (((observation -> 'probeContext'::text) -> 'command'::text) ->> 'environment'::text) = environment) IS TRUE)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_environment_check",
+      "kind": "CHECK",
+      "definition": "CHECK (environment = ANY (ARRAY['TEST'::text, 'LIVE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_environment_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL environment",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_observation_check",
+      "kind": "CHECK",
+      "definition": "CHECK (jsonb_typeof(observation) = 'object'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_observation_check1",
+      "kind": "CHECK",
+      "definition": "CHECK ((observation - ARRAY['schemaVersion'::text, 'observationId'::text, 'providerAccountId'::text, 'environment'::text, 'operation'::text, 'classification'::text, 'code'::text, 'probeContext'::text]) = '{}'::jsonb)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_observation_check2",
+      "kind": "CHECK",
+      "definition": "CHECK ((((observation ->> 'operation'::text) = ANY (ARRAY['GET_CAPABILITIES'::text, 'CREATE_PAYMENT'::text, 'GET_PAYMENT'::text, 'CANCEL_PAYMENT'::text, 'REFUND_PAYMENT'::text, 'RECONCILE_PAYMENT'::text, 'RECONCILE_REFUND'::text])) AND ((observation ->> 'classification'::text) = ANY (ARRAY['SUCCESS'::text, 'TECHNICAL_FAILURE'::text, 'BUSINESS_OUTCOME'::text, 'CONFIGURATION_ERROR'::text]))) IS TRUE)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_observation_check3",
+      "kind": "CHECK",
+      "definition": "CHECK (\nCASE observation ->> 'classification'::text\n    WHEN 'SUCCESS'::text THEN (observation -> 'code'::text) = 'null'::jsonb\n    WHEN 'TECHNICAL_FAILURE'::text THEN (observation ->> 'code'::text) = ANY (ARRAY['RATE_LIMITED'::text, 'TEMPORARY_UNAVAILABLE'::text, 'TIMEOUT_OUTCOME_UNKNOWN'::text, 'MALFORMED_PROVIDER_RESPONSE'::text, 'UNEXPECTED_ADAPTER_FAILURE'::text])\n    WHEN 'BUSINESS_OUTCOME'::text THEN (observation -> 'code'::text) = 'null'::jsonb OR ((observation ->> 'code'::text) = ANY (ARRAY['CAPABILITY_UNAVAILABLE'::text, 'PAYMENT_NOT_FOUND'::text, 'REFUND_NOT_FOUND'::text, 'PROVIDER_DECLINED'::text]))\n    WHEN 'CONFIGURATION_ERROR'::text THEN (observation ->> 'code'::text) = ANY (ARRAY['INVALID_COMMAND'::text, 'IDEMPOTENCY_CONFLICT'::text, 'INVALID_SIGNATURE'::text, 'EVENT_OUTSIDE_TOLERANCE'::text, 'UNSUPPORTED_EVENT'::text, 'AUTHENTICATION_FAILED'::text, 'CONFIGURATION_ERROR'::text])\n    ELSE false\nEND IS TRUE)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_observation_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL observation_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_observation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL observation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_observation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL observation",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (observation_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_policy_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL policy_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_recorded_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL recorded_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_source_check",
+      "kind": "CHECK",
+      "definition": "CHECK (source = ANY (ARRAY['CALL'::text, 'PROBE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_source_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL source",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_polic_provider_account_id_environm_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (provider_account_id, environment) REFERENCES payment_provider_accounts(id, environment)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_check",
+      "kind": "CHECK",
+      "definition": "CHECK (policy_hash::text = encode(sha256(convert_to(canonical_publication_json(policy), 'UTF8'::name)), 'hex'::text))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (((policy ->> 'schemaVersion'::text) = '1'::text AND (policy ->> 'providerAccountId'::text) = provider_account_id::text AND (policy ->> 'environment'::text) = environment AND (policy ->> 'version'::text) = policy_version::text) IS TRUE)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_environment_check",
+      "kind": "CHECK",
+      "definition": "CHECK (environment = ANY (ARRAY['TEST'::text, 'LIVE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_environment_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL environment",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (provider_account_id, environment, policy_version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_policy_check",
+      "kind": "CHECK",
+      "definition": "CHECK (jsonb_typeof(policy) = 'object'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_policy_check1",
+      "kind": "CHECK",
+      "definition": "CHECK ((policy -> 'schemaVersion'::text) = '1'::jsonb AND jsonb_typeof(policy -> 'version'::text) = 'number'::text AND jsonb_typeof(policy -> 'failureThreshold'::text) = 'number'::text AND jsonb_typeof(policy -> 'failureWindowMs'::text) = 'number'::text AND jsonb_typeof(policy -> 'openDurationMs'::text) = 'number'::text AND jsonb_typeof(policy -> 'probeLeaseMs'::text) = 'number'::text AND jsonb_typeof(policy -> 'probeRetryMs'::text) = 'number'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_policy_check2",
+      "kind": "CHECK",
+      "definition": "CHECK ((policy - ARRAY['schemaVersion'::text, 'providerAccountId'::text, 'environment'::text, 'version'::text, 'failureThreshold'::text, 'failureWindowMs'::text, 'openDurationMs'::text, 'probeLeaseMs'::text, 'probeRetryMs'::text]) = '{}'::jsonb)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_policy_check3",
+      "kind": "CHECK",
+      "definition": "CHECK ((((policy ->> 'failureThreshold'::text)::integer) >= 1 AND ((policy ->> 'failureThreshold'::text)::integer) <= 100 AND ((policy ->> 'failureWindowMs'::text)::integer) >= 1000 AND ((policy ->> 'failureWindowMs'::text)::integer) <= 3600000 AND ((policy ->> 'openDurationMs'::text)::integer) >= 1000 AND ((policy ->> 'openDurationMs'::text)::integer) <= 86400000 AND ((policy ->> 'probeLeaseMs'::text)::integer) >= 1000 AND ((policy ->> 'probeLeaseMs'::text)::integer) <= 120000 AND ((policy ->> 'probeRetryMs'::text)::integer) >= 1000 AND ((policy ->> 'probeRetryMs'::text)::integer) <= 86400000) IS TRUE)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_policy_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL policy_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_policy_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL policy",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_policy_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (policy_version >= 1 AND policy_version <= 2147483647)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_policy_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL policy_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_provider_account_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL provider_account_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_check",
+      "kind": "CHECK",
+      "definition": "CHECK (probe_context IS NULL OR ((probe_context -> 'command'::text) ->> 'providerAccountId'::text) = provider_account_id::text AND ((probe_context -> 'command'::text) ->> 'environment'::text) = environment)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (failure_count = 0 AND window_started_at IS NULL OR failure_count > 0 AND window_started_at IS NOT NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_check2",
+      "kind": "CHECK",
+      "definition": "CHECK (probe_id IS NULL AND probe_expires_at IS NULL AND lease_account_version IS NULL AND lease_policy_version IS NULL OR probe_id IS NOT NULL AND probe_expires_at IS NOT NULL AND lease_account_version IS NOT NULL AND lease_policy_version IS NOT NULL AND probe_context IS NOT NULL AND probe_due_at IS NOT NULL AND generation > 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_environment_check",
+      "kind": "CHECK",
+      "definition": "CHECK (environment = ANY (ARRAY['TEST'::text, 'LIVE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_environment_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL environment",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_failure_count_check",
+      "kind": "CHECK",
+      "definition": "CHECK (failure_count >= 0 AND failure_count <= 100)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_failure_count_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL failure_count",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_generation_check",
+      "kind": "CHECK",
+      "definition": "CHECK (generation >= 0 AND generation <= '9007199254740991'::bigint)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_generation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL generation",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (provider_account_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_policy_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL policy_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_probe_context_check",
+      "kind": "CHECK",
+      "definition": "CHECK (probe_context IS NULL OR payment_health_context_is_safe(probe_context))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_provider_account_id_environm_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (provider_account_id, environment, policy_version) REFERENCES payment_provider_health_policies(provider_account_id, environment, policy_version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_provider_account_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL provider_account_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "payment_reconcile_receipts",
       "name": "payment_reconcile_receipt_validate",
       "kind": "CONSTRAINT_TRIGGER",
@@ -57298,6 +58086,42 @@
       "valid": true
     },
     {
+      "table": "payment_provider_health_observations",
+      "name": "payment_provider_health_observations_pkey",
+      "definition": "CREATE UNIQUE INDEX payment_provider_health_observations_pkey ON public.payment_provider_health_observations USING btree (observation_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_provider_health_policies_pkey",
+      "definition": "CREATE UNIQUE INDEX payment_provider_health_policies_pkey ON public.payment_provider_health_policies USING btree (provider_account_id, environment, policy_version)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_due",
+      "definition": "CREATE INDEX payment_provider_health_due ON public.payment_provider_health_state USING btree (probe_due_at, provider_account_id) WHERE (probe_due_at IS NOT NULL)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_provider_health_state_pkey",
+      "definition": "CREATE UNIQUE INDEX payment_provider_health_state_pkey ON public.payment_provider_health_state USING btree (provider_account_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "payment_reconcile_receipts",
       "name": "payment_reconcile_receipts_audit_log_id_key",
       "definition": "CREATE UNIQUE INDEX payment_reconcile_receipts_audit_log_id_key ON public.payment_reconcile_receipts USING btree (audit_log_id)",
@@ -61437,6 +62261,48 @@
       "enabled": "O"
     },
     {
+      "table": "payment_provider_health_observations",
+      "name": "payment_health_observations_immutable",
+      "definition": "CREATE TRIGGER payment_health_observations_immutable BEFORE DELETE OR UPDATE ON payment_provider_health_observations FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_provider_health_observations",
+      "name": "payment_health_observations_no_truncate",
+      "definition": "CREATE TRIGGER payment_health_observations_no_truncate BEFORE TRUNCATE ON payment_provider_health_observations FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_health_policies_immutable",
+      "definition": "CREATE TRIGGER payment_health_policies_immutable BEFORE DELETE OR UPDATE ON payment_provider_health_policies FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_provider_health_policies",
+      "name": "payment_health_policies_no_truncate",
+      "definition": "CREATE TRIGGER payment_health_policies_no_truncate BEFORE TRUNCATE ON payment_provider_health_policies FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_health_state_identity",
+      "definition": "CREATE TRIGGER payment_health_state_identity BEFORE UPDATE ON payment_provider_health_state FOR EACH ROW EXECUTE FUNCTION guard_immutable_columns('provider_account_id', 'environment', 'schema_version')",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_health_state_no_delete",
+      "definition": "CREATE TRIGGER payment_health_state_no_delete BEFORE DELETE ON payment_provider_health_state FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_provider_health_state",
+      "name": "payment_health_state_no_truncate",
+      "definition": "CREATE TRIGGER payment_health_state_no_truncate BEFORE TRUNCATE ON payment_provider_health_state FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "payment_reconcile_receipts",
       "name": "payment_reconcile_receipt_validate",
       "definition": "CREATE CONSTRAINT TRIGGER payment_reconcile_receipt_validate AFTER INSERT ON payment_reconcile_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_payment_reconcile_receipt()",
@@ -63184,7 +64050,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.assert_payment_runtime_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE a public.payment_attempts%ROWTYPE; o public.orders%ROWTYPE; operation public.payment_runtime_operations%ROWTYPE; valid boolean;\nBEGIN\n  SELECT * INTO a FROM public.payment_attempts WHERE id=NEW.attempt_id;\n  SELECT * INTO o FROM public.orders WHERE id=a.order_id FOR UPDATE;\n  SELECT * INTO operation FROM public.payment_runtime_operations WHERE id=NEW.operation_id;\n  SELECT true INTO valid FROM public.carts c JOIN public.checkout_sessions session ON session.id=NEW.checkout_session_id AND session.cart_id=c.id\n    JOIN public.payment_route_rules rule ON rule.id=a.route_rule_id AND rule.provider_account_id=a.provider_account_id AND rule.config_version_id=a.config_version_id AND rule.rule_version=a.rule_version AND rule.payment_method=a.payment_method\n    JOIN public.payment_provider_configs config ON config.id=rule.provider_config_id AND config.config_version_id=a.config_version_id\n    JOIN public.payment_provider_accounts account ON account.id=a.provider_account_id AND account.environment=a.environment\n    JOIN public.merchant_entities merchant ON merchant.id=account.merchant_entity_id\n    JOIN public.payment_config_publication_heads head ON head.publication_id=NEW.config_publication_id AND head.config_version_id=a.config_version_id AND head.config_version=a.config_version\n    WHERE c.id=NEW.cart_id AND c.id=o.cart_id AND c.status='LOCKED' AND c.locked_order_id=o.id AND c.expires_at>NEW.created_at\n      AND session.id=o.checkout_session_id AND session.quote_id=o.checkout_quote_id AND session.quote_expires_at>NEW.created_at\n      AND session.status IN('READY','PAYMENT_PENDING') AND o.quote_expires_at>NEW.created_at AND o.order_status='PENDING_PAYMENT' AND o.payment_status='PENDING'\n      AND o.current_payment_attempt_id=a.id AND o.version=NEW.original_order_version+1\n      AND a.status='CREATED' AND a.version=1 AND NOT a.provider_call_started AND a.external_reference IS NULL AND a.created_at=NEW.created_at\n      AND a.amount_minor=o.total_amount_minor AND a.currency=o.currency AND a.requested_locale=o.presentation_locale\n      AND operation.attempt_id=a.id AND operation.phase='CREATE' AND operation.generation=1 AND operation.created_at=NEW.created_at\n      AND operation.request_id=NEW.request_id AND operation.correlation_id=NEW.correlation_id\n      AND account.status IN('INTERNAL','ACTIVE') AND account.health_status='HEALTHY' AND merchant.status='ACTIVE'\n      AND rule.enabled AND config.enabled AND rule.rollout_basis_points=10000 AND config.rollout_basis_points=10000\n      AND a.amount_minor BETWEEN rule.minimum_amount_minor AND rule.maximum_amount_minor\n      AND EXISTS(SELECT 1 FROM public.payment_route_rule_countries WHERE payment_route_rule_id=rule.id AND country=NEW.country)\n      AND EXISTS(SELECT 1 FROM public.payment_route_rule_markets WHERE payment_route_rule_id=rule.id AND market=o.market)\n      AND EXISTS(SELECT 1 FROM public.payment_route_rule_currencies WHERE payment_route_rule_id=rule.id AND currency=o.currency)\n      AND NOT EXISTS(SELECT 1 FROM public.payment_route_rule_device_capabilities d WHERE d.payment_route_rule_id=rule.id AND NOT NEW.supported_action_types ? d.capability);\n  IF COALESCE(valid,false)=false OR (\n    NEW.create_command->>'attemptId'=a.id::text AND NEW.create_command->>'orderId'=a.order_id::text\n    AND NEW.create_command->>'merchantReference'=a.id::text AND NEW.create_command->>'providerIdempotencyKey'=a.id::text\n    AND NEW.create_command->>'providerAccountId'=a.provider_account_id::text AND NEW.create_command->>'environment'=a.environment\n    AND NEW.create_command->>'amountMinor'=a.amount_minor::text AND NEW.create_command->>'currency'=a.currency\n    AND NEW.create_command->>'requestedLocale'=a.requested_locale AND NEW.create_command->>'paymentMethod'=a.payment_method\n  ) IS NOT TRUE OR EXISTS(SELECT 1 FROM jsonb_array_elements_text(NEW.supported_action_types) AS selected(action) WHERE action NOT IN('REDIRECT','PROVIDER_HOSTED_IFRAME','PROVIDER_COMPONENT','QR_CODE'))\n    OR (SELECT count(DISTINCT action) FROM jsonb_array_elements_text(NEW.supported_action_types) AS selected(action))<>jsonb_array_length(NEW.supported_action_types) THEN\n    RAISE EXCEPTION 'payment create receipt must bind its exact authorized checkout and route' USING ERRCODE='23514';\n  END IF;\n  IF EXISTS(SELECT 1 FROM public.order_items item JOIN public.gift_variants variant ON variant.id=item.gift_variant_id JOIN public.support_intents intent ON intent.id=item.support_intent_id\n    WHERE item.order_id=o.id AND (intent.status<>'CHECKOUT_LOCKED' OR intent.privacy_state<>'ACTIVE' OR intent.expires_at<=NEW.created_at\n      OR (variant.inventory_policy='TRACKED' AND (\n        (SELECT count(*) FROM public.inventory_reservations r WHERE r.checkout_session_id=o.checkout_session_id AND r.cart_item_id=item.cart_item_id AND r.status='ACTIVE')<>1\n        OR NOT EXISTS(SELECT 1 FROM public.inventory_reservations r WHERE r.checkout_session_id=o.checkout_session_id AND r.checkout_quote_id=o.checkout_quote_id AND r.cart_item_id=item.cart_item_id AND r.gift_variant_id=item.gift_variant_id AND r.locked_order_id=o.id AND r.quantity=item.quantity AND r.status='ACTIVE' AND r.expires_at>NEW.created_at)))\n      OR (variant.inventory_policy<>'TRACKED' AND EXISTS(SELECT 1 FROM public.inventory_reservations r WHERE r.checkout_session_id=o.checkout_session_id AND r.cart_item_id=item.cart_item_id))\n    )) THEN RAISE EXCEPTION 'new payment requires the exact valid checkout reservations and intents' USING ERRCODE='23514'; END IF;\n  RETURN NULL;\nEND; $function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_payment_runtime_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE a public.payment_attempts%ROWTYPE; o public.orders%ROWTYPE; operation public.payment_runtime_operations%ROWTYPE; valid boolean;\nBEGIN\n  SELECT * INTO a FROM public.payment_attempts WHERE id=NEW.attempt_id;\n  SELECT * INTO o FROM public.orders WHERE id=a.order_id FOR UPDATE;\n  SELECT * INTO operation FROM public.payment_runtime_operations WHERE id=NEW.operation_id;\n  SELECT true INTO valid FROM public.carts c JOIN public.checkout_sessions session ON session.id=NEW.checkout_session_id AND session.cart_id=c.id\n    JOIN public.payment_route_rules rule ON rule.id=a.route_rule_id AND rule.provider_account_id=a.provider_account_id AND rule.config_version_id=a.config_version_id AND rule.rule_version=a.rule_version AND rule.payment_method=a.payment_method\n    JOIN public.payment_provider_configs config ON config.id=rule.provider_config_id AND config.config_version_id=a.config_version_id\n    JOIN public.payment_provider_accounts account ON account.id=a.provider_account_id AND account.environment=a.environment\n    JOIN public.merchant_entities merchant ON merchant.id=account.merchant_entity_id\n    JOIN public.payment_config_publication_heads head ON head.publication_id=NEW.config_publication_id AND head.config_version_id=a.config_version_id AND head.config_version=a.config_version\n    WHERE c.id=NEW.cart_id AND c.id=o.cart_id AND c.status='LOCKED' AND c.locked_order_id=o.id AND c.expires_at>NEW.created_at\n      AND session.id=o.checkout_session_id AND session.quote_id=o.checkout_quote_id AND session.quote_expires_at>NEW.created_at\n      AND session.status IN('READY','PAYMENT_PENDING') AND o.quote_expires_at>NEW.created_at AND o.order_status='PENDING_PAYMENT' AND o.payment_status='PENDING'\n      AND o.current_payment_attempt_id=a.id AND o.version=NEW.original_order_version+1\n      AND a.status='CREATED' AND a.version=1 AND NOT a.provider_call_started AND a.external_reference IS NULL AND a.created_at=NEW.created_at\n      AND a.amount_minor=o.total_amount_minor AND a.currency=o.currency AND a.requested_locale=o.presentation_locale\n      AND operation.attempt_id=a.id AND operation.phase='CREATE' AND operation.generation=1 AND operation.created_at=NEW.created_at\n      AND operation.request_id=NEW.request_id AND operation.correlation_id=NEW.correlation_id\n      AND account.status IN('INTERNAL','ACTIVE') AND account.health_status='HEALTHY' AND merchant.status='ACTIVE'\n      AND rule.enabled AND config.enabled AND public.payment_rollout_bucket_v1('rule',session.id,rule.id)<rule.rollout_basis_points AND public.payment_rollout_bucket_v1('provider',session.id,account.id)<config.rollout_basis_points\n      AND a.amount_minor BETWEEN rule.minimum_amount_minor AND rule.maximum_amount_minor\n      AND EXISTS(SELECT 1 FROM public.payment_route_rule_countries WHERE payment_route_rule_id=rule.id AND country=NEW.country)\n      AND EXISTS(SELECT 1 FROM public.payment_route_rule_markets WHERE payment_route_rule_id=rule.id AND market=o.market)\n      AND EXISTS(SELECT 1 FROM public.payment_route_rule_currencies WHERE payment_route_rule_id=rule.id AND currency=o.currency)\n      AND NOT EXISTS(SELECT 1 FROM public.payment_route_rule_device_capabilities d WHERE d.payment_route_rule_id=rule.id AND NOT NEW.supported_action_types ? d.capability);\n  IF COALESCE(valid,false)=false OR (\n    NEW.create_command->>'attemptId'=a.id::text AND NEW.create_command->>'orderId'=a.order_id::text\n    AND NEW.create_command->>'merchantReference'=a.id::text AND NEW.create_command->>'providerIdempotencyKey'=a.id::text\n    AND NEW.create_command->>'providerAccountId'=a.provider_account_id::text AND NEW.create_command->>'environment'=a.environment\n    AND NEW.create_command->>'amountMinor'=a.amount_minor::text AND NEW.create_command->>'currency'=a.currency\n    AND NEW.create_command->>'requestedLocale'=a.requested_locale AND NEW.create_command->>'paymentMethod'=a.payment_method\n  ) IS NOT TRUE OR EXISTS(SELECT 1 FROM jsonb_array_elements_text(NEW.supported_action_types) AS selected(action) WHERE action NOT IN('REDIRECT','PROVIDER_HOSTED_IFRAME','PROVIDER_COMPONENT','QR_CODE'))\n    OR (SELECT count(DISTINCT action) FROM jsonb_array_elements_text(NEW.supported_action_types) AS selected(action))<>jsonb_array_length(NEW.supported_action_types) THEN\n    RAISE EXCEPTION 'payment create receipt must bind its exact authorized checkout and route' USING ERRCODE='23514';\n  END IF;\n  IF EXISTS(SELECT 1 FROM public.order_items item JOIN public.gift_variants variant ON variant.id=item.gift_variant_id JOIN public.support_intents intent ON intent.id=item.support_intent_id\n    WHERE item.order_id=o.id AND (intent.status<>'CHECKOUT_LOCKED' OR intent.privacy_state<>'ACTIVE' OR intent.expires_at<=NEW.created_at\n      OR (variant.inventory_policy='TRACKED' AND (\n        (SELECT count(*) FROM public.inventory_reservations r WHERE r.checkout_session_id=o.checkout_session_id AND r.cart_item_id=item.cart_item_id AND r.status='ACTIVE')<>1\n        OR NOT EXISTS(SELECT 1 FROM public.inventory_reservations r WHERE r.checkout_session_id=o.checkout_session_id AND r.checkout_quote_id=o.checkout_quote_id AND r.cart_item_id=item.cart_item_id AND r.gift_variant_id=item.gift_variant_id AND r.locked_order_id=o.id AND r.quantity=item.quantity AND r.status='ACTIVE' AND r.expires_at>NEW.created_at)))\n      OR (variant.inventory_policy<>'TRACKED' AND EXISTS(SELECT 1 FROM public.inventory_reservations r WHERE r.checkout_session_id=o.checkout_session_id AND r.cart_item_id=item.cart_item_id))\n    )) THEN RAISE EXCEPTION 'new payment requires the exact valid checkout reservations and intents' USING ERRCODE='23514'; END IF;\n  RETURN NULL;\nEND; $function$"
     },
     {
       "name": "assert_payment_state_event_outbox",
@@ -64205,6 +65071,26 @@
       "volatility": "STABLE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.notification_source_authority(source_id uuid)\n RETURNS TABLE(order_id uuid, event_type text, event_rank integer, source_sequence bigint)\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n  SELECT o.id,'PAYMENT_CONFIRMED'::text,1,e.sequence\n  FROM public.outbox_events x JOIN public.orders o ON o.id=x.aggregate_id\n  JOIN public.order_events e ON e.order_id=o.id AND e.sequence=x.aggregate_version\n    AND e.request_id=x.request_id AND e.correlation_id=x.correlation_id AND e.occurred_at=x.occurred_at\n    AND e.to_payment_status='PAID' AND e.to_payment_attempt_id=x.secondary_subject_id\n  JOIN public.order_payment_application_receipts receipt ON receipt.order_id=o.id\n    AND receipt.attempt_id=e.to_payment_attempt_id AND receipt.provider_event_id=e.provider_event_id\n    AND receipt.provider_event_id=receipt.canonical_provider_event_id\n    AND receipt.decision='APPLIED' AND receipt.outcome IN('PAID','PAID_REVIEW')\n  JOIN public.provider_events evidence ON evidence.id=receipt.provider_event_id\n    AND evidence.canonical_transaction_event_id IS NULL AND evidence.normalized_status='SUCCEEDED'\n  JOIN public.payment_transactions ledger ON ledger.provider_event_id=evidence.id\n    AND ledger.payment_attempt_id=receipt.attempt_id AND ledger.transaction_type='CAPTURE'\n    AND ledger.currency=o.currency AND ledger.amount_minor=o.total_amount_minor\n  WHERE x.id=source_id AND x.event_type='ORDER_PAYMENT_CONFIRMED'\n    AND x.primary_subject_id=o.id AND x.locale=o.presentation_locale\n    AND x.market=o.market AND x.currency=o.currency\n  UNION ALL\n  SELECT o.id,e.to_status,CASE e.to_status WHEN 'PREPARING' THEN 2 ELSE 3 END,e.sequence\n  FROM public.outbox_events x JOIN public.fulfillment_events e ON e.fulfillment_id=x.aggregate_id\n    AND e.order_id=x.secondary_subject_id AND e.sequence=x.aggregate_version\n    AND e.request_id=x.request_id AND e.correlation_id=x.correlation_id AND e.occurred_at=x.occurred_at\n    AND e.to_status=x.payload_status\n  JOIN public.orders o ON o.id=e.order_id\n  WHERE x.id=source_id AND x.event_type='FULFILLMENT_STATUS_CHANGED' AND e.to_status IN('PREPARING','DELIVERED')\n    AND x.primary_subject_id=e.fulfillment_id AND x.locale=o.presentation_locale\n    AND x.market=o.market AND x.currency=o.currency\n    AND EXISTS(SELECT 1 FROM public.order_payment_application_receipts paid WHERE paid.order_id=o.id AND paid.provider_event_id=paid.canonical_provider_event_id AND paid.decision='APPLIED' AND paid.outcome IN('PAID','PAID_REVIEW'))\n    AND EXISTS(SELECT 1 FROM public.order_events oe WHERE oe.order_id=o.id\n      AND oe.to_fulfillment_status=e.to_status AND oe.occurred_at<=e.occurred_at)\n$function$"
+    },
+    {
+      "name": "payment_health_context_is_safe",
+      "identityArguments": "value jsonb",
+      "resultType": "boolean",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.payment_health_context_is_safe(value jsonb)\n RETURNS boolean\n LANGUAGE sql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT COALESCE(CASE WHEN jsonb_typeof(value)='object' AND jsonb_typeof(value->'command')='object' AND jsonb_typeof(value->'command'->'supportedActionTypes')='array' THEN\n  (value-ARRAY['schemaVersion','routeId','configVersion','ruleVersion','command'])='{}'::jsonb\n  AND value->'schemaVersion'='1'::jsonb AND jsonb_typeof(value->'routeId')='string' AND (value->>'routeId')::uuid IS NOT NULL\n  AND jsonb_typeof(value->'configVersion')='number' AND (value->>'configVersion')::numeric BETWEEN 1 AND 2147483647 AND (value->>'configVersion')::numeric=trunc((value->>'configVersion')::numeric)\n  AND jsonb_typeof(value->'ruleVersion')='number' AND (value->>'ruleVersion')::numeric BETWEEN 1 AND 2147483647 AND (value->>'ruleVersion')::numeric=trunc((value->>'ruleVersion')::numeric)\n  AND ((value->'command')-ARRAY['schemaVersion','operation','providerAccountId','environment','market','country','currency','amountMinor','requestedLocale','supportedActionTypes'])='{}'::jsonb\n  AND value->'command'->'schemaVersion'='1'::jsonb AND value->'command'->>'operation'='GET_CAPABILITIES'\n  AND jsonb_typeof(value->'command'->'providerAccountId')='string' AND (value->'command'->>'providerAccountId')::uuid IS NOT NULL\n  AND value->'command'->>'environment' IN('TEST','LIVE')\n  AND jsonb_typeof(value->'command'->'market')='string' AND (value->'command'->>'market')::public.market_code IS NOT NULL\n  AND jsonb_typeof(value->'command'->'country')='string' AND (value->'command'->>'country')::public.country_code IS NOT NULL\n  AND jsonb_typeof(value->'command'->'currency')='string' AND (value->'command'->>'currency')::public.currency_code IS NOT NULL\n  AND jsonb_typeof(value->'command'->'requestedLocale')='string' AND (value->'command'->>'requestedLocale')::public.supported_locale IS NOT NULL\n  AND jsonb_typeof(value->'command'->'amountMinor')='number' AND (value->'command'->>'amountMinor')::numeric BETWEEN 0 AND 9007199254740991 AND (value->'command'->>'amountMinor')::numeric=trunc((value->'command'->>'amountMinor')::numeric)\n  AND jsonb_array_length(value->'command'->'supportedActionTypes') BETWEEN 1 AND 5\n  AND NOT EXISTS(SELECT 1 FROM jsonb_array_elements(value->'command'->'supportedActionTypes') action WHERE jsonb_typeof(action)<>'string' OR action#>>'{}' NOT IN('REDIRECT','PROVIDER_HOSTED_IFRAME','PROVIDER_COMPONENT','QR_CODE','WAIT'))\n  AND (SELECT count(DISTINCT action) FROM jsonb_array_elements(value->'command'->'supportedActionTypes') action)=jsonb_array_length(value->'command'->'supportedActionTypes')\n ELSE false END,false)\n$function$"
+    },
+    {
+      "name": "payment_rollout_bucket_v1",
+      "identityArguments": "scope text, checkout uuid, target uuid",
+      "resultType": "integer",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.payment_rollout_bucket_v1(scope text, checkout uuid, target uuid)\n RETURNS integer\n LANGUAGE plpgsql\n IMMUTABLE PARALLEL SAFE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  bytes bytea;\n  hash bigint := 2166136261;\n  byte_index integer;\n  mix_round integer;\nBEGIN\n  IF scope NOT IN ('provider','rule') THEN\n    RAISE EXCEPTION 'Invalid payment rollout scope' USING ERRCODE='22023';\n  END IF;\n  bytes := convert_to('payment-rollout:v1:'||scope||':'||checkout::text||':'||target::text,'UTF8');\n  FOR byte_index IN 0..octet_length(bytes)-1 LOOP\n    hash := mod((hash # get_byte(bytes,byte_index))::numeric * 16777619,4294967296)::bigint;\n  END LOOP;\n  FOR mix_round IN 1..2 LOOP\n    hash := mod((hash # (hash >> 16))::numeric * 73244475,4294967296)::bigint;\n  END LOOP;\n  RETURN ((hash # (hash >> 16)) % 10000)::integer;\nEND;\n$function$"
     },
     {
       "name": "publication_approval",

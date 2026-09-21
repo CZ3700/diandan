@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "maximumCheckouts": 30,
+  "cohorts": [
+    {
+      "ordinal": 1,
+      "schemaVersion": 1,
+      "algorithmVersion": 1,
+      "kind": "ELIGIBLE",
+      "providerBucket": 3295,
+      "ruleBucket": 4168
+    },
+    {
+      "ordinal": 2,
+      "schemaVersion": 1,
+      "algorithmVersion": 1,
+      "kind": "EXCLUDED",
+      "providerBucket": 9039,
+      "ruleBucket": 5250
+    }
+  ],
+  "actualRollout": {
+    "provider": 10000,
+    "rule": 5000
+  }
+}

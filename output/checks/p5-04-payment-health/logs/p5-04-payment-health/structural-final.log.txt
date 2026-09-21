@@ -1,0 +1,45 @@
+{"command":"node","args":["--test","scripts/check-adapter-boundaries.test.mjs"]}
+✔ payment gateway remains an outer adapter and cannot be imported by application (170.633125ms)
+✔ accepts pure inner layers and ignores private adapter declarations (8.447125ms)
+✔ allows the frozen webhook parser only in compatibility packages (15.708417ms)
+✔ allows the current webhook verifier path in production code (10.719459ms)
+✔ rejects legacy webhook imports and calls from production code (11.941083ms)
+✔ rejects provider imports from inner-layer source (8.338292ms)
+✔ rejects relative imports that escape an inner package into an adapter (9.184083ms)
+✔ rejects absolute filesystem imports from an inner package (7.971208ms)
+✔ allows relative imports that stay inside an inner package (7.264375ms)
+✔ rejects provider imports from non-port domain modules (9.440584ms)
+✔ rejects provider dependencies declared by inner packages (6.648375ms)
+✔ allows only the reviewed font assets in the design-token package (8.8ms)
+✔ allows React, CVA and Base UI only in the reviewed ui package (9.70925ms)
+✔ keeps the ui portability exception package-scoped and provider-free (8.814208ms)
+✔ allows the reviewed ICU formatter in i18n manifests, source and declarations (7.985667ms)
+✔ keeps the ICU formatter forbidden in domain and content (8.757458ms)
+✔ keeps real provider SDKs and provider aliases forbidden in i18n (7.555167ms)
+✔ rejects font-package scope expansion and alias bypasses (8.445667ms)
+✔ rejects known adapter imports and dependencies from inner-layer packages (6.989583ms)
+✔ allows real inner workspace dependencies and rejects invented workspace names (7.587583ms)
+✔ rejects unreviewed DefinitelyTyped packages from inner layers (6.325042ms)
+✔ rejects an unreviewed supplier SDK even when it is not hard-coded (7.531125ms)
+✔ rejects unscoped and scoped supplier targets hidden behind npm aliases (6.975083ms)
+✔ rejects malformed npm aliases instead of silently accepting them (6.858167ms)
+✔ rejects provider imports from emitted inner-layer declarations (6.988833ms)
+✔ rejects provider types through a transitive adapter root export (6.712042ms)
+✔ follows triple-slash path references from public adapter declarations (7.586375ms)
+✔ checks direct declaration exports and typesVersions targets (7.879ms)
+✔ checks every nested exports types target including public subpaths and arrays (6.833417ms)
+✔ checks both package types and typings declaration roots (7.154209ms)
+✔ rejects malformed or package-escaping public types targets (6.516ms)
+✔ rejects provider types through a workspace adapter re-export (7.952667ms)
+✔ requires self-test wiring and declaration validation after build (6.022792ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 470.1785
+{"command":"node","args":["scripts/check-adapter-boundaries.mjs"]}
+Adapter boundary validation failed:
+- packages/payment-gateway/src/conformance.test.ts:299:35 uses forbidden legacy webhook surface VERIFY_AND_PARSE_WEBHOOK

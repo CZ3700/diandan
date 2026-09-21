@@ -89,6 +89,36 @@ test("filters actual capabilities without advertising methods or hosted actions 
     error: { code: "CAPABILITY_UNAVAILABLE" },
   });
 });
+test("an authenticated empty capability list is ordinary unavailability, not a malformed provider response", async () => {
+  const response = {
+    schemaVersion: 1,
+    operation: "GET_CAPABILITIES",
+    outcome: "SUCCESS",
+    value: { capabilities: [] },
+  };
+  const fetcher = vi.fn<typeof fetch>(async () => Response.json(response));
+  expect(await setup(fetcher).getCapabilities(capabilities)).toEqual(response);
+});
+test.each([
+  { ...capability, available: false },
+  { ...capability, minimumAmountMinor: capabilities.amountMinor + 1 },
+])(
+  "a correlated capability unavailable for this quote is a business result",
+  async (entry) => {
+    const fetcher = vi.fn<typeof fetch>(async () =>
+      Response.json({
+        schemaVersion: 1,
+        operation: "GET_CAPABILITIES",
+        outcome: "SUCCESS",
+        value: { capabilities: [entry] },
+      }),
+    );
+    expect(await setup(fetcher).getCapabilities(capabilities)).toMatchObject({
+      outcome: "FAILURE",
+      error: { code: "CAPABILITY_UNAVAILABLE" },
+    });
+  },
+);
 test("invalid account, origin, method, protocol, stablecoin or credentials fail before network", async () => {
   const fetcher = vi.fn<typeof fetch>();
   for (const command of [

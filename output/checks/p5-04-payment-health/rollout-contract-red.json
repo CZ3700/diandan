@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "--filter",
+    "@fan-support/contracts",
+    "test",
+    "src/payment-rollout.test.ts"
+  ],
+  "startedAt": "2026-09-21T18:06:58.616668+00:00",
+  "exitCode": 1,
+  "elapsedSeconds": 2.563
+}

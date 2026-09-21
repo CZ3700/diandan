@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "--filter",
+    "@fan-support/payment-gateway",
+    "test",
+    "src/conformance.test.ts"
+  ],
+  "startedAt": "2026-09-21T17:56:52.809140+00:00",
+  "exitCode": 0,
+  "elapsedSeconds": 1.661
+}

@@ -1,0 +1,55 @@
+$ vitest run --config ../../vitest.config.ts --root . --coverage
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/domain
+      Coverage enabled with v8
+
+ ❯ src/index.test.ts (2 tests | 1 failed) 4ms
+   × exports the complete public domain decision surface 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/index.test.ts > exports the complete public domain decision surface
+AssertionError: expected [ 'advancePaymentHealthWindow', …(22) ] to deeply equal [ 'calculateLineAmounts', …(20) ]
+
+- Expected
++ Received
+
+@@ -1,16 +1,18 @@
+  [
++   "advancePaymentHealthWindow",
+    "calculateLineAmounts",
+    "calculateOrderAmounts",
+    "decideDisputeTransitionCommand",
+    "decideFulfillmentTransitionCommand",
+    "decideIdempotency",
+    "decideOrderLifecycleTransitionCommand",
+    "decideOrderPaymentTransitionCommand",
+    "decidePaymentAttemptTransitionCommand",
+    "decideRefundTransitionCommand",
+    "evaluateGiftEligibility",
++   "evaluatePaymentRollout",
+    "evaluateRefundCapacity",
+    "planCheckoutInventory",
+    "planInventoryReservationCreation",
+    "planInventoryReservationTransition",
+    "planLatePaymentSuccessCommand",
+
+ ❯ src/index.test.ts:10:38
+      8|
+      9| test("exports the complete public domain decision surface", () => {
+     10|   expect(Object.keys(domain).sort()).toEqual([
+       |                                      ^
+     11|     "calculateLineAmounts",
+     12|     "calculateOrderAmounts",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 24 passed (25)
+      Tests  1 failed | 182 passed (183)
+   Start at  01:22:34
+   Duration  1.57s (transform 3.00s, setup 0ms, import 8.77s, tests 777ms, environment 1ms)
+
+/Users/mario/Desktop/下单/packages/domain:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/domain@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . --coverage`
+Exit status 1

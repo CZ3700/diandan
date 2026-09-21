@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "assertions": 108,
+  "setupAssertions": 5761,
+  "realPostgres": true,
+  "realApiHttp": true,
+  "actualTlsTestPsp": true,
+  "actualMerchant": false,
+  "twoInstances": true,
+  "singleRecoveryProbe": 1,
+  "health": {
+    "health_status": "HEALTHY",
+    "version": 5,
+    "events": 5
+  },
+  "observations": 11,
+  "psp": {
+    "payments": 1,
+    "captures": 0,
+    "createCalls": 1,
+    "reconcileCalls": 1
+  },
+  "requests": [
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CREATE_ATTEMPT",
+      "status": 409,
+      "code": "CAPABILITY_UNAVAILABLE"
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CREATE_ATTEMPT",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CREATE_ATTEMPT",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "RECOVER_ATTEMPT",
+      "status": 200,
+      "code": null
+    },
+    {
+      "category": "CAPABILITIES",
+      "status": 200,
+      "code": null
+    }
+  ]
+}

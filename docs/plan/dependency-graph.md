@@ -22,6 +22,17 @@ flowchart LR
 
 2026-09-18 ADR-015：用户确认仅P5-01及其完整验收后的P5-02可本地先行；P3-06/P4-04待续无executor，正常Phase门不变。P5-03至P5-08以及Phase6/7不在例外白名单，不能沿用ADR-014跳过其支付依赖。
 
+2026-09-22 ADR-016：用户接受剩余20项本地排期，当前仅 P5-04 READY。P1-03 已 DONE，P4-04 已验收 TEST runtime/connectors 的适用范围经独立核对。后继按原直接依赖的本地完整实现及非作者验收逐项就绪，不改变下面的完整任务/Phase 退出顺序或最终证据。Phase 6/7 当前仍 LOCKED，满足对应波次条件后才在 MASTER/phase 登记有限本地 ACTIVE 范围，不一次性 READY。
+
+已接受的本地执行顺序（原外部验收全部保留）：
+
+```text
+P5-04 → P5-03（Lane A）/P5-05（Lane C）→ P5-06 → P5-07
+  → P5-08 可离线部分 → P6 可本地部分 → P7 文档/导入与 QA 工具准备
+```
+
+P5-03/P5-05 仅在各自依赖已验收、共享合同冻结和独占文件/Lane 条件成立后并行；其余 Lane D 工作串行。完整范围待外部验收的任务保持 IN_PROGRESS、释放 executor；后继只消费已独立验收的本地成果。详见 ADR-016 和 `remaining-delivery.md`，不授权云 apply、真实资金、正式内容发布或 push。
+
 ```text
 P0-01 → (P0-02 + P0-03) → P0-04 → P0-05 → [Phase 0 Gate]
 
@@ -103,3 +114,7 @@ P0-01 → (P0-02 + P0-03) → P0-04 → P0-05 → [Phase 0 Gate]
 | P4-05 | 订单快照只能兼容新增；历史渲染不能依赖实时商品 |
 | P5-05 | 新规则字段需 validator、审计与 rollback 兼容 |
 | P7-01 | 正式市场/政策变化需重新跑受影响 UAT |
+
+## 2026-09-22 P5-04 本地验收后的接续
+
+P5-04 的全部本地实现、实际PG/HTTP/七语双端与非作者复核通过；正式PSP条件仍保留，Task维持IN_PROGRESS并释放Lane A。P5-03原直接依赖P5-01/P4-05与P4-04已验收本地接口经当前源核对后置READY；P5-05的本地输入已齐，待共享合同与文件归属冻结后按Lane C登记就绪，不同时领取。当前29 DONE / 3 IN_PROGRESS / 1 READY / 16 PENDING=49，Phase6/7仍LOCKED。证据见`output/checks/p5-04-payment-health/final-verification.md`、`final-independent-review.md`和`next-stage-readiness.md`；上方排期登记按当时时点保留，原任务依赖及外部门不变。

@@ -20,8 +20,18 @@ export async function seedPaymentRuntimeConfiguration({
   bindings: inputBindings,
   configuration: inputConfiguration,
   scope: inputScope,
+  rollout = { providerBasisPoints: 10000, ruleBasisPoints: 10000 },
   check,
 }) {
+  if (
+    !rollout ||
+    Object.keys(rollout).sort().join(",") !==
+      "providerBasisPoints,ruleBasisPoints" ||
+    [rollout.providerBasisPoints, rollout.ruleBasisPoints].some(
+      (value) => !Number.isInteger(value) || value < 0 || value > 10000,
+    )
+  )
+    throw new TypeError("Invalid TEST payment rollout");
   const bindings = inputBindings.map((binding) =>
     paymentRuntimeProviderBindingSchema.parse(binding),
   );
@@ -121,13 +131,14 @@ export async function seedPaymentRuntimeConfiguration({
         [randomUUID(), binding.providerAccountId, requestId, correlationId],
       );
       await client.query(
-        "INSERT INTO payment_provider_configs(id,config_version_id,config_version,provider_account_id,enabled,display_order,rollout_basis_points) VALUES($1,$2,$3,$4,true,$5,10000)",
+        "INSERT INTO payment_provider_configs(id,config_version_id,config_version,provider_account_id,enabled,display_order,rollout_basis_points) VALUES($1,$2,$3,$4,true,$5,$6)",
         [
           providerConfigId,
           configVersionId,
           configVersion,
           binding.providerAccountId,
           index,
+          rollout.providerBasisPoints,
         ],
       );
       stage = "complete synthetic translation review sequence";
@@ -168,7 +179,7 @@ export async function seedPaymentRuntimeConfiguration({
       }
       stage = "explicit TEST routing scope";
       await client.query(
-        "INSERT INTO payment_route_rules(id,config_version_id,provider_config_id,provider_account_id,rule_key,rule_version,payment_method,enabled,minimum_amount_minor,maximum_amount_minor,priority,rollout_basis_points) VALUES($1,$2,$3,$4,$5,$6,'fake_card',true,0,100000000,10,10000)",
+        "INSERT INTO payment_route_rules(id,config_version_id,provider_config_id,provider_account_id,rule_key,rule_version,payment_method,enabled,minimum_amount_minor,maximum_amount_minor,priority,rollout_basis_points) VALUES($1,$2,$3,$4,$5,$6,'fake_card',true,0,100000000,10,$7)",
         [
           capabilityId,
           configVersionId,
@@ -176,6 +187,7 @@ export async function seedPaymentRuntimeConfiguration({
           binding.providerAccountId,
           `test.${capabilityId}`,
           ruleVersion,
+          rollout.ruleBasisPoints,
         ],
       );
       await client.query(
@@ -212,6 +224,7 @@ export async function seedPaymentRuntimeConfiguration({
       configVersion,
       ruleVersion,
       scope,
+      rollout,
       storefrontOrigin: configuration.publicStorefrontOrigin,
       providers: routes.map(({ binding, providerConfigId, capabilityId }) => ({
         providerAccountId: binding.providerAccountId,

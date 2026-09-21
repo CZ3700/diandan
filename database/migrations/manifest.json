@@ -320,6 +320,26 @@
         "up": "dea13c99e16e1cd4f46b3b968235c68fd8beb4e38550d92b0b1a4fcc0802923a",
         "down": "1a0fad13b7d5263d04abe379099451c43d0f586b012c7f2be4ec87f7e8d03523"
       }
+    },
+    {
+      "version": "0033",
+      "name": "payment-provider-health",
+      "up": "database/migrations/0033_payment-provider-health.up.sql",
+      "down": "database/migrations/0033_payment-provider-health.down.sql",
+      "sha256": {
+        "up": "d8b6f04119b7406f3a6383d66f79a9df125798d9633e7121131204d39cc30bab",
+        "down": "dce0648e0a70cadc3d71fbad09523eaa362f900d3e9fbff91df53861014136ed"
+      }
+    },
+    {
+      "version": "0034",
+      "name": "payment-rollout",
+      "up": "database/migrations/0034_payment-rollout.up.sql",
+      "down": "database/migrations/0034_payment-rollout.down.sql",
+      "sha256": {
+        "up": "4e3348e106b753573ac3465b1d14d3eab65c413c8c079ea01b1a20271761b075",
+        "down": "aa36279d52058631cc948bdd6f5be8df0f57719f1e1467014f513123a3c2c9ba"
+      }
     }
   ]
 }

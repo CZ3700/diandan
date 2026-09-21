@@ -30,6 +30,10 @@ import {
   withPaymentFailure,
   type PaymentRuntime,
 } from "./payment-runtime-context.js";
+import {
+  createPaymentRuntimeHealth,
+  type PaymentRuntimeHealthOptions,
+} from "./payment-runtime-health.js";
 
 export function createPaymentRuntimeUseCases({
   transactions,
@@ -37,12 +41,14 @@ export function createPaymentRuntimeUseCases({
   providers,
   providerDirectory,
   configuration,
+  health,
 }: {
   transactions: PaymentRuntimeTransactionManager;
   keyManagement: KeyManagementPort;
   providers: readonly PaymentRuntimeProviderRegistration[];
   providerDirectory?: PaymentRuntimeProviderDirectory;
   configuration: PaymentRuntimeConfiguration;
+  health?: PaymentRuntimeHealthOptions;
 }) {
   const registered = paymentProviderRegistrations(providers, providerDirectory);
   const runtime: PaymentRuntime = {
@@ -52,6 +58,9 @@ export function createPaymentRuntimeUseCases({
       return registered();
     },
     configuration: paymentRuntimeConfigurationSchema.parse(configuration),
+    ...(health === undefined
+      ? {}
+      : { health: createPaymentRuntimeHealth(health, registered) }),
   };
   const execute = async (
     operation: PaymentRuntimeCommand["operation"],
@@ -145,6 +154,17 @@ export function createPaymentRuntimeUseCases({
     recoverNext: async () =>
       paymentRuntimeRecoveryRunResponseSchema.parse(
         await withPaymentFailure(() => recoverNextRuntimePayment(runtime)),
+      ),
+    probeNext: async () =>
+      paymentRuntimeRecoveryRunResponseSchema.parse(
+        await withPaymentFailure(
+          async () =>
+            runtime.health?.probeNext() ?? {
+              schemaVersion: 1,
+              outcome: "SUCCESS",
+              processed: false,
+            },
+        ),
       ),
   });
 }

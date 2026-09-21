@@ -1,0 +1,40 @@
+$ vitest run --config ../../vitest.config.ts --root . src/payment-runtime-health.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/application
+
+ ❯ src/payment-runtime-health.test.ts (25 tests | 1 failed) 100ms
+   × a confirmed customer cancellation is a business outcome rather than a health recovery 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/payment-runtime-health.test.ts > a confirmed customer cancellation is a business outcome rather than a health recovery
+AssertionError: expected { classification: 'SUCCESS', …(1) } to deeply equal { …(2) }
+
+- Expected
++ Received
+
+  {
+-   "classification": "BUSINESS_OUTCOME",
++   "classification": "SUCCESS",
+    "code": null,
+  }
+
+ ❯ src/payment-runtime-health.test.ts:79:7
+     77|     schemaVersion: 1, operation: "GET_PAYMENT", outcome: "SUCCESS",
+     78|     value: { ...identity, status: "CANCELED", providerLocale: "en", fa…
+     79|   })).toEqual({ classification: "BUSINESS_OUTCOME", code: null });
+       |       ^
+     80| });
+     81|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 24 passed (25)
+   Start at  01:05:42
+   Duration  660ms (transform 367ms, setup 0ms, import 503ms, tests 100ms, environment 0ms)
+
+/Users/mario/Desktop/下单/packages/application:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/application@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/payment-runtime-health.test.ts`
+Exit status 1

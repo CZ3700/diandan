@@ -241,9 +241,12 @@ export async function createPaymentTestPspServer(options) {
       if (
         fault ||
         !["BEFORE", "AFTER", "MALFORMED"].includes(value.mode) ||
-        !["CREATE_PAYMENT", "RECONCILE_PAYMENT", "GET_PAYMENT"].includes(
-          value.operation,
-        )
+        ![
+          "GET_CAPABILITIES",
+          "CREATE_PAYMENT",
+          "RECONCILE_PAYMENT",
+          "GET_PAYMENT",
+        ].includes(value.operation)
       )
         throw new TypeError("Invalid TEST PSP fault");
       fault = { ...value };

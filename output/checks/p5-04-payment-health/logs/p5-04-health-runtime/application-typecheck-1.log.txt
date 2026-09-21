@@ -1,0 +1,6 @@
+$ tsc -p tsconfig.json
+src/payment-runtime-health.test.ts(94,38): error TS18047: 'created.attempt' is possibly 'null'.
+src/payment-runtime-health.test.ts(176,38): error TS18047: 'created.attempt' is possibly 'null'.
+/Users/mario/Desktop/下单/packages/application:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/application@0.0.0 typecheck: `tsc -p tsconfig.json`
+Exit status 2

@@ -1,0 +1,8 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单
+
+No test files found, exiting with code 1
+
+filter: packages/payment-gateway/src/client.test.ts, apps/api/src/payment-runtime-lifecycle.test.ts
+include: src/**/*.{test,spec}.{ts,tsx}
+exclude:  **/node_modules/**, **/.git/**

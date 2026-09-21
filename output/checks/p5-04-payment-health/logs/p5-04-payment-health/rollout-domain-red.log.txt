@@ -1,0 +1,130 @@
+$ vitest run --config ../../vitest.config.ts --root . --coverage src/payment-rollout.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/domain
+      Coverage enabled with v8
+
+ ❯ src/payment-rollout.test.ts (8 tests | 8 failed) 6ms
+   × matches frozen cross-runtime vectors for a1000000-0000-4000-8000-000000000001 4ms
+   × matches frozen cross-runtime vectors for ffffffff-ffff-4fff-bfff-ffffffffffff 0ms
+   × matches frozen cross-runtime vectors for 11111111-1111-4111-8111-111111111111 0ms
+   × zero closes either gate and 10000 preserves the original all-open route 0ms
+   × both independent buckets must be strictly below the threshold 0ms
+   × case normalization, repeated reads and proportion changes never resample 0ms
+   × thousands of deterministic checkouts exercise separated five-percent cohorts 0ms
+   × invalid, unknown and browser-chosen seed inputs fail closed 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/payment-rollout.test.ts > matches frozen cross-runtime vectors for a1000000-0000-4000-8000-000000000001
+ FAIL  src/payment-rollout.test.ts > matches frozen cross-runtime vectors for ffffffff-ffff-4fff-bfff-ffffffffffff
+ FAIL  src/payment-rollout.test.ts > matches frozen cross-runtime vectors for 11111111-1111-4111-8111-111111111111
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ evaluate src/payment-rollout.test.ts:15:14
+     13| function evaluate(value: unknown): Decision {
+     14|   const fn = (domain as unknown as Record<string, (value: unknown) => …
+     15|   expect(fn).toBeTypeOf("function");
+       |              ^
+     16|   return fn!(value);
+     17| }
+ ❯ src/payment-rollout.test.ts:23:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  src/payment-rollout.test.ts > zero closes either gate and 10000 preserves the original all-open route
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ evaluate src/payment-rollout.test.ts:15:14
+     13| function evaluate(value: unknown): Decision {
+     14|   const fn = (domain as unknown as Record<string, (value: unknown) => …
+     15|   expect(fn).toBeTypeOf("function");
+       |              ^
+     16|   return fn!(value);
+     17| }
+ ❯ src/payment-rollout.test.ts:26:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  src/payment-rollout.test.ts > both independent buckets must be strictly below the threshold
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ evaluate src/payment-rollout.test.ts:15:14
+     13| function evaluate(value: unknown): Decision {
+     14|   const fn = (domain as unknown as Record<string, (value: unknown) => …
+     15|   expect(fn).toBeTypeOf("function");
+       |              ^
+     16|   return fn!(value);
+     17| }
+ ❯ src/payment-rollout.test.ts:32:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  src/payment-rollout.test.ts > case normalization, repeated reads and proportion changes never resample
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ evaluate src/payment-rollout.test.ts:15:14
+     13| function evaluate(value: unknown): Decision {
+     14|   const fn = (domain as unknown as Record<string, (value: unknown) => …
+     15|   expect(fn).toBeTypeOf("function");
+       |              ^
+     16|   return fn!(value);
+     17| }
+ ❯ src/payment-rollout.test.ts:35:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  src/payment-rollout.test.ts > thousands of deterministic checkouts exercise separated five-percent cohorts
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ evaluate src/payment-rollout.test.ts:15:14
+     13| function evaluate(value: unknown): Decision {
+     14|   const fn = (domain as unknown as Record<string, (value: unknown) => …
+     15|   expect(fn).toBeTypeOf("function");
+       |              ^
+     16|   return fn!(value);
+     17| }
+ ❯ src/payment-rollout.test.ts:44:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  src/payment-rollout.test.ts > invalid, unknown and browser-chosen seed inputs fail closed
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ evaluate src/payment-rollout.test.ts:15:14
+     13| function evaluate(value: unknown): Decision {
+     14|   const fn = (domain as unknown as Record<string, (value: unknown) => …
+     15|   expect(fn).toBeTypeOf("function");
+       |              ^
+     16|   return fn!(value);
+     17| }
+ ❯ src/payment-rollout.test.ts:55:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed (8)
+   Start at  01:07:01
+   Duration  992ms (transform 581ms, setup 0ms, import 813ms, tests 6ms, environment 0ms)
+
+/Users/mario/Desktop/下单/packages/domain:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/domain@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . --coverage src/payment-rollout.test.ts`
+Exit status 1

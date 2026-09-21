@@ -1,21 +1,22 @@
-# 剩余 20 项交付与排期提案
+# 剩余 20 项交付与已接受本地排期
 
-> 日期：2026-09-21。状态：**可审阅提案，尚未接受，不改变当前任务门禁**。
-> 编制基线：29 DONE / 2 IN_PROGRESS / 18 PENDING；最新执行状态以 [MASTER](../progress/MASTER.md) 和各 phase 文件为准。
+> 日期：2026-09-22（Asia/Bangkok）。状态：**ACCEPTED，用户回复“那就继续按计划推进下一阶段”，见 [ADR-016](../decisions/016-local-remaining-development.md)**。
+> 原编制基线：29 DONE / 2 IN_PROGRESS / 18 PENDING；P5-04现已完成本地验收并保留外部门，当前29 DONE / 3 IN_PROGRESS / 1 READY / 16 PENDING。最新执行状态以 [MASTER](../progress/MASTER.md) 和各 phase 文件为准。
 
 用户已授权按计划持续推进。符合现有 Phase、依赖、READY 和 Lane 条件的任务，应验收一项、提交一项、继续下一项，无需逐项重新询问。
 
-当前 [ADR-015](../decisions/015-local-admin-operations-development.md) 只允许提前完成 P5-01→P5-02；这两项已经完成。下面的扩大本地研发排期尚未生效，不能据此直接领取其他 P5、P6 或 P7 任务。
+原 [ADR-015](../decisions/015-local-admin-operations-development.md) 的 P5-01→P5-02 已完成。新增 ADR-016 接受下面的本地研发顺序；每个后继仍须按原直接依赖的本地完整验收、非作者复核、Phase 与 Lane 条件逐项就绪，不能一次性解锁。
 
 ## 当前可直接继续的工作
 
+- P5-03：已置 READY；P5-01/P4-05与P4-04已验收本地接口经当前源码独立核对，Lane A空闲。P5-04本地完整验收通过、保留真实PSP条件、无executor；P5-05待共享合同与归属冻结后登记Lane C就绪。证据见`output/checks/p5-04-payment-health/final-verification.md`与`next-stage-readiness.md`。
 - P3-06：本轮完整七语言本地H2性能矩阵已通过，原30条axe待判断已完成技术复核；继续未完真人/读屏/真机/正式内容验收，保留所有原失败和慢样本。详见当前phase执行卡，不能把实验室通过当作任务DONE。
 - P4-04：保留已验收的 TEST 支付运行时和通用接入基础；待首个批准 PSP、商户及 sandbox 资料到位后完成实际接入与验收。
 - 正常路径仍是 P3/P4 退出后完成 P5，再依次进入 P6、P7。待外部验收的任务不计 DONE。
 
 ## 剩余执行表
 
-“本地交付”列说明可完成的工程成果，不表示当前已获准越过 Phase 或直接依赖；“外部/完整验收”列是任务完成前必须补齐的证据。
+“本地交付”列说明已授权按顺序推进的工程范围，领取仍须满足 ADR-016 的逐项依赖验收与 Phase/Lane 条件；“外部/完整验收”列是任务完成前必须补齐的证据。
 
 | Task | 本地交付 | 外部/完整验收 |
 | --- | --- | --- |
@@ -42,11 +43,11 @@
 
 任务的完整依赖与最低证据仍以 [task-breakdown](task-breakdown.md) 为准；本表不删减或代替这些条件。
 
-## 待确认的“仅本地研发”扩大排期
+## 已接受的“仅本地研发”扩大排期
 
 目的：在真实商户、人工验收或云环境尚未到位时，让已经具备本地实现条件的后续工程继续推进，同时保留全部验收欠项。
 
-这是对当前排期的变更提案。接受后才同步规范、ADR、MASTER、相关 phase 与依赖说明；本文件本身不解锁任务。建议范围如下：
+这是用户已接受的排期变更，规范 §19、ADR-016、MASTER、当前 phase 与依赖说明同步执行。P5-04 本地验收后当前仅 P5-03 READY，Phase 6/7 保持 LOCKED；到相应波次且原直接依赖的本地完整验收和独立复核通过后，先登记有限 ACTIVE 范围再逐项 READY。范围如下：
 
 | 顺序 | 工作 | 领取前的本地证据与 Lane 条件 |
 | --- | --- | --- |
@@ -67,9 +68,9 @@ P5-04→P5-03 的先后用于减少支付合同反复变动，不新增隐含业
 - 完整任务仅在原验收全部满足后标 DONE；“本地检查点通过”单独记证据，不新增 DONE 计数。
 - 已完成本地实现但等待外部验收的任务保留 IN_PROGRESS，写清待办、解除条件、责任方，并释放 executor；不伪造 READY/DONE 绕过依赖。
 - 每个任务独立审查和本地提交；已验收成果复用，失败原件保留，不靠重复测试数量代替交付。
-- 本提案不批准云 apply、真实收付款、真实内容发布、Git push 或生产发布，也不推定品牌、经营主体、PSP、市场/币种、政策和服务商选择。
+- 本排期不批准云 apply、真实收付款、真实内容发布、Git push 或生产发布，也不推定品牌、经营主体、PSP、市场/币种、政策和服务商选择。
 - 所需外部信息按实际接入前整理成具体资料清单；凭据通过合适的 Secret Manager/本地安全配置提供，不写入文档、日志或聊天证据。
 - 保持一个简单管理中心：艺人/礼物短表单上传，海报替换与历史恢复；订单、退款和支付设置按权限提供清楚入口。
 - 沿用 §9.0/ADR-012：日常艺人、礼物和海报可按真实原文发布，翻译可后补；原文 lang 和对应 noindex 规则保持。政策、支付、订单、邮件及关键 UI 的严格七语言批准不豁免。
 
-依据：[SPEC §19–22](../FAN_SUPPORT_PLATFORM_SPEC.md)、[MASTER](../progress/MASTER.md)、[ADR-015](../decisions/015-local-admin-operations-development.md)、[任务分解](task-breakdown.md)。
+依据：[SPEC §19–22](../FAN_SUPPORT_PLATFORM_SPEC.md)、[MASTER](../progress/MASTER.md)、[ADR-016](../decisions/016-local-remaining-development.md)、[任务分解](task-breakdown.md)。

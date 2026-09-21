@@ -1,0 +1,37 @@
+✔ payment seed requires an explicit TEST-only deployment before any SQL (15.103625ms)
+✔ payment seed cannot infer a missing country from its market (0.703333ms)
+✖ partial rollout seed rejects unsafe proportions before any SQL (2.589666ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 123.802834
+
+✖ failing tests:
+
+test at apps/api/scripts/payment-runtime-config-fixture.test.mjs:61:1
+✖ partial rollout seed rejects unsafe proportions before any SQL (2.589666ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /rollout/u. Input:
+
+  'Error: Database must not be touched for invalid TEST input'
+
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/payment-runtime-config-fixture.test.mjs:68:6)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Database must not be touched for invalid TEST input
+        at Object.query (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/payment-runtime-config-fixture.test.mjs:12:15)
+        at Module.seedPaymentRuntimeConfiguration (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/payment-runtime-config-fixture.mjs:74:16)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/payment-runtime-config-fixture.test.mjs:68:6)
+        at async Test.run (node:internal/test_runner/test:1404:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:969:7),
+    expected: /rollout/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }

@@ -1,0 +1,37 @@
+$ vitest run --config ../../vitest.config.ts --root . src/payment-runtime-health.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/application
+
+ ❯ src/payment-runtime-health.test.ts (21 tests | 1 failed) 92ms
+   × an unresolved health query expires locally and a late success never completes the lease twice 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/payment-runtime-health.test.ts > an unresolved health query expires locally and a late success never completes the lease twice
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/payment-runtime-health.test.ts:200:23
+    198|     expect(completed).toBe(false);
+    199|     await vi.advanceTimersByTimeAsync(1);
+    200|     expect(completed).toBe(true);
+       |                       ^
+    201|     expect(await pending).toMatchObject({ outcome: "SUCCESS", processe…
+    202|     expect(repository.completeProbe).toHaveBeenCalledTimes(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 20 passed (21)
+   Start at  01:01:14
+   Duration  617ms (transform 347ms, setup 0ms, import 471ms, tests 92ms, environment 0ms)
+
+/Users/mario/Desktop/下单/packages/application:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/application@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/payment-runtime-health.test.ts`
+Exit status 1

@@ -1,0 +1,9 @@
+$ vitest run --config ../../vitest.config.ts --root . src/payment-runtime-health.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/application
+
+
+ Test Files  1 passed (1)
+      Tests  21 passed (21)
+   Start at  01:01:33
+   Duration  612ms (transform 343ms, setup 0ms, import 467ms, tests 91ms, environment 0ms)

@@ -2,7 +2,7 @@
 
 > 总任务数：49
 > 状态真相源：`docs/progress/phase-*.md`  
-> 领取规则：所在 Phase 已为 `ACTIVE`、依赖全部 `DONE` 且对应 Lane 当前无 executor 后，任务才可从 `PENDING` 改为 `READY/IN_PROGRESS`。
+> 领取规则：所在 Phase 已为 `ACTIVE`、依赖全部 `DONE`（或满足 ADR-016 明确记录的本地完整验收及非作者复核条件）且对应 Lane 当前无 executor 后，任务才可从 `PENDING` 改为 `READY/IN_PROGRESS`。本地例外不删除下列原直接依赖或完整验收。
 
 ## 执行约定
 
@@ -132,6 +132,8 @@ P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字�
 
 2026-09-18 ADR-015：本地开发仅允许P5-01，其完整验收DONE后才允许P5-02；其余六项P5及后继Phase不由此解锁，原验收条件与直接依赖不变。
 
+2026-09-22 ADR-016：用户接受 P5-04→P5-03/P5-05（Lane A/C）→P5-06→P5-07→P5-08 离线部分的本地顺序。本次仅 P5-04 READY：P1-03 DONE，P4-04 已验收 TEST runtime/connectors 的适用范围经独立核对。P5-03 同样只能消费 P4-04 的已验收本地接口；P5-05/06/07/08 须逐项等全部原直接依赖的本地完整实现与独立验收，不能凭局部切片就绪。任务的完整 DONE 条件、真实 PSP/sandbox 和云验收仍保持。
+
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
 | P5-01 | P0-04, P1-04 | 实现自研 Admin 的 OIDC、服务端 session、RBAC、CSRF、MFA 生产要求和审计中间件 | 各角色授权矩阵；伪造 session/CSRF 拒绝；角色来自平台；审计不可改 | R-10 |
@@ -145,6 +147,8 @@ P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字�
 
 ## Phase 6 — 加固与恢复（6）
 
+当前 LOCKED。ADR-016 已授权后续可本地部分；到对应波次并逐项核对以下原直接依赖的本地完整验收/非作者复核后，先登记有限本地 ACTIVE 范围再 READY，六项按 Lane D 串行。真实读屏、RUM、恢复与完整 Release Gate 不以本地工具替代。
+
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
 | P6-01 | P4-06, P5-07 | 汇总并补齐 unit/i18n/property/schema/contract/integration/七语言 E2E/SEO/cache 测试矩阵与覆盖门禁 | CI 全绿；规范第 18.2 节 14 条 E2E；消息目录/locale cache/hreflang snapshot；失败 seed 可复现 | R-01, R-03, R-17 |
@@ -155,6 +159,8 @@ P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字�
 | P6-06 | P0-05, P1-04, P5-05, P5-08, P6-05 | 演练 PITR、对象存储恢复、storefront/admin/api/worker OCI 回退、配置回退和 webhook 重放 | RPO/RTO/15 分钟代码回退有时间戳证据；演练问题已闭环 | R-11, R-16 |
 
 ## Phase 7 — 上线与灰度（6）
+
+当前 LOCKED。ADR-016 仅授权后续决策/UAT/运维/复盘文档、导入及 QA 工具准备；所消费的原直接依赖本地成果先独立验收，先同步有限 ACTIVE 范围再逐项 READY。正式选择/内容、真实交易、发布和上线后观察仍须原门，日常上传不新增复杂导入步骤。
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
@@ -170,9 +176,13 @@ P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字�
 只允许以下值：
 
 - `PENDING`：Phase 尚未激活、依赖未完成或 Lane 正被占用。
-- `READY`：Phase 已激活、依赖完成且 Lane 空闲，可以领取。
-- `IN_PROGRESS`：已有唯一执行者。
+- `READY`：Phase 已激活、依赖完成（或符合 ADR-016 的本地完整验收与非作者复核条件）且 Lane 空闲，可以领取。
+- `IN_PROGRESS`：正在由唯一执行者实施；或本地范围已验收但外部条件待续，明确记录欠项并释放 executor。后一状态不等于完整 DONE。
 - `BLOCKED`：存在具体阻断条件。
 - `REVIEW`：实现完成，等待独立验证。
 - `DONE`：验收与证据全部满足。
 - `DEFERRED`：经用户明确同意移出当前里程碑。
+
+## 2026-09-22 P5-04 本地验收后的接续
+
+P5-04 的全部本地实现、实际PG/HTTP/七语双端与非作者复核通过；正式PSP条件仍保留，Task维持IN_PROGRESS并释放Lane A。P5-03原直接依赖P5-01/P4-05与P4-04已验收本地接口经当前源核对后置READY；P5-05的本地输入已齐，待共享合同与文件归属冻结后按Lane C登记就绪，不同时领取。当前29 DONE / 3 IN_PROGRESS / 1 READY / 16 PENDING=49，Phase6/7仍LOCKED。证据见`output/checks/p5-04-payment-health/final-verification.md`、`final-independent-review.md`和`next-stage-readiness.md`；上方排期登记按当时时点保留，原任务依赖及外部门不变。

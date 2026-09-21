@@ -1,0 +1,3 @@
+$ corepack pnpm --filter @fan-support/contracts build && node ./scripts/generate-contract-artifacts.mjs
+$ tsc -p tsconfig.build.json
+Generated contracts.schema.json and openapi.json

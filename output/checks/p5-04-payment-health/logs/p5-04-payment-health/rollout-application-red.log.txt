@@ -1,0 +1,61 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/application
+
+ ❯ src/payment-runtime-rollout.test.ts (3 tests | 2 failed) 41ms
+     × accepts a partial cohort and preserves strict independent threshold boundaries 24ms
+     × a permanent create receipt remains replayable after cohort closure 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/payment-runtime-rollout.test.ts > payment runtime consumes deterministic rollout eligibility > accepts a partial cohort and preserves strict independent threshold boundaries
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/payment-runtime-rollout.test.ts:24:81
+     22|       route.providerRolloutBasisPoints = provider;
+     23|       route.rolloutBasisPoints = rule;
+     24|       expect(eligiblePaymentRoute(runtime, current, route, "US", ["RED…
+       |                                                                                 ^
+     25|     }
+     26|     route.providerRolloutBasisPoints = 507; route.rolloutBasisPoints =…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/payment-runtime-rollout.test.ts > payment runtime consumes deterministic rollout eligibility > a permanent create receipt remains replayable after cohort closure
+AssertionError: expected { schemaVersion: 1, …(2) } to match object { action: 'REPLAYED' }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "action": "REPLAYED",
++   "code": "PAYMENT_IN_PROGRESS",
++   "outcome": "FAILURE",
++   "schemaVersion": 1,
+  }
+
+ ❯ src/payment-runtime-rollout.test.ts:47:20
+     45|     h.state().current.routing!.routes[0]!.providerRolloutBasisPoints =…
+     46|     const second = await app.create(h.create, h.freshContext());
+     47|     expect(second).toMatchObject({action: "REPLAYED"});
+       |                    ^
+     48|     expect(h.provider.createPayment).toHaveBeenCalledOnce();
+     49|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  01:12:02
+   Duration  569ms (transform 349ms, setup 0ms, import 474ms, tests 41ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/packages/application:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config ../../vitest.config.ts --root . src/payment-runtime-rollout.test.ts

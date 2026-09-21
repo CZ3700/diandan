@@ -12,6 +12,11 @@ const observed = vi.hoisted(() => ({
       outcome: "SUCCESS",
       processed: false,
     })),
+    probeNext: vi.fn(async () => ({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      processed: false,
+    })),
   })),
 }));
 vi.mock("@fan-support/application", () => ({
@@ -19,6 +24,7 @@ vi.mock("@fan-support/application", () => ({
 }));
 import {
   createTestPaymentRuntimeComposition,
+  createPaymentRuntimeComposition,
   createOptionalPaymentRuntimeComposition,
 } from "./payment-runtime-composition.js";
 const database = { connectionString: "postgresql://fixture.invalid/payment" };
@@ -203,5 +209,94 @@ test("TEST composition rejects a LIVE directory before opening a pool", () => {
       { createPersistence },
     ),
   ).toThrow();
+  expect(createPersistence).not.toHaveBeenCalled();
+});
+
+const healthPolicy = {
+  schemaVersion: 1 as const,
+  providerAccountId: binding.providerAccountId,
+  environment: "TEST" as const,
+  version: 1,
+  failureThreshold: 3,
+  failureWindowMs: 60000,
+  openDurationMs: 30000,
+  probeLeaseMs: 30000,
+  probeRetryMs: 10000,
+};
+test("deployed providers require explicit complete health policies before runtime resources can open", () => {
+  const environment = {
+    FAN_SUPPORT_PAYMENT_RUNTIME_CONFIG_JSON: JSON.stringify(configuration),
+    FAN_SUPPORT_PAYMENT_PROVIDER_BINDINGS_JSON: JSON.stringify([binding]),
+    FAN_SUPPORT_SITE_ORIGIN: configuration.publicStorefrontOrigin,
+  };
+  for (const policies of [
+    undefined,
+    [],
+    [healthPolicy, healthPolicy],
+    [
+      {
+        ...healthPolicy,
+        providerAccountId: "10000000-0000-4000-8000-000000000009",
+      },
+    ],
+  ]) {
+    expect(() =>
+      createOptionalPaymentRuntimeComposition(
+        {
+          ...environment,
+          ...(policies === undefined
+            ? {}
+            : {
+                FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON:
+                  JSON.stringify(policies),
+              }),
+        },
+        options.providers as never,
+      ),
+    ).toThrow("Invalid payment runtime configuration");
+  }
+  expect(() =>
+    createOptionalPaymentRuntimeComposition({
+      FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON: "[]",
+    }),
+  ).toThrow("Invalid payment runtime configuration");
+});
+
+test("explicit TEST health policy connects the independent PostgreSQL health transaction manager", async () => {
+  const persistence = {
+    paymentRuntimeTransactionManager: {
+      runInPaymentRuntimeTransaction: vi.fn(),
+    },
+    paymentHealthTransactionManager: { runInPaymentHealthTransaction: vi.fn() },
+    close: vi.fn(async () => {}),
+  };
+  const runtime = createTestPaymentRuntimeComposition(
+    { ...options, healthPolicies: [healthPolicy] } as never,
+    {
+      createPersistence: () => persistence,
+    },
+  );
+  expect(observed.create).toHaveBeenLastCalledWith(
+    expect.objectContaining({
+      health: {
+        policies: [healthPolicy],
+        transactions: persistence.paymentHealthTransactionManager,
+      },
+    }),
+  );
+  await runtime.paymentRuntime.stop();
+});
+
+test("the direct production factory rejects a missing health policy", () => {
+  const createPersistence = vi.fn();
+  expect(() =>
+    createPaymentRuntimeComposition(
+      {
+        ...options,
+        keyManagementConfig: {},
+      } as never,
+      { createPersistence },
+    ),
+  ).toThrow("Invalid payment health policies");
   expect(createPersistence).not.toHaveBeenCalled();
 });

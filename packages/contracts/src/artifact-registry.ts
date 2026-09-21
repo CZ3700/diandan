@@ -1,3 +1,5 @@
+import * as paymentRollout from "./payment-rollout.js";
+import * as paymentHealth from "./payment-health.js";
 import * as adminOrderNoteKey from "./admin-order-note-key.js";
 import * as adminOrdersPersistence from "./admin-orders-persistence.js";
 import * as adminOrders from "./admin-orders.js";
@@ -3828,6 +3830,76 @@ const registrations = [
     name: "DailyPublicationContext",
     audience: "internal",
     schema: dailyPublicationContextSchema,
+  },
+  {
+    name: "PaymentHealthPolicy",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthPolicySchema,
+  },
+  {
+    name: "PaymentHealthCapabilitiesCommand",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthCapabilitiesCommandSchema,
+  },
+  {
+    name: "PaymentHealthProbeContext",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthProbeContextSchema,
+  },
+  {
+    name: "PaymentHealthObservation",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthObservationSchema,
+  },
+  {
+    name: "PaymentHealthSnapshot",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthSnapshotSchema,
+  },
+  {
+    name: "PaymentHealthRecordResult",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthRecordResultSchema,
+  },
+  {
+    name: "PaymentHealthClaimProbeCommand",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthClaimProbeCommandSchema,
+  },
+  {
+    name: "PaymentHealthProbeLease",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthProbeLeaseSchema,
+  },
+  {
+    name: "PaymentHealthCompleteProbeCommand",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthCompleteProbeCommandSchema,
+  },
+  {
+    name: "PaymentHealthProbeResult",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthProbeResultSchema,
+  },
+  {
+    name: "PaymentHealthWindowInput",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthWindowInputSchema,
+  },
+  {
+    name: "PaymentHealthWindowResult",
+    audience: "internal",
+    schema: paymentHealth.paymentHealthWindowResultSchema,
+  },
+  {
+    name: "PaymentRolloutInput",
+    audience: "internal",
+    schema: paymentRollout.paymentRolloutInputSchema,
+  },
+  {
+    name: "PaymentRolloutDecision",
+    audience: "internal",
+    schema: paymentRollout.paymentRolloutDecisionSchema,
   },
 ] as const;
 

@@ -1,0 +1,80 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/persistence-postgres
+
+ ❯ src/payment-health-client.test.ts (4 tests | 4 failed) 8ms
+   × a timed out acquisition destroys a late client once without running SQL 5ms
+   × a query which never settles is terminated and a wrapper release is idempotent 1ms
+   × one deadline includes acquisition time and multiple successive queries 1ms
+   × an interrupted COMMIT retains unknown outcome and normal release cancels the deadline 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/payment-health-client.test.ts > a timed out acquisition destroys a late client once without running SQL
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/payment-health-client.test.ts:10:75
+      8| test("a timed out acquisition destroys a late client once without runn…
+      9|   vi.useFakeTimers();
+     10|   const module = await load(); expect(module?.acquirePaymentHealthClie…
+       |                                                                           ^
+     11|   const pending = deferred<TransactionClient>(), raw = client();
+     12|   const acquiring = module!.acquirePaymentHealthClient(() => pending.p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/payment-health-client.test.ts > a query which never settles is terminated and a wrapper release is idempotent
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/payment-health-client.test.ts:21:75
+     19| test("a query which never settles is terminated and a wrapper release …
+     20|   vi.useFakeTimers();
+     21|   const module = await load(); expect(module?.acquirePaymentHealthClie…
+       |                                                                           ^
+     22|   const raw = client(async () => new Promise<never>(() => {}));
+     23|   const bounded = await module!.acquirePaymentHealthClient(async () =>…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/payment-health-client.test.ts > one deadline includes acquisition time and multiple successive queries
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/payment-health-client.test.ts:31:75
+     29| test("one deadline includes acquisition time and multiple successive q…
+     30|   vi.useFakeTimers();
+     31|   const module = await load(); expect(module?.acquirePaymentHealthClie…
+       |                                                                           ^
+     32|   const pending = deferred<TransactionClient>(), raw = client();
+     33|   const acquiring = module!.acquirePaymentHealthClient(() => pending.p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/payment-health-client.test.ts > an interrupted COMMIT retains unknown outcome and normal release cancels the deadline
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/payment-health-client.test.ts:44:75
+     42| test("an interrupted COMMIT retains unknown outcome and normal release…
+     43|   vi.useFakeTimers();
+     44|   const module = await load(); expect(module?.acquirePaymentHealthClie…
+       |                                                                           ^
+     45|   const entered = deferred<void>();
+     46|   const raw = client(async (sql) => { if (sql === "COMMIT") { entered.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  01:17:40
+   Duration  388ms (transform 228ms, setup 0ms, import 325ms, tests 8ms, environment 0ms)

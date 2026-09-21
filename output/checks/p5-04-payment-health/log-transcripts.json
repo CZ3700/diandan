@@ -1,0 +1,1198 @@
+{
+  "schemaVersion": 1,
+  "scope": "Current-task logs only. Original .log files are unchanged. Git text transcripts normalize line endings and remove trailing whitespace/extra trailing blank lines; both original and transcript SHA256 are recorded. No statements or failure results removed.",
+  "files": [
+    {
+      "original": "output/checks/p5-04-payment-health/api-build-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/api-build-1.log.txt",
+      "originalBytes": 1072,
+      "originalSha256": "ca6da8cb3db567e9ac873195c034588b750de842945a8c84d99fb4e879c38cb3",
+      "transcriptBytes": 1069,
+      "transcriptSha256": "d1da9f967ae96f73f7cfe607627fb8cfe13c0255c66551e65842d7defb58cd9b"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/api-build-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/api-build-2.log.txt",
+      "originalBytes": 925,
+      "originalSha256": "bb1d9fe7878883e0f5e950974ba0f459b5038ddba9618956788a8d58ef456053",
+      "transcriptBytes": 922,
+      "transcriptSha256": "c676d58c683a00a1b8b4e2ec8664c9cbe340cdc6e12accd6b3f4a4c76fcb5800"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/api-build-3.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/api-build-3.log.txt",
+      "originalBytes": 29,
+      "originalSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8",
+      "transcriptBytes": 29,
+      "transcriptSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/api-build-4.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/api-build-4.log.txt",
+      "originalBytes": 216,
+      "originalSha256": "c2b5623113e3ae19d9880017f8a1fd1b42ebe61bbc8982705c549414db52d1a5",
+      "transcriptBytes": 214,
+      "transcriptSha256": "09e4677e0aace5648deb8827cf1c8131aa6ffe8660460e7738957224544aefe0"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/application-health-rollout.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/application-health-rollout.log.txt",
+      "originalBytes": 235,
+      "originalSha256": "5ed2a9e7af332296379696aff2e6e1a5cb94bc868158dccaec117d55e00f719c",
+      "transcriptBytes": 234,
+      "transcriptSha256": "5dd72a8f25b715e67bd653769419bbd84a00e592f7181ea76655c17cb1b84ff2"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/audit-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/audit-final.log.txt",
+      "originalBytes": 31,
+      "originalSha256": "15950a68a7ed99c59779717acefdceb3f69cfd31bde67d2c954f2a3cea4d7955",
+      "transcriptBytes": 31,
+      "transcriptSha256": "15950a68a7ed99c59779717acefdceb3f69cfd31bde67d2c954f2a3cea4d7955"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/bootstrap-health-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/bootstrap-health-green.log.txt",
+      "originalBytes": 235,
+      "originalSha256": "c2604dba3c4591116f89db18d98d2e2a0f88d03e07a9176bfbbf1eb8d6b5db23",
+      "transcriptBytes": 234,
+      "transcriptSha256": "d0b0c6e54dd2b6374b05293831cbaaddec5c6236dd1f94776ea741498170746c"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/bootstrap-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/bootstrap-red.log.txt",
+      "originalBytes": 2109,
+      "originalSha256": "fb4a06dfdd1cc62b38b0efe8db0603d2244ce964de84f3b44cb05a2419d77faf",
+      "transcriptBytes": 2109,
+      "transcriptSha256": "fb4a06dfdd1cc62b38b0efe8db0603d2244ce964de84f3b44cb05a2419d77faf"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/catalog-34.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/catalog-34.log.txt",
+      "originalBytes": 68,
+      "originalSha256": "c0e3cdb51549e478c472fc2315adc7e404dda8d808b47c73481befeebaed28e2",
+      "transcriptBytes": 68,
+      "transcriptSha256": "c0e3cdb51549e478c472fc2315adc7e404dda8d808b47c73481befeebaed28e2"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/check-dev-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/check-dev-1.log.txt",
+      "originalBytes": 4305,
+      "originalSha256": "cc243c7f343c7506301c938c9a25c11462586f7036b7892e45759b4610e87b35",
+      "transcriptBytes": 4302,
+      "transcriptSha256": "c148e61b83e5b85b037b2cb0cd1f0963040a1acb67ed68d69df1930ec7f00f69"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/check-dev-accepted.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/check-dev-accepted.log.txt",
+      "originalBytes": 4301,
+      "originalSha256": "b36b1efae863b62b82b2fbf1fdea32569b6313e491474b40b1b47e3789a45ae5",
+      "transcriptBytes": 4298,
+      "transcriptSha256": "ed0f44ce465bebca14e256e34e76d2750a3a90419f38f0ce32813715a2faf666"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/check-dev-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/check-dev-final.log.txt",
+      "originalBytes": 4302,
+      "originalSha256": "542492ec88dc147b001f3529bdd70e3a148c71f871fc9196340d39972cdc614a",
+      "transcriptBytes": 4299,
+      "transcriptSha256": "bd331bdf44725c67b2df872d89ac7b2b870687936d90ea06c3a8a5bbe333a842"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/config-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/config-green.log.txt",
+      "originalBytes": 223,
+      "originalSha256": "8916315a703b849a0fdff589879cc3741476ab00a099bd808caafd4d8e6e0bb0",
+      "transcriptBytes": 222,
+      "transcriptSha256": "31160a811f04f1f468db7ee131987cf5ede5162d1576f9d55bd676f1b9f7fcea"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/config-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/config-red.log.txt",
+      "originalBytes": 1281,
+      "originalSha256": "1cbcafbcc321c710bc95ca69e39117a3ee668ba5143f766bb1af8ae597ac1625",
+      "transcriptBytes": 1281,
+      "transcriptSha256": "1cbcafbcc321c710bc95ca69e39117a3ee668ba5143f766bb1af8ae597ac1625"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/conformance-boundary-format.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/conformance-boundary-format.log.txt",
+      "originalBytes": 54,
+      "originalSha256": "4707cdc1a0536291eb8acfe79b7b81d0fbc4e4dc460c723e357e3f6050bc47b4",
+      "transcriptBytes": 54,
+      "transcriptSha256": "4707cdc1a0536291eb8acfe79b7b81d0fbc4e4dc460c723e357e3f6050bc47b4"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/conformance-format-initial.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/conformance-format-initial.log.txt",
+      "originalBytes": 108,
+      "originalSha256": "917e7800bb9b8c9c8c8919402a35bc7450434e8fad8f2b0bde1af396d8ca77f2",
+      "transcriptBytes": 108,
+      "transcriptSha256": "917e7800bb9b8c9c8c8919402a35bc7450434e8fad8f2b0bde1af396d8ca77f2"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/conformance-initial.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/conformance-initial.log.txt",
+      "originalBytes": 315,
+      "originalSha256": "0856c46622e9070035d71011953ce7e583de563b1b00da4caa7d1d966dd79e69",
+      "transcriptBytes": 314,
+      "transcriptSha256": "7ae127256e2ebf9073bdc722d1930db1c3adcf42595ff2d01f307e5a4dd6c996"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/conformance-lint.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/conformance-lint.log.txt",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcriptBytes": 0,
+      "transcriptSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/conformance-typecheck.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/conformance-typecheck.log.txt",
+      "originalBytes": 23,
+      "originalSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b",
+      "transcriptBytes": 23,
+      "transcriptSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/contracts-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/contracts-final.log.txt",
+      "originalBytes": 202,
+      "originalSha256": "7a5cb029389f33e5eb0203024eb763ca97e9ce0445e9cf8d156e520cc579a8a7",
+      "transcriptBytes": 202,
+      "transcriptSha256": "7a5cb029389f33e5eb0203024eb763ca97e9ce0445e9cf8d156e520cc579a8a7"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/contracts-full.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/contracts-full.log.txt",
+      "originalBytes": 308,
+      "originalSha256": "2ef40d3a1c61b0e55aac8a76dae975229c0481e640101313d7b140018d327380",
+      "transcriptBytes": 307,
+      "transcriptSha256": "70d0b4673726ea9a1fffc311daa94b1fc1d107f9dbab7b06c4c16431b53dda36"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/contracts-generate-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/contracts-generate-2.log.txt",
+      "originalBytes": 182,
+      "originalSha256": "c9fa175054fb1afea3eda46f8597a0d47c4ca5370dbeef796e23c2a30c4d722e",
+      "transcriptBytes": 182,
+      "transcriptSha256": "c9fa175054fb1afea3eda46f8597a0d47c4ca5370dbeef796e23c2a30c4d722e"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/contracts-generate.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/contracts-generate.log.txt",
+      "originalBytes": 182,
+      "originalSha256": "c9fa175054fb1afea3eda46f8597a0d47c4ca5370dbeef796e23c2a30c4d722e",
+      "transcriptBytes": 182,
+      "transcriptSha256": "c9fa175054fb1afea3eda46f8597a0d47c4ca5370dbeef796e23c2a30c4d722e"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/contracts-green-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/contracts-green-2.log.txt",
+      "originalBytes": 229,
+      "originalSha256": "26ac6c8e85643c9ec82d866b62c79349be4991e58fb33fbe0fa26e09172c2396",
+      "transcriptBytes": 228,
+      "transcriptSha256": "2bdde0abd67e2541a5986ed7a7015593238b9893edf482ff290e06693c49c5f3"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/contracts-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/contracts-green.log.txt",
+      "originalBytes": 3130,
+      "originalSha256": "3385fff385a423a44b64427faa3ad51e4015cac727b628b7eb1aa39878e5edd5",
+      "transcriptBytes": 3130,
+      "transcriptSha256": "3385fff385a423a44b64427faa3ad51e4015cac727b628b7eb1aa39878e5edd5"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/contracts-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/contracts-red.log.txt",
+      "originalBytes": 3619,
+      "originalSha256": "2501d80605ae168538ad7bbb99673d2dc2d91591f6eefa4580145dcedd09b5cb",
+      "transcriptBytes": 3619,
+      "transcriptSha256": "2501d80605ae168538ad7bbb99673d2dc2d91591f6eefa4580145dcedd09b5cb"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/domain-full-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/domain-full-2.log.txt",
+      "originalBytes": 1790,
+      "originalSha256": "36f419f9c26a7b973030ddd2ac569b580118e6bd593847d61a907a76ddd687c2",
+      "transcriptBytes": 1667,
+      "transcriptSha256": "addfaa38d528e8b663740b71d75d04f9ed4172530b4593d13ab5d537c9f19210"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/domain-full.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/domain-full.log.txt",
+      "originalBytes": 1942,
+      "originalSha256": "47608cce7ddcc244a9b327c9ad5259ceda85910142dd5318ef064019fda62b92",
+      "transcriptBytes": 1942,
+      "transcriptSha256": "47608cce7ddcc244a9b327c9ad5259ceda85910142dd5318ef064019fda62b92"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/domain-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/domain-green.log.txt",
+      "originalBytes": 226,
+      "originalSha256": "2bf7eb0e445f1f692615df0d5acb9e2ca1eecb0dbf9fb6d7c6e4e119d56c8659",
+      "transcriptBytes": 225,
+      "transcriptSha256": "5dd51a1d9f2ffa013fad8025c36579fff097b2d6db513e04e900454d0a1170ee"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/domain-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/domain-red.log.txt",
+      "originalBytes": 3372,
+      "originalSha256": "faaf596772851bd6e3d3bf2fcac7705b5e5ca4bf70f180ccb7b25343ac7e24f1",
+      "transcriptBytes": 3372,
+      "transcriptSha256": "faaf596772851bd6e3d3bf2fcac7705b5e5ca4bf70f180ccb7b25343ac7e24f1"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/final-doc-format.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/final-doc-format.log.txt",
+      "originalBytes": 255,
+      "originalSha256": "21501c7e39bc7a8e349e9d6249beecc1cf3389c77c3855124a5b0f52ece8e8ab",
+      "transcriptBytes": 255,
+      "transcriptSha256": "21501c7e39bc7a8e349e9d6249beecc1cf3389c77c3855124a5b0f52ece8e8ab"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/format-owned.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/format-owned.log.txt",
+      "originalBytes": 3937,
+      "originalSha256": "886b73df1c5993dccab0d941314cc939a7987fc1cad453f3213a60cca1114d93",
+      "transcriptBytes": 3937,
+      "transcriptSha256": "886b73df1c5993dccab0d941314cc939a7987fc1cad453f3213a60cca1114d93"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/frozen-install.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/frozen-install.log.txt",
+      "originalBytes": 386,
+      "originalSha256": "28bc22b49d64fd9732d977547097023816bd1f60ba787c92e036583c178dd349",
+      "transcriptBytes": 386,
+      "transcriptSha256": "28bc22b49d64fd9732d977547097023816bd1f60ba787c92e036583c178dd349"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/gateway-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/gateway-final.log.txt",
+      "originalBytes": 295,
+      "originalSha256": "3dbb81314099e1264e7f01cb55acdb6f9b43880360159f718f958d99f2481ae1",
+      "transcriptBytes": 294,
+      "transcriptSha256": "fddc23109ab874cdd14ed01d2fff5b22905e0b5224aedf5640aa3800b3bee77a"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/http-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/http-1.log.txt",
+      "originalBytes": 1260,
+      "originalSha256": "4b07043de025fb988277d4648394719ba29b9a2b3e3276eb5dd1c3e3d02d86e1",
+      "transcriptBytes": 1260,
+      "transcriptSha256": "4b07043de025fb988277d4648394719ba29b9a2b3e3276eb5dd1c3e3d02d86e1"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/http-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/http-2.log.txt",
+      "originalBytes": 5369,
+      "originalSha256": "8abf50db718d7c0dc2e7a53528ab45970484e19d6578222a8306f8eab5a29e29",
+      "transcriptBytes": 5369,
+      "transcriptSha256": "8abf50db718d7c0dc2e7a53528ab45970484e19d6578222a8306f8eab5a29e29"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/http-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/http-final.log.txt",
+      "originalBytes": 5369,
+      "originalSha256": "8abf50db718d7c0dc2e7a53528ab45970484e19d6578222a8306f8eab5a29e29",
+      "transcriptBytes": 5369,
+      "transcriptSha256": "8abf50db718d7c0dc2e7a53528ab45970484e19d6578222a8306f8eab5a29e29"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/install.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/install.log.txt",
+      "originalBytes": 308,
+      "originalSha256": "4010afe4a1d8ceee86bb4b3dbee5db504556f1dc6f5ee925ea91018874c09dbb",
+      "transcriptBytes": 308,
+      "transcriptSha256": "4010afe4a1d8ceee86bb4b3dbee5db504556f1dc6f5ee925ea91018874c09dbb"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/manifest-generate-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/manifest-generate-2.log.txt",
+      "originalBytes": 30,
+      "originalSha256": "412143987a8596a476bd4ce6b45f2cf368bb1c1736fa75dc3773d60fc0fa5e4b",
+      "transcriptBytes": 30,
+      "transcriptSha256": "412143987a8596a476bd4ce6b45f2cf368bb1c1736fa75dc3773d60fc0fa5e4b"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/manifest-generate.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/manifest-generate.log.txt",
+      "originalBytes": 30,
+      "originalSha256": "412143987a8596a476bd4ce6b45f2cf368bb1c1736fa75dc3773d60fc0fa5e4b",
+      "transcriptBytes": 30,
+      "transcriptSha256": "412143987a8596a476bd4ce6b45f2cf368bb1c1736fa75dc3773d60fc0fa5e4b"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/payment-browser-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/payment-browser-final.log.txt",
+      "originalBytes": 16180,
+      "originalSha256": "18829e35db10b2bde8b07fa5428b7938db7b4467f65edf37bce7fa0712d1e143",
+      "transcriptBytes": 16180,
+      "transcriptSha256": "18829e35db10b2bde8b07fa5428b7938db7b4467f65edf37bce7fa0712d1e143"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/payment-regression-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/payment-regression-final.log.txt",
+      "originalBytes": 3262,
+      "originalSha256": "d7bc760b577c653c9dd34e011fa25a2a8c9d1127f02df7b2d77ed54c7ea7524c",
+      "transcriptBytes": 3262,
+      "transcriptSha256": "d7bc760b577c653c9dd34e011fa25a2a8c9d1127f02df7b2d77ed54c7ea7524c"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-affected-tests.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-affected-tests.log.txt",
+      "originalBytes": 243,
+      "originalSha256": "e37915b7767ce0fbed048acb7b1ff28295465b8ed5f13882437d1bf7f8c3ed48",
+      "transcriptBytes": 242,
+      "transcriptSha256": "199f6ff9949f6bbb4af900357453c3d4e40a913dc91f1c782071a134057e473c"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-build-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-build-1.log.txt",
+      "originalBytes": 1826,
+      "originalSha256": "5438f22dfe9a616b4e4a2028663d9edda7031e642958cf2877676651cc2af318",
+      "transcriptBytes": 1826,
+      "transcriptSha256": "5438f22dfe9a616b4e4a2028663d9edda7031e642958cf2877676651cc2af318"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-build-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-build-2.log.txt",
+      "originalBytes": 29,
+      "originalSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8",
+      "transcriptBytes": 29,
+      "transcriptSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-build-3.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-build-3.log.txt",
+      "originalBytes": 297,
+      "originalSha256": "8a6b6d00a8053b308035a4d808cb080ba60f15758ded498ef631a7cd2715eae5",
+      "transcriptBytes": 297,
+      "transcriptSha256": "8a6b6d00a8053b308035a4d808cb080ba60f15758ded498ef631a7cd2715eae5"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-build-agent-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-build-agent-1.log.txt",
+      "originalBytes": 29,
+      "originalSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8",
+      "transcriptBytes": 29,
+      "transcriptSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-build-agent-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-build-agent-2.log.txt",
+      "originalBytes": 29,
+      "originalSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8",
+      "transcriptBytes": 29,
+      "transcriptSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-build-agent-3.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-build-agent-3.log.txt",
+      "originalBytes": 29,
+      "originalSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8",
+      "transcriptBytes": 29,
+      "transcriptSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-build-agent-4.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-build-agent-4.log.txt",
+      "originalBytes": 29,
+      "originalSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8",
+      "transcriptBytes": 29,
+      "transcriptSha256": "24c42b76aecef2c39c8a5639a3536efb936b03bdac9a8f8be50c0e71ffbc7af8"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-concurrent-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-concurrent-red.log.txt",
+      "originalBytes": 355,
+      "originalSha256": "c08077c8e97b6412be0d9f5698d321fa6dda1cf12f81c864a5c2d86c22f0f0ac",
+      "transcriptBytes": 355,
+      "transcriptSha256": "c08077c8e97b6412be0d9f5698d321fa6dda1cf12f81c864a5c2d86c22f0f0ac"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-ddl-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-ddl-1.log.txt",
+      "originalBytes": 99,
+      "originalSha256": "e68ce29e03f87886c8956cf23bec233e5c3d751307a9a5d93f7517e13783981e",
+      "transcriptBytes": 99,
+      "transcriptSha256": "e68ce29e03f87886c8956cf23bec233e5c3d751307a9a5d93f7517e13783981e"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-ddl-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-ddl-2.log.txt",
+      "originalBytes": 81,
+      "originalSha256": "c793cf8ddbbde7b1973098e7a8f619e3e42c6c33b216540f52775c78899b4c0b",
+      "transcriptBytes": 81,
+      "transcriptSha256": "c793cf8ddbbde7b1973098e7a8f619e3e42c6c33b216540f52775c78899b4c0b"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-final.log.txt",
+      "originalBytes": 101,
+      "originalSha256": "3b9ef65f18e58ac1b0b8cb23f175adc205dac70aa3ea8a03bbd859b79d37a145",
+      "transcriptBytes": 101,
+      "transcriptSha256": "3b9ef65f18e58ac1b0b8cb23f175adc205dac70aa3ea8a03bbd859b79d37a145"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-lint-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-lint-1.log.txt",
+      "originalBytes": 496,
+      "originalSha256": "97121b1d859128eca170f4b2221d597a780c090d355f2518d727cd76747c61ab",
+      "transcriptBytes": 495,
+      "transcriptSha256": "aeb076382b68d4573cd117ccda9072f2569fb7189e9962e2e65fc8535ea87120"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-lint-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-lint-2.log.txt",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcriptBytes": 0,
+      "transcriptSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-lint-3.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-lint-3.log.txt",
+      "originalBytes": 415,
+      "originalSha256": "44571d8f09a24b1c5db6006b12b2ffe1275cbb171cf288a6d6429b11d85976c2",
+      "transcriptBytes": 414,
+      "transcriptSha256": "11baf2e289ba642d2e058fbf07bbe3d8554a80104432fa8b4c401013a556b81d"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-lint-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-lint-final.log.txt",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcriptBytes": 0,
+      "transcriptSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-lint-post-timeout-code.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-lint-post-timeout-code.log.txt",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcriptBytes": 0,
+      "transcriptSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-partial-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-partial-red.log.txt",
+      "originalBytes": 297,
+      "originalSha256": "a467c993e902fa74d804c086fe50ba522cbb951789235815e17f1fcfe4938574",
+      "transcriptBytes": 297,
+      "transcriptSha256": "a467c993e902fa74d804c086fe50ba522cbb951789235815e17f1fcfe4938574"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-postgres-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-postgres-1.log.txt",
+      "originalBytes": 133,
+      "originalSha256": "e574b14f90ced2ccff4f379799357d1fc5f890afb743aa7b21ca1bef12610501",
+      "transcriptBytes": 133,
+      "transcriptSha256": "e574b14f90ced2ccff4f379799357d1fc5f890afb743aa7b21ca1bef12610501"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-postgres-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-postgres-2.log.txt",
+      "originalBytes": 101,
+      "originalSha256": "26c893854bfe58e27e8cc8e0c187d234a4d9c7585eb4e2e4974716e94360a8b3",
+      "transcriptBytes": 101,
+      "transcriptSha256": "26c893854bfe58e27e8cc8e0c187d234a4d9c7585eb4e2e4974716e94360a8b3"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-postgres-3.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-postgres-3.log.txt",
+      "originalBytes": 311,
+      "originalSha256": "9b07cf29f36581215b83058031f120b95735a64c16c26367a530584aa7997311",
+      "transcriptBytes": 311,
+      "transcriptSha256": "9b07cf29f36581215b83058031f120b95735a64c16c26367a530584aa7997311"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-postgres-4.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-postgres-4.log.txt",
+      "originalBytes": 101,
+      "originalSha256": "389c7c2a6cb573af592132b8b0b54ebc28476a7c72d39de023212e17b89a80a0",
+      "transcriptBytes": 101,
+      "transcriptSha256": "389c7c2a6cb573af592132b8b0b54ebc28476a7c72d39de023212e17b89a80a0"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-postgres-5.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-postgres-5.log.txt",
+      "originalBytes": 133,
+      "originalSha256": "e574b14f90ced2ccff4f379799357d1fc5f890afb743aa7b21ca1bef12610501",
+      "transcriptBytes": 133,
+      "transcriptSha256": "e574b14f90ced2ccff4f379799357d1fc5f890afb743aa7b21ca1bef12610501"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-postgres-6.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-postgres-6.log.txt",
+      "originalBytes": 101,
+      "originalSha256": "3b9ef65f18e58ac1b0b8cb23f175adc205dac70aa3ea8a03bbd859b79d37a145",
+      "transcriptBytes": 101,
+      "transcriptSha256": "3b9ef65f18e58ac1b0b8cb23f175adc205dac70aa3ea8a03bbd859b79d37a145"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-red-verified.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-red-verified.log.txt",
+      "originalBytes": 372,
+      "originalSha256": "8beb52972930276a97b8b666dd7c044eba7f68c56bbc3efde68a98ec512a3a31",
+      "transcriptBytes": 372,
+      "transcriptSha256": "8beb52972930276a97b8b666dd7c044eba7f68c56bbc3efde68a98ec512a3a31"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-red.log.txt",
+      "originalBytes": 153,
+      "originalSha256": "41b57d4ad59cba14a71df97606b5c383bc4bb2cdd0831a096902dfdaa3e3df4f",
+      "transcriptBytes": 153,
+      "transcriptSha256": "41b57d4ad59cba14a71df97606b5c383bc4bb2cdd0831a096902dfdaa3e3df4f"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-timeout-code-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-timeout-code-green.log.txt",
+      "originalBytes": 240,
+      "originalSha256": "07c604093e213ca0d5f8daabd11b0cb52bd0da4235e1cdf73b4643ad62ce939e",
+      "transcriptBytes": 239,
+      "transcriptSha256": "9f10d0d505b1171e6a2f624462cb9a03338a35d1cee40d225567e0e19f844fa6"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-timeout-code-postgres.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-timeout-code-postgres.log.txt",
+      "originalBytes": 109,
+      "originalSha256": "9d1065b0f250f8feeca1efc9fe15672667361d1ec2a59e9a76a912ce94f3b38e",
+      "transcriptBytes": 109,
+      "transcriptSha256": "9d1065b0f250f8feeca1efc9fe15672667361d1ec2a59e9a76a912ce94f3b38e"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-timeout-code-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-timeout-code-red.log.txt",
+      "originalBytes": 1245,
+      "originalSha256": "a86741e22c4f17cda5158cd0815c4fd6f11a8abc6b126f47cbd783444c56b207",
+      "transcriptBytes": 1244,
+      "transcriptSha256": "e87b1dfe2b937af70b25e17d81d07464880caf777718a14f3090b67010b7af0f"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-timeout-postgres-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-timeout-postgres-red.log.txt",
+      "originalBytes": 285,
+      "originalSha256": "9fca01cf636d1a4ff246f0e8c54ce56956481b02f59e2f218f7f8281e00414e2",
+      "transcriptBytes": 285,
+      "transcriptSha256": "9fca01cf636d1a4ff246f0e8c54ce56956481b02f59e2f218f7f8281e00414e2"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-timeout-unit-green-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-timeout-unit-green-1.log.txt",
+      "originalBytes": 240,
+      "originalSha256": "af0bfe40099252f1d54535f8e6bc89d287371830ff4048d0c2b5c082f83dcef5",
+      "transcriptBytes": 239,
+      "transcriptSha256": "d92dea286d6fc6e289760d3beee9441a6345e4e34eba56f2b457ec3e4b55bd72"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-timeout-unit-red-verified.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-timeout-unit-red-verified.log.txt",
+      "originalBytes": 3849,
+      "originalSha256": "01c3196e7f87ab19acccc24d11add6da70cd88df9b0c9a3d83129df9c01d9dff",
+      "transcriptBytes": 3848,
+      "transcriptSha256": "4dca3f0b6fe493864a720d8df7a3341bf1b0671ab43c0da9405fcc703d3e6e35"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/persistence-timeout-unit-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/persistence-timeout-unit-red.log.txt",
+      "originalBytes": 2558,
+      "originalSha256": "c11a0fe7a3406b28ce0f199a186e79956a0c922a65782d4e84579984d280f566",
+      "transcriptBytes": 2555,
+      "transcriptSha256": "5f05a298aa5ab39cf1bf6c493cb20e1f8829b62fa1d5033377dce963eb712436"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollback-prefix-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollback-prefix-green.log.txt",
+      "originalBytes": 2840,
+      "originalSha256": "654779a93acee0ddf01e447132b9e311409fc67296a11252401ece185a958991",
+      "transcriptBytes": 2840,
+      "transcriptSha256": "654779a93acee0ddf01e447132b9e311409fc67296a11252401ece185a958991"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollback-prefix-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollback-prefix-red.log.txt",
+      "originalBytes": 8365,
+      "originalSha256": "1e167d4c2680a624219832e1443f7e7706a83d2c4d355dfbb59c677e3dd33aa4",
+      "transcriptBytes": 8353,
+      "transcriptSha256": "effb61bb0ad9e582a3a78bf5dc9048e66f4755ce30f12922117a75da089b97ac"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-application-green-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-application-green-2.log.txt",
+      "originalBytes": 232,
+      "originalSha256": "a6707d138f703b83af659a343e1eb15e4d69fd304492e8e8835845a3ad283fda",
+      "transcriptBytes": 231,
+      "transcriptSha256": "cf0c3c3370bc4001774399d68ce34ef60b4bdf7f461f5adbfb172ecb0a9026bf"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-application-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-application-green.log.txt",
+      "originalBytes": 1590,
+      "originalSha256": "91dc34ce166b362f5ef0335b6acb58418801b422c5b8e51edbc1d9cf6cdf2be0",
+      "transcriptBytes": 1590,
+      "transcriptSha256": "91dc34ce166b362f5ef0335b6acb58418801b422c5b8e51edbc1d9cf6cdf2be0"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-application-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-application-red.log.txt",
+      "originalBytes": 2480,
+      "originalSha256": "e9ba0deed15954ed78ec11c2c8e8ab24d773a8d1ff98f05fdd561d2fa5a8c424",
+      "transcriptBytes": 2480,
+      "transcriptSha256": "e9ba0deed15954ed78ec11c2c8e8ab24d773a8d1ff98f05fdd561d2fa5a8c424"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-contract-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-contract-green.log.txt",
+      "originalBytes": 326,
+      "originalSha256": "c5af67820a8416c15a95e0a0b6a36eaa0fdd00ff5e79918779093de0e74be1ea",
+      "transcriptBytes": 325,
+      "transcriptSha256": "29f22c15df3f10db236a7060153092c83f458d546dbeba9bd2e0c4772b84cbe7"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-contract-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-contract-red.log.txt",
+      "originalBytes": 2080,
+      "originalSha256": "43a954a44181d6a89558cc3c64ad450fa69ffc74d1a6607346d462939c278305",
+      "transcriptBytes": 2080,
+      "transcriptSha256": "43a954a44181d6a89558cc3c64ad450fa69ffc74d1a6607346d462939c278305"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-contract-typecheck.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-contract-typecheck.log.txt",
+      "originalBytes": 23,
+      "originalSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b",
+      "transcriptBytes": 23,
+      "transcriptSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-domain-green-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-domain-green-final.log.txt",
+      "originalBytes": 228,
+      "originalSha256": "fececdf749f64398cb494324e47cd4d10517bb13b511a6d0342ed777a5046632",
+      "transcriptBytes": 227,
+      "transcriptSha256": "e94a3a1b7560f68ea6b00826eeeadd29306f61e83dbc078547f7abbbc84e37a7"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-domain-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-domain-green.log.txt",
+      "originalBytes": 228,
+      "originalSha256": "4545ac903fd956432305d09a70d1c690cd8cb09379cd62b2b4530f0f4d281325",
+      "transcriptBytes": 227,
+      "transcriptSha256": "c88b8109318083b4e63ef89eb97b7fd7e4ac014451eefef604458af1abd847e5"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-domain-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-domain-red.log.txt",
+      "originalBytes": 5365,
+      "originalSha256": "f24c64e18212f5b0057a247489a3d776b99bda1f37c6b2c7aec5d24774b32368",
+      "transcriptBytes": 5365,
+      "transcriptSha256": "f24c64e18212f5b0057a247489a3d776b99bda1f37c6b2c7aec5d24774b32368"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-domain-typecheck.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-domain-typecheck.log.txt",
+      "originalBytes": 23,
+      "originalSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b",
+      "transcriptBytes": 23,
+      "transcriptSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-format-accepted.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-format-accepted.log.txt",
+      "originalBytes": 66,
+      "originalSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "transcriptBytes": 66,
+      "transcriptSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-format-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-format-final.log.txt",
+      "originalBytes": 66,
+      "originalSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "transcriptBytes": 66,
+      "transcriptSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-format.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-format.log.txt",
+      "originalBytes": 336,
+      "originalSha256": "bfd68d69b75a3435bc070b402bb4dab5b7e350b303a13b10e3d5c6b71519d1ae",
+      "transcriptBytes": 336,
+      "transcriptSha256": "bfd68d69b75a3435bc070b402bb4dab5b7e350b303a13b10e3d5c6b71519d1ae"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-http-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-http-1.log.txt",
+      "originalBytes": 1060,
+      "originalSha256": "a2d4a3765bb495197bea84a0357379ed8f95ad1a1bb77051a2b3662bde870a2b",
+      "transcriptBytes": 1060,
+      "transcriptSha256": "a2d4a3765bb495197bea84a0357379ed8f95ad1a1bb77051a2b3662bde870a2b"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-http-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-http-2.log.txt",
+      "originalBytes": 7816,
+      "originalSha256": "32e8526a8bd1360bc205ea3b3c64a2346247fb9aaa9c9a1e872cbfc396f85cb6",
+      "transcriptBytes": 7816,
+      "transcriptSha256": "32e8526a8bd1360bc205ea3b3c64a2346247fb9aaa9c9a1e872cbfc396f85cb6"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-http-3.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-http-3.log.txt",
+      "originalBytes": 8707,
+      "originalSha256": "2430ea53b323b2671ca0ae0fa5e2dd26e6cb24ae23506de5181cc281214a7bf4",
+      "transcriptBytes": 8707,
+      "transcriptSha256": "2430ea53b323b2671ca0ae0fa5e2dd26e6cb24ae23506de5181cc281214a7bf4"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-http-4.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-http-4.log.txt",
+      "originalBytes": 8833,
+      "originalSha256": "ad83a4d9a63ab1a024fa84d1a941f981afad70aa7e8a0280a80bdf7e191b11fe",
+      "transcriptBytes": 8833,
+      "transcriptSha256": "ad83a4d9a63ab1a024fa84d1a941f981afad70aa7e8a0280a80bdf7e191b11fe"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-http-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-http-final.log.txt",
+      "originalBytes": 8387,
+      "originalSha256": "8a85f794db82a4d14e8ac3172a668a6d63ad14ffb50aaa7140f61dc99742ca76",
+      "transcriptBytes": 8387,
+      "transcriptSha256": "8a85f794db82a4d14e8ac3172a668a6d63ad14ffb50aaa7140f61dc99742ca76"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-http-lint-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-http-lint-2.log.txt",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcriptBytes": 0,
+      "transcriptSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-http-lint.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-http-lint.log.txt",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcriptBytes": 0,
+      "transcriptSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-http-static.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-http-static.log.txt",
+      "originalBytes": 66,
+      "originalSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "transcriptBytes": 66,
+      "transcriptSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-lint.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-lint.log.txt",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcriptBytes": 0,
+      "transcriptSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-postgres-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-postgres-final.log.txt",
+      "originalBytes": 245,
+      "originalSha256": "1d062980a1555f1b626667af77b58b0a87f73e9b60d4c9aa11ae3d67d79c7e69",
+      "transcriptBytes": 245,
+      "transcriptSha256": "1d062980a1555f1b626667af77b58b0a87f73e9b60d4c9aa11ae3d67d79c7e69"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-postgres-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-postgres-green.log.txt",
+      "originalBytes": 245,
+      "originalSha256": "1d062980a1555f1b626667af77b58b0a87f73e9b60d4c9aa11ae3d67d79c7e69",
+      "transcriptBytes": 245,
+      "transcriptSha256": "1d062980a1555f1b626667af77b58b0a87f73e9b60d4c9aa11ae3d67d79c7e69"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-postgres-red-observed.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-postgres-red-observed.log.txt",
+      "originalBytes": 769,
+      "originalSha256": "96a85368f877a7eaccbf56acb08d36609f3d8a7da72abe717c4feee3d61e0a26",
+      "transcriptBytes": 769,
+      "transcriptSha256": "96a85368f877a7eaccbf56acb08d36609f3d8a7da72abe717c4feee3d61e0a26"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-postgres-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-postgres-red.log.txt",
+      "originalBytes": 661,
+      "originalSha256": "106ff135c513512ce691a2c42ccc8351c04b73cc5e355f539daae54f50c293c9",
+      "transcriptBytes": 661,
+      "transcriptSha256": "106ff135c513512ce691a2c42ccc8351c04b73cc5e355f539daae54f50c293c9"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-proof-helpers-lint.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-proof-helpers-lint.log.txt",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcriptBytes": 0,
+      "transcriptSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-seed-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-seed-green.log.txt",
+      "originalBytes": 357,
+      "originalSha256": "84c29d0bbd036b8ee6d76510311c933c209691dbe0c0582ba045bebf8dce8a87",
+      "transcriptBytes": 357,
+      "transcriptSha256": "84c29d0bbd036b8ee6d76510311c933c209691dbe0c0582ba045bebf8dce8a87"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-seed-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-seed-red.log.txt",
+      "originalBytes": 1898,
+      "originalSha256": "6ecb7a4ff086f9ef26cf798fac918e732af754c05e3a3fa8ce349ea162686323",
+      "transcriptBytes": 1894,
+      "transcriptSha256": "a464fab568d36861c9502b565dccfa6cebeeb625e46da3bce1bdf5c537573f1f"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/rollout-shared-build.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/rollout-shared-build.log.txt",
+      "originalBytes": 92,
+      "originalSha256": "50c4ea6480f8d73d057a217a05123a1193331013bcd4b16559a330b83a67d3d0",
+      "transcriptBytes": 92,
+      "transcriptSha256": "50c4ea6480f8d73d057a217a05123a1193331013bcd4b16559a330b83a67d3d0"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/secret-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/secret-final.log.txt",
+      "originalBytes": 34,
+      "originalSha256": "c5de5c7294bce3c849ea5b4d2c4df1edc669c7858437ffd95fa7af48e078d2c1",
+      "transcriptBytes": 34,
+      "transcriptSha256": "c5de5c7294bce3c849ea5b4d2c4df1edc669c7858437ffd95fa7af48e078d2c1"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/shared-build.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/shared-build.log.txt",
+      "originalBytes": 294,
+      "originalSha256": "ac7d353c9bbe593004718f90d67342a4b5d2345e665ff316adc2c8906e4a2d3f",
+      "transcriptBytes": 294,
+      "transcriptSha256": "ac7d353c9bbe593004718f90d67342a4b5d2345e665ff316adc2c8906e4a2d3f"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/staged-diff-check-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/staged-diff-check-2.log.txt",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcriptBytes": 0,
+      "transcriptSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/staged-diff-check.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/staged-diff-check.log.txt",
+      "originalBytes": 9862,
+      "originalSha256": "ba448b2178eaa0bfc979e38832dfc7fabbd7904b2edea8ec33912f3dbef7bbb5",
+      "transcriptBytes": 9701,
+      "transcriptSha256": "28a40113d509df3f289e0e6d4bd455ec903299da215b4d0e1eb665159243ed71"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/structural-final-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/structural-final-2.log.txt",
+      "originalBytes": 922,
+      "originalSha256": "f2bd11fc0b6489670d6f3f82eb9bbde973d0333d598204f118f513be848e989b",
+      "transcriptBytes": 922,
+      "transcriptSha256": "f2bd11fc0b6489670d6f3f82eb9bbde973d0333d598204f118f513be848e989b"
+    },
+    {
+      "original": "output/checks/p5-04-payment-health/structural-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-payment-health/structural-final.log.txt",
+      "originalBytes": 3091,
+      "originalSha256": "b68c81585bfbfd4e1a2d08ee07ad15d35b58acff3cbbf29c1066115054744d08",
+      "transcriptBytes": 3091,
+      "transcriptSha256": "b68c81585bfbfd4e1a2d08ee07ad15d35b58acff3cbbf29c1066115054744d08"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/api-regression.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/api-regression.log.txt",
+      "originalBytes": 427,
+      "originalSha256": "db4cd444a229097f1854dd6af9024a4b2c77fb702cec7c7b0c759579c06019de",
+      "transcriptBytes": 426,
+      "transcriptSha256": "20d61065cb14dcd52f1970bdf8abaca4f3dea9af26076b56f6047de04df1b80f"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-classification-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-classification-red.log.txt",
+      "originalBytes": 10328,
+      "originalSha256": "340d8b66b50878c2be96212992a0821e11ce6820012cb62ea632075f8a799566",
+      "transcriptBytes": 10328,
+      "transcriptSha256": "340d8b66b50878c2be96212992a0821e11ce6820012cb62ea632075f8a799566"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-green-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-green-1.log.txt",
+      "originalBytes": 323,
+      "originalSha256": "c824a15edf66828a912bdbd4781ee1e6b8ddae7de812a69b5ad97e81956599e5",
+      "transcriptBytes": 322,
+      "transcriptSha256": "7ebb53abf60ad3deb4bfcf0fd65680504ae386fb88a15ed77356d032ef499ca2"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-probe-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-probe-red.log.txt",
+      "originalBytes": 11827,
+      "originalSha256": "dfb97d151ab56ecbf0f4f4588753e3a5afd53a0096d24f64d52f1e1644507d7c",
+      "transcriptBytes": 11827,
+      "transcriptSha256": "dfb97d151ab56ecbf0f4f4588753e3a5afd53a0096d24f64d52f1e1644507d7c"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-red.log.txt",
+      "originalBytes": 6607,
+      "originalSha256": "9f5cbecbb633c03b30539c1394aee79345a81b332a4a169970f80a2376d7ff8a",
+      "transcriptBytes": 6607,
+      "transcriptSha256": "9f5cbecbb633c03b30539c1394aee79345a81b332a4a169970f80a2376d7ff8a"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-regression-final-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-regression-final-2.log.txt",
+      "originalBytes": 427,
+      "originalSha256": "2c735dcb58351a03aacde05f1f48bc8b817037beb4cc0297109d64950387cf61",
+      "transcriptBytes": 426,
+      "transcriptSha256": "4dbd56efefaa189acb79d5f7b903d8d9e14cc5581aa73d68e4981e3b2a10237b"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-regression-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-regression-final.log.txt",
+      "originalBytes": 427,
+      "originalSha256": "9ee00f6c0917321612327ddc74f1c98981d9d44b5961e00afefe78336f6621ce",
+      "transcriptBytes": 426,
+      "transcriptSha256": "f60fb19364ac7848213be657cb467785ce2b5d1aab324b85587a04a635da1019"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-regression.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-regression.log.txt",
+      "originalBytes": 427,
+      "originalSha256": "35aad47526a337943ec39a0c5d96575d19bd55135956e7816e271af893eebbcb",
+      "transcriptBytes": 426,
+      "transcriptSha256": "fbbee03737d57b9b3e4db8e58f05f7bc2f92401db07809a9dd5a00f61de64cce"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-typecheck-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-typecheck-1.log.txt",
+      "originalBytes": 381,
+      "originalSha256": "8aab35f14a4b5cf2b437358bb0544e1c73cf5d643d354ba60c41c55f03b0b825",
+      "transcriptBytes": 381,
+      "transcriptSha256": "8aab35f14a4b5cf2b437358bb0544e1c73cf5d643d354ba60c41c55f03b0b825"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-typecheck-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-typecheck-2.log.txt",
+      "originalBytes": 285,
+      "originalSha256": "ded7e90f342ebb86f7be5a853f35b801b3689aa567d475468bdffc9bf23c691a",
+      "transcriptBytes": 285,
+      "transcriptSha256": "ded7e90f342ebb86f7be5a853f35b801b3689aa567d475468bdffc9bf23c691a"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-typecheck-3.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-typecheck-3.log.txt",
+      "originalBytes": 23,
+      "originalSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b",
+      "transcriptBytes": 23,
+      "transcriptSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-typecheck-final-2.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-typecheck-final-2.log.txt",
+      "originalBytes": 23,
+      "originalSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b",
+      "transcriptBytes": 23,
+      "transcriptSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-typecheck-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-typecheck-final.log.txt",
+      "originalBytes": 23,
+      "originalSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b",
+      "transcriptBytes": 23,
+      "transcriptSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-unavailable-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-unavailable-green.log.txt",
+      "originalBytes": 323,
+      "originalSha256": "5c8189351653b2d1f256b56e50410a666e3e91debbe75edb627462e9c94d8dcf",
+      "transcriptBytes": 322,
+      "transcriptSha256": "771eba585f4d1c78419862a646156fcf62b821cc36b38e69e532a16ace05fd85"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/application-unavailable-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/application-unavailable-red.log.txt",
+      "originalBytes": 2365,
+      "originalSha256": "d46036c6893841deea1cc7c09fe3177cb372204b1ebea854e33a14e37fa33619",
+      "transcriptBytes": 2365,
+      "transcriptSha256": "d46036c6893841deea1cc7c09fe3177cb372204b1ebea854e33a14e37fa33619"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/canceled-format.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/canceled-format.log.txt",
+      "originalBytes": 144,
+      "originalSha256": "8c99030fbafb7692b6daf4d2ea11960af0e916b201e5c74b235729831e5557fa",
+      "transcriptBytes": 144,
+      "transcriptSha256": "8c99030fbafb7692b6daf4d2ea11960af0e916b201e5c74b235729831e5557fa"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/canceled-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/canceled-red.log.txt",
+      "originalBytes": 1535,
+      "originalSha256": "4522f817f4bd75789e7c4bf779486eec1af0fb6a97b518929ae2b31e277e2a7a",
+      "transcriptBytes": 1535,
+      "transcriptSha256": "4522f817f4bd75789e7c4bf779486eec1af0fb6a97b518929ae2b31e277e2a7a"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/composition-green-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/composition-green-1.log.txt",
+      "originalBytes": 313,
+      "originalSha256": "47254bc069b89fefb8f8e60e141a6d210c78b8b5ebc36e65065efd1b230f2424",
+      "transcriptBytes": 312,
+      "transcriptSha256": "06688bdb47fa005b12f2d4ee2abd857b96d274c2002d3720a39af24b0028138a"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/composition-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/composition-red.log.txt",
+      "originalBytes": 5940,
+      "originalSha256": "e07d7d6aa7d6a78e24a62dc31d56e3fb9d4dcc202df215bd025d1f568f11578c",
+      "transcriptBytes": 5940,
+      "transcriptSha256": "e07d7d6aa7d6a78e24a62dc31d56e3fb9d4dcc202df215bd025d1f568f11578c"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/format-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/format-final.log.txt",
+      "originalBytes": 61,
+      "originalSha256": "7ba3a8a30fe21cfead4c3f2d7a49d8b8e17e10289c95734fac4662809b34762e",
+      "transcriptBytes": 61,
+      "transcriptSha256": "7ba3a8a30fe21cfead4c3f2d7a49d8b8e17e10289c95734fac4662809b34762e"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/format.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/format.log.txt",
+      "originalBytes": 723,
+      "originalSha256": "8136d69942e3ca0bc608f9fe8cfee1d835df4947c78481f880d4eea0e428658a",
+      "transcriptBytes": 723,
+      "transcriptSha256": "8136d69942e3ca0bc608f9fe8cfee1d835df4947c78481f880d4eea0e428658a"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/gateway-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/gateway-green.log.txt",
+      "originalBytes": 312,
+      "originalSha256": "0a1ea666fd51b071de3490f8a903b46b8e853372671e56463fe7d5a656bc2710",
+      "transcriptBytes": 311,
+      "transcriptSha256": "2f2cfd065de318fd6eae61af8083671563d4947ce0e280815dff3162bb553fb1"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/gateway-lifecycle-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/gateway-lifecycle-red.log.txt",
+      "originalBytes": 267,
+      "originalSha256": "e507f50fcf492988218b31f20b49a32a6337e633dcb199b37b51d4bbdf282966",
+      "transcriptBytes": 266,
+      "transcriptSha256": "6bcb38a5024d943fd98b49c615c9664268eebf59ca903261b8a65db5bba62e3c"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/gateway-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/gateway-red.log.txt",
+      "originalBytes": 1798,
+      "originalSha256": "331e9d7bb0222f9773c579b7acf1a4534f4645d9b4704ed5876f0d284a3f4282",
+      "transcriptBytes": 1798,
+      "transcriptSha256": "331e9d7bb0222f9773c579b7acf1a4534f4645d9b4704ed5876f0d284a3f4282"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/gateway-regression.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/gateway-regression.log.txt",
+      "originalBytes": 295,
+      "originalSha256": "8ee39e89891de3672cf6782a4b4048328eb5d3b93dfcc6fc6d7fadffb4875262",
+      "transcriptBytes": 294,
+      "transcriptSha256": "de057635ae6207b88e90e4bf11c877200a152c0d8f03205a463b37ff0563fadc"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/gateway-typecheck.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/gateway-typecheck.log.txt",
+      "originalBytes": 23,
+      "originalSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b",
+      "transcriptBytes": 23,
+      "transcriptSha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/gateway-unavailable-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/gateway-unavailable-green.log.txt",
+      "originalBytes": 312,
+      "originalSha256": "d75ad0b11c63e7b66b3de158a58ec9b7c45bb0f9b97199d03f5ab825e9c937a3",
+      "transcriptBytes": 311,
+      "transcriptSha256": "cf378396bc6a79bb99657fc8c56dea19e86c1b7da8fdd77f1bcecbab889a31a9"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/gateway-unavailable-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/gateway-unavailable-red.log.txt",
+      "originalBytes": 1793,
+      "originalSha256": "e2306cfd59b3f0151455093602cbcde665f8ebae193b2c933361e97c910c3d14",
+      "transcriptBytes": 1793,
+      "transcriptSha256": "e2306cfd59b3f0151455093602cbcde665f8ebae193b2c933361e97c910c3d14"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/lifecycle-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/lifecycle-green.log.txt",
+      "originalBytes": 311,
+      "originalSha256": "3340b8c5521dcb1d5b4117f05220df12372bc36b0a68b1c6b8ca54a4917c91e1",
+      "transcriptBytes": 310,
+      "transcriptSha256": "9fce542d638433c55ca944f6b48a56691e6c2420554071f8d94fb007f20e3535"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/lifecycle-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/lifecycle-red.log.txt",
+      "originalBytes": 2033,
+      "originalSha256": "7ecc8da0e79e0de67129a00642791e8db7a38af0daed2fe839722337f0dfa838",
+      "transcriptBytes": 2033,
+      "transcriptSha256": "7ecc8da0e79e0de67129a00642791e8db7a38af0daed2fe839722337f0dfa838"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/lint-final.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/lint-final.log.txt",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcriptBytes": 0,
+      "transcriptSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/lint.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/lint.log.txt",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcriptBytes": 0,
+      "transcriptSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/probe-deadline-green.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/probe-deadline-green.log.txt",
+      "originalBytes": 323,
+      "originalSha256": "7a6841a0ce27c376fed548466cd86b6d9cdb12a65fd7582d0ee2c8a641f43b50",
+      "transcriptBytes": 322,
+      "transcriptSha256": "56e9c623515b9ca2902fbade2fb1dfa146bd15908d43cdd859a6b64d89b60a5a"
+    },
+    {
+      "original": "output/checks/p5-04-health-runtime/probe-deadline-red.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p5-04-health-runtime/probe-deadline-red.log.txt",
+      "originalBytes": 1490,
+      "originalSha256": "d23fdbb4b5c239b5aa4b110d2fe63cb8f1ccc5a6aeb7d1a05b5e490a781fed8b",
+      "transcriptBytes": 1490,
+      "transcriptSha256": "d23fdbb4b5c239b5aa4b110d2fe63cb8f1ccc5a6aeb7d1a05b5e490a781fed8b"
+    },
+    {
+      "original": "output/checks/p4-04-payment-runtime/run-2026-09-21T18-34-09.039Z/next-build-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p4-04-payment-runtime/run-2026-09-21T18-34-09.039Z/next-build-1.log.txt",
+      "originalBytes": 6400,
+      "originalSha256": "47a668d85aa4023f0dbf2633c559d2f577675774f8a00cab4c7b3dcbac71f8ca",
+      "transcriptBytes": 6393,
+      "transcriptSha256": "5540ffc2de10636d9ba380e21d3ce6c40d31998a0423248a4cddc0c002bc4f6b"
+    },
+    {
+      "original": "output/checks/p4-04-payment-runtime/run-2026-09-21T18-34-09.039Z/next-runtime-1.log",
+      "transcript": "output/checks/p5-04-payment-health/logs/p4-04-payment-runtime/run-2026-09-21T18-34-09.039Z/next-runtime-1.log.txt",
+      "originalBytes": 416,
+      "originalSha256": "6a7c349030bbe082415f344ed12fdacaa91f95d6ba45542fd40e94a7a45dc71a",
+      "transcriptBytes": 416,
+      "transcriptSha256": "6a7c349030bbe082415f344ed12fdacaa91f95d6ba45542fd40e94a7a45dc71a"
+    }
+  ]
+}

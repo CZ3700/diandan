@@ -1,0 +1,9 @@
+$ vitest run --config ../../vitest.config.ts --root . src/conformance.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/payment-gateway
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  00:56:53
+   Duration  1.09s (transform 328ms, setup 0ms, import 471ms, tests 561ms, environment 0ms)
