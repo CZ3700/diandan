@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-21T17:00:47.440566+00:00",
+  "baselineCommit": "bfe259a2f96220f709978db88ac7ef377537f51c",
+  "status": "PASS_LOCAL_LAB_AND_TECHNICAL_REVIEW",
+  "productionSourceChanges": 0,
+  "taskComplete": false,
+  "taskCounts": {
+    "done": 29,
+    "inProgress": 2,
+    "pending": 18,
+    "total": 49
+  },
+  "executorReleased": "Lane D",
+  "matrixSummary": "matrix-summary-final.json",
+  "filterSummary": "filter-summary.json",
+  "preservation": {
+    "source-before": {
+      "files": 2349,
+      "mismatches": []
+    },
+    "initial-untracked": {
+      "files": 5587,
+      "mismatches": []
+    },
+    "recordedAt": "2026-09-21T16:56:14.844809+00:00",
+    "status": "PASS",
+    "commitBeforeCheckpoint": "bfe259a2f96220f709978db88ac7ef377537f51c"
+  },
+  "cleanup": {
+    "schemaVersion": 1,
+    "observedPorts": [
+      {
+        "port": 50178,
+        "exitCode": 1,
+        "noListener": true
+      },
+      {
+        "port": 51175,
+        "exitCode": 1,
+        "noListener": true
+      },
+      {
+        "port": 52408,
+        "exitCode": 1,
+        "noListener": true
+      }
+    ],
+    "scope": "Only the recorded matrix viewer and two Next origins; full owned fixture cleanup additionally evidenced by each original successful process exit and finally hooks."
+  },
+  "checks": {
+    "affected-tests": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "--test",
+        "apps/api/scripts/storefront-acceptance-performance.test.mjs",
+        "apps/api/scripts/storefront-viewer-transport.test.mjs"
+      ],
+      "startedAt": "2026-09-21T16:34:26.797217+00:00",
+      "completedAt": "2026-09-21T16:34:27.249779+00:00",
+      "elapsedSeconds": 0.452,
+      "exitCode": 0
+    },
+    "matrix": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "output/checks/p3-06-h2-matrix/run-matrix.mjs"
+      ],
+      "startedAt": "2026-09-21T16:34:47.926343+00:00",
+      "completedAt": "2026-09-21T16:47:52.311605+00:00",
+      "elapsedSeconds": 784.371,
+      "exitCode": 0
+    },
+    "matrix-verification-final": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "output/checks/p3-06-h2-matrix/verify-matrix.mjs",
+        "output/checks/p3-06-storefront-acceptance/run-2026-09-21T16-34-50-464Z/browser-attempt-1",
+        "output/checks/p3-06-h2-matrix/matrix-summary-final.json"
+      ],
+      "startedAt": "2026-09-21T16:50:16.220164+00:00",
+      "completedAt": "2026-09-21T16:50:16.588020+00:00",
+      "elapsedSeconds": 0.368,
+      "exitCode": 0
+    },
+    "filter-probe": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "output/checks/p3-06-h2-matrix/run-filter-probe.mjs"
+      ],
+      "startedAt": "2026-09-21T16:49:16.311675+00:00",
+      "completedAt": "2026-09-21T16:54:12.421920+00:00",
+      "elapsedSeconds": 296.109,
+      "exitCode": 0
+    },
+    "filter-verification": {
+      "schemaVersion": 1,
+      "command": [
+        "python3",
+        "output/checks/p3-06-h2-matrix/verify-filter.py"
+      ],
+      "startedAt": "2026-09-21T16:59:49.001500+00:00",
+      "completedAt": "2026-09-21T16:59:49.032317+00:00",
+      "elapsedSeconds": 0.03,
+      "exitCode": 0
+    },
+    "probe-tools-lint": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "exec",
+        "eslint",
+        "output/checks/p3-06-h2-matrix/run-matrix.mjs",
+        "output/checks/p3-06-h2-matrix/verify-matrix.mjs",
+        "output/checks/p3-06-h2-matrix/run-filter-probe.mjs",
+        "output/checks/p3-06-h2-matrix/probe-filter.mjs",
+        "--max-warnings=0"
+      ],
+      "startedAt": "2026-09-21T16:49:03.469488+00:00",
+      "completedAt": "2026-09-21T16:49:04.214593+00:00",
+      "elapsedSeconds": 0.745,
+      "exitCode": 0
+    },
+    "check-dev": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "check:dev"
+      ],
+      "startedAt": "2026-09-21T16:55:13.107280+00:00",
+      "completedAt": "2026-09-21T16:55:28.608239+00:00",
+      "elapsedSeconds": 15.501,
+      "exitCode": 0
+    },
+    "adapter-boundaries": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "scripts/check-adapter-boundaries.mjs"
+      ],
+      "startedAt": "2026-09-21T16:56:10.370037+00:00",
+      "completedAt": "2026-09-21T16:56:14.114807+00:00",
+      "elapsedSeconds": 3.745,
+      "exitCode": 0
+    },
+    "build-artifacts": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "scripts/check-build-artifacts.mjs"
+      ],
+      "startedAt": "2026-09-21T16:56:10.371447+00:00",
+      "completedAt": "2026-09-21T16:56:10.837278+00:00",
+      "elapsedSeconds": 0.466,
+      "exitCode": 0
+    }
+  },
+  "superChecks": [
+    {
+      "number": 1,
+      "principle": "S",
+      "status": "PASS",
+      "evidence": "Each new file has one evidence collection, verification, or documentation responsibility."
+    },
+    {
+      "number": 2,
+      "principle": "S",
+      "status": "PASS",
+      "evidence": "Collector, summary verification, original fixture and original budget remain separate."
+    },
+    {
+      "number": 3,
+      "principle": "U",
+      "status": "PASS",
+      "evidence": "Tools consume existing application/fixture interfaces; production code does not depend on evidence output."
+    },
+    {
+      "number": 4,
+      "principle": "U",
+      "status": "PASS",
+      "evidence": "No production import or dependency changes; no cycles introduced."
+    },
+    {
+      "number": 5,
+      "principle": "P",
+      "status": "PASS",
+      "evidence": "Original serializable fixture/target interfaces and schemaVersion 1 reports reused; no public contract changed."
+    },
+    {
+      "number": 6,
+      "principle": "P",
+      "status": "PASS",
+      "evidence": "Evidence stored as JSON/text/PNG with explicit provenance; no private runtime objects serialized."
+    },
+    {
+      "number": 7,
+      "principle": "E",
+      "status": "PASS",
+      "evidence": "Existing TEST fixture supplies runtime origins and credentials; fixed replay evidence paths are output-only, not production configuration."
+    },
+    {
+      "number": 8,
+      "principle": "E",
+      "status": "PASS",
+      "evidence": "No dependencies added; pinned existing Node/Playwright/Lighthouse used."
+    },
+    {
+      "number": 9,
+      "principle": "R",
+      "status": "PASS",
+      "evidence": "One-off tools replaceable without changes to production modules or original acceptance functions."
+    },
+    {
+      "number": 10,
+      "principle": "tests",
+      "status": "PASS",
+      "evidence": "27 affected tests, original full matrix, current actual filter probe, check:dev and adapter/artifact checks passed within their declared scope."
+    }
+  ],
+  "independentReviews": [
+    "matrix-tools-review.md",
+    "docs-review.md",
+    "progress-final-review.md"
+  ],
+  "secretScanResult": "secret-scan-result.json (recorded separately after explicit staging; inspect actual exitCode)",
+  "gitPolicy": "Local checkpoint only; no push or deployment. Original untracked files never staged.",
+  "remaining": [
+    "Real operator timing and actual screen-reader evidence",
+    "Current physical device and key translation/approved photography review",
+    "P4-04 merchant/PSP sandbox and actual integration",
+    "JS recommendation excess and retained slow samples remain visible",
+    "Expanded local schedule proposal awaiting user response; P5-03..08 and P6/P7 not unlocked"
+  ],
+  "notRun": [
+    "Single full pnpm check",
+    "New full 88-case UI suite (previous verified evidence retained)",
+    "Production environment, merchant payments, staging or RUM"
+  ]
+}

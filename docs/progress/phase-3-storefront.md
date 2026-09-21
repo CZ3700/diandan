@@ -4,6 +4,24 @@
 > 任务：6  
 > 解锁条件：Phase 1 与 Phase 2 退出门禁均通过
 
+## P3-06 七语言 H2 完整实验室矩阵（2026-09-21）
+
+- Owner：Codex `/root`，继续同一 ACTIVE P3-06、Lane D 唯一 executor；开始 `2026-09-21T16:33:17.693606+00:00`，基线 `bfe259a`。用户要求连续完成余下2+18项，先闭合已有技术缺口；未满足依赖的任务不冒领，29/2/18暂不变。
+- 范围：在已验收字体修正上运行原完整84资源导航与7语言×3页面×3次=63次Lighthouse，原预算、默认模拟、Chrome启动参数、页面内容证明、顺序与三次聚合均不改；TEST读取诊断关闭。生产代码冻结；不再以中文单页诊断代替完整矩阵。
+- 传输：复用已测TLS/ALPN/压缩实体字节的loopback只读viewer，仅浏览器入口改为H2；原上游仍本机HTTP。沿用原精确TEST SPKI豁免，不修改系统信任或新增浏览器开关。明确是本地H2实验室证据，不代表已部署CloudFront、生产TLS、SEO或RUM。记录全部样本、辅助请求取消、原始报告和构建来源，不因失败挑选重采。
+- 所有权：root独占新 `output/checks/p3-06-h2-matrix/` 一次性运行入口、实际PG/S3/Next/Chrome与文档/Git；slow_lcp_audit只读现有慢快原件、matrix_plan_review只读复核方案；remaining_task_audit只读核对剩余任务依赖。任何产品改动须先登记具体范围并先RED再GREEN，不并行运行构建或CPU测试干扰采样。
+- 验证：原真实协议、完整原性能函数及三次聚合，源码/原未跟踪SHA保护、实际H2记录/关闭与端口清理；工具检查、check:dev、独立复核及S.U.P.E.R后本地提交。人工运营/读屏/关键译文/真机、真实商户与后续部署门保留，原失败不覆盖。
+- 文档纠偏所有权：root仅更新 `docs/operations/storefront-acceptance.md` 的人工操作入口，移除已被ADR-012取代的日常多角色/七语导入步骤，指向当前单一管理中心并明确真人计时记录；不把文档更新或自动回归当成人工PASS。剩余20项只读排期由remaining_task_audit独占新 `docs/plan/remaining-delivery.md`，提案未确认前不扩大阶段白名单。
+- 无障碍补证所有权：matrix_plan_review仅准备本检查点 `probe-filter.mjs` 与 `filter-probe-plan.md`；复用原手机筛选场景，保留完整axe节点、实际样式/遮挡、键盘和截图。root在性能采样结束后统一运行，期间不启动第二浏览器。既有28条目录裁切incomplete采用可绑定源码的历史专项证据复核，不篡改原axe结果；实际读屏门独立保留。
+
+### 完整矩阵与补证结果
+
+- 原完整84资源导航、63次Lighthouse和21组三次中位预算全部PASS，未改产品、浏览器设置、内容证明或阈值。score中位0.98–1、LCP中位1805.2408–2255.7256ms、CLS中位0；全部三次保留，5个慢样本最大4357.5634ms。图片SHOULD全通过；84页JS150027–155368 gzip B仍高于150000建议，留P6-03。不能说原呈现等待根因已修复或真实用户p75通过。
+- 153原件共88371421B的SHA/长度、fixture真实目标/完整viewport、63配置/content/warnings、原聚合重算通过。3356实际H2请求，3355完整、1次0字节CLIENT_ABORTED；其发生在es-home-mobile-2测量网络记录外的后续取证/关闭时段，不能确认具体图片/initiator，代理内部502不等于浏览器收到502。原资源失败0、Lighthouse warning0；viewer closed、active/overflow0。原run `run-2026-09-21T16-34-50-464Z` 正常exit0/784.371秒，本地H2不代替生产传输/SEO/RUM。
+- 原30条axe incomplete完成逐类技术复核，原结果不改为自动PASS：28条/532目录固底节点采用当前相同样式SHA、历史12实际卡片/24文字及数学对比度；新手机弹层精确定位说明段落，实际对比度7.7158717:1、9点无遮挡。补证127检查、原12Tab+补充24Tab/24ShiftTab、5次哨兵在原500ms内恢复、Escape回触发器、背景隐藏/恢复、2PNG通过，0axe违规/0页面错误，2incomplete原样保留。root查看新截图；不冒充VoiceOver/NVDA或真人操作。原run `run-2026-09-21T16-49-18-618Z` 正常exit0/296.109秒；两fixture原协议各32461。
+- 27原工具tests、最终check:dev exit0/15.501秒（type/test63/63、build36/36，全缓存）、adapter/artifact通过；没有运行单条完整pnpm check，没有重跑上轮88UI作为新证据。2349产品/工具源输入和5587原未跟踪逐SHA不变；viewer与两Next共3个已记录端口无监听。完整证据、独立复核/S.U.P.E.R及暂存后秘密扫描见 `output/checks/p3-06-h2-matrix/README.md` / `final-verification.json`。
+- 管理中心真人入口已纠正到当前短表单/原文发布，3/5/8分钟目标保持，见证者非必需、海报历史恢复独立；真实操作者尚未执行，不代签。剩余20项表与P5-04只读缺口审计已完成，扩大本地排期问题等待用户答复，不据提案解锁。P3-06仍IN_PROGRESS，29/2/18保持；root释放Lane D，后续入口为人工/真机/关键译审和P4-04真实商户条件，或用户接受的新本地排期；仅本地提交、不push。
+
 ## P3-06 字体重复范围修正（2026-09-21）
 
 - Owner：Codex `/root`，仍为 Lane D 唯一 executor；开始 `2026-09-21T15:55:00.199693+00:00`。接续同一个 ACTIVE P3-06，不解锁其他任务，29/2/18保持。
@@ -135,7 +153,7 @@
 | P3-03 | DONE | Codex `/root` | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
 | P3-04 | DONE | Codex `/root` | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
 | P3-05 | DONE | Codex `/root` | P2-04、P3-01、P3-04 | 真实七语礼物分页/筛选/详情/选择艺人/政策；完整check、PG/HTTP、浏览器与独立复核通过，见P3-05验收记录 |
-| P3-06 | IN_PROGRESS | Codex `/root`（Lane D） | P3-02/03/04/05 | 继续关键路径与性能验收；未完人工门保留，不计 DONE |
+| P3-06 | IN_PROGRESS | 无 executor（Lane D 已释放） | P3-02/03/04/05 | 七语言本地性能/无障碍技术复核通过；真人/读屏/真机/正式内容验收待续，不计 DONE |
 
 ## 必须证明
 

@@ -1,0 +1,954 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "scope": "Real fixture, public protocol and SEO proof/validators; not complete P3-06 acceptance",
+  "generatedAt": "2026-09-21T16:39:35.277Z",
+  "assertions": 32461,
+  "setupApiRequests": 6090,
+  "durationMs": 284812,
+  "actualPostgres": true,
+  "actualTlsS3": true,
+  "actualImageWorker": true,
+  "browserEvidence": false,
+  "seoCacheAcceptance": false,
+  "performanceAcceptance": false,
+  "humanOperationsEvidence": false,
+  "voiceOverEvidence": false,
+  "productionReleaseEvidence": false,
+  "protocol": {
+    "schemaVersion": 1,
+    "scope": "Real HTTP publication/media/commerce and SEO proof, enumeration, validators and normal lifecycle mutations; excludes compiled HTML/cache convergence, performance and manual acceptance",
+    "storefront": {
+      "schemaVersion": 1,
+      "cases": [
+        {
+          "name": "published-home-directory-detail-en",
+          "pass": true
+        },
+        {
+          "name": "published-home-directory-detail-zh-CN",
+          "pass": true
+        },
+        {
+          "name": "published-home-directory-detail-th",
+          "pass": true
+        },
+        {
+          "name": "published-home-directory-detail-vi",
+          "pass": true
+        },
+        {
+          "name": "published-home-directory-detail-ja",
+          "pass": true
+        },
+        {
+          "name": "published-home-directory-detail-es",
+          "pass": true
+        },
+        {
+          "name": "published-home-directory-detail-pt",
+          "pass": true
+        },
+        {
+          "name": "actual-120-pagination-alias-anchor-paused-and-media",
+          "pass": true,
+          "downloadedPublishedMedia": 9
+        }
+      ],
+      "destructiveFixtureChecks": false
+    },
+    "directory": {
+      "schemaVersion": 1,
+      "cases": [
+        {
+          "name": "published-content-prices-policies-en",
+          "pass": true
+        },
+        {
+          "name": "published-content-prices-policies-zh-CN",
+          "pass": true
+        },
+        {
+          "name": "published-content-prices-policies-th",
+          "pass": true
+        },
+        {
+          "name": "published-content-prices-policies-vi",
+          "pass": true
+        },
+        {
+          "name": "published-content-prices-policies-ja",
+          "pass": true
+        },
+        {
+          "name": "published-content-prices-policies-es",
+          "pass": true
+        },
+        {
+          "name": "published-content-prices-policies-pt",
+          "pass": true
+        },
+        {
+          "name": "actual-scope-pagination-sorts-prices-stock-eligibility-and-public-media",
+          "pass": true,
+          "downloadedPublishedMedia": 3
+        }
+      ]
+    },
+    "offers": {
+      "schemaVersion": 1,
+      "cases": [
+        {
+          "name": "actual-context-two-markets-four-policies",
+          "pass": true
+        },
+        {
+          "name": "scoped-offers-recipients-prices-stock-en",
+          "pass": true
+        },
+        {
+          "name": "scoped-offers-recipients-prices-stock-zh-CN",
+          "pass": true
+        },
+        {
+          "name": "scoped-offers-recipients-prices-stock-th",
+          "pass": true
+        },
+        {
+          "name": "scoped-offers-recipients-prices-stock-vi",
+          "pass": true
+        },
+        {
+          "name": "scoped-offers-recipients-prices-stock-ja",
+          "pass": true
+        },
+        {
+          "name": "scoped-offers-recipients-prices-stock-es",
+          "pass": true
+        },
+        {
+          "name": "scoped-offers-recipients-prices-stock-pt",
+          "pass": true
+        },
+        {
+          "name": "missing-recipient-market-invalid-query-archived-draft",
+          "pass": true
+        }
+      ]
+    },
+    "seo": {
+      "schemaVersion": 1,
+      "cases": [
+        {
+          "name": "complete-catalog-entity-clusters-etag",
+          "entities": 150,
+          "shards": 8
+        },
+        {
+          "name": "strict-input-and-private-field-rejection"
+        },
+        {
+          "name": "normal-publish-rollback-invalidate-cursor-and-lastmod"
+        },
+        {
+          "name": "normal-probe-rename-paused-archive",
+          "archivedProbeId": "c7292193-595e-47f7-a843-e221b82dfca2"
+        },
+        {
+          "name": "normal-rights-expiry-fails-proof-closed-and-restores"
+        }
+      ],
+      "initialEntityCount": 150,
+      "initialShardCount": 8,
+      "finalEntityCount": 150,
+      "cacheControl": "public, max-age=0, s-maxage=0, must-revalidate",
+      "productionCdnEvidence": false
+    },
+    "concurrentReads": {
+      "schemaVersion": 1,
+      "status": "PASS",
+      "scope": "Owned TEST PostgreSQL, three normal concurrent public reads with varied request order",
+      "beforeDeadlocks": 0,
+      "rounds": [
+        {
+          "locale": "en",
+          "startedAt": "2026-09-21T16:39:20.877Z",
+          "delayStepMs": 0,
+          "results": [
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=en"
+              },
+              "status": 200,
+              "elapsedMs": 352,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=en&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 680,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 452,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "en",
+          "startedAt": "2026-09-21T16:39:21.559Z",
+          "delayStepMs": 10,
+          "results": [
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 370,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=en"
+              },
+              "status": 200,
+              "elapsedMs": 458,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=en&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 702,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "en",
+          "startedAt": "2026-09-21T16:39:22.281Z",
+          "delayStepMs": 20,
+          "results": [
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=en&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 724,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 392,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=en"
+              },
+              "status": 200,
+              "elapsedMs": 492,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "zh-CN",
+          "startedAt": "2026-09-21T16:39:23.007Z",
+          "delayStepMs": 0,
+          "results": [
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=zh-CN"
+              },
+              "status": 200,
+              "elapsedMs": 385,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=zh-CN&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 675,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 474,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "zh-CN",
+          "startedAt": "2026-09-21T16:39:23.684Z",
+          "delayStepMs": 10,
+          "results": [
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 444,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=zh-CN"
+              },
+              "status": 200,
+              "elapsedMs": 436,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=zh-CN&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 638,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "zh-CN",
+          "startedAt": "2026-09-21T16:39:24.342Z",
+          "delayStepMs": 20,
+          "results": [
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=zh-CN&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 759,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 563,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=zh-CN"
+              },
+              "status": 200,
+              "elapsedMs": 445,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "th",
+          "startedAt": "2026-09-21T16:39:25.102Z",
+          "delayStepMs": 0,
+          "results": [
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=th"
+              },
+              "status": 200,
+              "elapsedMs": 466,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=th&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 603,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 380,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "th",
+          "startedAt": "2026-09-21T16:39:25.707Z",
+          "delayStepMs": 10,
+          "results": [
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 408,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=th"
+              },
+              "status": 200,
+              "elapsedMs": 470,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=th&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 642,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "th",
+          "startedAt": "2026-09-21T16:39:26.369Z",
+          "delayStepMs": 20,
+          "results": [
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=th&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 691,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 382,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=th"
+              },
+              "status": 200,
+              "elapsedMs": 475,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "vi",
+          "startedAt": "2026-09-21T16:39:27.062Z",
+          "delayStepMs": 0,
+          "results": [
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=vi"
+              },
+              "status": 200,
+              "elapsedMs": 446,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=vi&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 657,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 366,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "vi",
+          "startedAt": "2026-09-21T16:39:27.721Z",
+          "delayStepMs": 10,
+          "results": [
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 465,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=vi"
+              },
+              "status": 200,
+              "elapsedMs": 353,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=vi&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 644,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "vi",
+          "startedAt": "2026-09-21T16:39:28.385Z",
+          "delayStepMs": 20,
+          "results": [
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=vi&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 712,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 387,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=vi"
+              },
+              "status": 200,
+              "elapsedMs": 468,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "ja",
+          "startedAt": "2026-09-21T16:39:29.099Z",
+          "delayStepMs": 0,
+          "results": [
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=ja"
+              },
+              "status": 200,
+              "elapsedMs": 468,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=ja&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 648,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 468,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "ja",
+          "startedAt": "2026-09-21T16:39:29.748Z",
+          "delayStepMs": 10,
+          "results": [
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 447,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=ja"
+              },
+              "status": 200,
+              "elapsedMs": 349,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=ja&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 711,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "ja",
+          "startedAt": "2026-09-21T16:39:30.479Z",
+          "delayStepMs": 20,
+          "results": [
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=ja&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 694,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 417,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=ja"
+              },
+              "status": 200,
+              "elapsedMs": 473,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "es",
+          "startedAt": "2026-09-21T16:39:31.174Z",
+          "delayStepMs": 0,
+          "results": [
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=es"
+              },
+              "status": 200,
+              "elapsedMs": 385,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=es&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 618,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 473,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "es",
+          "startedAt": "2026-09-21T16:39:31.794Z",
+          "delayStepMs": 10,
+          "results": [
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 429,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=es"
+              },
+              "status": 200,
+              "elapsedMs": 332,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=es&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 675,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "es",
+          "startedAt": "2026-09-21T16:39:32.488Z",
+          "delayStepMs": 20,
+          "results": [
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=es&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 730,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 391,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=es"
+              },
+              "status": 200,
+              "elapsedMs": 483,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "pt",
+          "startedAt": "2026-09-21T16:39:33.220Z",
+          "delayStepMs": 0,
+          "results": [
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=pt"
+              },
+              "status": 200,
+              "elapsedMs": 454,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=pt&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 609,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 367,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "pt",
+          "startedAt": "2026-09-21T16:39:33.829Z",
+          "delayStepMs": 10,
+          "results": [
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 360,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=pt"
+              },
+              "status": 200,
+              "elapsedMs": 472,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=pt&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 709,
+              "valid": true,
+              "code": null
+            }
+          ]
+        },
+        {
+          "locale": "pt",
+          "startedAt": "2026-09-21T16:39:34.558Z",
+          "delayStepMs": 20,
+          "results": [
+            {
+              "request": {
+                "kind": "directory",
+                "path": "/api/v1/idols?locale=pt&limit=12"
+              },
+              "status": 200,
+              "elapsedMs": 716,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "seo",
+                "path": "/api/v1/storefront-seo/entity?kind=HOMEPAGE"
+              },
+              "status": 200,
+              "elapsedMs": 509,
+              "valid": true,
+              "code": null
+            },
+            {
+              "request": {
+                "kind": "homepage",
+                "path": "/api/v1/storefront-homepage?locale=pt"
+              },
+              "status": 200,
+              "elapsedMs": 491,
+              "valid": true,
+              "code": null
+            }
+          ]
+        }
+      ],
+      "afterDeadlocks": 0
+    }
+  }
+}

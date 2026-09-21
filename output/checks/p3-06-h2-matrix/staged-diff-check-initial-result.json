@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "exitCode": 2,
+  "finding": "output/checks/p3-06-h2-matrix/plan.md:8: new blank line at EOF.",
+  "scope": "One-off plan formatting only; preserve original finding, remove extra terminal blank line and repeat diff check."
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "--test",
+    "apps/api/scripts/storefront-acceptance-performance.test.mjs",
+    "apps/api/scripts/storefront-viewer-transport.test.mjs"
+  ],
+  "startedAt": "2026-09-21T16:34:26.797217+00:00",
+  "completedAt": "2026-09-21T16:34:27.249779+00:00",
+  "elapsedSeconds": 0.452,
+  "exitCode": 0
+}

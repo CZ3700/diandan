@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "exec",
+    "eslint",
+    "output/checks/p3-06-h2-matrix/run-matrix.mjs",
+    "output/checks/p3-06-h2-matrix/verify-matrix.mjs",
+    "output/checks/p3-06-h2-matrix/run-filter-probe.mjs",
+    "output/checks/p3-06-h2-matrix/probe-filter.mjs",
+    "--max-warnings=0"
+  ],
+  "startedAt": "2026-09-21T16:49:03.469488+00:00",
+  "completedAt": "2026-09-21T16:49:04.214593+00:00",
+  "elapsedSeconds": 0.745,
+  "exitCode": 0
+}
