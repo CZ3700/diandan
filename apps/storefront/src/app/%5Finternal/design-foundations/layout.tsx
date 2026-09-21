@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import "@fan-support/ui/composites.css";
 
 import { isDesignFoundationPreviewEnabled } from "../../../design-foundations";
 import { loadStorefrontRuntimeConfig } from "../../../server/runtime-config";

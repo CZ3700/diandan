@@ -3,9 +3,9 @@
 > 最后更新：2026-09-21
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-015，仅本地 P5-01→P5-02）
-> 当前任务：P5-01/P5-02 本地范围 DONE，Lane C 已释放；P3-06/P4-04 验收待续、无 executor
+> 当前任务：P3-06 由 `/root` 恢复 Lane D 执行；P5-01/P5-02 本地范围 DONE，P4-04 真实商户验收待续
 > 下一入口：回到 P3-06 性能/人工验收；P4-04 保留真实商户资料与验收门
-> 当前检查点：P5-02 完整本地验收 DONE，ADR-015 白名单已闭合。29 DONE / 2 IN_PROGRESS / 18 PENDING；仅本地提交，不解锁其余 P5 或 Phase 6/7。
+> 当前检查点：P3-06 完成公开 composites 样式隔离检查点，实际 CSS 少11301B/传输少1531B；七语与内部回归通过，性能预算仍未过门。29 DONE / 2 IN_PROGRESS / 18 PENDING；仅本地提交，不解锁其余 P5 或 Phase 6/7。
 
 ## 1. 开工入口
 
@@ -17,7 +17,7 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线，P3-01至P3-05及P4-01至P4-03已DONE；P4-05按ADR-014完成本地范围、P4-06也已DONE。2026-09-18 用户确认 ADR-015 后，P5-01 已完成本地登录/权限/会话及管理回归验收，P5-02 于 2026-09-21 完成本地完整验收，Lane C 已释放。P3-06 性能/人工验收、P4-04 真实商户验收仍 IN_PROGRESS 且无 executor，其他 P5 任务不在例外内。正式品牌资产、身份源/MFA恢复、邮件服务与译文的上线批准继续保留。
+只领取位于 `ACTIVE` Phase、依赖已完成、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线，P3-01至P3-05及P4-01至P4-03已DONE；P4-05按ADR-014完成本地范围、P4-06也已DONE。2026-09-18 用户确认 ADR-015 后，P5-01 已完成本地登录/权限/会话及管理回归验收，P5-02 于 2026-09-21 完成本地完整验收，Lane C 已释放。P3-06 性能/人工验收由 `/root` 恢复 Lane D 执行；P4-04 真实商户验收仍 IN_PROGRESS、无 executor，其他 P5 任务不在例外内。正式品牌资产、身份源/MFA恢复、邮件服务与译文的上线批准继续保留。
 
 ## 2. 总体状态
 
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-21 P3-06 公开样式隔离检查点：生产只将 composites.css 从公共root移到内部样板layout，原四份UI CSS/字体/图像不变。真实同fixture旧/候选各3次默认profile报告中，CSS少11301 resource B/1531 transfer B，54原件SHA有效；模拟LCP中位4212.1395→4359.5727ms，**不声称提速或性能过门**。协议32461、七语双端88场景/88截图/85axe（0违规/30incomplete）、内部P2-03/04/05原门回归、check:dev及五个设计/UI静态门和adapter/artifact通过；旧moderate提示、真机/人工/商户门保留。P2-03以2345候选文件同SHA的干净快照通过，主工作区首失败和构建产物缺失首失败保留。原5042未跟踪不变；详见 `output/checks/p3-06-critical-path/README.md` 与最终复核。29/2/18不变、P3-06仍IN_PROGRESS，不解锁其余阶段，仅本地提交。
 
 2026-09-21 P5-02 本地验收 DONE：同一管理中心订单/搜索分页筛选、私密人工审核、逐件准备送达、加密备注、独立可靠通知重发完成。真实订单 PG 5960、重发 PG/TLS/worker 6085、退出并发 6、HTTP/七语双端 7113（419 browser assertions/32 PNG/axe，零违规/incomplete/错误）通过；原管理 7377、自动通知 6814 和五条旧交易 HTTP 完整回归通过。最终 check:dev 63/63/36（缓存59/60/34）、32迁移/186表、合同/adapter/artifact/frozen-install/high audit/secret通过；原PG命令失败与20条后缀复验明确保留，不称单条完整check全绿。旧624合同/60SQL保持，2346输入 SHA `9e5a27e3a618bce062e10b645aecd822d855e5f461781422048ca3f5c9b057c1`，原4824未跟踪不变且未暂存；非作者ACCEPT/S.U.P.E.R10项PASS。详见 `output/checks/p5-02-order-operations/final-verification.md` 与 `docs/runbooks/admin-order-operations.md`。29 DONE / 2 IN_PROGRESS / 18 PENDING =49，Lane C释放，ADR-015白名单闭合，原P3/P4及生产门保留，仅本地提交、不push。
 

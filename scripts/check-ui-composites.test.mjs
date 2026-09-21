@@ -169,8 +169,8 @@ test("rejects physical-direction CSS, text clipping and missing consumption", as
   );
   await replace(
     root,
-    "apps/storefront/src/app/globals.css",
-    '@import "@fan-support/ui/composites.css";\n',
+    "apps/storefront/src/app/%5Finternal/design-foundations/layout.tsx",
+    'import "@fan-support/ui/composites.css";\n',
     "",
   );
   const errors = await validate(root);
@@ -233,6 +233,82 @@ test("rejects removing the gate from the root check workflow", async (context) =
   assert.ok(
     errors.some((error) =>
       error.includes("root check must run check:ui-composites"),
+    ),
+  );
+});
+
+async function internalStyleFixture() {
+  const root = await fixture();
+  const globalPath = path.join(root, "apps/storefront/src/app/globals.css");
+  await writeFile(
+    globalPath,
+    (await readFile(globalPath, "utf8")).replace(
+      '@import "@fan-support/ui/composites.css";\n',
+      "",
+    ),
+  );
+  const layoutPath = path.join(
+    root,
+    "apps/storefront/src/app/%5Finternal/design-foundations/layout.tsx",
+  );
+  const source = await readFile(layoutPath, "utf8");
+  if (!source.includes('import "@fan-support/ui/composites.css";')) {
+    await writeFile(
+      layoutPath,
+      `import "@fan-support/ui/composites.css";\n${source}`,
+    );
+  }
+  return root;
+}
+
+test("accepts composite styles owned by the internal layout", async (context) => {
+  const validate = await loadValidator();
+  const root = await internalStyleFixture();
+  context.after(() => rm(root, { force: true, recursive: true }));
+  assert.deepEqual(await validate(root), []);
+});
+
+for (const [label, replacement] of [
+  ["missing", ""],
+  ["duplicate", 'import "@fan-support/ui/composites.css";\n'.repeat(2)],
+  ["comment", '// import "@fan-support/ui/composites.css";\n'],
+  ["string", "const unused = 'import \"@fan-support/ui/composites.css\";';\n"],
+  ["type-only", 'import type {} from "@fan-support/ui/composites.css";\n'],
+]) {
+  test(`rejects ${label} internal composite CSS consumption`, async (context) => {
+    const validate = await loadValidator();
+    const root = await internalStyleFixture();
+    context.after(() => rm(root, { force: true, recursive: true }));
+    await replace(
+      root,
+      "apps/storefront/src/app/%5Finternal/design-foundations/layout.tsx",
+      'import "@fan-support/ui/composites.css";\n',
+      replacement,
+    );
+    const errors = await validate(root);
+    assert.ok(
+      errors.some((error) =>
+        error.includes(
+          "internal layout must import composites.css exactly once",
+        ),
+      ),
+    );
+  });
+}
+
+test("rejects composite styles leaking back into the public root", async (context) => {
+  const validate = await loadValidator();
+  const root = await internalStyleFixture();
+  context.after(() => rm(root, { force: true, recursive: true }));
+  const globalPath = path.join(root, "apps/storefront/src/app/globals.css");
+  await writeFile(
+    globalPath,
+    `@import "@fan-support/ui/composites.css";\n${await readFile(globalPath, "utf8")}`,
+  );
+  const errors = await validate(root);
+  assert.ok(
+    errors.some((error) =>
+      error.includes("public root must not import composites.css"),
     ),
   );
 });

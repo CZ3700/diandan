@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "check:ui-composites"
+  ],
+  "startedAt": "2026-09-21T13:48:53.860468+00:00",
+  "completedAt": "2026-09-21T13:48:56.604071+00:00",
+  "elapsedSeconds": 2.744,
+  "exitCode": 0
+}

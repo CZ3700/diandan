@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "scripts/verify-ui-motion-browser.mjs"
+  ],
+  "startedAt": "2026-09-21T13:47:45.317971+00:00",
+  "completedAt": "2026-09-21T13:48:24.049861+00:00",
+  "elapsedSeconds": 38.732,
+  "exitCode": 0
+}

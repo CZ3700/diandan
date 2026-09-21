@@ -17,6 +17,8 @@ const UI_MANIFEST_PATH = "packages/ui/package.json";
 const COMPOSITES_ENTRY_PATH = "packages/ui/src/composites.ts";
 const COMPOSITES_CSS_PATH = "packages/ui/styles/composites.css";
 const STOREFRONT_GLOBAL_CSS_PATH = "apps/storefront/src/app/globals.css";
+const INTERNAL_LAYOUT_PATH =
+  "apps/storefront/src/app/%5Finternal/design-foundations/layout.tsx";
 const ROOT_MANIFEST_PATH = "package.json";
 const STOREFRONT_APP_PATH = "apps/storefront/src/app";
 const COMPOSITE_EVIDENCE_PATH = "output/playwright/p2-04";
@@ -619,7 +621,7 @@ function cssRules(css) {
   return rules;
 }
 
-function validateCss(css, storefrontCss, errors) {
+function validateCss(css, errors) {
   if (css !== undefined) {
     for (const rule of cssRules(css.replace(/\/\*[\s\S]*?\*\//gu, ""))) {
       for (const declaration of rule.declarations) {
@@ -643,14 +645,31 @@ function validateCss(css, storefrontCss, errors) {
       }
     }
   }
+}
+
+function validateStyleConsumption(storefrontCss, internalLayout, errors) {
   if (storefrontCss !== undefined) {
     const imports = [
       ...storefrontCss.matchAll(
         /@import\s+["']@fan-support\/ui\/composites\.css["']\s*;/gu,
       ),
     ];
-    if (imports.length !== 1) {
-      errors.push("Storefront globals must import composites.css exactly once");
+    if (imports.length !== 0) {
+      errors.push("Storefront public root must not import composites.css");
+    }
+  }
+  if (internalLayout !== undefined) {
+    const source = parseSource(internalLayout, INTERNAL_LAYOUT_PATH);
+    const imports = source.statements.filter(
+      (statement) =>
+        ts.isImportDeclaration(statement) &&
+        ts.isStringLiteral(statement.moduleSpecifier) &&
+        statement.moduleSpecifier.text === "@fan-support/ui/composites.css",
+    );
+    if (imports.length !== 1 || imports[0].importClause !== undefined) {
+      errors.push(
+        "Storefront internal layout must import composites.css exactly once as a side effect",
+      );
     }
   }
 }
@@ -727,16 +746,19 @@ export async function validateUiComposites(
   workspaceRoot = defaultWorkspaceRoot,
 ) {
   const errors = [];
-  const [uiManifest, rootManifest, css, storefrontCss] = await Promise.all([
-    readJson(workspaceRoot, UI_MANIFEST_PATH, errors),
-    readJson(workspaceRoot, ROOT_MANIFEST_PATH, errors),
-    readText(workspaceRoot, COMPOSITES_CSS_PATH, errors),
-    readText(workspaceRoot, STOREFRONT_GLOBAL_CSS_PATH, errors),
-  ]);
+  const [uiManifest, rootManifest, css, storefrontCss, internalLayout] =
+    await Promise.all([
+      readJson(workspaceRoot, UI_MANIFEST_PATH, errors),
+      readJson(workspaceRoot, ROOT_MANIFEST_PATH, errors),
+      readText(workspaceRoot, COMPOSITES_CSS_PATH, errors),
+      readText(workspaceRoot, STOREFRONT_GLOBAL_CSS_PATH, errors),
+      readText(workspaceRoot, INTERNAL_LAYOUT_PATH, errors),
+    ]);
   validateManifest(uiManifest, errors);
   validateRootScripts(rootManifest, errors);
   await validateEntries(workspaceRoot, errors);
-  validateCss(css, storefrontCss, errors);
+  validateCss(css, errors);
+  validateStyleConsumption(storefrontCss, internalLayout, errors);
   await validateRoutes(workspaceRoot, errors);
   return errors;
 }

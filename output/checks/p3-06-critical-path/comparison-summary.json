@@ -1,0 +1,506 @@
+{
+  "schemaVersion": 1,
+  "status": "RESOURCE_ISOLATION_VERIFIED",
+  "rawFilesVerified": 54,
+  "groups": [
+    {
+      "stage": "baseline",
+      "capture": "output/checks/p3-06-storefront-acceptance/run-2026-09-21T13-25-04-359Z/browser-attempt-1/gift-render-trace/results.json",
+      "status": "COLLECTED_DIAGNOSTIC_BUDGET_FAILED",
+      "attempts": [
+        {
+          "name": "zh-CN-gift-mobile-1",
+          "resources": {
+            "Stylesheet": {
+              "count": 4,
+              "resourceBytes": 173321,
+              "transferBytes": 48494
+            },
+            "Script": {
+              "count": 8,
+              "resourceBytes": 513708,
+              "transferBytes": 157941
+            },
+            "Font": {
+              "count": 9,
+              "resourceBytes": 553700,
+              "transferBytes": 556871
+            },
+            "Image": {
+              "count": 1,
+              "resourceBytes": 47884,
+              "transferBytes": 48416
+            },
+            "Document": {
+              "count": 1,
+              "resourceBytes": 91720,
+              "transferBytes": 19037
+            }
+          },
+          "compositeSelectorsPresent": {
+            ".fs-composite-state": true,
+            ".fs-idol-portrait": true,
+            ".fs-gift-tile": true,
+            ".fs-cart-line": true,
+            ".fs-order-timeline": true
+          },
+          "fontResources": [
+            [
+              "noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2",
+              64552
+            ],
+            [
+              "noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2",
+              57648
+            ],
+            [
+              "noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2",
+              58648
+            ],
+            [
+              "noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2",
+              56508
+            ],
+            [
+              "noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2",
+              52984
+            ],
+            [
+              "noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2",
+              52464
+            ],
+            [
+              "noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2",
+              76800
+            ],
+            [
+              "noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2",
+              25240
+            ],
+            [
+              "simplified-chinese-ui.1vmo4wzsh43-s.woff2",
+              108856
+            ]
+          ],
+          "lcpMs": 5427.818,
+          "observedLcpMs": 675,
+          "score": 0.67,
+          "cls": 0
+        },
+        {
+          "name": "zh-CN-gift-mobile-2",
+          "resources": {
+            "Stylesheet": {
+              "count": 4,
+              "resourceBytes": 173321,
+              "transferBytes": 48494
+            },
+            "Script": {
+              "count": 8,
+              "resourceBytes": 513708,
+              "transferBytes": 157941
+            },
+            "Font": {
+              "count": 9,
+              "resourceBytes": 553700,
+              "transferBytes": 556871
+            },
+            "Image": {
+              "count": 1,
+              "resourceBytes": 47884,
+              "transferBytes": 48415
+            },
+            "Document": {
+              "count": 1,
+              "resourceBytes": 91720,
+              "transferBytes": 19037
+            }
+          },
+          "compositeSelectorsPresent": {
+            ".fs-composite-state": true,
+            ".fs-idol-portrait": true,
+            ".fs-gift-tile": true,
+            ".fs-cart-line": true,
+            ".fs-order-timeline": true
+          },
+          "fontResources": [
+            [
+              "noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2",
+              64552
+            ],
+            [
+              "noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2",
+              57648
+            ],
+            [
+              "noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2",
+              58648
+            ],
+            [
+              "noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2",
+              56508
+            ],
+            [
+              "noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2",
+              52984
+            ],
+            [
+              "noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2",
+              52464
+            ],
+            [
+              "noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2",
+              76800
+            ],
+            [
+              "noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2",
+              25240
+            ],
+            [
+              "simplified-chinese-ui.1vmo4wzsh43-s.woff2",
+              108856
+            ]
+          ],
+          "lcpMs": 4212.1395,
+          "observedLcpMs": 331,
+          "score": 0.79,
+          "cls": 0
+        },
+        {
+          "name": "zh-CN-gift-mobile-3",
+          "resources": {
+            "Stylesheet": {
+              "count": 4,
+              "resourceBytes": 173321,
+              "transferBytes": 48494
+            },
+            "Script": {
+              "count": 8,
+              "resourceBytes": 513708,
+              "transferBytes": 157941
+            },
+            "Font": {
+              "count": 9,
+              "resourceBytes": 553700,
+              "transferBytes": 556871
+            },
+            "Image": {
+              "count": 1,
+              "resourceBytes": 47884,
+              "transferBytes": 48415
+            },
+            "Document": {
+              "count": 1,
+              "resourceBytes": 91720,
+              "transferBytes": 19037
+            }
+          },
+          "compositeSelectorsPresent": {
+            ".fs-composite-state": true,
+            ".fs-idol-portrait": true,
+            ".fs-gift-tile": true,
+            ".fs-cart-line": true,
+            ".fs-order-timeline": true
+          },
+          "fontResources": [
+            [
+              "noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2",
+              64552
+            ],
+            [
+              "noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2",
+              57648
+            ],
+            [
+              "noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2",
+              58648
+            ],
+            [
+              "noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2",
+              56508
+            ],
+            [
+              "noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2",
+              52984
+            ],
+            [
+              "noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2",
+              52464
+            ],
+            [
+              "noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2",
+              76800
+            ],
+            [
+              "noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2",
+              25240
+            ],
+            [
+              "simplified-chinese-ui.1vmo4wzsh43-s.woff2",
+              108856
+            ]
+          ],
+          "lcpMs": 3909.30525,
+          "observedLcpMs": 287,
+          "score": 0.82,
+          "cls": 0
+        }
+      ],
+      "medianLcpMs": 4212.1395
+    },
+    {
+      "stage": "candidate",
+      "capture": "output/checks/p3-06-storefront-acceptance/run-2026-09-21T13-25-04-359Z/browser-attempt-2/gift-render-trace/results.json",
+      "status": "COLLECTED_DIAGNOSTIC_BUDGET_FAILED",
+      "attempts": [
+        {
+          "name": "zh-CN-gift-mobile-1",
+          "resources": {
+            "Stylesheet": {
+              "count": 4,
+              "resourceBytes": 162020,
+              "transferBytes": 46963
+            },
+            "Script": {
+              "count": 8,
+              "resourceBytes": 513708,
+              "transferBytes": 157941
+            },
+            "Font": {
+              "count": 9,
+              "resourceBytes": 553700,
+              "transferBytes": 556871
+            },
+            "Image": {
+              "count": 1,
+              "resourceBytes": 47884,
+              "transferBytes": 48417
+            },
+            "Document": {
+              "count": 1,
+              "resourceBytes": 91720,
+              "transferBytes": 19034
+            }
+          },
+          "compositeSelectorsPresent": {
+            ".fs-composite-state": false,
+            ".fs-idol-portrait": false,
+            ".fs-gift-tile": false,
+            ".fs-cart-line": false,
+            ".fs-order-timeline": false
+          },
+          "fontResources": [
+            [
+              "noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2",
+              64552
+            ],
+            [
+              "noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2",
+              57648
+            ],
+            [
+              "noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2",
+              58648
+            ],
+            [
+              "noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2",
+              56508
+            ],
+            [
+              "noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2",
+              52984
+            ],
+            [
+              "noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2",
+              52464
+            ],
+            [
+              "noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2",
+              76800
+            ],
+            [
+              "noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2",
+              25240
+            ],
+            [
+              "simplified-chinese-ui.1vmo4wzsh43-s.woff2",
+              108856
+            ]
+          ],
+          "lcpMs": 5418.09,
+          "observedLcpMs": 569,
+          "score": 0.78,
+          "cls": 0
+        },
+        {
+          "name": "zh-CN-gift-mobile-2",
+          "resources": {
+            "Stylesheet": {
+              "count": 4,
+              "resourceBytes": 162020,
+              "transferBytes": 46963
+            },
+            "Script": {
+              "count": 8,
+              "resourceBytes": 513708,
+              "transferBytes": 157941
+            },
+            "Font": {
+              "count": 9,
+              "resourceBytes": 553700,
+              "transferBytes": 556871
+            },
+            "Image": {
+              "count": 1,
+              "resourceBytes": 47884,
+              "transferBytes": 48415
+            },
+            "Document": {
+              "count": 1,
+              "resourceBytes": 91720,
+              "transferBytes": 19034
+            }
+          },
+          "compositeSelectorsPresent": {
+            ".fs-composite-state": false,
+            ".fs-idol-portrait": false,
+            ".fs-gift-tile": false,
+            ".fs-cart-line": false,
+            ".fs-order-timeline": false
+          },
+          "fontResources": [
+            [
+              "noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2",
+              64552
+            ],
+            [
+              "noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2",
+              57648
+            ],
+            [
+              "noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2",
+              58648
+            ],
+            [
+              "noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2",
+              56508
+            ],
+            [
+              "noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2",
+              52984
+            ],
+            [
+              "noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2",
+              52464
+            ],
+            [
+              "noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2",
+              76800
+            ],
+            [
+              "noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2",
+              25240
+            ],
+            [
+              "simplified-chinese-ui.1vmo4wzsh43-s.woff2",
+              108856
+            ]
+          ],
+          "lcpMs": 3012.687,
+          "observedLcpMs": 340,
+          "score": 0.93,
+          "cls": 0
+        },
+        {
+          "name": "zh-CN-gift-mobile-3",
+          "resources": {
+            "Stylesheet": {
+              "count": 4,
+              "resourceBytes": 162020,
+              "transferBytes": 46963
+            },
+            "Script": {
+              "count": 8,
+              "resourceBytes": 513708,
+              "transferBytes": 157941
+            },
+            "Font": {
+              "count": 9,
+              "resourceBytes": 553700,
+              "transferBytes": 556871
+            },
+            "Image": {
+              "count": 1,
+              "resourceBytes": 47884,
+              "transferBytes": 48415
+            },
+            "Document": {
+              "count": 1,
+              "resourceBytes": 91720,
+              "transferBytes": 19034
+            }
+          },
+          "compositeSelectorsPresent": {
+            ".fs-composite-state": false,
+            ".fs-idol-portrait": false,
+            ".fs-gift-tile": false,
+            ".fs-cart-line": false,
+            ".fs-order-timeline": false
+          },
+          "fontResources": [
+            [
+              "noto-sans-sc-108-wght-normal.2335rzoiz_ie5.woff2",
+              64552
+            ],
+            [
+              "noto-sans-sc-112-wght-normal.1gfxlf5xsert6.woff2",
+              57648
+            ],
+            [
+              "noto-sans-sc-113-wght-normal.14-a0ntw7ykqy.woff2",
+              58648
+            ],
+            [
+              "noto-sans-sc-115-wght-normal.3jnnrkqb9vsp8.woff2",
+              56508
+            ],
+            [
+              "noto-sans-sc-116-wght-normal.22tk8mt-tznk2.woff2",
+              52984
+            ],
+            [
+              "noto-sans-sc-117-wght-normal.2olicw0ohz54o.woff2",
+              52464
+            ],
+            [
+              "noto-sans-sc-119-wght-normal.3tp2rdvijri58.woff2",
+              76800
+            ],
+            [
+              "noto-sans-sc-latin-wght-normal.0l4v9ytfc_iwv.woff2",
+              25240
+            ],
+            [
+              "simplified-chinese-ui.1vmo4wzsh43-s.woff2",
+              108856
+            ]
+          ],
+          "lcpMs": 4359.5727,
+          "observedLcpMs": 282,
+          "score": 0.78,
+          "cls": 0
+        }
+      ],
+      "medianLcpMs": 4359.5727
+    }
+  ],
+  "cssSaved": {
+    "resourceBytes": 11301,
+    "transferBytes": 1531
+  },
+  "sameSettings": true,
+  "sameFontResources": true,
+  "sameGroupStartPublicationResponse": true,
+  "formalPerformanceAcceptance": false,
+  "caveat": "Fixed sequential diagnostic groups; server/image cache and timing may differ. LCP difference alone is not a causal improvement or full budget pass."
+}

@@ -4,6 +4,27 @@
 > 任务：6  
 > 解锁条件：Phase 1 与 Phase 2 退出门禁均通过
 
+## P3-06 关键路径接续（2026-09-21）
+
+- Owner：Codex `/root` 恢复 Lane D 唯一 executor；开始 2026-09-21T13:22:41.379900Z，基线 `3fc5df5`，分支 `codex/p3-06-critical-path`。P5-01/02 已完成，本轮只继续原 P3-06；29 DONE / 2 IN_PROGRESS / 18 PENDING 不变。
+- 范围：先离线核对已捕获的 BeginFrame 交付异常与正常导航的资源关键路径，区分测量环境和可优化应用成本；选择有证据的单变量候选，保留内容、图片质量、字体覆盖、原性能阈值与浏览器默认行为。未通过正式性能/人工门前不标 DONE。
+- 所有权：root 独占进度/Git、真实 PG/S3/Next/Chrome 与构建/采样；两个子步骤分别复核 Chromium 调度证据/采集有效性与页面资源依赖，实施文件随后单独登记。精确实施文件待候选确定后登记，不另领任务、不并行重负载。
+- 验证：新行为先 RED→GREEN；受影响测试、check:dev、边界检查、独立复核与 S.U.P.E.R；应用改动须真实七语言双视口/键盘/错误/reduced-motion 和有界同条件性能对照。保留全部失败和原始样本，不以重采筛选通过。仅本地提交，不 push/merge/部署。
+- 保护：初始未跟踪逐 SHA 清单 `output/checks/p3-06-critical-path/initial-untracked.json`；旧证据不覆盖。风险 R-08/R-12/R-13/R-17、真实支付/人工/真机与生产门保留。
+- 候选及精确所有权：resource_audit 先写公开样式隔离 RED 测试；待旧版三次导航完成后，独占 `apps/storefront/src/app/globals.css`、内部 `design-foundations/layout.tsx`，将仅样板使用的 composites/motion 样式移入内部布局。原 UI 样式字节不改；其后独占对应两个静态检查器及测试的假设更新，保留真实正反例。root 独占一次性对照入口与实际运行，固定旧/候选各三次标准 profile 中文礼物导航，然后七语言双端 UI 和必要内部样板回归；不会将该切片声称为完整性能过门。
+- 实施前收窄：独立复核发现 motion 与 primitives 的同 specificity 圆角覆盖，故最终只迁移 composites.css 一条 import，仅更新 composites 静态门；motion 位置及其检查器不改，不引入重复样式或 CSS layer。旧版固定三次已完整保留，真实协议32,461通过，之后才允许 RED→GREEN 与候选实现。
+
+### 本检查点结果（2026-09-21，任务未退出）
+
+- 最终生产只移动composites.css的import；原四份UI CSS字节不变，motion顺序保留。新增样式隔离测试与composites静态门正反例，五个实现/测试文件；无合同/SQL/依赖/字体/图像改动。
+- 同真实PG/TLS S3/worker/API fixture旧/候选各固定3次标准profile中文礼物导航，无额外预热或择优重采。CSS实际resource173321→162020B、transfer48494→46963B，少11301/1531B，每组3次一致；54原件SHA/长度、同导航内容、0+1读取与设置核验通过，12个官方FCP/LCP重放差0。
+- 模拟LCP中位4212.1395→4359.5727ms，两组预算仍FAIL，不声称稳定提速/无性能回归。旧BeginFrame等待原因UNKNOWN，精确版本源码表明现有事件缺sink关联；不以相同类别重复采集代替缺失观测。下一实验候选为相同TLS入口真实H1.1/H2对照，尚未实施。
+- 真实协议32461 PASS；完整7语言390×844/1440×900及键盘/搜索分页筛选/错误/reduced-motion/SEO共88场景、88截图、85axe（0违规/30incomplete）、0pageErrors、22705 callback assertions。发布9547ms/回退9244ms可见。root检查中文移动、葡语桌面与内部越南语移动截图，无本改动布局回归。
+- 内部原门P2-03/04/05分别13/16/8场景、15/18/22截图、8/10/3axe扫描；原moderate region 1项与heading-order 3项、incomplete5/4/3保留，blocking均0。动效结果保留physical-device-gate，不称真机通过。P2-03原工作区因旧runner要求完全clean而首失败，随后独立offline冻结安装的干净快照、2345候选输入逐SHA一致，原runner通过；不改变门禁或删用户文件。
+- 样式旧实现2FAIL/2PASS，新静态门RED；首次GREEN子串误报保留，独立规则判断后4/4通过。最终check:dev exit0，type/test63/63、build36/36，storefront91文件702tests。五个设计/UI静态门exit0；原browser准备清空非storefront dist造成adapter首失败，36/36缓存构建恢复后adapter/artifact通过，原失败保留。
+- `source-candidate.json`的2345输入SHA `6d89e148830443ec72da7982a9e3cd0d8ae9bf44e0a46ce2a9f1b20a11375600`不变，原5042未跟踪逐SHA不变；旧102件共享UI证据备份完整。fixture正常exit0，13个本轮记录端口无监听。仅刷新本轮P2-03/04/05当前证据，旧提交仍保留。
+- 显式暂存101条准确路径后秘密扫描exit0/47.571秒；命令、结果、独立复核/S.U.P.E.R见 `output/checks/p3-06-critical-path/README.md`、`final-verification.json`、`style-independent-review.md`。不声称完整pnpm check、物理手机/VoiceOver、人工/商户或云发布通过。29 DONE / 2 IN_PROGRESS / 18 PENDING保持，P3-06仍IN_PROGRESS，仅本地提交、不push。
+
 ## 2026-09-18 排期接续
 
 用户明确确认ADR-015后，root释放Lane D并转入P5-01；本任务继续IN_PROGRESS、未完性能/人工门与所有失败证据保留，不计DONE。后续沿已捕获异常继续有界验证，不因本地运营开发例外降低验收标准。
@@ -86,7 +107,7 @@
 | P3-03 | DONE | Codex `/root` | P2-03、P3-01 | Admin 礼物/variant/适用关系/受控详情块/七语言/价格/库存，以及所需管理API |
 | P3-04 | DONE | Codex `/root` | P2-06、P3-01 | `/:locale` Storefront shell/语言切换/首页/艺人连续横滑/搜索定位/详情 |
 | P3-05 | DONE | Codex `/root` | P2-04、P3-01、P3-04 | 真实七语礼物分页/筛选/详情/选择艺人/政策；完整check、PG/HTTP、浏览器与独立复核通过，见P3-05验收记录 |
-| P3-06 | IN_PROGRESS | —（验收待续，ADR-015） | P3-02/03/04/05 | 未完性能/人工验收保留；ADR-013 允许先做 P4 本地开发，不计 DONE |
+| P3-06 | IN_PROGRESS | Codex `/root`（Lane D） | P3-02/03/04/05 | 继续关键路径与性能验收；未完人工门保留，不计 DONE |
 
 ## 必须证明
 

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "--test",
+    "--test-name-pattern=internal composite CSS consumption|composite styles owned|composite styles leaking",
+    "scripts/check-ui-composites.test.mjs"
+  ],
+  "startedAt": "2026-09-21T13:32:02.118114+00:00",
+  "completedAt": "2026-09-21T13:32:03.369071+00:00",
+  "elapsedSeconds": 1.251,
+  "exitCode": 1
+}

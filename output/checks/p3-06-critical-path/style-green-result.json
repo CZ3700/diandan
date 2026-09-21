@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "--filter",
+    "@fan-support/storefront",
+    "test",
+    "src/app/storefront-style-isolation.test.ts"
+  ],
+  "startedAt": "2026-09-21T13:32:38.996445+00:00",
+  "completedAt": "2026-09-21T13:32:39.613454+00:00",
+  "elapsedSeconds": 0.617,
+  "exitCode": 1
+}
