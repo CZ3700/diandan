@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "exec",
+    "eslint",
+    "output/checks/p3-06-transport-proof/run-transport.mjs",
+    "output/checks/p3-06-transport-proof/analyze-transport.mjs",
+    "--max-warnings=0"
+  ],
+  "startedAt": "2026-09-21T15:42:54.388529+00:00",
+  "completedAt": "2026-09-21T15:42:54.911323+00:00",
+  "elapsedSeconds": 0.523,
+  "exitCode": 1
+}

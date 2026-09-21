@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "corepack",
+    "pnpm",
+    "check:dev"
+  ],
+  "startedAt": "2026-09-21T16:19:03.257547+00:00",
+  "completedAt": "2026-09-21T16:19:19.133707+00:00",
+  "elapsedSeconds": 15.876,
+  "exitCode": 0
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "output/checks/p3-06-transport-proof/analyze-transport.mjs",
+    "--manifest",
+    "output/checks/p3-06-transport-proof/analysis-manifest.json",
+    "--output",
+    "output/checks/p3-06-transport-proof/analysis-summary.json"
+  ],
+  "startedAt": "2026-09-21T15:56:01.630144+00:00",
+  "completedAt": "2026-09-21T15:56:02.285504+00:00",
+  "elapsedSeconds": 0.655,
+  "exitCode": 1
+}

@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-21T16:26:48.042626+00:00",
+  "baselineCommit": "c252c520a46a58de9469bc1e0823010370610493",
+  "branch": "codex/p3-06-transport-proof",
+  "scope": "Printable-ASCII fallback download reduction and original transport diagnostic; local checkpoint only.",
+  "status": "PASS_LOCAL_PATCH",
+  "phaseComplete": false,
+  "phase": "P3-06 IN_PROGRESS",
+  "taskCounts": {
+    "done": 29,
+    "inProgress": 2,
+    "pending": 18,
+    "total": 49
+  },
+  "measuredFontResources": {
+    "baseline": 9,
+    "candidate": 7,
+    "baselineResourceBytes": 553700,
+    "candidateResourceBytes": 412348,
+    "savedBytes": 141352,
+    "savedPercent": 25.528628860393713
+  },
+  "lcpMs": {
+    "baseline": [
+      4968.4245,
+      2405.4873,
+      1955.1059
+    ],
+    "candidate": [
+      4275.773,
+      1955.0864,
+      2256.0191
+    ],
+    "candidateMedian": 2256.0191,
+    "steadySpeedupClaim": false
+  },
+  "testCounts": {
+    "affectedFontGreen": 23,
+    "designFoundations": 57,
+    "viewerAndTraceTools": 41,
+    "protocolAssertions": 32461,
+    "callbackAssertions": 22705,
+    "uiCases": 88,
+    "uiScreenshots": 88,
+    "axeScans": 85,
+    "axeViolations": 0,
+    "axeIncompleteRetained": 30,
+    "controlledRenderingPairs": 792,
+    "renderingMismatches": 0
+  },
+  "checks": {
+    "check-dev-final": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "check:dev"
+      ],
+      "startedAt": "2026-09-21T16:19:03.257547+00:00",
+      "completedAt": "2026-09-21T16:19:19.133707+00:00",
+      "elapsedSeconds": 15.876,
+      "exitCode": 0
+    },
+    "design-foundations": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "check:design-foundations"
+      ],
+      "startedAt": "2026-09-21T16:06:11.007372+00:00",
+      "completedAt": "2026-09-21T16:06:13.463931+00:00",
+      "elapsedSeconds": 2.456,
+      "exitCode": 0
+    },
+    "adapter-boundaries": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "scripts/check-adapter-boundaries.mjs"
+      ],
+      "startedAt": "2026-09-21T16:07:31.315448+00:00",
+      "completedAt": "2026-09-21T16:07:34.942682+00:00",
+      "elapsedSeconds": 3.627,
+      "exitCode": 0
+    },
+    "build-artifacts": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "scripts/check-build-artifacts.mjs"
+      ],
+      "startedAt": "2026-09-21T16:07:34.964288+00:00",
+      "completedAt": "2026-09-21T16:07:35.485451+00:00",
+      "elapsedSeconds": 0.521,
+      "exitCode": 0
+    },
+    "fixture": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "output/checks/p3-06-font-range/run-comparison.mjs"
+      ],
+      "startedAt": "2026-09-21T15:55:51.634455+00:00",
+      "completedAt": "2026-09-21T16:14:34.974276+00:00",
+      "elapsedSeconds": 1123.332,
+      "exitCode": 0
+    },
+    "comparison-analysis-verified": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "output/checks/p3-06-font-range/analyze-comparison.mjs"
+      ],
+      "startedAt": "2026-09-21T16:13:35.690077+00:00",
+      "completedAt": "2026-09-21T16:13:36.097032+00:00",
+      "elapsedSeconds": 0.407,
+      "exitCode": 0
+    },
+    "rendering-final": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "output/checks/p3-06-font-range/verify-fallback-rendering.mjs"
+      ],
+      "startedAt": "2026-09-21T16:17:56.593550+00:00",
+      "completedAt": "2026-09-21T16:17:58.426973+00:00",
+      "elapsedSeconds": 1.833,
+      "exitCode": 0
+    },
+    "viewer-and-trace-tools": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "node",
+        "--test",
+        "apps/api/scripts/storefront-viewer-transport.test.mjs",
+        "apps/api/scripts/storefront-gift-trace-verification.test.mjs",
+        "apps/api/scripts/storefront-gift-trace-comparison.test.mjs",
+        "apps/api/scripts/storefront-gift-trace-analysis.test.mjs"
+      ],
+      "startedAt": "2026-09-21T15:42:37.405317+00:00",
+      "completedAt": "2026-09-21T15:42:37.878706+00:00",
+      "elapsedSeconds": 0.473,
+      "exitCode": 0
+    }
+  },
+  "independentReview": "final-review.md",
+  "superTenChecks": "PASS for the local font patch; does not replace phase acceptance",
+  "bindings": [
+    "comparison-summary-verified.json",
+    "post-capture-integrity.json",
+    "prior-untracked-protection.json",
+    "owned-port-cleanup.json",
+    "ui-summary.json",
+    "rendering-summary.json",
+    "implementation-verification.json"
+  ],
+  "historicalFailuresRetained": [
+    "Original transport fixture and aggregate reader exit 1; auxiliary request aborts preserved",
+    "Initial transport lint and proxy RED attempts",
+    "Rejected all-Unicode normalization RED and cmap audit",
+    "Initial controlled rendering gate rejected system-font fallback; independently named profiles passed"
+  ],
+  "openGates": [
+    "Remaining slow performance samples and complete seven-language performance matrix",
+    "Physical device and VoiceOver",
+    "Human translation and image-overlay contrast review",
+    "Field performance, staging and real merchant acceptance"
+  ],
+  "delivery": {
+    "localCommitOnly": true,
+    "pushed": false,
+    "deployed": false
+  },
+  "staging": {
+    "status": "VERIFIED",
+    "manifest": "staging-manifest.json",
+    "filesAfterCloseout": 83,
+    "priorUntrackedFilesStaged": 0,
+    "manifestPayloadHashesUnchanged": true,
+    "largeOriginalCaptures": "Retained locally, recorded by SHA; not added to Git."
+  },
+  "secretScan": {
+    "status": "PASS",
+    "result": {
+      "schemaVersion": 1,
+      "command": [
+        "mise",
+        "exec",
+        "node@24.20.0",
+        "--",
+        "corepack",
+        "pnpm",
+        "security:secrets"
+      ],
+      "startedAt": "2026-09-21T16:26:53.920681+00:00",
+      "completedAt": "2026-09-21T16:27:45.391036+00:00",
+      "elapsedSeconds": 51.469,
+      "exitCode": 0
+    },
+    "logSha256": "c5de5c7294bce3c849ea5b4d2c4df1edc669c7858437ffd95fa7af48e078d2c1",
+    "scope": "All Git-tracked source and the 82-file curated stage at scan start. Final result and this closeout metadata were assembled after the scan; no product, test, evidence tool or progress source changed afterwards."
+  },
+  "closedAt": "2026-09-21T16:28:13.075689+00:00"
+}

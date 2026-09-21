@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "output/checks/p3-06-font-range/analyze-comparison.mjs"
+  ],
+  "startedAt": "2026-09-21T16:13:35.690077+00:00",
+  "completedAt": "2026-09-21T16:13:36.097032+00:00",
+  "elapsedSeconds": 0.407,
+  "exitCode": 0
+}

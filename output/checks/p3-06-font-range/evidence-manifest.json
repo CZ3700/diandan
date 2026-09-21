@@ -1,0 +1,883 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-21T16:26:48.042626+00:00",
+  "note": "Raw captures, logs and large analysis remain local. Hashes preserve both failed and passing evidence. Final closeout metadata excluded to avoid recursive hashes.",
+  "files": [
+    {
+      "path": "output/checks/p3-06-font-range/README.md",
+      "bytes": 6090,
+      "sha256": "eac1c955b57a2a5b78d9a3806ca63d5dfe6e2c639e42aea12ee31fe6d9cf860a",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/adapter-boundaries-result.json",
+      "bytes": 302,
+      "sha256": "4cd86deaba7c7a467c3cec3dbbb35c851c8e03e329a4eebeb5999a0200c71c7b",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/adapter-boundaries.log",
+      "bytes": 170,
+      "sha256": "360ebfcae9aea3200bb9c177b8cbe7aad839b167bcbdceb6cdb98cc49e9c89b2",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/analyze-comparison.mjs",
+      "bytes": 9692,
+      "sha256": "64813dd663c8edaea2778d0c7321dfe7f2705457fb140362b114e8482afee0d6",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/baseline-japanese-fallback.css",
+      "bytes": 119465,
+      "sha256": "9b2f5c0999902d9dee6e46b8f2c702b61d463b9d6d64611d35c3d4884994d549",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/baseline-simplified-chinese-fallback.css",
+      "bytes": 114785,
+      "sha256": "8ef2949b2235a1eafb425f8da5cda87279a4a2839ce50e03e451107157a466be",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/baseline-source-binding.json",
+      "bytes": 1005,
+      "sha256": "2f61f88a179c38ac3d522fcf822aad66e8b61a065d1d200afc8ddec4a41c03f5",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/before.json",
+      "bytes": 1513,
+      "sha256": "1028e0f1e8b94e8c208319f8949147665db212d29bccf4ccf6bc1fc06bee19ff",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/build-artifacts-result.json",
+      "bytes": 299,
+      "sha256": "dc13c042b762711161320b69049bb0a786cb8db6ae8c31736636f16f860f6ced",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/build-artifacts.log",
+      "bytes": 71,
+      "sha256": "3ea4930d8fccf6fbcd51b53d744119d247eef442e94ecaa858048c1597a26df7",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/candidate-source.json",
+      "bytes": 433755,
+      "sha256": "f1561c23cf7e8a8e985ab0c4ab8da770773f0e71bf97f1d39b49210ede467fc1",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/check-dev-final-result.json",
+      "bytes": 292,
+      "sha256": "81379e6561a07f55d0bba05b917b72a0803bfa824b2fef84180563c872facbb2",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/check-dev-final.log",
+      "bytes": 4339,
+      "sha256": "7cca892322cce2bc7a6ae45faaa8087b99d030d18245fe7b3daefb4c6e774487",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/check-dev-result.json",
+      "bytes": 292,
+      "sha256": "ad2a119a9b2de2ac06e8390231d1b14e297e1e6e664fda4be82beab6b42dbe29",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/check-dev.log",
+      "bytes": 4302,
+      "sha256": "14aac4ca9707e06ae560155e24cfaac8892b9d6187b1ad0ce81d40c1d9c7dc0a",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/cmap-ascii-audit-before.json",
+      "bytes": 29309,
+      "sha256": "18ad4adc9e0cde37057b58ce0142a23cf2383010be9685d0ba47b44dec49b980",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/cmap-audit-before.json",
+      "bytes": 63794,
+      "sha256": "148731afca6248f1cd6bb9e902a9377acc893f47764732fff999951706883869",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/comparison-analysis-result.json",
+      "bytes": 319,
+      "sha256": "5f285b05c4cd06dea791e17391947e3c61aafdcb88813f67c073d614e58ce8c8",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/comparison-analysis-verified-result.json",
+      "bytes": 319,
+      "sha256": "2559001cdac234b1c0c287760f0ee3b549e987ade46df902b8231402132112f2",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/comparison-analysis-verified.log",
+      "bytes": 154,
+      "sha256": "19acc5ea39a093bd75b45a39139303a015439cc002adad7d7f2a9015cd59fef6",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/comparison-analysis.log",
+      "bytes": 154,
+      "sha256": "19acc5ea39a093bd75b45a39139303a015439cc002adad7d7f2a9015cd59fef6",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/comparison-summary-verified.json",
+      "bytes": 36720,
+      "sha256": "d1e3f5da385fb1accfdf318c22bd706e257fcda3d9dc1295e23d1e97eb7ffd81",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/comparison-summary.json",
+      "bytes": 36720,
+      "sha256": "d1e3f5da385fb1accfdf318c22bd706e257fcda3d9dc1295e23d1e97eb7ffd81",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/design-foundations-result.json",
+      "bytes": 306,
+      "sha256": "ef12d1cccc235f705202899507e2628636986ddf0a8c7f01cbc17d41992ca33d",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/design-foundations.log",
+      "bytes": 6229,
+      "sha256": "d507a3e5309a3cef906e1bcb6fa5f84507c6a16bf3a9ab5ec5e7362d02f9123e",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/final-review.md",
+      "bytes": 7202,
+      "sha256": "1d910e417a236ddaaaa1f9db2b6da839a2b191fac9b0ead9c6df2fff9868afa6",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/fixture-result.json",
+      "bytes": 318,
+      "sha256": "ec67022b17ee34148f24e2665338f8b170a54461cff14a6b57085af565f04410",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/fixture.log",
+      "bytes": 10161,
+      "sha256": "fdb098b85458c0514cb7abed67274d2dc2e70e87826144972d9fc9131ddc78cc",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/font-ascii-format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/font-ascii-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/font-ascii-range-green.log",
+      "bytes": 2506,
+      "sha256": "03d7b33077c7f0b7aac8c0db85fffc28f3b5e832078147ad69d96b849b461708",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/font-ascii-range-red.log",
+      "bytes": 10632,
+      "sha256": "97843550a67bacc2a326459ce35640a595fdbc52cefb36ebeed8258ee47997c7",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/font-range-red.log",
+      "bytes": 9478,
+      "sha256": "d530182dbf2b887af09ba1adf88fffcd90051ed67c6be97d306fddd948746a1a",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/implementation-review.md",
+      "bytes": 5418,
+      "sha256": "7e126e6ea9a43a137e13789b23c7fe657f7d75b4a3060ca24d172d9db9bdc469",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/implementation-verification.json",
+      "bytes": 104725,
+      "sha256": "6e03edcef416081282c08a59cb8c6989da8552c663b405c430b733fad46fd796",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/owned-port-cleanup.json",
+      "bytes": 492,
+      "sha256": "40f95fe8378dbc154c03280f97d0c54df9cae1e86283f5d5a43d55c8ffc21cc6",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/plan.md",
+      "bytes": 2544,
+      "sha256": "02299e829b07b8529c277f9149fea65cb444f068224545c7123a00a862232190",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/post-capture-integrity.json",
+      "bytes": 429,
+      "sha256": "060930bac5e0d6637ef1e82d39934492ee756f71fe75cb885da6a34d9e22a6bc",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/prior-untracked-protection.json",
+      "bytes": 122,
+      "sha256": "7f397be9052df769b2d6c4674b8c002a75553ac373fc4fc4fec7770e5b7b4a66",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-b457083a-de4d-4d01-b7d6-b187976b8585/japanese-400.png",
+      "bytes": 106275,
+      "sha256": "ea0fafc8c06043b6c0c98de2c62674afabea0dd567b1a9c8d8cd36b040a523e9",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-b457083a-de4d-4d01-b7d6-b187976b8585/japanese-500.png",
+      "bytes": 106551,
+      "sha256": "863f4b055fa3944468792f0e69481ce9fbb683b100960bbfdb506cbb4a6670e9",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-b457083a-de4d-4d01-b7d6-b187976b8585/japanese-600.png",
+      "bytes": 107018,
+      "sha256": "d64bedb6c52eafb051b2d5144f650ce1a694a8d9b2f8328975c72eaea257ac87",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-b457083a-de4d-4d01-b7d6-b187976b8585/japanese-700.png",
+      "bytes": 105972,
+      "sha256": "f8def1ac1033d4c605cd236a71b73f989cfc119e11637ac110052e35842130d0",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-b457083a-de4d-4d01-b7d6-b187976b8585/results.json",
+      "bytes": 1568766,
+      "sha256": "4780a151f09697e6851e84983d55cb5a10b07a5f2ec7355c9b13f551b4268145",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-b457083a-de4d-4d01-b7d6-b187976b8585/simplified-chinese-400.png",
+      "bytes": 110176,
+      "sha256": "63494566cb2498e5ba812bae853dbb78c472ed25d0991d8f8051791e9a9c7297",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-b457083a-de4d-4d01-b7d6-b187976b8585/simplified-chinese-500.png",
+      "bytes": 109114,
+      "sha256": "d11cd95f6e1cead1b792bc781fd1a67bdfb2552234010da808bad918a783a792",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-b457083a-de4d-4d01-b7d6-b187976b8585/simplified-chinese-600.png",
+      "bytes": 108761,
+      "sha256": "ca1a465d02f24483eca30596e15f4b2a3facb6497ecf185152598da5cd252c27",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-b457083a-de4d-4d01-b7d6-b187976b8585/simplified-chinese-700.png",
+      "bytes": 108435,
+      "sha256": "5b9feeee3237f796da607d355c53844cf315dd07f76be4a31453ceb925ab3278",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/japanese-400.png",
+      "bytes": 106275,
+      "sha256": "ea0fafc8c06043b6c0c98de2c62674afabea0dd567b1a9c8d8cd36b040a523e9",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/japanese-500.png",
+      "bytes": 106551,
+      "sha256": "863f4b055fa3944468792f0e69481ce9fbb683b100960bbfdb506cbb4a6670e9",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/japanese-600.png",
+      "bytes": 107018,
+      "sha256": "d64bedb6c52eafb051b2d5144f650ce1a694a8d9b2f8328975c72eaea257ac87",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/japanese-700.png",
+      "bytes": 105972,
+      "sha256": "f8def1ac1033d4c605cd236a71b73f989cfc119e11637ac110052e35842130d0",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/results.json",
+      "bytes": 1578942,
+      "sha256": "f35e6095583177940aa75c32112fcdc071aac80a9e17cacb52afc746a6565500",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/simplified-chinese-400.png",
+      "bytes": 109875,
+      "sha256": "2062e2cc3775956bd36f6a1a669fb9c5f7a9c29e4627e6302ea30a39bc69da09",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/simplified-chinese-500.png",
+      "bytes": 110464,
+      "sha256": "88a5a0ba86f7d20efe4d8b2774bc06f1e34a6ea30df7e342f332ce9fb254b8aa",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/simplified-chinese-600.png",
+      "bytes": 110645,
+      "sha256": "2a5817074eb1cf728ae7a5a4e42129459fc6a7bcbf0e10fa3dbf10cbbdb6747a",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/simplified-chinese-700.png",
+      "bytes": 109400,
+      "sha256": "cf1ae8ebbd93388a43a412c607a53ba41f9afb3d9746e62385f7397db809b44a",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-final-result.json",
+      "bytes": 326,
+      "sha256": "22d0a19047589dfd388cef11d92e0fa287a5fe43e8ed894300f8214facb42439",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-final.log",
+      "bytes": 139,
+      "sha256": "690bb88944a02c257a103bd30ff434ead6ff0ad03412d3c2de5aab3117d7e3a4",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-harness-note.md",
+      "bytes": 2836,
+      "sha256": "aa163c8fc8bbf70fbfcabe82a243b44c8feedb02d667f235de64462c9544ddbc",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-result.json",
+      "bytes": 326,
+      "sha256": "ba76e88d62084a63bfe3c81c2a603c044d695b26546d021f878a88e4e41a41e1",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-summary.json",
+      "bytes": 2856,
+      "sha256": "e72a643cf2172e0286d645fc4761a9eee28697406ddeb653c29cd71621d4a43b",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering.log",
+      "bytes": 139,
+      "sha256": "3b8c62ea258665e1fab280728980a09b02b6b817a1a547dece64cf78b872d1d8",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay/baseline/results.json",
+      "bytes": 1846,
+      "sha256": "7be2d6d4ada93a49e142e2a6f5390ab18a149e874662ea460c6695cf83a8c1de",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay/baseline/zh-CN-gift-mobile-1-analysis.json",
+      "bytes": 277869,
+      "sha256": "50b90584356b916fcb845cbbdf749f07357614c5fa6ee20c1a0bfa696b3679e9",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay/baseline/zh-CN-gift-mobile-2-analysis.json",
+      "bytes": 168999,
+      "sha256": "cb331636c7022d9036bac67efd26b175472a88646b964366065587b5b90f91ee",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay/baseline/zh-CN-gift-mobile-3-analysis.json",
+      "bytes": 161788,
+      "sha256": "b377d3abe9a05dc6bbad5478c7f729b08d1534855b799fc1c1e96992f3e71cc9",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay/candidate/results.json",
+      "bytes": 1878,
+      "sha256": "7b9b19d3d0c09090b9fd567b263fc21da661f6ae42fc5e59565d61753349f601",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay/candidate/zh-CN-gift-mobile-1-analysis.json",
+      "bytes": 427455,
+      "sha256": "d609ad589fd1aba0dc77dc6ba72ed4323e5e613394bb7b2dac2fa3543db70ec2",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay/candidate/zh-CN-gift-mobile-2-analysis.json",
+      "bytes": 153320,
+      "sha256": "d9d9ece4f0626d35e2ff5b1f088848f3849b15e8b497b60764997005930aff2e",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay/candidate/zh-CN-gift-mobile-3-analysis.json",
+      "bytes": 162337,
+      "sha256": "dbdb70bc55391492fa166f693d3782b6e6f94ed474bc2484a222d496309253e5",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay-baseline-result.json",
+      "bytes": 516,
+      "sha256": "018f2cc48c8b11efc94b540f99a872b6104cdcdee75fa01d0ae1601d92613c0c",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay-baseline.log",
+      "bytes": 128,
+      "sha256": "79f93c76d7e22cb920fd66fd6c85bfb6f71d82ea299efb9d04f71d34b04cfc72",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay-candidate-result.json",
+      "bytes": 516,
+      "sha256": "847a5373e0133a551f55b173580d0b04866cfd8267cae944b371b1febb77bea1",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/replay-candidate.log",
+      "bytes": 129,
+      "sha256": "a6da32bdcc58f5845c3ce965a3b1a121544ceceff27234fb32ef53f78aeabf63",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-font-range/run-check.py",
+      "bytes": 756,
+      "sha256": "44f3eee13125a8dce074a2d8e8a95d35dc86c2c56c86b64394a15b9cb26ff367",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/run-comparison.mjs",
+      "bytes": 5347,
+      "sha256": "b2a0fc2f463799c771f8f96fe550742f627087da436852e26615e15738e69e30",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/stage.json",
+      "bytes": 42,
+      "sha256": "b3cbbe72a9daab5c446bd49f779ec8378187041ffd5c5c79178ee12efbb22a0a",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/ui-summary.json",
+      "bytes": 23979,
+      "sha256": "4ea94f6edd9e9025bc35cb63acc40c6395ed65ba78ea7138aed4df4a4ed4922f",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-font-range/verify-fallback-rendering.mjs",
+      "bytes": 17795,
+      "sha256": "87d4bb12cad2aadb2ed48c3f9d73b20cb7028e04bd3029405853ce578b706596",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/README.md",
+      "bytes": 4366,
+      "sha256": "39923a2bf55b9091c27188a1a2d7e81eb07bc8afc6d3d185861e8f00dba92c25",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/aborted-request-audit.md",
+      "bytes": 4729,
+      "sha256": "faaf913089f4e7a71a1eef4f4decf1bbd699a90a7e3a10382f516fb7651e1f02",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/adapter-boundaries-result.json",
+      "bytes": 302,
+      "sha256": "6f9003cceb7e24f961071f8b4f6042a6e1a9e22fee0956670c09c5bbe573b235",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/adapter-boundaries.log",
+      "bytes": 170,
+      "sha256": "360ebfcae9aea3200bb9c177b8cbe7aad839b167bcbdceb6cdb98cc49e9c89b2",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/affected-tests-result.json",
+      "bytes": 531,
+      "sha256": "c44e934a7b73db43270631f0b957c49b4acfd62225716ae12dee0cfc6424dc3a",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/affected-tests.log",
+      "bytes": 4104,
+      "sha256": "b639428da3a002fec47f529fd76cc6a645fec04d2d214c689a055eb0e8900dbb",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/analysis-manifest.json",
+      "bytes": 1159,
+      "sha256": "00594a0c90018bc081023603930ae8c7b3a18466c1a346dff024ad99f86b6eab",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/analysis-result.json",
+      "bytes": 488,
+      "sha256": "84ea59216c1ee1ca37f2f157e856062f32940cc986c667de029907a35328803d",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/analysis-summary.json",
+      "bytes": 1352395,
+      "sha256": "a89296f56bf53c0ad4ff7d18649a083e425140590c32a7e47f6d9de3242e9cec",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/analysis.log",
+      "bytes": 263,
+      "sha256": "5d692207fe8156c4c3fb277253788538cdf3b3a58976867e9d52ec2830e1531a",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/analyze-transport.mjs",
+      "bytes": 39318,
+      "sha256": "187f98e4acd12f8bf9c5d3d33c95c304a512ebf79002337279e26a571c47431f",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/build-artifacts-result.json",
+      "bytes": 299,
+      "sha256": "3a8635b375b8be07227bba0919f75f1695d95332bfd4110f18e4332fcccb92dc",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/build-artifacts.log",
+      "bytes": 71,
+      "sha256": "3ea4930d8fccf6fbcd51b53d744119d247eef442e94ecaa858048c1597a26df7",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/check-dev-final-result.json",
+      "bytes": 291,
+      "sha256": "7abd9a9da3f86136c762f9f01df3fd74f5c574ca7fbd640dc5043f0e5583c91b",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/check-dev-final.log",
+      "bytes": 4302,
+      "sha256": "f4331419c22ba5327d7b692a8bf6792385d1a147af42d7c5f850f84cdd79daae",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/check-dev-result.json",
+      "bytes": 292,
+      "sha256": "ae477bd75c34232e7ebe1c60f8bc4a2ff8d3a0089619fde4e668fcb77e105e7d",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/check-dev.log",
+      "bytes": 1564,
+      "sha256": "38703fb57c26dbfe68558dba4ca62b34bb8ad51c2ad50844160f215fe0242299",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/diagnostic-lint-result.json",
+      "bytes": 450,
+      "sha256": "c07f42aad5dfdf135938a3d710736488447a00cbc1d4de5475370c2883c1ab96",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/diagnostic-lint.log",
+      "bytes": 614,
+      "sha256": "a3645d3541c70bffa6ac52c0bdee5e6aa215aa5e89a5a5bf3065d264bd764d85",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/fixture-result.json",
+      "bytes": 320,
+      "sha256": "f80ed5dc074b4bfa07d3084fd7c6fec82cbec51a02142b55cf120a8c83096b33",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/fixture.log",
+      "bytes": 5874,
+      "sha256": "2ef92552ec4d4c7aba993afebc86ba8bf82db4078bb6ae67f04bfb952a129bb5",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/font-overlap-audit.md",
+      "bytes": 22506,
+      "sha256": "fc9ac96c1c7ee9999e5d19285f30dd5243c9b7841b8c6029766d493bcb2d2b96",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/independent-review.md",
+      "bytes": 7034,
+      "sha256": "d7686ad154c00fc5cd0791da0ac73ee53dd65022f7c0b09832512a28b228a98e",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/initial-untracked.json",
+      "bytes": 1311537,
+      "sha256": "848baa39be6c2664c68813b4728f746a19f5702804c1f6958fb67413685f6b05",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/plan.md",
+      "bytes": 2506,
+      "sha256": "18a8d244333b187918e67221998eb41ec7e98ae35a9ff207e229428f4ce9d435",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/prior-critical-path-audit.md",
+      "bytes": 9594,
+      "sha256": "e81c94b491b49b9eeaffbf7d57d490dcf435be899bf4f3aa4fa194a81b65ca73",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h1-a/results.json",
+      "bytes": 1857,
+      "sha256": "eb582e53c7732890954d25421fc55c2c591cbcb1ce04895e304932d2e089d828",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h1-a/zh-CN-gift-mobile-1-analysis.json",
+      "bytes": 312198,
+      "sha256": "ac67350ecf85b34d9142f4adb761edb861fdd9ba2dcbcac3278ead9d98246d56",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h1-a/zh-CN-gift-mobile-2-analysis.json",
+      "bytes": 170584,
+      "sha256": "5749ee815f80c50a9db704f679f34613d4c45637985eae209ad73c3c683b3fef",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h1-a/zh-CN-gift-mobile-3-analysis.json",
+      "bytes": 180315,
+      "sha256": "3f43e20805e82a5e6e8edad5cdc1cc24aab8c2b589aa3a828d9ab499eb68e376",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h1-b/results.json",
+      "bytes": 1875,
+      "sha256": "6bdc1a06ab0b7844adb29fd54c466dded763bccc9cb227d364ea6e2f5e545c40",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h1-b/zh-CN-gift-mobile-1-analysis.json",
+      "bytes": 223399,
+      "sha256": "213606a13d35dab74ffe104aba20ae3d0e83ac566e1ee32d5347cfcc90c93f23",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h1-b/zh-CN-gift-mobile-2-analysis.json",
+      "bytes": 168673,
+      "sha256": "aa222ade420907cd562afd480115de9baec0dec3d89cee62f78f661322c3ac37",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h1-b/zh-CN-gift-mobile-3-analysis.json",
+      "bytes": 176461,
+      "sha256": "829fa9227b0f28515374bb565d1667442b3037b8ac9c36b8f2ea44b91e0f5f4a",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h2-a/results.json",
+      "bytes": 1875,
+      "sha256": "9ffa72bee34543ef24458d3033136aa27ab1f5d82018e81c824b2ecb68251e3a",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h2-a/zh-CN-gift-mobile-1-analysis.json",
+      "bytes": 202852,
+      "sha256": "225c084525b84eec3b19d15b668311422e4f916fa606ddaae4890a658ee41097",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h2-a/zh-CN-gift-mobile-2-analysis.json",
+      "bytes": 179127,
+      "sha256": "bc0c51c69d26dc0627d73b961ad019faf7031007ae68ae538edc7171e846b0e0",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h2-a/zh-CN-gift-mobile-3-analysis.json",
+      "bytes": 171258,
+      "sha256": "30518f1c452f726688bc9451f0bdb0ad1e04c62e9c232429d4b220845a8fbd2e",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h2-b/results.json",
+      "bytes": 1859,
+      "sha256": "ed505b5640bc10c600e6b2ac6a60c1a79c2b06d4cdff1e4921cc5f0f8dacc8c2",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h2-b/zh-CN-gift-mobile-1-analysis.json",
+      "bytes": 204188,
+      "sha256": "75466a7bf0e5e35865dcc0dde83718cdd688de736ff3ca677be931c1322b4412",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h2-b/zh-CN-gift-mobile-2-analysis.json",
+      "bytes": 167879,
+      "sha256": "cad569df1f3d61da90d08ad0ae4865f6054d652aa7b13528a80af0defc7fa80f",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay/h2-b/zh-CN-gift-mobile-3-analysis.json",
+      "bytes": 167937,
+      "sha256": "288a3bc747fdf37493f32f577853458893be169fe74c865d1f0c53e2e9d38933",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay-h1-a-result.json",
+      "bytes": 514,
+      "sha256": "c580f5bf331e9060e18517fee8c71655c0d84315e2143ef4acbc2bb8493e905a",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay-h1-a.log",
+      "bytes": 129,
+      "sha256": "929a8a2cf69c4a25946eee86995349a8e1f6027221be1e299f6c96eab7337350",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay-h1-b-result.json",
+      "bytes": 514,
+      "sha256": "6f7bf7921c5f895968216801368d93182dd658fd0a85dbe1e20b8f8db967474b",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay-h1-b.log",
+      "bytes": 129,
+      "sha256": "30a0b6a3565322e7e0293fe862ef3a950e354e27e8f6d03f4baef50e2d20851f",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay-h2-a-result.json",
+      "bytes": 514,
+      "sha256": "a5b48cd00030cf3858b6b572a11b5776772f1aef30ccfe0f0f7559431e0000d1",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay-h2-a.log",
+      "bytes": 129,
+      "sha256": "b38c8fa1a533311b0b1e6d5cbc102804dc640c4768ed1fa1d8207a79a0af248c",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay-h2-b-result.json",
+      "bytes": 514,
+      "sha256": "9518c1590b7eefba803b953ee30d3614de1ab8a87152c2d09025df6fae1365ca",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/replay-h2-b.log",
+      "bytes": 129,
+      "sha256": "c74cf2207e5fe8de2e2ce9ddcad537b0b1785bed1baca07b2f7899d37e05956a",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/run-check.py",
+      "bytes": 756,
+      "sha256": "44f3eee13125a8dce074a2d8e8a95d35dc86c2c56c86b64394a15b9cb26ff367",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/run-transport.mjs",
+      "bytes": 8386,
+      "sha256": "398620eb5a332587c8f3d3017b8999de4fb33c20d0a376e06a256d05304fa803",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/source-after-capture.json",
+      "bytes": 218,
+      "sha256": "1f87dc146bd2dc13b6371a56149bceb484a55766ba921454349d5a69cae58294",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/source-before.json",
+      "bytes": 433197,
+      "sha256": "8ddf7d51fa3add2ba85f8ed570303318a423a01993154823afe8ffae5f5410c2",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/source-frozen.json",
+      "bytes": 433796,
+      "sha256": "fe01f1dbc6a2ca3530ceb75d4c0484efb1633b2270242b6f9698985b142944fd",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/successful-entity-comparison.json",
+      "bytes": 23548,
+      "sha256": "0374cd2d9a79132be99d56af9bc0c39da01fe40c1921907258f96c9a028f105f",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/transport-findings.md",
+      "bytes": 10286,
+      "sha256": "a20b5b30708992a45c418e0878174180a552b6b6417d4c9a1de0c4ace17ef888",
+      "includedInCommit": true
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/viewer-transport-format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/viewer-transport-green-attempt1.log",
+      "bytes": 5581,
+      "sha256": "f1f69fdb871635c71c4aa71908e9675d480adc7dd9b4fca331b7e792bfd14456",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/viewer-transport-green-attempt2.log",
+      "bytes": 1583,
+      "sha256": "b0004f705f3f5adb828118869aee7124eb2686f91595f0402b3ef302fc482615",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/viewer-transport-green-final.log",
+      "bytes": 1953,
+      "sha256": "359d26e3e79f918529363895506d9e12150909a952eab3ab82874e669b50e730",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/viewer-transport-green.log",
+      "bytes": 1950,
+      "sha256": "dd7dece82fb1820284d65934ba0eca2ff4771cfaa8240ffe1a85e0f7d3af521b",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/viewer-transport-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/viewer-transport-localhost-red.log",
+      "bytes": 5143,
+      "sha256": "efdb99121f0dc15380e5537838590254f57de0727813956f9da42dd4b8638787",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/viewer-transport-red.log",
+      "bytes": 14687,
+      "sha256": "32216307c0f0fb34a1d43fa80cce2b643d2f9511e54d68824f64d6b5ef736911",
+      "includedInCommit": false
+    },
+    {
+      "path": "output/checks/p3-06-transport-proof/viewer-transport-verification.json",
+      "bytes": 1950,
+      "sha256": "a8cff14933a08fb09ff6f75ddfc7ddab8fbf214239dc271b6f94b01778ce6890",
+      "includedInCommit": true
+    }
+  ]
+}

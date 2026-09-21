@@ -5,7 +5,7 @@
 > 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-015，仅本地 P5-01→P5-02）
 > 当前任务：P3-06 由 `/root` 恢复 Lane D 执行；P5-01/P5-02 本地范围 DONE，P4-04 真实商户验收待续
 > 下一入口：回到 P3-06 性能/人工验收；P4-04 保留真实商户资料与验收门
-> 当前检查点：P3-06 完成公开 composites 样式隔离检查点，实际 CSS 少11301B/传输少1531B；七语与内部回归通过，性能预算仍未过门。29 DONE / 2 IN_PROGRESS / 18 PENDING；仅本地提交，不解锁其余 P5 或 Phase 6/7。
+> 当前检查点：P3-06 字体重复请求已修复，实测字体少25.53%，七语UI与792字体显示对照通过；仍有慢样本和正式性能/人工门待续。29 DONE / 2 IN_PROGRESS / 18 PENDING，仅本地推进。
 
 ## 1. 开工入口
 
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-21 P3-06 字体范围修正：先固定同构建H1/H2/H2/H1十二诊断，保留2个采集后辅助图取消造成的原整体FAIL；后以真实cmap否决全Unicode去重，仅规范化可打印ASCII重复声明。225原字体/7UI产物不变，同fixture旧/候选各3次H2实测9→7字体、553700→412348 resource B（-25.53%），54原件/12官方重放/同配置/0+1读取通过。中位2405.4873→2256.0191ms但慢样本4275.773ms保留，不冒称整阶段达标。七语双端88场景/88PNG/85axe零违规（30incomplete留人工）、792加载后字体零像素/metrics差通过；57设计tests、23定向tests、最终check:dev63/63/36全缓存及adapter/artifact通过。2348输入SHA与原5227未跟踪保护，owned端口清理；详见 `output/checks/p3-06-font-range/README.md` 与最终复核/收尾。29/2/18不变，P3-06仍IN_PROGRESS，仅本地提交。
 
 2026-09-21 P3-06 公开样式隔离检查点：生产只将 composites.css 从公共root移到内部样板layout，原四份UI CSS/字体/图像不变。真实同fixture旧/候选各3次默认profile报告中，CSS少11301 resource B/1531 transfer B，54原件SHA有效；模拟LCP中位4212.1395→4359.5727ms，**不声称提速或性能过门**。协议32461、七语双端88场景/88截图/85axe（0违规/30incomplete）、内部P2-03/04/05原门回归、check:dev及五个设计/UI静态门和adapter/artifact通过；旧moderate提示、真机/人工/商户门保留。P2-03以2345候选文件同SHA的干净快照通过，主工作区首失败和构建产物缺失首失败保留。原5042未跟踪不变；详见 `output/checks/p3-06-critical-path/README.md` 与最终复核。29/2/18不变、P3-06仍IN_PROGRESS，不解锁其余阶段，仅本地提交。
 

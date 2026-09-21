@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-21T16:01:40.834995+00:00",
+  "captureDirectory": "output/checks/p3-06-storefront-acceptance/run-2026-09-21T15-55-54-248Z/browser-attempt-1/gift-render-trace",
+  "sourceBaseline": "c252c52",
+  "productionFontInputsUnchanged": true,
+  "files": [
+    {
+      "path": "scripts/fonts/generate-fallback-css.mjs",
+      "sha256": "1d138e3c69c900670ec2ad8ff4fd2290c3c5085334dcb95d097bb7a65dc094c9"
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-fallback.css",
+      "sha256": "8ef2949b2235a1eafb425f8da5cda87279a4a2839ce50e03e451107157a466be"
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/japanese-fallback.css",
+      "sha256": "9b2f5c0999902d9dee6e46b8f2c702b61d463b9d6d64611d35c3d4884994d549"
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/fallback-manifest.json",
+      "sha256": "0a09f5ca28badc953a70191730637c4f5d770e951d36b2b92127d6c12e943f08"
+    }
+  ]
+}

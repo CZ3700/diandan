@@ -1,0 +1,1915 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-21T16:12:36.734362+00:00",
+  "recordedAtMeaning": "Metadata assembly time only; not the earlier command execution times.",
+  "task": "P3-06 printable ASCII font-range normalization",
+  "baseline": "c252c52",
+  "scope": "Only duplicate non-UI printable ASCII U+0020-U+007E advertisements are removed from earlier original faces; all other per-face ranges retain existing UI subtraction. No WOFF2 or UI font changes.",
+  "status": "LOCAL_SCOPED_GREEN",
+  "abandonedCandidate": "All-Unicode disjointness was rejected before production edits because actual cmap disproved declared-range ownership for 19 JP / 15 SC characters.",
+  "implementationFiles": [
+    {
+      "path": "scripts/fonts/generate-fallback-css.mjs",
+      "byteLength": 10200,
+      "sha256": "fe52815264fe37e5c6c8a0ad4c134fb3d9c4e6fac23d23f5b195623bc33e60aa"
+    },
+    {
+      "path": "scripts/fonts/generate-fallback-css.test.mjs",
+      "byteLength": 8212,
+      "sha256": "583c09ebd3ad7afb8c1fb2de6d9f4cd271e79f99a20a67b0839d9940cb555d4a"
+    },
+    {
+      "path": "scripts/font-ui-subset.test.mjs",
+      "byteLength": 12018,
+      "sha256": "06e0c666165237bf15cbb7f0b7b8bc55ca76974c279efb8326a7264418bda03d"
+    },
+    {
+      "path": "scripts/fonts/README.md",
+      "byteLength": 6060,
+      "sha256": "2c78ecf14201dbdbb358146a898bc5653007ade8acc103999d4ca348fe719a83"
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/japanese-fallback.css",
+      "byteLength": 119302,
+      "sha256": "80c94c4515e6b6250528384673dcb35cee018a58ba75c2aa0e13b9457c7ad16b"
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-fallback.css",
+      "byteLength": 114626,
+      "sha256": "3787ae649a6107fe9d635433ceb501ae11d655dc2c758aedadf2749fb4f9ef21"
+    },
+    {
+      "path": "packages/design-tokens/styles/fonts/generated/fallback-manifest.json",
+      "byteLength": 45651,
+      "sha256": "940055cf1f95fc9ec840834eff22eca8cd4f48908089efae59b611f10a1a256b"
+    }
+  ],
+  "executions": [
+    {
+      "label": "initial test and audit formatting",
+      "command": "mise exec node@24.20.0 -- node node_modules/prettier/bin/prettier.cjs --write scripts/fonts/generate-fallback-css.test.mjs scripts/font-ui-subset.test.mjs output/checks/p3-06-transport-proof/font-overlap-audit.md",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Exit 0 captured as final command of its shell invocation; output was returned by the tool, not saved to a log."
+    },
+    {
+      "label": "abandoned all-Unicode RED",
+      "command": "mise exec node@24.20.0 -- node --test scripts/fonts/generate-fallback-css.test.mjs scripts/font-ui-subset.test.mjs > output/checks/p3-06-font-range/font-range-red.log 2>&1",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 1,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Superseded. No all-Unicode production implementation was made.",
+      "log": {
+        "path": "output/checks/p3-06-font-range/font-range-red.log",
+        "byteLength": 9478,
+        "sha256": "d530182dbf2b887af09ba1adf88fffcd90051ed67c6be97d306fddd948746a1a"
+      },
+      "nodeTestReportedSummary": {
+        "tests": 19,
+        "pass": 11,
+        "fail": 8,
+        "duration_ms": 1713.513792
+      }
+    },
+    {
+      "label": "all-Unicode cmap audit",
+      "command": "uv run --offline --no-project --with fonttools==4.64.0 --with brotli==1.2.0 python - <<'PY' > output/checks/p3-06-font-range/cmap-audit-before.json\nimport pathlib,re,json\nfrom fontTools.ttLib import TTFont\nbase=pathlib.Path('packages/design-tokens');ui_profiles=json.loads((base/'styles/fonts/generated/manifest.json').read_text())['profiles'];results=[]\nfor profile in ui_profiles:\n root=base/'node_modules'/profile['fontsourcePackage'];css=(root/'wght.css').read_text();faces=[]\n for block in re.findall(r'@font-face\\s*\\{([^}]+)\\}',css):\n  resource=re.search(r'url\\((?:[\\'\\\"])?([^\\)\\'\\\"]+)',block).group(1);points=set()\n  for token in re.search(r'unicode-range:([^;]+)',block).group(1).strip().split(','):\n   a=token.strip()[2:].split('-');points.update(range(int(a[0],16),int(a[-1],16)+1))\n  with TTFont(root/resource,lazy=True) as font:cmap=set(font.getBestCmap())\n  faces.append({'file':pathlib.Path(resource).name,'points':points,'cmap':cmap})\n ui=set(profile['codepoints']);owners={point:i for i,face in enumerate(faces) for point in face['points']};removed=[];lost=[];unsupported=[]\n for i,face in enumerate(faces):\n  for point in face['points']-ui:\n   owner=owners[point]\n   if owner!=i:\n    record={'point':f'U+{point:04X}','from':face['file'],'owner':faces[owner]['file']}\n    removed.append(record)\n    if point not in faces[owner]['cmap']:\n     unsupported.append(record)\n     if point in face['cmap']:lost.append(record)\n results.append({'profile':profile['profile'],'faces':len(faces),'removedMemberships':len(removed),'removedUniquePoints':len(set(x['point'] for x in removed)),'ownerMissingCmapCount':len(unsupported),'lostEarlierActualGlyphCount':len(lost),'ownerMissingCmap':unsupported,'lostEarlierActualGlyph':lost})\nprint(json.dumps({'schemaVersion':1,'tool':'fonttools==4.64.0 / brotli==1.2.0','readOnly':True,'profiles':results},ensure_ascii=False,indent=2))\nPY",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Rejects the original broad candidate; output JSON is evidence, not a test-runner log.",
+      "log": {
+        "path": "output/checks/p3-06-font-range/cmap-audit-before.json",
+        "byteLength": 63794,
+        "sha256": "148731afca6248f1cd6bb9e902a9377acc893f47764732fff999951706883869"
+      }
+    },
+    {
+      "label": "initial scoped lint",
+      "command": "mise exec node@24.20.0 -- node node_modules/eslint/bin/eslint.js scripts/fonts/generate-fallback-css.test.mjs scripts/font-ui-subset.test.mjs --max-warnings=0",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": null,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "This command preceded other commands in a shell invocation; its individual exit code was not captured. No lint diagnostics were printed."
+    },
+    {
+      "label": "initial scoped format check",
+      "command": "mise exec node@24.20.0 -- node node_modules/prettier/bin/prettier.cjs --check scripts/fonts/generate-fallback-css.test.mjs scripts/font-ui-subset.test.mjs output/checks/p3-06-transport-proof/font-overlap-audit.md",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": null,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Individual exit code not captured; tool output reported all matched files use Prettier code style."
+    },
+    {
+      "label": "ASCII actual cmap audit",
+      "command": "uv run --offline --no-project --with fonttools==4.64.0 --with brotli==1.2.0 python - <<'PY' > output/checks/p3-06-font-range/cmap-ascii-audit-before.json\nimport pathlib,re,json\nfrom fontTools.ttLib import TTFont\nbase=pathlib.Path('packages/design-tokens');profiles=json.loads((base/'styles/fonts/generated/manifest.json').read_text())['profiles'];results=[]\nfor profile in profiles:\n root=base/'node_modules'/profile['fontsourcePackage'];faces=[]\n for block in re.findall(r'@font-face\\s*\\{([^}]+)\\}',(root/'wght.css').read_text()):\n  resource=re.search(r'url\\((?:[\\'\\\"])?([^\\)\\'\\\"]+)',block).group(1);points=set()\n  for token in re.search(r'unicode-range:([^;]+)',block).group(1).strip().split(','):\n   a=token.strip()[2:].split('-');points.update(range(int(a[0],16),int(a[-1],16)+1))\n  with TTFont(root/resource,lazy=True) as font:cmap=set(font.getBestCmap())\n  faces.append({'file':pathlib.Path(resource).name,'points':points,'cmap':cmap})\n ui=set(profile['codepoints']);owners={point:i for i,face in enumerate(faces) for point in face['points']};ascii_points=set(range(0x20,0x7f));removed=[]\n for i,face in enumerate(faces):\n  for point in (face['points']-ui)&ascii_points:\n   owner=owners[point]\n   if owner!=i:removed.append({'point':f'U+{point:04X}','from':face['file'],'owner':faces[owner]['file'],'ownerHasGlyph':point in faces[owner]['cmap']})\n results.append({'profile':profile['profile'],'all95AsciiSelectedOwnerHasGlyph':all(point in faces[owners[point]]['cmap'] for point in ascii_points),'removedMemberships':len(removed),'removedUniquePoints':len(set(x['point'] for x in removed)),'ownerMissingCmapCount':sum(not x['ownerHasGlyph'] for x in removed),'removed':removed})\nprint(json.dumps({'schemaVersion':1,'tool':'fonttools==4.64.0 / brotli==1.2.0','readOnly':True,'profiles':results},ensure_ascii=False,indent=2))\nPY",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": null,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Individual uv exit code was not captured because a subsequent Python summary command was last in the shell invocation. JSON completed with all95AsciiSelectedOwnerHasGlyph=true and ownerMissingCmapCount=0 for both profiles.",
+      "log": {
+        "path": "output/checks/p3-06-font-range/cmap-ascii-audit-before.json",
+        "byteLength": 29309,
+        "sha256": "18ad4adc9e0cde37057b58ce0142a23cf2383010be9685d0ba47b44dec49b980"
+      }
+    },
+    {
+      "label": "ASCII test formatting",
+      "command": "mise exec node@24.20.0 -- node node_modules/prettier/bin/prettier.cjs --write scripts/fonts/generate-fallback-css.test.mjs scripts/font-ui-subset.test.mjs",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": null,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Formatting preceded RED in one invocation; individual exit code not captured, both files reported unchanged."
+    },
+    {
+      "label": "ASCII RED",
+      "command": "mise exec node@24.20.0 -- node --test scripts/fonts/generate-fallback-css.test.mjs scripts/font-ui-subset.test.mjs > output/checks/p3-06-font-range/font-ascii-range-red.log 2>&1",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 1,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Captured exit 1; failures explicitly identify duplicate printable ASCII including U+24.",
+      "log": {
+        "path": "output/checks/p3-06-font-range/font-ascii-range-red.log",
+        "byteLength": 10632,
+        "sha256": "97843550a67bacc2a326459ce35640a595fdbc52cefb36ebeed8258ee47997c7"
+      },
+      "nodeTestReportedSummary": {
+        "tests": 19,
+        "pass": 11,
+        "fail": 8,
+        "duration_ms": 1587.446
+      }
+    },
+    {
+      "label": "implementation formatting",
+      "command": "mise exec node@24.20.0 -- node node_modules/prettier/bin/prettier.cjs --write scripts/fonts/generate-fallback-css.mjs scripts/fonts/README.md",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": null,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Preceded generator and GREEN in one invocation; individual exit code not captured, both files reported unchanged."
+    },
+    {
+      "label": "generate fallback artifacts",
+      "command": "mise exec node@24.20.0 -- node scripts/fonts/generate-fallback-css.mjs",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": null,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Individual exit code not captured; stdout reported exactly japanese-fallback.css, simplified-chinese-fallback.css and fallback-manifest.json. Subsequent deterministic-generation tests passed."
+    },
+    {
+      "label": "ASCII GREEN and adjacent font tests",
+      "command": "mise exec node@24.20.0 -- node --test scripts/fonts/generate-fallback-css.test.mjs scripts/font-ui-subset.test.mjs scripts/font-ui-artifacts.test.mjs scripts/font-loading-policy.test.mjs > output/checks/p3-06-font-range/font-ascii-range-green.log 2>&1",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "log": {
+        "path": "output/checks/p3-06-font-range/font-ascii-range-green.log",
+        "byteLength": 2506,
+        "sha256": "03d7b33077c7f0b7aac8c0db85fffc28f3b5e832078147ad69d96b849b461708"
+      },
+      "nodeTestReportedSummary": {
+        "tests": 23,
+        "pass": 23,
+        "fail": 0,
+        "duration_ms": 1727.932959
+      }
+    },
+    {
+      "label": "audit record formatting",
+      "command": "mise exec node@24.20.0 -- node node_modules/prettier/bin/prettier.cjs --write output/checks/p3-06-transport-proof/font-overlap-audit.md",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": null,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Preceded final format check and lint; individual exit code not captured, formatter reported the audit file."
+    },
+    {
+      "label": "final scoped format check",
+      "command": "mise exec node@24.20.0 -- node node_modules/prettier/bin/prettier.cjs --check scripts/fonts/generate-fallback-css.mjs scripts/fonts/generate-fallback-css.test.mjs scripts/font-ui-subset.test.mjs scripts/fonts/README.md packages/design-tokens/styles/fonts/generated/japanese-fallback.css packages/design-tokens/styles/fonts/generated/simplified-chinese-fallback.css packages/design-tokens/styles/fonts/generated/fallback-manifest.json output/checks/p3-06-transport-proof/font-overlap-audit.md > output/checks/p3-06-font-range/font-ascii-format.log 2>&1",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": null,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Individual exit code not captured; log explicitly reports all matched files use Prettier code style.",
+      "log": {
+        "path": "output/checks/p3-06-font-range/font-ascii-format.log",
+        "byteLength": 66,
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+      }
+    },
+    {
+      "label": "final scoped lint",
+      "command": "mise exec node@24.20.0 -- node node_modules/eslint/bin/eslint.js scripts/fonts/generate-fallback-css.mjs scripts/fonts/generate-fallback-css.test.mjs scripts/font-ui-subset.test.mjs --max-warnings=0 > output/checks/p3-06-font-range/font-ascii-lint.log 2>&1",
+      "cwd": "repository root",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "wallDurationMs": null,
+      "captureLimit": "Per-command UTC timestamps and elapsed wall time were not captured. Log modification times are not substituted for execution timestamps.",
+      "note": "Final shell-command exit 0 retrieved from the completed original session after root authorized evidence completion; command was not rerun.",
+      "log": {
+        "path": "output/checks/p3-06-font-range/font-ascii-lint.log",
+        "byteLength": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "originalFontInputs": {
+    "profiles": [
+      {
+        "profile": "japanese",
+        "fontsourcePackage": "@fontsource-variable/noto-sans-jp",
+        "version": "5.3.0",
+        "sourceCss": {
+          "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/wght.css",
+          "byteLength": 105215,
+          "sha256": "193e3083e45c7a3772576bec8a1ace9720d21b4bda05286a25cedf4e3429c269"
+        },
+        "resourcesMatchBaselineManifest": true,
+        "sourceCssDigestMatchesBaseline": true,
+        "resources": [
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-0-wght-normal.woff2",
+            "byteLength": 82880,
+            "sha256": "8b17112cc76b2c90582b242f6177e095f345a0bcd9796709a203f3d17b9d0960",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-1-wght-normal.woff2",
+            "byteLength": 69988,
+            "sha256": "03bfb0b94385731fed3fd5da48189fe392d7725acdf057dfa33a966d79864135",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-2-wght-normal.woff2",
+            "byteLength": 32328,
+            "sha256": "460db1180d719732f35b8721ae3eb88a56367a7db2e799e23e23d3f8ecf4f32b",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-3-wght-normal.woff2",
+            "byteLength": 43296,
+            "sha256": "6e06f8d74bb31e9400d14d7755580deb5a45a03805b89cfa259a5ee4aeefadc9",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-4-wght-normal.woff2",
+            "byteLength": 77196,
+            "sha256": "8c7f77688e8200f251cfbc09643a4094aae5336eddcc8f940855129a53bade21",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-5-wght-normal.woff2",
+            "byteLength": 86848,
+            "sha256": "727909ae65786399509010f23e5eb86afa2b54c5f3d121c69a5cc3fe8dc27ab9",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-6-wght-normal.woff2",
+            "byteLength": 90144,
+            "sha256": "112df81bdf17596fcf8219295fa46f7560594a1f28f9c8382f75b82eecfb724f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-7-wght-normal.woff2",
+            "byteLength": 82784,
+            "sha256": "8b971266c5ee76328787d12c2f6ed3c3c668fb410dab772a4413fa917a74dfc2",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-8-wght-normal.woff2",
+            "byteLength": 79256,
+            "sha256": "6ee6f418270e59be45df9e992dcdf7591e54bb388c2b4baf7c901703d34e8aa9",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-9-wght-normal.woff2",
+            "byteLength": 75544,
+            "sha256": "9d46ccbc5a5a87b47cf3f77e3672f5c58a0d43f1760fd4db1d61fbf52512897b",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-10-wght-normal.woff2",
+            "byteLength": 75148,
+            "sha256": "8d7131126195ad1b941b3fc01bfb866644ab1b7c3d62aa6292618df45d59a340",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-11-wght-normal.woff2",
+            "byteLength": 75616,
+            "sha256": "58bea698357f0bd0d833e85be94842d3d7f37cab57177d5c340f4ef6f1e7bec5",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-12-wght-normal.woff2",
+            "byteLength": 66532,
+            "sha256": "baa15f2ddefd0cd91d092e1ef00f8ce51e135b32b40599e4c515447d04276152",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-13-wght-normal.woff2",
+            "byteLength": 72816,
+            "sha256": "b838c4f4ebe0ce5097a3313094469e69d3dfdc3432d409c41822e35d37c1082a",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-14-wght-normal.woff2",
+            "byteLength": 72056,
+            "sha256": "5100ae9003f327edbf1778cffa62246ae52546191f37e882b057ec49a8bf2c98",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-15-wght-normal.woff2",
+            "byteLength": 80476,
+            "sha256": "fb24f7070cfc585f57a11ba062c92766ef7fc193713432fddfab8a3b28a5c42e",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-16-wght-normal.woff2",
+            "byteLength": 69080,
+            "sha256": "4b77f03ecc2f581e83ccda94b14136d6dfb1f4c6026d44784410b101e3381d58",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-17-wght-normal.woff2",
+            "byteLength": 80648,
+            "sha256": "b5d73c16c9257a97c178433476e71785aeee7d18347c55c14a4ab4dab47809cd",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-18-wght-normal.woff2",
+            "byteLength": 77708,
+            "sha256": "2635f04ec401d3721c66ccdb043b61051f567bc31d19208dd436dac4fdd4bad5",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-19-wght-normal.woff2",
+            "byteLength": 87028,
+            "sha256": "0ab6a32eefbef709b99bd4aa9a984ae4b24802fe40e485ea6610e3e5ec823c6a",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-20-wght-normal.woff2",
+            "byteLength": 61272,
+            "sha256": "19b0984a3a26d96820b6e240a2bb83adf1219465971947c7226cf4cf84993d68",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-21-wght-normal.woff2",
+            "byteLength": 72060,
+            "sha256": "b1e8206357a8dfe19ee867394be9451102d3cae8d2f45c087db26e7b7bb73deb",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-22-wght-normal.woff2",
+            "byteLength": 74160,
+            "sha256": "76caabd977b2c05bf8310b046b8994e8b20f8402b572ab38d50d4e8e1fbff9d5",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-23-wght-normal.woff2",
+            "byteLength": 75892,
+            "sha256": "86cba9e46c325c40d280d989872b2de62829ab4bb3d129ebb91759b1cb22a20d",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-24-wght-normal.woff2",
+            "byteLength": 82960,
+            "sha256": "f584da41c20417c59b31a9e3dcc6e887f2a408ed9444174847ac00e5d52b71a8",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-25-wght-normal.woff2",
+            "byteLength": 80248,
+            "sha256": "83bc34cf2bc8b0e5913689889706756c86f1ecd2250a392ccb1832366f6982d5",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-26-wght-normal.woff2",
+            "byteLength": 67724,
+            "sha256": "1b9aeed87ff1240a3a1e4e07da58c354c50ffec81769e24429d0ac4e7b2027d6",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-27-wght-normal.woff2",
+            "byteLength": 64116,
+            "sha256": "9a23e7722d58cca5842571892d58a7f25305b64c972adaa5cc2b64db470be228",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-28-wght-normal.woff2",
+            "byteLength": 70768,
+            "sha256": "f108471a9418fd85cf37fa9a18209ace11e91280b9fc6144aa317b14bf7ee75d",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-29-wght-normal.woff2",
+            "byteLength": 75976,
+            "sha256": "c2739f410f286cb0eb1ca5a60a167689ec30610dbc6801297d81bccab0d39c09",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-30-wght-normal.woff2",
+            "byteLength": 80004,
+            "sha256": "bed4aec4ad2d668dfa5d7272c48488579def74bb17aee03cb3ceac4b5ec48fb7",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-31-wght-normal.woff2",
+            "byteLength": 86412,
+            "sha256": "f52501cc3d0927511721015b26bd20eb6f85a3af298d18572c120ad99a408d45",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-32-wght-normal.woff2",
+            "byteLength": 73416,
+            "sha256": "29867e7754df92e511180d2ba08d1dcf3ce0ea609cfa3b2d4be03d951aed67dc",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-33-wght-normal.woff2",
+            "byteLength": 65228,
+            "sha256": "5bc13cda35932194c71e3591cb38d1d5eede8c1f6502933e11f79375648c5361",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-34-wght-normal.woff2",
+            "byteLength": 85056,
+            "sha256": "5b2d913c42afb96d232861c1d2f1433ee92b1fc396a735fee8dfbaa23e5dd0a4",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-35-wght-normal.woff2",
+            "byteLength": 70008,
+            "sha256": "fcbcb602ada3988033b1b8057838b2e245bd3dcd0c7f50d86654d29583adcfb0",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-36-wght-normal.woff2",
+            "byteLength": 62524,
+            "sha256": "e8ec15e3a64fa8042037e0bdd7d3737878af4c11d11fe940f93f15f83e1cd75a",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-37-wght-normal.woff2",
+            "byteLength": 73628,
+            "sha256": "a3165fb911386b013544b394ccd8859521a5ff0099ad1c08d1b30ff4660ce6f1",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-38-wght-normal.woff2",
+            "byteLength": 69120,
+            "sha256": "f172c73cbea38dfa27802029b248fad77365aaef244d867fb3aa05e466eda93a",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-39-wght-normal.woff2",
+            "byteLength": 75292,
+            "sha256": "5f82cc8e5bb6d312044c8b74dcd69a0215c18292b6f55ddacc722d7d88efdb33",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-40-wght-normal.woff2",
+            "byteLength": 64032,
+            "sha256": "29dc9edc60cb91153d93f9934fd23b5b80be1103e244a65f0cb69e638a3f1dac",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-41-wght-normal.woff2",
+            "byteLength": 75840,
+            "sha256": "5a08a9754f3f2ac5d1c2080a7cd09764d3a2228421e7c09ae8a784ba0358965c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-42-wght-normal.woff2",
+            "byteLength": 64832,
+            "sha256": "5f2aa1c638dc1eb821f4171ad0bab36250471ad5c3a20d92ab687a0add17d2bd",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-43-wght-normal.woff2",
+            "byteLength": 69976,
+            "sha256": "39758894d8644a0e919ba7c443ec634729cbbe877025aa22ddc894b781107e7f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-44-wght-normal.woff2",
+            "byteLength": 72060,
+            "sha256": "5c80d146bc0d0d29c7fb36b10ad359e48bfb7125f1144b6b5bcbc4cff2a568fa",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-45-wght-normal.woff2",
+            "byteLength": 67032,
+            "sha256": "1b0b4b9a9f32cf2ea61ca966bb896f4bc2c470f312f72c9cd1add6f59407423b",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-46-wght-normal.woff2",
+            "byteLength": 57872,
+            "sha256": "252175236149a5957acbef3792b10679fb35231a1642ce88572366d35c5f56fd",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-47-wght-normal.woff2",
+            "byteLength": 67920,
+            "sha256": "39f68fd2f1040fc50a6fff7cf6c9d8f723d06fb862abadc92b28d6cdf8f7907c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-48-wght-normal.woff2",
+            "byteLength": 71936,
+            "sha256": "ad15a8c6642eb28d252a5973ede58d0607cc1263ba2812a82c194608c12a8a41",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-49-wght-normal.woff2",
+            "byteLength": 61636,
+            "sha256": "a4ec1c8da2a06f8b5f43e805c5e60296083db71e52386910b1225b91f39b6ee0",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-50-wght-normal.woff2",
+            "byteLength": 60596,
+            "sha256": "2eb7e0675015dd0e0985cf9ffc74f0b24596f18b225ad11113dd1f009177d449",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-51-wght-normal.woff2",
+            "byteLength": 57224,
+            "sha256": "7668885d1a6cb5dd25901ea64597a7c30546e9c949d92113766d85b909640291",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-52-wght-normal.woff2",
+            "byteLength": 74848,
+            "sha256": "450c2f88265ac78fb029c4d35402e61db86ad3f971707d62263b2a2dbb7d8b54",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-53-wght-normal.woff2",
+            "byteLength": 38588,
+            "sha256": "509429c7351b4d82b8d0a51c60eb7c7c688c3f17daf7d6d7f14e8df6398f25c9",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-54-wght-normal.woff2",
+            "byteLength": 31288,
+            "sha256": "32a585fcca6ee0356af2978ec5cd9175ec3c4bcdd58d4d8a3cea1c06739f8e50",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-55-wght-normal.woff2",
+            "byteLength": 42464,
+            "sha256": "40fa335ca913d9c5a82b63f0d217e093809473dba706c8713d499fe5385c6916",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-56-wght-normal.woff2",
+            "byteLength": 37460,
+            "sha256": "b01aa17b1bc39165a778ba67ca41f05d6ae91a9a9c848a930ce0dbc9c98cb0da",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-57-wght-normal.woff2",
+            "byteLength": 10792,
+            "sha256": "63500ae38749d35ef735f61e0522171164e1f273bd749719e86f3c398d72dbd5",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-58-wght-normal.woff2",
+            "byteLength": 25300,
+            "sha256": "7babec35dec785842b84b6a2d93235b7525cc2d7e0ae1ef1b0a61309484e3e91",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-59-wght-normal.woff2",
+            "byteLength": 20024,
+            "sha256": "1795a5e393a3f28ce58c1cdf59e2a08dc9389b51937c6264b83b5cfbe387e895",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-60-wght-normal.woff2",
+            "byteLength": 23536,
+            "sha256": "91bfa2afe580b56f561f0c182167bd2e134326f9c298a532bebce8678a18386f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-61-wght-normal.woff2",
+            "byteLength": 21052,
+            "sha256": "6fd8fd1cbbe48bd165ef19f0e229599791d0fa9ddb95782c1b2cb8758cefd115",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-62-wght-normal.woff2",
+            "byteLength": 19728,
+            "sha256": "c59edd05b12286994b2c1540ec156052230907ceee2582bf147e4eecd714e8d0",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-63-wght-normal.woff2",
+            "byteLength": 18252,
+            "sha256": "9196131a52180ef89f863fd7873a598c078f4718889fadaf0375cc3867c0a537",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-64-wght-normal.woff2",
+            "byteLength": 22528,
+            "sha256": "225f4d28affa293ef6cdbc54ff7939414f345231e256fc902caef3dc6a68d682",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-65-wght-normal.woff2",
+            "byteLength": 20476,
+            "sha256": "cf151dfccbb2f61441a20a7aae67d408f59862a6a7ff2150f943fbdd80e6aec2",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-66-wght-normal.woff2",
+            "byteLength": 18228,
+            "sha256": "453b5c95fb86aa8f6bf7ad5b36537c4ec07e727b04b9319186f069c8fed9b113",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-67-wght-normal.woff2",
+            "byteLength": 18172,
+            "sha256": "aa77f7261ae5720b60b728965e25d84f55324f922f228ebc02401e1e54ca2ca1",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-68-wght-normal.woff2",
+            "byteLength": 21876,
+            "sha256": "e8034b950e96ad4173558634e72c1a35919d83b0b4f95dba8b4bb247748ae4e6",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-69-wght-normal.woff2",
+            "byteLength": 19848,
+            "sha256": "da38554816b96a947ad942526ca66468b0a83b625ce87fd0ca39a40ebc992ee1",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-70-wght-normal.woff2",
+            "byteLength": 19872,
+            "sha256": "1bda91e3f0b00e3c58185589f47bc4bf02280fe43ea61959135f47fad91d0ea7",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-71-wght-normal.woff2",
+            "byteLength": 20288,
+            "sha256": "fb8b322e2b1672bc1bb1fd32edc42ff5230aff4c977be8774c640549d640be93",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-72-wght-normal.woff2",
+            "byteLength": 21376,
+            "sha256": "07d7fd0b9a92a714243b1b9967a12e2e24701f479f9a123f2c77ba6cfe5c5a89",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-73-wght-normal.woff2",
+            "byteLength": 19692,
+            "sha256": "691f3dfb4e51b171993e0726b98c0db759ea572989c95f0703c5a9442d9ff0fc",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-74-wght-normal.woff2",
+            "byteLength": 18156,
+            "sha256": "622c72730261f27d302bd835c0b3c8104aea3a8271626efdbb7ffcd5a5c2e3e9",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-75-wght-normal.woff2",
+            "byteLength": 18932,
+            "sha256": "56f71dbbfb1fcd1469df246050e883722b7d95fac8e9e02d3464fbe4e2a9c777",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-76-wght-normal.woff2",
+            "byteLength": 17952,
+            "sha256": "36902946e31dcd025f82aa66db750826d103221a5fd65a557886632582bb1da6",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-77-wght-normal.woff2",
+            "byteLength": 18900,
+            "sha256": "19d35ce4edd5eaf2fc4c6da6245bb07aa01081d458c66c4a5e2153eb83951cdd",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-78-wght-normal.woff2",
+            "byteLength": 20092,
+            "sha256": "02cc334f134abf9b6c0052de41a105821fd40176c8097403569d4d95977ecef4",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-79-wght-normal.woff2",
+            "byteLength": 19792,
+            "sha256": "bbff02e318b0147707ef56ba2f48f6a5b8cb4537b42cf43cb3af72e61a6d1b5a",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-80-wght-normal.woff2",
+            "byteLength": 18228,
+            "sha256": "0e721ed634369717232ef67a2e8f00154c5a2993b2a816f89840236b9aa926e6",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-81-wght-normal.woff2",
+            "byteLength": 17692,
+            "sha256": "a803d829ac0dbb882df261a2d2a5df59537ae897a7356ecb37050b900898f647",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-82-wght-normal.woff2",
+            "byteLength": 18772,
+            "sha256": "4571ce712a5ff41e6914f86936bdfebf152ab14aaf421f11d4c9d7165fe14a6b",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-83-wght-normal.woff2",
+            "byteLength": 18248,
+            "sha256": "d7113f63462388c4ead33f28fff87fc20f7bebb49f444c0413641415ce13fbce",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-84-wght-normal.woff2",
+            "byteLength": 18980,
+            "sha256": "b8c29591eb03d83f2a91cdabecb1d03a8b740eccd83eb8c2c019649f0595800c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-85-wght-normal.woff2",
+            "byteLength": 17524,
+            "sha256": "a71da89198d3670abd694ff7169ddf9feac79de11b77d204ced4246f284fbd4e",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-86-wght-normal.woff2",
+            "byteLength": 16960,
+            "sha256": "fd329e7a5a7ffe0b7d9d5ddc0d05f8c0a35dbe48368cc402ee368e8d26e34ef4",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-87-wght-normal.woff2",
+            "byteLength": 19316,
+            "sha256": "d640499f935cf0d3a4f6670941a0dbe627f270c505128db088110c7e4ed13169",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-88-wght-normal.woff2",
+            "byteLength": 17328,
+            "sha256": "3fc93151c8df1c3b3a7cbd961e51ea281a43652852dffbe2dfc0f5cb68ede60d",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-89-wght-normal.woff2",
+            "byteLength": 18056,
+            "sha256": "9ddd025546dbb3dbd97e0aa01f0bc3e3c1edcbd017ad1b71be74d9b54f142036",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-90-wght-normal.woff2",
+            "byteLength": 18896,
+            "sha256": "604ca73afa1b159f5cb69390e5f2b90372e8cc78f21b13d37c2307e815b88421",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-91-wght-normal.woff2",
+            "byteLength": 18628,
+            "sha256": "7e9850aa4e409c7d328b564e87f391bdea64c7d9d4278aa82be922e94f1356b3",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-92-wght-normal.woff2",
+            "byteLength": 18856,
+            "sha256": "58435aaa4f34cb6c18a80459cf57b2351a28530ed79e24d1a869176a1bfff3f7",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-93-wght-normal.woff2",
+            "byteLength": 17160,
+            "sha256": "054d204ecae11fbab9917e62f8982bd15aa7e196adb254d7100c2ac767fd0f24",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-94-wght-normal.woff2",
+            "byteLength": 18116,
+            "sha256": "a8d9b30729f1a7cd3c7a9e2cc9805d049bb687d97af198f264ba4a020f3ecf3d",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-95-wght-normal.woff2",
+            "byteLength": 17352,
+            "sha256": "54578621ee47de9d62c6b34e92b90e7e06358e68b3ad1b2f6b886b76b2198614",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-96-wght-normal.woff2",
+            "byteLength": 17012,
+            "sha256": "ca29f03e3297cdb1edfdab28c84b3b7f5f356ee7229e61e6e293b353ab7ae9a1",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-97-wght-normal.woff2",
+            "byteLength": 17488,
+            "sha256": "1f1044d3de18eac28ea9c904a2655cf8e349e33d6152737a75b3f7650a1e740d",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-98-wght-normal.woff2",
+            "byteLength": 18644,
+            "sha256": "101d71009d1e75a8f4b9771b9d03153a45722519333e61d363cbf6e24034b20b",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-99-wght-normal.woff2",
+            "byteLength": 19272,
+            "sha256": "8885168940d6a6c682e6ccd684e95c77cc4dd2c8846023487eea30b2283c9882",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-100-wght-normal.woff2",
+            "byteLength": 20104,
+            "sha256": "8d720830937b13c20b95be6a879e8ddd2e7b7c84fc81553b04aea64090bd030b",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-101-wght-normal.woff2",
+            "byteLength": 15764,
+            "sha256": "14ad79f7603247ec37417e409996798bcc09aa0b06201adc1fc524c1ad602b50",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-102-wght-normal.woff2",
+            "byteLength": 17520,
+            "sha256": "75f46df9fcf13c3d6bca91b4eb19a7f803a9ec9868826a3608dd5437ea122ccb",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-103-wght-normal.woff2",
+            "byteLength": 16656,
+            "sha256": "dbfc897a23d4a5af2b4972e7ebfbfe0af4fce2be9c84781d8cf20b5cac60d08f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-104-wght-normal.woff2",
+            "byteLength": 17792,
+            "sha256": "613fbb530b90cfb8ddd547ceb531147341407089a057d4bf0ec14f272434aa4f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-105-wght-normal.woff2",
+            "byteLength": 17588,
+            "sha256": "19dcc9e3141fa1e500ea657f1ca20635203e1d03563cfb4640690e5d1251486f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-106-wght-normal.woff2",
+            "byteLength": 19504,
+            "sha256": "2f65cd5bf66a19f4b1d7652af457e184aa9d7d5445e614c22e240cc397680fa6",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-107-wght-normal.woff2",
+            "byteLength": 16652,
+            "sha256": "dcbd08dd15bf1b2442e4766e4bdd528326e6f3ab40115c622b5cfa06db663ee4",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-108-wght-normal.woff2",
+            "byteLength": 18444,
+            "sha256": "639ac8ea02fe1dbd7ac1f5f4cc5aceb3a0b2f6218c8c429b804f97d90cbaf44c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-109-wght-normal.woff2",
+            "byteLength": 15212,
+            "sha256": "89af699d25c48d333e94002c6b894a4f0f489e9e9a73f5aff6518aaba3665ebd",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-110-wght-normal.woff2",
+            "byteLength": 15864,
+            "sha256": "fea76e74e1104098076e3181e134dfea245616939c06cf6541a42ccc2a7ca821",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-111-wght-normal.woff2",
+            "byteLength": 16984,
+            "sha256": "d3fcad261eb5123928f680db013c22abd33b094e0d6a7ce7ae2b45a438b17bf1",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-112-wght-normal.woff2",
+            "byteLength": 15820,
+            "sha256": "04c1dd71359756923259898f77eb941de0af8fe0056ab0d82c1bc83765f58e9e",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-113-wght-normal.woff2",
+            "byteLength": 14804,
+            "sha256": "71fdc6966fcbb5d70c8e4b7b3f82010f77a5c8871e33c4705369655fef215d7d",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-114-wght-normal.woff2",
+            "byteLength": 14452,
+            "sha256": "6892696a8a5eefd068616824e9a7f343f2a03a9f9afc5ca9da60aa2d11ad7215",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-115-wght-normal.woff2",
+            "byteLength": 16088,
+            "sha256": "1f67b2a2a9353fc00f4b0e8a9e5dbd4579dacecd30b3c8dff50916c10b4e1a1f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-116-wght-normal.woff2",
+            "byteLength": 16444,
+            "sha256": "78fdda440157f7e87ed1f6ca5d9422aa459b2973c15aa966cf9286aa06a83d5a",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-117-wght-normal.woff2",
+            "byteLength": 11808,
+            "sha256": "074c84a38757ac42c6825bc534688b3dea53e00b0fc8b1cfcbaad12ed6492c14",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-118-wght-normal.woff2",
+            "byteLength": 18336,
+            "sha256": "a2aa18b725c0fb81c765f89728c4230846c2775b94b506446cf6315598ce3b25",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-119-wght-normal.woff2",
+            "byteLength": 79100,
+            "sha256": "fd07c4945e573d1b70a4a6e5988256353146641737f93c853004908bfe4d7256",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-cyrillic-wght-normal.woff2",
+            "byteLength": 9976,
+            "sha256": "fb328890e76d6620a2f5aac0629cfc5c01676146cbb8c32889be23c0c20353d6",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-vietnamese-wght-normal.woff2",
+            "byteLength": 9104,
+            "sha256": "e626c1140e75fba1028fc0a8bb8f8fc29cbfa5d0b9b685873e01eff26c3a3c91",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-latin-ext-wght-normal.woff2",
+            "byteLength": 8232,
+            "sha256": "ae56a66caadf69e67b818d49cdc6745fe51174804d1de8ee74a9aafb668746ab",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-latin-wght-normal.woff2",
+            "byteLength": 24840,
+            "sha256": "2df3e31f5fbf0357d1b7018d82f028ec84a31e43e35098931a975c2fc769d7e1",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          }
+        ]
+      },
+      {
+        "profile": "simplified-chinese",
+        "fontsourcePackage": "@fontsource-variable/noto-sans-sc",
+        "version": "5.3.0",
+        "sourceCss": {
+          "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/wght.css",
+          "byteLength": 101698,
+          "sha256": "5cb273ad9fdbf39e6043d7f3523e5796b126a7db072c398a8709cefe9d3818a1"
+        },
+        "resourcesMatchBaselineManifest": true,
+        "sourceCssDigestMatchesBaseline": true,
+        "resources": [
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-4-wght-normal.woff2",
+            "byteLength": 3796,
+            "sha256": "9fafd93ac77b81ffdeeb30c31e7d5911eb5b6a0a976b54c6e418eec8701a97e2",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-5-wght-normal.woff2",
+            "byteLength": 20176,
+            "sha256": "e64f57937e3ae4feb9dd073d6a5257a74fda82575060718a162c95c8c09ef2ae",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-6-wght-normal.woff2",
+            "byteLength": 11464,
+            "sha256": "17e15c4f0a5bfd92e65a65d285833633f2cc8d4a51a8ba6a2080663989123d7e",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-21-wght-normal.woff2",
+            "byteLength": 11356,
+            "sha256": "c1409c43e55ecff21bd7eee9327e71a6f4c66449842861b368dcdfe14445aab3",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-22-wght-normal.woff2",
+            "byteLength": 65384,
+            "sha256": "77037ed42ff4e7b0e5cc296cabe4f0580d1d518239a4a067c00ff8097f60819f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-23-wght-normal.woff2",
+            "byteLength": 56792,
+            "sha256": "38d0df21ac374e938a5c885f50a80b7be2dbab9a34803462a4f2c6c6fa777128",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-24-wght-normal.woff2",
+            "byteLength": 62580,
+            "sha256": "8fa21e7e457acf3e8ca2e0561d5df4dd26cf0824a27a721c2b831b202e88e195",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-25-wght-normal.woff2",
+            "byteLength": 58320,
+            "sha256": "f760b7a3871d214d421b378faa2e27a763bc632000f983964a837f2323665f1d",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-26-wght-normal.woff2",
+            "byteLength": 50888,
+            "sha256": "be8386e7bd7facfe78886db838ece2fac15056ef9ea6c48d631054460cd37c6f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-27-wght-normal.woff2",
+            "byteLength": 47488,
+            "sha256": "4895abcaddbd162e48a212dd75c270d3ba1706519f527dff5fd7ec47dfa64dfd",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-28-wght-normal.woff2",
+            "byteLength": 50200,
+            "sha256": "82540b6201a9b9ade19206b3e6e9ba65038e6ab5d8b61952352d87b92978f967",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-29-wght-normal.woff2",
+            "byteLength": 54008,
+            "sha256": "ff21d8fcc60ce39145c09da40c66f190dbb52b4b5ae6de1861dcaf15f87ef497",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-30-wght-normal.woff2",
+            "byteLength": 54656,
+            "sha256": "1f76f6ffded00b9ead063038ebfd5019ad334ffeb7035dda3aa33f4dd1bb7adc",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-31-wght-normal.woff2",
+            "byteLength": 47220,
+            "sha256": "e6c25be1bb08a63a0f4cd0cea425fc90b65df538be8505e3cf4010bec2853b64",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-32-wght-normal.woff2",
+            "byteLength": 52548,
+            "sha256": "0cda750d7d04a4e12e4b2ea1d78c0a3ec430b5c07e02b87064e809ff75d76998",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-33-wght-normal.woff2",
+            "byteLength": 47452,
+            "sha256": "b9732b5606bd87c51942e5f56270d26495f2bc22a157493725417af2c70c265e",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-34-wght-normal.woff2",
+            "byteLength": 46888,
+            "sha256": "38aa326b4c84902a342b4225a452a7ca3ac32ebf40792663d7db2013c22bee9d",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-35-wght-normal.woff2",
+            "byteLength": 50688,
+            "sha256": "bd98226c8e0aa80876366386a23e909087df5d6b570f48b2366a8849a3ca137b",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-36-wght-normal.woff2",
+            "byteLength": 41832,
+            "sha256": "0db1ca695a491d372060eba39ae66b1816457e8992698fbaacd35cc0f7786658",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-37-wght-normal.woff2",
+            "byteLength": 53528,
+            "sha256": "8df409a4e0a237c21db73608de96e2ae49c53de50826098d050a0e2cca867836",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-38-wght-normal.woff2",
+            "byteLength": 54592,
+            "sha256": "672d2d994994a3c39072fbbc4a40f0e25424ab2ff36ec63f3b55849d1ab8a650",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-39-wght-normal.woff2",
+            "byteLength": 51784,
+            "sha256": "272d6d0e153f56e8ab7d9412ca1e8581c06ce371641cf863859a0ab01751c1ea",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-40-wght-normal.woff2",
+            "byteLength": 46628,
+            "sha256": "5b9ef1ed48420aa7b9da1fbc18c4a4dfd3d4edf1c6b8aab89cf12b40913335a3",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-41-wght-normal.woff2",
+            "byteLength": 36416,
+            "sha256": "30aee47f660fd88a68fee63052ce8f3746e78e606813de686b710692d7610529",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-42-wght-normal.woff2",
+            "byteLength": 45540,
+            "sha256": "ec0014830db682b682120085e07476df857d016fa7bb1b4bb3dfe82113819a10",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-43-wght-normal.woff2",
+            "byteLength": 46624,
+            "sha256": "43df2b5dad9bb8353549d68023297605443f251f1f846a9cb2e5363b84aacd0b",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-44-wght-normal.woff2",
+            "byteLength": 54244,
+            "sha256": "acaa6195041b1a928d35c7e80365a4e653ffc5cba556c0a1443ee3a561228eb8",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-45-wght-normal.woff2",
+            "byteLength": 67620,
+            "sha256": "8cdb9903f770db21bd3d17eab6a1dd7d302b47f7eab059b2ff814d9593ce2526",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-46-wght-normal.woff2",
+            "byteLength": 57668,
+            "sha256": "6590d0a6fe94571cfb84a6d9536e0f58b6a6164643ffa339d3c1788835c96147",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-47-wght-normal.woff2",
+            "byteLength": 56156,
+            "sha256": "b05afdd32b3bf722adac4b2c936a3c3390fb4b6b8adc20a132a0b42cb9c23e83",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-48-wght-normal.woff2",
+            "byteLength": 50764,
+            "sha256": "c9585f7d070700be0435c1014761af37cd512faa68ffc33341d1e4634abed682",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-49-wght-normal.woff2",
+            "byteLength": 52844,
+            "sha256": "4943895a4dfa5dcf427429a13e1c56bb3fd344c1dd7b1ad927b9d6743e358ac0",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-50-wght-normal.woff2",
+            "byteLength": 45876,
+            "sha256": "13e51063d7743cfe2d533620860719890426ef12f6fe036d50b3c1a8f41508e7",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-51-wght-normal.woff2",
+            "byteLength": 41616,
+            "sha256": "fd4df1f02c2cb4d7db99d2d35225561f9695483f5f829e0f6667adac4bbe7ff6",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-52-wght-normal.woff2",
+            "byteLength": 51840,
+            "sha256": "06999a39c4c3a7ea279822ec42aeaf7e2f99d4047e4f8b7c48254158b7e293fa",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-53-wght-normal.woff2",
+            "byteLength": 43528,
+            "sha256": "767b7b9864658d91d81787ebeac555cb9d67ec920002845061516dd87fa1b95f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-54-wght-normal.woff2",
+            "byteLength": 52000,
+            "sha256": "4cd00537a46f6f1acaf2762a59176e059062d7259217a8a85a589df775531ea6",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-55-wght-normal.woff2",
+            "byteLength": 48132,
+            "sha256": "0118ec5d8c30b1971a59ec5982f3eeee3e687a40ef5b79108e99e5d82fa67aa9",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-56-wght-normal.woff2",
+            "byteLength": 53500,
+            "sha256": "a3e4a78929826930956ef1e3b3c1c329815d75c88f67296c4ffeac203e2cb544",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-57-wght-normal.woff2",
+            "byteLength": 55496,
+            "sha256": "7623501009e4a6db7c2d5a635f57099da3e78de33fa85cccdf8d3c1596064ccb",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-58-wght-normal.woff2",
+            "byteLength": 57648,
+            "sha256": "56ae1a59a32e4a258336c6d100d5288f3d1ece6f9e4f2bb3ec0548c289ede761",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-59-wght-normal.woff2",
+            "byteLength": 47676,
+            "sha256": "7a377a40e99fd9bc3b1eb38517f08c4ac09520437bed24c3d3a39e2b64ff0ee9",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-60-wght-normal.woff2",
+            "byteLength": 41432,
+            "sha256": "3657f66babdf6aff2d2ca3cbadf7bcdce820bda6be7c765d909afee8e74dad5c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-61-wght-normal.woff2",
+            "byteLength": 45276,
+            "sha256": "23919a2eb11d25dd3a78c020ecc337c9c72b8ca760412f5b4cd567cc43b776ba",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-62-wght-normal.woff2",
+            "byteLength": 59112,
+            "sha256": "a901edf25bc1cfae0fc4c474fce9f8783e93a46b9e88a1cb1cb1301feb1cbdb2",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-63-wght-normal.woff2",
+            "byteLength": 49180,
+            "sha256": "92f56f713cc0b62f1cbbbc3533b957cff5d2db2abdb4b45a173564011d217ddc",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-64-wght-normal.woff2",
+            "byteLength": 41540,
+            "sha256": "4929c9f39a5a4bd941050c7358e1556e57cef901b8c75503453e62c23ede281c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-65-wght-normal.woff2",
+            "byteLength": 41608,
+            "sha256": "8daa61282fb62a111c17f896b12429a43a3d60bd5f2eceb8c5a4f7d57a26d83c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-66-wght-normal.woff2",
+            "byteLength": 52868,
+            "sha256": "6479166925eb462be1a74ad446099719e8021949abf5c3eafefd9ad290836b9c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-67-wght-normal.woff2",
+            "byteLength": 52584,
+            "sha256": "a6b0e11c4c761ffda2e693d037f1384af67b6a338f81a8c0fcd7aa4eea9a177c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-68-wght-normal.woff2",
+            "byteLength": 41568,
+            "sha256": "65b77f1fe9d68dae692578370f64b50ace8469fcf737b34d8b4cdfabed344f23",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-69-wght-normal.woff2",
+            "byteLength": 55604,
+            "sha256": "b34f765cbbf4d02e71cc0d3ea9d488ad4a9da2bcea08f4c84a74e6ec82877f06",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-70-wght-normal.woff2",
+            "byteLength": 42236,
+            "sha256": "a99d55c00e4f95b79ccc545fcd5464428edb7127670eaed421003473fd4ede7f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-71-wght-normal.woff2",
+            "byteLength": 47904,
+            "sha256": "3298bed30dc8d23323c0ba9cab32aa4088d39f5316d126b5cbdabd56884a5f01",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-72-wght-normal.woff2",
+            "byteLength": 47032,
+            "sha256": "6597209ca97077267b65fc072819325eb5a6d3787791d193cc481b3a71fb1b76",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-73-wght-normal.woff2",
+            "byteLength": 39312,
+            "sha256": "e7ac1d4930eabd781b541d961576a89b49580cdf336ca2413e0eb7709b41e72a",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-74-wght-normal.woff2",
+            "byteLength": 56424,
+            "sha256": "1f0287be83a28e7ac104beb7f1b12ea6c0f327dd2dcd50033fb11c4aba123734",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-75-wght-normal.woff2",
+            "byteLength": 43940,
+            "sha256": "d9a4bb7bcc2be578e52835906301f04f6caf285ffcd299065521830529532fd6",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-76-wght-normal.woff2",
+            "byteLength": 48420,
+            "sha256": "5a019946bcadcec6e510d2786b1a490a8ca4442c849e3fbf6251bdc06a7e1f47",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-77-wght-normal.woff2",
+            "byteLength": 36788,
+            "sha256": "7c445e85d04f5319eda4b07329a71f5e468fb7906547d34150b819916d2f6d31",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-78-wght-normal.woff2",
+            "byteLength": 49156,
+            "sha256": "7d4afb70f641781cfe859e18b81b5b641fb76872fb44760e9314e76fa6b42e3f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-79-wght-normal.woff2",
+            "byteLength": 41232,
+            "sha256": "5798753a721bb4eccbf7d9ca923d2496524009a6c27c4bfc36e2b27f0251ee59",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-80-wght-normal.woff2",
+            "byteLength": 32632,
+            "sha256": "db887159ca6e46f3f2787f7a1037940805bb7db727fd3a7ee2bdf9fb47f74469",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-81-wght-normal.woff2",
+            "byteLength": 47548,
+            "sha256": "71e5743bbd225b3d80426f1b9e1d45c61fa7265aa453e2d22181944ec52569ff",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-82-wght-normal.woff2",
+            "byteLength": 46176,
+            "sha256": "8c5094c3785fd04f84142ebc0362d835cce48e56b13e90d9900ddce5f9fe060f",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-83-wght-normal.woff2",
+            "byteLength": 43504,
+            "sha256": "4a60a1ccba9052841d6f22a1d8d84a553184689b1de4c3dc6bcaa654c2c91ef6",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-84-wght-normal.woff2",
+            "byteLength": 32612,
+            "sha256": "3ed54e59ef4758e3cf1f81d9dd5ac9197ba8a7071ec8c0d69e2d52b2a2826be6",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-85-wght-normal.woff2",
+            "byteLength": 26900,
+            "sha256": "e87e0a1342e1778c69040e768b5ad1d615068cec94579ba0176a875cb4170bde",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-86-wght-normal.woff2",
+            "byteLength": 33576,
+            "sha256": "6d3ac3e20959dbcb9c0f4fbe786a2fc4040f565577b35a13275959eec27a9ae0",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-87-wght-normal.woff2",
+            "byteLength": 8012,
+            "sha256": "0eeffd5daad5c17bba306e06e89e93ac563a497c806c0fa1d4c3a53a8ffa4225",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-88-wght-normal.woff2",
+            "byteLength": 7336,
+            "sha256": "b1d9582dfa2684636af41b19f0e2b397f8200337e0302dcaac3638ad431b7000",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-89-wght-normal.woff2",
+            "byteLength": 10984,
+            "sha256": "8b437aeb9e9fcb5aa31bd8565986f92cb7c43dbf1ac3763531b8b384fcda7290",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-90-wght-normal.woff2",
+            "byteLength": 9344,
+            "sha256": "83b0a59e0a5e045a44b1819d98795bee83684f746844f6fc4ebf448db3d53d39",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-91-wght-normal.woff2",
+            "byteLength": 8704,
+            "sha256": "382f72b98d4bb9d7006109efa128aedf846904490b52a5d4f1db151a73718faf",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-97-wght-normal.woff2",
+            "byteLength": 2080,
+            "sha256": "5e52856457c5cdaba991d72419e6f419f6627a5231b674275b8152f691328a33",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-98-wght-normal.woff2",
+            "byteLength": 3416,
+            "sha256": "ffded4e7fd560d935f847ddd084187a049bbaca55d1deea9d2e6daf153cdea5b",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-99-wght-normal.woff2",
+            "byteLength": 9704,
+            "sha256": "54e302c23f11a8fd518f0948183800ac954315067f0990eed41b9c91e55761ef",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-100-wght-normal.woff2",
+            "byteLength": 64548,
+            "sha256": "ad5f29028d5699a59688d807fda531f23cb2c1ecd7815495853bbae8e75b8646",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-101-wght-normal.woff2",
+            "byteLength": 58204,
+            "sha256": "e189b81fc22ca6afcf03a1fcbf8fad93e8272a502d4b23241900113d9ddbe51a",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-102-wght-normal.woff2",
+            "byteLength": 60708,
+            "sha256": "941c0c2971fc1d6d1e36c3d40d74e6a133ad02f58f0bc3a9cb265d8a60f3eb31",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-103-wght-normal.woff2",
+            "byteLength": 63864,
+            "sha256": "bafbd591af6493fface8ee91ca8701cd227f18b1636c5a380c1dbd84cd79b92d",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-104-wght-normal.woff2",
+            "byteLength": 61588,
+            "sha256": "b0bf80ced89dd61bc3c1427c23203b44413dfef6aafb50da905ab28a7937a923",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-105-wght-normal.woff2",
+            "byteLength": 61828,
+            "sha256": "8d8b4e6f4a00621d2be4279e9ba4b07cded89ab6d4018d9b87d2116867ead335",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-106-wght-normal.woff2",
+            "byteLength": 62636,
+            "sha256": "bae74acc629d2e7484c66fd9bb0614df5bf3e98c39811d9e7e9222845a1c4b62",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-107-wght-normal.woff2",
+            "byteLength": 61076,
+            "sha256": "a42eff5010de7b0d6922a14734dd06c9b495655ac6e4397506f44c8e3eaee10c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-108-wght-normal.woff2",
+            "byteLength": 64552,
+            "sha256": "91882203459867be07157e9c8d433372b65cd4ce484fda26b97b05ed2cf6290d",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-109-wght-normal.woff2",
+            "byteLength": 60372,
+            "sha256": "a91f8b038e5ce10805a173a293484c8c49552c275cf901cdf21324d6dca3ed17",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-110-wght-normal.woff2",
+            "byteLength": 61472,
+            "sha256": "bbca9081655c45233a25c4cca030c47ebcf2e156eeedd48110836658adb31fa0",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-111-wght-normal.woff2",
+            "byteLength": 62664,
+            "sha256": "372be010ac0e87cb12065a861da39821104a43d68345a62ca95d3d3e2fb2c269",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-112-wght-normal.woff2",
+            "byteLength": 57648,
+            "sha256": "34a4580239eae8dc54b726a1e1e9fec266e74225b112063ed93b412d54b97ccd",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-113-wght-normal.woff2",
+            "byteLength": 58648,
+            "sha256": "614ab8f616352583f92cc2130fe8812c5aaaa8560b3828de45eefb318be7b503",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-114-wght-normal.woff2",
+            "byteLength": 57964,
+            "sha256": "cf7b8344807a316e8db054500a2b44ad9346ffa00763fec203ab5aa1c99ff602",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-115-wght-normal.woff2",
+            "byteLength": 56508,
+            "sha256": "fb29957c7adccb9a89e34fb28d3d1c7d12bd7401f80c0dba6e1c9e5259cb3262",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-116-wght-normal.woff2",
+            "byteLength": 52984,
+            "sha256": "a98dc5a726f82141f74a827c443e120709a12fe737fabacf2530927a275fce0d",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-117-wght-normal.woff2",
+            "byteLength": 52464,
+            "sha256": "d94b5af0c14838af99bf9855f91e851878726558531ddef5bd2100b70dfbe90c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-118-wght-normal.woff2",
+            "byteLength": 46192,
+            "sha256": "76c9ddb85ae4578cccd35ae4f6e6bbffaa2c8c2aec0fea17d3c17c84a3c6f7d1",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-119-wght-normal.woff2",
+            "byteLength": 76800,
+            "sha256": "b3b2374881f4cd93f239820dfd91f0fde8d52f8f92ba2888f7ab9cba21e4d7eb",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-cyrillic-wght-normal.woff2",
+            "byteLength": 10008,
+            "sha256": "5932d441e7126669016ce303fb19247ff258622291f13069124eb9b91304bbf9",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-vietnamese-wght-normal.woff2",
+            "byteLength": 9096,
+            "sha256": "cba3d00c8db989f0f0c3c7c48b1672468d9cb3c8c06514fc5cf1bb82ddccae7e",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-latin-ext-wght-normal.woff2",
+            "byteLength": 8244,
+            "sha256": "e316201f3fc493d191136a3ea728d184227b9651aea2bb38e279c45ef58646a7",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          },
+          {
+            "path": "packages/design-tokens/node_modules/@fontsource-variable/noto-sans-sc/files/noto-sans-sc-latin-wght-normal.woff2",
+            "byteLength": 25240,
+            "sha256": "c1d919c8701a86ed7f33a8044f7c4e5675db2fce8b754091e97b2c0792f9782c",
+            "matchesManifestSha256": true,
+            "matchesManifestByteLength": true
+          }
+        ]
+      }
+    ],
+    "uiInputs": [
+      {
+        "path": "packages/design-tokens/styles/fonts/generated/manifest.json",
+        "byteLength": 17651,
+        "sha256": "e63dda1145664bb67baf376690feb8cb572a916916b1e9889a529bc8c2b27fd4",
+        "unchangedFromBaseline": true
+      },
+      {
+        "path": "packages/design-tokens/styles/fonts/generated/japanese-ui.css",
+        "byteLength": 2984,
+        "sha256": "323a48fd6cf7a6f121155cc328a5e1f101b76f7474aa9a839b8e9d44f18c9d38",
+        "unchangedFromBaseline": true
+      },
+      {
+        "path": "packages/design-tokens/styles/fonts/generated/japanese-ui.woff2",
+        "byteLength": 117776,
+        "sha256": "4df0994714c870602575e2d33707fac69bc993c973c06cc8aeca0cce7cf06fa5",
+        "unchangedFromBaseline": true
+      },
+      {
+        "path": "packages/design-tokens/styles/fonts/generated/japanese-OFL.txt",
+        "byteLength": 4388,
+        "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+        "unchangedFromBaseline": true
+      },
+      {
+        "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.css",
+        "byteLength": 3543,
+        "sha256": "e1d0463eb218b85fb47eafd914011d56872e49509fa254df7c9bdddffc53e2d7",
+        "unchangedFromBaseline": true
+      },
+      {
+        "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-ui.woff2",
+        "byteLength": 108856,
+        "sha256": "81845c8fa4179a07c75d239cbe3807b92ff6985ac032dc209859d87d1473f873",
+        "unchangedFromBaseline": true
+      },
+      {
+        "path": "packages/design-tokens/styles/fonts/generated/simplified-chinese-OFL.txt",
+        "byteLength": 4388,
+        "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+        "unchangedFromBaseline": true
+      }
+    ],
+    "provenance": "Hashes read from the exact pinned local WOFF2 paths used by the recorded cmap commands; all original font resource manifests and source CSS digests equal c252c52.",
+    "cmapReplay": "The stored shell commands are complete and runnable from the repository root with the same lockfile/packages and cached uv dependencies. Use a fresh output filename when replaying to preserve these original evidence JSONs. Both commands only read original font files; they do not generate fonts."
+  },
+  "limits": [
+    "No UTC command start/end timestamps or per-command wall durations were captured; these fields remain null. Node test-reported duration is separately retained.",
+    "Individual exit codes in multi-command invocations are null unless the command was last and the process exit result was captured.",
+    "No tests, generator, format or lint were rerun to manufacture missing capture fields.",
+    "This metadata does not claim browser layout, fallback shaping, full-repository quality gates or LCP acceptance. Root independently owns those checks.",
+    "Root reported the completed candidate samples each used seven fonts and 412348 resource bytes instead of nine and 553700; this metadata did not rerun those browser samples."
+  ]
+}

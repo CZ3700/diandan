@@ -127,15 +127,84 @@ for (const profile of profiles) {
     );
   });
 
-  test(`${profile.locale} makes UI coverage exclusive without changing any original non-UI face or bytes`, async () => {
+  test(`${profile.locale} gives every printable ASCII codepoint exactly one face including dynamic text`, async () => {
+    const { current } = await load(profile);
+    const seen = new Set();
+    const overlaps = new Set();
+    for (const face of current.faces) {
+      for (const point of codepointsInFaces([face])) {
+        if (point < 0x20 || point > 0x7e) continue;
+        if (seen.has(point)) overlaps.add(point);
+        seen.add(point);
+      }
+    }
+    assert.equal(
+      overlaps.size,
+      0,
+      `the complete UI and fallback cascade must be disjoint for printable ASCII; examples: ${[
+        ...overlaps,
+      ]
+        .slice(0, 8)
+        .map((point) => `U+${point.toString(16)}`)
+        .join(", ")}`,
+    );
+  });
+
+  test(`${profile.locale} currency, Latin names and digits have exclusive coverage while dynamic CJK text keeps every original fallback`, async () => {
+    const { original, current, points } = await load(profile);
+    const text =
+      "$0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" +
+      (profile.locale === "zh-CN" ? "传递原创虚构插画" : "珈琲燈籠贈答");
+    const samples = new Set([...text].map((value) => value.codePointAt(0)));
+    assert.ok(
+      [...samples].some((point) => point > 0x3000 && !points.has(point)),
+      "sample includes dynamic CJK text outside the static UI corpus",
+    );
+    for (const point of samples) {
+      const matches = current.faces.filter((face) =>
+        face.ranges.some(([start, end]) => point >= start && point <= end),
+      );
+      if (point >= 0x20 && point <= 0x7e)
+        assert.equal(
+          matches.length,
+          1,
+          `U+${point.toString(16)} must advertise exactly one face, not merely prefer a later overlapping face`,
+        );
+      else if (!points.has(point))
+        assert.deepEqual(
+          await Promise.all(matches.map((face) => realpath(face.resource))),
+          await Promise.all(
+            original.faces
+              .filter((face) =>
+                face.ranges.some(
+                  ([start, end]) => point >= start && point <= end,
+                ),
+              )
+              .map((face) => realpath(face.resource)),
+          ),
+          "non-ASCII text keeps every original fallback advertisement in order",
+        );
+      const expected = points.has(point)
+        ? current.faces.at(-1)
+        : selectFace(original.faces, point);
+      assert.ok(expected, "representative text is supported by the original");
+      assert.equal(
+        await realpath(selectFace(current.faces, point).resource),
+        await realpath(expected.resource),
+        "range normalization must keep the originally selected font resource",
+      );
+    }
+  });
+
+  test(`${profile.locale} preserves every non-ASCII range, full repertoire, priority resource, descriptor and byte`, async () => {
     const { original, current, points } = await load(profile);
     const ui = current.faces.at(-1);
     const fallback = current.faces.slice(0, -1);
     // Chrome 152 cold optional-display evidence in the P3-06 overlap probe
     // disproves the old model's assumption that later overlap avoids requests.
-    // Replace literal original-range preservation with the stronger invariant:
-    // exactly UI moves to the existing subset; all other glyph coverage and
-    // source-ordered original font identities remain unchanged.
+    // Only printable ASCII may lose earlier duplicate advertisements. Broad
+    // non-ASCII declarations can exceed a later font's actual cmap, so their
+    // existing fallback advertisements must remain effective.
     for (const face of fallback) {
       assert.equal(
         [...codepointsInFaces([face])].some((point) => points.has(point)),
@@ -168,8 +237,23 @@ for (const profile of profiles) {
         ),
       ),
     );
-    const expectedFallback = original.faces.filter((face) =>
-      [...codepointsInFaces([face])].some((point) => !points.has(point)),
+    const originalCoverage = codepointsInFaces(original.faces);
+    const ownedPoints = new Map(
+      original.faces.map((face) => [face, new Set()]),
+    );
+    for (const face of original.faces)
+      for (const point of codepointsInFaces([face])) {
+        if (points.has(point)) continue;
+        if (
+          point >= 0x20 &&
+          point <= 0x7e &&
+          selectFace(original.faces, point) !== face
+        )
+          continue;
+        ownedPoints.get(face).add(point);
+      }
+    const expectedFallback = original.faces.filter(
+      (face) => ownedPoints.get(face).size > 0,
     );
     assert.equal(fallback.length, expectedFallback.length);
     const identities = await resourceIdentity([
@@ -196,15 +280,10 @@ for (const profile of profiles) {
       );
       assert.deepEqual(
         codepointsInFaces([face]),
-        new Set(
-          [...codepointsInFaces([expected])].filter(
-            (point) => !points.has(point),
-          ),
-        ),
-        "each individual original face removes exactly the complete UI set and nothing else",
+        ownedPoints.get(expected),
+        "each original face keeps every non-ASCII range and removes only UI or earlier duplicate printable ASCII advertisements",
       );
     }
-    const originalCoverage = codepointsInFaces(original.faces);
     const currentCoverage = codepointsInFaces(current.faces);
     assert.deepEqual(
       currentCoverage,

@@ -1,6 +1,8 @@
 # 常用界面字形子集
 
-只把完整的日文/中文 storefront 静态词库聚合到各一个 WOFF2。各字体 profile 先引入生成的 fallback CSS，再引入相同 family 的 UI 字体；fallback 的每个原 Fontsource 分片只从 unicode-range 中减去完整 UI 词库字符，使两者范围互斥。其余字符仍按原顺序选择原分片，全部原字符覆盖不变，艺人姓名与自由编辑礼物正文不受词库限制。原分片 WOFF2 不重写、不复制、不删字；无线上字体 API、运行时生成或全量文字下载依赖。
+只把完整的日文/中文 storefront 静态词库聚合到各一个 WOFF2。各字体 profile 先引入生成的 fallback CSS，再引入相同 family 的 UI 字体；fallback 的每个原 Fontsource 分片从 unicode-range 中减去完整 UI 词库字符，使两者范围互斥。对非 UI 的可打印 ASCII（U+0020–007E），仅保留原后写优先 face 的声明，避免价格、数字和拉丁艺人名称同时触发多个分片；其他字符的原分片范围逐 face 保持。全部原字符覆盖和优先资源选择不变，艺人姓名与自由编辑礼物正文不受词库限制。原分片 WOFF2 不重写、不复制、不删字；无线上字体 API、运行时生成或全量文字下载依赖。
+
+不能把上述去重复扩大到任意 Unicode 范围。当前锁定的中日原 WOFF2 经实际 cmap 检查，全部 95 个可打印 ASCII 字符在后写优先资源中均存在；但原 latin 的一些非 ASCII 声明并无实际字形，例如 U+2010/U+2011，需要较早分片提供。若只看 CSS 的宽范围就删掉较早声明，会丢失有效 fallback。生成器因此只规范化可打印 ASCII，并保持其余非 UI 字符的全部原 fallback 声明；升级 Fontsource 或修改此范围前必须重新检查实际 cmap。只读证据见 `output/checks/p3-06-font-range/cmap-ascii-audit-before.json` 与 `cmap-audit-before.json`，完整背景见 `output/checks/p3-06-transport-proof/font-overlap-audit.md`。既有 UI shaping 检查不冒称覆盖这些 fallback 字符。
 
 输入从 `sources.json` 的精确 Google Fonts Git 提交与 SHA256 定位，和当前 Fontsource 5.3.0 对照，字体内部版本均为 2.004-H2。保留 wght 100–900 可变轴、subsetting 按当前实际 Fontsource 原分片的 GSUB/GPOS feature 集合（同时包含定位与替换规则）选择，并保留所选字形需要的 lookup/closure、原 hinting 和时间戳；font-display 为 optional。生成后检查 cmap 与词库集合完全一致、可变轴不变，以及原分片的 hhea/OS2 关键垂直 metrics 一致，并逐字符在 100/400/900 三档字重比较当前 Fontsource 原分片的分解轮廓及字宽。原 TTF 还包含原网页字体没有提供的替代字形功能，生成时不额外引入；manifest 保存原始与候选 feature 集合并拒绝新增功能漂移。三档抽样不冒称每个连续字重、所有 shaping 序列和全部平台的像素证明，最终浏览器回归独立记录。
 
@@ -24,7 +26,7 @@ mise exec node@24.20.0 -- node scripts/fonts/generate-fallback-css.mjs --output-
 
 独立命令默认从已提交的 UI 目录读取 manifest/CSS/WOFF2，可用 `--ui-dir` 指定新的完整 UI 输入。所有输出始终按正式 `styles/fonts/generated/` 安装位置编码相对资源路径；临时输出用于逐字节比对，不用于从临时目录直接加载字体。资源引用经声明的 `design-tokens/node_modules/@fontsource-variable/.../files/` 路径解析并验证真实文件，不把 pnpm 存储路径写入 CSS。原 face 的 family、weight、style、display、format 及顺序保留，完全被 UI 覆盖的空 face 才省略；storefront 既有构建规则仍统一把 display 转为 optional。
 
-生成前验证当前完整 catalog 的 SHA256、codepoints、UI CSS 范围、UI WOFF2 与原分片摘要。`fallback-manifest.json` 记录原 CSS、UI 与所有原分片字节摘要，以及完整覆盖数量；生成器测试要求已提交输出可逐字节重现。语义测试逐原 face 验证范围差集、完整 union，以及每个非 UI 字符仍选中同一个真实原字体文件。CSS 声明范围的检查不替代实际 cmap/轮廓检查或真实浏览器验证。
+生成前验证当前完整 catalog 的 SHA256、codepoints、UI CSS 范围、UI WOFF2 与原分片摘要。`fallback-manifest.json` 记录原 CSS、UI 与所有原分片字节摘要，以及完整覆盖数量；生成器测试要求已提交输出可逐字节重现。语义测试逐原 face 验证非 ASCII 范围精确不变（仍减既有 UI 集）、可打印 ASCII 互斥、完整 union，以及每个非 UI 字符仍选中同一个真实原字体文件，保留源顺序、描述符与 WOFF2 字节。CSS 声明范围的检查不替代实际 cmap/轮廓检查或真实浏览器验证。
 
 原字体来自 [Google Fonts Noto Sans JP](https://github.com/google/fonts/tree/66a36c8c94b1a5d992ee4e7f392fccfe4945767c/ofl/notosansjp) 与 [Noto Sans SC](https://github.com/google/fonts/tree/a85815a42757630ce188fdad368c2dfc444d4773/ofl/notosanssc)；裁字使用 [FontTools subset](https://fonttools.readthedocs.io/en/latest/subset/index.html)。随输出分发原始 OFL 1.1 许可证及版权，未采用 Reserved Font Name “Source” 为子集字体名称。
 

@@ -10,6 +10,7 @@ import { format } from "prettier";
 import {
   codepointsInFaces,
   readFontCascade,
+  selectFace,
 } from "../font-ui-subset-support.mjs";
 
 const root = path.resolve(
@@ -22,7 +23,7 @@ const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const json = async (filename) => JSON.parse(await readFile(filename, "utf8"));
 const portable = (filename) => filename.split(path.sep).join("/");
 
-/** Remove UI points from each source interval without moving any remaining point. */
+/** Remove excluded points from each source interval without moving the rest. */
 export function subtractUnicodeRanges(ranges, excluded) {
   const points = [...excluded].sort((a, b) => a - b);
   const result = [];
@@ -129,6 +130,14 @@ async function buildProfile(
   const resources = new Map();
   const faces = [];
   const fallbackFaces = [];
+  // The pinned original fonts contain every printable ASCII glyph in its
+  // source-ordered owner. Broader advertised ranges can exceed actual cmap
+  // coverage, so preserve all non-ASCII fallback advertisements unchanged.
+  const asciiOwners = new Map();
+  for (let point = 0x20; point <= 0x7e; point += 1) {
+    const owner = selectFace(original.faces, point);
+    if (owner) asciiOwners.set(point, owner);
+  }
   for (const face of original.faces) {
     assert.equal(face.family, profile.family);
     const resourcePath = portable(
@@ -152,7 +161,10 @@ async function buildProfile(
       sha256: sha256(bytes),
       bytes: bytes.byteLength,
     });
-    const ranges = subtractUnicodeRanges(face.ranges, ui.points);
+    const excluded = new Set(ui.points);
+    for (const [point, owner] of asciiOwners)
+      if (owner !== face) excluded.add(point);
+    const ranges = subtractUnicodeRanges(face.ranges, excluded);
     if (ranges.length === 0) continue;
     // Always encode the installed stylesheet's location, even for temporary
     // reproduction output. Never serialize a symlink's .pnpm store location.
@@ -188,7 +200,7 @@ async function buildProfile(
     "combined fallback and UI coverage must preserve the entire original repertoire",
   );
   const css = await format(
-    `/* Generated from the complete original Fontsource repertoire minus the current UI catalog. See scripts/fonts/README.md. */\n${faces.join("\n")}\n`,
+    `/* Generated from the original Fontsource repertoire minus the UI catalog and earlier duplicate printable ASCII ranges. See scripts/fonts/README.md. */\n${faces.join("\n")}\n`,
     { parser: "css" },
   );
   return {

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "sourceReport": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/results.json",
+  "conditions": {
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "fontSizePx": 32,
+    "deviceScaleFactor": 1,
+    "pixelTolerance": 0,
+    "metricTolerance": 0,
+    "fontDisplay": "optional"
+  },
+  "comparisons": 792,
+  "mismatches": 0,
+  "customFontsOnly": true,
+  "fontResponses": 55,
+  "responseShaMatches": true,
+  "browserClosed": true,
+  "serverClosed": true,
+  "files": [
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/japanese-400.png",
+      "bytes": 106275,
+      "sha256": "ea0fafc8c06043b6c0c98de2c62674afabea0dd567b1a9c8d8cd36b040a523e9"
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/japanese-500.png",
+      "bytes": 106551,
+      "sha256": "863f4b055fa3944468792f0e69481ce9fbb683b100960bbfdb506cbb4a6670e9"
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/japanese-600.png",
+      "bytes": 107018,
+      "sha256": "d64bedb6c52eafb051b2d5144f650ce1a694a8d9b2f8328975c72eaea257ac87"
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/japanese-700.png",
+      "bytes": 105972,
+      "sha256": "f8def1ac1033d4c605cd236a71b73f989cfc119e11637ac110052e35842130d0"
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/results.json",
+      "bytes": 1578942,
+      "sha256": "f35e6095583177940aa75c32112fcdc071aac80a9e17cacb52afc746a6565500"
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/simplified-chinese-400.png",
+      "bytes": 109875,
+      "sha256": "2062e2cc3775956bd36f6a1a669fb9c5f7a9c29e4627e6302ea30a39bc69da09"
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/simplified-chinese-500.png",
+      "bytes": 110464,
+      "sha256": "88a5a0ba86f7d20efe4d8b2774bc06f1e34a6ea30df7e342f332ce9fb254b8aa"
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/simplified-chinese-600.png",
+      "bytes": 110645,
+      "sha256": "2a5817074eb1cf728ae7a5a4e42129459fc6a7bcbf0e10fa3dbf10cbbdb6747a"
+    },
+    {
+      "path": "output/checks/p3-06-font-range/rendering-attempt-c6664ac6-955a-4806-8e95-70c7a92816a8/simplified-chinese-700.png",
+      "bytes": 109400,
+      "sha256": "cf1ae8ebbd93388a43a412c607a53ba41f9afb3d9746e62385f7397db809b44a"
+    }
+  ],
+  "firstFailedAttempt": "rendering-attempt-b457083a-de4d-4d01-b7d6-b187976b8585/results.json"
+}

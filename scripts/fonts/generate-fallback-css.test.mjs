@@ -8,6 +8,12 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
+import postcss from "postcss";
+
+import {
+  codepointsInFaces,
+  unicodeRanges,
+} from "../font-ui-subset-support.mjs";
 import {
   buildFallbackArtifacts,
   subtractUnicodeRanges,
@@ -22,6 +28,39 @@ const outputDir = path.join(
   "packages/design-tokens/styles/fonts/generated",
 );
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+
+for (const profile of ["japanese", "simplified-chinese"]) {
+  test(`${profile} generation gives every non-UI printable ASCII codepoint exactly one fallback face`, async () => {
+    const artifacts = await buildFallbackArtifacts();
+    const css = postcss.parse(artifacts[`${profile}-fallback.css`]);
+    const advertised = new Set();
+    const overlaps = new Set();
+    css.walkAtRules("font-face", (face) => {
+      const descriptor = face.nodes.find(
+        (node) => node.type === "decl" && node.prop === "unicode-range",
+      );
+      assert.ok(descriptor, "each generated face has an explicit range");
+      const points = codepointsInFaces([
+        { ranges: unicodeRanges(descriptor.value) },
+      ]);
+      for (const point of points) {
+        if (point < 0x20 || point > 0x7e) continue;
+        if (advertised.has(point)) overlaps.add(point);
+        advertised.add(point);
+      }
+    });
+    assert.equal(
+      overlaps.size,
+      0,
+      `fallback faces must not compete for printable ASCII; examples: ${[
+        ...overlaps,
+      ]
+        .slice(0, 8)
+        .map((point) => `U+${point.toString(16)}`)
+        .join(", ")}`,
+    );
+  });
+}
 
 test("standalone temporary output reproduces canonical bytes without requiring UI input copies", async () => {
   const directory = await mkdtemp(

@@ -4,6 +4,34 @@
 > 任务：6  
 > 解锁条件：Phase 1 与 Phase 2 退出门禁均通过
 
+## P3-06 字体重复范围修正（2026-09-21）
+
+- Owner：Codex `/root`，仍为 Lane D 唯一 executor；开始 `2026-09-21T15:55:00.199693+00:00`。接续同一个 ACTIVE P3-06，不解锁其他任务，29/2/18保持。
+- 依据：同导航实际正文168个不同字符按原CSS优先规则只需7字体，实际下载9字体；SC108/119被美元符号/数字/拉丁字母的重叠范围触发。静态预测可去除141352资源字节（25.5%），尚无候选浏览器收益。传输对照H2的6报告预算通过但LCP图未含字体，不作为问题已经解决的证据；首组采集后2图片取消的原FAIL保留。
+- 最终单一候选：生成fallback CSS时，在既有减UI规则之外，仅对可打印ASCII U+0020–007E保留原后写face声明；非ASCII逐face全部范围保持。全覆盖、原优先资源、原WOFF2、family/axes/metrics/display/原顺序不变。按同一生成器覆盖中/日两profile，不重打包二进制、不内联样式、不改预算或浏览器设置。被cmap审计否决的初始全Unicode候选见下方纠偏记录。
+- 所有权：orders_persistence仅拥有 `scripts/fonts/generate-fallback-css.mjs`、对应 `.test.mjs`、`scripts/font-ui-subset.test.mjs`、`scripts/fonts/README.md` 和生成的中/日fallback CSS及fallback-manifest.json。先写全覆盖/优先映射/互斥RED测试，root保留同fixture旧版3次后才实施GREEN。root独占新 `output/checks/p3-06-font-range/` 运行器/证据、构建/PG/S3/Chrome/采样/UI与进度/Git。其他agents只读审阅，不另领取Task。
+- 验证工具补充所有权：resource_audit仅新增本检查点 `verify-fallback-rendering.mjs`，按保留旧CSS与候选CSS、同一原二进制做中/日ASCII及动态混排真实Chrome字体加载后像素/metrics对照；root统一在性能采样后运行，不能以原只覆盖UI字体的shaping脚本冒充fallback验证。
+- 实施前纠偏：真实WOFF2 cmap审计发现全unicode范围按CSS后写优先去重会让日文19/中文15个实际字符失去可用来源（如U+2010/U+2011/U+2027）；原全互斥RED与审计保留，该方案不实施。收窄为仅处理可打印ASCII U+0020–007E重叠，必须先证实后写owner实际有glyph；非ASCII声明与实际fallback选择保持原状，不新增字体解析器或运行时依赖。候选失败测试据此重跑并另存，不冒称CSS声明范围等于字体真实覆盖。
+- 验证计划：固定H2同viewer/同fixture旧版与候选各3次原参数中文礼物导航，全样本和失败保留；读取0+1/内容/设置/实际protocol绑定。候选必须验证真实字体请求与字节，而非CSS模型预测；覆盖全字符选择等价与cmap，设计静态门、受影响tests、check:dev、adapter/artifact、七语390×844/1440×900/键盘/错误/reduced-motion、原字体shaping检查（适用范围）。非作者复核/S.U.P.E.R及秘密扫描后本地提交，不push。
+
+### 字体修正检查点结果
+
+- 最终生产7文件：生成器仅给可打印ASCII选择原后写owner，两生成CSS及hash、两语义tests和字体README更新。225份原WOFF2、7份UI产物与词库不变；每个非ASCII原fallback声明精确保留，全CSS覆盖日17929/中15605与原优先资源不变。真实cmap阻止了初始全Unicode去重可能丢日19/中15字符的错误方案；其RED与审计保留。ASCII-only RED为11PASS/8预期FAIL，GREEN23/23、设计字体57tests通过。
+- 同真实PG/TLS S3/worker原协议32461通过；固定同H2 viewer旧/候选各3次，54原件SHA/长度、原设置/launcher/同导航内容、native读取0+1与12官方FCP/LCP重放/输入绑定通过。三次均9→7字体，553700→412348 resource B，少141352B（25.53%）；准确去掉SC108/119，其余7份path/SHA/bytes不变。原/候选LCP中位2405.4873→2256.0191ms，但4968.4245/4275.773慢样本保留，不能声称稳定提速或完整性能过门。旧辅助2图取消保留，156请求最终切片闭合/active0/overflow0/closed。
+- 候选七语390×844/1440×900原HTTP完整UI：88场景/88PNG/85axe，零违规/页面错误、30既有incomplete仍留人工；搜索/分页/排序/返回/键盘/错误/reduced-motion与SEO保持。真实发布/回退9957/9715ms。root查看七语礼物截图未见本次缺字或裁切；不是手机真机、读屏或译审证明。
+- 中日加载后字体独立Chrome对照792项（95ASCII+4混排/符号×4字重×2profile）像素/metrics零差、CDP实际自定义字体、55字体响应SHA与各自源字节匹配。首工具因跨profile复用family使SC回退系统字体，严格门FAIL保留；工具分离family后复验PASS，未改产品或重采性能。完整输入/截图与边界见rendering-summary和harness-note。
+- 最终check:dev exit0/15.876秒（63/63/36全缓存），adapter/artifact通过；前期新代理41tests通过且文件保持冻结。2348候选输入采集后SHA不变、原5227未跟踪不变；10个已记录owned端口无监听，第二fixture1123.332秒正常exit0（含开发等待），第一传输fixture原FAIL不改。没有执行单条完整pnpm check、正式63矩阵、真实PSP或staging。
+- 证据入口：`output/checks/p3-06-font-range/README.md`、`comparison-summary-verified.json`、`implementation-verification.json`、UI/渲染摘要、final-review/final-verification；原件 `run-2026-09-21T15-55-54-248Z/`。P3-06仍IN_PROGRESS、29/2/18保持，原人工/真机/商户门保留；本地提交，不push。后续先收敛仍慢样本并完成与部署传输一致的完整七语性能矩阵。
+
+## P3-06 传输与主要耗时核验（2026-09-21）
+
+- Owner：Codex `/root`，继续 Lane D 唯一 executor；开始 `2026-09-21T15:28:34.749947+00:00`，基线 `c252c52`，分支 `codex/p3-06-transport-proof`。用户明确要求每一步扎实验收后推进；29/2/18与原Phase门不变。
+- 问题：最近三次主要模拟LCP截止是CJK字体链，上一样式减量未带来LCP改善；原本机HTTP/1.1测试不能代表未部署的HTTPS viewer。先分离应用成本、传输协议与模拟截止，不继续无依据微调生产样式。
+- 范围：仅新增TEST只读流式TLS viewer代理、真实ALPN/字节一致性测试、固定有界运行和离线核验；原生产、合同、SQL、字体/图片/质量、LH/Chrome参数与预算不改。root拥有运行器/证据/Git；orders_persistence仅拥有新 `apps/api/scripts/storefront-viewer-transport.mjs` 和 `.test.mjs`，先RED后GREEN；resource_audit与scheduler_audit只读复核关键路径和测量。
+- 计划：同一fixture、同一Next generation/BUILD_ID及viewer origin，固定H1→H2→H2→H1四组、每组三次，共12次；每组全新原Chrome，浏览器缓存按原LH策略，服务器/图片缓存可能变暖如实记录。实际TLS ALPN切换，保留CDP/服务器协议与实体字节，原读取模式均candidate=0+1；不能把诊断当正式63次或RUM。
+- 信任边界：系统无已有mkcert信任项。本地viewer复用已由TEST CA签发、原Chrome已精确SPKI豁免的同一 `media.example.invalid` 证书，不增加pin或全局证书忽略、不修改系统信任。Node独立验证CA/主机名和ALPN；Chrome仍为同一TEST pin例外，明确不声称系统信任或CloudFront/staging验收。保留上游canonical为TEST原origin且两组相同，本轮不作为SEO通过证据。
+- 验证：真实TLS H1/H2协商、流式压缩字节/头/错误/清理测试；新代理与原采集器定向测试、check:dev、adapter/artifact、秘密扫描、独立复核与S.U.P.E.R局部范围。主应用未改则沿用c252c52的功能UI证据，不冒充新UI验收。原 `5227` 个未跟踪逐SHA保护，旧证据不改，仅本地提交。
+
 ## P3-06 关键路径接续（2026-09-21）
 
 - Owner：Codex `/root` 恢复 Lane D 唯一 executor；开始 2026-09-21T13:22:41.379900Z，基线 `3fc5df5`，分支 `codex/p3-06-critical-path`。P5-01/02 已完成，本轮只继续原 P3-06；29 DONE / 2 IN_PROGRESS / 18 PENDING 不变。

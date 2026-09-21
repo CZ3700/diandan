@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "mise",
+    "exec",
+    "node@24.20.0",
+    "--",
+    "node",
+    "apps/api/scripts/storefront-gift-trace-analysis.mjs",
+    "--input",
+    "output/checks/p3-06-storefront-acceptance/run-2026-09-21T15-45-06-322Z/transport-h2-b/gift-render-trace",
+    "--output",
+    "output/checks/p3-06-transport-proof/replay/h2-b"
+  ],
+  "startedAt": "2026-09-21T15:52:03.110101+00:00",
+  "completedAt": "2026-09-21T15:52:03.424388+00:00",
+  "elapsedSeconds": 0.314,
+  "exitCode": 0
+}
