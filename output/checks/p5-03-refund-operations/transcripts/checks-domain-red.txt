@@ -1,0 +1,151 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/domain
+
+ ❯ src/finance-evidence.test.ts (13 tests | 13 failed) 5ms
+     × keeps early refund evidence pending until durable submission 2ms
+     × applies trusted refund success from SUBMITTING 0ms
+     × applies trusted refund success from PROCESSING 0ms
+     × applies trusted refund success from UNKNOWN 0ms
+     × requires native refund transaction identity for successful evidence 0ms
+     × ignores stale progress and repeated terminal evidence without reopening or settling twice 0ms
+     × sends conflicting financial terminal evidence to review 0ms
+     × accepts first dispute terminal WON without inventing OPEN 0ms
+     × accepts first dispute terminal LOST without inventing OPEN 0ms
+     × rechecks every identity and amount before even accepting a duplicate 0ms
+     × rejects invalid input, amount beyond capture, and provider-invented platform states 0ms
+     × accepts progress and explicit failure, including recovery from UNKNOWN 0ms
+     × aggregates all disputes conservatively and serializably 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 13 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > keeps early refund evidence pending until durable submission
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ decide src/finance-evidence.test.ts:8:70
+
+ ❯ src/finance-evidence.test.ts:11:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/13]⎯
+
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > applies trusted refund success from SUBMITTING
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > applies trusted refund success from PROCESSING
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > applies trusted refund success from UNKNOWN
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ decide src/finance-evidence.test.ts:8:70
+
+ ❯ src/finance-evidence.test.ts:14:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/13]⎯
+
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > requires native refund transaction identity for successful evidence
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ decide src/finance-evidence.test.ts:8:70
+
+ ❯ src/finance-evidence.test.ts:18:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/13]⎯
+
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > ignores stale progress and repeated terminal evidence without reopening or settling twice
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ decide src/finance-evidence.test.ts:8:70
+
+ ❯ src/finance-evidence.test.ts:22:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/13]⎯
+
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > sends conflicting financial terminal evidence to review
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ decide src/finance-evidence.test.ts:8:70
+
+ ❯ src/finance-evidence.test.ts:31:168
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/13]⎯
+
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > accepts first dispute terminal WON without inventing OPEN
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > accepts first dispute terminal LOST without inventing OPEN
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ decide src/finance-evidence.test.ts:8:70
+
+ ❯ src/finance-evidence.test.ts:34:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/13]⎯
+
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > rechecks every identity and amount before even accepting a duplicate
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ decide src/finance-evidence.test.ts:8:70
+
+ ❯ src/finance-evidence.test.ts:38:372
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/13]⎯
+
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > rejects invalid input, amount beyond capture, and provider-invented platform states
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ decide src/finance-evidence.test.ts:8:70
+
+ ❯ src/finance-evidence.test.ts:42:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/13]⎯
+
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > accepts progress and explicit failure, including recovery from UNKNOWN
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ decide src/finance-evidence.test.ts:8:70
+
+ ❯ src/finance-evidence.test.ts:49:53
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/13]⎯
+
+ FAIL  src/finance-evidence.test.ts > financial evidence decisions > aggregates all disputes conservatively and serializably
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/finance-evidence.test.ts:56:47
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/13]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  13 failed (13)
+   Start at  02:56:33
+   Duration  76ms (transform 9ms, setup 0ms, import 17ms, tests 5ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/packages/domain:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config ../../vitest.config.ts --root . src/finance-evidence.test.ts

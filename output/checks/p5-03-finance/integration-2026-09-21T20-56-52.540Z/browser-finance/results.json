@@ -1,0 +1,4260 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "startedAt": "2026-09-21T20:58:02.314Z",
+  "cases": [
+    "seven-language-two-viewport-reconciliation-full-partial",
+    "keyboard-reduced-motion-read-error-recovery",
+    "seven-language-server-driven-financial-role-boundary",
+    "partial-allocation-lost-response-idempotent-recovery",
+    "refund-full-remaining-balance",
+    "unknown-reservation-and-confirmed-reconciliation",
+    "cancel-unpaid-confirmation",
+    "cancel-before-provider-attempt",
+    "dispute-refund-hold"
+  ],
+  "assertions": [
+    {
+      "label": "en-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "en-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "th-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "th-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "vi-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "ja-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "es-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "es-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "es-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "es-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "es-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "es-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "es-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "es-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "es-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "es-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "es-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "es-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "es-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "es-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "es-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "es retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "es-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "es-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "es-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "es-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "es-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "es-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "es-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "es-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "es-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "es-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "es-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "es-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "es-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "es-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "es-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "es retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "pt-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "pt-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "pt-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "pt-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "pt-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "pt-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "pt-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "pt-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "pt-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "pt-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "pt-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "pt-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "pt-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "pt-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "pt-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "pt retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "pt-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "pt retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "keyboard reaches reason after refund mode",
+      "passed": true
+    },
+    {
+      "label": "reduced motion remains enabled",
+      "passed": true
+    },
+    {
+      "label": "en-390-finance-read-error excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-finance-read-error URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-finance-read-error excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-finance-read-error has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-finance-read-error has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en order operator cannot submit financial commands",
+      "passed": true
+    },
+    {
+      "label": "en order operator cannot request refund",
+      "passed": true
+    },
+    {
+      "label": "en-390-finance-read-only excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-finance-read-only URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-finance-read-only excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-finance-read-only has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-finance-read-only has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN order operator cannot submit financial commands",
+      "passed": true
+    },
+    {
+      "label": "zh-CN order operator cannot request refund",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-finance-read-only excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-finance-read-only URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-finance-read-only excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-finance-read-only has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-finance-read-only has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th order operator cannot submit financial commands",
+      "passed": true
+    },
+    {
+      "label": "th order operator cannot request refund",
+      "passed": true
+    },
+    {
+      "label": "th-390-finance-read-only excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-390-finance-read-only URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-390-finance-read-only excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-390-finance-read-only has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-390-finance-read-only has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi order operator cannot submit financial commands",
+      "passed": true
+    },
+    {
+      "label": "vi order operator cannot request refund",
+      "passed": true
+    },
+    {
+      "label": "vi-390-finance-read-only excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-390-finance-read-only URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-390-finance-read-only excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-390-finance-read-only has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-390-finance-read-only has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja order operator cannot submit financial commands",
+      "passed": true
+    },
+    {
+      "label": "ja order operator cannot request refund",
+      "passed": true
+    },
+    {
+      "label": "ja-390-finance-read-only excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-390-finance-read-only URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-390-finance-read-only excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-390-finance-read-only has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-390-finance-read-only has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "es order operator cannot submit financial commands",
+      "passed": true
+    },
+    {
+      "label": "es order operator cannot request refund",
+      "passed": true
+    },
+    {
+      "label": "es-390-finance-read-only excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "es-390-finance-read-only URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "es-390-finance-read-only excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "es-390-finance-read-only has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "es-390-finance-read-only has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "pt order operator cannot submit financial commands",
+      "passed": true
+    },
+    {
+      "label": "pt order operator cannot request refund",
+      "passed": true
+    },
+    {
+      "label": "pt-390-finance-read-only excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "pt-390-finance-read-only URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "pt-390-finance-read-only excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "pt-390-finance-read-only has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "pt-390-finance-read-only has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "refund fixture exposes multiple independent gift allocations",
+      "passed": true
+    },
+    {
+      "label": "same gift for different artists has distinct refund input labels",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-unconfirmed-response excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-unconfirmed-response URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-unconfirmed-response excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-unconfirmed-response has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-unconfirmed-response has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "browser reload restores unresolved request and blocks a new financial command",
+      "passed": true
+    },
+    {
+      "label": "lost refund response recovers the exact same key and payload",
+      "passed": true
+    },
+    {
+      "label": "retry creates exactly one refund record",
+      "passed": true
+    },
+    {
+      "label": "en-390-partial-refund-recorded excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-partial-refund-recorded URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-partial-refund-recorded excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-partial-refund-recorded has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-partial-refund-recorded has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en-390-full-remaining-refund excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-full-remaining-refund URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-full-remaining-refund excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-full-remaining-refund has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-full-remaining-refund has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "UNKNOWN retains capacity and withholds a new refund action",
+      "passed": true
+    },
+    {
+      "label": "en-390-unknown-refund excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-unknown-refund URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-unknown-refund excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-unknown-refund has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-unknown-refund has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en-390-unknown-reconciled excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-unknown-reconciled URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-unknown-reconciled excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-unknown-reconciled has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-unknown-reconciled has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en-390-cancel-result excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-cancel-result URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-cancel-result excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-cancel-result has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-cancel-result has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "browser fixture includes order before payment creation",
+      "passed": true
+    },
+    {
+      "label": "en-390-cancel-without-attempt excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-cancel-without-attempt URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-cancel-without-attempt excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-cancel-without-attempt has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-cancel-without-attempt has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "browser fixture includes trusted provider dispute",
+      "passed": true
+    },
+    {
+      "label": "disputed payment provides explanation without new refund action",
+      "passed": true
+    },
+    {
+      "label": "en-390-dispute-refund-hold excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-dispute-refund-hold URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-dispute-refund-hold excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-dispute-refund-hold has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-dispute-refund-hold has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "browser has no page errors",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "en-390-reconciliation.png",
+    "en-390-refund-full.png",
+    "en-390-refund-partial.png",
+    "en-1440-reconciliation.png",
+    "en-1440-refund-full.png",
+    "en-1440-refund-partial.png",
+    "zh-CN-390-reconciliation.png",
+    "zh-CN-390-refund-full.png",
+    "zh-CN-390-refund-partial.png",
+    "zh-CN-1440-reconciliation.png",
+    "zh-CN-1440-refund-full.png",
+    "zh-CN-1440-refund-partial.png",
+    "th-390-reconciliation.png",
+    "th-390-refund-full.png",
+    "th-390-refund-partial.png",
+    "th-1440-reconciliation.png",
+    "th-1440-refund-full.png",
+    "th-1440-refund-partial.png",
+    "vi-390-reconciliation.png",
+    "vi-390-refund-full.png",
+    "vi-390-refund-partial.png",
+    "vi-1440-reconciliation.png",
+    "vi-1440-refund-full.png",
+    "vi-1440-refund-partial.png",
+    "ja-390-reconciliation.png",
+    "ja-390-refund-full.png",
+    "ja-390-refund-partial.png",
+    "ja-1440-reconciliation.png",
+    "ja-1440-refund-full.png",
+    "ja-1440-refund-partial.png",
+    "es-390-reconciliation.png",
+    "es-390-refund-full.png",
+    "es-390-refund-partial.png",
+    "es-1440-reconciliation.png",
+    "es-1440-refund-full.png",
+    "es-1440-refund-partial.png",
+    "pt-390-reconciliation.png",
+    "pt-390-refund-full.png",
+    "pt-390-refund-partial.png",
+    "pt-1440-reconciliation.png",
+    "pt-1440-refund-full.png",
+    "pt-1440-refund-partial.png",
+    "en-390-finance-read-error.png",
+    "en-390-finance-read-only.png",
+    "zh-CN-390-finance-read-only.png",
+    "th-390-finance-read-only.png",
+    "vi-390-finance-read-only.png",
+    "ja-390-finance-read-only.png",
+    "es-390-finance-read-only.png",
+    "pt-390-finance-read-only.png",
+    "en-390-refund-unconfirmed-response.png",
+    "en-390-partial-refund-recorded.png",
+    "en-390-full-remaining-refund.png",
+    "en-390-unknown-refund.png",
+    "en-390-unknown-reconciled.png",
+    "en-390-cancel-result.png",
+    "en-390-cancel-without-attempt.png",
+    "en-390-dispute-refund-hold.png"
+  ],
+  "axe": [
+    {
+      "name": "en-390-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"Orders\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "en-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"Orders\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "en-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"订单\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "zh-CN-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"订单\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "zh-CN-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"คำสั่งซื้อ\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "th-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"คำสั่งซื้อ\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "th-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"Đơn hàng\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "vi-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"Đơn hàng\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "vi-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"注文\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ja-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"注文\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ja-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-390-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"Pedidos\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "es-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-1440-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"Pedidos\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "es-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"Pedidos\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pt-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-1440-reconciliation",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "tags": [
+            "cat.aria",
+            "wcag2a",
+            "wcag412",
+            "EN-301-549",
+            "EN-9.4.1.2",
+            "RGAAv4",
+            "RGAA-7.1.1"
+          ],
+          "description": "Ensure ARIA attributes are not prohibited for an element's role",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/aria-prohibited-attr?application=playwright",
+          "nodes": [
+            {
+              "any": [],
+              "all": [],
+              "none": [
+                {
+                  "id": "aria-prohibited-attr",
+                  "data": {
+                    "role": null,
+                    "nodeName": "div",
+                    "messageKey": "noRoleSingular",
+                    "prohibited": [
+                      "aria-label"
+                    ]
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+                }
+              ],
+              "impact": "serious",
+              "html": "<div class=\"mo-actions\" aria-label=\"Pedidos\">",
+              "target": [
+                ".mo-actions"
+              ],
+              "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a div with no valid role attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pt-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-finance-read-error",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-finance-read-only",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-finance-read-only",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-finance-read-only",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-finance-read-only",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-finance-read-only",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-390-finance-read-only",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-finance-read-only",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-refund-unconfirmed-response",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-partial-refund-recorded",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-full-remaining-refund",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-unknown-refund",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-unknown-reconciled",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-cancel-result",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-cancel-without-attempt",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-dispute-refund-hold",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "errors": [],
+  "transport": [
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-pt-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "keyboard-and-read-error",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "role-boundary",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "refund-lost-response",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "remaining-full-refund",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "remaining-full-refund",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "remaining-full-refund",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "remaining-full-refund",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "remaining-full-refund",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "remaining-full-refund",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "remaining-full-refund",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "remaining-full-refund",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "unknown-recovery",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-unpaid",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "cancel-without-attempt",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "dispute-refund-hold",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    }
+  ],
+  "limitations": [
+    "Local PostgreSQL, TLS OIDC and TEST PSP only; no real merchant refund",
+    "390×844 is browser emulation, not a physical phone",
+    "Draft translations require independent human approval"
+  ],
+  "browserVersion": "153.0.8010.48",
+  "finishedAt": "2026-09-21T20:58:43.121Z"
+}

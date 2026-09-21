@@ -1,0 +1,3 @@
+Admin finance failure {"stage":"seed","name":"MigrationManifestError","code":null,"frames":["/packages/persistence-postgres/dist/migrations/manifest.js:249:15","/packages/persistence-postgres/dist/migrations/manifest.js:302:28","/packages/persistence-postgres/dist/migrations/runner.js:361:24","/apps/api/scripts/cart-storefront-runtime.mjs:71:5","/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14"]}
+FAIL admin finance {"name":"EphemeralPostgresError","code":null,"frames":["/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161:15","/apps/api/scripts/admin-finance-http.mjs:145:5"]}
+FAIL admin finance {"name":"Error","code":null,"frames":["/packages/media-s3/scripts/ephemeral-s3-harness.mjs:448:16"]}

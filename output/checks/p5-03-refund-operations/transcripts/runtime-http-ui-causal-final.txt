@@ -1,0 +1,228 @@
+Admin finance: processing original fictional Mira Vale independent media
+Admin finance: processing original fictional Kai Ren independent media
+Admin finance: processing original fictional Rose Palace gift artwork
+Admin finance: processing original fictional Blue Orbit gift artwork
+Admin finance: processing original fictional Ruby Bouquet gift artwork
+Admin finance: authoring real gift 1/27
+Admin finance: authoring real gift 2/27
+Admin finance: authoring real gift 3/27
+Admin finance: authoring real gift 4/27
+Admin finance: authoring real gift 5/27
+Admin finance: authoring real gift 6/27
+Admin finance: authoring real gift 7/27
+Admin finance: authoring real gift 8/27
+Admin finance: authoring real gift 9/27
+Admin finance: authoring real gift 10/27
+Admin finance: authoring real gift 11/27
+Admin finance: authoring real gift 12/27
+Admin finance: authoring real gift 13/27
+Admin finance: authoring real gift 14/27
+Admin finance: authoring real gift 15/27
+Admin finance: authoring real gift 16/27
+Admin finance: authoring real gift 17/27
+Admin finance: authoring real gift 18/27
+Admin finance: authoring real gift 19/27
+Admin finance: authoring real gift 20/27
+Admin finance: authoring real gift 21/27
+Admin finance: authoring real gift 22/27
+Admin finance: authoring real gift 23/27
+Admin finance: authoring real gift 24/27
+Admin finance: authoring real gift 25/27
+Admin finance: authoring real gift 26/27
+Admin finance: authoring real gift 27/27
+Admin finance: reading actual PostgreSQL price activation time
+Admin finance: creating complete TEST price book 1/2
+Admin finance: publishing complete TEST price book 1/2
+Admin finance: creating complete TEST price book 2/2
+Admin finance: publishing complete TEST price book 2/2
+Admin finance: creating actual inventory location
+Admin finance: stock, review and publication for gift 1/26
+Admin finance: stock, review and publication for gift 2/26
+Admin finance: stock, review and publication for gift 3/26
+Admin finance: stock, review and publication for gift 4/26
+Admin finance: stock, review and publication for gift 5/26
+Admin finance: stock, review and publication for gift 6/26
+Admin finance: stock, review and publication for gift 7/26
+Admin finance: stock, review and publication for gift 8/26
+Admin finance: stock, review and publication for gift 9/26
+Admin finance: stock, review and publication for gift 10/26
+Admin finance: stock, review and publication for gift 11/26
+Admin finance: stock, review and publication for gift 12/26
+Admin finance: stock, review and publication for gift 13/26
+Admin finance: stock, review and publication for gift 14/26
+Admin finance: stock, review and publication for gift 15/26
+Admin finance: stock, review and publication for gift 16/26
+Admin finance: stock, review and publication for gift 17/26
+Admin finance: stock, review and publication for gift 18/26
+Admin finance: stock, review and publication for gift 19/26
+Admin finance: stock, review and publication for gift 20/26
+Admin finance: stock, review and publication for gift 21/26
+Admin finance: stock, review and publication for gift 22/26
+Admin finance: stock, review and publication for gift 23/26
+Admin finance: stock, review and publication for gift 24/26
+Admin finance: stock, review and publication for gift 25/26
+Admin finance: stock, review and publication for gift 26/26
+Admin finance: proving tracked availability is one location's maximum, never a sum
+Admin finance: publishing actual TEST terms policy
+Admin finance: publishing actual TEST privacy policy
+Admin finance: publishing actual TEST refund policy
+Admin finance: publishing actual TEST delivery policy
+Admin finance: normal TEST webhook endpoint configuration
+Admin finance: provision owned durable event queue before VERIFY runtimes
+Admin finance: start actual signed webhook HTTP ingress
+Admin finance: real OIDC and financial API composition
+Checkout HTTP {"ordinal":1,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":2,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":3,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":4,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":5,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":6,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":7,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"prepare","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":403,"code":"FORBIDDEN"}
+Admin orders HTTP {"path":"refund","status":403,"code":"FORBIDDEN"}
+Admin orders HTTP {"path":"refund","status":200,"code":null}
+Admin orders HTTP {"path":"refund","status":200,"code":null}
+Admin orders HTTP {"path":"refund","status":409,"code":"IDEMPOTENCY_CONFLICT"}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"deliver","status":409,"code":"PAYMENT_NOT_CONFIRMED"}
+Admin orders HTTP {"path":"prepare","status":409,"code":"PAYMENT_NOT_CONFIRMED"}
+Admin orders HTTP {"path":"refund","status":409,"code":"REFUND_CAPACITY_EXCEEDED"}
+Admin orders HTTP {"path":"refund","status":409,"code":"CURRENCY_MISMATCH"}
+Order payment webhook HTTP {"status":400}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"refund","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"reconcile","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin finance: accepted but lost refund and original-provider recovery
+Checkout HTTP {"ordinal":8,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":9,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":10,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":11,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":12,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"refund","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"reconcile","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin finance: trusted failed refund releases capacity without replaying its request
+Checkout HTTP {"ordinal":13,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":14,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":15,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":16,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":17,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"refund","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"reconcile","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"refund","status":200,"code":null}
+Admin orders HTTP {"path":"refund","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"reconcile","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin finance: cancellation uses the original payment and trusted outcome
+Checkout HTTP {"ordinal":18,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":19,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":20,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":21,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"cancel","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin finance: real signed dispute out-of-order projection
+Checkout HTTP {"ordinal":22,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":23,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":24,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":25,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":26,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"refund","status":409,"code":"DISPUTE_REQUIRES_REVIEW"}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"list","status":200,"code":null}
+Admin finance: seven-language management browser
+Checkout HTTP {"ordinal":27,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":28,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":29,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":30,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":31,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":32,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":33,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Checkout HTTP {"ordinal":34,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":35,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":36,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":37,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":38,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Checkout HTTP {"ordinal":39,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":40,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":41,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":42,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Checkout HTTP {"ordinal":43,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":44,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":45,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":46,"category":"CREATE","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Admin orders HTTP {"path":"refund","status":200,"code":null}
+Admin orders HTTP {"path":"detail","status":200,"code":null}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance callback diagnostic {"status":303,"failed":false,"cookies":[{"name":"__Host-fan-admin-session","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-csrf","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CONSUMED","reason_code":"AUTHENTICATED","outcome":"SUCCEEDED","session_created":true,"ttl_seconds":298}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance callback diagnostic {"status":303,"failed":false,"cookies":[{"name":"__Host-fan-admin-session","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-csrf","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CONSUMED","reason_code":"AUTHENTICATED","outcome":"SUCCEEDED","session_created":true,"ttl_seconds":298}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance callback diagnostic {"status":303,"failed":false,"cookies":[{"name":"__Host-fan-admin-session","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-csrf","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CONSUMED","reason_code":"AUTHENTICATED","outcome":"SUCCEEDED","session_created":true,"ttl_seconds":298}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance callback diagnostic {"status":303,"failed":false,"cookies":[{"name":"__Host-fan-admin-session","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-csrf","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CONSUMED","reason_code":"AUTHENTICATED","outcome":"SUCCEEDED","session_created":true,"ttl_seconds":299}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance callback diagnostic {"status":303,"failed":false,"cookies":[{"name":"__Host-fan-admin-session","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-csrf","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CONSUMED","reason_code":"AUTHENTICATED","outcome":"SUCCEEDED","session_created":true,"ttl_seconds":299}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance callback diagnostic {"status":303,"failed":false,"cookies":[{"name":"__Host-fan-admin-session","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-csrf","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CONSUMED","reason_code":"AUTHENTICATED","outcome":"SUCCEEDED","session_created":true,"ttl_seconds":299}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance callback diagnostic {"status":303,"failed":false,"cookies":[{"name":"__Host-fan-admin-session","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-csrf","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CONSUMED","reason_code":"AUTHENTICATED","outcome":"SUCCEEDED","session_created":true,"ttl_seconds":299}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance callback diagnostic {"status":303,"failed":false,"cookies":[{"name":"__Host-fan-admin-session","maxAge":3600,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-csrf","maxAge":3600,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CONSUMED","reason_code":"AUTHENTICATED","outcome":"SUCCEEDED","session_created":true,"ttl_seconds":299}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance callback diagnostic {"status":303,"failed":false,"cookies":[{"name":"__Host-fan-admin-session","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-csrf","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CONSUMED","reason_code":"AUTHENTICATED","outcome":"SUCCEEDED","session_created":true,"ttl_seconds":299}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance callback diagnostic {"status":303,"failed":false,"cookies":[{"name":"__Host-fan-admin-session","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-csrf","maxAge":3601,"secure":true,"httpOnly":true,"sameSite":"Strict"},{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CONSUMED","reason_code":"AUTHENTICATED","outcome":"SUCCEEDED","session_created":true,"ttl_seconds":299}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance PostgreSQL {"operation":"STATEMENT","code":"23514","guard":"guard_admin_login_challenge","constraint":null}
+Finance callback diagnostic {"status":303,"failed":true,"cookies":[{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CONSUMED","reason_code":"IDENTITY_REJECTED","outcome":"REJECTED","session_created":false,"ttl_seconds":298}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Admin finance failure {"stage":"seven-language management browser","name":"TimeoutError","code":null,"frames":["/apps/api/scripts/admin-orders-runtime.mjs:247:46","/apps/api/scripts/admin-finance-fixture.mjs:169:9"]}
+FAIL admin finance {"name":"EphemeralPostgresError","code":null,"frames":["/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161:15","/apps/api/scripts/admin-finance-http.mjs:154:5"]}
+FAIL admin finance {"name":"Error","code":null,"frames":["/packages/media-s3/scripts/ephemeral-s3-harness.mjs:448:16"]}

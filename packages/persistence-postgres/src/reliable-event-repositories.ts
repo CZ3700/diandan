@@ -680,6 +680,12 @@ async function insertVerifiedReceipt(
       externalReference: candidate.externalReference,
       amountMinor: candidate.amountMinor,
       currency: candidate.currency,
+      ...(candidate.eventType === "REFUND_STATUS"
+        ? { refundReference: candidate.refundReference }
+        : {}),
+      ...(candidate.eventType === "DISPUTE_STATUS"
+        ? { disputeReference: candidate.disputeReference }
+        : {}),
       ...(candidate.transaction ? { transaction: candidate.transaction } : {}),
     });
     exactlyOneId(

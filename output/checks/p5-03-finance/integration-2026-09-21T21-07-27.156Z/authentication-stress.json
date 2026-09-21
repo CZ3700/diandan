@@ -1,0 +1,22 @@
+{
+  "status": "FAIL",
+  "completed": 1,
+  "failures": [
+    {
+      "step": {
+        "index": 1,
+        "locale": "zh-CN",
+        "role": "MANAGER"
+      },
+      "kind": "TIMEOUT"
+    }
+  ],
+  "steps": [
+    {
+      "index": 0,
+      "locale": "en",
+      "role": "ORDER_OPERATOR",
+      "passed": true
+    }
+  ]
+}

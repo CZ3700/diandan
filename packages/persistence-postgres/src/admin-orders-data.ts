@@ -29,7 +29,7 @@ export const adminOrdersBytes = (value: string) =>
 export async function lockAdminOrder(
   client: TransactionClient,
   orderId: string,
-) {
+): Promise<DraftRow | undefined> {
   const [initial] = await draftRows(
     client,
     "SELECT cart_id FROM public.orders WHERE id=$1::uuid",
@@ -46,7 +46,18 @@ export async function lockAdminOrder(
     `SELECT o.*,${adminOrdersTimestamp("o.created_at")} created_at,${adminOrdersTimestamp("o.updated_at")} updated_at,updated_at<=transaction_timestamp() writable_at_transaction FROM public.orders o WHERE o.id=$1::uuid FOR UPDATE`,
     [orderId],
   );
-  return order;
+  if (!order) return undefined;
+  // Read after the order lock: a refund accepted while we waited must pause
+  // fulfillment in this transaction's next READ COMMITTED snapshot.
+  const [refund] = await draftRows(
+    client,
+    `SELECT EXISTS(SELECT 1 FROM public.refunds WHERE order_id=$1::uuid
+      AND status IN ('REQUESTED','SUBMITTING','PROCESSING','UNKNOWN')) refund_pending`,
+    [orderId],
+  );
+  if (typeof refund?.["refund_pending"] !== "boolean")
+    return rejectAdminOrdersIntegrity();
+  return { ...order, refund_pending: refund["refund_pending"] };
 }
 export async function adminOrdersAudit(
   client: TransactionClient,

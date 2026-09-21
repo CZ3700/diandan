@@ -19,7 +19,7 @@ import {
 import { startTestOidcProvider } from "../../../packages/identity-oidc/src/test-support/https-idp.mjs";
 
 /** Owned TLS OIDC and actual API; sessions are issued through the implemented access endpoints. */
-export async function createAdminOrdersRuntime(context) {
+export async function createAdminOrdersRuntime(context, options = {}) {
   const { database, client, check, own, persistence } = context,
     logs = [],
     secrets = new Set();
@@ -34,12 +34,19 @@ export async function createAdminOrdersRuntime(context) {
   const idp = await startTestOidcProvider({
     redirectOrigins: [adminOrigin],
     acr: "urn:fixture:mfa",
+    ...(options.beforeValidTokenResponse
+      ? {
+          beforeValidTokenResponse: ({ state }) =>
+            options.beforeValidTokenResponse({ state, tokenPepper }),
+        }
+      : {}),
   });
   own("admin orders TLS identity provider", () => idp.stop());
   const { actors, permissions } = await seedAdminOrdersRoles(client, {
     issuer: idp.issuer,
     subjectPepper,
   });
+  await options.seedAdditionalRoles?.({ client, actors, permissions });
   const settings = {
     schemaVersion: 1,
     issuer: idp.issuer,
@@ -77,6 +84,8 @@ export async function createAdminOrdersRuntime(context) {
     allowedOrigin: adminOrigin,
     publicMediaBaseUrl: context.gateway.origin,
   });
+  const additional =
+    (await options.composeAdditional?.({ tokenPepper, adminOrigin })) ?? {};
   own("admin orders compositions", async () => {
     await orders.adminOrdersRuntime.stop();
     await access.adminAccessRuntime.stop();
@@ -84,6 +93,7 @@ export async function createAdminOrdersRuntime(context) {
   const app = await createApiApplication(preflightEnvironment(database), {
     ...access,
     ...orders,
+    ...additional,
     logger: createStructuredLogger({
       service: "api",
       write: (line) => logs.push(line),
@@ -171,10 +181,10 @@ export async function createAdminOrdersRuntime(context) {
     session,
     path,
     body,
-    { key, status = 200, privateResult = false } = {},
+    { key, status = 200, privateResult = false, namespace = "orders" } = {},
   ) {
     const r = await globalThis.fetch(
-      `${apiOrigin}/api/v1/admin/orders/${path}`,
+      `${apiOrigin}/api/v1/admin/${namespace}/${path}`,
       {
         method: "POST",
         headers: {
@@ -256,6 +266,8 @@ export async function createAdminOrdersRuntime(context) {
     registerSecret,
     login,
     command,
+    financeCommand: (session, path, body, options = {}) =>
+      command(session, path, body, { ...options, namespace: "finance" }),
     startBrowser,
     authenticate,
     assertPrivacy,

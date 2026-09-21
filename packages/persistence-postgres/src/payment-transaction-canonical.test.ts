@@ -75,3 +75,23 @@ test("a source already associated to a different attempt never changes that asso
     false,
   );
 });
+test("duplicate refund transaction sources reuse their canonical ledger and match platform refund correlation", async () => {
+  const c = client([
+    [{ supported: true }],
+    [],
+    [{ id: "canonical-refund", matches: true, complete: true }],
+  ]);
+  await expect(
+    resolveCanonicalPaymentTransaction(c, {
+      ...facts,
+      eventType: "REFUND_STATUS",
+      refundReference: "refund-correlation",
+      transaction: { type: "REFUND", providerReference: "refund-transaction" },
+    }),
+  ).resolves.toEqual({ supported: true, canonicalId: "canonical-refund" });
+  expect(
+    c.query.mock.calls.some(([sql]) =>
+      sql.includes("provider_refund_reference"),
+    ),
+  ).toBe(true);
+});

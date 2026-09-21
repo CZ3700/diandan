@@ -340,6 +340,16 @@
         "up": "4e3348e106b753573ac3465b1d14d3eab65c413c8c079ea01b1a20271761b075",
         "down": "aa36279d52058631cc948bdd6f5be8df0f57719f1e1467014f513123a3c2c9ba"
       }
+    },
+    {
+      "version": "0035",
+      "name": "admin-finance",
+      "up": "database/migrations/0035_admin-finance.up.sql",
+      "down": "database/migrations/0035_admin-finance.down.sql",
+      "sha256": {
+        "up": "cfe8caae037ab443a74a35e9b7280e4fece52b9e6c4303c1f02ce3b3c70c6736",
+        "down": "5a9fdc1efddcf67c2fc3d8c0e3b041dee3da6f4bd1b69af59e451aca82033063"
+      }
     }
   ]
 }

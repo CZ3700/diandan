@@ -1,0 +1,143 @@
+Admin finance: processing original fictional Mira Vale independent media
+Admin finance: processing original fictional Kai Ren independent media
+Admin finance: processing original fictional Rose Palace gift artwork
+Admin finance: processing original fictional Blue Orbit gift artwork
+Admin finance: processing original fictional Ruby Bouquet gift artwork
+Admin finance: authoring real gift 1/27
+Admin finance: authoring real gift 2/27
+Admin finance: authoring real gift 3/27
+Admin finance: authoring real gift 4/27
+Admin finance: authoring real gift 5/27
+Admin finance: authoring real gift 6/27
+Admin finance: authoring real gift 7/27
+Admin finance: authoring real gift 8/27
+Admin finance: authoring real gift 9/27
+Admin finance: authoring real gift 10/27
+Admin finance: authoring real gift 11/27
+Admin finance: authoring real gift 12/27
+Admin finance: authoring real gift 13/27
+Admin finance: authoring real gift 14/27
+Admin finance: authoring real gift 15/27
+Admin finance: authoring real gift 16/27
+Admin finance: authoring real gift 17/27
+Admin finance: authoring real gift 18/27
+Admin finance: authoring real gift 19/27
+Admin finance: authoring real gift 20/27
+Admin finance: authoring real gift 21/27
+Admin finance: authoring real gift 22/27
+Admin finance: authoring real gift 23/27
+Admin finance: authoring real gift 24/27
+Admin finance: authoring real gift 25/27
+Admin finance: authoring real gift 26/27
+Admin finance: authoring real gift 27/27
+Admin finance: reading actual PostgreSQL price activation time
+Admin finance: creating complete TEST price book 1/2
+Admin finance: publishing complete TEST price book 1/2
+Admin finance: creating complete TEST price book 2/2
+Admin finance: publishing complete TEST price book 2/2
+Admin finance: creating actual inventory location
+Admin finance: stock, review and publication for gift 1/26
+Admin finance: stock, review and publication for gift 2/26
+Admin finance: stock, review and publication for gift 3/26
+Admin finance: stock, review and publication for gift 4/26
+Admin finance: stock, review and publication for gift 5/26
+Admin finance: stock, review and publication for gift 6/26
+Admin finance: stock, review and publication for gift 7/26
+Admin finance: stock, review and publication for gift 8/26
+Admin finance: stock, review and publication for gift 9/26
+Admin finance: stock, review and publication for gift 10/26
+Admin finance: stock, review and publication for gift 11/26
+Admin finance: stock, review and publication for gift 12/26
+Admin finance: stock, review and publication for gift 13/26
+Admin finance: stock, review and publication for gift 14/26
+Admin finance: stock, review and publication for gift 15/26
+Admin finance: stock, review and publication for gift 16/26
+Admin finance: stock, review and publication for gift 17/26
+Admin finance: stock, review and publication for gift 18/26
+Admin finance: stock, review and publication for gift 19/26
+Admin finance: stock, review and publication for gift 20/26
+Admin finance: stock, review and publication for gift 21/26
+Admin finance: stock, review and publication for gift 22/26
+Admin finance: stock, review and publication for gift 23/26
+Admin finance: stock, review and publication for gift 24/26
+Admin finance: stock, review and publication for gift 25/26
+Admin finance: stock, review and publication for gift 26/26
+Admin finance: proving tracked availability is one location's maximum, never a sum
+Admin finance: publishing actual TEST terms policy
+Admin finance: publishing actual TEST privacy policy
+Admin finance: publishing actual TEST refund policy
+Admin finance: publishing actual TEST delivery policy
+Admin finance: normal TEST webhook endpoint configuration
+Admin finance: provision owned durable event queue before VERIFY runtimes
+Admin finance: start actual signed webhook HTTP ingress
+Admin finance: finance paid fixture
+Checkout HTTP {"ordinal":1,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":2,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":3,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":4,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":5,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin finance: finance DETAIL
+Admin finance: finance DETAIL
+Admin finance: finance REFUND
+Admin finance: finance REFUND
+Admin finance: finance REFUND
+Admin finance: finance REFUND
+Admin finance: finance DETAIL
+Admin finance: finance REFUND
+Admin finance: finance REFUND
+Admin finance: finance DETAIL
+Admin finance: finance DETAIL
+Admin finance: finance REFUND
+Admin finance: finance REFUND
+Admin finance: finance DETAIL
+Admin finance: finance REFUND
+Admin finance: finance DETAIL
+Admin finance: finance cancellation without payment dispatch
+Checkout HTTP {"ordinal":6,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":7,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":8,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":9,"category":"CREATE","status":200,"code":null}
+Admin finance: finance DETAIL
+Admin finance: finance CANCEL
+Admin finance: finance provider cancellation
+Checkout HTTP {"ordinal":10,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":11,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":12,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":13,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Admin finance: finance CANCEL
+Admin finance: finance DETAIL
+Admin finance: finance DETAIL
+Admin finance: finance dispute ledger and aggregate
+Checkout HTTP {"ordinal":14,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":15,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":16,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":17,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":18,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin finance: finance DETAIL
+Admin finance: finance DETAIL
+Admin finance: finance REFUND
+Admin finance: finance DETAIL
+Admin finance PG {"name":"error","code":"23514","parameter":null,"detail":null,"position":null,"guard":"assert_finance_order_projection","constraint":null,"statement":null}
+Admin finance: finance DETAIL
+Admin finance: finance wrong refund correlation
+Checkout HTTP {"ordinal":19,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":20,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":21,"category":"ADMIN_FIXTURE_PERSONALIZATION","status":200,"code":null}
+Checkout HTTP {"ordinal":22,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":23,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order payment webhook HTTP {"status":202}
+Admin finance: finance DETAIL
+Admin finance: finance immutable receipts and authority
+Admin finance PG {"name":"error","code":"55000","parameter":null,"detail":null,"position":null,"guard":"guard_append_only","constraint":null,"statement":"admin_finance_receipts"}
+Admin finance PG {"name":"error","code":"55000","parameter":null,"detail":null,"position":null,"guard":"validate_refund_mutation_and_capacity","constraint":null,"statement":"refunds"}
+PASS admin finance repositories 5992; /Users/mario/Desktop/下单/output/checks/p5-03-refund-operations/storage/run-2026-09-21T20-28-03.733Z

@@ -1,0 +1,9 @@
+$ vitest run --config ../../vitest.config.ts --root . src/order-payment-application.test.ts src/payment-transaction-canonical.test.ts src/admin-finance-read.test.ts src/admin-finance-migration.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/persistence-postgres
+
+
+ Test Files  4 passed (4)
+      Tests  15 passed (15)
+   Start at  03:14:05
+   Duration  681ms (transform 1.15s, setup 0ms, import 1.71s, tests 17ms, environment 0ms)

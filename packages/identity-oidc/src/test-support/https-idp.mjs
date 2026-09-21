@@ -178,6 +178,7 @@ export async function startTestOidcProvider(options = {}) {
       const code = randomUUID();
       codes.set(code, {
         subject,
+        state: url.searchParams.get("state"),
         nonce: url.searchParams.get("nonce"),
         challenge: url.searchParams.get("code_challenge"),
         redirectUri: callback.href,
@@ -269,6 +270,8 @@ export async function startTestOidcProvider(options = {}) {
       res.end("synthetic private invalid json");
       return;
     }
+    if (mode === "NORMAL")
+      await options.beforeValidTokenResponse?.({ state: issued.state });
     const seconds = Math.floor(Date.now() / 1000);
     const payload = {
       iss: issuer,

@@ -39,7 +39,8 @@
     "test:postgres:admin-orders": "pnpm turbo run build --filter @fan-support/api --filter @fan-support/worker --output-logs=errors-only && node ./scripts/admin-orders-parameters.mjs && node ./scripts/admin-orders-auth-locks.mjs && node ./scripts/admin-orders-integration.mjs",
     "test:postgres:admin-order-resends": "pnpm turbo run build --filter @fan-support/api --filter @fan-support/worker --output-logs=errors-only && node ./scripts/admin-notification-resend-integration.mjs",
     "test:postgres:payment-health": "pnpm run build:with-dependencies && node ./scripts/payment-health-postgres.mjs",
-    "test:postgres:payment-rollout": "pnpm run build:with-dependencies && node ./scripts/payment-rollout-postgres.mjs"
+    "test:postgres:payment-rollout": "pnpm run build:with-dependencies && node ./scripts/payment-rollout-postgres.mjs",
+    "test:postgres:admin-finance": "pnpm turbo run build --filter @fan-support/api --filter @fan-support/worker --output-logs=errors-only && node ./scripts/admin-finance-integration.mjs"
   },
   "dependencies": {
     "@fan-support/catalog": "workspace:*",

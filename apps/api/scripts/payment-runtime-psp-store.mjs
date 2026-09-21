@@ -2,6 +2,8 @@ import { URL } from "node:url";
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { Buffer } from "node:buffer";
 import { Pool } from "pg";
+import { createTestPspRefunds } from "./payment-runtime-psp-refunds.mjs";
+import { createTestPspDisputes } from "./payment-runtime-psp-disputes.mjs";
 import {
   paymentPortCommandSchema,
   paymentPortResponseSchema,
@@ -114,10 +116,6 @@ export async function createPaymentTestPspStore(options) {
       return failure(operation, "CONFIGURATION_ERROR");
     if (operation === "VERIFY_AND_PARSE_WEBHOOK")
       return failure(operation, "UNSUPPORTED_EVENT");
-    if (operation === "REFUND_PAYMENT")
-      return failure(operation, "CAPABILITY_UNAVAILABLE");
-    if (operation === "RECONCILE_REFUND")
-      return failure(operation, "REFUND_NOT_FOUND");
     if (
       operation === "CREATE_PAYMENT" &&
       (new URL(command.returnUrl).origin !== returnOrigin ||
@@ -129,7 +127,11 @@ export async function createPaymentTestPspStore(options) {
         "INSERT INTO psp_calls(account_id,attempt_id,operation) VALUES($1::uuid,$2::uuid,$3)",
         [
           binding.providerAccountId,
-          "attemptId" in command ? command.attemptId : null,
+          "attemptId" in command
+            ? command.attemptId
+            : "paymentAttemptId" in command
+              ? command.paymentAttemptId
+              : null,
           operation,
         ],
       );
@@ -191,7 +193,13 @@ export async function createPaymentTestPspStore(options) {
           },
         });
       }
-      let row = await load(client, command.attemptId, true);
+      let row = await load(
+        client,
+        "paymentAttemptId" in command
+          ? command.paymentAttemptId
+          : command.attemptId,
+        true,
+      );
       if (
         !row ||
         ("externalReference" in command &&
@@ -199,6 +207,8 @@ export async function createPaymentTestPspStore(options) {
           command.externalReference !== row.external_reference)
       )
         return failure(operation, "PAYMENT_NOT_FOUND");
+      if (operation === "REFUND_PAYMENT" || operation === "RECONCILE_REFUND")
+        return refunds.execute(client, command, row);
       if (operation === "GET_PAYMENT")
         return paymentPortResponseSchema.parse({
           schemaVersion: 1,
@@ -314,11 +324,27 @@ export async function createPaymentTestPspStore(options) {
         throw new TypeError("TEST PSP terminal outcome is immutable");
     });
   }
+  const refunds = await createTestPspRefunds({
+    pool,
+    binding,
+    transaction,
+    loadPayment: load,
+  });
+  const disputes = await createTestPspDisputes({
+    pool,
+    binding,
+    transaction,
+    loadPayment: load,
+  });
   let closed;
   return {
     execute,
     readHosted,
     settleHosted,
+    settleRefund: refunds.settleRefund,
+    readRefundWebhook: refunds.readRefundWebhook,
+    settleDispute: disputes.settleDispute,
+    readDisputeWebhook: disputes.readDisputeWebhook,
     async readHostedAction(attemptId) {
       if (typeof attemptId !== "string" || !/^[a-f\d-]{36}$/iu.test(attemptId))
         throw new TypeError("Invalid owned TEST hosted read");
@@ -364,6 +390,12 @@ export async function createPaymentTestPspStore(options) {
         captures: row.captures,
         createCalls: row.create_calls,
         reconcileCalls: row.reconcile_calls,
+        ...(
+          await pool.query(
+            "SELECT (SELECT count(*)::integer FROM psp_refunds WHERE account_id=$1::uuid) AS refunds,(SELECT count(*)::integer FROM psp_refunds WHERE account_id=$1::uuid AND status='SUCCEEDED') AS refunded,(SELECT count(*)::integer FROM psp_calls WHERE account_id=$1::uuid AND operation='REFUND_PAYMENT') AS \"refundCalls\",(SELECT count(*)::integer FROM psp_calls WHERE account_id=$1::uuid AND operation='RECONCILE_REFUND') AS \"reconcileRefundCalls\",(SELECT count(*)::integer FROM psp_calls WHERE account_id=$1::uuid AND operation='CANCEL_PAYMENT') AS \"cancelCalls\"",
+            [binding.providerAccountId],
+          )
+        ).rows[0],
       };
     },
     close: () => (closed ??= pool.end()),

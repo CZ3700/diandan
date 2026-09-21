@@ -173,6 +173,30 @@ export async function withOrderPaymentFixture(options) {
         endpoint,
         webhookBase,
         createOrderWorker,
+        signDisputeWebhook: async (disputeId) => {
+          const signed = await context.psp.webhook({
+            disputeId,
+            verificationSecret: secret.toString("base64url"),
+          });
+          await waitOrderPaymentReceiptClock({
+            client: context.client,
+            occurredAt: JSON.parse(signed.rawBody).created_at,
+            check: context.check,
+          });
+          return signed;
+        },
+        signRefundWebhook: async (refundId) => {
+          const signed = await context.psp.webhook({
+            refundId,
+            verificationSecret: secret.toString("base64url"),
+          });
+          await waitOrderPaymentReceiptClock({
+            client: context.client,
+            occurredAt: JSON.parse(signed.rawBody).created_at,
+            check: context.check,
+          });
+          return signed;
+        },
         signWebhook: async (attemptId) => {
           const signed = await context.psp.webhook({
             attemptId,

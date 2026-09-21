@@ -1,0 +1,83 @@
+Admin finance: processing original fictional Mira Vale independent media
+Admin finance: processing original fictional Kai Ren independent media
+Admin finance: processing original fictional Rose Palace gift artwork
+Admin finance: processing original fictional Blue Orbit gift artwork
+Admin finance: processing original fictional Ruby Bouquet gift artwork
+Admin finance: authoring real gift 1/27
+Admin finance: authoring real gift 2/27
+Admin finance: authoring real gift 3/27
+Admin finance: authoring real gift 4/27
+Admin finance: authoring real gift 5/27
+Admin finance: authoring real gift 6/27
+Admin finance: authoring real gift 7/27
+Admin finance: authoring real gift 8/27
+Admin finance: authoring real gift 9/27
+Admin finance: authoring real gift 10/27
+Admin finance: authoring real gift 11/27
+Admin finance: authoring real gift 12/27
+Admin finance: authoring real gift 13/27
+Admin finance: authoring real gift 14/27
+Admin finance: authoring real gift 15/27
+Admin finance: authoring real gift 16/27
+Admin finance: authoring real gift 17/27
+Admin finance: authoring real gift 18/27
+Admin finance: authoring real gift 19/27
+Admin finance: authoring real gift 20/27
+Admin finance: authoring real gift 21/27
+Admin finance: authoring real gift 22/27
+Admin finance: authoring real gift 23/27
+Admin finance: authoring real gift 24/27
+Admin finance: authoring real gift 25/27
+Admin finance: authoring real gift 26/27
+Admin finance: authoring real gift 27/27
+Admin finance: reading actual PostgreSQL price activation time
+Admin finance: creating complete TEST price book 1/2
+Admin finance: publishing complete TEST price book 1/2
+Admin finance: creating complete TEST price book 2/2
+Admin finance: publishing complete TEST price book 2/2
+Admin finance: creating actual inventory location
+Admin finance: stock, review and publication for gift 1/26
+Admin finance: stock, review and publication for gift 2/26
+Admin finance: stock, review and publication for gift 3/26
+Admin finance: stock, review and publication for gift 4/26
+Admin finance: stock, review and publication for gift 5/26
+Admin finance: stock, review and publication for gift 6/26
+Admin finance: stock, review and publication for gift 7/26
+Admin finance: stock, review and publication for gift 8/26
+Admin finance: stock, review and publication for gift 9/26
+Admin finance: stock, review and publication for gift 10/26
+Admin finance: stock, review and publication for gift 11/26
+Admin finance: stock, review and publication for gift 12/26
+Admin finance: stock, review and publication for gift 13/26
+Admin finance: stock, review and publication for gift 14/26
+Admin finance: stock, review and publication for gift 15/26
+Admin finance: stock, review and publication for gift 16/26
+Admin finance: stock, review and publication for gift 17/26
+Admin finance: stock, review and publication for gift 18/26
+Admin finance: stock, review and publication for gift 19/26
+Admin finance: stock, review and publication for gift 20/26
+Admin finance: stock, review and publication for gift 21/26
+Admin finance: stock, review and publication for gift 22/26
+Admin finance: stock, review and publication for gift 23/26
+Admin finance: stock, review and publication for gift 24/26
+Admin finance: stock, review and publication for gift 25/26
+Admin finance: stock, review and publication for gift 26/26
+Admin finance: proving tracked availability is one location's maximum, never a sum
+Admin finance: publishing actual TEST terms policy
+Admin finance: publishing actual TEST privacy policy
+Admin finance: publishing actual TEST refund policy
+Admin finance: publishing actual TEST delivery policy
+Admin finance: normal TEST webhook endpoint configuration
+Admin finance: provision owned durable event queue before VERIFY runtimes
+Admin finance: start actual signed webhook HTTP ingress
+Admin finance: real OIDC and financial API composition
+Admin finance: focused authentication reproduction
+Finance authentication step {"index":0,"locale":"en","role":"ORDER_OPERATOR"}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Finance PostgreSQL {"operation":"STATEMENT","code":"23514","guard":null,"constraint":"admin_login_challenges_check3"}
+Finance PostgreSQL {"operation":"STATEMENT","code":"23514","guard":null,"constraint":"admin_login_challenges_check3"}
+Finance callback diagnostic {"status":303,"failed":true,"cookies":[{"name":"__Host-fan-admin-login","maxAge":0,"secure":true,"httpOnly":true,"sameSite":"Lax"}],"challenge":{"state":"CLAIMED","reason_code":null,"outcome":null,"session_created":false,"ttl_seconds":299}}
+Finance session diagnostic {"path":"/api/admin/session","code":"UNAUTHENTICATED","requestSession":false,"requestCsrf":false,"headerCsrfMatches":false,"currentSession":false,"currentMatchesRequest":false,"found":false,"facts":null}
+Admin finance failure {"stage":"focused authentication reproduction","name":"TimeoutError","code":null,"frames":["/apps/api/scripts/admin-orders-runtime.mjs:241:46","/apps/api/scripts/admin-finance-fixture.mjs:162:9"]}
+FAIL admin finance {"name":"EphemeralPostgresError","code":null,"frames":["/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161:15","/apps/api/scripts/admin-finance-http.mjs:154:5"]}
+FAIL admin finance {"name":"Error","code":null,"frames":["/packages/media-s3/scripts/ephemeral-s3-harness.mjs:448:16"]}

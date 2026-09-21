@@ -1,0 +1,41 @@
+✔ payment gateway remains an outer adapter and cannot be imported by application (196.1215ms)
+✔ accepts pure inner layers and ignores private adapter declarations (14.991334ms)
+✔ allows the frozen webhook parser only in compatibility packages (24.72025ms)
+✔ allows the current webhook verifier path in production code (19.670208ms)
+✔ rejects legacy webhook imports and calls from production code (21.8725ms)
+✔ rejects provider imports from inner-layer source (14.15225ms)
+✔ rejects relative imports that escape an inner package into an adapter (15.734ms)
+✔ rejects absolute filesystem imports from an inner package (13.457458ms)
+✔ allows relative imports that stay inside an inner package (15.256375ms)
+✔ rejects provider imports from non-port domain modules (16.039042ms)
+✔ rejects provider dependencies declared by inner packages (12.393042ms)
+✔ allows only the reviewed font assets in the design-token package (12.897083ms)
+✔ allows React, CVA and Base UI only in the reviewed ui package (13.806875ms)
+✔ keeps the ui portability exception package-scoped and provider-free (12.985625ms)
+✔ allows the reviewed ICU formatter in i18n manifests, source and declarations (13.274833ms)
+✔ keeps the ICU formatter forbidden in domain and content (15.380417ms)
+✔ keeps real provider SDKs and provider aliases forbidden in i18n (15.107458ms)
+✔ rejects font-package scope expansion and alias bypasses (16.302375ms)
+✔ rejects known adapter imports and dependencies from inner-layer packages (10.319083ms)
+✔ allows real inner workspace dependencies and rejects invented workspace names (24.474458ms)
+✔ rejects unreviewed DefinitelyTyped packages from inner layers (11.811625ms)
+✔ rejects an unreviewed supplier SDK even when it is not hard-coded (12.027292ms)
+✔ rejects unscoped and scoped supplier targets hidden behind npm aliases (10.6055ms)
+✔ rejects malformed npm aliases instead of silently accepting them (11.434334ms)
+✔ rejects provider imports from emitted inner-layer declarations (12.1425ms)
+✔ rejects provider types through a transitive adapter root export (11.134333ms)
+✔ follows triple-slash path references from public adapter declarations (12.070625ms)
+✔ checks direct declaration exports and typesVersions targets (13.723625ms)
+✔ checks every nested exports types target including public subpaths and arrays (13.657ms)
+✔ checks both package types and typings declaration roots (13.511333ms)
+✔ rejects malformed or package-escaping public types targets (13.791333ms)
+✔ rejects provider types through a workspace adapter re-export (13.58675ms)
+✔ requires self-test wiring and declaration validation after build (13.357333ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 708.53125

@@ -1,0 +1,5 @@
+$ tsc -p tsconfig.json
+src/admin-finance-command.ts(51,29): error TS2322: Type 'string' is not assignable to type '`${string}-${string}-${string}-${string}-${string}`'.
+/Users/mario/Desktop/下单/packages/persistence-postgres:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/persistence-postgres@0.0.0 typecheck: `tsc -p tsconfig.json`
+Exit status 2

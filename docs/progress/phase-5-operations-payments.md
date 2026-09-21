@@ -14,9 +14,9 @@
 |:--|:--|:--|:--|:--|
 | P5-01 | DONE | Codex `/root`（Lane C 已释放） | P0-04、P1-04 | 本地 OIDC/七语 UI/真实 PG/原管理回归与最终复核通过；见下方验收 |
 | P5-02 | DONE | Codex `/root`（Lane C 已释放） | P5-01、P4-05/06 | 本地订单/七语人工审核/准备送达/加密备注/可靠通知重发完整验收；见下方 |
-| P5-03 | READY | —（Lane A 空闲） | P5-01、P4-04 已验收本地接口、P4-05 | 直接依赖与当前源经独立核对；下一项退款/取消/拒付/对账 |
+| P5-03 | IN_PROGRESS | —（本地完整验收，Lane A 已释放） | P5-01、P4-04 已验收本地接口、P4-05 | 取消/全额部分退款/拒付/对账已本地验收；真实商户sandbox refund等外部门保留 |
 | P5-04 | IN_PROGRESS | —（本地完整验收，Lane A 已释放） | P1-03 DONE；P4-04 本地输入按 ADR-016 独立核对 | 本地 capability/稳定灰度/健康/conformance 全验收；真实 PSP 条件保留 |
-| P5-05 | PENDING | — | P5-01、P5-04 本地完整验收 | 本地依赖已齐；共享合同/归属冻结后按 Lane C 登记就绪 |
+| P5-05 | READY | —（Lane C 空闲，尚未领取） | P5-01、P5-04 本地完整验收 | 原依赖已独立复核，共享合同/入口归属冻结；配置草稿/校验/发布/回退 |
 | P5-06 | PENDING | — | P5-01、P1-06、P5-03 | Replay/DLQ/UNKNOWN queue |
 | P5-07 | PENDING | — | P5-04/05/06 | New PSP runbook/fake adapter drill |
 | P5-08 | PENDING | — | P0-05、P1-05、P3-06、P4-06、P5-05/06/07 | ADR-007 OpenTofu + production-like staging + immutable deployment |
@@ -32,7 +32,7 @@
 
 ## Phase 退出证据
 
-尚无完整 Phase 退出证据。ADR-016 已获用户确认，P5-04 已完整本地验收、保留真实 PSP 条件并释放 executor；本次仅 P5-03 READY，P5-05 等共享合同与文件归属冻结后登记，其余任务继续按原直接依赖/非作者复核/Lane 顺序就绪。Phase 6/7 当前仍 LOCKED，后续按 ADR-016 登记有限本地激活范围；原真实 PSP、资金、云、人工与发布门不变。
+尚无完整 Phase 退出证据。ADR-016 已获用户确认，P5-04/P5-03 已完整本地验收，保留真实 PSP 条件并释放 executor；P5-05原直接依赖和共享合同/文件归属已核对冻结，现按Lane C登记READY，尚未领取。其余任务继续按原直接依赖/非作者复核/Lane顺序就绪。Phase 6/7 当前仍 LOCKED，后续按 ADR-016 登记有限本地激活范围；原真实 PSP、资金、云、人工与发布门不变。
 
 ## ADR-016 当前排期登记（2026-09-22）
 
@@ -122,3 +122,22 @@
 - 修复及限制如实记录：SQL 参数域类型、浏览器 DNS/异步清理/分页与搜索等待、授权/退出反向锁、人工 UNKNOWN 与自动通知排序、旧测试版本假设。历史 UNKNOWN 持续禁止新的人工重发；截止后继续的是后续自动通知，人工调查/解除不在本阶段。Worker 每队列 limit、两队列共 2×limit。
 - 证据：`output/checks/p5-02-order-operations/final-verification.md`、`final-gates.json`、`reviews.md`、`failure-history.md`；可重复运维入口 `docs/runbooks/admin-order-operations.md`。原 `.log` 本地保留，Git 文本副本及 SHA 见 `logs/` / `log-transcripts.json`。
 - 剩余正式门：P3 性能/人工可访问性、真实商户/小额支付、正式 IdP/MFA/恢复、正式邮件/人工译审、实体手机、云/staging/灰度。不推送、不 merge、不部署、不真实收款或发信，仅本地提交。下一入口回到 P3-06 未完验收，P4-04 商户资料门继续保留。
+
+## P5-03 执行登记（2026-09-22）
+
+- Owner：Codex `/root`，Lane A 唯一 executor；开始 `2026-09-21T19:46:44Z`，基线 `17b7230195879bbb480fa343975574759b84d789`，分支 `codex/p5-03-refund-operations`。直接依赖 P5-01/P4-05 与 P4-04 本地七操作/可信证据已在 P5-04 最终非作者报告接受，当前源与该提交一致。用户继续授权 ADR-016，本轮只领取 P5-03。
+- 范围：现有简单管理中心内 Manager 取消、全额/逐项部分退款、拒付与统一对账；PG 权威金额占用、永久幂等命令、固定原账户的退款/取消 Saga、可信事件关联及 UNKNOWN 恢复；七语言易用界面。P5-05 配置发布与 P5-06 通用异常中心另排。
+- 验证计划：合同与失败测试先行；纯 Domain/应用单测、实际 PG 并发/金额边界/重复键/乱序事件、HTTP/TLS TEST PSP 完整往返、七语言 390×844/1440×900 的浏览器键盘/错误/reduced motion；受影响回归、format/lint/typecheck/build、秘密扫描、旧根合同/迁移/未跟踪文件保护、非作者复核及 S.U.P.E.R 十项。
+- 已验收本地不代表真实 PSP sandbox refund、实际商户事件/退款政策、真实资金、staging 或生产发布；本轮只本地提交，不 push。
+
+### P5-03 最终本地验收（2026-09-22）
+
+- 结论：本地完整实现、非作者交叉复核与S.U.P.E.R十项通过；真实商户sandbox refund/正式政策与资金条件未闭合，Task仍IN_PROGRESS、无executor，Lane A释放。P5-05原直接依赖P5-01/P5-04本地验收及当前源已独立核对，共享contracts、API/BFF、管理中心入口归属冻结，Lane C空闲，登记READY但不在本轮领取。29 DONE / 4 IN_PROGRESS / 1 READY / 15 PENDING =49；Phase6/7仍LOCKED。
+- 交付：同一管理中心全额/逐项部分退款、未付款取消、拒付与分页对账。永久命令回执、版本/权限/MFA/原因/确认、原账户Saga、并发金额占用、可信金融证据及原生交易去重；UNKNOWN不重派退款。原付款成功保持，退款/拒付独立投影；未结退款与OPEN/LOST拒付阻止准备、送达和恢复。刷新/断线只恢复原幂等请求，浏览器不保存凭据或私密粉丝内容。
+- 验证：实际金融PG6023（5763准备+259专项+1源一致性）、35迁移/193表往返、rollback-prefix40tests、原订单管理5960/付款入账6827；TEST PSP20tests、OIDC75tests、最终fixture16tests通过。原未分类过期断言首失败和专项复验如实保留。
+- 最终真实HTTP/UI：`integration-2026-09-21T21-48-01.614Z` exit0，6742=5763准备+979场景，HTTP399、浏览器9cases/330assertions/58PNG/58axe；七语390×844/1440×900、键盘/reduced-motion/错误/只读/连续部分金额/恢复/取消/拒付完整原矩阵通过，0违规/0incomplete/0页面错误。root查阅中文手机与英文桌面最终截图；使用原生临时PG18.6、本地TLS IdP/S3/独立持久TEST PSP、Next dev/LOCAL_OIDC；生产build另验，不冒充实体手机或人工译审。
+- 环境失败保留：Docker/Colima guest墙钟同SQL回退约0.2秒；CPU0长测仍回退，未以增加等待或401重试掩盖。独立原生PG3860万样本0回退，三种真实cluster正常/失败清理通过，再跑完整原UI；生产认证、TTL、历史0030约束不改。guest具体校时进程仍未归因，staging时钟门保留。本轮TEST teardown与本机工具准备失败/修复均有记录。
+- 统一门：Node24.20.0/pnpm11.25.0，最终`check:dev` format/lint、types63/tests63/build36（缓存60/61/35）通过；contracts504tests、domain196/branch94.88%、Admin191tests；合同新鲜度/locale归属、33adapter checker tests、层边界、32exports、秘密扫描与暂存差异通过。未声称整条`pnpm check`、全部历史PG/S3脚本或远端CI通过。
+- 保护：659旧合同根/108旧路径与旧OpenAPI组件、68旧SQL/34旧manifest条目不变；2462最终源清单SHA `502f627cc26f86474afed91d04ed14cfb2faf0f549c73cba292e46db5c5d1420`，浏览器退出后文件集合/字节保持；5719原未跟踪逐SHA不变且未暂存。最终临时PG/Next已清理，Next声明恢复。
+- 证据：`output/checks/p5-03-refund-operations/final-verification.md`、`final-gates.json`、三份交叉review、`storage-auth-clock-review.md`、`accepted-browser-artifacts.json`和`failure-history.md`；命令日志原件本地保留，Git文本副本仅规范化行尾/尾随空白，双方SHA见`transcript-manifest.json`。日常操作/复验入口`docs/runbooks/admin-finance-local.md`。
+- 后续：P5-05配置草稿/校验/差异/二次确认/发布/一分钟回退与多实例传播，继续简单管理中心；不把TEST SQL发布夹具当已实现管理功能。真实PSP事件映射/sandbox refund、小额资金、正式政策/关键七语译审、正式身份/密钥、实体手机、staging/灰度/上线门保留。本轮只本地提交，不push/merge/部署。

@@ -1,0 +1,36 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
+
+ ❯ src/admin-finance-openapi.test.ts (2 tests | 1 failed) 1085ms
+   × refund OpenAPI excludes zero amounts in both totals and line allocations 319ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/admin-finance-openapi.test.ts > refund OpenAPI excludes zero amounts in both totals and line allocations
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/admin-finance-openapi.test.ts:40:48
+     38|  const api=JSON.parse(renderContractArtifactDocuments().openapi);
+     39|  const schema=api.paths["/api/v1/admin/finance/refund"].post.requestBo…
+     40|  expect(schema.properties.amountMinor.minimum).toBe(1);
+       |                                                ^
+     41|  expect(schema.properties.allocations.items.properties.amountMinor.min…
+     42| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  03:02:11
+   Duration  1.52s (transform 263ms, setup 0ms, import 377ms, tests 1.09s, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/packages/contracts:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config ../../vitest.config.ts --root . src/admin-finance-openapi.test.ts

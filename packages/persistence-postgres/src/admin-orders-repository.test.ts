@@ -165,6 +165,46 @@ describe("admin orders persistence boundary", () => {
       ).toEqual([]);
     },
   );
+  test.each(["PENDING", "PREPARING", "ON_HOLD"])(
+    "a pending refund pauses fulfillment in %s without rewriting its history",
+    (status) => {
+      const approved = {
+        ...line,
+        status,
+        moderation_status: "APPROVED",
+        resume_status: "PREPARING",
+      };
+      expect(
+        fulfillmentActions({ ...order, refund_pending: true }, approved, [
+          "orders.manage",
+          "orders.fulfillment",
+        ]),
+      ).toEqual([]);
+      expect(
+        fulfillmentActions({ ...order, refund_pending: false }, approved, [
+          "orders.manage",
+          "orders.fulfillment",
+        ]).length,
+      ).toBeGreaterThan(0);
+      expect(approved.status).toBe(status);
+    },
+  );
+  test.each([
+    ["OPEN", []],
+    ["LOST", []],
+    ["WON", ["PREPARE"]],
+  ])(
+    "dispute %s determines whether normal fulfillment can continue",
+    (dispute_status, expected) => {
+      expect(
+        fulfillmentActions(
+          { ...order, dispute_status, refund_pending: false },
+          { ...line, moderation_status: "APPROVED" },
+          ["orders.fulfillment"],
+        ),
+      ).toEqual(expected);
+    },
+  );
   test("only application-owned holds resume and terminals never move", () => {
     const held = {
       ...line,

@@ -53,6 +53,13 @@ async function apply(
       ? { ...result, decision: "ALREADY_APPLIED" }
       : result;
   }
+  if (["REFUND_STATUS", "DISPUTE_STATUS"].includes(String(event["event_type"])))
+    return recordOrderPaymentResult(client, command, {
+      decision: "IGNORED",
+      attemptId: null,
+      orderId: null,
+      reasonCode: "NON_PAYMENT_EVENT",
+    });
   const canonicalId =
     typeof event["canonical_transaction_event_id"] === "string"
       ? providerEventIdSchema.parse(event["canonical_transaction_event_id"])
@@ -238,7 +245,7 @@ export function createOrderPaymentApplicationRepository(
         // Claiming the scan is its own durable transaction. Failed and unmatched applications move behind later due work.
         const rows = await draftRows(
           client,
-          `WITH due AS (SELECT e.id FROM public.provider_events e LEFT JOIN public.order_payment_application_schedule s ON s.provider_event_id=e.id WHERE NOT EXISTS(SELECT 1 FROM public.order_payment_application_receipts r WHERE r.provider_event_id=e.id) AND coalesce(s.next_attempt_at,e.normalized_at)<=clock_timestamp() ORDER BY coalesce(s.next_attempt_at,e.normalized_at),e.id LIMIT $1::integer FOR UPDATE OF e SKIP LOCKED) INSERT INTO public.order_payment_application_schedule(provider_event_id,next_attempt_at,attempt_count) SELECT id,clock_timestamp()+interval '30 seconds',1 FROM due ON CONFLICT(provider_event_id) DO UPDATE SET next_attempt_at=EXCLUDED.next_attempt_at,attempt_count=order_payment_application_schedule.attempt_count+1 RETURNING provider_event_id`,
+          `WITH due AS (SELECT e.id FROM public.provider_events e LEFT JOIN public.order_payment_application_schedule s ON s.provider_event_id=e.id WHERE e.event_type='PAYMENT_STATUS' AND NOT EXISTS(SELECT 1 FROM public.order_payment_application_receipts r WHERE r.provider_event_id=e.id) AND coalesce(s.next_attempt_at,e.normalized_at)<=clock_timestamp() ORDER BY coalesce(s.next_attempt_at,e.normalized_at),e.id LIMIT $1::integer FOR UPDATE OF e SKIP LOCKED) INSERT INTO public.order_payment_application_schedule(provider_event_id,next_attempt_at,attempt_count) SELECT id,clock_timestamp()+interval '30 seconds',1 FROM due ON CONFLICT(provider_event_id) DO UPDATE SET next_attempt_at=EXCLUDED.next_attempt_at,attempt_count=order_payment_application_schedule.attempt_count+1 RETURNING provider_event_id`,
           [parsed.data.limit],
         );
         return orderPaymentPendingEventsSchema.parse({

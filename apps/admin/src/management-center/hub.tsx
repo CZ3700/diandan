@@ -4,6 +4,7 @@ import type { SupportedLocale } from "@fan-support/contracts";
 import { Button } from "@fan-support/ui";
 import type { ManagementApi, ManagementSection } from "./api";
 import type { OrdersApi } from "../management-orders/api";
+import type { FinanceApi } from "../management-finance/api";
 import { OrdersWorkspace } from "../management-orders/workspace";
 import { ordersCopy } from "../management-orders/copy";
 import { ManagementWorkspace } from "./workspace";
@@ -14,12 +15,14 @@ import { resolveManagementAccess } from "./access";
 export function ManagementHub({
   api,
   ordersApi,
+  financeApi,
   locale,
   storefrontOrigin,
   onLogout,
 }: {
   api: ManagementApi;
   ordersApi: OrdersApi;
+  financeApi?: FinanceApi | undefined;
   locale: SupportedLocale;
   storefrontOrigin?: string | undefined;
   onLogout?: (() => Promise<void>) | undefined;
@@ -96,6 +99,7 @@ export function ManagementHub({
       {access?.orders ? (
         <OrdersWorkspace
           api={ordersApi}
+          financeApi={financeApi}
           context={access.orders}
           locale={locale}
           onBusy={setBusy}

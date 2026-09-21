@@ -15,6 +15,9 @@ import { ordersCopy } from "./copy";
 import { ordersError } from "./labels";
 import { OrdersListView } from "./list-view";
 import { OrdersDetailView, type MutationRunner } from "./detail-view";
+import type { FinanceApi } from "../management-finance/api";
+import { FinanceListView } from "../management-finance/list-view";
+import { financeCopy } from "../management-finance/copy";
 import "./orders.css";
 const initialFilters: OrdersFilters = {
   page: 1,
@@ -25,11 +28,13 @@ const initialFilters: OrdersFilters = {
 };
 export function OrdersWorkspace({
   api,
+  financeApi,
   context,
   locale,
   onBusy,
 }: {
   api: OrdersApi;
+  financeApi?: FinanceApi | undefined;
   context: OrdersContext;
   locale: SupportedLocale;
   onBusy: (busy: boolean) => void;
@@ -38,6 +43,7 @@ export function OrdersWorkspace({
     common = managementCopy(locale);
   const [filters, setFilters] = useState(initialFilters),
     [selected, setSelected] = useState<string | null>(null);
+  const [financeView, setFinanceView] = useState(false);
   const [list, setList] = useState<OrdersList | null>(null),
     [detail, setDetail] = useState<OrdersDetail | null>(null);
   const [loading, setLoading] = useState(true),
@@ -120,6 +126,13 @@ export function OrdersWorkspace({
     },
     [onBusy],
   );
+  const financeBusy = useCallback(
+    (value: boolean) => {
+      setBusy(value);
+      onBusy(value);
+    },
+    [onBusy],
+  );
   return (
     <section data-orders-workspace aria-busy={loading || busy}>
       <header className="mc-workspace-header">
@@ -153,6 +166,29 @@ export function OrdersWorkspace({
           {common.reloadList}
         </Button>
       </header>
+      {!selected && financeApi ? (
+        <div className="mo-actions" role="group" aria-label={copy.orders}>
+          <Button
+            type="button"
+            variant="secondary"
+            disabled={busy}
+            aria-pressed={!financeView}
+            onClick={() => setFinanceView(false)}
+          >
+            {copy.orders}
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            disabled={busy}
+            data-finance-navigation
+            aria-pressed={financeView}
+            onClick={() => setFinanceView(true)}
+          >
+            {financeCopy(locale).reconciliation}
+          </Button>
+        </div>
+      ) : null}
       {success ? (
         <p className="mc-success" role="status" data-orders-success>
           {success === "QUEUED" ? copy.queued : copy.saved}
@@ -186,8 +222,17 @@ export function OrdersWorkspace({
             busy={busy}
             onMutation={mutate}
             onReload={() => setRefresh((value) => value + 1)}
+            financeApi={financeApi}
+            onFinanceBusy={financeBusy}
           />
         ) : null
+      ) : financeView && financeApi ? (
+        <FinanceListView
+          api={financeApi}
+          locale={locale}
+          busy={busy}
+          onSelect={setSelected}
+        />
       ) : list ? (
         <OrdersListView
           key={JSON.stringify(filters)}

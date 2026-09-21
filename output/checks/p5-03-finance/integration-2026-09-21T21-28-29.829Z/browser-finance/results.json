@@ -1,0 +1,1577 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "startedAt": "2026-09-21T21:29:39.579Z",
+  "cases": [],
+  "assertions": [
+    {
+      "label": "en-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "en-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "en-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "en retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "zh-CN-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "zh-CN retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "th-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "th-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "th-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "th retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "vi-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "vi-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "vi retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "ja-390-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-390-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-390-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-390-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-390-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-390-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja retains HTML language",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-reconciliation excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-reconciliation URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-reconciliation excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-reconciliation has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-reconciliation has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-full excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-full URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-full excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-full has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-full has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-partial excludes private panels",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-partial URL excludes private values",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-partial excludes private canaries",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-partial has no accessibility violations",
+      "passed": true
+    },
+    {
+      "label": "ja-1440-refund-partial has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "label": "ja retains HTML language",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "en-390-reconciliation.png",
+    "en-390-refund-full.png",
+    "en-390-refund-partial.png",
+    "en-1440-reconciliation.png",
+    "en-1440-refund-full.png",
+    "en-1440-refund-partial.png",
+    "zh-CN-390-reconciliation.png",
+    "zh-CN-390-refund-full.png",
+    "zh-CN-390-refund-partial.png",
+    "zh-CN-1440-reconciliation.png",
+    "zh-CN-1440-refund-full.png",
+    "zh-CN-1440-refund-partial.png",
+    "th-390-reconciliation.png",
+    "th-390-refund-full.png",
+    "th-390-refund-partial.png",
+    "th-1440-reconciliation.png",
+    "th-1440-refund-full.png",
+    "th-1440-refund-partial.png",
+    "vi-390-reconciliation.png",
+    "vi-390-refund-full.png",
+    "vi-390-refund-partial.png",
+    "vi-1440-reconciliation.png",
+    "vi-1440-refund-full.png",
+    "vi-1440-refund-partial.png",
+    "ja-390-reconciliation.png",
+    "ja-390-refund-full.png",
+    "ja-390-refund-partial.png",
+    "ja-1440-reconciliation.png",
+    "ja-1440-refund-full.png",
+    "ja-1440-refund-partial.png"
+  ],
+  "axe": [
+    {
+      "name": "en-390-reconciliation",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-reconciliation",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-reconciliation",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-reconciliation",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-reconciliation",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-reconciliation",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-reconciliation",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-reconciliation",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-reconciliation",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-refund-partial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-reconciliation",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-refund-full",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-refund-partial",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "errors": [],
+  "transport": [
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-en-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-zh-CN-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-th-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-vi-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-390",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/session",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/orders-context",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/orders-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/finance-list",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/orders-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-ja-1440",
+      "path": "/api/admin/finance-detail",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/session",
+      "status": 401
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/auth/begin",
+      "status": 200
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/auth/callback",
+      "status": 303
+    },
+    {
+      "stage": "matrix-es-390",
+      "path": "/api/admin/session",
+      "status": 401
+    }
+  ],
+  "limitations": [
+    "Local PostgreSQL, TLS OIDC and TEST PSP only; no real merchant refund",
+    "390×844 is browser emulation, not a physical phone",
+    "Draft translations require independent human approval"
+  ],
+  "browserVersion": "153.0.8010.48",
+  "loginState": {
+    "loginFailed": false,
+    "loginForm": 1,
+    "accountAction": 0,
+    "nextError": 1,
+    "alert": 2
+  },
+  "failure": {
+    "stage": "matrix-es-390",
+    "category": "TIMEOUT",
+    "frames": [
+      "admin-finance-browser.mjs:108:9",
+      "admin-finance-browser.mjs:195:9"
+    ]
+  },
+  "finishedAt": "2026-09-21T21:31:11.436Z"
+}

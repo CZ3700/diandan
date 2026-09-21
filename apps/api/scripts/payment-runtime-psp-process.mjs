@@ -84,6 +84,8 @@ export async function startPaymentTestPspProcess(options) {
       counts: () => call("COUNTS"),
       observations: () => call("OBSERVATIONS"),
       webhook: (value) => call("WEBHOOK", value),
+      settleRefund: (value) => call("SETTLE_REFUND", value),
+      settleDispute: (value) => call("SETTLE_DISPUTE", value),
       hostedAction: (attemptId) => call("HOSTED_ACTION", attemptId),
       close,
     };
@@ -118,6 +120,10 @@ if (process.argv[2] === "--owned-test-psp" && process.send) {
         result = server.observations();
       else if (operation === "WEBHOOK" && server)
         result = await server.webhook(value);
+      else if (operation === "SETTLE_REFUND" && server)
+        result = await server.settleRefund(value);
+      else if (operation === "SETTLE_DISPUTE" && server)
+        result = await server.settleDispute(value);
       else if (operation === "HOSTED_ACTION" && server)
         result = await server.hostedAction(value);
       else if (operation === "STOP") await close();

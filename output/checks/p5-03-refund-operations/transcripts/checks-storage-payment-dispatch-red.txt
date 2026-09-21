@@ -1,0 +1,41 @@
+$ vitest run --config ../../vitest.config.ts --root . src/order-payment-application.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/persistence-postgres
+
+ ❯ src/order-payment-application.test.ts (7 tests | 1 failed) 9ms
+   × refund evidence is left to the finance applier before comparing the payment capture amount 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/order-payment-application.test.ts > refund evidence is left to the finance applier before comparing the payment capture amount
+AssertionError: expected { schemaVersion: 1, …(3) } to match object { decision: 'IGNORED', …(1) }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "decision": "IGNORED",
+-   "reasonCode": "NON_PAYMENT_EVENT",
++   "decision": "UNMATCHED",
+  }
+
+ ❯ src/order-payment-application.test.ts:163:17
+    161|  const {repo,query}=setup([[{id:id(1),event_type:'REFUND_STATUS'}],[],…
+    162|  const result=await repo.apply(command);
+    163|  expect(result).toMatchObject({decision:'IGNORED',reasonCode:'NON_PAYM…
+       |                 ^
+    164|  expect(query.mock.calls.some(([sql])=>sql.includes('UPDATE public.pay…
+    165| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  03:13:50
+   Duration  688ms (transform 449ms, setup 0ms, import 615ms, tests 9ms, environment 0ms)
+
+/Users/mario/Desktop/下单/packages/persistence-postgres:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/persistence-postgres@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/order-payment-application.test.ts`
+Exit status 1

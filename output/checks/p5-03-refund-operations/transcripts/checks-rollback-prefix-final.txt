@@ -1,0 +1,48 @@
+✔ empty known head 0029 uses the ordinary exact-version down sequence (1.112625ms)
+✔ empty known head 0030 uses the ordinary exact-version down sequence (0.118375ms)
+✔ empty known head 0031 uses the ordinary exact-version down sequence (0.118917ms)
+✔ empty known head 0032 uses the ordinary exact-version down sequence (0.11525ms)
+✔ empty known head 0033 uses the ordinary exact-version down sequence (0.113792ms)
+✔ empty known head 0034 uses the ordinary exact-version down sequence (0.107208ms)
+✔ empty known head 0035 uses the ordinary exact-version down sequence (0.120875ms)
+✔ retained notifications rejects before any migration is attempted (0.864084ms)
+✔ retained contact_accesses rejects before any migration is attempted (0.203584ms)
+✔ retained bootstraps rejects before any migration is attempted (0.17975ms)
+✔ retained expiries rejects before any migration is attempted (0.140291ms)
+✔ retained login_challenges rejects before any migration is attempted (0.113084ms)
+✔ retained access_audits rejects before any migration is attempted (0.1065ms)
+✔ retained order_notes rejects before any migration is attempted (0.110125ms)
+✔ retained private_accesses rejects before any migration is attempted (0.097125ms)
+✔ retained private_confirmations rejects before any migration is attempted (0.102417ms)
+✔ retained message_reviews rejects before any migration is attempted (0.092042ms)
+✔ retained operation_receipts rejects before any migration is attempted (0.108542ms)
+✔ retained fulfillment_receipts rejects before any migration is attempted (0.162125ms)
+✔ retained review_locale_grants rejects before any migration is attempted (0.0955ms)
+✔ retained order_audits rejects before any migration is attempted (0.094125ms)
+✔ retained resends rejects before any migration is attempted (0.08975ms)
+✔ retained resend_outbox rejects before any migration is attempted (0.096625ms)
+✔ retained resend_attempts rejects before any migration is attempted (0.078208ms)
+✔ retained resend_contact_accesses rejects before any migration is attempted (0.083125ms)
+✔ retained resend_audits rejects before any migration is attempted (0.075625ms)
+✔ retained resend_link_audits rejects before any migration is attempted (0.070541ms)
+✔ retained health_policies rejects before any migration is attempted (0.075041ms)
+✔ retained health_state rejects before any migration is attempted (0.075959ms)
+✔ retained health_observations rejects before any migration is attempted (0.088083ms)
+✔ retained finance_operations rejects before any migration is attempted (0.077291ms)
+✔ retained finance_receipts rejects before any migration is attempted (0.076208ms)
+✔ retained finance_applications rejects before any migration is attempted (0.085084ms)
+✔ retained finance_schedule rejects before any migration is attempted (0.068708ms)
+✔ retained finance_audits rejects before any migration is attempted (0.070708ms)
+✔ retained finance_aliases rejects before any migration is attempted (0.085083ms)
+✔ unknown head null is not silently rewound (0.08825ms)
+✔ unknown head 0028 is not silently rewound (0.045792ms)
+✔ unknown head 0036 is not silently rewound (0.036083ms)
+✔ real PostgreSQL preserves login and audit history and rewinds only empty known prefixes (3608.470042ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4107.52

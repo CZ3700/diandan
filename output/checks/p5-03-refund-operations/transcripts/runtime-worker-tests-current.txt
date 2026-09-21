@@ -1,0 +1,9 @@
+$ vitest run --config ../../vitest.config.ts --root . -- reliable-events-composition.test.ts reliable-events-runtime.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/worker
+
+
+ Test Files  12 passed (12)
+      Tests  40 passed (40)
+   Start at  03:22:12
+   Duration  4.79s (transform 16.41s, setup 0ms, import 24.62s, tests 2.39s, environment 1ms)

@@ -1,0 +1,223 @@
+$ node ./scripts/check-development.mjs
+Development checks only; success is not formal acceptance. Use pnpm check and task-specific acceptance separately.
+Scope: all workspaces; consumers: all-workspaces.
+[check:dev] workspace
+Workspace validation passed: 4 apps, 32 packages, 36 units, no dependency cycles.
+[check:dev] domain-boundaries
+Domain boundary validation passed
+[check:dev] format
+$ prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts
+Checking formatting...
+All matched files use Prettier code style!
+[check:dev] lint
+$ eslint . --max-warnings=0
+[check:dev] typecheck
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/admin, @fan-support/api, @fan-support/application, @fan-support/cache-purge-cdn, @fan-support/cache-purge-port, @fan-support/cart, @fan-support/catalog, @fan-support/config, @fan-support/content, @fan-support/contracts, @fan-support/design-tokens, @fan-support/domain, @fan-support/i18n, @fan-support/identity-oidc, @fan-support/identity-port, @fan-support/inventory, @fan-support/key-management-kms, @fan-support/key-management-port, @fan-support/media-image, @fan-support/media-port, @fan-support/media-s3, @fan-support/notification-port, @fan-support/notification-provider, @fan-support/observability, @fan-support/orders, @fan-support/payment-fake, @fan-support/payment-gateway, @fan-support/payment-port, @fan-support/payment-routing, @fan-support/persistence-port, @fan-support/persistence-postgres, @fan-support/pricing, @fan-support/storefront, @fan-support/testing, @fan-support/ui, @fan-support/worker
+   • Running typecheck in 36 packages
+   • Remote caching disabled
+
+
+ Tasks:    63 successful, 63 total
+Cached:    30 cached, 63 total
+  Time:    27.01s
+
+[check:dev] test
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/admin, @fan-support/api, @fan-support/application, @fan-support/cache-purge-cdn, @fan-support/cache-purge-port, @fan-support/cart, @fan-support/catalog, @fan-support/config, @fan-support/content, @fan-support/contracts, @fan-support/design-tokens, @fan-support/domain, @fan-support/i18n, @fan-support/identity-oidc, @fan-support/identity-port, @fan-support/inventory, @fan-support/key-management-kms, @fan-support/key-management-port, @fan-support/media-image, @fan-support/media-port, @fan-support/media-s3, @fan-support/notification-port, @fan-support/notification-provider, @fan-support/observability, @fan-support/orders, @fan-support/payment-fake, @fan-support/payment-gateway, @fan-support/payment-port, @fan-support/payment-routing, @fan-support/persistence-port, @fan-support/persistence-postgres, @fan-support/pricing, @fan-support/storefront, @fan-support/testing, @fan-support/ui, @fan-support/worker
+   • Running test in 36 packages
+   • Remote caching disabled
+
+@fan-support/persistence-postgres:test: cache miss, executing f10b82b8fa3c9176
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test: > @fan-support/persistence-postgres@0.0.0 test /Users/mario/Desktop/下单/packages/persistence-postgres
+@fan-support/persistence-postgres:test: > vitest run --config ../../vitest.config.ts --root .
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test:  RUN  v4.1.11 /Users/mario/Desktop/下单/packages/persistence-postgres
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test:  ✓ src/migrations/manifest.test.ts (18 tests) 188ms
+@fan-support/persistence-postgres:test:  ✓ src/storefront-seo-data.test.ts (3 tests) 1200ms
+@fan-support/persistence-postgres:test:    ✓ SEO enumerates direct originals alongside reviewed content and versions their real proof records  1195ms
+@fan-support/persistence-postgres:test:  ✓ src/storefront-commerce-data.test.ts (3 tests) 1292ms
+@fan-support/persistence-postgres:test:    ✓ current storefront scopes contain only parsed market codes and currencies  1287ms
+@fan-support/persistence-postgres:test:  ✓ src/reliable-event-repositories.test.ts (9 tests) 253ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-preview-media-repository.test.ts (1 test) 1463ms
+@fan-support/persistence-postgres:test:    ✓ media resolver rejects raw storage identities before SQL  1462ms
+@fan-support/persistence-postgres:test:  ✓ src/translation-transfer-repository.test.ts (2 tests) 1381ms
+@fan-support/persistence-postgres:test:    ✓ translation receipt lookup rejects malformed ids before SQL  1378ms
+@fan-support/persistence-postgres:test:  ✓ src/translation-workspace-repository.test.ts (1 test) 1393ms
+@fan-support/persistence-postgres:test:    ✓ workspace repository rejects arbitrary owner and locale inputs without SQL  1390ms
+@fan-support/persistence-postgres:test:  ✓ src/resource-management-repository.test.ts (13 tests) 20ms
+@fan-support/persistence-postgres:test:  ✓ src/storefront-commerce-repository.test.ts (3 tests) 538ms
+@fan-support/persistence-postgres:test:    ✓ an invalid bounded recipient witness is unknown availability, never absence of eligible artists  532ms
+@fan-support/persistence-postgres:test:  ✓ src/order-payment-inventory.test.ts (20 tests) 461ms
+@fan-support/persistence-postgres:test:    ✓ two artists sharing inventory advance the balance sequentially without double spending  319ms
+@fan-support/persistence-postgres:test:  ✓ src/migration-files.test.ts (28 tests) 92ms
+@fan-support/persistence-postgres:test:  ✓ src/cart-runtime-migration.test.ts (5 tests) 88ms
+@fan-support/persistence-postgres:test:  ✓ src/migrations/runner.test.ts (17 tests) 70ms
+@fan-support/persistence-postgres:test:  ✓ src/notification-migration.test.ts (4 tests) 4ms
+@fan-support/persistence-postgres:test:  ✓ src/metadata-safety.test.ts (4 tests) 47ms
+@fan-support/persistence-postgres:test:  ✓ src/payment-health-client.test.ts (5 tests) 15ms
+@fan-support/persistence-postgres:test:  ✓ src/gift-commerce-gift.test.ts (5 tests) 8ms
+@fan-support/persistence-postgres:test:  ✓ src/transaction-runner.test.ts (59 tests) 44ms
+@fan-support/persistence-postgres:test:  ✓ src/catalog-publication-loader.test.ts (21 tests) 122ms
+@fan-support/persistence-postgres:test:  ✓ src/order-payment-write.test.ts (2 tests) 16ms
+@fan-support/persistence-postgres:test:  ✓ src/catalog-published-search.test.ts (3 tests) 19ms
+@fan-support/persistence-postgres:test:  ✓ src/payment-runtime-recovery.test.ts (5 tests) 33ms
+@fan-support/persistence-postgres:test:  ✓ src/order-access-repository.test.ts (12 tests) 16ms
+@fan-support/persistence-postgres:test:  ✓ src/inventory-repository.test.ts (7 tests) 48ms
+@fan-support/persistence-postgres:test:  ✓ src/schema.test.ts (3 tests) 21ms
+@fan-support/persistence-postgres:test:  ✓ src/connection-config.test.ts (15 tests) 11ms
+@fan-support/persistence-postgres:test:  ✓ src/payment-runtime-action.test.ts (9 tests) 30ms
+@fan-support/persistence-postgres:test:  ✓ src/commerce-expiry-inventory.test.ts (3 tests) 26ms
+@fan-support/persistence-postgres:test:  ✓ src/catalog-search-projection.test.ts (4 tests) 20ms
+@fan-support/persistence-postgres:test:  ✓ src/function-security.test.ts (1 test) 14ms
+@fan-support/persistence-postgres:test:  ✓ src/notification-repository.test.ts (8 tests) 9ms
+@fan-support/persistence-postgres:test:  ✓ src/cart-runtime-repository.test.ts (10 tests) 15ms
+@fan-support/persistence-postgres:test:  ✓ src/cart-edit-repository.test.ts (4 tests) 14ms
+@fan-support/persistence-postgres:test:  ✓ src/commerce-expiry-repository.test.ts (22 tests) 20ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-orders-migration.test.ts (3 tests) 6ms
+@fan-support/persistence-postgres:test:  ✓ src/payment-runtime-evidence.test.ts (7 tests) 46ms
+@fan-support/persistence-postgres:test:  ✓ src/publication-runtime-repository.test.ts (8 tests) 20ms
+@fan-support/persistence-postgres:test:  ✓ src/catalog-directory-sql.test.ts (8 tests) 24ms
+@fan-support/persistence-postgres:test:  ✓ src/daily-publication-price.test.ts (2 tests) 34ms
+@fan-support/persistence-postgres:test:  ❯ src/postgres-persistence.test.ts (22 tests | 1 failed) 47ms
+@fan-support/persistence-postgres:test:    ✓ admin access uses serializable transactions and respects managed shutdown 8ms
+@fan-support/persistence-postgres:test:    ✓ notification and expiry transactions share managed shutdown and roll back failed callbacks 5ms
+@fan-support/persistence-postgres:test:    ✓ payment runtime composes one serializable client and closes with persistence 1ms
+@fan-support/persistence-postgres:test:    ✓ homepage composition uses one serializable read transaction and respects shutdown 3ms
+@fan-support/persistence-postgres:test:    ✓ resource management shares authorization, idempotency and the serializable lifecycle 1ms
+@fan-support/persistence-postgres:test:    ✓ base reviews and preview share authorization, idempotency and the serializable lifecycle 1ms
+@fan-support/persistence-postgres:test:    ✓ content drafts use a dedicated serializable transaction and respect pool shutdown 0ms
+@fan-support/persistence-postgres:test:    ✓ admin authorization and content share one serializable transaction and lifecycle 1ms
+@fan-support/persistence-postgres:test:    ✓ content authoring shares authorization and idempotency in a serializable transaction 1ms
+@fan-support/persistence-postgres:test:    ✓ rejects invalid transaction options before acquiring a connection 8ms
+@fan-support/persistence-postgres:test:    × adds a reliable-event manager without changing legacy repository keys 6ms
+@fan-support/persistence-postgres:test:    ✓ rejects invalid reliable-event transaction options before acquiring a connection 0ms
+@fan-support/persistence-postgres:test:    ✓ tracks an invalid reliable-event operation even when the callback forgets to await it 1ms
+@fan-support/persistence-postgres:test:    ✓ fails closed before Pool construction when connection identity is incomplete 0ms
+@fan-support/persistence-postgres:test:    ✓ consumes idle pool errors and reports only a provider-neutral classification 0ms
+@fan-support/persistence-postgres:test:    ✓ contains a throwing pool-failure observer and still consumes the event 0ms
+@fan-support/persistence-postgres:test:    ✓ consumes an asynchronously rejected pool-failure observer 0ms
+@fan-support/persistence-postgres:test:    ✓ closes once, rejects new work while closing, and removes the listener after settle 0ms
+@fan-support/persistence-postgres:test:    ✓ normalizes close failures without leaking the raw pool error 0ms
+@fan-support/persistence-postgres:test:    ✓ isolates catalog reads in a serializable snapshot and closes the boundary with its pool 1ms
+@fan-support/persistence-postgres:test:    ✓ requires a configured public media origin for the content read boundary 1ms
+@fan-support/persistence-postgres:test:    ✓ provides a dedicated short media transaction boundary and refuses work after close 0ms
+@fan-support/persistence-postgres:test:  ✓ src/pg-boss-queue.test.ts (12 tests) 13ms
+@fan-support/persistence-postgres:test:  ✓ src/cart-edit-transaction.test.ts (3 tests) 30ms
+@fan-support/persistence-postgres:test:  ✓ src/cart-runtime-transaction.test.ts (3 tests) 28ms
+@fan-support/persistence-postgres:test:  ✓ src/catalog-directory-repository.test.ts (6 tests) 14ms
+@fan-support/persistence-postgres:test:  ✓ src/storefront-seo-transaction.test.ts (2 tests) 29ms
+@fan-support/persistence-postgres:test:  ✓ src/daily-publication-repository.test.ts (3 tests) 19ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-authorization-repository.test.ts (8 tests) 13ms
+@fan-support/persistence-postgres:test:  ✓ src/management-center-operation-read.test.ts (9 tests) 16ms
+@fan-support/persistence-postgres:test:  ✓ src/content-draft-repository.test.ts (6 tests) 11ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-access-repository.test.ts (6 tests) 12ms
+@fan-support/persistence-postgres:test:  ✓ src/publication-upgrade-harness.test.ts (1 test) 4ms
+@fan-support/persistence-postgres:test:  ✓ src/content-authoring-diff.test.ts (1 test) 77ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-notification-resend.test.ts (12 tests) 64ms
+@fan-support/persistence-postgres:test:  ✓ src/base-content-review-repository.test.ts (2 tests) 5ms
+@fan-support/persistence-postgres:test:  ✓ src/order-access-read.test.ts (6 tests) 12ms
+@fan-support/persistence-postgres:test:  ✓ src/daily-publication-inventory.test.ts (3 tests) 12ms
+@fan-support/persistence-postgres:test:  ✓ src/content-review-repository.test.ts (4 tests) 10ms
+@fan-support/persistence-postgres:test:  ✓ src/dependency-policy.test.ts (7 tests) 11ms
+@fan-support/persistence-postgres:test:  ✓ src/storefront-seo-purge-migration.test.ts (4 tests) 24ms
+@fan-support/persistence-postgres:test:  ✓ src/publication-preflight-repository.test.ts (4 tests) 9ms
+@fan-support/persistence-postgres:test:  ✓ src/migrations/manifest-generation.test.ts (1 test) 7ms
+@fan-support/persistence-postgres:test:  ✓ src/management-center-operation-repository.test.ts (7 tests) 12ms
+@fan-support/persistence-postgres:test:  ✓ src/publication-purge-paths.test.ts (35 tests) 10ms
+@fan-support/persistence-postgres:test:  ✓ src/outbox-status-upgrade-harness.test.ts (2 tests) 9ms
+@fan-support/persistence-postgres:test:  ✓ src/management-center-operation-composition.test.ts (1 test) 14ms
+@fan-support/persistence-postgres:test:  ✓ src/published-content-repository.test.ts (8 tests) 7ms
+@fan-support/persistence-postgres:test:  ✓ src/publication-heads.test.ts (6 tests) 11ms
+@fan-support/persistence-postgres:test:  ✓ src/management-center-operation-rollback-outcome.test.ts (3 tests) 29ms
+@fan-support/persistence-postgres:test:  ✓ src/gift-commerce-authorization-repository.test.ts (7 tests) 10ms
+@fan-support/persistence-postgres:test:  ✓ src/media-processing-repository.test.ts (10 tests) 8ms
+@fan-support/persistence-postgres:test:  ✓ src/checkout-preflight-save.test.ts (1 test) 5ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-session-repository.test.ts (4 tests) 7ms
+@fan-support/persistence-postgres:test:  ✓ src/migrations/catalog.test.ts (5 tests) 6ms
+@fan-support/persistence-postgres:test:  ✓ src/storefront-homepage-repository.test.ts (2 tests) 8ms
+@fan-support/persistence-postgres:test:  ✓ src/authority-evidence-security.test.ts (2 tests) 28ms
+@fan-support/persistence-postgres:test:  ✓ src/payment-runtime-migration.test.ts (3 tests) 17ms
+@fan-support/persistence-postgres:test:  ✓ src/private-data-security.test.ts (10 tests) 19ms
+@fan-support/persistence-postgres:test:  ✓ src/repository-savepoint.test.ts (5 tests) 39ms
+@fan-support/persistence-postgres:test:  ✓ src/content-authoring-repository.test.ts (2 tests) 8ms
+@fan-support/persistence-postgres:test:  ✓ src/checkout-preflight-transaction.test.ts (1 test) 24ms
+@fan-support/persistence-postgres:test:  ✓ src/cart-edit-migration.test.ts (2 tests) 24ms
+@fan-support/persistence-postgres:test:  ✓ src/base-content-preview-repository.test.ts (3 tests) 5ms
+@fan-support/persistence-postgres:test:  ✓ src/publication-purge-retry-paths.test.ts (2 tests) 7ms
+@fan-support/persistence-postgres:test:  ✓ src/checkout-preflight-migration.test.ts (2 tests) 16ms
+@fan-support/persistence-postgres:test:  ✓ src/checkout-preflight-repository.test.ts (6 tests) 9ms
+@fan-support/persistence-postgres:test:  ✓ src/payment-runtime-repository.test.ts (5 tests) 20ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-catalog-repository.test.ts (2 tests) 7ms
+@fan-support/persistence-postgres:test:  ✓ src/errors.test.ts (22 tests) 9ms
+@fan-support/persistence-postgres:test:  ✓ src/content-preview-repository.test.ts (3 tests) 15ms
+@fan-support/persistence-postgres:test:  ✓ src/testing/ephemeral-postgres.test.ts (1 test) 5ms
+@fan-support/persistence-postgres:test:  ✓ src/storefront-commerce-recipient-rules.test.ts (2 tests) 4ms
+@fan-support/persistence-postgres:test:  ✓ src/publication-read-locks.test.ts (4 tests) 25ms
+@fan-support/persistence-postgres:test:  ✓ src/daily-publication-template.test.ts (2 tests) 27ms
+@fan-support/persistence-postgres:test:  ✓ src/gift-commerce-pricing-repository.test.ts (2 tests) 5ms
+@fan-support/persistence-postgres:test:  ✓ src/order-payment-application.test.ts (7 tests) 10ms
+@fan-support/persistence-postgres:test:  ✓ src/public-api-boundary.test.ts (1 test) 7ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-orders-repository.test.ts (25 tests) 128ms
+@fan-support/persistence-postgres:test:  ✓ src/webhook-endpoint-security.test.ts (1 test) 79ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-catalog-data.test.ts (2 tests) 5ms
+@fan-support/persistence-postgres:test:  ✓ src/gift-commerce-inventory-repository.test.ts (1 test) 4ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-finance-migration.test.ts (2 tests) 14ms
+@fan-support/persistence-postgres:test:  ✓ src/daily-publication-text.test.ts (1 test) 2ms
+@fan-support/persistence-postgres:test:  ✓ src/published-content-media-proof.test.ts (4 tests) 3ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-finance-read.test.ts (1 test) 7ms
+@fan-support/persistence-postgres:test:  ✓ src/payment-transaction-canonical.test.ts (5 tests) 6ms
+@fan-support/persistence-postgres:test:  ✓ src/notification-lifecycle.test.ts (3 tests) 5ms
+@fan-support/persistence-postgres:test:  ✓ src/query-layer.test.ts (1 test) 3ms
+@fan-support/persistence-postgres:test:  ✓ src/admin-finance-recovery.test.ts (1 test) 4ms
+@fan-support/persistence-postgres:test:  ✓ src/index.test.ts (5 tests) 4ms
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test:  FAIL  src/postgres-persistence.test.ts > adds a reliable-event manager without changing legacy repository keys
+@fan-support/persistence-postgres:test: AssertionError: expected [ 'adminFinance', …(7) ] to deeply equal [ 'orderPaymentApplication', …(6) ]
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test: - Expected
+@fan-support/persistence-postgres:test: + Received
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test: @@ -1,6 +1,7 @@
+@fan-support/persistence-postgres:test:   [
+@fan-support/persistence-postgres:test: +   "adminFinance",
+@fan-support/persistence-postgres:test:     "orderPaymentApplication",
+@fan-support/persistence-postgres:test:     "outbox",
+@fan-support/persistence-postgres:test:     "outboxDispatch",
+@fan-support/persistence-postgres:test:     "paymentWebhookEndpoints",
+@fan-support/persistence-postgres:test:     "verifiedWebhookReceipts",
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test:  ❯ src/postgres-persistence.test.ts:384:6
+@fan-support/persistence-postgres:test:     382|         async (repositories) => Object.keys(repositories).sort(),
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test:     383|       ),
+@fan-support/persistence-postgres:test:     384|     ).resolves.toEqual([
+@fan-support/persistence-postgres:test:        |      ^
+@fan-support/persistence-postgres:test:     385|       "orderPaymentApplication",
+@fan-support/persistence-postgres:test:     386|       "outbox",
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test:  Test Files  1 failed | 108 passed (109)
+@fan-support/persistence-postgres:test:       Tests  1 failed | 713 passed (714)
+@fan-support/persistence-postgres:test:    Start at  03:38:28
+@fan-support/persistence-postgres:test:    Duration  9.17s (transform 11.29s, setup 0ms, import 54.41s, tests 10.32s, environment 14ms)
+@fan-support/persistence-postgres:test:
+@fan-support/persistence-postgres:test:  ELIFECYCLE  Test failed. See above for more details.
+@fan-support/persistence-postgres#test:  ERROR  command (/Users/mario/Desktop/下单/packages/persistence-postgres) /Users/mario/Library/pnpm/pnpm run test exited (1)
+
+ Tasks:    61 successful, 63 total
+Cached:    31 cached, 63 total
+  Time:    45.265s
+Failed:    @fan-support/persistence-postgres#test
+
+ ERROR  run failed: command  exited (1)
+[check:dev] stopped at test (exit 1); later checks did not run.
+[ELIFECYCLE] Command failed with exit code 1.

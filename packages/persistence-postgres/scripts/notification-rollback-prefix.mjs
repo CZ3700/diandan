@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { runMigrations } from "../dist/index.js";
 
-const supportedHeads = ["0029", "0030", "0031", "0032", "0033", "0034"];
+const supportedHeads = ["0029", "0030", "0031", "0032", "0033", "0034", "0035"];
 
 /** Legacy probes may rewind only explicitly known, empty migration prefixes. */
 export async function rollbackEmptyNotifications({
@@ -57,6 +57,18 @@ export async function rollbackEmptyNotifications({
             "public.audit_logs WHERE action='RESEND_ORDER_NOTIFICATION' OR task_name='admin-order-resend'",
           resend_link_audits:
             "public.order_access_audits WHERE task_name='admin-order-resend'",
+        }
+      : {}),
+    ...(version >= "0035"
+      ? {
+          finance_operations: "public.admin_finance_operations",
+          finance_receipts: "public.admin_finance_receipts",
+          finance_applications: "public.admin_finance_application_receipts",
+          finance_schedule: "public.admin_finance_application_schedule",
+          finance_audits:
+            "public.audit_logs WHERE action IN ('REFUND_REQUESTED','FINANCE_CANCEL_REQUESTED','FINANCE_RECONCILE_REQUESTED','FINANCE_PAYMENT_CANCELED') OR task_name='admin-finance'",
+          finance_aliases:
+            "public.provider_events WHERE canonical_transaction_event_id IS NOT NULL AND provider_transaction_type<>'CAPTURE'",
         }
       : {}),
     ...(version >= "0033"

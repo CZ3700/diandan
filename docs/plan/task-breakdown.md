@@ -186,3 +186,9 @@ P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字�
 ## 2026-09-22 P5-04 本地验收后的接续
 
 P5-04 的全部本地实现、实际PG/HTTP/七语双端与非作者复核通过；正式PSP条件仍保留，Task维持IN_PROGRESS并释放Lane A。P5-03原直接依赖P5-01/P4-05与P4-04已验收本地接口经当前源核对后置READY；P5-05的本地输入已齐，待共享合同与文件归属冻结后按Lane C登记就绪，不同时领取。当前29 DONE / 3 IN_PROGRESS / 1 READY / 16 PENDING=49，Phase6/7仍LOCKED。证据见`output/checks/p5-04-payment-health/final-verification.md`、`final-independent-review.md`和`next-stage-readiness.md`；上方排期登记按当时时点保留，原任务依赖及外部门不变。
+
+## 2026-09-22 P5-03 本地验收后的接续
+
+P5-03取消/全额部分退款/拒付/对账已完成全部本地实现、实际PG/HTTP/七语双端与非作者复核。正式商户sandbox refund等外部条件保留，Task仍IN_PROGRESS、Lane A释放。P5-05原直接依赖P5-01/P5-04本地完整验收已独立核对，选定身份输入17/19与P5-04时相同（两变化仅TEST IdP可选hook及声明，原75tests回归通过），支付输入85/85相同；共享contracts/API/BFF/管理中心入口归属已冻结，现Lane C READY、无owner，下一轮先登记再实施。29 DONE / 4 IN_PROGRESS / 1 READY / 15 PENDING=49；P5-06及后继按原依赖与排期逐项就绪，Phase6/7保持LOCKED。
+
+证据见`output/checks/p5-03-refund-operations/final-verification.md`、`final-gates.json`、`ui-next-stage-readiness.md`。Docker时钟失败与原生18.6隔离全验收范围均保留；不降低权限/金融/上线条件，不push/部署，不触发真实资金。

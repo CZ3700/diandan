@@ -35,6 +35,7 @@ export type TestOidcOptions = {
   acr?: string;
   amr?: string[];
   redirectOrigins?: string[];
+  beforeValidTokenResponse?: (input: { state: string }) => Promise<void>;
 };
 export type TestOidcProvider = {
   issuer: string;

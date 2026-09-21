@@ -1,0 +1,5 @@
+{
+  "exitCode": 1,
+  "stdout": "The files belonging to this database system will be owned by user \"mario\".\nThis user must also own the server process.\n\n",
+  "stderr": "initdb: error: file \"/opt/homebrew/share/postgresql@18/postgres.bki\" does not exist\ninitdb: hint: This might mean you have a corrupted installation or identified the wrong directory with the invocation option -L.\n"
+}

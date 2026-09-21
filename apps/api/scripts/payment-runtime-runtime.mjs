@@ -162,6 +162,7 @@ export async function withPaymentRuntimeFixture(options) {
           createPaymentApi,
           configuration,
           published,
+          providerRegistration: registration,
           psp: {
             get origin() {
               return psp.origin;
@@ -173,6 +174,8 @@ export async function withPaymentRuntimeFixture(options) {
             counts: () => psp.counts(),
             observations: () => psp.observations(),
             webhook: (value) => psp.webhook(value),
+            settleRefund: (value) => psp.settleRefund(value),
+            settleDispute: (value) => psp.settleDispute(value),
             hostedAction: (attemptId) => psp.hostedAction(attemptId),
             async restart() {
               const port = Number(new globalThis.URL(psp.origin).port),

@@ -1,0 +1,5 @@
+$ corepack pnpm --filter @fan-support/contracts build && node ./scripts/check-contracts.mjs
+$ tsc -p tsconfig.build.json
+- apps/admin/src/management-finance/copy.ts duplicates the complete locale-keyed map at line 10
+- apps/admin/src/management-finance/review-manifest.ts duplicates the complete locale-keyed map at line 2
+[ELIFECYCLE] Command failed with exit code 1.

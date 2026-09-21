@@ -1,0 +1,14 @@
+{
+  "stage": "orders detail expected HTTP 200",
+  "assertions": 5831,
+  "name": "AssertionError",
+  "code": "ERR_ASSERTION",
+  "frames": [
+    "/apps/api/scripts/admin-finance-http.mjs:44:12",
+    "/apps/api/scripts/admin-orders-runtime.mjs:200:5",
+    "/apps/api/scripts/admin-finance-protocol.mjs:15:17",
+    "/apps/api/scripts/admin-finance-http.mjs:66:26",
+    "/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14",
+    "/apps/api/scripts/payment-runtime-runtime.mjs:29:12"
+  ]
+}

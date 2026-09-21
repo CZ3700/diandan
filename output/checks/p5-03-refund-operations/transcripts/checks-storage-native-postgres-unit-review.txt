@@ -1,0 +1,13 @@
+✔ native TEST cluster is newly owned, private, loopback-only, password-authenticated and always removed (6.857375ms)
+✔ a partially started native cluster is stopped and cleaned while command details stay private (3.67525ms)
+✔ native callback failure preserves no password and still shuts down only its new cluster (2.541917ms)
+✔ native harness refuses cleanup when its exact ownership marker changed (1.571166ms)
+✔ native harness accepts no existing database or relative binary selector (0.109458ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 55.522666

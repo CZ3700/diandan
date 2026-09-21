@@ -1,3 +1,4 @@
+import { adminFinancePaths } from "./admin-finance-openapi.js";
 import { adminOrdersPaths } from "./admin-orders-openapi.js";
 import { orderAccessPaths } from "./order-access-openapi.js";
 import { checkoutPreflightPaths } from "./checkout-preflight-openapi.js";
@@ -211,6 +212,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...checkoutPreflightPaths(),
         ...paymentRuntimePaths(),
         ...adminOrdersPaths(),
+        ...adminFinancePaths(),
         ...orderAccessPaths(),
         ...managementCenterPaths(),
         ...storefrontHomepagePaths(),

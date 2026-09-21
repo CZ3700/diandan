@@ -1,0 +1,51 @@
+$ vitest run --config ../../vitest.config.ts --root . --maxWorkers=2
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
+
+ ❯ src/artifact-documents.test.ts (6 tests | 1 failed) 2039ms
+   × documents the exact raw payment webhook HTTP boundary 195ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/artifact-documents.test.ts > documents the exact raw payment webhook HTTP boundary
+AssertionError: expected [ …(98) ] to deeply equal [ …(93) ]
+
+- Expected
++ Received
+
+@@ -12,10 +12,15 @@
+    "/api/v1/admin/content-review/approve",
+    "/api/v1/admin/content-review/preview/issue",
+    "/api/v1/admin/content-review/preview/revoke",
+    "/api/v1/admin/content-review/read",
+    "/api/v1/admin/content-review/submit",
++   "/api/v1/admin/finance/cancel",
++   "/api/v1/admin/finance/detail",
++   "/api/v1/admin/finance/list",
++   "/api/v1/admin/finance/reconcile",
++   "/api/v1/admin/finance/refund",
+    "/api/v1/admin/gift-commerce/content/save",
+    "/api/v1/admin/gift-commerce/context/read",
+    "/api/v1/admin/gift-commerce/gifts/create",
+    "/api/v1/admin/gift-commerce/gifts/read",
+    "/api/v1/admin/gift-commerce/gifts/status",
+
+ ❯ src/artifact-documents.test.ts:273:5
+    271|       )
+    272|       .sort(),
+    273|   ).toEqual([
+       |     ^
+    274|     "/api/v1/admin-preview-media/read",
+    275|     "/api/v1/admin/catalog/history/read",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 86 passed (87)
+      Tests  1 failed | 500 passed (501)
+   Start at  02:54:23
+   Duration  8.76s (transform 760ms, setup 0ms, import 5.22s, tests 7.44s, environment 3ms)
+
+/Users/mario/Desktop/下单/packages/contracts:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/contracts@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . --maxWorkers=2`
+Exit status 1

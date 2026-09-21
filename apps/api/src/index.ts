@@ -52,3 +52,5 @@ export {
 
 export * from "./admin-access-route.js";
 export * from "./admin-access-composition.js";
+export * from "./admin-finance-route.js";
+export * from "./admin-finance-composition.js";

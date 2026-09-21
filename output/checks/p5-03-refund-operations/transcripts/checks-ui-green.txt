@@ -1,0 +1,9 @@
+$ vitest run --config ../../vitest.config.ts --root . src/management-finance src/server/admin-finance-operations.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
+
+
+ Test Files  4 passed (4)
+      Tests  7 passed (7)
+   Start at  03:01:44
+   Duration  448ms (transform 718ms, setup 0ms, import 1.08s, tests 42ms, environment 0ms)

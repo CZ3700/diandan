@@ -1,0 +1,36 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
+
+ ❯ src/admin-finance.test.ts (4 tests | 1 failed) 7ms
+   × carries an explicit dispute hold without exposing provider internals 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/admin-finance.test.ts > carries an explicit dispute hold without exposing provider internals
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/admin-finance.test.ts:118:127
+    116|
+    117| it("carries an explicit dispute hold without exposing provider interna…
+    118|  expect(api?.adminFinanceFailureSchema.safeParse({schemaVersion:1,outc…
+       |                                                                                                                               ^
+    119| });
+    120|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  03:07:43
+   Duration  250ms (transform 125ms, setup 0ms, import 189ms, tests 7ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/packages/contracts:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config ../../vitest.config.ts --root . src/admin-finance.test.ts

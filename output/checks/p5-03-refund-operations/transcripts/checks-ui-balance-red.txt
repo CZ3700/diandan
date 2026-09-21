@@ -1,0 +1,34 @@
+$ vitest run --config ../../vitest.config.ts --root . src/management-finance/views.test.tsx
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
+
+ ❯ src/management-finance/views.test.tsx (3 tests | 1 failed) 24ms
+   × processing balance excludes refunds already confirmed successful 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/management-finance/views.test.tsx > processing balance excludes refunds already confirmed successful
+AssertionError: expected '<data class="fs-price" data-currency=…' to contain 'value="200"'
+
+Expected: "value="200""
+Received: "<data class="fs-price" data-currency="USD" lang="en" value="600"><bdi>$6.00</bdi></data>"
+
+ ❯ src/management-finance/views.test.tsx:114:22
+    112|   const html = renderToStaticMarkup(<View detail={detail} locale="en" …
+    113|   const processing = /<dt>Refunds in progress<\/dt><dd>(.*?)<\/dd>/u.e…
+    114|   expect(processing).toContain('value="200"');
+       |                      ^
+    115|   expect(processing).not.toContain('value="600"');
+    116| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  03:17:53
+   Duration  536ms (transform 292ms, setup 0ms, import 424ms, tests 24ms, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/admin:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/admin@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/management-finance/views.test.tsx`
+Exit status 1

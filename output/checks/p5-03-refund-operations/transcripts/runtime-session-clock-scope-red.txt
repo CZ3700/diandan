@@ -1,0 +1,37 @@
+✖ a read that completes past the six-second bound cannot authorize readiness (0.524666ms)
+✖ browser readiness belongs only to the current successful callback's first GET and is removed afterward (0.529375ms)
+✔ TEST session readiness waits through a real-clock regression without authorizing the request (0.071958ms)
+✔ unknown, expired, revoked, inactive, non-MFA or mismatched-CSRF session is never waited or repaired (0.070292ms)
+✔ TEST readiness has a monotonic bound and cannot permit a persistent future session (0.605584ms)
+✔ revocation while waiting immediately leaves the original authorization boundary in control (0.057875ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.933083
+
+✖ failing tests:
+
+test at apps/api/scripts/admin-finance-session-clock.test.mjs:5:1
+✖ a read that completes past the six-second bound cannot authorize readiness (0.524666ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/admin-finance-session-clock.test.mjs:7:3)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /TEST session clock did not become ready/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at apps/api/scripts/admin-finance-session-clock.test.mjs:10:1
+✖ browser readiness belongs only to the current successful callback's first GET and is removed afterward (0.529375ms)
+  TypeError: listener is not a function
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/admin-finance-session-clock.test.mjs:19:3)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7)

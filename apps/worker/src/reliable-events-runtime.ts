@@ -16,6 +16,7 @@ export type ReliableEventsWorkerNotice = Readonly<{
     | "OUTBOX_RELAY_FAILED"
     | "PAYLOAD_PURGE_FAILED"
     | "ORDER_PAYMENT_APPLICATION_FAILED"
+    | "FINANCE_APPLICATION_FAILED"
     | "NOTIFICATION_MAINTENANCE_FAILED"
     | "COMMERCE_EXPIRY_FAILED"
     | "MAINTENANCE_CONTEXT_UNAVAILABLE";
@@ -56,6 +57,7 @@ export type ReliableEventsWorkerRuntimeOptions = Readonly<{
   listReadyOutboxJobs(command: unknown): Promise<readonly OutboxDispatchJob[]>;
   purgeExpiredWebhookPayloads(command: unknown): Promise<unknown>;
   applyPendingOrderPayments?(): Promise<void>;
+  applyPendingFinance?(): Promise<void>;
   runPendingNotifications?(): Promise<void>;
   expireCommerceResources?(): Promise<void>;
   consumerKeys: readonly string[];
@@ -230,6 +232,7 @@ export function createReliableEventsWorkerRuntime(
       }
     }
     for (const [run, code] of [
+      [options.applyPendingFinance, "FINANCE_APPLICATION_FAILED"],
       [options.runPendingNotifications, "NOTIFICATION_MAINTENANCE_FAILED"],
       [options.expireCommerceResources, "COMMERCE_EXPIRY_FAILED"],
     ] as const) {

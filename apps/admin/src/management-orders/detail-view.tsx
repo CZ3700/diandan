@@ -13,6 +13,8 @@ import { ordersCopy } from "./copy";
 import { orderStatusLabel } from "./labels";
 import { PrivateMessage } from "./private-message";
 import { PrivateNotes } from "./private-notes";
+import type { FinanceApi } from "../management-finance/api";
+import { FinancePanel } from "../management-finance/panel";
 export type MutationRunner = (
   work: () => Promise<unknown>,
   success?: "QUEUED" | "SAVED",
@@ -25,6 +27,8 @@ type DetailProps = {
   busy: boolean;
   onMutation: MutationRunner;
   onReload: () => void;
+  financeApi?: FinanceApi | undefined;
+  onFinanceBusy?: ((busy: boolean) => void) | undefined;
 };
 function usePrivatePanel() {
   const [opened, setOpened] = useState(false);
@@ -324,6 +328,32 @@ export function OrdersDetailView(props: DetailProps) {
         </div>
       </div>
       <p className="mc-hint">{copy.studioDelivery}</p>
+      {props.financeApi && props.onFinanceBusy ? (
+        <FinancePanel
+          api={props.financeApi}
+          orderId={detail.orderId}
+          actorId={context.actorId}
+          locale={locale}
+          onBusy={props.onFinanceBusy}
+          onUpdated={props.onReload}
+          itemTitles={Object.fromEntries(
+            detail.items.map((line) => {
+              const snapshot = detail.order.items.find(
+                (item) => item.position === line.position,
+              );
+              const position = new Intl.NumberFormat(locale).format(
+                line.position,
+              );
+              return [
+                line.itemId,
+                snapshot
+                  ? `${position} · ${snapshot.gift.title} · ${snapshot.idol.displayName}`
+                  : position,
+              ];
+            }),
+          )}
+        />
+      ) : null}
       <ul className="mo-lines">
         {detail.items.map((line) => (
           <OrderLine

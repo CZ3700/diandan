@@ -1,0 +1,34 @@
+✔ persistent TEST dispute evidence retains native identity, skipped states and restart history (2956.583209ms)
+✔ dispute fixture cannot run against a LIVE binding (0.3125ms)
+✔ independent authenticated TEST TLS PSP retains a refund after the accepted response is lost and its process restarts (3963.244834ms)
+{ stage: 'refund-create', outcome: 'SUCCESS', code: undefined }
+✔ persistent TEST PSP preserves refund identity and occupied capacity through concurrency and restart (3874.606ms)
+✔ independent TEST PSP signs only its persistent payment observation and preserves capture identity across restart (4356.181417ms)
+✔ new order-payment fixture provisions the durable queue once before unchanged VERIFY runtimes start (3531.273208ms)
+{"actualMigratedHarnessStatements":13,"failures":0}
+✔ all literal order-payment harness SQL prepares against the actual migrated schema before expensive fixture setup (4360.13475ms)
+{"status":"PASS","counts":{"events":1,"inbox":1,"orders":0},"stages":[{"stage":"PREFLIGHT","outcome":"ELIGIBLE"},{"stage":"VERIFIER_SELECTION","selected":true},{"stage":"RECEIVE","outcome":"FAILURE","code":"INVALID_SIGNATURE"},{"stage":"HTTP","status":400},{"stage":"PREFLIGHT","outcome":"UNAVAILABLE"},{"stage":"ELIGIBILITY","endpoint_count":0,"account_eligible":0,"endpoint_active":0,"eligible_at_received":0,"active_minus_received_us":null,"wall_minus_received_us":"61838.000000"},{"stage":"HTTP","status":404},{"stage":"PREFLIGHT","outcome":"ELIGIBLE"},{"stage":"VERIFIER_SELECTION","selected":true},{"stage":"VERIFIED_TIMING","occurred_minus_received_us":"-72165.000000"},{"stage":"RECEIVE","outcome":"SUCCESS","code":null},{"stage":"HTTP","status":202}]}
+✔ normal TEST endpoint and actual raw HTTP ingress reject changed bytes before persisting an authenticated unmatched observation (4534.313458ms)
+✔ cart drain waits for response and body and includes a new pending request (27.665625ms)
+✔ safe failure classification never stores untrusted body or error text (3.74525ms)
+✔ beginCreate fault is injected only after a successful real-manager boundary, once (821.203833ms)
+✔ settleCreate fault is injected only after a successful real-manager boundary, once (0.171583ms)
+✔ read-only and failed transactions do not consume the fault (0.288375ms)
+✔ payment seed requires an explicit TEST-only deployment before any SQL (30.05475ms)
+✔ payment seed cannot infer a missing country from its market (1.872ms)
+✔ partial rollout seed rejects unsafe proportions before any SQL (0.372458ms)
+✔ actual TLS gateway preserves configured Host, exact body/status and separate Set-Cookie fields (165.479292ms)
+✔ compiled payment Next uses the existing TEST runtime tier without weakening production config (4.288542ms)
+{"nativeHostedForm":true,"status":303,"originMatches":true,"originIsNull":false,"referrerContainsPath":false}
+{"nativeExpiredOutcome":true,"status":303}
+✔ real authenticated HTTPS preserves acceptance after lost response/restart and hosted return never invents PSP capture (4553.074542ms)
+{"stage":"INITIAL_CREATE","outcome":"SUCCESS"}
+✔ independent TEST PSP persists one acceptance across concurrent calls and process-owner replacement (3620.082959ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6122.138792

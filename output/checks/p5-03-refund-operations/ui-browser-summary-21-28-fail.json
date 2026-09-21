@@ -1,0 +1,20 @@
+{
+  "source": "output/checks/p5-03-finance/integration-2026-09-21T21-28-29.829Z/browser-finance/results.json",
+  "status": "FAIL",
+  "cases": [],
+  "errors": [],
+  "failure": {
+    "stage": "matrix-es-390",
+    "category": "TIMEOUT",
+    "frames": [
+      "admin-finance-browser.mjs:108:9",
+      "admin-finance-browser.mjs:195:9"
+    ]
+  },
+  "assertions": 160,
+  "failedAssertions": 0,
+  "screenshots": 30,
+  "axeRuns": 30,
+  "axeViolations": 0,
+  "axeIncomplete": 0
+}

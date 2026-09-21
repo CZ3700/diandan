@@ -27,3 +27,7 @@ export {
   decideRefundTransitionCommand,
   planLatePaymentSuccessCommand,
 } from "./state-machine-commands.js";
+export {
+  decideFinanceEvidence,
+  projectFinanceDisputeStatus,
+} from "./finance-evidence.js";

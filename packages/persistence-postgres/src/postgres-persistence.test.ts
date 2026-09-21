@@ -382,6 +382,7 @@ test("adds a reliable-event manager without changing legacy repository keys", as
         async (repositories) => Object.keys(repositories).sort(),
       ),
     ).resolves.toEqual([
+      "adminFinance",
       "orderPaymentApplication",
       "outbox",
       "outboxDispatch",

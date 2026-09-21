@@ -1,0 +1,170 @@
+✖ empty known head 0035 uses the ordinary exact-version down sequence (0.695042ms)
+✖ retained finance_operations rejects before any migration is attempted (0.310083ms)
+✖ retained finance_receipts rejects before any migration is attempted (0.105291ms)
+✖ retained finance_applications rejects before any migration is attempted (0.055042ms)
+✖ retained finance_schedule rejects before any migration is attempted (0.06875ms)
+✖ retained finance_audits rejects before any migration is attempted (0.080833ms)
+✖ retained finance_aliases rejects before any migration is attempted (0.056917ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 306.884292
+
+✖ failing tests:
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:76:3
+✖ empty known head 0035 uses the ordinary exact-version down sequence (0.695042ms)
+  AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head
+      at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:19:10)
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:78:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:86:3
+✖ retained finance_operations rejects before any migration is attempted (0.310083ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /without .*history/u. Input:
+
+  'AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head'
+
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head
+        at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:19:10)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+        at async Test.run (node:internal/test_runner/test:1404:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:969:7),
+    expected: /without .*history/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:86:3
+✖ retained finance_receipts rejects before any migration is attempted (0.105291ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /without .*history/u. Input:
+
+  'AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head'
+
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head
+        at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:19:10)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+        at async Test.run (node:internal/test_runner/test:1404:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:969:7),
+    expected: /without .*history/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:86:3
+✖ retained finance_applications rejects before any migration is attempted (0.055042ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /without .*history/u. Input:
+
+  'AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head'
+
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head
+        at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:19:10)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+        at async Test.run (node:internal/test_runner/test:1404:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:969:7),
+    expected: /without .*history/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:86:3
+✖ retained finance_schedule rejects before any migration is attempted (0.06875ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /without .*history/u. Input:
+
+  'AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head'
+
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head
+        at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:19:10)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+        at async Test.run (node:internal/test_runner/test:1404:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:969:7),
+    expected: /without .*history/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:86:3
+✖ retained finance_audits rejects before any migration is attempted (0.080833ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /without .*history/u. Input:
+
+  'AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head'
+
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head
+        at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:19:10)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+        at async Test.run (node:internal/test_runner/test:1404:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:969:7),
+    expected: /without .*history/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:86:3
+✖ retained finance_aliases rejects before any migration is attempted (0.056917ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /without .*history/u. Input:
+
+  'AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head'
+
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AssertionError [ERR_ASSERTION]: legacy rollback probe requires a known exact current head
+        at rollbackEmptyNotifications (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.mjs:19:10)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:88:5)
+        at async Test.run (node:internal/test_runner/test:1404:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:969:7),
+    expected: /without .*history/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }

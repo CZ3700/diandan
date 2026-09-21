@@ -1,0 +1,201 @@
+$ vitest run --config ../../vitest.config.ts --root . --maxWorkers=2
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
+
+ ❯ src/artifact-documents.test.ts (6 tests | 1 failed) 3496ms
+   × keeps committed contract artifacts byte-for-byte fresh 807ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/artifact-documents.test.ts > keeps committed contract artifacts byte-for-byte fresh
+AssertionError: expected '{\n  "$defs": {\n    "AdminAccessBegi…' to be '{\n  "$defs": {\n    "AdminAccessBegi…' // Object.is equality
+
+- Expected
++ Received
+
+@@ -9119,11 +9119,11 @@
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "amountMinor": {
+                      "maximum": 9007199254740991,
+-                     "minimum": 1,
++                     "minimum": 0,
+                      "type": "integer"
+                    },
+                    "orderItemId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+@@ -9140,11 +9140,11 @@
+                "minItems": 1,
+                "type": "array"
+              },
+              "amountMinor": {
+                "maximum": 9007199254740991,
+-               "minimum": 1,
++               "minimum": 0,
+                "type": "integer"
+              },
+              "confirmed": {
+                "const": true,
+                "type": "boolean"
+@@ -9343,11 +9343,10 @@
+              "NOT_FOUND",
+              "STALE_VERSION",
+              "IDEMPOTENCY_CONFLICT",
+              "CONFLICT",
+              "PAYMENT_NOT_CONFIRMED",
+-             "DISPUTE_REQUIRES_REVIEW",
+              "REFUND_CAPACITY_EXCEEDED",
+              "REFUND_ITEM_CAPACITY_EXCEEDED",
+              "CURRENCY_MISMATCH",
+              "TRANSITION_NOT_ALLOWED",
+              "RECONCILIATION_REQUIRED",
+@@ -9842,11 +9841,11 @@
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "amountMinor": {
+                          "maximum": 9007199254740991,
+-                         "minimum": 1,
++                         "minimum": 0,
+                          "type": "integer"
+                        },
+                        "orderItemId": {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+@@ -9863,11 +9862,11 @@
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "amountMinor": {
+                    "maximum": 9007199254740991,
+-                   "minimum": 1,
++                   "minimum": 0,
+                    "type": "integer"
+                  },
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+@@ -10095,11 +10094,10 @@
+                  "NOT_FOUND",
+                  "STALE_VERSION",
+                  "IDEMPOTENCY_CONFLICT",
+                  "CONFLICT",
+                  "PAYMENT_NOT_CONFIRMED",
+-                 "DISPUTE_REQUIRES_REVIEW",
+                  "REFUND_CAPACITY_EXCEEDED",
+                  "REFUND_ITEM_CAPACITY_EXCEEDED",
+                  "CURRENCY_MISMATCH",
+                  "TRANSITION_NOT_ALLOWED",
+                  "RECONCILIATION_REQUIRED",
+@@ -10584,11 +10582,11 @@
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "amountMinor": {
+                            "maximum": 9007199254740991,
+-                           "minimum": 1,
++                           "minimum": 0,
+                            "type": "integer"
+                          },
+                          "orderItemId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+@@ -10605,11 +10603,11 @@
+                      "minItems": 1,
+                      "type": "array"
+                    },
+                    "amountMinor": {
+                      "maximum": 9007199254740991,
+-                     "minimum": 1,
++                     "minimum": 0,
+                      "type": "integer"
+                    },
+                    "canReconcile": {
+                      "type": "boolean"
+                    },
+@@ -14272,11 +14270,11 @@
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "amountMinor": {
+                          "maximum": 9007199254740991,
+-                         "minimum": 1,
++                         "minimum": 0,
+                          "type": "integer"
+                        },
+                        "orderItemId": {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+@@ -14293,11 +14291,11 @@
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "amountMinor": {
+                    "maximum": 9007199254740991,
+-                   "minimum": 1,
++                   "minimum": 0,
+                    "type": "integer"
+                  },
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+@@ -416219,16 +416217,16 @@
+              "target": {
+                "additionalProperties": false,
+                "properties": {
+                  "amountMinor": {
+                    "maximum": 9007199254740991,
+-                   "minimum": 1,
++                   "minimum": 0,
+                    "type": "integer"
+                  },
+                  "capturedAmountMinor": {
+                    "maximum": 9007199254740991,
+-                   "minimum": 1,
++                   "minimum": 0,
+                    "type": "integer"
+                  },
+                  "currency": {
+                    "pattern": "^[A-Z]{3}$",
+                    "type": "string"
+@@ -416892,16 +416890,16 @@
+              "target": {
+                "additionalProperties": false,
+                "properties": {
+                  "amountMinor": {
+                    "maximum": 9007199254740991,
+-                   "minimum": 1,
++                   "minimum": 0,
+                    "type": "integer"
+                  },
+                  "capturedAmountMinor": {
+                    "maximum": 9007199254740991,
+-                   "minimum": 1,
++                   "minimum": 0,
+                    "type": "integer"
+                  },
+                  "currency": {
+                    "pattern": "^[A-Z]{3}$",
+                    "type": "string"
+
+ ❯ src/artifact-documents.test.ts:578:22
+    576|   expect(jsonSchema, "committed JSON Schema artifact must exist").toBe…
+    577|   expect(openapi, "committed OpenAPI artifact must exist").toBeDefined…
+    578|   expect(jsonSchema).toBe(rendered.jsonSchema);
+       |                      ^
+    579|   expect(openapi).toBe(rendered.openapi);
+    580| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 86 passed (87)
+      Tests  1 failed | 502 passed (503)
+   Start at  03:17:12
+   Duration  11.60s (transform 1.81s, setup 0ms, import 7.03s, tests 10.80s, environment 3ms)
+
+/Users/mario/Desktop/下单/packages/contracts:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/contracts@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . --maxWorkers=2`
+Exit status 1

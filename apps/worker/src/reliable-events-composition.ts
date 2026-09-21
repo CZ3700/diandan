@@ -5,6 +5,8 @@ import {
   createOrderPaymentApplication,
   createCommerceExpiryUseCases,
   createOrderPaymentWebhookHandler,
+  createAdminFinanceWebhookHandler,
+  createAdminFinanceEventApplication,
   createListReadyOutboxJobs,
   createProcessWebhookInbox,
   createPurgeExpiredWebhookPayloads,
@@ -170,7 +172,9 @@ const defaultBindings: WorkerReliableEventsBindings = Object.freeze({
   handlerForEvent: (eventType) =>
     eventType === "PAYMENT_STATUS"
       ? createOrderPaymentWebhookHandler()
-      : undefined,
+      : eventType === "REFUND_STATUS" || eventType === "DISPUTE_STATUS"
+        ? createAdminFinanceWebhookHandler()
+        : undefined,
   consumerForKey: () => undefined,
   consumerKeys: Object.freeze([]),
 });
@@ -268,6 +272,9 @@ export function createWorkerReliableEventsComposition(
     transactions: persistence.orderPaymentApplicationTransactionManager,
     createId: factories.createId,
   });
+  const finance = createAdminFinanceEventApplication(
+    persistence.adminFinanceTransactionManager,
+  );
   const runtime: ReliableEventsWorkerRuntime = factories.createRuntime({
     schemaVersion: 1,
     queue,
@@ -300,6 +307,15 @@ export function createWorkerReliableEventsComposition(
         contextLogger.warn("order_payment.review_required", {
           outcome: "failure",
           errorCode: "PAYMENT_REVIEW_REQUIRED",
+        });
+    },
+    applyPendingFinance: async () => {
+      const result = await finance.runPending(MAINTENANCE_BATCH_SIZE);
+      if (result.failed > 0) throw new Error("Finance maintenance failed");
+      if (result.review > 0)
+        contextLogger.warn("admin_finance.review_required", {
+          outcome: "failure",
+          errorCode: "FINANCE_REVIEW_REQUIRED",
         });
     },
     ...(notifications

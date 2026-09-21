@@ -8,6 +8,7 @@ import { managementCopy } from "./copy";
 import { ManagementShell } from "./shell";
 import { ManagementHub } from "./hub";
 import { createOrdersApi } from "../management-orders/api";
+import { createFinanceApi } from "../management-finance/api";
 import { ManagementLogin } from "./login";
 import "./management-center.css";
 
@@ -24,6 +25,7 @@ export function ManagementCenter({
     useAdminSession();
   const api = useMemo(() => createManagementApi(client), [client]);
   const ordersApi = useMemo(() => createOrdersApi(client), [client]);
+  const financeApi = useMemo(() => createFinanceApi(client), [client]);
   const copy = managementCopy(locale);
   const [loginFailed, setLoginFailed] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -77,6 +79,7 @@ export function ManagementCenter({
     <ManagementHub
       api={api}
       ordersApi={ordersApi}
+      financeApi={financeApi}
       locale={locale}
       storefrontOrigin={storefrontOrigin}
       onLogout={authenticationAvailable ? logout : undefined}

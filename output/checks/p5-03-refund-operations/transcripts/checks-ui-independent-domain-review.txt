@@ -1,0 +1,34 @@
+$ vitest run --config ../../vitest.config.ts --root . --coverage
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/domain
+      Coverage enabled with v8
+
+
+ Test Files  26 passed (26)
+      Tests  196 passed (196)
+   Start at  03:17:09
+   Duration  1.70s (transform 2.94s, setup 0ms, import 9.58s, tests 918ms, environment 1ms)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   95.53 |    94.88 |   96.47 |   96.34 |
+ ...t-inventory.ts |   88.37 |    78.18 |    90.9 |   94.87 | 58,69,92,184
+ ...t-preflight.ts |     100 |       50 |     100 |     100 | 24
+ ...ce-evidence.ts |   97.72 |    97.87 |     100 |    97.5 | 90
+ idempotency.ts    |   95.65 |    96.42 |     100 |     100 | 75
+ ...ate-machine.ts |   96.15 |    97.59 |     100 |   96.15 | 194,211
+ ...ate-machine.ts |   97.36 |    98.14 |     100 |   97.36 | 161
+ ...er-evidence.ts |   95.45 |    96.15 |     100 |   95.45 | 156,226
+ ...nd-capacity.ts |   93.54 |     93.1 |     100 |   93.54 | 92,103
+ ...ate-machine.ts |     100 |    96.55 |     100 |     100 | 105
+ ...ne-commands.ts |   86.84 |    84.78 |   81.25 |   86.84 | ...04,689-700,735
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 95.53% ( 727/761 )
+Branches     : 94.88% ( 686/723 )
+Functions    : 96.47% ( 137/142 )
+Lines        : 96.34% ( 712/739 )
+================================================================================

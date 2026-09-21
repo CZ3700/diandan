@@ -187,6 +187,22 @@
       "kind": "TABLE"
     },
     {
+      "name": "admin_finance_application_receipts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_finance_application_schedule",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_finance_operations",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_finance_receipts",
+      "kind": "TABLE"
+    },
+    {
       "name": "admin_identities",
       "kind": "TABLE"
     },
@@ -1017,6 +1033,456 @@
       "dataType": "uuid",
       "notNull": false,
       "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "position": 1,
+      "name": "provider_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "position": 2,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "position": 3,
+      "name": "decision",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "position": 4,
+      "name": "reason_code",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "position": 5,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "position": 6,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "position": 7,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "position": 1,
+      "name": "provider_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "position": 2,
+      "name": "next_attempt_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "position": 3,
+      "name": "attempt_count",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 2,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 3,
+      "name": "attempt_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 4,
+      "name": "refund_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 5,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 6,
+      "name": "phase",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 7,
+      "name": "provider_account_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 8,
+      "name": "environment",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 9,
+      "name": "adapter_key",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 10,
+      "name": "reason_code",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 11,
+      "name": "generation",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 12,
+      "name": "dispatch_count",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 13,
+      "name": "lease_token_digest",
+      "dataType": "bytea",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 14,
+      "name": "lease_expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 15,
+      "name": "claim",
+      "dataType": "jsonb",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 16,
+      "name": "next_attempt_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 17,
+      "name": "last_error_code",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 18,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_operations",
+      "position": 19,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 2,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 3,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 4,
+      "name": "order_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 5,
+      "name": "operation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 6,
+      "name": "refund_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 7,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 8,
+      "name": "idempotency_key",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 9,
+      "name": "request_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 10,
+      "name": "expected_order_version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 11,
+      "name": "confirmed",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 12,
+      "name": "reason_code",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 13,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 14,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 15,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_finance_receipts",
+      "position": 16,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
       "identity": "",
       "generation": ""
     },
@@ -23221,6 +23687,574 @@
       "initiallyDeferred": false
     },
     {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_decision_check",
+      "kind": "CHECK",
+      "definition": "CHECK (decision = ANY (ARRAY['APPLIED'::text, 'REVIEW'::text, 'IGNORED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_decision_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL decision",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (provider_event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_provider_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (provider_event_id) REFERENCES provider_events(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_provider_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL provider_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_reason_code_check",
+      "kind": "CHECK",
+      "definition": "CHECK (reason_code ~ '^[A-Z][A-Z0-9_]{1,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_reason_code_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL reason_code",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "name": "admin_finance_application_schedule_attempt_count_check",
+      "kind": "CHECK",
+      "definition": "CHECK (attempt_count > 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "name": "admin_finance_application_schedule_attempt_count_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL attempt_count",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "name": "admin_finance_application_schedule_next_attempt_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL next_attempt_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "name": "admin_finance_application_schedule_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (provider_event_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "name": "admin_finance_application_schedule_provider_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (provider_event_id) REFERENCES provider_events(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "name": "admin_finance_application_schedule_provider_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL provider_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operation_receipt",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['REFUND'::text, 'CANCEL'::text, 'RECONCILE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_attempt_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (attempt_id) REFERENCES payment_attempts(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_check",
+      "kind": "CHECK",
+      "definition": "CHECK ((lease_token_digest IS NULL) = (lease_expires_at IS NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (updated_at::timestamp with time zone >= created_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_check2",
+      "kind": "CHECK",
+      "definition": "CHECK ((refund_id IS NOT NULL) = ((phase = ANY (ARRAY['REFUND_READY'::text, 'REFUND_RECONCILE'::text])) OR phase = 'COMPLETE'::text AND refund_id IS NOT NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_dispatch_count_check",
+      "kind": "CHECK",
+      "definition": "CHECK (dispatch_count >= 0 AND dispatch_count <= 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_dispatch_count_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL dispatch_count",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_environment_check",
+      "kind": "CHECK",
+      "definition": "CHECK (environment = ANY (ARRAY['TEST'::text, 'LIVE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_generation_check",
+      "kind": "CHECK",
+      "definition": "CHECK (generation >= 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_generation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL generation",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_lease_token_digest_check",
+      "kind": "CHECK",
+      "definition": "CHECK (lease_token_digest IS NULL OR octet_length(lease_token_digest) = 32)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_next_attempt_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL next_attempt_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_phase_check",
+      "kind": "CHECK",
+      "definition": "CHECK (phase = ANY (ARRAY['REFUND_READY'::text, 'REFUND_RECONCILE'::text, 'CANCEL_READY'::text, 'PAYMENT_RECONCILE'::text, 'COMPLETE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_phase_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL phase",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_provider_account_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (provider_account_id) REFERENCES payment_provider_accounts(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_reason_code_check",
+      "kind": "CHECK",
+      "definition": "CHECK (reason_code ~ '^[A-Z][A-Z0-9_]{1,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_reason_code_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL reason_code",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_refund_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (refund_id) REFERENCES refunds(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipt_authority",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['REFUND'::text, 'CANCEL'::text, 'RECONCILE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_actor_id_action_idempotency_key_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (actor_id, action, idempotency_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_confirmed_check",
+      "kind": "CHECK",
+      "definition": "CHECK (confirmed)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_confirmed_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL confirmed",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_expected_order_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expected_order_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_idempotency_key_check",
+      "kind": "CHECK",
+      "definition": "CHECK (length(idempotency_key) >= 1 AND length(idempotency_key) <= 200)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_idempotency_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idempotency_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_operation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (operation_id) REFERENCES admin_finance_operations(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_operation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL operation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_order_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_order_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_reason_code_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL reason_code",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_refund_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (refund_id) REFERENCES refunds(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_request_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "admin_identities",
       "name": "admin_identities_created_at_not_null",
       "kind": "NOT_NULL",
@@ -31083,6 +32117,14 @@
       "definition": "NOT NULL version",
       "deferrable": false,
       "initiallyDeferred": false
+    },
+    {
+      "table": "disputes",
+      "name": "finance_dispute_projection_head",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
     },
     {
       "table": "fulfillment_events",
@@ -43926,6 +44968,14 @@
     },
     {
       "table": "order_events",
+      "name": "finance_order_projection",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "order_events",
       "name": "order_event_head_from_event_trigger",
       "kind": "CONSTRAINT_TRIGGER",
       "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
@@ -52030,6 +53080,14 @@
     },
     {
       "table": "refunds",
+      "name": "finance_refund_projection_head",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "refunds",
       "name": "refunds_amount_check",
       "kind": "CHECK",
       "definition": "CHECK (currency::text = captured_currency::text AND requested_amount_minor::bigint <= captured_amount_minor::bigint AND processed_amount_minor::bigint <= requested_amount_minor::bigint)",
@@ -54167,6 +55225,87 @@
       "definition": "CREATE UNIQUE INDEX admin_content_locale_grants_revoked_audit_log_id_key ON public.admin_content_locale_grants USING btree (revoked_audit_log_id)",
       "unique": true,
       "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_finance_application_receipts_pkey ON public.admin_finance_application_receipts USING btree (provider_event_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "name": "admin_finance_application_schedule_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_finance_application_schedule_pkey ON public.admin_finance_application_schedule USING btree (provider_event_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_active_cancel_unique",
+      "definition": "CREATE UNIQUE INDEX admin_finance_active_cancel_unique ON public.admin_finance_operations USING btree (attempt_id) WHERE ((action = 'CANCEL'::text) AND (phase <> 'COMPLETE'::text))",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_due",
+      "definition": "CREATE INDEX admin_finance_operations_due ON public.admin_finance_operations USING btree (next_attempt_at, id) WHERE (phase <> 'COMPLETE'::text)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_finance_operations_pkey ON public.admin_finance_operations USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_refund_operation_unique",
+      "definition": "CREATE UNIQUE INDEX admin_finance_refund_operation_unique ON public.admin_finance_operations USING btree (refund_id) WHERE (refund_id IS NOT NULL)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_actor_id_action_idempotency_key_key",
+      "definition": "CREATE UNIQUE INDEX admin_finance_receipts_actor_id_action_idempotency_key_key ON public.admin_finance_receipts USING btree (actor_id, action, idempotency_key)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_finance_receipts_audit_log_id_key ON public.admin_finance_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_finance_receipts_pkey ON public.admin_finance_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
       "exclusion": false,
       "valid": true
     },
@@ -59111,6 +60250,72 @@
       "enabled": "O"
     },
     {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_immutable",
+      "definition": "CREATE TRIGGER admin_finance_application_receipts_immutable BEFORE DELETE OR UPDATE ON admin_finance_application_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_finance_application_receipts",
+      "name": "admin_finance_application_receipts_no_truncate",
+      "definition": "CREATE TRIGGER admin_finance_application_receipts_no_truncate BEFORE TRUNCATE ON admin_finance_application_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "name": "admin_finance_application_schedule_no_delete",
+      "definition": "CREATE TRIGGER admin_finance_application_schedule_no_delete BEFORE DELETE ON admin_finance_application_schedule FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_finance_application_schedule",
+      "name": "admin_finance_application_schedule_no_truncate",
+      "definition": "CREATE TRIGGER admin_finance_application_schedule_no_truncate BEFORE TRUNCATE ON admin_finance_application_schedule FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operation_guard",
+      "definition": "CREATE TRIGGER admin_finance_operation_guard BEFORE INSERT OR UPDATE ON admin_finance_operations FOR EACH ROW EXECUTE FUNCTION guard_admin_finance_operation()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operation_receipt",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_finance_operation_receipt AFTER INSERT ON admin_finance_operations DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_finance_operation_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_no_delete",
+      "definition": "CREATE TRIGGER admin_finance_operations_no_delete BEFORE DELETE ON admin_finance_operations FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_finance_operations",
+      "name": "admin_finance_operations_no_truncate",
+      "definition": "CREATE TRIGGER admin_finance_operations_no_truncate BEFORE TRUNCATE ON admin_finance_operations FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipt_authority",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_finance_receipt_authority AFTER INSERT ON admin_finance_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_finance_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_immutable",
+      "definition": "CREATE TRIGGER admin_finance_receipts_immutable BEFORE DELETE OR UPDATE ON admin_finance_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_finance_receipts",
+      "name": "admin_finance_receipts_no_truncate",
+      "definition": "CREATE TRIGGER admin_finance_receipts_no_truncate BEFORE TRUNCATE ON admin_finance_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "admin_idol_identity_receipts",
       "name": "admin_idol_identity_receipts_append_only",
       "definition": "CREATE TRIGGER admin_idol_identity_receipts_append_only BEFORE DELETE OR UPDATE ON admin_idol_identity_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
@@ -59951,6 +61156,12 @@
       "enabled": "O"
     },
     {
+      "table": "disputes",
+      "name": "finance_dispute_projection_head",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_dispute_projection_head AFTER INSERT OR UPDATE ON disputes DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_finance_projection_head()",
+      "enabled": "O"
+    },
+    {
       "table": "fulfillment_events",
       "name": "admin_order_admin_event_required",
       "definition": "CREATE CONSTRAINT TRIGGER admin_order_admin_event_required AFTER INSERT ON fulfillment_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION require_admin_order_fulfillment_receipt()",
@@ -59984,6 +61195,12 @@
       "table": "fulfillment_events",
       "name": "fulfillment_events_validate_trigger",
       "definition": "CREATE TRIGGER fulfillment_events_validate_trigger BEFORE INSERT ON fulfillment_events FOR EACH ROW EXECUTE FUNCTION validate_fulfillment_event()",
+      "enabled": "O"
+    },
+    {
+      "table": "fulfillments",
+      "name": "finance_fulfillment_guard",
+      "definition": "CREATE TRIGGER finance_fulfillment_guard BEFORE UPDATE OF status ON fulfillments FOR EACH ROW EXECUTE FUNCTION guard_finance_fulfillment()",
       "enabled": "O"
     },
     {
@@ -61824,6 +63041,12 @@
     },
     {
       "table": "order_events",
+      "name": "finance_order_projection",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_order_projection AFTER INSERT ON order_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_finance_order_projection()",
+      "enabled": "O"
+    },
+    {
+      "table": "order_events",
       "name": "order_event_head_from_event_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER order_event_head_from_event_trigger AFTER INSERT OR DELETE OR UPDATE ON order_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_order_event_head()",
       "enabled": "O"
@@ -62042,6 +63265,12 @@
       "table": "payment_attempt_events",
       "name": "payment_attempt_events_outbox_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER payment_attempt_events_outbox_trigger AFTER INSERT ON payment_attempt_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_payment_state_event_outbox()",
+      "enabled": "O"
+    },
+    {
+      "table": "payment_attempts",
+      "name": "finance_cancel_attempt_guard",
+      "definition": "CREATE TRIGGER finance_cancel_attempt_guard BEFORE INSERT ON payment_attempts FOR EACH ROW EXECUTE FUNCTION guard_finance_cancel_attempt()",
       "enabled": "O"
     },
     {
@@ -62832,6 +64061,18 @@
     },
     {
       "table": "refunds",
+      "name": "finance_refund_dispute_guard",
+      "definition": "CREATE TRIGGER finance_refund_dispute_guard BEFORE INSERT ON refunds FOR EACH ROW EXECUTE FUNCTION guard_finance_refund_dispute()",
+      "enabled": "O"
+    },
+    {
+      "table": "refunds",
+      "name": "finance_refund_projection_head",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_refund_projection_head AFTER INSERT OR UPDATE ON refunds DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_finance_projection_head()",
+      "enabled": "O"
+    },
+    {
+      "table": "refunds",
       "name": "refunds_delete_guard_trigger",
       "definition": "CREATE TRIGGER refunds_delete_guard_trigger BEFORE DELETE ON refunds FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
@@ -63111,6 +64352,26 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_content_locale_grant_audit()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE audit public.audit_logs%ROWTYPE;\nBEGIN\n  IF TG_OP = 'UPDATE' THEN\n    IF NEW.revoked_at IS NOT DISTINCT FROM OLD.revoked_at THEN RETURN NULL; END IF;\n    SELECT * INTO audit FROM public.audit_logs WHERE id = NEW.revoked_audit_log_id;\n    IF audit.id IS NULL OR audit.action <> 'CONTENT_LOCALE_REVOKE' OR audit.created_at <> NEW.revoked_at THEN\n      RAISE EXCEPTION 'locale revocation requires exact audit' USING ERRCODE = '23514';\n    END IF;\n  ELSE\n  SELECT * INTO audit FROM public.audit_logs WHERE id = NEW.audit_log_id;\n    IF audit.id IS NULL OR audit.action <> 'CONTENT_LOCALE_GRANT' OR audit.created_at <> NEW.granted_at THEN\n      RAISE EXCEPTION 'locale grant requires exact audit' USING ERRCODE = '23514';\n    END IF;\n  END IF;\n  IF audit.id IS NULL OR audit.actor_type <> 'ADMIN'\n    OR (TG_OP = 'INSERT' AND audit.actor_id IS DISTINCT FROM NEW.granted_by)\n    OR audit.subject_type <> 'ADMIN_CONTENT_LOCALE_GRANT'\n    OR audit.subject_id <> NEW.admin_identity_id OR audit.outcome <> 'SUCCEEDED'\n    OR audit.reason_code IS NULL OR audit.request_id IS NULL OR audit.correlation_id IS NULL\n    OR audit.field_category IS DISTINCT FROM 'CONTENT_TRANSLATION'\n    OR NOT EXISTS (SELECT 1 FROM public.admin_identities WHERE id = audit.actor_id AND status = 'ACTIVE')\n    OR (TG_OP = 'INSERT' AND NOT EXISTS (SELECT 1 FROM public.admin_identities WHERE id = NEW.admin_identity_id AND status = 'ACTIVE')) THEN\n    RAISE EXCEPTION 'content locale grant requires exact active actor audit' USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_finance_operation_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_finance_operation_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$BEGIN\n IF NOT EXISTS(SELECT 1 FROM admin_finance_receipts WHERE operation_id=NEW.id) THEN RAISE EXCEPTION 'financial operation requires durable command receipt' USING ERRCODE='23514';END IF;RETURN NULL;END;$function$"
+    },
+    {
+      "name": "assert_admin_finance_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_finance_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE a audit_logs%ROWTYPE; op admin_finance_operations%ROWTYPE;\nBEGIN\n SELECT * INTO a FROM audit_logs WHERE id=NEW.audit_log_id;SELECT * INTO op FROM admin_finance_operations WHERE id=NEW.operation_id;\n IF NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,'orders.read',NEW.created_at) OR NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,'finance.manage',NEW.created_at) OR a.actor_type IS DISTINCT FROM 'ADMIN' OR a.actor_id IS DISTINCT FROM NEW.actor_id OR a.outcome IS DISTINCT FROM 'SUCCEEDED' OR a.reason_code IS DISTINCT FROM NEW.reason_code OR a.request_id IS DISTINCT FROM NEW.request_id OR a.correlation_id IS DISTINCT FROM NEW.correlation_id OR a.created_at IS DISTINCT FROM NEW.created_at OR op.order_id IS DISTINCT FROM NEW.order_id OR op.refund_id IS DISTINCT FROM NEW.refund_id THEN RAISE EXCEPTION 'financial operation requires exact live authority and audit' USING ERRCODE='23514';END IF;\n IF (NEW.action IN('CANCEL','RECONCILE') AND (a.action IS DISTINCT FROM 'FINANCE_'||NEW.action||'_REQUESTED' OR a.subject_type IS DISTINCT FROM 'ORDER' OR a.subject_id IS DISTINCT FROM NEW.order_id)) OR (NEW.action IN('REFUND','CANCEL') AND op.action IS DISTINCT FROM NEW.action) OR (NEW.action='RECONCILE' AND NOT ((op.action='REFUND' AND op.refund_id IS NOT NULL) OR (op.action='RECONCILE' AND op.refund_id IS NULL))) THEN RAISE EXCEPTION 'financial receipt must retain exact operation and requested audit action' USING ERRCODE='23514';END IF;\n IF NOT EXISTS(SELECT 1 FROM orders o WHERE o.id=NEW.order_id AND o.version=NEW.expected_order_version+CASE WHEN NEW.action='CANCEL' AND op.phase='COMPLETE' AND o.order_status='CANCELED' THEN 1 ELSE 0 END) THEN RAISE EXCEPTION 'financial receipt requires exact expected order version' USING ERRCODE='23514';END IF;\n IF NEW.action='REFUND' AND (a.action IS DISTINCT FROM 'REFUND_REQUESTED' OR a.subject_type IS DISTINCT FROM 'REFUND' OR a.subject_id IS DISTINCT FROM NEW.refund_id OR NOT EXISTS(SELECT 1 FROM refunds r WHERE r.id=NEW.refund_id AND r.order_id=NEW.order_id AND r.requested_audit_log_id=NEW.audit_log_id)) THEN RAISE EXCEPTION 'refund receipt must bind exact request audit' USING ERRCODE='23514';END IF;\n RETURN NULL;\nEND;$function$"
     },
     {
       "name": "assert_admin_idol_change",
@@ -63521,6 +64782,26 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_dispute_state_event_outbox()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  event_count integer;\n  aggregate_order_id uuid;\nBEGIN\n  SELECT dispute.order_id INTO aggregate_order_id\n  FROM public.disputes dispute\n  WHERE dispute.id = NEW.dispute_id;\n  SELECT count(*) INTO event_count\n  FROM public.disputes dispute\n  JOIN public.orders order_row ON order_row.id = dispute.order_id\n  JOIN public.outbox_events event\n    ON event.event_type = 'DISPUTE_STATUS_CHANGED'\n   AND event.aggregate_type = 'DISPUTE'\n   AND event.aggregate_id = dispute.id\n   AND event.aggregate_version = NEW.sequence\n   AND event.primary_subject_id = dispute.id\n   AND event.secondary_subject_id = order_row.id\n   AND event.request_id = NEW.request_id\n   AND event.correlation_id = NEW.correlation_id\n   AND event.occurred_at = NEW.occurred_at\n   AND event.locale = order_row.presentation_locale\n   AND event.market = order_row.market\n   AND event.currency = dispute.currency\n  WHERE dispute.id = NEW.dispute_id;\n  IF event_count <> 1 THEN\n    RAISE EXCEPTION 'dispute state event and outbox record must commit together'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND;\n$function$"
+    },
+    {
+      "name": "assert_finance_order_projection",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_finance_order_projection()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE total bigint; target text;\nBEGIN\n IF NEW.event_type='PAYMENT_STATUS_CHANGED' AND NEW.authority_kind='REFUND_AGGREGATE' THEN\n SELECT coalesce(sum(processed_amount_minor),0) INTO total FROM refunds WHERE order_id=NEW.order_id AND status='SUCCEEDED';\n SELECT CASE WHEN total=o.total_amount_minor THEN 'REFUNDED' WHEN total>0 AND total<o.total_amount_minor THEN 'PARTIALLY_REFUNDED' ELSE 'PAID' END INTO target FROM orders o WHERE o.id=NEW.order_id;\n IF NEW.to_payment_status IS DISTINCT FROM target THEN RAISE EXCEPTION 'refund order projection requires exact successful total' USING ERRCODE='23514';END IF;\n ELSIF NEW.event_type='DISPUTE_STATUS_CHANGED' THEN\n SELECT CASE WHEN bool_or(status='LOST') THEN 'LOST' WHEN bool_or(status='OPEN') THEN 'OPEN' WHEN bool_and(status='WON') THEN 'WON' ELSE 'NONE' END INTO target FROM disputes WHERE order_id=NEW.order_id AND status<>'NONE';\n IF NEW.to_dispute_status IS DISTINCT FROM target OR NOT EXISTS(SELECT 1 FROM disputes WHERE order_id=NEW.order_id AND provider_event_id=NEW.provider_event_id) THEN RAISE EXCEPTION 'dispute projection requires exact trusted dispute collection' USING ERRCODE='23514';END IF;\n END IF;RETURN NULL;\nEND;$function$"
+    },
+    {
+      "name": "assert_finance_projection_head",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_finance_projection_head()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE target_order uuid := NEW.order_id; target text; current text; total bigint;\nBEGIN\n IF TG_TABLE_NAME='disputes' THEN\n SELECT CASE WHEN bool_or(status='LOST') THEN 'LOST' WHEN bool_or(status='OPEN') THEN 'OPEN' WHEN bool_and(status='WON') THEN 'WON' ELSE 'NONE' END INTO target FROM disputes WHERE order_id=target_order AND status<>'NONE';\n SELECT dispute_status INTO current FROM orders WHERE id=target_order;\n ELSE\n SELECT coalesce(sum(processed_amount_minor),0) INTO total FROM refunds WHERE order_id=target_order AND status='SUCCEEDED';\n SELECT CASE WHEN total=o.total_amount_minor THEN 'REFUNDED' WHEN total>0 AND total<o.total_amount_minor THEN 'PARTIALLY_REFUNDED' ELSE 'PAID' END,payment_status INTO target,current FROM orders o WHERE o.id=target_order;\n END IF;\n IF target IS DISTINCT FROM current THEN RAISE EXCEPTION 'financial evidence must atomically project its complete order aggregate' USING ERRCODE='23514';END IF;RETURN NULL;\nEND;$function$"
     },
     {
       "name": "assert_financial_event_head",
@@ -64413,6 +65694,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_content_locale_grant()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$ BEGIN\n  IF TG_OP = 'INSERT' THEN\n    IF NEW.revoked_at IS NOT NULL OR NEW.revoked_audit_log_id IS NOT NULL OR NEW.granted_at > clock_timestamp() THEN\n      RAISE EXCEPTION 'new locale grant must be current and unrevoked' USING ERRCODE = '23514';\n    END IF;\n  ELSIF to_jsonb(NEW) - ARRAY['revoked_at','revoked_audit_log_id'] IS DISTINCT FROM to_jsonb(OLD) - ARRAY['revoked_at','revoked_audit_log_id']\n    OR (OLD.revoked_at IS NOT NULL AND (NEW.revoked_at IS DISTINCT FROM OLD.revoked_at OR NEW.revoked_audit_log_id IS DISTINCT FROM OLD.revoked_audit_log_id))\n    OR NEW.revoked_at IS NULL OR NEW.revoked_at > clock_timestamp() THEN\n    RAISE EXCEPTION 'locale grant only permits one-way audited revocation' USING ERRCODE = '55000';\n  END IF;\n  RETURN NEW;\nEND; $function$"
     },
     {
+      "name": "guard_admin_finance_operation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_finance_operation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF TG_OP='INSERT' THEN\n IF NEW.generation<>0 OR NEW.dispatch_count<>0 OR NEW.lease_token_digest IS NOT NULL OR NEW.claim IS NOT NULL OR (NEW.phase='COMPLETE' AND NEW.action<>'CANCEL') THEN RAISE EXCEPTION 'financial operation must start unclaimed' USING ERRCODE='23514';END IF;\n IF NEW.attempt_id IS NULL AND (NEW.action<>'CANCEL' OR NEW.phase<>'COMPLETE' OR NEW.provider_account_id IS NOT NULL OR NEW.environment IS NOT NULL OR NEW.adapter_key IS NOT NULL OR EXISTS(SELECT 1 FROM payment_attempts WHERE order_id=NEW.order_id)) THEN RAISE EXCEPTION 'only an unattempted checkout may complete without provider binding' USING ERRCODE='23514';END IF;\n IF NEW.attempt_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM payment_attempts a JOIN payment_provider_accounts p ON p.id=a.provider_account_id WHERE a.id=NEW.attempt_id AND a.order_id=NEW.order_id AND a.provider_account_id=NEW.provider_account_id AND a.environment=NEW.environment AND p.adapter_key=NEW.adapter_key) THEN RAISE EXCEPTION 'financial operation must pin original payment identity' USING ERRCODE='23514';END IF;\n ELSE\n IF to_jsonb(NEW)-ARRAY['phase','generation','dispatch_count','lease_token_digest','lease_expires_at','claim','next_attempt_at','last_error_code','updated_at'] IS DISTINCT FROM to_jsonb(OLD)-ARRAY['phase','generation','dispatch_count','lease_token_digest','lease_expires_at','claim','next_attempt_at','last_error_code','updated_at'] OR NEW.generation<OLD.generation OR NEW.generation>OLD.generation+1 OR NEW.dispatch_count<OLD.dispatch_count OR OLD.phase='COMPLETE' THEN RAISE EXCEPTION 'financial operation immutable binding or fence invalid' USING ERRCODE='55000';END IF;\n END IF;\n RETURN NEW;\nEND;$function$"
+    },
+    {
       "name": "guard_admin_idol_identity",
       "identityArguments": "",
       "resultType": "trigger",
@@ -64581,6 +65872,36 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.guard_customer_contact_transition()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.id <> OLD.id OR NEW.created_at <> OLD.created_at THEN\n    RAISE EXCEPTION 'customer contact identity is immutable' USING ERRCODE = '55000';\n  END IF;\n  IF NOT (\n    NEW.retention_status = OLD.retention_status\n    OR (OLD.retention_status = 'ACTIVE' AND NEW.retention_status = 'PURGE_PENDING')\n    OR (OLD.retention_status = 'PURGE_PENDING' AND NEW.retention_status = 'PURGED')\n  ) THEN\n    RAISE EXCEPTION 'invalid customer contact retention transition' USING ERRCODE = '23514';\n  END IF;\n  IF OLD.retention_status = 'ACTIVE' AND NEW.retention_status = 'ACTIVE'\n     AND (to_jsonb(NEW) - 'email_ciphertext' - 'encrypted_data_key' - 'encryption_key_version'\n          - 'email_lookup_hmac' - 'lookup_key_version') IS DISTINCT FROM\n         (to_jsonb(OLD) - 'email_ciphertext' - 'encrypted_data_key' - 'encryption_key_version'\n          - 'email_lookup_hmac' - 'lookup_key_version') THEN\n    RAISE EXCEPTION 'only encrypted contact material may rotate while active'\n      USING ERRCODE = '55000';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
+    },
+    {
+      "name": "guard_finance_cancel_attempt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_finance_cancel_attempt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$BEGIN\n IF EXISTS(SELECT 1 FROM admin_finance_operations WHERE order_id=NEW.order_id AND action='CANCEL' AND phase<>'COMPLETE') THEN RAISE EXCEPTION 'cancellation intent forbids a new payment attempt' USING ERRCODE='23514';END IF;RETURN NEW;END;$function$"
+    },
+    {
+      "name": "guard_finance_fulfillment",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_finance_fulfillment()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$BEGIN\n IF NEW.status IN('PENDING','PREPARING','DELIVERED') AND NEW.status IS DISTINCT FROM OLD.status THEN\n PERFORM 1 FROM orders WHERE id=NEW.order_id FOR UPDATE;\n IF EXISTS(SELECT 1 FROM disputes WHERE order_id=NEW.order_id AND status IN('OPEN','LOST')) THEN RAISE EXCEPTION 'open or lost dispute prevents fulfillment advancement' USING ERRCODE='23514';END IF;\n IF EXISTS(SELECT 1 FROM refunds WHERE order_id=NEW.order_id AND status IN('REQUESTED','SUBMITTING','PROCESSING','UNKNOWN')) THEN RAISE EXCEPTION 'pending refund prevents preparation or delivery' USING ERRCODE='23514';END IF;\n END IF;RETURN NEW;END;$function$"
+    },
+    {
+      "name": "guard_finance_refund_dispute",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_finance_refund_dispute()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$BEGIN\n IF EXISTS(SELECT 1 FROM disputes WHERE payment_attempt_id=NEW.payment_attempt_id AND status IN('OPEN','LOST')) THEN RAISE EXCEPTION 'open or lost dispute prevents a new refund' USING ERRCODE='23514';END IF;RETURN NEW;END;$function$"
     },
     {
       "name": "guard_fulfillment_profile_transition",
@@ -64860,7 +66181,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.guard_order_transition()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.version <> OLD.version + 1 THEN\n    RAISE EXCEPTION 'order version must increment exactly once' USING ERRCODE = '23514';\n  END IF;\n\n  IF (to_jsonb(NEW)\n        - 'order_status' - 'payment_status' - 'dispute_status' - 'fulfillment_status'\n        - 'current_payment_attempt_id' - 'version' - 'updated_at')\n     IS DISTINCT FROM\n     (to_jsonb(OLD)\n        - 'order_status' - 'payment_status' - 'dispute_status' - 'fulfillment_status'\n        - 'current_payment_attempt_id' - 'version' - 'updated_at') THEN\n    RAISE EXCEPTION 'order identity and amount snapshot are immutable' USING ERRCODE = '55000';\n  END IF;\n\n  IF NEW.updated_at < OLD.updated_at THEN\n    RAISE EXCEPTION 'order updated_at cannot move backwards' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.order_status = OLD.order_status\n    OR (OLD.order_status = 'DRAFT' AND NEW.order_status = 'PENDING_PAYMENT')\n    OR (OLD.order_status = 'PENDING_PAYMENT' AND NEW.order_status IN ('OPEN', 'CANCELED'))\n    OR (OLD.order_status = 'OPEN' AND NEW.order_status = 'CLOSED')\n    OR (OLD.order_status = 'CANCELED' AND NEW.order_status = 'OPEN')\n  ) THEN\n    RAISE EXCEPTION 'invalid order lifecycle transition' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.payment_status = OLD.payment_status\n    OR (OLD.payment_status = 'UNPAID' AND NEW.payment_status = 'PENDING')\n    OR (OLD.payment_status = 'PENDING' AND NEW.payment_status = 'PAID')\n    OR (OLD.payment_status = 'PAID' AND NEW.payment_status IN ('PARTIALLY_REFUNDED', 'REFUNDED'))\n    OR (OLD.payment_status = 'PARTIALLY_REFUNDED' AND NEW.payment_status = 'REFUNDED')\n  ) THEN\n    RAISE EXCEPTION 'invalid order payment transition' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.dispute_status = OLD.dispute_status\n    OR (OLD.dispute_status = 'NONE' AND NEW.dispute_status = 'OPEN')\n    OR (OLD.dispute_status = 'OPEN' AND NEW.dispute_status IN ('WON', 'LOST'))\n  ) THEN\n    RAISE EXCEPTION 'invalid order dispute transition' USING ERRCODE = '23514';\n  END IF;\n\n  IF OLD.payment_status IN ('PAID', 'PARTIALLY_REFUNDED', 'REFUNDED')\n     AND NEW.current_payment_attempt_id IS DISTINCT FROM OLD.current_payment_attempt_id THEN\n    RAISE EXCEPTION 'captured order payment attempt binding is immutable' USING ERRCODE = '55000';\n  END IF;\n\n  IF NEW.order_status = OLD.order_status\n     AND NEW.payment_status = OLD.payment_status\n     AND NEW.dispute_status = OLD.dispute_status\n     AND NEW.fulfillment_status = OLD.fulfillment_status\n     AND NEW.current_payment_attempt_id IS NOT DISTINCT FROM OLD.current_payment_attempt_id THEN\n    RAISE EXCEPTION 'order update must change a versioned aggregate field' USING ERRCODE = '23514';\n  END IF;\n\n  RETURN NEW;\nEND;\n$function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_order_transition()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.version <> OLD.version + 1 THEN\n    RAISE EXCEPTION 'order version must increment exactly once' USING ERRCODE = '23514';\n  END IF;\n\n  IF (to_jsonb(NEW)\n        - 'order_status' - 'payment_status' - 'dispute_status' - 'fulfillment_status'\n        - 'current_payment_attempt_id' - 'version' - 'updated_at')\n     IS DISTINCT FROM\n     (to_jsonb(OLD)\n        - 'order_status' - 'payment_status' - 'dispute_status' - 'fulfillment_status'\n        - 'current_payment_attempt_id' - 'version' - 'updated_at') THEN\n    RAISE EXCEPTION 'order identity and amount snapshot are immutable' USING ERRCODE = '55000';\n  END IF;\n\n  IF NEW.updated_at < OLD.updated_at THEN\n    RAISE EXCEPTION 'order updated_at cannot move backwards' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.order_status = OLD.order_status\n    OR (OLD.order_status = 'DRAFT' AND NEW.order_status = 'PENDING_PAYMENT')\n    OR (OLD.order_status = 'PENDING_PAYMENT' AND NEW.order_status IN ('OPEN', 'CANCELED'))\n    OR (OLD.order_status = 'OPEN' AND NEW.order_status = 'CLOSED')\n    OR (OLD.order_status = 'CANCELED' AND NEW.order_status = 'OPEN')\n  ) THEN\n    RAISE EXCEPTION 'invalid order lifecycle transition' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.payment_status = OLD.payment_status\n    OR (OLD.payment_status = 'UNPAID' AND NEW.payment_status = 'PENDING')\n    OR (OLD.payment_status = 'PENDING' AND NEW.payment_status = 'PAID')\n    OR (OLD.payment_status = 'PAID' AND NEW.payment_status IN ('PARTIALLY_REFUNDED', 'REFUNDED'))\n    OR (OLD.payment_status = 'PARTIALLY_REFUNDED' AND NEW.payment_status = 'REFUNDED')\n  ) THEN\n    RAISE EXCEPTION 'invalid order payment transition' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.dispute_status = OLD.dispute_status\n    OR (NEW.dispute_status IN ('OPEN','WON','LOST'))\n  ) THEN\n    RAISE EXCEPTION 'invalid order dispute transition' USING ERRCODE = '23514';\n  END IF;\n\n  IF OLD.payment_status IN ('PAID', 'PARTIALLY_REFUNDED', 'REFUNDED')\n     AND NEW.current_payment_attempt_id IS DISTINCT FROM OLD.current_payment_attempt_id THEN\n    RAISE EXCEPTION 'captured order payment attempt binding is immutable' USING ERRCODE = '55000';\n  END IF;\n\n  IF NEW.order_status = OLD.order_status\n     AND NEW.payment_status = OLD.payment_status\n     AND NEW.dispute_status = OLD.dispute_status\n     AND NEW.fulfillment_status = OLD.fulfillment_status\n     AND NEW.current_payment_attempt_id IS NOT DISTINCT FROM OLD.current_payment_attempt_id THEN\n    RAISE EXCEPTION 'order update must change a versioned aggregate field' USING ERRCODE = '23514';\n  END IF;\n\n  RETURN NEW;\nEND;\n$function$"
     },
     {
       "name": "guard_payment_config_version_mutation",
@@ -65390,7 +66711,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.validate_order_event()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  previous_event order_events%ROWTYPE;\n  authority_and_fields_valid boolean;\nBEGIN\n  IF NEW.authority_kind = 'ADMIN' THEN\n    PERFORM 1 FROM audit_logs audit\n    WHERE audit.id = NEW.audit_log_id\n    FOR UPDATE;\n\n    IF NOT EXISTS (\n      SELECT 1 FROM audit_logs audit\n      WHERE audit.id = NEW.audit_log_id\n        AND audit.actor_type = 'ADMIN'\n        AND audit.actor_id = NEW.admin_identity_id\n        AND audit.action = 'ORDER_CANCELED'\n        AND audit.subject_type = 'ORDER'\n        AND audit.subject_id = NEW.order_id\n        AND audit.reason_code = NEW.reason_code\n        AND audit.request_id = NEW.request_id\n        AND audit.correlation_id = NEW.correlation_id\n        AND audit.outcome = 'SUCCEEDED'\n        AND audit.created_at = NEW.occurred_at\n        AND NEW.occurred_at = transaction_timestamp()\n    ) THEN\n      RAISE EXCEPTION 'admin order event requires exact fresh successful audit evidence'\n        USING ERRCODE = '23514';\n    END IF;\n\n    IF EXISTS (\n      SELECT 1 FROM order_events event WHERE event.audit_log_id = NEW.audit_log_id\n      UNION ALL\n      SELECT 1 FROM fulfillment_events event WHERE event.audit_log_id = NEW.audit_log_id\n    ) THEN\n      RAISE EXCEPTION 'admin authority audit evidence was already consumed'\n        USING ERRCODE = '23514';\n    END IF;\n  END IF;\n\n  IF NEW.sequence = 1 THEN\n    IF NEW.event_type <> 'ORDER_CREATED'\n       OR NEW.authority_kind <> 'CHECKOUT'\n       OR NEW.from_order_status IS NOT NULL\n       OR NEW.from_payment_status IS NOT NULL\n       OR NEW.from_dispute_status IS NOT NULL\n       OR NEW.from_fulfillment_status IS NOT NULL\n       OR NEW.from_payment_attempt_id IS NOT NULL\n       OR NEW.to_order_status <> 'DRAFT'\n       OR NEW.to_payment_status <> 'UNPAID'\n       OR NEW.to_dispute_status <> 'NONE'\n       OR NEW.to_fulfillment_status <> 'PENDING'\n       OR NEW.to_payment_attempt_id IS NOT NULL THEN\n      RAISE EXCEPTION 'first order event must be an origin snapshot' USING ERRCODE = '23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n\n  SELECT * INTO previous_event\n  FROM order_events\n  WHERE order_id = NEW.order_id AND sequence = NEW.sequence - 1;\n\n  IF previous_event.id IS NULL THEN\n    RAISE EXCEPTION 'order event sequence must be contiguous' USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.event_type = 'ORDER_CREATED'\n     OR NEW.from_order_status <> previous_event.to_order_status\n     OR NEW.from_payment_status <> previous_event.to_payment_status\n     OR NEW.from_dispute_status <> previous_event.to_dispute_status\n     OR NEW.from_fulfillment_status <> previous_event.to_fulfillment_status\n     OR NEW.from_payment_attempt_id IS DISTINCT FROM previous_event.to_payment_attempt_id THEN\n    RAISE EXCEPTION 'order event must continue the prior aggregate snapshot'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_order_status = NEW.from_order_status\n    OR (NEW.from_order_status = 'DRAFT' AND NEW.to_order_status = 'PENDING_PAYMENT')\n    OR (NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status IN ('OPEN', 'CANCELED'))\n    OR (NEW.from_order_status = 'OPEN' AND NEW.to_order_status = 'CLOSED')\n    OR (NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN')\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid lifecycle edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_payment_status = NEW.from_payment_status\n    OR (NEW.from_payment_status = 'UNPAID' AND NEW.to_payment_status = 'PENDING')\n    OR (NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID')\n    OR (NEW.from_payment_status = 'PAID' AND NEW.to_payment_status IN ('PARTIALLY_REFUNDED', 'REFUNDED'))\n    OR (NEW.from_payment_status = 'PARTIALLY_REFUNDED' AND NEW.to_payment_status = 'REFUNDED')\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid payment edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_dispute_status = NEW.from_dispute_status\n    OR (NEW.from_dispute_status = 'NONE' AND NEW.to_dispute_status = 'OPEN')\n    OR (NEW.from_dispute_status = 'OPEN' AND NEW.to_dispute_status IN ('WON', 'LOST'))\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid dispute edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.to_order_status = NEW.from_order_status\n     AND NEW.to_payment_status = NEW.from_payment_status\n     AND NEW.to_dispute_status = NEW.from_dispute_status\n     AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n     AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id THEN\n    RAISE EXCEPTION 'order event must record a state or attempt binding change'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.event_type = 'LIFECYCLE_CHANGED' AND NEW.to_order_status = NEW.from_order_status THEN\n    RAISE EXCEPTION 'lifecycle event must change lifecycle status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'PAYMENT_STATUS_CHANGED' AND NEW.to_payment_status = NEW.from_payment_status THEN\n    RAISE EXCEPTION 'payment event must change payment status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'DISPUTE_STATUS_CHANGED' AND NEW.to_dispute_status = NEW.from_dispute_status THEN\n    RAISE EXCEPTION 'dispute event must change dispute status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'FULFILLMENT_AGGREGATE_CHANGED'\n        AND NEW.to_fulfillment_status = NEW.from_fulfillment_status THEN\n    RAISE EXCEPTION 'fulfillment aggregate event must change fulfillment status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'PAYMENT_ATTEMPT_BOUND'\n        AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id THEN\n    RAISE EXCEPTION 'attempt binding event must change payment attempt' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'LATE_PAYMENT_RECOVERED'\n        AND NOT (NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN') THEN\n    RAISE EXCEPTION 'late payment recovery must reopen a canceled order' USING ERRCODE = '23514';\n  END IF;\n\n  authority_and_fields_valid := CASE NEW.event_type\n    WHEN 'LIFECYCLE_CHANGED' THEN\n      NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND (\n        (NEW.from_order_status = 'DRAFT' AND NEW.to_order_status = 'PENDING_PAYMENT'\n          AND NEW.authority_kind = 'CHECKOUT' AND NEW.reason_code = 'ORDER_CHECKOUT_CREATED')\n        OR (NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status = 'CANCELED'\n          AND NEW.authority_kind IN ('PROVIDER_EVIDENCE', 'ADMIN')\n          AND NEW.reason_code = 'ORDER_CANCELED')\n        OR (NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status = 'CANCELED'\n          AND NEW.authority_kind = 'SYSTEM' AND NEW.reason_code = 'CHECKOUT_QUOTE_EXPIRED'\n          AND NEW.occurred_at = transaction_timestamp()\n          AND EXISTS (SELECT 1 FROM public.orders o WHERE o.id=NEW.order_id\n            AND o.quote_expires_at<=transaction_timestamp() AND o.payment_status IN('UNPAID','PENDING')\n            AND NOT EXISTS(SELECT 1 FROM public.payment_attempts a WHERE a.order_id=o.id AND a.status NOT IN('FAILED','CANCELED','EXPIRED'))\n            AND ((o.current_payment_attempt_id IS NULL AND NOT EXISTS(SELECT 1 FROM public.payment_attempts a WHERE a.order_id=o.id))\n              OR EXISTS(SELECT 1 FROM public.payment_attempts a WHERE a.id=o.current_payment_attempt_id AND a.order_id=o.id AND a.status IN('FAILED','CANCELED','EXPIRED'))))\n          AND EXISTS (SELECT 1 FROM public.audit_logs a WHERE a.id=NEW.audit_log_id\n            AND a.actor_type='SYSTEM' AND a.actor_id IS NULL AND a.task_name IS NOT NULL\n            AND a.action='ORDER_CHECKOUT_EXPIRED' AND a.subject_type='ORDER' AND a.subject_id=NEW.order_id\n            AND a.reason_code='CHECKOUT_QUOTE_EXPIRED' AND a.request_id=NEW.request_id AND a.correlation_id=NEW.correlation_id\n            AND a.outcome='SUCCEEDED' AND a.created_at=NEW.occurred_at)\n          AND NOT EXISTS(SELECT 1 FROM public.order_events e WHERE e.audit_log_id=NEW.audit_log_id)\n          AND NOT EXISTS(SELECT 1 FROM public.fulfillment_events e WHERE e.audit_log_id=NEW.audit_log_id))\n        OR (NEW.from_order_status = 'OPEN' AND NEW.to_order_status = 'CLOSED'\n          AND NEW.authority_kind = 'FULFILLMENT'\n          AND NEW.reason_code = 'ORDER_FULFILLMENT_COMPLETED')\n      )\n    WHEN 'PAYMENT_STATUS_CHANGED' THEN\n      NEW.to_dispute_status = NEW.from_dispute_status\n      AND (\n        (NEW.from_payment_status = 'UNPAID' AND NEW.to_payment_status = 'PENDING'\n          AND NEW.to_order_status = NEW.from_order_status\n          AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n          AND NEW.from_payment_attempt_id IS NULL\n          AND NEW.to_payment_attempt_id IS NOT NULL\n          AND NEW.authority_kind = 'CHECKOUT'\n          AND NEW.reason_code = 'ORDER_PAYMENT_ATTEMPT_CREATED')\n        OR (NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID'\n          AND NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status = 'OPEN'\n          AND NEW.from_fulfillment_status = 'PENDING'\n          AND NEW.to_fulfillment_status IN ('PENDING', 'ON_HOLD')\n          AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n          AND NEW.to_payment_attempt_id IS NOT NULL\n          AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n          AND NEW.reason_code = 'ORDER_PAYMENT_CONFIRMED')\n        OR (NEW.from_payment_status IN ('PAID', 'PARTIALLY_REFUNDED')\n          AND NEW.to_payment_status IN ('PARTIALLY_REFUNDED', 'REFUNDED')\n          AND NEW.to_order_status = NEW.from_order_status\n          AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n          AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n          AND NEW.authority_kind = 'REFUND_AGGREGATE'\n          AND NEW.reason_code = 'ORDER_REFUND_TOTAL_CONFIRMED')\n      )\n    WHEN 'DISPUTE_STATUS_CHANGED' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n    WHEN 'FULFILLMENT_AGGREGATE_CHANGED' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND NEW.authority_kind = 'FULFILLMENT'\n    WHEN 'PAYMENT_ATTEMPT_BOUND' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.authority_kind IN ('CHECKOUT', 'SYSTEM')\n      AND NEW.reason_code = 'PAYMENT_ATTEMPT_BOUND'\n    WHEN 'LATE_PAYMENT_RECOVERED' THEN\n      NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN'\n      AND NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID'\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_payment_attempt_id IS NOT NULL\n      AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n      AND NEW.reason_code IN ('PAYMENT_SUCCESS_RECONCILED', 'LATE_PAYMENT_INVENTORY_UNAVAILABLE')\n    ELSE false\n  END;\n\n  IF NOT authority_and_fields_valid THEN\n    RAISE EXCEPTION 'order event authority or changed-field set is invalid'\n      USING ERRCODE = '23514';\n  END IF;\n\n  RETURN NEW;\nEND;\n$function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.validate_order_event()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  previous_event order_events%ROWTYPE;\n  authority_and_fields_valid boolean;\nBEGIN\n  IF NEW.authority_kind = 'ADMIN' THEN\n    PERFORM 1 FROM audit_logs audit\n    WHERE audit.id = NEW.audit_log_id\n    FOR UPDATE;\n\n    IF NOT EXISTS (\n      SELECT 1 FROM audit_logs audit\n      WHERE audit.id = NEW.audit_log_id\n        AND audit.actor_type = 'ADMIN'\n        AND audit.actor_id = NEW.admin_identity_id\n        AND audit.action = 'ORDER_CANCELED'\n        AND audit.subject_type = 'ORDER'\n        AND audit.subject_id = NEW.order_id\n        AND audit.reason_code = NEW.reason_code\n        AND audit.request_id = NEW.request_id\n        AND audit.correlation_id = NEW.correlation_id\n        AND audit.outcome = 'SUCCEEDED'\n        AND audit.created_at = NEW.occurred_at\n        AND NEW.occurred_at = transaction_timestamp()\n    ) THEN\n      RAISE EXCEPTION 'admin order event requires exact fresh successful audit evidence'\n        USING ERRCODE = '23514';\n    END IF;\n\n    IF EXISTS (\n      SELECT 1 FROM order_events event WHERE event.audit_log_id = NEW.audit_log_id\n      UNION ALL\n      SELECT 1 FROM fulfillment_events event WHERE event.audit_log_id = NEW.audit_log_id\n    ) THEN\n      RAISE EXCEPTION 'admin authority audit evidence was already consumed'\n        USING ERRCODE = '23514';\n    END IF;\n  END IF;\n\n  IF NEW.sequence = 1 THEN\n    IF NEW.event_type <> 'ORDER_CREATED'\n       OR NEW.authority_kind <> 'CHECKOUT'\n       OR NEW.from_order_status IS NOT NULL\n       OR NEW.from_payment_status IS NOT NULL\n       OR NEW.from_dispute_status IS NOT NULL\n       OR NEW.from_fulfillment_status IS NOT NULL\n       OR NEW.from_payment_attempt_id IS NOT NULL\n       OR NEW.to_order_status <> 'DRAFT'\n       OR NEW.to_payment_status <> 'UNPAID'\n       OR NEW.to_dispute_status <> 'NONE'\n       OR NEW.to_fulfillment_status <> 'PENDING'\n       OR NEW.to_payment_attempt_id IS NOT NULL THEN\n      RAISE EXCEPTION 'first order event must be an origin snapshot' USING ERRCODE = '23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n\n  SELECT * INTO previous_event\n  FROM order_events\n  WHERE order_id = NEW.order_id AND sequence = NEW.sequence - 1;\n\n  IF previous_event.id IS NULL THEN\n    RAISE EXCEPTION 'order event sequence must be contiguous' USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.event_type = 'ORDER_CREATED'\n     OR NEW.from_order_status <> previous_event.to_order_status\n     OR NEW.from_payment_status <> previous_event.to_payment_status\n     OR NEW.from_dispute_status <> previous_event.to_dispute_status\n     OR NEW.from_fulfillment_status <> previous_event.to_fulfillment_status\n     OR NEW.from_payment_attempt_id IS DISTINCT FROM previous_event.to_payment_attempt_id THEN\n    RAISE EXCEPTION 'order event must continue the prior aggregate snapshot'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_order_status = NEW.from_order_status\n    OR (NEW.from_order_status = 'DRAFT' AND NEW.to_order_status = 'PENDING_PAYMENT')\n    OR (NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status IN ('OPEN', 'CANCELED'))\n    OR (NEW.from_order_status = 'OPEN' AND NEW.to_order_status = 'CLOSED')\n    OR (NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN')\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid lifecycle edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_payment_status = NEW.from_payment_status\n    OR (NEW.from_payment_status = 'UNPAID' AND NEW.to_payment_status = 'PENDING')\n    OR (NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID')\n    OR (NEW.from_payment_status = 'PAID' AND NEW.to_payment_status IN ('PARTIALLY_REFUNDED', 'REFUNDED'))\n    OR (NEW.from_payment_status = 'PARTIALLY_REFUNDED' AND NEW.to_payment_status = 'REFUNDED')\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid payment edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NOT (\n    NEW.to_dispute_status = NEW.from_dispute_status\n    OR (NEW.to_dispute_status IN ('OPEN','WON','LOST'))\n  ) THEN\n    RAISE EXCEPTION 'order event contains an invalid dispute edge' USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.to_order_status = NEW.from_order_status\n     AND NEW.to_payment_status = NEW.from_payment_status\n     AND NEW.to_dispute_status = NEW.from_dispute_status\n     AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n     AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id THEN\n    RAISE EXCEPTION 'order event must record a state or attempt binding change'\n      USING ERRCODE = '23514';\n  END IF;\n\n  IF NEW.event_type = 'LIFECYCLE_CHANGED' AND NEW.to_order_status = NEW.from_order_status THEN\n    RAISE EXCEPTION 'lifecycle event must change lifecycle status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'PAYMENT_STATUS_CHANGED' AND NEW.to_payment_status = NEW.from_payment_status THEN\n    RAISE EXCEPTION 'payment event must change payment status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'DISPUTE_STATUS_CHANGED' AND NEW.to_dispute_status = NEW.from_dispute_status THEN\n    RAISE EXCEPTION 'dispute event must change dispute status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'FULFILLMENT_AGGREGATE_CHANGED'\n        AND NEW.to_fulfillment_status = NEW.from_fulfillment_status THEN\n    RAISE EXCEPTION 'fulfillment aggregate event must change fulfillment status' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'PAYMENT_ATTEMPT_BOUND'\n        AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id THEN\n    RAISE EXCEPTION 'attempt binding event must change payment attempt' USING ERRCODE = '23514';\n  ELSIF NEW.event_type = 'LATE_PAYMENT_RECOVERED'\n        AND NOT (NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN') THEN\n    RAISE EXCEPTION 'late payment recovery must reopen a canceled order' USING ERRCODE = '23514';\n  END IF;\n\n  authority_and_fields_valid := CASE NEW.event_type\n    WHEN 'LIFECYCLE_CHANGED' THEN\n      NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND (\n        (NEW.from_order_status = 'DRAFT' AND NEW.to_order_status = 'PENDING_PAYMENT'\n          AND NEW.authority_kind = 'CHECKOUT' AND NEW.reason_code = 'ORDER_CHECKOUT_CREATED')\n        OR (NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status = 'CANCELED'\n          AND NEW.authority_kind IN ('PROVIDER_EVIDENCE', 'ADMIN')\n          AND NEW.reason_code = 'ORDER_CANCELED')\n        OR (NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status = 'CANCELED'\n          AND NEW.authority_kind = 'SYSTEM' AND NEW.reason_code = 'CHECKOUT_QUOTE_EXPIRED'\n          AND NEW.occurred_at = transaction_timestamp()\n          AND EXISTS (SELECT 1 FROM public.orders o WHERE o.id=NEW.order_id\n            AND o.quote_expires_at<=transaction_timestamp() AND o.payment_status IN('UNPAID','PENDING')\n            AND NOT EXISTS(SELECT 1 FROM public.payment_attempts a WHERE a.order_id=o.id AND a.status NOT IN('FAILED','CANCELED','EXPIRED'))\n            AND ((o.current_payment_attempt_id IS NULL AND NOT EXISTS(SELECT 1 FROM public.payment_attempts a WHERE a.order_id=o.id))\n              OR EXISTS(SELECT 1 FROM public.payment_attempts a WHERE a.id=o.current_payment_attempt_id AND a.order_id=o.id AND a.status IN('FAILED','CANCELED','EXPIRED'))))\n          AND EXISTS (SELECT 1 FROM public.audit_logs a WHERE a.id=NEW.audit_log_id\n            AND a.actor_type='SYSTEM' AND a.actor_id IS NULL AND a.task_name IS NOT NULL\n            AND a.action='ORDER_CHECKOUT_EXPIRED' AND a.subject_type='ORDER' AND a.subject_id=NEW.order_id\n            AND a.reason_code='CHECKOUT_QUOTE_EXPIRED' AND a.request_id=NEW.request_id AND a.correlation_id=NEW.correlation_id\n            AND a.outcome='SUCCEEDED' AND a.created_at=NEW.occurred_at)\n          AND NOT EXISTS(SELECT 1 FROM public.order_events e WHERE e.audit_log_id=NEW.audit_log_id)\n          AND NOT EXISTS(SELECT 1 FROM public.fulfillment_events e WHERE e.audit_log_id=NEW.audit_log_id))\n        OR (NEW.from_order_status = 'OPEN' AND NEW.to_order_status = 'CLOSED'\n          AND NEW.authority_kind = 'FULFILLMENT'\n          AND NEW.reason_code = 'ORDER_FULFILLMENT_COMPLETED')\n      )\n    WHEN 'PAYMENT_STATUS_CHANGED' THEN\n      NEW.to_dispute_status = NEW.from_dispute_status\n      AND (\n        (NEW.from_payment_status = 'UNPAID' AND NEW.to_payment_status = 'PENDING'\n          AND NEW.to_order_status = NEW.from_order_status\n          AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n          AND NEW.from_payment_attempt_id IS NULL\n          AND NEW.to_payment_attempt_id IS NOT NULL\n          AND NEW.authority_kind = 'CHECKOUT'\n          AND NEW.reason_code = 'ORDER_PAYMENT_ATTEMPT_CREATED')\n        OR (NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID'\n          AND NEW.from_order_status = 'PENDING_PAYMENT' AND NEW.to_order_status = 'OPEN'\n          AND NEW.from_fulfillment_status = 'PENDING'\n          AND NEW.to_fulfillment_status IN ('PENDING', 'ON_HOLD')\n          AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n          AND NEW.to_payment_attempt_id IS NOT NULL\n          AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n          AND NEW.reason_code = 'ORDER_PAYMENT_CONFIRMED')\n        OR (NEW.from_payment_status IN ('PAID', 'PARTIALLY_REFUNDED')\n          AND NEW.to_payment_status IN ('PARTIALLY_REFUNDED', 'REFUNDED')\n          AND NEW.to_order_status = NEW.from_order_status\n          AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n          AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n          AND NEW.authority_kind = 'REFUND_AGGREGATE'\n          AND NEW.reason_code = 'ORDER_REFUND_TOTAL_CONFIRMED')\n      )\n    WHEN 'DISPUTE_STATUS_CHANGED' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n    WHEN 'FULFILLMENT_AGGREGATE_CHANGED' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_payment_attempt_id IS NOT DISTINCT FROM NEW.from_payment_attempt_id\n      AND NEW.authority_kind = 'FULFILLMENT'\n    WHEN 'PAYMENT_ATTEMPT_BOUND' THEN\n      NEW.to_order_status = NEW.from_order_status\n      AND NEW.to_payment_status = NEW.from_payment_status\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_fulfillment_status = NEW.from_fulfillment_status\n      AND NEW.authority_kind IN ('CHECKOUT', 'SYSTEM')\n      AND NEW.reason_code = 'PAYMENT_ATTEMPT_BOUND'\n    WHEN 'LATE_PAYMENT_RECOVERED' THEN\n      NEW.from_order_status = 'CANCELED' AND NEW.to_order_status = 'OPEN'\n      AND NEW.from_payment_status = 'PENDING' AND NEW.to_payment_status = 'PAID'\n      AND NEW.to_dispute_status = NEW.from_dispute_status\n      AND NEW.to_payment_attempt_id IS NOT NULL\n      AND NEW.authority_kind = 'PROVIDER_EVIDENCE'\n      AND NEW.reason_code IN ('PAYMENT_SUCCESS_RECONCILED', 'LATE_PAYMENT_INVENTORY_UNAVAILABLE')\n    ELSE false\n  END;\n\n  IF NOT authority_and_fields_valid THEN\n    RAISE EXCEPTION 'order event authority or changed-field set is invalid'\n      USING ERRCODE = '23514';\n  END IF;\n\n  RETURN NEW;\nEND;\n$function$"
     },
     {
       "name": "validate_order_item_snapshot",
@@ -65410,7 +66731,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.validate_order_provider_cancel_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.authority_kind <> 'PROVIDER_EVIDENCE'\n     OR NEW.event_type <> 'LIFECYCLE_CHANGED'\n     OR NEW.from_order_status <> 'PENDING_PAYMENT'\n     OR NEW.to_order_status <> 'CANCELED' THEN\n    RETURN NEW;\n  END IF;\n\n  IF NOT EXISTS (\n    SELECT 1\n    FROM public.orders order_row\n    JOIN public.payment_attempts attempt\n      ON attempt.id = NEW.to_payment_attempt_id\n     AND attempt.order_id = NEW.order_id\n    JOIN public.provider_event_associations association\n      ON association.provider_event_id = NEW.provider_event_id\n     AND association.association_status = 'MATCHED'\n     AND association.payment_attempt_id = attempt.id\n    JOIN public.provider_events event\n      ON event.id = association.provider_event_id\n     AND event.provider_account_id = attempt.provider_account_id\n     AND event.environment = attempt.environment\n     AND event.external_payment_reference = attempt.external_reference\n    JOIN public.payment_attempt_events attempt_event\n      ON attempt_event.payment_attempt_id = attempt.id\n     AND attempt_event.sequence = attempt.version\n     AND attempt_event.to_status = attempt.status\n     AND attempt_event.provider_event_id = event.id\n     AND attempt_event.request_id = NEW.request_id\n     AND attempt_event.correlation_id = NEW.correlation_id\n     AND attempt_event.occurred_at = NEW.occurred_at\n    WHERE order_row.id = NEW.order_id\n      AND order_row.current_payment_attempt_id = attempt.id\n      AND NEW.from_payment_attempt_id = attempt.id\n      AND NEW.to_payment_attempt_id = attempt.id\n      AND attempt.status = event.normalized_status\n      AND event.event_type = 'PAYMENT_STATUS'\n      AND event.normalized_status IN ('FAILED', 'CANCELED', 'EXPIRED')\n      AND event.evidence_kind = attempt.status_evidence_kind\n      AND event.reconcile_audit_log_id IS NOT DISTINCT FROM attempt.evidence_audit_log_id\n      AND event.occurred_at = NEW.occurred_at\n  ) THEN\n    RAISE EXCEPTION 'provider order cancellation requires the current attempt terminal evidence chain'\n      USING ERRCODE = '23514';\n  END IF;\n\n  RETURN NEW;\nEND;\n$function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.validate_order_provider_cancel_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.authority_kind='PROVIDER_EVIDENCE' AND NEW.event_type='LIFECYCLE_CHANGED' AND NEW.from_order_status='PENDING_PAYMENT' AND NEW.to_order_status='CANCELED'\n    AND EXISTS(SELECT 1 FROM admin_finance_operations x JOIN admin_finance_receipts r ON r.operation_id=x.id JOIN payment_attempts a ON a.id=x.attempt_id JOIN provider_events e ON e.id=NEW.provider_event_id JOIN provider_event_associations matched ON matched.provider_event_id=e.id AND matched.association_status='MATCHED' AND matched.payment_attempt_id=a.id\n      WHERE x.order_id=NEW.order_id AND x.action='CANCEL' AND r.action='CANCEL' AND a.id=NEW.to_payment_attempt_id AND a.status IN('FAILED','CANCELED','EXPIRED') AND a.status=e.normalized_status AND a.provider_account_id=e.provider_account_id AND a.environment=e.environment AND a.external_reference=e.external_payment_reference AND a.amount_minor=e.amount_minor AND a.currency=e.currency AND e.event_type='PAYMENT_STATUS') THEN RETURN NEW; END IF;\n  IF NEW.authority_kind <> 'PROVIDER_EVIDENCE'\n     OR NEW.event_type <> 'LIFECYCLE_CHANGED'\n     OR NEW.from_order_status <> 'PENDING_PAYMENT'\n     OR NEW.to_order_status <> 'CANCELED' THEN\n    RETURN NEW;\n  END IF;\n\n  IF NOT EXISTS (\n    SELECT 1\n    FROM public.orders order_row\n    JOIN public.payment_attempts attempt\n      ON attempt.id = NEW.to_payment_attempt_id\n     AND attempt.order_id = NEW.order_id\n    JOIN public.provider_event_associations association\n      ON association.provider_event_id = NEW.provider_event_id\n     AND association.association_status = 'MATCHED'\n     AND association.payment_attempt_id = attempt.id\n    JOIN public.provider_events event\n      ON event.id = association.provider_event_id\n     AND event.provider_account_id = attempt.provider_account_id\n     AND event.environment = attempt.environment\n     AND event.external_payment_reference = attempt.external_reference\n    JOIN public.payment_attempt_events attempt_event\n      ON attempt_event.payment_attempt_id = attempt.id\n     AND attempt_event.sequence = attempt.version\n     AND attempt_event.to_status = attempt.status\n     AND attempt_event.provider_event_id = event.id\n     AND attempt_event.request_id = NEW.request_id\n     AND attempt_event.correlation_id = NEW.correlation_id\n     AND attempt_event.occurred_at = NEW.occurred_at\n    WHERE order_row.id = NEW.order_id\n      AND order_row.current_payment_attempt_id = attempt.id\n      AND NEW.from_payment_attempt_id = attempt.id\n      AND NEW.to_payment_attempt_id = attempt.id\n      AND attempt.status = event.normalized_status\n      AND event.event_type = 'PAYMENT_STATUS'\n      AND event.normalized_status IN ('FAILED', 'CANCELED', 'EXPIRED')\n      AND event.evidence_kind = attempt.status_evidence_kind\n      AND event.reconcile_audit_log_id IS NOT DISTINCT FROM attempt.evidence_audit_log_id\n      AND event.occurred_at = NEW.occurred_at\n  ) THEN\n    RAISE EXCEPTION 'provider order cancellation requires the current attempt terminal evidence chain'\n      USING ERRCODE = '23514';\n  END IF;\n\n  RETURN NEW;\nEND;\n$function$"
     },
     {
       "name": "validate_outbox_event_shape",
@@ -65510,7 +66831,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.validate_provider_event_canonical_alias()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.canonical_transaction_event_id IS NULL THEN RETURN NEW; END IF;\n  IF NEW.id=NEW.canonical_transaction_event_id OR NEW.provider_transaction_type IS DISTINCT FROM 'CAPTURE'\n    OR NOT EXISTS (\n      SELECT 1 FROM provider_events canonical\n      JOIN provider_event_associations association ON association.provider_event_id=canonical.id AND association.association_status='MATCHED'\n      JOIN payment_transactions ledger ON ledger.provider_event_id=canonical.id AND ledger.payment_attempt_id=association.payment_attempt_id\n      WHERE canonical.id=NEW.canonical_transaction_event_id AND canonical.canonical_transaction_event_id IS NULL\n        AND canonical.provider_account_id=NEW.provider_account_id AND canonical.environment=NEW.environment\n        AND canonical.event_type=NEW.event_type AND canonical.normalized_status=NEW.normalized_status\n        AND canonical.external_payment_reference=NEW.external_payment_reference\n        AND canonical.provider_transaction_type=NEW.provider_transaction_type\n        AND canonical.provider_transaction_reference=NEW.provider_transaction_reference\n        AND canonical.amount_minor=NEW.amount_minor AND canonical.currency=NEW.currency\n        AND ledger.transaction_type=canonical.provider_transaction_type AND ledger.provider_transaction_reference=canonical.provider_transaction_reference\n        AND ledger.amount_minor=canonical.amount_minor AND ledger.currency=canonical.currency\n        AND ledger.evidence_kind=canonical.evidence_kind AND ledger.reconcile_audit_log_id IS NOT DISTINCT FROM canonical.reconcile_audit_log_id\n        AND ledger.occurred_at=canonical.occurred_at\n    ) THEN\n    RAISE EXCEPTION 'payment capture alias requires exact canonical authenticated ledger' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.validate_provider_event_canonical_alias()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.canonical_transaction_event_id IS NULL THEN RETURN NEW; END IF;\n  IF NEW.id=NEW.canonical_transaction_event_id OR NEW.provider_transaction_type NOT IN ('CAPTURE','REFUND','CHARGEBACK','VOID')\n    OR NOT EXISTS (\n      SELECT 1 FROM provider_events canonical\n      JOIN provider_event_associations association ON association.provider_event_id=canonical.id AND association.association_status='MATCHED'\n      JOIN payment_transactions ledger ON ledger.provider_event_id=canonical.id AND ledger.payment_attempt_id=association.payment_attempt_id\n      WHERE canonical.id=NEW.canonical_transaction_event_id AND canonical.canonical_transaction_event_id IS NULL\n        AND canonical.provider_account_id=NEW.provider_account_id AND canonical.environment=NEW.environment\n        AND canonical.event_type=NEW.event_type AND (canonical.normalized_status=NEW.normalized_status OR (NEW.provider_transaction_type='CHARGEBACK' AND canonical.normalized_status IN('OPEN','LOST') AND NEW.normalized_status IN('OPEN','LOST')))\n        AND canonical.provider_refund_reference IS NOT DISTINCT FROM NEW.provider_refund_reference AND canonical.provider_dispute_reference IS NOT DISTINCT FROM NEW.provider_dispute_reference\n        AND canonical.external_payment_reference=NEW.external_payment_reference\n        AND canonical.provider_transaction_type=NEW.provider_transaction_type\n        AND canonical.provider_transaction_reference=NEW.provider_transaction_reference\n        AND canonical.amount_minor=NEW.amount_minor AND canonical.currency=NEW.currency\n        AND ledger.transaction_type=canonical.provider_transaction_type AND ledger.provider_transaction_reference=canonical.provider_transaction_reference\n        AND ledger.amount_minor=canonical.amount_minor AND ledger.currency=canonical.currency\n        AND ledger.evidence_kind=canonical.evidence_kind AND ledger.reconcile_audit_log_id IS NOT DISTINCT FROM canonical.reconcile_audit_log_id\n        AND ledger.occurred_at=canonical.occurred_at\n    ) THEN\n    RAISE EXCEPTION 'payment capture alias requires exact canonical authenticated ledger' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
     },
     {
       "name": "validate_provider_event_evidence",

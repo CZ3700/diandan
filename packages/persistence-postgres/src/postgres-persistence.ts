@@ -1,3 +1,8 @@
+import { createAdminFinanceRepository } from "./admin-finance-repository.js";
+import type {
+  AdminFinanceRepository,
+  AdminFinanceTransactionManager,
+} from "@fan-support/persistence-port";
 import { acquirePaymentHealthClient } from "./payment-health-client.js";
 import { createPaymentHealthRepository } from "./payment-health-repository.js";
 import type {
@@ -188,6 +193,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly adminFinanceTransactionManager: AdminFinanceTransactionManager;
   readonly paymentHealthTransactionManager: PaymentHealthTransactionManager;
   readonly adminOrdersTransactionManager: AdminOrdersTransactionManager;
   readonly adminOrderResendNotificationTransactionManager: NotificationTransactionManager;
@@ -359,6 +365,25 @@ export function createPostgresPersistenceWithPoolFactory(
       };
     },
   });
+  const financeRepositories = (
+    client: TransactionClient,
+    scope: Parameters<typeof createAdminOrdersRepository>[1],
+  ) => {
+    const database = createPostgresQueryLayer(client as NodePgClient);
+    const inventory = createInventoryRepository(database, scope),
+      outbox = createOutboxRepository(database, scope);
+    return createAdminFinanceRepository(
+      client,
+      scope,
+      outbox,
+      inventory,
+      createOrderPaymentApplicationRepository(client, inventory, outbox, scope),
+    );
+  };
+  const adminFinanceRunner = createTransactionRunner<AdminFinanceRepository>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: financeRepositories,
+  });
   const adminOrdersRunner = createTransactionRunner<AdminOrdersRepositories>({
     acquireClient: async () => pool.connect(),
     createRepositories: (client, scope) => ({
@@ -512,6 +537,7 @@ export function createPostgresPersistenceWithPoolFactory(
       createRepositories: (client, transactionScope) => {
         const database = createPostgresQueryLayer(client as NodePgClient);
         return {
+          adminFinance: financeRepositories(client, transactionScope),
           orderPaymentApplication: createOrderPaymentApplicationRepository(
             client,
             createInventoryRepository(database, transactionScope),
@@ -1148,6 +1174,19 @@ export function createPostgresPersistenceWithPoolFactory(
           });
         return publishedContentRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    adminFinanceTransactionManager: {
+      async runInAdminFinanceTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminFinanceRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );
       },

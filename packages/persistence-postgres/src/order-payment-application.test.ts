@@ -157,3 +157,20 @@ test("a persisted matched association is used before external-reference fallback
   expect(lookup).toContain("NOT EXISTS(SELECT 1 FROM matched)");
   expect(query.mock.calls[2]?.[1]).toContain(id(1));
 });
+test("refund evidence is left to the finance applier before comparing the payment capture amount", async () => {
+  const { repo, query } = setup([
+    [{ id: id(1), event_type: "REFUND_STATUS" }],
+    [],
+    [],
+  ]);
+  const result = await repo.apply(command);
+  expect(result).toMatchObject({
+    decision: "IGNORED",
+    reasonCode: "NON_PAYMENT_EVENT",
+  });
+  expect(
+    query.mock.calls.some(([sql]) =>
+      sql.includes("UPDATE public.payment_attempts"),
+    ),
+  ).toBe(false);
+});

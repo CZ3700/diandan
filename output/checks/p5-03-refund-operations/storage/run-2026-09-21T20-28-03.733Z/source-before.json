@@ -1,0 +1,130 @@
+[
+  {
+    "name": "apps/api/scripts/admin-orders-fixtures.mjs",
+    "sha256": "dd798b574943b24c3d30a42d08c2b473dbb471fd0de94b69e35b2f507ea00825"
+  },
+  {
+    "name": "database/migrations/0032_admin-order-resends.up.sql",
+    "sha256": "dea13c99e16e1cd4f46b3b968235c68fd8beb4e38550d92b0b1a4fcc0802923a"
+  },
+  {
+    "name": "database/migrations/0035_admin-finance.down.sql",
+    "sha256": "5a9fdc1efddcf67c2fc3d8c0e3b041dee3da6f4bd1b69af59e451aca82033063"
+  },
+  {
+    "name": "database/migrations/0035_admin-finance.up.sql",
+    "sha256": "cfe8caae037ab443a74a35e9b7280e4fece52b9e6c4303c1f02ce3b3c70c6736"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-apply.d.ts",
+    "sha256": "4cb5837086c6e1688cf1649025804e740a4718ea9a52aa8b5abb8158c9ed36c6"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-apply.js",
+    "sha256": "ed0489a2469c5801ecc59ac3e681e41cdb96217253ee2966a2997a88e2d288cd"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-cancel.d.ts",
+    "sha256": "88111324a1c268bf1e392a7e5c3dbc57ca834bc839d739febd05090f7930a93f"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-cancel.js",
+    "sha256": "ac22c608e07359daad1e9f6842c939635e71608679f00d79e858cad8cafbfe09"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-command.d.ts",
+    "sha256": "8a4ff36b23331d1eb63342851c11b66811247adb43ae0b370e0fdecb6ca2ecd9"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-command.js",
+    "sha256": "078732426d48bbf189525fb02bd3498fe185e06f8fb0086f5a1ac5f7d551adbe"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-data.d.ts",
+    "sha256": "cb50fad1eab2309fe5fc33312a06d76867595f60adf1a0995aeea5ce9fd4d3c9"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-data.js",
+    "sha256": "5848de5c0686ad02572e7d9409c77e4dfd515c0bfc39e64a47f31c375ca30634"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-evidence.d.ts",
+    "sha256": "449c77f1080a5fa172bb5689fd9ea03d20e7fb1d57547be8c0888f141f4e71fa"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-evidence.js",
+    "sha256": "b11b53952f089eb0473c72f6a8add9815d82025ac00efbb2df7575fd31b09e21"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-read.d.ts",
+    "sha256": "8ea7f5dd3455b707798f82a9fe1041a5a6180b725325529449e8626eb8a4e6c2"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-read.js",
+    "sha256": "36627f5c7cb0f37b6c7116705aa9e275b42a463e428cd63c61661ae2372ec3c7"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-recovery.d.ts",
+    "sha256": "02506c636667fbbe386d38e72c7d281a66a67c584286749b68a3fdf96c107bb5"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-recovery.js",
+    "sha256": "51eaff3f6149e8d99aeed25fddad8f4afe089c43633c55675a3821bd771e2347"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-repository.d.ts",
+    "sha256": "227aa5ed5640e989cb0e899d7d7e10276d9e4a7d38d96be85f61022fb4d2dc2b"
+  },
+  {
+    "name": "packages/persistence-postgres/dist/admin-finance-repository.js",
+    "sha256": "b969e6b0df0e5160e11dd68452e5c1e6175ded3a642cb158787618f8f084f89c"
+  },
+  {
+    "name": "packages/persistence-postgres/scripts/admin-finance-fixture.mjs",
+    "sha256": "abb4db9a3f38f93daf3da271e9827e49e307137ec4b2c12da3e32b43be9105c1"
+  },
+  {
+    "name": "packages/persistence-postgres/scripts/admin-finance-integration.mjs",
+    "sha256": "7cf7307d10745f0d640d5cf8472a1e33e69055f6aad0a173ef0255fa8d5bf9d0"
+  },
+  {
+    "name": "packages/persistence-postgres/src/admin-finance-apply.ts",
+    "sha256": "b5dc4cd56221299d3d0509f6fe743fa89c5f3ef8bba665a04fa20325946c0b9a"
+  },
+  {
+    "name": "packages/persistence-postgres/src/admin-finance-cancel.ts",
+    "sha256": "a5b6fcb3ecf288c1c8412c68a721ff74e67c74bb58315f88f98c620e8991b58d"
+  },
+  {
+    "name": "packages/persistence-postgres/src/admin-finance-command.ts",
+    "sha256": "75a9558601ff132fece5addd21a3a16a7c4d7b1585141786e7fd6809ffeaef01"
+  },
+  {
+    "name": "packages/persistence-postgres/src/admin-finance-data.ts",
+    "sha256": "72f8f0bc098a98cedcd2cf8ac22d34393a0a92bcf98f3966307d7574f8fb9474"
+  },
+  {
+    "name": "packages/persistence-postgres/src/admin-finance-evidence.ts",
+    "sha256": "eaf58594f65ad9a8f2366f5cbf78f8055742ddae3d450e23d694f2c40fd2a4c5"
+  },
+  {
+    "name": "packages/persistence-postgres/src/admin-finance-migration.test.ts",
+    "sha256": "423b819b332b1cb96b6e09b59bd4f019ab9c957f515262b47a81b45be57ed95b"
+  },
+  {
+    "name": "packages/persistence-postgres/src/admin-finance-read.test.ts",
+    "sha256": "398cb9b111de55b62bff848b7d455b3cb441360feded59d407b7b523be800697"
+  },
+  {
+    "name": "packages/persistence-postgres/src/admin-finance-read.ts",
+    "sha256": "cb110cbe447cc3f33078100dc0f7b839298429c3c8df8a9c0f5f244988205b6d"
+  },
+  {
+    "name": "packages/persistence-postgres/src/admin-finance-recovery.ts",
+    "sha256": "7855004cda5e105d4171e94e4e55133b8e35ee71789f3c69bd801822b96bb48d"
+  },
+  {
+    "name": "packages/persistence-postgres/src/admin-finance-repository.ts",
+    "sha256": "46cf734809a9c8a7583d521f5aa385a777d582a5ae12583f9a601990ac09914d"
+  }
+]

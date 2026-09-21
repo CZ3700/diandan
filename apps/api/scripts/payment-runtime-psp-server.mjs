@@ -199,10 +199,16 @@ export async function createPaymentTestPspServer(options) {
     observations: () => observations.map((entry) => ({ ...entry })),
     hostedAction: (attemptId) => store.readHostedAction(attemptId),
     async webhook(value) {
+      const refund = value && Object.hasOwn(value, "refundId");
+      const dispute = value && Object.hasOwn(value, "disputeId");
       if (
         !value ||
         Object.keys(value).sort().join(",") !==
-          "attemptId,verificationSecret" ||
+          (refund
+            ? "refundId,verificationSecret"
+            : dispute
+              ? "disputeId,verificationSecret"
+              : "attemptId,verificationSecret") ||
         typeof value.verificationSecret !== "string" ||
         !/^[A-Za-z0-9_-]{43}$/u.test(value.verificationSecret)
       )
@@ -218,7 +224,11 @@ export async function createPaymentTestPspServer(options) {
         )
           throw new TypeError("Invalid TEST webhook key");
         const rawBody = JSON.stringify(
-          await store.readWebhook(value.attemptId),
+          await (refund
+            ? store.readRefundWebhook(value.refundId)
+            : dispute
+              ? store.readDisputeWebhook(value.disputeId)
+              : store.readWebhook(value.attemptId)),
         );
         const timestamp = String(Math.floor(Date.now() / 1000));
         const signature = createHmac("sha256", verificationSecret)
@@ -237,6 +247,8 @@ export async function createPaymentTestPspServer(options) {
         verificationSecret.fill(0);
       }
     },
+    settleRefund: (value) => store.settleRefund(value.refundId, value.status),
+    settleDispute: (value) => store.settleDispute(value),
     arm(value) {
       if (
         fault ||
@@ -246,6 +258,9 @@ export async function createPaymentTestPspServer(options) {
           "CREATE_PAYMENT",
           "RECONCILE_PAYMENT",
           "GET_PAYMENT",
+          "CANCEL_PAYMENT",
+          "REFUND_PAYMENT",
+          "RECONCILE_REFUND",
         ].includes(value.operation)
       )
         throw new TypeError("Invalid TEST PSP fault");

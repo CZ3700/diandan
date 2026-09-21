@@ -1,0 +1,59 @@
+✔ empty known head 0029 uses the ordinary exact-version down sequence (0.8005ms)
+✔ empty known head 0030 uses the ordinary exact-version down sequence (0.090625ms)
+✔ empty known head 0031 uses the ordinary exact-version down sequence (0.096125ms)
+✔ empty known head 0032 uses the ordinary exact-version down sequence (0.086125ms)
+✔ empty known head 0033 uses the ordinary exact-version down sequence (0.095083ms)
+✔ empty known head 0034 uses the ordinary exact-version down sequence (0.079917ms)
+✔ empty known head 0035 uses the ordinary exact-version down sequence (0.081958ms)
+✔ retained notifications rejects before any migration is attempted (0.667834ms)
+✔ retained contact_accesses rejects before any migration is attempted (0.158125ms)
+✔ retained bootstraps rejects before any migration is attempted (0.144625ms)
+✔ retained expiries rejects before any migration is attempted (0.105125ms)
+✔ retained login_challenges rejects before any migration is attempted (0.0905ms)
+✔ retained access_audits rejects before any migration is attempted (0.085166ms)
+✔ retained order_notes rejects before any migration is attempted (0.085459ms)
+✔ retained private_accesses rejects before any migration is attempted (0.078ms)
+✔ retained private_confirmations rejects before any migration is attempted (0.07825ms)
+✔ retained message_reviews rejects before any migration is attempted (0.076333ms)
+✔ retained operation_receipts rejects before any migration is attempted (0.087959ms)
+✔ retained fulfillment_receipts rejects before any migration is attempted (0.072875ms)
+✔ retained review_locale_grants rejects before any migration is attempted (0.076541ms)
+✔ retained order_audits rejects before any migration is attempted (0.075416ms)
+✔ retained resends rejects before any migration is attempted (0.071333ms)
+✔ retained resend_outbox rejects before any migration is attempted (0.072667ms)
+✔ retained resend_attempts rejects before any migration is attempted (0.067084ms)
+✔ retained resend_contact_accesses rejects before any migration is attempted (0.072541ms)
+✔ retained resend_audits rejects before any migration is attempted (0.069334ms)
+✔ retained resend_link_audits rejects before any migration is attempted (0.059959ms)
+✔ retained health_policies rejects before any migration is attempted (0.063916ms)
+✔ retained health_state rejects before any migration is attempted (0.066166ms)
+✔ retained health_observations rejects before any migration is attempted (0.074042ms)
+✔ retained finance_operations rejects before any migration is attempted (0.066416ms)
+✔ retained finance_receipts rejects before any migration is attempted (0.0555ms)
+✔ retained finance_applications rejects before any migration is attempted (0.065042ms)
+✔ retained finance_schedule rejects before any migration is attempted (0.056542ms)
+✔ retained finance_audits rejects before any migration is attempted (0.05825ms)
+✔ retained finance_aliases rejects before any migration is attempted (0.066125ms)
+✔ unknown head null is not silently rewound (0.061459ms)
+✔ unknown head 0028 is not silently rewound (0.037209ms)
+✔ unknown head 0036 is not silently rewound (0.02975ms)
+✖ real PostgreSQL preserves login and audit history and rewinds only empty known prefixes (952.1095ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 39
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1266.6995
+
+✖ failing tests:
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:103:1
+✖ real PostgreSQL preserves login and audit history and rewinds only empty known prefixes (952.1095ms)
+  Error [EphemeralPostgresError]: ephemeral PostgreSQL operation failed
+      at withEphemeralPostgres (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161:15)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:104:3)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7)

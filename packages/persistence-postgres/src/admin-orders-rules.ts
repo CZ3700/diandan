@@ -7,7 +7,8 @@ export function orderIsFulfillable(order: DraftRow): boolean {
   return (
     order["order_status"] === "OPEN" &&
     order["payment_status"] === "PAID" &&
-    order["dispute_status"] === "NONE"
+    ["NONE", "WON"].includes(String(order["dispute_status"])) &&
+    order["refund_pending"] !== true
   );
 }
 export function privateContentSafe(line: DraftRow): boolean {

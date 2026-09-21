@@ -1,0 +1,3 @@
+$ corepack pnpm --filter @fan-support/contracts build && node ./scripts/check-contracts.mjs
+$ tsc -p tsconfig.build.json
+Contract artifacts are fresh: 2 documents, canonical locale ownership preserved.

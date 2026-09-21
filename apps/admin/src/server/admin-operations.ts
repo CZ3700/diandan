@@ -114,6 +114,44 @@ function commerceOperation(
   });
 }
 const entries = {
+  "finance-list": operation(
+    "/api/v1/admin/finance/list",
+    contract.adminFinanceCommandSchema,
+    contract.adminFinanceResponseSchema,
+    "LIST",
+    "LIST",
+  ),
+  "finance-detail": operation(
+    "/api/v1/admin/finance/detail",
+    contract.adminFinanceCommandSchema,
+    contract.adminFinanceResponseSchema,
+    "DETAIL",
+    "DETAIL",
+  ),
+  "finance-refund": operation(
+    "/api/v1/admin/finance/refund",
+    contract.adminFinanceCommandSchema,
+    contract.adminFinanceResponseSchema,
+    "REFUND",
+    "MUTATION",
+    true,
+  ),
+  "finance-cancel": operation(
+    "/api/v1/admin/finance/cancel",
+    contract.adminFinanceCommandSchema,
+    contract.adminFinanceResponseSchema,
+    "CANCEL",
+    "MUTATION",
+    true,
+  ),
+  "finance-reconcile": operation(
+    "/api/v1/admin/finance/reconcile",
+    contract.adminFinanceCommandSchema,
+    contract.adminFinanceResponseSchema,
+    "RECONCILE",
+    "MUTATION",
+    true,
+  ),
   "orders-context": operation(
     "/api/v1/admin/orders/context",
     contract.adminOrdersCommandSchema,

@@ -1,0 +1,9 @@
+$ vitest run --config ../../vitest.config.ts --root . -- admin-finance-route.test.ts admin-finance-composition.test.ts admin-orders-route.test.ts admin-orders-composition.test.ts lifecycle-registration.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/api
+
+
+ Test Files  68 passed (68)
+      Tests  273 passed (273)
+   Start at  03:22:12
+   Duration  8.31s (transform 12.05s, setup 0ms, import 57.02s, tests 8.60s, environment 6ms)

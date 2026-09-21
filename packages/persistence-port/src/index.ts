@@ -1,3 +1,4 @@
+import type { AdminFinanceRepository } from "./admin-finance.js";
 export * from "./translation-workspace.js";
 export * from "./translation-transfer.js";
 export * from "./admin-preview-media.js";
@@ -254,6 +255,7 @@ export interface WebhookPayloadRetentionRepository {
 }
 
 export type ReliableEventTransactionRepositories = Readonly<{
+  adminFinance?: AdminFinanceRepository;
   orderPaymentApplication?: OrderPaymentApplicationRepository;
   paymentWebhookEndpoints: PaymentWebhookEndpointRepository;
   verifiedWebhookReceipts: VerifiedWebhookReceiptRepository;
@@ -357,3 +359,4 @@ export * from "./order-notification.js";
 export * from "./admin-access.js";
 export * from "./admin-orders.js";
 export * from "./payment-health.js";
+export * from "./admin-finance.js";

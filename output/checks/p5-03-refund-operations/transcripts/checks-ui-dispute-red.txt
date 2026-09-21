@@ -1,0 +1,34 @@
+$ vitest run --config ../../vitest.config.ts --root . src/management-finance/views.test.tsx
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
+
+ ❯ src/management-finance/views.test.tsx (2 tests | 1 failed) 21ms
+   × finance panel uses server authority and withholds new refunds while reconciliation is outstanding 19ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/management-finance/views.test.tsx > finance panel uses server authority and withholds new refunds while reconciliation is outstanding
+AssertionError: expected '<div data-finance-detail="10000000-00…' not to contain 'data-finance-refund'
+
+Expected: "data-finance-refund"
+Received: "<div data-finance-detail="10000000-0000-4000-8000-000000000001"><dl class="mf-balances"><div><dt>Captured</dt><dd><data class="fs-price" data-currency="USD" lang="en" value="1000"><bdi>$10.00</bdi></data></dd></div><div><dt>Refunded</dt><dd><data class="fs-price" data-currency="USD" lang="en" value="0"><bdi>$0.00</bdi></data></dd></div><div><dt>Refunds in progress</dt><dd><data class="fs-price" data-currency="USD" lang="en" value="0"><bdi>$0.00</bdi></data></dd></div><div><dt>Available to refund</dt><dd><data class="fs-price" data-currency="USD" lang="en" value="1000"><bdi>$10.00</bdi></data></dd></div></dl><div class="mo-actions"><button data-finance-refund="true" aria-pressed="true" class="fs-button fs-button--standard fs-button--secondary" type="button"><span class="fs-button__label">Refund</span></button></div><form class="mf-form" data-finance-form="true"><p class="mc-hint">Refunds return through the original payment account. Pending amounts are already excluded.</p><label class="mc-field"><span>Refund</span><select data-finance-mode="true"><option value="FULL" selected="">All remaining funds</option><option value="PARTIAL">Choose gift amounts</option></select></label><ul class="mf-allocation"><li><label class="mc-field"><span>Gift 1</span><span class="mc-hint">Available to refund: <data class="fs-price" data-currency="USD" lang="en" value="1000"><bdi>$10.00</bdi></data></span><span><data class="fs-price" data-currency="USD" lang="en" value="1000"><bdi>$10.00</bdi></data></span></label></li></ul><p data-finance-total="true">Refund total: <data class="fs-price" data-currency="USD" lang="en" value="1000"><bdi>$10.00</bdi></data></p><label class="mc-field"><span>Reason</span><select data-finance-reason="true"><option value="CUSTOMER_REQUEST" selected="">Fan requested</option><option value="DUPLICATE_PAYMENT">Duplicate payment</option><option value="GIFT_UNAVAILABLE">Gift unavailable</option><option value="PROVIDER_RESULT_CHECK">Confirm provider result</option></select></label><label class="mo-check" for="_R_0_-confirm"><input id="_R_0_-confirm" data-finance-confirm="true" type="checkbox"/><span>I have checked the amounts and confirm this action.</span></label><button data-finance-submit="true" class="fs-button fs-button--standard fs-button--primary" disabled="" type="submit"><span class="fs-button__label">Confirm refund</span></button></form><section class="mf-history" aria-labelledby="_R_0_-refunds"><h3 id="_R_0_-refunds">Refund history</h3><p class="mc-hint">No records yet.</p></section><section class="mf-history" aria-labelledby="_R_0_-payments"><h3 id="_R_0_-payments">Payment attempts</h3><ul></ul></section></div>"
+
+ ❯ src/management-finance/views.test.tsx:77:24
+     75|   detail.order.needsReconciliation = false;
+     76|   detail.order.disputeStatus = "OPEN";
+     77|   expect(render()).not.toContain("data-finance-refund");
+       |                        ^
+     78|   expect(render()).toContain("data-finance-dispute-hold");
+     79|   detail.order.disputeStatus = "LOST";
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  03:08:26
+   Duration  443ms (transform 247ms, setup 0ms, import 365ms, tests 21ms, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/admin:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/admin@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/management-finance/views.test.tsx`
+Exit status 1

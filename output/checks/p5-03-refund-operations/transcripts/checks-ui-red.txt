@@ -1,0 +1,95 @@
+$ vitest run --config ../../vitest.config.ts --root . src/management-finance/model.test.ts src/management-finance/api.test.ts src/server/admin-finance-operations.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
+
+ ❯ src/management-finance/model.test.ts (2 tests | 2 failed) 3ms
+   × full refunds allocate only the unoccupied amount of every item 2ms
+   × partial refunds parse exact currency units and reject line or capture overflow 0ms
+ ❯ src/server/admin-finance-operations.test.ts (1 test | 1 failed) 2ms
+   × finance mutations have distinct fixed routes and require reason, version, key and confirmation 2ms
+ ❯ src/management-finance/api.test.ts (2 tests | 2 failed) 3ms
+   × finance client uses a caller-owned retry key and binds mutation response to its order 2ms
+   × finance list rejects mismatched pagination 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/management-finance/api.test.ts > finance client uses a caller-owned retry key and binds mutation response to its order
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-finance/api.test.ts:6:33
+      4| const id = "10000000-0000-4000-8000-000000000001";
+      5| test("finance client uses a caller-owned retry key and binds mutation …
+      6|   expect(api?.createFinanceApi).toBeTypeOf("function");
+       |                                 ^
+      7|   const requests: RequestInit[] = [];
+      8|   const client = createAdminClient(() => "csrf", () => {}, (async (_ur…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/management-finance/api.test.ts > finance list rejects mismatched pagination
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-finance/api.test.ts:21:33
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/management-finance/model.test.ts > full refunds allocate only the unoccupied amount of every item
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-finance/model.test.ts:10:35
+      8| ];
+      9| test("full refunds allocate only the unoccupied amount of every item",…
+     10|   expect(model?.refundAllocation).toBeTypeOf("function");
+       |                                   ^
+     11|   expect(model!.refundAllocation(items, "FULL", {}, "en", "USD", 1600)…
+     12|     amountMinor: 1600,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/management-finance/model.test.ts > partial refunds parse exact currency units and reject line or capture overflow
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-finance/model.test.ts:17:35
+     15| });
+     16| test("partial refunds parse exact currency units and reject line or ca…
+     17|   expect(model?.refundAllocation).toBeTypeOf("function");
+       |                                   ^
+     18|   expect(model!.refundAllocation(items, "PARTIAL", { [first]: "1,01", …
+     19|   for (const value of ["7.01", "-1", "0", "1.001", "Infinity", "1e2"])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/server/admin-finance-operations.test.ts > finance mutations have distinct fixed routes and require reason, version, key and confirmation
+AssertionError: expected undefined to be defined
+ ❯ src/server/admin-finance-operations.test.ts:6:18
+      4| test("finance mutations have distinct fixed routes and require reason,…
+      5|   const cancel = getAdminOperation("finance-cancel");
+      6|   expect(cancel).toBeDefined();
+       |                  ^
+      7|   const body = { schemaVersion: 1, orderId: id, expectedOrderVersion: …
+      8|   expect(cancel!.path).toBe("/api/v1/admin/finance/cancel");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  5 failed (5)
+   Start at  02:53:21
+   Duration  401ms (transform 478ms, setup 0ms, import 692ms, tests 8ms, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/admin:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/admin@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/management-finance/model.test.ts src/management-finance/api.test.ts src/server/admin-finance-operations.test.ts`
+Exit status 1

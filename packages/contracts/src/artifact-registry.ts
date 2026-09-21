@@ -1,3 +1,6 @@
+import * as financeEvidence from "./finance-evidence.js";
+import * as adminFinance from "./admin-finance.js";
+import * as adminFinancePersistence from "./admin-finance-persistence.js";
 import * as paymentRollout from "./payment-rollout.js";
 import * as paymentHealth from "./payment-health.js";
 import * as adminOrderNoteKey from "./admin-order-note-key.js";
@@ -672,6 +675,106 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "FinanceEvidenceInput",
+    audience: "internal",
+    schema: financeEvidence.financeEvidenceInputSchema,
+  },
+  {
+    name: "FinanceEvidenceDecision",
+    audience: "internal",
+    schema: financeEvidence.financeEvidenceDecisionSchema,
+  },
+  {
+    name: "FinanceDisputeProjectionInput",
+    audience: "internal",
+    schema: financeEvidence.financeDisputeProjectionInputSchema,
+  },
+  {
+    name: "FinanceDisputeProjection",
+    audience: "internal",
+    schema: financeEvidence.financeDisputeProjectionSchema,
+  },
+  {
+    name: "AdminFinanceFailure",
+    audience: "admin-http",
+    schema: adminFinance.adminFinanceFailureSchema,
+  },
+  {
+    name: "AdminFinanceCommand",
+    audience: "admin-http",
+    schema: adminFinance.adminFinanceCommandSchema,
+  },
+  {
+    name: "AdminFinanceRequest",
+    audience: "admin-http",
+    schema: adminFinance.adminFinanceRequestSchema,
+  },
+  {
+    name: "AdminFinanceMutationResponse",
+    audience: "admin-http",
+    schema: adminFinance.adminFinanceMutationResponseSchema,
+  },
+  {
+    name: "AdminFinanceResponse",
+    audience: "admin-http",
+    schema: adminFinance.adminFinanceResponseSchema,
+  },
+  {
+    name: "AdminFinanceStoreRequest",
+    audience: "internal",
+    schema: adminFinancePersistence.adminFinanceStoreRequestSchema,
+  },
+  {
+    name: "AdminFinanceProviderCommand",
+    audience: "internal",
+    schema: adminFinancePersistence.adminFinanceProviderCommandSchema,
+  },
+  {
+    name: "AdminFinanceClaimRequest",
+    audience: "internal",
+    schema: adminFinancePersistence.adminFinanceClaimRequestSchema,
+  },
+  {
+    name: "AdminFinanceClaim",
+    audience: "internal",
+    schema: adminFinancePersistence.adminFinanceClaimSchema,
+  },
+  {
+    name: "AdminFinanceSettleCommand",
+    audience: "internal",
+    schema: adminFinancePersistence.adminFinanceSettleCommandSchema,
+  },
+  {
+    name: "AdminFinanceSettleResult",
+    audience: "internal",
+    schema: adminFinancePersistence.adminFinanceSettleResultSchema,
+  },
+  {
+    name: "AdminFinanceApplyCommand",
+    audience: "internal",
+    schema: adminFinancePersistence.adminFinanceApplyCommandSchema,
+  },
+  {
+    name: "AdminFinanceApplyResult",
+    audience: "internal",
+    schema: adminFinancePersistence.adminFinanceApplyResultSchema,
+  },
+  {
+    name: "AdminFinanceListPendingCommand",
+    audience: "internal",
+    schema: adminFinancePersistence.adminFinanceListPendingCommandSchema,
+  },
+  {
+    name: "AdminFinancePendingEvents",
+    audience: "internal",
+    schema: adminFinancePersistence.adminFinancePendingEventsSchema,
+  },
+  {
+    name: "AdminFinanceRunResult",
+    audience: "internal",
+    schema: adminFinancePersistence.adminFinanceRunResultSchema,
+  },
   {
     name: "AdminOrdersPermission",
     audience: "admin-http",

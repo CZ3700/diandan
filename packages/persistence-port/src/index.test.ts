@@ -1,6 +1,7 @@
 import { expect, expectTypeOf, test } from "vitest";
 
 import type {
+  AdminFinanceRepository,
   OrderPaymentApplicationRepository,
   ReliableEventTransactionRepositories,
   TransactionRepositories,
@@ -47,10 +48,14 @@ test("groups reliable-event repositories without widening the legacy manager", (
     | "outboxDispatch"
     | "webhookPayloadRetention"
     | "orderPaymentApplication"
+    | "adminFinance"
   >();
   expectTypeOf<
     ReliableEventTransactionRepositories["orderPaymentApplication"]
   >().toEqualTypeOf<OrderPaymentApplicationRepository | undefined>();
+  expectTypeOf<
+    ReliableEventTransactionRepositories["adminFinance"]
+  >().toEqualTypeOf<AdminFinanceRepository | undefined>();
   expect(
     persistencePort.reliableEventPersistenceOperationSchema.options,
   ).toEqual([

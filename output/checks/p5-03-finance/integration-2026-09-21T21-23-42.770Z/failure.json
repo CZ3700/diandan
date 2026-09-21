@@ -1,0 +1,15 @@
+{
+  "stage": "focused authentication reproduction",
+  "assertions": 5763,
+  "name": "Error",
+  "code": null,
+  "frames": [
+    "/apps/api/scripts/admin-access-next.mjs:125:11",
+    "/apps/api/scripts/admin-orders-runtime.mjs:221:12",
+    "/apps/api/scripts/admin-finance-http.mjs:70:11",
+    "/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14",
+    "/apps/api/scripts/payment-runtime-runtime.mjs:29:12",
+    "/apps/api/scripts/admin-finance-http.mjs:55:5",
+    "/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:155:16"
+  ]
+}

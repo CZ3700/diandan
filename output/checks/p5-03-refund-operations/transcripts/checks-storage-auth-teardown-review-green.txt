@@ -1,0 +1,20 @@
+Finance session route failure {"alreadyHandled":false,"targetClosed":false,"requestAborted":false}
+Finance session route failure {"alreadyHandled":false,"targetClosed":false,"requestAborted":false}
+Finance session route abort failed after original error
+✔ route uninstall error cannot replace an earlier route failure (0.9015ms)
+✔ scope cleanup also drains an already dispatched handler arriving while uninstall awaits (0.126541ms)
+✔ authentication scope drains a pending real route handler before removal and preserves its first error (0.199584ms)
+✔ a read that completes past the six-second bound cannot authorize readiness (0.082166ms)
+✔ browser readiness belongs only to the current successful callback's first GET and is removed afterward (1.269083ms)
+✔ TEST session readiness waits through a real-clock regression without authorizing the request (0.065375ms)
+✔ unknown, expired, revoked, inactive, non-MFA or mismatched-CSRF session is never waited or repaired (0.082583ms)
+✔ TEST readiness has a monotonic bound and cannot permit a persistent future session (0.649333ms)
+✔ revocation while waiting immediately leaves the original authorization boundary in control (0.07025ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 141.801625
