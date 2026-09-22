@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "fixtureCleanupVerified": false,
+  "configurationResources": [
+    {
+      "name": "configuration normalized PSP isolated database",
+      "closed": true
+    },
+    {
+      "name": "normalized gateway TEST PSP process",
+      "closed": true
+    },
+    {
+      "name": "admin orders TLS identity provider",
+      "closed": true
+    },
+    {
+      "name": "admin orders compositions",
+      "closed": true
+    },
+    {
+      "name": "admin orders API",
+      "closed": true
+    },
+    {
+      "name": "independent payment configuration API process",
+      "closed": true
+    },
+    {
+      "name": "independent payment configuration API process",
+      "closed": true
+    }
+  ],
+  "outerPostgresAndS3": "See outer-result.json; fixture completion does not establish outer harness cleanup."
+}

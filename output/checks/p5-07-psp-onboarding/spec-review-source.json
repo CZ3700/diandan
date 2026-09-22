@@ -1,0 +1,273 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/exception_storage",
+  "reviewedAt": "2026-09-22T10:15:11.912621+00:00",
+  "scope": "ROOT_ENTRY_TWO_RUNBOOKS_HTTP_AND_REUSED_IDENTITY_OBSERVATION",
+  "status": "P5_07_ACCEPT",
+  "source": [
+    {
+      "path": "scripts/verify-psp-onboarding.mjs",
+      "sha256": "0ee9f80c36b21a95904e905a8d16c0bf43a4276728e3a3a58bee4b460582a74d"
+    },
+    {
+      "path": "scripts/verify-psp-onboarding.test.mjs",
+      "sha256": "51cfd996d97a60fdd0e5c1523acca0490e46b91505e535766c4324cf57a0e416"
+    },
+    {
+      "path": "scripts/psp-onboarding-conformance.mjs",
+      "sha256": "5b23c152a2187ae1a0be99fe32fc08fda83b524e550c491d94a5bb2396ed3ac2"
+    },
+    {
+      "path": "package.json",
+      "sha256": "e1c51631ce54e0e76fa438a1d1e28cfe6eb15f9d33a4c6949b7699dcbf9cde3c"
+    },
+    {
+      "path": "docs/runbooks/psp-onboarding.md",
+      "sha256": "b3ef432ee0ac3494cc538f6fc75ed6700a98b96130f96a7828f6d049d39bfff7"
+    },
+    {
+      "path": "docs/runbooks/psp-onboarding-evidence-template.md",
+      "sha256": "c6d56d562305b79d5a036ace0673e977997c0a9cceaef8a2c690e2b0395bc85a"
+    },
+    {
+      "path": "apps/api/scripts/psp-onboarding-http.mjs",
+      "sha256": "54af3ccbd750f64633d42d70cce2cbea5442535f79a222ed2ae214f31a82ed0b"
+    },
+    {
+      "path": "apps/api/scripts/psp-onboarding-protocol.mjs",
+      "sha256": "c9d3d7e5d645b04fffb51cbd531b7b942ecbe4fac5ad839ecf2a1a745b3e9248"
+    },
+    {
+      "path": "apps/api/scripts/admin-payment-config-fixture.mjs",
+      "sha256": "cf8138e84246b8f839fd620ab6f6dbdce2fc68ab0a09b748aaf31f263462c2d4"
+    },
+    {
+      "path": "apps/api/scripts/admin-payment-config-process.mjs",
+      "sha256": "631529a6d4338f2db96e87681685c8ee8132f0a022a93612a65793026dbc947a"
+    },
+    {
+      "path": "apps/api/scripts/order-payment-client.mjs",
+      "sha256": "a1fc32aeb7a8b1805bc9b3c430c4b3c94b86643353c953903259e45708573aae"
+    }
+  ],
+  "fingerprint": "c910ef47222e7496448ef16092ae72b636c1e940ba67ac88bf4da731c359e78a",
+  "commandsRun": [],
+  "limitations": [
+    "Reviewer independently read final original outputs and rehashed current files; did not rerun heavy suites",
+    "Intermediate 5/25 percent measured actual capability admission, not per-stage provider creates or exact population percentage",
+    "No commercial PSP sandbox, real funds, production release or new browser acceptance",
+    "Final archival rescan and task state changes remain root responsibilities"
+  ],
+  "initialRootReview": {
+    "scope": "ROOT_ENTRY_AND_TWO_RUNBOOKS_ONLY",
+    "fingerprint": "e16a49742ab7dbab0df3b4494a40425903e2f7d90338635dae25c0e0706795d2",
+    "source": [
+      {
+        "path": "scripts/verify-psp-onboarding.mjs",
+        "sha256": "0ee9f80c36b21a95904e905a8d16c0bf43a4276728e3a3a58bee4b460582a74d"
+      },
+      {
+        "path": "scripts/verify-psp-onboarding.test.mjs",
+        "sha256": "51cfd996d97a60fdd0e5c1523acca0490e46b91505e535766c4324cf57a0e416"
+      },
+      {
+        "path": "scripts/psp-onboarding-conformance.mjs",
+        "sha256": "5b23c152a2187ae1a0be99fe32fc08fda83b524e550c491d94a5bb2396ed3ac2"
+      },
+      {
+        "path": "package.json",
+        "sha256": "e1c51631ce54e0e76fa438a1d1e28cfe6eb15f9d33a4c6949b7699dcbf9cde3c"
+      },
+      {
+        "path": "docs/runbooks/psp-onboarding.md",
+        "sha256": "b3ef432ee0ac3494cc538f6fc75ed6700a98b96130f96a7828f6d049d39bfff7"
+      },
+      {
+        "path": "docs/runbooks/psp-onboarding-evidence-template.md",
+        "sha256": "c6d56d562305b79d5a036ace0673e977997c0a9cceaef8a2c690e2b0395bc85a"
+      }
+    ]
+  },
+  "incrementalReview": {
+    "changedFiles": [
+      "apps/api/scripts/psp-onboarding-http.mjs",
+      "apps/api/scripts/psp-onboarding-protocol.mjs"
+    ],
+    "status": "SPEC_PASS_PENDING_EXECUTION",
+    "findingsResolved": [
+      "original receipt requires exactly one row before hash",
+      "PG bigint configuration/rule versions cast to fixture-safe integer matching public contract",
+      "zero-rollout current-version negative create on both APIs proves no attempts or PSP mutations"
+    ]
+  },
+  "scenarioEvidence": {
+    "status": "PASS_INDEPENDENTLY_READ",
+    "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-02-53.342Z",
+    "inputSourceDrift": [],
+    "reports": [
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-02-53.342Z/run-result.json",
+        "sha256": "9b150763a052e8790e2a09c57a5f8fb161478770bba21645fab77545c16533e1"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-02-53.342Z/outer-result.json",
+        "sha256": "9713d030370b1b1367373d925456a49c1c1279ea9bdc81ea48d37f16affeb70e"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-02-53.342Z/cleanup.json",
+        "sha256": "97573ffaa85868673b407eaebb456a4006720b12c9cdd00f8796afc621d6f80f"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-02-53.342Z/scope.json",
+        "sha256": "cc2fedf491e37f5cbe9c9a3b6da96171ac5bf2ca9be7c40601ac7264b6e7d7b4"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-02-53.342Z/protocol.json",
+        "sha256": "80944c919173912dc2ba6e9324a27afc63ab38c0321d95057b5411928d4dc218"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-02-53.342Z/stages.json",
+        "sha256": "dbc0f10bb93ec8638e1f8dd21c02f9be10944ebf06435fb6953ab68dab2da945"
+      }
+    ]
+  },
+  "finalSourceVerification": {
+    "candidateCount": 2587,
+    "candidateFingerprint": "5ef8f24b41c3f6f765b6af951ea1f4c64fae8742de80d097be8675197c0cef6f",
+    "candidateFileDrift": [],
+    "reviewInputDrift": [],
+    "upstreamSelectionRecords": 963,
+    "upstreamDrift": [],
+    "preexistingUntrackedCount": 5993,
+    "preexistingDrift": []
+  },
+  "finalEvidence": {
+    "scope": "LOCAL_TEST_ONLY",
+    "authority": "integration-2026-09-22T10-05-55.604Z",
+    "admitted": [
+      0,
+      24,
+      2,
+      5,
+      24,
+      0,
+      24
+    ],
+    "assertions": 35259,
+    "scenarioAssertions": 29495,
+    "nextStage": "P5_08_READY_OFFLINE_IAC_AND_PERSISTENT_LOCAL_TOOLS",
+    "files": [
+      {
+        "path": "output/checks/p5-07-psp-onboarding/drill-final/result.json",
+        "sha256": "6f72e481fdf00ee6a327342565cf5066bbf65ee243b10fdef483a3fa2145a7b6"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/drill-final/build.txt",
+        "sha256": "55da4822978629d6881314422606bea9c9291dcd5dc4de9009545366e2c6398d",
+        "originalReviewedSha256": "41359137f2d5a4e5c43ebe05b22d9ea10a8a9cc30dc3a38a28ac66180908e1ae",
+        "rawLocalArchive": "output/checks/p5-07-psp-onboarding/drill-final/build.raw.log",
+        "archiveNormalization": "root verified EOF blank line only"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/drill-final/fake-conformance.txt",
+        "sha256": "468d5f9a0dabe9f7cd963642fef714c5d5cbf00f6f7041c7a05941a5d4ff23f4"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/drill-final/adapter-tests.txt",
+        "sha256": "2558de16c2cd064a49a2392268fafc5a61cf84b1de343897ef0f6fdde1502331"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/drill-final/staged-rollout.txt",
+        "sha256": "f7382ac38511b4fe5a97c15994f809e096dfe042b8dce2362f35d47e53fad274"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/check-dev.txt",
+        "sha256": "4d1e7ce25638e49cd224ec3185b9bea949fd3f4d4b1d5944305a5c90b1f9e974",
+        "rawArchive": {
+          "path": "output/checks/p5-07-psp-onboarding/check-dev.raw.log",
+          "sha256": "ce6cbd3fa118173c268127205380c2662675210c52ed673e1ca6e82e49ab9072",
+          "scope": "Original reviewed bytes, preserved in ignored local archive"
+        },
+        "normalization": {
+          "metadataPath": "output/checks/p5-07-psp-onboarding/transcript-normalization.json",
+          "metadataSha256": "a422908676ee2501b06c1f509f1ad5f5d81a3e810a2035ca1a7029e428dd2236",
+          "transformation": "trailing horizontal whitespace only; line breaks and content preserved",
+          "independentlyVerifiedTrailingHorizontalWhitespaceOnly": true,
+          "originalReviewedSha256": "ce6cbd3fa118173c268127205380c2662675210c52ed673e1ca6e82e49ab9072"
+        }
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/contracts-green.txt",
+        "sha256": "7a5cb029389f33e5eb0203024eb763ca97e9ce0445e9cf8d156e520cc579a8a7"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/adapter-boundaries-green.txt",
+        "sha256": "360ebfcae9aea3200bb9c177b8cbe7aad839b167bcbdceb6cdb98cc49e9c89b2"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/artifacts-green.txt",
+        "sha256": "3ea4930d8fccf6fbcd51b53d744119d247eef442e94ecaa858048c1597a26df7"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/ci-green.txt",
+        "sha256": "5f54aa4b78c25da00cb70acd769b5490a02cfe3048c714f23e4ab503ffab7f59"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/runtime-green.txt",
+        "sha256": "9abc10e6c7ae8785821687cdcb5d7eb0a26e8d6dae4c02ef587611e2f5fda888"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/observability-green.txt",
+        "sha256": "bd526529b11dd7a28549f6cc697caf23c75fc97016ac12bcc98efa61f758a182"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/secrets.txt",
+        "sha256": "c5de5c7294bce3c849ea5b4d2c4df1edc669c7858437ffd95fa7af48e078d2c1"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/compatibility-verification.json",
+        "sha256": "e79887e898587fb73b0d1c708db389e347737ba5d7e11725462bc4b92656eab2"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/candidate-source.json",
+        "sha256": "7f42999bfc81492eb4c649b287aae421abdf0d9c2aca8f06052ee8c76cc0709e"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/quality-review.md",
+        "sha256": "6d238abd17802e73ff7b1d49aa798bb729740f28fcaefe14bc6f886da830edaf"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/runner-red.txt",
+        "sha256": "6ac546509cef7465a30b751dbed56b3ab1b8e1fdc9ca9df73d0f49630dd5b361"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/runner-green.txt",
+        "sha256": "5b459018de94cb1f803b3d1077e7bfe764a8431c237908772491a64a6514ce80"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-05-55.604Z/run-result.json",
+        "sha256": "545813e74f32587d7127134addae165049ed9c0f083b4f2434d1d9ff53ef276e"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-05-55.604Z/outer-result.json",
+        "sha256": "e669de4e1ba49a67810211947af2e0873cb1a33a62783f2200758dd8baf6a42b"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-05-55.604Z/cleanup.json",
+        "sha256": "97573ffaa85868673b407eaebb456a4006720b12c9cdd00f8796afc621d6f80f"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-05-55.604Z/scope.json",
+        "sha256": "cc2fedf491e37f5cbe9c9a3b6da96171ac5bf2ca9be7c40601ac7264b6e7d7b4"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-05-55.604Z/protocol.json",
+        "sha256": "d1c8abc741eaf6f249ae5e71a5a29770ffb89f8c0ba4b73bbb8fd9530d76adbb"
+      },
+      {
+        "path": "output/checks/p5-07-psp-onboarding/integration-2026-09-22T10-05-55.604Z/stages.json",
+        "sha256": "dae3c71c8bf3d8ac6d67158c492f73c16cac39b82e8469c6dd5455f46e827ad3"
+      }
+    ]
+  }
+}

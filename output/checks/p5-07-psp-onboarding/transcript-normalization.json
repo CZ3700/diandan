@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "transcript": "output/checks/p5-07-psp-onboarding/check-dev.txt",
+      "rawLocalArchive": "output/checks/p5-07-psp-onboarding/check-dev.raw.log",
+      "rawSha256": "ce6cbd3fa118173c268127205380c2662675210c52ed673e1ca6e82e49ab9072",
+      "transcriptSha256": "4d1e7ce25638e49cd224ec3185b9bea949fd3f4d4b1d5944305a5c90b1f9e974",
+      "transformation": "trailing horizontal whitespace only; line breaks and content preserved"
+    },
+    {
+      "transcript": "output/checks/p5-07-psp-onboarding/drill-final/build.txt",
+      "rawLocalArchive": "output/checks/p5-07-psp-onboarding/drill-final/build.raw.log",
+      "rawSha256": "41359137f2d5a4e5c43ebe05b22d9ea10a8a9cc30dc3a38a28ac66180908e1ae",
+      "transcriptSha256": "55da4822978629d6881314422606bea9c9291dcd5dc4de9009545366e2c6398d",
+      "transformation": "extra blank line at EOF only; all nonblank content preserved"
+    }
+  ]
+}

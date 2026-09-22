@@ -1,0 +1,1230 @@
+{
+  "schemaVersion": 1,
+  "stages": [
+    {
+      "label": "INITIAL_ZERO",
+      "revisionId": "08396a54-9c9d-4603-9beb-5235df4e5043",
+      "publicationId": "ed2992b5-b80c-42a5-bc22-8154bdb29c39",
+      "generation": 2,
+      "routeId": "88ce4f88-e391-4759-b2b6-73f287fb06ab",
+      "configVersion": 2,
+      "ruleVersion": 2,
+      "providerBasisPoints": 0,
+      "ruleBasisPoints": 10000,
+      "propagationMs": 576.474209,
+      "processObservations": [
+        {
+          "generation": 2
+        },
+        {
+          "generation": 2
+        }
+      ],
+      "review": {
+        "approvals": 7,
+        "inherited": 0
+      },
+      "cohortSize": 24,
+      "admitted": 0,
+      "excluded": 24,
+      "observedAdmissionRatio": 0,
+      "capabilityRequests": 672,
+      "cohorts": [
+        {
+          "checkoutSessionId": "9f3abbd0-4ec9-4d35-a2b3-06f92e7a80bc",
+          "providerBucket": 4958,
+          "ruleBucket": 1097,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e8b462b7-61d0-40ff-ab18-26d61f397be0",
+          "providerBucket": 3941,
+          "ruleBucket": 8745,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "69f41026-ea32-4225-97db-5224e23fa5d4",
+          "providerBucket": 4779,
+          "ruleBucket": 6831,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "9be2beb2-2b0b-48e5-9cf1-8b419f5a71c5",
+          "providerBucket": 2029,
+          "ruleBucket": 9470,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "17aadf39-c105-4897-8933-82215531a4c1",
+          "providerBucket": 8784,
+          "ruleBucket": 215,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "ce1e2c23-0dee-482a-a618-ea906573413a",
+          "providerBucket": 9384,
+          "ruleBucket": 9020,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "1b0dd639-ce38-43a4-9d42-7411db5d6d30",
+          "providerBucket": 1614,
+          "ruleBucket": 2705,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "a2915b91-8371-4c49-9ea8-abf7ce3d5378",
+          "providerBucket": 1314,
+          "ruleBucket": 4832,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "9ae4ce24-5e6c-4a11-8913-cd71fbe51113",
+          "providerBucket": 3834,
+          "ruleBucket": 2362,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e8f863c4-2c9a-48c2-b19d-9ee6a5f715b4",
+          "providerBucket": 3313,
+          "ruleBucket": 9379,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "a804a449-eb45-41af-a906-58d517c55d55",
+          "providerBucket": 7798,
+          "ruleBucket": 9633,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "2f006f17-81f4-4f6a-8c98-95fbdc7a1892",
+          "providerBucket": 7668,
+          "ruleBucket": 7682,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "4811eb9b-40a0-40b5-9469-1e00de128b0a",
+          "providerBucket": 290,
+          "ruleBucket": 3211,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e4ac38b6-1515-47df-86d1-ae413f15715a",
+          "providerBucket": 4283,
+          "ruleBucket": 4658,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "725b5112-3a04-429a-b9ef-4402ab81b0e0",
+          "providerBucket": 7041,
+          "ruleBucket": 3234,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "5a4f5c3a-6a4c-4d9b-ba3c-88c6e9ecdad9",
+          "providerBucket": 5042,
+          "ruleBucket": 6995,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "5fc6b9c0-b4b3-4f77-9d12-669ee24af0e0",
+          "providerBucket": 7013,
+          "ruleBucket": 1100,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "3f5b36b7-b77f-43a7-9206-48ac2e3107ff",
+          "providerBucket": 6309,
+          "ruleBucket": 3439,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e9f939eb-16a2-417c-839f-429d3479e44c",
+          "providerBucket": 7727,
+          "ruleBucket": 7456,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "f1eb206e-251f-4d90-82f2-f7c94906d682",
+          "providerBucket": 7247,
+          "ruleBucket": 1656,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "7b4b3762-a4d8-4df2-9bec-47a87581d277",
+          "providerBucket": 9878,
+          "ruleBucket": 926,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "0869895d-eb81-4b9a-b5e5-1ea97beda64a",
+          "providerBucket": 8349,
+          "ruleBucket": 3314,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "afa60b01-9765-4b45-98a5-5108ab3f774b",
+          "providerBucket": 4068,
+          "ruleBucket": 8142,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "ee887e42-3dce-43b0-8ecd-1d475fa7604a",
+          "providerBucket": 770,
+          "ruleBucket": 6217,
+          "eligible": false
+        }
+      ]
+    },
+    {
+      "label": "INTERNAL_ISOLATED_TEST_100_PERCENT",
+      "revisionId": "482720fa-0a20-4cc2-923c-f7cabe91f5c7",
+      "publicationId": "adae7c33-c6eb-49df-9732-c6bbd8a550ba",
+      "generation": 3,
+      "routeId": "fa185fb8-0ddd-4c3f-9472-214182de52f9",
+      "configVersion": 3,
+      "ruleVersion": 3,
+      "providerBasisPoints": 10000,
+      "ruleBasisPoints": 10000,
+      "propagationMs": 674.9841250000027,
+      "processObservations": [
+        {
+          "generation": 3
+        },
+        {
+          "generation": 3
+        }
+      ],
+      "review": {
+        "approvals": 0,
+        "inherited": 7
+      },
+      "cohortSize": 24,
+      "admitted": 24,
+      "excluded": 0,
+      "observedAdmissionRatio": 1,
+      "capabilityRequests": 672,
+      "cohorts": [
+        {
+          "checkoutSessionId": "9f3abbd0-4ec9-4d35-a2b3-06f92e7a80bc",
+          "providerBucket": 4958,
+          "ruleBucket": 6831,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e8b462b7-61d0-40ff-ab18-26d61f397be0",
+          "providerBucket": 3941,
+          "ruleBucket": 8401,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "69f41026-ea32-4225-97db-5224e23fa5d4",
+          "providerBucket": 4779,
+          "ruleBucket": 7121,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "9be2beb2-2b0b-48e5-9cf1-8b419f5a71c5",
+          "providerBucket": 2029,
+          "ruleBucket": 9235,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "17aadf39-c105-4897-8933-82215531a4c1",
+          "providerBucket": 8784,
+          "ruleBucket": 7856,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "ce1e2c23-0dee-482a-a618-ea906573413a",
+          "providerBucket": 9384,
+          "ruleBucket": 3102,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "1b0dd639-ce38-43a4-9d42-7411db5d6d30",
+          "providerBucket": 1614,
+          "ruleBucket": 1085,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "a2915b91-8371-4c49-9ea8-abf7ce3d5378",
+          "providerBucket": 1314,
+          "ruleBucket": 3213,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "9ae4ce24-5e6c-4a11-8913-cd71fbe51113",
+          "providerBucket": 3834,
+          "ruleBucket": 6310,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e8f863c4-2c9a-48c2-b19d-9ee6a5f715b4",
+          "providerBucket": 3313,
+          "ruleBucket": 8680,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "a804a449-eb45-41af-a906-58d517c55d55",
+          "providerBucket": 7798,
+          "ruleBucket": 1459,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "2f006f17-81f4-4f6a-8c98-95fbdc7a1892",
+          "providerBucket": 7668,
+          "ruleBucket": 5476,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "4811eb9b-40a0-40b5-9469-1e00de128b0a",
+          "providerBucket": 290,
+          "ruleBucket": 733,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e4ac38b6-1515-47df-86d1-ae413f15715a",
+          "providerBucket": 4283,
+          "ruleBucket": 6977,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "725b5112-3a04-429a-b9ef-4402ab81b0e0",
+          "providerBucket": 7041,
+          "ruleBucket": 734,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "5a4f5c3a-6a4c-4d9b-ba3c-88c6e9ecdad9",
+          "providerBucket": 5042,
+          "ruleBucket": 2534,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "5fc6b9c0-b4b3-4f77-9d12-669ee24af0e0",
+          "providerBucket": 7013,
+          "ruleBucket": 9612,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "3f5b36b7-b77f-43a7-9206-48ac2e3107ff",
+          "providerBucket": 6309,
+          "ruleBucket": 5869,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e9f939eb-16a2-417c-839f-429d3479e44c",
+          "providerBucket": 7727,
+          "ruleBucket": 7940,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "f1eb206e-251f-4d90-82f2-f7c94906d682",
+          "providerBucket": 7247,
+          "ruleBucket": 5734,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "7b4b3762-a4d8-4df2-9bec-47a87581d277",
+          "providerBucket": 9878,
+          "ruleBucket": 4431,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "0869895d-eb81-4b9a-b5e5-1ea97beda64a",
+          "providerBucket": 8349,
+          "ruleBucket": 633,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "afa60b01-9765-4b45-98a5-5108ab3f774b",
+          "providerBucket": 4068,
+          "ruleBucket": 2140,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "ee887e42-3dce-43b0-8ecd-1d475fa7604a",
+          "providerBucket": 770,
+          "ruleBucket": 4544,
+          "eligible": true
+        }
+      ]
+    },
+    {
+      "label": "PUBLIC_5_PERCENT",
+      "revisionId": "6a8d8308-a90a-4819-862f-f87261cff3d3",
+      "publicationId": "2595bcff-044e-4c72-9f83-bbcf35768013",
+      "generation": 4,
+      "routeId": "7d935a19-c1b3-4db6-ad1e-e84a8733203d",
+      "configVersion": 4,
+      "ruleVersion": 4,
+      "providerBasisPoints": 10000,
+      "ruleBasisPoints": 500,
+      "propagationMs": 1034.593541000002,
+      "processObservations": [
+        {
+          "generation": 4
+        },
+        {
+          "generation": 4
+        }
+      ],
+      "review": {
+        "approvals": 0,
+        "inherited": 7
+      },
+      "cohortSize": 24,
+      "admitted": 2,
+      "excluded": 22,
+      "observedAdmissionRatio": 0.08333333333333333,
+      "capabilityRequests": 672,
+      "cohorts": [
+        {
+          "checkoutSessionId": "9f3abbd0-4ec9-4d35-a2b3-06f92e7a80bc",
+          "providerBucket": 4958,
+          "ruleBucket": 2172,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e8b462b7-61d0-40ff-ab18-26d61f397be0",
+          "providerBucket": 3941,
+          "ruleBucket": 2113,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "69f41026-ea32-4225-97db-5224e23fa5d4",
+          "providerBucket": 4779,
+          "ruleBucket": 7650,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "9be2beb2-2b0b-48e5-9cf1-8b419f5a71c5",
+          "providerBucket": 2029,
+          "ruleBucket": 5974,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "17aadf39-c105-4897-8933-82215531a4c1",
+          "providerBucket": 8784,
+          "ruleBucket": 8618,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "ce1e2c23-0dee-482a-a618-ea906573413a",
+          "providerBucket": 9384,
+          "ruleBucket": 3157,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "1b0dd639-ce38-43a4-9d42-7411db5d6d30",
+          "providerBucket": 1614,
+          "ruleBucket": 1194,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "a2915b91-8371-4c49-9ea8-abf7ce3d5378",
+          "providerBucket": 1314,
+          "ruleBucket": 7181,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "9ae4ce24-5e6c-4a11-8913-cd71fbe51113",
+          "providerBucket": 3834,
+          "ruleBucket": 288,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e8f863c4-2c9a-48c2-b19d-9ee6a5f715b4",
+          "providerBucket": 3313,
+          "ruleBucket": 7194,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "a804a449-eb45-41af-a906-58d517c55d55",
+          "providerBucket": 7798,
+          "ruleBucket": 4628,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "2f006f17-81f4-4f6a-8c98-95fbdc7a1892",
+          "providerBucket": 7668,
+          "ruleBucket": 2280,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "4811eb9b-40a0-40b5-9469-1e00de128b0a",
+          "providerBucket": 290,
+          "ruleBucket": 6138,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e4ac38b6-1515-47df-86d1-ae413f15715a",
+          "providerBucket": 4283,
+          "ruleBucket": 8452,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "725b5112-3a04-429a-b9ef-4402ab81b0e0",
+          "providerBucket": 7041,
+          "ruleBucket": 8292,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "5a4f5c3a-6a4c-4d9b-ba3c-88c6e9ecdad9",
+          "providerBucket": 5042,
+          "ruleBucket": 6960,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "5fc6b9c0-b4b3-4f77-9d12-669ee24af0e0",
+          "providerBucket": 7013,
+          "ruleBucket": 595,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "3f5b36b7-b77f-43a7-9206-48ac2e3107ff",
+          "providerBucket": 6309,
+          "ruleBucket": 64,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e9f939eb-16a2-417c-839f-429d3479e44c",
+          "providerBucket": 7727,
+          "ruleBucket": 9028,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "f1eb206e-251f-4d90-82f2-f7c94906d682",
+          "providerBucket": 7247,
+          "ruleBucket": 8687,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "7b4b3762-a4d8-4df2-9bec-47a87581d277",
+          "providerBucket": 9878,
+          "ruleBucket": 948,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "0869895d-eb81-4b9a-b5e5-1ea97beda64a",
+          "providerBucket": 8349,
+          "ruleBucket": 7097,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "afa60b01-9765-4b45-98a5-5108ab3f774b",
+          "providerBucket": 4068,
+          "ruleBucket": 6810,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "ee887e42-3dce-43b0-8ecd-1d475fa7604a",
+          "providerBucket": 770,
+          "ruleBucket": 7121,
+          "eligible": false
+        }
+      ]
+    },
+    {
+      "label": "PUBLIC_25_PERCENT",
+      "revisionId": "b7afb74c-8bb2-424b-b59f-c7d9cf1f15df",
+      "publicationId": "bc7b02dc-0a8b-433d-90dd-589fe73f5ca0",
+      "generation": 5,
+      "routeId": "f63649af-3913-4542-8d60-67ff31abaf2a",
+      "configVersion": 5,
+      "ruleVersion": 5,
+      "providerBasisPoints": 10000,
+      "ruleBasisPoints": 2500,
+      "propagationMs": 623.2558750000026,
+      "processObservations": [
+        {
+          "generation": 5
+        },
+        {
+          "generation": 5
+        }
+      ],
+      "review": {
+        "approvals": 0,
+        "inherited": 7
+      },
+      "cohortSize": 24,
+      "admitted": 5,
+      "excluded": 19,
+      "observedAdmissionRatio": 0.20833333333333334,
+      "capabilityRequests": 672,
+      "cohorts": [
+        {
+          "checkoutSessionId": "9f3abbd0-4ec9-4d35-a2b3-06f92e7a80bc",
+          "providerBucket": 4958,
+          "ruleBucket": 950,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e8b462b7-61d0-40ff-ab18-26d61f397be0",
+          "providerBucket": 3941,
+          "ruleBucket": 6140,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "69f41026-ea32-4225-97db-5224e23fa5d4",
+          "providerBucket": 4779,
+          "ruleBucket": 2013,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "9be2beb2-2b0b-48e5-9cf1-8b419f5a71c5",
+          "providerBucket": 2029,
+          "ruleBucket": 7688,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "17aadf39-c105-4897-8933-82215531a4c1",
+          "providerBucket": 8784,
+          "ruleBucket": 7003,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "ce1e2c23-0dee-482a-a618-ea906573413a",
+          "providerBucket": 9384,
+          "ruleBucket": 8977,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "1b0dd639-ce38-43a4-9d42-7411db5d6d30",
+          "providerBucket": 1614,
+          "ruleBucket": 3902,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "a2915b91-8371-4c49-9ea8-abf7ce3d5378",
+          "providerBucket": 1314,
+          "ruleBucket": 4756,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "9ae4ce24-5e6c-4a11-8913-cd71fbe51113",
+          "providerBucket": 3834,
+          "ruleBucket": 7770,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e8f863c4-2c9a-48c2-b19d-9ee6a5f715b4",
+          "providerBucket": 3313,
+          "ruleBucket": 4654,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "a804a449-eb45-41af-a906-58d517c55d55",
+          "providerBucket": 7798,
+          "ruleBucket": 8075,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "2f006f17-81f4-4f6a-8c98-95fbdc7a1892",
+          "providerBucket": 7668,
+          "ruleBucket": 6459,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "4811eb9b-40a0-40b5-9469-1e00de128b0a",
+          "providerBucket": 290,
+          "ruleBucket": 6268,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e4ac38b6-1515-47df-86d1-ae413f15715a",
+          "providerBucket": 4283,
+          "ruleBucket": 3663,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "725b5112-3a04-429a-b9ef-4402ab81b0e0",
+          "providerBucket": 7041,
+          "ruleBucket": 6618,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "5a4f5c3a-6a4c-4d9b-ba3c-88c6e9ecdad9",
+          "providerBucket": 5042,
+          "ruleBucket": 1076,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "5fc6b9c0-b4b3-4f77-9d12-669ee24af0e0",
+          "providerBucket": 7013,
+          "ruleBucket": 1946,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "3f5b36b7-b77f-43a7-9206-48ac2e3107ff",
+          "providerBucket": 6309,
+          "ruleBucket": 4600,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e9f939eb-16a2-417c-839f-429d3479e44c",
+          "providerBucket": 7727,
+          "ruleBucket": 5430,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "f1eb206e-251f-4d90-82f2-f7c94906d682",
+          "providerBucket": 7247,
+          "ruleBucket": 5475,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "7b4b3762-a4d8-4df2-9bec-47a87581d277",
+          "providerBucket": 9878,
+          "ruleBucket": 8797,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "0869895d-eb81-4b9a-b5e5-1ea97beda64a",
+          "providerBucket": 8349,
+          "ruleBucket": 6506,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "afa60b01-9765-4b45-98a5-5108ab3f774b",
+          "providerBucket": 4068,
+          "ruleBucket": 7579,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "ee887e42-3dce-43b0-8ecd-1d475fa7604a",
+          "providerBucket": 770,
+          "ruleBucket": 335,
+          "eligible": true
+        }
+      ]
+    },
+    {
+      "label": "PUBLIC_100_PERCENT",
+      "revisionId": "c6a57b37-477f-4d22-b1fd-f87a5fd6f0d4",
+      "publicationId": "e77c550f-0c06-444f-8442-04e59f6ecf9e",
+      "generation": 6,
+      "routeId": "8b979b10-a49f-407e-bb96-e44cabe66327",
+      "configVersion": 6,
+      "ruleVersion": 6,
+      "providerBasisPoints": 10000,
+      "ruleBasisPoints": 10000,
+      "propagationMs": 878.3508749999892,
+      "processObservations": [
+        {
+          "generation": 6
+        },
+        {
+          "generation": 6
+        }
+      ],
+      "review": {
+        "approvals": 0,
+        "inherited": 7
+      },
+      "cohortSize": 24,
+      "admitted": 24,
+      "excluded": 0,
+      "observedAdmissionRatio": 1,
+      "capabilityRequests": 672,
+      "cohorts": [
+        {
+          "checkoutSessionId": "9f3abbd0-4ec9-4d35-a2b3-06f92e7a80bc",
+          "providerBucket": 4958,
+          "ruleBucket": 8764,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e8b462b7-61d0-40ff-ab18-26d61f397be0",
+          "providerBucket": 3941,
+          "ruleBucket": 9434,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "69f41026-ea32-4225-97db-5224e23fa5d4",
+          "providerBucket": 4779,
+          "ruleBucket": 8029,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "9be2beb2-2b0b-48e5-9cf1-8b419f5a71c5",
+          "providerBucket": 2029,
+          "ruleBucket": 5863,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "17aadf39-c105-4897-8933-82215531a4c1",
+          "providerBucket": 8784,
+          "ruleBucket": 3045,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "ce1e2c23-0dee-482a-a618-ea906573413a",
+          "providerBucket": 9384,
+          "ruleBucket": 4428,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "1b0dd639-ce38-43a4-9d42-7411db5d6d30",
+          "providerBucket": 1614,
+          "ruleBucket": 7985,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "a2915b91-8371-4c49-9ea8-abf7ce3d5378",
+          "providerBucket": 1314,
+          "ruleBucket": 2000,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "9ae4ce24-5e6c-4a11-8913-cd71fbe51113",
+          "providerBucket": 3834,
+          "ruleBucket": 195,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e8f863c4-2c9a-48c2-b19d-9ee6a5f715b4",
+          "providerBucket": 3313,
+          "ruleBucket": 6392,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "a804a449-eb45-41af-a906-58d517c55d55",
+          "providerBucket": 7798,
+          "ruleBucket": 9397,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "2f006f17-81f4-4f6a-8c98-95fbdc7a1892",
+          "providerBucket": 7668,
+          "ruleBucket": 3327,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "4811eb9b-40a0-40b5-9469-1e00de128b0a",
+          "providerBucket": 290,
+          "ruleBucket": 509,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e4ac38b6-1515-47df-86d1-ae413f15715a",
+          "providerBucket": 4283,
+          "ruleBucket": 23,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "725b5112-3a04-429a-b9ef-4402ab81b0e0",
+          "providerBucket": 7041,
+          "ruleBucket": 7931,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "5a4f5c3a-6a4c-4d9b-ba3c-88c6e9ecdad9",
+          "providerBucket": 5042,
+          "ruleBucket": 7781,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "5fc6b9c0-b4b3-4f77-9d12-669ee24af0e0",
+          "providerBucket": 7013,
+          "ruleBucket": 9394,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "3f5b36b7-b77f-43a7-9206-48ac2e3107ff",
+          "providerBucket": 6309,
+          "ruleBucket": 2563,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e9f939eb-16a2-417c-839f-429d3479e44c",
+          "providerBucket": 7727,
+          "ruleBucket": 2890,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "f1eb206e-251f-4d90-82f2-f7c94906d682",
+          "providerBucket": 7247,
+          "ruleBucket": 1491,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "7b4b3762-a4d8-4df2-9bec-47a87581d277",
+          "providerBucket": 9878,
+          "ruleBucket": 8141,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "0869895d-eb81-4b9a-b5e5-1ea97beda64a",
+          "providerBucket": 8349,
+          "ruleBucket": 8166,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "afa60b01-9765-4b45-98a5-5108ab3f774b",
+          "providerBucket": 4068,
+          "ruleBucket": 7761,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "ee887e42-3dce-43b0-8ecd-1d475fa7604a",
+          "providerBucket": 770,
+          "ruleBucket": 1663,
+          "eligible": true
+        }
+      ]
+    },
+    {
+      "label": "EMERGENCY_ZERO",
+      "revisionId": "3f56a36a-ebc6-423a-8de0-d234efd5a1bc",
+      "publicationId": "5f0cdfc1-51f9-40a5-8f88-2c38ea230102",
+      "generation": 7,
+      "routeId": "4a39105e-86e9-4b1b-8d85-3d0e9a152169",
+      "configVersion": 7,
+      "ruleVersion": 7,
+      "providerBasisPoints": 0,
+      "ruleBasisPoints": 10000,
+      "propagationMs": 727.9595419999969,
+      "processObservations": [
+        {
+          "generation": 7
+        },
+        {
+          "generation": 7
+        }
+      ],
+      "review": {
+        "approvals": 0,
+        "inherited": 7
+      },
+      "cohortSize": 24,
+      "admitted": 0,
+      "excluded": 24,
+      "observedAdmissionRatio": 0,
+      "capabilityRequests": 672,
+      "cohorts": [
+        {
+          "checkoutSessionId": "9f3abbd0-4ec9-4d35-a2b3-06f92e7a80bc",
+          "providerBucket": 4958,
+          "ruleBucket": 7856,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e8b462b7-61d0-40ff-ab18-26d61f397be0",
+          "providerBucket": 3941,
+          "ruleBucket": 4080,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "69f41026-ea32-4225-97db-5224e23fa5d4",
+          "providerBucket": 4779,
+          "ruleBucket": 9650,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "9be2beb2-2b0b-48e5-9cf1-8b419f5a71c5",
+          "providerBucket": 2029,
+          "ruleBucket": 7357,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "17aadf39-c105-4897-8933-82215531a4c1",
+          "providerBucket": 8784,
+          "ruleBucket": 3847,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "ce1e2c23-0dee-482a-a618-ea906573413a",
+          "providerBucket": 9384,
+          "ruleBucket": 2951,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "1b0dd639-ce38-43a4-9d42-7411db5d6d30",
+          "providerBucket": 1614,
+          "ruleBucket": 6644,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "a2915b91-8371-4c49-9ea8-abf7ce3d5378",
+          "providerBucket": 1314,
+          "ruleBucket": 1298,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "9ae4ce24-5e6c-4a11-8913-cd71fbe51113",
+          "providerBucket": 3834,
+          "ruleBucket": 2666,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e8f863c4-2c9a-48c2-b19d-9ee6a5f715b4",
+          "providerBucket": 3313,
+          "ruleBucket": 9272,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "a804a449-eb45-41af-a906-58d517c55d55",
+          "providerBucket": 7798,
+          "ruleBucket": 7781,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "2f006f17-81f4-4f6a-8c98-95fbdc7a1892",
+          "providerBucket": 7668,
+          "ruleBucket": 617,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "4811eb9b-40a0-40b5-9469-1e00de128b0a",
+          "providerBucket": 290,
+          "ruleBucket": 5591,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e4ac38b6-1515-47df-86d1-ae413f15715a",
+          "providerBucket": 4283,
+          "ruleBucket": 5587,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "725b5112-3a04-429a-b9ef-4402ab81b0e0",
+          "providerBucket": 7041,
+          "ruleBucket": 2744,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "5a4f5c3a-6a4c-4d9b-ba3c-88c6e9ecdad9",
+          "providerBucket": 5042,
+          "ruleBucket": 2360,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "5fc6b9c0-b4b3-4f77-9d12-669ee24af0e0",
+          "providerBucket": 7013,
+          "ruleBucket": 7687,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "3f5b36b7-b77f-43a7-9206-48ac2e3107ff",
+          "providerBucket": 6309,
+          "ruleBucket": 8297,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "e9f939eb-16a2-417c-839f-429d3479e44c",
+          "providerBucket": 7727,
+          "ruleBucket": 7355,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "f1eb206e-251f-4d90-82f2-f7c94906d682",
+          "providerBucket": 7247,
+          "ruleBucket": 9516,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "7b4b3762-a4d8-4df2-9bec-47a87581d277",
+          "providerBucket": 9878,
+          "ruleBucket": 9457,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "0869895d-eb81-4b9a-b5e5-1ea97beda64a",
+          "providerBucket": 8349,
+          "ruleBucket": 7794,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "afa60b01-9765-4b45-98a5-5108ab3f774b",
+          "providerBucket": 4068,
+          "ruleBucket": 6459,
+          "eligible": false
+        },
+        {
+          "checkoutSessionId": "ee887e42-3dce-43b0-8ecd-1d475fa7604a",
+          "providerBucket": 770,
+          "ruleBucket": 574,
+          "eligible": false
+        }
+      ]
+    },
+    {
+      "label": "ROLLBACK_TO_100_PERCENT",
+      "revisionId": "c6a57b37-477f-4d22-b1fd-f87a5fd6f0d4",
+      "publicationId": "5ef387d6-a457-4d64-9d54-a4bff13936b8",
+      "generation": 8,
+      "routeId": "8b979b10-a49f-407e-bb96-e44cabe66327",
+      "configVersion": 6,
+      "ruleVersion": 6,
+      "providerBasisPoints": 10000,
+      "ruleBasisPoints": 10000,
+      "propagationMs": 774.2687500000029,
+      "processObservations": [
+        {
+          "generation": 8
+        },
+        {
+          "generation": 8
+        }
+      ],
+      "review": {
+        "approvals": 0,
+        "inherited": 7
+      },
+      "cohortSize": 24,
+      "admitted": 24,
+      "excluded": 0,
+      "observedAdmissionRatio": 1,
+      "capabilityRequests": 672,
+      "cohorts": [
+        {
+          "checkoutSessionId": "9f3abbd0-4ec9-4d35-a2b3-06f92e7a80bc",
+          "providerBucket": 4958,
+          "ruleBucket": 8764,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e8b462b7-61d0-40ff-ab18-26d61f397be0",
+          "providerBucket": 3941,
+          "ruleBucket": 9434,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "69f41026-ea32-4225-97db-5224e23fa5d4",
+          "providerBucket": 4779,
+          "ruleBucket": 8029,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "9be2beb2-2b0b-48e5-9cf1-8b419f5a71c5",
+          "providerBucket": 2029,
+          "ruleBucket": 5863,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "17aadf39-c105-4897-8933-82215531a4c1",
+          "providerBucket": 8784,
+          "ruleBucket": 3045,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "ce1e2c23-0dee-482a-a618-ea906573413a",
+          "providerBucket": 9384,
+          "ruleBucket": 4428,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "1b0dd639-ce38-43a4-9d42-7411db5d6d30",
+          "providerBucket": 1614,
+          "ruleBucket": 7985,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "a2915b91-8371-4c49-9ea8-abf7ce3d5378",
+          "providerBucket": 1314,
+          "ruleBucket": 2000,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "9ae4ce24-5e6c-4a11-8913-cd71fbe51113",
+          "providerBucket": 3834,
+          "ruleBucket": 195,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e8f863c4-2c9a-48c2-b19d-9ee6a5f715b4",
+          "providerBucket": 3313,
+          "ruleBucket": 6392,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "a804a449-eb45-41af-a906-58d517c55d55",
+          "providerBucket": 7798,
+          "ruleBucket": 9397,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "2f006f17-81f4-4f6a-8c98-95fbdc7a1892",
+          "providerBucket": 7668,
+          "ruleBucket": 3327,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "4811eb9b-40a0-40b5-9469-1e00de128b0a",
+          "providerBucket": 290,
+          "ruleBucket": 509,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e4ac38b6-1515-47df-86d1-ae413f15715a",
+          "providerBucket": 4283,
+          "ruleBucket": 23,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "725b5112-3a04-429a-b9ef-4402ab81b0e0",
+          "providerBucket": 7041,
+          "ruleBucket": 7931,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "5a4f5c3a-6a4c-4d9b-ba3c-88c6e9ecdad9",
+          "providerBucket": 5042,
+          "ruleBucket": 7781,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "5fc6b9c0-b4b3-4f77-9d12-669ee24af0e0",
+          "providerBucket": 7013,
+          "ruleBucket": 9394,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "3f5b36b7-b77f-43a7-9206-48ac2e3107ff",
+          "providerBucket": 6309,
+          "ruleBucket": 2563,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "e9f939eb-16a2-417c-839f-429d3479e44c",
+          "providerBucket": 7727,
+          "ruleBucket": 2890,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "f1eb206e-251f-4d90-82f2-f7c94906d682",
+          "providerBucket": 7247,
+          "ruleBucket": 1491,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "7b4b3762-a4d8-4df2-9bec-47a87581d277",
+          "providerBucket": 9878,
+          "ruleBucket": 8141,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "0869895d-eb81-4b9a-b5e5-1ea97beda64a",
+          "providerBucket": 8349,
+          "ruleBucket": 8166,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "afa60b01-9765-4b45-98a5-5108ab3f774b",
+          "providerBucket": 4068,
+          "ruleBucket": 7761,
+          "eligible": true
+        },
+        {
+          "checkoutSessionId": "ee887e42-3dce-43b0-8ecd-1d475fa7604a",
+          "providerBucket": 770,
+          "ruleBucket": 1663,
+          "eligible": true
+        }
+      ]
+    }
+  ]
+}

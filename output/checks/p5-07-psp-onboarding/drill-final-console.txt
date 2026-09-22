@@ -1,0 +1,6 @@
+$ node ./scripts/verify-psp-onboarding.mjs --output output/checks/p5-07-psp-onboarding/drill-final
+[psp-onboarding] build; /Users/mario/Desktop/下单/output/checks/p5-07-psp-onboarding/drill-final/build.txt
+[psp-onboarding] fake-conformance; /Users/mario/Desktop/下单/output/checks/p5-07-psp-onboarding/drill-final/fake-conformance.txt
+[psp-onboarding] adapter-tests; /Users/mario/Desktop/下单/output/checks/p5-07-psp-onboarding/drill-final/adapter-tests.txt
+[psp-onboarding] staged-rollout; /Users/mario/Desktop/下单/output/checks/p5-07-psp-onboarding/drill-final/staged-rollout.txt
+[psp-onboarding] PASS; /Users/mario/Desktop/下单/output/checks/p5-07-psp-onboarding/drill-final/result.json

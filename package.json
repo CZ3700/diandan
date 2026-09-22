@@ -57,7 +57,8 @@
     "verify:admin-orders:browser": "corepack pnpm --filter @fan-support/api test:browser:admin-orders",
     "verify:admin-finance:browser": "corepack pnpm --filter @fan-support/api test:browser:admin-finance",
     "verify:admin-payment-configuration:browser": "corepack pnpm --filter @fan-support/api test:browser:admin-payment-configuration",
-    "verify:admin-exceptions:browser": "corepack pnpm --filter @fan-support/api test:browser:admin-exceptions"
+    "verify:admin-exceptions:browser": "corepack pnpm --filter @fan-support/api test:browser:admin-exceptions",
+    "verify:psp-onboarding": "node ./scripts/verify-psp-onboarding.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

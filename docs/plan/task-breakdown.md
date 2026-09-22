@@ -200,3 +200,7 @@ P5-05配置管理、独立审核/继承、差异/二次确认/发布回退、健
 ### 2026-09-22 P5-06 验收与 P5-07 本地就绪
 
 P5-06 原任务四类异常与安全重放已完成实际PG/HTTP/Worker/七语双端、质量门及非作者复核，标DONE、Lane D释放。原任务不要求新商户接入；正式PSP/人工/部署条件留在对应未完任务。P5-07原P5-04/05/06直接依赖的本地完整成果已逐源核对并独立验收，现READY、尚未领取，只做接入runbook与fake conformance/灰度演练；不实际增加多余渠道。证据见`output/checks/p5-06-exception-operations/next-stage-readiness.md`与最终验收。30 DONE /5 IN_PROGRESS /1 READY /13 PENDING=49，Phase6/7仍LOCKED；完整持久本地体验继续按独立检查表交付。
+
+### 2026-09-22 P5-07 验收与 P5-08 有限本地就绪
+
+P5-07 接入手册/商户资格门、完整fake conformance/七阶段TEST灰度、停止回退及旧UNKNOWN恢复已通过统一入口、实际PG/HTTP/双API、质量门与非作者复核，标DONE、Lane D释放。P5-08原P0-05/P1-05/P3-06/P4-06/P5-05/P5-06/P5-07依赖不变；适用本地成果经独立逐源及验收证据核对后，按ADR-016仅离线模块/部署工具READY、尚未领取。该工具范围明确包含持久本地体验：同一PG/媒体、前后台/Worker/本地身份、上传→TEST付款→查单→订单处理→退款和重启保留数据，按`docs/runbooks/local-experience-readiness.md`实测后再告知用户准备服务器。原OpenTofu与AWS staging apply/smoke/re-apply等完整验收不删减，离线通过仍不能把P5-08标DONE。证据见`output/checks/p5-07-psp-onboarding/final-verification.md`和`next-stage-readiness.md`。31 DONE /5 IN_PROGRESS /1 READY /12 PENDING=49，Phase6/7仍LOCKED；原商户/人工/内容/云/真实资金门保留，仅本地提交。

@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "environment": "TEST",
+  "commercialSandbox": false,
+  "report": {
+    "schemaVersion": 1,
+    "suite": "payment-provider-v1",
+    "passed": true,
+    "cases": [
+      {
+        "schemaVersion": 1,
+        "caseName": "get-capabilities",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "create-payment",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "get-payment",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "cancel-payment",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "refund-payment",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "reconcile-payment",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "reconcile-refund",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "create-captured-payment-scenario",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "authenticate-captured-payment-scenario",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "authenticate-captured-payment-with-new-audit",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "refund-after-authenticated-reconcile",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "replay-refund-exactly-once",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "reject-refund-idempotency-drift",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "reject-refund-over-capture",
+        "passed": true
+      },
+      {
+        "schemaVersion": 1,
+        "caseName": "reconcile-existing-refund",
+        "passed": true
+      }
+    ]
+  }
+}

@@ -4,7 +4,7 @@
 
 ## 运转方式
 
-- 首次部署给每个账户和环境明确提供 `PaymentHealthPolicy`。API 的 `FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON` 必须与已部署绑定完整对应，PG 保存不可变版本；重复启动只验证同值，不自动覆盖策略。后续运营发布属于 P5-05。
+- 首次部署给每个账户和环境明确提供 `PaymentHealthPolicy`。API 的 `FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON` 必须与已部署绑定完整对应，PG 保存不可变版本；重复启动只验证同值，不自动覆盖策略。P5-05 已接通版本化健康策略和管理发布，见[支付设置手册](admin-payment-configuration.md)。
 - 技术失败在 PG 时间决定的固定窗口中累计，普通成功不清窗口，业务拒付、取消、停售和配置错误不计技术故障。达到阈值时同事务追加健康事件并暂时停止新付款资格；实际新创建仍在数据库里重验。
 - API 既有恢复循环独立调用有界健康探测；无待恢复付款时也能探测。PG 跨实例领取、代际、租期、账户版本和策略版本共同约束结果。仅用先前实际结账产生且当前发布配置仍允许的 `GET_CAPABILITIES` 上下文，不拼凑金额/市场，不调用任何资金操作。失败和成功的有效探测留存受限证据，过期成功不能恢复渠道。
 - 健康写入故障关闭新付款资格，但已发出的创建或可信对账继续原结果落库；不得把监测失败当作未扣款后再创建。不可达 adapter 的探测有本地截止时间，迟到响应被忽略；不具备 abort 的 adapter 请求仍由其自身传输截止时间清理。
@@ -41,4 +41,4 @@ mise exec node@24.20.0 -- corepack pnpm check:dev
 
 0034 的回退需要与对应应用版本一起操作：新版付款创建依赖新增数据库函数。当前下迁移证据是隔离环境的 DDL 往返，不能据此执行生产回退；0033 一旦已有健康策略或观测历史会拒绝回退，必须保留这些记录。
 
-正式策略阈值、已批准 PSP 的实际签名/能力映射、sandbox/真实小额、正式 Secret Manager、staging 与灰度验收仍按原任务完成。管理中心配置发布和退款/异常队列由后续 P5 任务接入，本阶段没有增加运营表单负担。
+正式策略阈值、已批准 PSP 的实际签名/能力映射、sandbox/真实小额、正式 Secret Manager、staging 与灰度验收仍按原任务完成。管理中心已接通[支付设置](admin-payment-configuration.md)、[退款与对账](admin-finance-local.md)和[异常待处理](exception-operations.md)。新渠道接入及分级演练见[PSP 接入手册](psp-onboarding.md)，仍保留原实际供应商与正式发布验收。

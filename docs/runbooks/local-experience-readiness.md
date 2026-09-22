@@ -2,6 +2,8 @@
 
 2026-09-22 当前核查：**尚未达到可交给用户完整体验的统一入口**。本页记录交付条件，不代表业务模块未开发，也不等于线上发布批准。
 
+本地部署交付归属：**P5-08 的本地部署工具范围**，在 P5-07 验收、P5-08 原依赖独立核对与领取登记后实施。与原 OpenTofu 离线模块并列验收，不能仅把检查表向后转交。P5-08 的云 staging apply/smoke/re-apply 仍须实际环境和授权，完整体验通过也不自动关闭这些云端欠项。
+
 现有 `pnpm preview:management-center` 是临时内容管理 TEST 环境。`apps/api/scripts/management-center-local.mjs` 运行浏览器检查后保留预览，再清理自有数据库/媒体；它不能作为可重启保留数据的完整交易环境。订单夹具 `admin-orders-runtime.mjs` 的上传端口明确未组合真实上传，新艺人也未自动取得可结账的履约资料；实际预检在缺少资料时正确返回 `FULFILLMENT_UNAVAILABLE`。
 
 统一体验入口必须完成并实测：
