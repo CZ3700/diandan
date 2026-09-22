@@ -1,3 +1,8 @@
+import { createAdminExceptionsRepository } from "./admin-exceptions-repository.js";
+import type {
+  AdminExceptionsRepository,
+  AdminExceptionsTransactionManager,
+} from "@fan-support/persistence-port";
 import { createAdminPaymentConfigurationRepository } from "./admin-payment-configuration-repository.js";
 import type {
   AdminPaymentConfigurationRepository,
@@ -199,6 +204,7 @@ import {
 
 export interface PostgresPersistence {
   readonly adminPaymentConfigurationTransactionManager: AdminPaymentConfigurationTransactionManager;
+  readonly adminExceptionsTransactionManager: AdminExceptionsTransactionManager;
   readonly adminFinanceTransactionManager: AdminFinanceTransactionManager;
   readonly paymentHealthTransactionManager: PaymentHealthTransactionManager;
   readonly adminOrdersTransactionManager: AdminOrdersTransactionManager;
@@ -391,6 +397,18 @@ export function createPostgresPersistenceWithPoolFactory(
       acquireClient: () =>
         acquirePaymentHealthClient(() => pool.connect(), 10000),
       createRepositories: createAdminPaymentConfigurationRepository,
+    });
+  const adminExceptionsRunner =
+    createTransactionRunner<AdminExceptionsRepository>({
+      acquireClient: () =>
+        acquirePaymentHealthClient(() => pool.connect(), 10000),
+      createRepositories: (client, scope) =>
+        createAdminExceptionsRepository(
+          client,
+          scope,
+          financeRepositories(client, scope),
+          createAdminOrderResendRepository(client, scope),
+        ),
     });
   const adminFinanceRunner = createTransactionRunner<AdminFinanceRepository>({
     acquireClient: async () => pool.connect(),
@@ -1198,6 +1216,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return adminPaymentConfigurationRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    adminExceptionsTransactionManager: {
+      async runInAdminExceptionsTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminExceptionsRunner.run(
           { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );

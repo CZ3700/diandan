@@ -1,0 +1,15 @@
+{
+  "stage": "restored authority reads fresh detail",
+  "assertions": 7133,
+  "name": "AssertionError",
+  "code": "ERR_ASSERTION",
+  "frames": [
+    "/apps/api/scripts/admin-exceptions-http.mjs:54:12",
+    "/apps/api/scripts/admin-exceptions-browser.mjs:49:5",
+    "/apps/api/scripts/admin-exceptions-browser.mjs:462:5",
+    "/apps/api/scripts/admin-exceptions-http.mjs:153:21",
+    "/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14",
+    "/apps/api/scripts/payment-runtime-runtime.mjs:29:12",
+    "/apps/api/scripts/admin-exceptions-http.mjs:64:5"
+  ]
+}

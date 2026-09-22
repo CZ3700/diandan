@@ -47,6 +47,7 @@ export function ManagementWorkspace({
   onLogout,
   onOrders,
   onPayments,
+  onExceptions,
   initialSection = "ARTISTS",
   accessNotice,
 }: {
@@ -56,6 +57,7 @@ export function ManagementWorkspace({
   onLogout?: (() => Promise<void>) | undefined;
   onOrders?: (() => void) | undefined;
   onPayments?: (() => void) | undefined;
+  onExceptions?: (() => void) | undefined;
   initialSection?: ManagementSection;
   accessNotice?: ReactNode;
 }) {
@@ -214,10 +216,13 @@ export function ManagementWorkspace({
           ? onOrders?.()
           : next === "PAYMENTS"
             ? onPayments?.()
-            : chooseSection(next)
+            : next === "EXCEPTIONS"
+              ? onExceptions?.()
+              : chooseSection(next)
       }
       ordersAvailable={Boolean(onOrders)}
       paymentsAvailable={Boolean(onPayments)}
+      exceptionsAvailable={Boolean(onExceptions)}
       disabled={busy}
       accountAction={
         onLogout ? (

@@ -1,0 +1,47 @@
+{
+  "baseline": "f9c8a619f38a07c095607e4b3b73039b4317f2a0",
+  "checkedAt": "2026-09-22T07:10:17.327411+00:00",
+  "checks": {
+    "contracts.schema.json:$defs": {
+      "oldCount": 690,
+      "newCount": 699,
+      "changedOldEntries": [],
+      "addedEntries": [
+        "AdminExceptionsClaim",
+        "AdminExceptionsClaimRequest",
+        "AdminExceptionsCommand",
+        "AdminExceptionsFailure",
+        "AdminExceptionsRequest",
+        "AdminExceptionsResponse",
+        "AdminExceptionsSettleCommand",
+        "AdminExceptionsSettleResult",
+        "AdminExceptionsStoreRequest"
+      ]
+    },
+    "openapi.json:paths": {
+      "oldCount": 120,
+      "newCount": 127,
+      "changedOldEntries": [],
+      "addedEntries": [
+        "/api/v1/admin/exceptions/context",
+        "/api/v1/admin/exceptions/detail",
+        "/api/v1/admin/exceptions/list",
+        "/api/v1/admin/exceptions/reconcile-payment",
+        "/api/v1/admin/exceptions/replay-webhook",
+        "/api/v1/admin/exceptions/retry-dead-letter",
+        "/api/v1/admin/exceptions/retry-notification"
+      ]
+    },
+    "openapi.json:components.schemas": {
+      "oldCount": 200,
+      "newCount": 204,
+      "changedOldEntries": [],
+      "addedEntries": [
+        "AdminExceptionsCommand",
+        "AdminExceptionsFailure",
+        "AdminExceptionsRequest",
+        "AdminExceptionsResponse"
+      ]
+    }
+  }
+}

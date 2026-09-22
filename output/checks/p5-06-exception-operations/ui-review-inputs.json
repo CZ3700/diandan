@@ -1,0 +1,143 @@
+{
+  "observedAt": "2026-09-22T08:24:56.139835+00:00",
+  "scope": "Author review of Admin UI/BFF and browser runner",
+  "decision": "ACCEPT",
+  "files": [
+    {
+      "path": "apps/admin/src/management-exceptions/api.test.ts",
+      "sha256": "7b1a5fba76042309d47cff6bd606ae53d6178f8e37affb96e473de00135fad2c"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/api.ts",
+      "sha256": "71733c32e45811c09d05c8a7a66e7a699f72265987db775d1a8a8b42bc685377"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-en.ts",
+      "sha256": "374f8d0c0cf8c78bc74dc96cd2a8434065bc3edeb897da558aeebda4c30e057d"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-es.ts",
+      "sha256": "5f1e7f3016362dc078abb8d571daa41f8aec6557072010a0e6c02afd49a6096a"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-ja.ts",
+      "sha256": "a5f6d18c8df65a110176ca05b06113c89dec585667db55eb07581ec3cf23bb3f"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-pt.ts",
+      "sha256": "ef0ff9418e80ce9e0722c2a9f89bc345dffca5cfe60a087d5b308138610c08a6"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-th.ts",
+      "sha256": "476516a4cab6f524208fac625a16810cf62f5036e8b813d150db450064e04775"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-vi.ts",
+      "sha256": "92d6bc78132b58168915a7d06576cad0e3157b07c8dd9a43b1940c8677d29b34"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-zh-cn.ts",
+      "sha256": "a6e3464502f447c069a75bedab91d7b3e29efec2f027e8582c444f923f2c6b32"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy.ts",
+      "sha256": "a836f0afa6fab6e36b35d0f6fc89bbf86774bb29d4cd1549d88963af5f8ac86d"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/detail-view.tsx",
+      "sha256": "d787b8fbc5f0dc32a7d26b229189e7e84f0325bbf09334f539eace45d5251a60"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/exceptions.css",
+      "sha256": "4d54fc6f56ce17f8f32324ed40cecfbfa35cf6d1deb94cf83495d20891777f6b"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/filters-view.tsx",
+      "sha256": "25ae6b791d0b52a90ca18b8e50943ef1c3d488bcfb7d675922f11c8df9473fec"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/labels.ts",
+      "sha256": "7daba7cdbf1cb4254f19c9e50acd0b62521dddcdcc60675dca57211f2205bf43"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/list-view.tsx",
+      "sha256": "3a00af69726f4350fe1881c0af56edeaf4d7351f0b4a85c1094b939b83320288"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/pending-store.test.ts",
+      "sha256": "5b6b914cfafb9b5a33cf882619c27b95aaea9bc7ee57187f06e1899b742d9506"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/pending-store.ts",
+      "sha256": "ef7d97baef138ba8b7f93c92b462a87ff1a434a2333e92e007f9650c43882b8d"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/review-manifest.ts",
+      "sha256": "46a129cd10766efa67ccf35562b637a06d433c400f81ad1a804903a66e929823"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/state.test.ts",
+      "sha256": "731bf5e976d507ab0ba4da3e9888c39b60d71f1237623d672e4201f9336f1a9c"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/state.ts",
+      "sha256": "67bdfcf889c6287eced892029a0a6ea3725bfba356b5dc0158b3688e64775e23"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/views.test.tsx",
+      "sha256": "702a03c1faed2db0ea07f18cb185ad163da5527c56e74e29a4bbec5b975b905a"
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/workspace.tsx",
+      "sha256": "16144d2b425bf777714aa9fecf7ff71511bd5c054de15702ddf9a41db7e48db3"
+    },
+    {
+      "path": "apps/admin/src/management-center/access.ts",
+      "sha256": "365ea8197f175fce649b705b4044e83e65718934ec002902cbd90441131e8696"
+    },
+    {
+      "path": "apps/admin/src/management-center/access.test.ts",
+      "sha256": "23f20a17267bd8a6e1f3d3683dfb26e87ac553d59535845fc5512950d8394022"
+    },
+    {
+      "path": "apps/admin/src/management-center/center.tsx",
+      "sha256": "c975bff5e3023821a089634da28ecae73d300f405bbfa2072768fbbdbf95b7da"
+    },
+    {
+      "path": "apps/admin/src/management-center/hub.tsx",
+      "sha256": "f5ede6cdc36e829c3956ded0aed8c57d0801ff25d4d73c33a198b628262290a4"
+    },
+    {
+      "path": "apps/admin/src/management-center/shell.tsx",
+      "sha256": "2f2d97c633aa99fb0b8bebe7b16767d170a7e72e5ec855904560e60e970f1963"
+    },
+    {
+      "path": "apps/admin/src/management-center/workspace.tsx",
+      "sha256": "d31efad27bbe1d61b85856a04c76f78adc31cf4e2460742f033241d189e29ae6"
+    },
+    {
+      "path": "apps/admin/src/server/admin-api-client.ts",
+      "sha256": "9160e153210f8fa045a9c6c94be70e9d2019d9bccb818ecbd44ebe5b559e53ee"
+    },
+    {
+      "path": "apps/admin/src/server/admin-operations.ts",
+      "sha256": "805478bbd9d51fe64e84bb89412a29e63a7908a9f1488d75bf055186d529c2fa"
+    },
+    {
+      "path": "apps/admin/src/server/admin-exceptions-operations.test.ts",
+      "sha256": "de367b5753918fcc1e944234a4d1bc1bb3065cd2094b55d79659de464d2edc72"
+    },
+    {
+      "path": "apps/admin/src/server/admin-bff.test.ts",
+      "sha256": "571858916c5a61e770f763c40422b9654fa7dd8b4a90a8b877c0f85b29e13b3e"
+    },
+    {
+      "path": "apps/api/scripts/admin-exceptions-browser.mjs",
+      "sha256": "adaa364c12da2f24dc825da4cb57c4f3dd3eb311ad203a52e2148436f1538f23"
+    }
+  ],
+  "browserReport": {
+    "path": "output/checks/p5-06-exception-operations/integration-2026-09-22T08-16-42.172Z/browser-exceptions/report.json",
+    "sha256": "3f49b074341a10ecb1bfbc70714d907e4260bc9aaa7941fa201baeb58bb162db"
+  }
+}

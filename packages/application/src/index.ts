@@ -1,4 +1,13 @@
 export { createAdminOrderResendUseCases } from "./admin-order-resends.js";
+export {
+  createAdminExceptionsUseCases,
+  type AdminExceptionsDependencies,
+  type AdminExceptionsUseCases,
+} from "./admin-exceptions.js";
+export {
+  createAdminExceptionsRecovery,
+  type AdminExceptionsRecoveryDependencies,
+} from "./admin-exceptions-recovery.js";
 export * from "./admin-preview-media.js";
 export * from "./admin-catalog.js";
 export * from "./translation-workspace.js";

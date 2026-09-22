@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "task": "P5-06",
+  "baseline": "f9c8a619f38a07c095607e4b3b73039b4317f2a0",
+  "verifiedAt": "2026-09-22T08:25:52.196869+00:00",
+  "localAcceptance": "PASS",
+  "taskStatus": "DONE",
+  "nextTask": "P5-07_READY_LOCAL_SCOPE",
+  "checkDev": {
+    "exitCode": 0,
+    "log": "check-dev-final.log",
+    "typecheck": {
+      "passed": 64,
+      "cached": 63
+    },
+    "test": {
+      "passed": 64,
+      "cached": 63
+    },
+    "build": {
+      "passed": 36,
+      "cached": 35
+    },
+    "format": "PASS",
+    "lint": "PASS",
+    "countMeaning": "Turbo task graph, including dependencies; not number of unit assertions"
+  },
+  "contracts": {
+    "files": 92,
+    "tests": 517,
+    "artifactCheck": "PASS",
+    "log": "contracts-final.log"
+  },
+  "storage": {
+    "checks": 53,
+    "postgres": "18.6",
+    "migrations": 37,
+    "tables": 200,
+    "syntheticHistoricalSourceSetup": true,
+    "run": "storage/2026-09-22T07-44-41.865Z/result.json"
+  },
+  "legacyConfigurationPostgres": {
+    "checks": 151,
+    "exitCode": 0,
+    "log": "storage-legacy-0036-green.log"
+  },
+  "httpAndBrowser": {
+    "exitCode": 0,
+    "run": "output/checks/p5-06-exception-operations/integration-2026-09-22T08-16-42.172Z",
+    "total": 7143,
+    "setup": 5763,
+    "protocol": 369,
+    "sharedStorage": 27,
+    "browserIncludingFixtureChecks": 809,
+    "additionalFixture": 175,
+    "uiAssertions": 708,
+    "cases": 11,
+    "screenshots": 89,
+    "axe": 89,
+    "violations": 0,
+    "incomplete": 0,
+    "pageErrors": 0
+  },
+  "otherGates": {
+    "ci": "PASS",
+    "runtime": "PASS",
+    "observability": "PASS",
+    "adapterBoundaries": "PASS",
+    "buildArtifactExports": 32,
+    "domainBoundaryTests": "PASS",
+    "adapterBoundaryTests": "PASS",
+    "secrets": "PASS",
+    "secretScanExitCode": 0,
+    "secretScanLog": "secrets-artifacts-final.log"
+  },
+  "compatibility": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "checkedAt": "2026-09-22T08:30:22.054Z",
+    "baseline": "f9c8a619f38a07c095607e4b3b73039b4317f2a0",
+    "preexistingFilesPreserved": 5993,
+    "oldSqlPreserved": 72,
+    "oldMigrationEntriesPreserved": 36,
+    "checks": {
+      "contracts.schema.json:$defs": {
+        "before": 690,
+        "after": 700,
+        "changed": 0
+      },
+      "openapi.json:paths": {
+        "before": 120,
+        "after": 127,
+        "changed": 0
+      },
+      "openapi.json:components.schemas": {
+        "before": 200,
+        "after": 204,
+        "changed": 0
+      }
+    },
+    "sourceFiles": 2582,
+    "sourceManifestSha256": "7bd8b9ed7fc2d9f2ba24c0510898bc6641e4d14424e0c10bf0e393249b786e21"
+  },
+  "reviewInputVerification": "review-input-verification.json",
+  "superChecks": "PASS_1_TO_10",
+  "limits": {
+    "fullPnpmCheckRun": false,
+    "allHistoricalPostgresAndS3SuitesRerun": false,
+    "physicalDevice": false,
+    "commercialPspSandbox": false,
+    "realMoney": false,
+    "realEmail": false,
+    "workerOsProcessKilled": false,
+    "simulatedPostCommitInterruptionWithRealLeaseRecovery": true,
+    "browserReadonlyScope": "WEBHOOK_MUTATION_SEVEN_LOCALES",
+    "formalTranslationReview": "DRAFT",
+    "persistentUserExperienceReady": false,
+    "pushed": false,
+    "deployed": false
+  },
+  "cleanup": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "outerCommandExitCode": 0,
+    "ownedNativePostgresStopped": true,
+    "ownedNativePostgresRemoved": true,
+    "ownedNextStopped": true,
+    "ownedApiStopped": true,
+    "ownedTlsOidcStopped": true,
+    "ownedTlsS3Stopped": true,
+    "ownedTestPspStopped": true,
+    "ownedTestMailStopped": true,
+    "processInspection": {
+      "postgres": 0,
+      "minio": 0,
+      "taskNodeProcesses": 0,
+      "preexistingNextPidsRetained": [
+        54282,
+        75388
+      ],
+      "codexComputerUseProcessesRetained": true
+    },
+    "evidence": "Outer isolated runner exited 0 after all owned cleanup callbacks; process inventory contains only Codex computer-use Node processes and pre-existing September 5 Next servers.",
+    "verifiedAt": "2026-09-22T08:25:39.050Z"
+  }
+}

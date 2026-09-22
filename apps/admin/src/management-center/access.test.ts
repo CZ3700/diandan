@@ -81,3 +81,68 @@ test("payment access remains independent when content and order services reject 
     ),
   ).toMatchObject({ payments: payment, temporaryFailure: true });
 });
+test("exceptions access is independent and never inferred from another workspace", () => {
+  const denied = {
+    status: "rejected",
+    reason: new AdminClientError("FORBIDDEN"),
+  } as const;
+  const context = {
+    schemaVersion: 1 as const,
+    outcome: "SUCCESS" as const,
+    kind: "CONTEXT" as const,
+    actorId: "10000000-0000-4000-8000-000000000001",
+    permissions: {
+      canRead: true,
+      canReplayWebhook: false,
+      canRetryDeadLetter: false,
+      canReconcilePayment: false,
+      canRetryNotification: false,
+    },
+  };
+  expect(
+    access.resolveManagementAccess(denied, denied, undefined, {
+      status: "fulfilled",
+      value: context,
+    }),
+  ).toMatchObject({ exceptions: context, temporaryFailure: false });
+  expect(
+    access.resolveManagementAccess(denied, denied, undefined, {
+      status: "fulfilled",
+      value: {
+        ...context,
+        permissions: { ...context.permissions, canRead: false },
+      },
+    }),
+  ).toMatchObject({ exceptions: null });
+});
+test("a healthy active workspace does not display another workspace's discovery error", () => {
+  const denied = {
+    status: "rejected",
+    reason: new AdminClientError("FORBIDDEN"),
+  } as const;
+  const result = access.resolveManagementAccess(
+    { status: "rejected", reason: new AdminClientError("CONTENT_UNAVAILABLE") },
+    denied,
+    undefined,
+    {
+      status: "fulfilled",
+      value: {
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "CONTEXT",
+        actorId: "10000000-0000-4000-8000-000000000001",
+        permissions: {
+          canRead: true,
+          canReplayWebhook: false,
+          canRetryDeadLetter: false,
+          canReconcilePayment: false,
+          canRetryNotification: false,
+        },
+      },
+    },
+  );
+  expect(result.temporaryFailure).toBe(true);
+  expect(access.managementSectionUnavailable(result, "EXCEPTIONS")).toBe(false);
+  expect(access.managementSectionUnavailable(result, "ARTISTS")).toBe(true);
+  expect(access.managementSectionUnavailable(null, "EXCEPTIONS")).toBe(false);
+});

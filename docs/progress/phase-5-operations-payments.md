@@ -17,8 +17,8 @@
 | P5-03 | IN_PROGRESS | —（本地完整验收，Lane A 已释放） | P5-01、P4-04 已验收本地接口、P4-05 | 取消/全额部分退款/拒付/对账已本地验收；真实商户sandbox refund等外部门保留 |
 | P5-04 | IN_PROGRESS | —（本地完整验收，Lane A 已释放） | P1-03 DONE；P4-04 本地输入按 ADR-016 独立核对 | 本地 capability/稳定灰度/健康/conformance 全验收；真实 PSP 条件保留 |
 | P5-05 | IN_PROGRESS | —（本地完整验收，Lane C 已释放） | P5-01、P5-04 本地完整验收 | 草稿/审核/差异/发布回退与双进程传播已验收；正式商户能力/关键译审/实际配置保留 |
-| P5-06 | READY | —（Lane D 空闲） | P5-01、P1-06、P5-03 本地完整验收 | 原依赖当前源与共享接入回归独立核对通过；领取前登记 |
-| P5-07 | PENDING | — | P5-04/05/06 | New PSP runbook/fake adapter drill |
+| P5-06 | DONE | Codex `/root`（Lane D 已释放） | P5-01、P1-06、P5-03 本地完整验收 | 同一管理中心四类异常/安全重放、PG/HTTP/七语双端与独立复核通过 |
+| P5-07 | READY | —（Lane D 空闲） | P5-04/05 本地完整验收、P5-06 DONE | 原直接依赖独立核对通过；仅接入手册/fake演练，尚未领取 |
 | P5-08 | PENDING | — | P0-05、P1-05、P3-06、P4-06、P5-05/06/07 | ADR-007 OpenTofu + production-like staging + immutable deployment |
 
 ## 必须证明
@@ -29,6 +29,27 @@
 - 新 PSP 需要代码部署和认证测试，运营不能上传代码。
 - 不支持/低置信度语言的留言进入人工队列而不自动批准；用户可见支付名称/提示七语言完整。
 - OpenTofu 可从干净环境重复建立 production-like staging；四镜像固定 digest，RDS/S3/CloudFront/WAF/KMS/IAM、预算与配额通过 smoke，production apply 仍受 Phase 7 灰度门控制。
+
+## P5-06 执行登记（2026-09-22）
+
+- Owner：Codex `/root`，Lane D 唯一 executor；开始 `2026-09-22T06:55:45.061367+00:00`，基线 `f9c8a619f38a07c095607e4b3b73039b4317f2a0`，分支 `codex/p5-06-exception-operations`。用户已明确继续；原直接依赖 P5-01/P1-06/P5-03 的本地完整验收、当前源和共享接入复核见 P5-05 `next-stage-readiness.md`。
+- 范围：同一管理中心的 webhook 查询/安全重放、DLQ、UNKNOWN 支付与通知失败待办；当前平台权限/MFA/CSRF、原因/二次确认、永久幂等与审计。仅消费可信既有事件和原交易绑定，不通过浏览器确认付款，不重发新扣款/退款，不暴露敏感原文。
+- 顺序：先审计原可靠事件/财务/通知链路并冻结独立兼容合同；同任务按文件归属实现持久化、应用/API/Worker 与 Admin/UI；真实 PG、TLS TEST PSP/邮件与 worker 测重放无重复副作用，再七语言双视口和最终质量门。
+- 验证：RED→GREEN、实际并发/重复键/失权/锁后过期/事务失败/重启/重放去重/原账户 UNKNOWN 恢复、通知失败不重复发送与历史不改；format/lint/typecheck/build、旧合同/迁移/原未跟踪保护、secret scan、非作者复核及 S.U.P.E.R 10 项。风险 R-02/R-03/R-11，权限边界同步覆盖 R-10。
+- 保护：初始 tracked clean，原 5993 个未跟踪文件 SHA 清单已保存；历史 72 SQL 与 690 根合同/120 paths 保持。root 统一根导出/生成件/lock与任务状态；仅本地提交、不 push/merge/部署/真实资金，不领取其他 Task。完整持久本地体验、真实供应商/关键译审/云门保留。
+- 当前：29 DONE / 6 IN_PROGRESS / 0 READY / 14 PENDING =49；P3-06/P4-04/P5-03/P5-04/P5-05 保留外部验收、无 executor；Phase6/7仍LOCKED。
+
+### P5-06 最终本地验收（2026-09-22）
+
+- 实现经过 REVIEW 与两路非作者复核，本 Task 原定范围全部验收，标 DONE、Lane D 释放；S.U.P.E.R 1–10 PASS。P5-06 未要求新商户或线上接入，不另造外部门；P3-06/P4-04/P5-03/P5-04/P5-05 原欠项继续保留。P5-07 原直接依赖本地完整成果独立复核后 READY；30 DONE / 5 IN_PROGRESS / 1 READY / 13 PENDING=49，Phase6/7仍LOCKED。
+- 同一管理中心新增“待处理”，四类筛选/分页、安全详情、原因/二次确认、当前权限与永久幂等审计。原可信 webhook/outbox 用独立持久操作和 lease/generation 恢复；UNKNOWN 固定原账户核实，确定失败通知复用受控重发；未知/已发送/不合格来源阻断。SENT 后继使原失败退出 OPEN，ALL 保留历史。
+- 实际 PostgreSQL18.6专项53checks、0037往返与37迁移/200表，旧配置PG151通过。最终组合7143=5763setup+369protocol+27共享SQL+809浏览器及其夹具+175其他夹具；浏览器自身708断言/11cases/89PNG/89axe，零违规/incomplete/页面错误。七语390×844/1440×900、键盘/reduced motion、错误、WEBHOOK操作只读、无权限、分页/空态、四动作、两层丢响应刷新原键恢复、失权/复权均通过。
+- 十次同键及十次原handler重放未增加PSP create/refund调用，退款入账恰1、履约及其事件不变，通知仅允许原任务与受控重发。模拟业务已提交但未settle的中断，实际PG lease过期后新Worker实例恢复、旧generation结算STALE；未声称OS进程kill。最终自有PG/Next/API/OIDC/S3/TESTPSP/mail全部清理且外层exit0。
+- 修复SQL NULL/伪造成功与wrapper缺口、REVIEW和通知历史投影、无关模块错误横幅。夹具故障限定目标，108个非目标backlog照常完成；浏览器导航/复权等待改为真实响应和DOM，不放宽断言。原RED、FAIL、截图与清理证据保留。
+- 最终check:dev exit0：format/lint、typecheck64/64、test64/64、build36/36（缓存63/63/35，任务图数量）；合同517tests、check:contracts、CI/runtime/observability、adapter/artifact32exports及秘密扫描通过。没有运行整条pnpm check或重跑全部历史PG/S3门。
+- 旧690合同根/120paths/200components结构不变，72旧SQL/36manifest前缀不变；5993原未跟踪文件逐SHA保留且不暂存。2582源输入最终SHA见`output/checks/p5-06-exception-operations/compatibility-verification.json`；独立审阅11+53文件与最终源一致。
+- 证据：`output/checks/p5-06-exception-operations/final-verification.md`、`final-gates.json`、`next-stage-readiness.md`；操作/复跑入口`docs/runbooks/exception-operations.md`。七语DRAFT、浏览器模拟手机、TEST PSP/邮件和正式环境范围明确保留；仅本地提交，不push/merge/部署/真实资金。
+- 完整持久本地体验仍按`docs/runbooks/local-experience-readiness.md`验收；尚不通知购买服务器。下一项P5-07接入手册与fake演练，本轮不领取。
 
 ## P5-05 执行登记（2026-09-22）
 
@@ -52,7 +73,7 @@
 
 ## Phase 退出证据
 
-尚无完整 Phase 退出证据。ADR-016 已获用户确认，P5-04/P5-03 已完整本地验收，保留真实 PSP 条件并释放 executor；P5-05亦已完成本地完整验收、释放Lane C；P5-06原P5-01/P1-06/P5-03依赖经当前源、真实回归与非作者核对后置READY，Lane D空闲，尚未领取。其余任务继续按原直接依赖/非作者复核/Lane顺序就绪。Phase 6/7 当前仍 LOCKED，后续按 ADR-016 登记有限本地激活范围；原真实 PSP、资金、云、人工与发布门不变。
+尚无完整 Phase 退出证据。ADR-016 下 P5-03/04/05 已完整本地验收并保留原外部门，均无 executor；P5-06 四类异常与安全重放全部本地验收 DONE、Lane D 释放。P5-07 原直接依赖经当前源、实际回归与非作者核对后 READY，尚未领取。其余任务继续按原直接依赖和 Lane 顺序就绪；Phase6/7仍LOCKED，真实商户/云/人工/发布门不变。
 
 ## ADR-016 当前排期登记（2026-09-22）
 

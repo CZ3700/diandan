@@ -6,6 +6,8 @@ import type { ManagementApi, ManagementSection } from "./api";
 import type { OrdersApi } from "../management-orders/api";
 import type { PaymentConfigurationApi } from "../management-payments/api";
 import { PaymentsWorkspace } from "../management-payments/workspace";
+import type { ExceptionsApi } from "../management-exceptions/api";
+import { ExceptionsWorkspace } from "../management-exceptions/workspace";
 import type { FinanceApi } from "../management-finance/api";
 import { OrdersWorkspace } from "../management-orders/workspace";
 import { ordersCopy } from "../management-orders/copy";
@@ -13,12 +15,16 @@ import { ManagementWorkspace } from "./workspace";
 import { ManagementShell } from "./shell";
 import { ManagementLogout } from "./logout";
 import { managementCopy } from "./copy";
-import { resolveManagementAccess } from "./access";
+import {
+  resolveManagementAccess,
+  managementSectionUnavailable,
+} from "./access";
 export function ManagementHub({
   api,
   ordersApi,
   financeApi,
   paymentsApi,
+  exceptionsApi,
   locale,
   storefrontOrigin,
   onLogout,
@@ -27,6 +33,7 @@ export function ManagementHub({
   ordersApi: OrdersApi;
   financeApi?: FinanceApi | undefined;
   paymentsApi?: PaymentConfigurationApi | undefined;
+  exceptionsApi?: ExceptionsApi | undefined;
   locale: SupportedLocale;
   storefrontOrigin?: string | undefined;
   onLogout?: (() => Promise<void>) | undefined;
@@ -36,7 +43,7 @@ export function ManagementHub({
   > | null>(null);
   const [attempt, setAttempt] = useState(0),
     [section, setSection] = useState<
-      ManagementSection | "ORDERS" | "PAYMENTS" | null
+      ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS" | null
     >(null),
     [busy, setBusy] = useState(false);
   const copy = ordersCopy(locale),
@@ -48,7 +55,8 @@ export function ManagementHub({
       api.context(),
       ordersApi.context(),
       paymentsApi?.read() ?? Promise.resolve(null),
-    ] as const).then(([content, orders, payments]) => {
+      exceptionsApi?.context() ?? Promise.resolve(null),
+    ] as const).then(([content, orders, payments, exceptions]) => {
       if (!canceled)
         setAccess(
           resolveManagementAccess(
@@ -59,23 +67,33 @@ export function ManagementHub({
               : payments.value
                 ? { status: "fulfilled", value: payments.value }
                 : undefined,
+            exceptions.status === "rejected"
+              ? exceptions
+              : exceptions.value
+                ? { status: "fulfilled", value: exceptions.value }
+                : undefined,
           ),
         );
     });
     return () => {
       canceled = true;
     };
-  }, [api, ordersApi, paymentsApi, attempt]);
+  }, [api, ordersApi, paymentsApi, exceptionsApi, attempt]);
   const active =
     section ??
     (access?.contentAllowed
       ? "ARTISTS"
       : access?.payments
         ? "PAYMENTS"
-        : "ORDERS");
-  function chooseSection(next: ManagementSection | "ORDERS" | "PAYMENTS") {
+        : access?.orders
+          ? "ORDERS"
+          : "EXCEPTIONS");
+  function chooseSection(
+    next: ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS",
+  ) {
     setSection(next);
-    if (next === "PAYMENTS") setAttempt((value) => value + 1);
+    if (next === "PAYMENTS" || next === "EXCEPTIONS")
+      setAttempt((value) => value + 1);
   }
   const retry = (
     <Button
@@ -88,13 +106,18 @@ export function ManagementHub({
       {common.retry}
     </Button>
   );
-  const notice = access?.temporaryFailure ? (
+  const notice = managementSectionUnavailable(access, active) ? (
     <div className="mc-error-state" role="alert">
       <p>{copy.loadError}</p>
       {retry}
     </div>
   ) : null;
-  if (access?.contentAllowed && active !== "ORDERS" && active !== "PAYMENTS")
+  if (
+    access?.contentAllowed &&
+    active !== "ORDERS" &&
+    active !== "PAYMENTS" &&
+    active !== "EXCEPTIONS"
+  )
     return (
       <ManagementWorkspace
         api={api}
@@ -106,6 +129,9 @@ export function ManagementHub({
         onPayments={
           access.payments ? () => chooseSection("PAYMENTS") : undefined
         }
+        onExceptions={
+          access.exceptions ? () => chooseSection("EXCEPTIONS") : undefined
+        }
         accessNotice={notice}
       />
     );
@@ -116,6 +142,7 @@ export function ManagementHub({
       contentAllowed={access?.contentAllowed ?? false}
       ordersAvailable={Boolean(access?.orders)}
       paymentsAvailable={Boolean(access?.payments)}
+      exceptionsAvailable={Boolean(access?.exceptions)}
       disabled={busy || !access}
       onSection={chooseSection}
       accountAction={
@@ -129,7 +156,14 @@ export function ManagementHub({
       }
     >
       {notice}
-      {active === "PAYMENTS" && access?.payments && paymentsApi ? (
+      {active === "EXCEPTIONS" && access?.exceptions && exceptionsApi ? (
+        <ExceptionsWorkspace
+          api={exceptionsApi}
+          initial={access.exceptions}
+          locale={locale}
+          onBusy={setBusy}
+        />
+      ) : active === "PAYMENTS" && access?.payments && paymentsApi ? (
         <PaymentsWorkspace
           api={paymentsApi}
           initial={access.payments}

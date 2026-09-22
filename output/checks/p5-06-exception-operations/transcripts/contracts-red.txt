@@ -1,0 +1,82 @@
+$ vitest run --config ../../vitest.config.ts --root . --maxWorkers=2 src/admin-exceptions.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
+
+ ❯ src/admin-exceptions.test.ts (5 tests | 5 failed) 3ms
+     × binds a confirmed recovery to its original source and snapshot 2ms
+     × canonicalizes source UUIDs before command hashing 0ms
+     × requires the original consumer only for a dead-letter operation 0ms
+     × rejects a receipt for another source or operation 0ms
+     × rejects sensitive detail fields and unknown error strings 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/admin-exceptions.test.ts > exception operations boundary > binds a confirmed recovery to its original source and snapshot
+AssertionError: expected undefined to be defined
+ ❯ src/admin-exceptions.test.ts:16:22
+     14| describe("exception operations boundary", () => {
+     15|   it("binds a confirmed recovery to its original source and snapshot",…
+     16|     expect(contract).toBeDefined();
+       |                      ^
+     17|     const schema = contract!.adminExceptionsCommandSchema;
+     18|     expect(schema.parse(replay)).toEqual(replay);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/admin-exceptions.test.ts > exception operations boundary > canonicalizes source UUIDs before command hashing
+AssertionError: expected undefined to be defined
+ ❯ src/admin-exceptions.test.ts:29:22
+     27|   });
+     28|   it("canonicalizes source UUIDs before command hashing", () => {
+     29|     expect(contract).toBeDefined();
+       |                      ^
+     30|     expect(contract!.adminExceptionsCommandSchema.parse({ ...replay, t…
+     31|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/admin-exceptions.test.ts > exception operations boundary > requires the original consumer only for a dead-letter operation
+AssertionError: expected undefined to be defined
+ ❯ src/admin-exceptions.test.ts:33:22
+     31|   });
+     32|   it("requires the original consumer only for a dead-letter operation"…
+     33|     expect(contract).toBeDefined();
+       |                      ^
+     34|     const command = { ...replay, action: "RETRY_DEAD_LETTER", target: …
+     35|     expect(contract!.adminExceptionsCommandSchema.safeParse(command).s…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/admin-exceptions.test.ts > exception operations boundary > rejects a receipt for another source or operation
+AssertionError: expected undefined to be defined
+ ❯ src/admin-exceptions.test.ts:39:22
+     37|   });
+     38|   it("rejects a receipt for another source or operation", () => {
+     39|     expect(contract).toBeDefined();
+       |                      ^
+     40|     const command = contract!.adminExceptionsCommandSchema.parse(repla…
+     41|     const receipt = { schemaVersion: 1, outcome: "SUCCESS", kind: "MUT…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/admin-exceptions.test.ts > exception operations boundary > rejects sensitive detail fields and unknown error strings
+AssertionError: expected undefined to be defined
+ ❯ src/admin-exceptions.test.ts:47:22
+     45|   });
+     46|   it("rejects sensitive detail fields and unknown error strings", () =…
+     47|     expect(contract).toBeDefined();
+       |                      ^
+     48|     const schema = contract!.adminExceptionsResponseSchema;
+     49|     expect(schema.safeParse({ schemaVersion: 1, outcome: "FAILURE", co…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  14:03:12
+   Duration  79ms (transform 9ms, setup 0ms, import 16ms, tests 3ms, environment 0ms)
+
+/Users/mario/Desktop/下单/packages/contracts:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/contracts@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . --maxWorkers=2 src/admin-exceptions.test.ts`
+Exit status 1

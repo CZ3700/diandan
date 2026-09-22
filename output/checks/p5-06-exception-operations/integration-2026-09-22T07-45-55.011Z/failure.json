@@ -1,0 +1,15 @@
+{
+  "stage": "actual bounded queues retain dead letters after six failed deliveries",
+  "assertions": 6333,
+  "name": "AssertionError",
+  "code": "ERR_ASSERTION",
+  "frames": [
+    "/apps/api/scripts/admin-exceptions-http.mjs:54:12",
+    "/apps/api/scripts/admin-exceptions-fixture.mjs:445:9",
+    "/apps/api/scripts/order-payment-client.mjs:19:3",
+    "/apps/api/scripts/admin-exceptions-fixture.mjs:413:5",
+    "/apps/api/scripts/admin-exceptions-http.mjs:104:11",
+    "/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14",
+    "/apps/api/scripts/payment-runtime-runtime.mjs:29:12"
+  ]
+}

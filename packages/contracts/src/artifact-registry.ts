@@ -1,4 +1,6 @@
 import * as adminPaymentConfiguration from "./admin-payment-configuration.js";
+import * as adminExceptions from "./admin-exceptions.js";
+import * as adminExceptionsPersistence from "./admin-exceptions-persistence.js";
 import * as adminPaymentConfigurationPersistence from "./admin-payment-configuration-persistence.js";
 import * as paymentConfigurationValidation from "./payment-configuration-validation.js";
 import * as financeEvidence from "./finance-evidence.js";
@@ -678,6 +680,56 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "AdminExceptionsRunResult",
+    audience: "internal",
+    schema: adminExceptionsPersistence.adminExceptionsRunResultSchema,
+  },
+  {
+    name: "AdminExceptionsCommand",
+    audience: "admin-http",
+    schema: adminExceptions.adminExceptionsCommandSchema,
+  },
+  {
+    name: "AdminExceptionsRequest",
+    audience: "admin-http",
+    schema: adminExceptions.adminExceptionsRequestSchema,
+  },
+  {
+    name: "AdminExceptionsResponse",
+    audience: "admin-http",
+    schema: adminExceptions.adminExceptionsResponseSchema,
+  },
+  {
+    name: "AdminExceptionsFailure",
+    audience: "admin-http",
+    schema: adminExceptions.adminExceptionsFailureSchema,
+  },
+  {
+    name: "AdminExceptionsStoreRequest",
+    audience: "internal",
+    schema: adminExceptionsPersistence.adminExceptionsStoreRequestSchema,
+  },
+  {
+    name: "AdminExceptionsClaimRequest",
+    audience: "internal",
+    schema: adminExceptionsPersistence.adminExceptionsClaimRequestSchema,
+  },
+  {
+    name: "AdminExceptionsClaim",
+    audience: "internal",
+    schema: adminExceptionsPersistence.adminExceptionsClaimSchema,
+  },
+  {
+    name: "AdminExceptionsSettleCommand",
+    audience: "internal",
+    schema: adminExceptionsPersistence.adminExceptionsSettleCommandSchema,
+  },
+  {
+    name: "AdminExceptionsSettleResult",
+    audience: "internal",
+    schema: adminExceptionsPersistence.adminExceptionsSettleResultSchema,
+  },
   {
     name: "PaymentConfigurationDocument",
     audience: "internal",

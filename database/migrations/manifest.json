@@ -360,6 +360,16 @@
         "up": "bd8f832d4056f6c57b8cb92ca48bd83e9a206d47ff1519fe8485a4f57c0ee43f",
         "down": "1b1036f84ea1567f8912f490a1c7258439eb1be5823ac962ace99aed6b58cce9"
       }
+    },
+    {
+      "version": "0037",
+      "name": "admin-exceptions",
+      "up": "database/migrations/0037_admin-exceptions.up.sql",
+      "down": "database/migrations/0037_admin-exceptions.down.sql",
+      "sha256": {
+        "up": "3872323f8b641e4c0f4683e38dee54a18f8694e948714ce24aaaad88530e9970",
+        "down": "d511312cfe601d6cf7fb460b16f666e0b7822bf0653f78b376e1f65b04e29bd6"
+      }
     }
   ]
 }

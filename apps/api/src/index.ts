@@ -57,3 +57,5 @@ export * from "./admin-finance-composition.js";
 export * from "./admin-payment-configuration-route.js";
 export * from "./admin-payment-configuration-composition.js";
 export * from "./payment-configuration-runtime.js";
+export * from "./admin-exceptions-route.js";
+export * from "./admin-exceptions-composition.js";

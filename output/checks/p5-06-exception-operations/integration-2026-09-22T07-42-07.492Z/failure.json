@@ -1,0 +1,14 @@
+{
+  "stage": "orders query expected HTTP 200",
+  "assertions": 6151,
+  "name": "AssertionError",
+  "code": "ERR_ASSERTION",
+  "frames": [
+    "/apps/api/scripts/admin-exceptions-http.mjs:54:12",
+    "/apps/api/scripts/admin-orders-runtime.mjs:212:5",
+    "/packages/persistence-postgres/scripts/admin-exceptions-storage-cases.mjs:96:16",
+    "/apps/api/scripts/admin-exceptions-http.mjs:88:25",
+    "/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14",
+    "/apps/api/scripts/payment-runtime-runtime.mjs:29:12"
+  ]
+}

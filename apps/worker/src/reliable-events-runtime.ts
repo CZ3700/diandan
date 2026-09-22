@@ -17,6 +17,7 @@ export type ReliableEventsWorkerNotice = Readonly<{
     | "PAYLOAD_PURGE_FAILED"
     | "ORDER_PAYMENT_APPLICATION_FAILED"
     | "FINANCE_APPLICATION_FAILED"
+    | "EXCEPTION_RECOVERY_FAILED"
     | "NOTIFICATION_MAINTENANCE_FAILED"
     | "COMMERCE_EXPIRY_FAILED"
     | "MAINTENANCE_CONTEXT_UNAVAILABLE";
@@ -58,6 +59,7 @@ export type ReliableEventsWorkerRuntimeOptions = Readonly<{
   purgeExpiredWebhookPayloads(command: unknown): Promise<unknown>;
   applyPendingOrderPayments?(): Promise<void>;
   applyPendingFinance?(): Promise<void>;
+  runPendingExceptions?(): Promise<void>;
   runPendingNotifications?(): Promise<void>;
   expireCommerceResources?(): Promise<void>;
   consumerKeys: readonly string[];
@@ -127,6 +129,8 @@ function validateOptions(options: ReliableEventsWorkerRuntimeOptions): void {
       typeof options.onNotice !== "function") ||
     (options.applyPendingOrderPayments !== undefined &&
       typeof options.applyPendingOrderPayments !== "function") ||
+    (options.runPendingExceptions !== undefined &&
+      typeof options.runPendingExceptions !== "function") ||
     (options.runPendingNotifications !== undefined &&
       typeof options.runPendingNotifications !== "function") ||
     (options.expireCommerceResources !== undefined &&
@@ -232,6 +236,7 @@ export function createReliableEventsWorkerRuntime(
       }
     }
     for (const [run, code] of [
+      [options.runPendingExceptions, "EXCEPTION_RECOVERY_FAILED"],
       [options.applyPendingFinance, "FINANCE_APPLICATION_FAILED"],
       [options.runPendingNotifications, "NOTIFICATION_MAINTENANCE_FAILED"],
       [options.expireCommerceResources, "COMMERCE_EXPIRY_FAILED"],

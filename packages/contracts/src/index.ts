@@ -103,3 +103,5 @@ export * from "./payment-rollout.js";
 export * from "./admin-finance.js";
 export * from "./admin-finance-persistence.js";
 export * from "./finance-evidence.js";
+export * from "./admin-exceptions.js";
+export * from "./admin-exceptions-persistence.js";

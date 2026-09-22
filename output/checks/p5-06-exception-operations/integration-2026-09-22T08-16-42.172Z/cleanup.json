@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "outerCommandExitCode": 0,
+  "ownedNativePostgresStopped": true,
+  "ownedNativePostgresRemoved": true,
+  "ownedNextStopped": true,
+  "ownedApiStopped": true,
+  "ownedTlsOidcStopped": true,
+  "ownedTlsS3Stopped": true,
+  "ownedTestPspStopped": true,
+  "ownedTestMailStopped": true,
+  "processInspection": {
+    "postgres": 0,
+    "minio": 0,
+    "taskNodeProcesses": 0,
+    "preexistingNextPidsRetained": [
+      54282,
+      75388
+    ],
+    "codexComputerUseProcessesRetained": true
+  },
+  "evidence": "Outer isolated runner exited 0 after all owned cleanup callbacks; process inventory contains only Codex computer-use Node processes and pre-existing September 5 Next servers.",
+  "verifiedAt": "2026-09-22T08:25:39.050Z"
+}

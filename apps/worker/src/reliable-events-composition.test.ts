@@ -50,6 +50,9 @@ function createHarness() {
   const persistence = Object.freeze({
     transactionManager: Object.freeze({}),
     reliableEventTransactionManager: transactionManager,
+    adminExceptionsTransactionManager: {
+      runInAdminExceptionsTransaction: vi.fn(async () => null),
+    },
     close: vi.fn(async () => undefined),
   });
   const runtime = Object.freeze({
@@ -150,6 +153,7 @@ test("wires PostgreSQL, pg-boss VERIFY mode, application handlers, and maintenan
       purgeExpiredWebhookPayloads: expect.any(Function),
       applyPendingOrderPayments: expect.any(Function),
       expireCommerceResources: expect.any(Function),
+      runPendingExceptions: expect.any(Function),
       now: expect.any(Function),
       createPropagation: expect.any(Function),
     }),

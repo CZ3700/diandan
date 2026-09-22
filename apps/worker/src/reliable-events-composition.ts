@@ -7,6 +7,7 @@ import {
   createOrderPaymentWebhookHandler,
   createAdminFinanceWebhookHandler,
   createAdminFinanceEventApplication,
+  createAdminExceptionsRecovery,
   createListReadyOutboxJobs,
   createProcessWebhookInbox,
   createPurgeExpiredWebhookPayloads,
@@ -275,24 +276,41 @@ export function createWorkerReliableEventsComposition(
   const finance = createAdminFinanceEventApplication(
     persistence.adminFinanceTransactionManager,
   );
+  const processWebhookInbox = createProcessWebhookInbox({
+    transactionManager,
+    handlerForEvent: bindings.handlerForEvent,
+    createId: factories.createId,
+    now: factories.now,
+  });
+  const dispatchOutboxEvent = createDispatchOutboxEvent({
+    transactionManager,
+    consumerForKey: (key) =>
+      notifications && key === notificationConsumerKey
+        ? notifications.consumer
+        : bindings.consumerForKey(key),
+    createId: factories.createId,
+    now: factories.now,
+  });
+  const exceptions = createAdminExceptionsRecovery({
+    transactions: persistence.adminExceptionsTransactionManager,
+    processWebhookInbox: (job, delivery) =>
+      runWithObservedQueueContext(job, contextLogger, () =>
+        processWebhookInbox(job, delivery),
+      ),
+    dispatchOutboxEvent: (job, delivery) =>
+      runWithObservedQueueContext(job, contextLogger, () =>
+        dispatchOutboxEvent(job, delivery),
+      ),
+  });
   const runtime: ReliableEventsWorkerRuntime = factories.createRuntime({
     schemaVersion: 1,
     queue,
-    processWebhookInbox: createProcessWebhookInbox({
-      transactionManager,
-      handlerForEvent: bindings.handlerForEvent,
-      createId: factories.createId,
-      now: factories.now,
-    }),
-    dispatchOutboxEvent: createDispatchOutboxEvent({
-      transactionManager,
-      consumerForKey: (key) =>
-        notifications && key === notificationConsumerKey
-          ? notifications.consumer
-          : bindings.consumerForKey(key),
-      createId: factories.createId,
-      now: factories.now,
-    }),
+    processWebhookInbox,
+    dispatchOutboxEvent,
+    runPendingExceptions: async () => {
+      const result = await exceptions.runPending(6);
+      if (result.failed > 0) throw new Error("Exception recovery failed");
+    },
     runWithQueueContext: (job, handler) =>
       runWithObservedQueueContext(job, contextLogger, handler),
     listReadyOutboxJobs: createListReadyOutboxJobs({ transactionManager }),

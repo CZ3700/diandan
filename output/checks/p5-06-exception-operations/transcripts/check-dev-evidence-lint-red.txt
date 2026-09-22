@@ -1,0 +1,22 @@
+$ node ./scripts/check-development.mjs
+Development checks only; success is not formal acceptance. Use pnpm check and task-specific acceptance separately.
+Scope: all workspaces; consumers: all-workspaces.
+[check:dev] workspace
+Workspace validation passed: 4 apps, 32 packages, 36 units, no dependency cycles.
+[check:dev] domain-boundaries
+Domain boundary validation passed
+[check:dev] format
+$ prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts
+Checking formatting...
+All matched files use Prettier code style!
+[check:dev] lint
+$ eslint . --max-warnings=0
+
+/Users/mario/Desktop/下单/output/checks/p5-06-exception-operations/verify-compatibility.mjs
+  8:32  error  'URL' is not defined  no-undef
+
+✖ 1 problem (1 error, 0 warnings)
+
+[ELIFECYCLE] Command failed with exit code 1.
+[check:dev] stopped at lint (exit 1); later checks did not run.
+[ELIFECYCLE] Command failed with exit code 1.

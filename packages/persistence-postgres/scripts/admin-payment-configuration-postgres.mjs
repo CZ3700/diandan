@@ -65,6 +65,7 @@ await harness(async (database) => {
     const migrations = await loadMigrationManifest({ workspaceRoot });
     await runMigrationCommandOnSession(migrationSession, migrations, {
       direction: "up",
+      targetVersion: "0036",
     });
     const before = await capture();
     await runMigrationCommandOnSession(migrationSession, migrations, {
@@ -81,6 +82,9 @@ await harness(async (database) => {
       "up/down/up catalog is identical",
     );
     checks++;
+    await runMigrationCommandOnSession(migrationSession, migrations, {
+      direction: "up",
+    });
   } catch (error) {
     await client.end();
     console.error(

@@ -1,5 +1,24 @@
 import { expect, test, vi } from "vitest";
 
+test("exception recovery runs on maintenance and failures remain safe notices", async () => {
+  const harness = createHarness(),
+    runPendingExceptions = vi.fn(async () => {
+      throw new Error("private failure");
+    });
+  const factory = await loadRuntimeFactory();
+  const runtime = factory!({ ...harness.options, runPendingExceptions });
+  await runtime.start();
+  await runtime.runMaintenanceOnce();
+  expect(runPendingExceptions).toHaveBeenCalledOnce();
+  expect(harness.notices).toContainEqual({
+    schemaVersion: 1,
+    severity: "WARNING",
+    code: "EXCEPTION_RECOVERY_FAILED",
+  });
+  expect(harness.purgeExpiredWebhookPayloads).toHaveBeenCalledOnce();
+  await runtime.stop();
+});
+
 test("maintenance applies durable order evidence and waits for it on shutdown", async () => {
   const harness = createHarness();
   let release!: () => void;

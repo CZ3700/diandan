@@ -9,6 +9,7 @@ import { ManagementShell } from "./shell";
 import { ManagementHub } from "./hub";
 import { createOrdersApi } from "../management-orders/api";
 import { createPaymentConfigurationApi } from "../management-payments/api";
+import { createExceptionsApi } from "../management-exceptions/api";
 import { createFinanceApi } from "../management-finance/api";
 import { ManagementLogin } from "./login";
 import "./management-center.css";
@@ -30,6 +31,7 @@ export function ManagementCenter({
     () => createPaymentConfigurationApi(client),
     [client],
   );
+  const exceptionsApi = useMemo(() => createExceptionsApi(client), [client]);
   const financeApi = useMemo(() => createFinanceApi(client), [client]);
   const copy = managementCopy(locale);
   const [loginFailed, setLoginFailed] = useState(false);
@@ -86,6 +88,7 @@ export function ManagementCenter({
       ordersApi={ordersApi}
       financeApi={financeApi}
       paymentsApi={paymentsApi}
+      exceptionsApi={exceptionsApi}
       locale={locale}
       storefrontOrigin={storefrontOrigin}
       onLogout={authenticationAvailable ? logout : undefined}

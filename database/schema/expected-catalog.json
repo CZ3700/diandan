@@ -187,6 +187,14 @@
       "kind": "TABLE"
     },
     {
+      "name": "admin_exception_operations",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_exception_receipts",
+      "kind": "TABLE"
+    },
+    {
       "name": "admin_finance_application_receipts",
       "kind": "TABLE"
     },
@@ -1052,6 +1060,366 @@
       "name": "revoked_audit_log_id",
       "dataType": "uuid",
       "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 3,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 4,
+      "name": "webhook_inbox_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 5,
+      "name": "outbox_event_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 6,
+      "name": "consumer_key",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 7,
+      "name": "status",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 8,
+      "name": "generation",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 9,
+      "name": "version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 10,
+      "name": "lease_token_digest",
+      "dataType": "bytea",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 11,
+      "name": "lease_expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 12,
+      "name": "reason_code",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 13,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 14,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 15,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_operations",
+      "position": 16,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 3,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 4,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 5,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 6,
+      "name": "target_kind",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 7,
+      "name": "target_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 8,
+      "name": "consumer_key",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 9,
+      "name": "operation_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 10,
+      "name": "finance_operation_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 11,
+      "name": "notification_resend_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 12,
+      "name": "idempotency_key",
+      "dataType": "idempotency_key_value",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 13,
+      "name": "request_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 14,
+      "name": "expected_version",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 15,
+      "name": "confirmed",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 16,
+      "name": "reason_code",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 17,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 18,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 19,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_exception_receipts",
+      "position": 20,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
       "defaultExpression": null,
       "identity": "",
       "generation": ""
@@ -24173,6 +24541,438 @@
       "name": "admin_content_locale_grants_revoked_audit_log_id_key",
       "kind": "UNIQUE",
       "definition": "UNIQUE (revoked_audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operation_receipt",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['REPLAY_WEBHOOK'::text, 'RETRY_DEAD_LETTER'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = 'REPLAY_WEBHOOK'::text AND webhook_inbox_id IS NOT NULL AND outbox_event_id IS NULL AND consumer_key IS NULL OR action = 'RETRY_DEAD_LETTER'::text AND outbox_event_id IS NOT NULL AND webhook_inbox_id IS NULL AND consumer_key IS NOT NULL AND consumer_key = 'order-notifications-v1'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (status = 'PROCESSING'::text AND lease_token_digest IS NOT NULL AND octet_length(lease_token_digest) = 32 AND lease_expires_at IS NOT NULL AND generation > 0 OR status <> 'PROCESSING'::text AND lease_token_digest IS NULL AND lease_expires_at IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_check2",
+      "kind": "CHECK",
+      "definition": "CHECK ((status = ANY (ARRAY['REQUESTED'::text, 'PROCESSING'::text])) AND reason_code IS NULL OR status = 'SUCCEEDED'::text AND reason_code IS NOT NULL AND reason_code = 'PROCESSED'::text OR status = 'FAILED'::text AND reason_code IS NOT NULL AND reason_code = 'PROCESSING_FAILED'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_check3",
+      "kind": "CHECK",
+      "definition": "CHECK (updated_at::timestamp with time zone >= created_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_generation_check",
+      "kind": "CHECK",
+      "definition": "CHECK (generation >= 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_generation_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL generation",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_outbox_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (outbox_event_id) REFERENCES outbox_events(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_status_check",
+      "kind": "CHECK",
+      "definition": "CHECK (status = ANY (ARRAY['REQUESTED'::text, 'PROCESSING'::text, 'SUCCEEDED'::text, 'FAILED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_status_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL status",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_webhook_inbox_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (webhook_inbox_id) REFERENCES webhook_inbox(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipt_authority",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['REPLAY_WEBHOOK'::text, 'RETRY_DEAD_LETTER'::text, 'RECONCILE_PAYMENT'::text, 'RETRY_NOTIFICATION'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_actor_id_action_idempotency_key_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (actor_id, action, idempotency_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = 'REPLAY_WEBHOOK'::text AND target_kind = 'WEBHOOK'::text AND consumer_key IS NULL AND operation_id IS NOT NULL AND finance_operation_id IS NULL AND notification_resend_id IS NULL OR action = 'RETRY_DEAD_LETTER'::text AND target_kind = 'DEAD_LETTER'::text AND consumer_key IS NOT NULL AND consumer_key = 'order-notifications-v1'::text AND operation_id IS NOT NULL AND finance_operation_id IS NULL AND notification_resend_id IS NULL OR action = 'RECONCILE_PAYMENT'::text AND target_kind = 'PAYMENT'::text AND consumer_key IS NULL AND operation_id IS NULL AND finance_operation_id IS NOT NULL AND notification_resend_id IS NULL OR action = 'RETRY_NOTIFICATION'::text AND target_kind = 'NOTIFICATION'::text AND consumer_key IS NULL AND operation_id IS NULL AND finance_operation_id IS NULL AND notification_resend_id IS NOT NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_confirmed_check",
+      "kind": "CHECK",
+      "definition": "CHECK (confirmed)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_confirmed_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL confirmed",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_expected_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expected_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_finance_operation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (finance_operation_id) REFERENCES admin_finance_operations(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_idempotency_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idempotency_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_notification_resend_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (notification_resend_id) REFERENCES admin_notification_resends(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_operation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (operation_id) REFERENCES admin_exception_operations(id) DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_reason_code_check",
+      "kind": "CHECK",
+      "definition": "CHECK (reason_code = ANY (ARRAY['RETRY_AFTER_REPAIR'::text, 'VERIFY_PROVIDER_STATUS'::text, 'RETRY_FAILED_NOTIFICATION'::text, 'OPERATOR_REVIEW'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_reason_code_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL reason_code",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_request_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_target_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL target_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_target_kind_check",
+      "kind": "CHECK",
+      "definition": "CHECK (target_kind = ANY (ARRAY['WEBHOOK'::text, 'DEAD_LETTER'::text, 'PAYMENT'::text, 'NOTIFICATION'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_target_kind_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL target_kind",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -56543,6 +57343,96 @@
       "valid": true
     },
     {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_due",
+      "definition": "CREATE INDEX admin_exception_operations_due ON public.admin_exception_operations USING btree (created_at, id) WHERE (status = ANY (ARRAY['REQUESTED'::text, 'PROCESSING'::text]))",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_exception_operations_pkey ON public.admin_exception_operations USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_outbox_history",
+      "definition": "CREATE INDEX admin_exception_outbox_history ON public.admin_exception_operations USING btree (outbox_event_id, consumer_key, created_at, id) WHERE (outbox_event_id IS NOT NULL)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_outbox_pending",
+      "definition": "CREATE UNIQUE INDEX admin_exception_outbox_pending ON public.admin_exception_operations USING btree (outbox_event_id, consumer_key) WHERE (status = ANY (ARRAY['REQUESTED'::text, 'PROCESSING'::text]))",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_webhook_history",
+      "definition": "CREATE INDEX admin_exception_webhook_history ON public.admin_exception_operations USING btree (webhook_inbox_id, created_at, id) WHERE (webhook_inbox_id IS NOT NULL)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_webhook_pending",
+      "definition": "CREATE UNIQUE INDEX admin_exception_webhook_pending ON public.admin_exception_operations USING btree (webhook_inbox_id) WHERE (status = ANY (ARRAY['REQUESTED'::text, 'PROCESSING'::text]))",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_actor_id_action_idempotency_key_key",
+      "definition": "CREATE UNIQUE INDEX admin_exception_receipts_actor_id_action_idempotency_key_key ON public.admin_exception_receipts USING btree (actor_id, action, idempotency_key)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_exception_receipts_audit_log_id_key ON public.admin_exception_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_exception_receipts_pkey ON public.admin_exception_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_target",
+      "definition": "CREATE INDEX admin_exception_receipts_target ON public.admin_exception_receipts USING btree (target_kind, target_id, consumer_key, created_at DESC)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "admin_finance_application_receipts",
       "name": "admin_finance_application_receipts_pkey",
       "definition": "CREATE UNIQUE INDEX admin_finance_application_receipts_pkey ON public.admin_finance_application_receipts USING btree (provider_event_id)",
@@ -61663,6 +62553,48 @@
       "enabled": "O"
     },
     {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operation_guard",
+      "definition": "CREATE TRIGGER admin_exception_operation_guard BEFORE INSERT OR UPDATE ON admin_exception_operations FOR EACH ROW EXECUTE FUNCTION guard_admin_exception_operation()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operation_receipt",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_exception_operation_receipt AFTER INSERT ON admin_exception_operations DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_exception_operation_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_no_delete",
+      "definition": "CREATE TRIGGER admin_exception_operations_no_delete BEFORE DELETE ON admin_exception_operations FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_exception_operations",
+      "name": "admin_exception_operations_no_truncate",
+      "definition": "CREATE TRIGGER admin_exception_operations_no_truncate BEFORE TRUNCATE ON admin_exception_operations FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipt_authority",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_exception_receipt_authority AFTER INSERT ON admin_exception_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_exception_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_immutable",
+      "definition": "CREATE TRIGGER admin_exception_receipts_immutable BEFORE DELETE OR UPDATE ON admin_exception_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_exception_receipts",
+      "name": "admin_exception_receipts_no_truncate",
+      "definition": "CREATE TRIGGER admin_exception_receipts_no_truncate BEFORE TRUNCATE ON admin_exception_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "admin_finance_application_receipts",
       "name": "admin_finance_application_receipts_immutable",
       "definition": "CREATE TRIGGER admin_finance_application_receipts_immutable BEFORE DELETE OR UPDATE ON admin_finance_application_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
@@ -65937,6 +66869,16 @@
   ],
   "functions": [
     {
+      "name": "admin_exception_source_version",
+      "identityArguments": "kind text, target uuid, consumer text, excluded_operation uuid",
+      "resultType": "text",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "STABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.admin_exception_source_version(kind text, target uuid, consumer text, excluded_operation uuid DEFAULT NULL::uuid)\n RETURNS text\n LANGUAGE plpgsql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE source jsonb; recoveries jsonb; notification_base uuid;\nBEGIN\n CASE kind\n WHEN 'WEBHOOK' THEN\n  SELECT jsonb_build_array(i.id,e.id,e.event_type,e.normalized_status,\n   (SELECT jsonb_agg(jsonb_build_array(a.attempt_number,a.outcome) ORDER BY a.attempt_number) FROM webhook_processing_attempts a WHERE a.webhook_inbox_id=i.id),\n   (SELECT jsonb_agg(jsonb_build_array(a.association_status,a.payment_attempt_id) ORDER BY a.created_at,a.id) FROM provider_event_associations a WHERE a.provider_event_id=e.id),\n   (SELECT jsonb_agg(jsonb_build_array(r.decision,r.reason_code)) FROM admin_finance_application_receipts r WHERE r.provider_event_id=e.id),\n   (SELECT jsonb_agg(jsonb_build_array(r.decision,r.outcome,r.reason_code)) FROM order_payment_application_receipts r WHERE r.provider_event_id=e.id)) INTO source FROM webhook_inbox i JOIN provider_events e ON e.webhook_inbox_id=i.id WHERE i.id=target;\n WHEN 'DEAD_LETTER' THEN\n  SELECT jsonb_build_array(e.id,e.event_type,e.aggregate_version,consumer,\n   (SELECT jsonb_agg(jsonb_build_array(a.attempt_number,a.outcome) ORDER BY a.attempt_number) FROM outbox_dispatch_attempts a WHERE a.outbox_event_id=e.id AND a.consumer_key=consumer)) INTO source FROM outbox_events e WHERE e.id=target AND EXISTS(SELECT 1 FROM outbox_dispatch_attempts a WHERE a.outbox_event_id=e.id AND a.consumer_key=consumer AND a.outcome='DEAD_LETTER');\n WHEN 'PAYMENT' THEN SELECT jsonb_build_array(a.id,a.version,a.status,o.id,o.version,o.current_payment_attempt_id) INTO source FROM payment_attempts a JOIN orders o ON o.id=a.order_id WHERE a.id=target;\n WHEN 'NOTIFICATION' THEN\n  SELECT jsonb_build_array(d.id,d.version,d.status,o.id,o.version),d.id INTO source,notification_base FROM notification_deliveries d JOIN orders o ON o.id=d.order_id WHERE d.id=target;\n  IF source IS NULL THEN SELECT jsonb_build_array(d.id,d.version,d.status,o.id,o.version),d.base_notification_id INTO source,notification_base FROM admin_notification_resends d JOIN orders o ON o.id=d.order_id WHERE d.id=target;END IF;\n  IF source IS NOT NULL THEN\n   SELECT jsonb_build_array(source,coalesce(jsonb_agg(jsonb_build_array(r.id,r.version,r.status,r.generation) ORDER BY r.resend_sequence),'[]'::jsonb)) INTO source FROM admin_notification_resends r WHERE r.base_notification_id=notification_base AND r.id IS DISTINCT FROM excluded_operation;\n  END IF;\n ELSE RETURN NULL;\n END CASE;\n IF source IS NULL THEN RETURN NULL;END IF;\n SELECT coalesce(jsonb_agg(jsonb_build_array(x.id,x.version,x.status,x.generation) ORDER BY x.created_at,x.id),'[]'::jsonb) INTO recoveries FROM admin_exception_operations x\n WHERE x.id IS DISTINCT FROM excluded_operation AND ((kind='WEBHOOK' AND x.webhook_inbox_id=target) OR(kind='DEAD_LETTER' AND x.outbox_event_id=target AND x.consumer_key=consumer));\n RETURN encode(sha256(convert_to(jsonb_build_array(source,recoveries)::text,'UTF8')),'hex');\nEND;$function$"
+    },
+    {
       "name": "admin_notification_current_event",
       "identityArguments": "target uuid",
       "resultType": "text",
@@ -65975,6 +66917,26 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_content_locale_grant_audit()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE audit public.audit_logs%ROWTYPE;\nBEGIN\n  IF TG_OP = 'UPDATE' THEN\n    IF NEW.revoked_at IS NOT DISTINCT FROM OLD.revoked_at THEN RETURN NULL; END IF;\n    SELECT * INTO audit FROM public.audit_logs WHERE id = NEW.revoked_audit_log_id;\n    IF audit.id IS NULL OR audit.action <> 'CONTENT_LOCALE_REVOKE' OR audit.created_at <> NEW.revoked_at THEN\n      RAISE EXCEPTION 'locale revocation requires exact audit' USING ERRCODE = '23514';\n    END IF;\n  ELSE\n  SELECT * INTO audit FROM public.audit_logs WHERE id = NEW.audit_log_id;\n    IF audit.id IS NULL OR audit.action <> 'CONTENT_LOCALE_GRANT' OR audit.created_at <> NEW.granted_at THEN\n      RAISE EXCEPTION 'locale grant requires exact audit' USING ERRCODE = '23514';\n    END IF;\n  END IF;\n  IF audit.id IS NULL OR audit.actor_type <> 'ADMIN'\n    OR (TG_OP = 'INSERT' AND audit.actor_id IS DISTINCT FROM NEW.granted_by)\n    OR audit.subject_type <> 'ADMIN_CONTENT_LOCALE_GRANT'\n    OR audit.subject_id <> NEW.admin_identity_id OR audit.outcome <> 'SUCCEEDED'\n    OR audit.reason_code IS NULL OR audit.request_id IS NULL OR audit.correlation_id IS NULL\n    OR audit.field_category IS DISTINCT FROM 'CONTENT_TRANSLATION'\n    OR NOT EXISTS (SELECT 1 FROM public.admin_identities WHERE id = audit.actor_id AND status = 'ACTIVE')\n    OR (TG_OP = 'INSERT' AND NOT EXISTS (SELECT 1 FROM public.admin_identities WHERE id = NEW.admin_identity_id AND status = 'ACTIVE')) THEN\n    RAISE EXCEPTION 'content locale grant requires exact active actor audit' USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_admin_exception_operation_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_exception_operation_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$ BEGIN\n IF NOT EXISTS(SELECT 1 FROM admin_exception_receipts r WHERE r.operation_id=NEW.id) THEN RAISE EXCEPTION 'recovery requires a permanent authorized receipt' USING ERRCODE='23514';END IF;RETURN NULL;END;$function$"
+    },
+    {
+      "name": "assert_admin_exception_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_exception_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE audit public.audit_logs%ROWTYPE; required_permission text;\nBEGIN\n required_permission:=CASE NEW.action WHEN 'RECONCILE_PAYMENT' THEN 'finance.manage' WHEN 'RETRY_NOTIFICATION' THEN 'orders.notification.resend' ELSE 'exceptions.replay' END;\n SELECT * INTO audit FROM audit_logs WHERE id=NEW.audit_log_id;\n IF NOT admin_order_authorized(NEW.session_id,NEW.actor_id,'exceptions.read',NEW.created_at) OR NOT admin_order_authorized(NEW.session_id,NEW.actor_id,required_permission,NEW.created_at)\n OR (NEW.action IN('RECONCILE_PAYMENT','RETRY_NOTIFICATION') AND NOT admin_order_authorized(NEW.session_id,NEW.actor_id,'orders.read',NEW.created_at))\n OR audit.actor_type IS DISTINCT FROM 'ADMIN' OR audit.actor_id IS DISTINCT FROM NEW.actor_id OR audit.action IS DISTINCT FROM 'EXCEPTION_'||NEW.action OR audit.subject_type IS DISTINCT FROM 'EXCEPTION_SOURCE' OR audit.subject_id IS DISTINCT FROM NEW.target_id OR audit.reason_code IS DISTINCT FROM NEW.reason_code OR audit.request_id IS DISTINCT FROM NEW.request_id OR audit.correlation_id IS DISTINCT FROM NEW.correlation_id OR audit.outcome IS DISTINCT FROM 'SUCCEEDED' OR audit.created_at IS DISTINCT FROM NEW.created_at\n THEN RAISE EXCEPTION 'exception request requires exact current permission and audit' USING ERRCODE='23514';END IF;\n IF admin_exception_source_version(NEW.target_kind,NEW.target_id,NEW.consumer_key,coalesce(NEW.operation_id,NEW.notification_resend_id)) IS DISTINCT FROM NEW.expected_version THEN RAISE EXCEPTION 'exception source version changed' USING ERRCODE='23514';END IF;\n IF NEW.operation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM admin_exception_operations x WHERE x.id=NEW.operation_id AND x.action=NEW.action AND coalesce(x.webhook_inbox_id,x.outbox_event_id)=NEW.target_id AND x.consumer_key IS NOT DISTINCT FROM NEW.consumer_key AND x.request_id=NEW.request_id AND x.correlation_id=NEW.correlation_id) THEN RAISE EXCEPTION 'recovery receipt must bind its exact source' USING ERRCODE='23514';END IF;\n IF NEW.finance_operation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM admin_finance_receipts r JOIN admin_finance_operations x ON x.id=r.operation_id WHERE x.id=NEW.finance_operation_id AND x.attempt_id=NEW.target_id AND EXISTS(SELECT 1 FROM payment_attempts p WHERE p.id=NEW.target_id AND p.status='UNKNOWN') AND r.action='RECONCILE' AND r.actor_id=NEW.actor_id AND r.session_id=NEW.session_id AND r.idempotency_key='exception:'||NEW.id AND r.reason_code=NEW.reason_code AND r.request_id=NEW.request_id AND r.correlation_id=NEW.correlation_id) THEN RAISE EXCEPTION 'payment recovery must delegate to audited finance' USING ERRCODE='23514';END IF;\n IF NEW.notification_resend_id IS NOT NULL AND NOT EXISTS(\n  SELECT 1 FROM admin_notification_resends r WHERE r.id=NEW.notification_resend_id AND r.id<>NEW.target_id\n  AND r.actor_id=NEW.actor_id AND r.session_id=NEW.session_id AND r.command_idempotency_key='exception:'||NEW.id\n  AND r.reason_code=NEW.reason_code AND r.request_id=NEW.request_id AND r.correlation_id=NEW.correlation_id\n  AND (\n   (r.base_notification_id=NEW.target_id\n    AND EXISTS(SELECT 1 FROM notification_deliveries source WHERE source.id=NEW.target_id AND source.status IN('FAILED','CANCELED'))\n    AND NOT EXISTS(SELECT 1 FROM admin_notification_resends prior WHERE prior.base_notification_id=r.base_notification_id AND prior.resend_sequence<r.resend_sequence))\n   OR EXISTS(SELECT 1 FROM admin_notification_resends prior WHERE prior.id=NEW.target_id AND prior.base_notification_id=r.base_notification_id\n    AND prior.status IN('FAILED','CANCELED') AND prior.resend_sequence=(SELECT max(previous.resend_sequence) FROM admin_notification_resends previous WHERE previous.base_notification_id=r.base_notification_id AND previous.resend_sequence<r.resend_sequence))\n  )\n  AND NOT EXISTS(SELECT 1 FROM notification_delivery_attempts a JOIN notification_deliveries d ON d.id=a.notification_delivery_id WHERE d.order_id=r.order_id AND d.status<>'SENT' AND a.outcome='UNKNOWN')\n  AND NOT EXISTS(SELECT 1 FROM admin_notification_resend_attempts a JOIN admin_notification_resends d ON d.id=a.resend_id WHERE d.order_id=r.order_id AND d.status<>'SENT' AND a.outcome='UNKNOWN')\n ) THEN RAISE EXCEPTION 'notification recovery requires exact failed source and audited resend' USING ERRCODE='23514';END IF;\n RETURN NULL;\nEND;$function$"
     },
     {
       "name": "assert_admin_finance_operation_receipt",
@@ -67365,6 +68327,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_content_locale_grant()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$ BEGIN\n  IF TG_OP = 'INSERT' THEN\n    IF NEW.revoked_at IS NOT NULL OR NEW.revoked_audit_log_id IS NOT NULL OR NEW.granted_at > clock_timestamp() THEN\n      RAISE EXCEPTION 'new locale grant must be current and unrevoked' USING ERRCODE = '23514';\n    END IF;\n  ELSIF to_jsonb(NEW) - ARRAY['revoked_at','revoked_audit_log_id'] IS DISTINCT FROM to_jsonb(OLD) - ARRAY['revoked_at','revoked_audit_log_id']\n    OR (OLD.revoked_at IS NOT NULL AND (NEW.revoked_at IS DISTINCT FROM OLD.revoked_at OR NEW.revoked_audit_log_id IS DISTINCT FROM OLD.revoked_audit_log_id))\n    OR NEW.revoked_at IS NULL OR NEW.revoked_at > clock_timestamp() THEN\n    RAISE EXCEPTION 'locale grant only permits one-way audited revocation' USING ERRCODE = '55000';\n  END IF;\n  RETURN NEW;\nEND; $function$"
+    },
+    {
+      "name": "guard_admin_exception_operation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_exception_operation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF TG_OP='INSERT' THEN\n  IF NEW.status<>'REQUESTED' OR NEW.generation<>0 OR NEW.version<>1 THEN RAISE EXCEPTION 'recovery must begin with a durable unclaimed request' USING ERRCODE='23514';END IF;\n ELSE\n  IF OLD.status IN('SUCCEEDED','FAILED') OR NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at OR to_jsonb(NEW)-ARRAY['status','generation','version','lease_token_digest','lease_expires_at','reason_code','updated_at'] IS DISTINCT FROM to_jsonb(OLD)-ARRAY['status','generation','version','lease_token_digest','lease_expires_at','reason_code','updated_at'] THEN RAISE EXCEPTION 'recovery identity and terminal history are immutable' USING ERRCODE='55000';END IF;\n  IF NEW.status='PROCESSING' THEN\n   IF NEW.generation<>OLD.generation+1 OR (OLD.status='PROCESSING' AND OLD.lease_expires_at>clock_timestamp()) OR NEW.lease_expires_at<=clock_timestamp() OR NEW.lease_expires_at>clock_timestamp()+interval '5 minutes' THEN RAISE EXCEPTION 'recovery lease must be fresh and fenced' USING ERRCODE='23514';END IF;\n  ELSIF OLD.status<>'PROCESSING' OR NEW.status NOT IN('SUCCEEDED','FAILED') OR NEW.generation<>OLD.generation OR OLD.lease_expires_at<=clock_timestamp() THEN RAISE EXCEPTION 'completion requires an active recovery lease' USING ERRCODE='23514';END IF;\n END IF;\n IF NEW.status='SUCCEEDED' AND NOT (\n  (NEW.action='REPLAY_WEBHOOK' AND EXISTS(SELECT 1 FROM webhook_processing_attempts a WHERE a.webhook_inbox_id=NEW.webhook_inbox_id AND a.outcome='SUCCEEDED'))\n  OR (NEW.action='RETRY_DEAD_LETTER' AND EXISTS(SELECT 1 FROM outbox_dispatch_attempts a WHERE a.outbox_event_id=NEW.outbox_event_id AND a.consumer_key=NEW.consumer_key AND a.outcome='SUCCEEDED'))\n ) THEN RAISE EXCEPTION 'recovery success requires original processing evidence' USING ERRCODE='23514';END IF;\n RETURN NEW;\nEND;$function$"
     },
     {
       "name": "guard_admin_finance_operation",

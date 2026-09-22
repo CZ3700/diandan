@@ -1,0 +1,579 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-22T07:53:20.593848+00:00",
+  "acceptedP504ManifestSha256": "c3f0a0bb5d69d6775c4be5c8ef81b9b02a78d31bab6a3b90a1c95b15b416311c",
+  "acceptedP505ManifestSha256": "3c48d45f95541512ad64ca5d9f1f0c2ec3cdbbf4f1fcea7968b276c93bf54233",
+  "groups": {
+    "p504_core": {
+      "count": 45,
+      "unchangedFromTaskAcceptance": 45,
+      "matchesAcceptedP505": 45,
+      "changedSinceP505": [],
+      "files": [
+        {
+          "path": "apps/api/scripts/payment-health-http.mjs",
+          "baselineSha256": "eb1ef3f07a0c467bbf5e857dc4b4c1e5bda46bc3059ca2e725f8023b9d3d148d",
+          "acceptedP505Sha256": "eb1ef3f07a0c467bbf5e857dc4b4c1e5bda46bc3059ca2e725f8023b9d3d148d",
+          "currentSha256": "eb1ef3f07a0c467bbf5e857dc4b4c1e5bda46bc3059ca2e725f8023b9d3d148d"
+        },
+        {
+          "path": "apps/api/scripts/payment-rollout-guard-proof.mjs",
+          "baselineSha256": "b189741c2fcc9f5040696a08923e7d91d5516c8c0ba72969c24e3ecf04cc5aca",
+          "acceptedP505Sha256": "b189741c2fcc9f5040696a08923e7d91d5516c8c0ba72969c24e3ecf04cc5aca",
+          "currentSha256": "b189741c2fcc9f5040696a08923e7d91d5516c8c0ba72969c24e3ecf04cc5aca"
+        },
+        {
+          "path": "apps/api/scripts/payment-rollout-http.mjs",
+          "baselineSha256": "51824693320c58e669eb21ef872beaab0f1ea617c6fbc58e2f3ef827b15f27eb",
+          "acceptedP505Sha256": "51824693320c58e669eb21ef872beaab0f1ea617c6fbc58e2f3ef827b15f27eb",
+          "currentSha256": "51824693320c58e669eb21ef872beaab0f1ea617c6fbc58e2f3ef827b15f27eb"
+        },
+        {
+          "path": "apps/api/scripts/payment-rollout-publish-fixture.mjs",
+          "baselineSha256": "9b5cd390286049a67eb87d7e487be468ec637028e5d696cf7471fa370d111d63",
+          "acceptedP505Sha256": "9b5cd390286049a67eb87d7e487be468ec637028e5d696cf7471fa370d111d63",
+          "currentSha256": "9b5cd390286049a67eb87d7e487be468ec637028e5d696cf7471fa370d111d63"
+        },
+        {
+          "path": "database/migrations/0033_payment-provider-health.down.sql",
+          "baselineSha256": "dce0648e0a70cadc3d71fbad09523eaa362f900d3e9fbff91df53861014136ed",
+          "acceptedP505Sha256": "dce0648e0a70cadc3d71fbad09523eaa362f900d3e9fbff91df53861014136ed",
+          "currentSha256": "dce0648e0a70cadc3d71fbad09523eaa362f900d3e9fbff91df53861014136ed"
+        },
+        {
+          "path": "database/migrations/0033_payment-provider-health.up.sql",
+          "baselineSha256": "d8b6f04119b7406f3a6383d66f79a9df125798d9633e7121131204d39cc30bab",
+          "acceptedP505Sha256": "d8b6f04119b7406f3a6383d66f79a9df125798d9633e7121131204d39cc30bab",
+          "currentSha256": "d8b6f04119b7406f3a6383d66f79a9df125798d9633e7121131204d39cc30bab"
+        },
+        {
+          "path": "database/migrations/0034_payment-rollout.down.sql",
+          "baselineSha256": "aa36279d52058631cc948bdd6f5be8df0f57719f1e1467014f513123a3c2c9ba",
+          "acceptedP505Sha256": "aa36279d52058631cc948bdd6f5be8df0f57719f1e1467014f513123a3c2c9ba",
+          "currentSha256": "aa36279d52058631cc948bdd6f5be8df0f57719f1e1467014f513123a3c2c9ba"
+        },
+        {
+          "path": "database/migrations/0034_payment-rollout.up.sql",
+          "baselineSha256": "4e3348e106b753573ac3465b1d14d3eab65c413c8c079ea01b1a20271761b075",
+          "acceptedP505Sha256": "4e3348e106b753573ac3465b1d14d3eab65c413c8c079ea01b1a20271761b075",
+          "currentSha256": "4e3348e106b753573ac3465b1d14d3eab65c413c8c079ea01b1a20271761b075"
+        },
+        {
+          "path": "packages/contracts/src/payment-health.test.ts",
+          "baselineSha256": "c5b68df6ec9e123692e8d2d098b64212c71088b18e8295b25379ff61b96530be",
+          "acceptedP505Sha256": "c5b68df6ec9e123692e8d2d098b64212c71088b18e8295b25379ff61b96530be",
+          "currentSha256": "c5b68df6ec9e123692e8d2d098b64212c71088b18e8295b25379ff61b96530be"
+        },
+        {
+          "path": "packages/contracts/src/payment-health.ts",
+          "baselineSha256": "2809526c9080a534433d15844bb628183f5fb1bcf7fe1b54134979ddf2746b8d",
+          "acceptedP505Sha256": "2809526c9080a534433d15844bb628183f5fb1bcf7fe1b54134979ddf2746b8d",
+          "currentSha256": "2809526c9080a534433d15844bb628183f5fb1bcf7fe1b54134979ddf2746b8d"
+        },
+        {
+          "path": "packages/contracts/src/payment-rollout.test.ts",
+          "baselineSha256": "376bac9973fb35179f631038bf81ba18fbf99cdf31cf684b4f585a675886def7",
+          "acceptedP505Sha256": "376bac9973fb35179f631038bf81ba18fbf99cdf31cf684b4f585a675886def7",
+          "currentSha256": "376bac9973fb35179f631038bf81ba18fbf99cdf31cf684b4f585a675886def7"
+        },
+        {
+          "path": "packages/contracts/src/payment-rollout.ts",
+          "baselineSha256": "3ef1d1d4fe8e77b970515395c5a73f8017ec1edcefa2e754656204a5b2af4d20",
+          "acceptedP505Sha256": "3ef1d1d4fe8e77b970515395c5a73f8017ec1edcefa2e754656204a5b2af4d20",
+          "currentSha256": "3ef1d1d4fe8e77b970515395c5a73f8017ec1edcefa2e754656204a5b2af4d20"
+        },
+        {
+          "path": "packages/domain/src/payment-health.test.ts",
+          "baselineSha256": "cd0c25a01f657c9b45aa26f6771b5d1b30ae6b0d6052bce482e4452a1d214ed5",
+          "acceptedP505Sha256": "cd0c25a01f657c9b45aa26f6771b5d1b30ae6b0d6052bce482e4452a1d214ed5",
+          "currentSha256": "cd0c25a01f657c9b45aa26f6771b5d1b30ae6b0d6052bce482e4452a1d214ed5"
+        },
+        {
+          "path": "packages/domain/src/payment-health.ts",
+          "baselineSha256": "4ffead803a35ecc5d0129490eff3cbb6167d90cda71049f860694917a5cd9f66",
+          "acceptedP505Sha256": "4ffead803a35ecc5d0129490eff3cbb6167d90cda71049f860694917a5cd9f66",
+          "currentSha256": "4ffead803a35ecc5d0129490eff3cbb6167d90cda71049f860694917a5cd9f66"
+        },
+        {
+          "path": "packages/domain/src/payment-rollout.test.ts",
+          "baselineSha256": "65407055058b2bba2865f909b36b61dcf07b5998a562c9e43859fb4ce9925563",
+          "acceptedP505Sha256": "65407055058b2bba2865f909b36b61dcf07b5998a562c9e43859fb4ce9925563",
+          "currentSha256": "65407055058b2bba2865f909b36b61dcf07b5998a562c9e43859fb4ce9925563"
+        },
+        {
+          "path": "packages/domain/src/payment-rollout.ts",
+          "baselineSha256": "4095b319dd9baee8dcc7be26e6136e0efdd5c92c01d420bf5d33a4d4656d1388",
+          "acceptedP505Sha256": "4095b319dd9baee8dcc7be26e6136e0efdd5c92c01d420bf5d33a4d4656d1388",
+          "currentSha256": "4095b319dd9baee8dcc7be26e6136e0efdd5c92c01d420bf5d33a4d4656d1388"
+        },
+        {
+          "path": "packages/payment-gateway/src/client.test.ts",
+          "baselineSha256": "47911a2c617eed642ca4bb4933733cd33b31939bbe8b09b4ea5e7946e5e0380d",
+          "acceptedP505Sha256": "47911a2c617eed642ca4bb4933733cd33b31939bbe8b09b4ea5e7946e5e0380d",
+          "currentSha256": "47911a2c617eed642ca4bb4933733cd33b31939bbe8b09b4ea5e7946e5e0380d"
+        },
+        {
+          "path": "packages/payment-gateway/src/client.ts",
+          "baselineSha256": "311beedb7c3c9dd517c19db6cedbb0f870cd66cd80ea45733c284e99e16a33d4",
+          "acceptedP505Sha256": "311beedb7c3c9dd517c19db6cedbb0f870cd66cd80ea45733c284e99e16a33d4",
+          "currentSha256": "311beedb7c3c9dd517c19db6cedbb0f870cd66cd80ea45733c284e99e16a33d4"
+        },
+        {
+          "path": "packages/payment-gateway/src/conformance.test.ts",
+          "baselineSha256": "0a8dac63196033d5a647e8521003f13603c676ba5336d64554e05f8fc51fc395",
+          "acceptedP505Sha256": "0a8dac63196033d5a647e8521003f13603c676ba5336d64554e05f8fc51fc395",
+          "currentSha256": "0a8dac63196033d5a647e8521003f13603c676ba5336d64554e05f8fc51fc395"
+        },
+        {
+          "path": "packages/payment-gateway/src/credentials.test.ts",
+          "baselineSha256": "cfa4307e3617b5ba620c48820675e055089f774444dcc916b08195f2620d13ce",
+          "acceptedP505Sha256": "cfa4307e3617b5ba620c48820675e055089f774444dcc916b08195f2620d13ce",
+          "currentSha256": "cfa4307e3617b5ba620c48820675e055089f774444dcc916b08195f2620d13ce"
+        },
+        {
+          "path": "packages/payment-gateway/src/credentials.ts",
+          "baselineSha256": "290e0a98ec2bce7828e139e31fb3f7ce24585dcd25257c69ce98fe1f27de7b58",
+          "acceptedP505Sha256": "290e0a98ec2bce7828e139e31fb3f7ce24585dcd25257c69ce98fe1f27de7b58",
+          "currentSha256": "290e0a98ec2bce7828e139e31fb3f7ce24585dcd25257c69ce98fe1f27de7b58"
+        },
+        {
+          "path": "packages/payment-gateway/src/factory.test.ts",
+          "baselineSha256": "1f1a0257e22900fd2f6eb814c181ecad861b40ca84cf8923ae3766fe8c177cd6",
+          "acceptedP505Sha256": "1f1a0257e22900fd2f6eb814c181ecad861b40ca84cf8923ae3766fe8c177cd6",
+          "currentSha256": "1f1a0257e22900fd2f6eb814c181ecad861b40ca84cf8923ae3766fe8c177cd6"
+        },
+        {
+          "path": "packages/payment-gateway/src/factory.ts",
+          "baselineSha256": "6c1b7460b66df3a349fbd1aff945e38065ff3f62dd23913fb5c853bed78a9330",
+          "acceptedP505Sha256": "6c1b7460b66df3a349fbd1aff945e38065ff3f62dd23913fb5c853bed78a9330",
+          "currentSha256": "6c1b7460b66df3a349fbd1aff945e38065ff3f62dd23913fb5c853bed78a9330"
+        },
+        {
+          "path": "packages/payment-gateway/src/harness.gateway.ts",
+          "baselineSha256": "9406b6de721bad8a8b4754128f4465e90dff0fdb820d5d21648bd22826eb276d",
+          "acceptedP505Sha256": "9406b6de721bad8a8b4754128f4465e90dff0fdb820d5d21648bd22826eb276d",
+          "currentSha256": "9406b6de721bad8a8b4754128f4465e90dff0fdb820d5d21648bd22826eb276d"
+        },
+        {
+          "path": "packages/payment-gateway/src/harness.tls.ts",
+          "baselineSha256": "89812f75e11dabeffeb7973cabecc4c156aaf242aec9fa7402ca8673ccccea27",
+          "acceptedP505Sha256": "89812f75e11dabeffeb7973cabecc4c156aaf242aec9fa7402ca8673ccccea27",
+          "currentSha256": "89812f75e11dabeffeb7973cabecc4c156aaf242aec9fa7402ca8673ccccea27"
+        },
+        {
+          "path": "packages/payment-gateway/src/http.test.ts",
+          "baselineSha256": "8146f1f113cb54c88f6e4cd2d44b568faef68f72b96ed76f919a901b939be645",
+          "acceptedP505Sha256": "8146f1f113cb54c88f6e4cd2d44b568faef68f72b96ed76f919a901b939be645",
+          "currentSha256": "8146f1f113cb54c88f6e4cd2d44b568faef68f72b96ed76f919a901b939be645"
+        },
+        {
+          "path": "packages/payment-gateway/src/index.test.ts",
+          "baselineSha256": "e707363e750aebd0b5ffda847b15b33f5ff1e47752ab977f4b373e72deaedd6b",
+          "acceptedP505Sha256": "e707363e750aebd0b5ffda847b15b33f5ff1e47752ab977f4b373e72deaedd6b",
+          "currentSha256": "e707363e750aebd0b5ffda847b15b33f5ff1e47752ab977f4b373e72deaedd6b"
+        },
+        {
+          "path": "packages/payment-gateway/src/index.ts",
+          "baselineSha256": "8b15f67273273ddbb00956528ba2547ac7568567e38797feb5fff93a65a3bd3e",
+          "acceptedP505Sha256": "8b15f67273273ddbb00956528ba2547ac7568567e38797feb5fff93a65a3bd3e",
+          "currentSha256": "8b15f67273273ddbb00956528ba2547ac7568567e38797feb5fff93a65a3bd3e"
+        },
+        {
+          "path": "packages/payment-gateway/src/registry.test.ts",
+          "baselineSha256": "8f69af8ece1785be74d64e034b2d6d98dfb7e1de7a726338ee2f43d11eb3e9e2",
+          "acceptedP505Sha256": "8f69af8ece1785be74d64e034b2d6d98dfb7e1de7a726338ee2f43d11eb3e9e2",
+          "currentSha256": "8f69af8ece1785be74d64e034b2d6d98dfb7e1de7a726338ee2f43d11eb3e9e2"
+        },
+        {
+          "path": "packages/payment-gateway/src/registry.ts",
+          "baselineSha256": "5010626272fbe8d54f67409f610f3156d29e8b3856f839b2923e69b1fdf12d44",
+          "acceptedP505Sha256": "5010626272fbe8d54f67409f610f3156d29e8b3856f839b2923e69b1fdf12d44",
+          "currentSha256": "5010626272fbe8d54f67409f610f3156d29e8b3856f839b2923e69b1fdf12d44"
+        },
+        {
+          "path": "packages/payment-gateway/src/stablecoin.test.ts",
+          "baselineSha256": "cdb47530143a18120807fdf54d477cd11ccbd414b96dd169a90ae57ab65d66e7",
+          "acceptedP505Sha256": "cdb47530143a18120807fdf54d477cd11ccbd414b96dd169a90ae57ab65d66e7",
+          "currentSha256": "cdb47530143a18120807fdf54d477cd11ccbd414b96dd169a90ae57ab65d66e7"
+        },
+        {
+          "path": "packages/payment-gateway/src/stablecoin.ts",
+          "baselineSha256": "ede657fbfc73f02337bae1ae2c21ecc10ee5d3403f5044500fdf037c6a48d7a9",
+          "acceptedP505Sha256": "ede657fbfc73f02337bae1ae2c21ecc10ee5d3403f5044500fdf037c6a48d7a9",
+          "currentSha256": "ede657fbfc73f02337bae1ae2c21ecc10ee5d3403f5044500fdf037c6a48d7a9"
+        },
+        {
+          "path": "packages/payment-gateway/src/webhook.test.ts",
+          "baselineSha256": "eae70a16c007bca56a4fe998dbefaea52f40fe2cc413e61afe061f04d505becf",
+          "acceptedP505Sha256": "eae70a16c007bca56a4fe998dbefaea52f40fe2cc413e61afe061f04d505becf",
+          "currentSha256": "eae70a16c007bca56a4fe998dbefaea52f40fe2cc413e61afe061f04d505becf"
+        },
+        {
+          "path": "packages/payment-gateway/src/webhook.ts",
+          "baselineSha256": "59bd06529b348ab75122c5ed9ca18730ac46dd8b4d9b8760ec8ca4d6d29b406d",
+          "acceptedP505Sha256": "59bd06529b348ab75122c5ed9ca18730ac46dd8b4d9b8760ec8ca4d6d29b406d",
+          "currentSha256": "59bd06529b348ab75122c5ed9ca18730ac46dd8b4d9b8760ec8ca4d6d29b406d"
+        },
+        {
+          "path": "packages/persistence-port/src/payment-health.ts",
+          "baselineSha256": "7a83b374a400bad8e9a52ed646dfc8b9867721c45a6fbca7dab034d190d3d5f3",
+          "acceptedP505Sha256": "7a83b374a400bad8e9a52ed646dfc8b9867721c45a6fbca7dab034d190d3d5f3",
+          "currentSha256": "7a83b374a400bad8e9a52ed646dfc8b9867721c45a6fbca7dab034d190d3d5f3"
+        },
+        {
+          "path": "packages/persistence-postgres/scripts/payment-health-ddl.mjs",
+          "baselineSha256": "50062dff056a998831e72a4270aca2d15e57a2ccf1e95999f04e978540553834",
+          "acceptedP505Sha256": "50062dff056a998831e72a4270aca2d15e57a2ccf1e95999f04e978540553834",
+          "currentSha256": "50062dff056a998831e72a4270aca2d15e57a2ccf1e95999f04e978540553834"
+        },
+        {
+          "path": "packages/persistence-postgres/scripts/payment-health-postgres.mjs",
+          "baselineSha256": "edc2281879abd077280427cc3f8060bf7eb90048aee8833b205636d70c45830f",
+          "acceptedP505Sha256": "edc2281879abd077280427cc3f8060bf7eb90048aee8833b205636d70c45830f",
+          "currentSha256": "edc2281879abd077280427cc3f8060bf7eb90048aee8833b205636d70c45830f"
+        },
+        {
+          "path": "packages/persistence-postgres/scripts/payment-health-timeout-code.mjs",
+          "baselineSha256": "866e24f2c3fa7a7905d0e9c10b71e200e97c891a3a04c4b84216157cf47da87b",
+          "acceptedP505Sha256": "866e24f2c3fa7a7905d0e9c10b71e200e97c891a3a04c4b84216157cf47da87b",
+          "currentSha256": "866e24f2c3fa7a7905d0e9c10b71e200e97c891a3a04c4b84216157cf47da87b"
+        },
+        {
+          "path": "packages/persistence-postgres/scripts/payment-rollout-postgres.mjs",
+          "baselineSha256": "399293d59b6a2c0d1f853f086c914731cb4d88a480feaa932892ca180f688f4c",
+          "acceptedP505Sha256": "399293d59b6a2c0d1f853f086c914731cb4d88a480feaa932892ca180f688f4c",
+          "currentSha256": "399293d59b6a2c0d1f853f086c914731cb4d88a480feaa932892ca180f688f4c"
+        },
+        {
+          "path": "packages/persistence-postgres/src/payment-health-client.test.ts",
+          "baselineSha256": "45d2b698b7fe79b94108e6d858343a815039802d7127d4f87405cf01dfe506ff",
+          "acceptedP505Sha256": "45d2b698b7fe79b94108e6d858343a815039802d7127d4f87405cf01dfe506ff",
+          "currentSha256": "45d2b698b7fe79b94108e6d858343a815039802d7127d4f87405cf01dfe506ff"
+        },
+        {
+          "path": "packages/persistence-postgres/src/payment-health-client.ts",
+          "baselineSha256": "528ca5416a48c2436baf45f14b43eb7b8dec465c37d3b73c3431ccc445c1e3c0",
+          "acceptedP505Sha256": "528ca5416a48c2436baf45f14b43eb7b8dec465c37d3b73c3431ccc445c1e3c0",
+          "currentSha256": "528ca5416a48c2436baf45f14b43eb7b8dec465c37d3b73c3431ccc445c1e3c0"
+        },
+        {
+          "path": "packages/persistence-postgres/src/payment-health-context.ts",
+          "baselineSha256": "6b606ed333728f672617b281826b2768a396f6d271cf53a642cc0fe6b87d690b",
+          "acceptedP505Sha256": "6b606ed333728f672617b281826b2768a396f6d271cf53a642cc0fe6b87d690b",
+          "currentSha256": "6b606ed333728f672617b281826b2768a396f6d271cf53a642cc0fe6b87d690b"
+        },
+        {
+          "path": "packages/persistence-postgres/src/payment-health-data.ts",
+          "baselineSha256": "8412021e82238707a7a40ec86f1fabfb37793e11689b8c149c45f72126f9febf",
+          "acceptedP505Sha256": "8412021e82238707a7a40ec86f1fabfb37793e11689b8c149c45f72126f9febf",
+          "currentSha256": "8412021e82238707a7a40ec86f1fabfb37793e11689b8c149c45f72126f9febf"
+        },
+        {
+          "path": "packages/persistence-postgres/src/payment-health-probe.ts",
+          "baselineSha256": "0e77094992544d35ec994bfd09cf2f9f74ce8b9d1347367f0fc9f6ff7ead80b6",
+          "acceptedP505Sha256": "0e77094992544d35ec994bfd09cf2f9f74ce8b9d1347367f0fc9f6ff7ead80b6",
+          "currentSha256": "0e77094992544d35ec994bfd09cf2f9f74ce8b9d1347367f0fc9f6ff7ead80b6"
+        },
+        {
+          "path": "packages/persistence-postgres/src/payment-health-repository.ts",
+          "baselineSha256": "14c53d46d6dcd34f8c4aca36fcfd903c255db2110c4f9fe1a650fb654634b1c9",
+          "acceptedP505Sha256": "14c53d46d6dcd34f8c4aca36fcfd903c255db2110c4f9fe1a650fb654634b1c9",
+          "currentSha256": "14c53d46d6dcd34f8c4aca36fcfd903c255db2110c4f9fe1a650fb654634b1c9"
+        }
+      ]
+    },
+    "p505_configuration": {
+      "count": 47,
+      "unchangedFromTaskAcceptance": 46,
+      "matchesAcceptedP505": 46,
+      "changedSinceP505": [
+        "packages/persistence-postgres/scripts/admin-payment-configuration-postgres.mjs"
+      ],
+      "files": [
+        {
+          "path": "apps/admin/src/server/admin-payment-configuration-operations.test.ts",
+          "baselineSha256": "4debc418e68cb37f9a00b30bc6fa7fadf404c7be8a31db476d459858ecb09bbb",
+          "acceptedP505Sha256": "4debc418e68cb37f9a00b30bc6fa7fadf404c7be8a31db476d459858ecb09bbb",
+          "currentSha256": "4debc418e68cb37f9a00b30bc6fa7fadf404c7be8a31db476d459858ecb09bbb"
+        },
+        {
+          "path": "apps/api/scripts/admin-payment-config-browser.mjs",
+          "baselineSha256": "d35f6e85f5171284f3b09b1a82357ebf0b6535fa884182a3a9e6d11b13f2926d",
+          "acceptedP505Sha256": "d35f6e85f5171284f3b09b1a82357ebf0b6535fa884182a3a9e6d11b13f2926d",
+          "currentSha256": "d35f6e85f5171284f3b09b1a82357ebf0b6535fa884182a3a9e6d11b13f2926d"
+        },
+        {
+          "path": "apps/api/scripts/admin-payment-config-connectors.mjs",
+          "baselineSha256": "0178fbda74214683682d86938e84e5b1e2df14444574e00c531b4029043dedb9",
+          "acceptedP505Sha256": "0178fbda74214683682d86938e84e5b1e2df14444574e00c531b4029043dedb9",
+          "currentSha256": "0178fbda74214683682d86938e84e5b1e2df14444574e00c531b4029043dedb9"
+        },
+        {
+          "path": "apps/api/scripts/admin-payment-config-fixture.mjs",
+          "baselineSha256": "cf8138e84246b8f839fd620ab6f6dbdce2fc68ab0a09b748aaf31f263462c2d4",
+          "acceptedP505Sha256": "cf8138e84246b8f839fd620ab6f6dbdce2fc68ab0a09b748aaf31f263462c2d4",
+          "currentSha256": "cf8138e84246b8f839fd620ab6f6dbdce2fc68ab0a09b748aaf31f263462c2d4"
+        },
+        {
+          "path": "apps/api/scripts/admin-payment-config-http.mjs",
+          "baselineSha256": "a34513afd70003ab2c056b50766fdf467da5ad35035c5b0d3b1ffccadbf151b9",
+          "acceptedP505Sha256": "a34513afd70003ab2c056b50766fdf467da5ad35035c5b0d3b1ffccadbf151b9",
+          "currentSha256": "a34513afd70003ab2c056b50766fdf467da5ad35035c5b0d3b1ffccadbf151b9"
+        },
+        {
+          "path": "apps/api/scripts/admin-payment-config-process.mjs",
+          "baselineSha256": "631529a6d4338f2db96e87681685c8ee8132f0a022a93612a65793026dbc947a",
+          "acceptedP505Sha256": "631529a6d4338f2db96e87681685c8ee8132f0a022a93612a65793026dbc947a",
+          "currentSha256": "631529a6d4338f2db96e87681685c8ee8132f0a022a93612a65793026dbc947a"
+        },
+        {
+          "path": "apps/api/scripts/admin-payment-config-protocol.mjs",
+          "baselineSha256": "81276d4d4831a28f24692cd35641830531b38133a62a10c6cfb3ddd4db0e605f",
+          "acceptedP505Sha256": "81276d4d4831a28f24692cd35641830531b38133a62a10c6cfb3ddd4db0e605f",
+          "currentSha256": "81276d4d4831a28f24692cd35641830531b38133a62a10c6cfb3ddd4db0e605f"
+        },
+        {
+          "path": "apps/api/scripts/admin-payment-config-psp-envelope.mjs",
+          "baselineSha256": "a5a2aba4ff090bd58155c935be6583af7faf1f3053f1e7bcc32a048364eb72cc",
+          "acceptedP505Sha256": "a5a2aba4ff090bd58155c935be6583af7faf1f3053f1e7bcc32a048364eb72cc",
+          "currentSha256": "a5a2aba4ff090bd58155c935be6583af7faf1f3053f1e7bcc32a048364eb72cc"
+        },
+        {
+          "path": "apps/api/scripts/admin-payment-config-psp-envelope.test.mjs",
+          "baselineSha256": "440bc42ebbb59e4410fcbe0926a03c50433ac3f207788faf76f012aaa8bd1838",
+          "acceptedP505Sha256": "440bc42ebbb59e4410fcbe0926a03c50433ac3f207788faf76f012aaa8bd1838",
+          "currentSha256": "440bc42ebbb59e4410fcbe0926a03c50433ac3f207788faf76f012aaa8bd1838"
+        },
+        {
+          "path": "apps/api/scripts/admin-payment-config-psp-http.test.mjs",
+          "baselineSha256": "9fbf53d68ddbbd54a96e524cbb13136d52756f3be1e58cf0d8fc4132a0ef1922",
+          "acceptedP505Sha256": "9fbf53d68ddbbd54a96e524cbb13136d52756f3be1e58cf0d8fc4132a0ef1922",
+          "currentSha256": "9fbf53d68ddbbd54a96e524cbb13136d52756f3be1e58cf0d8fc4132a0ef1922"
+        },
+        {
+          "path": "apps/api/src/admin-payment-configuration-composition.test.ts",
+          "baselineSha256": "4a8f243f04d68bd4df03272ee28de00b84d24d4e08846a6676b03fa5a0c17029",
+          "acceptedP505Sha256": "4a8f243f04d68bd4df03272ee28de00b84d24d4e08846a6676b03fa5a0c17029",
+          "currentSha256": "4a8f243f04d68bd4df03272ee28de00b84d24d4e08846a6676b03fa5a0c17029"
+        },
+        {
+          "path": "apps/api/src/admin-payment-configuration-composition.ts",
+          "baselineSha256": "52d7a35e208a625037dc93d5f0b4015f0244d76c6f453446469a8aad1923f48a",
+          "acceptedP505Sha256": "52d7a35e208a625037dc93d5f0b4015f0244d76c6f453446469a8aad1923f48a",
+          "currentSha256": "52d7a35e208a625037dc93d5f0b4015f0244d76c6f453446469a8aad1923f48a"
+        },
+        {
+          "path": "apps/api/src/admin-payment-configuration-route.test.ts",
+          "baselineSha256": "dfbd24f9b44607a6b626bf47d23e41b1a1cce51571aaecc6e30eab99b3d0b95a",
+          "acceptedP505Sha256": "dfbd24f9b44607a6b626bf47d23e41b1a1cce51571aaecc6e30eab99b3d0b95a",
+          "currentSha256": "dfbd24f9b44607a6b626bf47d23e41b1a1cce51571aaecc6e30eab99b3d0b95a"
+        },
+        {
+          "path": "apps/api/src/admin-payment-configuration-route.ts",
+          "baselineSha256": "77b8bd46c193ea6a0da755712afa8e24955b45153785e35c9f31800ba793eff4",
+          "acceptedP505Sha256": "77b8bd46c193ea6a0da755712afa8e24955b45153785e35c9f31800ba793eff4",
+          "currentSha256": "77b8bd46c193ea6a0da755712afa8e24955b45153785e35c9f31800ba793eff4"
+        },
+        {
+          "path": "apps/api/src/payment-configuration-lifecycle.test.ts",
+          "baselineSha256": "167c3f1670b5085c16f3c339b2644ba2c591189d7d236cf3f02a74f99520ddb6",
+          "acceptedP505Sha256": "167c3f1670b5085c16f3c339b2644ba2c591189d7d236cf3f02a74f99520ddb6",
+          "currentSha256": "167c3f1670b5085c16f3c339b2644ba2c591189d7d236cf3f02a74f99520ddb6"
+        },
+        {
+          "path": "apps/api/src/payment-configuration-lifecycle.ts",
+          "baselineSha256": "0b637980e789082da3790c2f8f2ff33484c2379ee198ae0f31af45ead8898059",
+          "acceptedP505Sha256": "0b637980e789082da3790c2f8f2ff33484c2379ee198ae0f31af45ead8898059",
+          "currentSha256": "0b637980e789082da3790c2f8f2ff33484c2379ee198ae0f31af45ead8898059"
+        },
+        {
+          "path": "apps/api/src/payment-configuration-runtime.test.ts",
+          "baselineSha256": "b117059eb89fc93229dc8ed75d4fe8f9f93acd3c501480b8bd645e3b2780e70c",
+          "acceptedP505Sha256": "b117059eb89fc93229dc8ed75d4fe8f9f93acd3c501480b8bd645e3b2780e70c",
+          "currentSha256": "b117059eb89fc93229dc8ed75d4fe8f9f93acd3c501480b8bd645e3b2780e70c"
+        },
+        {
+          "path": "apps/api/src/payment-configuration-runtime.ts",
+          "baselineSha256": "a27d2d7012cbb479c40997fd69aefdfcfe8d0ae38b8e0ffbb0bf1ccf195c2400",
+          "acceptedP505Sha256": "a27d2d7012cbb479c40997fd69aefdfcfe8d0ae38b8e0ffbb0bf1ccf195c2400",
+          "currentSha256": "a27d2d7012cbb479c40997fd69aefdfcfe8d0ae38b8e0ffbb0bf1ccf195c2400"
+        },
+        {
+          "path": "database/migrations/0036_admin-payment-configuration.down.sql",
+          "baselineSha256": "1b1036f84ea1567f8912f490a1c7258439eb1be5823ac962ace99aed6b58cce9",
+          "acceptedP505Sha256": "1b1036f84ea1567f8912f490a1c7258439eb1be5823ac962ace99aed6b58cce9",
+          "currentSha256": "1b1036f84ea1567f8912f490a1c7258439eb1be5823ac962ace99aed6b58cce9"
+        },
+        {
+          "path": "database/migrations/0036_admin-payment-configuration.up.sql",
+          "baselineSha256": "bd8f832d4056f6c57b8cb92ca48bd83e9a206d47ff1519fe8485a4f57c0ee43f",
+          "acceptedP505Sha256": "bd8f832d4056f6c57b8cb92ca48bd83e9a206d47ff1519fe8485a4f57c0ee43f",
+          "currentSha256": "bd8f832d4056f6c57b8cb92ca48bd83e9a206d47ff1519fe8485a4f57c0ee43f"
+        },
+        {
+          "path": "packages/application/src/admin-payment-configuration.test.ts",
+          "baselineSha256": "47eac872388c29ef6bc634e1fd44c903658c56525a24260fe54c89f8b667a8b5",
+          "acceptedP505Sha256": "47eac872388c29ef6bc634e1fd44c903658c56525a24260fe54c89f8b667a8b5",
+          "currentSha256": "47eac872388c29ef6bc634e1fd44c903658c56525a24260fe54c89f8b667a8b5"
+        },
+        {
+          "path": "packages/application/src/admin-payment-configuration.ts",
+          "baselineSha256": "53c837b9ef4b4f3b033cd09c66d5386f4a294a89f9ed862d805cad36a05883d6",
+          "acceptedP505Sha256": "53c837b9ef4b4f3b033cd09c66d5386f4a294a89f9ed862d805cad36a05883d6",
+          "currentSha256": "53c837b9ef4b4f3b033cd09c66d5386f4a294a89f9ed862d805cad36a05883d6"
+        },
+        {
+          "path": "packages/contracts/src/admin-payment-configuration-openapi.test.ts",
+          "baselineSha256": "647386d4ac23af1f20b6736596983340e5f4ef0bc705fa17176acb3eb84b1554",
+          "acceptedP505Sha256": "647386d4ac23af1f20b6736596983340e5f4ef0bc705fa17176acb3eb84b1554",
+          "currentSha256": "647386d4ac23af1f20b6736596983340e5f4ef0bc705fa17176acb3eb84b1554"
+        },
+        {
+          "path": "packages/contracts/src/admin-payment-configuration-openapi.ts",
+          "baselineSha256": "7356498cb92c5ec7678a21bab31f59cbf600ef429bff7f54b749618ddfe57530",
+          "acceptedP505Sha256": "7356498cb92c5ec7678a21bab31f59cbf600ef429bff7f54b749618ddfe57530",
+          "currentSha256": "7356498cb92c5ec7678a21bab31f59cbf600ef429bff7f54b749618ddfe57530"
+        },
+        {
+          "path": "packages/contracts/src/admin-payment-configuration-persistence.ts",
+          "baselineSha256": "e55047bed49e2391763feaade63124a5a1902d07759d4cea5d886d3f5a5d1be4",
+          "acceptedP505Sha256": "e55047bed49e2391763feaade63124a5a1902d07759d4cea5d886d3f5a5d1be4",
+          "currentSha256": "e55047bed49e2391763feaade63124a5a1902d07759d4cea5d886d3f5a5d1be4"
+        },
+        {
+          "path": "packages/contracts/src/admin-payment-configuration.test.ts",
+          "baselineSha256": "e88bc62438554cc45d1ae94c59fa1b11a087356df11583c848ad4fc872bbf077",
+          "acceptedP505Sha256": "e88bc62438554cc45d1ae94c59fa1b11a087356df11583c848ad4fc872bbf077",
+          "currentSha256": "e88bc62438554cc45d1ae94c59fa1b11a087356df11583c848ad4fc872bbf077"
+        },
+        {
+          "path": "packages/contracts/src/admin-payment-configuration.ts",
+          "baselineSha256": "298980cecb269a57d2a77ebe08a20e955b852abb4d96b4b827566a698e6fac60",
+          "acceptedP505Sha256": "298980cecb269a57d2a77ebe08a20e955b852abb4d96b4b827566a698e6fac60",
+          "currentSha256": "298980cecb269a57d2a77ebe08a20e955b852abb4d96b4b827566a698e6fac60"
+        },
+        {
+          "path": "packages/contracts/src/payment-configuration-validation.ts",
+          "baselineSha256": "3f7e1472097ed73769d88751641d0b92898fc71bcf12614a43e0c6d961982ff9",
+          "acceptedP505Sha256": "3f7e1472097ed73769d88751641d0b92898fc71bcf12614a43e0c6d961982ff9",
+          "currentSha256": "3f7e1472097ed73769d88751641d0b92898fc71bcf12614a43e0c6d961982ff9"
+        },
+        {
+          "path": "packages/domain/src/payment-configuration-diff.ts",
+          "baselineSha256": "57a625558ceec111e7aee4a06fa35d7ff19023d6f14226444d07ffedd5089333",
+          "acceptedP505Sha256": "57a625558ceec111e7aee4a06fa35d7ff19023d6f14226444d07ffedd5089333",
+          "currentSha256": "57a625558ceec111e7aee4a06fa35d7ff19023d6f14226444d07ffedd5089333"
+        },
+        {
+          "path": "packages/domain/src/payment-configuration.test.ts",
+          "baselineSha256": "5ef8714c3d534cf5ece39969be5a67b4bf3c90bb0e22d1aa5afe588e3c2dcdb5",
+          "acceptedP505Sha256": "5ef8714c3d534cf5ece39969be5a67b4bf3c90bb0e22d1aa5afe588e3c2dcdb5",
+          "currentSha256": "5ef8714c3d534cf5ece39969be5a67b4bf3c90bb0e22d1aa5afe588e3c2dcdb5"
+        },
+        {
+          "path": "packages/domain/src/payment-configuration.ts",
+          "baselineSha256": "677e080dee8bc5d63f815ecb013d80865a83d1631f3b4626abf5e33dac8dd09f",
+          "acceptedP505Sha256": "677e080dee8bc5d63f815ecb013d80865a83d1631f3b4626abf5e33dac8dd09f",
+          "currentSha256": "677e080dee8bc5d63f815ecb013d80865a83d1631f3b4626abf5e33dac8dd09f"
+        },
+        {
+          "path": "packages/persistence-port/src/admin-payment-configuration.ts",
+          "baselineSha256": "fc52f956a22c3f9eb412ab5ef53c01b130d65d5f4ecbf4fd9ba10870fa378940",
+          "acceptedP505Sha256": "fc52f956a22c3f9eb412ab5ef53c01b130d65d5f4ecbf4fd9ba10870fa378940",
+          "currentSha256": "fc52f956a22c3f9eb412ab5ef53c01b130d65d5f4ecbf4fd9ba10870fa378940"
+        },
+        {
+          "path": "packages/persistence-postgres/scripts/admin-payment-configuration-capacity-cases.mjs",
+          "baselineSha256": "520fa3ce84e3297fb37628af685420aff32b1310ff4ab0a60617b23a089bb42a",
+          "acceptedP505Sha256": "520fa3ce84e3297fb37628af685420aff32b1310ff4ab0a60617b23a089bb42a",
+          "currentSha256": "520fa3ce84e3297fb37628af685420aff32b1310ff4ab0a60617b23a089bb42a"
+        },
+        {
+          "path": "packages/persistence-postgres/scripts/admin-payment-configuration-copy-cases.mjs",
+          "baselineSha256": "f90cc24981ef95b9b957a4456e4a4db79dd3cc76920917493da5c09e856ad0d3",
+          "acceptedP505Sha256": "f90cc24981ef95b9b957a4456e4a4db79dd3cc76920917493da5c09e856ad0d3",
+          "currentSha256": "f90cc24981ef95b9b957a4456e4a4db79dd3cc76920917493da5c09e856ad0d3"
+        },
+        {
+          "path": "packages/persistence-postgres/scripts/admin-payment-configuration-document-cases.mjs",
+          "baselineSha256": "451b255b84703d70093834c443f7a246f574ea446c71b761d1c14f56c23c628b",
+          "acceptedP505Sha256": "451b255b84703d70093834c443f7a246f574ea446c71b761d1c14f56c23c628b",
+          "currentSha256": "451b255b84703d70093834c443f7a246f574ea446c71b761d1c14f56c23c628b"
+        },
+        {
+          "path": "packages/persistence-postgres/scripts/admin-payment-configuration-postgres.mjs",
+          "baselineSha256": "06b86d8cc71b1c477db8589dd595adbcadb7be8e4cf6d77acfea392082ce542e",
+          "acceptedP505Sha256": "06b86d8cc71b1c477db8589dd595adbcadb7be8e4cf6d77acfea392082ce542e",
+          "currentSha256": "e8a47b7b0e3fec93f3304f31b4d11564234ac86bb68c5f788f4cd3d600556ded"
+        },
+        {
+          "path": "packages/persistence-postgres/scripts/admin-payment-configuration-storage-cases.mjs",
+          "baselineSha256": "123fe0a651d4dca4b9b58a0d39fc698b631e1bd9415c7feda956cd9c0badd1fd",
+          "acceptedP505Sha256": "123fe0a651d4dca4b9b58a0d39fc698b631e1bd9415c7feda956cd9c0badd1fd",
+          "currentSha256": "123fe0a651d4dca4b9b58a0d39fc698b631e1bd9415c7feda956cd9c0badd1fd"
+        },
+        {
+          "path": "packages/persistence-postgres/scripts/admin-payment-configuration-uuid-cases.mjs",
+          "baselineSha256": "f612dddc46ad0181343f2166a8ce209b3da766a13bc1c667aa64a5cf09024dc1",
+          "acceptedP505Sha256": "f612dddc46ad0181343f2166a8ce209b3da766a13bc1c667aa64a5cf09024dc1",
+          "currentSha256": "f612dddc46ad0181343f2166a8ce209b3da766a13bc1c667aa64a5cf09024dc1"
+        },
+        {
+          "path": "packages/persistence-postgres/src/admin-payment-configuration-authoring.ts",
+          "baselineSha256": "e19115d4fe98d04eeeca0abdb2c893ab6a96dfe588f499921532ea7e4a20cd97",
+          "acceptedP505Sha256": "e19115d4fe98d04eeeca0abdb2c893ab6a96dfe588f499921532ea7e4a20cd97",
+          "currentSha256": "e19115d4fe98d04eeeca0abdb2c893ab6a96dfe588f499921532ea7e4a20cd97"
+        },
+        {
+          "path": "packages/persistence-postgres/src/admin-payment-configuration-authorization.ts",
+          "baselineSha256": "c1267e90ad17992014ec85c7fc88d0ee9a2cc37fd140e711445758354ffa62b4",
+          "acceptedP505Sha256": "c1267e90ad17992014ec85c7fc88d0ee9a2cc37fd140e711445758354ffa62b4",
+          "currentSha256": "c1267e90ad17992014ec85c7fc88d0ee9a2cc37fd140e711445758354ffa62b4"
+        },
+        {
+          "path": "packages/persistence-postgres/src/admin-payment-configuration-copy.ts",
+          "baselineSha256": "444ccc53c710e4549984924737046db1fbd0c579221537ae3861f775a7bbfa61",
+          "acceptedP505Sha256": "444ccc53c710e4549984924737046db1fbd0c579221537ae3861f775a7bbfa61",
+          "currentSha256": "444ccc53c710e4549984924737046db1fbd0c579221537ae3861f775a7bbfa61"
+        },
+        {
+          "path": "packages/persistence-postgres/src/admin-payment-configuration-data.ts",
+          "baselineSha256": "30469b068459d6ad368cb7ba8953f245f82426ffb56f40dd8c7d32e0ec52d65e",
+          "acceptedP505Sha256": "30469b068459d6ad368cb7ba8953f245f82426ffb56f40dd8c7d32e0ec52d65e",
+          "currentSha256": "30469b068459d6ad368cb7ba8953f245f82426ffb56f40dd8c7d32e0ec52d65e"
+        },
+        {
+          "path": "packages/persistence-postgres/src/admin-payment-configuration-publication.ts",
+          "baselineSha256": "5e4ffbbc88acfc6b7ee266fe023c532f389bf489a46ce0eae97efb67f5ea30b7",
+          "acceptedP505Sha256": "5e4ffbbc88acfc6b7ee266fe023c532f389bf489a46ce0eae97efb67f5ea30b7",
+          "currentSha256": "5e4ffbbc88acfc6b7ee266fe023c532f389bf489a46ce0eae97efb67f5ea30b7"
+        },
+        {
+          "path": "packages/persistence-postgres/src/admin-payment-configuration-read.ts",
+          "baselineSha256": "5bec293dc34c4cf7cee73de8dc4a1d97fcd7193c848f988811f809c0eb7c6f3c",
+          "acceptedP505Sha256": "5bec293dc34c4cf7cee73de8dc4a1d97fcd7193c848f988811f809c0eb7c6f3c",
+          "currentSha256": "5bec293dc34c4cf7cee73de8dc4a1d97fcd7193c848f988811f809c0eb7c6f3c"
+        },
+        {
+          "path": "packages/persistence-postgres/src/admin-payment-configuration-repository.ts",
+          "baselineSha256": "297a473ede84f2558a1be27c8165bc2df9ee89f02b8a89375d8ce2a748595bad",
+          "acceptedP505Sha256": "297a473ede84f2558a1be27c8165bc2df9ee89f02b8a89375d8ce2a748595bad",
+          "currentSha256": "297a473ede84f2558a1be27c8165bc2df9ee89f02b8a89375d8ce2a748595bad"
+        },
+        {
+          "path": "packages/persistence-postgres/src/admin-payment-configuration-validation.ts",
+          "baselineSha256": "40b8601d098aba116f0088e3a58448d94cf16bf7192fecaaa2c1754b0650af7c",
+          "acceptedP505Sha256": "40b8601d098aba116f0088e3a58448d94cf16bf7192fecaaa2c1754b0650af7c",
+          "currentSha256": "40b8601d098aba116f0088e3a58448d94cf16bf7192fecaaa2c1754b0650af7c"
+        },
+        {
+          "path": "packages/persistence-postgres/src/admin-payment-configuration.test.ts",
+          "baselineSha256": "98c98483afe536200c01abb445e27aac27be23543b38a1dafd2bc6c962384f00",
+          "acceptedP505Sha256": "98c98483afe536200c01abb445e27aac27be23543b38a1dafd2bc6c962384f00",
+          "currentSha256": "98c98483afe536200c01abb445e27aac27be23543b38a1dafd2bc6c962384f00"
+        }
+      ]
+    }
+  },
+  "p506ReviewedSourceFingerprint": "9c29be18b3ed4df027f3c0ce9ef2c3b8bdc64141717948fd3c71d5d8866b02b8"
+}

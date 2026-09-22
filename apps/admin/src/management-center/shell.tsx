@@ -1,3 +1,4 @@
+import { exceptionsCopy } from "../management-exceptions/copy";
 import type { ReactNode } from "react";
 import type { SupportedLocale } from "@fan-support/contracts";
 import type { ManagementSection } from "./api";
@@ -15,16 +16,20 @@ export function ManagementShell({
   contentAllowed = true,
   ordersAvailable = false,
   paymentsAvailable = false,
+  exceptionsAvailable = false,
 }: {
   locale: SupportedLocale;
-  section: ManagementSection | "ORDERS" | "PAYMENTS";
-  onSection: (section: ManagementSection | "ORDERS" | "PAYMENTS") => void;
+  section: ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS";
+  onSection: (
+    section: ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS",
+  ) => void;
   children: ReactNode;
   disabled?: boolean;
   accountAction?: ReactNode;
   contentAllowed?: boolean;
   ordersAvailable?: boolean;
   paymentsAvailable?: boolean;
+  exceptionsAvailable?: boolean;
 }) {
   const copy = managementCopy(locale);
   return (
@@ -83,6 +88,17 @@ export function ManagementShell({
               onClick={() => onSection("PAYMENTS")}
             >
               {paymentCopy(locale).title}
+            </button>
+          ) : null}
+          {exceptionsAvailable ? (
+            <button
+              type="button"
+              data-management-section="EXCEPTIONS"
+              aria-current={section === "EXCEPTIONS" ? "page" : undefined}
+              disabled={disabled}
+              onClick={() => onSection("EXCEPTIONS")}
+            >
+              {exceptionsCopy(locale).title}
             </button>
           ) : null}
         </nav>

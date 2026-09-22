@@ -4670,6 +4670,1772 @@
         ],
         "x-fan-support-audience": "admin-http"
       },
+      "AdminExceptionsCommand": {
+        "oneOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "CONTEXT",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "LIST",
+                "type": "string"
+              },
+              "category": {
+                "enum": [
+                  "ALL",
+                  "WEBHOOK",
+                  "DEAD_LETTER",
+                  "PAYMENT",
+                  "NOTIFICATION"
+                ],
+                "type": "string"
+              },
+              "page": {
+                "maximum": 10000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "pageSize": {
+                "maximum": 50,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "status": {
+                "enum": [
+                  "OPEN",
+                  "ALL"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "page",
+              "pageSize",
+              "category",
+              "status"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "DETAIL",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "target": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "WEBHOOK",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "maxLength": 64,
+                        "minLength": 2,
+                        "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+                        "type": "string"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "DEAD_LETTER",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "PAYMENT",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "NOTIFICATION",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "target"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "REPLAY_WEBHOOK",
+                "type": "string"
+              },
+              "confirmed": {
+                "const": true,
+                "type": "boolean"
+              },
+              "expectedVersion": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "reasonCode": {
+                "enum": [
+                  "RETRY_AFTER_REPAIR",
+                  "VERIFY_PROVIDER_STATUS",
+                  "RETRY_FAILED_NOTIFICATION",
+                  "OPERATOR_REVIEW"
+                ],
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "target": {
+                "additionalProperties": false,
+                "properties": {
+                  "consumerKey": {
+                    "type": "null"
+                  },
+                  "id": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "const": "WEBHOOK",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id",
+                  "consumerKey"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "expectedVersion",
+              "idempotencyKey",
+              "reasonCode",
+              "confirmed",
+              "action",
+              "target"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "RETRY_DEAD_LETTER",
+                "type": "string"
+              },
+              "confirmed": {
+                "const": true,
+                "type": "boolean"
+              },
+              "expectedVersion": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "reasonCode": {
+                "enum": [
+                  "RETRY_AFTER_REPAIR",
+                  "VERIFY_PROVIDER_STATUS",
+                  "RETRY_FAILED_NOTIFICATION",
+                  "OPERATOR_REVIEW"
+                ],
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "target": {
+                "additionalProperties": false,
+                "properties": {
+                  "consumerKey": {
+                    "maxLength": 64,
+                    "minLength": 2,
+                    "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+                    "type": "string"
+                  },
+                  "id": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "const": "DEAD_LETTER",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id",
+                  "consumerKey"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "expectedVersion",
+              "idempotencyKey",
+              "reasonCode",
+              "confirmed",
+              "action",
+              "target"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "RECONCILE_PAYMENT",
+                "type": "string"
+              },
+              "confirmed": {
+                "const": true,
+                "type": "boolean"
+              },
+              "expectedVersion": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "reasonCode": {
+                "enum": [
+                  "RETRY_AFTER_REPAIR",
+                  "VERIFY_PROVIDER_STATUS",
+                  "RETRY_FAILED_NOTIFICATION",
+                  "OPERATOR_REVIEW"
+                ],
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "target": {
+                "additionalProperties": false,
+                "properties": {
+                  "consumerKey": {
+                    "type": "null"
+                  },
+                  "id": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "const": "PAYMENT",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id",
+                  "consumerKey"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "expectedVersion",
+              "idempotencyKey",
+              "reasonCode",
+              "confirmed",
+              "action",
+              "target"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "RETRY_NOTIFICATION",
+                "type": "string"
+              },
+              "confirmed": {
+                "const": true,
+                "type": "boolean"
+              },
+              "expectedVersion": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "reasonCode": {
+                "enum": [
+                  "RETRY_AFTER_REPAIR",
+                  "VERIFY_PROVIDER_STATUS",
+                  "RETRY_FAILED_NOTIFICATION",
+                  "OPERATOR_REVIEW"
+                ],
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "target": {
+                "additionalProperties": false,
+                "properties": {
+                  "consumerKey": {
+                    "type": "null"
+                  },
+                  "id": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "const": "NOTIFICATION",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id",
+                  "consumerKey"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "expectedVersion",
+              "idempotencyKey",
+              "reasonCode",
+              "confirmed",
+              "action",
+              "target"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminExceptionsFailure": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "enum": [
+              "INVALID_COMMAND",
+              "UNAUTHENTICATED",
+              "CSRF_INVALID",
+              "FORBIDDEN",
+              "NOT_FOUND",
+              "STALE_VERSION",
+              "IDEMPOTENCY_CONFLICT",
+              "CONFLICT",
+              "TRANSITION_NOT_ALLOWED",
+              "SOURCE_IN_PROGRESS",
+              "UNSUPPORTED_CONSUMER",
+              "RECONCILIATION_REQUIRED",
+              "NOTIFICATION_NOT_READY",
+              "NOTIFICATION_IN_PROGRESS",
+              "RATE_LIMITED",
+              "TEMPORARY_UNAVAILABLE"
+            ],
+            "type": "string"
+          },
+          "outcome": {
+            "const": "FAILURE",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "outcome",
+          "code"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminExceptionsRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "command": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "CONTEXT",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "LIST",
+                    "type": "string"
+                  },
+                  "category": {
+                    "enum": [
+                      "ALL",
+                      "WEBHOOK",
+                      "DEAD_LETTER",
+                      "PAYMENT",
+                      "NOTIFICATION"
+                    ],
+                    "type": "string"
+                  },
+                  "page": {
+                    "maximum": 10000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "pageSize": {
+                    "maximum": 50,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "status": {
+                    "enum": [
+                      "OPEN",
+                      "ALL"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "page",
+                  "pageSize",
+                  "category",
+                  "status"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "DETAIL",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "target": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "type": "null"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "WEBHOOK",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "maxLength": 64,
+                            "minLength": 2,
+                            "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+                            "type": "string"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "DEAD_LETTER",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "type": "null"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "PAYMENT",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "type": "null"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "NOTIFICATION",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "target"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "REPLAY_WEBHOOK",
+                    "type": "string"
+                  },
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedVersion": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "enum": [
+                      "RETRY_AFTER_REPAIR",
+                      "VERIFY_PROVIDER_STATUS",
+                      "RETRY_FAILED_NOTIFICATION",
+                      "OPERATOR_REVIEW"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "target": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "WEBHOOK",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "idempotencyKey",
+                  "reasonCode",
+                  "confirmed",
+                  "action",
+                  "target"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "RETRY_DEAD_LETTER",
+                    "type": "string"
+                  },
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedVersion": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "enum": [
+                      "RETRY_AFTER_REPAIR",
+                      "VERIFY_PROVIDER_STATUS",
+                      "RETRY_FAILED_NOTIFICATION",
+                      "OPERATOR_REVIEW"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "target": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "maxLength": 64,
+                        "minLength": 2,
+                        "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+                        "type": "string"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "DEAD_LETTER",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "idempotencyKey",
+                  "reasonCode",
+                  "confirmed",
+                  "action",
+                  "target"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "RECONCILE_PAYMENT",
+                    "type": "string"
+                  },
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedVersion": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "enum": [
+                      "RETRY_AFTER_REPAIR",
+                      "VERIFY_PROVIDER_STATUS",
+                      "RETRY_FAILED_NOTIFICATION",
+                      "OPERATOR_REVIEW"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "target": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "PAYMENT",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "idempotencyKey",
+                  "reasonCode",
+                  "confirmed",
+                  "action",
+                  "target"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "RETRY_NOTIFICATION",
+                    "type": "string"
+                  },
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedVersion": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "enum": [
+                      "RETRY_AFTER_REPAIR",
+                      "VERIFY_PROVIDER_STATUS",
+                      "RETRY_FAILED_NOTIFICATION",
+                      "OPERATOR_REVIEW"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "target": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "NOTIFICATION",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "idempotencyKey",
+                  "reasonCode",
+                  "confirmed",
+                  "action",
+                  "target"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "csrfToken": {
+            "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+            "type": "string"
+          },
+          "requestId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "sessionToken": {
+            "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "sessionToken",
+          "csrfToken",
+          "command"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminExceptionsResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "INVALID_COMMAND",
+                  "UNAUTHENTICATED",
+                  "CSRF_INVALID",
+                  "FORBIDDEN",
+                  "NOT_FOUND",
+                  "STALE_VERSION",
+                  "IDEMPOTENCY_CONFLICT",
+                  "CONFLICT",
+                  "TRANSITION_NOT_ALLOWED",
+                  "SOURCE_IN_PROGRESS",
+                  "UNSUPPORTED_CONSUMER",
+                  "RECONCILIATION_REQUIRED",
+                  "NOTIFICATION_NOT_READY",
+                  "NOTIFICATION_IN_PROGRESS",
+                  "RATE_LIMITED",
+                  "TEMPORARY_UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "actorId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "kind": {
+                "const": "CONTEXT",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "permissions": {
+                "additionalProperties": false,
+                "properties": {
+                  "canRead": {
+                    "type": "boolean"
+                  },
+                  "canReconcilePayment": {
+                    "type": "boolean"
+                  },
+                  "canReplayWebhook": {
+                    "type": "boolean"
+                  },
+                  "canRetryDeadLetter": {
+                    "type": "boolean"
+                  },
+                  "canRetryNotification": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "canRead",
+                  "canReplayWebhook",
+                  "canRetryDeadLetter",
+                  "canReconcilePayment",
+                  "canRetryNotification"
+                ],
+                "type": "object"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "actorId",
+              "permissions"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "items": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "allowedAction": {
+                      "anyOf": [
+                        {
+                          "enum": [
+                            "REPLAY_WEBHOOK",
+                            "RETRY_DEAD_LETTER",
+                            "RECONCILE_PAYMENT",
+                            "RETRY_NOTIFICATION"
+                          ],
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "attemptCount": {
+                      "maximum": 9007199254740991,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "blockedReason": {
+                      "enum": [
+                        "NONE",
+                        "READ_ONLY",
+                        "IN_PROGRESS",
+                        "ALREADY_COMPLETE",
+                        "MANUAL_REVIEW_REQUIRED",
+                        "UNSUPPORTED_CONSUMER",
+                        "NOTIFICATION_UNCERTAIN",
+                        "NOTIFICATION_EXPIRED",
+                        "NOTIFICATION_SUPERSEDED",
+                        "NOT_RETRYABLE",
+                        "SOURCE_INCONSISTENT"
+                      ],
+                      "type": "string"
+                    },
+                    "orderId": {
+                      "anyOf": [
+                        {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "publicOrderId": {
+                      "anyOf": [
+                        {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "status": {
+                      "enum": [
+                        "PENDING",
+                        "PROCESSING",
+                        "FAILED",
+                        "UNKNOWN",
+                        "SUCCEEDED",
+                        "REVIEW",
+                        "EXPIRED"
+                      ],
+                      "type": "string"
+                    },
+                    "target": {
+                      "oneOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "consumerKey": {
+                              "type": "null"
+                            },
+                            "id": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "WEBHOOK",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "id",
+                            "consumerKey"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "consumerKey": {
+                              "maxLength": 64,
+                              "minLength": 2,
+                              "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+                              "type": "string"
+                            },
+                            "id": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "DEAD_LETTER",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "id",
+                            "consumerKey"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "consumerKey": {
+                              "type": "null"
+                            },
+                            "id": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "PAYMENT",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "id",
+                            "consumerKey"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "consumerKey": {
+                              "type": "null"
+                            },
+                            "id": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "NOTIFICATION",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "id",
+                            "consumerKey"
+                          ],
+                          "type": "object"
+                        }
+                      ]
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                      "type": "string"
+                    },
+                    "version": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "target",
+                    "version",
+                    "orderId",
+                    "publicOrderId",
+                    "status",
+                    "attemptCount",
+                    "updatedAt",
+                    "allowedAction",
+                    "blockedReason"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 50,
+                "type": "array"
+              },
+              "kind": {
+                "const": "LIST",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "page": {
+                "maximum": 10000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "pageSize": {
+                "maximum": 50,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "totalItems": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "page",
+              "pageSize",
+              "totalItems",
+              "items"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "item": {
+                "additionalProperties": false,
+                "properties": {
+                  "allowedAction": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "REPLAY_WEBHOOK",
+                          "RETRY_DEAD_LETTER",
+                          "RECONCILE_PAYMENT",
+                          "RETRY_NOTIFICATION"
+                        ],
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "attemptCount": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "blockedReason": {
+                    "enum": [
+                      "NONE",
+                      "READ_ONLY",
+                      "IN_PROGRESS",
+                      "ALREADY_COMPLETE",
+                      "MANUAL_REVIEW_REQUIRED",
+                      "UNSUPPORTED_CONSUMER",
+                      "NOTIFICATION_UNCERTAIN",
+                      "NOTIFICATION_EXPIRED",
+                      "NOTIFICATION_SUPERSEDED",
+                      "NOT_RETRYABLE",
+                      "SOURCE_INCONSISTENT"
+                    ],
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "publicOrderId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "status": {
+                    "enum": [
+                      "PENDING",
+                      "PROCESSING",
+                      "FAILED",
+                      "UNKNOWN",
+                      "SUCCEEDED",
+                      "REVIEW",
+                      "EXPIRED"
+                    ],
+                    "type": "string"
+                  },
+                  "target": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "type": "null"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "WEBHOOK",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "maxLength": 64,
+                            "minLength": 2,
+                            "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+                            "type": "string"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "DEAD_LETTER",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "type": "null"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "PAYMENT",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "type": "null"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "NOTIFICATION",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "updatedAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "version": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "target",
+                  "version",
+                  "orderId",
+                  "publicOrderId",
+                  "status",
+                  "attemptCount",
+                  "updatedAt",
+                  "allowedAction",
+                  "blockedReason"
+                ],
+                "type": "object"
+              },
+              "kind": {
+                "const": "DETAIL",
+                "type": "string"
+              },
+              "operations": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "action": {
+                      "enum": [
+                        "REPLAY_WEBHOOK",
+                        "RETRY_DEAD_LETTER",
+                        "RECONCILE_PAYMENT",
+                        "RETRY_NOTIFICATION"
+                      ],
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                      "type": "string"
+                    },
+                    "operationId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "REQUESTED",
+                        "PROCESSING",
+                        "SUCCEEDED",
+                        "FAILED"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "operationId",
+                    "action",
+                    "status",
+                    "createdAt"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 20,
+                "type": "array"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "item",
+              "operations"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "enum": [
+                  "REPLAY_WEBHOOK",
+                  "RETRY_DEAD_LETTER",
+                  "RECONCILE_PAYMENT",
+                  "RETRY_NOTIFICATION"
+                ],
+                "type": "string"
+              },
+              "kind": {
+                "const": "MUTATION",
+                "type": "string"
+              },
+              "operationId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "replayed": {
+                "type": "boolean"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "target": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "WEBHOOK",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "maxLength": 64,
+                        "minLength": 2,
+                        "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+                        "type": "string"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "DEAD_LETTER",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "PAYMENT",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "NOTIFICATION",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "action",
+              "target",
+              "operationId",
+              "replayed"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "admin-http"
+      },
       "AdminFinanceCommand": {
         "oneOf": [
           {
@@ -152456,6 +154222,2579 @@
         "x-fan-support-concurrency": "expectedVersion is the canonical review sequence; hashes must still match",
         "x-fan-support-idempotency": "same actor/operation/key/body returns the original safe result reference",
         "x-fan-support-rbac": "content.edit"
+      }
+    },
+    "/api/v1/admin/exceptions/context": {
+      "post": {
+        "description": "Current administrator session, MFA, Origin, CSRF and source-specific permissions are required. Recovery binds a server-issued source snapshot, a fixed reason, confirmation and permanent idempotency receipt. Webhooks use already verified normalized events; queue recovery retains original business effects and consumer keys. Payment reconciliation uses the original provider account. Notification recovery cannot bypass uncertain delivery protection. Responses contain safe metadata only.",
+        "operationId": "adminExceptionsContext",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 16384
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Safe authorized work queue, detail or permanent recovery receipt.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "context"
+      }
+    },
+    "/api/v1/admin/exceptions/detail": {
+      "post": {
+        "description": "Current administrator session, MFA, Origin, CSRF and source-specific permissions are required. Recovery binds a server-issued source snapshot, a fixed reason, confirmation and permanent idempotency receipt. Webhooks use already verified normalized events; queue recovery retains original business effects and consumer keys. Payment reconciliation uses the original provider account. Notification recovery cannot bypass uncertain delivery protection. Responses contain safe metadata only.",
+        "operationId": "adminExceptionsDetail",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "target": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "type": "null"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "WEBHOOK",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "maxLength": 64,
+                            "minLength": 2,
+                            "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+                            "type": "string"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "DEAD_LETTER",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "type": "null"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "PAYMENT",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "consumerKey": {
+                            "type": "null"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "NOTIFICATION",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id",
+                          "consumerKey"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "target"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 16384
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Safe authorized work queue, detail or permanent recovery receipt.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "detail"
+      }
+    },
+    "/api/v1/admin/exceptions/list": {
+      "post": {
+        "description": "Current administrator session, MFA, Origin, CSRF and source-specific permissions are required. Recovery binds a server-issued source snapshot, a fixed reason, confirmation and permanent idempotency receipt. Webhooks use already verified normalized events; queue recovery retains original business effects and consumer keys. Payment reconciliation uses the original provider account. Notification recovery cannot bypass uncertain delivery protection. Responses contain safe metadata only.",
+        "operationId": "adminExceptionsList",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "category": {
+                    "enum": [
+                      "ALL",
+                      "WEBHOOK",
+                      "DEAD_LETTER",
+                      "PAYMENT",
+                      "NOTIFICATION"
+                    ],
+                    "type": "string"
+                  },
+                  "page": {
+                    "maximum": 10000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "pageSize": {
+                    "maximum": 50,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "status": {
+                    "enum": [
+                      "OPEN",
+                      "ALL"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "page",
+                  "pageSize",
+                  "category",
+                  "status"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 16384
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Safe authorized work queue, detail or permanent recovery receipt.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "list"
+      }
+    },
+    "/api/v1/admin/exceptions/reconcile-payment": {
+      "post": {
+        "description": "Current administrator session, MFA, Origin, CSRF and source-specific permissions are required. Recovery binds a server-issued source snapshot, a fixed reason, confirmation and permanent idempotency receipt. Webhooks use already verified normalized events; queue recovery retains original business effects and consumer keys. Payment reconciliation uses the original provider account. Notification recovery cannot bypass uncertain delivery protection. Responses contain safe metadata only.",
+        "operationId": "adminExceptionsReconcilePayment",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedVersion": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "enum": [
+                      "RETRY_AFTER_REPAIR",
+                      "VERIFY_PROVIDER_STATUS",
+                      "RETRY_FAILED_NOTIFICATION",
+                      "OPERATOR_REVIEW"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "target": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "PAYMENT",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "reasonCode",
+                  "confirmed",
+                  "target"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 16384
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Safe authorized work queue, detail or permanent recovery receipt.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "reconcile payment"
+      }
+    },
+    "/api/v1/admin/exceptions/replay-webhook": {
+      "post": {
+        "description": "Current administrator session, MFA, Origin, CSRF and source-specific permissions are required. Recovery binds a server-issued source snapshot, a fixed reason, confirmation and permanent idempotency receipt. Webhooks use already verified normalized events; queue recovery retains original business effects and consumer keys. Payment reconciliation uses the original provider account. Notification recovery cannot bypass uncertain delivery protection. Responses contain safe metadata only.",
+        "operationId": "adminExceptionsReplayWebhook",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedVersion": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "enum": [
+                      "RETRY_AFTER_REPAIR",
+                      "VERIFY_PROVIDER_STATUS",
+                      "RETRY_FAILED_NOTIFICATION",
+                      "OPERATOR_REVIEW"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "target": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "WEBHOOK",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "reasonCode",
+                  "confirmed",
+                  "target"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 16384
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Safe authorized work queue, detail or permanent recovery receipt.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "replay webhook"
+      }
+    },
+    "/api/v1/admin/exceptions/retry-dead-letter": {
+      "post": {
+        "description": "Current administrator session, MFA, Origin, CSRF and source-specific permissions are required. Recovery binds a server-issued source snapshot, a fixed reason, confirmation and permanent idempotency receipt. Webhooks use already verified normalized events; queue recovery retains original business effects and consumer keys. Payment reconciliation uses the original provider account. Notification recovery cannot bypass uncertain delivery protection. Responses contain safe metadata only.",
+        "operationId": "adminExceptionsRetryDeadLetter",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedVersion": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "enum": [
+                      "RETRY_AFTER_REPAIR",
+                      "VERIFY_PROVIDER_STATUS",
+                      "RETRY_FAILED_NOTIFICATION",
+                      "OPERATOR_REVIEW"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "target": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "maxLength": 64,
+                        "minLength": 2,
+                        "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+                        "type": "string"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "DEAD_LETTER",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "reasonCode",
+                  "confirmed",
+                  "target"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 16384
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Safe authorized work queue, detail or permanent recovery receipt.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "retry dead letter"
+      }
+    },
+    "/api/v1/admin/exceptions/retry-notification": {
+      "post": {
+        "description": "Current administrator session, MFA, Origin, CSRF and source-specific permissions are required. Recovery binds a server-issued source snapshot, a fixed reason, confirmation and permanent idempotency receipt. Webhooks use already verified normalized events; queue recovery retains original business effects and consumer keys. Payment reconciliation uses the original provider account. Notification recovery cannot bypass uncertain delivery protection. Responses contain safe metadata only.",
+        "operationId": "adminExceptionsRetryNotification",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedVersion": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "enum": [
+                      "RETRY_AFTER_REPAIR",
+                      "VERIFY_PROVIDER_STATUS",
+                      "RETRY_FAILED_NOTIFICATION",
+                      "OPERATOR_REVIEW"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "target": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "consumerKey": {
+                        "type": "null"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "NOTIFICATION",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id",
+                      "consumerKey"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "reasonCode",
+                  "confirmed",
+                  "target"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 16384
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Safe authorized work queue, detail or permanent recovery receipt.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminExceptionsResponse"
+                }
+              }
+            },
+            "description": "Typed rejection without provider payload, private content or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "retry notification"
       }
     },
     "/api/v1/admin/finance/cancel": {

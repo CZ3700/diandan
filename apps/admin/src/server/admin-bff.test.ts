@@ -174,3 +174,56 @@ test("LOCAL_OIDC sessions use the same canonical authorization endpoint without 
     ).has("x-admin-access-key"),
   ).toBe(false);
 });
+test("exception discovery tolerates an absent capability and mismatched receipts fail closed", async () => {
+  const req = () =>
+    request("exceptions-context", {
+      method: "POST",
+      headers: {
+        origin: siteOrigin,
+        "content-type": "application/json",
+        "x-csrf-token": csrf,
+      },
+      body: JSON.stringify({ schemaVersion: 1 }),
+    });
+  const absent = await createAdminBff({
+    config,
+    fetch: async () => new Response("missing", { status: 404 }),
+  }).operation(req(), "exceptions-context");
+  expect(absent.status).toBe(404);
+  expect(await absent.json()).toMatchObject({ code: "NOT_FOUND" });
+  const id = "10000000-0000-4000-8000-000000000001",
+    other = "10000000-0000-4000-8000-000000000002";
+  const mismatch = await createAdminBff({
+    config,
+    fetch: async () =>
+      Response.json({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "MUTATION",
+        action: "REPLAY_WEBHOOK",
+        target: { kind: "WEBHOOK", id: other, consumerKey: null },
+        operationId: other,
+        replayed: false,
+      }),
+  }).operation(
+    request("exceptions-replay-webhook", {
+      method: "POST",
+      headers: {
+        origin: siteOrigin,
+        "content-type": "application/json",
+        "x-csrf-token": csrf,
+        "idempotency-key": id,
+      },
+      body: JSON.stringify({
+        schemaVersion: 1,
+        target: { kind: "WEBHOOK", id, consumerKey: null },
+        expectedVersion: "a".repeat(64),
+        reasonCode: "OPERATOR_REVIEW",
+        confirmed: true,
+      }),
+    }),
+    "exceptions-replay-webhook",
+  );
+  expect(mismatch.status).toBe(503);
+  expect(await mismatch.json()).toMatchObject({ code: "CONTENT_UNAVAILABLE" });
+});

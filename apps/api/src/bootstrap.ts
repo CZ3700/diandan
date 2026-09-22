@@ -73,6 +73,10 @@ import {
   type AdminContentRouteOptions,
 } from "./admin-content-route.js";
 import "reflect-metadata";
+import {
+  registerAdminExceptionsRoute,
+  type AdminExceptionsRouteDependencies,
+} from "./admin-exceptions-route.js";
 
 import type { NestApplicationOptions } from "@nestjs/common";
 import type { FastifyReply } from "fastify";
@@ -145,6 +149,8 @@ export type CreateApiApplicationOptions = Readonly<{
   adminOrdersRuntime?: ApiLifecycleResource;
   adminFinanceRoute?: AdminFinanceRouteDependencies;
   adminFinanceRuntime?: ApiLifecycleResource;
+  adminExceptionsRoute?: AdminExceptionsRouteDependencies;
+  adminExceptionsRuntime?: ApiLifecycleResource;
   adminPaymentConfigurationRoute?: AdminPaymentConfigurationRouteDependencies;
   adminPaymentConfigurationRuntime?: ApiLifecycleResource;
   adminAccessRoute?: AdminAccessRouteDependencies;
@@ -187,6 +193,7 @@ function registerApiLifecycle(
     | "API admin access"
     | "API admin orders"
     | "API admin finance"
+    | "API admin exceptions"
     | "API payment configuration"
     | "API admin session"
     | "API cart"
@@ -390,6 +397,16 @@ export async function createApiApplication(
   );
   if (options.adminFinanceRoute)
     registerAdminFinanceRoute(adapter.getInstance(), options.adminFinanceRoute);
+  registerApiLifecycle(
+    adapter,
+    options.adminExceptionsRuntime,
+    "API admin exceptions",
+  );
+  if (options.adminExceptionsRoute)
+    registerAdminExceptionsRoute(
+      adapter.getInstance(),
+      options.adminExceptionsRoute,
+    );
   registerApiLifecycle(
     adapter,
     options.adminPaymentConfigurationRuntime,

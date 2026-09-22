@@ -196,3 +196,7 @@ P5-03取消/全额部分退款/拒付/对账已完成全部本地实现、实际
 ## 2026-09-22 P5-05 本地验收后的接续
 
 P5-05配置管理、独立审核/继承、差异/二次确认/发布回退、健康策略和双独立进程传播已完成本地完整验收；正式商户能力、关键文案批准和实际配置保留，Task仍IN_PROGRESS、Lane C释放。P5-06原直接依赖P5-01/P1-06/P5-03经非作者核对，身份19/可靠事件31/财务79选中源与accepted一致；11个共享变化和0036由本轮真实PG/原财务HTTP/配置HTTP/七语双端及最终质量门承接，现READY、Lane D空闲，先登记再领取。29 DONE / 5 IN_PROGRESS / 1 READY / 14 PENDING=49，Phase6/7保持LOCKED。完整持久本地体验尚未交付，检查表见`docs/runbooks/local-experience-readiness.md`；不以短暂测试夹具代替用户可持续使用的体验环境。
+
+### 2026-09-22 P5-06 验收与 P5-07 本地就绪
+
+P5-06 原任务四类异常与安全重放已完成实际PG/HTTP/Worker/七语双端、质量门及非作者复核，标DONE、Lane D释放。原任务不要求新商户接入；正式PSP/人工/部署条件留在对应未完任务。P5-07原P5-04/05/06直接依赖的本地完整成果已逐源核对并独立验收，现READY、尚未领取，只做接入runbook与fake conformance/灰度演练；不实际增加多余渠道。证据见`output/checks/p5-06-exception-operations/next-stage-readiness.md`与最终验收。30 DONE /5 IN_PROGRESS /1 READY /13 PENDING=49，Phase6/7仍LOCKED；完整持久本地体验继续按独立检查表交付。

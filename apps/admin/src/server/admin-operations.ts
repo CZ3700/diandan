@@ -8,6 +8,7 @@ export type AdminOperation = Readonly<{
   readOnly: boolean;
   parseCommand(body: unknown, idempotencyKey?: string): unknown;
   parseResponse(input: unknown): unknown;
+  responseMatches?: (command: unknown, response: unknown) => boolean;
   apiBody(command: unknown): unknown;
 }>;
 const SMALL = 64 * 1024;
@@ -113,7 +114,52 @@ function commerceOperation(
     },
   });
 }
+function exceptionOperation(
+  action: contract.AdminExceptionsCommand["action"],
+  kind: string,
+  mutation = false,
+): AdminOperation {
+  return Object.freeze({
+    ...operation(
+      `/api/v1/admin/exceptions/${action.toLowerCase().replaceAll("_", "-")}`,
+      contract.adminExceptionsCommandSchema,
+      contract.adminExceptionsResponseSchema,
+      action,
+      kind,
+      mutation,
+    ),
+    responseMatches(command: unknown, response: unknown) {
+      return contract.adminExceptionsResponseMatches(
+        contract.adminExceptionsCommandSchema.parse(command),
+        response,
+      );
+    },
+  });
+}
 const entries = {
+  "exceptions-context": exceptionOperation("CONTEXT", "CONTEXT"),
+  "exceptions-list": exceptionOperation("LIST", "LIST"),
+  "exceptions-detail": exceptionOperation("DETAIL", "DETAIL"),
+  "exceptions-replay-webhook": exceptionOperation(
+    "REPLAY_WEBHOOK",
+    "MUTATION",
+    true,
+  ),
+  "exceptions-retry-dead-letter": exceptionOperation(
+    "RETRY_DEAD_LETTER",
+    "MUTATION",
+    true,
+  ),
+  "exceptions-reconcile-payment": exceptionOperation(
+    "RECONCILE_PAYMENT",
+    "MUTATION",
+    true,
+  ),
+  "exceptions-retry-notification": exceptionOperation(
+    "RETRY_NOTIFICATION",
+    "MUTATION",
+    true,
+  ),
   "payment-config-read": operation(
     "/api/v1/admin/payment-configuration/read",
     contract.adminPaymentConfigurationCommandSchema,
