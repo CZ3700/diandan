@@ -1,0 +1,36 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/domain
+
+ ❯ src/payment-configuration.test.ts (25 tests | 1 failed) 11ms
+   × does not publish an internal-only provider account in the LIVE environment 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/payment-configuration.test.ts > does not publish an internal-only provider account in the LIVE environment
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/payment-configuration.test.ts:296:111
+    294|   const input = baseline();
+    295|   input.accounts[0]!.environment = "LIVE";
+    296|   expect(api!.validatePaymentConfiguration(input).issues.some(issue =>…
+       |                                                                                                               ^
+    297|   input.accounts[0]!.accountStatus = "ACTIVE";
+    298|   expect(api!.validatePaymentConfiguration(input).valid).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 24 passed (25)
+   Start at  13:03:27
+   Duration  401ms (transform 230ms, setup 0ms, import 333ms, tests 11ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/packages/domain:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run src/payment-configuration.test.ts

@@ -132,6 +132,9 @@ importers:
       '@fan-support/observability':
         specifier: workspace:*
         version: link:../../packages/observability
+      '@fan-support/payment-gateway':
+        specifier: workspace:*
+        version: link:../../packages/payment-gateway
       '@fan-support/payment-port':
         specifier: workspace:*
         version: link:../../packages/payment-port

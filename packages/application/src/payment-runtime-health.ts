@@ -3,7 +3,6 @@ import {
   paymentHealthClaimProbeCommandSchema,
   paymentHealthCompleteProbeCommandSchema,
   paymentHealthObservationSchema,
-  paymentHealthPolicySchema,
   paymentHealthProbeLeaseSchema,
   paymentHealthProbeResultSchema,
   paymentHealthRecordResultSchema,
@@ -19,18 +18,22 @@ import {
   classifyPaymentHealthResponse,
   type PaymentHealthOutcome,
 } from "./payment-runtime-health-classification.js";
+import {
+  createHealthPolicyReader,
+  healthPolicyFingerprint,
+  healthPolicyIdentity as key,
+} from "./payment-runtime-health-policies.js";
 
 export type PaymentRuntimeHealthOptions = Readonly<{
   transactions: PaymentHealthTransactionManager;
   policies: readonly PaymentHealthPolicy[];
+  readPolicies?: () => readonly PaymentHealthPolicy[];
 }>;
 type Identity = Pick<PaymentHealthPolicy, "providerAccountId" | "environment">;
 type ObservedCommand = Extract<
   PaymentPortCommand,
   { operation: PaymentHealthOperation }
 >;
-const key = (value: Identity) =>
-  `${value.environment}/${value.providerAccountId.toLowerCase()}`;
 const thrownOutcome: PaymentHealthOutcome = {
   classification: "TECHNICAL_FAILURE",
   code: "UNEXPECTED_ADAPTER_FAILURE",
@@ -70,46 +73,61 @@ export function createPaymentRuntimeHealth(
   options: PaymentRuntimeHealthOptions,
   providers: () => readonly PaymentRuntimeProviderRegistration[],
 ) {
-  const policies = options.policies.map((value) =>
-    paymentHealthPolicySchema.parse(value),
+  const readPolicies = createHealthPolicyReader(
+    options.policies,
+    options.readPolicies,
   );
-  const byAccount = new Map(policies.map((policy) => [key(policy), policy]));
-  if (
-    policies.length === 0 ||
-    policies.length > 100 ||
-    byAccount.size !== policies.length
-  )
-    throw new TypeError("Invalid payment health policies");
   const initialized = new Map<string, Promise<boolean>>();
-  const readyAccounts = new Set<string>();
+  const readyAccounts = new Map<string, string>();
   let bootstrapCursor = 0;
   async function initialize(identity: Identity) {
     const identityKey = key(identity);
-    const policy = byAccount.get(identityKey);
+    let policy: PaymentHealthPolicy | undefined;
+    try {
+      policy = readPolicies().get(identityKey);
+    } catch {
+      return false;
+    }
     if (!policy) return false;
-    let pending = initialized.get(identityKey);
+    const selected = policy;
+    const fingerprint = healthPolicyFingerprint(selected);
+    let pending = initialized.get(fingerprint);
     if (!pending) {
       pending = (async () => {
         try {
           const snapshot = paymentHealthSnapshotSchema.parse(
             await options.transactions.runInPaymentHealthTransaction(
-              (repository) => repository.initialize(policy),
+              (repository) => repository.initialize(selected),
             ),
           );
           return (
             key(snapshot) === identityKey &&
-            snapshot.policyVersion === policy.version
+            snapshot.policyVersion === selected.version
           );
         } catch {
           return false;
         }
       })();
-      initialized.set(identityKey, pending);
+      initialized.set(fingerprint, pending);
     }
     const ready = await pending;
-    if (ready) readyAccounts.add(identityKey);
-    if (!ready && initialized.get(identityKey) === pending)
-      initialized.delete(identityKey);
+    try {
+      const latest = readPolicies().get(identityKey);
+      if (!latest || healthPolicyFingerprint(latest) !== fingerprint) {
+        initialized.delete(fingerprint);
+        return false;
+      }
+    } catch {
+      initialized.delete(fingerprint);
+      return false;
+    }
+    if (ready) {
+      const prior = readyAccounts.get(identityKey);
+      if (prior && prior !== fingerprint) initialized.delete(prior);
+      readyAccounts.set(identityKey, fingerprint);
+    }
+    if (!ready && initialized.get(fingerprint) === pending)
+      initialized.delete(fingerprint);
     return ready;
   }
   async function record(
@@ -159,8 +177,9 @@ export function createPaymentRuntimeHealth(
     return { response, healthAvailable };
   }
   async function probeNext() {
+    const byAccount = readPolicies();
     const registered = providers();
-    const candidates = policies.filter((policy) =>
+    const candidates = [...byAccount.values()].filter((policy) =>
       registered.some((entry) => key(entry.configuration) === key(policy)),
     );
     if (candidates.length > 0) {
@@ -169,7 +188,10 @@ export function createPaymentRuntimeHealth(
       bootstrapCursor = (bootstrapCursor + 1) % candidates.length;
     }
     const accounts: Identity[] = candidates
-      .filter((policy) => readyAccounts.has(key(policy)))
+      .filter(
+        (policy) =>
+          readyAccounts.get(key(policy)) === healthPolicyFingerprint(policy),
+      )
       .map(({ providerAccountId, environment }) => ({
         providerAccountId,
         environment,
@@ -201,10 +223,21 @@ export function createPaymentRuntimeHealth(
     );
     if (!provider || !accounts.some((account) => key(account) === key(lease)))
       throw new TypeError("Invalid payment health probe account");
+    const captured = byAccount.get(key(lease))!;
+    const current = readPolicies().get(key(lease));
+    if (
+      !current ||
+      healthPolicyFingerprint(current) !== healthPolicyFingerprint(captured)
+    )
+      return {
+        schemaVersion: 1 as const,
+        outcome: "SUCCESS" as const,
+        processed: false,
+      };
     const outcome = await probeOutcome(
       lease.context.command,
       () => provider.provider.getCapabilities(lease.context.command),
-      byAccount.get(key(lease))!.probeLeaseMs,
+      captured.probeLeaseMs,
     );
     paymentHealthProbeResultSchema.parse(
       await options.transactions.runInPaymentHealthTransaction((repository) =>

@@ -1,0 +1,137 @@
+Admin payment configuration: processing original fictional Mira Vale independent media
+Admin payment configuration: processing original fictional Kai Ren independent media
+Admin payment configuration: processing original fictional Rose Palace gift artwork
+Admin payment configuration: processing original fictional Blue Orbit gift artwork
+Admin payment configuration: processing original fictional Ruby Bouquet gift artwork
+Admin payment configuration: authoring real gift 1/27
+Admin payment configuration: authoring real gift 2/27
+Admin payment configuration: authoring real gift 3/27
+Admin payment configuration: authoring real gift 4/27
+Admin payment configuration: authoring real gift 5/27
+Admin payment configuration: authoring real gift 6/27
+Admin payment configuration: authoring real gift 7/27
+Admin payment configuration: authoring real gift 8/27
+Admin payment configuration: authoring real gift 9/27
+Admin payment configuration: authoring real gift 10/27
+Admin payment configuration: authoring real gift 11/27
+Admin payment configuration: authoring real gift 12/27
+Admin payment configuration: authoring real gift 13/27
+Admin payment configuration: authoring real gift 14/27
+Admin payment configuration: authoring real gift 15/27
+Admin payment configuration: authoring real gift 16/27
+Admin payment configuration: authoring real gift 17/27
+Admin payment configuration: authoring real gift 18/27
+Admin payment configuration: authoring real gift 19/27
+Admin payment configuration: authoring real gift 20/27
+Admin payment configuration: authoring real gift 21/27
+Admin payment configuration: authoring real gift 22/27
+Admin payment configuration: authoring real gift 23/27
+Admin payment configuration: authoring real gift 24/27
+Admin payment configuration: authoring real gift 25/27
+Admin payment configuration: authoring real gift 26/27
+Admin payment configuration: authoring real gift 27/27
+Admin payment configuration: reading actual PostgreSQL price activation time
+Admin payment configuration: creating complete TEST price book 1/2
+Admin payment configuration: publishing complete TEST price book 1/2
+Admin payment configuration: creating complete TEST price book 2/2
+Admin payment configuration: publishing complete TEST price book 2/2
+Admin payment configuration: creating actual inventory location
+Admin payment configuration: stock, review and publication for gift 1/26
+Admin payment configuration: stock, review and publication for gift 2/26
+Admin payment configuration: stock, review and publication for gift 3/26
+Admin payment configuration: stock, review and publication for gift 4/26
+Admin payment configuration: stock, review and publication for gift 5/26
+Admin payment configuration: stock, review and publication for gift 6/26
+Admin payment configuration: stock, review and publication for gift 7/26
+Admin payment configuration: stock, review and publication for gift 8/26
+Admin payment configuration: stock, review and publication for gift 9/26
+Admin payment configuration: stock, review and publication for gift 10/26
+Admin payment configuration: stock, review and publication for gift 11/26
+Admin payment configuration: stock, review and publication for gift 12/26
+Admin payment configuration: stock, review and publication for gift 13/26
+Admin payment configuration: stock, review and publication for gift 14/26
+Admin payment configuration: stock, review and publication for gift 15/26
+Admin payment configuration: stock, review and publication for gift 16/26
+Admin payment configuration: stock, review and publication for gift 17/26
+Admin payment configuration: stock, review and publication for gift 18/26
+Admin payment configuration: stock, review and publication for gift 19/26
+Admin payment configuration: stock, review and publication for gift 20/26
+Admin payment configuration: stock, review and publication for gift 21/26
+Admin payment configuration: stock, review and publication for gift 22/26
+Admin payment configuration: stock, review and publication for gift 23/26
+Admin payment configuration: stock, review and publication for gift 24/26
+Admin payment configuration: stock, review and publication for gift 25/26
+Admin payment configuration: stock, review and publication for gift 26/26
+Admin payment configuration: proving tracked availability is one location's maximum, never a sum
+Admin payment configuration: publishing actual TEST terms policy
+Admin payment configuration: publishing actual TEST privacy policy
+Admin payment configuration: publishing actual TEST refund policy
+Admin payment configuration: publishing actual TEST delivery policy
+Admin payment configuration: normal TEST webhook endpoint configuration
+Admin payment configuration: provision owned durable event queue before VERIFY runtimes
+Admin payment configuration: start actual signed webhook HTTP ingress
+Admin payment configuration: actual OIDC, deployed connectors and two independent API processes
+Admin payment configuration: versioned configuration HTTP publication and rollback
+Admin orders HTTP {"path":"read","status":200,"code":null}
+Admin orders HTTP {"path":"save","status":403,"code":"FORBIDDEN"}
+Admin orders HTTP {"path":"save","status":200,"code":null}
+Admin orders HTTP {"path":"validate","status":200,"code":null}
+Checkout HTTP {"ordinal":1,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":2,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":3,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":4,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Admin orders HTTP {"path":"read","status":200,"code":null}
+Admin orders HTTP {"path":"save","status":200,"code":null}
+Admin orders HTTP {"path":"validate","status":200,"code":null}
+Admin orders HTTP {"path":"submit","status":200,"code":null}
+Admin orders HTTP {"path":"approve","status":403,"code":"SELF_REVIEW"}
+Admin orders HTTP {"path":"approve","status":403,"code":"FORBIDDEN"}
+Admin orders HTTP {"path":"approve","status":200,"code":null}
+Admin orders HTTP {"path":"read","status":200,"code":null}
+Admin orders HTTP {"path":"submit","status":200,"code":null}
+Admin orders HTTP {"path":"approve","status":200,"code":null}
+Admin orders HTTP {"path":"submit","status":200,"code":null}
+Admin orders HTTP {"path":"approve","status":200,"code":null}
+Admin orders HTTP {"path":"submit","status":200,"code":null}
+Admin orders HTTP {"path":"approve","status":200,"code":null}
+Admin orders HTTP {"path":"submit","status":200,"code":null}
+Admin orders HTTP {"path":"approve","status":200,"code":null}
+Admin orders HTTP {"path":"submit","status":200,"code":null}
+Admin orders HTTP {"path":"approve","status":200,"code":null}
+Admin orders HTTP {"path":"submit","status":200,"code":null}
+Admin orders HTTP {"path":"approve","status":200,"code":null}
+Admin orders HTTP {"path":"read","status":200,"code":null}
+Admin orders HTTP {"path":"validate","status":200,"code":null}
+Admin orders HTTP {"path":"publish","status":409,"code":"VALIDATION_REQUIRED"}
+Admin orders HTTP {"path":"publish","status":200,"code":null}
+Checkout HTTP {"ordinal":5,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":6,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":7,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":8,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Checkout HTTP {"ordinal":9,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":10,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":11,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":12,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Finance PostgreSQL {"operation":"STATEMENT","code":null,"guard":null,"constraint":null}
+Configuration child PostgreSQL {"code":null,"guard":null,"constraint":null}
+Configuration child PostgreSQL {"code":null,"guard":null,"constraint":null}
+Finance PostgreSQL {"operation":"STATEMENT","code":null,"guard":null,"constraint":null}
+Configuration child PostgreSQL {"code":null,"guard":null,"constraint":null}
+Configuration child PostgreSQL {"code":null,"guard":null,"constraint":null}
+Admin orders HTTP {"path":"read","status":200,"code":null}
+Admin orders HTTP {"path":"save","status":200,"code":null}
+Admin orders HTTP {"path":"read","status":200,"code":null}
+Admin orders HTTP {"path":"read","status":200,"code":null}
+Admin orders HTTP {"path":"validate","status":200,"code":null}
+Admin orders HTTP {"path":"publish","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":409,"code":"CAPABILITY_UNAVAILABLE"}
+Admin payment configuration failure {"stage":"payment CAPABILITIES returns expected status","name":"AssertionError","code":"ERR_ASSERTION","frames":["/apps/api/scripts/admin-payment-config-http.mjs:48:12","/apps/api/scripts/payment-runtime-client.mjs:58:5","/apps/api/scripts/admin-payment-config-protocol.mjs:393:7","/apps/api/scripts/admin-payment-config-http.mjs:75:22","/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14","/apps/api/scripts/payment-runtime-runtime.mjs:29:12"]}
+FAIL admin payment configuration {"name":"Error","code":null,"frames":["/apps/api/scripts/admin-finance-native-postgres.mjs:216:15","/apps/api/scripts/admin-payment-config-http.mjs:156:7"]}
+FAIL admin payment configuration {"name":"Error","code":null,"frames":["/packages/media-s3/scripts/ephemeral-s3-harness.mjs:448:16"]}

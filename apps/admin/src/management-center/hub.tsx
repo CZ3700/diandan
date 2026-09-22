@@ -4,6 +4,8 @@ import type { SupportedLocale } from "@fan-support/contracts";
 import { Button } from "@fan-support/ui";
 import type { ManagementApi, ManagementSection } from "./api";
 import type { OrdersApi } from "../management-orders/api";
+import type { PaymentConfigurationApi } from "../management-payments/api";
+import { PaymentsWorkspace } from "../management-payments/workspace";
 import type { FinanceApi } from "../management-finance/api";
 import { OrdersWorkspace } from "../management-orders/workspace";
 import { ordersCopy } from "../management-orders/copy";
@@ -16,6 +18,7 @@ export function ManagementHub({
   api,
   ordersApi,
   financeApi,
+  paymentsApi,
   locale,
   storefrontOrigin,
   onLogout,
@@ -23,6 +26,7 @@ export function ManagementHub({
   api: ManagementApi;
   ordersApi: OrdersApi;
   financeApi?: FinanceApi | undefined;
+  paymentsApi?: PaymentConfigurationApi | undefined;
   locale: SupportedLocale;
   storefrontOrigin?: string | undefined;
   onLogout?: (() => Promise<void>) | undefined;
@@ -31,23 +35,48 @@ export function ManagementHub({
     typeof resolveManagementAccess
   > | null>(null);
   const [attempt, setAttempt] = useState(0),
-    [section, setSection] = useState<ManagementSection | "ORDERS" | null>(null),
+    [section, setSection] = useState<
+      ManagementSection | "ORDERS" | "PAYMENTS" | null
+    >(null),
     [busy, setBusy] = useState(false);
   const copy = ordersCopy(locale),
     common = managementCopy(locale);
   useEffect(() => {
     let canceled = false;
     setAccess(null);
-    void Promise.allSettled([api.context(), ordersApi.context()]).then(
-      ([content, orders]) => {
-        if (!canceled) setAccess(resolveManagementAccess(content, orders));
-      },
-    );
+    void Promise.allSettled([
+      api.context(),
+      ordersApi.context(),
+      paymentsApi?.read() ?? Promise.resolve(null),
+    ] as const).then(([content, orders, payments]) => {
+      if (!canceled)
+        setAccess(
+          resolveManagementAccess(
+            content,
+            orders,
+            payments.status === "rejected"
+              ? payments
+              : payments.value
+                ? { status: "fulfilled", value: payments.value }
+                : undefined,
+          ),
+        );
+    });
     return () => {
       canceled = true;
     };
-  }, [api, ordersApi, attempt]);
-  const active = section ?? (access?.contentAllowed ? "ARTISTS" : "ORDERS");
+  }, [api, ordersApi, paymentsApi, attempt]);
+  const active =
+    section ??
+    (access?.contentAllowed
+      ? "ARTISTS"
+      : access?.payments
+        ? "PAYMENTS"
+        : "ORDERS");
+  function chooseSection(next: ManagementSection | "ORDERS" | "PAYMENTS") {
+    setSection(next);
+    if (next === "PAYMENTS") setAttempt((value) => value + 1);
+  }
   const retry = (
     <Button
       type="button"
@@ -65,7 +94,7 @@ export function ManagementHub({
       {retry}
     </div>
   ) : null;
-  if (access?.contentAllowed && active !== "ORDERS")
+  if (access?.contentAllowed && active !== "ORDERS" && active !== "PAYMENTS")
     return (
       <ManagementWorkspace
         api={api}
@@ -74,6 +103,9 @@ export function ManagementHub({
         onLogout={onLogout}
         initialSection={active}
         onOrders={access.orders ? () => setSection("ORDERS") : undefined}
+        onPayments={
+          access.payments ? () => chooseSection("PAYMENTS") : undefined
+        }
         accessNotice={notice}
       />
     );
@@ -83,8 +115,9 @@ export function ManagementHub({
       section={active}
       contentAllowed={access?.contentAllowed ?? false}
       ordersAvailable={Boolean(access?.orders)}
+      paymentsAvailable={Boolean(access?.payments)}
       disabled={busy || !access}
-      onSection={setSection}
+      onSection={chooseSection}
       accountAction={
         onLogout ? (
           <ManagementLogout
@@ -96,7 +129,14 @@ export function ManagementHub({
       }
     >
       {notice}
-      {access?.orders ? (
+      {active === "PAYMENTS" && access?.payments && paymentsApi ? (
+        <PaymentsWorkspace
+          api={paymentsApi}
+          initial={access.payments}
+          locale={locale}
+          onBusy={setBusy}
+        />
+      ) : access?.orders ? (
         <OrdersWorkspace
           api={ordersApi}
           financeApi={financeApi}

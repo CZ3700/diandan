@@ -1,0 +1,59 @@
+$ vitest run --config ../../vitest.config.ts --root . src/admin-payment-configuration-route.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/api
+
+ ❯ src/admin-payment-configuration-route.test.ts (6 tests | 6 failed) 44ms
+   × save binds explicit idempotency and server authority 41ms
+   × submit binds explicit idempotency and server authority 1ms
+   × approve binds explicit idempotency and server authority 0ms
+   × publish binds explicit idempotency and server authority 0ms
+   × rollback binds explicit idempotency and server authority 0ms
+   × read and validate preserve private origin and authenticated CSRF boundaries 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/admin-payment-configuration-route.test.ts > save binds explicit idempotency and server authority
+ FAIL  src/admin-payment-configuration-route.test.ts > submit binds explicit idempotency and server authority
+ FAIL  src/admin-payment-configuration-route.test.ts > approve binds explicit idempotency and server authority
+ FAIL  src/admin-payment-configuration-route.test.ts > publish binds explicit idempotency and server authority
+ FAIL  src/admin-payment-configuration-route.test.ts > rollback binds explicit idempotency and server authority
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/admin-payment-configuration-route.test.ts:15:58
+     13|   const app = Fastify({ logger: false });
+     14|   const execute = vi.fn(async () => ({ schemaVersion: 1, outcome: "SUC…
+     15|   expect(module?.registerAdminPaymentConfigurationRoute).toBeTypeOf("f…
+       |                                                          ^
+     16|   module!.registerAdminPaymentConfigurationRoute(app, { allowedOrigin:…
+     17|   try {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/admin-payment-configuration-route.test.ts > read and validate preserve private origin and authenticated CSRF boundaries
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/admin-payment-configuration-route.test.ts:34:58
+     32| test("read and validate preserve private origin and authenticated CSRF…
+     33|   const app = Fastify({ logger: false }), execute = vi.fn(async () => …
+     34|   expect(module?.registerAdminPaymentConfigurationRoute).toBeTypeOf("f…
+       |                                                          ^
+     35|   module!.registerAdminPaymentConfigurationRoute(app, { allowedOrigin:…
+     36|   try {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed (6)
+   Start at  12:39:55
+   Duration  170ms (transform 15ms, setup 0ms, import 70ms, tests 44ms, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/api:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/api@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/admin-payment-configuration-route.test.ts`
+Exit status 1

@@ -1,3 +1,4 @@
+export type * from "./admin-payment-configuration.js";
 import type { AdminFinanceRepository } from "./admin-finance.js";
 export * from "./translation-workspace.js";
 export * from "./translation-transfer.js";

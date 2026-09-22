@@ -1,0 +1,101 @@
+$ vitest run --config ../../vitest.config.ts --root . src/management-payments/api.test.ts src/management-payments/pending-store.test.ts src/management-payments/model.test.ts src/server/admin-payment-configuration-operations.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
+
+ ❯ src/management-payments/model.test.ts (1 test | 1 failed) 3ms
+   × percentage parsing is exact and bounded without silently rounding 2ms
+ ❯ src/management-payments/pending-store.test.ts (1 test | 1 failed) 3ms
+   × configuration mutation recovery survives remount and stays isolated by authenticated actor 3ms
+ ❯ src/server/admin-payment-configuration-operations.test.ts (1 test | 1 failed) 2ms
+   × configuration publication uses a fixed route and requires head, validation, confirmation and a header key 2ms
+ ❯ src/management-payments/api.test.ts (2 tests | 2 failed) 3ms
+   × configuration client binds validation to revision, head and mode 2ms
+   × publication retry preserves caller key and rejects a mismatched receipt 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/server/admin-payment-configuration-operations.test.ts > configuration publication uses a fixed route and requires head, validation, confirmation and a header key
+AssertionError: expected undefined to be defined
+ ❯ src/server/admin-payment-configuration-operations.test.ts:6:14
+      4| test("configuration publication uses a fixed route and requires head, …
+      5|   const op = getAdminOperation("payment-config-publish");
+      6|   expect(op).toBeDefined();
+       |              ^
+      7|   const body = {schemaVersion:1, revisionId:id,expectedPublicationId:n…
+      8|   expect(op!.path).toBe("/api/v1/admin/payment-configuration/publish");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/management-payments/api.test.ts > configuration client binds validation to revision, head and mode
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-payments/api.test.ts:6:49
+      4| const id = "10000000-0000-4000-8000-000000000001";
+      5| test("configuration client binds validation to revision, head and mode…
+      6|   expect(module?.createPaymentConfigurationApi).toBeTypeOf("function");
+       |                                                 ^
+      7|   const client = createAdminClient(() => "csrf", () => {}, async () =>…
+      8|     schemaVersion: 1, outcome: "SUCCESS", kind: "VALIDATION", revision…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/management-payments/api.test.ts > publication retry preserves caller key and rejects a mismatched receipt
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-payments/api.test.ts:16:49
+     14| });
+     15| test("publication retry preserves caller key and rejects a mismatched …
+     16|   expect(module?.createPaymentConfigurationApi).toBeTypeOf("function");
+       |                                                 ^
+     17|   const requests: RequestInit[] = [];
+     18|   const client = createAdminClient(() => "csrf", () => {}, (async (_ur…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/management-payments/model.test.ts > percentage parsing is exact and bounded without silently rounding
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-payments/model.test.ts:4:35
+      2| const module = await import("./model").catch(() => undefined);
+      3| test("percentage parsing is exact and bounded without silently roundin…
+      4|   expect(module?.parsePercentage).toBeTypeOf("function");
+       |                                   ^
+      5|   expect(module!.parsePercentage("0.01")).toBe(1);
+      6|   expect(module!.parsePercentage("100")).toBe(10000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/management-payments/pending-store.test.ts > configuration mutation recovery survives remount and stays isolated by authenticated actor
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-payments/pending-store.test.ts:5:45
+      3| const id = "10000000-0000-4000-8000-000000000001";
+      4| test("configuration mutation recovery survives remount and stays isola…
+      5|   expect(module?.createPaymentPendingStore).toBeTypeOf("function");
+       |                                             ^
+      6|   const map = new Map<string,string>();
+      7|   const storage = {getItem: (key: string) => map.get(key) ?? null, set…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  4 failed (4)
+      Tests  5 failed (5)
+   Start at  12:34:49
+   Duration  413ms (transform 480ms, setup 0ms, import 733ms, tests 11ms, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/admin:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/admin@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/management-payments/api.test.ts src/management-payments/pending-store.test.ts src/management-payments/model.test.ts src/server/admin-payment-configuration-operations.test.ts`
+Exit status 1

@@ -1,3 +1,4 @@
+export { createAdminPaymentConfigurationRepository } from "./admin-payment-configuration-repository.js";
 export { createAdminFinanceRepository } from "./admin-finance-repository.js";
 export { createPaymentHealthRepository } from "./payment-health-repository.js";
 export { createAdminOrdersRepository } from "./admin-orders-repository.js";

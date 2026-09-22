@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "task": "P5-05",
+  "baseline": "fb89c3a4029083b6c6495dd8c581c1b2e4db88aa",
+  "localAcceptance": "PASS",
+  "taskStatus": "IN_PROGRESS_EXTERNAL_CONDITIONS_RETAINED",
+  "checkDev": {
+    "exitCode": 0,
+    "log": "check-dev-final.log",
+    "typecheck": {
+      "passed": 64,
+      "cached": 62
+    },
+    "test": {
+      "passed": 64,
+      "cached": 62
+    },
+    "build": {
+      "passed": 36,
+      "cached": 34
+    },
+    "format": "PASS",
+    "lint": "PASS"
+  },
+  "contracts": {
+    "exitCode": 0,
+    "files": 89,
+    "tests": 510,
+    "artifactCheck": "PASS"
+  },
+  "storage": {
+    "exitCode": 0,
+    "checks": 151,
+    "postgres": "18.6",
+    "migrations": 36,
+    "tables": 198
+  },
+  "legacyFinance": {
+    "exitCode": 0,
+    "checks": 6164,
+    "setup": 5763,
+    "scenario": 401,
+    "protocol": 399
+  },
+  "rollbackPrefix": {
+    "exitCode": 0,
+    "tests": 47
+  },
+  "httpAndBrowser": {
+    "exitCode": 0,
+    "run": "output/checks/p5-05-payment-configuration/integration-2026-09-22T06-40-07.476Z",
+    "total": 6660,
+    "setup": 5763,
+    "scenario": 897,
+    "protocol": 313,
+    "browserAssertions": 466,
+    "browserCases": 8,
+    "screenshots": 65,
+    "axe": 65,
+    "violations": 0,
+    "incomplete": 0,
+    "pageErrors": 0,
+    "testPollMs": 1000,
+    "defaultPollMs": 10000,
+    "propagationMs": [
+      876.5941659999953,
+      924.4261659999975,
+      928.6374999999971
+    ]
+  },
+  "adapterBoundaries": {
+    "exitCode": 0
+  },
+  "buildArtifacts": {
+    "exitCode": 0,
+    "packageExports": 32
+  },
+  "frozenInstall": {
+    "exitCode": 0
+  },
+  "secretScan": {
+    "status": "PASS",
+    "exitCode": 0,
+    "log": "secrets-final.log"
+  },
+  "diffCheck": {
+    "status": "PASS",
+    "exitCode": 0,
+    "scope": "working tree and staged diff"
+  },
+  "protection": {
+    "capturedAt": "2026-09-22T06:43:55.939777+00:00",
+    "baseline": "fb89c3a4029083b6c6495dd8c581c1b2e4db88aa",
+    "protectedUntracked": 5958,
+    "changedUntracked": [],
+    "oldSqlCount": 70,
+    "changedOldSql": [],
+    "oldManifestEntries": 35,
+    "oldManifestPrefixUnchanged": true,
+    "currentMigrations": 36,
+    "contracts": {
+      "packages/contracts/generated/contracts.schema.json": {
+        "previous": 679,
+        "current": 690,
+        "changedPrevious": []
+      },
+      "packages/contracts/generated/openapi.json": {
+        "previous": 113,
+        "current": 120,
+        "changedPrevious": []
+      }
+    },
+    "sourceFiles": 2530,
+    "sourceDeltaSinceFinalGate": [],
+    "finalSourceManifestSha256": "3c48d45f95541512ad64ca5d9f1f0c2ec3cdbbf4f1fcea7968b276c93bf54233"
+  },
+  "independentReviews": [
+    "storage-review.md",
+    "runtime-independent-persistence-review.md",
+    "ui-independent-review.md",
+    "ui-verification.md",
+    "next-stage-readiness.md"
+  ],
+  "notRun": [
+    "Full pnpm check aggregate",
+    "All historical standalone PG/S3/queue runners",
+    "Commercial merchant sandbox",
+    "Real money",
+    "Physical device",
+    "Human translation approval",
+    "Production-like staging",
+    "Production release"
+  ],
+  "localPersistentExperienceReady": false,
+  "nextTask": "P5-06",
+  "gitPush": false,
+  "completedAt": "2026-09-22T06:51:50.371002+00:00",
+  "superChecks": {
+    "passed": 10,
+    "total": 10
+  },
+  "nextTaskStatus": "READY"
+}

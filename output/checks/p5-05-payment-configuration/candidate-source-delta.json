@@ -1,0 +1,25 @@
+{
+  "capturedAt": "2026-09-22T06:40:15.454504+00:00",
+  "changed": [
+    {
+      "path": "apps/admin/src/management-center/management-center.css",
+      "before": "bc959f6b0eb2f9b8442d769d5ebf2bd1137850008603eb5e6f6c6e3359a205cf",
+      "after": "f6a197533e39cc453ba858c24cc695d3b2bf55a945745e5aa743b5ccd1fc2c69"
+    },
+    {
+      "path": "apps/api/scripts/admin-payment-config-browser.mjs",
+      "before": "ca75e178b70bbde92d9b1c6ad13a6d200be20b32fe83f6c73369fee97d5b83ea",
+      "after": "d35f6e85f5171284f3b09b1a82357ebf0b6535fa884182a3a9e6d11b13f2926d"
+    },
+    {
+      "path": "apps/api/scripts/admin-payment-config-protocol.mjs",
+      "before": "d1c3955a60c9bd6af4af8ebc81fda34ae93a9a6b12dcb5abe4343a56ec7b8711",
+      "after": "81276d4d4831a28f24692cd35641830531b38133a62a10c6cfb3ddd4db0e605f"
+    },
+    {
+      "path": "apps/api/src/payment-runtime-composition.test.ts",
+      "before": "903cfd0d9fffd2e24a70bc47725199a5b0bcb3a053b49f4f7a4650c5aa907338",
+      "after": "c6a66896d02e418c30232c8ebe29103d595e36c976c295b56f4135fd10b45c07"
+    }
+  ]
+}

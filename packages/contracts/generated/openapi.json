@@ -9405,6 +9405,2444 @@
         ],
         "x-fan-support-audience": "admin-http"
       },
+      "AdminPaymentConfigurationCommand": {
+        "oneOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "READ",
+                "type": "string"
+              },
+              "revisionId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "revisionId"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "SAVE",
+                "type": "string"
+              },
+              "configuration": {
+                "additionalProperties": false,
+                "properties": {
+                  "channels": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "displayOrder": {
+                          "maximum": 2147483647,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "healthPolicy": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "failureThreshold": {
+                              "maximum": 100,
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            "failureWindowMs": {
+                              "maximum": 3600000,
+                              "minimum": 1000,
+                              "type": "integer"
+                            },
+                            "openDurationMs": {
+                              "maximum": 86400000,
+                              "minimum": 1000,
+                              "type": "integer"
+                            },
+                            "probeLeaseMs": {
+                              "maximum": 120000,
+                              "minimum": 1000,
+                              "type": "integer"
+                            },
+                            "probeRetryMs": {
+                              "maximum": 86400000,
+                              "minimum": 1000,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "failureThreshold",
+                            "failureWindowMs",
+                            "openDurationMs",
+                            "probeLeaseMs",
+                            "probeRetryMs"
+                          ],
+                          "type": "object"
+                        },
+                        "providerAccountId": {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        "rolloutBasisPoints": {
+                          "maximum": 10000,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "translations": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "customerHint": {
+                                "maxLength": 280,
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "displayName": {
+                                "maxLength": 80,
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "locale": {
+                                "enum": [
+                                  "en",
+                                  "zh-CN",
+                                  "th",
+                                  "vi",
+                                  "ja",
+                                  "es",
+                                  "pt"
+                                ],
+                                "type": "string"
+                              },
+                              "translatedFromSourceHash": {
+                                "anyOf": [
+                                  {
+                                    "pattern": "^[a-f0-9]{64}$",
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "locale",
+                              "displayName",
+                              "customerHint",
+                              "translatedFromSourceHash"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 7,
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "providerAccountId",
+                        "enabled",
+                        "displayOrder",
+                        "rolloutBasisPoints",
+                        "healthPolicy",
+                        "translations"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 100,
+                    "type": "array"
+                  },
+                  "routes": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "countries": {
+                          "items": {
+                            "pattern": "^[A-Z]{2}$",
+                            "type": "string"
+                          },
+                          "maxItems": 250,
+                          "type": "array"
+                        },
+                        "currencies": {
+                          "items": {
+                            "pattern": "^[A-Z]{3}$",
+                            "type": "string"
+                          },
+                          "maxItems": 100,
+                          "type": "array"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "markets": {
+                          "items": {
+                            "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                            "type": "string"
+                          },
+                          "maxItems": 100,
+                          "type": "array"
+                        },
+                        "maximumAmountMinor": {
+                          "maximum": 9007199254740991,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "minimumAmountMinor": {
+                          "maximum": 9007199254740991,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "paymentMethod": {
+                          "maxLength": 64,
+                          "minLength": 1,
+                          "pattern": "^[a-z0-9][a-z0-9_-]*$",
+                          "type": "string"
+                        },
+                        "priority": {
+                          "maximum": 2147483647,
+                          "minimum": -2147483648,
+                          "type": "integer"
+                        },
+                        "providerAccountId": {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        "requiredDeviceCapabilities": {
+                          "items": {
+                            "enum": [
+                              "REDIRECT",
+                              "PROVIDER_HOSTED_IFRAME",
+                              "PROVIDER_COMPONENT",
+                              "QR_CODE"
+                            ],
+                            "type": "string"
+                          },
+                          "maxItems": 4,
+                          "type": "array"
+                        },
+                        "rolloutBasisPoints": {
+                          "maximum": 10000,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "ruleKey": {
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "ruleKey",
+                        "providerAccountId",
+                        "paymentMethod",
+                        "enabled",
+                        "countries",
+                        "markets",
+                        "currencies",
+                        "minimumAmountMinor",
+                        "maximumAmountMinor",
+                        "requiredDeviceCapabilities",
+                        "priority",
+                        "rolloutBasisPoints"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 200,
+                    "type": "array"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "channels",
+                  "routes"
+                ],
+                "type": "object"
+              },
+              "expectedPublicationId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "sourceRevisionId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "sourceRevisionId",
+              "expectedPublicationId",
+              "idempotencyKey",
+              "configuration"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "SUBMIT",
+                "type": "string"
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "locale": {
+                "enum": [
+                  "en",
+                  "zh-CN",
+                  "th",
+                  "vi",
+                  "ja",
+                  "es",
+                  "pt"
+                ],
+                "type": "string"
+              },
+              "providerAccountId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "revisionId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "revisionId",
+              "providerAccountId",
+              "locale",
+              "idempotencyKey"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "APPROVE",
+                "type": "string"
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "locale": {
+                "enum": [
+                  "en",
+                  "zh-CN",
+                  "th",
+                  "vi",
+                  "ja",
+                  "es",
+                  "pt"
+                ],
+                "type": "string"
+              },
+              "providerAccountId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "revisionId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "revisionId",
+              "providerAccountId",
+              "locale",
+              "idempotencyKey"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "VALIDATE",
+                "type": "string"
+              },
+              "expectedPublicationId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "mode": {
+                "enum": [
+                  "PUBLISH",
+                  "ROLLBACK"
+                ],
+                "type": "string"
+              },
+              "revisionId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "revisionId",
+              "expectedPublicationId",
+              "mode"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "PUBLISH",
+                "type": "string"
+              },
+              "confirmed": {
+                "const": true,
+                "type": "boolean"
+              },
+              "expectedPublicationId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "reasonCode": {
+                "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                "type": "string"
+              },
+              "revisionId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "validationHash": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "revisionId",
+              "expectedPublicationId",
+              "idempotencyKey",
+              "validationHash",
+              "reasonCode",
+              "confirmed"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "ROLLBACK",
+                "type": "string"
+              },
+              "confirmed": {
+                "const": true,
+                "type": "boolean"
+              },
+              "expectedPublicationId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "reasonCode": {
+                "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                "type": "string"
+              },
+              "revisionId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "validationHash": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "revisionId",
+              "expectedPublicationId",
+              "idempotencyKey",
+              "validationHash",
+              "reasonCode",
+              "confirmed"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminPaymentConfigurationFailure": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "enum": [
+              "INVALID_COMMAND",
+              "UNAUTHENTICATED",
+              "CSRF_INVALID",
+              "FORBIDDEN",
+              "NOT_FOUND",
+              "STALE_VERSION",
+              "IDEMPOTENCY_CONFLICT",
+              "CONFLICT",
+              "SELF_REVIEW",
+              "TRANSLATION_STALE",
+              "VALIDATION_REQUIRED",
+              "VALIDATION_FAILED",
+              "ADAPTER_UNAVAILABLE",
+              "RATE_LIMITED",
+              "TEMPORARY_UNAVAILABLE"
+            ],
+            "type": "string"
+          },
+          "outcome": {
+            "const": "FAILURE",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "outcome",
+          "code"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminPaymentConfigurationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "command": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "READ",
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "revisionId"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "SAVE",
+                    "type": "string"
+                  },
+                  "configuration": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "channels": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "displayOrder": {
+                              "maximum": 2147483647,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "healthPolicy": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "failureThreshold": {
+                                  "maximum": 100,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                },
+                                "failureWindowMs": {
+                                  "maximum": 3600000,
+                                  "minimum": 1000,
+                                  "type": "integer"
+                                },
+                                "openDurationMs": {
+                                  "maximum": 86400000,
+                                  "minimum": 1000,
+                                  "type": "integer"
+                                },
+                                "probeLeaseMs": {
+                                  "maximum": 120000,
+                                  "minimum": 1000,
+                                  "type": "integer"
+                                },
+                                "probeRetryMs": {
+                                  "maximum": 86400000,
+                                  "minimum": 1000,
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "failureThreshold",
+                                "failureWindowMs",
+                                "openDurationMs",
+                                "probeLeaseMs",
+                                "probeRetryMs"
+                              ],
+                              "type": "object"
+                            },
+                            "providerAccountId": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "rolloutBasisPoints": {
+                              "maximum": 10000,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "translations": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "customerHint": {
+                                    "maxLength": 280,
+                                    "minLength": 1,
+                                    "type": "string"
+                                  },
+                                  "displayName": {
+                                    "maxLength": 80,
+                                    "minLength": 1,
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "enum": [
+                                      "en",
+                                      "zh-CN",
+                                      "th",
+                                      "vi",
+                                      "ja",
+                                      "es",
+                                      "pt"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "translatedFromSourceHash": {
+                                    "anyOf": [
+                                      {
+                                        "pattern": "^[a-f0-9]{64}$",
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "locale",
+                                  "displayName",
+                                  "customerHint",
+                                  "translatedFromSourceHash"
+                                ],
+                                "type": "object"
+                              },
+                              "maxItems": 7,
+                              "type": "array"
+                            }
+                          },
+                          "required": [
+                            "providerAccountId",
+                            "enabled",
+                            "displayOrder",
+                            "rolloutBasisPoints",
+                            "healthPolicy",
+                            "translations"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 100,
+                        "type": "array"
+                      },
+                      "routes": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "countries": {
+                              "items": {
+                                "pattern": "^[A-Z]{2}$",
+                                "type": "string"
+                              },
+                              "maxItems": 250,
+                              "type": "array"
+                            },
+                            "currencies": {
+                              "items": {
+                                "pattern": "^[A-Z]{3}$",
+                                "type": "string"
+                              },
+                              "maxItems": 100,
+                              "type": "array"
+                            },
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "markets": {
+                              "items": {
+                                "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                                "type": "string"
+                              },
+                              "maxItems": 100,
+                              "type": "array"
+                            },
+                            "maximumAmountMinor": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "minimumAmountMinor": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "paymentMethod": {
+                              "maxLength": 64,
+                              "minLength": 1,
+                              "pattern": "^[a-z0-9][a-z0-9_-]*$",
+                              "type": "string"
+                            },
+                            "priority": {
+                              "maximum": 2147483647,
+                              "minimum": -2147483648,
+                              "type": "integer"
+                            },
+                            "providerAccountId": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "requiredDeviceCapabilities": {
+                              "items": {
+                                "enum": [
+                                  "REDIRECT",
+                                  "PROVIDER_HOSTED_IFRAME",
+                                  "PROVIDER_COMPONENT",
+                                  "QR_CODE"
+                                ],
+                                "type": "string"
+                              },
+                              "maxItems": 4,
+                              "type": "array"
+                            },
+                            "rolloutBasisPoints": {
+                              "maximum": 10000,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "ruleKey": {
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "ruleKey",
+                            "providerAccountId",
+                            "paymentMethod",
+                            "enabled",
+                            "countries",
+                            "markets",
+                            "currencies",
+                            "minimumAmountMinor",
+                            "maximumAmountMinor",
+                            "requiredDeviceCapabilities",
+                            "priority",
+                            "rolloutBasisPoints"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 200,
+                        "type": "array"
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "channels",
+                      "routes"
+                    ],
+                    "type": "object"
+                  },
+                  "expectedPublicationId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "sourceRevisionId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "sourceRevisionId",
+                  "expectedPublicationId",
+                  "idempotencyKey",
+                  "configuration"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "SUBMIT",
+                    "type": "string"
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "locale": {
+                    "enum": [
+                      "en",
+                      "zh-CN",
+                      "th",
+                      "vi",
+                      "ja",
+                      "es",
+                      "pt"
+                    ],
+                    "type": "string"
+                  },
+                  "providerAccountId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "revisionId",
+                  "providerAccountId",
+                  "locale",
+                  "idempotencyKey"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "APPROVE",
+                    "type": "string"
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "locale": {
+                    "enum": [
+                      "en",
+                      "zh-CN",
+                      "th",
+                      "vi",
+                      "ja",
+                      "es",
+                      "pt"
+                    ],
+                    "type": "string"
+                  },
+                  "providerAccountId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "revisionId",
+                  "providerAccountId",
+                  "locale",
+                  "idempotencyKey"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "VALIDATE",
+                    "type": "string"
+                  },
+                  "expectedPublicationId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "mode": {
+                    "enum": [
+                      "PUBLISH",
+                      "ROLLBACK"
+                    ],
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "revisionId",
+                  "expectedPublicationId",
+                  "mode"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "PUBLISH",
+                    "type": "string"
+                  },
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedPublicationId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "validationHash": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "revisionId",
+                  "expectedPublicationId",
+                  "idempotencyKey",
+                  "validationHash",
+                  "reasonCode",
+                  "confirmed"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "ROLLBACK",
+                    "type": "string"
+                  },
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedPublicationId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "validationHash": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "revisionId",
+                  "expectedPublicationId",
+                  "idempotencyKey",
+                  "validationHash",
+                  "reasonCode",
+                  "confirmed"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "csrfToken": {
+            "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+            "type": "string"
+          },
+          "requestId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "sessionToken": {
+            "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "sessionToken",
+          "csrfToken",
+          "command"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminPaymentConfigurationResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "INVALID_COMMAND",
+                  "UNAUTHENTICATED",
+                  "CSRF_INVALID",
+                  "FORBIDDEN",
+                  "NOT_FOUND",
+                  "STALE_VERSION",
+                  "IDEMPOTENCY_CONFLICT",
+                  "CONFLICT",
+                  "SELF_REVIEW",
+                  "TRANSLATION_STALE",
+                  "VALIDATION_REQUIRED",
+                  "VALIDATION_FAILED",
+                  "ADAPTER_UNAVAILABLE",
+                  "RATE_LIMITED",
+                  "TEMPORARY_UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accounts": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "accountStatus": {
+                      "enum": [
+                        "DISABLED",
+                        "INTERNAL",
+                        "ACTIVE",
+                        "SUSPENDED",
+                        "ARCHIVED"
+                      ],
+                      "type": "string"
+                    },
+                    "adapterKey": {
+                      "pattern": "^[a-z][a-z0-9_-]{1,63}$",
+                      "type": "string"
+                    },
+                    "adapterVersion": {
+                      "maxLength": 64,
+                      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+                      "type": "string"
+                    },
+                    "deployed": {
+                      "type": "boolean"
+                    },
+                    "displayLabel": {
+                      "maxLength": 160,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "environment": {
+                      "enum": [
+                        "TEST",
+                        "LIVE"
+                      ],
+                      "type": "string"
+                    },
+                    "healthPolicy": {
+                      "anyOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "failureThreshold": {
+                              "maximum": 100,
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            "failureWindowMs": {
+                              "maximum": 3600000,
+                              "minimum": 1000,
+                              "type": "integer"
+                            },
+                            "openDurationMs": {
+                              "maximum": 86400000,
+                              "minimum": 1000,
+                              "type": "integer"
+                            },
+                            "probeLeaseMs": {
+                              "maximum": 120000,
+                              "minimum": 1000,
+                              "type": "integer"
+                            },
+                            "probeRetryMs": {
+                              "maximum": 86400000,
+                              "minimum": 1000,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "failureThreshold",
+                            "failureWindowMs",
+                            "openDurationMs",
+                            "probeLeaseMs",
+                            "probeRetryMs"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "healthStatus": {
+                      "enum": [
+                        "HEALTHY",
+                        "UNAVAILABLE"
+                      ],
+                      "type": "string"
+                    },
+                    "merchantStatus": {
+                      "enum": [
+                        "ACTIVE",
+                        "SUSPENDED",
+                        "ARCHIVED"
+                      ],
+                      "type": "string"
+                    },
+                    "paymentMethods": {
+                      "items": {
+                        "maxLength": 64,
+                        "minLength": 1,
+                        "pattern": "^[a-z0-9][a-z0-9_-]*$",
+                        "type": "string"
+                      },
+                      "maxItems": 50,
+                      "type": "array"
+                    },
+                    "providerAccountId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "healthPolicy",
+                    "providerAccountId",
+                    "environment",
+                    "displayLabel",
+                    "adapterKey",
+                    "adapterVersion",
+                    "paymentMethods",
+                    "deployed",
+                    "accountStatus",
+                    "merchantStatus",
+                    "healthStatus"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "type": "array"
+              },
+              "actorId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "canEdit": {
+                "type": "boolean"
+              },
+              "canPublish": {
+                "type": "boolean"
+              },
+              "currentPublicationId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "currentRevisionId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "generation": {
+                "maximum": 2147483647,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "history": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "createdAt": {
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                      "type": "string"
+                    },
+                    "lifecycle": {
+                      "enum": [
+                        "DRAFT",
+                        "VALIDATED",
+                        "PUBLISHED",
+                        "SUPERSEDED",
+                        "ARCHIVED"
+                      ],
+                      "type": "string"
+                    },
+                    "revisionId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "version": {
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991,
+                      "type": "integer"
+                    },
+                    "wasPublished": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "revisionId",
+                    "version",
+                    "lifecycle",
+                    "createdAt",
+                    "wasPublished"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "type": "array"
+              },
+              "kind": {
+                "const": "WORKSPACE",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "reviewLocales": {
+                "items": {
+                  "enum": [
+                    "en",
+                    "zh-CN",
+                    "th",
+                    "vi",
+                    "ja",
+                    "es",
+                    "pt"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 7,
+                "type": "array"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "selected": {
+                "anyOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "configuration": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "channels": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "displayOrder": {
+                                  "maximum": 2147483647,
+                                  "minimum": 0,
+                                  "type": "integer"
+                                },
+                                "enabled": {
+                                  "type": "boolean"
+                                },
+                                "healthPolicy": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "failureThreshold": {
+                                      "maximum": 100,
+                                      "minimum": 1,
+                                      "type": "integer"
+                                    },
+                                    "failureWindowMs": {
+                                      "maximum": 3600000,
+                                      "minimum": 1000,
+                                      "type": "integer"
+                                    },
+                                    "openDurationMs": {
+                                      "maximum": 86400000,
+                                      "minimum": 1000,
+                                      "type": "integer"
+                                    },
+                                    "probeLeaseMs": {
+                                      "maximum": 120000,
+                                      "minimum": 1000,
+                                      "type": "integer"
+                                    },
+                                    "probeRetryMs": {
+                                      "maximum": 86400000,
+                                      "minimum": 1000,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "required": [
+                                    "failureThreshold",
+                                    "failureWindowMs",
+                                    "openDurationMs",
+                                    "probeLeaseMs",
+                                    "probeRetryMs"
+                                  ],
+                                  "type": "object"
+                                },
+                                "providerAccountId": {
+                                  "format": "uuid",
+                                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                  "type": "string"
+                                },
+                                "rolloutBasisPoints": {
+                                  "maximum": 10000,
+                                  "minimum": 0,
+                                  "type": "integer"
+                                },
+                                "translations": {
+                                  "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "customerHint": {
+                                        "maxLength": 280,
+                                        "minLength": 1,
+                                        "type": "string"
+                                      },
+                                      "displayName": {
+                                        "maxLength": 80,
+                                        "minLength": 1,
+                                        "type": "string"
+                                      },
+                                      "locale": {
+                                        "enum": [
+                                          "en",
+                                          "zh-CN",
+                                          "th",
+                                          "vi",
+                                          "ja",
+                                          "es",
+                                          "pt"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "translatedFromSourceHash": {
+                                        "anyOf": [
+                                          {
+                                            "pattern": "^[a-f0-9]{64}$",
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "locale",
+                                      "displayName",
+                                      "customerHint",
+                                      "translatedFromSourceHash"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "maxItems": 7,
+                                  "type": "array"
+                                }
+                              },
+                              "required": [
+                                "providerAccountId",
+                                "enabled",
+                                "displayOrder",
+                                "rolloutBasisPoints",
+                                "healthPolicy",
+                                "translations"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 100,
+                            "type": "array"
+                          },
+                          "routes": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "countries": {
+                                  "items": {
+                                    "pattern": "^[A-Z]{2}$",
+                                    "type": "string"
+                                  },
+                                  "maxItems": 250,
+                                  "type": "array"
+                                },
+                                "currencies": {
+                                  "items": {
+                                    "pattern": "^[A-Z]{3}$",
+                                    "type": "string"
+                                  },
+                                  "maxItems": 100,
+                                  "type": "array"
+                                },
+                                "enabled": {
+                                  "type": "boolean"
+                                },
+                                "markets": {
+                                  "items": {
+                                    "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                                    "type": "string"
+                                  },
+                                  "maxItems": 100,
+                                  "type": "array"
+                                },
+                                "maximumAmountMinor": {
+                                  "maximum": 9007199254740991,
+                                  "minimum": 0,
+                                  "type": "integer"
+                                },
+                                "minimumAmountMinor": {
+                                  "maximum": 9007199254740991,
+                                  "minimum": 0,
+                                  "type": "integer"
+                                },
+                                "paymentMethod": {
+                                  "maxLength": 64,
+                                  "minLength": 1,
+                                  "pattern": "^[a-z0-9][a-z0-9_-]*$",
+                                  "type": "string"
+                                },
+                                "priority": {
+                                  "maximum": 2147483647,
+                                  "minimum": -2147483648,
+                                  "type": "integer"
+                                },
+                                "providerAccountId": {
+                                  "format": "uuid",
+                                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                  "type": "string"
+                                },
+                                "requiredDeviceCapabilities": {
+                                  "items": {
+                                    "enum": [
+                                      "REDIRECT",
+                                      "PROVIDER_HOSTED_IFRAME",
+                                      "PROVIDER_COMPONENT",
+                                      "QR_CODE"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "maxItems": 4,
+                                  "type": "array"
+                                },
+                                "rolloutBasisPoints": {
+                                  "maximum": 10000,
+                                  "minimum": 0,
+                                  "type": "integer"
+                                },
+                                "ruleKey": {
+                                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "ruleKey",
+                                "providerAccountId",
+                                "paymentMethod",
+                                "enabled",
+                                "countries",
+                                "markets",
+                                "currencies",
+                                "minimumAmountMinor",
+                                "maximumAmountMinor",
+                                "requiredDeviceCapabilities",
+                                "priority",
+                                "rolloutBasisPoints"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 200,
+                            "type": "array"
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "channels",
+                          "routes"
+                        ],
+                        "type": "object"
+                      },
+                      "createdAt": {
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                        "type": "string"
+                      },
+                      "createdBy": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "lifecycle": {
+                        "enum": [
+                          "DRAFT",
+                          "VALIDATED",
+                          "PUBLISHED",
+                          "SUPERSEDED",
+                          "ARCHIVED"
+                        ],
+                        "type": "string"
+                      },
+                      "reviews": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "canApprove": {
+                              "type": "boolean"
+                            },
+                            "editorId": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "locale": {
+                              "enum": [
+                                "en",
+                                "zh-CN",
+                                "th",
+                                "vi",
+                                "ja",
+                                "es",
+                                "pt"
+                              ],
+                              "type": "string"
+                            },
+                            "providerAccountId": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "reviewerId": {
+                              "anyOf": [
+                                {
+                                  "format": "uuid",
+                                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "sourceHash": {
+                              "pattern": "^[a-f0-9]{64}$",
+                              "type": "string"
+                            },
+                            "status": {
+                              "enum": [
+                                "DRAFT",
+                                "IN_REVIEW",
+                                "APPROVED",
+                                "STALE"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "providerAccountId",
+                            "locale",
+                            "status",
+                            "sourceHash",
+                            "editorId",
+                            "reviewerId",
+                            "canApprove"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 700,
+                        "type": "array"
+                      },
+                      "revisionId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "version": {
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "revisionId",
+                      "version",
+                      "lifecycle",
+                      "createdAt",
+                      "createdBy",
+                      "configuration",
+                      "reviews"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "actorId",
+              "canEdit",
+              "canPublish",
+              "reviewLocales",
+              "currentPublicationId",
+              "currentRevisionId",
+              "generation",
+              "accounts",
+              "selected",
+              "history"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "diff": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "change": {
+                      "enum": [
+                        "ADDED",
+                        "REMOVED",
+                        "CHANGED"
+                      ],
+                      "type": "string"
+                    },
+                    "fields": {
+                      "items": {
+                        "enum": [
+                          "enabled",
+                          "displayOrder",
+                          "rolloutBasisPoints",
+                          "healthPolicy",
+                          "translations",
+                          "providerAccountId",
+                          "paymentMethod",
+                          "countries",
+                          "markets",
+                          "currencies",
+                          "minimumAmountMinor",
+                          "maximumAmountMinor",
+                          "requiredDeviceCapabilities",
+                          "priority"
+                        ],
+                        "type": "string"
+                      },
+                      "maxItems": 15,
+                      "type": "array"
+                    },
+                    "key": {
+                      "maxLength": 128,
+                      "type": "string"
+                    },
+                    "kind": {
+                      "enum": [
+                        "CHANNEL",
+                        "ROUTE"
+                      ],
+                      "type": "string"
+                    },
+                    "values": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "after": {
+                            "anyOf": [
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "maximum": 9007199254740991,
+                                "minimum": -2147483648,
+                                "type": "integer"
+                              },
+                              {
+                                "maxLength": 128,
+                                "type": "string"
+                              },
+                              {
+                                "items": {
+                                  "maxLength": 128,
+                                  "type": "string"
+                                },
+                                "maxItems": 250,
+                                "type": "array"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "failureThreshold": {
+                                    "maximum": 100,
+                                    "minimum": 1,
+                                    "type": "integer"
+                                  },
+                                  "failureWindowMs": {
+                                    "maximum": 3600000,
+                                    "minimum": 1000,
+                                    "type": "integer"
+                                  },
+                                  "openDurationMs": {
+                                    "maximum": 86400000,
+                                    "minimum": 1000,
+                                    "type": "integer"
+                                  },
+                                  "probeLeaseMs": {
+                                    "maximum": 120000,
+                                    "minimum": 1000,
+                                    "type": "integer"
+                                  },
+                                  "probeRetryMs": {
+                                    "maximum": 86400000,
+                                    "minimum": 1000,
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "failureThreshold",
+                                  "failureWindowMs",
+                                  "openDurationMs",
+                                  "probeLeaseMs",
+                                  "probeRetryMs"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "customerHint": {
+                                      "maxLength": 280,
+                                      "minLength": 1,
+                                      "type": "string"
+                                    },
+                                    "displayName": {
+                                      "maxLength": 80,
+                                      "minLength": 1,
+                                      "type": "string"
+                                    },
+                                    "locale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "translatedFromSourceHash": {
+                                      "anyOf": [
+                                        {
+                                          "pattern": "^[a-f0-9]{64}$",
+                                          "type": "string"
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "locale",
+                                    "displayName",
+                                    "customerHint",
+                                    "translatedFromSourceHash"
+                                  ],
+                                  "type": "object"
+                                },
+                                "maxItems": 7,
+                                "type": "array"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "before": {
+                            "anyOf": [
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "maximum": 9007199254740991,
+                                "minimum": -2147483648,
+                                "type": "integer"
+                              },
+                              {
+                                "maxLength": 128,
+                                "type": "string"
+                              },
+                              {
+                                "items": {
+                                  "maxLength": 128,
+                                  "type": "string"
+                                },
+                                "maxItems": 250,
+                                "type": "array"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "failureThreshold": {
+                                    "maximum": 100,
+                                    "minimum": 1,
+                                    "type": "integer"
+                                  },
+                                  "failureWindowMs": {
+                                    "maximum": 3600000,
+                                    "minimum": 1000,
+                                    "type": "integer"
+                                  },
+                                  "openDurationMs": {
+                                    "maximum": 86400000,
+                                    "minimum": 1000,
+                                    "type": "integer"
+                                  },
+                                  "probeLeaseMs": {
+                                    "maximum": 120000,
+                                    "minimum": 1000,
+                                    "type": "integer"
+                                  },
+                                  "probeRetryMs": {
+                                    "maximum": 86400000,
+                                    "minimum": 1000,
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "failureThreshold",
+                                  "failureWindowMs",
+                                  "openDurationMs",
+                                  "probeLeaseMs",
+                                  "probeRetryMs"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "customerHint": {
+                                      "maxLength": 280,
+                                      "minLength": 1,
+                                      "type": "string"
+                                    },
+                                    "displayName": {
+                                      "maxLength": 80,
+                                      "minLength": 1,
+                                      "type": "string"
+                                    },
+                                    "locale": {
+                                      "enum": [
+                                        "en",
+                                        "zh-CN",
+                                        "th",
+                                        "vi",
+                                        "ja",
+                                        "es",
+                                        "pt"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "translatedFromSourceHash": {
+                                      "anyOf": [
+                                        {
+                                          "pattern": "^[a-f0-9]{64}$",
+                                          "type": "string"
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "locale",
+                                    "displayName",
+                                    "customerHint",
+                                    "translatedFromSourceHash"
+                                  ],
+                                  "type": "object"
+                                },
+                                "maxItems": 7,
+                                "type": "array"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "field": {
+                            "enum": [
+                              "enabled",
+                              "displayOrder",
+                              "rolloutBasisPoints",
+                              "healthPolicy",
+                              "translations",
+                              "providerAccountId",
+                              "paymentMethod",
+                              "countries",
+                              "markets",
+                              "currencies",
+                              "minimumAmountMinor",
+                              "maximumAmountMinor",
+                              "requiredDeviceCapabilities",
+                              "priority"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "field",
+                          "before",
+                          "after"
+                        ],
+                        "type": "object"
+                      },
+                      "maxItems": 15,
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "key",
+                    "change",
+                    "fields"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 600,
+                "type": "array"
+              },
+              "expectedPublicationId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "issues": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "enum": [
+                        "EMPTY_ROUTES",
+                        "ACCOUNT_UNAVAILABLE",
+                        "ADAPTER_UNAVAILABLE",
+                        "UNSUPPORTED_METHOD",
+                        "INVALID_ROUTE",
+                        "TRANSLATION_MISSING",
+                        "TRANSLATION_UNAPPROVED",
+                        "TRANSLATION_STALE",
+                        "HEALTH_POLICY_INVALID",
+                        "NOT_PREVIOUSLY_PUBLISHED"
+                      ],
+                      "type": "string"
+                    },
+                    "locale": {
+                      "anyOf": [
+                        {
+                          "enum": [
+                            "en",
+                            "zh-CN",
+                            "th",
+                            "vi",
+                            "ja",
+                            "es",
+                            "pt"
+                          ],
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "providerAccountId": {
+                      "anyOf": [
+                        {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "ruleKey": {
+                      "anyOf": [
+                        {
+                          "maxLength": 128,
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "providerAccountId",
+                    "ruleKey",
+                    "locale"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 2000,
+                "type": "array"
+              },
+              "kind": {
+                "const": "VALIDATION",
+                "type": "string"
+              },
+              "mode": {
+                "enum": [
+                  "PUBLISH",
+                  "ROLLBACK"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "revisionId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "valid": {
+                "type": "boolean"
+              },
+              "validationHash": {
+                "anyOf": [
+                  {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "revisionId",
+              "expectedPublicationId",
+              "mode",
+              "valid",
+              "validationHash",
+              "issues",
+              "diff"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "enum": [
+                  "SAVE",
+                  "SUBMIT",
+                  "APPROVE",
+                  "PUBLISH",
+                  "ROLLBACK"
+                ],
+                "type": "string"
+              },
+              "generation": {
+                "maximum": 2147483647,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "kind": {
+                "const": "MUTATION",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "publicationId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "replayed": {
+                "type": "boolean"
+              },
+              "revisionId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "action",
+              "revisionId",
+              "publicationId",
+              "generation",
+              "replayed"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "admin-http"
+      },
       "AdminPreviewMediaRequest": {
         "additionalProperties": false,
         "properties": {
@@ -164030,6 +166468,2702 @@
           }
         ],
         "summary": "resume"
+      }
+    },
+    "/api/v1/admin/payment-configuration/approve": {
+      "post": {
+        "description": "Current platform permissions, MFA, Origin and CSRF are required. Mutations use permanent idempotency receipts. Drafts never grant translation approval. Publication requires independently approved current seven-language copy, a validationHash bound to the exact revision and expectedPublicationId, a reason and second confirmation. The transaction revalidates the candidate and deployed adapter/account eligibility. Rollback creates a new publication generation; historical attempts retain their original account. No executable adapter, merchant credential or secret reference is accepted.",
+        "operationId": "adminPaymentConfigurationApprove",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "locale": {
+                    "enum": [
+                      "en",
+                      "zh-CN",
+                      "th",
+                      "vi",
+                      "ja",
+                      "es",
+                      "pt"
+                    ],
+                    "type": "string"
+                  },
+                  "providerAccountId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "revisionId",
+                  "providerAccountId",
+                  "locale"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 524288
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Authorized configuration workspace, validation or permanent mutation receipt without connection secrets.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "approve"
+      }
+    },
+    "/api/v1/admin/payment-configuration/publish": {
+      "post": {
+        "description": "Current platform permissions, MFA, Origin and CSRF are required. Mutations use permanent idempotency receipts. Drafts never grant translation approval. Publication requires independently approved current seven-language copy, a validationHash bound to the exact revision and expectedPublicationId, a reason and second confirmation. The transaction revalidates the candidate and deployed adapter/account eligibility. Rollback creates a new publication generation; historical attempts retain their original account. No executable adapter, merchant credential or secret reference is accepted.",
+        "operationId": "adminPaymentConfigurationPublish",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedPublicationId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reasonCode": {
+                    "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "validationHash": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "revisionId",
+                  "expectedPublicationId",
+                  "validationHash",
+                  "reasonCode",
+                  "confirmed"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 524288
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Authorized configuration workspace, validation or permanent mutation receipt without connection secrets.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "publish"
+      }
+    },
+    "/api/v1/admin/payment-configuration/read": {
+      "post": {
+        "description": "Current platform permissions, MFA, Origin and CSRF are required. Mutations use permanent idempotency receipts. Drafts never grant translation approval. Publication requires independently approved current seven-language copy, a validationHash bound to the exact revision and expectedPublicationId, a reason and second confirmation. The transaction revalidates the candidate and deployed adapter/account eligibility. Rollback creates a new publication generation; historical attempts retain their original account. No executable adapter, merchant credential or secret reference is accepted.",
+        "operationId": "adminPaymentConfigurationRead",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "revisionId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "revisionId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 524288
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Authorized configuration workspace, validation or permanent mutation receipt without connection secrets.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "read"
+      }
+    },
+    "/api/v1/admin/payment-configuration/rollback": {
+      "post": {
+        "description": "Current platform permissions, MFA, Origin and CSRF are required. Mutations use permanent idempotency receipts. Drafts never grant translation approval. Publication requires independently approved current seven-language copy, a validationHash bound to the exact revision and expectedPublicationId, a reason and second confirmation. The transaction revalidates the candidate and deployed adapter/account eligibility. Rollback creates a new publication generation; historical attempts retain their original account. No executable adapter, merchant credential or secret reference is accepted.",
+        "operationId": "adminPaymentConfigurationRollback",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedPublicationId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reasonCode": {
+                    "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "validationHash": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "revisionId",
+                  "expectedPublicationId",
+                  "validationHash",
+                  "reasonCode",
+                  "confirmed"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 524288
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Authorized configuration workspace, validation or permanent mutation receipt without connection secrets.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "rollback"
+      }
+    },
+    "/api/v1/admin/payment-configuration/save": {
+      "post": {
+        "description": "Current platform permissions, MFA, Origin and CSRF are required. Mutations use permanent idempotency receipts. Drafts never grant translation approval. Publication requires independently approved current seven-language copy, a validationHash bound to the exact revision and expectedPublicationId, a reason and second confirmation. The transaction revalidates the candidate and deployed adapter/account eligibility. Rollback creates a new publication generation; historical attempts retain their original account. No executable adapter, merchant credential or secret reference is accepted.",
+        "operationId": "adminPaymentConfigurationSave",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "configuration": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "channels": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "displayOrder": {
+                              "maximum": 2147483647,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "healthPolicy": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "failureThreshold": {
+                                  "maximum": 100,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                },
+                                "failureWindowMs": {
+                                  "maximum": 3600000,
+                                  "minimum": 1000,
+                                  "type": "integer"
+                                },
+                                "openDurationMs": {
+                                  "maximum": 86400000,
+                                  "minimum": 1000,
+                                  "type": "integer"
+                                },
+                                "probeLeaseMs": {
+                                  "maximum": 120000,
+                                  "minimum": 1000,
+                                  "type": "integer"
+                                },
+                                "probeRetryMs": {
+                                  "maximum": 86400000,
+                                  "minimum": 1000,
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "failureThreshold",
+                                "failureWindowMs",
+                                "openDurationMs",
+                                "probeLeaseMs",
+                                "probeRetryMs"
+                              ],
+                              "type": "object"
+                            },
+                            "providerAccountId": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "rolloutBasisPoints": {
+                              "maximum": 10000,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "translations": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "customerHint": {
+                                    "maxLength": 280,
+                                    "minLength": 1,
+                                    "type": "string"
+                                  },
+                                  "displayName": {
+                                    "maxLength": 80,
+                                    "minLength": 1,
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "enum": [
+                                      "en",
+                                      "zh-CN",
+                                      "th",
+                                      "vi",
+                                      "ja",
+                                      "es",
+                                      "pt"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "translatedFromSourceHash": {
+                                    "anyOf": [
+                                      {
+                                        "pattern": "^[a-f0-9]{64}$",
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "locale",
+                                  "displayName",
+                                  "customerHint",
+                                  "translatedFromSourceHash"
+                                ],
+                                "type": "object"
+                              },
+                              "maxItems": 7,
+                              "type": "array"
+                            }
+                          },
+                          "required": [
+                            "providerAccountId",
+                            "enabled",
+                            "displayOrder",
+                            "rolloutBasisPoints",
+                            "healthPolicy",
+                            "translations"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 100,
+                        "type": "array"
+                      },
+                      "routes": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "countries": {
+                              "items": {
+                                "pattern": "^[A-Z]{2}$",
+                                "type": "string"
+                              },
+                              "maxItems": 250,
+                              "type": "array"
+                            },
+                            "currencies": {
+                              "items": {
+                                "pattern": "^[A-Z]{3}$",
+                                "type": "string"
+                              },
+                              "maxItems": 100,
+                              "type": "array"
+                            },
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "markets": {
+                              "items": {
+                                "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                                "type": "string"
+                              },
+                              "maxItems": 100,
+                              "type": "array"
+                            },
+                            "maximumAmountMinor": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "minimumAmountMinor": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "paymentMethod": {
+                              "maxLength": 64,
+                              "minLength": 1,
+                              "pattern": "^[a-z0-9][a-z0-9_-]*$",
+                              "type": "string"
+                            },
+                            "priority": {
+                              "maximum": 2147483647,
+                              "minimum": -2147483648,
+                              "type": "integer"
+                            },
+                            "providerAccountId": {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            "requiredDeviceCapabilities": {
+                              "items": {
+                                "enum": [
+                                  "REDIRECT",
+                                  "PROVIDER_HOSTED_IFRAME",
+                                  "PROVIDER_COMPONENT",
+                                  "QR_CODE"
+                                ],
+                                "type": "string"
+                              },
+                              "maxItems": 4,
+                              "type": "array"
+                            },
+                            "rolloutBasisPoints": {
+                              "maximum": 10000,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "ruleKey": {
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "ruleKey",
+                            "providerAccountId",
+                            "paymentMethod",
+                            "enabled",
+                            "countries",
+                            "markets",
+                            "currencies",
+                            "minimumAmountMinor",
+                            "maximumAmountMinor",
+                            "requiredDeviceCapabilities",
+                            "priority",
+                            "rolloutBasisPoints"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 200,
+                        "type": "array"
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "channels",
+                      "routes"
+                    ],
+                    "type": "object"
+                  },
+                  "expectedPublicationId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "sourceRevisionId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "sourceRevisionId",
+                  "expectedPublicationId",
+                  "configuration"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 524288
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Authorized configuration workspace, validation or permanent mutation receipt without connection secrets.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "save"
+      }
+    },
+    "/api/v1/admin/payment-configuration/submit": {
+      "post": {
+        "description": "Current platform permissions, MFA, Origin and CSRF are required. Mutations use permanent idempotency receipts. Drafts never grant translation approval. Publication requires independently approved current seven-language copy, a validationHash bound to the exact revision and expectedPublicationId, a reason and second confirmation. The transaction revalidates the candidate and deployed adapter/account eligibility. Rollback creates a new publication generation; historical attempts retain their original account. No executable adapter, merchant credential or secret reference is accepted.",
+        "operationId": "adminPaymentConfigurationSubmit",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "locale": {
+                    "enum": [
+                      "en",
+                      "zh-CN",
+                      "th",
+                      "vi",
+                      "ja",
+                      "es",
+                      "pt"
+                    ],
+                    "type": "string"
+                  },
+                  "providerAccountId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "revisionId",
+                  "providerAccountId",
+                  "locale"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 524288
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Authorized configuration workspace, validation or permanent mutation receipt without connection secrets.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "submit"
+      }
+    },
+    "/api/v1/admin/payment-configuration/validate": {
+      "post": {
+        "description": "Current platform permissions, MFA, Origin and CSRF are required. Mutations use permanent idempotency receipts. Drafts never grant translation approval. Publication requires independently approved current seven-language copy, a validationHash bound to the exact revision and expectedPublicationId, a reason and second confirmation. The transaction revalidates the candidate and deployed adapter/account eligibility. Rollback creates a new publication generation; historical attempts retain their original account. No executable adapter, merchant credential or secret reference is accepted.",
+        "operationId": "adminPaymentConfigurationValidate",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "expectedPublicationId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "mode": {
+                    "enum": [
+                      "PUBLISH",
+                      "ROLLBACK"
+                    ],
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "revisionId",
+                  "expectedPublicationId",
+                  "mode"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 524288
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Authorized configuration workspace, validation or permanent mutation receipt without connection secrets.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentConfigurationResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "validate"
       }
     },
     "/api/v1/admin/resources/media/read": {

@@ -19,6 +19,7 @@ test("exports the complete public domain decision surface", () => {
     "decideOrderPaymentTransitionCommand",
     "decidePaymentAttemptTransitionCommand",
     "decideRefundTransitionCommand",
+    "diffPaymentConfiguration",
     "evaluateGiftEligibility",
     "evaluatePaymentRollout",
     "evaluateRefundCapacity",
@@ -32,6 +33,7 @@ test("exports the complete public domain decision surface", () => {
     "selectCheckoutInventory",
     "selectEffectivePrice",
     "selectPaymentRoute",
+    "validatePaymentConfiguration",
     "workspacePackageName",
   ]);
 });

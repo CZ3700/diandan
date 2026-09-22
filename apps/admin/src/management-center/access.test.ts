@@ -37,3 +37,47 @@ test("order workspace authority is independent from content access and temporary
     temporaryFailure: true,
   });
 });
+test("payment access remains independent when content and order services reject access", () => {
+  const denied = {
+    status: "rejected",
+    reason: new AdminClientError("FORBIDDEN"),
+  } as const;
+  const payment = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "WORKSPACE",
+    actorId: "10000000-0000-4000-8000-000000000001",
+    canEdit: true,
+    canPublish: false,
+    reviewLocales: [],
+    currentPublicationId: null,
+    currentRevisionId: null,
+    generation: 0,
+    accounts: [],
+    selected: null,
+    history: [],
+  } as const;
+  const result = access.resolveManagementAccess(denied, denied, {
+    status: "fulfilled",
+    value: { ...payment, reviewLocales: [], accounts: [], history: [] },
+  });
+  expect(result).toMatchObject({
+    contentAllowed: false,
+    orders: null,
+    payments: payment,
+    temporaryFailure: false,
+  });
+  expect(
+    access.resolveManagementAccess(
+      denied,
+      {
+        status: "rejected",
+        reason: new AdminClientError("TEMPORARY_UNAVAILABLE"),
+      },
+      {
+        status: "fulfilled",
+        value: { ...payment, reviewLocales: [], accounts: [], history: [] },
+      },
+    ),
+  ).toMatchObject({ payments: payment, temporaryFailure: true });
+});

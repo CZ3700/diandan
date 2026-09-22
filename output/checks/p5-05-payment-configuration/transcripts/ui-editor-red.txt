@@ -1,0 +1,45 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
+
+ ❯ src/management-payments/editor-model.test.ts (2 tests | 2 failed) 3ms
+   × editor rejects absent health policy and does not infer country, market or currency from language 2ms
+   × editor preserves explicit scope, exact minor units and marks fresh translated text for server binding 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/management-payments/editor-model.test.ts > editor rejects absent health policy and does not infer country, market or currency from language
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-payments/editor-model.test.ts:4:37
+      2| const model=await import("./editor-model").catch(()=>undefined);
+      3| test("editor rejects absent health policy and does not infer country, …
+      4|  expect(model?.readPaymentDocument).toBeTypeOf("function");
+       |                                     ^
+      5|  const data=new FormData();data.set("c0.account","10000000-0000-4000-8…
+      6|  expect(model!.readPaymentDocument(data,1,[]).success).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/management-payments/editor-model.test.ts > editor preserves explicit scope, exact minor units and marks fresh translated text for server binding
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-payments/editor-model.test.ts:12:37
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  12:45:28
+   Duration  95ms (transform 8ms, setup 0ms, import 15ms, tests 3ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/apps/admin:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run src/management-payments/editor-model.test.ts

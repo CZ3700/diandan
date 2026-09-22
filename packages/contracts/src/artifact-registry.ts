@@ -1,3 +1,6 @@
+import * as adminPaymentConfiguration from "./admin-payment-configuration.js";
+import * as adminPaymentConfigurationPersistence from "./admin-payment-configuration-persistence.js";
+import * as paymentConfigurationValidation from "./payment-configuration-validation.js";
 import * as financeEvidence from "./finance-evidence.js";
 import * as adminFinance from "./admin-finance.js";
 import * as adminFinancePersistence from "./admin-finance-persistence.js";
@@ -675,6 +678,65 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "PaymentConfigurationDocument",
+    audience: "internal",
+    schema: adminPaymentConfiguration.paymentConfigurationDocumentSchema,
+  },
+  {
+    name: "AdminPaymentConfigurationCommand",
+    audience: "admin-http",
+    schema: adminPaymentConfiguration.adminPaymentConfigurationCommandSchema,
+  },
+  {
+    name: "AdminPaymentConfigurationRequest",
+    audience: "admin-http",
+    schema: adminPaymentConfiguration.adminPaymentConfigurationRequestSchema,
+  },
+  {
+    name: "AdminPaymentConfigurationResponse",
+    audience: "admin-http",
+    schema: adminPaymentConfiguration.adminPaymentConfigurationResponseSchema,
+  },
+  {
+    name: "AdminPaymentConfigurationFailure",
+    audience: "admin-http",
+    schema: adminPaymentConfiguration.adminPaymentConfigurationFailureSchema,
+  },
+  {
+    name: "AdminPaymentConfigurationStoreRequest",
+    audience: "internal",
+    schema:
+      adminPaymentConfigurationPersistence.adminPaymentConfigurationStoreRequestSchema,
+  },
+  {
+    name: "PaymentConfigurationPublishedProjection",
+    audience: "internal",
+    schema:
+      adminPaymentConfigurationPersistence.paymentConfigurationPublishedProjectionSchema,
+  },
+  {
+    name: "PaymentConfigurationValidationInput",
+    audience: "internal",
+    schema:
+      paymentConfigurationValidation.paymentConfigurationValidationInputSchema,
+  },
+  {
+    name: "PaymentConfigurationValidationResult",
+    audience: "internal",
+    schema:
+      paymentConfigurationValidation.paymentConfigurationValidationResultSchema,
+  },
+  {
+    name: "PaymentConfigurationDiffInput",
+    audience: "internal",
+    schema: paymentConfigurationValidation.paymentConfigurationDiffInputSchema,
+  },
+  {
+    name: "PaymentConfigurationDiffResult",
+    audience: "internal",
+    schema: paymentConfigurationValidation.paymentConfigurationDiffResultSchema,
+  },
   {
     name: "FinanceEvidenceInput",
     audience: "internal",

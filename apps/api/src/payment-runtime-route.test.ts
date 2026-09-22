@@ -46,7 +46,7 @@ const view = {
   actionExpired: false,
   updatedAt: "2026-09-09T00:00:00Z",
 };
-async function setup() {
+async function setup(readOrigins = () => [providerOrigin]) {
   const app = Fastify({ logger: false });
   const credentials = createCartSessionCredentials({
     activePepperVersion: "test-v1",
@@ -84,7 +84,9 @@ async function setup() {
   >;
   registerPaymentRuntimeRoute(app, {
     allowedOrigin: origin,
-    actionOrigins: [providerOrigin],
+    get actionOrigins() {
+      return readOrigins();
+    },
     credentials,
     useCases,
   });
@@ -286,6 +288,55 @@ test("typed expiry clears only the existing host cookie and reads never invoke r
     expect(response.headers["set-cookie"]).toContain("Max-Age=0");
     expect(useCases.recover).not.toHaveBeenCalled();
     expect(useCases.create).not.toHaveBeenCalled();
+  } finally {
+    await app.close();
+  }
+});
+
+test("hosted action validation follows the newly published directory and retains exact origin restrictions", async () => {
+  let origins = [providerOrigin];
+  const { app, send, useCases } = await setup(() => origins);
+  const nextOrigin = "https://new-payments.example.invalid";
+  try {
+    await app.ready();
+    origins = [providerOrigin, nextOrigin];
+    for (const action of ["create", "read", "recover"] as const) {
+      useCases[action].mockResolvedValueOnce({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        action:
+          action === "create"
+            ? "CREATED"
+            : action === "read"
+              ? "READ"
+              : "RECOVERED",
+        attempt: {
+          ...view,
+          action: { ...view.action, url: `${nextOrigin}/continue/test` },
+        },
+      });
+      expect((await send(action)).statusCode).toBe(200);
+    }
+    useCases.read.mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "READ",
+      attempt: view,
+    });
+    expect((await send("read")).statusCode).toBe(200);
+    useCases.read.mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "READ",
+      attempt: {
+        ...view,
+        action: {
+          ...view.action,
+          url: "https://unregistered.example.invalid/continue",
+        },
+      },
+    });
+    expect((await send("read")).statusCode).toBe(503);
   } finally {
     await app.close();
   }

@@ -46,7 +46,13 @@ export async function createAdminOrdersRuntime(context, options = {}) {
     issuer: idp.issuer,
     subjectPepper,
   });
-  await options.seedAdditionalRoles?.({ client, actors, permissions });
+  await options.seedAdditionalRoles?.({
+    client,
+    actors,
+    permissions,
+    issuer: idp.issuer,
+    subjectPepper,
+  });
   const settings = {
     schemaVersion: 1,
     issuer: idp.issuer,

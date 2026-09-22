@@ -1,3 +1,7 @@
+export {
+  validatePaymentConfiguration,
+  diffPaymentConfiguration,
+} from "./payment-configuration.js";
 export const workspacePackageName = "@fan-support/domain" as const;
 export {
   selectCheckoutInventory,

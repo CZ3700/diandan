@@ -1,0 +1,11 @@
+{"passed":false,"stage":"transaction-manager","code":"23502","message":"null value in column \"granted_by\" of relation \"admin_content_locale_grants\" violates not-null constraint"}
+file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/admin-finance-native-postgres.mjs:216
+    failure = new Error(
+              ^
+
+Error: Native TEST PostgreSQL operation failed; inspect safe scenario evidence
+    at withNativeFinancePostgres (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/admin-finance-native-postgres.mjs:216:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/admin-payment-configuration-postgres.mjs:18:1
+
+Node.js v24.20.0

@@ -1,0 +1,28 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
+
+ ❯ src/management-payments/editor-model.test.ts (3 tests | 1 failed) 13ms
+   × deployed health durations keep exact millisecond precision through seconds fields 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/management-payments/editor-model.test.ts > deployed health durations keep exact millisecond precision through seconds fields
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-payments/editor-model.test.ts:74:132
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  12:53:30
+   Duration  380ms (transform 216ms, setup 0ms, import 312ms, tests 13ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/apps/admin:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run src/management-payments/editor-model.test.ts

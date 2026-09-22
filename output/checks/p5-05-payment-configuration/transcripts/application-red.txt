@@ -1,0 +1,89 @@
+$ vitest run --config ../../vitest.config.ts --root . src/admin-payment-configuration.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/application
+
+ ❯ src/admin-payment-configuration.test.ts (4 tests | 4 failed) 4ms
+   × configuration requests persist digests, canonical permanent receipts and trusted deployments only 2ms
+   × malformed requests cannot open a transaction or assert deployment authority 0ms
+   × repository errors and responses for a different command cannot become accepted configuration receipts 0ms
+   × validation binds revision, current publication and mode 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/admin-payment-configuration.test.ts > configuration requests persist digests, canonical permanent receipts and trusted deployments only
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ setup src/admin-payment-configuration.test.ts:33:59
+     31|   const execute = vi.fn<AdminPaymentConfigurationRepository["execute"]…
+     32|   const run = vi.fn(async (work: (repository: AdminPaymentConfiguratio…
+     33|   expect(module?.createAdminPaymentConfigurationUseCases).toBeTypeOf("…
+       |                                                           ^
+     34|   const app = module!.createAdminPaymentConfigurationUseCases({
+     35|     tokenPepper: "a".repeat(64),
+ ❯ src/admin-payment-configuration.test.ts:42:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/admin-payment-configuration.test.ts > malformed requests cannot open a transaction or assert deployment authority
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ setup src/admin-payment-configuration.test.ts:33:59
+     31|   const execute = vi.fn<AdminPaymentConfigurationRepository["execute"]…
+     32|   const run = vi.fn(async (work: (repository: AdminPaymentConfiguratio…
+     33|   expect(module?.createAdminPaymentConfigurationUseCases).toBeTypeOf("…
+       |                                                           ^
+     34|   const app = module!.createAdminPaymentConfigurationUseCases({
+     35|     tokenPepper: "a".repeat(64),
+ ❯ src/admin-payment-configuration.test.ts:54:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/admin-payment-configuration.test.ts > repository errors and responses for a different command cannot become accepted configuration receipts
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ setup src/admin-payment-configuration.test.ts:33:59
+     31|   const execute = vi.fn<AdminPaymentConfigurationRepository["execute"]…
+     32|   const run = vi.fn(async (work: (repository: AdminPaymentConfiguratio…
+     33|   expect(module?.createAdminPaymentConfigurationUseCases).toBeTypeOf("…
+       |                                                           ^
+     34|   const app = module!.createAdminPaymentConfigurationUseCases({
+     35|     tokenPepper: "a".repeat(64),
+ ❯ src/admin-payment-configuration.test.ts:61:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/admin-payment-configuration.test.ts > validation binds revision, current publication and mode
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ setup src/admin-payment-configuration.test.ts:33:59
+     31|   const execute = vi.fn<AdminPaymentConfigurationRepository["execute"]…
+     32|   const run = vi.fn(async (work: (repository: AdminPaymentConfiguratio…
+     33|   expect(module?.createAdminPaymentConfigurationUseCases).toBeTypeOf("…
+       |                                                           ^
+     34|   const app = module!.createAdminPaymentConfigurationUseCases({
+     35|     tokenPepper: "a".repeat(64),
+ ❯ src/admin-payment-configuration.test.ts:70:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  12:37:51
+   Duration  75ms (transform 11ms, setup 0ms, import 18ms, tests 4ms, environment 0ms)
+
+/Users/mario/Desktop/下单/packages/application:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/application@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/admin-payment-configuration.test.ts`
+Exit status 1

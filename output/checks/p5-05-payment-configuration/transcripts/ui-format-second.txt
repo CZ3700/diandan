@@ -1,0 +1,37 @@
+apps/admin/src/management-payments/api.test.ts 21ms (unchanged)
+apps/admin/src/management-payments/api.ts 7ms (unchanged)
+apps/admin/src/management-payments/channel-fields.tsx 10ms (unchanged)
+apps/admin/src/management-payments/configuration-summary.tsx 8ms
+apps/admin/src/management-payments/copy-en.ts 3ms (unchanged)
+apps/admin/src/management-payments/copy-es.ts 2ms (unchanged)
+apps/admin/src/management-payments/copy-ja.ts 2ms (unchanged)
+apps/admin/src/management-payments/copy-pt.ts 2ms (unchanged)
+apps/admin/src/management-payments/copy-th.ts 2ms (unchanged)
+apps/admin/src/management-payments/copy-vi.ts 2ms (unchanged)
+apps/admin/src/management-payments/copy-zh-cn.ts 3ms (unchanged)
+apps/admin/src/management-payments/copy.ts 1ms (unchanged)
+apps/admin/src/management-payments/diff-values.tsx 2ms
+apps/admin/src/management-payments/editor-model.test.ts 3ms
+apps/admin/src/management-payments/editor-model.ts 4ms (unchanged)
+apps/admin/src/management-payments/editor.tsx 4ms (unchanged)
+apps/admin/src/management-payments/labels.ts 1ms (unchanged)
+apps/admin/src/management-payments/model.test.ts 1ms (unchanged)
+apps/admin/src/management-payments/model.ts 1ms (unchanged)
+apps/admin/src/management-payments/payments.css 13ms (unchanged)
+apps/admin/src/management-payments/pending-store.test.ts 2ms (unchanged)
+apps/admin/src/management-payments/pending-store.ts 2ms (unchanged)
+apps/admin/src/management-payments/publish-panel.tsx 5ms
+apps/admin/src/management-payments/review-manifest.ts 1ms
+apps/admin/src/management-payments/review-panel.tsx 3ms (unchanged)
+apps/admin/src/management-payments/rule-fields.tsx 6ms (unchanged)
+[error] apps/admin/src/management-payments/views.test.tsx: SyntaxError: Identifier expected. (151:42)
+[error]   149 |  const validation=adminPaymentConfigurationResponseSchema.parse({schemaVersion:1,outcome:"SUCCESS",kind:"VALIDATION",revisionId:id,expectedPublicationId:null,mode:"PUBLISH",valid:false,validationHash:null,issues:[],diff:[{kind:"CHANNEL",key:id,change:"CHANGED",fields:["translations","rolloutBasisPoints"],values:[{field:"translations",before:null,after:[{locale:"en",displayName:"Fresh channel name",customerHint:"Fresh channel hint",translatedFromSourceHash:"a".repeat(64)}]},{field:"rolloutBasisPoints",before:2500,after:5000}]}]});
+[error]   150 |  if(validation.outcome!=="SUCCESS"||validation.kind!=="VALIDATION")throw new Error("Fixture invalid");
+[error] > 151 |  const html=renderToStaticMarkup(<publish!.PaymentPublishPanel validation={validation} locale="en" accounts={[]} canPublish busy={false} mutate={()=>{}}/>);
+[error]       |                                          ^
+[error]   152 |  expect(html).toContain("Fresh channel name");expect(html).toContain("25%");expect(html).toContain("50%");expect(html).not.toContain("a".repeat(64));
+[error]   153 | });
+[error]   154 |
+apps/admin/src/management-payments/workspace.tsx 7ms
+apps/admin/src/management-center/hub.tsx 6ms (unchanged)
+apps/api/scripts/admin-payment-config-browser.mjs 17ms

@@ -3,9 +3,9 @@
 > 最后更新：2026-09-22（Asia/Bangkok）
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-016，逐项本地研发）；Phase 6/7 仍 LOCKED
-> 当前任务：P5-03本地完整验收通过，保留真实商户退款等条件、无executor；P5-05 READY，Lane C空闲；P3-06/P4-04/P5-04原未完验收继续保留
-> 下一入口：领取P5-05，接入同一管理中心的支付配置draft/validate/publish/rollback；原直接依赖已独立复核，共享文件归属冻结，尚未实施
-> 当前检查点：P5-03取消/退款/拒付/对账、实际PG/HTTP/七语双端与非作者复核通过。29 DONE / 4 IN_PROGRESS / 1 READY / 15 PENDING，仅本地推进。
+> 当前任务：P5-05 本地完整验收闭合，仍 IN_PROGRESS、Lane C 已释放；P3-06/P4-04/P5-03/P5-04 原外部验收保留、无 executor
+> 下一入口：P5-06 READY，Lane D 空闲；同一管理中心的 webhook/DLQ/UNKNOWN/通知失败查询与安全重放。完整持久本地体验尚未就绪，见 local-experience-readiness runbook
+> 当前检查点：P5-05 实际 PG、双进程 HTTP、七语双端、全仓质量门及非作者复核通过。29 DONE / 5 IN_PROGRESS / 1 READY / 14 PENDING，仅本地提交、不 push。
 
 ## 1. 开工入口
 
@@ -17,15 +17,15 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成（或满足 ADR-016 明确记录的本地完整验收与非作者复核条件）、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线，P3-01至P3-05及P4-01至P4-03已DONE；P4-05按ADR-014完成本地范围、P4-06也已DONE。P5-01/02 已按 ADR-015 完成本地验收，Lane C 已释放。P3-06 本地性能与无障碍补证通过后释放 Lane D，任务仍 IN_PROGRESS；P4-04 真实商户验收仍 IN_PROGRESS、无 executor。2026-09-22 用户以“那就继续按计划推进下一阶段”接受剩余20项本地排期，ADR-016 首先允许 P5-04；P5-04及接续P5-03现均完成本地完整验收，Lane A释放；P5-05原依赖与共享文件归属已核对后置READY。P5-01/P4-05 的当前可消费代码与 P4-04 本地接口已有独立就绪核对，见 `output/checks/p5-04-payment-health/next-stage-readiness.md` 和最终复核。后继依次核对原直接依赖的本地完整成果，不把局部切片当可消费实现；Phase 6/7 保持 LOCKED，到对应波次满足条件后才登记有限 ACTIVE 范围，无需重复请求本次授权。正式品牌资产、身份源/MFA恢复、邮件服务与译文的上线批准继续保留。
+只领取位于 `ACTIVE` Phase、依赖已完成（或满足 ADR-016 明确记录的本地完整验收与非作者复核条件）、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线，P3-01至P3-05及P4-01至P4-03已DONE；P4-05按ADR-014完成本地范围、P4-06也已DONE。P5-01/02 已按 ADR-015 完成本地验收，Lane C 已释放。P3-06 本地性能与无障碍补证通过后释放 Lane D，任务仍 IN_PROGRESS；P4-04 真实商户验收仍 IN_PROGRESS、无 executor。2026-09-22 用户以“那就继续按计划推进下一阶段”接受剩余20项本地排期，ADR-016 首先允许 P5-04；P5-04及接续P5-03现均完成本地完整验收，Lane A释放；P5-05原依赖与共享文件归属已核对后置READY。P5-05随后完成本地完整验收，Lane C释放；P5-06原直接依赖P5-01/P1-06/P5-03当前源与本轮共享接入回归经独立复核后置READY，Lane D空闲。P5-01/P4-05 的当前可消费代码与 P4-04 本地接口已有独立就绪核对，见 `output/checks/p5-04-payment-health/next-stage-readiness.md` 和最终复核。后继依次核对原直接依赖的本地完整成果，不把局部切片当可消费实现；Phase 6/7 保持 LOCKED，到对应波次满足条件后才登记有限 ACTIVE 范围，无需重复请求本次授权。正式品牌资产、身份源/MFA恢复、邮件服务与译文的上线批准继续保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 15 |
+| PENDING | 14 |
 | READY | 1 |
-| IN_PROGRESS | 4 |
+| IN_PROGRESS | 5 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
 | DONE | 29 |
@@ -55,7 +55,7 @@
 | Phase 0 | Phase 1、Phase 2 | Phase 0 |
 | Phase 1 与 Phase 2 | Phase 3 | Phase 1、Phase 2 |
 | Phase 3；或 ADR-013 已确认的本地开发例外 | Phase 4 | 正常路径关闭 Phase 3；例外保留未完验收 |
-| Phase 3 与 Phase 4；或已确认 ADR-015/016 的逐项本地条件 | Phase 5（ADR-016 当前 P5-05 READY） | 正常路径关闭 Phase 3、Phase 4；例外保留未完验收 |
+| Phase 3 与 Phase 4；或已确认 ADR-015/016 的逐项本地条件 | Phase 5（ADR-016 当前 P5-06 READY；已验收本地项保留外部门） | 正常路径关闭 Phase 3、Phase 4；例外保留未完验收 |
 | Phase 5；或到 ADR-016 对应波次且候选原直接依赖本地完整验收/独立复核通过 | Phase 6（当前仍 LOCKED；例外须先登记有限本地 ACTIVE 范围） | 正常路径关闭 Phase 5；例外保留全部未完验收 |
 | Phase 6；或到 ADR-016 对应波次且候选原直接依赖本地完整验收/独立复核通过 | Phase 7（当前仍 LOCKED；例外仅文档/导入及 QA 工具准备） | 正常路径关闭 Phase 6；例外保留正式内容/交易/发布/观察门 |
 
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-22 P5-05本地完整验收闭合：同一管理中心草稿/七语独立审核/前后差异/二次确认/发布回退、PG永久幂等与审批继承、动态目录和健康策略激活完成。真实PG151、36迁移198表、旧财务HTTP6164和rollback-prefix47通过；最终双独立进程HTTP/UI6660（协议313、浏览器466断言/8cases/65PNG/65axe，零违规/incomplete/页面错误），发布/停止/回退传播876.6/924.4/928.6ms（TEST 1秒轮询，默认10秒）并通过锁阻塞与旧UNKNOWN原账户恢复。修复真实新渠道托管origin缓存与西语窄屏导航缺陷，保留首失败。最终check:dev64/64/36（缓存62/62/34）、合同/adapter/artifact/冻结安装/秘密扫描/非作者复核和S.U.P.E.R通过；2530源输入、679旧根/113路径/70SQL/35manifest及5958原未跟踪保护。详见`output/checks/p5-05-payment-configuration/final-verification.md`。P5-05保留正式商户能力/关键译审/实际环境配置，仍IN_PROGRESS、Lane C释放；P5-06独立就绪后READY。29 DONE / 5 IN_PROGRESS / 1 READY / 14 PENDING=49，Phase6/7仍LOCKED。完整持久本地体验尚未达到交付条件，届时提供启动入口再准备服务器；仅本地提交、不push/merge/部署。以下历史检查点保持原时点。
 
 2026-09-22 P5-03本地完整验收闭合：同一管理中心取消/全额与逐项退款/拒付/分页对账、PG永久幂等/金额占用/原账户恢复及履约暂停完成。金融PG6023、35迁移193表、原订单5960/6827通过；最终原生PG18.6 HTTP/UI6742（HTTP399，浏览器330断言/9cases/58PNG/58axe，0违规/incomplete/页面错误），七语双端原矩阵完整通过。Docker guest墙钟阶跃失败与固定CPU无效证据保留，生产权限/TTL/历史约束不改；原生独立3860万时间样本及3种真实cleanup通过。最终check:dev63/63/36（缓存60/61/35）、合同/adapter/artifact/秘密扫描及非作者复核通过。2462源输入SHA、659旧根/108旧路径/68旧SQL/34manifest、5719原未跟踪保护，详见`output/checks/p5-03-refund-operations/final-verification.md`和`final-gates.json`。P5-03保留真实商户sandbox refund等外部门，仍IN_PROGRESS无executor；P5-05原依赖独立复核与共享文件冻结后READY。29 DONE / 4 IN_PROGRESS / 1 READY / 15 PENDING=49；Phase6/7仍LOCKED，仅本地提交，不push/merge/部署。以下历史检查点按当时时点保留。
 

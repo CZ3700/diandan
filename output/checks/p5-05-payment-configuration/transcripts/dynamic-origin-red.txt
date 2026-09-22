@@ -1,0 +1,32 @@
+$ vitest run --config ../../vitest.config.ts --root . src/payment-runtime-route.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/api
+
+ ❯ src/payment-runtime-route.test.ts (6 tests | 1 failed) 51ms
+   × hosted action validation follows the newly published directory and retains exact origin restrictions 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/payment-runtime-route.test.ts > hosted action validation follows the newly published directory and retains exact origin restrictions
+AssertionError: expected 503 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 503
+
+ ❯ src/payment-runtime-route.test.ts:304:47
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  13:27:13
+   Duration  499ms (transform 245ms, setup 0ms, import 392ms, tests 51ms, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/api:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/api@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/payment-runtime-route.test.ts`
+Exit status 1

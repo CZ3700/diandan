@@ -7,6 +7,10 @@ import {
   type AdminFinanceRouteDependencies,
 } from "./admin-finance-route.js";
 import {
+  registerAdminPaymentConfigurationRoute,
+  type AdminPaymentConfigurationRouteDependencies,
+} from "./admin-payment-configuration-route.js";
+import {
   registerAdminAccessRoute,
   type AdminAccessRouteDependencies,
 } from "./admin-access-route.js";
@@ -141,6 +145,8 @@ export type CreateApiApplicationOptions = Readonly<{
   adminOrdersRuntime?: ApiLifecycleResource;
   adminFinanceRoute?: AdminFinanceRouteDependencies;
   adminFinanceRuntime?: ApiLifecycleResource;
+  adminPaymentConfigurationRoute?: AdminPaymentConfigurationRouteDependencies;
+  adminPaymentConfigurationRuntime?: ApiLifecycleResource;
   adminAccessRoute?: AdminAccessRouteDependencies;
   adminAccessRuntime?: ApiLifecycleResource;
   adminSessionRoute?: AdminSessionRouteDependencies;
@@ -181,6 +187,7 @@ function registerApiLifecycle(
     | "API admin access"
     | "API admin orders"
     | "API admin finance"
+    | "API payment configuration"
     | "API admin session"
     | "API cart"
     | "API order access"
@@ -383,6 +390,16 @@ export async function createApiApplication(
   );
   if (options.adminFinanceRoute)
     registerAdminFinanceRoute(adapter.getInstance(), options.adminFinanceRoute);
+  registerApiLifecycle(
+    adapter,
+    options.adminPaymentConfigurationRuntime,
+    "API payment configuration",
+  );
+  if (options.adminPaymentConfigurationRoute)
+    registerAdminPaymentConfigurationRoute(
+      adapter.getInstance(),
+      options.adminPaymentConfigurationRoute,
+    );
   if (options.adminOrdersRoute)
     registerAdminOrdersRoute(adapter.getInstance(), options.adminOrdersRoute);
   if (options.adminAccessRoute)

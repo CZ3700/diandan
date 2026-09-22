@@ -163,6 +163,13 @@ export async function withPaymentRuntimeFixture(options) {
           configuration,
           published,
           providerRegistration: registration,
+          // TEST-only IPC deployment input; never serialized into evidence or logs.
+          testPaymentDeployment: {
+            authorizationToken,
+            binding: psp.binding,
+            endpointOrigin: psp.origin,
+            returnOrigin: context.origin,
+          },
           psp: {
             get origin() {
               return psp.origin;

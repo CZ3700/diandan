@@ -60,7 +60,9 @@
     "test:browser:admin-orders": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-orders-browser-tasks.test.mjs && node ./scripts/admin-orders-http.mjs --ui",
     "test:postgres:payment-health": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node ./scripts/payment-health-http.mjs && node ./scripts/payment-rollout-http.mjs",
     "test:postgres:admin-finance": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-finance-psp.test.mjs ./scripts/admin-finance-psp-http.test.mjs ./scripts/admin-finance-disputes-psp.test.mjs && node ./scripts/admin-finance-http.mjs",
-    "test:browser:admin-finance": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-finance-native-postgres.test.mjs ./scripts/admin-finance-session-clock.test.mjs ./scripts/admin-finance-token-clock.test.mjs && node ./scripts/admin-finance-http.mjs --ui"
+    "test:browser:admin-finance": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-finance-native-postgres.test.mjs ./scripts/admin-finance-session-clock.test.mjs ./scripts/admin-finance-token-clock.test.mjs && node ./scripts/admin-finance-http.mjs --ui",
+    "test:postgres:admin-payment-configuration": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-payment-config-psp-envelope.test.mjs ./scripts/admin-payment-config-psp-http.test.mjs && node ./scripts/admin-payment-config-http.mjs",
+    "test:browser:admin-payment-configuration": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-payment-config-psp-envelope.test.mjs ./scripts/admin-payment-config-psp-http.test.mjs && node ./scripts/admin-payment-config-http.mjs --ui"
   },
   "dependencies": {
     "@fan-support/application": "workspace:*",
@@ -71,6 +73,7 @@
     "@fan-support/key-management-port": "workspace:*",
     "@fan-support/media-port": "workspace:*",
     "@fan-support/observability": "workspace:*",
+    "@fan-support/payment-gateway": "workspace:*",
     "@fan-support/payment-port": "workspace:*",
     "@fan-support/persistence-postgres": "workspace:*",
     "@nestjs/common": "12.0.1",

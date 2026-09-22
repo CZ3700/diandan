@@ -3,6 +3,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { createServer } from "node:https";
 import { createPaymentTestPspStore } from "./payment-runtime-psp-store.mjs";
+import { readTestNormalizedPaymentCommand } from "./admin-payment-config-psp-envelope.mjs";
 
 const privateHeaders = {
   "cache-control": "private, no-store",
@@ -67,7 +68,13 @@ export async function createPaymentTestPspServer(options) {
           response.writeHead(400, privateHeaders).end();
           return;
         }
-        if (request.method === "POST" && url.pathname === "/v1/commands") {
+        const normalized =
+          options.normalizedGateway !== undefined &&
+          url.pathname === "/v1/payment-commands";
+        if (
+          request.method === "POST" &&
+          (url.pathname === "/v1/commands" || normalized)
+        ) {
           if (
             !equal(
               request.headers.authorization,
@@ -80,7 +87,13 @@ export async function createPaymentTestPspServer(options) {
             response.writeHead(401, privateHeaders).end();
             return;
           }
-          const command = JSON.parse(await bodyOf(request));
+          const raw = JSON.parse(await bodyOf(request));
+          const command = normalized
+            ? readTestNormalizedPaymentCommand(raw, request.headers, {
+                ...options.normalizedGateway,
+                providerAccountId: options.binding.providerAccountId,
+              })
+            : raw;
           const armed = fault?.operation === command.operation ? fault : null;
           if (armed) fault = undefined;
           if (armed?.mode === "BEFORE") {

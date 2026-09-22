@@ -1,3 +1,8 @@
+import { createAdminPaymentConfigurationRepository } from "./admin-payment-configuration-repository.js";
+import type {
+  AdminPaymentConfigurationRepository,
+  AdminPaymentConfigurationTransactionManager,
+} from "@fan-support/persistence-port";
 import { createAdminFinanceRepository } from "./admin-finance-repository.js";
 import type {
   AdminFinanceRepository,
@@ -193,6 +198,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly adminPaymentConfigurationTransactionManager: AdminPaymentConfigurationTransactionManager;
   readonly adminFinanceTransactionManager: AdminFinanceTransactionManager;
   readonly paymentHealthTransactionManager: PaymentHealthTransactionManager;
   readonly adminOrdersTransactionManager: AdminOrdersTransactionManager;
@@ -380,6 +386,12 @@ export function createPostgresPersistenceWithPoolFactory(
       createOrderPaymentApplicationRepository(client, inventory, outbox, scope),
     );
   };
+  const adminPaymentConfigurationRunner =
+    createTransactionRunner<AdminPaymentConfigurationRepository>({
+      acquireClient: () =>
+        acquirePaymentHealthClient(() => pool.connect(), 10000),
+      createRepositories: createAdminPaymentConfigurationRepository,
+    });
   const adminFinanceRunner = createTransactionRunner<AdminFinanceRepository>({
     acquireClient: async () => pool.connect(),
     createRepositories: financeRepositories,
@@ -1174,6 +1186,19 @@ export function createPostgresPersistenceWithPoolFactory(
           });
         return publishedContentRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    adminPaymentConfigurationTransactionManager: {
+      async runInAdminPaymentConfigurationTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminPaymentConfigurationRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );
       },

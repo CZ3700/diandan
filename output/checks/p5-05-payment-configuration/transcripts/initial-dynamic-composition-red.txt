@@ -1,0 +1,33 @@
+$ vitest run --config ../../vitest.config.ts --root . src/payment-runtime-composition.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/api
+
+ ❯ src/payment-runtime-composition.test.ts (10 tests | 1 failed) 8ms
+   × a dynamic deployment can begin without an eligible account and activate its first PG publication later 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/payment-runtime-composition.test.ts > a dynamic deployment can begin without an eligible account and activate its first PG publication later
+TypeError: Invalid payment health policies
+ ❯ healthPolicies src/payment-runtime-composition.ts:105:11
+    103| ) {
+    104|   if (!Array.isArray(input) || input.length === 0 || input.length > 10…
+    105|     throw new TypeError("Invalid payment health policies");
+       |           ^
+    106|   const policies = input.map((value) => paymentHealthPolicySchema.pars…
+    107|   const identity = (
+ ❯ compose src/payment-runtime-composition.ts:141:9
+ ❯ Module.createTestPaymentRuntimeComposition src/payment-runtime-composition.ts:220:10
+ ❯ src/payment-runtime-composition.test.ts:111:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 passed (10)
+   Start at  13:12:41
+   Duration  1.47s (transform 935ms, setup 0ms, import 1.39s, tests 8ms, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/api:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/api@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/payment-runtime-composition.test.ts`
+Exit status 1

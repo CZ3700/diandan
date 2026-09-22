@@ -1,5 +1,8 @@
 import { expect, test, vi } from "vitest";
-import { SUPPORTED_LOCALES } from "@fan-support/contracts";
+import {
+  SUPPORTED_LOCALES,
+  paymentRuntimeConfigurationSchema,
+} from "@fan-support/contracts";
 const observed = vi.hoisted(() => ({
   create: vi.fn(() => ({
     capabilities: vi.fn(),
@@ -34,7 +37,7 @@ const keyManagement = {
   encryptEnvelopeFields: vi.fn(),
   decryptEnvelope: vi.fn(),
 };
-const configuration = {
+const configuration = paymentRuntimeConfigurationSchema.parse({
   schemaVersion: 1 as const,
   publicStorefrontOrigin: "https://shop.example.invalid",
   leaseMs: 10_000,
@@ -42,7 +45,7 @@ const configuration = {
   actionTtlMs: 60_000,
   returnStateTtlMs: 60_000,
   recoveryBatchSize: 5,
-};
+});
 const binding = {
   schemaVersion: 1 as const,
   providerAccountId: "10000000-0000-4000-8000-000000000001",
@@ -75,6 +78,59 @@ const options = {
   configuration,
   providers: [{ configuration: binding, provider }],
 };
+test("dynamic policies reach application health while legacy initial policy validation remains mandatory", () => {
+  const policy = {
+    schemaVersion: 1,
+    providerAccountId: binding.providerAccountId,
+    environment: "TEST",
+    version: 1,
+    failureThreshold: 3,
+    failureWindowMs: 60000,
+    openDurationMs: 30000,
+    probeLeaseMs: 30000,
+    probeRetryMs: 10000,
+  };
+  const readHealthPolicies = () => [policy];
+  const persistence = {
+    paymentRuntimeTransactionManager: {
+      runInPaymentRuntimeTransaction: vi.fn(),
+    },
+    paymentHealthTransactionManager: { runInPaymentHealthTransaction: vi.fn() },
+    close: vi.fn(async () => undefined),
+  };
+  createTestPaymentRuntimeComposition(
+    { ...options, healthPolicies: [policy], readHealthPolicies } as never,
+    { createPersistence: () => persistence },
+  );
+  expect(observed.create).toHaveBeenLastCalledWith(
+    expect.objectContaining({
+      health: expect.objectContaining({ readPolicies: readHealthPolicies }),
+    }),
+  );
+});
+test("a dynamic deployment can begin without an eligible account and activate its first PG publication later", async () => {
+  const readHealthPolicies = () => [];
+  const persistence = {
+    paymentRuntimeTransactionManager: {
+      runInPaymentRuntimeTransaction: vi.fn(),
+    },
+    paymentHealthTransactionManager: { runInPaymentHealthTransaction: vi.fn() },
+    close: vi.fn(async () => undefined),
+  };
+  const result = createTestPaymentRuntimeComposition(
+    { ...options, providers: [], healthPolicies: [], readHealthPolicies },
+    { createPersistence: () => persistence },
+  );
+  expect(observed.create).toHaveBeenLastCalledWith(
+    expect.objectContaining({
+      health: expect.objectContaining({
+        policies: [],
+        readPolicies: readHealthPolicies,
+      }),
+    }),
+  );
+  await result.paymentRuntime.stop();
+});
 test("TEST composition owns one payment pool, binds exact providers and a stoppable recovery lifecycle", async () => {
   const persistence = {
     paymentRuntimeTransactionManager: {

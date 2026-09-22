@@ -114,6 +114,61 @@ function commerceOperation(
   });
 }
 const entries = {
+  "payment-config-read": operation(
+    "/api/v1/admin/payment-configuration/read",
+    contract.adminPaymentConfigurationCommandSchema,
+    contract.adminPaymentConfigurationResponseSchema,
+    "READ",
+    "WORKSPACE",
+  ),
+  "payment-config-save": operation(
+    "/api/v1/admin/payment-configuration/save",
+    contract.adminPaymentConfigurationCommandSchema,
+    contract.adminPaymentConfigurationResponseSchema,
+    "SAVE",
+    "MUTATION",
+    true,
+    512 * 1024,
+  ),
+  "payment-config-submit": operation(
+    "/api/v1/admin/payment-configuration/submit",
+    contract.adminPaymentConfigurationCommandSchema,
+    contract.adminPaymentConfigurationResponseSchema,
+    "SUBMIT",
+    "MUTATION",
+    true,
+  ),
+  "payment-config-approve": operation(
+    "/api/v1/admin/payment-configuration/approve",
+    contract.adminPaymentConfigurationCommandSchema,
+    contract.adminPaymentConfigurationResponseSchema,
+    "APPROVE",
+    "MUTATION",
+    true,
+  ),
+  "payment-config-validate": operation(
+    "/api/v1/admin/payment-configuration/validate",
+    contract.adminPaymentConfigurationCommandSchema,
+    contract.adminPaymentConfigurationResponseSchema,
+    "VALIDATE",
+    "VALIDATION",
+  ),
+  "payment-config-publish": operation(
+    "/api/v1/admin/payment-configuration/publish",
+    contract.adminPaymentConfigurationCommandSchema,
+    contract.adminPaymentConfigurationResponseSchema,
+    "PUBLISH",
+    "MUTATION",
+    true,
+  ),
+  "payment-config-rollback": operation(
+    "/api/v1/admin/payment-configuration/rollback",
+    contract.adminPaymentConfigurationCommandSchema,
+    contract.adminPaymentConfigurationResponseSchema,
+    "ROLLBACK",
+    "MUTATION",
+    true,
+  ),
   "finance-list": operation(
     "/api/v1/admin/finance/list",
     contract.adminFinanceCommandSchema,

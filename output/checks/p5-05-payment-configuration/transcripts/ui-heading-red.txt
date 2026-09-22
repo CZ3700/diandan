@@ -1,0 +1,33 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
+
+ ❯ src/management-payments/views.test.tsx (5 tests | 1 failed) 32ms
+   × editor cards continue the page heading outline after the workspace title 15ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/management-payments/views.test.tsx > editor cards continue the page heading outline after the workspace title
+AssertionError: expected '<h1>Payment settings</h1><form class=…' to contain '<h2>Connected account 1</h2>'
+
+Expected: "<h2>Connected account 1</h2>"
+Received: "<h1>Payment settings</h1><form class="mp-editor" data-payment-editor="true"><p>Saving creates a new version. Unchanged text from a published version may keep its approval; new or changed text needs independent review.</p><fieldset><legend>Payment channels</legend><section class="mp-card" data-payment-channel="true"><h3>Connected account 1</h3><label>Connected account<select name="c0.account" required=""><option value="">Connected account</option></select></label><div class="mp-grid"><label class="mp-check"><input type="checkbox" name="c0.enabled" checked=""/>Enabled for new payments</label><label>Display order<input type="number" min="0" max="2147483647" step="1" required="" name="c0.order" value="1"/></label><label>Traffic share (%)<input type="number" min="0" max="100" step="0.01" required="" name="c0.rollout" value="100"/></label></div><details><summary>Advanced: channel health</summary><p>Use the deployed policy or enter all fields explicitly. Technical failures can pause new payments.</p><div class="mp-grid"><label>Failures before pause<input type="number" min="1" max="100" step="1" required="" name="c0.failureThreshold" value="3"/></label><label>Failure window (seconds)<input type="number" min="1" max="3600" step="0.001" required="" name="c0.failureWindowMs" value="60"/></label><label>Pause duration (seconds)<input type="number" min="1" max="86400" step="0.001" required="" name="c0.openDurationMs" value="10"/></label><label>Recovery check timeout (seconds)<input type="number" min="1" max="120" step="0.001" required="" name="c0.probeLeaseMs" value="5"/></label><label>Recovery check interval (seconds)<input type="number" min="1" max="86400" step="0.001" required="" name="c0.probeRetryMs" value="10"/></label></div></details><div class="mp-copy-editor"><label>Language<select><option value="en" selected="">English</option><option value="zh-CN">Chinese (China)</option><option value="th">Thai</option><option value="vi">Vietnamese</option><option value="ja">Japanese</option><option value="es">Spanish</option><option value="pt">Portuguese</option></select></label><div lang="en" data-payment-text="en"><label>Channel name · English<input maxLength="80" name="c0.en.name" value="Test card"/></label><label>Payment guidance · English<textarea name="c0.en.hint" maxLength="280" rows="3">Hosted test checkout</textarea></label></div><div hidden="" lang="zh-CN" data-payment-text="zh-CN"><label>Channel name · Chinese (China)<input maxLength="80" name="c0.zh-CN.name" value=""/></label><label>Payment guidance · Chinese (China)<textarea name="c0.zh-CN.hint" maxLength="280" rows="3"></textarea></label></div><div hidden="" lang="th" data-payment-text="th"><label>Channel name · Thai<input maxLength="80" name="c0.th.name" value=""/></label><label>Payment guidance · Thai<textarea name="c0.th.hint" maxLength="280" rows="3"></textarea></label></div><div hidden="" lang="vi" data-payment-text="vi"><label>Channel name · Vietnamese<input maxLength="80" name="c0.vi.name" value=""/></label><label>Payment guidance · Vietnamese<textarea name="c0.vi.hint" maxLength="280" rows="3"></textarea></label></div><div hidden="" lang="ja" data-payment-text="ja"><label>Channel name · Japanese<input maxLength="80" name="c0.ja.name" value=""/></label><label>Payment guidance · Japanese<textarea name="c0.ja.hint" maxLength="280" rows="3"></textarea></label></div><div hidden="" lang="es" data-payment-text="es"><label>Channel name · Spanish<input maxLength="80" name="c0.es.name" value=""/></label><label>Payment guidance · Spanish<textarea name="c0.es.hint" maxLength="280" rows="3"></textarea></label></div><div hidden="" lang="pt" data-payment-text="pt"><label>Channel name · Portuguese<input maxLength="80" name="c0.pt.name" value=""/></label><label>Payment guidance · Portuguese<textarea name="c0.pt.hint" maxLength="280" rows="3"></textarea></label></div></div><button class="fs-button fs-button--standard fs-button--secondary" type="button"><span class="fs-button__label">Remove</span></button></section><button data-payment-add-channel="true" class="fs-button fs-button--standard fs-button--secondary" disabled="" type="button"><span class="fs-button__label">Add channel</span></button></fieldset><fieldset><legend>Availability rules</legend><button data-payment-add-rule="true" class="fs-button fs-button--standard fs-button--secondary" type="button"><span class="fs-button__label">Add rule</span></button></fieldset><div class="mp-actions"><button data-payment-save="true" class="fs-button fs-button--standard fs-button--primary" type="submit"><span class="fs-button__label">Save draft</span></button><button class="fs-button fs-button--standard fs-button--secondary" type="button"><span class="fs-button__label">Back</span></button></div></form>"
+
+ ❯ src/management-payments/views.test.tsx:205:15
+    203|  const {PaymentEditor}=await import("./editor");
+    204|  const html=renderToStaticMarkup(<><h1>Payment settings</h1><PaymentEd…
+    205|  expect(html).toContain("<h2>Connected account 1</h2>");expect(html).n…
+       |               ^
+    206| });
+    207|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  13:15:04
+   Duration  483ms (transform 278ms, setup 0ms, import 394ms, tests 32ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/apps/admin:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run src/management-payments/views.test.tsx

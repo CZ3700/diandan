@@ -1,0 +1,12 @@
+{"stage":"query","code":"23514","constraint":"admin_payment_configuration_revisions_document_check1","routine":"ExecConstraints","message":"new row for relation \"admin_payment_configuration_revisions\" violates check constraint \"admin_payment_configuration_revisions_document_check1\""}
+{"passed":false,"stage":"draft-and-approval","code":"INTEGRITY_VIOLATION","message":"persistence transaction failed"}
+file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/admin-finance-native-postgres.mjs:216
+    failure = new Error(
+              ^
+
+Error: Native TEST PostgreSQL operation failed; inspect safe scenario evidence
+    at withNativeFinancePostgres (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/admin-finance-native-postgres.mjs:216:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/admin-payment-configuration-postgres.mjs:19:1
+
+Node.js v24.20.0

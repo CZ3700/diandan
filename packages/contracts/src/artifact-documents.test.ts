@@ -9,6 +9,33 @@ import * as registry from "./artifact-registry.js";
 
 type JsonObject = Record<string, unknown>;
 
+/** Payment operations expose account identities only to authorized configuration staff. */
+function withoutPaymentConfiguration(document: JsonObject): JsonObject {
+  const components = document["components"] as JsonObject;
+  const configurationSchemas = new Set([
+    "AdminPaymentConfigurationCommand",
+    "AdminPaymentConfigurationRequest",
+    "AdminPaymentConfigurationResponse",
+    "AdminPaymentConfigurationFailure",
+  ]);
+  return {
+    ...document,
+    paths: Object.fromEntries(
+      Object.entries(document["paths"] as JsonObject).filter(
+        ([path]) => !path.startsWith("/api/v1/admin/payment-configuration/"),
+      ),
+    ),
+    components: {
+      ...components,
+      schemas: Object.fromEntries(
+        Object.entries(components["schemas"] as JsonObject).filter(
+          ([name]) => !configurationSchemas.has(name),
+        ),
+      ),
+    },
+  };
+}
+
 function isStrictVersionedRoot(schema: JsonObject): boolean {
   const alternatives = (schema["anyOf"] ?? schema["oneOf"]) as
     unknown[] | undefined;
@@ -158,6 +185,9 @@ test("renders deterministic JSON Schema and OpenAPI documents from one registry"
     expect(componentSchema).toEqual(jsonDefinitions[registration.name]);
   }
 
+  expect(
+    JSON.stringify(withoutPaymentConfiguration(documents.openapi)),
+  ).not.toContain("providerAccountId");
   const renderedOpenapi = JSON.stringify(documents.openapi);
   for (const forbiddenField of [
     "fanMessageCiphertext",
@@ -166,7 +196,8 @@ test("renders deterministic JSON Schema and OpenAPI documents from one registry"
     "encryptionKeyVersion",
     "objectKey",
     "supportIntentId",
-    "providerAccountId",
+    "credentialRef",
+    "merchantAccount",
     "providerIdempotencyKey",
     "externalReference",
     "customerContactId",
@@ -322,6 +353,13 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/orders/notification/resend",
     "/api/v1/admin/orders/prepare",
     "/api/v1/admin/orders/resume",
+    "/api/v1/admin/payment-configuration/approve",
+    "/api/v1/admin/payment-configuration/publish",
+    "/api/v1/admin/payment-configuration/read",
+    "/api/v1/admin/payment-configuration/rollback",
+    "/api/v1/admin/payment-configuration/save",
+    "/api/v1/admin/payment-configuration/submit",
+    "/api/v1/admin/payment-configuration/validate",
     "/api/v1/admin/resources/media/read",
     "/api/v1/admin/resources/media/rights",
     "/api/v1/admin/resources/policies/read",
@@ -498,11 +536,13 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
   }
 
   expect(schemas["PaymentWebhookAcceptedResponse"]).toBeDefined();
+  expect(JSON.stringify(withoutPaymentConfiguration(openapi))).not.toContain(
+    "providerAccountId",
+  );
   const publicDocument = JSON.stringify(openapi);
   for (const forbidden of [
     "ReceivePaymentWebhookCommand",
     "rawBodyBase64",
-    "providerAccountId",
     "verificationKeyReferenceHash",
     "webhookInboxId",
     "providerEventRowId",

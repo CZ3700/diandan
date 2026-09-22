@@ -1,0 +1,55 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
+
+ ❯ src/admin-payment-configuration.test.ts (3 tests | 3 failed) 2ms
+     × requires an exact reviewed candidate and confirmation for publication 1ms
+     × keeps draft authoring separate from seven-language approval 0ms
+     × validates rollback explicitly and never accepts arbitrary executable adapters 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/admin-payment-configuration.test.ts > payment configuration management boundary > requires an exact reviewed candidate and confirmation for publication
+AssertionError: expected undefined to be defined
+ ❯ src/admin-payment-configuration.test.ts:8:61
+      6| describe("payment configuration management boundary",()=>{
+      7|  it("requires an exact reviewed candidate and confirmation for publica…
+      8|   expect(contracts?.adminPaymentConfigurationCommandSchema).toBeDefine…
+       |                                                             ^
+      9|   const schema=contracts!.adminPaymentConfigurationCommandSchema;
+     10|   expect(schema.safeParse(publish).success).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/admin-payment-configuration.test.ts > payment configuration management boundary > keeps draft authoring separate from seven-language approval
+AssertionError: expected undefined to be defined
+ ❯ src/admin-payment-configuration.test.ts:14:61
+     12|  });
+     13|  it("keeps draft authoring separate from seven-language approval",()=>{
+     14|   expect(contracts?.adminPaymentConfigurationCommandSchema).toBeDefine…
+       |                                                             ^
+     15|   const schema=contracts!.adminPaymentConfigurationCommandSchema;
+     16|   const save={schemaVersion:1,action:"SAVE",sourceRevisionId:null,expe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/admin-payment-configuration.test.ts > payment configuration management boundary > validates rollback explicitly and never accepts arbitrary executable adapters
+AssertionError: expected undefined to be defined
+ ❯ src/admin-payment-configuration.test.ts:23:61
+     21|  });
+     22|  it("validates rollback explicitly and never accepts arbitrary executa…
+     23|   expect(contracts?.adminPaymentConfigurationCommandSchema).toBeDefine…
+       |                                                             ^
+     24|   const schema=contracts!.adminPaymentConfigurationCommandSchema;
+     25|   expect(schema.safeParse({...publish,action:"ROLLBACK"}).success).toB…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  12:29:54
+   Duration  79ms (transform 9ms, setup 0ms, import 16ms, tests 2ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/packages/contracts:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config ../../vitest.config.ts --root . src/admin-payment-configuration.test.ts

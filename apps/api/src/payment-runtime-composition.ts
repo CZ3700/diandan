@@ -51,6 +51,7 @@ type Common = {
   providers: readonly PaymentRuntimeProviderRegistration[];
   providerDirectory?: PaymentRuntimeProviderDirectory;
   healthPolicies?: readonly PaymentHealthPolicy[];
+  readHealthPolicies?: () => readonly PaymentHealthPolicy[];
 };
 type Injected = Common & {
   keyManagement: KeyManagementPort;
@@ -99,8 +100,13 @@ function registrations(
 function healthPolicies(
   input: readonly PaymentHealthPolicy[] | undefined,
   providers: readonly PaymentRuntimeProviderRegistration[],
+  dynamic = false,
 ) {
-  if (!Array.isArray(input) || input.length === 0 || input.length > 100)
+  if (
+    !Array.isArray(input) ||
+    (input.length === 0 && !dynamic) ||
+    input.length > 100
+  )
     throw new TypeError("Invalid payment health policies");
   const policies = input.map((value) => paymentHealthPolicySchema.parse(value));
   const identity = (
@@ -134,13 +140,19 @@ function compose(
         };
   // Validate before creating database resources; the application also guards historical bindings.
   providerDirectory?.getRegistrations();
+  if (
+    options.readHealthPolicies !== undefined &&
+    options.healthPolicies === undefined
+  )
+    throw new TypeError("Dynamic health requires an initial policy snapshot");
   const policies =
     options.healthPolicies === undefined
       ? undefined
-      : healthPolicies(options.healthPolicies, [
-          ...providers,
-          ...(providerDirectory?.getRegistrations() ?? []),
-        ]);
+      : healthPolicies(
+          options.healthPolicies,
+          [...providers, ...(providerDirectory?.getRegistrations() ?? [])],
+          options.readHealthPolicies !== undefined,
+        );
   const credentials = createCartSessionCredentials(options);
   const persistence = (
     factories.createPersistence ?? createPostgresPersistence
@@ -168,6 +180,9 @@ function compose(
             health: {
               policies,
               transactions: persistence.paymentHealthTransactionManager!,
+              ...(options.readHealthPolicies === undefined
+                ? {}
+                : { readPolicies: options.readHealthPolicies }),
             },
           }),
     });
@@ -243,10 +258,14 @@ export function createPaymentRuntimeComposition(
   },
   factories: Factories = {},
 ): PaymentRuntimeComposition {
-  healthPolicies(options.healthPolicies, [
-    ...options.providers,
-    ...(options.providerDirectory?.getRegistrations() ?? []),
-  ]);
+  healthPolicies(
+    options.healthPolicies,
+    [
+      ...options.providers,
+      ...(options.providerDirectory?.getRegistrations() ?? []),
+    ],
+    options.readHealthPolicies !== undefined,
+  );
   return compose(
     {
       ...options,

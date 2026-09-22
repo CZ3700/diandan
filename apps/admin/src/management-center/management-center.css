@@ -379,7 +379,10 @@
     padding: 0 0 var(--space-4);
   }
   .mc-sidebar nav {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, var(--space-32)), 1fr)
+    );
     gap: var(--space-1);
   }
   .mc-sidebar button {

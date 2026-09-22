@@ -1,0 +1,26 @@
+{
+  "capturedAt": "2026-09-22T06:43:55.939777+00:00",
+  "baseline": "fb89c3a4029083b6c6495dd8c581c1b2e4db88aa",
+  "protectedUntracked": 5958,
+  "changedUntracked": [],
+  "oldSqlCount": 70,
+  "changedOldSql": [],
+  "oldManifestEntries": 35,
+  "oldManifestPrefixUnchanged": true,
+  "currentMigrations": 36,
+  "contracts": {
+    "packages/contracts/generated/contracts.schema.json": {
+      "previous": 679,
+      "current": 690,
+      "changedPrevious": []
+    },
+    "packages/contracts/generated/openapi.json": {
+      "previous": 113,
+      "current": 120,
+      "changedPrevious": []
+    }
+  },
+  "sourceFiles": 2530,
+  "sourceDeltaSinceFinalGate": [],
+  "finalSourceManifestSha256": "3c48d45f95541512ad64ca5d9f1f0c2ec3cdbbf4f1fcea7968b276c93bf54233"
+}

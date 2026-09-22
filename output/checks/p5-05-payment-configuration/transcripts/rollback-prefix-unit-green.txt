@@ -1,0 +1,65 @@
+✔ empty known head 0029 uses the ordinary exact-version down sequence (0.811083ms)
+✔ empty known head 0030 uses the ordinary exact-version down sequence (0.094833ms)
+✔ empty known head 0031 uses the ordinary exact-version down sequence (0.08725ms)
+✔ empty known head 0032 uses the ordinary exact-version down sequence (0.105333ms)
+✔ empty known head 0033 uses the ordinary exact-version down sequence (0.086583ms)
+✔ empty known head 0034 uses the ordinary exact-version down sequence (0.076792ms)
+✔ empty known head 0035 uses the ordinary exact-version down sequence (0.097833ms)
+✔ empty known head 0036 uses the ordinary exact-version down sequence (0.079042ms)
+✔ retained notifications rejects before any migration is attempted (0.726125ms)
+✔ retained contact_accesses rejects before any migration is attempted (0.2ms)
+✔ retained bootstraps rejects before any migration is attempted (0.144833ms)
+✔ retained expiries rejects before any migration is attempted (0.101042ms)
+✔ retained login_challenges rejects before any migration is attempted (0.0965ms)
+✔ retained access_audits rejects before any migration is attempted (0.087625ms)
+✔ retained order_notes rejects before any migration is attempted (0.079875ms)
+✔ retained private_accesses rejects before any migration is attempted (0.094792ms)
+✔ retained private_confirmations rejects before any migration is attempted (0.082292ms)
+✔ retained message_reviews rejects before any migration is attempted (0.083417ms)
+✔ retained operation_receipts rejects before any migration is attempted (0.087875ms)
+✔ retained fulfillment_receipts rejects before any migration is attempted (0.076667ms)
+✔ retained review_locale_grants rejects before any migration is attempted (0.074583ms)
+✔ retained order_audits rejects before any migration is attempted (0.082417ms)
+✔ retained resends rejects before any migration is attempted (0.069667ms)
+✔ retained resend_outbox rejects before any migration is attempted (0.082667ms)
+✔ retained resend_attempts rejects before any migration is attempted (0.070334ms)
+✔ retained resend_contact_accesses rejects before any migration is attempted (0.065125ms)
+✔ retained resend_audits rejects before any migration is attempted (0.111375ms)
+✔ retained resend_link_audits rejects before any migration is attempted (0.073959ms)
+✔ retained health_policies rejects before any migration is attempted (0.071291ms)
+✔ retained health_state rejects before any migration is attempted (0.064792ms)
+✔ retained health_observations rejects before any migration is attempted (0.062875ms)
+✔ retained finance_operations rejects before any migration is attempted (0.061292ms)
+✔ retained finance_receipts rejects before any migration is attempted (0.065833ms)
+✔ retained finance_applications rejects before any migration is attempted (0.062417ms)
+✔ retained finance_schedule rejects before any migration is attempted (0.070167ms)
+✔ retained finance_audits rejects before any migration is attempted (0.066667ms)
+✔ retained finance_aliases rejects before any migration is attempted (0.064708ms)
+✔ retained configuration_revisions rejects before any migration is attempted (0.083916ms)
+✔ retained configuration_validations rejects before any migration is attempted (0.064625ms)
+✔ retained configuration_receipts rejects before any migration is attempted (0.063917ms)
+✔ retained configuration_activations rejects before any migration is attempted (0.070125ms)
+✔ retained configuration_audits rejects before any migration is attempted (0.083667ms)
+✔ unknown head null is not silently rewound (0.053083ms)
+✔ unknown head 0028 is not silently rewound (0.047084ms)
+✔ unknown head 0037 is not silently rewound (0.024959ms)
+✖ real PostgreSQL preserves login and audit history and rewinds only empty known prefixes (958.302417ms)
+ℹ tests 46
+ℹ suites 0
+ℹ pass 45
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1317.28075
+
+✖ failing tests:
+
+test at packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:117:1
+✖ real PostgreSQL preserves login and audit history and rewinds only empty known prefixes (958.302417ms)
+  Error [EphemeralPostgresError]: ephemeral PostgreSQL operation failed
+      at withEphemeralPostgres (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/dist/testing/ephemeral-postgres.js:161:15)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:118:3)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7)

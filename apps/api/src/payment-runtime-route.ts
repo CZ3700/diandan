@@ -166,9 +166,11 @@ export function registerPaymentRuntimeRoute(
   options: PaymentRuntimeRouteDependencies,
 ): void {
   paymentRuntimeOriginSchema.parse(options.allowedOrigin);
-  const origins = options.actionOrigins.map((value) =>
-    paymentRuntimeOriginSchema.parse(value),
-  );
+  const readOrigins = () =>
+    options.actionOrigins.map((value) =>
+      paymentRuntimeOriginSchema.parse(value),
+    );
+  readOrigins();
   for (const [method, url, action] of [
     ["GET", "/api/v1/checkout/current/status", "current"],
     [
@@ -271,7 +273,7 @@ export function registerPaymentRuntimeRoute(
               if (result.code === "CART_EXPIRED") clearCookie(reply);
               return reply.code(status(result.code)).send(result);
             }
-            if (!matches(command, result, origins))
+            if (!matches(command, result, readOrigins()))
               throw new Error("Payment response mismatch");
             void reply.header("x-csrf-token", proof.csrfToken);
             return reply.code(200).send(result);

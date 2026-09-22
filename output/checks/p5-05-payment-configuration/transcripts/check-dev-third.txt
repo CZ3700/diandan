@@ -1,0 +1,42 @@
+$ node ./scripts/check-development.mjs
+Development checks only; success is not formal acceptance. Use pnpm check and task-specific acceptance separately.
+Scope: all workspaces; consumers: all-workspaces.
+[check:dev] workspace
+Workspace validation passed: 4 apps, 32 packages, 36 units, no dependency cycles.
+[check:dev] domain-boundaries
+Domain boundary validation passed
+[check:dev] format
+$ prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts
+Checking formatting...
+All matched files use Prettier code style!
+[check:dev] lint
+$ eslint . --max-warnings=0
+[check:dev] typecheck
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/admin, @fan-support/api, @fan-support/application, @fan-support/cache-purge-cdn, @fan-support/cache-purge-port, @fan-support/cart, @fan-support/catalog, @fan-support/config, @fan-support/content, @fan-support/contracts, @fan-support/design-tokens, @fan-support/domain, @fan-support/i18n, @fan-support/identity-oidc, @fan-support/identity-port, @fan-support/inventory, @fan-support/key-management-kms, @fan-support/key-management-port, @fan-support/media-image, @fan-support/media-port, @fan-support/media-s3, @fan-support/notification-port, @fan-support/notification-provider, @fan-support/observability, @fan-support/orders, @fan-support/payment-fake, @fan-support/payment-gateway, @fan-support/payment-port, @fan-support/payment-routing, @fan-support/persistence-port, @fan-support/persistence-postgres, @fan-support/pricing, @fan-support/storefront, @fan-support/testing, @fan-support/ui, @fan-support/worker
+   • Running typecheck in 36 packages
+   • Remote caching disabled
+
+@fan-support/persistence-postgres:typecheck: cache miss, executing 0ef99e02992d562d
+@fan-support/persistence-postgres:typecheck:
+@fan-support/persistence-postgres:typecheck: > @fan-support/persistence-postgres@0.0.0 typecheck /Users/mario/Desktop/下单/packages/persistence-postgres
+@fan-support/persistence-postgres:typecheck: > tsc -p tsconfig.json
+@fan-support/persistence-postgres:typecheck:
+@fan-support/persistence-postgres:typecheck: src/admin-payment-configuration.test.ts(30,24): error TS2322: Type 'Promise<{ query: Mock<Procedure | Constructable>; release: Mock<Procedure | Constructable>; }>' is not assignable to type 'Promise<TransactionClient>'.
+@fan-support/persistence-postgres:typecheck:   Type '{ query: Mock<Procedure | Constructable>; release: Mock<Procedure | Constructable>; }' is not assignable to type 'TransactionClient'.
+@fan-support/persistence-postgres:typecheck:     Types of property 'query' are incompatible.
+@fan-support/persistence-postgres:typecheck:       Type 'Mock<Procedure | Constructable>' is not assignable to type '(text: string, values?: unknown[] | undefined) => Promise<unknown>'.
+@fan-support/persistence-postgres:typecheck:         Type 'MockInstance<Procedure | Constructable> & (new (...args: any[]) => any) & {}' is not assignable to type '(text: string, values?: unknown[] | undefined) => Promise<unknown>'.
+@fan-support/persistence-postgres:typecheck:           Type 'MockInstance<Procedure | Constructable> & (new (...args: any[]) => any) & {}' provides no match for the signature '(text: string, values?: unknown[] | undefined): Promise<unknown>'.
+@fan-support/persistence-postgres:typecheck:  ELIFECYCLE  Command failed with exit code 2.
+@fan-support/persistence-postgres#typecheck:  ERROR  command (/Users/mario/Desktop/下单/packages/persistence-postgres) /Users/mario/Library/pnpm/pnpm run typecheck exited (2)
+
+ Tasks:    61 successful, 62 total
+Cached:    35 cached, 62 total
+  Time:    21.171s
+Failed:    @fan-support/persistence-postgres#typecheck
+
+ ERROR  run failed: command  exited (2)
+[check:dev] stopped at typecheck (exit 2); later checks did not run.
+[ELIFECYCLE] Command failed with exit code 2.

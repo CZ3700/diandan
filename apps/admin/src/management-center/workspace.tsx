@@ -46,6 +46,7 @@ export function ManagementWorkspace({
   storefrontOrigin,
   onLogout,
   onOrders,
+  onPayments,
   initialSection = "ARTISTS",
   accessNotice,
 }: {
@@ -54,6 +55,7 @@ export function ManagementWorkspace({
   storefrontOrigin?: string | undefined;
   onLogout?: (() => Promise<void>) | undefined;
   onOrders?: (() => void) | undefined;
+  onPayments?: (() => void) | undefined;
   initialSection?: ManagementSection;
   accessNotice?: ReactNode;
 }) {
@@ -208,9 +210,14 @@ export function ManagementWorkspace({
       locale={locale}
       section={section}
       onSection={(next) =>
-        next === "ORDERS" ? onOrders?.() : chooseSection(next)
+        next === "ORDERS"
+          ? onOrders?.()
+          : next === "PAYMENTS"
+            ? onPayments?.()
+            : chooseSection(next)
       }
       ordersAvailable={Boolean(onOrders)}
+      paymentsAvailable={Boolean(onPayments)}
       disabled={busy}
       accountAction={
         onLogout ? (

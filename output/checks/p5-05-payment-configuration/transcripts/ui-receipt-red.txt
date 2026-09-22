@@ -1,0 +1,41 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
+
+ ❯ src/management-payments/api.test.ts (3 tests | 1 failed) 15ms
+   × receipt semantics cannot invent a publication or confirm a zero generation 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/management-payments/api.test.ts > receipt semantics cannot invent a publication or confirm a zero generation
+AssertionError: promise resolved "{ schemaVersion: 1, …(7) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "action": "PUBLISH",
++   "generation": 0,
++   "kind": "MUTATION",
++   "outcome": "SUCCESS",
++   "publicationId": "10000000-0000-4000-8000-000000000001",
++   "replayed": false,
++   "revisionId": "10000000-0000-4000-8000-000000000001",
++   "schemaVersion": 1,
+  }
+
+ ❯ src/management-payments/api.test.ts:85:38
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  13:05:27
+   Duration  392ms (transform 220ms, setup 0ms, import 320ms, tests 15ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/apps/admin:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run src/management-payments/api.test.ts

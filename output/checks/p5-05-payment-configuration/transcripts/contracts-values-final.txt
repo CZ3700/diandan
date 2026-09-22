@@ -1,0 +1,9 @@
+$ vitest run --config ../../vitest.config.ts --root . --maxWorkers=2
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
+
+
+ Test Files  89 passed (89)
+      Tests  508 passed (508)
+   Start at  13:00:46
+   Duration  11.18s (transform 2.00s, setup 0ms, import 7.13s, tests 10.03s, environment 3ms)

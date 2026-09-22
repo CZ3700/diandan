@@ -479,3 +479,32 @@ test("an unresolved health query expires locally and a late success never comple
     vi.useRealTimers();
   }
 });
+
+test("a policy refreshed while a probe is being claimed cannot dispatch under the captured timeout", async () => {
+  const { app, h, repository, capabilities, policy, health } = await setup();
+  await app.capabilities(capabilities, h.context);
+  const context = (
+    repository.record.mock.calls[0]![0] as { probeContext: unknown }
+  ).probeContext;
+  let policies = [policy];
+  const dynamic = createPaymentRuntimeUseCases({
+    ...h.dependencies,
+    health: { ...health, readPolicies: () => policies },
+  });
+  repository.claimProbe.mockImplementationOnce(async () => {
+    policies = [{ ...policy, version: 2, probeLeaseMs: 60000 }];
+    return {
+      schemaVersion: 1,
+      probeId: "71000000-0000-4000-8000-000000000088",
+      providerAccountId: policy.providerAccountId,
+      environment: "TEST",
+      generation: 2,
+      expiresAt: "2026-09-22T22:00:00.000Z",
+      context,
+    } as never;
+  });
+  h.provider.getCapabilities.mockClear();
+  expect(await dynamic.probeNext()).toMatchObject({ processed: false });
+  expect(h.provider.getCapabilities).not.toHaveBeenCalled();
+  expect(repository.completeProbe).not.toHaveBeenCalled();
+});

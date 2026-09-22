@@ -1,0 +1,36 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
+
+ ❯ src/management-payments/authority.test.ts (2 tests | 2 failed) 3ms
+   × configuration editors can preflight drafts independently of publication permission 2ms
+   × current published and archived versions cannot misleadingly offer a publish or rollback command 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/management-payments/authority.test.ts > configuration editors can preflight drafts independently of publication permission
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ src/management-payments/authority.test.ts:6:138
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/management-payments/authority.test.ts > current published and archived versions cannot misleadingly offer a publish or rollback command
+TypeError: Cannot read properties of undefined (reading 'availableValidationModes')
+ ❯ src/management-payments/authority.test.ts:7:125
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  13:02:50
+   Duration  373ms (transform 215ms, setup 0ms, import 314ms, tests 3ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/apps/admin:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run src/management-payments/authority.test.ts

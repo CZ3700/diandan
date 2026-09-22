@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { SupportedLocale } from "@fan-support/contracts";
 import type { ManagementSection } from "./api";
 import { managementCopy } from "./copy";
+import { paymentCopy } from "../management-payments/copy";
 import { ordersCopy } from "../management-orders/copy";
 
 export function ManagementShell({
@@ -13,15 +14,17 @@ export function ManagementShell({
   accountAction,
   contentAllowed = true,
   ordersAvailable = false,
+  paymentsAvailable = false,
 }: {
   locale: SupportedLocale;
-  section: ManagementSection | "ORDERS";
-  onSection: (section: ManagementSection | "ORDERS") => void;
+  section: ManagementSection | "ORDERS" | "PAYMENTS";
+  onSection: (section: ManagementSection | "ORDERS" | "PAYMENTS") => void;
   children: ReactNode;
   disabled?: boolean;
   accountAction?: ReactNode;
   contentAllowed?: boolean;
   ordersAvailable?: boolean;
+  paymentsAvailable?: boolean;
 }) {
   const copy = managementCopy(locale);
   return (
@@ -69,6 +72,17 @@ export function ManagementShell({
               onClick={() => onSection("ORDERS")}
             >
               {ordersCopy(locale).orders}
+            </button>
+          ) : null}
+          {paymentsAvailable ? (
+            <button
+              type="button"
+              data-management-section="PAYMENTS"
+              aria-current={section === "PAYMENTS" ? "page" : undefined}
+              disabled={disabled}
+              onClick={() => onSection("PAYMENTS")}
+            >
+              {paymentCopy(locale).title}
             </button>
           ) : null}
         </nav>

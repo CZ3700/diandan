@@ -1,0 +1,14 @@
+{
+  "stage": "payment CREATE_ATTEMPT returns expected status",
+  "assertions": 5978,
+  "name": "AssertionError",
+  "code": "ERR_ASSERTION",
+  "frames": [
+    "/apps/api/scripts/admin-payment-config-http.mjs:48:12",
+    "/apps/api/scripts/payment-runtime-client.mjs:58:5",
+    "/apps/api/scripts/admin-payment-config-protocol.mjs:277:5",
+    "/apps/api/scripts/admin-payment-config-http.mjs:75:22",
+    "/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14",
+    "/apps/api/scripts/payment-runtime-runtime.mjs:29:12"
+  ]
+}

@@ -192,3 +192,7 @@ P5-04 的全部本地实现、实际PG/HTTP/七语双端与非作者复核通过
 P5-03取消/全额部分退款/拒付/对账已完成全部本地实现、实际PG/HTTP/七语双端与非作者复核。正式商户sandbox refund等外部条件保留，Task仍IN_PROGRESS、Lane A释放。P5-05原直接依赖P5-01/P5-04本地完整验收已独立核对，选定身份输入17/19与P5-04时相同（两变化仅TEST IdP可选hook及声明，原75tests回归通过），支付输入85/85相同；共享contracts/API/BFF/管理中心入口归属已冻结，现Lane C READY、无owner，下一轮先登记再实施。29 DONE / 4 IN_PROGRESS / 1 READY / 15 PENDING=49；P5-06及后继按原依赖与排期逐项就绪，Phase6/7保持LOCKED。
 
 证据见`output/checks/p5-03-refund-operations/final-verification.md`、`final-gates.json`、`ui-next-stage-readiness.md`。Docker时钟失败与原生18.6隔离全验收范围均保留；不降低权限/金融/上线条件，不push/部署，不触发真实资金。
+
+## 2026-09-22 P5-05 本地验收后的接续
+
+P5-05配置管理、独立审核/继承、差异/二次确认/发布回退、健康策略和双独立进程传播已完成本地完整验收；正式商户能力、关键文案批准和实际配置保留，Task仍IN_PROGRESS、Lane C释放。P5-06原直接依赖P5-01/P1-06/P5-03经非作者核对，身份19/可靠事件31/财务79选中源与accepted一致；11个共享变化和0036由本轮真实PG/原财务HTTP/配置HTTP/七语双端及最终质量门承接，现READY、Lane D空闲，先登记再领取。29 DONE / 5 IN_PROGRESS / 1 READY / 14 PENDING=49，Phase6/7保持LOCKED。完整持久本地体验尚未交付，检查表见`docs/runbooks/local-experience-readiness.md`；不以短暂测试夹具代替用户可持续使用的体验环境。

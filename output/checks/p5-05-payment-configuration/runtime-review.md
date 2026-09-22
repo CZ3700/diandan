@@ -1,0 +1,35 @@
+# P5-05 application / runtime review (local candidate)
+
+Status: local acceptance PASS on the final frozen candidate; external merchant/staging evidence remains outstanding.
+
+The management route parses the strict command, derives trusted identity and CSRF credentials, and invokes the application through the frozen persistence port. The application retains permanent idempotency identity and checks response command association; publish/rollback require a non-null publication and positive generation, while authoring replies cannot impersonate publication receipts.
+
+The API composition owns the actual deployed gateway registry. Safe account descriptors are validated against deployed factory capabilities; secrets, connection credentials and adapter code remain deployment inputs. Every PostgreSQL managed projection is parsed in full, merged with static historical bindings and policies, then applied through `registry.applyPublishedSnapshot`. Generation regression, same-generation content replacement, disappeared historic accounts, changed same-version health policy and incomplete policy sets fail closed. The last complete snapshot remains live after transient loading failure. No worker handler is needed for activation: each process polls the authoritative published head. Existing outbox dispatch recognizes the publication event and unrelated notification handlers safely acknowledge it.
+
+Configuration database access is bounded by pool connection 3s / statement 5s / query 6s and the repository's total transaction deadline of 10s. No detached Promise.race leaves a live transaction. The integration protocol holds the real head row lock and requires both independent processes to record bounded failures before releasing the lock and observing the next publication automatically.
+
+Health initialization is version-sensitive. A late initialize cannot mark an older policy ready. A refresh during probe claim is checked again through the policy fingerprint before dispatch, with actual RED→GREEN in `probe-refresh-race-{red,green}.log`. The old lease contract has no policyVersion field; if PostgreSQL publishes before the process observes the new projection, generation/expiry fencing still refuses obsolete probe completion. Such an in-flight query may conservatively fail, but cannot restore an unavailable account or dispatch funds. Existing published accounts remain resolvable for old UNKNOWN/reconcile regardless of new routing admission.
+
+A real two-process test found that route registration captured the hosted action origin set once. The new account's successful hosted redirect was conservatively rejected after publication. `payment-runtime-route.ts` now validates the current trusted directory at response matching time, preserving initial validation, historic origins and rejection of unknown origins. `dynamic-origin-red.log` reproduces 503; `dynamic-origin-green.log` passes all six route tests. Temporary broad schema/transaction diagnostics were removed after identifying the cause. No PSP operation or transaction validation was weakened.
+
+## Evidence and boundaries
+
+- Actual native PostgreSQL 18.6, TLS TEST OIDC, TLS TEST object storage and independent PostgreSQL-backed TEST PSP are used.
+- `psp-normalized-http-green.log` proves the existing gateway adapter uses authenticated TLS, rejects a wrong merchant, and reconciles a lost create response without duplicating provider acceptance.
+- Original failed HTTP runs remain retained; the first revealed a TEST audit/grant pair outside one transaction and subsequent runs exposed the real dynamic-origin issue.
+- No commercial PSP sandbox, merchant credentials, real money, staging, production deployment or Git push is claimed.
+- Application/API/composition/dynamic-health unit evidence is retained alongside the actual failed tests. The initial registry-runtime test was first observed green after tool startup delay; `runtime-first-observed-green.log` is deliberately not labelled RED.
+
+S.U.P.E.R checks 1–9 reviewed: one responsibility per module; transport/application/domain/port/adapter dependencies remain inward; serializable strict boundaries; no new domain networking; all runtime endpoints/credentials come from validated deployment configuration; gateway workspace dependency declared; registry/storage/provider can be independently replaced. Check 10 passes for the declared local scope: root combined format/lint/typecheck/test/build gate and actual PG/TLS/two-process/browser acceptance all passed.
+
+## Final accepted candidate
+
+`integration-2026-09-22T06-40-07.476Z` completed with exit 0, **6660 assertions** (5763 fixture setup + 897 phase scenarios), including HTTP 313 and browser 466 assertions. All 65 screenshots across seven locales and both viewports have zero axe violations, zero incomplete checks, no horizontal overflow and no clipped navigation text; eight complete interaction cases include independent locale review, readonly permissions, keyboard/reduced motion/error recovery, lost publish/rollback responses with reload and same-key recovery, and refreshed navigation state. Page errors are empty.
+
+HTTP publication/zero-rollout/rollback generations 2/3/4 reached both separate API processes in 876.6 / 924.4 / 928.6 ms. The fixture polls at 1 second; the production lifecycle default remains 10 seconds. Real head-row lock failure was observed by both nodes in 10757.1 ms and a subsequent publication recovered automatically. Restarted API reconstructs the current directory. Browser publication generation 5 and rollback generation 7 also converged automatically; post-interaction observation took 50.9 / 101.9 ms, which is an observation interval after the user interaction rather than PSP network latency.
+
+`scope.json` explicitly identifies isolated native PG18.6, real TEST TLS IdP/S3/PSP and no commercial sandbox or money. `cleanup-verification.json` records exit 0, completed owned cleanup and both recorded API PIDs absent. No source was changed during the accepted run. Previous failed evidence remains intact, including real dynamic-origin and Spanish navigation defects and corrected TEST expectations for unchanged payment rejection semantics.
+
+The browser exercised the actual Next **development** server and complete BFF/API/PG path. Root separately completed the Next **production build** in `check-dev-final.log`; this run does not represent a deployed production browser session. Browser publication elapsed values start at the subsequent convergence wait after same-key response recovery, so they are not presented as the total click/reload/operation duration. The HTTP protocol additionally bounds publication+HTTP retry and rollback+observation from their operation start by 60 seconds.
+
+Cleanup evidence is the parent runner's observed process exit 0 after its nested owned S3/native PG/OIDC/PSP/API/Next teardown returned, plus an explicit OS liveness check that both final recorded API PIDs are absent. The exact result is in `cleanup-verification.json`; no unknown containers, host services or unrelated processes were inspected or terminated.

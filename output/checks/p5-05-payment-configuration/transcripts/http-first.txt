@@ -1,0 +1,77 @@
+Admin payment configuration: processing original fictional Mira Vale independent media
+Admin payment configuration: processing original fictional Kai Ren independent media
+Admin payment configuration: processing original fictional Rose Palace gift artwork
+Admin payment configuration: processing original fictional Blue Orbit gift artwork
+Admin payment configuration: processing original fictional Ruby Bouquet gift artwork
+Admin payment configuration: authoring real gift 1/27
+Admin payment configuration: authoring real gift 2/27
+Admin payment configuration: authoring real gift 3/27
+Admin payment configuration: authoring real gift 4/27
+Admin payment configuration: authoring real gift 5/27
+Admin payment configuration: authoring real gift 6/27
+Admin payment configuration: authoring real gift 7/27
+Admin payment configuration: authoring real gift 8/27
+Admin payment configuration: authoring real gift 9/27
+Admin payment configuration: authoring real gift 10/27
+Admin payment configuration: authoring real gift 11/27
+Admin payment configuration: authoring real gift 12/27
+Admin payment configuration: authoring real gift 13/27
+Admin payment configuration: authoring real gift 14/27
+Admin payment configuration: authoring real gift 15/27
+Admin payment configuration: authoring real gift 16/27
+Admin payment configuration: authoring real gift 17/27
+Admin payment configuration: authoring real gift 18/27
+Admin payment configuration: authoring real gift 19/27
+Admin payment configuration: authoring real gift 20/27
+Admin payment configuration: authoring real gift 21/27
+Admin payment configuration: authoring real gift 22/27
+Admin payment configuration: authoring real gift 23/27
+Admin payment configuration: authoring real gift 24/27
+Admin payment configuration: authoring real gift 25/27
+Admin payment configuration: authoring real gift 26/27
+Admin payment configuration: authoring real gift 27/27
+Admin payment configuration: reading actual PostgreSQL price activation time
+Admin payment configuration: creating complete TEST price book 1/2
+Admin payment configuration: publishing complete TEST price book 1/2
+Admin payment configuration: creating complete TEST price book 2/2
+Admin payment configuration: publishing complete TEST price book 2/2
+Admin payment configuration: creating actual inventory location
+Admin payment configuration: stock, review and publication for gift 1/26
+Admin payment configuration: stock, review and publication for gift 2/26
+Admin payment configuration: stock, review and publication for gift 3/26
+Admin payment configuration: stock, review and publication for gift 4/26
+Admin payment configuration: stock, review and publication for gift 5/26
+Admin payment configuration: stock, review and publication for gift 6/26
+Admin payment configuration: stock, review and publication for gift 7/26
+Admin payment configuration: stock, review and publication for gift 8/26
+Admin payment configuration: stock, review and publication for gift 9/26
+Admin payment configuration: stock, review and publication for gift 10/26
+Admin payment configuration: stock, review and publication for gift 11/26
+Admin payment configuration: stock, review and publication for gift 12/26
+Admin payment configuration: stock, review and publication for gift 13/26
+Admin payment configuration: stock, review and publication for gift 14/26
+Admin payment configuration: stock, review and publication for gift 15/26
+Admin payment configuration: stock, review and publication for gift 16/26
+Admin payment configuration: stock, review and publication for gift 17/26
+Admin payment configuration: stock, review and publication for gift 18/26
+Admin payment configuration: stock, review and publication for gift 19/26
+Admin payment configuration: stock, review and publication for gift 20/26
+Admin payment configuration: stock, review and publication for gift 21/26
+Admin payment configuration: stock, review and publication for gift 22/26
+Admin payment configuration: stock, review and publication for gift 23/26
+Admin payment configuration: stock, review and publication for gift 24/26
+Admin payment configuration: stock, review and publication for gift 25/26
+Admin payment configuration: stock, review and publication for gift 26/26
+Admin payment configuration: proving tracked availability is one location's maximum, never a sum
+Admin payment configuration: publishing actual TEST terms policy
+Admin payment configuration: publishing actual TEST privacy policy
+Admin payment configuration: publishing actual TEST refund policy
+Admin payment configuration: publishing actual TEST delivery policy
+Admin payment configuration: normal TEST webhook endpoint configuration
+Admin payment configuration: provision owned durable event queue before VERIFY runtimes
+Admin payment configuration: start actual signed webhook HTTP ingress
+Admin payment configuration: actual OIDC, deployed connectors and two independent API processes
+Finance PostgreSQL {"operation":"STATEMENT","code":"23514","guard":"assert_admin_content_locale_grant_audit","constraint":null}
+Admin payment configuration failure {"stage":"actual OIDC, deployed connectors and two independent API processes","name":"error","code":"23514","frames":["/apps/api/scripts/admin-payment-config-fixture.mjs:96:5","/apps/api/scripts/admin-orders-runtime.mjs:49:3","/apps/api/scripts/admin-payment-config-fixture.mjs:169:19","/apps/api/scripts/admin-payment-config-http.mjs:71:21","/apps/api/scripts/storefront-acceptance-lifecycle.mjs:7:14"]}
+FAIL admin payment configuration {"name":"Error","code":null,"frames":["/apps/api/scripts/admin-finance-native-postgres.mjs:216:15","/apps/api/scripts/admin-payment-config-http.mjs:156:7"]}
+FAIL admin payment configuration {"name":"Error","code":null,"frames":["/packages/media-s3/scripts/ephemeral-s3-harness.mjs:448:16"]}

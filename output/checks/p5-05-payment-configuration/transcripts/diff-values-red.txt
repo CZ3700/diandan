@@ -1,0 +1,49 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/domain
+
+ ❯ src/payment-configuration.test.ts (24 tests | 1 failed) 11ms
+   × provides the exact before and after values for publication confirmation 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/payment-configuration.test.ts > provides the exact before and after values for publication confirmation
+AssertionError: expected { kind: 'CHANNEL', …(3) } to match object { values: [ { …(3) } ] }
+(4 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "values": [
+-     {
+-       "after": 2500,
+-       "before": 10000,
+-       "field": "rolloutBasisPoints",
+-     },
++   "change": "CHANGED",
++   "fields": [
++     "rolloutBasisPoints",
+    ],
++   "key": "10000000-0000-4000-8000-000000000001",
++   "kind": "CHANNEL",
+  }
+
+ ❯ src/payment-configuration.test.ts:276:80
+    274| it("provides the exact before and after values for publication confirm…
+    275|  expect(api?.diffPaymentConfiguration).toBeDefined();const before=base…
+    276|  expect(api!.diffPaymentConfiguration({schemaVersion:1,before,after}).…
+       |                                                                                ^
+    277| });
+    278|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 23 passed (24)
+   Start at  12:54:11
+   Duration  395ms (transform 226ms, setup 0ms, import 325ms, tests 11ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/packages/domain:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config ../../vitest.config.ts --root . src/payment-configuration.test.ts

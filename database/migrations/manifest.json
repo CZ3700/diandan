@@ -350,6 +350,16 @@
         "up": "cfe8caae037ab443a74a35e9b7280e4fece52b9e6c4303c1f02ce3b3c70c6736",
         "down": "5a9fdc1efddcf67c2fc3d8c0e3b041dee3da6f4bd1b69af59e451aca82033063"
       }
+    },
+    {
+      "version": "0036",
+      "name": "admin-payment-configuration",
+      "up": "database/migrations/0036_admin-payment-configuration.up.sql",
+      "down": "database/migrations/0036_admin-payment-configuration.down.sql",
+      "sha256": {
+        "up": "bd8f832d4056f6c57b8cb92ca48bd83e9a206d47ff1519fe8485a4f57c0ee43f",
+        "down": "1b1036f84ea1567f8912f490a1c7258439eb1be5823ac962ace99aed6b58cce9"
+      }
     }
   ]
 }
