@@ -1,0 +1,21 @@
+[regression] 1-build
+[regression] 2-start
+{"instance":"test-regression-7f245b5730554f80","stage":"LOGIN"}
+{"instance":"test-regression-7f245b5730554f80","stage":"UPLOAD_ARTIST"}
+{"stage":"ARTIST_PUBLISHED","artistId":"749bdb0d-dfcf-43f7-abcf-439633f29de3"}
+{"instance":"test-regression-7f245b5730554f80","stage":"UPLOAD_GIFT"}
+{"instance":"test-regression-7f245b5730554f80","stage":"WAIT_INITIAL_HOMEPAGE"}
+{"instance":"test-regression-7f245b5730554f80","stage":"UPLOAD_POSTER"}
+{"instance":"test-regression-7f245b5730554f80","stage":"SEVEN_LOCALE_MATRIX"}
+{"instance":"test-regression-7f245b5730554f80","stage":"COMPLETE"}
+[accessibility] en-mobile
+[accessibility] en-desktop
+[accessibility] en-narrow
+[accessibility] zh-CN-mobile
+[accessibility] zh-CN-desktop
+[accessibility] zh-CN-narrow
+[accessibility] th-mobile
+[accessibility] th-desktop
+[accessibility] th-narrow
+[regression] 3-stop
+{"status":"FAIL","instance":"test-regression-7f245b5730554f80","report":"/Users/mario/Desktop/.fan-support-regression/9bfad5f7-bef1-4f91-8bbb-fc5aec05b894/workspace/output/checks/p6-02-accessibility/browser/test-regression-7f245b5730554f80/result.json"}

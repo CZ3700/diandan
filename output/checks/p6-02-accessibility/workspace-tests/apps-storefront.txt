@@ -1,0 +1,118 @@
+
+> @fan-support/storefront@0.0.0 test /Users/mario/Desktop/下单/apps/storefront
+> vitest run --config ../../vitest.config.ts --root .
+
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/storefront
+
+ ✓ src/storefront/cart-header-restoration.test.tsx (5 tests) 1768ms
+   ✓ a visitor without a cookie makes no automatic cart request when document is loading  1764ms
+ ✓ src/storefront/cart-session.test.ts (4 tests) 1800ms
+     ✓ keeps the exact body and key for an unknown mutation and never retries by itself  1797ms
+ ✓ src/storefront/lazy-drawer-boundary.test.tsx (4 tests) 1520ms
+   ✓ the initial native Drawer trigger preserves the existing SSR content and ARIA  1411ms
+ ✓ src/app/ui-interactions-specimen.test.tsx (3 tests) 2027ms
+   ✓ renders the five interaction workspaces with locale-scoped copy  2015ms
+ ✓ src/storefront/directory-loading.test.ts (3 tests) 2371ms
+   ✓ loads validation only for an interaction and stops a cancelled pending import before fetch  2113ms
+ ✓ src/app/ui-primitives-specimen.test.tsx (4 tests) 2100ms
+   ✓ renders all eight primitives as an internal, locale-scoped specimen  2089ms
+ ✓ src/storefront/order-controller.test.ts (12 tests) 440ms
+   ✓ binds the exchanged grant to the link hint before attempting any read  400ms
+ ✓ src/storefront/cart-editor-lifecycle.test.tsx (4 tests) 403ms
+   ✓ closing the editor ignores a later plaintext response  401ms
+ ✓ src/storefront/directory-query.test.ts (2 tests) 283ms
+ ✓ src/app/design-foundation-specimen.test.tsx (4 tests) 363ms
+   ✓ renders the requested script profile and full stress copy  356ms
+ ✓ src/storefront/directory-lazy.test.ts (6 tests) 348ms
+ ✓ src/storefront/gift-filter-cancellation.test.tsx (8 tests) 440ms
+ ✓ src/storefront/content-safety.test.tsx (3 tests) 266ms
+ ✓ src/storefront/cart-editor-concurrency.test.tsx (2 tests) 282ms
+ ✓ src/storefront/order-fragment.test.ts (1 test) 419ms
+   ✓ accepts only a single credential and non-authorizing order hint  418ms
+ ✓ src/internal-presentation-locale.test.ts (10 tests) 420ms
+   ✓ changes only the locale segment of the gated interaction fixture  417ms
+ ✓ src/storefront/site-header-lazy-loading.test.tsx (14 tests) 3507ms
+   ✓ first undefined activation loads only on interaction and retains opening intent  1694ms
+ ✓ src/storefront/gift-directory.test.tsx (6 tests) 244ms
+ ✓ src/server/order-proxy.test.ts (11 tests) 216ms
+ ✓ src/storefront/order-detail.test.tsx (10 tests) 183ms
+ ✓ src/app/ui-composites-specimen.test.tsx (7 tests) 203ms
+ ✓ src/storefront/gift-browse.test.tsx (15 tests) 81ms
+ ✓ src/storefront/gift-directory-page-entry.test.tsx (19 tests) 200ms
+ ✓ src/storefront/gift-page-scheduling.test.tsx (55 tests) 1786ms
+ ✓ src/storefront/checkout-controller.test.ts (15 tests) 86ms
+ ✓ src/storefront/checkout-view.test.tsx (2 tests) 96ms
+ ✓ src/server/public-commerce.test.ts (7 tests) 72ms
+ ✓ src/storefront/order-page-factory.test.tsx (8 tests) 182ms
+ ✓ src/storefront/gift-purchase.test.tsx (17 tests) 228ms
+ ✓ src/storefront/page-factory.test.tsx (40 tests) 2729ms
+ ✓ src/storefront/gift-page-entry-isolation.test.ts (28 tests) 302ms
+ ✓ src/storefront/lazy-drawer-loading.test.tsx (13 tests) 33ms
+ ✓ src/storefront/artist-directory.test.tsx (4 tests) 296ms
+ ✓ src/storefront/pages.test.tsx (1 test) 86ms
+ ✓ src/server/cart-restoration-hint.test.ts (3 tests) 13ms
+ ✓ src/storefront/cart-checkout-entry.test.tsx (2 tests) 109ms
+ ✓ src/storefront/gift-seo.test.tsx (27 tests) 93ms
+ ✓ src/storefront/site-header-lazy-boundary.test.tsx (8 tests) 185ms
+ ✓ src/server/public-catalog.test.ts (7 tests) 171ms
+ ✓ src/storefront/order-transport.test.ts (7 tests) 228ms
+ ✓ src/server/checkout-proxy.test.ts (7 tests) 254ms
+ ✓ src/server/cart-proxy.test.ts (11 tests) 241ms
+ ✓ src/server/storefront-copy.test.ts (1 test) 8ms
+ ✓ src/server/observability-probe.test.ts (8 tests) 245ms
+ ✓ src/storefront/gift-query.test.ts (6 tests) 182ms
+ ✓ src/app/api/storefront/idols/route.test.ts (1 test) 163ms
+ ✓ src/server/request-origin.test.ts (19 tests) 27ms
+ ✓ src/order-entry.test.ts (2 tests) 13ms
+ ✓ src/app/ui-motion-specimen.test.tsx (11 tests) 182ms
+ ✓ src/storefront/checkout-order-result.test.tsx (1 test) 156ms
+ ✓ src/storefront/gift-filter-presentation.test.tsx (9 tests) 178ms
+ ✓ src/app/global-error.test.tsx (2 tests) 44ms
+ ✓ src/storefront/directory-request.test.ts (6 tests) 154ms
+ ✓ src/storefront/checkout-transport.test.ts (4 tests) 35ms
+ ✓ src/instrumentation.test.ts (3 tests) 45ms
+ ✓ src/storefront/published-image.test.tsx (5 tests) 100ms
+ ✓ src/storefront/commerce-context.test.tsx (8 tests) 122ms
+ ✓ src/server/sitemap.test.ts (5 tests) 172ms
+ ✓ src/server/storefront-seo.test.ts (3 tests) 110ms
+ ✓ src/server/image-config.test.ts (22 tests) 80ms
+ ✓ src/server/public-gift-browse.test.ts (9 tests) 144ms
+ ✓ src/storefront/checkout-page-factory.test.tsx (8 tests) 90ms
+ ✓ src/storefront/page-factory-dependencies.test.ts (7 tests) 21ms
+ ✓ src/storefront/gift-filter-validation.test.ts (15 tests) 91ms
+ ✓ src/storefront/cart-provider-restoration.test.tsx (2 tests) 15ms
+ ✓ src/storefront/directory-model.test.ts (6 tests) 15ms
+ ✓ src/storefront/seo-structured-data.test.tsx (6 tests) 118ms
+ ✓ src/design-foundations.test.ts (11 tests) 144ms
+ ✓ src/storefront/payment-polling.test.ts (4 tests) 15ms
+ ✓ src/storefront/seo-identity.test.ts (24 tests) 9ms
+ ✓ src/storefront/gift-selection.test.ts (10 tests) 210ms
+ ✓ src/presentation-locale.test.ts (26 tests) 10ms
+ ✓ src/storefront/gift-content.test.tsx (2 tests) 11ms
+ ✓ src/app/healthz/route.test.ts (8 tests) 176ms
+ ✓ src/health.test.ts (1 test) 8ms
+ ✓ src/app/ui-brand-model.test.ts (6 tests) 7ms
+ ✓ src/storefront/checkout-focus.test.ts (1 test) 99ms
+ ✓ src/payment-privacy.test.ts (3 tests) 129ms
+ ✓ src/storefront/cart-item.test.tsx (2 tests) 10ms
+ ✓ src/storefront/cart-body.test.tsx (1 test) 8ms
+ ✓ src/proxy.test.ts (9 tests) 64ms
+ ✓ src/app/%5Finternal/design-foundations/layout.test.tsx (7 tests) 7ms
+ ✓ src/storefront/cart-removal-focus.test.ts (2 tests) 3ms
+ ✓ src/storefront/gift-offer-selection.test.ts (1 test) 4ms
+ ✓ src/index.test.ts (1 test) 2ms
+ ✓ src/canonical-locale-boundary.test.ts (19 tests) 7ms
+ ✓ src/storefront/cart-error.test.ts (1 test) 2ms
+ ✓ src/storefront/browse-seo.test.ts (3 tests) 7ms
+ ✓ src/storefront/seo-metadata.test.ts (2 tests) 4ms
+ ✓ src/storefront/gift-content-read.test.ts (6 tests) 6ms
+ ✓ src/storefront/storefront-page-shell.test.tsx (2 tests) 3ms
+ ✓ src/app/storefront-style-isolation.test.ts (4 tests) 3ms
+ ✓ src/storefront/cart-personalization.test.tsx (2 tests) 2ms
+
+ Test Files  93 passed (93)
+      Tests  746 passed (746)
+   Start at  00:45:40
+   Duration  11.49s (transform 15.39s, setup 0ms, import 54.61s, tests 30.54s, environment 6ms)
+

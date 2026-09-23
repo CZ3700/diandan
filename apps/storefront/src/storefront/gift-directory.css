@@ -317,3 +317,19 @@
     order: -1;
   }
 }
+
+.gift-browse-description {
+  color: var(--color-text-muted);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.gift-browse-filters button {
+  color: var(--color-text);
+  background: transparent;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  min-height: var(--space-12);
+  padding: var(--space-2) var(--space-4);
+  font: inherit;
+  cursor: pointer;
+}

@@ -147,12 +147,12 @@ P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字�
 
 ## Phase 6 — 加固与恢复（6）
 
-当前P6-01完整本地回归已ACCEPT（2026-09-23），保留远端CI而保持IN_PROGRESS、Lane D释放；P6-02原P3-06/P4-06/P5-02本地完整验收已独立复核，仅新增P6-02有限本地ACTIVE/READY、尚未领取；P6-03至P6-06仍PENDING。ADR-016 已授权后续可本地部分，仍须逐项核对原直接依赖后先登记范围再 READY，六项按 Lane D 串行。真实读屏、RUM、恢复与完整 Release Gate 不以本地工具替代。
+当前P6-01完整本地回归与P6-02本地自动验收均已ACCEPT（2026-09-24），分别保留远端CI、真人读屏/人工语言原门而保持IN_PROGRESS，Lane D释放；P6-03原P3-06/P4-06本地完整验收及本轮共享前台成果已独立复核，仅新增P6-03有限本地ACTIVE/READY、尚未领取；P6-04至P6-06仍PENDING。范围与验证计划见phase-6，ADR-016后继仍须逐项核对原直接依赖、登记再READY，六项按Lane D串行。真实读屏、RUM、恢复与完整Release Gate不以本地工具替代。
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
 | P6-01 | P4-06, P5-07 | 汇总并补齐 unit/i18n/property/schema/contract/integration/七语言 E2E/SEO/cache 测试矩阵与覆盖门禁 | CI 全绿；规范第 18.2 节 14 条 E2E；消息目录/locale cache/hreflang snapshot；失败 seed 可复现 | R-01, R-03, R-17 |
-| P6-02 | P3-06, P4-06, P5-02 | 完成七语言 WCAG 2.2 AA：键盘、VoiceOver/NVDA、200% zoom、320px、断行、reduce motion | critical/serious=0；CJK/Thai/Vietnamese/长西葡语人工记录；核心路径不阻塞 | R-07, R-17 |
+| P6-02 | P3-06, P4-06, P5-02 | 完成七语言 WCAG 2.2 AA：键盘、VoiceOver/NVDA、200% zoom、320px、断行、reduce motion；按 ADR-017 优先纳入首页直接礼物浏览的交互简化 | critical/serious=0；CJK/Thai/Vietnamese/长西葡语人工记录；核心路径不阻塞 | R-07, R-17 |
 | P6-03 | P3-06, P4-06 | 优化 LCP/INP/CLS、按 locale 字体/消息 bundle、图片、缓存与第三方脚本 | 七语言 Lighthouse/bundle；6 视口；RUM dashboard；达到第 16.2 节 | R-07, R-17 |
 | P6-04 | P5-06 | 做明确范围的安全检查：越权、XSS、CSRF、SSRF、重放、token、secret、依赖、PII | High/Critical=0；修复回归；扫描报告路径 | R-02, R-03, R-09, R-10 |
 | P6-05 | P1-06, P4-06, P5-06 | 故障注入：超时、乱序、重复、队列积压、PSP/邮件/对象存储/DB 短暂失败 | 无丢单/重复扣款；backlog 恢复；UNKNOWN 可对账 | R-03, R-11 |

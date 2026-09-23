@@ -36,6 +36,10 @@ const reads = vi.hoisted(() => ({
   directory: vi.fn(),
   restore: vi.fn(),
   seo: vi.fn(),
+  browse: vi.fn(),
+}));
+vi.mock("../server/public-gift-browse", () => ({
+  readGiftBrowse: reads.browse,
 }));
 vi.mock("../server/storefront-copy", () => ({
   loadStorefrontCopy: reads.copy,
@@ -168,6 +172,12 @@ beforeEach(() => {
   reads.artists.mockResolvedValue(artists);
   reads.directory.mockResolvedValue(directory);
   reads.restore.mockResolvedValue(false);
+  if (directory.outcome !== "SUCCESS")
+    throw new Error("Missing fixture directory");
+  reads.browse.mockResolvedValue({
+    ...directory,
+    pageInfo: { ...directory.pageInfo, page: 1, hasPreviousPage: false },
+  });
 });
 
 test.each(SUPPORTED_LOCALES)(
@@ -228,7 +238,7 @@ test.each(SUPPORTED_LOCALES)(
   },
 );
 
-test.each(["context", "copy", "restore"] as const)(
+test.each(["copy", "restore"] as const)(
   "the directory waits for %s before selecting an artist and rendering",
   async (blocked) => {
     const value = {
@@ -269,7 +279,7 @@ test("a directory context rejection is consumed while copy is still pending", as
   });
   try {
     for (let turn = 0; turn < 20; turn++) await Promise.resolve();
-    expect(rejected).toBe(failure);
+    expect(rejected).toBeUndefined();
     expect(reads.artists).not.toHaveBeenCalled();
   } finally {
     slowCopy.resolve(copy);
@@ -282,4 +292,23 @@ test("the directory does not display a different artist when the selected artist
   expect(await directoryMarkup(await page("en"))).not.toContain(
     "data-directory-recipient",
   );
+});
+
+test("gift browsing is rendered without awaiting commerce availability or choosing a region", async () => {
+  const slow = deferred<typeof context>();
+  reads.context.mockReturnValue(slow.promise);
+  let rendered = false;
+  const pending = page("en", {} as typeof query).then(async (tree) => {
+    const html = await directoryMarkup(tree);
+    expect(html).toContain("data-gift-browse");
+    expect(html).not.toContain("data-market-choices");
+    expect(reads.directory).not.toHaveBeenCalled();
+    rendered = true;
+  });
+  try {
+    await vi.waitFor(() => expect(rendered).toBe(true), { timeout: 300 });
+  } finally {
+    slow.resolve(context);
+    await pending;
+  }
 });

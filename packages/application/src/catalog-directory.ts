@@ -29,12 +29,14 @@ import type {
   ContentReadTransactionManager,
   JsonValue,
 } from "@fan-support/persistence-port";
+import { createGiftBrowseUseCase } from "./gift-browse.js";
 
 export type CatalogDirectoryDependencies = Readonly<{
   transactions: ContentReadTransactionManager;
 }>;
 
 export type CatalogDirectoryUseCases = Readonly<{
+  browseGifts: ReturnType<typeof createGiftBrowseUseCase>;
   readIdols(input: unknown): Promise<IdolDirectoryResponse>;
   readGifts(input: unknown): Promise<GiftDirectoryResponse>;
 }>;
@@ -71,6 +73,7 @@ export function createCatalogDirectoryUseCases(
   dependencies: CatalogDirectoryDependencies,
 ): CatalogDirectoryUseCases {
   return Object.freeze({
+    browseGifts: createGiftBrowseUseCase(dependencies),
     async readIdols(input: unknown): Promise<IdolDirectoryResponse> {
       const parsed = idolDiscoveryQuerySchema.safeParse(input);
       if (!parsed.success) return failure("INVALID_QUERY");

@@ -31,7 +31,11 @@ test("parses explicit public directory context and revalidates successful public
   const app = Fastify();
   const readIdols = vi.fn(async () => emptyIdols);
   const readGifts = vi.fn(async () => emptyGifts);
-  registerCatalogDirectoryRoute(app, { readIdols, readGifts });
+  registerCatalogDirectoryRoute(app, {
+    readIdols,
+    readGifts,
+    browseGifts: async () => emptyGifts,
+  });
   try {
     const idols = await app.inject({
       url: "/api/v1/idols?locale=ja&q=%E3%83%9F%E3%83%A9&limit=8",
@@ -69,7 +73,11 @@ test("rejects duplicate, unknown, missing and noncanonical numeric parameters be
   const app = Fastify();
   const readIdols = vi.fn(async () => emptyIdols);
   const readGifts = vi.fn(async () => emptyGifts);
-  registerCatalogDirectoryRoute(app, { readIdols, readGifts });
+  registerCatalogDirectoryRoute(app, {
+    readIdols,
+    readGifts,
+    browseGifts: async () => emptyGifts,
+  });
   try {
     const urls = [
       "/api/v1/idols?locale=en&locale=ja",
@@ -108,7 +116,11 @@ test("returns stable navigation failure codes and contains application exception
   const readGifts = vi.fn(async () => {
     throw new Error("private source data");
   });
-  registerCatalogDirectoryRoute(app, { readIdols, readGifts });
+  registerCatalogDirectoryRoute(app, {
+    readIdols,
+    readGifts,
+    browseGifts: async () => emptyGifts,
+  });
   try {
     const changed = await app.inject({ url: "/api/v1/idols?locale=en" });
     expect(changed.statusCode).toBe(409);
@@ -139,6 +151,7 @@ test("maps all declared directory failures and rejects malformed application out
   const app = Fastify();
   registerCatalogDirectoryRoute(app, {
     readIdols: async () => ({ schemaVersion: 1, outcome: "FAILURE", code }),
+    browseGifts: async () => emptyGifts,
     readGifts: async () =>
       ({ ...emptyGifts, internalSecret: "fixture-private-canary" }) as never,
   });

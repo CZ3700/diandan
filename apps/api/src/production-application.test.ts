@@ -34,6 +34,7 @@ test("passes the source-owned reliable-event route and lifecycle into the API bo
     catalogDirectoryRoute: Object.freeze({
       readIdols: vi.fn(),
       readGifts: vi.fn(),
+      browseGifts: vi.fn(),
     }),
     catalogDirectoryRuntime: Object.freeze({
       start: vi.fn(async () => undefined),

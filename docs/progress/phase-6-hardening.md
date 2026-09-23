@@ -1,8 +1,8 @@
 # Phase 6 — 质量、安全与韧性加固
 
-> 状态：ACTIVE（ADR-016，P6-01 本地已 ACCEPT；仅新增 P6-02 本地范围 READY）
+> 状态：ACTIVE（ADR-016，P6-01/02 本地已 ACCEPT；P6-03 有限本地 READY）
 > 任务：6  
-> 正常解锁条件：Phase 5 退出门禁通过；按 ADR-016 逐项登记本地范围；P6-01 本地已验收，现仅 P6-02 READY，P6-03 至 P6-06 仍 PENDING。
+> 正常解锁条件：Phase 5 退出门禁通过；按 ADR-016 逐项登记本地范围；P6-01/02 本地已验收但保留原外部门，现仅 P6-03 READY，P6-04 至 P6-06 仍 PENDING。
 
 ## 目标
 
@@ -13,8 +13,8 @@
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
 | P6-01 | IN_PROGRESS | —（本地 ACCEPT，Lane D 已释放） | P4-06、P5-07 | 5组/17命令/14路径本地通过；实际远端 CI 待补 |
-| P6-02 | READY | —（尚未领取） | P3-06、P4-06、P5-02 | 原依赖本地完整成果已独立复核；仅激活七语可访问性本地范围 |
-| P6-03 | PENDING | — | P3-06、P4-06 | 分 locale 字体/消息 bundle/Performance/RUM |
+| P6-02 | IN_PROGRESS | —（本地 ACCEPT，Lane D 已释放） | P3-06、P4-06、P5-02 | 七语28单元/196核心页通过；真人读屏与人工语言原门保留 |
+| P6-03 | READY | —（尚未领取） | P3-06、P4-06 | 本地七语六视口性能、字体/消息/图片/目录负载；真实 RUM 原门保留 |
 | P6-04 | PENDING | — | P5-06 | Scoped security checks |
 | P6-05 | PENDING | — | P1-06、P4-06、P5-06 | Fault injection |
 | P6-06 | PENDING | — | P0-05、P1-04、P5-05、P5-08、P6-05 | Recovery/rollback drill |
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-P6-01 完整本地回归已 ACCEPT，保留远端 CI；仅新增 P6-02 本地范围 READY。Phase 完整退出仍待全部原门。
+P6-01 完整本地回归和 P6-02 本地自动验收已 ACCEPT，分别保留远端 CI、真人读屏/人工语言原门；P6-03 仅有限本地 READY。Phase 完整退出仍待全部原门。
 
 ## P6-01 本地激活与执行登记（2026-09-23）
 
@@ -82,3 +82,38 @@ P6-01 完整本地回归已 ACCEPT，保留远端 CI；仅新增 P6-02 本地范
 原P3-06/P4-06/P5-02适用本地完整验收与非作者证据已独立核对，选定输入18/18、62/62、67/67以及共享UI/BFF49/49保持；新增发布/媒体重试、native TEST runtime等跨模块变化由最新独立源码审查及上述完整五组实际回归覆盖，不能用旧输入不变冒称共享模块全未改。见 `p6-02-readiness.md`、`p6-02-readiness-source-final8-preparation.json` 及最终五组/聚合review。
 
 按用户已批准ADR-016，仅将P6-02有限本地ACTIVE/READY，范围为axe、键盘、320px/200%缩放、reduced-motion及七语断行/布局自动验收；真人VoiceOver/NVDA/语言核心路径等原门继续保留。Owner尚未分配，无executor；P6-03至P6-06仍PENDING、Phase7仍LOCKED。计数31DONE/7IN_PROGRESS/1READY/10PENDING=49。
+
+## P6-02 执行登记（2026-09-24）
+
+- Owner：Codex `/root`，Lane D 唯一 executor；开始 `2026-09-23T17:19:01.612505+00:00`；基线 `40854787`；分支 `codex/p6-02-accessibility`。原依赖与 P6-01 完整本地独立验收已核对，领取原 READY 项。
+- 范围：七语言 axe、键盘焦点/错误、320 CSS px、真实 200% 浏览器缩放、断行与 reduced-motion 自动验收和必要修复；同时按本轮用户明确要求，优先让首页艺人下方直接展示真实礼物，取消看礼物之前的浏览/地区选择阻碍。保持已批准视觉和独立 locale/market/currency，不改变购物车或支付事实。
+- 验证计划：先失败用例，最小实现；受影响单元/协议、七语双端与窄屏/缩放/键盘/reduce 浏览器，format/lint/typecheck/build、非作者复核和 S.U.P.E.R 十项。原未跟踪文件保护清单见 `output/checks/p6-02-accessibility/protected-untracked-baseline.json`。保护原持久体验，不 reset。
+- 保留门：VoiceOver/NVDA 与人工语言检查不由自动测试代签；正式商户、真机、RUM、云/上线门保持。当前 31 DONE / 8 IN_PROGRESS / 0 READY / 10 PENDING = 49；后继不提前解锁，仅本地提交、不 push。
+
+### P6-02 实施与验收记录
+
+- 按用户追加需求及 ADR-017 新增无地区/币种的只读礼物浏览合同、应用服务、PG 仓储、HTTP/BFF 与首页真实目录。首页艺人后直接展示图片、名称和介绍，复用分类与分页；无上下文 `/gifts` 同样可以直接看内容，价格和加购仍由明确的交易上下文决定。首页海报读取返回失败时仍保留礼物区域。旧 700 个 JSON Schema 定义、204 个 OpenAPI schema、127 个既有路径逐值不变。
+- 存储单独入口已接入常规 PG 门；作者 49 单测、真实 PG 803 目录检查与 69 严格发布/事故检查通过。事故范围明确为实际 PG 正常发布后，在 TEST SQL 结果叶子模拟缺译，不修改不可变已发布行。只有完整 proof 校验确认的英文内容和媒体才允许回退；原旧目录默认路径不启用该选项。
+- 第一轮隔离浏览器 `run-1` 保留 FAIL：真实上架、首页直接浏览/分类/越界恢复、键盘详情/加购/结账及签名 TEST 支付通过，首个邮件环节停止。独立定位为收件箱授权后的自动刷新与测试立即 reload 竞争，真实投递/订单事实正常；补受控失败用例并修复测试等待，不能把该轮称为完整通过。
+- 独立工具审查发现连续清理中首个 close 失败会跳过其他资源及临时 profile 删除，要求各资源独立收尾、任何清理失败阻断验收，并补真实高度核对。所有原失败保留；最终 28 单元浏览器和本地验收结论尚待补齐。
+- 全仓 `check:dev` 已通过原 format/lint 与 64 typecheck /64 test /36 build，合同新鲜度、设计基础 57 项、adapter 边界和 32 包产物入口通过。用户原实例正常停启且 4 服务 ready，未 reset、私有配置 SHA 不变；原 8017 未跟踪文件逐 SHA 不变。后续工具修改仍需最终相关验证。
+- `run-2` 原 FAIL 保留：49 项实际 daily 发布七语投影通过；邮件授权成功后，exchange 页短暂渲染 PAID，再异步跳转到规范订单路径。工具只等 PAID 就采样 URL 并再次导航，可能抢在 replace 前重载缺 fragment 的 exchange 页。真实 Chrome 延迟 replace 夹具先红后绿，现等待配置来源、原订单 locale、publicOrderId 对应的最终规范路径及空 hash，再做布局/语言切换。产品授权和支付不改，14 工具测试及相关格式/lint通过，完整接受仍待 fresh `run-3`。
+- 两路非作者审查已通过前台和 PG，独立 PG 原目录 315、新目录 803、strict 69 检查均通过；harness 清理阻塞已关闭。旧 8017 未跟踪文件保护、原用户配置 hash 和四服务状态通过；另以有效 TEST CA 验证原持久实例中文首页 HTTP 200、艺人与礼物区域及已上架卡片存在，未创建 cart cookie。仅 GET，不更改用户数据。
+- `run-3` 原 FAIL 保留：首 8 个单元完整通过，真实支付、独立邮件授权及审核/准备/送达完成；Thai 320 后台搜索发现两个问题。工具未等待本次结果，且产品在 query 改变时卸载带焦点的表单，却只在页码变化时将焦点移到稳定标题。真实延迟响应 RED 记录 pending/complete 焦点均掉到 BODY；最小产品修复将现有标题焦点 effect 依赖改为 `[selected, filters]`，不跟随输入 draft 或 loading/list 重复抢焦点。真实同场景 GREEN 验证加载前后标题和后续键盘进入订单；工具同时验证本次真实响应、合同、唯一订单、busy 和焦点，17 项工具测试通过。诊断副本的一行刷新单独登记，不混作原 run-3 冻结源。
+- 产品修复后 `check:dev` 再次通过 64/64/36（缓存60/62/34）；后台单独 219 测试通过。原用户实例再次正常停启且 4 服务 ready，私有配置 SHA 不变。正确失败诊断实例已 stop 并保留；误建的空 TEST 实例在确认归属后已正常清理。完整新轮 `run-4` 仍在进行中。
+
+
+### P6-02 本地最终接受与交接（2026-09-24）
+
+- fresh `run-4` 全部 PASS，冻结执行源 `c7b2e52ba36558e104d10fead2a1e0c7f69cca65e3319ea8310231438a2b2903`。七语×手机/桌面/320px/原生200%共28单元、196核心页，额外越界页1、199张PNG；506键盘目标、8对话框、28实际延迟搜索焦点均通过，axe violations/incomplete、pageErrors、cleanupFailures均0。多页浏览器下一页未执行（只有一个已发布礼物），分页的多数据验证来自真实PG，不扩大声明。
+- 原生200%在同物理窗体1710×929下，CSS1710×842→855×421、DPR2→4，两张物理PNG均3420×1684。实际daily上架七语49项通过；一笔独立TEST PSP签名支付、清cookie后独立邮件授权及审核/准备/送达完整通过，其余27单元不计为独立支付/邮件兑换。前台生产编译、后台本地开发模式，真实Chrome153/原生PG18.6/Node24.20.0。
+- 最新全仓check:dev 64类型/64测试任务/36构建、后台219测试、工具17、合同新鲜度、设计基础57、边界与32公共导出通过；非作者实际PG旧目录315/新目录803/strict69及49单测通过。旧700定义/204schema/127路径原值保持。原run-1/2/3均FAIL保留，run-3焦点缺陷真实RED→GREEN及每格回归关闭，不用诊断拼接验收。
+- 非作者最终 `final-independent-acceptance.md` ACCEPT：2782执行输入一致，2866冻结文件、249归档原件逐SHA核对；相关实现独立审查均通过。S.U.P.E.R十项本地通过，详细命令、范围、剩余风险见 `output/checks/p6-02-accessibility/final-verification.md` 与 `verification-index.json`。
+- 原8017未跟踪文件和私有用户配置SHA不变；原持久实例 `acceptance-e143d720dd1a4357a3c3` 四服务ready，中文首页实际GET200、直接礼物卡片且不创建cart cookie。用户数据未reset；run-4自有实例正常stop/reset、临时浏览器profile删除，失败诊断实例停止但保留原数据。仅本地提交、不push。
+- P6-02本地自动范围接受并释放Lane D，状态仍IN_PROGRESS；真人VoiceOver/NVDA、七语人工理解/读屏、真机与正式内容等原门未代签，不增加DONE。
+
+## P6-03 有限本地激活与 READY（尚未领取）
+
+按ADR-016与非作者 `output/checks/p6-02-accessibility/p6-03-readiness.md`，原P3-06/P4-06的适用完整本地成果、最新P6-01整合验收及本轮P6-02当前共享源完整验收均可消费。Lane D已释放，仅P6-03置READY，无owner/executor；全局31 DONE/8 IN_PROGRESS/1 READY/9 PENDING=49。P6-04至P6-06仍PENDING、Phase7仍LOCKED。
+
+范围与验证计划：独立TEST服务、冻结生产编译；七语×SPEC六基准视口的Lighthouse/资源与按locale字体/消息包；首页新礼物区12/48条及大目录真实PG响应成本；图片/缓存/第三方脚本与核心交互；RUM采集、查询/仪表板的可测试接线。固定原样本、网络/CPU、缓存和版本，性能采样串行独占负载，保留全部慢值/失败及前后对照；先失败用例、受影响测试、原质量门、非作者复核与S.U.P.E.R。不得用旧首页性能报告、TBT或合成事件替代当前性能/真实用户INP与p75；真实RUM窗口/样本、云staging、真机/真实网络等原门仍须后续取得证据。领取前仍需执行代理完整读取当前入口并登记开始时间。

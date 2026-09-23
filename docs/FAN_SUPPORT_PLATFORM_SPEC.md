@@ -1,8 +1,8 @@
 # 全球偶像礼物应援平台：产品、设计与工程约束
 
 > 文档状态：开发基线（Authoritative）  
-> 版本：3.0.2
-> 日期：2026-09-18
+> 版本：3.1.0
+> 日期：2026-09-24
 > 面向：Codex、Claude Code、产品设计、前端、后端、测试与运营  
 > 目标：让执行代理无需重新解释需求，即可按阶段实现、验证和交付第一版平台。
 
@@ -172,7 +172,7 @@ MVP 没有偶像登录角色。偶像资料由平台运营维护。
 | 路由 | 页面 | 索引策略 | 主要动作 |
 |:--|:--|:--|:--|
 | `/` | locale 入口 | noindex | 有有效 `site_locale` cookie 时以 `302/307` 到该语言，否则到 `/en` |
-| `/:locale` | 首页 | index | 选择偶像、查看推荐礼物 |
+| `/:locale` | 首页 | index | 选择偶像、直接浏览已上架礼物 |
 | `/:locale/idols` | 偶像目录 | index | 搜索/浏览偶像 |
 | `/:locale/idols/:handle` | 偶像详情 | index | 选择礼物 |
 | `/:locale/gifts` | 礼物目录 | index（基础分页）；任意筛选/排序 noindex | 分页、筛选、当前市场价格 |
@@ -231,6 +231,8 @@ MVP 没有偶像登录角色。偶像资料由平台运营维护。
 - 首页不得自动轮播会导致用户失去控制的主要内容。
 
 状态：加载、图片失败、无推荐偶像、无推荐礼物、离线重试均必须有稳定布局，不得发生大幅 CLS。
+
+2026-09-24 用户确认：首页艺人展示下方直接显示已上架礼物，不以“浏览礼物”按钮或地区选择挡住内容。管理中心发布后自动进入公开礼物目录，无需额外设置首页推荐位。首页与未选择市场的礼物目录支持有界分页和分类筛选；图片、名称和简介来自 PostgreSQL 已发布内容。未确认市场/币种时不提供虚构报价、不根据语言推断市场、不修改购物车；详情先显示完整内容，在价格/购买资格确认前再明确选择地区。已有显式 market/currency/idol 上下文在导航中保留，原带价格排序/金额筛选与结账重验保持。详见 ADR-017。
 
 ### 5.3 偶像目录 `/:locale/idols`
 
@@ -1129,6 +1131,7 @@ Webhook 验签必须通过独立的 endpoint-scoped `PaymentWebhookVerifier` 产
 粉丝端：
 
 - `GET /api/v1/idols?locale=&q=&limit=&after=&anchorId=`（after 与 anchorId 互斥）
+- `GET /api/v1/gift-browse?locale=&page=&pageSize=&category=&idol=`（只读已发布内容，首次浏览无需 market/currency；不返回价格或可购承诺）
 - `GET /api/v1/gifts?locale=&page=&pageSize=&sort=&category=&priceMinMinor=&priceMaxMinor=&availability=&idol=`（market/currency 必须显式来自已校验上下文）
 - `GET /api/v1/idols/:handle?locale=`
 - `GET /api/v1/gifts/:handle?idol=&locale=`

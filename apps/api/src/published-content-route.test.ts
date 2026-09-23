@@ -518,7 +518,11 @@ test("uses safe public errors, protects unknown methods and coexists with direct
     outcome: "FAILURE" as const,
     code: "CATALOG_UNAVAILABLE" as const,
   }));
-  registerCatalogDirectoryRoute(app, { readIdols: read, readGifts: read });
+  registerCatalogDirectoryRoute(app, {
+    readIdols: read,
+    readGifts: read,
+    browseGifts: read,
+  });
   try {
     for (const [code, expected] of Object.entries({
       INVALID_QUERY: 400,

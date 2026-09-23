@@ -1,0 +1,10 @@
+$ vitest run --config ../../vitest.config.ts --root . src/gift-browse-repository.test.ts src/gift-browse-sql.test.ts src/catalog-directory-repository.test.ts src/catalog-directory-sql.test.ts src/catalog-publication-loader.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/persistence-postgres
+
+
+ Test Files  5 passed (5)
+      Tests  49 passed (49)
+   Start at  00:44:50
+   Duration  1.81s (transform 3.82s, setup 0ms, import 5.34s, tests 182ms, environment 0ms)
+

@@ -4,9 +4,8 @@ import type {
   SupportedLocale,
 } from "@fan-support/contracts";
 import { Icon } from "@fan-support/ui";
-import { PublishedHeroImage, PublishedImage } from "./published-image";
+import { PublishedHeroImage } from "./published-image";
 import { storefrontHref } from "./navigation";
-import { giftDetailHref } from "./gift-query";
 import type { StorefrontCopy } from "./copy";
 import { HowItWorks, PageState, StudioPromise } from "./page-parts";
 
@@ -16,35 +15,41 @@ export function HomeContent({
   copy,
   contextQuery,
   directory,
+  giftDirectory,
 }: Readonly<{
   data: StorefrontHomepageResponse;
   locale: SupportedLocale;
   copy: StorefrontCopy;
   contextQuery: string;
   directory?: ReactNode;
+  giftDirectory?: ReactNode;
 }>) {
   if (data.outcome === "FAILURE")
     return (
-      <PageState
-        locale={locale}
-        copy={copy}
-        title={
-          data.code === "NOT_FOUND" ? copy.artistEmptyTitle : copy.contentError
-        }
-        body={
-          data.code === "NOT_FOUND"
-            ? copy.artistEmptyDescription
-            : copy.contentErrorBody
-        }
-        contextQuery={contextQuery}
-      />
+      <>
+        <PageState
+          locale={locale}
+          copy={copy}
+          title={
+            data.code === "NOT_FOUND"
+              ? copy.artistEmptyTitle
+              : copy.contentError
+          }
+          body={
+            data.code === "NOT_FOUND"
+              ? copy.artistEmptyDescription
+              : copy.contentErrorBody
+          }
+          contextQuery={contextQuery}
+        />
+        {giftDirectory}
+      </>
     );
   const view = data.homepage.content.view;
   const hero = data.slots.find(
     (slot) => slot.kind === "HERO_IDOL" && slot.status === "AVAILABLE",
   );
   const artists = data.slots.filter((slot) => slot.kind === "FEATURED_IDOL");
-  const gifts = data.slots.filter((slot) => slot.kind === "FEATURED_GIFT");
   const heroArtist =
     hero?.status === "AVAILABLE" && hero.content.content.kind === "IDOL"
       ? hero.content.content.view
@@ -151,55 +156,7 @@ export function HomeContent({
         )}
         {directory}
       </section>
-      <section
-        className="storefront-section storefront-gifts"
-        id="gifts"
-        aria-labelledby="featured-gifts-title"
-      >
-        <div className="storefront-section-heading">
-          <div>
-            <p className="storefront-eyebrow">{copy.giftEyebrow}</p>
-            <h2 id="featured-gifts-title">{copy.giftTitle}</h2>
-          </div>
-          <p>{copy.giftBody}</p>
-        </div>
-        <div className="storefront-gift-grid">
-          {gifts.map((slot) =>
-            slot.status === "AVAILABLE" &&
-            slot.content.content.kind === "GIFT" ? (
-              <article
-                key={slot.slotKey}
-                lang={slot.content.content.view.localeContext.resolvedLocale}
-              >
-                <a
-                  href={giftDetailHref(
-                    locale,
-                    slot.content.content.view.handle,
-                    contextQuery,
-                  )}
-                >
-                  <PublishedImage
-                    media={slot.content.content.view.primaryMedia}
-                    fallbackLabel={copy.mediaFallback}
-                  />
-                  <h3>{slot.content.content.view.title}</h3>
-                </a>
-                <p>{slot.content.content.view.shortDescription}</p>
-              </article>
-            ) : (
-              <p key={slot.slotKey}>{copy.giftEmpty}</p>
-            ),
-          )}
-        </div>
-        {gifts.length === 0 && <p>{copy.giftEmpty}</p>}
-        <a
-          className="storefront-text-link"
-          href={storefrontHref(locale, "/gifts", contextQuery)}
-        >
-          {copy.giftBrowse}
-          <Icon name="arrow-right" decorative />
-        </a>
-      </section>
+      {giftDirectory}
       <nav className="storefront-policy-links" aria-label={copy.trustTitle}>
         {view.slots
           .filter((slot) => slot.kind === "POLICY_LINK")

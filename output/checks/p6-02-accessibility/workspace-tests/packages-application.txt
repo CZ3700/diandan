@@ -1,0 +1,70 @@
+
+> @fan-support/application@0.0.0 test /Users/mario/Desktop/下单/packages/application
+> vitest run --config ../../vitest.config.ts --root .
+
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/application
+
+ ✓ src/cart-edit.test.ts (16 tests) 48ms
+ ✓ src/payment-runtime-provider.test.ts (4 tests) 233ms
+ ✓ src/storefront-commerce.test.ts (3 tests) 1078ms
+   ✓ invalid caller scope and configuration payloads do not reach the transaction  1072ms
+ ✓ src/translation-workspace.test.ts (2 tests) 72ms
+ ✓ src/payment-runtime-health-bootstrap.test.ts (2 tests) 60ms
+ ✓ src/admin-content.test.ts (62 tests) 91ms
+ ✓ src/payment-runtime-rollout.test.ts (3 tests) 118ms
+ ✓ src/payment-runtime.test.ts (18 tests) 397ms
+ ✓ src/payment-runtime-health.test.ts (26 tests) 386ms
+ ✓ src/published-content.test.ts (4 tests) 92ms
+ ✓ src/public-daily-locale.test.ts (11 tests) 62ms
+ ✓ src/gift-commerce.test.ts (33 tests) 106ms
+ ✓ src/publication-runtime.test.ts (18 tests) 267ms
+ ✓ src/checkout-creation.test.ts (11 tests) 239ms
+ ✓ src/payment-runtime-directory.test.ts (8 tests) 304ms
+ ✓ src/content-authoring.test.ts (38 tests) 236ms
+ ✓ src/base-content.test.ts (32 tests) 150ms
+ ✓ src/gift-commerce-content.test.ts (7 tests) 107ms
+ ✓ src/resource-management.test.ts (57 tests) 148ms
+ ✓ src/storefront-seo.test.ts (6 tests) 185ms
+ ✓ src/cart-runtime-view.test.ts (2 tests) 47ms
+ ✓ src/receive-payment-webhook.test.ts (13 tests) 35ms
+ ✓ src/translation-transfer.test.ts (3 tests) 104ms
+ ✓ src/cart-runtime.test.ts (8 tests) 142ms
+ ✓ src/order-notifications.test.ts (9 tests) 17ms
+ ✓ src/media-processing.test.ts (12 tests) 70ms
+ ✓ src/publication-preflight.test.ts (14 tests) 120ms
+ ✓ src/dispatch-outbox-event.test.ts (14 tests) 29ms
+ ✓ src/checkout-preflight.test.ts (6 tests) 46ms
+ ✓ src/reliable-event-maintenance.test.ts (8 tests) 61ms
+ ✓ src/checkout-observation.test.ts (3 tests) 32ms
+ ✓ src/publication-purge.test.ts (14 tests) 147ms
+ ✓ src/process-webhook-inbox.test.ts (13 tests) 109ms
+ ✓ src/admin-orders.test.ts (14 tests) 20ms
+ ✓ src/order-access.test.ts (7 tests) 50ms
+ ✓ src/checkout-contact.test.ts (3 tests) 8ms
+ ✓ src/admin-finance.test.ts (9 tests) 106ms
+ ✓ src/admin-session.test.ts (4 tests) 20ms
+ ✓ src/admin-exceptions.test.ts (8 tests) 65ms
+ ✓ src/management-media.test.ts (21 tests) 181ms
+ ✓ src/gift-browse.test.ts (6 tests) 112ms
+ ✓ src/management-center.test.ts (33 tests) 113ms
+ ✓ src/catalog-directory.test.ts (9 tests) 88ms
+ ✓ src/admin-access.test.ts (12 tests) 79ms
+ ✓ src/admin-payment-configuration.test.ts (6 tests) 57ms
+ ✓ src/payment-webhook-endpoint-preflight.test.ts (5 tests) 7ms
+ ✓ src/admin-preview-media.test.ts (4 tests) 17ms
+ ✓ src/admin-catalog.test.ts (3 tests) 32ms
+ ✓ src/storefront-homepage.test.ts (2 tests) 7ms
+ ✓ src/admin-finance-webhook.test.ts (1 test) 54ms
+ ✓ src/payment-runtime-health-dynamic.test.ts (4 tests) 10ms
+ ✓ src/order-payment-application.test.ts (4 tests) 6ms
+ ✓ src/commerce-expiry.test.ts (1 test) 7ms
+ ✓ src/published-gift-commerce.test.ts (1 test) 8ms
+ ✓ src/order-payment-webhook.test.ts (4 tests) 7ms
+ ✓ src/index.test.ts (1 test) 2ms
+
+ Test Files  56 passed (56)
+      Tests  642 passed (642)
+   Start at  00:45:37
+   Duration  5.99s (transform 7.47s, setup 0ms, import 37.15s, tests 6.40s, environment 5ms)
+

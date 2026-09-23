@@ -396,6 +396,7 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/checkout/sessions/{checkoutSessionId}/order-access",
     "/api/v1/checkout/sessions/{checkoutSessionId}/status",
     "/api/v1/content-review-preview/read",
+    "/api/v1/gift-browse",
     "/api/v1/gift-content/{handle}",
     "/api/v1/gifts",
     "/api/v1/gifts/{handle}",

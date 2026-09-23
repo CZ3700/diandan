@@ -1,0 +1,204 @@
+$ vitest run --config ../../vitest.config.ts --root . src/server/public-gift-browse.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/storefront
+
+ ❯ src/server/public-gift-browse.test.ts (9 tests | 2 failed) 28ms
+   × a category mismatch and an unproven English fallback are rejected 7ms
+   × an unproven English fallback is rejected 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/server/public-gift-browse.test.ts > a category mismatch and an unproven English fallback are rejected
+AssertionError: expected { schemaVersion: 1, …(4) } to match object { code: 'CATALOG_UNAVAILABLE' }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "code": "CATALOG_UNAVAILABLE",
++   "catalogVersion": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
++   "items": [
++     {
++       "category": "FOOD",
++       "contents": [
++         {
++           "componentCode": "GIFT",
++           "quantity": 1,
++           "unit": "ITEM",
++         },
++       ],
++       "deliveryEstimate": {
++         "maximum": 2,
++         "minimum": 1,
++         "unit": "DAY",
++       },
++       "description": "A fictional gift description",
++       "fulfillmentDescription": "The studio prepares and delivers it to the artist.",
++       "gallery": [],
++       "handle": "fictional-gift",
++       "id": "10000000-0000-4000-8000-000000000001",
++       "localeContext": {
++         "fallbackUsed": false,
++         "requestedLocale": "en",
++         "resolvedLocale": "en",
++         "schemaVersion": 1,
++       },
++       "primaryMedia": {
++         "alt": "Fictional gift photograph",
++         "focalPoint": {
++           "x": 0.5,
++           "y": 0.5,
++         },
++         "height": 1000,
++         "kind": "INFORMATIVE",
++         "schemaVersion": 1,
++         "url": "https://media.example.test/processed/v1/source/variant.webp",
++         "width": 1000,
++       },
++       "safetyNotice": "Fictional test gift",
++       "schemaVersion": 1,
++       "seoDescription": "A fictional gift for directory tests",
++       "seoTitle": "Fictional gift",
++       "shippingMode": "internal_to_idol",
++       "shortDescription": "A fictional gift",
++       "status": "active",
++       "subtitle": "Prepared for an artist",
++       "title": "Fictional gift",
++       "variants": [
++         {
++           "id": "20000000-0000-4000-8000-000000000001",
++           "inventoryPolicy": "PROCURE_ON_DEMAND",
++           "label": "Gift",
++           "schemaVersion": 1,
++           "status": "active",
++         },
++       ],
++     },
++   ],
++   "outcome": "SUCCESS",
++   "pageInfo": {
++     "hasNextPage": false,
++     "hasPreviousPage": false,
++     "page": 1,
++     "pageSize": 12,
++     "paginationLimited": false,
++     "schemaVersion": 1,
++     "totalItems": 1,
++     "totalPages": 1,
++   },
++   "schemaVersion": 1,
+  }
+
+ ❯ src/server/public-gift-browse.test.ts:104:100
+    102|   categoryMismatch.items[0]!.category = "FOOD";
+    103|   const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(Response…
+    104|   await expect(fetchGiftBrowse("https://api.example.test", {...query, …
+       |                                                                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/server/public-gift-browse.test.ts > an unproven English fallback is rejected
+AssertionError: expected { schemaVersion: 1, …(4) } to match object { code: 'CATALOG_UNAVAILABLE' }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "code": "CATALOG_UNAVAILABLE",
++   "catalogVersion": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
++   "items": [
++     {
++       "category": "OTHER",
++       "contents": [
++         {
++           "componentCode": "GIFT",
++           "quantity": 1,
++           "unit": "ITEM",
++         },
++       ],
++       "deliveryEstimate": {
++         "maximum": 2,
++         "minimum": 1,
++         "unit": "DAY",
++       },
++       "description": "A fictional gift description",
++       "fulfillmentDescription": "The studio prepares and delivers it to the artist.",
++       "gallery": [],
++       "handle": "fictional-gift",
++       "id": "10000000-0000-4000-8000-000000000001",
++       "localeContext": {
++         "fallbackUsed": true,
++         "requestedLocale": "th",
++         "resolvedLocale": "en",
++         "schemaVersion": 1,
++         "translationRevision": " ",
++       },
++       "primaryMedia": {
++         "alt": "Fictional gift photograph",
++         "focalPoint": {
++           "x": 0.5,
++           "y": 0.5,
++         },
++         "height": 1000,
++         "kind": "INFORMATIVE",
++         "schemaVersion": 1,
++         "url": "https://media.example.test/processed/v1/source/variant.webp",
++         "width": 1000,
++       },
++       "safetyNotice": "Fictional test gift",
++       "schemaVersion": 1,
++       "seoDescription": "A fictional gift for directory tests",
++       "seoTitle": "Fictional gift",
++       "shippingMode": "internal_to_idol",
++       "shortDescription": "A fictional gift",
++       "status": "active",
++       "subtitle": "Prepared for an artist",
++       "title": "Fictional gift",
++       "variants": [
++         {
++           "id": "20000000-0000-4000-8000-000000000001",
++           "inventoryPolicy": "PROCURE_ON_DEMAND",
++           "label": "Gift",
++           "schemaVersion": 1,
++           "status": "active",
++         },
++       ],
++     },
++   ],
++   "outcome": "SUCCESS",
++   "pageInfo": {
++     "hasNextPage": false,
++     "hasPreviousPage": false,
++     "page": 1,
++     "pageSize": 12,
++     "paginationLimited": false,
++     "schemaVersion": 1,
++     "totalItems": 1,
++     "totalPages": 1,
++   },
++   "schemaVersion": 1,
+  }
+
+ ❯ src/server/public-gift-browse.test.ts:111:95
+    109|   const fallback = {...success(), items: [{...giftBrowseFixture(), loc…
+    110|   fetcher.mockResolvedValueOnce(Response.json(fallback));
+    111|   await expect(fetchGiftBrowse("https://api.example.test", {...query, …
+       |                                                                                               ^
+    112| });
+    113|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 7 passed (9)
+   Start at  00:32:22
+   Duration  694ms (transform 407ms, setup 0ms, import 586ms, tests 28ms, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/storefront:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/storefront@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/server/public-gift-browse.test.ts`
+Exit status 1

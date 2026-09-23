@@ -18,6 +18,7 @@ import type {
   IdolDirectorySnapshot,
 } from "@fan-support/contracts";
 import type { CatalogDirectoryRepository } from "@fan-support/persistence-port";
+import { createGiftBrowseRepository } from "./gift-browse-repository.js";
 import {
   buildGiftDirectoryQuery,
   buildIdolDirectoryQuery,
@@ -94,6 +95,7 @@ export function createCatalogDirectoryRepository(
   }
 
   return {
+    ...createGiftBrowseRepository(client, dependencies),
     readIdols: (input) =>
       run(async (): Promise<IdolDirectorySnapshot> => {
         const parsed = idolDirectoryReadCommandSchema.safeParse(input);

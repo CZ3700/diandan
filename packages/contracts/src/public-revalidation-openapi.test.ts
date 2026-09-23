@@ -4,6 +4,7 @@ import { giftCommercePaths } from "./gift-commerce-openapi.js";
 import { storefrontHomepagePaths } from "./storefront-homepage-openapi.js";
 import { storefrontCommercePaths } from "./storefront-commerce-openapi.js";
 import { catalogDirectoryPaths } from "./catalog-directory-openapi.js";
+import { giftBrowsePaths } from "./gift-browse-openapi.js";
 
 type Response = {
   headers: Record<string, { schema: { const?: string; enum?: string[] } }>;
@@ -18,16 +19,17 @@ type Path = {
   post?: { responses: Record<string, Response> };
 };
 const cache = "public, max-age=0, s-maxage=0, must-revalidate";
-test("all eleven existing public reads document zero-TTL revalidation, credential privacy and no-body 304", () => {
+test("all twelve public reads document zero-TTL revalidation, credential privacy and no-body 304", () => {
   const paths = {
     ...publicationRuntimePaths(),
     ...giftCommercePaths(),
     ...storefrontHomepagePaths(),
     ...storefrontCommercePaths(),
     ...catalogDirectoryPaths(),
+    ...giftBrowsePaths(),
   } as Record<string, Path>;
   const publicPaths = Object.entries(paths).filter(([, value]) => value.get);
-  expect(publicPaths).toHaveLength(11);
+  expect(publicPaths).toHaveLength(12);
   for (const [path, { get }] of publicPaths) {
     expect(get!.security).toEqual([]);
     expect(get!.parameters).toContainEqual(

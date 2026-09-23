@@ -1,0 +1,32 @@
+{
+  "stage": "diag-mail:mail-order",
+  "screenshots": [],
+  "keyboard": [],
+  "journey": {},
+  "dialogs": [],
+  "status": "FAIL",
+  "failureDiagnostic": {
+    "kind": "RUNTIME",
+    "frames": [
+      "apps/api/scripts/accessibility-flows.mjs:374:20",
+      "apps/api/scripts/accessibility-flows.mjs:371:3"
+    ]
+  },
+  "mailResponses": [
+    {
+      "path": "/",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/session",
+      "method": "POST",
+      "status": 204
+    },
+    {
+      "path": "/",
+      "method": "GET",
+      "status": 200
+    }
+  ]
+}

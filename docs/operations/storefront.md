@@ -89,3 +89,11 @@ mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/api preview:gift-s
 真实 PG 联调曾发现 `array_agg(currency_code)` 的 DOMAIN 数组被 node-pg 读为字符串。聚合 `currency::text` 后返回可验证数组；保留正常业务谓词并通过新真实 context 协议回归。探针入口为 `output/checks/p3-05-gift-storefront/domain-array-probe.mjs`。不要放宽 schema 或把解析失败改为空地区列表。
 
 根 `pnpm check` 的历史 storefront 协议会写 P3-04 固定 `http-results.json`。本轮先用 `protect-regression.py backup` 保存原字节，检查后用 `restore` 将新回归结果归档 P3-05/regression 并恢复 P3-04；脚本校验原 hash，拒绝覆盖现有备份。不要用破坏性 Git 操作覆盖旧证据。原始 `.log` 保留本地，提交选择源码、文档和结构化结果，避免强行跟踪被忽略的日志。
+
+## 首页直接看礼物（ADR-017）
+
+首页艺人下方自动读取已发布礼物，管理中心上架后无需另设首页推荐位。初访无需选地区即可看图片、名称、简介，使用分类和分页寻找礼物；点入详情后再确认地区与币种来查看价格和选购。已有地区/币种/艺人选择会随链接保留。
+
+数据来自只读 `/api/v1/gift-browse`，默认每页12、最多48件。它不提供报价或承诺可购，不创建购物车；正式价格、库存和可用性仍由既有市场目录和服务端加购/结账重验决定。
+
+七语言、键盘、窄屏与真实缩放的重复验收入口见 [可访问性本地验收](./accessibility.md)。

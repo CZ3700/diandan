@@ -1,0 +1,38 @@
+$ vitest run --config ../../vitest.config.ts --root . src/storefront/page-factory.test.tsx
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/storefront
+
+ ❯ src/storefront/page-factory.test.tsx (40 tests | 1 failed) 2424ms
+   × published gifts remain browsable when the homepage poster is unavailable 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/storefront/page-factory.test.tsx > published gifts remain browsable when the homepage poster is unavailable
+AssertionError: expected '<!--$--><div class="storefront" lang=…' to contain 'Gift from the server directory'
+
+- Expected
++ Received
+
+- Gift from the server directory
++ <!--$--><div class="storefront" lang="en"><a class="storefront-skip" href="#main-content">Skip to content</a><header class="storefront-header" data-scrolled="false"><a class="storefront-wordmark" href="/en">Fixture Studio<span aria-hidden="true">.</span></a><div class="storefront-desktop-nav"><nav aria-label="Main navigation"><a href="/en" aria-current="page">Home</a><a href="/en/idols">Artists</a><a href="/en/gifts">Gifts</a><a href="/en/orders/lookup">Find an order</a></nav></div><div class="storefront-header-utilities"><div class="storefront-desktop-language"><div data-storefront-language="true" data-language-state="idle"><button type="button" tabindex="0" aria-haspopup="menu" class="fs-menu__trigger"><span class="fs-menu__trigger-copy"><span class="fs-menu__label">Language</span><span class="fs-menu__value">English</span></span><span aria-hidden="true" class="fs-menu__chevron"><svg aria-hidden="true" class="fs-icon fs-interaction-icon" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg></span></button></div></div><div class="storefront-cart-control" data-cart-trigger="true"><button class="fs-overlay-trigger" data-overlay-trigger="drawer" data-drawer-load-state="idle" type="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false"><svg aria-hidden="true" class="fs-icon" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8Zm3 0V6a3 3 0 0 1 6 0v2"></path></svg><span class="storefront-sr-only">Gift bag</span></button><noscript><a href="/en/cart">Gift bag</a></noscript></div><div class="storefront-mobile-menu"><button class="fs-overlay-trigger" data-overlay-trigger="drawer" data-drawer-load-state="idle" type="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg><span class="storefront-sr-only">Menu</span></button></div></div></header><main id="main-content" tabindex="-1"><!--$--><!--/$--><section class="storefront-state"><p class="storefront-eyebrow">Artists</p><h1>This page is temporarily unavailable.</h1><p>Please try again in a moment.</p><a class="storefront-primary" href="/en">Try again<svg aria-hidden="true" class="fs-icon" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6m6-6H5"></path></svg></a><a class="storefront-text-link" href="/en/idols">All artists</a></section></main><footer class="storefront-footer"><span class="storefront-wordmark">Fixture Studio<span aria-hidden="true">.</span></span><p>The studio prepares each gift and passes it on to the artist.</p><a href="/en/region">Region and currency</a><a href="/en/idols">All artists<svg aria-hidden="true" class="fs-icon" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6m6-6H5"></path></svg></a><!--$?--><template id="B:0"></template><!--/$--></footer></div><!--/$--><script>requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
++ $RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script>
+
+ ❯ src/storefront/page-factory.test.tsx:714:27
+    712|   streamed.abort();
+    713|   expect(streamed.errors).toEqual([]);
+    714|   expect(streamed.html()).toContain("Gift from the server directory");
+       |                           ^
+    715|   expect(streamed.html()).not.toContain("data-market-choices");
+    716| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 39 passed (40)
+   Start at  00:29:22
+   Duration  2.88s (transform 382ms, setup 0ms, import 400ms, tests 2.42s, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/storefront:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/storefront@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/storefront/page-factory.test.tsx`
+Exit status 1

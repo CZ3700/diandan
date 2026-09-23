@@ -1,0 +1,77 @@
+
+> @fan-support/admin@0.0.0 test /Users/mario/Desktop/下单/apps/admin
+> vitest run --config ../../vitest.config.ts --root .
+
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
+
+ ✓ src/workspace/client.test.ts (3 tests) 27ms
+ ✓ src/workspace/session-access.test.ts (5 tests) 36ms
+ ✓ src/management-exceptions/api.test.ts (1 test) 26ms
+ ✓ src/server/admin-access-bff.test.ts (35 tests) 1557ms
+   ✓ login begins with a private API request and a browser-bound Secure cookie, never response JSON credentials  1533ms
+ ✓ src/server/admin-bff.test.ts (6 tests) 36ms
+ ✓ src/management-orders/views.test.tsx (2 tests) 38ms
+ ✓ src/management-payments/views.test.tsx (5 tests) 253ms
+ ✓ src/workspace/content-form.test.tsx (4 tests) 26ms
+ ✓ src/management-center/center.test.tsx (2 tests) 2166ms
+   ✓ opens the new management center at the ordinary locale entry  2157ms
+ ✓ src/management-payments/api.test.ts (3 tests) 54ms
+ ✓ src/workspace/editor-model.test.ts (7 tests) 22ms
+ ✓ src/management-finance/api.test.ts (2 tests) 51ms
+ ✓ src/management-center/content-form.test.tsx (10 tests) 72ms
+ ✓ src/management-center/list-view.test.tsx (4 tests) 100ms
+ ✓ src/management-center/inputs.test.ts (3 tests) 16ms
+ ✓ src/management-center/authentication.test.tsx (10 tests) 28ms
+ ✓ src/app/healthz/route.test.ts (8 tests) 57ms
+ ✓ src/instrumentation.test.ts (3 tests) 23ms
+ ✓ src/management-finance/views.test.tsx (3 tests) 104ms
+ ✓ src/management-finance/model.test.ts (2 tests) 142ms
+ ✓ src/management-orders/api.test.ts (2 tests) 82ms
+ ✓ src/management-center/submission.test.ts (3 tests) 70ms
+ ✓ src/workspace/gift-editor-model.test.ts (5 tests) 111ms
+ ✓ src/management-center/api.test.ts (3 tests) 207ms
+ ✓ src/workspace/gift-detail-review.test.tsx (6 tests) 208ms
+ ✓ src/server/admin-orders-operations.test.ts (5 tests) 157ms
+ ✓ src/management-orders/detail-view.test.tsx (2 tests) 134ms
+ ✓ src/management-exceptions/views.test.tsx (3 tests) 31ms
+ ✓ src/management-finance/input-events.test.tsx (1 test) 116ms
+ ✓ src/workspace/media-upload-attempt.test.ts (2 tests) 197ms
+ ✓ src/workspace/advanced-page.test.tsx (3 tests) 10ms
+ ✓ src/proxy.test.ts (8 tests) 15ms
+ ✓ src/management-payments/editor-model.test.ts (3 tests) 122ms
+ ✓ src/management-center/form-model.test.ts (5 tests) 41ms
+ ✓ src/workspace/preview.test.tsx (2 tests) 9ms
+ ✓ src/workspace/publication-attempt.test.ts (3 tests) 3ms
+ ✓ src/server/gift-commerce-operations.test.ts (4 tests) 117ms
+ ✓ src/workspace/gift-detail-preview.test.tsx (1 test) 94ms
+ ✓ src/app/global-error.test.tsx (2 tests) 14ms
+ ✓ src/server/management-operations.test.ts (2 tests) 9ms
+ ✓ src/management-payments/authority.test.ts (2 tests) 6ms
+ ✓ src/management-finance/pending-store.test.ts (2 tests) 7ms
+ ✓ src/management-exceptions/state.test.ts (2 tests) 135ms
+ ✓ src/management-exceptions/pending-store.test.ts (1 test) 6ms
+ ✓ src/management-center/focus.test.ts (3 tests) 4ms
+ ✓ src/management-center/watch-operation.test.ts (3 tests) 8ms
+ ✓ src/server/admin-operations.test.ts (2 tests) 8ms
+ ✓ src/server/admin-payment-configuration-operations.test.ts (1 test) 7ms
+ ✓ src/health.test.ts (1 test) 8ms
+ ✓ src/management-payments/pending-store.test.ts (1 test) 5ms
+ ✓ src/workspace/state.test.ts (3 tests) 7ms
+ ✓ src/server/admin-finance-operations.test.ts (1 test) 194ms
+ ✓ src/server/management-config.test.ts (1 test) 3ms
+ ✓ src/server/admin-exceptions-operations.test.ts (1 test) 6ms
+ ✓ src/management-orders/private-state.test.ts (1 test) 5ms
+ ✓ src/index.test.ts (1 test) 3ms
+ ✓ src/management-center/workspace-state.test.ts (2 tests) 3ms
+ ✓ src/management-center/access.test.ts (4 tests) 3ms
+ ✓ src/management-payments/model.test.ts (1 test) 2ms
+ ✓ src/server/admin-access-logging.test.ts (1 test) 3ms
+ ✓ src/management-center/copy.test.ts (1 test) 3ms
+ ✓ src/management-center/errors.test.ts (1 test) 2ms
+
+ Test Files  62 passed (62)
+      Tests  219 passed (219)
+   Start at  00:45:44
+   Duration  7.99s (transform 12.76s, setup 0ms, import 49.68s, tests 7.01s, environment 4ms)
+

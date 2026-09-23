@@ -1,0 +1,33 @@
+{
+  "result": "PASS",
+  "checks": {
+    "$defs": {
+      "previous": 700,
+      "current": 704,
+      "existingChanged": [],
+      "added": [
+        "GiftBrowseQuery",
+        "GiftBrowseReadCommand",
+        "GiftBrowseResponse",
+        "GiftBrowseSnapshot"
+      ]
+    },
+    "components/schemas": {
+      "previous": 204,
+      "current": 206,
+      "existingChanged": [],
+      "added": [
+        "GiftBrowseQuery",
+        "GiftBrowseResponse"
+      ]
+    },
+    "paths": {
+      "previous": 127,
+      "current": 128,
+      "existingChanged": [],
+      "added": [
+        "/api/v1/gift-browse"
+      ]
+    }
+  }
+}

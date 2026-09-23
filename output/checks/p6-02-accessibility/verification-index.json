@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "status": "LOCAL_ACCEPT",
+  "baseline": "40854787",
+  "branch": "codex/p6-02-accessibility",
+  "task": "P6-02",
+  "quality": {
+    "command": "pnpm check:dev",
+    "result": "PASS",
+    "typecheckTasks": 64,
+    "testTasks": 64,
+    "buildTasks": 36,
+    "log": "check-dev-final.txt"
+  },
+  "affectedAdminTests": {
+    "result": "PASS",
+    "tests": 219,
+    "log": "admin-focus-tests.txt"
+  },
+  "storage": {
+    "independentUnitTests": 49,
+    "independentLegacyPgChecks": 315,
+    "independentBrowsePgChecks": 803,
+    "independentStrictPgChecks": 69,
+    "review": "storage-independent-review.md"
+  },
+  "contracts": {
+    "result": "PASS",
+    "existingDefinitionsUnchanged": 700,
+    "existingOpenApiSchemasUnchanged": 204,
+    "existingOpenApiPathsUnchanged": 127,
+    "evidence": "contract-compatibility-final.json"
+  },
+  "browserAttempts": [
+    {
+      "run": "run-1",
+      "result": "FAIL",
+      "reason": "mailbox authentication refresh race in harness"
+    },
+    {
+      "run": "run-2",
+      "result": "FAIL",
+      "reason": "harness navigated before canonical order redirect"
+    },
+    {
+      "run": "run-3",
+      "result": "FAIL",
+      "reason": "admin search focus loss and harness operated stale rows"
+    },
+    {
+      "run": "run-4",
+      "result": "PASS",
+      "cells": 28,
+      "coreScreens": 196,
+      "screenshots": 199,
+      "summary": "browser-final-summary.json"
+    }
+  ],
+  "externalEvidence": {
+    "humanScreenReader": false,
+    "physicalPhone": false,
+    "realMerchant": false,
+    "cloudStaging": false
+  },
+  "remaining": "Human screen-reader and language acceptance; physical phone, real merchant, remote CI, RUM, and cloud staging gates remain in their corresponding tasks. Local P6-03 performance is READY, not started.",
+  "sourceHash": "c7b2e52ba36558e104d10fead2a1e0c7f69cca65e3319ea8310231438a2b2903",
+  "taskStatus": "IN_PROGRESS",
+  "executor": null,
+  "independentAcceptance": {
+    "result": "ACCEPT",
+    "report": "final-independent-acceptance.md"
+  },
+  "finalChecks": {
+    "source": "source-final-comparison.json",
+    "protectedFiles": "protected-untracked-final.json",
+    "secrets": {
+      "result": "PASS",
+      "exitCode": 0,
+      "log": "secrets-final.txt"
+    },
+    "userInstance": "user-instance-final.json",
+    "userConfig": "user-config-final.json",
+    "userHome": "user-home-http.json"
+  }
+}

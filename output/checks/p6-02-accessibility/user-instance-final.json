@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "instanceId": "713fc5bc-571a-431f-859b-4c99600bdbdd",
+  "runId": "7477db15-43ef-44c6-9434-516c0ca5a57a",
+  "pid": 2793,
+  "ready": true,
+  "services": {
+    "api": true,
+    "worker": true,
+    "storefront": true,
+    "admin": true
+  },
+  "stage": "ready",
+  "origins": {
+    "storefront": "https://storefront.example.invalid:53381",
+    "admin": "https://admin.example.invalid:53382",
+    "oidc": "https://oidc.example.invalid:53385",
+    "psp": "https://payments.example.invalid:53386",
+    "mail": "https://mail.example.invalid:53387",
+    "media": "https://media.example.invalid:53388"
+  }
+}

@@ -19,6 +19,7 @@ import { contentAuthoringPaths } from "./content-authoring-openapi.js";
 import { baseContentPaths } from "./base-content-openapi.js";
 import { adminContentPaths } from "./admin-content-openapi.js";
 import { catalogDirectoryPaths } from "./catalog-directory-openapi.js";
+import { giftBrowsePaths } from "./gift-browse-openapi.js";
 import { z } from "zod";
 
 import { contractArtifactRegistry } from "./artifact-registry.js";
@@ -224,6 +225,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...storefrontSeoPaths(),
         [PAYMENT_WEBHOOK_PATH]: paymentWebhookPath(),
         ...catalogDirectoryPaths(),
+        ...giftBrowsePaths(),
         ...adminContentPaths(),
         ...contentAuthoringPaths(),
         ...baseContentPaths(),

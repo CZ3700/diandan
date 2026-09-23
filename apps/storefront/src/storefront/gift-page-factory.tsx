@@ -55,7 +55,7 @@ export function createGiftStorefrontPage(
     if (handle && !handle.success) notFound();
     const contextRead = readCommerceContext().catch(
       (error: unknown): StorefrontContextResponse => {
-        if (kind !== "gift") throw error;
+        if (kind !== "gift" && kind !== "gifts") throw error;
         return {
           schemaVersion: 1,
           outcome: "FAILURE",
@@ -69,12 +69,11 @@ export function createGiftStorefrontPage(
         ? readGiftDetailPage(locale, handle.data, values)
         : undefined,
       readCartRestorationHint(),
-      kind === "gift" ? undefined : contextRead,
+      kind === "gift" || kind === "gifts" ? undefined : contextRead,
     ]);
     const contextQuery = queryString(values);
     let content: ReactNode;
     if (kind === "gifts") {
-      const context = await contextRead;
       const selectedId = idolIdSchema.safeParse(values["idol"]);
       const directory = selectedId.success
         ? await artistRead(locale, selectedId.data)
@@ -90,7 +89,7 @@ export function createGiftStorefrontPage(
           locale={locale}
           copy={copy}
           values={values}
-          context={context}
+          context={contextRead}
           {...(artist ? { artist } : {})}
         />
       );
@@ -239,7 +238,7 @@ export function createGiftStorefrontPage(
           name={name}
           contextQuery={contextQuery}
           policyLinks={
-            kind === "gift" ? (
+            kind === "gift" || kind === "gifts" ? (
               <GiftDetailPolicyLinks
                 locale={locale}
                 copy={copy}

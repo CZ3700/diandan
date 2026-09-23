@@ -35,11 +35,18 @@ test("connects real directory use cases to configured persistence and trusted me
     hasNextPage: false,
   }));
   const close = vi.fn(async () => undefined);
+  const browseGifts = vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    catalogVersion: "a".repeat(64),
+    items: [],
+    totalItems: 0,
+  }));
   const createPersistence = vi.fn(() => ({
     contentReadTransactionManager: {
       runInContentReadTransaction: async (
         work: (repositories: unknown) => unknown,
-      ) => work({ catalogDirectory: { readIdols } }),
+      ) => work({ catalogDirectory: { readIdols, browseGifts } }),
     },
     close,
   }));
@@ -63,6 +70,17 @@ test("connects real directory use cases to configured persistence and trusted me
     }),
   ).resolves.toMatchObject({ outcome: "SUCCESS", items: [] });
   expect(readIdols).toHaveBeenCalledTimes(1);
+  await expect(
+    composition.catalogDirectoryRoute.browseGifts({
+      schemaVersion: 1,
+      locale: "th",
+    }),
+  ).resolves.toMatchObject({
+    outcome: "SUCCESS",
+    items: [],
+    pageInfo: { page: 1, pageSize: 12 },
+  });
+  expect(browseGifts).toHaveBeenCalledTimes(1);
   await composition.catalogDirectoryRuntime.start();
   await Promise.all([
     composition.catalogDirectoryRuntime.stop(),

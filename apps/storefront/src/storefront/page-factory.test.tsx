@@ -22,6 +22,7 @@ const reads = vi.hoisted(() => ({
   context: vi.fn(),
   seo: vi.fn(),
   gifts: vi.fn(),
+  browse: vi.fn(),
 }));
 vi.mock("server-only", () => ({}));
 vi.mock("next/headers", () => ({
@@ -39,6 +40,9 @@ vi.mock("../server/public-commerce", () => ({
   readPublishedGiftCommerce: vi.fn(),
   readStorefrontGift: vi.fn(),
   readStorefrontGiftDirectory: reads.gifts,
+}));
+vi.mock("../server/public-gift-browse", () => ({
+  readGiftBrowse: reads.browse,
 }));
 vi.mock("../server/runtime-config", () => ({
   loadStorefrontRuntimeConfig: () => ({ deploymentEnvironment: "test" }),
@@ -284,6 +288,11 @@ beforeEach(() => {
   reads.context.mockReset().mockResolvedValue(contextUnavailable);
   reads.seo.mockReset().mockReturnValue(null);
   reads.gifts.mockReset();
+  reads.browse.mockReset().mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "CATALOG_UNAVAILABLE",
+  });
 });
 // Measure the scheduling of reads after module loading, independently of transform/worker startup.
 beforeAll(async () => {
@@ -660,4 +669,50 @@ test("an unavailable commerce context retains the artist and fails the gift sect
   expect(streamed.html()).not.toContain("data-gift-link");
   expect(streamed.html()).not.toContain('data-outcome="success"');
   expect(reads.gifts).not.toHaveBeenCalled();
+});
+
+test.each(SUPPORTED_LOCALES)(
+  "%s homepage shows published gifts below artists without featured slots or choosing a market",
+  async (locale) => {
+    reads.catalog.mockImplementation(async (_path, _query, kind) =>
+      kind === "homepage" ? publishedHome(locale) : directoryFixturePage([]),
+    );
+    const priced = giftPage(locale);
+    if (priced.outcome !== "SUCCESS") throw new Error("Missing fixture");
+    reads.browse.mockResolvedValue({
+      ...priced,
+      items: priced.items.map((item) => item.gift),
+    });
+    const streamed = await streamHome(locale);
+    await streamed.ended;
+    streamed.abort();
+    expect(streamed.errors).toEqual([]);
+    const html = streamed.html();
+    expect(html).toContain("Gift from the server directory");
+    expect(html.indexOf('id="gifts"')).toBeGreaterThan(
+      html.indexOf('id="artists"'),
+    );
+    expect(html).toContain(`/${locale}/gifts/streamed-gift`);
+    expect(html).not.toContain("data-market-choices");
+    expect(html).not.toContain("giftEmpty");
+    expect(reads.gifts).not.toHaveBeenCalled();
+    expect(reads.browse).toHaveBeenCalledWith(
+      expect.objectContaining({ locale, page: 1, pageSize: 12 }),
+    );
+  },
+);
+
+test("published gifts remain browsable when the homepage poster is unavailable", async () => {
+  const priced = giftPage("en");
+  if (priced.outcome !== "SUCCESS") throw new Error("Missing fixture");
+  reads.browse.mockResolvedValue({
+    ...priced,
+    items: priced.items.map((item) => item.gift),
+  });
+  const streamed = await streamHome("en");
+  await streamed.ended;
+  streamed.abort();
+  expect(streamed.errors).toEqual([]);
+  expect(streamed.html()).toContain("Gift from the server directory");
+  expect(streamed.html()).not.toContain("data-market-choices");
 });

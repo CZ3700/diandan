@@ -162,7 +162,11 @@ const scenarios: readonly Scenario[] = [
     value: emptyIdols,
     unavailable: "CATALOG_UNAVAILABLE",
     register: (app, read) =>
-      registerCatalogDirectoryRoute(app, { readIdols: read, readGifts: read }),
+      registerCatalogDirectoryRoute(app, {
+        readIdols: read,
+        readGifts: read,
+        browseGifts: read,
+      }),
   },
   {
     name: "gift directory",
@@ -170,7 +174,11 @@ const scenarios: readonly Scenario[] = [
     value: emptyGifts,
     unavailable: "CATALOG_UNAVAILABLE",
     register: (app, read) =>
-      registerCatalogDirectoryRoute(app, { readIdols: read, readGifts: read }),
+      registerCatalogDirectoryRoute(app, {
+        readIdols: read,
+        readGifts: read,
+        browseGifts: read,
+      }),
   },
 ];
 
@@ -249,6 +257,10 @@ test("empty directory ETags partition canonical locale, search, market, currency
   registerCatalogDirectoryRoute(app, {
     readIdols: async () => emptyIdols,
     readGifts: async () => emptyGifts,
+    browseGifts: async () =>
+      emptyGifts.outcome === "SUCCESS"
+        ? { ...emptyGifts, items: emptyGifts.items.map((item) => item.gift) }
+        : emptyGifts,
   });
   try {
     const tags = new Set<string>();
@@ -316,7 +328,11 @@ test("directory scope is validated before ETag generation and conditional matchi
       paginationLimited: false,
     },
   } as never);
-  registerCatalogDirectoryRoute(app, { readIdols, readGifts });
+  registerCatalogDirectoryRoute(app, {
+    readIdols,
+    readGifts,
+    browseGifts: readGifts,
+  });
   try {
     for (const url of [
       "/api/v1/idols?locale=ja",

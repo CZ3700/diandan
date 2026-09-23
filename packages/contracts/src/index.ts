@@ -37,6 +37,8 @@ export * from "./reliable-events.js";
 export * from "./versioning.js";
 
 export * from "./catalog-directory.js";
+export * from "./gift-browse.js";
+export * from "./gift-browse-internal.js";
 
 export * from "./media-processing.js";
 export * from "./content-drafts.js";

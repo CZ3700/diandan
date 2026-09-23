@@ -1,0 +1,41 @@
+[regression] 1-build
+[regression] 2-start
+{"instance":"test-regression-b643408543a946c4","stage":"LOGIN"}
+{"instance":"test-regression-b643408543a946c4","stage":"UPLOAD_ARTIST"}
+{"stage":"ARTIST_PUBLISHED","artistId":"664f383e-958c-445a-aa48-229c6f4e8ec7"}
+{"instance":"test-regression-b643408543a946c4","stage":"UPLOAD_GIFT"}
+{"instance":"test-regression-b643408543a946c4","stage":"WAIT_INITIAL_HOMEPAGE"}
+{"instance":"test-regression-b643408543a946c4","stage":"UPLOAD_POSTER"}
+{"instance":"test-regression-b643408543a946c4","stage":"SEVEN_LOCALE_MATRIX"}
+{"instance":"test-regression-b643408543a946c4","stage":"COMPLETE"}
+[accessibility] en-mobile
+[accessibility] en-desktop
+[accessibility] en-narrow
+[accessibility] zh-CN-mobile
+[accessibility] zh-CN-desktop
+[accessibility] zh-CN-narrow
+[accessibility] th-mobile
+[accessibility] th-desktop
+[accessibility] th-narrow
+[accessibility] vi-mobile
+[accessibility] vi-desktop
+[accessibility] vi-narrow
+[accessibility] ja-mobile
+[accessibility] ja-desktop
+[accessibility] ja-narrow
+[accessibility] es-mobile
+[accessibility] es-desktop
+[accessibility] es-narrow
+[accessibility] pt-mobile
+[accessibility] pt-desktop
+[accessibility] pt-narrow
+[accessibility] en-native-zoom
+[accessibility] zh-CN-native-zoom
+[accessibility] th-native-zoom
+[accessibility] vi-native-zoom
+[accessibility] ja-native-zoom
+[accessibility] es-native-zoom
+[accessibility] pt-native-zoom
+[regression] 3-stop
+[regression] 4-reset
+{"status":"PASS","instance":"test-regression-b643408543a946c4","report":"/Users/mario/Desktop/.fan-support-regression/eb449603-544a-43cd-b1fe-a568304769ba/workspace/output/checks/p6-02-accessibility/browser/test-regression-b643408543a946c4/result.json"}

@@ -4,6 +4,7 @@ import type {
   StorefrontContextResponse,
   SupportedLocale,
 } from "@fan-support/contracts";
+import { GiftBrowseBody } from "./gift-browse-section";
 import { giftDirectoryRead } from "./gift-page-reads";
 import { prepareGiftQuery } from "./gift-query";
 import { GiftDirectory } from "./gift-directory";
@@ -16,7 +17,7 @@ export async function GiftDirectorySection({
   locale,
   copy,
   values,
-  context,
+  context: contextRead,
   basePath = "/gifts",
   headingLevel = 1,
   artist,
@@ -24,7 +25,7 @@ export async function GiftDirectorySection({
   locale: SupportedLocale;
   copy: StorefrontCopy;
   values: Readonly<Record<string, string | string[] | undefined>>;
-  context: StorefrontContextResponse;
+  context: StorefrontContextResponse | Promise<StorefrontContextResponse>;
   basePath?: string;
   headingLevel?: 1 | 2;
   artist?: PublishedIdolView;
@@ -33,7 +34,19 @@ export async function GiftDirectorySection({
   const Heading = headingLevel === 1 ? "h1" : "h2";
   const query = prepared.contextQuery;
   let body;
-  if (!prepared.valid)
+  const browsing =
+    values["market"] === undefined && values["currency"] === undefined;
+  const context = browsing ? undefined : await contextRead;
+  if (browsing)
+    body = await GiftBrowseBody({
+      locale,
+      copy,
+      values,
+      basePath,
+      headingLevel,
+    });
+  else if (!context) throw new Error("Missing commerce context");
+  else if (!prepared.valid)
     body = (
       <>
         {prepared.reason === "INVALID_QUERY" && (

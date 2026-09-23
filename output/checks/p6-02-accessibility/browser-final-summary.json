@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "sourceHash": "c7b2e52ba36558e104d10fead2a1e0c7f69cca65e3319ea8310231438a2b2903",
+  "cells": 28,
+  "screens": 196,
+  "additionalScreens": 1,
+  "screenshots": 199,
+  "keyboardChecks": 506,
+  "dialogs": 8,
+  "searchFocusChecks": 28,
+  "violations": 0,
+  "incomplete": 0,
+  "pageErrors": 0,
+  "journey": {
+    "payment": true,
+    "mailAccess": true,
+    "fulfillment": true
+  },
+  "dailyBrowse": {
+    "schemaVersion": 1,
+    "result": "PASS",
+    "checks": 49,
+    "locales": [
+      "en",
+      "zh-CN",
+      "th",
+      "vi",
+      "ja",
+      "es",
+      "pt"
+    ],
+    "sourceLocale": "en"
+  },
+  "nativeZoom": {
+    "baseline": {
+      "outerWidth": 1710,
+      "outerHeight": 929,
+      "innerWidth": 1710,
+      "innerHeight": 842,
+      "devicePixelRatio": 2,
+      "visualViewport": {
+        "width": 1710,
+        "height": 842,
+        "scale": 1
+      }
+    },
+    "zoomed": {
+      "outerWidth": 1710,
+      "outerHeight": 929,
+      "innerWidth": 855,
+      "innerHeight": 421,
+      "devicePixelRatio": 4,
+      "visualViewport": {
+        "width": 855,
+        "height": 421,
+        "scale": 1
+      }
+    },
+    "captures": [
+      {
+        "percent": 100,
+        "file": "native-chrome-100.png",
+        "sha256": "39c44177cfa260928176052ca3761b6b005ce10b92976c6ee9c9498dc4546ec9",
+        "height": 1684,
+        "width": 3420
+      },
+      {
+        "percent": 200,
+        "file": "native-chrome-200.png",
+        "sha256": "0244e9e7fada2eb6f2c18958b079fda4240e544c53e8006d28695295909917b3",
+        "height": 1684,
+        "width": 3420
+      }
+    ],
+    "profileRemoved": true,
+    "method": "Headed Chrome temporary HostZoomMap profiles; viewport null; CDP screenshots without device-metrics or page-scale emulation"
+  },
+  "cleanupFailures": [],
+  "humanScreenReaderVerified": false,
+  "physicalPhoneVerified": false,
+  "report": "output/checks/p6-02-accessibility/run-4/artifacts/checks/p6-02-accessibility/browser/test-regression-b643408543a946c4/pages/report.json"
+}

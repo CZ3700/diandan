@@ -85,7 +85,7 @@ export function OrdersWorkspace({
   }, [api, selected, filters, refresh]);
   useEffect(() => {
     title.current?.focus();
-  }, [selected, filters.page]);
+  }, [selected, filters]);
   const mutate: MutationRunner = useCallback(
     async (work, notice = "SAVED") => {
       if (active.current) return false;

@@ -1,0 +1,547 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "instance": "test-regression-122406e4658e499c",
+  "stage": "en-mobile:mail-order",
+  "scope": "28 production-page accessibility cells; one complete keyboard TEST payment and independent email exchange/review/delivery; per-cell keyboard add/checkout form and protected order layout using an in-memory authorized TEST session",
+  "runtime": {
+    "storefront": "PRODUCTION_NEXT",
+    "admin": "LOCAL_NEXT_DEVELOPMENT",
+    "payment": "INDEPENDENT_TEST_PSP"
+  },
+  "humanScreenReaderVerified": false,
+  "physicalPhoneVerified": false,
+  "cases": [
+    {
+      "mode": "mobile",
+      "width": 390,
+      "height": 844,
+      "reducedMotion": true,
+      "locale": "en",
+      "id": "en-mobile",
+      "screens": [
+        {
+          "name": "home",
+          "passed": true,
+          "measurement": {
+            "width": 390,
+            "height": 844,
+            "documentWidth": 390,
+            "bodyWidth": 390,
+            "locale": "en",
+            "reducedMotion": true,
+            "scrollBehavior": "auto",
+            "transformAnimations": 0
+          },
+          "axe": {
+            "engineVersion": "4.13.0",
+            "violations": [],
+            "incomplete": []
+          }
+        },
+        {
+          "name": "gift",
+          "passed": true,
+          "measurement": {
+            "width": 390,
+            "height": 844,
+            "documentWidth": 390,
+            "bodyWidth": 390,
+            "locale": "en",
+            "reducedMotion": true,
+            "scrollBehavior": "auto",
+            "transformAnimations": 0
+          },
+          "axe": {
+            "engineVersion": "4.13.0",
+            "violations": [],
+            "incomplete": []
+          }
+        },
+        {
+          "name": "cart",
+          "passed": true,
+          "measurement": {
+            "width": 390,
+            "height": 844,
+            "documentWidth": 390,
+            "bodyWidth": 390,
+            "locale": "en",
+            "reducedMotion": true,
+            "scrollBehavior": "auto",
+            "transformAnimations": 0
+          },
+          "axe": {
+            "engineVersion": "4.13.0",
+            "violations": [],
+            "incomplete": []
+          }
+        },
+        {
+          "name": "checkout",
+          "passed": true,
+          "measurement": {
+            "width": 390,
+            "height": 844,
+            "documentWidth": 390,
+            "bodyWidth": 390,
+            "locale": "en",
+            "reducedMotion": true,
+            "scrollBehavior": "auto",
+            "transformAnimations": 0
+          },
+          "axe": {
+            "engineVersion": "4.13.0",
+            "violations": [],
+            "incomplete": []
+          }
+        }
+      ],
+      "keyboard": true,
+      "homeNoContext": true,
+      "giftBeforeMarket": true,
+      "homeNoCartCreated": true
+    }
+  ],
+  "additionalScreens": [
+    {
+      "scenario": "en-mobile-out-of-range",
+      "name": "home-out-of-range",
+      "passed": true,
+      "measurement": {
+        "width": 390,
+        "height": 844,
+        "documentWidth": 390,
+        "bodyWidth": 390,
+        "locale": "en",
+        "reducedMotion": true,
+        "scrollBehavior": "auto",
+        "transformAnimations": 0
+      },
+      "axe": {
+        "engineVersion": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      }
+    }
+  ],
+  "keyboard": [
+    {
+      "scenario": "en-mobile:home",
+      "label": "home-category",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 166,
+      "height": 48
+    },
+    {
+      "scenario": "en-mobile:home",
+      "label": "home-apply-category",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 121.015625,
+      "height": 48
+    },
+    {
+      "scenario": "en-mobile:home",
+      "label": "home-clear-category",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 168,
+      "height": 48
+    },
+    {
+      "scenario": "en-mobile:home",
+      "label": "home-clear-apply",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 121.90625,
+      "height": 48
+    },
+    {
+      "scenario": "en-mobile:home",
+      "label": "home-first-page",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 124.953125,
+      "height": 49.8125
+    },
+    {
+      "scenario": "en-mobile:home",
+      "label": "home-gift",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 171,
+      "height": 314.25
+    },
+    {
+      "scenario": "en-mobile:gift",
+      "label": "purchase-market",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 358,
+      "height": 93.625
+    },
+    {
+      "scenario": "en-mobile:gift",
+      "label": "recipient-dialog-open",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 157.046875,
+      "height": 51.8125
+    },
+    {
+      "scenario": "en-mobile:gift",
+      "label": "choose-recipient",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 157.046875,
+      "height": 51.8125
+    },
+    {
+      "scenario": "en-mobile:gift",
+      "label": "recipient",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 340,
+      "height": 106
+    },
+    {
+      "scenario": "en-mobile:gift",
+      "label": "anonymous-name",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 13,
+      "height": 13
+    },
+    {
+      "scenario": "en-mobile:gift",
+      "label": "private-message",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 358,
+      "height": 103.4375
+    },
+    {
+      "scenario": "en-mobile:gift",
+      "label": "add-gift",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 358,
+      "height": 49.8125
+    },
+    {
+      "scenario": "en-mobile:gift",
+      "label": "cart-dialog-open",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 47.453125,
+      "height": 44
+    },
+    {
+      "scenario": "en-mobile:gift",
+      "label": "cart-open",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 47.453125,
+      "height": 44
+    },
+    {
+      "scenario": "en-mobile:gift",
+      "label": "cart-page",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 100.09375,
+      "height": 25.8125
+    },
+    {
+      "scenario": "en-mobile:cart",
+      "label": "checkout",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 218.390625,
+      "height": 49.8125
+    },
+    {
+      "scenario": "en-mobile:checkout",
+      "label": "checkout-policy",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 13,
+      "height": 13
+    },
+    {
+      "scenario": "en-mobile:checkout",
+      "label": "checkout-policy",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 13,
+      "height": 13
+    },
+    {
+      "scenario": "en-mobile:checkout",
+      "label": "checkout-policy",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 13,
+      "height": 13
+    },
+    {
+      "scenario": "en-mobile:checkout",
+      "label": "checkout-policy",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 13,
+      "height": 13
+    },
+    {
+      "scenario": "en-mobile:checkout",
+      "label": "invalid-checkout",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 358,
+      "height": 49.8125
+    },
+    {
+      "scenario": "en-mobile:checkout",
+      "label": "checkout-email",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 358,
+      "height": 51.8125
+    },
+    {
+      "scenario": "en-mobile:checkout",
+      "label": "confirm-checkout",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 358,
+      "height": 49.8125
+    },
+    {
+      "scenario": "en-mobile:checkout",
+      "label": "payment-country",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 358,
+      "height": 50
+    },
+    {
+      "scenario": "en-mobile:checkout",
+      "label": "create-payment",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 358,
+      "height": 49.8125
+    },
+    {
+      "scenario": "en-mobile:checkout",
+      "label": "hosted-payment",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 358,
+      "height": 49.8125
+    },
+    {
+      "scenario": "FIRST_PAYMENT_RETURN",
+      "label": "test-psp-pay",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 165.171875,
+      "height": 21
+    },
+    {
+      "scenario": "en-mobile:mail-order",
+      "label": "mail-order-link",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 171.640625,
+      "height": 15
+    }
+  ],
+  "dialogs": [
+    {
+      "scenario": "en-mobile:gift",
+      "label": "recipient-dialog",
+      "forwardAndReverseContained": true,
+      "escapeRestoresTrigger": true
+    },
+    {
+      "scenario": "en-mobile:gift",
+      "label": "cart-dialog",
+      "forwardAndReverseContained": true,
+      "escapeRestoresTrigger": true
+    }
+  ],
+  "validation": [
+    {
+      "scenario": "en-mobile",
+      "valueMissing": true,
+      "focused": true,
+      "named": true,
+      "described": true
+    }
+  ],
+  "screenshots": [
+    "en-mobile-home.png",
+    "en-mobile-out-of-range-home-out-of-range.png",
+    "en-mobile-gift.png",
+    "en-mobile-cart.png",
+    "en-mobile-checkout.png"
+  ],
+  "pageErrors": [],
+  "observations": [],
+  "paymentCreates": [
+    {
+      "checkoutSessionId": "637b18b7-ebe0-4a9d-ab94-1a80c07b99e8",
+      "stage": "en-mobile:checkout"
+    }
+  ],
+  "paymentReads": [
+    {
+      "stage": "FIRST_PAYMENT_RETURN",
+      "checkoutSessionId": "637b18b7-ebe0-4a9d-ab94-1a80c07b99e8",
+      "attemptId": "b4235bfa-947f-451f-a6af-241b6c27d167",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "FIRST_PAYMENT_RETURN",
+      "checkoutSessionId": "637b18b7-ebe0-4a9d-ab94-1a80c07b99e8",
+      "attemptId": "b4235bfa-947f-451f-a6af-241b6c27d167",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    }
+  ],
+  "journey": {
+    "payment": true,
+    "mailAccess": false,
+    "fulfillment": false
+  },
+  "contentSetup": {
+    "status": "PARTIAL_PASS",
+    "assertions": 556
+  },
+  "actualDailyBrowse": {
+    "schemaVersion": 1,
+    "result": "PASS",
+    "checks": 49,
+    "locales": [
+      "en",
+      "zh-CN",
+      "th",
+      "vi",
+      "ja",
+      "es",
+      "pt"
+    ],
+    "sourceLocale": "en"
+  },
+  "browserVersion": "153.0.8010.53",
+  "homepageControls": {
+    "categoryGet": true,
+    "clearGet": true,
+    "outOfRangeRecovery": true,
+    "economicContextUnchanged": true,
+    "paginationNextBack": "NOT_EXERCISED_SINGLE_PUBLISHED_GIFT"
+  },
+  "failure": "Inspect safe current-stage measurements and screenshots; private browser errors and runtime values are omitted.",
+  "failureDiagnostic": {
+    "kind": "TIMEOUT",
+    "frames": [
+      "apps/api/scripts/regression-journey-browser.mjs:229:6",
+      "apps/api/scripts/accessibility-flows.mjs:384:3",
+      "apps/api/scripts/accessibility-browser.mjs:213:26",
+      "apps/api/scripts/accessibility-browser.mjs:252:9",
+      "scripts/regression-journey-lifecycle.mjs:7:20"
+    ]
+  },
+  "cleanupFailures": []
+}

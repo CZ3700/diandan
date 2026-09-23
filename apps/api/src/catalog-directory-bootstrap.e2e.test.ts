@@ -34,7 +34,7 @@ const validEnvironment = Object.freeze({
   FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true",
 });
 
-test("mounts both public directory routes through the real Nest bootstrap and closes their resource", async () => {
+test("mounts all public directory routes through the real Nest bootstrap and closes their resource", async () => {
   const start = vi.fn(async () => undefined);
   const stop = vi.fn(async () => undefined);
   const readIdols = vi.fn(async () => ({
@@ -55,7 +55,7 @@ test("mounts both public directory routes through the real Nest bootstrap and cl
   }));
   const app = await createApiApplication(validEnvironment, {
     logger: quietLogger,
-    catalogDirectoryRoute: { readIdols, readGifts },
+    catalogDirectoryRoute: { readIdols, readGifts, browseGifts: readGifts },
     catalogDirectoryRuntime: { start, stop },
   });
   try {
@@ -79,6 +79,17 @@ test("mounts both public directory routes through the real Nest bootstrap and cl
     expect(start).toHaveBeenCalledTimes(1);
     expect(readIdols).toHaveBeenCalledTimes(1);
     expect(readGifts).toHaveBeenCalledTimes(1);
+    const browsing = await server.inject({
+      method: "GET",
+      url: "/api/v1/gift-browse?locale=vi",
+    });
+    expect(browsing.statusCode).toBe(503);
+    expect(readGifts).toHaveBeenLastCalledWith({
+      schemaVersion: 1,
+      locale: "vi",
+      page: 1,
+      pageSize: 12,
+    });
   } finally {
     await app.close();
     expect(stop).toHaveBeenCalledTimes(1);

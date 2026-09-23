@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "stage": "admin-query-focus-red",
+  "keyboard": [
+    {
+      "scenario": "admin-query-focus-red",
+      "label": "login",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 99.3125,
+      "height": 51.59375
+    },
+    {
+      "scenario": "admin-query-focus-red",
+      "label": "identity",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 182,
+      "height": 19
+    },
+    {
+      "scenario": "admin-query-focus-red",
+      "label": "identity-confirm",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 206.453125,
+      "height": 21
+    },
+    {
+      "scenario": "admin-query-focus-red",
+      "label": "orders",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 142,
+      "height": 48
+    },
+    {
+      "scenario": "admin-query-focus-red",
+      "label": "search",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 288,
+      "height": 51.59375
+    },
+    {
+      "scenario": "admin-query-focus-red",
+      "label": "apply",
+      "reached": true,
+      "visible": true,
+      "unobscured": true,
+      "focusVisible": true,
+      "outline": true,
+      "width": 288,
+      "height": 51.59375
+    }
+  ],
+  "samples": [
+    {
+      "label": "before-submit",
+      "tag": "BUTTON",
+      "apply": true,
+      "stableHeading": false,
+      "body": false,
+      "connected": true,
+      "busy": "false"
+    },
+    {
+      "label": "pending-response",
+      "tag": "BODY",
+      "apply": false,
+      "stableHeading": false,
+      "body": true,
+      "connected": true,
+      "busy": "true"
+    },
+    {
+      "label": "completed-response",
+      "tag": "BODY",
+      "apply": false,
+      "stableHeading": false,
+      "body": true,
+      "connected": true,
+      "busy": "false"
+    },
+    {
+      "label": "next-tab",
+      "tag": "INPUT",
+      "apply": false,
+      "stableHeading": false,
+      "body": false,
+      "connected": true,
+      "busy": "false"
+    }
+  ],
+  "status": "FAIL"
+}

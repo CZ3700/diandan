@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "status": "AUTHOR_STORAGE_CHECKS_PASS",
+  "task": "P6-02 gift discovery PostgreSQL subimplementation",
+  "sourceFiles": [
+    {
+      "path": "packages/persistence-postgres/package.json",
+      "sha256": "98e25841d6b011d931949fd6159d8c9616bd70b8faccbe410f10746f1221d727"
+    },
+    {
+      "path": "packages/persistence-postgres/src/catalog-directory-repository.ts",
+      "sha256": "cca7cbfe061c1c5c05226e291b0de9d11f3a130b81d7a4dac021cdd170178eb4"
+    },
+    {
+      "path": "packages/persistence-postgres/src/catalog-publication-loader.ts",
+      "sha256": "6200150c1c130d2904e982e707ce4eacea4012cf14f4fea150e93c4b81837dae"
+    },
+    {
+      "path": "packages/persistence-postgres/src/catalog-publication-loader.test.ts",
+      "sha256": "2748f52fe77d0e304b7645536d4612af8d28eb5351474a6c5b9da03339d4d6a5"
+    },
+    {
+      "path": "packages/persistence-postgres/src/catalog-publication-mapper.ts",
+      "sha256": "e9aa91755bbce34800b4736544c2bc3660be0d870552e5a360a8bf37fa083170"
+    },
+    {
+      "path": "packages/persistence-postgres/src/catalog-verified-manifest.ts",
+      "sha256": "1d54440bfe42c360b7f7ab46d2310f1310fb12c6c432689c45af5b2cbd7e7a63"
+    },
+    {
+      "path": "packages/persistence-postgres/src/gift-browse-repository.ts",
+      "sha256": "12720a769aee4c08ef79eb279ae6651901ab5de07ec85eb93f3ac4920108e56c"
+    },
+    {
+      "path": "packages/persistence-postgres/src/gift-browse-repository.test.ts",
+      "sha256": "be0095669b315327c8032c1c6d443169357f75aa1ecb45bf0a3371bf35f7f094"
+    },
+    {
+      "path": "packages/persistence-postgres/src/gift-browse-sql.ts",
+      "sha256": "583e17b277e2e8a30d7a24966417545e6a51e2ca77d4b91723b63cf2fa181fbc"
+    },
+    {
+      "path": "packages/persistence-postgres/src/gift-browse-sql.test.ts",
+      "sha256": "97f50ad3905619768d69d5a2c87cb7a01186c43541341f33c25a902d90c22f80"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/gift-browse-postgres.mjs",
+      "sha256": "dfa1b5ff9c1a409ea534678cbb745fd1eca59e89cda67fd3411f260890a2fa9c"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/gift-browse-strict-postgres.mjs",
+      "sha256": "a21e6ea44f76092298d6c395077a2d6f79eece9c19a1cde6e93206b30ab15c4b"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/gift-browse-publication-cases.mjs",
+      "sha256": "704f5c72fd27494a077d95921fcf096b0bed432cf2aecedf64437cf7de2a3faa"
+    }
+  ],
+  "checks": {
+    "targetedUnitTests": 49,
+    "targetedTestFiles": 5,
+    "typecheckExit": 0,
+    "formatExit": 0,
+    "lintExit": 0,
+    "buildPackages": 16,
+    "buildExit": 0,
+    "isolatedPostgresDirectoryChecks": 803,
+    "isolatedPostgresStrictPublicationChecks": 69,
+    "postgresEntryExit": 0
+  },
+  "evidence": [
+    "unit.txt",
+    "typecheck.txt",
+    "style.txt",
+    "postgres.txt"
+  ],
+  "postgresCommand": "POSTGRES_TEST_BIN='/Users/mario/Desktop/下单/output/checks/p5-03-refund-operations/native-runtime/dist/postgresql@18/18.6/bin' mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/persistence-postgres test:postgres:gift-browse",
+  "scope": {
+    "noBusinessMigrations": true,
+    "noUserInstanceTouched": true,
+    "isolatedPostgresAutomaticallyCleaned": true,
+    "noBrowserStarted": true,
+    "faultBoundary": "Actual PostgreSQL SELECT leaves with TEST_ONLY missing/tampered translation projection, no immutable rows changed",
+    "defaultCatalogBehavior": "existing directories do not enable the new verifiedLocaleFallback option",
+    "recipientSemantics": "explicit relation remains discoverable for paused artist; ALL_ACTIVE_ARTISTS requires active accepting current published artist; purchase is checked separately"
+  },
+  "limitations": [
+    "Daily source publication browser/API verification is owned by root and accessibility_scope; exported helper is ready but this report does not claim their results.",
+    "Strict readers use FOR SHARE; readonly refers to no business mutations, not a PostgreSQL READ ONLY transaction.",
+    "Full workspace and browser acceptance remain root responsibilities; no production or external CI acceptance claimed.",
+    "Historical proof-version 1 lacks the immutable v2 manifest and still fails closed if its required translation evidence disappears."
+  ],
+  "superReview": {
+    "singlePurpose": true,
+    "focusedFunctions": true,
+    "productionDependencyDirection": true,
+    "noNewProductionCycles": true,
+    "schemaBoundaries": true,
+    "serializablePortIO": true,
+    "configuredMediaOrigin": true,
+    "noNewDependencies": true,
+    "repositoryReplaceable": true,
+    "affectedTestsPass": true
+  }
+}

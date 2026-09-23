@@ -1,0 +1,98 @@
+$ pnpm run build:with-dependencies && node ./scripts/gift-browse-postgres.mjs && node ./scripts/gift-browse-strict-postgres.mjs
+
+> @fan-support/persistence-postgres@0.0.0 build:with-dependencies /Users/mario/Desktop/下单/packages/persistence-postgres
+> pnpm turbo run build --filter @fan-support/persistence-postgres --concurrency=1
+
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/persistence-postgres
+   • Running build in 1 packages
+   • Remote caching disabled
+
+@fan-support/contracts:build: cache hit, replaying logs d8113b1462273979
+@fan-support/contracts:build: 
+@fan-support/contracts:build: > @fan-support/contracts@0.0.0 build /Users/mario/Desktop/下单/packages/contracts
+@fan-support/contracts:build: > tsc -p tsconfig.build.json
+@fan-support/contracts:build: 
+@fan-support/notification-port:build: cache hit, replaying logs 7c6320a1a8a5dedb
+@fan-support/notification-port:build: 
+@fan-support/notification-port:build: > @fan-support/notification-port@0.0.0 build /Users/mario/Desktop/下单/packages/notification-port
+@fan-support/notification-port:build: > tsc -p tsconfig.build.json
+@fan-support/notification-port:build: 
+@fan-support/media-port:build: cache hit, replaying logs b144665b96c9b8d4
+@fan-support/media-port:build: 
+@fan-support/media-port:build: > @fan-support/media-port@0.0.0 build /Users/mario/Desktop/下单/packages/media-port
+@fan-support/media-port:build: > tsc -p tsconfig.build.json
+@fan-support/media-port:build: 
+@fan-support/catalog:build: cache hit, replaying logs 9861f98ee45e4bc0
+@fan-support/catalog:build: 
+@fan-support/catalog:build: > @fan-support/catalog@0.0.0 build /Users/mario/Desktop/下单/packages/catalog
+@fan-support/catalog:build: > tsc -p tsconfig.build.json
+@fan-support/catalog:build: 
+@fan-support/content:build: cache hit, replaying logs 4e0909616d62319d
+@fan-support/content:build: 
+@fan-support/content:build: > @fan-support/content@0.0.0 build /Users/mario/Desktop/下单/packages/content
+@fan-support/content:build: > tsc -p tsconfig.build.json
+@fan-support/content:build: 
+@fan-support/domain:build: cache hit, replaying logs 200c43bce0d2fdf2
+@fan-support/domain:build: 
+@fan-support/domain:build: > @fan-support/domain@0.0.0 build /Users/mario/Desktop/下单/packages/domain
+@fan-support/domain:build: > tsc -p tsconfig.build.json
+@fan-support/domain:build: 
+@fan-support/persistence-port:build: cache hit, replaying logs da330d4ecda7e477
+@fan-support/persistence-port:build: 
+@fan-support/persistence-port:build: > @fan-support/persistence-port@0.0.0 build /Users/mario/Desktop/下单/packages/persistence-port
+@fan-support/persistence-port:build: > tsc -p tsconfig.build.json
+@fan-support/persistence-port:build: 
+@fan-support/cache-purge-port:build: cache hit, replaying logs b7ee4adb9c012111
+@fan-support/cache-purge-port:build: 
+@fan-support/cache-purge-port:build: > @fan-support/cache-purge-port@0.0.0 build /Users/mario/Desktop/下单/packages/cache-purge-port
+@fan-support/cache-purge-port:build: > tsc -p tsconfig.build.json
+@fan-support/cache-purge-port:build: 
+@fan-support/payment-port:build: cache hit, replaying logs 594b733865a873fe
+@fan-support/payment-port:build: 
+@fan-support/payment-port:build: > @fan-support/payment-port@0.0.0 build /Users/mario/Desktop/下单/packages/payment-port
+@fan-support/payment-port:build: > tsc -p tsconfig.build.json
+@fan-support/payment-port:build: 
+@fan-support/identity-port:build: cache hit, replaying logs 13652c0841e79d43
+@fan-support/identity-port:build: 
+@fan-support/identity-port:build: > @fan-support/identity-port@0.0.0 build /Users/mario/Desktop/下单/packages/identity-port
+@fan-support/identity-port:build: > tsc -p tsconfig.build.json
+@fan-support/identity-port:build: 
+@fan-support/cart:build: cache hit, replaying logs 8206457092f2d34d
+@fan-support/cart:build: 
+@fan-support/cart:build: > @fan-support/cart@0.0.0 build /Users/mario/Desktop/下单/packages/cart
+@fan-support/cart:build: > tsc -p tsconfig.build.json
+@fan-support/cart:build: 
+@fan-support/key-management-port:build: cache hit, replaying logs e6d516ce94c41748
+@fan-support/key-management-port:build: 
+@fan-support/key-management-port:build: > @fan-support/key-management-port@0.0.0 build /Users/mario/Desktop/下单/packages/key-management-port
+@fan-support/key-management-port:build: > tsc -p tsconfig.build.json
+@fan-support/key-management-port:build: 
+@fan-support/testing:build: cache hit, replaying logs 0676e7f71961237b
+@fan-support/testing:build: 
+@fan-support/testing:build: > @fan-support/testing@0.0.0 build /Users/mario/Desktop/下单/packages/testing
+@fan-support/testing:build: > tsc -p tsconfig.build.json
+@fan-support/testing:build: 
+@fan-support/application:build: cache hit, replaying logs af083f809637d818
+@fan-support/application:build: 
+@fan-support/application:build: > @fan-support/application@0.0.0 build /Users/mario/Desktop/下单/packages/application
+@fan-support/application:build: > tsc -p tsconfig.build.json
+@fan-support/application:build: 
+@fan-support/payment-fake:build: cache hit, replaying logs 587aca807359c3f8
+@fan-support/payment-fake:build: 
+@fan-support/payment-fake:build: > @fan-support/payment-fake@0.0.0 build /Users/mario/Desktop/下单/packages/payment-fake
+@fan-support/payment-fake:build: > tsc -p tsconfig.build.json
+@fan-support/payment-fake:build: 
+@fan-support/persistence-postgres:build: cache miss, executing 82ca801e3fd318bb
+@fan-support/persistence-postgres:build: 
+@fan-support/persistence-postgres:build: > @fan-support/persistence-postgres@0.0.0 build /Users/mario/Desktop/下单/packages/persistence-postgres
+@fan-support/persistence-postgres:build: > tsc -p tsconfig.build.json
+@fan-support/persistence-postgres:build: 
+
+ Tasks:    16 successful, 16 total
+Cached:    15 cached, 16 total
+  Time:    7.374s 
+
+{"schemaVersion":1,"result":"PASS","checks":803,"scope":"isolated real PostgreSQL; historical strict catalog; no services or browser"}
+{"schemaVersion":1,"result":"PASS","checks":69,"scope":"real isolated PG strict publication plus TEST SQL-leaf absence; immutable rows unchanged"}

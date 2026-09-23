@@ -1,11 +1,11 @@
 # Progress Master
 
-> 最后更新：2026-09-23（Asia/Bangkok）
+> 最后更新：2026-09-24（Asia/Bangkok）
 > 当前里程碑：完整本地 TEST 体验已交付，进入 Phase 6 质量加固；M3/M4 未完外部验收保留（M1/M2 已完成）
-> 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-016，逐项本地研发）；Phase 6 有限 ACTIVE（P6-01 本地 ACCEPT、P6-02 READY）；Phase 7 仍 LOCKED
-> 当前任务：P6-01 本地完整回归已 ACCEPT、远端 CI 待补；P6-02 READY，尚未领取，Lane D 空闲
-> 当前入口：按 ADR-016 独立核对原依赖后，仅新增 P6-02 七语可访问性本地范围；其他 P6/P7 尚未激活
-> 当前检查点：31 DONE / 7 IN_PROGRESS / 1 READY / 10 PENDING；保护持久 TEST 内容与订单，仅本地开发。
+> 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-016，逐项本地研发）；Phase 6 有限 ACTIVE（P6-01/02 本地 ACCEPT、P6-03 READY）；Phase 7 仍 LOCKED
+> 当前任务：P6-02 本地自动验收及首页直接礼物浏览已 ACCEPT；Lane D 已释放，P6-03 READY、尚未领取
+> 当前入口：按 ADR-016 独立核对原依赖与本轮完整验收后，仅新增 P6-03 本地性能范围；P6-04 至 P6-06 与 Phase 7 尚未激活
+> 当前检查点：31 DONE / 8 IN_PROGRESS / 1 READY / 9 PENDING；保护持久 TEST 内容与订单，仅本地开发。
 
 ## 1. 开工入口
 
@@ -13,19 +13,19 @@
 
 1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md`
 2. 本文件
-3. 候选任务所在的 `ACTIVE` phase 文件（Phase 3/4保留未完验收；Phase 5 按 ADR-016 逐项本地推进，Phase 6 当前P6-01本地ACCEPT、P6-02有限本地READY，Phase 7 尚未激活）
+3. 候选任务所在的 `ACTIVE` phase 文件（Phase 3/4保留未完验收；Phase 5 按 ADR-016 逐项本地推进，Phase 6 当前P6-01/02本地ACCEPT、P6-03有限本地READY，Phase 7 尚未激活）
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成（或满足 ADR-016 明确记录的本地完整验收与非作者复核条件）、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线，P3-01至P3-05及P4-01至P4-03已DONE；P4-05按ADR-014完成本地范围、P4-06也已DONE。P5-01/02 已按 ADR-015 完成本地验收，Lane C 已释放。P3-06 本地性能与无障碍补证通过后释放 Lane D，任务仍 IN_PROGRESS；P4-04 真实商户验收仍 IN_PROGRESS、无 executor。2026-09-22 用户以“那就继续按计划推进下一阶段”接受剩余20项本地排期，ADR-016 首先允许 P5-04；P5-04及接续P5-03现均完成本地完整验收，Lane A释放；P5-05原依赖与共享文件归属已核对后置READY。P5-05随后完成本地完整验收，Lane C释放；P5-06原直接依赖经复核后领取，现已完成四类异常/安全重放和全部本地验收DONE，Lane D释放；P5-07原P5-04/05/06本地成果独立核对后领取，现接入手册与完整演练验收DONE、Lane D释放；P5-08原七依赖的适用本地成果独立核对后，离线模块/部署工具及持久本地体验已完成完整本地验收和非作者复核，Lane D释放；任务保留云staging原门而保持IN_PROGRESS。P5-01/P4-05 的当前可消费代码与 P4-04 本地接口已有独立就绪核对，见 `output/checks/p5-04-payment-health/next-stage-readiness.md` 和最终复核。后继依次核对原直接依赖的本地完整成果，不把局部切片当可消费实现；现已到 Phase 6 波次，P6-01完整本地回归已ACCEPT且释放Lane D；仅新增P6-02有限本地READY，P6-03至P6-06仍PENDING、Phase 7 仍 LOCKED，无需重复请求本次授权。正式品牌资产、身份源/MFA恢复、邮件服务与译文的上线批准继续保留。
+只领取位于 `ACTIVE` Phase、依赖已完成（或满足 ADR-016 明确记录的本地完整验收与非作者复核条件）、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线，P3-01至P3-05及P4-01至P4-03已DONE；P4-05按ADR-014完成本地范围、P4-06也已DONE。P5-01/02 已按 ADR-015 完成本地验收，Lane C 已释放。P3-06 本地性能与无障碍补证通过后释放 Lane D，任务仍 IN_PROGRESS；P4-04 真实商户验收仍 IN_PROGRESS、无 executor。2026-09-22 用户以“那就继续按计划推进下一阶段”接受剩余20项本地排期，ADR-016 首先允许 P5-04；P5-04及接续P5-03现均完成本地完整验收，Lane A释放；P5-05原依赖与共享文件归属已核对后置READY。P5-05随后完成本地完整验收，Lane C释放；P5-06原直接依赖经复核后领取，现已完成四类异常/安全重放和全部本地验收DONE，Lane D释放；P5-07原P5-04/05/06本地成果独立核对后领取，现接入手册与完整演练验收DONE、Lane D释放；P5-08原七依赖的适用本地成果独立核对后，离线模块/部署工具及持久本地体验已完成完整本地验收和非作者复核，Lane D释放；任务保留云staging原门而保持IN_PROGRESS。P5-01/P4-05 的当前可消费代码与 P4-04 本地接口已有独立就绪核对，见 `output/checks/p5-04-payment-health/next-stage-readiness.md` 和最终复核。后继依次核对原直接依赖的本地完整成果，不把局部切片当可消费实现；现已到 Phase 6 波次，P6-01完整本地回归与P6-02本地自动验收均已ACCEPT且释放Lane D；仅新增P6-03有限本地READY，P6-04至P6-06仍PENDING、Phase 7 仍 LOCKED，无需重复请求本次授权。正式品牌资产、身份源/MFA恢复、邮件服务与译文的上线批准继续保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
-| PENDING | 10 |
+| PENDING | 9 |
 | READY | 1 |
-| IN_PROGRESS | 7 |
+| IN_PROGRESS | 8 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
 | DONE | 31 |
@@ -42,7 +42,7 @@
 | 3 自研 Admin、内容与浏览前台 | 6 | ACTIVE | `phase-3-storefront.md` | 七语言自研后台、真实内容、发布、SEO/cache、性能 |
 | 4 购买闭环 | 6 | ACTIVE | `phase-4-commerce.md` | 七语言测试支付、订单 locale、查单、通知 |
 | 5 运营与支付 | 8 | ACTIVE（ADR-016逐项本地） | `phase-5-operations-payments.md` | RBAC、退款、配置回退、重放、production-like staging |
-| 6 加固与恢复 | 6 | ACTIVE（P6-01 本地 ACCEPT、P6-02 READY） | `phase-6-hardening.md` | Release Gate 技术证据 |
+| 6 加固与恢复 | 6 | ACTIVE（P6-01/02 本地 ACCEPT、P6-03 READY） | `phase-6-hardening.md` | Release Gate 技术证据 |
 | 7 上线与灰度 | 6 | LOCKED | `phase-7-launch.md` | 正式签署、灰度、复盘 |
 
 `LOCKED` 表示尚未满足 Phase 依赖，不代表需求未定义。Phase 状态是硬门禁：即使任务级依赖已完成，`LOCKED` phase 中的任务也不得领取。
@@ -56,7 +56,7 @@
 | Phase 1 与 Phase 2 | Phase 3 | Phase 1、Phase 2 |
 | Phase 3；或 ADR-013 已确认的本地开发例外 | Phase 4 | 正常路径关闭 Phase 3；例外保留未完验收 |
 | Phase 3 与 Phase 4；或已确认 ADR-015/016 的逐项本地条件 | Phase 5（ADR-016 当前 P5-06/07 DONE、P5-08 有限本地 IN_PROGRESS；原外部门保留） | 正常路径关闭 Phase 3、Phase 4；例外保留未完验收 |
-| Phase 5；或到 ADR-016 对应波次且候选原直接依赖本地完整验收/独立复核通过 | Phase 6（当前P6-01本地ACCEPT、P6-02有限本地READY；其他逐项登记） | 正常路径关闭 Phase 5；例外保留全部未完验收 |
+| Phase 5；或到 ADR-016 对应波次且候选原直接依赖本地完整验收/独立复核通过 | Phase 6（当前P6-01/02本地ACCEPT、P6-03有限本地READY；其他逐项登记） | 正常路径关闭 Phase 5；例外保留全部未完验收 |
 | Phase 6；或到 ADR-016 对应波次且候选原直接依赖本地完整验收/独立复核通过 | Phase 7（当前仍 LOCKED；例外仅文档/导入及 QA 工具准备） | 正常路径关闭 Phase 6；例外保留正式内容/交易/发布/观察门 |
 
 除 Phase 1/2、ADR-013 的 Phase 3/4 与 ADR-015/016 已记录的本地排期例外外，不允许多个 Phase 同时为 `ACTIVE`。ADR-016 不一次性解锁后继或缩减原依赖/完整验收；协调者须先同步候选 phase 和证据，再逐项 READY，并执行“每个 Lane 同时最多一个 executor”。
@@ -79,6 +79,10 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-24 P6-02 本地自动范围 ACCEPT：首页艺人下直接显示真实上架礼物，无需先选地区；原购买报价边界保持。fresh run-4 同源七语28单元、196核心页/199PNG、506键盘目标/8对话框/28真实延迟搜索焦点通过，axe违规/incomplete与页面错误均0；实际daily发布49检查，一笔独立TEST签名支付、邮件查单、审核/准备/送达完整通过。原三轮FAIL及RED/GREEN保留；全仓64/64/36、17工具测试、实际PG及非作者最终验收通过，执行源`c7b2e52b…`；证据见`output/checks/p6-02-accessibility/final-verification.md`。P6-02保留真人读屏/人工语言原门而仍IN_PROGRESS、Lane D释放；仅P6-03原依赖及当前完整本地成果核对后有限READY，尚未领取。31 DONE /8 IN_PROGRESS /1 READY /9 PENDING=49。原持久实例已更新、数据未reset；仅本地提交，商户/RUM/云/真机/远端CI与Phase7原门保持。
+
+2026-09-24 P6-02 已领取，root 独占 Lane D；基线 `40854787`，原直接依赖及 P6-01 本地完整验收已核对。推进七语可访问性本地验证，并纳入用户明确要求的首页直接看礼物简化。开始/范围/验证见 phase 执行登记。31 DONE /8 IN_PROGRESS /0 READY /10 PENDING=49；原持久数据及全部外部门保持，仅本地开发。
 
 2026-09-23 P6-01完整本地回归ACCEPT：同执行源`642a55a8…`跨运行5组/17原命令/14核心路径齐全，原完整check与真实PG/TLS S3、catalog/commerce、运营5项和fresh七语双端旅程通过；旅程14×10里程碑、28语言切换、失败/取消恢复2、独立邮件查单和唯一发布效果通过。原8FAIL保留，不称单次默认命令全绿；Docker时间约束/财务读门历史间歇失败仍UNKNOWN、journey补丁版本未单列记录。2740执行输入×4树、1121归档与各底层结果获非作者复核，秘密扫描与旧6144文件保护通过，S.U.P.E.R本地10项通过；详见`output/checks/p6-01-regression/final-verification.md`。原持久体验已恢复/open，4服务ready、数据未reset。实际远端CI未跑，P6-01仍IN_PROGRESS、Lane D释放；仅P6-02原依赖再次核对后有限本地READY，尚未领取。31 DONE /7 IN_PROGRESS /1 READY /10 PENDING=49。商户/人工/真机/RUM/云及Phase7原门保留，只本地提交。
 

@@ -1,0 +1,22 @@
+$ node --test ./scripts/accessibility-*.test.mjs ./apps/api/scripts/accessibility-*.test.mjs
+✔ browser tools reach and activate controls with real sequential keyboard input (579.597125ms)
+✔ a visually obstructed target fails instead of accepting DOM focus alone (10.1495ms)
+✔ unreachable disabled control never receives an artificial focus pass (8.597083ms)
+✔ mail entry waits for the session exchange and its own reload before another navigation (199.001625ms)
+✔ each failed close still closes the other resources, removes profiles and saves safe FAIL evidence (1.254167ms)
+✔ clean completion preserves PASS and never removes a missing profile (0.127125ms)
+✔ failure diagnostics contain only source module locations, never message, host or capability (0.187541ms)
+✔ completion requires native window zoom and explicitly retains the human gate (2.90025ms)
+✔ matrix requires every seven-locale regular, desktop, narrow and real zoom cell (1.49925ms)
+✔ matrix refuses partial, duplicate and forged cells instead of extrapolating (0.657167ms)
+✔ each matrix cell proves all core screens and non-gated homepage keyboard path (2.972458ms)
+✔ reflow fails on body overflow, incorrect locale, absent measurement or unreduced transform (0.222917ms)
+✔ focus evidence rejects invisible, obscured, ringless, zero-size and non-keyboard targets (0.154ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1156.687167

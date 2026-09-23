@@ -1,5 +1,6 @@
 import {
   CATALOG_DISCOVERY_LIMITS,
+  DEFAULT_LOCALE,
   giftDirectoryRecordSchema,
   giftIdSchema,
   idolDirectoryRecordSchema,
@@ -18,6 +19,7 @@ import type {
 import { projectPublishedContent } from "@fan-support/content";
 import { loadPublishedContentContext } from "./published-content-repository.js";
 import { mediaProvenanceEligibilitySql } from "./resource-media-eligibility-sql.js";
+import { catalogVerifiedManifest } from "./catalog-verified-manifest.js";
 import {
   catalogRecord,
   catalogRows,
@@ -134,6 +136,7 @@ async function loadRecords(
   publicMediaBaseUrl: string,
   kind: CatalogObjectKind,
   scope?: TransactionScopeControl,
+  options?: Readonly<{ verifiedLocaleFallback: boolean }>,
 ) {
   const { ids, baseUrl } = normalizedInput(
     kind,
@@ -176,6 +179,10 @@ async function loadRecords(
     string,
     Extract<IdolDirectoryRecord | GiftDirectoryRecord, { schemaVersion: 3 }>
   >();
+  const verified = new Map<
+    string,
+    NonNullable<Parameters<typeof mapCatalogPublication>[5]>
+  >();
   // Only explicitly migrated legacy events use the old decoder. New events are
   // verified with their complete persisted proof before projecting the v1 list subset.
   for (const id of ids) {
@@ -201,9 +208,11 @@ async function loadRecords(
     );
     if (
       loaded.outcome !== "SUCCESS" ||
-      loaded.context.publication.publicationId !== publication["id"] ||
-      projectPublishedContent(loaded.context).outcome !== "SUCCESS"
+      loaded.context.publication.publicationId !== publication["id"]
     )
+      throw new Error("CATALOG_PUBLICATION_INVALID");
+    const projected = projectPublishedContent(loaded.context);
+    if (projected.outcome !== "SUCCESS" || projected.content.kind !== kind)
       throw new Error("CATALOG_PUBLICATION_INVALID");
     if (publication["proof_version"] === 3) {
       if (
@@ -218,6 +227,21 @@ async function loadRecords(
       dailyRecords.set(id, { schemaVersion: 3, context: loaded.context });
     } else if (loaded.context.schemaVersion === 3)
       throw new Error("CATALOG_PUBLICATION_INVALID");
+    else if (options?.verifiedLocaleFallback) {
+      if (projected.content.kind !== "GIFT" || kind !== "GIFT")
+        throw new Error("CATALOG_PUBLICATION_INVALID");
+      const localeContext = projected.content.view.localeContext;
+      if (
+        localeContext.requestedLocale !== locale ||
+        (localeContext.resolvedLocale !== locale &&
+          localeContext.resolvedLocale !== DEFAULT_LOCALE)
+      )
+        throw new Error("CATALOG_PUBLICATION_INVALID");
+      verified.set(id, {
+        resolvedLocale: localeContext.resolvedLocale,
+        translationManifest: catalogVerifiedManifest(loaded.context),
+      });
+    }
   }
   return ids.map((id) => {
     const daily = dailyRecords.get(id);
@@ -232,6 +256,7 @@ async function loadRecords(
       kind,
       locale,
       baseUrl,
+      verified.get(id),
     );
   });
 }
@@ -252,8 +277,17 @@ export async function loadGiftDirectoryRecords(
   locale: SupportedLocale,
   publicMediaBaseUrl: string,
   scope?: TransactionScopeControl,
+  options?: Readonly<{ verifiedLocaleFallback: boolean }>,
 ): Promise<GiftDirectoryRecord[]> {
   return (
-    await loadRecords(client, ids, locale, publicMediaBaseUrl, "GIFT", scope)
+    await loadRecords(
+      client,
+      ids,
+      locale,
+      publicMediaBaseUrl,
+      "GIFT",
+      scope,
+      options,
+    )
   ).map((record) => giftDirectoryRecordSchema.parse(record));
 }

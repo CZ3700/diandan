@@ -1,4 +1,12 @@
 import * as adminPaymentConfiguration from "./admin-payment-configuration.js";
+import {
+  giftBrowseQuerySchema,
+  giftBrowseResponseSchema,
+} from "./gift-browse.js";
+import {
+  giftBrowseReadCommandSchema,
+  giftBrowseSnapshotSchema,
+} from "./gift-browse-internal.js";
 import * as adminExceptions from "./admin-exceptions.js";
 import * as adminExceptionsPersistence from "./admin-exceptions-persistence.js";
 import * as adminPaymentConfigurationPersistence from "./admin-payment-configuration-persistence.js";
@@ -680,6 +688,26 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "GiftBrowseQuery",
+    audience: "public-http",
+    schema: giftBrowseQuerySchema,
+  },
+  {
+    name: "GiftBrowseResponse",
+    audience: "public-http",
+    schema: giftBrowseResponseSchema,
+  },
+  {
+    name: "GiftBrowseReadCommand",
+    audience: "internal",
+    schema: giftBrowseReadCommandSchema,
+  },
+  {
+    name: "GiftBrowseSnapshot",
+    audience: "internal",
+    schema: giftBrowseSnapshotSchema,
+  },
   {
     name: "AdminExceptionsRunResult",
     audience: "internal",

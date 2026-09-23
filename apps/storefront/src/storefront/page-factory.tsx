@@ -11,6 +11,9 @@ import { loadStorefrontCopy } from "../server/storefront-copy";
 import type { StorefrontCopy } from "./copy";
 import { queryString } from "./navigation";
 import { HomeContent } from "./home-content";
+import { GiftBrowseSection } from "./gift-browse-section";
+import { prepareGiftBrowse } from "./gift-browse-query";
+import { readGiftBrowse } from "../server/public-gift-browse";
 import { HomepageDirectory } from "./homepage-directory";
 import { ArtistDirectory } from "./artist-directory";
 import { prepareDirectoryQuery } from "./directory-query";
@@ -40,6 +43,8 @@ export function createStorefrontPage(
     let copy: StorefrontCopy;
     let content;
     if (kind === "home") {
+      const browseQuery = prepareGiftBrowse(locale, values);
+      const gifts = browseQuery ? readGiftBrowse(browseQuery) : undefined;
       const homepage = readStorefrontHomepage(locale);
       const directory = readStorefrontDirectory(
         directoryQuery.query,
@@ -53,6 +58,16 @@ export function createStorefrontPage(
           copy={copy}
           contextQuery={contextQuery}
           data={data}
+          giftDirectory={
+            <GiftBrowseSection
+              locale={locale}
+              copy={copy}
+              values={values}
+              basePath="/"
+              headingLevel={2}
+              initial={gifts}
+            />
+          }
           directory={
             <Suspense
               fallback={

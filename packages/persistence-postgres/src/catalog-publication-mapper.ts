@@ -241,6 +241,10 @@ export function mapCatalogPublication(
   kind: CatalogObjectKind,
   locale: SupportedLocale,
   baseUrl: string,
+  verified?: Readonly<{
+    resolvedLocale: SupportedLocale;
+    translationManifest: TranslationPublicationManifestEntry[];
+  }>,
 ): IdolDirectoryRecord | GiftDirectoryRecord {
   const baseRow = catalogRecord(row["base"]),
     revisionRow = catalogRecord(row["revision"]),
@@ -257,7 +261,15 @@ export function mapCatalogPublication(
     ]),
   }));
   const rows = catalogRows(row["translations"]);
-  const manifests = [
+  const metadataIds = mediaRows.map(
+    (entry) => catalogRecord(entry["reference"])["media_metadata_revision_id"],
+  );
+  const manifests = verified?.translationManifest.filter(
+    (entry) =>
+      entry.objectKind === kind ||
+      (entry.objectKind === "MEDIA_METADATA" &&
+        metadataIds.includes(entry.mediaMetadataRevisionId)),
+  ) ?? [
     ...manifest(rows, kind, publicationRow["id"]),
     ...mediaRows.flatMap((entry) =>
       manifest(
@@ -287,25 +299,29 @@ export function mapCatalogPublication(
         catalogRecord(entry["reference"])["media_metadata_revision_id"],
     ),
   });
+  const resolvedLocale = verified?.resolvedLocale ?? locale;
   const selected = manifests.find(
-    (entry) => entry.objectKind === kind && entry.locale === locale,
+    (entry) => entry.objectKind === kind && entry.locale === resolvedLocale,
   );
   const selectedMediaTranslations = manifests.filter(
-    (entry) => entry.objectKind === "MEDIA_METADATA" && entry.locale === locale,
+    (entry) =>
+      entry.objectKind === "MEDIA_METADATA" && entry.locale === resolvedLocale,
   );
-  const localized = translation(localizedRow(rows, locale), kind);
+  const localized = translation(localizedRow(rows, resolvedLocale), kind);
   const sourceCommon = {
     schemaVersion: 1,
     objectKind: kind,
     localeContext: {
       schemaVersion: 1,
       requestedLocale: locale,
-      resolvedLocale: locale,
-      fallbackUsed: false,
+      resolvedLocale,
+      fallbackUsed: resolvedLocale !== locale,
       translationRevision: localized.id,
     },
     translation: localized,
-    media: mediaRows.map((entry) => mediaSource(entry, locale, baseUrl)),
+    media: mediaRows.map((entry) =>
+      mediaSource(entry, resolvedLocale, baseUrl),
+    ),
   };
   const selectionCommon = {
     schemaVersion: 1,

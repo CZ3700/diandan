@@ -2,6 +2,10 @@ import type { FastifyInstance, FastifyReply } from "fastify";
 import { sendRevalidatedPublicJson } from "./public-revalidation-response.js";
 import { matchesPublicContentLocale } from "./public-content-locale.js";
 import {
+  registerGiftBrowseRoute,
+  type GiftBrowseRouteOptions,
+} from "./gift-browse-route.js";
+import {
   catalogDirectoryFailureSchema,
   giftDirectoryResponseSchema,
   giftDiscoveryQuerySchema,
@@ -12,10 +16,11 @@ import {
   type IdolDirectoryResponse,
 } from "@fan-support/contracts";
 
-export type CatalogDirectoryRouteOptions = Readonly<{
-  readIdols(input: unknown): Promise<IdolDirectoryResponse>;
-  readGifts(input: unknown): Promise<GiftDirectoryResponse>;
-}>;
+export type CatalogDirectoryRouteOptions = GiftBrowseRouteOptions &
+  Readonly<{
+    readIdols(input: unknown): Promise<IdolDirectoryResponse>;
+    readGifts(input: unknown): Promise<GiftDirectoryResponse>;
+  }>;
 
 const IDOL_QUERY_FIELDS = new Set([
   "locale",
@@ -111,6 +116,7 @@ export function registerCatalogDirectoryRoute(
   instance: FastifyInstance,
   options: CatalogDirectoryRouteOptions,
 ): void {
+  registerGiftBrowseRoute(instance, options);
   instance.register(async (scope) => {
     scope.addHook("onRequest", async (_request, reply) => {
       privacy(reply);

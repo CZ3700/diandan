@@ -1,0 +1,139 @@
+$ vitest run --config ../../vitest.config.ts --root . src/storefront/page-factory.test.tsx src/storefront/gift-directory.test.tsx src/storefront/page-factory-dependencies.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/storefront
+
+ ❯ src/storefront/page-factory.test.tsx (39 tests | 17 failed) 2437ms
+   × en streams the verified hero before a slow directory and retains its final server cards and anchor 111ms
+   × zh-CN streams the verified hero before a slow directory and retains its final server cards and anchor 105ms
+   × th streams the verified hero before a slow directory and retains its final server cards and anchor 107ms
+   × vi streams the verified hero before a slow directory and retains its final server cards and anchor 103ms
+   × ja streams the verified hero before a slow directory and retains its final server cards and anchor 103ms
+   × es streams the verified hero before a slow directory and retains its final server cards and anchor 105ms
+   × pt streams the verified hero before a slow directory and retains its final server cards and anchor 104ms
+   × a delayed CATALOG_UNAVAILABLE directory renders its error after the verified hero 54ms
+   × a delayed ANCHOR_NOT_FOUND directory renders its error after the verified hero 53ms
+   × a slow SEO component does not hold the verified hero or initial directory 54ms
+   × en homepage shows published gifts below artists without featured slots or choosing a market 4ms
+   × zh-CN homepage shows published gifts below artists without featured slots or choosing a market 3ms
+   × th homepage shows published gifts below artists without featured slots or choosing a market 3ms
+   × vi homepage shows published gifts below artists without featured slots or choosing a market 3ms
+   × ja homepage shows published gifts below artists without featured slots or choosing a market 3ms
+   × es homepage shows published gifts below artists without featured slots or choosing a market 3ms
+   × pt homepage shows published gifts below artists without featured slots or choosing a market 3ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 17 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/storefront/page-factory.test.tsx > en streams the verified hero before a slow directory and retains its final server cards and anchor
+ FAIL  src/storefront/page-factory.test.tsx > zh-CN streams the verified hero before a slow directory and retains its final server cards and anchor
+ FAIL  src/storefront/page-factory.test.tsx > th streams the verified hero before a slow directory and retains its final server cards and anchor
+ FAIL  src/storefront/page-factory.test.tsx > vi streams the verified hero before a slow directory and retains its final server cards and anchor
+ FAIL  src/storefront/page-factory.test.tsx > ja streams the verified hero before a slow directory and retains its final server cards and anchor
+ FAIL  src/storefront/page-factory.test.tsx > es streams the verified hero before a slow directory and retains its final server cards and anchor
+ FAIL  src/storefront/page-factory.test.tsx > pt streams the verified hero before a slow directory and retains its final server cards and anchor
+AssertionError: expected [ …(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   TypeError {
++     "message": "Expected a local storefront path",
++   },
++ ]
+
+ ❯ src/storefront/page-factory.test.tsx:392:29
+    390|       streamed.abort();
+    391|     }
+    392|     expect(streamed.errors).toEqual([]);
+       |                             ^
+    393|     expect(streamed.html()).toContain("Fictional 2");
+    394|     expect(streamed.html()).toContain('data-artist-start="true"');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+ FAIL  src/storefront/page-factory.test.tsx > a delayed CATALOG_UNAVAILABLE directory renders its error after the verified hero
+ FAIL  src/storefront/page-factory.test.tsx > a delayed ANCHOR_NOT_FOUND directory renders its error after the verified hero
+AssertionError: expected [ …(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   TypeError {
++     "message": "Expected a local storefront path",
++   },
++ ]
+
+ ❯ src/storefront/page-factory.test.tsx:422:29
+    420|       streamed.abort();
+    421|     }
+    422|     expect(streamed.errors).toEqual([]);
+       |                             ^
+    423|     expect(streamed.html()).toContain(`data-error="${code}"`);
+    424|     expect(streamed.html()).toContain('data-artist-retry="true"');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL  src/storefront/page-factory.test.tsx > a slow SEO component does not hold the verified hero or initial directory
+AssertionError: expected [ …(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   TypeError {
++     "message": "Expected a local storefront path",
++   },
++ ]
+
+ ❯ src/storefront/page-factory.test.tsx:451:27
+    449|     streamed.abort();
+    450|   }
+    451|   expect(streamed.errors).toEqual([]);
+       |                           ^
+    452|   expect(streamed.html()).toContain("Resolved SEO boundary");
+    453| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL  src/storefront/page-factory.test.tsx > en homepage shows published gifts below artists without featured slots or choosing a market
+ FAIL  src/storefront/page-factory.test.tsx > zh-CN homepage shows published gifts below artists without featured slots or choosing a market
+ FAIL  src/storefront/page-factory.test.tsx > th homepage shows published gifts below artists without featured slots or choosing a market
+ FAIL  src/storefront/page-factory.test.tsx > vi homepage shows published gifts below artists without featured slots or choosing a market
+ FAIL  src/storefront/page-factory.test.tsx > ja homepage shows published gifts below artists without featured slots or choosing a market
+ FAIL  src/storefront/page-factory.test.tsx > es homepage shows published gifts below artists without featured slots or choosing a market
+ FAIL  src/storefront/page-factory.test.tsx > pt homepage shows published gifts below artists without featured slots or choosing a market
+AssertionError: expected [ …(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   TypeError {
++     "message": "Expected a local storefront path",
++   },
++ ]
+
+ ❯ src/storefront/page-factory.test.tsx:689:29
+    687|     await streamed.ended;
+    688|     streamed.abort();
+    689|     expect(streamed.errors).toEqual([]);
+       |                             ^
+    690|     const html = streamed.html();
+    691|     expect(html).toContain("Gift from the server directory");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  17 failed | 35 passed (52)
+   Start at  00:25:25
+   Duration  3.05s (transform 1.14s, setup 0ms, import 1.43s, tests 2.64s, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/storefront:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/storefront@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/storefront/page-factory.test.tsx src/storefront/gift-directory.test.tsx src/storefront/page-factory-dependencies.test.ts`
+Exit status 1

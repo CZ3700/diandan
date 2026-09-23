@@ -16,6 +16,7 @@ import {
 } from "./catalog-publication-loader.js";
 
 import * as publishedRepository from "./published-content-repository.js";
+import { mapCatalogPublication } from "./catalog-publication-mapper.js";
 
 const uuid = (number: number) =>
   `70000000-0000-4000-8000-${number.toString(16).padStart(12, "0")}`;
@@ -541,6 +542,150 @@ test("daily catalog hydration delegates to the complete current proof without in
       },
       origin,
     );
+  } finally {
+    read.mockRestore();
+  }
+});
+
+test("opt-in mapping keeps a verified frozen manifest and the entire English object during a translation incident", async () => {
+  const data = fixture("GIFT");
+  const original = (
+    await loadGiftDirectoryRecords(
+      clientWith([data.main], data.media),
+      [data.id],
+      "en",
+      origin,
+    )
+  )[0];
+  assertLegacy(original);
+  const verified = {
+    resolvedLocale: "en" as const,
+    translationManifest:
+      original.selection.currentPublication.translationManifest,
+  };
+  data.main["translations"] = (data.main["translations"] as Row[]).filter(
+    (row) => row["locale"] !== "ja",
+  );
+  for (const media of data.media)
+    media.translations = media.translations.filter(
+      (row) => row["locale"] !== "ja",
+    );
+  expect(() =>
+    mapCatalogPublication(data.main, data.media, "GIFT", "ja", origin),
+  ).toThrow();
+  const recovered = mapCatalogPublication(
+    data.main,
+    data.media,
+    "GIFT",
+    "ja",
+    origin,
+    verified,
+  );
+  if (
+    recovered.schemaVersion === 3 ||
+    recovered.selection.objectKind !== "GIFT"
+  )
+    throw new Error("legacy gift expected");
+  const projected = selectPublishedGift(recovered.selection, recovered.source);
+  expect(projected.success).toBe(true);
+  expect(recovered.source.localeContext).toEqual({
+    ...original.source.localeContext,
+    requestedLocale: "ja",
+    fallbackUsed: true,
+  });
+  expect(recovered.source.translation).toEqual(original.source.translation);
+  expect(recovered.source.media).toEqual(original.source.media);
+  expect(recovered.selection.selectedTranslation).toEqual(
+    original.selection.selectedTranslation,
+  );
+  expect(recovered.selection.currentPublication.translationManifest).toEqual(
+    verified.translationManifest,
+  );
+  data.media[0]!.translations = data.media[0]!.translations.filter(
+    (row) => row["locale"] !== "en",
+  );
+  expect(() =>
+    mapCatalogPublication(
+      data.main,
+      data.media,
+      "GIFT",
+      "ja",
+      origin,
+      verified,
+    ),
+  ).toThrow();
+});
+
+test("verified fallback cannot fabricate English content or accept a present changed translation", async () => {
+  const data = fixture("GIFT");
+  const original = (
+    await loadGiftDirectoryRecords(
+      clientWith([data.main], data.media),
+      [data.id],
+      "en",
+      origin,
+    )
+  )[0];
+  assertLegacy(original);
+  const verified = {
+    resolvedLocale: "en" as const,
+    translationManifest:
+      original.selection.currentPublication.translationManifest,
+  };
+  const rows = data.main["translations"] as Row[];
+  rows.find((row) => row["locale"] === "en")!["title"] = "Unreviewed change";
+  const changed = mapCatalogPublication(
+    data.main,
+    data.media,
+    "GIFT",
+    "ja",
+    origin,
+    verified,
+  );
+  if (changed.schemaVersion === 3 || changed.selection.objectKind !== "GIFT")
+    throw new Error("legacy gift expected");
+  expect(selectPublishedGift(changed.selection, changed.source).success).toBe(
+    false,
+  );
+  data.main["translations"] = rows.filter((row) => row["locale"] !== "en");
+  expect(() =>
+    mapCatalogPublication(
+      data.main,
+      data.media,
+      "GIFT",
+      "ja",
+      origin,
+      verified,
+    ),
+  ).toThrow();
+});
+
+test("browse opt-in still rejects a failed complete publication verification before mapping", async () => {
+  const data = fixture("GIFT");
+  (data.main["publication"] as Row)["proof_version"] = 2;
+  const scope = {
+    markRollbackOnly: vi.fn(),
+    trackOperation: async <T>(work: () => Promise<T>) => work(),
+  };
+  const read = vi
+    .spyOn(publishedRepository, "loadPublishedContentContext")
+    .mockResolvedValue({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "CONTENT_UNAVAILABLE",
+    });
+  try {
+    await expect(
+      loadGiftDirectoryRecords(
+        clientWith([data.main], data.media),
+        [data.id],
+        "ja",
+        origin,
+        scope,
+        { verifiedLocaleFallback: true },
+      ),
+    ).rejects.toThrow("CATALOG_PUBLICATION_INVALID");
+    expect(read).toHaveBeenCalledOnce();
   } finally {
     read.mockRestore();
   }

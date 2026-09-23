@@ -1,0 +1,128 @@
+
+> @fan-support/contracts@0.0.0 test /Users/mario/Desktop/下单/packages/contracts
+> vitest run --config ../../vitest.config.ts --root . --maxWorkers=2
+
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
+
+ ✓ src/admin-finance-openapi.test.ts (2 tests) 3470ms
+   ✓ finance exposes five authenticated commands and private durable recovery contracts  1781ms
+   ✓ refund OpenAPI excludes zero amounts in both totals and line allocations  1688ms
+ ✓ src/admin-payment-configuration-openapi.test.ts (1 test) 1480ms
+   ✓ configuration operations bind session, CSRF, idempotency and reviewed publication  1479ms
+ ✓ src/artifact-documents.test.ts (6 tests) 5681ms
+   ✓ renders deterministic JSON Schema and OpenAPI documents from one registry  2127ms
+   ✓ documents the exact raw payment webhook HTTP boundary  1121ms
+   ✓ marks every registered top-level contract with an explicit version policy  984ms
+   ✓ keeps committed contract artifacts byte-for-byte fresh  728ms
+   ✓ describes real public directory operations with explicit language and commerce context  381ms
+   ✓ maps the public idol query parameter to the internal gift recipient field  339ms
+ ✓ src/admin-workspace-openapi.test.ts (3 tests) 1222ms
+   ✓ admin workspace documents all scoped routes and keeps credentials out of body envelopes  448ms
+   ✓ transfer documents audited replay, head expiry, draft-only writes and a bounded body  396ms
+   ✓ preview-media documents body-only scoped credentials and no arbitrary media input  377ms
+ ✓ src/admin-orders-openapi.test.ts (1 test) 1434ms
+   ✓ admin orders exposes twelve exact, authenticated commands with isolated private responses  1433ms
+ ✓ src/payment-runtime-artifacts.test.ts (1 test) 524ms
+   ✓ publishes scoped payment requests while keeping internal configuration out of public OpenAPI  523ms
+ ✓ src/cart-edit-artifacts.test.ts (1 test) 505ms
+   ✓ cart edit operations are documented with private response schemas and concurrency controls  504ms
+ ✓ src/admin-exceptions-openapi.test.ts (1 test) 982ms
+   ✓ exception routes require current session, CSRF and exact recovery identity  981ms
+ ✓ src/resource-management-openapi.test.ts (1 test) 777ms
+   ✓ documents private resource commands with explicit permissions and no client authority  776ms
+ ✓ src/publication-preflight-openapi.test.ts (1 test) 639ms
+   ✓ documents the read-only publication preflight and its actual strict body  638ms
+ ✓ src/base-content-openapi.test.ts (1 test) 642ms
+   ✓ documents five base admin commands and an isolated token POST preview  641ms
+ ✓ src/catalog-discovery.test.ts (3 tests) 210ms
+ ✓ src/admin-content-openapi.test.ts (1 test) 408ms
+   ✓ documents every secured admin content operation and token-body preview  407ms
+ ✓ src/artifact-registry.test.ts (6 tests) 187ms
+ ✓ src/payment-runtime.test.ts (5 tests) 112ms
+ ✓ src/checkout-preflight-artifacts.test.ts (1 test) 399ms
+   ✓ checkout operations expose exact private requests, idempotency and read-only historical status  398ms
+ ✓ src/payment-runtime-config.test.ts (3 tests) 114ms
+ ✓ src/checkout-preflight-internal.test.ts (3 tests) 153ms
+ ✓ src/envelopes.test.ts (2 tests) 60ms
+ ✓ src/checkout-preflight-public.test.ts (2 tests) 92ms
+ ✓ src/storefront-seo.test.ts (2 tests) 80ms
+ ✓ src/content.test.ts (6 tests) 72ms
+ ✓ src/admin-preview-media.test.ts (2 tests) 66ms
+ ✓ src/translation-transfer.test.ts (1 test) 66ms
+ ✓ src/translation-workspace.test.ts (2 tests) 68ms
+ ✓ src/order.test.ts (2 tests) 59ms
+ ✓ src/fulfillment-notification.test.ts (1 test) 61ms
+ ✓ src/payment.test.ts (3 tests) 53ms
+ ✓ src/commerce.test.ts (4 tests) 51ms
+ ✓ src/payment-stablecoin.test.ts (32 tests) 54ms
+ ✓ src/gift-details.test.ts (4 tests) 46ms
+ ✓ src/checkout-preflight.test.ts (7 tests) 47ms
+ ✓ src/catalog.test.ts (1 test) 87ms
+ ✓ src/domain-rules.test.ts (38 tests) 48ms
+ ✓ src/catalog-directory-boundary.test.ts (3 tests) 43ms
+ ✓ src/locale.test.ts (3 tests) 39ms
+ ✓ src/versioning.test.ts (1 test) 32ms
+ ✓ src/gift-browse.test.ts (2 tests) 60ms
+ ✓ src/port-contracts.test.ts (44 tests) 28ms
+ ✓ src/compatibility.test.ts (7 tests) 29ms
+ ✓ src/gift-commerce-openapi.test.ts (3 tests) 13ms
+ ✓ src/reliable-event-persistence-contracts.test.ts (10 tests) 20ms
+ ✓ src/content-drafts.test.ts (26 tests) 11ms
+ ✓ src/content-authoring-openapi.test.ts (1 test) 10ms
+ ✓ src/gift-commerce.test.ts (28 tests) 21ms
+ ✓ src/media-framing.test.ts (6 tests) 16ms
+ ✓ src/locale-boundary.test.ts (6 tests) 17ms
+ ✓ src/order-payment-application.test.ts (15 tests) 14ms
+ ✓ src/reliable-events.test.ts (12 tests) 13ms
+ ✓ src/management-center.test.ts (15 tests) 10ms
+ ✓ src/cart-runtime.test.ts (8 tests) 12ms
+ ✓ src/content-authoring.test.ts (9 tests) 12ms
+ ✓ src/payment-runtime-internal.test.ts (9 tests) 12ms
+ ✓ src/admin-payment-configuration.test.ts (5 tests) 11ms
+ ✓ src/public-revalidation-openapi.test.ts (1 test) 15ms
+ ✓ src/cart-edit-internal.test.ts (3 tests) 9ms
+ ✓ src/publication-manifest.test.ts (5 tests) 9ms
+ ✓ src/base-content.test.ts (5 tests) 9ms
+ ✓ src/payment-connector.test.ts (15 tests) 7ms
+ ✓ src/published-content.test.ts (5 tests) 8ms
+ ✓ src/admin-content.test.ts (5 tests) 7ms
+ ✓ src/publication-runtime-openapi.test.ts (1 test) 8ms
+ ✓ src/admin-finance.test.ts (5 tests) 8ms
+ ✓ src/daily-public-views.test.ts (3 tests) 6ms
+ ✓ src/storefront-commerce.test.ts (4 tests) 9ms
+ ✓ src/publication-preflight.test.ts (7 tests) 11ms
+ ✓ src/presentation.test.ts (16 tests) 7ms
+ ✓ src/admin-access.test.ts (5 tests) 9ms
+ ✓ src/admin-catalog.test.ts (7 tests) 9ms
+ ✓ src/admin-orders.test.ts (7 tests) 8ms
+ ✓ src/payment-health.test.ts (4 tests) 8ms
+ ✓ src/resource-management.test.ts (3 tests) 5ms
+ ✓ src/admin-exceptions.test.ts (5 tests) 9ms
+ ✓ src/media-processing.test.ts (3 tests) 6ms
+ ✓ src/publication-runtime.test.ts (3 tests) 6ms
+ ✓ src/content-provenance.test.ts (10 tests) 6ms
+ ✓ src/cart-edit.test.ts (2 tests) 6ms
+ ✓ src/admin-session.test.ts (3 tests) 5ms
+ ✓ src/daily-publication.test.ts (3 tests) 5ms
+ ✓ src/catalog-directory.test.ts (3 tests) 5ms
+ ✓ src/order-access.test.ts (4 tests) 6ms
+ ✓ src/order-notification.test.ts (2 tests) 5ms
+ ✓ src/daily-directory.test.ts (1 test) 4ms
+ ✓ src/management-center-openapi.test.ts (1 test) 4ms
+ ✓ src/published-gift-commerce.test.ts (2 tests) 4ms
+ ✓ src/payment-rollout.test.ts (2 tests) 5ms
+ ✓ src/storefront-homepage.test.ts (2 tests) 5ms
+ ✓ src/storefront-seo-openapi.test.ts (1 test) 4ms
+ ✓ src/storefront-commerce-openapi.test.ts (1 test) 3ms
+ ✓ src/identifiers.test.ts (4 tests) 3ms
+ ✓ src/admin-exceptions-persistence.test.ts (1 test) 3ms
+ ✓ src/storefront-homepage-openapi.test.ts (1 test) 2ms
+ ✓ src/gift-browse-openapi.test.ts (1 test) 3ms
+ ✓ src/index.test.ts (1 test) 1ms
+
+ Test Files  94 passed (94)
+      Tests  520 passed (520)
+   Start at  00:45:11
+   Duration  20.45s (transform 1.78s, setup 0ms, import 11.70s, tests 20.62s, environment 5ms)
+

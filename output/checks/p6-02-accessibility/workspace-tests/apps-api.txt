@@ -1,0 +1,92 @@
+
+> @fan-support/api@0.0.0 test /Users/mario/Desktop/下单/apps/api
+> vitest run --config ../../vitest.config.ts --root .
+
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/api
+
+ ✓ src/fatal-process.e2e.test.ts (1 test) 577ms
+   ✓ contains repeated fatal errors without reflecting them to process output  576ms
+ ✓ src/storefront-commerce-route.test.ts (2 tests) 941ms
+   ✓ commerce route requires explicit canonical locale and scope, rejects duplicate or unknown parameters  935ms
+ ✓ src/storefront-seo-route.test.ts (4 tests) 92ms
+ ✓ src/payment-runtime-route.test.ts (6 tests) 115ms
+ ✓ src/checkout-preflight-route.test.ts (7 tests) 123ms
+ ✓ src/payment-webhook-route.e2e.test.ts (8 tests) 140ms
+ ✓ src/admin-content-authoring-route.test.ts (8 tests) 172ms
+ ✓ src/admin-exceptions-route.test.ts (7 tests) 183ms
+ ✓ src/admin-finance-route.test.ts (5 tests) 120ms
+ ✓ src/storefront-homepage-route.test.ts (3 tests) 81ms
+ ✓ src/publication-runtime-route.test.ts (6 tests) 188ms
+ ✓ src/order-access-route.test.ts (7 tests) 116ms
+ ✓ src/gift-commerce-route.test.ts (7 tests) 211ms
+ ✓ src/base-content-route.test.ts (8 tests) 215ms
+ ✓ src/publication-preflight-route.test.ts (8 tests) 201ms
+ ✓ src/admin-session-route.test.ts (4 tests) 75ms
+ ✓ src/cart-edit-route.test.ts (3 tests) 92ms
+ ✓ src/admin-workspace-route.test.ts (4 tests) 129ms
+ ✓ src/management-center-route.test.ts (3 tests) 141ms
+ ✓ src/cart-route.test.ts (7 tests) 152ms
+ ✓ src/nest-failure-boundary.test.ts (1 test) 2203ms
+   ✓ turns Nest initialization failures into catchable rejections  2202ms
+ ✓ src/admin-payment-configuration-route.test.ts (6 tests) 204ms
+ ✓ src/observability.e2e.test.ts (2 tests) 100ms
+ ✓ src/admin-content-bootstrap.e2e.test.ts (1 test) 78ms
+ ✓ src/admin-orders-route.test.ts (10 tests) 312ms
+ ✓ src/resource-management-route.test.ts (8 tests) 176ms
+ ✓ src/public-get-revalidation.test.ts (33 tests) 259ms
+ ✓ src/admin-content-route.test.ts (10 tests) 225ms
+ ✓ src/payment-webhook-bootstrap.e2e.test.ts (1 test) 83ms
+ ✓ src/order-access-observability.test.ts (2 tests) 134ms
+ ✓ src/admin-access-route.test.ts (3 tests) 84ms
+ ✓ src/published-content-route.test.ts (7 tests) 233ms
+ ✓ src/public-revalidation-response.test.ts (3 tests) 61ms
+ ✓ src/cart-edit-bootstrap.e2e.test.ts (2 tests) 87ms
+ ✓ src/order-access-credentials.test.ts (5 tests) 31ms
+ ✓ src/published-gift-commerce-fallback.test.ts (1 test) 328ms
+   ✓ preserves verified incident English fallback through the gift commerce application boundary  327ms
+ ✓ src/gift-browse-route.test.ts (4 tests) 72ms
+ ✓ src/catalog-directory-route.e2e.test.ts (4 tests) 72ms
+ ✓ src/cart-session-credentials.test.ts (4 tests) 25ms
+ ✓ src/health.e2e.test.ts (2 tests) 79ms
+ ✓ src/published-gift-commerce-route.test.ts (1 test) 61ms
+ ✓ src/publication-runtime-composition.test.ts (2 tests) 17ms
+ ✓ src/catalog-directory-bootstrap.e2e.test.ts (1 test) 142ms
+ ✓ src/payment-runtime-bootstrap.test.ts (2 tests) 78ms
+ ✓ src/checkout-preflight-route-bootstrap.test.ts (2 tests) 91ms
+ ✓ src/order-access-bootstrap.test.ts (2 tests) 81ms
+ ✓ src/payment-runtime-composition.test.ts (10 tests) 10ms
+ ✓ src/cart-production.test.ts (2 tests) 83ms
+ ✓ src/payment-configuration-runtime.test.ts (4 tests) 29ms
+ ✓ src/payment-runtime-lifecycle.test.ts (5 tests) 17ms
+ ✓ src/published-content-composition.test.ts (2 tests) 14ms
+ ✓ src/admin-payment-configuration-composition.test.ts (3 tests) 12ms
+ ✓ src/payment-configuration-lifecycle.test.ts (2 tests) 7ms
+ ✓ src/reliable-events-composition.test.ts (5 tests) 19ms
+ ✓ src/catalog-directory-composition.test.ts (2 tests) 18ms
+ ✓ src/management-center-runtime.test.ts (3 tests) 5ms
+ ✓ src/admin-finance-composition.test.ts (2 tests) 9ms
+ ✓ src/cart-composition.test.ts (2 tests) 4ms
+ ✓ src/checkout-composition.test.ts (3 tests) 5ms
+ ✓ src/admin-access-composition.test.ts (2 tests) 9ms
+ ✓ src/order-access-composition.test.ts (2 tests) 8ms
+ ✓ src/test-management-center-composition.test.ts (2 tests) 8ms
+ ✓ src/cart-runtime-config.test.ts (3 tests) 6ms
+ ✓ src/safe-http-exception.filter.test.ts (2 tests) 6ms
+ ✓ src/admin-workspace-composition.test.ts (2 tests) 4ms
+ ✓ src/admin-session-composition.test.ts (3 tests) 5ms
+ ✓ src/gift-commerce-composition.test.ts (7 tests) 7ms
+ ✓ src/admin-orders-composition.test.ts (2 tests) 4ms
+ ✓ src/content-authoring-composition.test.ts (3 tests) 4ms
+ ✓ src/resource-management-composition.test.ts (3 tests) 3ms
+ ✓ src/base-content-composition.test.ts (3 tests) 4ms
+ ✓ src/admin-content-composition.test.ts (2 tests) 3ms
+ ✓ src/publication-preflight-composition.test.ts (3 tests) 3ms
+ ✓ src/production-application.test.ts (2 tests) 4ms
+ ✓ src/index.test.ts (1 test) 1ms
+
+ Test Files  75 passed (75)
+      Tests  314 passed (314)
+   Start at  00:46:04
+   Duration  9.39s (transform 11.77s, setup 0ms, import 61.31s, tests 9.69s, environment 5ms)
+

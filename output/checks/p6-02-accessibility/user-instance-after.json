@@ -1,0 +1,23 @@
+$ node ./scripts/local-experience.mjs status --instance acceptance-e143d720dd1a4357a3c3
+{
+  "schemaVersion": 1,
+  "instanceId": "713fc5bc-571a-431f-859b-4c99600bdbdd",
+  "runId": "3094bf35-e28e-48c2-9593-6702429767c8",
+  "pid": 93860,
+  "ready": true,
+  "services": {
+    "api": true,
+    "worker": true,
+    "storefront": true,
+    "admin": true
+  },
+  "stage": "ready",
+  "origins": {
+    "storefront": "https://storefront.example.invalid:53381",
+    "admin": "https://admin.example.invalid:53382",
+    "oidc": "https://oidc.example.invalid:53385",
+    "psp": "https://payments.example.invalid:53386",
+    "mail": "https://mail.example.invalid:53387",
+    "media": "https://media.example.invalid:53388"
+  }
+}

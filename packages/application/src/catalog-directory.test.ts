@@ -35,6 +35,7 @@ function harness(overrides: Partial<CatalogDirectoryRepository> = {}) {
   const repository: CatalogDirectoryRepository = {
     readIdols,
     readGifts,
+    browseGifts: readGifts,
     ...overrides,
   };
   const run = vi.fn();
