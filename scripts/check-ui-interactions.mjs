@@ -1698,9 +1698,14 @@ function validateMenuScrollLock(source, css, errors) {
         /^(?:html|:root)\[data-fs-menu-scroll-lock\]\s+body$/u.test(selector),
       );
     }
-    if (!locksRoot || !locksBody) {
+    if (!locksBody) {
       errors.push(
-        "interaction CSS must lock root and body overflow while a menu is open",
+        "interaction CSS must lock body viewport overflow while a menu is open",
+      );
+    }
+    if (locksRoot) {
+      errors.push(
+        "menu scroll lock must not add a second root scroll container",
       );
     }
 

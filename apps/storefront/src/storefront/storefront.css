@@ -81,8 +81,8 @@
   border: 0;
   background: transparent;
 }
-.storefront-mobile-menu {
-  display: none;
+.storefront-navigation-menu {
+  display: block;
 }
 .storefront-drawer-nav {
   display: grid;
@@ -399,9 +399,6 @@
 @media (width < 64rem) {
   .storefront-desktop-nav {
     display: none;
-  }
-  .storefront-mobile-menu {
-    display: block;
   }
   .storefront-header {
     gap: var(--space-3);

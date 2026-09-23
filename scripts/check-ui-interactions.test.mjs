@@ -227,7 +227,6 @@ export function RegionControl({ options, value }: { options: readonly unknown[];
 .fs-toast[data-limited] { display: none; }
 .fs-toast__viewport { inset-block-end: var(--space-4); inset-inline-end: var(--space-4); }
 
-:root[data-fs-menu-scroll-lock],
 :root[data-fs-menu-scroll-lock] body {
   overflow: hidden;
   overscroll-behavior: none;
@@ -1015,7 +1014,7 @@ test("requires stable, bounded menu layout and scroll locking", async (context) 
   );
   includesError(
     errors,
-    "interaction CSS must lock root and body overflow while a menu is open",
+    "interaction CSS must lock body viewport overflow while a menu is open",
   );
   includesError(
     errors,
@@ -1660,4 +1659,18 @@ test("requires excess toasts to be visually excluded", async (context) => {
 
   const errors = await validateUiInteractions(root);
   includesError(errors, "limited Toast items must not remain visible");
+});
+
+test("rejects a second root scroll container that detaches sticky menu triggers", async (context) => {
+  const { root, validateUiInteractions } = await validateFixture(context);
+  await replace(
+    root,
+    "packages/ui/styles/interactions.css",
+    ":root[data-fs-menu-scroll-lock] body {",
+    ":root[data-fs-menu-scroll-lock], :root[data-fs-menu-scroll-lock] body {",
+  );
+  includesError(
+    await validateUiInteractions(root),
+    "menu scroll lock must not add a second root scroll container",
+  );
 });

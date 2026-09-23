@@ -3,7 +3,7 @@
 > 最后更新：2026-09-24（Asia/Bangkok）
 > 当前里程碑：完整本地 TEST 体验已交付，进入 Phase 6 质量加固；M3/M4 未完外部验收保留（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-016，逐项本地研发）；Phase 6 有限 ACTIVE（P6-01/02 本地 ACCEPT、P6-03 READY）；Phase 7 仍 LOCKED
-> 当前任务：P6-02 本地自动验收及首页直接礼物浏览已 ACCEPT；Lane D 已释放，P6-03 READY、尚未领取
+> 当前任务：P6-02 用户反馈的滚动后语言菜单与查单入口修复已本地 ACCEPT；Lane D 已释放，P6-03 READY、尚未领取
 > 当前入口：按 ADR-016 独立核对原依赖与本轮完整验收后，仅新增 P6-03 本地性能范围；P6-04 至 P6-06 与 Phase 7 尚未激活
 > 当前检查点：31 DONE / 8 IN_PROGRESS / 1 READY / 9 PENDING；保护持久 TEST 内容与订单，仅本地开发。
 
@@ -79,6 +79,8 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-24 P6-02 用户反馈修复：已复现双滚动锁使sticky页头和语言菜单移出视口；统一沿用body viewport锁，保留触控防穿透/焦点/引用计数，并按用户澄清将查单移入桌面与手机共用菜单。真实七语双端14场景、重启后smoke、共享组件原13场景/原生200%及92门禁测试通过；全仓check:dev 64/64/36、秘密/边界/导出和独立复核通过。原失败及root-only中间方案反例保留，共享axe原门中的moderate/incomplete不抹去。证据`output/checks/p6-02-language-menu-fix/final-verification.md`。用户持久数据未reset、4服务ready，Lane D释放；49项计数与全部外部门不变，P6-03未领取，只本地提交。
 
 2026-09-24 P6-02 本地自动范围 ACCEPT：首页艺人下直接显示真实上架礼物，无需先选地区；原购买报价边界保持。fresh run-4 同源七语28单元、196核心页/199PNG、506键盘目标/8对话框/28真实延迟搜索焦点通过，axe违规/incomplete与页面错误均0；实际daily发布49检查，一笔独立TEST签名支付、邮件查单、审核/准备/送达完整通过。原三轮FAIL及RED/GREEN保留；全仓64/64/36、17工具测试、实际PG及非作者最终验收通过，执行源`c7b2e52b…`；证据见`output/checks/p6-02-accessibility/final-verification.md`。P6-02保留真人读屏/人工语言原门而仍IN_PROGRESS、Lane D释放；仅P6-03原依赖及当前完整本地成果核对后有限READY，尚未领取。31 DONE /8 IN_PROGRESS /1 READY /9 PENDING=49。原持久实例已更新、数据未reset；仅本地提交，商户/RUM/云/真机/远端CI与Phase7原门保持。
 

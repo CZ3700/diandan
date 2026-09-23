@@ -13,7 +13,7 @@
 | ID | 状态 | Owner | 依赖 | 证据/说明 |
 |:--|:--|:--|:--|:--|
 | P6-01 | IN_PROGRESS | —（本地 ACCEPT，Lane D 已释放） | P4-06、P5-07 | 5组/17命令/14路径本地通过；实际远端 CI 待补 |
-| P6-02 | IN_PROGRESS | —（本地 ACCEPT，Lane D 已释放） | P3-06、P4-06、P5-02 | 七语28单元/196核心页通过；真人读屏与人工语言原门保留 |
+| P6-02 | IN_PROGRESS | —（本地反馈修复 ACCEPT，Lane D 已释放） | P3-06、P4-06、P5-02 | 七语28单元/196核心页通过；真人读屏与人工语言原门保留 |
 | P6-03 | READY | —（尚未领取） | P3-06、P4-06 | 本地七语六视口性能、字体/消息/图片/目录负载；真实 RUM 原门保留 |
 | P6-04 | PENDING | — | P5-06 | Scoped security checks |
 | P6-05 | PENDING | — | P1-06、P4-06、P5-06 | Fault injection |
@@ -117,3 +117,22 @@ P6-01 完整本地回归和 P6-02 本地自动验收已 ACCEPT，分别保留远
 按ADR-016与非作者 `output/checks/p6-02-accessibility/p6-03-readiness.md`，原P3-06/P4-06的适用完整本地成果、最新P6-01整合验收及本轮P6-02当前共享源完整验收均可消费。Lane D已释放，仅P6-03置READY，无owner/executor；全局31 DONE/8 IN_PROGRESS/1 READY/9 PENDING=49。P6-04至P6-06仍PENDING、Phase7仍LOCKED。
 
 范围与验证计划：独立TEST服务、冻结生产编译；七语×SPEC六基准视口的Lighthouse/资源与按locale字体/消息包；首页新礼物区12/48条及大目录真实PG响应成本；图片/缓存/第三方脚本与核心交互；RUM采集、查询/仪表板的可测试接线。固定原样本、网络/CPU、缓存和版本，性能采样串行独占负载，保留全部慢值/失败及前后对照；先失败用例、受影响测试、原质量门、非作者复核与S.U.P.E.R。不得用旧首页性能报告、TBT或合成事件替代当前性能/真实用户INP与p75；真实RUM窗口/样本、云staging、真机/真实网络等原门仍须后续取得证据。领取前仍需执行代理完整读取当前入口并登记开始时间。
+
+
+## P6-02 用户反馈修复登记（2026-09-24）
+
+- 用户明确反馈下滑后打开语言切换卡住，并要求首页Banner不再显示查询订单；优先修复已验收范围，暂不领取P6-03。既有49项状态计数不变。
+- Owner：Codex `/root`，Lane D；开始 2026-09-23T18:51:24.194188+00:00；基线`1ec464c2`，分支`codex/fix-scrolled-language-menu`。
+- 范围：定位滚动后语言菜单交互与遮罩/焦点/滚动锁，最小修复；按用户澄清将查单入口放进菜单、不占顶部导航，桌面和手机均能打开。交易、后端、用户数据、现有视觉基线保持。
+- 验证：先真实浏览器复现与失败回归，再受影响单测、七语言390×844/1440×900及键盘/reduced-motion、关闭/再次打开/切换后的滚动与上下文、原format/lint/typecheck/build、独立复核及S.U.P.E.R。原用户实例不reset，只本地提交不push。证据目录`output/checks/p6-02-language-menu-fix/`。
+
+
+### 用户反馈修复验收（2026-09-24）
+
+- 真实首次复现：scrollY=1100保持，打开语言菜单后header top0→-1100、菜单top-1010且背景锁住。原CSS同时锁html/body改变sticky滚动祖先。中间仅root锁方案在快速Drawer→语言菜单时仍与Base UI保留的body锁冲突，逐帧1300→95滚动与离屏反例保留；未用延长等待或降低可见比例掩盖。
+- 最终最小实现只移除原root锁选择器，使用与当前Base UI一致的body viewport锁，不改变菜单JS、焦点、触屏防穿透或引用计数。20轮真实控制实验稳定；新静态门要求body单锁并拒绝第二root锁。当前页面html没有独立overflow容器；未来改变该前提须重新验证。
+- 查单按用户明确答复收入现有共用Drawer，电脑与手机均可打开；顶部主导航仅首页/艺人/礼物，保留语言及购物车，不新增页脚查单。七语导航SSR先7RED后GREEN；作者91受影响测试与最终整仓门通过。
+- 新实际浏览器七语×390×844/1440×900共14/14通过、页面错误0：滚动后首次/再次打开菜单在视口内、Escape焦点/滚动恢复、菜单内查单、语言坐标点击/触控与page查询保留；手机reduce。market/currency保留由导航单测及既有locale helper验证，不借新浏览器page参数冒称全部业务上下文重验。浏览器避免locator自动滚动把离屏菜单带回。
+- 最新check:dev：原format/lint、64类型（59缓存）/64测试任务（60缓存）/36构建（33缓存）PASS；共享交互门92及非作者独立92通过，32公共导出、依赖边界、秘密扫描通过。独立新源码副本的原P2-03浏览器门13场景、15PNG、8axe与实际原生200%通过；保留1项moderate region/5条incomplete，不宣称零问题或真人辅助技术已完成。
+- 最终执行源`34e9e6c36b8a286501a1ae4de55b54e39ce07786b307c52ef957c03ef5a5df1c`，2784执行输入与共享验证副本一致；8457原未跟踪文件逐SHA保持，用户私有配置保持。构建后原持久实例已恢复4服务ready，重启后中文桌面smoke通过，未reset数据。自有共享验证服务/浏览器按原门清理。
+- 非作者实现与14矩阵证据ACCEPT，完整汇总及S.U.P.E.R十项见`output/checks/p6-02-language-menu-fix/final-verification.md`。P6-02仍IN_PROGRESS保留人工门，Lane D释放；P6-03仍READY/尚未领取；31 DONE/8 IN_PROGRESS/1 READY/9 PENDING不变，仅本地提交、不push。

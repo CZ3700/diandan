@@ -1,0 +1,70 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+ExpectError: expect(locator).toBeInViewport() failed
+
+Locator:  getByRole('menu')
+Expected: in viewport
+Received: viewport ratio 0.9858757257461548
+Timeout:  5000ms
+
+Call log:
+  - Expect "to.be.in.viewport" with timeout 5000ms
+  - waiting for getByRole('menu')
+    - locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>
+    - unexpected value "viewport ratio 0.980506420135498"
+    - locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>
+    - unexpected value "viewport ratio 0.9838936924934387"
+    - locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>
+    - unexpected value "viewport ratio 0.9856896996498108"
+    11 × locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>
+       - unexpected value "viewport ratio 0.9858757257461548"
+
+    at captureRawStack (/Users/mario/Desktop/下单/node_modules/.pnpm/playwright-core@1.62.1/node_modules/playwright-core/lib/coreBundle.js:9681:17)
+    at callMatcherAsStep (/Users/mario/Desktop/下单/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/lib/matchers/expect.js:13310:57)
+    at Object.toBeInViewport (/Users/mario/Desktop/下单/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/lib/matchers/expect.js:13300:23)
+    at visibleGeometry (/Users/mario/Desktop/下单/scripts/verify-storefront-header-browser.mjs:60:25)
+    at checkCase (/Users/mario/Desktop/下单/scripts/verify-storefront-header-browser.mjs:163:11)
+    at async file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/verify-storefront-header-browser.mjs:209:7 {
+  matcherResult: {
+    message: 'expect(locator).toBeInViewport() failed\n' +
+      '\n' +
+      "Locator:  getByRole('menu')\n" +
+      'Expected: in viewport\n' +
+      'Received: viewport ratio 0.9858757257461548\n' +
+      'Timeout:  5000ms\n' +
+      '\n' +
+      'Call log:\n' +
+      '  - Expect "to.be.in.viewport" with timeout 5000ms\n' +
+      "  - waiting for getByRole('menu')\n" +
+      '    - locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>\n' +
+      '    - unexpected value "viewport ratio 0.980506420135498"\n' +
+      '    - locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>\n' +
+      '    - unexpected value "viewport ratio 0.9838936924934387"\n' +
+      '    - locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>\n' +
+      '    - unexpected value "viewport ratio 0.9856896996498108"\n' +
+      '    11 × locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>\n' +
+      '       - unexpected value "viewport ratio 0.9858757257461548"\n',
+    pass: false,
+    actual: 'viewport ratio 0.9858757257461548',
+    name: 'toBeInViewport',
+    expected: 'in viewport',
+    log: [
+      '  - Expect "to.be.in.viewport" with timeout 5000ms',
+      "  - waiting for getByRole('menu')",
+      '    - locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>',
+      '    - unexpected value "viewport ratio 0.980506420135498"',
+      '    - locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>',
+      '    - unexpected value "viewport ratio 0.9838936924934387"',
+      '    - locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>',
+      '    - unexpected value "viewport ratio 0.9856896996498108"',
+      '    11 × locator resolved to <div id="_r_2_" role="menu" data-open="" tabindex="-1" aria-label="言語" data-align="end" data-side="bottom" class="fs-menu__popup" aria-labelledby="_r_0_" data-rootownerid="_r_1_" data-base-ui-focusable="" aria-orientation="vertical">…</div>',
+      '       - unexpected value "viewport ratio 0.9858757257461548"'
+    ],
+    timeout: 5000,
+    ariaSnapshot: '- menu "言語 日本語":\n  - group'
+  }
+}
+
+Node.js v24.20.0

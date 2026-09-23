@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "source": "/Users/mario/Desktop/.fan-support-regression/b9a86054-d232-45f1-9f60-f92be360ac09/workspace/output/playwright/p2-03",
+  "destination": "/Users/mario/Desktop/下单/output/checks/p6-02-language-menu-fix/shared-ui",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4113,
+      "sha256": "c273080c38e1b35a10cc83b8afac3bca5f4b5628b6df5b53020211ec2a01294f"
+    },
+    {
+      "path": "axe-results/base-desktop.json",
+      "bytes": 256011,
+      "sha256": "b4341d0b568c106b8ff32f0f59f4d406dcb7d52929c70c26be0634e7148be24e"
+    },
+    {
+      "path": "axe-results/base-mobile.json",
+      "bytes": 255056,
+      "sha256": "32a95880efb2ab5797180870afb7b989362d539128d4ef71e85bb92999496673"
+    },
+    {
+      "path": "axe-results/dialog.json",
+      "bytes": 181377,
+      "sha256": "1b20038df533a87205ea02b734530b7a9788ea881e7c95c74a3d4cf196621d99"
+    },
+    {
+      "path": "axe-results/drawer.json",
+      "bytes": 177020,
+      "sha256": "01b3924a585b1a6ed0aef363a5eb5c8d9753c16608e88340356a12dba0b54c40"
+    },
+    {
+      "path": "axe-results/menu.json",
+      "bytes": 333930,
+      "sha256": "0022a763b57dd52d0298a1da35cb3d50ed3ba6766e4077e5c0cdbe49aa3b450d"
+    },
+    {
+      "path": "axe-results/pseudo-320.json",
+      "bytes": 256035,
+      "sha256": "714115cb74a363ab9d868f411f4cc2f7b9e6d3aac0563325273a383b43ae1384"
+    },
+    {
+      "path": "axe-results/reduced-motion.json",
+      "bytes": 257215,
+      "sha256": "49505f1283ae530d745503d093e69900957ce617c6a0e7e0084c54a08ee6c8ea"
+    },
+    {
+      "path": "axe-results/toast.json",
+      "bytes": 277783,
+      "sha256": "c48b9b9bd196c1fddfead1567b1adb32a70e4459ac1cdd88fb0cd7727093b9ab"
+    },
+    {
+      "path": "browser-results.json",
+      "bytes": 75562,
+      "sha256": "88e21839ec41fd553015c1486571d6b575b780930489f36f4985f6d66a1c7ec5"
+    },
+    {
+      "path": "interactions/390x844-en-touch-menu.png",
+      "bytes": 96352,
+      "sha256": "e5cffc0bcdccc0f3dac88ea50755e46b43bbc4371ac348fba52d2e704397925b"
+    },
+    {
+      "path": "interactions/390x844-ja-after-isolation.png",
+      "bytes": 110469,
+      "sha256": "515cb3617745d76da6d730be90e2ae37b8b6a0c4f2025c3389d93526be0eff69"
+    },
+    {
+      "path": "logs/build-storefront-closure.log",
+      "bytes": 15341,
+      "sha256": "02150f3c90d6944a1f9e59cb99af89b6a56aa61254a2632e43a74b1a0c0805cd"
+    },
+    {
+      "path": "logs/server-preview.log",
+      "bytes": 292,
+      "sha256": "db139e186ff37bfd5497b140376fa39d71bec3e63a9cc7611c19c020b28cd507"
+    },
+    {
+      "path": "logs/server-production.log",
+      "bytes": 294,
+      "sha256": "57cf31422b3a15c48740a098ab1371974c841998e294766f9c112d16bbf6ef80"
+    },
+    {
+      "path": "logs/server-staging.log",
+      "bytes": 292,
+      "sha256": "439e666e0c39c5cdb30131b3d4c3b2f421164d3d35f4c85884615a0aa0c4e894"
+    },
+    {
+      "path": "reduced-motion/1440x900-pt-drawer.png",
+      "bytes": 149556,
+      "sha256": "7a980dda6fce61b22a5c4d98fbdca45abe0de2de14901ddf45cee404edcccf04"
+    },
+    {
+      "path": "reduced-motion/390x844-en-dialog.png",
+      "bytes": 103391,
+      "sha256": "2393815164fde193aa6b36f6a7f4f8f778aa38ee73795c0d71e21b844f5c6460"
+    },
+    {
+      "path": "rtl/1440x900-en-menu.png",
+      "bytes": 117298,
+      "sha256": "8ccc5672c668093a5aba0686d7dcf5d81efec06dbc403c98ab76ef2edc814d17"
+    },
+    {
+      "path": "screenshots.sha256",
+      "bytes": 1480,
+      "sha256": "281aad39263283edf6bfe8dc17d9e74db54a2e262248f4bd9ccc52f9e7a45a37"
+    },
+    {
+      "path": "stress/320x800-en-XA-menu.png",
+      "bytes": 112487,
+      "sha256": "3f3e857437099d5fd3e5da2b2a7be6b6a6d3fe9f8dbd53558d93c74b7872e9bd"
+    },
+    {
+      "path": "stress/320x800-pt-long.png",
+      "bytes": 100498,
+      "sha256": "22deb3759a0e7f1c2ef38407a7e063f514637f9e3db7cc48a9394cba6925f142"
+    },
+    {
+      "path": "viewports/1024x768-zh-CN.png",
+      "bytes": 112935,
+      "sha256": "034b3505d90e464b82c3ffd312622d728a54aeca226b05a1d617e32b0a742bac"
+    },
+    {
+      "path": "viewports/1440x900-ja-dialog.png",
+      "bytes": 139943,
+      "sha256": "ae95933a439109ec542c214955f22a7d9bb673d2d6ff8171d58920fd98d94b23"
+    },
+    {
+      "path": "viewports/1920x1080-es.png",
+      "bytes": 127965,
+      "sha256": "3f5f8e6b89627f9cbe28a5125ceb74d47ea54c3d0a5a5aab0fd989b3225d91a4"
+    },
+    {
+      "path": "viewports/360x800-en.png",
+      "bytes": 92048,
+      "sha256": "27ae8548e42ee4b9311137f4e2b9eed437dacd741ff76e842b4c4cec6189f76d"
+    },
+    {
+      "path": "viewports/390x844-vi-drawer.png",
+      "bytes": 74962,
+      "sha256": "0727a95f8ad24cf80c597023115ffd9737154e1296553b0321cff076afe89a99"
+    },
+    {
+      "path": "viewports/768x1024-th-menu.png",
+      "bytes": 97064,
+      "sha256": "1130bf5f92f7a08a493854f2500846dfdc2d94571e204f3071aa6f37d4c29cc1"
+    },
+    {
+      "path": "zoom/google-chrome-200-percent-pt.png",
+      "bytes": 220285,
+      "sha256": "386c0abfbd86323aea9f2956be2c4a217243c081a1a4600da6e8822795fb7e6a"
+    },
+    {
+      "path": "zoom/google-chrome-baseline-pt.png",
+      "bytes": 146531,
+      "sha256": "fbd28789c856b9fce449ace1a34644c6869ed90eaee56cc79b46510cc893267e"
+    }
+  ]
+}

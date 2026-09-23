@@ -10,7 +10,7 @@
   white-space: nowrap;
 }
 
-:root[data-fs-menu-scroll-lock],
+/* Share Base UI's body viewport lock; a second root lock detaches sticky anchors. */
 :root[data-fs-menu-scroll-lock] body {
   overflow: hidden;
   overscroll-behavior: none;

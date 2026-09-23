@@ -1,0 +1,289 @@
+$ node ./scripts/verify-ui-interactions-browser.mjs
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/config, @fan-support/contracts, @fan-support/design-tokens, @fan-support/i18n, @fan-support/observability, @fan-support/storefront, @fan-support/ui
+   • Running build in 7 packages
+   • Remote caching disabled
+
+@fan-support/contracts:build: cache bypass, force executing d8113b1462273979
+@fan-support/contracts:build: 
+@fan-support/contracts:build: > @fan-support/contracts@0.0.0 build /Users/mario/Desktop/.fan-support-regression/b9a86054-d232-45f1-9f60-f92be360ac09/workspace/packages/contracts
+@fan-support/contracts:build: > tsc -p tsconfig.build.json
+@fan-support/contracts:build: 
+@fan-support/observability:build: cache bypass, force executing af38238623beb950
+@fan-support/config:build: cache bypass, force executing 3ca89ce2268c9c6b
+@fan-support/design-tokens:build: cache bypass, force executing cb5807bd8b6a6d77
+@fan-support/i18n:build: cache bypass, force executing 87998ea48ed676d4
+@fan-support/ui:build: cache bypass, force executing 245b74e80523b7f0
+@fan-support/design-tokens:build: 
+@fan-support/design-tokens:build: > @fan-support/design-tokens@0.0.0 build /Users/mario/Desktop/.fan-support-regression/b9a86054-d232-45f1-9f60-f92be360ac09/workspace/packages/design-tokens
+@fan-support/design-tokens:build: > tsc -p tsconfig.build.json
+@fan-support/design-tokens:build: 
+@fan-support/observability:build: 
+@fan-support/observability:build: > @fan-support/observability@0.0.0 build /Users/mario/Desktop/.fan-support-regression/b9a86054-d232-45f1-9f60-f92be360ac09/workspace/packages/observability
+@fan-support/observability:build: > tsc -p tsconfig.build.json
+@fan-support/observability:build: 
+@fan-support/ui:build: 
+@fan-support/ui:build: > @fan-support/ui@0.0.0 build /Users/mario/Desktop/.fan-support-regression/b9a86054-d232-45f1-9f60-f92be360ac09/workspace/packages/ui
+@fan-support/ui:build: > tsc -p tsconfig.build.json
+@fan-support/ui:build: 
+@fan-support/config:build: 
+@fan-support/config:build: > @fan-support/config@0.0.0 build /Users/mario/Desktop/.fan-support-regression/b9a86054-d232-45f1-9f60-f92be360ac09/workspace/packages/config
+@fan-support/config:build: > tsc -p tsconfig.build.json
+@fan-support/config:build: 
+@fan-support/i18n:build: 
+@fan-support/i18n:build: > @fan-support/i18n@0.0.0 build /Users/mario/Desktop/.fan-support-regression/b9a86054-d232-45f1-9f60-f92be360ac09/workspace/packages/i18n
+@fan-support/i18n:build: > tsc -p tsconfig.build.json
+@fan-support/i18n:build: 
+@fan-support/storefront:build: cache bypass, force executing 20a2ea6d236f395c
+@fan-support/storefront:build: 
+@fan-support/storefront:build: > @fan-support/storefront@0.0.0 build /Users/mario/Desktop/.fan-support-regression/b9a86054-d232-45f1-9f60-f92be360ac09/workspace/apps/storefront
+@fan-support/storefront:build: > next build
+@fan-support/storefront:build: 
+@fan-support/storefront:build: ▲ Next.js 16.3.4 (Turbopack)
+@fan-support/storefront:build: ✓ Running next.config.ts took 1833ms
+@fan-support/storefront:build: 
+@fan-support/storefront:build:   Creating an optimized production build ...
+@fan-support/storefront:build: ✓ Compiled successfully in 7.0s
+@fan-support/storefront:build:   Running TypeScript ...
+@fan-support/storefront:build:   Finished TypeScript in 3.6s ...
+@fan-support/storefront:build:   Collecting page data using 9 workers ...
+@fan-support/storefront:build:   Generating static pages using 9 workers (0/4) ...
+@fan-support/storefront:build:   Generating static pages using 9 workers (1/4) 
+@fan-support/storefront:build:   Generating static pages using 9 workers (2/4) 
+@fan-support/storefront:build:   Generating static pages using 9 workers (3/4) 
+@fan-support/storefront:build: ✓ Generating static pages using 9 workers (4/4) in 62ms
+@fan-support/storefront:build:   Finalizing page optimization ...
+@fan-support/storefront:build: 
+@fan-support/storefront:build: Route (app)
+@fan-support/storefront:build: ┌ ƒ /
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en-XA
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en-XA/brand
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en-XA/components
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en-XA/interactions
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en-XA/motion
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en-XA/primitives
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en/brand
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en/components
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en/interactions
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en/motion
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/en/primitives
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/es
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/es/brand
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/es/components
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/es/interactions
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/es/motion
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/es/primitives
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/ja
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/ja/brand
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/ja/components
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/ja/interactions
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/ja/motion
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/ja/primitives
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/pt
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/pt/brand
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/pt/components
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/pt/interactions
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/pt/motion
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/pt/primitives
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/th
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/th/brand
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/th/components
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/th/interactions
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/th/motion
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/th/primitives
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/vi
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/vi/brand
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/vi/components
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/vi/interactions
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/vi/motion
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/vi/primitives
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/zh-CN
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/zh-CN/brand
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/zh-CN/components
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/zh-CN/interactions
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/zh-CN/motion
+@fan-support/storefront:build: ├ ƒ /_internal/design-foundations/zh-CN/primitives
+@fan-support/storefront:build: ├ ƒ /_internal/observability
+@fan-support/storefront:build: ├ ƒ /_not-found
+@fan-support/storefront:build: ├ ƒ /-/sitemap.xml
+@fan-support/storefront:build: ├ ƒ /api/storefront/cart
+@fan-support/storefront:build: ├ ƒ /api/storefront/cart/items
+@fan-support/storefront:build: ├ ƒ /api/storefront/cart/items/[itemId]
+@fan-support/storefront:build: ├ ƒ /api/storefront/cart/items/[itemId]/editor
+@fan-support/storefront:build: ├ ƒ /api/storefront/cart/validate
+@fan-support/storefront:build: ├ ƒ /api/storefront/checkout/current/status
+@fan-support/storefront:build: ├ ƒ /api/storefront/checkout/sessions
+@fan-support/storefront:build: ├ ƒ /api/storefront/checkout/sessions/[checkoutSessionId]/attempts
+@fan-support/storefront:build: ├ ƒ /api/storefront/checkout/sessions/[checkoutSessionId]/attempts/[attemptId]
+@fan-support/storefront:build: ├ ƒ /api/storefront/checkout/sessions/[checkoutSessionId]/attempts/[attemptId]/recover
+@fan-support/storefront:build: ├ ƒ /api/storefront/checkout/sessions/[checkoutSessionId]/capabilities
+@fan-support/storefront:build: ├ ƒ /api/storefront/checkout/sessions/[checkoutSessionId]/order-access
+@fan-support/storefront:build: ├ ƒ /api/storefront/checkout/sessions/[checkoutSessionId]/status
+@fan-support/storefront:build: ├ ƒ /api/storefront/idols
+@fan-support/storefront:build: ├ ƒ /api/storefront/order-access/exchange
+@fan-support/storefront:build: ├ ƒ /api/storefront/order-access/revoke
+@fan-support/storefront:build: ├ ƒ /api/storefront/orders/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /en
+@fan-support/storefront:build: ├ ƒ /en/cart
+@fan-support/storefront:build: ├ ƒ /en/checkout
+@fan-support/storefront:build: ├ ƒ /en/checkout/return
+@fan-support/storefront:build: ├ ƒ /en/gifts
+@fan-support/storefront:build: ├ ƒ /en/gifts/[handle]
+@fan-support/storefront:build: ├ ƒ /en/idols
+@fan-support/storefront:build: ├ ƒ /en/idols/[handle]
+@fan-support/storefront:build: ├ ƒ /en/order-access
+@fan-support/storefront:build: ├ ƒ /en/orders/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /en/orders/lookup
+@fan-support/storefront:build: ├ ƒ /en/policies/[handle]
+@fan-support/storefront:build: ├ ƒ /en/region
+@fan-support/storefront:build: ├ ƒ /en/thank-you/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /es
+@fan-support/storefront:build: ├ ƒ /es/cart
+@fan-support/storefront:build: ├ ƒ /es/checkout
+@fan-support/storefront:build: ├ ƒ /es/checkout/return
+@fan-support/storefront:build: ├ ƒ /es/gifts
+@fan-support/storefront:build: ├ ƒ /es/gifts/[handle]
+@fan-support/storefront:build: ├ ƒ /es/idols
+@fan-support/storefront:build: ├ ƒ /es/idols/[handle]
+@fan-support/storefront:build: ├ ƒ /es/order-access
+@fan-support/storefront:build: ├ ƒ /es/orders/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /es/orders/lookup
+@fan-support/storefront:build: ├ ƒ /es/policies/[handle]
+@fan-support/storefront:build: ├ ƒ /es/region
+@fan-support/storefront:build: ├ ƒ /es/thank-you/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /healthz
+@fan-support/storefront:build: ├ ○ /icon.svg
+@fan-support/storefront:build: ├ ƒ /ja
+@fan-support/storefront:build: ├ ƒ /ja/cart
+@fan-support/storefront:build: ├ ƒ /ja/checkout
+@fan-support/storefront:build: ├ ƒ /ja/checkout/return
+@fan-support/storefront:build: ├ ƒ /ja/gifts
+@fan-support/storefront:build: ├ ƒ /ja/gifts/[handle]
+@fan-support/storefront:build: ├ ƒ /ja/idols
+@fan-support/storefront:build: ├ ƒ /ja/idols/[handle]
+@fan-support/storefront:build: ├ ƒ /ja/order-access
+@fan-support/storefront:build: ├ ƒ /ja/orders/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /ja/orders/lookup
+@fan-support/storefront:build: ├ ƒ /ja/policies/[handle]
+@fan-support/storefront:build: ├ ƒ /ja/region
+@fan-support/storefront:build: ├ ƒ /ja/thank-you/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /pt
+@fan-support/storefront:build: ├ ƒ /pt/cart
+@fan-support/storefront:build: ├ ƒ /pt/checkout
+@fan-support/storefront:build: ├ ƒ /pt/checkout/return
+@fan-support/storefront:build: ├ ƒ /pt/gifts
+@fan-support/storefront:build: ├ ƒ /pt/gifts/[handle]
+@fan-support/storefront:build: ├ ƒ /pt/idols
+@fan-support/storefront:build: ├ ƒ /pt/idols/[handle]
+@fan-support/storefront:build: ├ ƒ /pt/order-access
+@fan-support/storefront:build: ├ ƒ /pt/orders/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /pt/orders/lookup
+@fan-support/storefront:build: ├ ƒ /pt/policies/[handle]
+@fan-support/storefront:build: ├ ƒ /pt/region
+@fan-support/storefront:build: ├ ƒ /pt/thank-you/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /robots.txt
+@fan-support/storefront:build: ├ ƒ /sitemap.xml
+@fan-support/storefront:build: ├ ƒ /th
+@fan-support/storefront:build: ├ ƒ /th/cart
+@fan-support/storefront:build: ├ ƒ /th/checkout
+@fan-support/storefront:build: ├ ƒ /th/checkout/return
+@fan-support/storefront:build: ├ ƒ /th/gifts
+@fan-support/storefront:build: ├ ƒ /th/gifts/[handle]
+@fan-support/storefront:build: ├ ƒ /th/idols
+@fan-support/storefront:build: ├ ƒ /th/idols/[handle]
+@fan-support/storefront:build: ├ ƒ /th/order-access
+@fan-support/storefront:build: ├ ƒ /th/orders/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /th/orders/lookup
+@fan-support/storefront:build: ├ ƒ /th/policies/[handle]
+@fan-support/storefront:build: ├ ƒ /th/region
+@fan-support/storefront:build: ├ ƒ /th/thank-you/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /vi
+@fan-support/storefront:build: ├ ƒ /vi/cart
+@fan-support/storefront:build: ├ ƒ /vi/checkout
+@fan-support/storefront:build: ├ ƒ /vi/checkout/return
+@fan-support/storefront:build: ├ ƒ /vi/gifts
+@fan-support/storefront:build: ├ ƒ /vi/gifts/[handle]
+@fan-support/storefront:build: ├ ƒ /vi/idols
+@fan-support/storefront:build: ├ ƒ /vi/idols/[handle]
+@fan-support/storefront:build: ├ ƒ /vi/order-access
+@fan-support/storefront:build: ├ ƒ /vi/orders/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /vi/orders/lookup
+@fan-support/storefront:build: ├ ƒ /vi/policies/[handle]
+@fan-support/storefront:build: ├ ƒ /vi/region
+@fan-support/storefront:build: ├ ƒ /vi/thank-you/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /zh-CN
+@fan-support/storefront:build: ├ ƒ /zh-CN/cart
+@fan-support/storefront:build: ├ ƒ /zh-CN/checkout
+@fan-support/storefront:build: ├ ƒ /zh-CN/checkout/return
+@fan-support/storefront:build: ├ ƒ /zh-CN/gifts
+@fan-support/storefront:build: ├ ƒ /zh-CN/gifts/[handle]
+@fan-support/storefront:build: ├ ƒ /zh-CN/idols
+@fan-support/storefront:build: ├ ƒ /zh-CN/idols/[handle]
+@fan-support/storefront:build: ├ ƒ /zh-CN/order-access
+@fan-support/storefront:build: ├ ƒ /zh-CN/orders/[publicOrderId]
+@fan-support/storefront:build: ├ ƒ /zh-CN/orders/lookup
+@fan-support/storefront:build: ├ ƒ /zh-CN/policies/[handle]
+@fan-support/storefront:build: ├ ƒ /zh-CN/region
+@fan-support/storefront:build: └ ƒ /zh-CN/thank-you/[publicOrderId]
+@fan-support/storefront:build: 
+@fan-support/storefront:build: 
+@fan-support/storefront:build: ƒ Proxy (Middleware)
+@fan-support/storefront:build: 
+@fan-support/storefront:build: ○  (Static)   prerendered as static content
+@fan-support/storefront:build: ƒ  (Dynamic)  server-rendered on demand
+@fan-support/storefront:build: 
+
+ Tasks:    7 successful, 7 total
+Cached:    0 cached, 7 total
+  Time:    25.591s 
+
+▲ Next.js 16.3.4
+- Local:         http://127.0.0.1:51544
+- Network:       http://127.0.0.1:51544
+✓ Ready in 0ms
+✓ Running next.config took 2ms
+
+[p2-03 browser] viewport-360x800-en
+
+[p2-03 browser] viewport-390x844-vi
+
+[p2-03 browser] viewport-768x1024-th
+
+[p2-03 browser] viewport-1024x768-zh-cn
+
+[p2-03 browser] viewport-1440x900-ja
+
+[p2-03 browser] viewport-1920x1080-es
+
+[p2-03 browser] stress-320x800-en-xa
+
+[p2-03 browser] stress-320x800-pt
+
+[p2-03 browser] interaction-390x844-en-to-ja
+
+[p2-03 browser] touch-menu-390x844-en
+
+[p2-03 browser] rtl-1440x900-en
+
+[p2-03 browser] reduced-motion-390x844-en
+
+[p2-03 browser] reduced-motion-1440x900-pt
+
+[p2-03 browser] native-chrome-200-percent-pt
+{"schemaVersion":1,"timestamp":"2026-09-23T19:08:10.893Z","level":"info","service":"storefront","event":"runtime.stopped","outcome":"success"}
+▲ Next.js 16.3.4
+- Local:         http://127.0.0.1:51754
+- Network:       http://127.0.0.1:51754
+✓ Ready in 0ms
+✓ Running next.config took 4ms
+{"schemaVersion":1,"timestamp":"2026-09-23T19:08:11.315Z","level":"info","service":"storefront","event":"runtime.stopped","outcome":"success"}
+▲ Next.js 16.3.4
+- Local:         http://127.0.0.1:51769
+- Network:       http://127.0.0.1:51769
+✓ Ready in 0ms
+✓ Running next.config took 1.9ms
+{"schemaVersion":1,"timestamp":"2026-09-23T19:08:11.740Z","level":"info","service":"storefront","event":"runtime.stopped","outcome":"success"}
+
+P2-03 browser verification passed; evidence: /Users/mario/Desktop/.fan-support-regression/b9a86054-d232-45f1-9f60-f92be360ac09/workspace/output/playwright/p2-03

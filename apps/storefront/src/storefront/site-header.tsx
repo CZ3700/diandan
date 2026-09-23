@@ -26,7 +26,7 @@ export function SiteHeader({
 }>) {
   const [menu, setMenu] = useState(false),
     [scrolled, setScrolled] = useState(false);
-  const cancelMobileLanguage = useRef<(() => void) | null>(null);
+  const cancelDrawerLanguage = useRef<(() => void) | null>(null);
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 24);
     update();
@@ -37,9 +37,8 @@ export function SiteHeader({
     { path: "/", label: copy.navHome, key: "home" },
     { path: "/idols", label: copy.navArtists, key: "artists" },
     { path: "/gifts", label: copy.navGifts, key: "gifts" },
-    { path: "/orders/lookup", label: copy.navOrders, key: "other" },
   ];
-  const navigation = (
+  const navigation = (showOrderLookup = false) => (
     <nav aria-label={copy.navLabel}>
       {links.map((link) => (
         <a
@@ -52,16 +51,21 @@ export function SiteHeader({
           {link.label}
         </a>
       ))}
+      {showOrderLookup && (
+        <a href={storefrontHref(locale, "/orders/lookup", contextQuery)}>
+          {copy.navOrders}
+        </a>
+      )}
     </nav>
   );
-  const language = (mobile = false) => (
+  const language = (inDrawer = false) => (
     <HeaderLanguage
       label={copy.language}
       locale={locale}
       loadingLabel={copy.loading}
       errorLabel={copy.contentErrorBody}
       retryLabel={copy.artistRetry}
-      {...(mobile ? { cancelRef: cancelMobileLanguage } : {})}
+      {...(inDrawer ? { cancelRef: cancelDrawerLanguage } : {})}
       onValueChange={(next) => {
         const destination = createPresentationLocaleUrl(
           new URL(window.location.href),
@@ -87,18 +91,18 @@ export function SiteHeader({
           {name}
           <span aria-hidden="true">.</span>
         </a>
-        <div className="storefront-desktop-nav">{navigation}</div>
+        <div className="storefront-desktop-nav">{navigation()}</div>
         <div className="storefront-header-utilities">
           <div className="storefront-desktop-language">{language()}</div>
           <CartHeader locale={locale} copy={copy} contextQuery={contextQuery} />
-          <div className="storefront-mobile-menu">
+          <div className="storefront-navigation-menu storefront-mobile-menu">
             <LazyDrawer
               loadingLabel={copy.loading}
               errorLabel={copy.contentErrorBody}
               retryLabel={copy.artistRetry}
               open={menu}
               onOpenChange={(next) => {
-                if (!next) cancelMobileLanguage.current?.();
+                if (!next) cancelDrawerLanguage.current?.();
                 setMenu(next);
               }}
               title={copy.navMenu}
@@ -120,7 +124,7 @@ export function SiteHeader({
               }
             >
               <div className="storefront-drawer-nav">
-                {navigation}
+                {navigation(true)}
                 {language(true)}
                 <p>{copy.regionHint}</p>
                 <a href={storefrontHref(locale, "/region", contextQuery)}>

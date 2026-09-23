@@ -1,0 +1,42 @@
+{
+  "result": "PASS",
+  "sourceHash": "34e9e6c36b8a286501a1ae4de55b54e39ce07786b307c52ef957c03ef5a5df1c",
+  "sourcePaths": [
+    "apps/storefront/src/storefront/site-header-navigation.test.tsx",
+    "apps/storefront/src/storefront/site-header.tsx",
+    "apps/storefront/src/storefront/storefront.css",
+    "docs/FAN_SUPPORT_PLATFORM_SPEC.md",
+    "docs/operations/accessibility.md",
+    "docs/progress/MASTER.md",
+    "docs/progress/phase-6-hardening.md",
+    "packages/ui/styles/interactions.css",
+    "scripts/check-ui-interactions.mjs",
+    "scripts/check-ui-interactions.test.mjs",
+    "scripts/verify-storefront-header-browser.mjs"
+  ],
+  "browser": {
+    "locales": 7,
+    "viewports": 2,
+    "passed": 14,
+    "pageErrors": 0
+  },
+  "sharedUi": {
+    "passed": 13,
+    "axeBlocking": 0,
+    "axeModerate": 1,
+    "axeIncomplete": 5,
+    "native200": true
+  },
+  "checkDev": {
+    "typecheck": 64,
+    "testTasks": 64,
+    "build": 36,
+    "exitCode": 0
+  },
+  "tools": 92,
+  "secretScanExitCode": 0,
+  "independentReview": "ACCEPT",
+  "protection": "protection-final.json",
+  "localExperience": "user-status-final.json",
+  "externalScopeUnchanged": true
+}

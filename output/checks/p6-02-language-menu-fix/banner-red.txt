@@ -1,0 +1,136 @@
+$ vitest run --config ../../vitest.config.ts --root . src/storefront/site-header-navigation.test.tsx
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/storefront
+
+ ❯ src/storefront/site-header-navigation.test.tsx (7 tests | 7 failed) 35ms
+   × en keeps order lookup inside the navigation drawer, outside the top links 10ms
+   × zh-CN keeps order lookup inside the navigation drawer, outside the top links 5ms
+   × th keeps order lookup inside the navigation drawer, outside the top links 4ms
+   × vi keeps order lookup inside the navigation drawer, outside the top links 5ms
+   × ja keeps order lookup inside the navigation drawer, outside the top links 4ms
+   × es keeps order lookup inside the navigation drawer, outside the top links 4ms
+   × pt keeps order lookup inside the navigation drawer, outside the top links 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/storefront/site-header-navigation.test.tsx > en keeps order lookup inside the navigation drawer, outside the top links
+AssertionError: expected '<nav aria-label="Main navigation"><a …' not to contain '/orders/lookup'
+
+Expected: "/orders/lookup"
+Received: "<nav aria-label="Main navigation"><a href="/en?market=TEST_MARKET&amp;currency=USD" aria-current="page">Home</a><a href="/en/idols?market=TEST_MARKET&amp;currency=USD">Artists</a><a href="/en/gifts?market=TEST_MARKET&amp;currency=USD">Gifts</a><a href="/en/orders/lookup?market=TEST_MARKET&amp;currency=USD">Find an order</a>"
+
+ ❯ src/storefront/site-header-navigation.test.tsx:36:25
+     34|     expect(desktop).toBeDefined();
+     35|     expect(drawer).toBeDefined();
+     36|     expect(desktop).not.toContain("/orders/lookup");
+       |                         ^
+     37|     for (const path of ["", "/idols", "/gifts"]) {
+     38|       const href = `href="/${locale}${path}?market=TEST_MARKET&amp;cur…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  src/storefront/site-header-navigation.test.tsx > zh-CN keeps order lookup inside the navigation drawer, outside the top links
+AssertionError: expected '<nav aria-label="主导航"><a href="/zh-CN…' not to contain '/orders/lookup'
+
+Expected: "/orders/lookup"
+Received: "<nav aria-label="主导航"><a href="/zh-CN?market=TEST_MARKET&amp;currency=USD" aria-current="page">首页</a><a href="/zh-CN/idols?market=TEST_MARKET&amp;currency=USD">艺人</a><a href="/zh-CN/gifts?market=TEST_MARKET&amp;currency=USD">礼物</a><a href="/zh-CN/orders/lookup?market=TEST_MARKET&amp;currency=USD">查询订单</a>"
+
+ ❯ src/storefront/site-header-navigation.test.tsx:36:25
+     34|     expect(desktop).toBeDefined();
+     35|     expect(drawer).toBeDefined();
+     36|     expect(desktop).not.toContain("/orders/lookup");
+       |                         ^
+     37|     for (const path of ["", "/idols", "/gifts"]) {
+     38|       const href = `href="/${locale}${path}?market=TEST_MARKET&amp;cur…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  src/storefront/site-header-navigation.test.tsx > th keeps order lookup inside the navigation drawer, outside the top links
+AssertionError: expected '<nav aria-label="เมนูหลัก"><a href="/…' not to contain '/orders/lookup'
+
+Expected: "/orders/lookup"
+Received: "<nav aria-label="เมนูหลัก"><a href="/th?market=TEST_MARKET&amp;currency=USD" aria-current="page">หน้าแรก</a><a href="/th/idols?market=TEST_MARKET&amp;currency=USD">ศิลปิน</a><a href="/th/gifts?market=TEST_MARKET&amp;currency=USD">ของขวัญ</a><a href="/th/orders/lookup?market=TEST_MARKET&amp;currency=USD">ค้นหาคำสั่งซื้อ</a>"
+
+ ❯ src/storefront/site-header-navigation.test.tsx:36:25
+     34|     expect(desktop).toBeDefined();
+     35|     expect(drawer).toBeDefined();
+     36|     expect(desktop).not.toContain("/orders/lookup");
+       |                         ^
+     37|     for (const path of ["", "/idols", "/gifts"]) {
+     38|       const href = `href="/${locale}${path}?market=TEST_MARKET&amp;cur…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  src/storefront/site-header-navigation.test.tsx > vi keeps order lookup inside the navigation drawer, outside the top links
+AssertionError: expected '<nav aria-label="Điều hướng chính"><a…' not to contain '/orders/lookup'
+
+Expected: "/orders/lookup"
+Received: "<nav aria-label="Điều hướng chính"><a href="/vi?market=TEST_MARKET&amp;currency=USD" aria-current="page">Trang chủ</a><a href="/vi/idols?market=TEST_MARKET&amp;currency=USD">Nghệ sĩ</a><a href="/vi/gifts?market=TEST_MARKET&amp;currency=USD">Quà tặng</a><a href="/vi/orders/lookup?market=TEST_MARKET&amp;currency=USD">Tra cứu đơn hàng</a>"
+
+ ❯ src/storefront/site-header-navigation.test.tsx:36:25
+     34|     expect(desktop).toBeDefined();
+     35|     expect(drawer).toBeDefined();
+     36|     expect(desktop).not.toContain("/orders/lookup");
+       |                         ^
+     37|     for (const path of ["", "/idols", "/gifts"]) {
+     38|       const href = `href="/${locale}${path}?market=TEST_MARKET&amp;cur…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  src/storefront/site-header-navigation.test.tsx > ja keeps order lookup inside the navigation drawer, outside the top links
+AssertionError: expected '<nav aria-label="メインナビゲーション"><a href=…' not to contain '/orders/lookup'
+
+Expected: "/orders/lookup"
+Received: "<nav aria-label="メインナビゲーション"><a href="/ja?market=TEST_MARKET&amp;currency=USD" aria-current="page">ホーム</a><a href="/ja/idols?market=TEST_MARKET&amp;currency=USD">アーティスト</a><a href="/ja/gifts?market=TEST_MARKET&amp;currency=USD">ギフト</a><a href="/ja/orders/lookup?market=TEST_MARKET&amp;currency=USD">注文を確認</a>"
+
+ ❯ src/storefront/site-header-navigation.test.tsx:36:25
+     34|     expect(desktop).toBeDefined();
+     35|     expect(drawer).toBeDefined();
+     36|     expect(desktop).not.toContain("/orders/lookup");
+       |                         ^
+     37|     for (const path of ["", "/idols", "/gifts"]) {
+     38|       const href = `href="/${locale}${path}?market=TEST_MARKET&amp;cur…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  src/storefront/site-header-navigation.test.tsx > es keeps order lookup inside the navigation drawer, outside the top links
+AssertionError: expected '<nav aria-label="Navegación principal…' not to contain '/orders/lookup'
+
+Expected: "/orders/lookup"
+Received: "<nav aria-label="Navegación principal"><a href="/es?market=TEST_MARKET&amp;currency=USD" aria-current="page">Inicio</a><a href="/es/idols?market=TEST_MARKET&amp;currency=USD">Artistas</a><a href="/es/gifts?market=TEST_MARKET&amp;currency=USD">Regalos</a><a href="/es/orders/lookup?market=TEST_MARKET&amp;currency=USD">Buscar un pedido</a>"
+
+ ❯ src/storefront/site-header-navigation.test.tsx:36:25
+     34|     expect(desktop).toBeDefined();
+     35|     expect(drawer).toBeDefined();
+     36|     expect(desktop).not.toContain("/orders/lookup");
+       |                         ^
+     37|     for (const path of ["", "/idols", "/gifts"]) {
+     38|       const href = `href="/${locale}${path}?market=TEST_MARKET&amp;cur…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  src/storefront/site-header-navigation.test.tsx > pt keeps order lookup inside the navigation drawer, outside the top links
+AssertionError: expected '<nav aria-label="Navegação principal"…' not to contain '/orders/lookup'
+
+Expected: "/orders/lookup"
+Received: "<nav aria-label="Navegação principal"><a href="/pt?market=TEST_MARKET&amp;currency=USD" aria-current="page">Início</a><a href="/pt/idols?market=TEST_MARKET&amp;currency=USD">Artistas</a><a href="/pt/gifts?market=TEST_MARKET&amp;currency=USD">Presentes</a><a href="/pt/orders/lookup?market=TEST_MARKET&amp;currency=USD">Consultar pedido</a>"
+
+ ❯ src/storefront/site-header-navigation.test.tsx:36:25
+     34|     expect(desktop).toBeDefined();
+     35|     expect(drawer).toBeDefined();
+     36|     expect(desktop).not.toContain("/orders/lookup");
+       |                         ^
+     37|     for (const path of ["", "/idols", "/gifts"]) {
+     38|       const href = `href="/${locale}${path}?market=TEST_MARKET&amp;cur…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  7 failed (7)
+   Start at  01:54:19
+   Duration  513ms (transform 302ms, setup 0ms, import 416ms, tests 35ms, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/storefront:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/storefront@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/storefront/site-header-navigation.test.tsx`
+Exit status 1

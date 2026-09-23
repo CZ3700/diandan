@@ -1,0 +1,10 @@
+$ vitest run --config ../../vitest.config.ts --root . src/storefront/site-header-navigation.test.tsx src/storefront/site-header-lazy-boundary.test.tsx src/storefront/site-header-lazy-loading.test.tsx src/storefront/lazy-drawer-loading.test.tsx src/storefront/lazy-drawer-boundary.test.tsx src/storefront/cart-header-restoration.test.tsx src/storefront/page-factory.test.tsx
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/storefront
+
+
+ Test Files  7 passed (7)
+      Tests  91 passed (91)
+   Start at  01:55:30
+   Duration  3.24s (transform 2.29s, setup 0ms, import 2.50s, tests 5.10s, environment 0ms)
+

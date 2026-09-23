@@ -30,3 +30,10 @@ corepack pnpm verify:accessibility --output output/checks/p6-02-accessibility/ne
 自动结果不能替代 VoiceOver/NVDA 真人读屏、七语人工理解与译审、真实手机、真实商户支付、生产基础设施或 RUM。所有这些原门保持独立登记。axe 的 incomplete 也需人工判断，不能当作已通过。
 
 检查基于 [WCAG 2.2](https://www.w3.org/TR/WCAG22/) 与 [Reflow 说明](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)，本地通过不表示已完成全部 WCAG 合规认证。
+
+
+## 滚动后页头交互回归
+
+`pnpm exec node scripts/verify-storefront-header-browser.mjs --instance <已有本地TEST实例> --output output/playwright/<新证据目录>` 只读取公开页面，不创建订单或修改内容。使用七语言、390×844/1440×900，检查下滑后首次懒加载/再次打开语言菜单、完整可见几何、Escape焦点和滚动恢复、菜单内查单、坐标点击/触控语言跳转及查询参数保持。手机使用reduced-motion；它不是物理手机或人工读屏验收。`--smoke`仅中文桌面，`--locale ja`仅指定语言双端；局部运行不得报告成完整七语。
+
+先断言菜单在视口内，再点击；直接用locator.click可能自动把屏幕外的菜单滚回来，掩盖实际卡住。页面导航后等待目标内容加载完成，再测滚动。当前页面的viewport overflow由body传播；自定义菜单与Base UI共享body锁，不能同时给html和body加overflow:hidden。切换到独立html滚动容器的未来布局变更须同步重新评审锁目标，不能只通过静态门禁。

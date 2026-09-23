@@ -1,0 +1,395 @@
+✖ accepts the actual split locale value and exact presentation helper chain (118.088458ms)
+✔ rejects split canonical locale wrong export (14.205708ms)
+✔ rejects split canonical locale type-only export (13.239958ms)
+✔ rejects split canonical locale wrong import (12.478208ms)
+✔ rejects split canonical locale type-only import (11.934166ms)
+✔ rejects split canonical locale wrong enum (12.105292ms)
+✔ rejects split canonical locale shadow declaration (12.611042ms)
+✔ rejects split canonical locale leaf order (11.458208ms)
+✔ rejects split canonical locale leaf duplicate (10.621166ms)
+✔ rejects split canonical locale leaf nonexported (12.287375ms)
+✔ requires the real locale leaf even when old source contains declaration comments (11.800917ms)
+✔ rejects normalization without exact equality instead of trusting canonical helper text (11.725583ms)
+✔ rejects helper fake parser instead of trusting canonical helper text (11.529917ms)
+✔ rejects helper nonthrowing reject instead of trusting canonical helper text (10.869417ms)
+✔ rejects wrong helper import instead of trusting canonical helper text (11.247ms)
+✔ rejects unvalidated target instead of trusting canonical helper text (11.31925ms)
+✔ rejects unvalidated source instead of trusting canonical helper text (11.665667ms)
+✔ rejects unvalidated cookie instead of trusting canonical helper text (10.436208ms)
+✔ reports an empty presentation function without throwing or trusting comments (11.950334ms)
+✔ does not accept a canonical enum mentioned only in a comment (10.411875ms)
+✖ rejects presentation leading helper parameter instead of accepting a shadowed call (10.285792ms)
+✖ rejects presentation create source-check parameter instead of accepting a shadowed call (11.417291ms)
+✖ rejects presentation cookie helper parameter instead of accepting a shadowed call (9.791083ms)
+✖ rejects presentation hoisted local source-check function instead of accepting a shadowed call (11.075ms)
+✖ rejects presentation defaulted source parameter instead of accepting a shadowed call (11.178958ms)
+✖ rejects presentation optional target parameter instead of accepting a shadowed call (9.488458ms)
+✖ rejects presentation rest cookie parameter instead of accepting a shadowed call (10.533375ms)
+✖ accepts the reviewed P2-03 interaction contract (10.72825ms)
+✔ requires exact interaction package exports and Base UI pin (10.8175ms)
+✔ requires the dedicated client entrypoint and exact value exports (10.303916ms)
+✔ keeps interaction values out of the root and legacy client entries (11.624917ms)
+✔ confines Base UI to reviewed UI submodules (9.906ms)
+✔ requires the Storefront interaction stylesheet import (10.418208ms)
+✔ requires exactly eight gated interaction routes with matching locales (12.242583ms)
+✔ derives language options from canonical locale contracts (10.16675ms)
+✔ keeps pseudo locale internal and forbids flag-based language UI (10.685209ms)
+✔ requires canonical-validated locale URLs and host-only cookie attributes (10.704375ms)
+✔ allows en-XA only as an internal source and validates public targets (11.158167ms)
+✔ requires visible focus and reduced-motion coverage (10.093916ms)
+✔ requires a design-system focus indicator on focused Toast roots (14.947458ms)
+✔ requires a specificity-safe reduced-motion Drawer transform override (11.495958ms)
+✔ forbids physical direction, z-index, and visible critical-copy truncation (10.6335ms)
+✔ rejects physical border and directional text alignment (11.938583ms)
+✔ requires the Menu highlight rail on logical inline-start (9.7695ms)
+✖ requires stable, bounded menu layout and scroll locking (10.389084ms)
+✖ accepts the exact optional controlled Menu state while preserving its uncontrolled default (12.395666ms)
+✔ rejects a controlled Menu prop that shadows the undefined comparison binding (10.823583ms)
+✔ rejects a module binding shadowing the controlled Menu's undefined guard (10.755375ms)
+✔ rejects a reassigned controlled Menu state binding (10.904291ms)
+✔ rejects a reassigned controlled Menu callback binding (10.864459ms)
+✔ rejects a reassigned controlled Menu loop target binding (10.091542ms)
+✔ rejects a reassigned controlled Menu destructured callback binding (11.365708ms)
+✔ rejects a namespace import shadowing the controlled Menu undefined guard (11.189875ms)
+✔ rejects optional controlled Menu with true initial state (9.9325ms)
+✔ rejects optional controlled Menu with truthy instead of nullish state (11.8905ms)
+✔ rejects optional controlled Menu with wrong internal fallback (9.512666ms)
+✔ rejects optional controlled Menu with wrong external property (9.471916ms)
+✔ rejects optional controlled Menu with defaulted external property (11.48ms)
+✔ rejects optional controlled Menu with shadowed state hook (10.376333ms)
+✔ rejects optional controlled Menu with shadowed external state (11.156791ms)
+✔ rejects optional controlled Menu with shadowed state setter (11.614334ms)
+✔ rejects optional controlled Menu with wrong uncontrolled guard (11.193125ms)
+✔ rejects optional controlled Menu with unconditional internal write (9.971583ms)
+✔ rejects optional controlled Menu with missing external callback (11.193083ms)
+✔ rejects optional controlled Menu with wrong external callback value (14.399542ms)
+✔ rejects optional controlled Menu with wrong live Root state (10.529625ms)
+✔ rejects optional controlled Menu with wrong live Root callback (11.400625ms)
+✔ rejects optional controlled Menu with overriding Root spread (10.258042ms)
+✔ rejects optional controlled Menu with shadowed external callback (9.815292ms)
+✔ rejects optional controlled Menu with dead state declaration bait (11.515875ms)
+✔ binds touch scroll prevention and cancellation to the live handlers (9.599542ms)
+✔ rejects unreachable touch scroll prevention and cancellation (11.192125ms)
+✔ requires the touch scroll effect to return while closed (11.464333ms)
+✔ requires reachable touch listener cleanup (10.246459ms)
+✔ rejects cleanup that exits before releasing the scroll marker (10.530583ms)
+✔ requires a stable touch listener identity (10.621458ms)
+✔ rejects cleanup parameters that can shadow the registered listener (10.465541ms)
+✔ rejects one-shot or abortable touch listeners (9.37775ms)
+✔ requires the scroll lock Set to be shared at module scope (10.743167ms)
+✔ binds the same scroll lock token to add and delete (10.5005ms)
+✔ binds the scroll marker to documentElement (9.796708ms)
+✔ removes the scroll marker only after the last lock (12.077416ms)
+✖ allows local callback renames without weakening the touch guard (10.14525ms)
+✔ requires the Element guard before accessing classList (15.2625ms)
+✔ rejects async Array.some predicates in the touch guard (12.90125ms)
+✔ rejects a shadowed Symbol used for scroll lock identity (17.428458ms)
+✔ rejects a shadowed document used for the scroll marker root (12.204541ms)
+✖ allows unrelated module constants and Sets (12.533041ms)
+✔ requires the interaction lab to set and restore the portal language (11.348709ms)
+✔ requires source-owned interaction icons and rejects functional glyphs (12.700125ms)
+✔ requires excess toasts to be visually excluded (11.692959ms)
+✖ rejects a body scroll container that detaches sticky menu triggers (11.233584ms)
+ℹ tests 92
+ℹ suites 0
+ℹ pass 78
+ℹ fail 14
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1175.431792
+
+✖ failing tests:
+
+test at scripts/check-ui-interactions.test.mjs:390:1
+✖ accepts the actual split locale value and exact presentation helper chain (118.088458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:393:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:609:3
+✖ rejects presentation leading helper parameter instead of accepting a shadowed call (10.285792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:611:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:609:3
+✖ rejects presentation create source-check parameter instead of accepting a shadowed call (11.417291ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:611:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:609:3
+✖ rejects presentation cookie helper parameter instead of accepting a shadowed call (9.791083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:611:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:609:3
+✖ rejects presentation hoisted local source-check function instead of accepting a shadowed call (11.075ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:611:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:609:3
+✖ rejects presentation defaulted source parameter instead of accepting a shadowed call (11.178958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:611:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:609:3
+✖ rejects presentation optional target parameter instead of accepting a shadowed call (9.488458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:611:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:609:3
+✖ rejects presentation rest cookie parameter instead of accepting a shadowed call (10.533375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:611:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:620:1
+✖ accepts the reviewed P2-03 interaction contract (10.72825ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:622:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:940:1
+✖ requires stable, bounded menu layout and scroll locking (10.389084ms)
+  AssertionError [ERR_ASSERTION]: expected error containing "interaction CSS must lock root overflow while a menu is open", received:
+  Menu RadioItemIndicator must keep its layout slot mounted
+  Menu must cancel touchmove outside dismissal while scroll lock is active
+  Menu must use a controlled open state for scroll locking
+  Menu scroll lock must prevent outside touchmove without blocking popup scrolling
+  Menu scroll lock must set and remove data-fs-menu-scroll-lock on documentElement
+  Menu scroll lock must use a shared reference count
+  interaction CSS must lock root and body overflow while a menu is open
+  menu popup max-block-size must use --available-height
+  menu popup must use overflow: auto
+  unchecked Menu indicator must remain visually hidden
+      at includesError (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:310:10)
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:1015:3)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:1052:1
+✖ accepts the exact optional controlled Menu state while preserving its uncontrolled default (12.395666ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:1055:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:1452:1
+✖ allows local callback renames without weakening the touch guard (10.14525ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:1467:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:1537:1
+✖ allows unrelated module constants and Sets (12.533041ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'interaction CSS must lock root and body overflow while a menu is open'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:1548:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'interaction CSS must lock root and body overflow while a menu is open' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-ui-interactions.test.mjs:1665:1
+✖ rejects a body scroll container that detaches sticky menu triggers (11.233584ms)
+  AssertionError [ERR_ASSERTION]: expected error containing "menu scroll lock must not turn body into a scrolling ancestor of sticky triggers", received:
+  
+      at includesError (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:310:10)
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/check-ui-interactions.test.mjs:1673:3)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

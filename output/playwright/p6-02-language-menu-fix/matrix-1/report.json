@@ -1,0 +1,141 @@
+{
+  "status": "FAIL",
+  "browserVersion": "153.0.8010.53",
+  "cases": [
+    {
+      "locale": "en",
+      "mobile": false,
+      "status": "PASS",
+      "openMenu": {
+        "x": 944.2711791992188,
+        "y": 88.16191101074219,
+        "width": 317.17218017578125,
+        "height": 350.87168884277344
+      },
+      "escapeRestoresFocusAndScroll": true,
+      "lookupInDrawer": true,
+      "switchedLocale": "zh-CN",
+      "queryPreserved": true
+    },
+    {
+      "locale": "en",
+      "mobile": true,
+      "status": "PASS",
+      "openMenu": {
+        "x": 25,
+        "y": 452,
+        "width": 320,
+        "height": 354
+      },
+      "escapeRestoresFocusAndScroll": true,
+      "lookupInDrawer": true,
+      "switchedLocale": "zh-CN",
+      "queryPreserved": true
+    },
+    {
+      "locale": "zh-CN",
+      "mobile": false,
+      "status": "PASS",
+      "openMenu": {
+        "x": 947.0599975585938,
+        "y": 85.83999633789062,
+        "width": 313.60003662109375,
+        "height": 346.9200134277344
+      },
+      "escapeRestoresFocusAndScroll": true,
+      "lookupInDrawer": true,
+      "switchedLocale": "th",
+      "queryPreserved": true
+    },
+    {
+      "locale": "zh-CN",
+      "mobile": true,
+      "status": "PASS",
+      "openMenu": {
+        "x": 25,
+        "y": 452,
+        "width": 320,
+        "height": 354
+      },
+      "escapeRestoresFocusAndScroll": true,
+      "lookupInDrawer": true,
+      "switchedLocale": "th",
+      "queryPreserved": true
+    },
+    {
+      "locale": "th",
+      "mobile": false,
+      "status": "PASS",
+      "openMenu": {
+        "x": 944.4213256835938,
+        "y": 88.16206359863281,
+        "width": 317.17242431640625,
+        "height": 350.87196350097656
+      },
+      "escapeRestoresFocusAndScroll": true,
+      "lookupInDrawer": true,
+      "switchedLocale": "vi",
+      "queryPreserved": true
+    },
+    {
+      "locale": "th",
+      "mobile": true,
+      "status": "PASS",
+      "openMenu": {
+        "x": 25,
+        "y": 452,
+        "width": 320,
+        "height": 354
+      },
+      "escapeRestoresFocusAndScroll": true,
+      "lookupInDrawer": true,
+      "switchedLocale": "vi",
+      "queryPreserved": true
+    },
+    {
+      "locale": "vi",
+      "mobile": false,
+      "status": "PASS",
+      "openMenu": {
+        "x": 1113.6568603515625,
+        "y": 88.16129302978516,
+        "width": 317.1712646484375,
+        "height": 350.8706588745117
+      },
+      "escapeRestoresFocusAndScroll": true,
+      "lookupInDrawer": true,
+      "switchedLocale": "ja",
+      "queryPreserved": true
+    },
+    {
+      "locale": "vi",
+      "mobile": true,
+      "status": "PASS",
+      "openMenu": {
+        "x": 25,
+        "y": 452,
+        "width": 320,
+        "height": 354
+      },
+      "escapeRestoresFocusAndScroll": true,
+      "lookupInDrawer": true,
+      "switchedLocale": "ja",
+      "queryPreserved": true
+    },
+    {
+      "locale": "ja",
+      "mobile": false,
+      "status": "FAIL",
+      "openMenu": {
+        "x": 942,
+        "y": 90,
+        "width": 320,
+        "height": 354
+      },
+      "escapeRestoresFocusAndScroll": true,
+      "lookupInDrawer": true,
+      "failure": "Error"
+    }
+  ],
+  "pageErrors": []
+}
