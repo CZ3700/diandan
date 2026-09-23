@@ -176,8 +176,8 @@ async function runChild(output) {
       { binDirectory },
     );
   else
-    await withEphemeralPostgres((database) =>
-      verify(database, s3, { kind: "DOCKER_EPHEMERAL_TEST" }, output),
+    await withEphemeralPostgres((database, metadata) =>
+      verify(database, s3, metadata, output),
     );
 }
 

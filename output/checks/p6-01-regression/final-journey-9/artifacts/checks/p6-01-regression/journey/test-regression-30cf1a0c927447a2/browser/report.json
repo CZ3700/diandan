@@ -1,0 +1,847 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "instance": "test-regression-30cf1a0c927447a2",
+  "stage": "COMPLETE",
+  "cases": [
+    {
+      "locale": "en",
+      "width": 390,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "steps": {
+        "home": true,
+        "artist": true,
+        "gift": true,
+        "cart": true,
+        "checkout": true,
+        "hostedPayment": true,
+        "trustedConfirmation": true,
+        "localizedOrder": true,
+        "localizedMail": true,
+        "secureOrder": true
+      }
+    }
+  ],
+  "localeSwitches": [
+    {
+      "width": 390,
+      "stage": "CHECKOUT",
+      "locale": "zh-CN",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "CHECKOUT",
+      "locale": "th",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "CHECKOUT",
+      "locale": "vi",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "CHECKOUT",
+      "locale": "ja",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "CHECKOUT",
+      "locale": "es",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "CHECKOUT",
+      "locale": "pt",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "CHECKOUT",
+      "locale": "en",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "ORDER",
+      "locale": "zh-CN",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "ORDER",
+      "locale": "th",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "ORDER",
+      "locale": "vi",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "ORDER",
+      "locale": "ja",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "ORDER",
+      "locale": "es",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "ORDER",
+      "locale": "pt",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 390,
+      "stage": "ORDER",
+      "locale": "en",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "CHECKOUT",
+      "locale": "zh-CN",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "CHECKOUT",
+      "locale": "th",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "CHECKOUT",
+      "locale": "vi",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "CHECKOUT",
+      "locale": "ja",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "CHECKOUT",
+      "locale": "es",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "CHECKOUT",
+      "locale": "pt",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "CHECKOUT",
+      "locale": "en",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "ORDER",
+      "locale": "zh-CN",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "ORDER",
+      "locale": "th",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "ORDER",
+      "locale": "vi",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "ORDER",
+      "locale": "ja",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "ORDER",
+      "locale": "es",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "ORDER",
+      "locale": "pt",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    },
+    {
+      "width": 1440,
+      "stage": "ORDER",
+      "locale": "en",
+      "sameEntity": true,
+      "economicStateUnchanged": true
+    }
+  ],
+  "recoveries": [
+    {
+      "outcome": "FAILED",
+      "samePurchase": true,
+      "privateContextPreserved": true,
+      "explicitRetryAvailable": true
+    },
+    {
+      "outcome": "CANCELED",
+      "samePurchase": true,
+      "privateContextPreserved": true,
+      "explicitRetryAvailable": true
+    }
+  ],
+  "screenshots": [
+    "en-390-cart.png",
+    "en-390-checkout.png",
+    "en-390-paid-order.png",
+    "en-1440-cart.png",
+    "en-1440-checkout.png",
+    "en-1440-paid-order.png",
+    "zh-CN-390-cart.png",
+    "zh-CN-390-checkout.png",
+    "zh-CN-390-paid-order.png",
+    "zh-CN-1440-cart.png",
+    "zh-CN-1440-checkout.png",
+    "zh-CN-1440-paid-order.png",
+    "th-390-cart.png",
+    "th-390-checkout.png",
+    "th-390-paid-order.png",
+    "th-1440-cart.png",
+    "th-1440-checkout.png",
+    "th-1440-paid-order.png",
+    "vi-390-cart.png",
+    "vi-390-checkout.png",
+    "vi-390-paid-order.png",
+    "vi-1440-cart.png",
+    "vi-1440-checkout.png",
+    "vi-1440-paid-order.png",
+    "ja-390-cart.png",
+    "ja-390-checkout.png",
+    "ja-390-paid-order.png",
+    "ja-1440-cart.png",
+    "ja-1440-checkout.png",
+    "ja-1440-paid-order.png",
+    "es-390-cart.png",
+    "es-390-checkout.png",
+    "es-390-paid-order.png",
+    "es-1440-cart.png",
+    "es-1440-checkout.png",
+    "es-1440-paid-order.png",
+    "pt-390-cart.png",
+    "pt-390-checkout.png",
+    "pt-390-paid-order.png",
+    "pt-1440-cart.png",
+    "pt-1440-checkout.png",
+    "pt-1440-paid-order.png",
+    "failed-restored-cart.png",
+    "canceled-restored-cart.png"
+  ],
+  "paymentCreates": [
+    {
+      "checkoutSessionId": "28ab78f5-bf9b-433c-8ef0-9e9750e9a3c9",
+      "stage": "en-390-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "e62e5c43-8948-469b-843d-f057207d6cd4",
+      "stage": "en-1440-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "b9bfda10-385e-461a-8347-aeb624fa1b79",
+      "stage": "zh-CN-390-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "0c6e90ed-2168-4e7a-93aa-5064d935a820",
+      "stage": "zh-CN-1440-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "2548e006-d81e-4c13-a399-1e105d7680e0",
+      "stage": "th-390-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "ed8b7d2c-7ed3-463a-a1a4-2a5e56eb9b50",
+      "stage": "th-1440-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "7f3fccd8-523d-48d6-a899-03edd5ee12e7",
+      "stage": "vi-390-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "e6e2261e-826e-407d-babf-ceee5f3ac98b",
+      "stage": "vi-1440-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "2ba36c7e-b1e8-4c4c-a111-43494a41af3f",
+      "stage": "ja-390-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "411e2018-0cb5-4466-a93e-8a0340f3be9b",
+      "stage": "ja-1440-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "0efe6f6d-2f47-4d52-9bfe-4cba52f2078b",
+      "stage": "es-390-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "35f7fc50-3848-4a49-8a76-a3610b773a22",
+      "stage": "es-1440-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "2a90be86-d3ae-4078-bb5c-40020ce23bb8",
+      "stage": "pt-390-JOURNEY"
+    },
+    {
+      "checkoutSessionId": "077af8a0-f41c-42cb-8b3e-5d54d4e950b0",
+      "stage": "pt-1440-JOURNEY"
+    }
+  ],
+  "paymentReads": [
+    {
+      "stage": "en-390-RETURN",
+      "checkoutSessionId": "28ab78f5-bf9b-433c-8ef0-9e9750e9a3c9",
+      "attemptId": "85824437-e510-4281-ab13-7011c4a050a8",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "en-390-RETURN",
+      "checkoutSessionId": "28ab78f5-bf9b-433c-8ef0-9e9750e9a3c9",
+      "attemptId": "85824437-e510-4281-ab13-7011c4a050a8",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "en-1440-RETURN",
+      "checkoutSessionId": "e62e5c43-8948-469b-843d-f057207d6cd4",
+      "attemptId": "757d73a7-ca18-49e2-92a5-3d05a45528a2",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "en-1440-RETURN",
+      "checkoutSessionId": "e62e5c43-8948-469b-843d-f057207d6cd4",
+      "attemptId": "757d73a7-ca18-49e2-92a5-3d05a45528a2",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "zh-CN-390-RETURN",
+      "checkoutSessionId": "b9bfda10-385e-461a-8347-aeb624fa1b79",
+      "attemptId": "5d42c818-849d-4474-8d1b-14a8711193fe",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "zh-CN-390-RETURN",
+      "checkoutSessionId": "b9bfda10-385e-461a-8347-aeb624fa1b79",
+      "attemptId": "5d42c818-849d-4474-8d1b-14a8711193fe",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "zh-CN-1440-RETURN",
+      "checkoutSessionId": "0c6e90ed-2168-4e7a-93aa-5064d935a820",
+      "attemptId": "a8c639d8-2ea3-4d52-9cf5-c517eb1ebb14",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "zh-CN-1440-RETURN",
+      "checkoutSessionId": "0c6e90ed-2168-4e7a-93aa-5064d935a820",
+      "attemptId": "a8c639d8-2ea3-4d52-9cf5-c517eb1ebb14",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "th-390-RETURN",
+      "checkoutSessionId": "2548e006-d81e-4c13-a399-1e105d7680e0",
+      "attemptId": "7a57749f-8e62-491c-a6da-7cf9183fc8e5",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "th-390-RETURN",
+      "checkoutSessionId": "2548e006-d81e-4c13-a399-1e105d7680e0",
+      "attemptId": "7a57749f-8e62-491c-a6da-7cf9183fc8e5",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "th-1440-RETURN",
+      "checkoutSessionId": "ed8b7d2c-7ed3-463a-a1a4-2a5e56eb9b50",
+      "attemptId": "95c8bc67-efbb-48cd-a48f-44ff9789fb37",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "th-1440-RETURN",
+      "checkoutSessionId": "ed8b7d2c-7ed3-463a-a1a4-2a5e56eb9b50",
+      "attemptId": "95c8bc67-efbb-48cd-a48f-44ff9789fb37",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "vi-390-RETURN",
+      "checkoutSessionId": "7f3fccd8-523d-48d6-a899-03edd5ee12e7",
+      "attemptId": "81b47f76-046e-4673-8a42-2efaed0c93f1",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "vi-390-RETURN",
+      "checkoutSessionId": "7f3fccd8-523d-48d6-a899-03edd5ee12e7",
+      "attemptId": "81b47f76-046e-4673-8a42-2efaed0c93f1",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "vi-1440-RETURN",
+      "checkoutSessionId": "e6e2261e-826e-407d-babf-ceee5f3ac98b",
+      "attemptId": "e0e6e5b3-fb3c-46c5-ac7a-238d4e3df964",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "vi-1440-RETURN",
+      "checkoutSessionId": "e6e2261e-826e-407d-babf-ceee5f3ac98b",
+      "attemptId": "e0e6e5b3-fb3c-46c5-ac7a-238d4e3df964",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "ja-390-RETURN",
+      "checkoutSessionId": "2ba36c7e-b1e8-4c4c-a111-43494a41af3f",
+      "attemptId": "7c99e13d-95d7-40b2-9db6-6ace81020548",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "ja-390-RETURN",
+      "checkoutSessionId": "2ba36c7e-b1e8-4c4c-a111-43494a41af3f",
+      "attemptId": "7c99e13d-95d7-40b2-9db6-6ace81020548",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "ja-1440-RETURN",
+      "checkoutSessionId": "411e2018-0cb5-4466-a93e-8a0340f3be9b",
+      "attemptId": "d0e7cea6-d418-4b41-ad28-8d89d775d8ab",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "ja-1440-RETURN",
+      "checkoutSessionId": "411e2018-0cb5-4466-a93e-8a0340f3be9b",
+      "attemptId": "d0e7cea6-d418-4b41-ad28-8d89d775d8ab",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "es-390-RETURN",
+      "checkoutSessionId": "0efe6f6d-2f47-4d52-9bfe-4cba52f2078b",
+      "attemptId": "fe9d7321-990b-4504-8c8f-175f97fc10a2",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "es-390-RETURN",
+      "checkoutSessionId": "0efe6f6d-2f47-4d52-9bfe-4cba52f2078b",
+      "attemptId": "fe9d7321-990b-4504-8c8f-175f97fc10a2",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "es-1440-RETURN",
+      "checkoutSessionId": "35f7fc50-3848-4a49-8a76-a3610b773a22",
+      "attemptId": "baefc336-853c-44ee-a309-757ed2a89986",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "es-1440-RETURN",
+      "checkoutSessionId": "35f7fc50-3848-4a49-8a76-a3610b773a22",
+      "attemptId": "baefc336-853c-44ee-a309-757ed2a89986",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "pt-390-RETURN",
+      "checkoutSessionId": "2a90be86-d3ae-4078-bb5c-40020ce23bb8",
+      "attemptId": "07d9a3e1-a679-4748-9d9a-0d3e023ddd84",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "pt-390-RETURN",
+      "checkoutSessionId": "2a90be86-d3ae-4078-bb5c-40020ce23bb8",
+      "attemptId": "07d9a3e1-a679-4748-9d9a-0d3e023ddd84",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "pt-1440-RETURN",
+      "checkoutSessionId": "077af8a0-f41c-42cb-8b3e-5d54d4e950b0",
+      "attemptId": "54822a43-a561-4931-9e7b-8db9be411ee8",
+      "status": "REQUIRES_ACTION",
+      "recovery": "NONE"
+    },
+    {
+      "stage": "pt-1440-RETURN",
+      "checkoutSessionId": "077af8a0-f41c-42cb-8b3e-5d54d4e950b0",
+      "attemptId": "54822a43-a561-4931-9e7b-8db9be411ee8",
+      "status": "SUCCEEDED",
+      "recovery": "NONE"
+    }
+  ],
+  "paymentBodyEvidenceScope": "RETURN_AND_EXPLICIT_PRE_DEPARTURE_CURRENT",
+  "preDepartureChecks": [
+    {
+      "locale": "en",
+      "width": 390,
+      "samePurchase": true
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "samePurchase": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 390,
+      "samePurchase": true
+    },
+    {
+      "locale": "zh-CN",
+      "width": 1440,
+      "samePurchase": true
+    },
+    {
+      "locale": "th",
+      "width": 390,
+      "samePurchase": true
+    },
+    {
+      "locale": "th",
+      "width": 1440,
+      "samePurchase": true
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "samePurchase": true
+    },
+    {
+      "locale": "vi",
+      "width": 1440,
+      "samePurchase": true
+    },
+    {
+      "locale": "ja",
+      "width": 390,
+      "samePurchase": true
+    },
+    {
+      "locale": "ja",
+      "width": 1440,
+      "samePurchase": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "samePurchase": true
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "samePurchase": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "samePurchase": true
+    },
+    {
+      "locale": "pt",
+      "width": 1440,
+      "samePurchase": true
+    }
+  ],
+  "observations": [],
+  "pageErrors": [],
+  "invalidLocale404": true,
+  "contentSetup": {
+    "status": "PARTIAL_PASS",
+    "assertions": 542,
+    "cases": 14
+  },
+  "giftPublicationAtomicity": {
+    "operations": 1,
+    "headBindings": 1,
+    "variants": 1,
+    "giftRevisions": 1,
+    "expectedMetadata": 1,
+    "metadataRevisions": 1,
+    "priorMediaDrafts": 1,
+    "unexpectedRevisions": 0,
+    "revisions": 2,
+    "manifests": 2,
+    "contentPublications": 2,
+    "priceRevisions": 1,
+    "pricePublications": 1,
+    "priceReceiptBindings": 1,
+    "priceHeads": 1,
+    "priceEvents": 1,
+    "invalidContentEventGroups": 0,
+    "invalidPurgeGroups": 0
+  }
+}

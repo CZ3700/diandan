@@ -1,4 +1,5 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import type { ManagementCenterPreparedMedia } from "@fan-support/contracts";
 import {
   createManagementCenterUseCases,
   createManagementCenterWorker,
@@ -148,13 +149,19 @@ function readyWorkerFixture() {
       failure: { code: "PUBLICATION_FAILED", retryable: true },
     },
   });
+  const media = {
+    prepare: vi.fn(async () => ({
+      outcome: "READY" as const,
+      preparedMedia: null as ManagementCenterPreparedMedia | null,
+    })),
+  };
   const worker = createManagementCenterWorker({
     transactions: f.transactions,
-    media: { prepare: async () => ({ outcome: "READY", preparedMedia: null }) },
+    media,
     createLeaseToken: () => "a".repeat(64),
     leaseSeconds: 60,
   });
-  return { ...f, worker };
+  return { ...f, media, worker };
 }
 function transactionFailure(
   code:
@@ -162,6 +169,7 @@ function transactionFailure(
     | "TRANSACTION_ABORTED"
     | "TRANSACTION_OUTCOME_UNKNOWN"
     | "UNEXPECTED_ADAPTER_FAILURE",
+  retryAfterMs = 250,
 ) {
   const retryable =
     code === "TRANSACTION_ABORTED" || code === "UNEXPECTED_ADAPTER_FAILURE";
@@ -177,16 +185,234 @@ function transactionFailure(
         code === "TRANSACTION_OUTCOME_UNKNOWN"
           ? "RECONCILE_REQUIRED"
           : recovery,
-      ...(retryable ? { retryAfterMs: 250 } : {}),
+      ...(retryable ? { retryAfterMs } : {}),
     },
   });
 }
-describe("management publication rollback outcomes", () => {
+describe("management publication transaction retries", () => {
+  afterEach(() => vi.useRealTimers());
+
+  function rollbackFixture(
+    abortCount: number,
+    error: unknown = transactionFailure("TRANSACTION_ABORTED"),
+  ) {
+    const f = readyWorkerFixture();
+    const state = { publishing: 0, committed: 0, active: false };
+    vi.mocked(
+      f.transactions.runInManagementCenterTransaction,
+    ).mockImplementation(async (work) => {
+      const before = f.publication.publish.mock.calls.length;
+      state.active = true;
+      try {
+        const result = await work({
+          operations: f.operations,
+          publication: f.publication,
+        } as never);
+        if (f.publication.publish.mock.calls.length > before) {
+          state.publishing++;
+          // Model COMMIT abort after the callback has also called complete.
+          if (state.publishing <= abortCount) throw error;
+          if (result === "PUBLISHED") state.committed++;
+        }
+        return result;
+      } finally {
+        state.active = false;
+      }
+    });
+    return { ...f, state };
+  }
+
+  it("waits for the port delay outside the rolled-back transaction, then commits once", async () => {
+    vi.useFakeTimers();
+    const f = rollbackFixture(
+      1,
+      transactionFailure("TRANSACTION_ABORTED", 800),
+    );
+    const pending = f.worker.processNext();
+    await vi.advanceTimersByTimeAsync(0);
+    expect(f.state).toEqual({ publishing: 1, committed: 0, active: false });
+    expect(f.operations.complete).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(799);
+    expect(f.publication.publish).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(await pending).toBe("PUBLISHED");
+    expect(f.state).toEqual({ publishing: 2, committed: 1, active: false });
+    expect(f.operations.loadClaim).toHaveBeenCalledTimes(2);
+    expect(f.operations.claim).toHaveBeenCalledTimes(1);
+    expect(f.media.prepare).toHaveBeenCalledTimes(1);
+    expect(f.operations.fail).not.toHaveBeenCalled();
+    expect(f.publication.publish.mock.calls[1]).toEqual(
+      f.publication.publish.mock.calls[0],
+    );
+  });
+
+  it("allows a third total publication attempt without redoing claim or media", async () => {
+    vi.useFakeTimers();
+    const f = rollbackFixture(2);
+    const pending = f.worker.processNext();
+    await vi.runAllTimersAsync();
+    expect(await pending).toBe("PUBLISHED");
+    expect(f.state.committed).toBe(1);
+    expect(f.publication.publish).toHaveBeenCalledTimes(3);
+    expect(f.operations.loadClaim).toHaveBeenCalledTimes(3);
+    expect(f.operations.complete).toHaveBeenCalledTimes(3);
+    expect(f.operations.claim).toHaveBeenCalledTimes(1);
+    expect(f.media.prepare).toHaveBeenCalledTimes(1);
+    expect(f.operations.fail).not.toHaveBeenCalled();
+  });
+
+  it("retries a statement abort with the same prepared media before completing", async () => {
+    vi.useFakeTimers();
+    const f = rollbackFixture(0);
+    const preparedMedia: ManagementCenterPreparedMedia = {
+      sourceAssetId: id,
+      assets: [
+        {
+          role: "PORTRAIT",
+          assetId: id,
+          metadataRevisionId: id,
+          processingJobId: id,
+        },
+      ],
+    };
+    f.media.prepare.mockResolvedValue({ outcome: "READY", preparedMedia });
+    const originalLoad = f.operations.loadClaim.getMockImplementation()!;
+    f.operations.loadClaim.mockImplementation(async (fence) => ({
+      ...(await originalLoad(fence)),
+      checkpoint: { ...claim.checkpoint, preparedMedia },
+    }));
+    f.publication.publish.mockRejectedValueOnce(
+      transactionFailure("TRANSACTION_ABORTED"),
+    );
+    const pending = f.worker.processNext();
+    await vi.advanceTimersByTimeAsync(0);
+    expect(f.operations.complete).not.toHaveBeenCalled();
+    expect(f.state.active).toBe(false);
+    await vi.runAllTimersAsync();
+    expect(await pending).toBe("PUBLISHED");
+    expect(f.operations.loadClaim).toHaveBeenCalledTimes(2);
+    expect(f.publication.publish).toHaveBeenCalledTimes(2);
+    expect(f.operations.complete).toHaveBeenCalledTimes(1);
+    expect(f.state.committed).toBe(1);
+    expect(f.media.prepare).toHaveBeenCalledTimes(1);
+    expect(f.publication.publish.mock.calls[1]?.[0]).toMatchObject({
+      preparedMedia,
+    });
+    expect(f.publication.publish.mock.calls[1]).toEqual(
+      f.publication.publish.mock.calls[0],
+    );
+  });
+
+  it("records one fenced failure after three aborts, without a fourth publication", async () => {
+    vi.useFakeTimers();
+    const f = rollbackFixture(3);
+    const pending = f.worker.processNext();
+    await vi.runAllTimersAsync();
+    expect(await pending).toBe("FAILED");
+    expect(f.state.committed).toBe(0);
+    expect(f.publication.publish).toHaveBeenCalledTimes(3);
+    expect(f.operations.loadClaim).toHaveBeenCalledTimes(3);
+    expect(f.operations.claim).toHaveBeenCalledTimes(1);
+    expect(f.media.prepare).toHaveBeenCalledTimes(1);
+    expect(f.operations.fail).toHaveBeenCalledExactlyOnceWith({
+      operationId: id,
+      leaseTokenDigest: f.operations.claim.mock.calls[0]![0].leaseTokenDigest,
+      code: "PUBLICATION_FAILED",
+      retryable: true,
+    });
+  });
+
+  it.each(["authority-or-lease", "intent", "fence", "operation"])(
+    "stops if the next transaction reload rejects %s",
+    async (invalid) => {
+      vi.useFakeTimers();
+      const f = rollbackFixture(1);
+      const originalLoad = f.operations.loadClaim.getMockImplementation()!;
+      f.operations.loadClaim
+        .mockImplementationOnce(originalLoad)
+        .mockImplementationOnce(async (fence) => {
+          const current = await originalLoad(fence);
+          if (invalid === "authority-or-lease")
+            return {
+              schemaVersion: 1,
+              outcome: "FAILURE",
+              code: "NEEDS_AUTHORIZATION",
+            };
+          if (invalid === "intent")
+            return { ...current, intentHash: "c".repeat(64) };
+          if (invalid === "fence")
+            return { ...current, leaseTokenDigest: "c".repeat(64) };
+          return {
+            ...current,
+            operation: {
+              ...current.operation,
+              operationId: "00000000-0000-4000-8000-000000000002",
+            },
+          };
+        });
+      const pending = f.worker.processNext();
+      await vi.runAllTimersAsync();
+      expect(await pending).toBe("UNAVAILABLE");
+      expect(f.operations.loadClaim).toHaveBeenCalledTimes(2);
+      expect(f.publication.publish).toHaveBeenCalledTimes(1);
+      expect(f.state.committed).toBe(0);
+      expect(f.operations.fail).not.toHaveBeenCalled();
+      expect(f.operations.claim).toHaveBeenCalledTimes(1);
+      expect(f.media.prepare).toHaveBeenCalledTimes(1);
+    },
+  );
+
   it.each([
-    "INTEGRITY_VIOLATION",
-    "TRANSACTION_ABORTED",
-    "UNEXPECTED_ADAPTER_FAILURE",
-  ] as const)(
+    [
+      "unknown commit",
+      transactionFailure("TRANSACTION_OUTCOME_UNKNOWN"),
+      "UNAVAILABLE",
+    ],
+    ["integrity", transactionFailure("INTEGRITY_VIOLATION"), "FAILED"],
+    [
+      "unexpected adapter",
+      transactionFailure("UNEXPECTED_ADAPTER_FAILURE"),
+      "FAILED",
+    ],
+    [
+      "untyped abort",
+      { code: "TRANSACTION_ABORTED", recovery: "RETRY_SAME_COMMAND" },
+      "UNAVAILABLE",
+    ],
+  ])("never replays %s", async (_label, error, expected) => {
+    vi.useFakeTimers();
+    const f = rollbackFixture(3, error);
+    expect(await f.worker.processNext()).toBe(expected);
+    expect(f.publication.publish).toHaveBeenCalledTimes(1);
+    expect(f.operations.loadClaim).toHaveBeenCalledTimes(1);
+    expect(f.media.prepare).toHaveBeenCalledTimes(1);
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it.each(["claim", "media"])(
+    "does not retry an abort in %s",
+    async (phase) => {
+      vi.useFakeTimers();
+      const f = readyWorkerFixture();
+      if (phase === "claim")
+        f.operations.claim.mockRejectedValueOnce(
+          transactionFailure("TRANSACTION_ABORTED"),
+        );
+      else
+        f.media.prepare.mockRejectedValueOnce(
+          transactionFailure("TRANSACTION_ABORTED"),
+        );
+      expect(await f.worker.processNext()).toBe("UNAVAILABLE");
+      expect(f.operations.claim).toHaveBeenCalledTimes(1);
+      expect(f.media.prepare).toHaveBeenCalledTimes(phase === "claim" ? 0 : 1);
+      expect(f.publication.publish).not.toHaveBeenCalled();
+      expect(f.operations.fail).not.toHaveBeenCalled();
+      expect(vi.getTimerCount()).toBe(0);
+    },
+  );
+});
+describe("management publication rollback outcomes", () => {
+  it.each(["INTEGRITY_VIOLATION", "UNEXPECTED_ADAPTER_FAILURE"] as const)(
     "records a retryable failure in a new fenced transaction only after confirmed %s",
     async (code) => {
       const f = readyWorkerFixture();
@@ -269,7 +495,7 @@ describe("management publication rollback outcomes", () => {
           operations: f.operations,
           publication: f.publication,
         } as never);
-        if (ordinal === 2) throw transactionFailure("TRANSACTION_ABORTED");
+        if (ordinal === 2) throw transactionFailure("INTEGRITY_VIOLATION");
         if (ordinal === 3 && mode === "unknown-failure-commit")
           throw transactionFailure("TRANSACTION_OUTCOME_UNKNOWN");
         return result;

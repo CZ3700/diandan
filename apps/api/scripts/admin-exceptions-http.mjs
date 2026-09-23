@@ -243,11 +243,8 @@ try {
         { binDirectory: nativeBin },
       );
     else
-      await withEphemeralPostgres((database) =>
-        run(database, s3, process.argv[2].endsWith("-ui"), {
-          kind: "DOCKER_EPHEMERAL_TEST",
-          configuredBy: "withEphemeralPostgres",
-        }),
+      await withEphemeralPostgres((database, metadata) =>
+        run(database, s3, process.argv[2].endsWith("-ui"), metadata),
       );
   } else
     await withEphemeralS3((context) =>

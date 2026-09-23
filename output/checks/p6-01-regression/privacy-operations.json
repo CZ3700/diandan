@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "scope": "OPERATIONS_9_COMPLETE_FROZEN_ARTIFACTS_AND_OUTER_TEXT_ONLY",
+  "runId": "479c6a33-16d3-4344-b173-5ebf50d278e3",
+  "sourceHash": "642a55a818680d763f41ce5d87b5386092591ea5341c92ce4e88c8248bcb8b72",
+  "sourceStatus": "PASS",
+  "suites": [
+    {
+      "id": "operations",
+      "status": "PASS"
+    }
+  ],
+  "archiveFiles": 304,
+  "archiveExtensions": {
+    ".png": 278,
+    ".json": 26
+  },
+  "archiveTextFiles": 26,
+  "outerTextFiles": 13,
+  "scannedTextBytes": 2189622,
+  "patternDefinitions": {
+    "JOURNEY_MESSAGE": "PRIVATE_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+    "JOURNEY_DISPLAY_NAME": "\\bFan [0-9a-f]{8}\\b",
+    "JOURNEY_EMAIL": "journey-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}@example\\.test",
+    "CART_INITIAL_MESSAGE": "TEST_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}_",
+    "CART_EDITED_MESSAGE": "EDIT_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}_",
+    "CART_DISPLAY_NAME": "\\bNAME_[0-9a-f]{8}\\b",
+    "LEGACY_MESSAGE": "private-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+    "LEGACY_DISPLAY_NAME": "\\bname-[0-9a-f-]{8,13}\\b",
+    "LEGACY_CONTACT": "test-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}@example\\.invalid",
+    "ORDER_ACCESS_LINK": "/order-access#token=[A-Za-z0-9_-]{43}&order=[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+    "TOKEN_URL": "(?:https?://[^\\s<>\"\\x27]+)?/(?:[^\\s<>\"\\x27]*?)[#?]token=[A-Za-z0-9_-]{32,}",
+    "AUTHORIZATION_BEARER": "Bearer [A-Za-z0-9_.~-]{32,}",
+    "ADMIN_OPERATIONAL_NOTE": "Synthetic operational note [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+  },
+  "findings": [],
+  "sensitiveFieldInventory": [],
+  "jsonParseFailures": [],
+  "textInventory": [
+    {
+      "path": "artifacts/checks/p5-01-admin-access/integration-2026-09-23T16-12-28.090Z/browser-access/results.json",
+      "bytes": 312779,
+      "sha256": "080b958ac71d23261fe5873940d2ac0e1f4db133abf4dd02ec741c704dc0a25e"
+    },
+    {
+      "path": "artifacts/checks/p5-01-admin-access/integration-2026-09-23T16-12-28.090Z/browser.json",
+      "bytes": 312779,
+      "sha256": "080b958ac71d23261fe5873940d2ac0e1f4db133abf4dd02ec741c704dc0a25e"
+    },
+    {
+      "path": "artifacts/checks/p5-01-admin-access/integration-2026-09-23T16-12-28.090Z/cleanup.json",
+      "bytes": 418,
+      "sha256": "ecbb786f74ce675427b2053a53ac133acb516e2fa29b215660bfa718641f80c2"
+    },
+    {
+      "path": "artifacts/checks/p5-01-admin-access/integration-2026-09-23T16-12-28.090Z/validation.json",
+      "bytes": 82130,
+      "sha256": "32cf465ea16bd5ae8fb2461ed6d7a300919e817f9440044af00391c66f918b53"
+    },
+    {
+      "path": "artifacts/checks/p5-02-order-operations/integration-2026-09-23T16-13-05.717Z/browser-orders/results.json",
+      "bytes": 60119,
+      "sha256": "d38780c4fbac16a1cadce05fb52b5d63aed29be364849dd8b8af7dbf16203a2e"
+    },
+    {
+      "path": "artifacts/checks/p5-02-order-operations/integration-2026-09-23T16-13-05.717Z/browser.json",
+      "bytes": 60119,
+      "sha256": "d38780c4fbac16a1cadce05fb52b5d63aed29be364849dd8b8af7dbf16203a2e"
+    },
+    {
+      "path": "artifacts/checks/p5-02-order-operations/integration-2026-09-23T16-13-05.717Z/run-result.json",
+      "bytes": 133,
+      "sha256": "2792c3ec7966b0cd39ce8345c5357e91fddf671b5e188d7b2f2ec0148c8ffc8b"
+    },
+    {
+      "path": "artifacts/checks/p5-02-order-operations/integration-2026-09-23T16-13-05.717Z/scope.json",
+      "bytes": 274,
+      "sha256": "d8ba29a4db07cbbaa190bd53bac04ea11a191d7ffd8f6119d325bdd9e7ca7d98"
+    },
+    {
+      "path": "artifacts/checks/p5-03-finance/integration-2026-09-23T16-14-19.560Z/browser-finance/results.json",
+      "bytes": 83848,
+      "sha256": "a941cc9a5b5329b8c52de4a0799bcb74afe6ce4661729b476a81f852e1e95b91"
+    },
+    {
+      "path": "artifacts/checks/p5-03-finance/integration-2026-09-23T16-14-19.560Z/browser.json",
+      "bytes": 83848,
+      "sha256": "a941cc9a5b5329b8c52de4a0799bcb74afe6ce4661729b476a81f852e1e95b91"
+    },
+    {
+      "path": "artifacts/checks/p5-03-finance/integration-2026-09-23T16-14-19.560Z/postgres-environment.json",
+      "bytes": 103,
+      "sha256": "4d9daeb48ababa7da313afcdd25345409c5168c5cd26ca321794f5dc7ed098ec"
+    },
+    {
+      "path": "artifacts/checks/p5-03-finance/integration-2026-09-23T16-14-19.560Z/protocol.json",
+      "bytes": 347,
+      "sha256": "e528a000bdc74ff493bdb5c1e49267e3fdfb041bd50e82979b4f3bf9c56fa8bc"
+    },
+    {
+      "path": "artifacts/checks/p5-03-finance/integration-2026-09-23T16-14-19.560Z/run-result.json",
+      "bytes": 194,
+      "sha256": "3ec330fe63d9ac5a40a05507385c6dabc6df25688945cbee8b68312e10de0d2a"
+    },
+    {
+      "path": "artifacts/checks/p5-03-finance/integration-2026-09-23T16-14-19.560Z/scope.json",
+      "bytes": 402,
+      "sha256": "1008c82ccd29dcd360d4374cc40e05df9a6cd7cda7954ec6cc0fad3b6f077c53"
+    },
+    {
+      "path": "artifacts/checks/p5-05-payment-configuration/integration-2026-09-23T16-16-23.973Z/browser-payment-configuration/results.json",
+      "bytes": 97125,
+      "sha256": "f6b763f8388af71a2c40847009b3dadfe12a17019a84b1c217016e0a8e54031b"
+    },
+    {
+      "path": "artifacts/checks/p5-05-payment-configuration/integration-2026-09-23T16-16-23.973Z/browser.json",
+      "bytes": 97125,
+      "sha256": "f6b763f8388af71a2c40847009b3dadfe12a17019a84b1c217016e0a8e54031b"
+    },
+    {
+      "path": "artifacts/checks/p5-05-payment-configuration/integration-2026-09-23T16-16-23.973Z/protocol.json",
+      "bytes": 4322,
+      "sha256": "a34896169b38f362b4396957d6b475d1ea32346c14a44ff330875ceaaacc1034"
+    },
+    {
+      "path": "artifacts/checks/p5-05-payment-configuration/integration-2026-09-23T16-16-23.973Z/run-result.json",
+      "bytes": 205,
+      "sha256": "6e9beb5d40e9d3f239aa66bae7e491c3f1f4821a943c1be8c5b8864ba224c2f2"
+    },
+    {
+      "path": "artifacts/checks/p5-05-payment-configuration/integration-2026-09-23T16-16-23.973Z/scope.json",
+      "bytes": 408,
+      "sha256": "c376f4d3ae750b11229044dbf7547908d369beafb88f230cd46a4eba3738a89b"
+    },
+    {
+      "path": "artifacts/checks/p5-06-exception-operations/integration-2026-09-23T16-18-56.328Z/browser-exceptions/report.json",
+      "bytes": 157030,
+      "sha256": "5414e96a2c6ae341dee1e626fe6a931b568e9f5eddb895749c5e980290390486"
+    },
+    {
+      "path": "artifacts/checks/p5-06-exception-operations/integration-2026-09-23T16-18-56.328Z/browser.json",
+      "bytes": 157030,
+      "sha256": "5414e96a2c6ae341dee1e626fe6a931b568e9f5eddb895749c5e980290390486"
+    },
+    {
+      "path": "artifacts/checks/p5-06-exception-operations/integration-2026-09-23T16-18-56.328Z/postgres-environment.json",
+      "bytes": 103,
+      "sha256": "4d9daeb48ababa7da313afcdd25345409c5168c5cd26ca321794f5dc7ed098ec"
+    },
+    {
+      "path": "artifacts/checks/p5-06-exception-operations/integration-2026-09-23T16-18-56.328Z/protocol.json",
+      "bytes": 1291,
+      "sha256": "088f9941594757b90b150290791fc966fba20374ee56cbcc81716e08f5a4d2d2"
+    },
+    {
+      "path": "artifacts/checks/p5-06-exception-operations/integration-2026-09-23T16-18-56.328Z/run-result.json",
+      "bytes": 294,
+      "sha256": "9fd84f2c8005666920b6364bec86eb5a601aa7ca678c4de7d6a254b4c31a46b0"
+    },
+    {
+      "path": "artifacts/checks/p5-06-exception-operations/integration-2026-09-23T16-18-56.328Z/scope.json",
+      "bytes": 887,
+      "sha256": "b7ef2d12315592482ff99d73db6bff25eed1f6759df129aacc38e4bc7a53d02a"
+    },
+    {
+      "path": "artifacts/checks/p5-06-exception-operations/integration-2026-09-23T16-18-56.328Z/storage-cases.json",
+      "bytes": 301,
+      "sha256": "9ff224558ab36cc9324267cf5198d92631a65d9b41957d9644e3bb54b7f5adba"
+    },
+    {
+      "path": "commit-isolated-source.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "frozen-install.txt",
+      "bytes": 1239,
+      "sha256": "db0258f407278c5bed025ecc48e4d8a71b2fcba9ccb9b6fb4517f2ebd806540f"
+    },
+    {
+      "path": "index-isolated-source.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "initialize-isolated-index.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "operations-exception-replay.txt",
+      "bytes": 73581,
+      "sha256": "1c35ae1b2d67f34b0a9d61a31afc5f0089be48645b7f338a31e41dde110ac2a8"
+    },
+    {
+      "path": "operations-login-permissions.txt",
+      "bytes": 1874,
+      "sha256": "b0f264ae0b65cd7dae61f9119beaa80c78dee800ab07a31d5f972e903b6aa080"
+    },
+    {
+      "path": "operations-order-operations.txt",
+      "bytes": 20477,
+      "sha256": "6afeae3aa8b12a6411e29c814bc17b5662f736c5a48bae12e9a0b74088b9e9fe"
+    },
+    {
+      "path": "operations-payment-configuration.txt",
+      "bytes": 11607,
+      "sha256": "b5af713e756fdbec958577bfeddb24e38787b738de06fb11f1c4792e82fc1bba"
+    },
+    {
+      "path": "operations-refunds-disputes.txt",
+      "bytes": 35616,
+      "sha256": "9aaa4cde55a14cdd11c7d363ebab25b14267f97ace52a67a21c7fde4dbaf7c4e"
+    },
+    {
+      "path": "plan.json",
+      "bytes": 3878,
+      "sha256": "ca93f4f202d2ea44b3639f7c871caab2db66c582c37bfe5fab1df38271063b79"
+    },
+    {
+      "path": "report.json",
+      "bytes": 7647,
+      "sha256": "6c586267d7baf0b01e7eb7309183534624d3795e86175b0350e0aeab98b748be"
+    },
+    {
+      "path": "source.json",
+      "bytes": 514960,
+      "sha256": "3327fa71f0ce36387f31c1a2552e24adba73ddc73dc4e9e2f65fbd81b29961a4"
+    },
+    {
+      "path": "steps.json",
+      "bytes": 5129,
+      "sha256": "f7944fc66d427cf770774088094bb8bf8e834a24cdea409915204c5f7bd5b18b"
+    }
+  ],
+  "imagesReviewed": [
+    {
+      "path": "artifacts/checks/p5-02-order-operations/integration-2026-09-23T16-13-05.717Z/browser-orders/en-1440-notes-closed.png",
+      "sha256": "56c111467550c43b073f99d9687b4bcd43097968f144de9f90ef8ca41098ac25",
+      "method": "DIRECT_VISUAL_VIEW_IMAGE",
+      "finding": "Private message and note panels are closed. Only note count, review status and open buttons remain; no private fan name/message/note/email/credential is visible."
+    },
+    {
+      "path": "artifacts/checks/p5-02-order-operations/integration-2026-09-23T16-13-05.717Z/browser-orders/en-1440-delivered.png",
+      "sha256": "a08aab75580b23f8c0f32c1efaa1edb98b21c76761c54d2270cd499da5d0e5a3",
+      "method": "DIRECT_VISUAL_VIEW_IMAGE",
+      "finding": "Delivery state after private message approval; reviewed image contains public fixture order and gift/artist information, no private content. No inference is made about content not present in the captured image."
+    }
+  ],
+  "limitations": [
+    "Pattern scan is not generic PII detection.",
+    "Archive extension allowlist is not redaction; each producer is responsible.",
+    "Only two specified images received direct visual review; 276 other images were not exhaustively inspected.",
+    "No journey file was scanned while that run was in progress.",
+    "No source or original evidence changed; no browser or service started."
+  ],
+  "status": "PASS_BOUNDED_PRIVACY_REVIEW",
+  "producerCaptureSources": [
+    {
+      "path": "apps/api/scripts/admin-orders-browser.mjs",
+      "lines": "307-339",
+      "behavior": "Before screenshot: asserts no private panel and no registered private value in body text; does not persist open private-panel screenshots."
+    },
+    {
+      "path": "apps/api/scripts/admin-finance-browser.mjs",
+      "lines": "142-168",
+      "behavior": "Before screenshot: keeps original outstanding-read zero gate, asserts no private panel and no private value in URL or body text."
+    }
+  ]
+}

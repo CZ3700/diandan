@@ -1,0 +1,58 @@
+{
+  "scope": "READ_ONLY_EXISTING_EVIDENCE_VALIDATION",
+  "status": "PASS",
+  "cases": 14,
+  "stepsPerCase": 10,
+  "localeSwitches": 28,
+  "recoveries": 2,
+  "screenshotsPresent": 44,
+  "zeroPageErrors": true,
+  "invalidLocale404": true,
+  "sourceScope": "9 relevant application and journey files byte-identical in root, diagnostic workspace and final-6 source manifest",
+  "freshRun40001": 0,
+  "syntheticServerAbort": 1,
+  "syntheticNaturalConcurrencyProof": false,
+  "additionalNaturalPriceSelect40001": true,
+  "bothOwnedInstancesStoppedAndReset": true,
+  "fullGate": "PENDING",
+  "sameCheckoutAndAttemptForReturnReads": true,
+  "sourceHashFinal6": "87f797d19aa12d578a99c487dad2f7640740c58f9547d7d93d1fc0b586ab131c",
+  "selectedFiles": [
+    {
+      "path": "packages/application/src/management-center.ts",
+      "sha256": "5d013bb31c73b38c475b57f831f5e123e43ad74779e86efae72b6525b5e80274"
+    },
+    {
+      "path": "packages/application/src/management-center.test.ts",
+      "sha256": "3432463d83a87d1a64b5b691ef593f6635f1440eabcade7057dd37112d365959"
+    },
+    {
+      "path": "packages/application/src/management-media.ts",
+      "sha256": "9e42378d629edf03655dc855f825b3ace1575f6170881459dbe705da7988604a"
+    },
+    {
+      "path": "packages/application/src/management-media.test.ts",
+      "sha256": "73e26fdd42b4c46fee5b6e9cd8efc29f5c18fb18741435d75aced4e6a583d98b"
+    },
+    {
+      "path": "packages/application/src/management-transaction-retry.ts",
+      "sha256": "eeb7dec0dd0073d555f893ea4a41d62d2a6fccffdc5f614c48d8683c5efd9c31"
+    },
+    {
+      "path": "apps/api/scripts/regression-journey-publication-state.mjs",
+      "sha256": "d193c50062560d16aad04f39d8a80d0eb0ee39cd9352b5ab7f911c9daafc673c"
+    },
+    {
+      "path": "apps/api/scripts/regression-journey-publication-state.test.mjs",
+      "sha256": "27ca89cceaeb06633f7432ab01871aabf7d92c6b27f952d7add48cf5d96f2cfa"
+    },
+    {
+      "path": "apps/api/scripts/regression-journey-state.mjs",
+      "sha256": "f0cd2477ed4f7c27cf4d9d73206b12c680023fc4a783ffdeb1acee6fe379649b"
+    },
+    {
+      "path": "apps/api/scripts/regression-journey.mjs",
+      "sha256": "4a0d65a0447b37ed976be3de016c2bed0fd6d0c55afc692d70bc4933118cd91b"
+    }
+  ]
+}

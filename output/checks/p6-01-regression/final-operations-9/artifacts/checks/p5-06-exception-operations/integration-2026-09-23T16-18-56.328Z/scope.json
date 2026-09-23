@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "actualPostgres": true,
+  "postgresEnvironment": {
+    "kind": "NATIVE_ISOLATED_TEST",
+    "configuredBy": "POSTGRES_TEST_BIN",
+    "serverVersion": "18.6"
+  },
+  "actualTlsOidc": true,
+  "actualTlsS3": true,
+  "actualPgBossSixAttemptFailure": true,
+  "faultInjectionTargetsOnly": true,
+  "actualWorker": true,
+  "recoveryFailureMode": "SIMULATED_POST_COMMIT_INTERRUPTION",
+  "actualDatabaseLeaseExpiry": true,
+  "actualNewWorkerInstance": true,
+  "workerProcessKilled": false,
+  "independentPersistentTestPsp": true,
+  "independentPersistentTestMail": true,
+  "actualPspSandbox": false,
+  "realMoney": false,
+  "realEmail": false,
+  "browser": true,
+  "browserReadonlyScope": "WEBHOOK_MUTATION_SEVEN_LOCALES",
+  "setupAssertions": 5763,
+  "protocolAssertions": 369,
+  "storageAssertions": 27,
+  "browserAssertions": 812,
+  "additionalFixtureAssertions": 175
+}

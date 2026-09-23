@@ -6,9 +6,14 @@ import path from "node:path";
 import { preserveManagementNextDeclarations } from "./management-center-runtime-config.mjs";
 import { createLocalExperienceFetch } from "./local-experience-services-common.mjs";
 import { localStorefrontIdentity } from "./local-experience-web-config.mjs";
+import {
+  regressionWebMode,
+  startRegressionStorefront,
+} from "./regression-journey-web.mjs";
 
 export async function startLocalWeb(context) {
   const { config, workspaceRoot, own, progress } = context;
+  const mode = regressionWebMode(config, process.env);
   await preserveManagementNextDeclarations(workspaceRoot, own);
   const fetcher = await createLocalExperienceFetch({
     origins: Object.values(config.origins),
@@ -42,6 +47,14 @@ export async function startLocalWeb(context) {
       NEXT_TELEMETRY_DISABLED: "1",
       NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --import=${new URL("./local-experience-dns.mjs", import.meta.url).href}`,
     });
+    if (app === "storefront" && mode === "production") {
+      await startRegressionStorefront({
+        ...context,
+        environment: env,
+        fetcher,
+      });
+      continue;
+    }
     const child = spawn(
       process.execPath,
       [

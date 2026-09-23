@@ -3,7 +3,6 @@ import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { fileURLToPath, URL } from "node:url";
 import path from "node:path";
-import { withEphemeralPostgres } from "@fan-support/persistence-postgres";
 import {
   withEphemeralS3,
   runS3IntegrationChild,
@@ -15,7 +14,7 @@ import { createOrderPaymentProtocolClient } from "./order-payment-client.mjs";
 import { createAdminFinanceFixture } from "./admin-finance-fixture.mjs";
 import { verifyAdminFinanceProtocol } from "./admin-finance-protocol.mjs";
 import { observeFinancePostgres } from "./admin-finance-diagnostics.mjs";
-import { withNativeFinancePostgres } from "./admin-finance-native-postgres.mjs";
+import { withFinanceTestDatabase } from "./admin-finance-test-database.mjs";
 const workspaceRoot = fileURLToPath(new URL("../../../", import.meta.url));
 const safeError = (error) => ({
   name: /^[A-Za-z]{1,64}$/u.test(error?.name ?? "") ? error.name : null,
@@ -154,25 +153,9 @@ try {
       await import("./admin-access-test-dns.mjs");
     const s3 = readEphemeralS3Config();
     await prepareEphemeralS3Buckets(s3);
-    const nativeBin = process.env.ADMIN_FINANCE_TEST_POSTGRES_BIN;
-    if (nativeBin !== undefined) {
-      await withNativeFinancePostgres(
-        (database, metadata) =>
-          run(database, s3, process.argv[2].endsWith("-ui"), {
-            kind: "NATIVE_ISOLATED_TEST",
-            serverVersion: metadata.serverVersion,
-            configuredBy: "ADMIN_FINANCE_TEST_POSTGRES_BIN",
-          }),
-        { binDirectory: nativeBin },
-      );
-    } else {
-      await withEphemeralPostgres((database) =>
-        run(database, s3, process.argv[2].endsWith("-ui"), {
-          kind: "DOCKER_EPHEMERAL_TEST",
-          configuredBy: "withEphemeralPostgres",
-        }),
-      );
-    }
+    await withFinanceTestDatabase((database, metadata) =>
+      run(database, s3, process.argv[2].endsWith("-ui"), metadata),
+    );
   } else
     await withEphemeralS3((context) =>
       runS3IntegrationChild({

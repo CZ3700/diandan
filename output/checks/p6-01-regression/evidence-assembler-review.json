@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-23T16:18:03.662937+00:00",
+  "reviewer": "/root/regression_readiness",
+  "status": "ACCEPT_EVIDENCE_ASSEMBLER_ONLY",
+  "assembler": {
+    "path": "output/checks/p6-01-regression/assemble-final-evidence.mjs",
+    "sha256": "85a9f7b83045233825d1827bb2846db8475372cde208ee13eef107cbdf3a5ed6",
+    "executedByReviewer": false
+  },
+  "sourceHash": "642a55a818680d763f41ce5d87b5386092591ea5341c92ce4e88c8248bcb8b72",
+  "findings": [],
+  "verifiedSourceLogic": [
+    "re-enumerates current and retained snapshot inventories",
+    "compares full executable file paths, SHA-256 and modes",
+    "rejects new/deleted/changed executable inputs",
+    "exact five suites in canonical order and 17 canonical commands",
+    "requires selected suite PASS and subprocess exit0/no signal/no launch failure",
+    "preserves final1 through final8 FAIL and binds report hashes",
+    "exclusive new output writes",
+    "explicit SAME_SOURCE_CROSS_RUN_LOCAL_COVERAGE with unchanged external limitations"
+  ],
+  "limitations": [
+    "Not a successful single invocation",
+    "Semantic review of underlying case reports remains required",
+    "Assembler has not been executed by this review",
+    "Operations and journey complete evidence not yet consumed",
+    "Original intermittent financial read-drain and Docker time failure causes remain UNKNOWN"
+  ],
+  "fullGateAccepted": false,
+  "sourceEdits": false,
+  "servicesStarted": false
+}

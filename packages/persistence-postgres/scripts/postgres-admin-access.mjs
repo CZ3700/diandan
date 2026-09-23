@@ -2,6 +2,7 @@
 import assert from "node:assert/strict";
 import { randomUUID, randomBytes } from "node:crypto";
 import { Buffer } from "node:buffer";
+import { performance } from "node:perf_hooks";
 import { setTimeout as delay } from "node:timers/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -20,6 +21,7 @@ const issuer = "https://identity.example.test";
 let checks = 0;
 let stage = "schema";
 let check = "none";
+let clockDiagnostic;
 function equal(actual, expected, label) {
   check = label;
   assert.ok(JSON.stringify(actual) === JSON.stringify(expected), label);
@@ -81,6 +83,25 @@ await withEphemeralPostgres(async (config) => {
         "SELECT to_char(clock_timestamp() AT TIME ZONE 'UTC','YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"') AS now",
       )
     ).rows[0].now;
+  async function waitForDatabaseExpiry(sql, values) {
+    const started = performance.now();
+    while (performance.now() - started < 60_000) {
+      const row = (await client.query(sql, values)).rows[0];
+      assert.ok(
+        row?.seconds != null && Number.isFinite(Number(row.seconds)),
+        "expiry fixture has a database deadline",
+      );
+      const remainingMilliseconds = Number(row.seconds) * 1000;
+      if (remainingMilliseconds <= 0)
+        return {
+          databaseRemainingMilliseconds: remainingMilliseconds,
+          hostElapsedMilliseconds: performance.now() - started,
+        };
+      // A host timer is only a polling interval, never proof that PG expired.
+      await delay(Math.min(1000, Math.max(25, remainingMilliseconds)));
+    }
+    assert.fail("database expiry was not observed within the bounded wait");
+  }
   async function challenge(ttl = 600) {
     const c = createCommand(ttl);
     equal((await run("create", c)).kind, "LOGIN_CREATED", "create challenge");
@@ -300,21 +321,26 @@ await withEphemeralPostgres(async (config) => {
       await delay(10);
     }
     ok(revokeWaiting, "logout-all is observably waiting on session row lock");
-    const revokeWait = (
-      await client.query(
-        "SELECT greatest(0,extract(epoch from expires_at-clock_timestamp())+0.03) AS seconds FROM admin_sessions WHERE id=$1",
-        [blockedSession.sessionId],
-      )
-    ).rows[0].seconds;
-    await delay(Number(revokeWait) * 1000);
+    const revokeWait = await waitForDatabaseExpiry(
+      "SELECT extract(epoch from expires_at-clock_timestamp())+0.03 AS seconds FROM admin_sessions WHERE id=$1",
+      [blockedSession.sessionId],
+    );
     await blocker.query("COMMIT");
     await blocker.end();
     blocker = undefined;
+    const blockedRevokeResult = await blockedRevoke;
+    clockDiagnostic = {
+      scenario: "REVOKE",
+      ...revokeWait,
+      code: blockedRevokeResult.code ?? null,
+      kind: blockedRevokeResult.kind ?? null,
+    };
     equal(
-      (await blockedRevoke).code,
+      blockedRevokeResult.code,
       "UNAUTHENTICATED",
       "logout-all waiting for row lock rechecks database expiry",
     );
+    clockDiagnostic = undefined;
     equal(
       (
         await client.query(
@@ -786,21 +812,26 @@ await withEphemeralPostgres(async (config) => {
       await delay(20);
     }
     ok(waiting, "claim is observably waiting on the held challenge row");
-    const wait = (
-      await client.query(
-        "SELECT greatest(0,extract(epoch from max(expires_at)-clock_timestamp())+0.03) AS seconds FROM admin_login_challenges WHERE id=ANY($1::uuid[])",
-        [[expiredClaimed.c.challengeId, expiredReady.challengeId]],
-      )
-    ).rows[0].seconds;
-    await delay(Number(wait) * 1000);
+    const wait = await waitForDatabaseExpiry(
+      "SELECT extract(epoch from max(expires_at)-clock_timestamp())+0.03 AS seconds FROM admin_login_challenges WHERE id=ANY($1::uuid[])",
+      [[expiredClaimed.c.challengeId, expiredReady.challengeId]],
+    );
     await blocker.query("COMMIT");
     await blocker.end();
     blocker = undefined;
+    const blockedClaimResult = await blockedClaim;
+    clockDiagnostic = {
+      scenario: "CLAIM",
+      ...wait,
+      code: blockedClaimResult.code ?? null,
+      kind: blockedClaimResult.kind ?? null,
+    };
     equal(
-      (await blockedClaim).code,
+      blockedClaimResult.code,
       "LOGIN_RESTART_REQUIRED",
       "claim waiting for lock rechecks database expiry",
     );
+    clockDiagnostic = undefined;
     equal(
       (await run("claim", claimCommand(expiredReady))).code,
       "LOGIN_RESTART_REQUIRED",
@@ -846,6 +877,7 @@ await withEphemeralPostgres(async (config) => {
         stage,
         checks,
         check,
+        ...(clockDiagnostic ? { clockDiagnostic } : {}),
         failure:
           error?.name === "AssertionError"
             ? "ASSERTION"

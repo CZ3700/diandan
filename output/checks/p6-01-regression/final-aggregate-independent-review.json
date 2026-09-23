@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "seven_locale_journey",
+  "generatedAt": "2026-09-23T16:35:16.927Z",
+  "status": "ACCEPT",
+  "scope": "AGGREGATE_PROVENANCE_AND_FILE_INTEGRITY_ONLY",
+  "independentOfAggregateGenerator": true,
+  "independentJourneyImplementationReview": false,
+  "sourceHash": "642a55a818680d763f41ce5d87b5386092591ea5341c92ce4e88c8248bcb8b72",
+  "executableFiles": 2740,
+  "trees": [
+    {
+      "label": "current-root",
+      "files": 2740,
+      "bytesModeAndInventoryMatch": true
+    },
+    {
+      "label": "final-8",
+      "files": 2740,
+      "bytesModeAndInventoryMatch": true
+    },
+    {
+      "label": "final-operations-9",
+      "files": 2740,
+      "bytesModeAndInventoryMatch": true
+    },
+    {
+      "label": "final-journey-9",
+      "files": 2740,
+      "bytesModeAndInventoryMatch": true
+    }
+  ],
+  "suites": [
+    {
+      "id": "quality",
+      "run": "final-8",
+      "runStatus": "FAIL",
+      "status": "PASS"
+    },
+    {
+      "id": "catalog",
+      "run": "final-8",
+      "runStatus": "FAIL",
+      "status": "PASS"
+    },
+    {
+      "id": "commerce",
+      "run": "final-8",
+      "runStatus": "FAIL",
+      "status": "PASS"
+    },
+    {
+      "id": "operations",
+      "run": "final-operations-9",
+      "runStatus": "PASS",
+      "status": "PASS"
+    },
+    {
+      "id": "journey",
+      "run": "final-journey-9",
+      "runStatus": "PASS",
+      "status": "PASS"
+    }
+  ],
+  "commands": 17,
+  "requirements": 14,
+  "referencesVerified": 49,
+  "uniqueReferencePaths": 48,
+  "archives": [
+    {
+      "run": "final-8",
+      "files": 723,
+      "fullArchiveAndSourceOutputHashesMatch": true
+    },
+    {
+      "run": "final-operations-9",
+      "files": 304,
+      "fullArchiveAndSourceOutputHashesMatch": true
+    },
+    {
+      "run": "final-journey-9",
+      "files": 94,
+      "fullArchiveAndSourceOutputHashesMatch": true
+    }
+  ],
+  "archivedFilesVerified": 1121,
+  "originalFailureReportsPreserved": 8,
+  "priorFinanceFailureCause": "UNKNOWN",
+  "priorFinanceFailureDemonstratedFixed": false,
+  "singleInvocationPassed": false,
+  "servicesStarted": false,
+  "browserStarted": false,
+  "remoteCiPassed": false,
+  "p601Done": false,
+  "runtimeEvidenceLimits": "Index node/pnpm describe generator environment. Available final8/operations JSON records report Chrome 153.0.8010.53 and PostgreSQL 18.6. Journey artifacts do not independently record those exact runtime versions; common selection alone is not an actual-service version record.",
+  "exclusions": [
+    "Journey implementation and scenario sufficiency are reviewed separately by a non-author.",
+    "Archive byte integrity does not establish screenshot privacy or content correctness.",
+    "No claim that the retained intermittent finance failure was fixed.",
+    "No remote CI, real merchant/money, cloud, human acceptance or release-gate claim."
+  ],
+  "evidence": [
+    {
+      "path": "output/checks/p6-01-regression/final-evidence-index.json",
+      "sha256": "93f3879503f7241513ed4b9bcd9d8be6306c62ada0b31ffcde1483f1d814593c",
+      "bytes": 30047
+    },
+    {
+      "path": "output/checks/p6-01-regression/final-source.json",
+      "sha256": "766c9494ab52317dfc73bd37d4c8074150c3b5577a5e6303cd786f057923b151",
+      "bytes": 514960
+    },
+    {
+      "path": "output/checks/p6-01-regression/final-artifact-integrity.json",
+      "sha256": "bbc894aa31b1b18ba7daf707512cb5d6fa5d986493c6d5f64a0107e9867f5a0a",
+      "bytes": 286568
+    },
+    {
+      "path": "output/checks/p6-01-regression/assemble-final-evidence.executed.mjs.txt",
+      "sha256": "85a9f7b83045233825d1827bb2846db8475372cde208ee13eef107cbdf3a5ed6",
+      "bytes": 6747,
+      "originalReviewedPath": "output/checks/p6-01-regression/assemble-final-evidence.mjs",
+      "preservedExecutedVersion": true
+    },
+    {
+      "path": "output/checks/p6-01-regression/verify-artifact-integrity.py",
+      "sha256": "baf840ce93212bc6d9d5622bb41a9bc019860688953ef46623eddfc8545d85a6",
+      "bytes": 1834
+    },
+    {
+      "path": "output/checks/p6-01-regression/independent-final-aggregate-check.mjs",
+      "sha256": "2f34cf5b307da1360abbe0c954687ac083c10a1420b792ca434d47eb907ab1ed",
+      "bytes": 11772
+    },
+    {
+      "path": "output/checks/p6-01-regression/final-tool-version-scope.json",
+      "sha256": "ded07b184f5f8bf9fd6e6015a89f0aadcef982e0819784ae89ea4bf60087f368",
+      "bytes": 968
+    },
+    {
+      "path": "output/checks/p6-01-regression/assemble-final-evidence.mjs",
+      "sha256": "f2d751a8efa706a2adf3f2f4ee80b7bc47b6711200af7c3ae0c9c7c2c7af2264",
+      "bytes": 7110
+    },
+    {
+      "path": "output/checks/p6-01-regression/evidence-scratch-cleanup.json",
+      "sha256": "ba9e632b4f46f5ce7e2566acd8c2222383def5eba886a19d51cc6159199da537",
+      "bytes": 673
+    },
+    {
+      "path": "output/checks/p6-01-regression/owned-source-verification-final.json",
+      "sha256": "298ffec25ae3c09d88e498b554a4e2412871d033f9150c58951cfec9812804ab",
+      "bytes": 306
+    },
+    {
+      "path": "output/checks/p6-01-regression/aggregate-verify-only-independent.json",
+      "sha256": "9f451025fd83efdf61f320fa2bb375f977cd53aee0ee8b4ee43fc63c5dcfa80c",
+      "bytes": 1603
+    }
+  ],
+  "additionalChecks": {
+    "all17SelectedStepLogReferencesRehashed": true,
+    "priorFailureSourceHashesAndStatusesMatchOriginalReports": true,
+    "runtimeVersionScopeDisclosureRead": true,
+    "missingJourneyPatchRecordsDoNotEstablishVersionEquality": true
+  },
+  "cleanupFollowUp": {
+    "status": "ACCEPT",
+    "generatorDiffScope": "Owned mkdtemp scratch/finally cleanup and read-only output mode only; selection and assertion logic unchanged",
+    "originalExecutedGeneratorPreservedAtIdenticalSha256": true,
+    "independentVerifyOnlyExitCode": 0,
+    "originalIndexSourceArtifactIntegrityHashesUnchanged": true,
+    "oldFourScratchDirectoriesAbsent": true,
+    "newScratchDirectoriesRemaining": 0,
+    "preDeletionFullByteComparisonIndependentlyReplayed": false,
+    "preDeletionComparisonEvidence": "root evidence-scratch-cleanup.json only; deleted copies were not required by independent verification",
+    "verifyOnlyScope": "Recomputes from source reports and current source; does not itself compare existing final index. Existing final index was independently verified and its bytes checked unchanged here."
+  }
+}

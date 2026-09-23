@@ -66,9 +66,16 @@ export {
 } from "./migrations/runner.js";
 export {
   type DockerCommandExecutor,
+  type TestPostgresRuntimeMetadata,
   EphemeralPostgresError,
   withEphemeralPostgres,
 } from "./testing/ephemeral-postgres.js";
+export {
+  withNativeTestPostgres,
+  type NativePostgresMetadata,
+  type NativePostgresOptions,
+  type NativePostgresRun,
+} from "./testing/native-postgres.js";
 export { rebuildIdolSearchProjections } from "./catalog-search-projection.js";
 export { createCatalogDirectoryRepository } from "./catalog-directory-repository.js";
 export { createManagementCenterOperationRepository } from "./management-center-operation-repository.js";

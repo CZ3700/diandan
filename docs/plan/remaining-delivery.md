@@ -1,7 +1,7 @@
 # 剩余交付与已接受本地排期
 
 > 日期：2026-09-22（Asia/Bangkok）。状态：**ACCEPTED，用户回复“那就继续按计划推进下一阶段”，见 [ADR-016](../decisions/016-local-remaining-development.md)**。
-> 原编制基线：29 DONE / 2 IN_PROGRESS / 18 PENDING；P5-04/P5-03/P5-05现均已完整本地验收并保留外部门；P5-06/07 DONE、P5-08有限本地READY，当前31 DONE / 5 IN_PROGRESS / 1 READY / 12 PENDING。最新执行状态以 [MASTER](../progress/MASTER.md) 和各 phase 文件为准。
+> 原编制基线：29 DONE / 2 IN_PROGRESS / 18 PENDING。当前 P5-08 完整本地体验与 P3-06 UI 修正均已 ACCEPT；P6-01完整本地回归也已ACCEPT，按ADR-016仅新增P6-02有限本地READY、尚未领取，31 DONE / 7 IN_PROGRESS / 1 READY / 10 PENDING。最新状态以 [MASTER](../progress/MASTER.md) 和各 phase 为准。
 
 用户已授权按计划持续推进。符合现有 Phase、依赖、READY 和 Lane 条件的任务，应验收一项、提交一项、继续下一项，无需逐项重新询问。
 
@@ -9,7 +9,9 @@
 
 ## 当前可直接继续的工作
 
-- P5-08：有限离线模块/部署工具及持久本地体验 READY，Lane D 空闲、尚未领取；原七直接依赖的适用本地成果独立核对见 `output/checks/p5-07-psp-onboarding/next-stage-readiness.md`。P5-07 接入手册与完整 fake conformance/七阶段演练已验收 DONE。P5-08 必须承接 `docs/runbooks/local-experience-readiness.md` 的完整持久体验，不把检查表继续后移；云 staging 原门保留。
+- P6-02：原P3-06/P4-06/P5-02本地完整成果已独立核对，仅激活可访问性本地范围并置READY；尚未领取，Lane D空闲。
+- P6-01：完整同源码五组/17命令/14路径本地ACCEPT、Lane D释放；实际远端CI保留，Task仍IN_PROGRESS，历史UNKNOWN与完整范围见最终验收记录。
+- P5-08：离线模块/部署工具及完整持久体验已本地 ACCEPT，Lane D 已释放；用户已实测本地功能无误，真实云 staging 原门保留。
 - P3-06：本轮完整七语言本地H2性能矩阵已通过，原30条axe待判断已完成技术复核；继续未完真人/读屏/真机/正式内容验收，保留所有原失败和慢样本。详见当前phase执行卡，不能把实验室通过当作任务DONE。
 - P4-04：保留已验收的 TEST 支付运行时和通用接入基础；待首个批准 PSP、商户及 sandbox 资料到位后完成实际接入与验收。
 - 正常路径仍是 P3/P4 退出后完成 P5，再依次进入 P6、P7。待外部验收的任务不计 DONE。
@@ -47,7 +49,7 @@
 
 目的：在真实商户、人工验收或云环境尚未到位时，让已经具备本地实现条件的后续工程继续推进，同时保留全部验收欠项。
 
-这是用户已接受的排期变更，规范 §19、ADR-016、MASTER、当前 phase 与依赖说明同步执行。P5-06/07 已验收 DONE，P5-08 原依赖独立核对后有限本地 READY、尚未领取，Phase 6/7 保持 LOCKED；到相应波次且原直接依赖的本地完整验收和独立复核通过后，先登记有限 ACTIVE 范围再逐项 READY。范围如下：
+这是用户已接受的排期变更，规范 §19、ADR-016、MASTER、当前 phase 与依赖说明同步执行。P5-06/07 已验收 DONE，P5-08 全部本地范围已 ACCEPT；P6-01现完整本地ACCEPT，当前仅新增P6-02经独立核对后有限本地READY，Phase 7 保持 LOCKED；到相应波次且原直接依赖的本地完整验收和独立复核通过后，先登记有限 ACTIVE 范围再逐项 READY。范围如下：
 
 | 顺序 | 工作 | 领取前的本地证据与 Lane 条件 |
 | --- | --- | --- |

@@ -1,0 +1,179 @@
+$ corepack pnpm --filter @fan-support/api test:browser:storefront-acceptance
+$ pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/i18n... --filter=@fan-support/ui... --filter=@fan-support/design-tokens... --output-logs=errors-only && node ./scripts/storefront-acceptance-http.mjs --production --ui
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/api, @fan-support/application, @fan-support/cache-purge-cdn, @fan-support/cache-purge-port, @fan-support/cart, @fan-support/catalog, @fan-support/config, @fan-support/content, @fan-support/contracts, @fan-support/design-tokens, @fan-support/domain, @fan-support/i18n, @fan-support/identity-oidc, @fan-support/identity-port, @fan-support/key-management-kms, @fan-support/key-management-port, @fan-support/media-image, @fan-support/media-port, @fan-support/media-s3, @fan-support/notification-port, @fan-support/notification-provider, @fan-support/observability, @fan-support/payment-fake, @fan-support/payment-gateway, @fan-support/payment-port, @fan-support/persistence-port, @fan-support/persistence-postgres, @fan-support/testing, @fan-support/ui, @fan-support/worker
+   • Running build in 30 packages
+   • Remote caching disabled
+
+
+ Tasks:    30 successful, 30 total
+Cached:    30 cached, 30 total
+  Time:    20ms >>> FULL TURBO
+
+Acceptance fixture: processing original fictional Mira Vale independent media
+Acceptance fixture: processing original fictional Kai Ren independent media
+Acceptance fixture: processing original fictional Rose Palace gift artwork
+Acceptance fixture: processing original fictional Blue Orbit gift artwork
+Acceptance fixture: processing original fictional Ruby Bouquet gift artwork
+Acceptance fixture: authoring real gift 1/27
+Acceptance fixture: authoring real gift 2/27
+Acceptance fixture: authoring real gift 3/27
+Acceptance fixture: authoring real gift 4/27
+Acceptance fixture: authoring real gift 5/27
+Acceptance fixture: authoring real gift 6/27
+Acceptance fixture: authoring real gift 7/27
+Acceptance fixture: authoring real gift 8/27
+Acceptance fixture: authoring real gift 9/27
+Acceptance fixture: authoring real gift 10/27
+Acceptance fixture: authoring real gift 11/27
+Acceptance fixture: authoring real gift 12/27
+Acceptance fixture: authoring real gift 13/27
+Acceptance fixture: authoring real gift 14/27
+Acceptance fixture: authoring real gift 15/27
+Acceptance fixture: authoring real gift 16/27
+Acceptance fixture: authoring real gift 17/27
+Acceptance fixture: authoring real gift 18/27
+Acceptance fixture: authoring real gift 19/27
+Acceptance fixture: authoring real gift 20/27
+Acceptance fixture: authoring real gift 21/27
+Acceptance fixture: authoring real gift 22/27
+Acceptance fixture: authoring real gift 23/27
+Acceptance fixture: authoring real gift 24/27
+Acceptance fixture: authoring real gift 25/27
+Acceptance fixture: authoring real gift 26/27
+Acceptance fixture: authoring real gift 27/27
+Acceptance fixture: reading actual PostgreSQL price activation time
+Acceptance fixture: creating complete TEST price book 1/2
+Acceptance fixture: publishing complete TEST price book 1/2
+Acceptance fixture: creating complete TEST price book 2/2
+Acceptance fixture: publishing complete TEST price book 2/2
+Acceptance fixture: creating actual inventory location
+Acceptance fixture: stock, review and publication for gift 1/26
+Acceptance fixture: stock, review and publication for gift 2/26
+Acceptance fixture: stock, review and publication for gift 3/26
+Acceptance fixture: stock, review and publication for gift 4/26
+Acceptance fixture: stock, review and publication for gift 5/26
+Acceptance fixture: stock, review and publication for gift 6/26
+Acceptance fixture: stock, review and publication for gift 7/26
+Acceptance fixture: stock, review and publication for gift 8/26
+Acceptance fixture: stock, review and publication for gift 9/26
+Acceptance fixture: stock, review and publication for gift 10/26
+Acceptance fixture: stock, review and publication for gift 11/26
+Acceptance fixture: stock, review and publication for gift 12/26
+Acceptance fixture: stock, review and publication for gift 13/26
+Acceptance fixture: stock, review and publication for gift 14/26
+Acceptance fixture: stock, review and publication for gift 15/26
+Acceptance fixture: stock, review and publication for gift 16/26
+Acceptance fixture: stock, review and publication for gift 17/26
+Acceptance fixture: stock, review and publication for gift 18/26
+Acceptance fixture: stock, review and publication for gift 19/26
+Acceptance fixture: stock, review and publication for gift 20/26
+Acceptance fixture: stock, review and publication for gift 21/26
+Acceptance fixture: stock, review and publication for gift 22/26
+Acceptance fixture: stock, review and publication for gift 23/26
+Acceptance fixture: stock, review and publication for gift 24/26
+Acceptance fixture: stock, review and publication for gift 25/26
+Acceptance fixture: stock, review and publication for gift 26/26
+Acceptance fixture: proving tracked availability is one location's maximum, never a sum
+Acceptance fixture: publishing actual TEST terms policy
+Acceptance fixture: publishing actual TEST privacy policy
+Acceptance fixture: publishing actual TEST refund policy
+Acceptance fixture: publishing actual TEST delivery policy
+Acceptance fixture: publishing acceptance artist 4/120
+Acceptance fixture: publishing acceptance artist 21/120
+Acceptance fixture: publishing acceptance artist 41/120
+Acceptance fixture: publishing acceptance artist 61/120
+Acceptance fixture: publishing acceptance artist 81/120
+Acceptance fixture: publishing acceptance artist 101/120
+Acceptance fixture: publishing acceptance homepage with actual artist, gift and policy references
+Acceptance fixture: existing public protocol baseline over the same real fixture
+Acceptance fixture: SEO full catalog, per-owner publication clusters and HTTP validators
+Acceptance fixture: seven-locale concurrent homepage, directory and SEO proof reads
+PASS acceptance protocol baseline (32461 assertions); /Users/mario/Desktop/.fan-support-regression/2df26fe4-e0a8-4286-bad3-9eaaa3d3a8ca/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-23T15-37-02-186Z
+Acceptance fixture: normal publish and rollback to seven-locale API, actual HTML and sitemap within sixty seconds
+Acceptance fixture: browser en-390-home
+Acceptance fixture: browser en-390-artists
+Acceptance fixture: browser en-390-artist
+Acceptance fixture: browser en-390-gifts
+Acceptance fixture: browser en-390-gift
+Acceptance fixture: browser en-390-policy
+Acceptance fixture: browser zh-CN-390-home
+Acceptance fixture: browser zh-CN-390-artists
+Acceptance fixture: browser zh-CN-390-artist
+Acceptance fixture: browser zh-CN-390-gifts
+Acceptance fixture: browser zh-CN-390-gift
+Acceptance fixture: browser zh-CN-390-policy
+Acceptance fixture: browser th-390-home
+Acceptance fixture: browser th-390-artists
+Acceptance fixture: browser th-390-artist
+Acceptance fixture: browser th-390-gifts
+Acceptance fixture: browser th-390-gift
+Acceptance fixture: browser th-390-policy
+Acceptance fixture: browser vi-390-home
+Acceptance fixture: browser vi-390-artists
+Acceptance fixture: browser vi-390-artist
+Acceptance fixture: browser vi-390-gifts
+Acceptance fixture: browser vi-390-gift
+Acceptance fixture: browser vi-390-policy
+Acceptance fixture: browser ja-390-home
+Acceptance fixture: browser ja-390-artists
+Acceptance fixture: browser ja-390-artist
+Acceptance fixture: browser ja-390-gifts
+Acceptance fixture: browser ja-390-gift
+Acceptance fixture: browser ja-390-policy
+Acceptance fixture: browser es-390-home
+Acceptance fixture: browser es-390-artists
+Acceptance fixture: browser es-390-artist
+Acceptance fixture: browser es-390-gifts
+Acceptance fixture: browser es-390-gift
+Acceptance fixture: browser es-390-policy
+Acceptance fixture: browser pt-390-home
+Acceptance fixture: browser pt-390-artists
+Acceptance fixture: browser pt-390-artist
+Acceptance fixture: browser pt-390-gifts
+Acceptance fixture: browser pt-390-gift
+Acceptance fixture: browser pt-390-policy
+Acceptance fixture: browser en-1440-home
+Acceptance fixture: browser en-1440-artists
+Acceptance fixture: browser en-1440-artist
+Acceptance fixture: browser en-1440-gifts
+Acceptance fixture: browser en-1440-gift
+Acceptance fixture: browser en-1440-policy
+Acceptance fixture: browser zh-CN-1440-home
+Acceptance fixture: browser zh-CN-1440-artists
+Acceptance fixture: browser zh-CN-1440-artist
+Acceptance fixture: browser zh-CN-1440-gifts
+Acceptance fixture: browser zh-CN-1440-gift
+Acceptance fixture: browser zh-CN-1440-policy
+Acceptance fixture: browser th-1440-home
+Acceptance fixture: browser th-1440-artists
+Acceptance fixture: browser th-1440-artist
+Acceptance fixture: browser th-1440-gifts
+Acceptance fixture: browser th-1440-gift
+Acceptance fixture: browser th-1440-policy
+Acceptance fixture: browser vi-1440-home
+Acceptance fixture: browser vi-1440-artists
+Acceptance fixture: browser vi-1440-artist
+Acceptance fixture: browser vi-1440-gifts
+Acceptance fixture: browser vi-1440-gift
+Acceptance fixture: browser vi-1440-policy
+Acceptance fixture: browser ja-1440-home
+Acceptance fixture: browser ja-1440-artists
+Acceptance fixture: browser ja-1440-artist
+Acceptance fixture: browser ja-1440-gifts
+Acceptance fixture: browser ja-1440-gift
+Acceptance fixture: browser ja-1440-policy
+Acceptance fixture: browser es-1440-home
+Acceptance fixture: browser es-1440-artists
+Acceptance fixture: browser es-1440-artist
+Acceptance fixture: browser es-1440-gifts
+Acceptance fixture: browser es-1440-gift
+Acceptance fixture: browser es-1440-policy
+Acceptance fixture: browser pt-1440-home
+Acceptance fixture: browser pt-1440-artists
+Acceptance fixture: browser pt-1440-artist
+Acceptance fixture: browser pt-1440-gifts
+Acceptance fixture: browser pt-1440-gift
+Acceptance fixture: browser pt-1440-policy
+PASS acceptance browser callback; /Users/mario/Desktop/.fan-support-regression/2df26fe4-e0a8-4286-bad3-9eaaa3d3a8ca/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-23T15-37-02-186Z/browser-attempt-1

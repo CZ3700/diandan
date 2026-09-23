@@ -1,0 +1,30 @@
+{
+  "scope": "PURE_NODE_DATE_AND_EXISTING_PG_TEXT_PARSER_NO_DATABASE",
+  "initialProbeFailure": "ISO_INPUT_RETURNED_NULL_PG_PARSER_REQUIRES_NATIVE_PG_TEXT",
+  "results": [
+    {
+      "fractionDigits": 6,
+      "parsedType": "Date",
+      "isoFractionDigits": 3,
+      "pgDateMinusOriginalMs": -0.001,
+      "jsDateMinusOriginalMs": -0.001,
+      "contentSchemaPreservesExactString": true
+    },
+    {
+      "fractionDigits": 6,
+      "parsedType": "Date",
+      "isoFractionDigits": 3,
+      "pgDateMinusOriginalMs": -0.45600000000000307,
+      "jsDateMinusOriginalMs": -0.45600000000000307,
+      "contentSchemaPreservesExactString": true
+    },
+    {
+      "fractionDigits": 6,
+      "parsedType": "Date",
+      "isoFractionDigits": 3,
+      "pgDateMinusOriginalMs": -0.9990000000000236,
+      "jsDateMinusOriginalMs": -0.9990000000000236,
+      "contentSchemaPreservesExactString": true
+    }
+  ]
+}

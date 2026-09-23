@@ -1,6 +1,7 @@
-import type {
-  ContentLocaleContext,
-  SupportedLocale,
+import {
+  DEFAULT_LOCALE,
+  type ContentLocaleContext,
+  type SupportedLocale,
 } from "@fan-support/contracts";
 
 /** Called only after the complete public response schema has validated provenance. */
@@ -15,5 +16,7 @@ export function matchesPublicContentLocale(
       context.resolvedLocale === context.sourceLocale &&
       context.fallbackUsed === (requested !== context.sourceLocale)
     );
-  return context.resolvedLocale === requested && !context.fallbackUsed;
+  return context.fallbackUsed
+    ? requested !== DEFAULT_LOCALE && context.resolvedLocale === DEFAULT_LOCALE
+    : context.resolvedLocale === requested;
 }

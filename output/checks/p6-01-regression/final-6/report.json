@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "runId": "fb5538da-2803-46ca-a3d2-6ce7d129191f",
+  "status": "FAIL",
+  "scope": {
+    "environment": "LOCAL_TEST",
+    "remoteCi": false,
+    "realMoney": false,
+    "commercialSandbox": false,
+    "cloudEvidence": false,
+    "humanAccessibility": false
+  },
+  "sourceHash": "87f797d19aa12d578a99c487dad2f7640740c58f9547d7d93d1fc0b586ab131c",
+  "sourceHead": "7ad8be93871c2aefa600ad4e299f85454f27c168",
+  "workspace": "/Users/mario/Desktop/.fan-support-regression/fb5538da-2803-46ca-a3d2-6ce7d129191f/workspace",
+  "artifacts": "/Users/mario/Desktop/.fan-support-regression/fb5538da-2803-46ca-a3d2-6ce7d129191f/workspace/output",
+  "startedAt": "2026-09-23T13:08:43.679Z",
+  "preparation": [
+    {
+      "label": "initialize-isolated-index",
+      "startedAt": "2026-09-23T13:08:44.347Z",
+      "completedAt": "2026-09-23T13:08:44.358Z",
+      "log": "initialize-isolated-index.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "index-isolated-source",
+      "startedAt": "2026-09-23T13:08:44.359Z",
+      "completedAt": "2026-09-23T13:08:45.645Z",
+      "log": "index-isolated-source.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "commit-isolated-source",
+      "startedAt": "2026-09-23T13:08:45.645Z",
+      "completedAt": "2026-09-23T13:08:45.783Z",
+      "log": "commit-isolated-source.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "frozen-install",
+      "startedAt": "2026-09-23T13:08:45.783Z",
+      "completedAt": "2026-09-23T13:08:49.590Z",
+      "log": "frozen-install.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    }
+  ],
+  "execution": {
+    "schemaVersion": 1,
+    "status": "FAIL",
+    "startedAt": "2026-09-23T13:08:49.590Z",
+    "suites": [
+      {
+        "id": "quality",
+        "status": "FAIL"
+      },
+      {
+        "id": "catalog",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "commerce",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "operations",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "journey",
+        "status": "NOT_RUN"
+      }
+    ],
+    "steps": [
+      {
+        "suite": "quality",
+        "label": "quality-regression-tools",
+        "startedAt": "2026-09-23T13:08:49.590Z",
+        "completedAt": "2026-09-23T13:09:14.243Z",
+        "log": "quality-regression-tools.txt",
+        "exitCode": 0,
+        "signal": null,
+        "launchFailed": false,
+        "status": "PASS"
+      },
+      {
+        "suite": "quality",
+        "label": "quality-ui-composites",
+        "startedAt": "2026-09-23T13:09:14.244Z",
+        "completedAt": "2026-09-23T13:09:47.436Z",
+        "log": "quality-ui-composites.txt",
+        "exitCode": 0,
+        "signal": null,
+        "launchFailed": false,
+        "status": "PASS"
+      },
+      {
+        "suite": "quality",
+        "label": "quality-ui-motion",
+        "startedAt": "2026-09-23T13:09:47.437Z",
+        "completedAt": "2026-09-23T13:10:24.618Z",
+        "log": "quality-ui-motion.txt",
+        "exitCode": 0,
+        "signal": null,
+        "launchFailed": false,
+        "status": "PASS"
+      },
+      {
+        "suite": "quality",
+        "label": "quality-repository-check",
+        "startedAt": "2026-09-23T13:10:24.618Z",
+        "completedAt": "2026-09-23T13:51:39.085Z",
+        "log": "quality-repository-check.txt",
+        "exitCode": 1,
+        "signal": null,
+        "launchFailed": false,
+        "status": "FAIL"
+      }
+    ],
+    "coverage": {
+      "complete": false,
+      "requirements": [
+        {
+          "id": "E2E-01",
+          "description": "Guest purchase with artist, gift and private intent",
+          "suites": [
+            "journey"
+          ],
+          "status": "NOT_RUN"
+        },
+        {
+          "id": "E2E-02",
+          "description": "Independent recipients in one cart",
+          "suites": [
+            "commerce"
+          ],
+          "status": "NOT_RUN"
+        },
+        {
+          "id": "E2E-03",
+          "description": "Payment failure and cancellation preserve context",
+          "suites": [
+            "commerce",
+            "journey"
+          ],
+          "status": "NOT_RUN"
+        },
+        {
+          "id": "E2E-04",
+          "description": "Canonical preflight rejects stale availability and prices",
+          "suites": [
+            "quality"
+          ],
+          "status": "FAIL"
+        },
+        {
+          "id": "E2E-05",
+          "description": "Early return eventually observes trusted payment evidence",
+          "suites": [
+            "commerce",
+            "journey"
+          ],
+          "status": "NOT_RUN"
+        },
+        {
+          "id": "E2E-06",
+          "description": "Ten identical signed HTTP webhooks have one business effect",
+          "suites": [
+            "quality"
+          ],
+          "status": "FAIL"
+        },
+        {
+          "id": "E2E-07",
+          "description": "Full and partial refunds and disputes update orders",
+          "suites": [
+            "quality",
+            "operations"
+          ],
+          "status": "FAIL"
+        },
+        {
+          "id": "E2E-08",
+          "description": "Paid, preparing and delivered have idempotent notifications",
+          "suites": [
+            "quality",
+            "operations"
+          ],
+          "status": "FAIL"
+        },
+        {
+          "id": "E2E-09",
+          "description": "Disabling a channel blocks new payments and preserves existing attempts",
+          "suites": [
+            "quality",
+            "operations"
+          ],
+          "status": "FAIL"
+        },
+        {
+          "id": "E2E-10",
+          "description": "Published desktop and mobile poster changes appear within 60 seconds",
+          "suites": [
+            "catalog"
+          ],
+          "status": "NOT_RUN"
+        },
+        {
+          "id": "E2E-11",
+          "description": "Seven locales complete the same purchase, order and email journey",
+          "suites": [
+            "quality",
+            "journey"
+          ],
+          "status": "FAIL"
+        },
+        {
+          "id": "E2E-12",
+          "description": "Deep-link locale changes preserve commerce and invalid locales fail closed",
+          "suites": [
+            "commerce",
+            "journey"
+          ],
+          "status": "NOT_RUN"
+        },
+        {
+          "id": "E2E-13",
+          "description": "Localized SEO and reciprocal fallback alternate clusters",
+          "suites": [
+            "catalog"
+          ],
+          "status": "NOT_RUN"
+        },
+        {
+          "id": "E2E-14",
+          "description": "Locale cache isolation, precise purge and hosted-language-only fallback",
+          "suites": [
+            "quality",
+            "catalog",
+            "commerce"
+          ],
+          "status": "FAIL"
+        }
+      ],
+      "missingSuites": [
+        "quality",
+        "catalog",
+        "commerce",
+        "operations",
+        "journey"
+      ]
+    },
+    "completedAt": "2026-09-23T13:51:39.087Z"
+  },
+  "archive": {
+    "schemaVersion": 1,
+    "files": 125
+  },
+  "completedAt": "2026-09-23T13:51:39.123Z"
+}

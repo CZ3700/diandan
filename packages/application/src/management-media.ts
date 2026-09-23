@@ -21,6 +21,7 @@ import type {
   ManagementMediaTransactionManager,
   ManagementMediaRepositories,
 } from "@fan-support/persistence-port";
+import { retryManagementTransaction } from "./management-transaction-retry.js";
 
 class PreparationFailure extends Error {
   constructor(readonly code: ManagementCenterFailure["code"]) {
@@ -46,7 +47,11 @@ async function reload(
   const result = await repositories.operations.loadClaim(fence(prior));
   if ("outcome" in result) throw new PreparationFailure(result.code);
   const current = managementCenterClaimSchema.parse(result);
-  if (current.intentHash !== prior.intentHash)
+  if (
+    current.intentHash !== prior.intentHash ||
+    current.operation.operationId !== prior.operation.operationId ||
+    current.leaseTokenDigest !== prior.leaseTokenDigest
+  )
     throw new PreparationFailure("TARGET_CONFLICT");
   return current;
 }
@@ -118,10 +123,11 @@ export function createManagementMediaPreparation(
     inspector: MediaSourceInspectionPort;
   }>,
 ): ManagementCenterMediaPreparationPort {
-  const transact =
-    dependencies.transactions.runInManagementMediaTransaction.bind(
-      dependencies.transactions,
-    );
+  const transact: ManagementMediaTransactionManager["runInManagementMediaTransaction"] =
+    (work) =>
+      retryManagementTransaction(() =>
+        dependencies.transactions.runInManagementMediaTransaction(work),
+      );
   return Object.freeze({
     async prepare(
       input: ManagementCenterClaim,

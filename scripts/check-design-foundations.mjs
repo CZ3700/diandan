@@ -1382,8 +1382,8 @@ function validateConsumerCssText(
 ) {
   const mediaWidthPatterns = [
     /@media\s*\(\s*(?:min|max)-width\s*:\s*([^)]+)\)/giu,
-    /@media\s*\(\s*width\s*(?:>=|>)\s*([^)]+)\)/giu,
-    /@media\s*\(\s*([^\s)]+)\s*(?:<=|<)\s*width\s*\)/giu,
+    /@media\s*\(\s*width\s*(?:>=|>|<=|<)\s*([^)]+)\)/giu,
+    /@media\s*\(\s*([^\s)]+)\s*(?:<=|<|>=|>)\s*width\s*\)/giu,
   ];
   for (const match of mediaWidthPatterns.flatMap((pattern) => [
     ...css.matchAll(pattern),

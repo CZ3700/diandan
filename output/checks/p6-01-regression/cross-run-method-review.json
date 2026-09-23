@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "seven_locale_journey",
+  "reviewDate": "2026-09-23",
+  "scope": "SAME_EXECUTION_SOURCE_CROSS_RUN_LOCAL_REGRESSION_METHOD",
+  "status": "METHOD_ACCEPTED_FINAL_EVIDENCE_PENDING",
+  "expectedSourceHash": "642a55a818680d763f41ce5d87b5386092591ea5341c92ce4e88c8248bcb8b72",
+  "expectedSourceHashVerifiedForFutureRuns": false,
+  "singleInvocationRequiredByReviewedNormativeSources": false,
+  "normativeReferences": [
+    { "path": "docs/FAN_SUPPORT_PLATFORM_SPEC.md", "lines": [1260, 1292] },
+    { "path": "docs/plan/task-breakdown.md", "lines": [150, 154] },
+    { "path": "docs/progress/phase-6-hardening.md", "lines": [38, 40] }
+  ],
+  "execution": {
+    "codeModified": false,
+    "servicesStarted": false,
+    "testsRunForThisMethodReview": false,
+    "userInstancesTouched": false,
+    "reviewArtifactsOnly": true
+  },
+  "aggregationRequirements": {
+    "suiteCount": 5,
+    "commandCount": 17,
+    "requirementCount": 14,
+    "uniqueSuites": ["quality", "catalog", "commerce", "operations", "journey"],
+    "rejectDuplicateUnknownOrMissingSuitesBeforeCoverage": true,
+    "recomputeCoverageUsingCanonicalRegressionCoverage": true,
+    "doNotConcatenateRawRunSuitesIntoMap": true,
+    "exactExecutableArgvAndOrdering": true,
+    "allSelectedCommandsExitZeroWithoutSignalOrLaunchFailure": true,
+    "thresholdsSeedsContractsAndAssertionsUnchanged": true,
+    "standardSnapshotsWithoutDiagnosticInstrumentation": true,
+    "recomputeExecutableManifestHash": true,
+    "compareExecutablePathSetSha256AndMode": true,
+    "verifyActualRootAndSnapshotInputsIncludingAdditionsDeletions": true,
+    "recordAndCompareOriginalSourceHead": true,
+    "snapshotGeneratedGitHeadIsNotOriginalSourceHead": true,
+    "freezeDependencyLockAndToolSelection": true,
+    "bindActualRuntimeVersionsNotOnlySelectionMetadata": true,
+    "explicitlyDiscloseAndAssessRuntimeVersionDifferences": true,
+    "retainOriginalReportsAndCoverageUnchanged": true,
+    "separateAggregateDescriptorManifestAndEvidenceIndex": true,
+    "hashAllReferencedEvidence": true,
+    "explicitCrossRunProvenance": true,
+    "explicitPriorFailureRisk": true
+  },
+  "selectionPlan": [
+    { "suite": "quality", "sourceRun": "final-8", "requirement": "COMPLETE_SUITE_PASS" },
+    { "suite": "catalog", "sourceRun": "final-8", "requirement": "COMPLETE_SUITE_PASS" },
+    { "suite": "commerce", "sourceRun": "final-8", "requirement": "COMPLETE_SUITE_PASS" },
+    {
+      "suite": "operations",
+      "sourceRun": "PENDING_STANDARD_SAME_SOURCE_RUN",
+      "requirement": "COMPLETE_SUITE_PASS",
+      "commands": ["login-permissions", "order-operations", "refunds-disputes", "payment-configuration", "exception-replay"]
+    },
+    {
+      "suite": "journey",
+      "sourceRun": "PENDING_STANDARD_FRESH_SAME_SOURCE_RUN",
+      "requirement": "COMPLETE_SUITE_PASS",
+      "commands": ["seven-locale-purchase"],
+      "journeyCases": 14,
+      "localeSwitches": 28,
+      "failureRecoveryCases": 2
+    }
+  ],
+  "priorFailureRisk": {
+    "sourceRun": "final-8",
+    "originalRunStatus": "FAIL",
+    "suite": "operations",
+    "command": "refunds-disputes",
+    "boundary": "FINANCE_CAPTURE_OUTSTANDING_READS_NOT_ZERO_WITHIN_ORIGINAL_5_SECONDS",
+    "cause": "UNKNOWN",
+    "fixed": false,
+    "diagnosticNonReproductionDoesNotEstablishResolution": true,
+    "mustRetainOriginalFailureEvidence": true
+  },
+  "acceptanceClaims": {
+    "methodAccepted": true,
+    "finalAggregateAccepted": false,
+    "defaultSingleInvocationPassed": false,
+    "remoteCiPassed": false,
+    "realMoneyPassed": false,
+    "commercialSandboxPassed": false,
+    "cloudEvidencePassed": false,
+    "humanAccessibilityPassed": false,
+    "releaseGatePassed": false,
+    "p601Done": false,
+    "p601StatusWhileRemoteCiPending": "IN_PROGRESS"
+  }
+}

@@ -20,6 +20,7 @@ import {
   digestAdminContentToken,
   validateAdminContentTokenPepper,
 } from "./admin-content-tokens.js";
+import { retryManagementTransaction } from "./management-transaction-retry.js";
 
 const failure = (
   code: ManagementCenterFailure["code"],
@@ -275,8 +276,8 @@ export function createManagementCenterWorker(
           prepared.preparedMedia === null
             ? null
             : managementCenterPreparedMediaSchema.parse(prepared.preparedMedia);
-        return await dependencies.transactions
-          .runInManagementCenterTransaction(
+        return await retryManagementTransaction(() =>
+          dependencies.transactions.runInManagementCenterTransaction(
             async ({ operations, publication }) => {
               const current = managementCenterClaimSchema.safeParse(
                 await operations.loadClaim(fence),
@@ -343,14 +344,14 @@ export function createManagementCenterWorker(
               managementCenterOperationSchema.parse(completed.operation);
               return "PUBLISHED";
             },
-          )
-          .catch((error: unknown) =>
-            recordRolledBackPublicationFailure(
-              error,
-              dependencies.transactions,
-              fence,
-            ),
-          );
+          ),
+        ).catch((error: unknown) =>
+          recordRolledBackPublicationFailure(
+            error,
+            dependencies.transactions,
+            fence,
+          ),
+        );
       } catch {
         // Do not mark a lease failed after an uncertain commit. The next claim reconciles its durable receipt.
         return "UNAVAILABLE";

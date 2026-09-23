@@ -1,0 +1,92 @@
+import assert from "node:assert/strict";
+import { writeFile } from "node:fs/promises";
+import { createRequire } from "node:module";
+import {
+  runMigrations,
+  withEphemeralPostgres,
+} from "../../../packages/persistence-postgres/dist/index.js";
+import { rollbackEmptyNotifications } from "../../../packages/persistence-postgres/scripts/notification-rollback-prefix.mjs";
+
+const workspaceRoot = process.cwd();
+const { Client } = createRequire(
+  new URL(
+    "../../../packages/persistence-postgres/package.json",
+    import.meta.url,
+  ),
+)("pg");
+const report = {
+  schemaVersion: 1,
+  stage: "START",
+  failures: [],
+  cleanup: false,
+};
+function failure(stage, error) {
+  report.failures.push({
+    stage,
+    name: error.name,
+    code: /^[A-Z0-9_]+$/u.test(error.code ?? "") ? error.code : null,
+    ...(stage === "ORIGINAL_HEAD_ASSERTION"
+      ? { expected: error.expected, actual: error.actual }
+      : {}),
+    frames: String(error.stack)
+      .split("\n")
+      .filter((line) =>
+        /at .*\/(?:pg-full-gate-diagnostic|notification-rollback-prefix)\.mjs:\d/u.test(
+          line,
+        ),
+      )
+      .map((line) => line.replace(workspaceRoot, "<workspace>")),
+  });
+}
+try {
+  await withEphemeralPostgres(async (clientConfig) => {
+    const client = new Client(clientConfig);
+    await client.connect();
+    try {
+      report.stage = "MIGRATE";
+      await runMigrations({
+        clientConfig,
+        workspaceRoot,
+        command: { direction: "up" },
+      });
+      const head = (
+        await client.query(
+          "SELECT max(version) AS version FROM schema_migrations",
+        )
+      ).rows[0].version;
+      assert.match(head, /^\d{4}$/u);
+      report.head = head;
+      report.originalAssertion =
+        "packages/persistence-postgres/scripts/notification-rollback-prefix.test.mjs:135";
+      report.stage = "ORIGINAL_HEAD_ASSERTION";
+      try {
+        assert.equal(head, "0036");
+      } catch (error) {
+        failure(report.stage, error);
+      }
+      report.stage = "ORIGINAL_PREFIX_HELPER";
+      try {
+        await rollbackEmptyNotifications({
+          client,
+          clientConfig,
+          workspaceRoot,
+        });
+      } catch (error) {
+        failure(report.stage, error);
+      }
+    } finally {
+      await client.end();
+    }
+  });
+  report.cleanup = true;
+  report.stage = "COMPLETE";
+} catch (error) {
+  failure(report.stage, error);
+  process.exitCode = 1;
+} finally {
+  await writeFile(
+    "output/checks/p6-01-regression/pg-full-gate-diagnostic.json",
+    JSON.stringify(report, null, 2) + "\n",
+  );
+  console.log(JSON.stringify(report, null, 2));
+}

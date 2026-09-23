@@ -1,0 +1,379 @@
+{
+  "operations": [
+    {
+      "id": "18b2b5c9-6ffd-4b4d-8fc7-52ec94b27197",
+      "status": "SUCCEEDED",
+      "version": "9",
+      "failure_code": null,
+      "checkpoint": {
+        "jobs": [
+          {
+            "role": "PORTRAIT",
+            "jobId": "9a806d4c-78ae-4ec3-a49f-0e365ffc7ea4",
+            "metadataRevisionId": "e893f4c3-c677-4258-9ac8-167a96a50dc8"
+          },
+          {
+            "role": "HERO_DESKTOP",
+            "jobId": "d27b5f6e-adba-44d1-94d1-4378f9b6d0b3",
+            "metadataRevisionId": "e893f4c3-c677-4258-9ac8-167a96a50dc8"
+          },
+          {
+            "role": "HERO_MOBILE",
+            "jobId": "ddf8f623-b1b3-43a5-9059-ed73733bed39",
+            "metadataRevisionId": "e893f4c3-c677-4258-9ac8-167a96a50dc8"
+          }
+        ],
+        "preparedMedia": {
+          "assets": [
+            {
+              "role": "PORTRAIT",
+              "assetId": "319c43ef-1ecc-44b2-b96a-f4d00d453baa",
+              "processingJobId": "9a806d4c-78ae-4ec3-a49f-0e365ffc7ea4",
+              "metadataRevisionId": "3a04f884-4b39-4b0d-91f3-49d8d634d320"
+            },
+            {
+              "role": "HERO_DESKTOP",
+              "assetId": "07d50b54-1d70-4207-baee-3623d02edf97",
+              "processingJobId": "d27b5f6e-adba-44d1-94d1-4378f9b6d0b3",
+              "metadataRevisionId": "ae17a282-b3fa-4cf0-be12-54d00f1f5cb6"
+            },
+            {
+              "role": "HERO_MOBILE",
+              "assetId": "8dc679ac-1f76-40b9-9d96-ea61d6357825",
+              "processingJobId": "ddf8f623-b1b3-43a5-9059-ed73733bed39",
+              "metadataRevisionId": "67e6c3d3-2be3-4393-a891-ba3246f4faf9"
+            }
+          ],
+          "sourceAssetId": "fca492e5-388d-4f85-80e6-f9c348c44b4a"
+        },
+        "sourceAssetId": "fca492e5-388d-4f85-80e6-f9c348c44b4a",
+        "retryRequested": false
+      },
+      "updated_at": "2026-09-23T15:46:33.845Z",
+      "observed_at": "2026-09-23T15:48:27.860Z"
+    },
+    {
+      "id": "7b8cf066-1125-481a-8d3b-14980a8ee396",
+      "status": "SUCCEEDED",
+      "version": "3",
+      "failure_code": null,
+      "checkpoint": {
+        "jobs": [],
+        "preparedMedia": null,
+        "sourceAssetId": null,
+        "retryRequested": false
+      },
+      "updated_at": "2026-09-23T15:46:35.735Z",
+      "observed_at": "2026-09-23T15:48:27.860Z"
+    },
+    {
+      "id": "4993318d-6efa-41ab-abc8-236a679307db",
+      "status": "SUCCEEDED",
+      "version": "9",
+      "failure_code": null,
+      "checkpoint": {
+        "jobs": [
+          {
+            "role": "GIFT_PRIMARY",
+            "jobId": "801a8802-3595-4d36-895c-2f88f147b02f",
+            "metadataRevisionId": "a663c548-5363-4eaf-a946-ce79caca24ce"
+          }
+        ],
+        "preparedMedia": {
+          "assets": [
+            {
+              "role": "GIFT_PRIMARY",
+              "assetId": "a76bfadb-7125-421f-9b53-725926281ee1",
+              "processingJobId": "801a8802-3595-4d36-895c-2f88f147b02f",
+              "metadataRevisionId": "a983f051-07f4-4f21-93a9-225a43680d8a"
+            }
+          ],
+          "sourceAssetId": "3e1d6bf6-d3a7-4570-a3ec-a23e39e0dd5b"
+        },
+        "sourceAssetId": "3e1d6bf6-d3a7-4570-a3ec-a23e39e0dd5b",
+        "retryRequested": false
+      },
+      "updated_at": "2026-09-23T15:46:40.176Z",
+      "observed_at": "2026-09-23T15:48:27.860Z"
+    },
+    {
+      "id": "68551fda-95c0-413a-8a82-a4433dd6bcdd",
+      "status": "SUCCEEDED",
+      "version": "9",
+      "failure_code": null,
+      "checkpoint": {
+        "jobs": [
+          {
+            "role": "GIFT_PRIMARY",
+            "jobId": "81f8c86b-b9cf-426c-b8ac-09927cf50b1d",
+            "metadataRevisionId": "6729a040-8e7a-4a48-934b-c86ead74c97b"
+          }
+        ],
+        "preparedMedia": {
+          "assets": [
+            {
+              "role": "GIFT_PRIMARY",
+              "assetId": "a76bfadb-7125-421f-9b53-725926281ee1",
+              "processingJobId": "81f8c86b-b9cf-426c-b8ac-09927cf50b1d",
+              "metadataRevisionId": "5f596d92-24a1-4c7b-a81b-3d1a4208bfc3"
+            }
+          ],
+          "sourceAssetId": "3e1d6bf6-d3a7-4570-a3ec-a23e39e0dd5b"
+        },
+        "sourceAssetId": "3e1d6bf6-d3a7-4570-a3ec-a23e39e0dd5b",
+        "retryRequested": false
+      },
+      "updated_at": "2026-09-23T15:46:44.920Z",
+      "observed_at": "2026-09-23T15:48:27.860Z"
+    },
+    {
+      "id": "2c4f9492-161d-493d-97fa-fb4800d0e24d",
+      "status": "SUCCEEDED",
+      "version": "9",
+      "failure_code": null,
+      "checkpoint": {
+        "jobs": [
+          {
+            "role": "GIFT_PRIMARY",
+            "jobId": "1d436b57-f8a9-4473-baf1-c4146819a747",
+            "metadataRevisionId": "df57263b-c50f-4ae9-93c8-0821be9ebdfa"
+          }
+        ],
+        "preparedMedia": {
+          "assets": [
+            {
+              "role": "GIFT_PRIMARY",
+              "assetId": "a76bfadb-7125-421f-9b53-725926281ee1",
+              "processingJobId": "1d436b57-f8a9-4473-baf1-c4146819a747",
+              "metadataRevisionId": "6e8eb825-11ce-4d17-8122-21ec51a59c9b"
+            }
+          ],
+          "sourceAssetId": "3e1d6bf6-d3a7-4570-a3ec-a23e39e0dd5b"
+        },
+        "sourceAssetId": "3e1d6bf6-d3a7-4570-a3ec-a23e39e0dd5b",
+        "retryRequested": false
+      },
+      "updated_at": "2026-09-23T15:46:49.401Z",
+      "observed_at": "2026-09-23T15:48:27.860Z"
+    },
+    {
+      "id": "f4c6cac3-b7f9-4ea5-8027-14df456b2856",
+      "status": "SUCCEEDED",
+      "version": "9",
+      "failure_code": null,
+      "checkpoint": {
+        "jobs": [
+          {
+            "role": "GIFT_PRIMARY",
+            "jobId": "9b970f4d-7cad-4158-b394-7e4db850c236",
+            "metadataRevisionId": "24c245be-5747-40c5-8be7-501733b4d417"
+          }
+        ],
+        "preparedMedia": {
+          "assets": [
+            {
+              "role": "GIFT_PRIMARY",
+              "assetId": "a76bfadb-7125-421f-9b53-725926281ee1",
+              "processingJobId": "9b970f4d-7cad-4158-b394-7e4db850c236",
+              "metadataRevisionId": "85ff8bbe-b091-437c-a81b-f3b940562f73"
+            }
+          ],
+          "sourceAssetId": "3e1d6bf6-d3a7-4570-a3ec-a23e39e0dd5b"
+        },
+        "sourceAssetId": "3e1d6bf6-d3a7-4570-a3ec-a23e39e0dd5b",
+        "retryRequested": false
+      },
+      "updated_at": "2026-09-23T15:46:53.854Z",
+      "observed_at": "2026-09-23T15:48:27.860Z"
+    },
+    {
+      "id": "17a83b93-3f37-444a-9faa-83dd85c3a01d",
+      "status": "SUCCEEDED",
+      "version": "3",
+      "failure_code": null,
+      "checkpoint": {
+        "jobs": [],
+        "preparedMedia": null,
+        "sourceAssetId": null,
+        "retryRequested": false
+      },
+      "updated_at": "2026-09-23T15:46:56.215Z",
+      "observed_at": "2026-09-23T15:48:27.860Z"
+    },
+    {
+      "id": "55c095db-d4e3-4376-b44d-95fb59338d13",
+      "status": "SUCCEEDED",
+      "version": "9",
+      "failure_code": null,
+      "checkpoint": {
+        "jobs": [
+          {
+            "role": "HERO_DESKTOP",
+            "jobId": "82f10acd-df5e-4751-b1e3-0ff67ed431a4",
+            "metadataRevisionId": "689f3959-5fad-42dc-a7a6-f1559543106f"
+          },
+          {
+            "role": "HERO_MOBILE",
+            "jobId": "80bad72f-d144-4093-b5ef-a22d84d02bbe",
+            "metadataRevisionId": "689f3959-5fad-42dc-a7a6-f1559543106f"
+          }
+        ],
+        "preparedMedia": {
+          "assets": [
+            {
+              "role": "HERO_DESKTOP",
+              "assetId": "f4f0567e-2066-443b-930d-9a3eed51f38a",
+              "processingJobId": "82f10acd-df5e-4751-b1e3-0ff67ed431a4",
+              "metadataRevisionId": "59bf3c43-704f-44be-b832-e5c9641e6526"
+            },
+            {
+              "role": "HERO_MOBILE",
+              "assetId": "fcc23b20-4e0d-4900-99d1-013e9884623b",
+              "processingJobId": "80bad72f-d144-4093-b5ef-a22d84d02bbe",
+              "metadataRevisionId": "f76ce370-f542-4034-a0ee-42c0e8738ef9"
+            }
+          ],
+          "sourceAssetId": "b849909d-f2f8-4545-afb6-5e49602222ba"
+        },
+        "sourceAssetId": "b849909d-f2f8-4545-afb6-5e49602222ba",
+        "retryRequested": false
+      },
+      "updated_at": "2026-09-23T15:47:03.183Z",
+      "observed_at": "2026-09-23T15:48:27.860Z"
+    },
+    {
+      "id": "056b59d0-7b2c-4cd0-80ea-6e348b4f866a",
+      "status": "SUCCEEDED",
+      "version": "9",
+      "failure_code": null,
+      "checkpoint": {
+        "jobs": [
+          {
+            "role": "HERO_DESKTOP",
+            "jobId": "3e52b8c1-05b9-477b-b66c-07e58de9ade4",
+            "metadataRevisionId": "2bc92a5a-45e6-40e4-bde8-8d6774618e9c"
+          },
+          {
+            "role": "HERO_MOBILE",
+            "jobId": "2729fc3e-a643-4125-9ec4-5dae146743a4",
+            "metadataRevisionId": "2bc92a5a-45e6-40e4-bde8-8d6774618e9c"
+          }
+        ],
+        "preparedMedia": {
+          "assets": [
+            {
+              "role": "HERO_DESKTOP",
+              "assetId": "07d50b54-1d70-4207-baee-3623d02edf97",
+              "processingJobId": "3e52b8c1-05b9-477b-b66c-07e58de9ade4",
+              "metadataRevisionId": "1468f412-4f90-49c1-9290-e137d58ab3cf"
+            },
+            {
+              "role": "HERO_MOBILE",
+              "assetId": "8dc679ac-1f76-40b9-9d96-ea61d6357825",
+              "processingJobId": "2729fc3e-a643-4125-9ec4-5dae146743a4",
+              "metadataRevisionId": "67679f19-41b6-4a91-ba40-8c01d92d4454"
+            }
+          ],
+          "sourceAssetId": "fca492e5-388d-4f85-80e6-f9c348c44b4a"
+        },
+        "sourceAssetId": "fca492e5-388d-4f85-80e6-f9c348c44b4a",
+        "retryRequested": false
+      },
+      "updated_at": "2026-09-23T15:47:08.156Z",
+      "observed_at": "2026-09-23T15:48:27.860Z"
+    },
+    {
+      "id": "cc5765f5-efef-4f3b-a6d4-9f3656b8e6fc",
+      "status": "SUCCEEDED",
+      "version": "3",
+      "failure_code": null,
+      "checkpoint": {
+        "jobs": [],
+        "preparedMedia": null,
+        "sourceAssetId": null,
+        "retryRequested": false
+      },
+      "updated_at": "2026-09-23T15:47:11.287Z",
+      "observed_at": "2026-09-23T15:48:27.860Z"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "9a806d4c-78ae-4ec3-a49f-0e365ffc7ea4",
+      "status": "SUCCEEDED",
+      "attempt_count": 1,
+      "output_asset_id": "319c43ef-1ecc-44b2-b96a-f4d00d453baa",
+      "error_code": null
+    },
+    {
+      "id": "d27b5f6e-adba-44d1-94d1-4378f9b6d0b3",
+      "status": "SUCCEEDED",
+      "attempt_count": 1,
+      "output_asset_id": "07d50b54-1d70-4207-baee-3623d02edf97",
+      "error_code": null
+    },
+    {
+      "id": "ddf8f623-b1b3-43a5-9059-ed73733bed39",
+      "status": "SUCCEEDED",
+      "attempt_count": 1,
+      "output_asset_id": "8dc679ac-1f76-40b9-9d96-ea61d6357825",
+      "error_code": null
+    },
+    {
+      "id": "801a8802-3595-4d36-895c-2f88f147b02f",
+      "status": "SUCCEEDED",
+      "attempt_count": 1,
+      "output_asset_id": "a76bfadb-7125-421f-9b53-725926281ee1",
+      "error_code": null
+    },
+    {
+      "id": "81f8c86b-b9cf-426c-b8ac-09927cf50b1d",
+      "status": "SUCCEEDED",
+      "attempt_count": 1,
+      "output_asset_id": "a76bfadb-7125-421f-9b53-725926281ee1",
+      "error_code": null
+    },
+    {
+      "id": "1d436b57-f8a9-4473-baf1-c4146819a747",
+      "status": "SUCCEEDED",
+      "attempt_count": 1,
+      "output_asset_id": "a76bfadb-7125-421f-9b53-725926281ee1",
+      "error_code": null
+    },
+    {
+      "id": "9b970f4d-7cad-4158-b394-7e4db850c236",
+      "status": "SUCCEEDED",
+      "attempt_count": 1,
+      "output_asset_id": "a76bfadb-7125-421f-9b53-725926281ee1",
+      "error_code": null
+    },
+    {
+      "id": "80bad72f-d144-4093-b5ef-a22d84d02bbe",
+      "status": "SUCCEEDED",
+      "attempt_count": 1,
+      "output_asset_id": "fcc23b20-4e0d-4900-99d1-013e9884623b",
+      "error_code": null
+    },
+    {
+      "id": "82f10acd-df5e-4751-b1e3-0ff67ed431a4",
+      "status": "SUCCEEDED",
+      "attempt_count": 1,
+      "output_asset_id": "f4f0567e-2066-443b-930d-9a3eed51f38a",
+      "error_code": null
+    },
+    {
+      "id": "3e52b8c1-05b9-477b-b66c-07e58de9ade4",
+      "status": "SUCCEEDED",
+      "attempt_count": 1,
+      "output_asset_id": "07d50b54-1d70-4207-baee-3623d02edf97",
+      "error_code": null
+    },
+    {
+      "id": "2729fc3e-a643-4125-9ec4-5dae146743a4",
+      "status": "SUCCEEDED",
+      "attempt_count": 1,
+      "output_asset_id": "8dc679ac-1f76-40b9-9d96-ea61d6357825",
+      "error_code": null
+    }
+  ]
+}

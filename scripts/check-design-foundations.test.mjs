@@ -903,23 +903,31 @@ test("rejects inline styles and Tailwind arbitrary design literals", async (cont
 test("rejects consumer media-query breakpoint drift", async (context) => {
   const root = await fixture();
   context.after(() => rm(root, { recursive: true, force: true }));
+  const queries = [
+    "width >= 47rem",
+    "width < 46rem",
+    "width <= 45rem",
+    "44rem > width",
+    "43rem >= width",
+  ];
   await write(
     root,
     "packages/ui/src/bad.css",
-    `@media (width >= 47rem) {
-      .bad { padding: var(--space-1); }
-    }\n`,
+    queries
+      .map((query) => `@media (${query}) { .bad { padding: var(--space-1); } }`)
+      .join("\n"),
   );
 
   const errors = await validateDesignFoundations(root);
-  assert.ok(
-    errors.some(
-      (error) =>
-        error.includes("packages/ui/src/bad.css") &&
-        error.includes("47rem") &&
-        error.includes("breakpoint"),
-    ),
-  );
+  for (const breakpoint of ["47rem", "46rem", "45rem", "44rem", "43rem"])
+    assert.ok(
+      errors.some(
+        (error) =>
+          error.includes("packages/ui/src/bad.css") &&
+          error.includes(breakpoint) &&
+          error.includes("breakpoint"),
+      ),
+    );
 });
 
 test("rejects undeclared runtime tokens and fail-open reduced motion", async (context) => {

@@ -22,6 +22,7 @@ import {
   sameId,
 } from "./publication-preflight-shared.js";
 import { publishedMediaResolver } from "./published-content-media.js";
+import { recoverPublishedTranslationProjection } from "./published-content-recovery.js";
 
 function currentPublication(context: LegacyPublishedContentContext): boolean {
   const { publication, canonical } = context;
@@ -387,16 +388,49 @@ function project(
     };
   throw new Error("Public content kind mismatch");
 }
-function verifiedContext(input: unknown): LegacyPublishedContentContext {
-  const context = legacyPublishedContentContextSchema.parse(input);
+function verifiedContext(input: unknown) {
+  const original = legacyPublishedContentContextSchema.parse(input);
+  if (
+    computePublicationManifestHash(original.publication.manifest) !==
+    original.publication.manifestHash
+  )
+    throw new Error("Public publication hash invalid");
+  const { context, unavailable } =
+    recoverPublishedTranslationProjection(original);
   if (
     !currentPublication(context) ||
-    computePublicationManifestHash(context.publication.manifest) !==
-      context.publication.manifestHash ||
     !verifyPublicationManifest(context.publication.manifest, context.canonical)
   )
     throw new Error("Public publication proof invalid");
-  return context;
+  return { context, unavailable };
+}
+
+function projectWithRecovery(
+  context: LegacyPublishedContentContext,
+  unavailable: ReadonlySet<string>,
+): PublishedContentResponse {
+  if (!unavailable.has(context.locale)) return projectVerifiedContext(context);
+  const english = projectVerifiedContext({
+    ...context,
+    locale: DEFAULT_LOCALE,
+  });
+  if (english.outcome !== "SUCCESS") return english;
+  const content = english.content;
+  const localeContext = {
+    ...(content.kind === "MEDIA_METADATA"
+      ? content.localeContext
+      : content.view.localeContext),
+    requestedLocale: context.locale,
+    resolvedLocale: DEFAULT_LOCALE,
+    fallbackUsed: true,
+  };
+  return publishedContentResponseSchema.parse({
+    ...english,
+    content:
+      content.kind === "MEDIA_METADATA"
+        ? { ...content, localeContext }
+        : { ...content, view: { ...content.view, localeContext } },
+  });
 }
 
 function unavailable(): PublishedContentResponse {
@@ -438,7 +472,8 @@ export function projectPublishedContent(
   try {
     if (dailyPublicationContextSchema.safeParse(input).success)
       return projectDailyPublication(input);
-    return projectVerifiedContext(verifiedContext(input));
+    const { context, unavailable: missingLocales } = verifiedContext(input);
+    return projectWithRecovery(context, missingLocales);
   } catch {
     return unavailable();
   }
@@ -454,11 +489,11 @@ export function projectPublishedContentLocales(
         projectDailyPublicationLocales(input) ??
         SUPPORTED_LOCALES.map(() => unavailable())
       );
-    const context = verifiedContext(input);
+    const { context, unavailable: missingLocales } = verifiedContext(input);
     if (context.locale !== DEFAULT_LOCALE)
       throw new Error("Publication source locale mismatch");
     return SUPPORTED_LOCALES.map((locale) =>
-      projectVerifiedContext({ ...context, locale }),
+      projectWithRecovery({ ...context, locale }, missingLocales),
     );
   } catch {
     return SUPPORTED_LOCALES.map(() => unavailable());

@@ -1,0 +1,180 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { lstat, readFile, readdir, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { planRegression, regressionCoverage } from '../../../scripts/regression-plan.mjs';
+
+const root = process.cwd();
+const base = path.join(root, 'output/checks/p6-01-regression');
+const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+const json = async filename => JSON.parse(await readFile(filename, 'utf8'));
+const index = await json(path.join(base, 'final-evidence-index.json'));
+const finalSource = await json(path.join(base, 'final-source.json'));
+const integrity = await json(path.join(base, 'final-artifact-integrity.json'));
+const executable = files => files.filter(file => !file.path.startsWith('docs/') && !file.path.startsWith('.agents/') && !['AGENTS.md', 'README.md'].includes(file.path));
+const expectedFiles = executable(finalSource.files);
+const expectedHash = '642a55a818680d763f41ce5d87b5386092591ea5341c92ce4e88c8248bcb8b72';
+const canonical = planRegression([], { root });
+const cleanGit = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('GIT_')));
+const rootNames = new Set(['package.json', 'pnpm-lock.yaml', 'pnpm-workspace.yaml', 'turbo.json', 'vitest.config.ts', 'tsconfig.base.json', 'eslint.config.mjs', '.gitignore', '.dockerignore', '.prettierignore', '.secretlintignore', '.secretlintrc.json', '.node-version', '.npmrc', '.env.example']);
+const roots = ['apps/', 'packages/', 'scripts/', 'database/', 'provider-fixtures/', 'infra/', '.github/'];
+const selected = filename => {
+  if (/^(?:\/)|(?:^|\/)\.\.?(?:\/|$)|\\/u.test(filename)) throw new Error('Unsafe manifest path');
+  if (/(?:^|\/)(?:node_modules|\.next|\.turbo|dist|coverage|\.git)(?:\/|$)|(?:\.log|\.tsbuildinfo)$/u.test(filename)) return false;
+  if (/(?:^|\/)\.env(?:\.|$)/u.test(filename) && !filename.endsWith('.example')) return false;
+  return rootNames.has(filename) || roots.some(prefix => filename.startsWith(prefix));
+};
+const inventory = directory => {
+  const git = args => execFileSync('git', ['ls-files', ...args, '-z'], { cwd: directory, env: cleanGit, maxBuffer: 64 * 1024 * 1024 }).toString().split('\0').filter(Boolean);
+  const removed = new Set(git(['--deleted']));
+  return [...new Set(git(['--cached', '--others', '--exclude-standard']))].filter(name => !removed.has(name) && selected(name)).sort();
+};
+const trees = [];
+async function verifyTree(directory, label) {
+  const filenames = inventory(directory);
+  assert.deepEqual(filenames, expectedFiles.map(file => file.path));
+  for (const file of expectedFiles) {
+    const absolute = path.join(directory, file.path);
+    const stat = await lstat(absolute);
+    assert(stat.isFile() && !stat.isSymbolicLink());
+    assert.equal(stat.mode & 0o777, file.mode);
+    assert.equal(hash(await readFile(absolute)), file.sha256);
+  }
+  trees.push({ label, files: filenames.length, bytesModeAndInventoryMatch: true });
+}
+assert.equal(index.status, 'PASS');
+assert.equal(index.acceptance, 'SAME_SOURCE_CROSS_RUN_LOCAL_COVERAGE');
+assert.equal(finalSource.sourceHash, expectedHash);
+assert.equal(hash(JSON.stringify(expectedFiles)), expectedHash);
+assert.equal(index.sourceHash, expectedHash);
+assert.equal(expectedFiles.length, 2740);
+assert.equal(new Set(index.suites.map(suite => suite.id)).size, 5);
+assert.deepEqual(index.suites.map(suite => suite.id), canonical.suites.map(suite => suite.id));
+assert.deepEqual(index.scope, canonical.scope);
+assert.equal(index.versions.node, 'v24.20.0');
+assert.equal(index.versions.pnpm, '11.25.0');
+await verifyTree(root, 'current-root');
+const reports = new Map();
+const runs = ['final-8', 'final-operations-9', 'final-journey-9'];
+for (const run of runs) {
+  const directory = path.join(base, run);
+  const report = await json(path.join(directory, 'report.json'));
+  const source = await json(path.join(directory, 'source.json'));
+  const steps = await json(path.join(directory, 'steps.json'));
+  const plan = await json(path.join(directory, 'plan.json'));
+  assert.deepEqual(report.execution, steps);
+  assert.equal(report.sourceHash, expectedHash);
+  assert.equal(report.sourceHead, index.sourceHead);
+  assert.equal(source.sourceHash, expectedHash);
+  assert.equal(hash(JSON.stringify(executable(source.files))), expectedHash);
+  assert.deepEqual(executable(source.files), expectedFiles);
+  assert.deepEqual(plan.suites, canonical.suites.filter(suite => run === 'final-8' || suite.id === (run === 'final-operations-9' ? 'operations' : 'journey')));
+  assert.equal(report.status, run === 'final-8' ? 'FAIL' : 'PASS');
+  assert.deepEqual(report.scope, canonical.scope);
+  assert.equal(report.postgresSelection.kind, 'EXPLICIT_NATIVE_18');
+  assert.deepEqual(report.execution.coverage, regressionCoverage(report.execution.suites));
+  assert.equal(report.execution.coverage.complete, false);
+  assert.equal(report.preparation.length, 4);
+  for (const step of report.preparation) assert(step.status === 'PASS' && step.exitCode === 0 && step.signal === null && step.launchFailed === false);
+  await verifyTree(report.workspace, run);
+  reports.set(run, report);
+}
+let commands = 0;
+for (const suite of index.suites) {
+  const report = reports.get(suite.run);
+  assert(report);
+  assert.equal(suite.runId, report.runId);
+  assert.equal(suite.runStatus, report.status);
+  assert.equal(suite.sourceHash, expectedHash);
+  assert.equal(suite.status, 'PASS');
+  assert.equal(report.execution.suites.find(entry => entry.id === suite.id)?.status, 'PASS');
+  const originals = report.execution.steps.filter(step => step.suite === suite.id);
+  const definitions = canonical.suites.find(entry => entry.id === suite.id).commands;
+  assert.equal(suite.steps.length, definitions.length);
+  assert.equal(originals.length, definitions.length);
+  for (let i = 0; i < definitions.length; i++) {
+    const actual = suite.steps[i], original = originals[i], definition = definitions[i];
+    assert.equal(actual.command, definition.command);
+    assert.deepEqual(actual.args, definition.args);
+    const { command, args, ...record } = actual;
+    assert.deepEqual({ ...record, log: original.log }, original);
+    assert.equal(actual.label, `${suite.id}-${definition.label}`);
+    assert.equal(actual.log.path, path.join('output/checks/p6-01-regression', suite.run, original.log));
+    assert(actual.status === 'PASS' && actual.exitCode === 0 && actual.signal === null && actual.launchFailed === false);
+    commands++;
+  }
+}
+assert.equal(commands, 17);
+assert.deepEqual(index.coverage, regressionCoverage(index.suites));
+assert(index.coverage.complete && index.coverage.requirements.length === 14 && index.coverage.requirements.every(item => item.status === 'PASS') && index.coverage.missingSuites.length === 0);
+let references = 0;
+for (const reference of index.references) {
+  assert(!path.isAbsolute(reference.path) && !reference.path.split('/').includes('..'));
+  const bytes = await readFile(path.join(root, reference.path));
+  assert.equal(bytes.length, reference.bytes);
+  assert.equal(hash(bytes), reference.sha256);
+  references++;
+}
+assert.deepEqual(index.priorFailures.map(item => item.run), Array.from({ length: 8 }, (_, i) => `final-${i + 1}`));
+for (const prior of index.priorFailures) assert.equal((await json(path.join(root, prior.report.path))).status, 'FAIL');
+assert(index.limitations.some(text => text.includes('Not a successful single invocation')));
+assert(index.limitations.some(text => text.includes('cause UNKNOWN, not demonstrated fixed')));
+async function walk(directory, prefix = '') {
+  const paths = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    assert(!entry.isSymbolicLink());
+    const name = path.posix.join(prefix, entry.name);
+    if (entry.isDirectory()) paths.push(...await walk(path.join(directory, entry.name), name));
+    else if (entry.isFile()) paths.push(name);
+    else assert.fail('Unexpected archive entry');
+  }
+  return paths.sort();
+}
+const archives = [];
+for (const item of integrity.runs) {
+  const report = reports.get(item.run);
+  assert(report);
+  const archive = path.join(base, item.run, 'artifacts');
+  const recordedPaths = item.files.map(file => file.path);
+  assert.equal(new Set(recordedPaths).size, item.count);
+  assert.deepEqual(await walk(archive), [...recordedPaths].sort());
+  assert.equal(item.count, report.archive.files);
+  for (const file of item.files) {
+    assert(!path.isAbsolute(file.path) && !file.path.split('/').some(part => part.startsWith('.')));
+    assert(['.json', '.png', '.md', '.txt'].includes(path.extname(file.path)));
+    const archived = await readFile(path.join(archive, file.path));
+    const originalPath = path.join(report.workspace, 'output', file.path);
+    const stat = await lstat(originalPath);
+    assert(stat.isFile() && !stat.isSymbolicLink());
+    assert.equal(archived.length, file.bytes);
+    assert.equal(hash(archived), file.sha256);
+    assert.equal(hash(await readFile(originalPath)), file.sha256);
+  }
+  archives.push({ run: item.run, files: item.count, fullArchiveAndSourceOutputHashesMatch: true });
+}
+assert.deepEqual(archives.map(item => item.run), runs);
+assert.deepEqual(archives.map(item => item.files), [723, 304, 94]);
+const evidence = [];
+for (const name of ['final-evidence-index.json', 'final-source.json', 'final-artifact-integrity.json', 'assemble-final-evidence.mjs', 'verify-artifact-integrity.py', 'independent-final-aggregate-check.mjs']) {
+  const bytes = await readFile(path.join(base, name));
+  evidence.push({ path: path.join('output/checks/p6-01-regression', name), sha256: hash(bytes), bytes: bytes.length });
+}
+const result = {
+  schemaVersion: 1, reviewer: 'seven_locale_journey', generatedAt: new Date().toISOString(),
+  status: 'ACCEPT', scope: 'AGGREGATE_PROVENANCE_AND_FILE_INTEGRITY_ONLY',
+  independentOfAggregateGenerator: true, independentJourneyImplementationReview: false,
+  sourceHash: expectedHash, executableFiles: expectedFiles.length, trees,
+  suites: index.suites.map(({ id, run, runStatus }) => ({ id, run, runStatus, status: 'PASS' })),
+  commands, requirements: index.coverage.requirements.length,
+  referencesVerified: references, uniqueReferencePaths: new Set(index.references.map(item => item.path)).size,
+  archives, archivedFilesVerified: archives.reduce((sum, item) => sum + item.files, 0),
+  originalFailureReportsPreserved: 8, priorFinanceFailureCause: 'UNKNOWN', priorFinanceFailureDemonstratedFixed: false,
+  singleInvocationPassed: false, servicesStarted: false, browserStarted: false,
+  remoteCiPassed: false, p601Done: false,
+  runtimeEvidenceLimits: 'Index node/pnpm describe generator environment. Available final8/operations JSON records report Chrome 153.0.8010.53 and PostgreSQL 18.6. Journey artifacts do not independently record those exact runtime versions; common selection alone is not an actual-service version record.',
+  exclusions: ['Journey implementation and scenario sufficiency are reviewed separately by a non-author.', 'Archive byte integrity does not establish screenshot privacy or content correctness.', 'No claim that the retained intermittent finance failure was fixed.', 'No remote CI, real merchant/money, cloud, human acceptance or release-gate claim.'],
+  evidence,
+};
+await writeFile(path.join(base, 'final-aggregate-independent-review.json'), JSON.stringify(result, null, 2) + '\n', { flag: 'wx' });
+console.log(JSON.stringify({ status: result.status, sourceHash: expectedHash, trees: trees.length, executableFiles: expectedFiles.length, suites: result.suites.length, commands, requirements: result.requirements, references, archives, exclusions: result.exclusions }));

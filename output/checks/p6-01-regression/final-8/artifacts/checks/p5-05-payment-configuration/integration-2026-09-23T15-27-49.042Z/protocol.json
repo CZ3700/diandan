@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "firstRevisionId": "d8a7d7b3-c246-403d-aa72-08afeb5b9f65",
+  "secondRevisionId": "02f9a60b-1986-4ae8-8df6-15c1fd0f1d8c",
+  "finalPublicationId": "46327ea0-d971-4bed-9e8c-00bd86d1ea29",
+  "generation": 4,
+  "propagation": [
+    {
+      "generation": 2,
+      "elapsedMs": 733.2942079999993,
+      "observations": [
+        {
+          "generation": 2,
+          "databaseFailures": 0,
+          "accounts": [
+            "07921987-058c-4e5e-8d6d-745489707e02",
+            "e700100c-7f05-47d1-afa6-d6534923b235"
+          ],
+          "policies": [
+            {
+              "providerAccountId": "07921987-058c-4e5e-8d6d-745489707e02",
+              "version": 1,
+              "failureThreshold": 3
+            },
+            {
+              "providerAccountId": "e700100c-7f05-47d1-afa6-d6534923b235",
+              "version": 1,
+              "failureThreshold": 3
+            }
+          ]
+        },
+        {
+          "generation": 2,
+          "databaseFailures": 0,
+          "accounts": [
+            "07921987-058c-4e5e-8d6d-745489707e02",
+            "e700100c-7f05-47d1-afa6-d6534923b235"
+          ],
+          "policies": [
+            {
+              "providerAccountId": "07921987-058c-4e5e-8d6d-745489707e02",
+              "version": 1,
+              "failureThreshold": 3
+            },
+            {
+              "providerAccountId": "e700100c-7f05-47d1-afa6-d6534923b235",
+              "version": 1,
+              "failureThreshold": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "generation": 3,
+      "elapsedMs": 943.7057920000007,
+      "observations": [
+        {
+          "generation": 3,
+          "databaseFailures": 1,
+          "accounts": [
+            "07921987-058c-4e5e-8d6d-745489707e02",
+            "e700100c-7f05-47d1-afa6-d6534923b235"
+          ],
+          "policies": [
+            {
+              "providerAccountId": "07921987-058c-4e5e-8d6d-745489707e02",
+              "version": 1,
+              "failureThreshold": 3
+            },
+            {
+              "providerAccountId": "e700100c-7f05-47d1-afa6-d6534923b235",
+              "version": 2,
+              "failureThreshold": 5
+            }
+          ]
+        },
+        {
+          "generation": 3,
+          "databaseFailures": 1,
+          "accounts": [
+            "07921987-058c-4e5e-8d6d-745489707e02",
+            "e700100c-7f05-47d1-afa6-d6534923b235"
+          ],
+          "policies": [
+            {
+              "providerAccountId": "07921987-058c-4e5e-8d6d-745489707e02",
+              "version": 1,
+              "failureThreshold": 3
+            },
+            {
+              "providerAccountId": "e700100c-7f05-47d1-afa6-d6534923b235",
+              "version": 2,
+              "failureThreshold": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "generation": 4,
+      "elapsedMs": 883.2179580000011,
+      "observations": [
+        {
+          "generation": 4,
+          "databaseFailures": 1,
+          "accounts": [
+            "07921987-058c-4e5e-8d6d-745489707e02",
+            "e700100c-7f05-47d1-afa6-d6534923b235"
+          ],
+          "policies": [
+            {
+              "providerAccountId": "07921987-058c-4e5e-8d6d-745489707e02",
+              "version": 1,
+              "failureThreshold": 3
+            },
+            {
+              "providerAccountId": "e700100c-7f05-47d1-afa6-d6534923b235",
+              "version": 3,
+              "failureThreshold": 3
+            }
+          ]
+        },
+        {
+          "generation": 4,
+          "databaseFailures": 1,
+          "accounts": [
+            "07921987-058c-4e5e-8d6d-745489707e02",
+            "e700100c-7f05-47d1-afa6-d6534923b235"
+          ],
+          "policies": [
+            {
+              "providerAccountId": "07921987-058c-4e5e-8d6d-745489707e02",
+              "version": 1,
+              "failureThreshold": 3
+            },
+            {
+              "providerAccountId": "e700100c-7f05-47d1-afa6-d6534923b235",
+              "version": 3,
+              "failureThreshold": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "boundedRefreshFailureMs": 10679.644417000003,
+  "independentPids": [
+    48913,
+    48998
+  ],
+  "unknownAttemptId": "64741b82-eea0-466d-a97d-b925b9edd91d",
+  "assertions": 313
+}

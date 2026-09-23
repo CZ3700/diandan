@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "sourceAndDocumentationWhitespaceCheck": {
+    "exitCode": 0
+  },
+  "fullStagedWhitespaceCheck": {
+    "exitCode": 2,
+    "onlyPreservedRawCaptureLogs": true,
+    "files": [
+      "output/checks/p6-01-regression/final-8/quality-regression-tools.txt",
+      "output/checks/p6-01-regression/final-8/quality-repository-check.txt",
+      "output/checks/p6-01-regression/final-8/quality-ui-composites.txt",
+      "output/checks/p6-01-regression/final-8/quality-ui-motion.txt",
+      "output/checks/p6-01-regression/final-journey-9/artifacts/checks/p6-01-regression/journey/test-regression-30cf1a0c927447a2/1-build.txt",
+      "output/checks/p6-01-regression/final-operations-9/operations-login-permissions.txt",
+      "output/checks/p6-01-regression/final-operations-9/operations-order-operations.txt"
+    ]
+  },
+  "rawEvidenceBytesPreserved": true,
+  "qualityFormatLintGates": "PASS on original complete quality suite; current root ESLint also exit0"
+}

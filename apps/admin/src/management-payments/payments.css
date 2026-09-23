@@ -1,5 +1,5 @@
 .mp-workspace {
-  max-width: 76rem;
+  max-width: calc(var(--layout-content-max) + var(--space-4));
   margin-inline: auto;
   overflow-wrap: anywhere;
 }
@@ -61,8 +61,8 @@
   font: inherit;
 }
 .mp-workspace input[type="checkbox"] {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: calc(var(--space-4) + var(--space-1));
+  height: calc(var(--space-4) + var(--space-1));
   flex-shrink: 0;
 }
 .mp-workspace fieldset {
@@ -113,8 +113,8 @@
   margin-block-start: var(--space-2);
 }
 .mp-workspace :focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
+  outline: calc(var(--border-width) * 2) solid var(--color-accent);
+  outline-offset: calc(var(--border-width) * 3);
 }
 @media (max-width: 48rem) {
   .mp-grid,

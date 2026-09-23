@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "status": "ACCEPT_JOURNEY_GROUP_WITH_SCOPE_LIMITS",
+  "aggregateAccepted": false,
+  "runId": "ebefac61-3dcb-4695-abef-ac81885046db",
+  "sourceHash": "642a55a818680d763f41ce5d87b5386092591ea5341c92ce4e88c8248bcb8b72",
+  "sourceManifestFilesVerified": 2822,
+  "executableManifestFiles": 2740,
+  "sourceMismatches": [],
+  "sourceFiles": [
+    {
+      "path": "apps/api/scripts/regression-journey.mjs",
+      "sha256": "4a0d65a0447b37ed976be3de016c2bed0fd6d0c55afc692d70bc4933118cd91b"
+    },
+    {
+      "path": "apps/api/scripts/regression-journey-browser.mjs",
+      "sha256": "2efcd45cffaa190627149f1ef2fc2464b7e66b31fd3811fac06585b45e2299bb"
+    },
+    {
+      "path": "apps/api/scripts/regression-journey-state.mjs",
+      "sha256": "f0cd2477ed4f7c27cf4d9d73206b12c680023fc4a783ffdeb1acee6fe379649b"
+    },
+    {
+      "path": "apps/api/scripts/regression-journey-publication-state.mjs",
+      "sha256": "d193c50062560d16aad04f39d8a80d0eb0ee39cd9352b5ab7f911c9daafc673c"
+    },
+    {
+      "path": "apps/api/scripts/regression-journey-contract.mjs",
+      "sha256": "13be42b46df48cc90f4bf8044545b0618a49b2b59c9fa709d54ef860a6c0ad43"
+    },
+    {
+      "path": "apps/api/scripts/regression-journey-web.mjs",
+      "sha256": "89ce40dcc68e385265bfe995442b700083b865cfea1145650cad0674901e0d34"
+    },
+    {
+      "path": "apps/api/scripts/local-experience-browser-payment-observer.mjs",
+      "sha256": "1af8d9a0c5429e46acec6164a5423c8dce38950fca5347278ac77a0106bee6ca"
+    },
+    {
+      "path": "apps/api/scripts/local-experience-services-psp.mjs",
+      "sha256": "5c489296f8f13238d93c1b7ae3eed142a24ed77e6922c7ad0628a1d7a3477c92"
+    },
+    {
+      "path": "apps/api/scripts/local-experience-postgres.mjs",
+      "sha256": "d8fb86e75fd00bf50c192e9313678779d7cf42fa536e3ae06a044d820a702b1a"
+    },
+    {
+      "path": "scripts/verify-regression-journey.mjs",
+      "sha256": "486f19ba901e0547d21a1e045f2118ec5b50f6001bee5f23515b3d518954caf6"
+    },
+    {
+      "path": "scripts/regression-journey-lifecycle.mjs",
+      "sha256": "586d5eff5fd5b18f65ca167c18c6ba9d94716106dc5c846a57ae2918568da04a"
+    }
+  ],
+  "matrix": {
+    "locales": [
+      "en",
+      "zh-CN",
+      "th",
+      "vi",
+      "ja",
+      "es",
+      "pt"
+    ],
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 1440,
+        "height": 900
+      }
+    ],
+    "uniqueCases": 14,
+    "stepsPerCase": 10,
+    "allStepValuesTrue": true,
+    "headerLocaleSwitches": 28,
+    "preDepartureChecks": 14,
+    "paymentCreates": 14,
+    "returnReads": 28,
+    "eachReturnHasSameAttemptRequiresActionAndSucceeded": true,
+    "privateFailureAndCancellationRecoveries": 2,
+    "invalidLocale404": true,
+    "pageErrors": 0,
+    "observerFailures": 0,
+    "summaryEvidenceChecks": 171,
+    "summaryCountIsNotRawAssertionTotal": true
+  },
+  "publicationAtomicity": {
+    "operations": 1,
+    "headBindings": 1,
+    "variants": 1,
+    "giftRevisions": 1,
+    "expectedMetadata": 1,
+    "metadataRevisions": 1,
+    "priorMediaDrafts": 1,
+    "unexpectedRevisions": 0,
+    "revisions": 2,
+    "manifests": 2,
+    "contentPublications": 2,
+    "priceRevisions": 1,
+    "pricePublications": 1,
+    "priceReceiptBindings": 1,
+    "priceHeads": 1,
+    "priceEvents": 1,
+    "invalidContentEventGroups": 0,
+    "invalidPurgeGroups": 0
+  },
+  "cleanup": {
+    "commands": [
+      {
+        "label": "1-build",
+        "exitCode": 0,
+        "status": "PASS"
+      },
+      {
+        "label": "2-start",
+        "exitCode": 0,
+        "status": "PASS"
+      },
+      {
+        "label": "3-stop",
+        "exitCode": 0,
+        "status": "PASS"
+      },
+      {
+        "label": "4-reset",
+        "exitCode": 0,
+        "status": "PASS"
+      }
+    ],
+    "dataPreserved": false,
+    "ownedInstanceDirectoryAbsent": true,
+    "browserCleanupFailureAbsent": true
+  },
+  "versions": {
+    "nextInstalledInSnapshot": "16.3.4",
+    "playwrightInstalledInSnapshot": "1.62.1",
+    "packageManagerDeclared": "pnpm@11.25.0",
+    "nodeDeclaredRange": ">=24.20.0 <25",
+    "postgresMajorRuntimeGate": 18,
+    "browserConfiguredChannel": "chrome",
+    "browserActualVersionRecorded": false,
+    "postgresActualPatchRecorded": false,
+    "note": "No earlier run versions are borrowed as proof for this run.",
+    "rootReportedToolSelection": {
+      "node": "24.20.0 selected through mise",
+      "postgres": "explicit absolute PostgreSQL 18.6 binary directory, normalized into journey local selector",
+      "evidenceType": "Parent run-command confirmation, not a per-service version record inside the journey artifact"
+    }
+  },
+  "scope": {
+    "environment": "LOCAL_TEST",
+    "remoteCi": false,
+    "realMoney": false,
+    "commercialSandbox": false,
+    "cloudEvidence": false,
+    "humanAccessibility": false,
+    "storefront": "production-compiled Next in LOCAL_TEST tier",
+    "admin": "existing local development with LOCAL_OIDC TEST identity",
+    "psp": "independent local TEST hosted PSP with HMAC-signed webhook or authenticated reconcile evidence",
+    "mail": "independent encrypted local TEST capture; no external mail-delivery acceptance",
+    "commercialNetworkAcceptance": false
+  },
+  "evidenceHashes": [
+    {
+      "path": "output/checks/p6-01-regression/final-journey-9/report.json",
+      "sha256": "3cc4ab6af84f98f79669531adaa838071c28b740cd1202ccba8fe341a2bf8064"
+    },
+    {
+      "path": "output/checks/p6-01-regression/final-journey-9/source.json",
+      "sha256": "766c9494ab52317dfc73bd37d4c8074150c3b5577a5e6303cd786f057923b151"
+    },
+    {
+      "path": "output/checks/p6-01-regression/final-journey-9/artifacts/checks/p6-01-regression/journey/test-regression-30cf1a0c927447a2/result.json",
+      "sha256": "9d5e97920f9b6d8f397f6e9db1e878374ccb826a73a3221e0a679676fd5b355a"
+    },
+    {
+      "path": "output/checks/p6-01-regression/final-journey-9/artifacts/checks/p6-01-regression/journey/test-regression-30cf1a0c927447a2/browser/report.json",
+      "sha256": "c39e60a9b3b208fdd8875cd6ff0b1b188d46e52fe64ca6a043c0c3bfc57c9dbf"
+    }
+  ],
+  "limitations": [
+    "This accepts the completed journey group, not aggregate P6-01.",
+    "PSP signed delivery path and trusted SUCCEEDED are evidenced by frozen source and runtime journey; no per-attempt webhook row/signature receipt is separately archived.",
+    "Both FAILED and CANCELED are tested at en/390, not all 14 matrix cells.",
+    "No live database is re-opened by this review; original instance was intentionally reset.",
+    "Content setup PARTIAL_PASS is expected POSTER-only fixture preparation and is not claimed as a separate full content suite.",
+    "Exactly-one publication is the canonical gift operation scoped check, not a claim that all database writes globally occur once."
+  ],
+  "contentSetup": {
+    "mode": "POSTER",
+    "status": "PARTIAL_PASS",
+    "stage": "COMPLETE",
+    "assertions": 542,
+    "localeViewportCases": 14,
+    "screenshots": 42,
+    "pageErrors": 0,
+    "observations": 0,
+    "loginConsoleErrors": 1,
+    "loginConsoleClassification": "HTTP_401_UNAUTHORIZED_AT_ADMIN_LOGIN",
+    "note": "Console capture is restricted by source to LOGIN. This review does not claim zero console messages."
+  }
+}

@@ -104,7 +104,9 @@ export async function withAcceptanceFixture({
       ...publicationMediaEnvironment(preflightEnvironment(database), s3),
       FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN: gateway.origin,
     };
-    const persistence = createPostgresPersistence(database, {
+    const createReadPersistence =
+      diagnostics?.createReadPersistence ?? createPostgresPersistence;
+    const persistence = createReadPersistence(database, {
       catalogPublicMediaBaseUrl: gateway.origin,
     });
     own("public read persistence", () => persistence.close());
@@ -135,10 +137,10 @@ export async function withAcceptanceFixture({
         { ...common, publicMediaBaseUrl: gateway.origin },
         diagnostics
           ? {
-              createPersistence: (config, options) =>
-                diagnostics.wrapPersistence(
-                  createPostgresPersistence(config, options),
-                ),
+              createPersistence: (config, options) => {
+                const reads = createReadPersistence(config, options);
+                return diagnostics.wrapPersistence?.(reads) ?? reads;
+              },
             }
           : undefined,
       ),

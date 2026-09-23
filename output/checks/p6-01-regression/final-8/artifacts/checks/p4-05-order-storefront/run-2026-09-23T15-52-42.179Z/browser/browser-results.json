@@ -1,0 +1,2061 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "hosted-return-signed-webhook-worker-canonical-order",
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "GET",
+          "category": "OTHER"
+        },
+        {
+          "method": "GET",
+          "category": "OTHER"
+        },
+        {
+          "method": "GET",
+          "category": "OTHER"
+        },
+        {
+          "method": "GET",
+          "category": "OTHER"
+        },
+        {
+          "method": "GET",
+          "category": "OTHER"
+        },
+        {
+          "method": "GET",
+          "category": "OTHER"
+        },
+        {
+          "method": "GET",
+          "category": "OTHER"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "OTHER"
+        },
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "OTHER"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "OTHER"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "READ",
+          "status": 403,
+          "action": null,
+          "code": "ACCESS_DENIED",
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "BOOTSTRAP",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "en",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": true,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "consumed-token-replay",
+      "status": "PASS"
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "zh-CN",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": true,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "th",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": true,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "vi",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": true,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "ja",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": true,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "es",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": true,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "pt",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": true,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "en",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": false,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "zh-CN",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": false,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "th",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": false,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "vi",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": false,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "ja",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": false,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "es",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": false,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "actual-header-language-preserves-order",
+      "from": "pt",
+      "to": [
+        "ja",
+        "zh-CN",
+        "pt"
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "seven-locale-order-matrix",
+      "locale": "pt",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": false,
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    },
+    {
+      "name": "real-cookie-with-discarded-json-recovers-via-known-order",
+      "status": "PASS",
+      "injectedAt": "NEXT_RESPONSE_BODY",
+      "socketDisconnected": false,
+      "bodyDiscarded": true
+    },
+    {
+      "name": "discarded-read-retry",
+      "status": "PASS",
+      "fault": "BROWSER_REQUEST_ABORT"
+    },
+    {
+      "name": "native-back-reauthorization",
+      "status": "PASS",
+      "navigation": {
+        "type": "back_forward",
+        "pageshow": [
+          {
+            "persisted": false
+          }
+        ]
+      },
+      "actualBfcacheRestoration": false
+    },
+    {
+      "name": "new-browser-session-revokes-old-browser",
+      "status": "PASS"
+    },
+    {
+      "name": "real-link-expiry",
+      "status": "PASS"
+    },
+    {
+      "name": "real-browser-session-expiry",
+      "status": "PASS"
+    },
+    {
+      "name": "revocation-body-loss-retains-close-intent",
+      "status": "PASS",
+      "socketDisconnected": false,
+      "bodyDiscarded": true
+    },
+    {
+      "name": "daily-original-lookup-cross-order-and-revoke",
+      "status": "PASS",
+      "requests": [
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "POST",
+          "category": "ACCESS"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        },
+        {
+          "method": "GET",
+          "category": "READ"
+        }
+      ],
+      "responses": [
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 401,
+          "action": null,
+          "code": "ACCESS_DENIED",
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 401,
+          "action": null,
+          "code": "ACCESS_DENIED",
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "EXCHANGE",
+          "status": 401,
+          "action": null,
+          "code": "ACCESS_DENIED",
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 403,
+          "action": null,
+          "code": "ACCESS_DENIED",
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "EXCHANGE",
+          "status": 200,
+          "action": "GRANTED",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 200,
+          "action": "READ",
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "REVOKE",
+          "status": 200,
+          "action": null,
+          "code": null,
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 403,
+          "action": null,
+          "code": "ACCESS_DENIED",
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        },
+        {
+          "category": "READ",
+          "status": 403,
+          "action": null,
+          "code": "ACCESS_DENIED",
+          "privateCache": true,
+          "noReferrer": true,
+          "noIndex": true
+        }
+      ],
+      "fragmentEvents": [
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "REPLACE",
+          "cleared": true
+        },
+        {
+          "stage": "EXCHANGE",
+          "cleared": true
+        }
+      ],
+      "pageErrors": 0,
+      "leaked": false
+    }
+  ],
+  "screenshots": [
+    "en-390-return-awaiting-evidence.png",
+    "en-390-checkout-canonical-success.png",
+    "en-390-lookup.png",
+    "en-390-history.png",
+    "en-390-success.png",
+    "en-390-token-replay.png",
+    "zh-CN-390-lookup.png",
+    "zh-CN-390-history.png",
+    "zh-CN-390-success.png",
+    "th-390-lookup.png",
+    "th-390-history.png",
+    "th-390-success.png",
+    "vi-390-lookup.png",
+    "vi-390-history.png",
+    "vi-390-success.png",
+    "ja-390-lookup.png",
+    "ja-390-history.png",
+    "ja-390-success.png",
+    "es-390-lookup.png",
+    "es-390-history.png",
+    "es-390-success.png",
+    "pt-390-lookup.png",
+    "pt-390-history.png",
+    "pt-390-success.png",
+    "en-1440-lookup.png",
+    "en-1440-history.png",
+    "en-1440-success.png",
+    "zh-CN-1440-lookup.png",
+    "zh-CN-1440-history.png",
+    "zh-CN-1440-success.png",
+    "th-1440-lookup.png",
+    "th-1440-history.png",
+    "th-1440-success.png",
+    "vi-1440-lookup.png",
+    "vi-1440-history.png",
+    "vi-1440-success.png",
+    "ja-1440-lookup.png",
+    "ja-1440-history.png",
+    "ja-1440-success.png",
+    "es-1440-lookup.png",
+    "es-1440-history.png",
+    "es-1440-success.png",
+    "pt-1440-lookup.png",
+    "pt-1440-history.png",
+    "pt-1440-success.png",
+    "pt-order-1440-header-ja.png",
+    "pt-order-1440-header-zh-CN.png",
+    "pt-order-1440-header-pt.png",
+    "pt-390-daily-original-response-loss.png",
+    "pt-390-cross-order-denied.png",
+    "pt-390-network-error.png",
+    "pt-390-session-rotated.png",
+    "pt-390-expired-link.png",
+    "pt-390-expired-session.png",
+    "pt-390-revoked.png"
+  ],
+  "axe": [
+    {
+      "name": "en-390-return-awaiting-evidence",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-checkout-canonical-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-token-replay",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-390-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-390-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-390-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-390-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-1440-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-1440-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-1440-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "ja-1440-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-1440-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-1440-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "es-1440-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-1440-lookup",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-1440-history",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-1440-success",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-order-1440-header-ja",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-order-1440-header-zh-CN",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-order-1440-header-pt",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-daily-original-response-loss",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-cross-order-denied",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-network-error",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-session-rotated",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-expired-link",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-expired-session",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-revoked",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "browserClosed": true,
+  "actualPspSandbox": false,
+  "physicalDeviceEvidence": false,
+  "humanTranslationReview": false,
+  "browserVersion": "153.0.8010.53",
+  "browserBfcacheExplicitlyEnabled": true,
+  "catalogChange": {
+    "artistRepublished": true,
+    "giftRepublished": true,
+    "portraitAndGiftImageReplaced": true,
+    "currentArtistAndGiftArchived": true,
+    "oldAmount": 1500,
+    "newAmount": 1637
+  },
+  "keyboard": [
+    {
+      "expectedMatched": true,
+      "body": false,
+      "tag": "BUTTON",
+      "outline": "solid",
+      "outlineWidth": 3,
+      "shadow": "none"
+    },
+    {
+      "expectedMatched": true,
+      "body": false,
+      "tag": "A",
+      "outline": "solid",
+      "outlineWidth": 3,
+      "shadow": "none"
+    },
+    {
+      "expectedMatched": true,
+      "body": false,
+      "tag": "BUTTON",
+      "outline": "solid",
+      "outlineWidth": 3,
+      "shadow": "none"
+    },
+    {
+      "expectedMatched": true,
+      "body": false,
+      "tag": "A",
+      "outline": "solid",
+      "outlineWidth": 3,
+      "shadow": "none"
+    }
+  ],
+  "financialStateUnchanged": true
+}

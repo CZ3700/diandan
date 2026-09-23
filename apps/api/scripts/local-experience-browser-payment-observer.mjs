@@ -2,7 +2,12 @@ import { URL } from "node:url";
 import { paymentRuntimeResponseSchema } from "@fan-support/contracts";
 
 /** Retains only canonical payment identities and states, never request bodies or capabilities. */
-export function observeLocalBrowserPayment({ page, config, report }) {
+export function observeLocalBrowserPayment({
+  page,
+  config,
+  report,
+  readBodyForStage = () => true,
+}) {
   const pending = new Set();
   const pattern =
     /^\/api\/storefront\/checkout\/sessions\/([a-f0-9-]+)\/attempts(?:\/([a-f0-9-]+))?$/u;
@@ -28,11 +33,20 @@ export function observeLocalBrowserPayment({ page, config, report }) {
     const stage = report.stage;
     const operation = (async () => {
       try {
+        // HTTP failures are always evidence failures, including stages whose
+        // bodies cannot be retained after cross-document navigation.
+        if (value.status() !== 200) {
+          report.observations.push({
+            code: "PAYMENT_READ_CONTRACT_FAILED",
+            stage,
+          });
+          return;
+        }
+        if (!readBodyForStage(stage)) return;
         const parsed = paymentRuntimeResponseSchema.safeParse(
           await value.json(),
         );
         if (
-          value.status() !== 200 ||
           !parsed.success ||
           parsed.data.outcome !== "SUCCESS" ||
           !("attempt" in parsed.data) ||

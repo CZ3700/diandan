@@ -1,0 +1,116 @@
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { performance } from 'node:perf_hooks';
+import { setTimeout as delay } from 'node:timers/promises';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import { chromium, expect } from '@playwright/test';
+
+const output = path.dirname(fileURLToPath(import.meta.url));
+const report = {scope:'FIXED_DUMMY_HTTP_CHROME_LAST_ROUTE_TEARDOWN_CONTROL_ONLY',status:'RUNNING',pairs:[],reproduced:false,thresholdMs:5000};
+const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Owned diagnostic</title></head><body><script>
+window.readState = {kind:'NOT_STARTED'};
+window.firstRefund = async () => {
+ try { const response=await fetch('/api/admin/finance-refund',{method:'POST',headers:{'content-type':'application/json'},body:'{}'});await response.json();return 'UNEXPECTED_RESPONSE'; }
+ catch { return 'LOST'; }
+};
+window.retryRefund = async () => {
+ const response=await fetch('/api/admin/finance-refund',{method:'POST',headers:{'content-type':'application/json'},body:'{}'});
+ await response.json();
+ window.readState={kind:'PENDING'};
+ window.readPromise=fetch('/api/admin/orders-detail',{method:'POST',headers:{'content-type':'application/json'},body:'{}'}).then(async result=>{await result.json();window.readState={kind:'RESOLVED',status:result.status};}).catch(()=>{window.readState={kind:'REJECTED'};});
+};
+</script></body></html>`;
+let held = null;
+const server=createServer(async (request,response)=>{
+ request.resume();
+ if(request.url==='/'){
+  response.writeHead(200,{'content-type':'text/html','cache-control':'no-store'});response.end(html);return;
+ }
+ if(request.url==='/api/admin/finance-refund'){
+  response.writeHead(200,{'content-type':'application/json','cache-control':'no-store'});response.end('{"ok":true}');return;
+ }
+ if(request.url==='/api/admin/orders-detail' && held){
+  held.response=response;held.arrived();return;
+ }
+ response.writeHead(404);response.end();
+});
+let browser;
+const activeContexts=new Set();
+try {
+ await mkdir(output,{recursive:true});
+ await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
+ const origin=`http://127.0.0.1:${server.address().port}`;
+ browser=await chromium.launch({channel:'chrome',headless:true});
+ report.browserVersion=browser.version();
+ const runCase=async(mode,pair)=>{
+  const context=await browser.newContext();activeContexts.add(context);
+  const page=await context.newPage();page.setDefaultTimeout(30000);
+  const outstanding=new Set(),reads=new Map(),events=[];
+  let sequence=0,phase='INITIALIZE',lost=true;
+  const at=performance.now();
+  const record=(kind,request,extra={})=>{
+   const item=reads.get(request);if(!item)return;
+   events.push({kind,ordinal:item.ordinal,path:'/api/admin/orders-detail',method:'POST',phase,ageMs:Math.round((performance.now()-item.at)*1000)/1000,...extra});
+  };
+  page.on('request',request=>{
+   if(new URL(request.url()).pathname!=='/api/admin/orders-detail')return;
+   outstanding.add(request);reads.set(request,{ordinal:++sequence,at:performance.now()});record('REQUEST_STARTED',request);
+  });
+  page.on('response',response=>record('RESPONSE',response.request(),{status:response.status()}));
+  page.on('requestfinished',request=>{const removed=outstanding.delete(request);record('REQUEST_FINISHED',request,{trackedDelete:removed});});
+  page.on('requestfailed',request=>{const removed=outstanding.delete(request);record('REQUEST_FAILED',request,{trackedDelete:removed});});
+  const route=async intercepted=>{
+   if(lost){lost=false;await intercepted.fetch({timeout:30000});await intercepted.abort('failed');}
+   else await intercepted.continue();
+  };
+  const pattern='**/api/admin/finance-refund';
+  try {
+   await page.goto(origin);
+   await page.route(pattern,route);
+   phase='FIRST_REFUND';
+   assert.equal(await page.evaluate(()=>window.firstRefund()),'LOST');
+   let arrived;
+   const arrival=new Promise(resolve=>{arrived=resolve;});
+   held={arrived,response:null};
+   phase='RETRY_REFUND';
+   await page.evaluate(()=>window.retryRefund());
+   await Promise.race([arrival,delay(5000).then(()=>{throw new Error('Dummy read did not reach owned server');})]);
+   assert.equal(outstanding.size,1);
+   const pendingAtTeardown=[...reads.values()].map(item=>({ordinal:item.ordinal,ageMs:Math.round((performance.now()-item.at)*1000)/1000}));
+   const release=()=>{held.response.writeHead(200,{'content-type':'application/json','cache-control':'no-store'});held.response.end('{"ok":true}');};
+   if(mode==='A_UNROUTE_IN_FLIGHT'){
+    phase='UNROUTE_WHILE_HELD';await page.unroute(pattern,route);
+    phase='RELEASE_AFTER_UNROUTE';release();
+   }else{phase='RELEASE_BEFORE_UNROUTE';release();}
+   let pollPassed=true;
+   try {await expect.poll(()=>outstanding.size,{timeout:5000}).toBe(0);}catch{pollPassed=false;}
+   let fetchSettled=true;
+   try {await expect.poll(async()=> (await page.evaluate(()=>window.readState)).kind,{timeout:5000}).not.toBe('PENDING');}catch{fetchSettled=false;}
+   const pageFetch=await page.evaluate(()=>window.readState);
+   if(mode==='B_UNROUTE_AFTER_COMPLETE'){
+    phase='UNROUTE_AFTER_COMPLETE';await page.unroute(pattern,route);
+   }
+   return {pair,mode,pollPassed,fetchSettled,pageFetch,pendingAtTeardown,remainingReads:outstanding.size,events,durationMs:Math.round((performance.now()-at)*1000)/1000};
+  }finally{held=null;await context.close();activeContexts.delete(context);}
+ };
+ for(let pair=1;pair<=10;pair++){
+  const a=await runCase('A_UNROUTE_IN_FLIGHT',pair);
+  const b=await runCase('B_UNROUTE_AFTER_COMPLETE',pair);
+  report.pairs.push({pair,a,b});
+  report.reproduced=!a.pollPassed||!a.fetchSettled||a.pageFetch.kind!=='RESOLVED'||a.pageFetch.status!==200||a.remainingReads!==0;
+  await writeFile(path.join(output,'report.json'),JSON.stringify(report,null,2)+'\n');
+  console.log(JSON.stringify({pair,aPoll:a.pollPassed,aFetch:a.pageFetch.kind,bPoll:b.pollPassed,bFetch:b.pageFetch.kind,reproduced:report.reproduced}));
+  if(report.reproduced)break;
+ }
+ report.status='COMPLETE';
+}catch(error){report.status='PROBE_FAILURE';report.failure={name:error?.name==='AssertionError'?'ASSERTION':'RUNTIME'};process.exitCode=1;}
+finally{
+ for(const context of activeContexts)await context.close().catch(()=>{});
+ await browser?.close();
+ server.closeAllConnections();
+ if(server.listening)await new Promise(resolve=>server.close(resolve));
+ report.cleanedUp=true;
+ await writeFile(path.join(output,'report.json'),JSON.stringify(report,null,2)+'\n');
+}

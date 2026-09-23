@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Client } from "pg";
-import { withEphemeralPostgres } from "../dist/index.js";
+import { withFinanceTestDatabase } from "../../../apps/api/scripts/admin-finance-test-database.mjs";
 import {
   withEphemeralS3,
   runS3IntegrationChild,
@@ -43,6 +43,8 @@ async function inputs() {
     "database/migrations/0035_admin-finance.down.sql",
     "database/migrations/0032_admin-order-resends.up.sql",
     "apps/api/scripts/admin-orders-fixtures.mjs",
+    "apps/api/scripts/admin-finance-test-database.mjs",
+    "apps/api/scripts/admin-finance-native-postgres.mjs",
   ];
   for (const folder of ["src", "dist", "scripts"])
     for (const name of await readdir(
@@ -59,7 +61,7 @@ async function inputs() {
     })),
   );
 }
-export async function runAdminFinance(database, s3) {
+export async function runAdminFinance(database, s3, postgresEnvironment) {
   const output = path.join(
     workspaceRoot,
     "output/checks/p5-03-refund-operations/storage",
@@ -72,6 +74,7 @@ export async function runAdminFinance(database, s3) {
     stage = "prepare",
     status = "FAIL";
   const before = await inputs();
+  await save("postgres-environment.json", postgresEnvironment);
   await save("source-before.json", before);
   const check = (condition, label) => {
     assertions++;
@@ -139,7 +142,9 @@ if (path.resolve(process.argv[1] ?? "") === fileURLToPath(import.meta.url))
     if (process.argv[2] === "--run-admin-finance") {
       const s3 = readEphemeralS3Config();
       await prepareEphemeralS3Buckets(s3);
-      await withEphemeralPostgres((database) => runAdminFinance(database, s3));
+      await withFinanceTestDatabase((database, metadata) =>
+        runAdminFinance(database, s3, metadata),
+      );
     } else {
       assert.equal(process.argv.length, 2);
       await withEphemeralS3((context) =>

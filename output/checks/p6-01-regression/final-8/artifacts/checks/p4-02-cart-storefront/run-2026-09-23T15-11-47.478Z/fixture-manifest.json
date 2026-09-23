@@ -1,0 +1,491 @@
+{
+  "schemaVersion": 1,
+  "environment": "TEST",
+  "artistCount": 3,
+  "visibleGiftCount": 25,
+  "policyCount": 4,
+  "locales": [
+    "en",
+    "zh-CN",
+    "th",
+    "vi",
+    "ja",
+    "es",
+    "pt"
+  ],
+  "markets": [
+    {
+      "market": "GLOBAL",
+      "currency": "USD"
+    },
+    {
+      "market": "JAPAN",
+      "currency": "JPY"
+    }
+  ],
+  "artists": [
+    {
+      "id": "0803264c-9764-417b-a946-fa35a87f4b85",
+      "handle": "mira-vale",
+      "revisionId": "d826f3e0-28b6-4057-bb6a-618a11c61096",
+      "acceptingGifts": true
+    },
+    {
+      "id": "93583341-82de-4d9c-ac97-566fbf9ec616",
+      "handle": "kai-ren",
+      "revisionId": "b49bb201-34a9-4fe2-af2b-8c674734ecb8",
+      "acceptingGifts": true
+    },
+    {
+      "id": "77d4d1e5-2484-44ae-ae3f-e57399d4cde9",
+      "handle": "studio-guest",
+      "revisionId": "ef8299c5-9987-41a3-92ea-a28e3a28b385",
+      "acceptingGifts": false
+    }
+  ],
+  "gifts": [
+    {
+      "id": "1dacfb55-ffa7-416d-a1c2-60e4f59a1dd9",
+      "handle": "studio-gift-001",
+      "revisionId": "34e5da1e-9744-46db-8bfc-fc04554dd01b",
+      "status": "active"
+    },
+    {
+      "id": "65ebee37-d07e-450f-8f33-695594dc9c6e",
+      "handle": "studio-gift-002",
+      "revisionId": "96a92589-3be7-4c74-ae01-3107937ca03f",
+      "status": "active"
+    },
+    {
+      "id": "4b747bf5-1bfc-417d-a461-a65b7deb25df",
+      "handle": "studio-gift-003",
+      "revisionId": "5cd77231-99b5-4df2-9cba-9838845ee0fc",
+      "status": "active"
+    },
+    {
+      "id": "1ee92d42-ef95-460a-a748-ac40ab55edb6",
+      "handle": "studio-gift-004",
+      "revisionId": "fa6834e1-d1c5-4ea4-ad3c-eb0ebc7e8d75",
+      "status": "active"
+    },
+    {
+      "id": "875a6601-3c6c-451f-9892-656ff9a93174",
+      "handle": "studio-gift-005",
+      "revisionId": "40c341d6-6af0-4e68-a2cd-f4a449e12704",
+      "status": "active"
+    },
+    {
+      "id": "7e1ab34a-a893-4bd1-ab8e-747559bbbcd6",
+      "handle": "studio-gift-006",
+      "revisionId": "1c696890-5e10-4fdc-8244-5c25b0dd9753",
+      "status": "active"
+    },
+    {
+      "id": "33f4052e-02af-4a41-9eb2-f7fd8905ee30",
+      "handle": "studio-gift-007",
+      "revisionId": "5e296ad9-8a66-4fba-8866-b688a0bc7ec2",
+      "status": "active"
+    },
+    {
+      "id": "bbefce27-78f1-4018-bf92-f1ced1cfc662",
+      "handle": "studio-gift-008",
+      "revisionId": "44c85bbe-f23e-43df-b54a-829753713042",
+      "status": "active"
+    },
+    {
+      "id": "e117dbeb-0cee-45bf-bbc3-7f9eb60ea108",
+      "handle": "studio-gift-009",
+      "revisionId": "1569b601-4199-4e2c-b9b7-73272bacef28",
+      "status": "active"
+    },
+    {
+      "id": "8d29781d-3eff-46d6-bf94-66b97870cd28",
+      "handle": "studio-gift-010",
+      "revisionId": "bd0405c2-05f5-4573-90a0-c704bdb7034b",
+      "status": "active"
+    },
+    {
+      "id": "3772468a-f9e6-4621-af10-046540bb5acb",
+      "handle": "studio-gift-011",
+      "revisionId": "fa93bd99-5c4f-45ab-8567-a06d3870f86f",
+      "status": "active"
+    },
+    {
+      "id": "8579a182-f804-4852-ac75-872188786b06",
+      "handle": "studio-gift-012",
+      "revisionId": "c0c87dd9-229e-4978-9165-48904f280faf",
+      "status": "active"
+    },
+    {
+      "id": "beb5c0b9-9e97-4d27-b590-59c89edc577d",
+      "handle": "studio-gift-013",
+      "revisionId": "38afda00-9dc7-4af2-8f5d-292dd7ac83de",
+      "status": "active"
+    },
+    {
+      "id": "e6f1da9c-3e61-4212-933f-0396536706bc",
+      "handle": "studio-gift-014",
+      "revisionId": "412c8469-7b80-4ab7-ba52-027b5c54fa5e",
+      "status": "active"
+    },
+    {
+      "id": "3ef6f4e0-d5d3-49b0-bdd1-0105d5eb4708",
+      "handle": "studio-gift-015",
+      "revisionId": "69dcd318-8406-47cf-a3df-89bede72b3ca",
+      "status": "active"
+    },
+    {
+      "id": "597f73ac-e843-4bcc-ab22-eaf82a3a30ba",
+      "handle": "studio-gift-016",
+      "revisionId": "829c045c-4fc8-4188-ab3a-7eb419feea29",
+      "status": "active"
+    },
+    {
+      "id": "46479dee-9cbe-42ec-98b4-40486cc58959",
+      "handle": "studio-gift-017",
+      "revisionId": "7be28d49-e563-40ff-a759-b0a272f122b6",
+      "status": "active"
+    },
+    {
+      "id": "0214a93a-51bc-434b-b818-42ed20292e63",
+      "handle": "studio-gift-018",
+      "revisionId": "24177294-1bc8-4072-88a1-8182cb45f1c8",
+      "status": "active"
+    },
+    {
+      "id": "611022c3-649f-48f8-a727-7c03bae94713",
+      "handle": "studio-gift-019",
+      "revisionId": "a75c42a2-56ab-4ed9-a0ad-dbd00ae520e0",
+      "status": "active"
+    },
+    {
+      "id": "ed6db2b4-62bc-4c63-a406-427ce23ce4fa",
+      "handle": "studio-gift-020",
+      "revisionId": "097e535b-701e-4034-82f5-b7dddd252a5c",
+      "status": "active"
+    },
+    {
+      "id": "8b46f722-3ae4-452f-9af3-a6157587db42",
+      "handle": "studio-gift-021",
+      "revisionId": "aae8bd18-a534-45bc-864e-ed6e1fc6e672",
+      "status": "active"
+    },
+    {
+      "id": "e957f259-0fff-41f6-99e0-1b9b55af295c",
+      "handle": "studio-gift-022",
+      "revisionId": "74ce94ff-2377-4859-a707-042f82122016",
+      "status": "active"
+    },
+    {
+      "id": "38f4c5b1-f19a-4933-a5dd-2b90c0b8ef66",
+      "handle": "studio-gift-023",
+      "revisionId": "9cff5c64-69c6-487d-9f27-3c9c5bf47112",
+      "status": "active"
+    },
+    {
+      "id": "fa4411b7-bcf0-4ae4-a930-200131330d03",
+      "handle": "studio-gift-024",
+      "revisionId": "a9039421-8640-4698-8283-b806a23e9d59",
+      "status": "active"
+    },
+    {
+      "id": "af93713a-713b-42e4-800c-ec489654e22f",
+      "handle": "studio-gift-025",
+      "revisionId": "622d7011-9a3e-4430-b752-b5155c288096",
+      "status": "paused"
+    },
+    {
+      "id": "f4d94111-9acf-4b01-a6ff-683283f0372a",
+      "handle": "studio-gift-026",
+      "revisionId": "aec5a62e-024e-480a-9bf5-f62534d38674",
+      "status": "archived"
+    },
+    {
+      "id": "afa170a1-a7a8-41bf-a407-dd3edd609dcd",
+      "handle": "studio-gift-027",
+      "status": "draft"
+    }
+  ],
+  "policies": [
+    {
+      "policyKey": "terms",
+      "kind": "TERMS",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "terms"
+      },
+      "revisionId": "da5fec4d-30fc-4f5a-8a17-3d357a113c5f",
+      "publicationId": "84a9232d-320f-45c9-aa97-cf7f012eb6a1"
+    },
+    {
+      "policyKey": "privacy",
+      "kind": "PRIVACY",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "privacy"
+      },
+      "revisionId": "2005abb1-7bb5-4650-ae57-7b8a24ad64ac",
+      "publicationId": "a4653912-99d7-4b0e-b3ef-b14513c112a7"
+    },
+    {
+      "policyKey": "refund",
+      "kind": "REFUND",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "refund"
+      },
+      "revisionId": "6e9bbb70-7783-4b40-ae84-8f81a438afcd",
+      "publicationId": "ffaf41f8-a2ef-44da-9ae2-7626742155f0"
+    },
+    {
+      "policyKey": "delivery",
+      "kind": "DELIVERY",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "delivery"
+      },
+      "revisionId": "f63146eb-4b34-4ad9-b2e8-fcbd5c19cbff",
+      "publicationId": "fa76c959-3405-4220-9c37-cfa6d4ae68d0"
+    }
+  ],
+  "syntheticMediaCompositions": [
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-mobile.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "PORTRAIT",
+      "sourceSha256": "007cae3cc384ab0fba38dcdc8ad4df2f1b2241bc1cff902688809cee7c2074ee",
+      "composedSha256": "09ff605ad73e33046e49523be2bf8c47060191929cc802fd6b92a7e21e79d083",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1600,
+        "height": 2000
+      },
+      "placement": {
+        "left": 239,
+        "top": 299,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "embeddedPixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-desktop.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_DESKTOP",
+      "sourceSha256": "4612276bf7b2d8df770e1ed36e2ee4210ac70935f0f214d4493cc61a0180c82a",
+      "composedSha256": "9fdc2ba59aaba75dbeb3ed67049a4d14a22005662755d736c426a2e8399af1e8",
+      "sourceSize": {
+        "width": 1672,
+        "height": 941
+      },
+      "canvasSize": {
+        "width": 2400,
+        "height": 1350
+      },
+      "placement": {
+        "left": 364,
+        "top": 204,
+        "width": 1672,
+        "height": 941
+      },
+      "resampled": false,
+      "sourcePixelSha256": "9d1aeaf7a6f8493f7dc6d7267f07351f1441dd6f8f90bc46ecb256bfc8f4d255",
+      "embeddedPixelSha256": "9d1aeaf7a6f8493f7dc6d7267f07351f1441dd6f8f90bc46ecb256bfc8f4d255",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-mobile.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_MOBILE",
+      "sourceSha256": "007cae3cc384ab0fba38dcdc8ad4df2f1b2241bc1cff902688809cee7c2074ee",
+      "composedSha256": "4597c8d06473f1c0951eb4b972baf7673b963b6521f2347f461048270ea74f7d",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "embeddedPixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-mobile.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "PORTRAIT",
+      "sourceSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "composedSha256": "04f0dcf56e23bfabb3dd59e78e6127f8361c25df5b2e35fc8f0eb118706e5b31",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1600,
+        "height": 2000
+      },
+      "placement": {
+        "left": 239,
+        "top": 299,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "embeddedPixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-desktop.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_DESKTOP",
+      "sourceSha256": "8f4a8277040f631829cff1d76beab63ab0f4ff0fc88df7aa328faffa2c5c47c1",
+      "composedSha256": "df9d91a0a6544841b041b3d06b6f498be9f64020dd809a6c2e223ae927d471eb",
+      "sourceSize": {
+        "width": 1641,
+        "height": 958
+      },
+      "canvasSize": {
+        "width": 2400,
+        "height": 1350
+      },
+      "placement": {
+        "left": 379,
+        "top": 196,
+        "width": 1641,
+        "height": 958
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d1d5e81f51b31fde9b40a04251a1e12d183a92c96353aa8988468a78723770c2",
+      "embeddedPixelSha256": "d1d5e81f51b31fde9b40a04251a1e12d183a92c96353aa8988468a78723770c2",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-mobile.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_MOBILE",
+      "sourceSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "composedSha256": "1ae8cc2a6c52e13a1273608bfa853cf1f5623250bd65da6d8b9af9bfbe23393e",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "embeddedPixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-rose-palace.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "6baca198ca3a623b026a641269a1c68847f4eb053b3276e692b7539dbf33ffca",
+      "composedSha256": "f850973bff6e01223d6a0fdee9379601ae218105155a6e6a929f4608bcaaa9e1",
+      "sourceSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "canvasSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1254,
+        "height": 1254
+      },
+      "resampled": false,
+      "sourcePixelSha256": "86db5b29868053223e8570f13d6a1bf3b0e181d972cb2c47941015b52690f859",
+      "embeddedPixelSha256": "86db5b29868053223e8570f13d6a1bf3b0e181d972cb2c47941015b52690f859",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-blue-orbit.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "7a2d7ea94b921544b8628422b44f98e9b9732362e9c8dfeabd281709c933a448",
+      "composedSha256": "4a7f82dadbae16a68647b4cba144566f50559bde5083a037e09c574edfe416cc",
+      "sourceSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "canvasSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1254,
+        "height": 1254
+      },
+      "resampled": false,
+      "sourcePixelSha256": "29b11eae98b49b46f791e0d3f6d876f49a53d6af98373e37963a4a78f4741ad0",
+      "embeddedPixelSha256": "29b11eae98b49b46f791e0d3f6d876f49a53d6af98373e37963a4a78f4741ad0",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-ruby-bouquet.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "composedSha256": "429113554ac5599bf5d1ec8aa6a91d087ff2218c400e353585b8d5cc45488159",
+      "sourceSize": {
+        "width": 1024,
+        "height": 1024
+      },
+      "canvasSize": {
+        "width": 1200,
+        "height": 1200
+      },
+      "placement": {
+        "left": 88,
+        "top": 88,
+        "width": 1024,
+        "height": 1024
+      },
+      "resampled": false,
+      "sourcePixelSha256": "75b3c9c96194e6b8ec8c8c279f9c95962df20ba226344c19cf0f48f214a4e444",
+      "embeddedPixelSha256": "75b3c9c96194e6b8ec8c8c279f9c95962df20ba226344c19cf0f48f214a4e444",
+      "formalAssetApproval": false
+    }
+  ],
+  "formalAssetApproval": false,
+  "humanOperationsEvidence": false,
+  "physicalDeviceEvidence": false,
+  "productionReleaseEvidence": false
+}

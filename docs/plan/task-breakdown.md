@@ -147,7 +147,7 @@ P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字�
 
 ## Phase 6 — 加固与恢复（6）
 
-当前 LOCKED。ADR-016 已授权后续可本地部分；到对应波次并逐项核对以下原直接依赖的本地完整验收/非作者复核后，先登记有限本地 ACTIVE 范围再 READY，六项按 Lane D 串行。真实读屏、RUM、恢复与完整 Release Gate 不以本地工具替代。
+当前P6-01完整本地回归已ACCEPT（2026-09-23），保留远端CI而保持IN_PROGRESS、Lane D释放；P6-02原P3-06/P4-06/P5-02本地完整验收已独立复核，仅新增P6-02有限本地ACTIVE/READY、尚未领取；P6-03至P6-06仍PENDING。ADR-016 已授权后续可本地部分，仍须逐项核对原直接依赖后先登记范围再 READY，六项按 Lane D 串行。真实读屏、RUM、恢复与完整 Release Gate 不以本地工具替代。
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|

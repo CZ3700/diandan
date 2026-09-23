@@ -6,6 +6,30 @@ import {
 } from "./order-payment-client.mjs";
 import { verifyOrderPaymentCommitFaults } from "./order-payment-commit-faults.mjs";
 
+/** Reuse the original signed HTTP event; neither retries nor evidence may mutate business state. */
+export async function verifyOrderWebhookReplays({
+  signed,
+  sendWebhook,
+  readEffects,
+  maintenance,
+  check,
+}) {
+  const baseline = JSON.stringify(await readEffects());
+  for (let iteration = 0; iteration < 10; iteration++) {
+    const reply = await sendWebhook(signed);
+    check(
+      reply.accepted,
+      "Each sequential signed webhook retry is acknowledged",
+    );
+    await maintenance();
+    check(
+      JSON.stringify(await readEffects()) === baseline,
+      "Sequential HTTP webhook replay preserves exact payment, order, stock and notification effects",
+    );
+  }
+  return { sequentialHttpReplays: 10, effectsUnchanged: true };
+}
+
 export async function verifyOrderPaymentProtocol(context) {
   const { client, check, fixtures, psp } = context;
   const api = createOrderPaymentProtocolClient(context);
@@ -169,7 +193,10 @@ export async function verifyOrderPaymentProtocol(context) {
   context.progress(
     "raw signed webhook, real inbox worker and cross-source capture idempotency",
   );
-  const webhookFirst = await api.fresh({ locale: "ja" });
+  const webhookFirst = await api.fresh({
+    locale: "ja",
+    lines: [{ gift: fixtures.gifts[6] }],
+  });
   const earlier = await context.signWebhook(webhookFirst.attempt.id);
   const bad = await context.sendWebhook(earlier, {
     rawBody: earlier.rawBody + " ",
@@ -199,7 +226,22 @@ export async function verifyOrderPaymentProtocol(context) {
   );
   const worker = await context.createOrderWorker();
   try {
-    const paid = await waitPaid(webhookFirst);
+    const paid = await waitPaid(webhookFirst, 1);
+    const sequential = await verifyOrderWebhookReplays({
+      signed,
+      sendWebhook: (value) => context.sendWebhook(value),
+      readEffects: async () => ({
+        order: await api.state(webhookFirst),
+        notificationDeliveries: (
+          await client.query(
+            "SELECT count(*)::int AS count FROM notification_deliveries WHERE order_id=$1::uuid",
+            [paid.order_id],
+          )
+        ).rows[0].count,
+      }),
+      maintenance: () => worker.maintenance(),
+      check,
+    });
     const duplicates = await Promise.all([
       context.sendWebhook(signed),
       context.sendWebhook(signed),
@@ -221,7 +263,16 @@ export async function verifyOrderPaymentProtocol(context) {
       paid,
       "An older verified payment observation cannot reverse settled order state",
     );
-    cases.push({ kind: "WEBHOOK_FIRST_AND_DUPLICATE", outcome: "PAID" });
+    cases.push({
+      kind: "WEBHOOK_FIRST_AND_DUPLICATE",
+      outcome: "PAID",
+      ...sequential,
+      capturedTransactions: paid.captures,
+      committedReservations: paid.committed,
+      inventoryDecrements: paid.decrements,
+      notificationSourceEvents: paid.confirmations,
+      mailTransportEvidence: false,
+    });
   } finally {
     await worker.stop();
   }

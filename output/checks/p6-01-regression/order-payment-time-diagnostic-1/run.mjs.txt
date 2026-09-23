@@ -1,0 +1,24 @@
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+import { runRegressionCommand, regressionSuiteEnvironment } from '../../../../scripts/regression-runner.mjs';
+const root = process.cwd();
+const output = path.join(root, 'output/checks/p6-01-regression/order-payment-time-diagnostic-1');
+const source = JSON.parse(await readFile(path.join(output, 'source.json'), 'utf8'));
+const filename = path.join(source.workspace, source.path);
+const original = await readFile(path.join(output, 'order-payment-http.original.mjs'));
+const sha = (value) => createHash('sha256').update(value).digest('hex');
+let result;
+try {
+  if (sha(await readFile(filename)) !== source.diagnostic) throw new Error('Diagnostic ownership changed');
+  result = await runRegressionCommand({label:'original-docker-http-with-safe-observer',command:'mise',args:['exec','node@24.20.0','--','node','./apps/api/scripts/order-payment-http.mjs']},{workspace:source.workspace,output,environment:regressionSuiteEnvironment('quality',process.env)});
+  await writeFile(path.join(output, 'execution.json'), JSON.stringify(result,null,2)+'\n');
+  process.exitCode = result.status === 'PASS' ? 0 : 1;
+} finally {
+  const observed = sha(await readFile(filename));
+  if (observed !== source.diagnostic) throw new Error('Diagnostic source changed; refusing to overwrite');
+  await writeFile(filename,original);
+  const restored = sha(await readFile(filename));
+  await writeFile(path.join(output,'restore.json'),JSON.stringify({restored:restored===source.before,sha256:restored},null,2)+'\n');
+  if (restored !== source.before) throw new Error('Diagnostic restoration mismatch');
+}

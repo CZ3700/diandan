@@ -98,7 +98,7 @@
   border-left: calc(var(--border-width) * 2) solid var(--color-accent);
   margin-block: var(--space-4);
 }
-@media (max-width: 47.99rem) {
+@media (width < 48rem) {
   .me-heading {
     flex-wrap: wrap;
   }

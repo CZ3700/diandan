@@ -25,6 +25,35 @@ const operationKeys = new Set([
   "management-retry-operation",
 ]);
 
+/** Local publication latency only; the two actual responsive URLs stay out of evidence. */
+export function posterVisibilityEvidence({
+  operationKind,
+  elapsedMs,
+  previousImages,
+  publicImages,
+  expectedImages,
+}) {
+  return {
+    operationKind,
+    elapsedMs,
+    budgetMs: 60_000,
+    pass:
+      Number.isFinite(elapsedMs) &&
+      elapsedMs >= 0 &&
+      elapsedMs <= 60_000 &&
+      previousImages.length === 2 &&
+      publicImages.length === 2 &&
+      publicImages.every(
+        (url, index) =>
+          typeof url === "string" &&
+          url.length > 0 &&
+          url !== previousImages[index],
+      ) &&
+      (expectedImages === undefined ||
+        JSON.stringify(publicImages) === JSON.stringify(expectedImages)),
+  };
+}
+
 /** Real TEST operator only. No credential, signed URL, request body, HAR or trace is saved. */
 export async function verifyManagementCenterBrowser({
   adminOrigin,
@@ -55,6 +84,7 @@ export async function verifyManagementCenterBrowser({
     operations: [],
     uploads: [],
     publicPages: [],
+    posterVisibility: [],
     pageErrors: [],
     observationFailures: [],
     limitations: [
@@ -62,6 +92,7 @@ export async function verifyManagementCenterBrowser({
       "Automated accessibility is not a screen-reader or human translation approval",
       "No payment, real customer data, operator timing or production deployment",
       "Public gift checks cover the current add-to-cart entry and quantity contract; this content fixture does not compose cart, checkout or payment runtimes",
+      "Poster visibility measures actual submit click through local TEST public HTML and responsive image readback; it is not a production CDN propagation claim",
     ],
   };
   const assert = (condition, label) => {
@@ -707,6 +738,7 @@ export async function verifyManagementCenterBrowser({
     ]) {
       await begin("POSTERS");
       await page.locator(field("image")).setInputFiles(filename);
+      const started = globalThis.performance.now();
       const operation = await operationAfter(
         () => page.locator("[data-management-submit]").click(),
         "REPLACE_POSTER",
@@ -722,14 +754,16 @@ export async function verifyManagementCenterBrowser({
       const publicImages = await homeImages();
       const previousImages =
         posters.at(-1)?.publicImages ?? initialPublicImages;
+      const visibility = posterVisibilityEvidence({
+        operationKind: "REPLACE_POSTER",
+        elapsedMs: globalThis.performance.now() - started,
+        previousImages,
+        publicImages,
+      });
+      report.posterVisibility.push(visibility);
       assert(
-        publicImages.length === 2 &&
-          previousImages.length === 2 &&
-          publicImages.every(
-            (url, index) =>
-              typeof url === "string" && url !== previousImages[index],
-          ),
-        `poster ${label} changes both actual public desktop and mobile compositions`,
+        visibility.pass,
+        `poster ${label} changes both actual public desktop and mobile compositions within sixty seconds of submission`,
       );
       posters.push({ operation, item: current, publicImages });
     }
@@ -738,16 +772,25 @@ export async function verifyManagementCenterBrowser({
       await previous.isEnabled(),
       "previous authorized poster offers a real restore action",
     );
+    const restoreStarted = globalThis.performance.now();
     await operationAfter(() => previous.click(), "RESTORE_POSTER");
     const restored = await currentPoster();
     assert(
       restored.image.url === posters[0].item.image.url,
       "restored current history shows poster A's exact image",
     );
+    const restoredImages = await homeImages();
+    const restoreVisibility = posterVisibilityEvidence({
+      operationKind: "RESTORE_POSTER",
+      elapsedMs: globalThis.performance.now() - restoreStarted,
+      previousImages: posters[1].publicImages,
+      publicImages: restoredImages,
+      expectedImages: posters[0].publicImages,
+    });
+    report.posterVisibility.push(restoreVisibility);
     assert(
-      JSON.stringify(await homeImages()) ===
-        JSON.stringify(posters[0].publicImages),
-      "restoring poster A restores its exact public desktop and mobile image URLs",
+      restoreVisibility.pass,
+      "restoring poster A restores its exact public desktop and mobile image URLs within sixty seconds of submission",
     );
     report.cases.push({ name: step, status: "PASS" });
 

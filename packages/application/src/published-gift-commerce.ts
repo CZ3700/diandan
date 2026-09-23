@@ -1,4 +1,5 @@
 import {
+  DEFAULT_LOCALE,
   publishedGiftCommerceReadCommandSchema,
   publishedGiftCommerceResponseSchema,
   publishedGiftCommerceContextResponseSchema,
@@ -32,7 +33,9 @@ export function createPublishedGiftCommerceUseCases({
                 await publishedGiftCommerce.load(command.data),
               );
               if (loaded.outcome === "FAILURE") return loaded;
-              const result = projectPublishedGiftCommerce(loaded);
+              const result = publishedGiftCommerceResponseSchema.parse(
+                projectPublishedGiftCommerce(loaded),
+              );
               if (result.outcome === "FAILURE") return result;
               const locale = result.content.view.localeContext;
               if (
@@ -44,8 +47,10 @@ export function createPublishedGiftCommerceUseCases({
                   ? locale.resolvedLocale !== locale.sourceLocale ||
                     locale.fallbackUsed !==
                       (command.data.locale !== locale.sourceLocale)
-                  : locale.resolvedLocale !== command.data.locale ||
-                    locale.fallbackUsed)
+                  : locale.fallbackUsed
+                    ? command.data.locale === DEFAULT_LOCALE ||
+                      locale.resolvedLocale !== DEFAULT_LOCALE
+                    : locale.resolvedLocale !== command.data.locale)
               )
                 return unavailable;
               return JSON.parse(JSON.stringify(result)) as JsonValue;

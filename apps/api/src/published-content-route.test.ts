@@ -283,6 +283,61 @@ test("every content kind rechecks current proof before 304 and keeps credentials
   }
 });
 
+test("accepts schema-validated incident English recovery for every requested non-English locale", async () => {
+  const { app, execute } = setup();
+  try {
+    for (const { path, locator } of locations)
+      for (const locale of SUPPORTED_LOCALES.filter(
+        (value) => value !== "en",
+      )) {
+        const result = responseFor(locator.kind);
+        const item = result.content as {
+          kind: string;
+          localeContext?: unknown;
+          view: Record<string, unknown>;
+        };
+        const recovered = {
+          schemaVersion: 1,
+          requestedLocale: locale,
+          resolvedLocale: "en",
+          fallbackUsed: true,
+          translationRevision: id,
+        };
+        if (item.kind === "MEDIA_METADATA") item.localeContext = recovered;
+        else item.view["localeContext"] = recovered;
+        execute.mockResolvedValueOnce(result);
+        const response = await app.inject({
+          url: `/api/v1${path}?locale=${locale}`,
+        });
+        expect(response.statusCode).toBe(200);
+        privacy(response.headers, true);
+        expect(response.json()).toEqual(result);
+      }
+    const result = responseFor("IDOL", "ja");
+    const item = result.content as { view: Record<string, unknown> };
+    for (const changed of [
+      { requestedLocale: "th", resolvedLocale: "en", fallbackUsed: true },
+      { requestedLocale: "ja", resolvedLocale: "th", fallbackUsed: true },
+      { requestedLocale: "ja", resolvedLocale: "en", fallbackUsed: false },
+      { requestedLocale: "ja", resolvedLocale: "ja", fallbackUsed: true },
+    ]) {
+      item.view["localeContext"] = {
+        schemaVersion: 1,
+        translationRevision: id,
+        ...changed,
+      };
+      execute.mockResolvedValueOnce(result);
+      const response = await app.inject({
+        url: "/api/v1/idols/fictional-idol?locale=ja",
+      });
+      expect(response.statusCode).toBe(503);
+      privacy(response.headers);
+    }
+  } finally {
+    await app.close();
+  }
+});
+
 test("rejects missing, duplicate, unsupported or extra query authority and malformed locators", async () => {
   const { app, execute } = setup();
   try {

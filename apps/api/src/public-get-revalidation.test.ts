@@ -546,20 +546,68 @@ for (const scenario of originalScenarios) {
         expect(denied.headers.etag).toBeUndefined();
         expect(denied.headers["cache-control"]).toBe("no-store");
       }
+    } finally {
+      await app.close();
+    }
+  });
+
+  test(`${scenario.name}: validated English recovery revalidates by requested locale and still rejects invalid provenance`, async () => {
+    const app = Fastify();
+    const context = {
+      schemaVersion: 1,
+      requestedLocale: "ja",
+      resolvedLocale: "en",
+      fallbackUsed: true,
+      translationRevision: idol.id,
+    };
+    const value = withLocaleContexts(scenario.value, context);
+    const read = vi.fn<Reader>().mockResolvedValue(value as never);
+    scenario.register(app, read);
+    const url = scenario.url.replace("locale=en", "locale=ja");
+    try {
+      const first = await app.inject(url);
+      expect(first.statusCode).toBe(200);
+      expect(first.json()).toEqual(value);
+      expect(first.headers.etag).toEqual(expect.any(String));
+      const same = await app.inject({
+        url,
+        headers: { "if-none-match": String(first.headers.etag) },
+      });
+      expect(same.statusCode).toBe(304);
+      expect(read).toHaveBeenCalledTimes(2);
+
       read.mockResolvedValueOnce(
         withLocaleContexts(scenario.value, {
-          schemaVersion: 1,
-          requestedLocale: "ja",
-          resolvedLocale: "en",
-          fallbackUsed: true,
-          translationRevision: idol.id,
+          ...context,
+          resolvedLocale: "ja",
+          fallbackUsed: false,
         }) as never,
       );
-      const legacyFallback = await app.inject(
-        scenario.url.replace("locale=en", "locale=ja"),
-      );
-      expect(legacyFallback.statusCode).toBe(503);
-      expect(legacyFallback.headers.etag).toBeUndefined();
+      const restored = await app.inject({
+        url,
+        headers: { "if-none-match": String(first.headers.etag) },
+      });
+      expect(restored.statusCode).toBe(200);
+      expect(restored.headers.etag).not.toBe(first.headers.etag);
+
+      for (const invalid of [
+        { ...context, requestedLocale: "en" },
+        { ...context, resolvedLocale: "zh-CN" },
+        { ...context, fallbackUsed: false },
+        { ...context, translationRevision: "" },
+        { ...context, schemaVersion: 999 },
+      ]) {
+        read.mockResolvedValueOnce(
+          withLocaleContexts(scenario.value, invalid) as never,
+        );
+        const denied = await app.inject({
+          url,
+          headers: { "if-none-match": "*" },
+        });
+        expect(denied.statusCode).toBe(503);
+        expect(denied.headers.etag).toBeUndefined();
+        expect(denied.headers["cache-control"]).toBe("no-store");
+      }
     } finally {
       await app.close();
     }

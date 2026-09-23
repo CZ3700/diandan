@@ -1,0 +1,1863 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "actualPostgres": true,
+  "actualHttp": true,
+  "compiledBrowser": true,
+  "faultBoundary": "TEST_ONLY_ACTUAL_SQL_TRANSLATION_REVIEW_JOIN_ROW_ABSENCE",
+  "immutableRowsMutated": false,
+  "externalCdnEvidence": false,
+  "humanAcceptance": false,
+  "policyBoundary": "POLICY_BODY_FAILS_CLOSED; VERIFIED_ENGLISH_METADATA_NOINDEX_ONLY",
+  "cases": [
+    {
+      "kind": "IDOL",
+      "locale": "en",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "zh-CN",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "th",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "vi",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "ja",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "ja",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "es",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "pt",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "GIFT",
+      "locale": "en",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "GIFT",
+      "locale": "zh-CN",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "GIFT",
+      "locale": "th",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "GIFT",
+      "locale": "vi",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "GIFT",
+      "locale": "ja",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "GIFT",
+      "locale": "ja",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "GIFT",
+      "locale": "es",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "GIFT",
+      "locale": "pt",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "HOMEPAGE",
+      "locale": "en",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "HOMEPAGE",
+      "locale": "zh-CN",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "HOMEPAGE",
+      "locale": "th",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "HOMEPAGE",
+      "locale": "vi",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "HOMEPAGE",
+      "locale": "ja",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "HOMEPAGE",
+      "locale": "ja",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "HOMEPAGE",
+      "locale": "es",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "HOMEPAGE",
+      "locale": "pt",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "POLICY",
+      "locale": "en",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "POLICY",
+      "locale": "zh-CN",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "POLICY",
+      "locale": "th",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "POLICY",
+      "locale": "vi",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "POLICY",
+      "locale": "ja",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "POLICY",
+      "locale": "ja",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "POLICY",
+      "locale": "es",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "POLICY",
+      "locale": "pt",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": false,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "zh-CN",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "zh-CN",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "th",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "th",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "vi",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "vi",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "es",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "es",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "pt",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fallback": true,
+      "html": "PASS"
+    },
+    {
+      "kind": "IDOL",
+      "locale": "pt",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fallback": true,
+      "html": "PASS"
+    }
+  ],
+  "failures": [
+    {
+      "locale": "en",
+      "mode": "MISSING",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "locale": "ja",
+      "mode": "REVIEW_MISSING",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "locale": "ja",
+      "mode": "TAMPER",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "locale": "ja",
+      "mode": "DUPLICATE",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "locale": "ja",
+      "mode": "SQL_ERROR",
+      "result": "FAIL_CLOSED"
+    }
+  ],
+  "faultEvents": [
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "GIFT",
+      "revisionId": "ba727db1-272e-45e1-a40e-b7c49d82f620",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "HOMEPAGE",
+      "revisionId": "880741db-c6d3-4ed5-8672-d97c7be79a83",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "POLICY",
+      "revisionId": "54ff3707-101a-45f7-8319-22b19008d186",
+      "locale": "ja",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "zh-CN",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "zh-CN",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "zh-CN",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "zh-CN",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "zh-CN",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "zh-CN",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "th",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "th",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "th",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "th",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "th",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "th",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "vi",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "vi",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "vi",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "vi",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "vi",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "vi",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "es",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "es",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "es",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "es",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "es",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "es",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "pt",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "pt",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "pt",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "pt",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "pt",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "pt",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "en",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "en",
+      "mode": "MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "REVIEW_MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "REVIEW_MISSING",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "TAMPER",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "TAMPER",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "DUPLICATE",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    },
+    {
+      "kind": "IDOL",
+      "revisionId": "6f6e0c8f-311f-46be-828f-b8ef27d7f563",
+      "locale": "ja",
+      "mode": "DUPLICATE",
+      "leaf": "TRANSLATION_REVIEW_JOIN",
+      "affectedRows": 1
+    }
+  ]
+}

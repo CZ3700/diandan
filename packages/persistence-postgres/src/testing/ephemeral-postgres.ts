@@ -5,6 +5,8 @@ import { setTimeout as delay } from "node:timers/promises";
 import { Client } from "pg";
 
 import type { PostgresConnectionConfig } from "../connection-config.js";
+import { withNativeTestPostgres } from "./native-postgres.js";
+import path from "node:path";
 
 const postgresImage =
   "postgres:18.6-bookworm@sha256:1c59e2c3c818eaa0f0628f695b36e7c9e362d6b219b36a54a32df645cbd7e1af";
@@ -53,6 +55,12 @@ const defaultDockerExecutor: DockerCommandExecutor = {
 type ReadinessProbe = (
   clientConfig: PostgresConnectionConfig,
 ) => Promise<boolean>;
+
+export type TestPostgresRuntimeMetadata = Readonly<{
+  kind: "NATIVE_ISOLATED_TEST" | "DOCKER_EPHEMERAL_TEST";
+  configuredBy: string;
+  serverVersion?: string;
+}>;
 
 const defaultReadinessProbe: ReadinessProbe = async (clientConfig) => {
   const client = new Client({
@@ -150,12 +158,40 @@ async function removeOwnedContainer(
 }
 
 export async function withEphemeralPostgres<Result>(
-  operation: (clientConfig: PostgresConnectionConfig) => Promise<Result>,
+  operation: (
+    clientConfig: PostgresConnectionConfig,
+    metadata: TestPostgresRuntimeMetadata,
+  ) => Promise<Result>,
   options: Readonly<{
     docker?: DockerCommandExecutor;
     readinessProbe?: ReadinessProbe;
+    environment?: Readonly<Record<string, string | undefined>>;
+    native?: typeof withNativeTestPostgres;
   }> = {},
 ): Promise<Result> {
+  const environment = options.environment ?? process.env;
+  const binDirectory = environment["POSTGRES_TEST_BIN"];
+  if (binDirectory !== undefined) {
+    if (typeof binDirectory !== "string" || !path.isAbsolute(binDirectory)) {
+      throw new EphemeralPostgresError(
+        "Invalid native TEST PostgreSQL configuration",
+      );
+    }
+    if (options.docker !== undefined || options.readinessProbe !== undefined) {
+      throw new EphemeralPostgresError(
+        "Native TEST PostgreSQL selection conflicts with Docker-only options",
+      );
+    }
+    return (options.native ?? withNativeTestPostgres)(
+      (configuration, metadata) =>
+        operation(configuration, {
+          kind: "NATIVE_ISOLATED_TEST",
+          configuredBy: "POSTGRES_TEST_BIN",
+          serverVersion: metadata.serverVersion,
+        }),
+      { binDirectory },
+    );
+  }
   const docker = options.docker ?? defaultDockerExecutor;
   const readinessProbe = options.readinessProbe ?? defaultReadinessProbe;
   const runId = randomUUID();
@@ -207,7 +243,10 @@ export async function withEphemeralPostgres<Result>(
       application_name: "fan-support-p1-04-migration-harness",
     };
     await waitUntilReady(clientConfig, readinessProbe);
-    return await operation(clientConfig);
+    return await operation(clientConfig, {
+      kind: "DOCKER_EPHEMERAL_TEST",
+      configuredBy: "withEphemeralPostgres",
+    });
   } catch (error: unknown) {
     if (error instanceof EphemeralPostgresError) {
       throw error;

@@ -1,0 +1,11 @@
+# Operations-9 artifact privacy review
+
+Bounded PASS for complete operations run `479c6a33-16d3-4344-b173-5ebf50d278e3`, source hash `642a55a818680d763f41ce5d87b5386092591ea5341c92ce4e88c8248bcb8b72`. The runner reports operations PASS. This does not modify or replace the original final-8 FAIL and does not establish journey completion.
+
+The frozen archive contains 304 files: 26 JSON and 278 PNG. Scanned all 26 archived text files and 13 outer runner JSON/TXT/MD files (2,189,622 bytes), including raw text, URL-decoded text and parsed JSON strings. All JSON parsed. Reused the twelve exact private-canary/token patterns from `privacy-final8.json` and added the actual synthetic operational-note UUID pattern from `admin-orders-browser.mjs`. All 13 patterns produced **zero matching files or values**. The selected sensitive-field-name inventory was also empty. Pattern definitions, paths and SHA-256 hashes of every scanned text file are preserved in `privacy-operations.json`; no private matched values were output or saved.
+
+Directly viewed two archived management order screenshots: `en-1440-notes-closed.png` and `en-1440-delivered.png`. The notes screenshot shows only the note count and closed-panel buttons, with message-review status and public fixture order/gift/artist details. No private fan name, message, note, email or credential is visible. The delivered screenshot similarly contains no private content in the captured image. These images are recorded by exact path and SHA-256; 276 other PNG files were not exhaustively inspected. No inference is made about content not present in either captured image.
+
+Static producer checks confirm that order screenshots require private panels to be closed and registered private values absent from body text. Finance screenshots likewise reject open private panels or private values in URL/body text. This is producer-controlled privacy; the archive extension allowlist does not redact content. The finite pattern/field scan is not a generic PII detector.
+
+Only existing files were read using filesystem tools and `view_image`. No browser, database or other service was started; no source or original evidence was edited. The in-progress final-journey-9 files were not scanned and still require a separate final review after completion.

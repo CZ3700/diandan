@@ -84,7 +84,7 @@ export function projectStorefrontSeoEntity(input: unknown):
       )
         throw new Error("SEO publication mismatch");
       const provenance = view.content.view.localeContext;
-      if (provenance.schemaVersion === 2 && provenance.fallbackUsed) return [];
+      if (provenance.fallbackUsed) return [];
       if (
         provenance.requestedLocale !== locale ||
         provenance.resolvedLocale !== locale ||

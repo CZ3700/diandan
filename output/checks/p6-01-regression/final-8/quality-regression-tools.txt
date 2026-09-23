@@ -1,0 +1,104 @@
+$ corepack pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --filter=@fan-support/storefront^... --output-logs=errors-only --concurrency=2 && node --test ./scripts/regression-*.test.mjs ./apps/api/scripts/regression-*.test.mjs ./apps/api/scripts/admin-finance-native-postgres.test.mjs
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/api, @fan-support/application, @fan-support/cache-purge-cdn, @fan-support/cache-purge-port, @fan-support/cart, @fan-support/catalog, @fan-support/config, @fan-support/content, @fan-support/contracts, @fan-support/design-tokens, @fan-support/domain, @fan-support/i18n, @fan-support/identity-oidc, @fan-support/identity-port, @fan-support/key-management-kms, @fan-support/key-management-port, @fan-support/media-image, @fan-support/media-port, @fan-support/media-s3, @fan-support/notification-port, @fan-support/notification-provider, @fan-support/observability, @fan-support/payment-fake, @fan-support/payment-gateway, @fan-support/payment-port, @fan-support/persistence-port, @fan-support/persistence-postgres, @fan-support/testing, @fan-support/ui, @fan-support/worker
+   • Running build in 30 packages
+   • Remote caching disabled
+
+
+ Tasks:    30 successful, 30 total
+Cached:    0 cached, 30 total
+  Time:    23.153s 
+
+✔ native TEST cluster is newly owned, private, loopback-only, password-authenticated and always removed (19.855458ms)
+✔ a partially started native cluster is stopped and cleaned while command details stay private (10.880959ms)
+✔ native callback failure preserves no password and still shuts down only its new cluster (3.712ms)
+✔ native harness refuses cleanup when its exact ownership marker changed (17.994375ms)
+✔ native harness accepts no existing database or relative binary selector (0.251291ms)
+✔ poster visibility requires both actual compositions to change within sixty seconds (0.4005ms)
+✔ restoration verifies the exact historical pair and does not store media URLs (0.207042ms)
+✔ the duplicate-webhook gate sends ten sequential copies and verifies stable effects (1.271791ms)
+✔ the duplicate-webhook gate rejects a repeated economic or notification effect (0.92375ms)
+✔ the duplicate-webhook gate rejects a failed acknowledgement (0.191333ms)
+✔ finance defaults to the original isolated Docker database and reports that actual runtime (0.65075ms)
+✔ finance preserves the actual common runtime metadata and explicit environment (0.074417ms)
+✔ conflicting common and finance selectors fail before starting either runtime (0.201875ms)
+✔ an explicit native selector is used by finance and exposes only safe runtime metadata (0.088708ms)
+✔ invalid or unavailable explicit finance tools never fall back ("") (0.073667ms)
+✔ invalid or unavailable explicit finance tools never fall back ("relative") (0.040208ms)
+✔ invalid or unavailable explicit finance tools never fall back ("/unavailable/postgres/bin") (0.05325ms)
+✔ native operation failure is not replayed on another database (0.072125ms)
+✔ native cleanup failure is not replayed on another database (0.045792ms)
+✔ requires every locale and viewport with every journey stage (2.705792ms)
+✔ safe case schema rejects private values and unknown evidence (0.218667ms)
+✔ presentation switching cannot change any economic or identity field (0.235125ms)
+✔ browser entry rejects a persistent user instance before reading or mutating files (420.144959ms)
+✔ page errors retain only a closed diagnostic code, never private browser text (0.35875ms)
+✔ default payment observation still reads and validates every response body (4.683458ms)
+✔ the explicit canonical current read rejects unsuccessful HTTP before trusting a body (0.727791ms)
+✔ explicit stage scope skips only body retrieval and always rejects non-200 HTTP (0.222208ms)
+✔ RETURN scope retains full contract validation and unavailable-body failure (1.849833ms)
+✔ one gift publication binds its actual media count and excludes unrelated poster effects (7.698125ms)
+✔ rejects missing or duplicate operations after transaction retries (1.232875ms)
+✔ rejects missing or duplicate headBindings after transaction retries (0.132875ms)
+✔ rejects missing or duplicate variants after transaction retries (0.090917ms)
+✔ rejects missing or duplicate giftRevisions after transaction retries (0.080916ms)
+✔ rejects missing or duplicate priceRevisions after transaction retries (0.086125ms)
+✔ rejects missing or duplicate pricePublications after transaction retries (0.071459ms)
+✔ rejects missing or duplicate priceReceiptBindings after transaction retries (0.075791ms)
+✔ rejects missing or duplicate priceHeads after transaction retries (0.070708ms)
+✔ rejects missing or duplicate priceEvents after transaction retries (0.10975ms)
+✔ rejects repeated selected metadata and publication artifacts (0.163167ms)
+✔ every publication requires one event and purge job per supported locale (0.084083ms)
+✔ rejects unreferenced drafts while retaining the exact source processing metadata (0.055875ms)
+✔ notification verification reads actual captured mail from the separate TEST provider database (21.125291ms)
+✔ compiled regression mode is explicit and rejects ordinary instances before startup (1.641917ms)
+✔ production compilation serves the existing TEST tier through owned strict TLS and cleans in reverse order (2.873792ms)
+✔ failed compilation never starts a server or proxy and remains cleanable (0.367333ms)
+✔ proxy and health failures retain ownership so partial startup is stopped (1.818208ms)
+✔ stop during a pending compilation terminates the build and never starts the server or proxy (0.581208ms)
+✔ SQL leaf absence removes only the owned revision/locale pair without changing driver rows (0.694375ms)
+✔ copy evidence inner join projects only the same missing target translation (0.08325ms)
+✔ fault REVIEW_MISSING stays confined to the real SQL leaf result (0.075959ms)
+✔ fault TAMPER stays confined to the real SQL leaf result (0.043875ms)
+✔ fault DUPLICATE stays confined to the real SQL leaf result (0.038917ms)
+✔ fault SQL_ERROR stays confined to the real SQL leaf result (0.086292ms)
+✔ accepts all seven locale-bound invalidations for the exact publication (0.616084ms)
+✔ rejects missing locale without treating partial coverage as complete (0.350958ms)
+✔ rejects duplicate locale without treating partial coverage as complete (0.072625ms)
+✔ rejects unbounded purge without treating partial coverage as complete (0.062041ms)
+✔ rejects missing SEO dependency without treating partial coverage as complete (0.061ms)
+✔ rejects cross-locale path without treating partial coverage as complete (0.060834ms)
+✔ rejects wrong outbox locale without treating partial coverage as complete (0.06025ms)
+✔ rejects wrong revision without treating partial coverage as complete (0.04925ms)
+✔ archive only explicit evidence formats from output, never private runtime state or raw logs (21.113667ms)
+✔ required Quality result is gated by every regression suite, even on failure or cancellation (5.676542ms)
+✔ CI provisions the required runtimes and preserves failure evidence without private instance state (0.242375ms)
+✔ all suites use one explicit PostgreSQL tool directory, with no legacy override (1.253667ms)
+✔ identical legacy selectors agree; different or invalid selectors fail closed (1.101708ms)
+✔ unconfigured runs preserve the default and never invent a database selection (0.08275ms)
+✔ failed journeys stop services but preserve owned data, successful journeys clean only their instance (1.535542ms)
+✔ a partial browser report cannot trigger reset or successful acceptance (0.183375ms)
+✔ generated journey selectors obey the existing 32-character instance limit (0.450083ms)
+✔ full regression includes every fixed suite without substituting development checks (1.604625ms)
+✔ selected suites are explicitly partial, with no arbitrary executable input (0.196583ms)
+✔ operations exercises the real login and permission UI before privileged flows (0.539875ms)
+✔ coverage remains incomplete when a required suite fails or is missing (0.215792ms)
+✔ Git snapshot preparation cannot redirect an owned commit to another repository (123.774166ms)
+✔ suite environment drops all Git overrides while preserving host tooling (0.189833ms)
+✔ suite processes receive tooling settings without inherited application configuration (46.386208ms)
+✔ runner stops after a failing process and retains the failed step without claiming missing suites (21.746833ms)
+✔ runner records successful partial execution as partial coverage (20.224584ms)
+✔ source enumeration ignores Git environment pointing at another repository (98.349833ms)
+✔ source inventory honors unstaged deletions but refuses files lost after enumeration (27.807208ms)
+✔ isolated source snapshots include owned new source, exclude private state and preserve original bytes (3.654041ms)
+✔ source snapshot rejects traversal and symbolic links (1.597209ms)
+✔ snapshot workspaces must not sit inside node_modules, which breaks TypeScript package names (0.124167ms)
+ℹ tests 84
+ℹ suites 0
+ℹ pass 84
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 810.893333

@@ -10,6 +10,7 @@ const supportedHeads = [
   "0034",
   "0035",
   "0036",
+  "0037",
 ];
 
 /** Legacy probes may rewind only explicitly known, empty migration prefixes. */
@@ -81,6 +82,13 @@ export async function rollbackEmptyNotifications({
             "public.admin_payment_configuration_translation_copies",
           configuration_audits:
             "public.audit_logs WHERE action LIKE 'PAYMENT_CONFIGURATION_%'",
+        }
+      : {}),
+    ...(version >= "0037"
+      ? {
+          exception_operations: "public.admin_exception_operations",
+          exception_receipts: "public.admin_exception_receipts",
+          exception_audits: "public.audit_logs WHERE action LIKE 'EXCEPTION_%'",
         }
       : {}),
     ...(version >= "0035"

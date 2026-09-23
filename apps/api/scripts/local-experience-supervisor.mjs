@@ -28,7 +28,8 @@ const state = await loadLocalState(workspaceRoot, process.argv[2] ?? "default"),
   { config, stateDirectory } = state;
 const lock = path.join(stateDirectory, "supervisor.lock"),
   runId = randomUUID(),
-  lifecycle = createLocalLifecycle();
+  lifecycle = createLocalLifecycle(),
+  startupCancellation = new globalThis.AbortController();
 let ready = false,
   stage = "starting";
 const own = (name, close) => lifecycle.own(name, close);
@@ -36,7 +37,13 @@ const progress = (value) => {
   stage = value;
   process.stdout.write(JSON.stringify({ stage }) + "\n");
 };
-const context = { ...state, workspaceRoot, own, progress };
+const context = {
+  ...state,
+  workspaceRoot,
+  own,
+  progress,
+  startupSignal: startupCancellation.signal,
+};
 try {
   await writeFile(
     lock,
@@ -90,6 +97,7 @@ let shutdownPromise;
 function shutdown() {
   return (shutdownPromise ??= (async () => {
     ready = false;
+    startupCancellation.abort();
     const failures = await lifecycle.stop();
     await writePrivateJson(path.join(stateDirectory, "last-run.json"), {
       schemaVersion: 1,
