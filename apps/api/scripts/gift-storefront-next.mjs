@@ -4,6 +4,7 @@ import { once } from "node:events";
 import { appendFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import path from "node:path";
+import { storefrontTestRumEnvironment } from "./storefront-test-rum-config.mjs";
 import { setTimeout as delay } from "node:timers/promises";
 
 function forwardedResponseHeaders(headers) {
@@ -101,6 +102,7 @@ export function createGiftStorefrontNext({
   output,
   production,
   readDiagnostics = false,
+  localRum = false,
   secrets,
   check,
 }) {
@@ -196,7 +198,7 @@ export function createGiftStorefrontNext({
       ],
       {
         cwd,
-        env: startEnvironment,
+        env: storefrontTestRumEnvironment(startEnvironment, localRum),
         stdio: ["ignore", "pipe", "pipe"],
       },
     );

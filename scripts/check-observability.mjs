@@ -86,9 +86,15 @@ async function validateObservabilityPackage() {
       types: "./dist/node.d.ts",
       import: "./dist/node.js",
     },
+    "./rum": {
+      types: "./dist/rum.d.ts",
+      import: "./dist/rum.js",
+    },
   };
   if (!isDeepEqual(manifest.exports, expectedExports)) {
-    errors.push(`${relativePath} must expose only ., ./fastify, and ./node`);
+    errors.push(
+      `${relativePath} must expose only ., ./fastify, ./node, and ./rum`,
+    );
   }
 
   const expectedDependencies = {

@@ -1,0 +1,56 @@
+import assert from 'node:assert/strict';
+import { readFile, readdir, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
+const root=process.cwd();
+const directory=path.join(root,'output/checks/p6-03-performance');
+const candidate='/Users/mario/Desktop/.fan-support-regression/e3ad4bfc-33a2-4dfc-8691-948e5a201577/workspace';
+const baseline='/Users/mario/Desktop/.fan-support-regression/533549cb-7a34-4aea-8fcd-8524cdda9fa2/workspace';
+const sourceHash='ea5371aa693c4c2d46c238ac393036b11770c15e267d69e90460c829fe26baab';
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const sourcePath=path.join(directory,'candidate-5-source.json');
+const source=JSON.parse(await readFile(sourcePath,'utf8'));assert.equal(source.sourceHash,sourceHash);assert.equal(source.workspace,candidate);
+const names={baseline:'baseline-browser-1/browser-attempt-1/six-screen/results.json',disabled:'formal-performance-5/browser-attempt-1/six-screen/results.json',enabled:'rum-final-5/browser-attempt-1/rum/results.json'};
+const reports={};const reportBindings=[];
+for(const [kind,name] of Object.entries(names)){const file=path.join(directory,name);const bytes=await readFile(file);reports[kind]=JSON.parse(bytes);reportBindings.push({kind,path:path.relative(root,file),sha256:sha(bytes)});assert.equal(reports[kind].status,kind==='baseline'?'DIAGNOSTIC_COLLECTED':'PASS');}
+assert.equal(reports.disabled.cells.length,294);assert.equal(reports.enabled.cells.length,14);assert.equal(reports.baseline.cells.length,3);
+const rawBase=path.join(candidate,'output/checks/p3-06-storefront-acceptance');
+const rawNames=await readdir(rawBase);const rawBindings=[];
+for(const [kind,prefix,suffix] of [['disabled','run-2026-09-23T21-34-38','browser-attempt-1/six-screen/results.json'],['enabled','run-2026-09-23T21-27-10','browser-attempt-1/rum/results.json']]){
+ const found=rawNames.filter(name=>name.startsWith(prefix));assert.equal(found.length,1);const file=path.join(rawBase,found[0],suffix);const rawSha=sha(await readFile(file));assert.equal(rawSha,reportBindings.find(row=>row.kind===kind).sha256);rawBindings.push({kind,path:file,sha256:rawSha,archiveMatches:true});
+}
+const cache=new Map();
+async function artifact(workspace,url){const relative=new URL(url).pathname;assert.ok(relative.startsWith('/_next/static/chunks/'));const filename=path.join(workspace,'apps/storefront/.next',relative.slice('/_next/'.length));if(!cache.has(filename)){const bytes=await readFile(filename);cache.set(filename,{name:path.basename(filename),path:filename,sha256:sha(bytes),bodyBytes:bytes.length,nodeGzipBytes:gzipSync(bytes).length,compiled:bytes.toString('utf8')});}return cache.get(filename);}
+const resources=cell=>cell.resourceAssessment??cell.initialResources;
+const scripts=cell=>resources(cell).resources.filter(row=>row.type==='script');
+const fonts=cell=>resources(cell).resources.filter(row=>row.type==='font').map(row=>row.sha256).sort();
+const summaries={};
+for(const [kind,report] of Object.entries(reports)){
+ const workspace=kind==='baseline'?baseline:candidate;let count=0;const entries=[];
+ for(const cell of report.cells){assert.equal(cell.status,'PASS');const list=scripts(cell);assert.equal(list.length,resources(cell).scriptCount);assert.equal(list.reduce((sum,row)=>sum+row.gzipBytes,0),resources(cell).javascriptGzipBytes);
+ for(const response of list){const disk=await artifact(workspace,response.url);assert.equal(response.status,200);assert.equal(response.sha256,disk.sha256);assert.equal(response.bodyBytes,disk.bodyBytes);assert.equal(response.gzipBytes,disk.nodeGzipBytes);count++;}
+ entries.push({id:cell.id??`${cell.locale}-home-${cell.width}x${cell.height}`,scriptCount:list.length,javascriptGzipBytes:resources(cell).javascriptGzipBytes});}
+ summaries[kind]={cells:report.cells.length,scriptResponses:count,scriptResponsesMatchCompiled:count,entries};
+}
+assert.equal(summaries.disabled.scriptResponses,2352);assert.equal(summaries.enabled.scriptResponses,126);assert.equal(summaries.baseline.scriptResponses,24);
+const compiledDir=path.join(candidate,'apps/storefront/.next/static/chunks');
+const jsNames=(await readdir(compiledDir)).filter(name=>name.endsWith('.js'));
+const collectorMatches=[];const vitalsMatches=[];
+for(const name of jsNames){const asset=await artifact(candidate,'http://localhost/_next/static/chunks/'+name);if(asset.compiled.includes('"RumCollector"')&&asset.compiled.includes('/api/storefront/rum'))collectorMatches.push(asset);if(['onCLS','onINP','onLCP'].every(metric=>asset.compiled.includes(`"${metric}",0,`)))vitalsMatches.push(asset);}
+assert.equal(collectorMatches.length,1);assert.equal(vitalsMatches.length,1);
+const collector=collectorMatches[0],vitals=vitalsMatches[0];assert.ok(collector.compiled.includes(`static/chunks/${vitals.name}`));assert.ok(collector.compiled.includes('load:()=>e.A(77332)'));assert.ok(collector.compiled.includes('204===e.status&&await e.arrayBuffer()'));
+const shape=asset=>({name:asset.name,path:asset.path,sha256:asset.sha256,bodyBytes:asset.bodyBytes,nodeGzipBytes:asset.nodeGzipBytes});
+const responseShape=response=>({name:path.basename(new URL(response.url).pathname),sha256:response.sha256,bodyBytes:response.bodyBytes,nodeGzipBytes:response.gzipBytes});
+const comparison=(left,right)=>{const a=scripts(left),b=scripts(right);const aHashes=new Set(a.map(row=>row.sha256)),bHashes=new Set(b.map(row=>row.sha256));return {leftScriptCount:a.length,rightScriptCount:b.length,unchangedScripts:a.filter(row=>bHashes.has(row.sha256)).length,leftNodeGzipBytes:resources(left).javascriptGzipBytes,rightNodeGzipBytes:resources(right).javascriptGzipBytes,deltaNodeGzipBytes:resources(right).javascriptGzipBytes-resources(left).javascriptGzipBytes,removed:a.filter(row=>!bHashes.has(row.sha256)).map(responseShape),added:b.filter(row=>!aHashes.has(row.sha256)).map(responseShape),fontHashesIdentical:JSON.stringify(fonts(left))===JSON.stringify(fonts(right))};};
+const baselineComparisons=reports.baseline.cells.map(cell=>{const found=reports.disabled.cells.filter(row=>row.id===cell.id);assert.equal(found.length,1);return {id:cell.id,...comparison(cell,found[0])};});
+const enabledComparisons=reports.enabled.cells.map(cell=>{const id=`${cell.locale}-home-${cell.width}x${cell.height}`;const found=reports.disabled.cells.filter(row=>row.id===id);assert.equal(found.length,1);return {id,...comparison(found[0],cell)};});
+const observed=(report,asset)=>report.cells.filter(cell=>scripts(cell).some(row=>row.sha256===asset.sha256)).length;
+const bodyObservation={disabledCollectorCells:observed(reports.disabled,collector),disabledVitalsCells:observed(reports.disabled,vitals),enabledCollectorCells:observed(reports.enabled,collector),enabledVitalsCells:observed(reports.enabled,vitals)};
+assert.deepEqual(bodyObservation,{disabledCollectorCells:294,disabledVitalsCells:0,enabledCollectorCells:14,enabledVitalsCells:14});
+for(const row of baselineComparisons){assert.equal(row.unchangedScripts,7);assert.equal(row.removed.length,1);assert.equal(row.added.length,1);assert.equal(row.added[0].sha256,collector.sha256);}
+for(const row of enabledComparisons){assert.equal(row.unchangedScripts,8);assert.equal(row.removed.length,0);assert.equal(row.added.length,1);assert.equal(row.added[0].sha256,vitals.sha256);assert.equal(row.deltaNodeGzipBytes,vitals.nodeGzipBytes);}
+const baselineShared=await artifact(baseline,scripts(reports.baseline.cells[0]).find(row=>row.sha256===baselineComparisons[0].removed[0].sha256).url);
+const report={schemaVersion:1,reviewedAt:new Date().toISOString(),status:'PASS',scope:'Read-only final candidate compiled-body and actual response comparison; no build/browser/DB run',sourceHash,sourceManifest:{path:path.relative(root,sourcePath),sha256:sha(await readFile(sourcePath))},reportBindings,rawBindings,artifacts:{baselineShared:shape(baselineShared),collectorShared:{...shape(collector),containsCollectorExport:true,containsFixedEndpoint:true,containsSuccessful204BodyConsumption:true,asyncModuleId:77332,asyncChunk:vitals.name},vitals:{...shape(vitals),exports:['onCLS','onINP','onLCP']}},bodyObservation,summaries,baselineComparisons,enabledComparisons,limitations:['Node gzip recompresses decoded response bodies; not observed wire bytes.','Baseline comparison is only three zh-CN/390 diagnostic pages, not 294 baseline cells.','Shared net delta includes collector, async loader and minifier changes, not separately measured module CPU or parse cost.','Disabled H2 and enabled HTTP runs permit matching body-byte comparison, not controlled timing/field A/B.','Resource observer covers initial navigation through network idle/fonts ready; it does not prove all later downloads or zero telemetry POSTs.','Only the actual 14 enabled home cells support enabled costs; not all enabled public page families.','150000 B remains a SHOULD JS budget; these pages exceed it and formal hard-gate PASS does not erase it.']};
+await writeFile(path.join(directory,'rum-final-5-bundle-cost.json'),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({status:report.status,bodyObservation,artifacts:Object.fromEntries(Object.entries(report.artifacts).map(([key,value])=>[key,{name:value.name,bodyBytes:value.bodyBytes,nodeGzipBytes:value.nodeGzipBytes}])),baselineComparisons:baselineComparisons.map(({id,leftNodeGzipBytes,rightNodeGzipBytes,deltaNodeGzipBytes})=>({id,leftNodeGzipBytes,rightNodeGzipBytes,deltaNodeGzipBytes})),enabledComparisons:enabledComparisons.map(({id,leftNodeGzipBytes,rightNodeGzipBytes,deltaNodeGzipBytes})=>({id,leftNodeGzipBytes,rightNodeGzipBytes,deltaNodeGzipBytes}))},null,2));

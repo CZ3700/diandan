@@ -1,0 +1,54 @@
+{
+  "status": "FAIL",
+  "scope": "Read-only existing TEST homepage menu/search, no data mutation",
+  "steps": [
+    {
+      "id": "home",
+      "status": "PASS"
+    },
+    {
+      "id": "drawer-open",
+      "status": "PASS"
+    },
+    {
+      "id": "language-open",
+      "status": "PASS"
+    },
+    {
+      "id": "language-arrowdown",
+      "status": "PASS"
+    },
+    {
+      "id": "language-escape",
+      "status": "PASS"
+    },
+    {
+      "id": "drawer-escape",
+      "status": "PASS"
+    },
+    {
+      "id": "search-original-query",
+      "status": "FAIL",
+      "errorName": "Error"
+    }
+  ],
+  "pageErrors": [],
+  "errorName": "Error",
+  "diagnostics": {
+    "languageStates": [
+      "idle"
+    ],
+    "dialogs": 0,
+    "menus": 0,
+    "searchCount": 1,
+    "searchExpanded": "true",
+    "listboxes": [
+      {
+        "options": 0,
+        "width": 340,
+        "height": 0
+      }
+    ],
+    "scrollY": 621
+  }
+}

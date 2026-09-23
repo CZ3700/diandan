@@ -1,0 +1,13 @@
+✔ RUM exchange rejects headers or body that could disclose private context (2.017958ms)
+✔ server evidence excludes non-RUM logs and rejects malformed RUM observations (0.728916ms)
+✔ a partial browser matrix cannot count as RUM acceptance (0.113708ms)
+✔ dashboard explicitly marks empty windows and missing INP rather than passing (23.749042ms)
+✔ log reader filters ordinary logs, rejects malformed observations and bounds records (5.145875ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 234.020167

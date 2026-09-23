@@ -1,0 +1,155 @@
+{
+  "status": "DIAGNOSTIC_COLLECTED",
+  "commandExitCode": 0,
+  "source": "/Users/mario/Desktop/.fan-support-regression/533549cb-7a34-4aea-8fcd-8524cdda9fa2/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-23T19-53-45-049Z",
+  "destination": "/Users/mario/Desktop/\u4e0b\u5355/output/checks/p6-03-performance/baseline-browser-1",
+  "unmodifiedBaselineFiles": 2867,
+  "verifiedToolFiles": 10,
+  "files": [
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/results.json",
+      "sha256": "d2f631c9d45ed10366a9ccfe758bea7400b9c9c0a8e16b3b35cdfdd3a5a36b8f",
+      "bytes": 3518
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-artist-mobile-1.html",
+      "sha256": "bffb02705e31df686e3d2552bea92e7d7a5953e28c05c1f06e5735ee9ef92688",
+      "bytes": 681357
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-artist-mobile-1.json",
+      "sha256": "9638f05b75a2db4b3bbe46ccdf2f4ab2c282d169162d2d1b8ee93c48b1818432",
+      "bytes": 603952
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-artist-mobile-2.html",
+      "sha256": "3f6062b555813bfa0aac16130178d2fdde26710b8f2bdfc99f0294d9d96cda38",
+      "bytes": 681431
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-artist-mobile-2.json",
+      "sha256": "f3312ad7c2736f5487ee09ca5783d5291b654a8de199f4cb79217061971d1cb6",
+      "bytes": 604026
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-artist-mobile-3.html",
+      "sha256": "acd191081b5baa94cb4b3df4f13955328cfc9f09cb3c49020a180ff1fe99cf97",
+      "bytes": 681374
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-artist-mobile-3.json",
+      "sha256": "324191cc6328d0f20c8cdcf1f45b09d1b18d93836a0015c11ef35a949a522e17",
+      "bytes": 603969
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-gift-mobile-1.html",
+      "sha256": "0eedda9fb8fc9fa3ab607b9c0e4614027a7ba85a20420e9b536f6060bd764268",
+      "bytes": 761020
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-gift-mobile-1.json",
+      "sha256": "4a16cf2eade021c047f67aa298d51437fe8a569b38986bc6dd9315d86fae4241",
+      "bytes": 679210
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-gift-mobile-2.html",
+      "sha256": "6e7ba9ac259376e1151716b1d8e8b508d8b1b6190eedeec1d1d6aba3485a0e36",
+      "bytes": 761072
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-gift-mobile-2.json",
+      "sha256": "c3888b27225072e78c11a9c860b86f63bcc4608b84e7cf283fe3fe630f2ac37c",
+      "bytes": 679626
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-gift-mobile-3.html",
+      "sha256": "715aedbe3066448b3fd268f24925dc89723b287280f3d5ee6fd8baa8aaf07bcf",
+      "bytes": 760673
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-gift-mobile-3.json",
+      "sha256": "2e3745170692273eaf07f5ec7862ed8d03aace626e91b59566bca9500cde10f7",
+      "bytes": 678863
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-home-mobile-1.html",
+      "sha256": "54cc551f31b7d0a399042f7dd05aca7709c090807a110d168dc5f62fd18b9b53",
+      "bytes": 711693
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-home-mobile-1.json",
+      "sha256": "084f995ec9324672823e2932c84fb2c7f3324b89605534a8560597a5c016dd03",
+      "bytes": 639125
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-home-mobile-2.html",
+      "sha256": "7b40c20e055651f821a137a9c37763652d0fa688ebb29175d7741344024149dc",
+      "bytes": 725045
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-home-mobile-2.json",
+      "sha256": "4940495415fe07b6b6acf4c04b7ebdd752bd9a64ffd699ac6268580fb158a4bf",
+      "bytes": 652891
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-home-mobile-3.html",
+      "sha256": "5326af215913741907a82c058e136671887b9e1ceb43fc78ecd07dc0cc2a78f3",
+      "bytes": 725033
+    },
+    {
+      "path": "browser-attempt-1/diagnostic-lighthouse/zh-CN-home-mobile-3.json",
+      "sha256": "59d152d175de78c14957851c57a9e610186c390f503ba41b7853c1a4558cdc86",
+      "bytes": 652879
+    },
+    {
+      "path": "browser-attempt-1/performance-context.json",
+      "sha256": "c981d8b6350432d7e7d0f68fa7c9a991021587e5727abd7262f94977cb88ba1d",
+      "bytes": 348
+    },
+    {
+      "path": "browser-attempt-1/performance-viewer-after.json",
+      "sha256": "7a16aacc0f8fd69262f7cc6e8f76279a8a8ae983426d43c980033755ada8218c",
+      "bytes": 156800
+    },
+    {
+      "path": "browser-attempt-1/performance-viewer-final.json",
+      "sha256": "d06044f5e931dab126c290e8df1e9d00431264b21c900372c3c62364807fea83",
+      "bytes": 156799
+    },
+    {
+      "path": "browser-attempt-1/results.json",
+      "sha256": "acff3ca55139a8a08ed593258d007045fe68e76ee394b717c6d2173cfc297ee5",
+      "bytes": 77973
+    },
+    {
+      "path": "browser-attempt-1/six-screen/results.json",
+      "sha256": "5496e2904d8feb2b8a421a95c3eae47c87f76b411b04b2ad2633f01c7427cadf",
+      "bytes": 74213
+    },
+    {
+      "path": "concurrent-public-reads-1790193372788.json",
+      "sha256": "d0e180296b17f06ed20c7f2325282af715a9697465bd57f82946804cacf74afd",
+      "bytes": 18710
+    },
+    {
+      "path": "fixture-manifest.json",
+      "sha256": "982e4a11da12a941446dc3c249f58970034fe9158e10a1284ec03f37a50cd1dc",
+      "bytes": 38020
+    },
+    {
+      "path": "next-build-1.log",
+      "sha256": "d5a8c65fb16a1ba0b696b350174850c810d97b0f7de7d4283a9304332cc18800",
+      "bytes": 6400
+    },
+    {
+      "path": "next-runtime-1.log",
+      "sha256": "76bc922e23be70aa04e4052aac8ba46ce7a29cdf95175401630c80189c2a5208",
+      "bytes": 416
+    },
+    {
+      "path": "protocol-results.json",
+      "sha256": "852fa3d808f03264b9a278c3a030656587c447d7689482a1867ec8dbffea2371",
+      "bytes": 26470
+    }
+  ]
+}

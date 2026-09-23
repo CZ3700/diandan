@@ -1,0 +1,39 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/storefront
+
+ ❯ src/storefront/rum-client.test.ts (2 tests | 2 failed) 6ms
+   × disabled, sampled-out and token exchange documents download no collector 4ms
+   × subscribes once and fixes hard-document context through route changes with ephemeral metric revisions 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/storefront/rum-client.test.ts > disabled, sampled-out and token exchange documents download no collector
+AssertionError: RUM lifecycle adapter must exist: expected undefined to be defined
+ ❯ src/storefront/rum-client.test.ts:6:54
+      4| test("disabled, sampled-out and token exchange documents download no c…
+      5|   const loaded = await import("./rum-client").catch(() => undefined);
+      6|   expect(loaded, "RUM lifecycle adapter must exist").toBeDefined();
+       |                                                      ^
+      7|   if (!loaded) return;
+      8|   const load = vi.fn();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/storefront/rum-client.test.ts > subscribes once and fixes hard-document context through route changes with ephemeral metric revisions
+Error: Cannot find module '/src/storefront/rum-client' imported from /Users/mario/Desktop/下单/apps/storefront/src/storefront/rum-client.test.ts
+ ❯ src/storefront/rum-client.test.ts:16:24
+     14|
+     15| test("subscribes once and fixes hard-document context through route ch…
+     16|   const { startRum } = await import("./rum-client");
+       |                        ^
+     17|   const callbacks: ((metric: MetricType) => void)[] = [];
+     18|   const on = (callback: (metric: MetricType) => void) => { callbacks.p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  02:31:27
+   Duration  108ms (transform 9ms, setup 0ms, import 14ms, tests 6ms, environment 0ms)
+

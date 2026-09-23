@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/performance_catalog_audit",
+  "checkedAt": "2026-09-23T22:02:01.455891+00:00",
+  "status": "PASS",
+  "checks": {
+    "allOriginal8457Unchanged": true,
+    "mirrorsPreservedAndScannable": true,
+    "secretScanActualOuter0": true,
+    "scanRulesUnchanged": true,
+    "instanceRunPidServicesIdentical": true,
+    "configHashEvidenceMatches": true,
+    "readOnlyHttps200": true,
+    "noResetRestart": true,
+    "actualPrivateConfigBytesUnchanged": true,
+    "newTwoBaselineMirrorsExact": true,
+    "original8457NotStaged": true,
+    "finalStagedScanIncludesNewMirrors": true
+  },
+  "protectedFileCount": 8457,
+  "protectedBytesHashed": 5887735618,
+  "protectedChanges": [],
+  "logMirrors": [
+    {
+      "original": "output/checks/p6-02-language-menu-fix/shared-ui/logs/build-storefront-closure.log",
+      "mirror": "output/checks/p6-02-language-menu-fix/shared-ui/logs/build-storefront-closure.log.txt",
+      "originalAndMirrorEqual": true,
+      "expectedShaMatches": true,
+      "onlyMirrorTracked": true
+    },
+    {
+      "original": "output/checks/p6-02-language-menu-fix/shared-ui/logs/server-preview.log",
+      "mirror": "output/checks/p6-02-language-menu-fix/shared-ui/logs/server-preview.log.txt",
+      "originalAndMirrorEqual": true,
+      "expectedShaMatches": true,
+      "onlyMirrorTracked": true
+    },
+    {
+      "original": "output/checks/p6-02-language-menu-fix/shared-ui/logs/server-production.log",
+      "mirror": "output/checks/p6-02-language-menu-fix/shared-ui/logs/server-production.log.txt",
+      "originalAndMirrorEqual": true,
+      "expectedShaMatches": true,
+      "onlyMirrorTracked": true
+    },
+    {
+      "original": "output/checks/p6-02-language-menu-fix/shared-ui/logs/server-staging.log",
+      "mirror": "output/checks/p6-02-language-menu-fix/shared-ui/logs/server-staging.log.txt",
+      "originalAndMirrorEqual": true,
+      "expectedShaMatches": true,
+      "onlyMirrorTracked": true
+    }
+  ],
+  "scanRules": [
+    {
+      "path": "scripts/scan-secrets.mjs",
+      "currentSha256": "d933457d82a34a2cd1e1f01dd81c0d8a1fe51513c6472e35b593c05e9a069564",
+      "baselineSha256": "d933457d82a34a2cd1e1f01dd81c0d8a1fe51513c6472e35b593c05e9a069564",
+      "matches": true
+    },
+    {
+      "path": ".secretlintignore",
+      "currentSha256": "f15e3386a4f6cefbbb14be0f3e504e0505217dc1963cd0d0b7284d979df952fc",
+      "baselineSha256": "f15e3386a4f6cefbbb14be0f3e504e0505217dc1963cd0d0b7284d979df952fc",
+      "matches": true
+    },
+    {
+      "path": ".secretlintrc.json",
+      "currentSha256": "1c0e86ca72216c22cc77b1c94c27f975b731aa9e104167f5d57a5befa654c10e",
+      "baselineSha256": "1c0e86ca72216c22cc77b1c94c27f975b731aa9e104167f5d57a5befa654c10e",
+      "matches": true
+    }
+  ],
+  "scanReceipt": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "command": "mise exec node@24.20.0 -- pnpm security:secrets",
+    "log": "secrets-final-6-staged.txt",
+    "session": 54176,
+    "completion": "5bcec2",
+    "outerExitCode": 0,
+    "policyUnchanged": true,
+    "stagedIndexChecked": true,
+    "ownBaselineLogMirrorsScanned": 2
+  },
+  "privateConfigCheck": {
+    "path": "/Users/mario/Desktop/下单/node_modules/.cache/fan-support-local-experience/acceptance-e143d720dd1a4357a3c3/config.json",
+    "sha256": "1bb3a5ec2d125d1e836e4ca336928e843a0d29cd3ddf31d71ca838e8ca8fd91e",
+    "matchesOriginal": true,
+    "contentsPrinted": false
+  },
+  "instanceEvidence": "Original and final status JSON equal, including instance/run/PID/four readiness flags; actual HTTPS GET receipt supplied by root. No service restart or request made by reviewer.",
+  "scopeNote": "Independent original8457 hash/actual private config/source rules and staged mirrors confirmed. Final original secret scan repeated after both new baseline mirrors became tracked: session54176/completion5bcec2/exit0. Original raw logs and old archive bytes remain unchanged.",
+  "updatedAt": "2026-09-23T22:04:48.178568+00:00",
+  "baselineDiagnosticLogMirrors": [
+    {
+      "original": "output/checks/p6-03-performance/baseline-browser-1/next-build-1.log",
+      "mirror": "output/checks/p6-03-performance/baseline-browser-1/next-build-1.log.txt",
+      "sameBytes": true,
+      "expectedShaAndSize": true,
+      "onlyMirrorTracked": true
+    },
+    {
+      "original": "output/checks/p6-03-performance/baseline-browser-1/next-runtime-1.log",
+      "mirror": "output/checks/p6-03-performance/baseline-browser-1/next-runtime-1.log.txt",
+      "sameBytes": true,
+      "expectedShaAndSize": true,
+      "onlyMirrorTracked": true
+    }
+  ],
+  "stagedProtection": {
+    "stagedPathsAtRead": 814,
+    "protectedIntersection": [],
+    "noRenamePathCount": 818
+  },
+  "previousScanReceipt": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "command": "mise exec node@24.20.0 -- pnpm security:secrets",
+    "log": "secrets-final-5.txt",
+    "session": 18052,
+    "completion": "464854",
+    "outerExitCode": 0,
+    "policyUnchanged": true,
+    "historicalTrackedLogs": "Four preserved exact byte .log.txt mirrors instead of .log, previously staged; original files remain locally, old report hashes untouched."
+  }
+}

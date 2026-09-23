@@ -1,0 +1,19 @@
+✔ partial launch failure still kills the already spawned child before removing its profile (1.289542ms)
+✔ close rejection or timeout cannot prevent owned kill and profile cleanup (21.553ms)
+✔ unconfirmed process exit blocks success and preserves the owned profile (22.551125ms)
+✔ fresh owned context success waits for process exit and profile cleanup (0.174ms)
+✔ connection and profile-removal failures cannot become successful verification (0.161166ms)
+✔ visibility evidence rejects synthetic, missing, navigated, or still visible documents (5.087708ms)
+✔ RUM exchange rejects headers or body that could disclose private context (2.467292ms)
+✔ request attempts remain observable when acknowledgement or header validation fails (0.724292ms)
+✔ server evidence excludes non-RUM logs and rejects malformed RUM observations (1.033875ms)
+✔ 204 acknowledgement requires completed response and pending observations are bounded (42.7495ms)
+✔ a partial browser matrix cannot count as RUM acceptance (0.2705ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 334.186625

@@ -1,0 +1,1219 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "sourceHash": "acc7cc8514f123c5221d78e299185bd8a8da90e0176697685a12981e955c496c",
+  "browserVersion": "153.0.8010.53",
+  "originalResources": 84,
+  "lighthouseSamples": 63,
+  "lighthouseGroups": 21,
+  "sixScreenCells": 294,
+  "pageErrors": 0,
+  "budget": {
+    "labTargetsMet": true,
+    "scoreMedianMinimum": 0.9,
+    "lcpLabMedianExclusiveMaximumMs": 2500,
+    "clsLabMedianExclusiveMaximum": 0.1,
+    "javascriptShouldMet": false,
+    "imagesShouldMet": true,
+    "javascriptPagesExceedingRecommendation": 84,
+    "imagesExceedingRecommendation": 0,
+    "fieldCwvEvidence": false
+  },
+  "groupMedianRange": {
+    "lcpMs": {
+      "min": 1353.7912000000001,
+      "max": 2264.4155
+    },
+    "cls": {
+      "min": 0,
+      "max": 0
+    },
+    "performanceScore": {
+      "min": 0.98,
+      "max": 1
+    }
+  },
+  "allSampleRange": {
+    "lcpMs": {
+      "min": 1204.7601,
+      "max": 3057.7210999999998
+    },
+    "cls": {
+      "min": 0,
+      "max": 0
+    },
+    "score": {
+      "min": 0.92,
+      "max": 1
+    }
+  },
+  "originalJavaScriptGzipRange": {
+    "min": 151753,
+    "max": 157046
+  },
+  "sixScreenUnthrottledObservedLcpRange": {
+    "min": 64,
+    "max": 812
+  },
+  "groups": [
+    {
+      "file": "en-artist-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1654.1278,
+        "median": 1955.6278,
+        "max": 1959.8417
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 0.99,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "en-gift-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1954.1199000000001,
+        "median": 2104.7537,
+        "max": 2405.8469999999998
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.98,
+        "median": 0.99,
+        "max": 0.99
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "en-home-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1809.7619,
+        "median": 1957.0744,
+        "max": 2110.2485
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 0.99,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "es-artist-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1505.317,
+        "median": 1803.8775,
+        "max": 1954.3961
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 1,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "es-gift-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1353.4976000000001,
+        "median": 1353.7912000000001,
+        "max": 2105.0769
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 1,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "es-home-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1804.5522,
+        "median": 1805.1666,
+        "max": 1805.5285
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 1,
+        "median": 1,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "ja-artist-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1654.4709,
+        "median": 2107.642,
+        "max": 3057.7210999999998
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.92,
+        "median": 0.99,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "ja-gift-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 2254.6077,
+        "median": 2264.4155,
+        "max": 2265.5419
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.98,
+        "median": 0.98,
+        "max": 0.98
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "ja-home-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 2106.0023,
+        "median": 2155.9802,
+        "max": 2706.819
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.96,
+        "median": 0.99,
+        "max": 0.99
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "pt-artist-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1803.8161,
+        "median": 1803.9234999999999,
+        "max": 1955.4560999999999
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 0.99,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "pt-gift-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1204.7601,
+        "median": 1504.3903,
+        "max": 2103.9537
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 1,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "pt-home-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1806.4989,
+        "median": 1955.8339,
+        "max": 2107.018
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 0.99,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "th-artist-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1504.039,
+        "median": 1505.1334000000002,
+        "max": 1805.1408999999999
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 1,
+        "median": 1,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "th-gift-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1954.1554999999998,
+        "median": 1954.8339,
+        "max": 1955.7535
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 0.99,
+        "max": 0.99
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "th-home-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1806.0017,
+        "median": 2104.8197,
+        "max": 2106.3244999999997
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 0.99,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "vi-artist-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 2103.9319,
+        "median": 2104.6795,
+        "max": 2108.8351000000002
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 0.99,
+        "max": 0.99
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "vi-gift-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1955.8342,
+        "median": 2253.3627,
+        "max": 2255.5592
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.98,
+        "median": 0.98,
+        "max": 0.99
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "vi-home-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1805.9949000000001,
+        "median": 2106.2427,
+        "max": 2107.2874
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 0.99,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "zh-CN-artist-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 1655.6551,
+        "median": 1655.7821,
+        "max": 1655.9027999999998
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 1,
+        "median": 1,
+        "max": 1
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "zh-CN-gift-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 2255.5164999999997,
+        "median": 2255.6513999999997,
+        "max": 2260.2824
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.98,
+        "median": 0.98,
+        "max": 0.98
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    },
+    {
+      "file": "zh-CN-home-aggregate.json",
+      "runs": 3,
+      "lcpMs": {
+        "min": 2105.209,
+        "median": 2107.0602,
+        "max": 2109.415
+      },
+      "cls": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "performanceScore": {
+        "min": 0.99,
+        "median": 0.99,
+        "max": 0.99
+      },
+      "performanceScoreTargetMet": true,
+      "lcpLabTargetMet": true,
+      "clsLabTargetMet": true,
+      "realUserEvidence": false,
+      "fieldInpEvidence": false,
+      "selection": "All three attempts retained; median, minimum and maximum, never best-only"
+    }
+  ],
+  "samples": [
+    {
+      "locale": "en",
+      "kind": "home",
+      "attempt": 1,
+      "file": "en-home-mobile-1.json",
+      "score": 0.99,
+      "lcpMs": 2110.2485,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "en",
+      "kind": "home",
+      "attempt": 2,
+      "file": "en-home-mobile-2.json",
+      "score": 1,
+      "lcpMs": 1809.7619,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "en",
+      "kind": "home",
+      "attempt": 3,
+      "file": "en-home-mobile-3.json",
+      "score": 0.99,
+      "lcpMs": 1957.0744,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "en",
+      "kind": "artist",
+      "attempt": 1,
+      "file": "en-artist-mobile-1.json",
+      "score": 0.99,
+      "lcpMs": 1959.8417,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "en",
+      "kind": "artist",
+      "attempt": 2,
+      "file": "en-artist-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 1955.6278,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "en",
+      "kind": "artist",
+      "attempt": 3,
+      "file": "en-artist-mobile-3.json",
+      "score": 1,
+      "lcpMs": 1654.1278,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "en",
+      "kind": "gift",
+      "attempt": 1,
+      "file": "en-gift-mobile-1.json",
+      "score": 0.98,
+      "lcpMs": 2405.8469999999998,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "en",
+      "kind": "gift",
+      "attempt": 2,
+      "file": "en-gift-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 2104.7537,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "en",
+      "kind": "gift",
+      "attempt": 3,
+      "file": "en-gift-mobile-3.json",
+      "score": 0.99,
+      "lcpMs": 1954.1199000000001,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "home",
+      "attempt": 1,
+      "file": "zh-CN-home-mobile-1.json",
+      "score": 0.99,
+      "lcpMs": 2107.0602,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "home",
+      "attempt": 2,
+      "file": "zh-CN-home-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 2105.209,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "home",
+      "attempt": 3,
+      "file": "zh-CN-home-mobile-3.json",
+      "score": 0.99,
+      "lcpMs": 2109.415,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "artist",
+      "attempt": 1,
+      "file": "zh-CN-artist-mobile-1.json",
+      "score": 1,
+      "lcpMs": 1655.7821,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "artist",
+      "attempt": 2,
+      "file": "zh-CN-artist-mobile-2.json",
+      "score": 1,
+      "lcpMs": 1655.6551,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "artist",
+      "attempt": 3,
+      "file": "zh-CN-artist-mobile-3.json",
+      "score": 1,
+      "lcpMs": 1655.9027999999998,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gift",
+      "attempt": 1,
+      "file": "zh-CN-gift-mobile-1.json",
+      "score": 0.98,
+      "lcpMs": 2260.2824,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gift",
+      "attempt": 2,
+      "file": "zh-CN-gift-mobile-2.json",
+      "score": 0.98,
+      "lcpMs": 2255.5164999999997,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "zh-CN",
+      "kind": "gift",
+      "attempt": 3,
+      "file": "zh-CN-gift-mobile-3.json",
+      "score": 0.98,
+      "lcpMs": 2255.6513999999997,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "th",
+      "kind": "home",
+      "attempt": 1,
+      "file": "th-home-mobile-1.json",
+      "score": 0.99,
+      "lcpMs": 2106.3244999999997,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "th",
+      "kind": "home",
+      "attempt": 2,
+      "file": "th-home-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 2104.8197,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "th",
+      "kind": "home",
+      "attempt": 3,
+      "file": "th-home-mobile-3.json",
+      "score": 1,
+      "lcpMs": 1806.0017,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "th",
+      "kind": "artist",
+      "attempt": 1,
+      "file": "th-artist-mobile-1.json",
+      "score": 1,
+      "lcpMs": 1505.1334000000002,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "th",
+      "kind": "artist",
+      "attempt": 2,
+      "file": "th-artist-mobile-2.json",
+      "score": 1,
+      "lcpMs": 1805.1408999999999,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "th",
+      "kind": "artist",
+      "attempt": 3,
+      "file": "th-artist-mobile-3.json",
+      "score": 1,
+      "lcpMs": 1504.039,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "th",
+      "kind": "gift",
+      "attempt": 1,
+      "file": "th-gift-mobile-1.json",
+      "score": 0.99,
+      "lcpMs": 1954.1554999999998,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "th",
+      "kind": "gift",
+      "attempt": 2,
+      "file": "th-gift-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 1954.8339,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "th",
+      "kind": "gift",
+      "attempt": 3,
+      "file": "th-gift-mobile-3.json",
+      "score": 0.99,
+      "lcpMs": 1955.7535,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "vi",
+      "kind": "home",
+      "attempt": 1,
+      "file": "vi-home-mobile-1.json",
+      "score": 1,
+      "lcpMs": 1805.9949000000001,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "vi",
+      "kind": "home",
+      "attempt": 2,
+      "file": "vi-home-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 2106.2427,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "vi",
+      "kind": "home",
+      "attempt": 3,
+      "file": "vi-home-mobile-3.json",
+      "score": 0.99,
+      "lcpMs": 2107.2874,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "vi",
+      "kind": "artist",
+      "attempt": 1,
+      "file": "vi-artist-mobile-1.json",
+      "score": 0.99,
+      "lcpMs": 2108.8351000000002,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "vi",
+      "kind": "artist",
+      "attempt": 2,
+      "file": "vi-artist-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 2103.9319,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "vi",
+      "kind": "artist",
+      "attempt": 3,
+      "file": "vi-artist-mobile-3.json",
+      "score": 0.99,
+      "lcpMs": 2104.6795,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "vi",
+      "kind": "gift",
+      "attempt": 1,
+      "file": "vi-gift-mobile-1.json",
+      "score": 0.98,
+      "lcpMs": 2255.5592,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "vi",
+      "kind": "gift",
+      "attempt": 2,
+      "file": "vi-gift-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 1955.8342,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "vi",
+      "kind": "gift",
+      "attempt": 3,
+      "file": "vi-gift-mobile-3.json",
+      "score": 0.98,
+      "lcpMs": 2253.3627,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "ja",
+      "kind": "home",
+      "attempt": 1,
+      "file": "ja-home-mobile-1.json",
+      "score": 0.96,
+      "lcpMs": 2706.819,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "ja",
+      "kind": "home",
+      "attempt": 2,
+      "file": "ja-home-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 2155.9802,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "ja",
+      "kind": "home",
+      "attempt": 3,
+      "file": "ja-home-mobile-3.json",
+      "score": 0.99,
+      "lcpMs": 2106.0023,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "ja",
+      "kind": "artist",
+      "attempt": 1,
+      "file": "ja-artist-mobile-1.json",
+      "score": 0.99,
+      "lcpMs": 2107.642,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "ja",
+      "kind": "artist",
+      "attempt": 2,
+      "file": "ja-artist-mobile-2.json",
+      "score": 0.92,
+      "lcpMs": 3057.7210999999998,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "ja",
+      "kind": "artist",
+      "attempt": 3,
+      "file": "ja-artist-mobile-3.json",
+      "score": 1,
+      "lcpMs": 1654.4709,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "ja",
+      "kind": "gift",
+      "attempt": 1,
+      "file": "ja-gift-mobile-1.json",
+      "score": 0.98,
+      "lcpMs": 2254.6077,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "ja",
+      "kind": "gift",
+      "attempt": 2,
+      "file": "ja-gift-mobile-2.json",
+      "score": 0.98,
+      "lcpMs": 2264.4155,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "ja",
+      "kind": "gift",
+      "attempt": 3,
+      "file": "ja-gift-mobile-3.json",
+      "score": 0.98,
+      "lcpMs": 2265.5419,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "es",
+      "kind": "home",
+      "attempt": 1,
+      "file": "es-home-mobile-1.json",
+      "score": 1,
+      "lcpMs": 1805.5285,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "es",
+      "kind": "home",
+      "attempt": 2,
+      "file": "es-home-mobile-2.json",
+      "score": 1,
+      "lcpMs": 1805.1666,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "es",
+      "kind": "home",
+      "attempt": 3,
+      "file": "es-home-mobile-3.json",
+      "score": 1,
+      "lcpMs": 1804.5522,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "es",
+      "kind": "artist",
+      "attempt": 1,
+      "file": "es-artist-mobile-1.json",
+      "score": 1,
+      "lcpMs": 1803.8775,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "es",
+      "kind": "artist",
+      "attempt": 2,
+      "file": "es-artist-mobile-2.json",
+      "score": 1,
+      "lcpMs": 1505.317,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "es",
+      "kind": "artist",
+      "attempt": 3,
+      "file": "es-artist-mobile-3.json",
+      "score": 0.99,
+      "lcpMs": 1954.3961,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "es",
+      "kind": "gift",
+      "attempt": 1,
+      "file": "es-gift-mobile-1.json",
+      "score": 1,
+      "lcpMs": 1353.4976000000001,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "es",
+      "kind": "gift",
+      "attempt": 2,
+      "file": "es-gift-mobile-2.json",
+      "score": 1,
+      "lcpMs": 1353.7912000000001,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "es",
+      "kind": "gift",
+      "attempt": 3,
+      "file": "es-gift-mobile-3.json",
+      "score": 0.99,
+      "lcpMs": 2105.0769,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "pt",
+      "kind": "home",
+      "attempt": 1,
+      "file": "pt-home-mobile-1.json",
+      "score": 0.99,
+      "lcpMs": 1955.8339,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "pt",
+      "kind": "home",
+      "attempt": 2,
+      "file": "pt-home-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 2107.018,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "pt",
+      "kind": "home",
+      "attempt": 3,
+      "file": "pt-home-mobile-3.json",
+      "score": 1,
+      "lcpMs": 1806.4989,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "pt",
+      "kind": "artist",
+      "attempt": 1,
+      "file": "pt-artist-mobile-1.json",
+      "score": 0.99,
+      "lcpMs": 1803.8161,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "pt",
+      "kind": "artist",
+      "attempt": 2,
+      "file": "pt-artist-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 1955.4560999999999,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "pt",
+      "kind": "artist",
+      "attempt": 3,
+      "file": "pt-artist-mobile-3.json",
+      "score": 1,
+      "lcpMs": 1803.9234999999999,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "pt",
+      "kind": "gift",
+      "attempt": 1,
+      "file": "pt-gift-mobile-1.json",
+      "score": 1,
+      "lcpMs": 1504.3903,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "pt",
+      "kind": "gift",
+      "attempt": 2,
+      "file": "pt-gift-mobile-2.json",
+      "score": 0.99,
+      "lcpMs": 2103.9537,
+      "cls": 0,
+      "currentContentScore": 1
+    },
+    {
+      "locale": "pt",
+      "kind": "gift",
+      "attempt": 3,
+      "file": "pt-gift-mobile-3.json",
+      "score": 1,
+      "lcpMs": 1204.7601,
+      "cls": 0,
+      "currentContentScore": 1
+    }
+  ],
+  "realUserEvidence": false,
+  "physicalDeviceEvidence": false
+}

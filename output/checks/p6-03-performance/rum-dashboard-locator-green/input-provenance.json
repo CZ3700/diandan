@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "input": [
+    {
+      "name": "rum-report.json",
+      "sha256": "826a4a20ffa817d0e100d7fde9005cb03aea0a4785356f44616b14c9ee84c8aa"
+    },
+    {
+      "name": "rum-dashboard.html",
+      "sha256": "a82b806973afd0c1bfc5a39b37e7974ed26c3698440ce5360a51588ee4045aae"
+    }
+  ],
+  "scope": "EXISTING_ACTUAL_CLI_HTML_ONLY",
+  "metricsInjected": false,
+  "fullNextIntegration": false,
+  "browserVersion": "153.0.8010.53"
+}

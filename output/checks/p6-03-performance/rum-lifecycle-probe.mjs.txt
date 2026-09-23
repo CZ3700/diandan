@@ -1,0 +1,78 @@
+import assert from "node:assert/strict";
+import { createServer } from "node:http";
+import { readFile, writeFile } from "node:fs/promises";
+import { createRequire } from "node:module";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import { setTimeout as delay } from "node:timers/promises";
+import ts from "typescript";
+import { chromium, expect } from "@playwright/test";
+const root = process.cwd();
+const require = createRequire(path.join(root, "apps/storefront/package.json"));
+const vitalsPath = path.join(path.dirname(require.resolve("web-vitals")), "web-vitals.js");
+const source = await readFile(path.join(root, "apps/storefront/src/storefront/rum-client.ts"), "utf8");
+const client = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } }).outputText;
+const { validateRumExchange } = await import(pathToFileURL(path.join(root, "apps/api/scripts/rum-browser.mjs")));
+const report = { status: "RUNNING", source: "ACTUAL_PRODUCT_START_BROWSER_RUM_AND_LOCKED_WEB_VITALS", callbacksInjected: false, server: [], pageResponses: [], contextResponses: [], requestHeaders: [], failures: [], pageErrors: [] };
+const server = createServer(async (req, res) => {
+  if (req.url === "/client.js") { res.setHeader("Content-Type", "text/javascript"); res.end(client); return; }
+  if (req.url === "/vitals.js") { res.setHeader("Content-Type", "text/javascript"); res.end(await readFile(vitalsPath)); return; }
+  if (req.url === "/contract.js") { res.setHeader("Content-Type", "text/javascript"); res.end('export const RUM_ENDPOINT="/api/storefront/rum";'); return; }
+  if (req.url === "/api/storefront/rum") {
+    let body = ""; for await (const part of req) body += part;
+    const metric = JSON.parse(body).metric;
+    report.server.push({ name: metric.name, value: metric.value });
+    await delay(80); res.writeHead(204); res.end(); return;
+  }
+  if (req.url === "/healthz") { res.setHeader("Content-Type", "text/html"); res.end("<!doctype html><title>Health</title><p>Healthy</p>"); return; }
+  res.setHeader("Content-Type", "text/html");
+  res.end(`<!doctype html><html lang="en"><meta charset="utf-8"><title>Real RUM lifecycle probe</title><style>body{font:32px sans-serif;margin:40px}input{font:inherit}</style><h1>Local performance lifecycle</h1><label>Search <input type="search"></label><script type="importmap">{"imports":{"@fan-support/contracts/rum-browser":"/contract.js","web-vitals":"/vitals.js"}}</script><script type="module">import { startBrowserRum } from '/client.js'; await startBrowserRum({locale:'en',samplePermille:1000});document.documentElement.dataset.rumReady='true';</script></html>`);
+});
+await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
+const origin = `http://127.0.0.1:${server.address().port}`;
+const browser = await chromium.launch({ channel: "chrome", headless: true });
+const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+const page = await context.newPage();
+const early = new Map();
+const pending = [];
+page.on("pageerror", () => report.pageErrors.push("PAGE_ERROR"));
+page.on("request", request => {
+  if (request.url() !== origin + "/api/storefront/rum") return;
+  const p = request.allHeaders().then(headers => {
+    report.requestHeaders.push({ name: JSON.parse(request.postData()).metric.name, originPresent: headers.origin !== undefined, originExact: headers.origin === origin, fetchSite: headers["sec-fetch-site"] ?? null });
+    return headers;
+  }).catch(() => { report.failures.push({ stage: "EARLY_HEADERS" }); return null; });
+  early.set(request, p); pending.push(p);
+});
+function observe(owner, target) {
+  owner.on("response", response => {
+    const request = response.request();
+    if (request.url() !== origin + "/api/storefront/rum") return;
+    pending.push((async () => {
+      const row = { status: response.status(), name: JSON.parse(request.postData()).metric.name };
+      target.push(row);
+      try {
+        const headers = await request.allHeaders();
+        row.headersRead = true; row.originPresent = headers.origin !== undefined; row.originExact = headers.origin === origin; row.fetchSite = headers["sec-fetch-site"] ?? null;
+        validateRumExchange({ endpoint: request.url(), method: request.method(), status: response.status(), headers, body: JSON.parse(request.postData()) }, origin);
+        row.valid = true;
+      } catch (error) { row.valid = false; row.errorName = error.name; row.stage = row.headersRead ? "VALIDATION" : "RESPONSE_HEADERS"; }
+      const earlyHeaders = await early.get(request);
+      row.earlyHeadersAvailable = !!earlyHeaders;
+    })());
+  });
+}
+observe(page, report.pageResponses); observe(context, report.contextResponses);
+try {
+  await page.goto(origin + "/en", { waitUntil: "networkidle" });
+  await expect(page.locator("html")).toHaveAttribute("data-rum-ready", "true");
+  await page.getByRole("searchbox").click();
+  await page.getByRole("searchbox").pressSequentially("Read only interaction", { delay: 50 });
+  await page.goto(origin + "/healthz", { waitUntil: "networkidle" });
+  await expect.poll(async () => { await Promise.all(pending); return [...new Set(report.pageResponses.filter(x => x.valid).map(x => x.name))].sort(); }, { timeout: 10000 }).toEqual(["CLS", "INP", "LCP"]);
+  assert.deepEqual(report.pageErrors, []); report.status = "PASS";
+} catch (error) { report.status = "FAIL"; report.errorName = error.name; process.exitCode = 1; }
+finally {
+  await Promise.all(pending); await context.close(); await browser.close(); await new Promise(resolve => server.close(resolve));
+  await writeFile(path.join(root, "output/checks/p6-03-performance/rum-lifecycle-probe.json"), JSON.stringify(report, null, 2) + "\n"); console.log(JSON.stringify(report));
+}

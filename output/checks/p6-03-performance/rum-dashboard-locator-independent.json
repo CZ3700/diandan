@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "scope": "READ_ONLY_TOOL_DIFF_AND_TARGETED_REAL_HTML_RESULTS",
+  "checkedAt": "2026-09-23T21:23:26.020Z",
+  "tool": "apps/api/scripts/rum-browser.mjs",
+  "sha256": "6d4ba55e372fd8dbc27f156d97293e5497ccceb1593fe88c3d299543f3b68f9d",
+  "exactDiff": "Export existing verifyRumDashboard plus seven exact label locators replaced with exact combobox role/name locators; formatter output exactly equals current source",
+  "inputProvenance": {
+    "status": "PASS",
+    "input": [
+      {
+        "name": "rum-report.json",
+        "sha256": "826a4a20ffa817d0e100d7fde9005cb03aea0a4785356f44616b14c9ee84c8aa"
+      },
+      {
+        "name": "rum-dashboard.html",
+        "sha256": "a82b806973afd0c1bfc5a39b37e7974ed26c3698440ce5360a51588ee4045aae"
+      }
+    ],
+    "scope": "EXISTING_ACTUAL_CLI_HTML_ONLY",
+    "metricsInjected": false,
+    "fullNextIntegration": false,
+    "browserVersion": "153.0.8010.53"
+  },
+  "viewports": [
+    390,
+    1440
+  ],
+  "filterGroupsPerViewport": 23,
+  "emptyWindow": "INSUFFICIENT",
+  "pageErrors": 0,
+  "networkRequests": 0,
+  "fullNextIntegration": false,
+  "testsRunByReviewer": false,
+  "browsersRunByReviewer": false
+}

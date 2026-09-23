@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单
+
+No test files found, exiting with code 1
+
+filter: packages/contracts/src/rum.test.ts, packages/contracts/src/rum-openapi.test.ts, packages/config/src/rum-config.test.ts, packages/observability/src/rum.test.ts, apps/storefront/src/storefront/rum-client.test.ts, apps/storefront/src/server/rum-intake.test.ts, apps/storefront/src/server/rum-bootstrap.test.tsx
+include: src/**/*.{test,spec}.{ts,tsx}
+exclude:  **/node_modules/**, **/.git/**
+

@@ -8,6 +8,14 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./rum": {
+      "types": "./dist/rum.d.ts",
+      "import": "./dist/rum.js"
+    },
+    "./rum-browser": {
+      "types": "./dist/rum-browser.d.ts",
+      "import": "./dist/rum-browser.js"
     }
   },
   "scripts": {

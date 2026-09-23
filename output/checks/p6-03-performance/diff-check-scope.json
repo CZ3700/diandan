@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "sourceAndDocsExitCode": 0,
+  "sourceAndDocsPaths": 71,
+  "includingRawEvidenceExitCode": 2,
+  "allWarningsInOutputEvidence": true,
+  "warningCount": 393,
+  "decision": "Preserve byte-identical generated Lighthouse HTML and console log whitespace. The repository formatter excludes output/. Do not rewrite raw evidence or suppress its warnings. Source/docs scoped diff check is clean."
+}

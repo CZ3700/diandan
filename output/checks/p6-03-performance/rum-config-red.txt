@@ -1,0 +1,29 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/config
+
+ ❯ src/rum-config.test.ts (1 test | 1 failed) 5ms
+   × RUM is disabled without explicit approval, and separates local from production field 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/rum-config.test.ts > RUM is disabled without explicit approval, and separates local from production field
+AssertionError: RUM must use a dedicated validated config fragment: expected undefined to be defined
+ ❯ src/rum-config.test.ts:5:72
+      3| test("RUM is disabled without explicit approval, and separates local f…
+      4|   const loaded = await import("./rum-config.js").catch(() => undefined…
+      5|   expect(loaded, "RUM must use a dedicated validated config fragment")…
+       |                                                                        ^
+      6|   if (!loaded) return;
+      7|   expect(loaded.resolveRumConfig({})).toEqual({ schemaVersion: 1, mode…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  02:25:15
+   Duration  73ms (transform 8ms, setup 0ms, import 12ms, tests 5ms, environment 0ms)
+
+undefined
+/Users/mario/Desktop/下单/packages/config:
+[ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL] Command failed with exit code 1: vitest run --config ../../vitest.config.ts --root . src/rum-config.test.ts

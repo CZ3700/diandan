@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "sourceRoot": "/Users/mario/Desktop/.fan-support-regression/18cceb47-ced9-43f8-a19a-61fde7ecdaee/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-23T20-34-42-482Z",
+  "files": [
+    {
+      "source": "browser-attempt-1/failure.json",
+      "archive": "rum-diagnostic-2-failed/browser-attempt-1/failure.json",
+      "sha256": "3339c9e6c7574d9498eacaf05b3cbb311cf8847710ad6a5607c43808116e6897",
+      "bytes": 91
+    },
+    {
+      "source": "browser-attempt-1/rum/interaction-diagnostics.json",
+      "archive": "rum-diagnostic-2-failed/browser-attempt-1/rum/interaction-diagnostics.json",
+      "sha256": "dcbc8aa42efd9e4389f75ad80fe6003f49099496ee1b9175a05e19adefa83d4f",
+      "bytes": 1801
+    },
+    {
+      "source": "browser-attempt-1/rum/results.json",
+      "archive": "rum-diagnostic-2-failed/browser-attempt-1/rum/results.json",
+      "sha256": "670db0ef6a5f4fde91c8f78e98937304b41f5340a55bb553d3355bae31d5d334",
+      "bytes": 10616
+    },
+    {
+      "source": "concurrent-public-reads-1790195829217.json",
+      "archive": "rum-diagnostic-2-failed/concurrent-public-reads-1790195829217.json",
+      "sha256": "6d0d1ee0c31de6fa83fdcff68eccc0fac7bd9bec618f4cee74c3b30c72dd417d",
+      "bytes": 18710
+    },
+    {
+      "source": "fixture-manifest.json",
+      "archive": "rum-diagnostic-2-failed/fixture-manifest.json",
+      "sha256": "72c6d6c245885cf4cd19c611c0f15ff7bd3717f45dcc17a72965d12970fa88fd",
+      "bytes": 38020
+    },
+    {
+      "source": "next-build-1.log",
+      "archive": "rum-diagnostic-2-failed/next-build-1.log.txt",
+      "sha256": "52aa6526f257ef1c39b95d3c69758eb3bb421bc5c15bf54e97c5264c653949e9",
+      "bytes": 6429
+    },
+    {
+      "source": "next-runtime-1.log",
+      "archive": "rum-diagnostic-2-failed/next-runtime-1.log.txt",
+      "sha256": "efbe1697556c09c848006d48e23661224f4706b7318844da70d1ec465e64d34c",
+      "bytes": 1556
+    },
+    {
+      "source": "protocol-results.json",
+      "archive": "rum-diagnostic-2-failed/protocol-results.json",
+      "sha256": "07f9257315119372c103ce20cf8915ec0ec00503813912a398d8ba2b67dddcb1",
+      "bytes": 26470
+    }
+  ],
+  "fileCount": 8,
+  "outerExitCode": 1,
+  "sessionId": 65754,
+  "completionChunkId": "3043ef",
+  "status": "DIAGNOSTIC_FAIL_RETAINED",
+  "baseSourceHash": "acc7cc8514f123c5221d78e299185bd8a8da90e0176697685a12981e955c496c",
+  "toolOverlay": "rum-diagnostic-tool-overlay.json",
+  "diagnosis": "All original menu/search interactions passed; actual search response 200 SUCCESS with six items. Metric acknowledgment collection retained only LCP at original 10-second deadline. Server presence alone is not accepted as full browser validation."
+}

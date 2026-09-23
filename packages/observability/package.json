@@ -16,6 +16,10 @@
     "./fastify": {
       "types": "./dist/fastify.d.ts",
       "import": "./dist/fastify.js"
+    },
+    "./rum": {
+      "types": "./dist/rum.d.ts",
+      "import": "./dist/rum.js"
     }
   },
   "scripts": {

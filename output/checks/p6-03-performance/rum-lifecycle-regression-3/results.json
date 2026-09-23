@@ -1,0 +1,134 @@
+{
+  "status": "FAIL",
+  "scope": "CONTROLLED_ACTUAL_PRODUCT_COLLECTOR_LIFECYCLE_REGRESSION",
+  "metricsInjected": false,
+  "fieldEvidence": false,
+  "productionSinkEvidence": false,
+  "cells": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "excluded": false,
+      "status": "RUNNING",
+      "browserVersion": "153.0.8010.53",
+      "exchanges": [],
+      "errors": [
+        {
+          "kind": "RUM_REQUEST_FAILED"
+        },
+        {
+          "kind": "RUM_REQUEST_FAILED"
+        },
+        {
+          "kind": "RUM_REQUEST_FAILED"
+        },
+        {
+          "kind": "RUM_OBSERVATION_FAILED"
+        },
+        {
+          "kind": "RUM_OBSERVATION_FAILED"
+        },
+        {
+          "kind": "RUM_OBSERVATION_FAILED"
+        }
+      ],
+      "requests": [
+        {
+          "method": "POST",
+          "stage": "HEADERS_VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "LCP",
+          "failureCode": "net::ERR_ABORTED"
+        },
+        {
+          "method": "POST",
+          "stage": "HEADERS_VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "INP",
+          "failureCode": "net::ERR_ABORTED"
+        },
+        {
+          "method": "POST",
+          "stage": "HEADERS_VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "CLS",
+          "failureCode": "net::ERR_ABORTED"
+        }
+      ],
+      "actualViewport": {
+        "width": 390,
+        "height": 844
+      },
+      "lifecycle": {
+        "before": "visible",
+        "after": "hidden",
+        "sameDocument": true,
+        "sameUrl": true,
+        "sameTimeOrigin": true,
+        "events": [
+          {
+            "state": "hidden",
+            "trusted": true
+          }
+        ]
+      }
+    }
+  ],
+  "server": [
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "mobile",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "LCP",
+        "value": 24,
+        "measurementKey": "18fe54df-546e-4b22-9dc0-39bca08f53ea",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "mobile",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "INP",
+        "value": 16,
+        "measurementKey": "675faffe-0981-414e-814b-f8c0b96e118c",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "mobile",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "CLS",
+        "value": 0,
+        "measurementKey": "4d2dda4e-b5bc-4f6b-90c9-b96823550091",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    }
+  ],
+  "errorName": "Error",
+  "controlledFailure": "Timeout 10000ms exceeded while waiting on the predicate"
+}

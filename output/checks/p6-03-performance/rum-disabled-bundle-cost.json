@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-23T20:35:27.224Z",
+  "scope": "Read-only compiled asset and actual response comparison; default RUM disabled; no browser/build run",
+  "reportBindings": [
+    {
+      "path": "output/checks/p6-03-performance/baseline-browser-1/browser-attempt-1/six-screen/results.json",
+      "sha256": "5496e2904d8feb2b8a421a95c3eae47c87f76b411b04b2ad2633f01c7427cadf"
+    },
+    {
+      "path": "output/checks/p6-03-performance/formal-performance/browser-attempt-1/six-screen/results.json",
+      "sha256": "16d712a1cc600e4d6fdb9f0fbc96df36867faa261e18c6a7d540470cd954ab4d"
+    }
+  ],
+  "formalCells": 294,
+  "collectorChunkObservedCells": 294,
+  "vitalsChunkObservedCells": 0,
+  "candidateScriptResponses": 2352,
+  "candidateScriptResponsesMatchArtifacts": 2352,
+  "mismatches": [],
+  "assets": [
+    {
+      "kind": "baselineShared",
+      "name": "3rrddfj_zf4lv.js",
+      "path": "/Users/mario/Desktop/.fan-support-regression/533549cb-7a34-4aea-8fcd-8524cdda9fa2/workspace/apps/storefront/.next/static/chunks/3rrddfj_zf4lv.js",
+      "sha256": "2a0c8d94bfdaeb5511e610106b757c775f9872c14348d3d6f2b53a05b0532eeb",
+      "bodyBytes": 14378,
+      "nodeGzipBytes": 3661,
+      "compiledModuleIds": [],
+      "containsCollectorExport": false,
+      "containsFixedRumEndpoint": false,
+      "containsVitalsAsyncChunkMapping": false,
+      "containsOnLCPExport": false,
+      "containsOnINPExport": false,
+      "containsOnCLSExport": false
+    },
+    {
+      "kind": "collectorShared",
+      "name": "34ezpajeoo8oe.js",
+      "path": "/Users/mario/Desktop/.fan-support-regression/18cceb47-ced9-43f8-a19a-61fde7ecdaee/workspace/apps/storefront/.next/static/chunks/34ezpajeoo8oe.js",
+      "sha256": "6c8cad247553f6f330a840d9a481fef59e89c7e3e855b75a8283f168bd43c703",
+      "bodyBytes": 16659,
+      "nodeGzipBytes": 4670,
+      "compiledModuleIds": [
+        "52545",
+        "77332"
+      ],
+      "containsCollectorExport": true,
+      "containsFixedRumEndpoint": true,
+      "containsVitalsAsyncChunkMapping": true,
+      "containsOnLCPExport": false,
+      "containsOnINPExport": false,
+      "containsOnCLSExport": false
+    },
+    {
+      "kind": "vitalsLibrary",
+      "name": "38xug_56lnpts.js",
+      "path": "/Users/mario/Desktop/.fan-support-regression/18cceb47-ced9-43f8-a19a-61fde7ecdaee/workspace/apps/storefront/.next/static/chunks/38xug_56lnpts.js",
+      "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+      "bodyBytes": 8790,
+      "nodeGzipBytes": 3249,
+      "compiledModuleIds": [
+        "55141"
+      ],
+      "containsCollectorExport": false,
+      "containsFixedRumEndpoint": false,
+      "containsVitalsAsyncChunkMapping": false,
+      "containsOnLCPExport": true,
+      "containsOnINPExport": true,
+      "containsOnCLSExport": true
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "zh-CN-home-390x844",
+      "baselineScriptCount": 8,
+      "candidateScriptCount": 8,
+      "unchangedScripts": 7,
+      "baselineGzipBytes": 152393,
+      "candidateGzipBytes": 153402,
+      "deltaGzipBytes": 1009,
+      "removed": [
+        {
+          "name": "3rrddfj_zf4lv.js",
+          "sha256": "2a0c8d94bfdaeb5511e610106b757c775f9872c14348d3d6f2b53a05b0532eeb",
+          "bodyBytes": 14378,
+          "gzipBytes": 3661
+        }
+      ],
+      "added": [
+        {
+          "name": "34ezpajeoo8oe.js",
+          "sha256": "6c8cad247553f6f330a840d9a481fef59e89c7e3e855b75a8283f168bd43c703",
+          "bodyBytes": 16659,
+          "gzipBytes": 4670
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "zh-CN-artist-390x844",
+      "baselineScriptCount": 8,
+      "candidateScriptCount": 8,
+      "unchangedScripts": 7,
+      "baselineGzipBytes": 150744,
+      "candidateGzipBytes": 151753,
+      "deltaGzipBytes": 1009,
+      "removed": [
+        {
+          "name": "3rrddfj_zf4lv.js",
+          "sha256": "2a0c8d94bfdaeb5511e610106b757c775f9872c14348d3d6f2b53a05b0532eeb",
+          "bodyBytes": 14378,
+          "gzipBytes": 3661
+        }
+      ],
+      "added": [
+        {
+          "name": "34ezpajeoo8oe.js",
+          "sha256": "6c8cad247553f6f330a840d9a481fef59e89c7e3e855b75a8283f168bd43c703",
+          "bodyBytes": 16659,
+          "gzipBytes": 4670
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "zh-CN-gift-390x844",
+      "baselineScriptCount": 8,
+      "candidateScriptCount": 8,
+      "unchangedScripts": 7,
+      "baselineGzipBytes": 154012,
+      "candidateGzipBytes": 155021,
+      "deltaGzipBytes": 1009,
+      "removed": [
+        {
+          "name": "3rrddfj_zf4lv.js",
+          "sha256": "2a0c8d94bfdaeb5511e610106b757c775f9872c14348d3d6f2b53a05b0532eeb",
+          "bodyBytes": 14378,
+          "gzipBytes": 3661
+        }
+      ],
+      "added": [
+        {
+          "name": "34ezpajeoo8oe.js",
+          "sha256": "6c8cad247553f6f330a840d9a481fef59e89c7e3e855b75a8283f168bd43c703",
+          "bodyBytes": 16659,
+          "gzipBytes": 4670
+        }
+      ],
+      "fontHashesIdentical": true
+    }
+  ],
+  "limitations": [
+    "Gzip figures are Node-recompressed decoded response sizes, not actual wire transfer bytes.",
+    "Shared chunk delta includes collector registration, async loader and minifier changes; no isolated per-module compressed CPU cost is claimed.",
+    "Resources cover initial navigation through network idle/fonts ready, not all future actions.",
+    "Resource observer does not record fetch/POST responses, so this file alone is not a proof of zero telemetry POSTs.",
+    "Baseline has only three zh-CN/390 diagnostic resource cells.",
+    "Enabled-mode full browser run is pending."
+  ]
+}

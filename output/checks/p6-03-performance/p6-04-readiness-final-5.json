@@ -1,0 +1,634 @@
+{
+  "schemaVersion": 1,
+  "scope": "Read-only conditional P6-04 direct dependency recheck after P6-03 final candidate; no activation or security scanning",
+  "sourceHash": "ea5371aa693c4c2d46c238ac393036b11770c15e267d69e90460c829fe26baab",
+  "count": 69,
+  "unchanged": 69,
+  "originalP506": 67,
+  "coveredByP601": 69,
+  "mismatches": [],
+  "selectedSource": [
+    {
+      "path": "apps/admin/src/management-center/access.test.ts",
+      "previousReviewedSha256": "23f20a17267bd8a6e1f3d3683dfb26e87ac553d59535845fc5512950d8394022",
+      "currentSha256": "23f20a17267bd8a6e1f3d3683dfb26e87ac553d59535845fc5512950d8394022",
+      "candidate5Sha256": "23f20a17267bd8a6e1f3d3683dfb26e87ac553d59535845fc5512950d8394022",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-center/access.ts",
+      "previousReviewedSha256": "365ea8197f175fce649b705b4044e83e65718934ec002902cbd90441131e8696",
+      "currentSha256": "365ea8197f175fce649b705b4044e83e65718934ec002902cbd90441131e8696",
+      "candidate5Sha256": "365ea8197f175fce649b705b4044e83e65718934ec002902cbd90441131e8696",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-center/center.tsx",
+      "previousReviewedSha256": "c975bff5e3023821a089634da28ecae73d300f405bbfa2072768fbbdbf95b7da",
+      "currentSha256": "c975bff5e3023821a089634da28ecae73d300f405bbfa2072768fbbdbf95b7da",
+      "candidate5Sha256": "c975bff5e3023821a089634da28ecae73d300f405bbfa2072768fbbdbf95b7da",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-center/hub.tsx",
+      "previousReviewedSha256": "f5ede6cdc36e829c3956ded0aed8c57d0801ff25d4d73c33a198b628262290a4",
+      "currentSha256": "f5ede6cdc36e829c3956ded0aed8c57d0801ff25d4d73c33a198b628262290a4",
+      "candidate5Sha256": "f5ede6cdc36e829c3956ded0aed8c57d0801ff25d4d73c33a198b628262290a4",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-center/shell.tsx",
+      "previousReviewedSha256": "2f2d97c633aa99fb0b8bebe7b16767d170a7e72e5ec855904560e60e970f1963",
+      "currentSha256": "2f2d97c633aa99fb0b8bebe7b16767d170a7e72e5ec855904560e60e970f1963",
+      "candidate5Sha256": "2f2d97c633aa99fb0b8bebe7b16767d170a7e72e5ec855904560e60e970f1963",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-center/workspace.tsx",
+      "previousReviewedSha256": "d31efad27bbe1d61b85856a04c76f78adc31cf4e2460742f033241d189e29ae6",
+      "currentSha256": "d31efad27bbe1d61b85856a04c76f78adc31cf4e2460742f033241d189e29ae6",
+      "candidate5Sha256": "d31efad27bbe1d61b85856a04c76f78adc31cf4e2460742f033241d189e29ae6",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/api.test.ts",
+      "previousReviewedSha256": "7b1a5fba76042309d47cff6bd606ae53d6178f8e37affb96e473de00135fad2c",
+      "currentSha256": "7b1a5fba76042309d47cff6bd606ae53d6178f8e37affb96e473de00135fad2c",
+      "candidate5Sha256": "7b1a5fba76042309d47cff6bd606ae53d6178f8e37affb96e473de00135fad2c",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/api.ts",
+      "previousReviewedSha256": "71733c32e45811c09d05c8a7a66e7a699f72265987db775d1a8a8b42bc685377",
+      "currentSha256": "71733c32e45811c09d05c8a7a66e7a699f72265987db775d1a8a8b42bc685377",
+      "candidate5Sha256": "71733c32e45811c09d05c8a7a66e7a699f72265987db775d1a8a8b42bc685377",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-en.ts",
+      "previousReviewedSha256": "374f8d0c0cf8c78bc74dc96cd2a8434065bc3edeb897da558aeebda4c30e057d",
+      "currentSha256": "374f8d0c0cf8c78bc74dc96cd2a8434065bc3edeb897da558aeebda4c30e057d",
+      "candidate5Sha256": "374f8d0c0cf8c78bc74dc96cd2a8434065bc3edeb897da558aeebda4c30e057d",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-es.ts",
+      "previousReviewedSha256": "5f1e7f3016362dc078abb8d571daa41f8aec6557072010a0e6c02afd49a6096a",
+      "currentSha256": "5f1e7f3016362dc078abb8d571daa41f8aec6557072010a0e6c02afd49a6096a",
+      "candidate5Sha256": "5f1e7f3016362dc078abb8d571daa41f8aec6557072010a0e6c02afd49a6096a",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-ja.ts",
+      "previousReviewedSha256": "a5f6d18c8df65a110176ca05b06113c89dec585667db55eb07581ec3cf23bb3f",
+      "currentSha256": "a5f6d18c8df65a110176ca05b06113c89dec585667db55eb07581ec3cf23bb3f",
+      "candidate5Sha256": "a5f6d18c8df65a110176ca05b06113c89dec585667db55eb07581ec3cf23bb3f",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-pt.ts",
+      "previousReviewedSha256": "ef0ff9418e80ce9e0722c2a9f89bc345dffca5cfe60a087d5b308138610c08a6",
+      "currentSha256": "ef0ff9418e80ce9e0722c2a9f89bc345dffca5cfe60a087d5b308138610c08a6",
+      "candidate5Sha256": "ef0ff9418e80ce9e0722c2a9f89bc345dffca5cfe60a087d5b308138610c08a6",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-th.ts",
+      "previousReviewedSha256": "476516a4cab6f524208fac625a16810cf62f5036e8b813d150db450064e04775",
+      "currentSha256": "476516a4cab6f524208fac625a16810cf62f5036e8b813d150db450064e04775",
+      "candidate5Sha256": "476516a4cab6f524208fac625a16810cf62f5036e8b813d150db450064e04775",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-vi.ts",
+      "previousReviewedSha256": "92d6bc78132b58168915a7d06576cad0e3157b07c8dd9a43b1940c8677d29b34",
+      "currentSha256": "92d6bc78132b58168915a7d06576cad0e3157b07c8dd9a43b1940c8677d29b34",
+      "candidate5Sha256": "92d6bc78132b58168915a7d06576cad0e3157b07c8dd9a43b1940c8677d29b34",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy-zh-cn.ts",
+      "previousReviewedSha256": "a6e3464502f447c069a75bedab91d7b3e29efec2f027e8582c444f923f2c6b32",
+      "currentSha256": "a6e3464502f447c069a75bedab91d7b3e29efec2f027e8582c444f923f2c6b32",
+      "candidate5Sha256": "a6e3464502f447c069a75bedab91d7b3e29efec2f027e8582c444f923f2c6b32",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/copy.ts",
+      "previousReviewedSha256": "a836f0afa6fab6e36b35d0f6fc89bbf86774bb29d4cd1549d88963af5f8ac86d",
+      "currentSha256": "a836f0afa6fab6e36b35d0f6fc89bbf86774bb29d4cd1549d88963af5f8ac86d",
+      "candidate5Sha256": "a836f0afa6fab6e36b35d0f6fc89bbf86774bb29d4cd1549d88963af5f8ac86d",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/detail-view.tsx",
+      "previousReviewedSha256": "d787b8fbc5f0dc32a7d26b229189e7e84f0325bbf09334f539eace45d5251a60",
+      "currentSha256": "d787b8fbc5f0dc32a7d26b229189e7e84f0325bbf09334f539eace45d5251a60",
+      "candidate5Sha256": "d787b8fbc5f0dc32a7d26b229189e7e84f0325bbf09334f539eace45d5251a60",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/exceptions.css",
+      "previousReviewedSha256": "ed2c37de1851419191e4c921102907918b2d6a2b32aaff1b15a86cc52b5ae2ca",
+      "currentSha256": "ed2c37de1851419191e4c921102907918b2d6a2b32aaff1b15a86cc52b5ae2ca",
+      "candidate5Sha256": "ed2c37de1851419191e4c921102907918b2d6a2b32aaff1b15a86cc52b5ae2ca",
+      "unchanged": true,
+      "originalP506": false,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/filters-view.tsx",
+      "previousReviewedSha256": "25ae6b791d0b52a90ca18b8e50943ef1c3d488bcfb7d675922f11c8df9473fec",
+      "currentSha256": "25ae6b791d0b52a90ca18b8e50943ef1c3d488bcfb7d675922f11c8df9473fec",
+      "candidate5Sha256": "25ae6b791d0b52a90ca18b8e50943ef1c3d488bcfb7d675922f11c8df9473fec",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/labels.ts",
+      "previousReviewedSha256": "7daba7cdbf1cb4254f19c9e50acd0b62521dddcdcc60675dca57211f2205bf43",
+      "currentSha256": "7daba7cdbf1cb4254f19c9e50acd0b62521dddcdcc60675dca57211f2205bf43",
+      "candidate5Sha256": "7daba7cdbf1cb4254f19c9e50acd0b62521dddcdcc60675dca57211f2205bf43",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/list-view.tsx",
+      "previousReviewedSha256": "3a00af69726f4350fe1881c0af56edeaf4d7351f0b4a85c1094b939b83320288",
+      "currentSha256": "3a00af69726f4350fe1881c0af56edeaf4d7351f0b4a85c1094b939b83320288",
+      "candidate5Sha256": "3a00af69726f4350fe1881c0af56edeaf4d7351f0b4a85c1094b939b83320288",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/pending-store.test.ts",
+      "previousReviewedSha256": "5b6b914cfafb9b5a33cf882619c27b95aaea9bc7ee57187f06e1899b742d9506",
+      "currentSha256": "5b6b914cfafb9b5a33cf882619c27b95aaea9bc7ee57187f06e1899b742d9506",
+      "candidate5Sha256": "5b6b914cfafb9b5a33cf882619c27b95aaea9bc7ee57187f06e1899b742d9506",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/pending-store.ts",
+      "previousReviewedSha256": "ef7d97baef138ba8b7f93c92b462a87ff1a434a2333e92e007f9650c43882b8d",
+      "currentSha256": "ef7d97baef138ba8b7f93c92b462a87ff1a434a2333e92e007f9650c43882b8d",
+      "candidate5Sha256": "ef7d97baef138ba8b7f93c92b462a87ff1a434a2333e92e007f9650c43882b8d",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/review-manifest.ts",
+      "previousReviewedSha256": "46a129cd10766efa67ccf35562b637a06d433c400f81ad1a804903a66e929823",
+      "currentSha256": "46a129cd10766efa67ccf35562b637a06d433c400f81ad1a804903a66e929823",
+      "candidate5Sha256": "46a129cd10766efa67ccf35562b637a06d433c400f81ad1a804903a66e929823",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/state.test.ts",
+      "previousReviewedSha256": "731bf5e976d507ab0ba4da3e9888c39b60d71f1237623d672e4201f9336f1a9c",
+      "currentSha256": "731bf5e976d507ab0ba4da3e9888c39b60d71f1237623d672e4201f9336f1a9c",
+      "candidate5Sha256": "731bf5e976d507ab0ba4da3e9888c39b60d71f1237623d672e4201f9336f1a9c",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/state.ts",
+      "previousReviewedSha256": "67bdfcf889c6287eced892029a0a6ea3725bfba356b5dc0158b3688e64775e23",
+      "currentSha256": "67bdfcf889c6287eced892029a0a6ea3725bfba356b5dc0158b3688e64775e23",
+      "candidate5Sha256": "67bdfcf889c6287eced892029a0a6ea3725bfba356b5dc0158b3688e64775e23",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/views.test.tsx",
+      "previousReviewedSha256": "702a03c1faed2db0ea07f18cb185ad163da5527c56e74e29a4bbec5b975b905a",
+      "currentSha256": "702a03c1faed2db0ea07f18cb185ad163da5527c56e74e29a4bbec5b975b905a",
+      "candidate5Sha256": "702a03c1faed2db0ea07f18cb185ad163da5527c56e74e29a4bbec5b975b905a",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/management-exceptions/workspace.tsx",
+      "previousReviewedSha256": "16144d2b425bf777714aa9fecf7ff71511bd5c054de15702ddf9a41db7e48db3",
+      "currentSha256": "16144d2b425bf777714aa9fecf7ff71511bd5c054de15702ddf9a41db7e48db3",
+      "candidate5Sha256": "16144d2b425bf777714aa9fecf7ff71511bd5c054de15702ddf9a41db7e48db3",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/server/admin-api-client.ts",
+      "previousReviewedSha256": "9160e153210f8fa045a9c6c94be70e9d2019d9bccb818ecbd44ebe5b559e53ee",
+      "currentSha256": "9160e153210f8fa045a9c6c94be70e9d2019d9bccb818ecbd44ebe5b559e53ee",
+      "candidate5Sha256": "9160e153210f8fa045a9c6c94be70e9d2019d9bccb818ecbd44ebe5b559e53ee",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/server/admin-bff.test.ts",
+      "previousReviewedSha256": "571858916c5a61e770f763c40422b9654fa7dd8b4a90a8b877c0f85b29e13b3e",
+      "currentSha256": "571858916c5a61e770f763c40422b9654fa7dd8b4a90a8b877c0f85b29e13b3e",
+      "candidate5Sha256": "571858916c5a61e770f763c40422b9654fa7dd8b4a90a8b877c0f85b29e13b3e",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/server/admin-bff.ts",
+      "previousReviewedSha256": "e50d91a27cb4f03858bf997d69a4e3b9383e99f3754eb1cbea3ef1bf61bf2f5d",
+      "currentSha256": "e50d91a27cb4f03858bf997d69a4e3b9383e99f3754eb1cbea3ef1bf61bf2f5d",
+      "candidate5Sha256": "e50d91a27cb4f03858bf997d69a4e3b9383e99f3754eb1cbea3ef1bf61bf2f5d",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/server/admin-exceptions-operations.test.ts",
+      "previousReviewedSha256": "de367b5753918fcc1e944234a4d1bc1bb3065cd2094b55d79659de464d2edc72",
+      "currentSha256": "de367b5753918fcc1e944234a4d1bc1bb3065cd2094b55d79659de464d2edc72",
+      "candidate5Sha256": "de367b5753918fcc1e944234a4d1bc1bb3065cd2094b55d79659de464d2edc72",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/admin/src/server/admin-operations.ts",
+      "previousReviewedSha256": "805478bbd9d51fe64e84bb89412a29e63a7908a9f1488d75bf055186d529c2fa",
+      "currentSha256": "805478bbd9d51fe64e84bb89412a29e63a7908a9f1488d75bf055186d529c2fa",
+      "candidate5Sha256": "805478bbd9d51fe64e84bb89412a29e63a7908a9f1488d75bf055186d529c2fa",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/api/scripts/admin-exceptions-browser.mjs",
+      "previousReviewedSha256": "adaa364c12da2f24dc825da4cb57c4f3dd3eb311ad203a52e2148436f1538f23",
+      "currentSha256": "adaa364c12da2f24dc825da4cb57c4f3dd3eb311ad203a52e2148436f1538f23",
+      "candidate5Sha256": "adaa364c12da2f24dc825da4cb57c4f3dd3eb311ad203a52e2148436f1538f23",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/api/scripts/admin-exceptions-fixture.mjs",
+      "previousReviewedSha256": "90e17f11e52ac15e855b154b865083f49a3288d6e83366cf678a2fde53350fb2",
+      "currentSha256": "90e17f11e52ac15e855b154b865083f49a3288d6e83366cf678a2fde53350fb2",
+      "candidate5Sha256": "90e17f11e52ac15e855b154b865083f49a3288d6e83366cf678a2fde53350fb2",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/api/scripts/admin-exceptions-http.mjs",
+      "previousReviewedSha256": "bdaf6d0ee62852aaa5b068d0f736d8309eddad652705c42919beba0dee0a4ea8",
+      "currentSha256": "bdaf6d0ee62852aaa5b068d0f736d8309eddad652705c42919beba0dee0a4ea8",
+      "candidate5Sha256": "bdaf6d0ee62852aaa5b068d0f736d8309eddad652705c42919beba0dee0a4ea8",
+      "unchanged": true,
+      "originalP506": false,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/api/scripts/admin-exceptions-protocol.mjs",
+      "previousReviewedSha256": "6cb7c801a78661193a9c45499fab392089d494bb53a9253b9291597f54949bd8",
+      "currentSha256": "6cb7c801a78661193a9c45499fab392089d494bb53a9253b9291597f54949bd8",
+      "candidate5Sha256": "6cb7c801a78661193a9c45499fab392089d494bb53a9253b9291597f54949bd8",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/api/src/admin-exceptions-composition.ts",
+      "previousReviewedSha256": "ff30e7f3ecec656353b73c88c391ee3c672fe0a75df65e5357885f3284eb2d34",
+      "currentSha256": "ff30e7f3ecec656353b73c88c391ee3c672fe0a75df65e5357885f3284eb2d34",
+      "candidate5Sha256": "ff30e7f3ecec656353b73c88c391ee3c672fe0a75df65e5357885f3284eb2d34",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/api/src/admin-exceptions-route.test.ts",
+      "previousReviewedSha256": "9bce8eb451046f8b3f776e10d489344b01773fc85d7b17f7367d001def94c1eb",
+      "currentSha256": "9bce8eb451046f8b3f776e10d489344b01773fc85d7b17f7367d001def94c1eb",
+      "candidate5Sha256": "9bce8eb451046f8b3f776e10d489344b01773fc85d7b17f7367d001def94c1eb",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/api/src/admin-exceptions-route.ts",
+      "previousReviewedSha256": "65464fb4bd8e7524e55248dafe0621cc885f3c8828c71510a7100cf66293df73",
+      "currentSha256": "65464fb4bd8e7524e55248dafe0621cc885f3c8828c71510a7100cf66293df73",
+      "candidate5Sha256": "65464fb4bd8e7524e55248dafe0621cc885f3c8828c71510a7100cf66293df73",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/api/src/admin-workspace-transport.ts",
+      "previousReviewedSha256": "5d1f1f67ba6c336b861e053eb6e848087851f9e764557c5c1cbafa00a15ce25b",
+      "currentSha256": "5d1f1f67ba6c336b861e053eb6e848087851f9e764557c5c1cbafa00a15ce25b",
+      "candidate5Sha256": "5d1f1f67ba6c336b861e053eb6e848087851f9e764557c5c1cbafa00a15ce25b",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/api/src/bootstrap.ts",
+      "previousReviewedSha256": "e10c448ff9e291452006eca6eb877a9ca7212bf1e00ac42799fc881f62ca8b48",
+      "currentSha256": "e10c448ff9e291452006eca6eb877a9ca7212bf1e00ac42799fc881f62ca8b48",
+      "candidate5Sha256": "e10c448ff9e291452006eca6eb877a9ca7212bf1e00ac42799fc881f62ca8b48",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/api/src/index.ts",
+      "previousReviewedSha256": "783db2dadfef8614e49b7661a93bcef2bd288340907e8a73f85be3b91993b59d",
+      "currentSha256": "783db2dadfef8614e49b7661a93bcef2bd288340907e8a73f85be3b91993b59d",
+      "candidate5Sha256": "783db2dadfef8614e49b7661a93bcef2bd288340907e8a73f85be3b91993b59d",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/worker/src/reliable-events-composition.test.ts",
+      "previousReviewedSha256": "51e576d3b239df6f340ace1ddaa0dc68f68c6caa59d3c473f0bd479ca1f726c4",
+      "currentSha256": "51e576d3b239df6f340ace1ddaa0dc68f68c6caa59d3c473f0bd479ca1f726c4",
+      "candidate5Sha256": "51e576d3b239df6f340ace1ddaa0dc68f68c6caa59d3c473f0bd479ca1f726c4",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/worker/src/reliable-events-composition.ts",
+      "previousReviewedSha256": "80586aced5decfcfc1952ff35c3193375ac0028c6d08ca9a5dbec2cbc777192b",
+      "currentSha256": "80586aced5decfcfc1952ff35c3193375ac0028c6d08ca9a5dbec2cbc777192b",
+      "candidate5Sha256": "80586aced5decfcfc1952ff35c3193375ac0028c6d08ca9a5dbec2cbc777192b",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/worker/src/reliable-events-runtime.test.ts",
+      "previousReviewedSha256": "702b807b21262595d39e13c7b14be1e748656f779773234aee0f4e2c7e57cbc5",
+      "currentSha256": "702b807b21262595d39e13c7b14be1e748656f779773234aee0f4e2c7e57cbc5",
+      "candidate5Sha256": "702b807b21262595d39e13c7b14be1e748656f779773234aee0f4e2c7e57cbc5",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "apps/worker/src/reliable-events-runtime.ts",
+      "previousReviewedSha256": "4e51fd0aaa4ecfd29036226d2649b027e8537a6f71f3a827c04be0199b643c8b",
+      "currentSha256": "4e51fd0aaa4ecfd29036226d2649b027e8537a6f71f3a827c04be0199b643c8b",
+      "candidate5Sha256": "4e51fd0aaa4ecfd29036226d2649b027e8537a6f71f3a827c04be0199b643c8b",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "database/migrations/0037_admin-exceptions.down.sql",
+      "previousReviewedSha256": "d511312cfe601d6cf7fb460b16f666e0b7822bf0653f78b376e1f65b04e29bd6",
+      "currentSha256": "d511312cfe601d6cf7fb460b16f666e0b7822bf0653f78b376e1f65b04e29bd6",
+      "candidate5Sha256": "d511312cfe601d6cf7fb460b16f666e0b7822bf0653f78b376e1f65b04e29bd6",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "database/migrations/0037_admin-exceptions.up.sql",
+      "previousReviewedSha256": "3872323f8b641e4c0f4683e38dee54a18f8694e948714ce24aaaad88530e9970",
+      "currentSha256": "3872323f8b641e4c0f4683e38dee54a18f8694e948714ce24aaaad88530e9970",
+      "candidate5Sha256": "3872323f8b641e4c0f4683e38dee54a18f8694e948714ce24aaaad88530e9970",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/application/src/admin-exceptions-recovery.ts",
+      "previousReviewedSha256": "7262686b0768f4914b38f8f67c3e3ec8399183ca43727fed4b5c43153de1f9cc",
+      "currentSha256": "7262686b0768f4914b38f8f67c3e3ec8399183ca43727fed4b5c43153de1f9cc",
+      "candidate5Sha256": "7262686b0768f4914b38f8f67c3e3ec8399183ca43727fed4b5c43153de1f9cc",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/application/src/admin-exceptions.test.ts",
+      "previousReviewedSha256": "5e4712de26e87b4d73aec4adcbfd9bcb3144278952175784f5090af039bca4aa",
+      "currentSha256": "5e4712de26e87b4d73aec4adcbfd9bcb3144278952175784f5090af039bca4aa",
+      "candidate5Sha256": "5e4712de26e87b4d73aec4adcbfd9bcb3144278952175784f5090af039bca4aa",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/application/src/admin-exceptions.ts",
+      "previousReviewedSha256": "83fc3f9093be632088cfc6bf10f051b067e22534bd85560d60c219ba06d3dd1f",
+      "currentSha256": "83fc3f9093be632088cfc6bf10f051b067e22534bd85560d60c219ba06d3dd1f",
+      "candidate5Sha256": "83fc3f9093be632088cfc6bf10f051b067e22534bd85560d60c219ba06d3dd1f",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/contracts/src/admin-exceptions-openapi.test.ts",
+      "previousReviewedSha256": "def228ddf8774e4c68c2bc9d01c38a535a2ff9a7c3841990f6db4bfaabb9c622",
+      "currentSha256": "def228ddf8774e4c68c2bc9d01c38a535a2ff9a7c3841990f6db4bfaabb9c622",
+      "candidate5Sha256": "def228ddf8774e4c68c2bc9d01c38a535a2ff9a7c3841990f6db4bfaabb9c622",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/contracts/src/admin-exceptions-openapi.ts",
+      "previousReviewedSha256": "1cec3f9f8dd688d12b924011cdbb235ff033e9ef5b35b89416f618106260d094",
+      "currentSha256": "1cec3f9f8dd688d12b924011cdbb235ff033e9ef5b35b89416f618106260d094",
+      "candidate5Sha256": "1cec3f9f8dd688d12b924011cdbb235ff033e9ef5b35b89416f618106260d094",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/contracts/src/admin-exceptions-persistence.test.ts",
+      "previousReviewedSha256": "0312e976c859e8aee2d2c84efbc1a62ac6b305725aa685581b2a7e813351aa5c",
+      "currentSha256": "0312e976c859e8aee2d2c84efbc1a62ac6b305725aa685581b2a7e813351aa5c",
+      "candidate5Sha256": "0312e976c859e8aee2d2c84efbc1a62ac6b305725aa685581b2a7e813351aa5c",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/contracts/src/admin-exceptions-persistence.ts",
+      "previousReviewedSha256": "71c58bcb38094200043cb7c38bbb6337bdc628cffc7d9292e745a1d7380d132b",
+      "currentSha256": "71c58bcb38094200043cb7c38bbb6337bdc628cffc7d9292e745a1d7380d132b",
+      "candidate5Sha256": "71c58bcb38094200043cb7c38bbb6337bdc628cffc7d9292e745a1d7380d132b",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/contracts/src/admin-exceptions.test.ts",
+      "previousReviewedSha256": "bb582bc1344efeaf0503b283eb2630cc8807909c335fbd68304198241db85ad4",
+      "currentSha256": "bb582bc1344efeaf0503b283eb2630cc8807909c335fbd68304198241db85ad4",
+      "candidate5Sha256": "bb582bc1344efeaf0503b283eb2630cc8807909c335fbd68304198241db85ad4",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/contracts/src/admin-exceptions.ts",
+      "previousReviewedSha256": "0dfc5490ae67a0efe32fe97d14cb8bc4f3ccdbbd18a76df7476cb38791ab787b",
+      "currentSha256": "0dfc5490ae67a0efe32fe97d14cb8bc4f3ccdbbd18a76df7476cb38791ab787b",
+      "candidate5Sha256": "0dfc5490ae67a0efe32fe97d14cb8bc4f3ccdbbd18a76df7476cb38791ab787b",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/persistence-port/src/admin-exceptions.ts",
+      "previousReviewedSha256": "798a131387ae9365ab71daa04d12956eb43ccedaa2ff080aa56ba0714d3e7ad5",
+      "currentSha256": "798a131387ae9365ab71daa04d12956eb43ccedaa2ff080aa56ba0714d3e7ad5",
+      "candidate5Sha256": "798a131387ae9365ab71daa04d12956eb43ccedaa2ff080aa56ba0714d3e7ad5",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/admin-exceptions-postgres.mjs",
+      "previousReviewedSha256": "60a8aee1f99821caf1902b5f9e26c1cd2fcd1c6433d1193de4af551085d26cf6",
+      "currentSha256": "60a8aee1f99821caf1902b5f9e26c1cd2fcd1c6433d1193de4af551085d26cf6",
+      "candidate5Sha256": "60a8aee1f99821caf1902b5f9e26c1cd2fcd1c6433d1193de4af551085d26cf6",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/admin-exceptions-projection-cases.mjs",
+      "previousReviewedSha256": "ff814166b5ba68821f33dc7c1f7a654774bb24a4808c99945c5fc491a49ce4aa",
+      "currentSha256": "ff814166b5ba68821f33dc7c1f7a654774bb24a4808c99945c5fc491a49ce4aa",
+      "candidate5Sha256": "ff814166b5ba68821f33dc7c1f7a654774bb24a4808c99945c5fc491a49ce4aa",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/admin-exceptions-storage-cases.mjs",
+      "previousReviewedSha256": "b43035a0fcd93639dbe17315ce401e6ef8db7c73cdbb9e9c18f3daae505d5062",
+      "currentSha256": "b43035a0fcd93639dbe17315ce401e6ef8db7c73cdbb9e9c18f3daae505d5062",
+      "candidate5Sha256": "b43035a0fcd93639dbe17315ce401e6ef8db7c73cdbb9e9c18f3daae505d5062",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/admin-exceptions-authorization.ts",
+      "previousReviewedSha256": "9bfc4034a17621b63ee09704cea8783829dd536c4262c75c822bff6a33a656d4",
+      "currentSha256": "9bfc4034a17621b63ee09704cea8783829dd536c4262c75c822bff6a33a656d4",
+      "candidate5Sha256": "9bfc4034a17621b63ee09704cea8783829dd536c4262c75c822bff6a33a656d4",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/admin-exceptions-command.ts",
+      "previousReviewedSha256": "5ee4ab89961be0eb28f64dfac73d41f15787fe933002d2d2edc951d6135264f3",
+      "currentSha256": "5ee4ab89961be0eb28f64dfac73d41f15787fe933002d2d2edc951d6135264f3",
+      "candidate5Sha256": "5ee4ab89961be0eb28f64dfac73d41f15787fe933002d2d2edc951d6135264f3",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/admin-exceptions-data.ts",
+      "previousReviewedSha256": "f449d585b6333d8902c2ec6be7ad6d3420ab389efea2d72ee97039dae2b10da6",
+      "currentSha256": "f449d585b6333d8902c2ec6be7ad6d3420ab389efea2d72ee97039dae2b10da6",
+      "candidate5Sha256": "f449d585b6333d8902c2ec6be7ad6d3420ab389efea2d72ee97039dae2b10da6",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/admin-exceptions-read.ts",
+      "previousReviewedSha256": "28041fac543b02662eaa476ee6aca9f37e5116c6edb4fea1447bf09b074cf35c",
+      "currentSha256": "28041fac543b02662eaa476ee6aca9f37e5116c6edb4fea1447bf09b074cf35c",
+      "candidate5Sha256": "28041fac543b02662eaa476ee6aca9f37e5116c6edb4fea1447bf09b074cf35c",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/admin-exceptions-recovery.ts",
+      "previousReviewedSha256": "187150cfe723d3bc5c98ad6971580f6500c65db7cef31a529421fe2f2e8d36d3",
+      "currentSha256": "187150cfe723d3bc5c98ad6971580f6500c65db7cef31a529421fe2f2e8d36d3",
+      "candidate5Sha256": "187150cfe723d3bc5c98ad6971580f6500c65db7cef31a529421fe2f2e8d36d3",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/admin-exceptions-repository.ts",
+      "previousReviewedSha256": "c8996ed3246a3c9b3c31402b55f1eaa3484d2eea9b48cdec1d8145d5300db5d6",
+      "currentSha256": "c8996ed3246a3c9b3c31402b55f1eaa3484d2eea9b48cdec1d8145d5300db5d6",
+      "candidate5Sha256": "c8996ed3246a3c9b3c31402b55f1eaa3484d2eea9b48cdec1d8145d5300db5d6",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/admin-exceptions.test.ts",
+      "previousReviewedSha256": "893f67ca71888cd484d320dc87a8179e7309da08e9ecdca9ade59f2169b7e283",
+      "currentSha256": "893f67ca71888cd484d320dc87a8179e7309da08e9ecdca9ade59f2169b7e283",
+      "candidate5Sha256": "893f67ca71888cd484d320dc87a8179e7309da08e9ecdca9ade59f2169b7e283",
+      "unchanged": true,
+      "originalP506": true,
+      "coveredP601": true
+    }
+  ],
+  "handoffCondition": "Root overall ACCEPT of P6-03, release Lane D, then record limited P6-04 activation and READY; this report does not activate or claim the task."
+}

@@ -1,0 +1,2016 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-23T21:55:31.887Z",
+  "status": "PASS",
+  "scope": "Read-only final candidate compiled-body and actual response comparison; no build/browser/DB run",
+  "sourceHash": "ea5371aa693c4c2d46c238ac393036b11770c15e267d69e90460c829fe26baab",
+  "sourceManifest": {
+    "path": "output/checks/p6-03-performance/candidate-5-source.json",
+    "sha256": "e6adffb84f6df19557680c50bc76cce4e45cf3edf80f45f6109145a36b8cd7aa"
+  },
+  "reportBindings": [
+    {
+      "kind": "baseline",
+      "path": "output/checks/p6-03-performance/baseline-browser-1/browser-attempt-1/six-screen/results.json",
+      "sha256": "5496e2904d8feb2b8a421a95c3eae47c87f76b411b04b2ad2633f01c7427cadf"
+    },
+    {
+      "kind": "disabled",
+      "path": "output/checks/p6-03-performance/formal-performance-5/browser-attempt-1/six-screen/results.json",
+      "sha256": "2b56796d2fa317e14950d6a90e05f7775b7620012e85794ceb116bf45e3ce36b"
+    },
+    {
+      "kind": "enabled",
+      "path": "output/checks/p6-03-performance/rum-final-5/browser-attempt-1/rum/results.json",
+      "sha256": "c34292973797145f37133b592c553a8778f68a9917ebea9734b8ee37a3b2164f"
+    }
+  ],
+  "rawBindings": [
+    {
+      "kind": "disabled",
+      "path": "/Users/mario/Desktop/.fan-support-regression/e3ad4bfc-33a2-4dfc-8691-948e5a201577/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-23T21-34-38-681Z/browser-attempt-1/six-screen/results.json",
+      "sha256": "2b56796d2fa317e14950d6a90e05f7775b7620012e85794ceb116bf45e3ce36b",
+      "archiveMatches": true
+    },
+    {
+      "kind": "enabled",
+      "path": "/Users/mario/Desktop/.fan-support-regression/e3ad4bfc-33a2-4dfc-8691-948e5a201577/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-23T21-27-10-586Z/browser-attempt-1/rum/results.json",
+      "sha256": "c34292973797145f37133b592c553a8778f68a9917ebea9734b8ee37a3b2164f",
+      "archiveMatches": true
+    }
+  ],
+  "artifacts": {
+    "baselineShared": {
+      "name": "3rrddfj_zf4lv.js",
+      "path": "/Users/mario/Desktop/.fan-support-regression/533549cb-7a34-4aea-8fcd-8524cdda9fa2/workspace/apps/storefront/.next/static/chunks/3rrddfj_zf4lv.js",
+      "sha256": "2a0c8d94bfdaeb5511e610106b757c775f9872c14348d3d6f2b53a05b0532eeb",
+      "bodyBytes": 14378,
+      "nodeGzipBytes": 3661
+    },
+    "collectorShared": {
+      "name": "2u-3gy2cnotm0.js",
+      "path": "/Users/mario/Desktop/.fan-support-regression/e3ad4bfc-33a2-4dfc-8691-948e5a201577/workspace/apps/storefront/.next/static/chunks/2u-3gy2cnotm0.js",
+      "sha256": "39d8642aef0f6a973b98d4dea39125fc6a775ca4f55853a032051f5c300e2699",
+      "bodyBytes": 16714,
+      "nodeGzipBytes": 4703,
+      "containsCollectorExport": true,
+      "containsFixedEndpoint": true,
+      "containsSuccessful204BodyConsumption": true,
+      "asyncModuleId": 77332,
+      "asyncChunk": "38xug_56lnpts.js"
+    },
+    "vitals": {
+      "name": "38xug_56lnpts.js",
+      "path": "/Users/mario/Desktop/.fan-support-regression/e3ad4bfc-33a2-4dfc-8691-948e5a201577/workspace/apps/storefront/.next/static/chunks/38xug_56lnpts.js",
+      "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+      "bodyBytes": 8790,
+      "nodeGzipBytes": 3249,
+      "exports": [
+        "onCLS",
+        "onINP",
+        "onLCP"
+      ]
+    }
+  },
+  "bodyObservation": {
+    "disabledCollectorCells": 294,
+    "disabledVitalsCells": 0,
+    "enabledCollectorCells": 14,
+    "enabledVitalsCells": 14
+  },
+  "summaries": {
+    "baseline": {
+      "cells": 3,
+      "scriptResponses": 24,
+      "scriptResponsesMatchCompiled": 24,
+      "entries": [
+        {
+          "id": "zh-CN-home-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 152393
+        },
+        {
+          "id": "zh-CN-artist-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 150744
+        },
+        {
+          "id": "zh-CN-gift-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 154012
+        }
+      ]
+    },
+    "disabled": {
+      "cells": 294,
+      "scriptResponses": 2352,
+      "scriptResponsesMatchCompiled": 2352,
+      "entries": [
+        {
+          "id": "en-home-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artists-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artist-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "en-gifts-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "en-gift-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-policy-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-gift-browse-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-home-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artists-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artist-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "zh-CN-gifts-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-gift-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-policy-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-gift-browse-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-home-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artists-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artist-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "th-gifts-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-gift-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-policy-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-gift-browse-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-home-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artists-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artist-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "vi-gifts-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-gift-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-policy-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-gift-browse-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-home-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artists-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artist-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "ja-gifts-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-gift-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-policy-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-gift-browse-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-home-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artists-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artist-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "es-gifts-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-gift-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-policy-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-gift-browse-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-home-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artists-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artist-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "pt-gifts-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-gift-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-policy-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-gift-browse-360x800",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "en-home-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artists-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artist-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "en-gifts-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "en-gift-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-policy-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-gift-browse-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-home-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artists-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artist-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "zh-CN-gifts-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-gift-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-policy-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-gift-browse-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-home-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artists-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artist-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "th-gifts-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-gift-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-policy-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-gift-browse-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-home-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artists-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artist-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "vi-gifts-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-gift-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-policy-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-gift-browse-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-home-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artists-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artist-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "ja-gifts-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-gift-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-policy-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-gift-browse-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-home-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artists-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artist-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "es-gifts-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-gift-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-policy-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-gift-browse-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-home-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artists-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artist-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "pt-gifts-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-gift-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-policy-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-gift-browse-390x844",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "en-home-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artists-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artist-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "en-gifts-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "en-gift-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-policy-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-gift-browse-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-home-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artists-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artist-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "zh-CN-gifts-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-gift-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-policy-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-gift-browse-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-home-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artists-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artist-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "th-gifts-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-gift-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-policy-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-gift-browse-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-home-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artists-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artist-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "vi-gifts-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-gift-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-policy-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-gift-browse-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-home-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artists-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artist-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "ja-gifts-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-gift-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-policy-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-gift-browse-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-home-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artists-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artist-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "es-gifts-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-gift-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-policy-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-gift-browse-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-home-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artists-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artist-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "pt-gifts-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-gift-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-policy-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-gift-browse-768x1024",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "en-home-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artists-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artist-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "en-gifts-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "en-gift-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-policy-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-gift-browse-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-home-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artists-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artist-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "zh-CN-gifts-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-gift-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-policy-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-gift-browse-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-home-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artists-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artist-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "th-gifts-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-gift-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-policy-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-gift-browse-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-home-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artists-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artist-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "vi-gifts-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-gift-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-policy-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-gift-browse-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-home-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artists-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artist-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "ja-gifts-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-gift-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-policy-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-gift-browse-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-home-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artists-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artist-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "es-gifts-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-gift-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-policy-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-gift-browse-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-home-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artists-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artist-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "pt-gifts-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-gift-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-policy-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-gift-browse-1024x768",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "en-home-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artists-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artist-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "en-gifts-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "en-gift-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-policy-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-gift-browse-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-home-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artists-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artist-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "zh-CN-gifts-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-gift-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-policy-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-gift-browse-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-home-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artists-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artist-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "th-gifts-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-gift-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-policy-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-gift-browse-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-home-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artists-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artist-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "vi-gifts-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-gift-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-policy-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-gift-browse-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-home-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artists-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artist-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "ja-gifts-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-gift-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-policy-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-gift-browse-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-home-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artists-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artist-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "es-gifts-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-gift-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-policy-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-gift-browse-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-home-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artists-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artist-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "pt-gifts-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-gift-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-policy-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-gift-browse-1440x900",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "en-home-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artists-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "en-artist-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "en-gifts-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "en-gift-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-policy-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "en-gift-browse-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-home-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artists-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "zh-CN-artist-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "zh-CN-gifts-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "zh-CN-gift-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-policy-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "zh-CN-gift-browse-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-home-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artists-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "th-artist-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "th-gifts-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "th-gift-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-policy-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "th-gift-browse-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-home-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artists-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "vi-artist-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "vi-gifts-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "vi-gift-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-policy-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "vi-gift-browse-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-home-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artists-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "ja-artist-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "ja-gifts-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "ja-gift-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-policy-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "ja-gift-browse-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-home-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artists-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "es-artist-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "es-gifts-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "es-gift-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-policy-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "es-gift-browse-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-home-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artists-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 153435
+        },
+        {
+          "id": "pt-artist-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 151786
+        },
+        {
+          "id": "pt-gifts-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        },
+        {
+          "id": "pt-gift-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-policy-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 155054
+        },
+        {
+          "id": "pt-gift-browse-1920x1080",
+          "scriptCount": 8,
+          "javascriptGzipBytes": 157079
+        }
+      ]
+    },
+    "enabled": {
+      "cells": 14,
+      "scriptResponses": 126,
+      "scriptResponsesMatchCompiled": 126,
+      "entries": [
+        {
+          "id": "en-home-390x844",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "en-home-1440x900",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "zh-CN-home-390x844",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "zh-CN-home-1440x900",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "th-home-390x844",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "th-home-1440x900",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "vi-home-390x844",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "vi-home-1440x900",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "ja-home-390x844",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "ja-home-1440x900",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "es-home-390x844",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "es-home-1440x900",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "pt-home-390x844",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        },
+        {
+          "id": "pt-home-1440x900",
+          "scriptCount": 9,
+          "javascriptGzipBytes": 156684
+        }
+      ]
+    }
+  },
+  "baselineComparisons": [
+    {
+      "id": "zh-CN-home-390x844",
+      "leftScriptCount": 8,
+      "rightScriptCount": 8,
+      "unchangedScripts": 7,
+      "leftNodeGzipBytes": 152393,
+      "rightNodeGzipBytes": 153435,
+      "deltaNodeGzipBytes": 1042,
+      "removed": [
+        {
+          "name": "3rrddfj_zf4lv.js",
+          "sha256": "2a0c8d94bfdaeb5511e610106b757c775f9872c14348d3d6f2b53a05b0532eeb",
+          "bodyBytes": 14378,
+          "nodeGzipBytes": 3661
+        }
+      ],
+      "added": [
+        {
+          "name": "2u-3gy2cnotm0.js",
+          "sha256": "39d8642aef0f6a973b98d4dea39125fc6a775ca4f55853a032051f5c300e2699",
+          "bodyBytes": 16714,
+          "nodeGzipBytes": 4703
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "zh-CN-artist-390x844",
+      "leftScriptCount": 8,
+      "rightScriptCount": 8,
+      "unchangedScripts": 7,
+      "leftNodeGzipBytes": 150744,
+      "rightNodeGzipBytes": 151786,
+      "deltaNodeGzipBytes": 1042,
+      "removed": [
+        {
+          "name": "3rrddfj_zf4lv.js",
+          "sha256": "2a0c8d94bfdaeb5511e610106b757c775f9872c14348d3d6f2b53a05b0532eeb",
+          "bodyBytes": 14378,
+          "nodeGzipBytes": 3661
+        }
+      ],
+      "added": [
+        {
+          "name": "2u-3gy2cnotm0.js",
+          "sha256": "39d8642aef0f6a973b98d4dea39125fc6a775ca4f55853a032051f5c300e2699",
+          "bodyBytes": 16714,
+          "nodeGzipBytes": 4703
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "zh-CN-gift-390x844",
+      "leftScriptCount": 8,
+      "rightScriptCount": 8,
+      "unchangedScripts": 7,
+      "leftNodeGzipBytes": 154012,
+      "rightNodeGzipBytes": 155054,
+      "deltaNodeGzipBytes": 1042,
+      "removed": [
+        {
+          "name": "3rrddfj_zf4lv.js",
+          "sha256": "2a0c8d94bfdaeb5511e610106b757c775f9872c14348d3d6f2b53a05b0532eeb",
+          "bodyBytes": 14378,
+          "nodeGzipBytes": 3661
+        }
+      ],
+      "added": [
+        {
+          "name": "2u-3gy2cnotm0.js",
+          "sha256": "39d8642aef0f6a973b98d4dea39125fc6a775ca4f55853a032051f5c300e2699",
+          "bodyBytes": 16714,
+          "nodeGzipBytes": 4703
+        }
+      ],
+      "fontHashesIdentical": true
+    }
+  ],
+  "enabledComparisons": [
+    {
+      "id": "en-home-390x844",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "en-home-1440x900",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "zh-CN-home-390x844",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "zh-CN-home-1440x900",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "th-home-390x844",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "th-home-1440x900",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "vi-home-390x844",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "vi-home-1440x900",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "ja-home-390x844",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "ja-home-1440x900",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "es-home-390x844",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "es-home-1440x900",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "pt-home-390x844",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    },
+    {
+      "id": "pt-home-1440x900",
+      "leftScriptCount": 8,
+      "rightScriptCount": 9,
+      "unchangedScripts": 8,
+      "leftNodeGzipBytes": 153435,
+      "rightNodeGzipBytes": 156684,
+      "deltaNodeGzipBytes": 3249,
+      "removed": [],
+      "added": [
+        {
+          "name": "38xug_56lnpts.js",
+          "sha256": "91d4794136799ac000a1b51686f742345754298f2d55d75d69c1ed2c0e50bd27",
+          "bodyBytes": 8790,
+          "nodeGzipBytes": 3249
+        }
+      ],
+      "fontHashesIdentical": true
+    }
+  ],
+  "limitations": [
+    "Node gzip recompresses decoded response bodies; not observed wire bytes.",
+    "Baseline comparison is only three zh-CN/390 diagnostic pages, not 294 baseline cells.",
+    "Shared net delta includes collector, async loader and minifier changes, not separately measured module CPU or parse cost.",
+    "Disabled H2 and enabled HTTP runs permit matching body-byte comparison, not controlled timing/field A/B.",
+    "Resource observer covers initial navigation through network idle/fonts ready; it does not prove all later downloads or zero telemetry POSTs.",
+    "Only the actual 14 enabled home cells support enabled costs; not all enabled public page families.",
+    "150000 B remains a SHOULD JS budget; these pages exceed it and formal hard-gate PASS does not erase it."
+  ]
+}

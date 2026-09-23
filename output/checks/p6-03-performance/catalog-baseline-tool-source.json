@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "executingRun": "catalog-baseline-2",
+  "files": [
+    {
+      "path": "apps/api/scripts/catalog-performance-daily-fixture.mjs",
+      "sha256": "46102b81bdac83f8331a5ad4d9280b2a9002c4985b640828473d5f3bb62c2d43"
+    },
+    {
+      "path": "apps/api/scripts/catalog-performance.mjs",
+      "sha256": "a557e05596eadf5b8d02ee31ba738b8a5beea5028fec20d48c5a2a2c40dcb3f0"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance-legacy.mjs",
+      "sha256": "b29d3ee52fc367c22fb9636790f4430d644f2e4ec1be2b9bcf474d86b4b96fcc"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance-runner.mjs",
+      "sha256": "1b30d790909436774eb04d4c4bb2135ae1dd6b6eb703c4e7015caa7934b339c5"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance.mjs",
+      "sha256": "a9623dbdc449f094213372abc874a2c60a3a6a7ca9632dfb9d261ffe928620c9"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance.test.mjs",
+      "sha256": "a16d5155daf20d76c98f942b294f1b792b84c1d63c47d8d35e02082bc0ae71e6"
+    }
+  ]
+}

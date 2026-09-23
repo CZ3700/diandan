@@ -1,0 +1,37 @@
+$ node --test ./scripts/performance-*.test.mjs ./scripts/render-rum-dashboard.test.mjs ./apps/api/scripts/performance-*.test.mjs ./apps/api/scripts/rum-*.test.mjs ./apps/api/scripts/storefront-test-rum-config.test.mjs ./apps/api/scripts/storefront-acceptance-performance.test.mjs ./packages/persistence-postgres/scripts/catalog-performance.test.mjs
+✔ current-content Lighthouse guard is additive and retains original metric configuration (1.189833ms)
+✔ missing or contradictory current content cannot pass the added audit (0.110791ms)
+✔ font, stylesheet, network and missing-body failures are never omitted (0.971042ms)
+✔ only same-origin scripts and the locale font hash allowlist pass (0.31175ms)
+✔ message probes use unique long locale strings and never report message bodies (0.487834ms)
+✔ RUM exchange rejects headers or body that could disclose private context (2.337334ms)
+✔ server evidence excludes non-RUM logs and rejects malformed RUM observations (0.905959ms)
+✔ a partial browser matrix cannot count as RUM acceptance (0.144667ms)
+✔ resource collection retains a network-failed image even when a script response succeeds (0.962375ms)
+✔ content audit rejects incomplete or contradictory observations (0.1305ms)
+✔ three-run aggregation retains worst run and reports median instead of selecting the best (0.167458ms)
+✔ incomplete or failed lighthouse runs cannot be hidden in an aggregate (0.576375ms)
+✔ an HTTP-successful Lighthouse error page cannot count as valid storefront content (0.14375ms)
+✔ completed collection with a failing median is a failed lab budget, with resource recommendations separate (0.123208ms)
+✔ resource budgets deduplicate loaded script URLs and distinguish hero from regular images (0.0965ms)
+✔ default fixture configuration does not enable RUM or change its environment (1.104958ms)
+✔ explicit local RUM is confined to the owned TEST runtime and uses full sampling (0.600958ms)
+✔ RUM fixture injection cannot target production, preview, or missing environment (1.402125ms)
+✔ query observation preserves calls and rejects overlapping measurement (2.415916ms)
+✔ version probe preserves the exact version expression and refuses unknown boundaries (0.357959ms)
+✔ failed queries remain counted with safe SQLSTATE and original error is available only to caller (0.87325ms)
+✔ summaries retain the slow sample and reject missing or failed observations (0.331917ms)
+✔ EXPLAIN isolates version subtree without counting parent cumulative times twice (1.653084ms)
+✔ formal plan retains 63 original mobile Lighthouse samples and 294 six-screen resource cells (0.726375ms)
+✔ diagnostic plan cannot satisfy a formal collection (0.606916ms)
+✔ missing, repeated, failed and mismatched viewport cells cannot pass coverage (5.240375ms)
+✔ dashboard explicitly marks empty windows and missing INP rather than passing (37.124458ms)
+✔ log reader filters ordinary logs, rejects malformed observations and bounds records (7.750292ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 310.756625

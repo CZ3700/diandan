@@ -1,0 +1,26 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
+
+ ❯ src/rum-openapi.test.ts (1 test | 1 failed) 5ms
+   × documents the actual same-origin intake with strict schema and bounded failures 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/rum-openapi.test.ts > documents the actual same-origin intake with strict schema and bounded failures
+AssertionError: RUM HTTP documentation must be generated with its contract: expected undefined to be defined
+ ❯ src/rum-openapi.test.ts:4:80
+      2| test("documents the actual same-origin intake with strict schema and b…
+      3|   const loaded = await import("./rum-openapi.js").catch(() => undefine…
+      4|   expect(loaded, "RUM HTTP documentation must be generated with its co…
+       |                                                                                ^
+      5|   if (!loaded) return;
+      6|   const paths = loaded.rumPaths();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  02:33:41
+   Duration  113ms (transform 11ms, setup 0ms, import 15ms, tests 5ms, environment 0ms)
+

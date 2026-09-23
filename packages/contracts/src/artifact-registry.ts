@@ -1,3 +1,8 @@
+import {
+  rumIntakeSchema,
+  rumObservationSchema,
+  rumReportSchema,
+} from "./rum.js";
 import * as adminPaymentConfiguration from "./admin-payment-configuration.js";
 import {
   giftBrowseQuerySchema,
@@ -688,6 +693,13 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  { name: "RumIntake", audience: "public-http", schema: rumIntakeSchema },
+  {
+    name: "RumObservation",
+    audience: "internal",
+    schema: rumObservationSchema,
+  },
+  { name: "RumReport", audience: "internal", schema: rumReportSchema },
   {
     name: "GiftBrowseQuery",
     audience: "public-http",

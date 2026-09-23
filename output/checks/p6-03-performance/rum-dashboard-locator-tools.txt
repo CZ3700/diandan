@@ -1,0 +1,45 @@
+$ node --test ./scripts/performance-*.test.mjs ./scripts/render-rum-dashboard.test.mjs ./apps/api/scripts/performance-*.test.mjs ./apps/api/scripts/rum-*.test.mjs ./apps/api/scripts/storefront-test-rum-config.test.mjs ./apps/api/scripts/storefront-acceptance-performance.test.mjs ./packages/persistence-postgres/scripts/catalog-performance.test.mjs
+✔ current-content Lighthouse guard is additive and retains original metric configuration (1.240041ms)
+✔ missing or contradictory current content cannot pass the added audit (0.172875ms)
+✔ font, stylesheet, network and missing-body failures are never omitted (0.538167ms)
+✔ only same-origin scripts and the locale font hash allowlist pass (0.225584ms)
+✔ message probes use unique long locale strings and never report message bodies (0.44825ms)
+✔ partial launch failure still kills the already spawned child before removing its profile (0.705042ms)
+✔ close rejection or timeout cannot prevent owned kill and profile cleanup (21.995ms)
+✔ unconfirmed process exit blocks success and preserves the owned profile (23.6755ms)
+✔ fresh owned context success waits for process exit and profile cleanup (0.181458ms)
+✔ connection and profile-removal failures cannot become successful verification (0.167459ms)
+✔ visibility evidence rejects synthetic, missing, navigated, or still visible documents (2.130542ms)
+✔ RUM exchange rejects headers or body that could disclose private context (2.177ms)
+✔ request attempts remain observable when acknowledgement or header validation fails (0.423792ms)
+✔ server evidence excludes non-RUM logs and rejects malformed RUM observations (0.766333ms)
+✔ 204 acknowledgement requires completed response and pending observations are bounded (44.08725ms)
+✔ a partial browser matrix cannot count as RUM acceptance (0.246583ms)
+✔ resource collection retains a network-failed image even when a script response succeeds (0.903375ms)
+✔ content audit rejects incomplete or contradictory observations (0.12125ms)
+✔ three-run aggregation retains worst run and reports median instead of selecting the best (0.15625ms)
+✔ incomplete or failed lighthouse runs cannot be hidden in an aggregate (0.557042ms)
+✔ an HTTP-successful Lighthouse error page cannot count as valid storefront content (0.148792ms)
+✔ completed collection with a failing median is a failed lab budget, with resource recommendations separate (0.1115ms)
+✔ resource budgets deduplicate loaded script URLs and distinguish hero from regular images (0.09025ms)
+✔ default fixture configuration does not enable RUM or change its environment (0.607334ms)
+✔ explicit local RUM is confined to the owned TEST runtime and uses full sampling (0.299ms)
+✔ RUM fixture injection cannot target production, preview, or missing environment (0.685042ms)
+✔ query observation preserves calls and rejects overlapping measurement (2.178875ms)
+✔ version probe preserves the exact version expression and refuses unknown boundaries (0.203667ms)
+✔ failed queries remain counted with safe SQLSTATE and original error is available only to caller (0.43575ms)
+✔ summaries retain the slow sample and reject missing or failed observations (0.1565ms)
+✔ EXPLAIN isolates version subtree without counting parent cumulative times twice (1.207291ms)
+✔ formal plan retains 63 original mobile Lighthouse samples and 294 six-screen resource cells (0.690458ms)
+✔ diagnostic plan cannot satisfy a formal collection (0.5875ms)
+✔ missing, repeated, failed and mismatched viewport cells cannot pass coverage (7.687875ms)
+✔ dashboard explicitly marks empty windows and missing INP rather than passing (32.948042ms)
+✔ log reader filters ordinary logs, rejects malformed observations and bounds records (8.556417ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 334.824417

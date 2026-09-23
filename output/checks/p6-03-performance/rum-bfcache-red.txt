@@ -1,0 +1,53 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/storefront
+
+ ❯ src/storefront/rum-client.test.ts (3 tests | 1 failed) 13ms
+   × does not misattribute BFCache after a soft route has moved to another page 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/storefront/rum-client.test.ts > does not misattribute BFCache after a soft route has moved to another page
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      Object {
+        "context": Object {
+          "automation": "automated",
+          "locale": "en",
+          "page": "home",
+          "viewport": "mobile",
+        },
+        "metric": Object {
+          "measurementKey": "fa4cea68-d3e1-45c6-b6fa-914ddfc69b5c",
+          "name": "LCP",
+          "navigationType": "back-forward-cache",
+          "revision": 1,
+          "value": 250,
+        },
+        "schemaVersion": 1,
+      },
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/storefront/rum-client.test.ts:50:20
+     48|   pathname = "/th/gifts/example";
+     49|   callback!({ id: "restored", name: "LCP", value: 250, navigationType:…
+     50|   expect(send).not.toHaveBeenCalled();
+       |                    ^
+     51| });
+     52|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  02:34:32
+   Duration  119ms (transform 15ms, setup 0ms, import 15ms, tests 13ms, environment 0ms)
+

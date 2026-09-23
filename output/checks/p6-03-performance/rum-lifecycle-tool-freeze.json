@@ -1,0 +1,46 @@
+{
+  "status": "FROZEN_WITH_CONTROLLED_REAL_BROWSER_PASS",
+  "files": [
+    {
+      "path": "apps/api/scripts/rum-browser-lifecycle-regression.mjs",
+      "sha256": "4d833dce3a2750d7e70611ec04ef9142f2acd401f84ad12d870fa337a79698a9"
+    },
+    {
+      "path": "apps/api/scripts/rum-browser-lifecycle.mjs",
+      "sha256": "21e849dc62dac66c9d4440e5a60dd9408e6a9d5e765608a8c86e38069b15fafa"
+    },
+    {
+      "path": "apps/api/scripts/rum-browser-lifecycle.test.mjs",
+      "sha256": "582098579fb316e5626bb853baaba9b1fd90940cea7cd5a58f9fbbcd1b4ac5df"
+    },
+    {
+      "path": "apps/api/scripts/rum-browser.mjs",
+      "sha256": "54ee867da13b887e11bd2c88f98d15694312bb43ea1dd437b7e52e3b5c760925"
+    },
+    {
+      "path": "apps/api/scripts/rum-browser.test.mjs",
+      "sha256": "5983a55e21359cc2ccb6b0412458b344a4db4c48e49b4ef307ab7f31b60d4d27"
+    }
+  ],
+  "lightTests": 11,
+  "completePerformanceToolTests": 36,
+  "metricsInjected": false,
+  "completeRumAcceptance": false,
+  "controlledBrowser": {
+    "status": "PASS",
+    "cells": 4,
+    "records": 6,
+    "evidence": "rum-lifecycle-regression-4/results.json",
+    "ownedChromeProcessesRemaining": 0
+  },
+  "product": [
+    {
+      "path": "apps/storefront/src/storefront/rum-client.ts",
+      "sha256": "90d5f4e142acd735202e55dde0f969c386a77a3b0cf3284dc420bd1a938204fb"
+    },
+    {
+      "path": "apps/storefront/src/storefront/rum-client-transport.test.ts",
+      "sha256": "e97445ca06ff04db2d3e810fa9399ef4ec2fe1fb81da877b6598051a64118ab0"
+    }
+  ]
+}

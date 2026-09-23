@@ -1,0 +1,186 @@
+{
+  "status": "FAIL",
+  "scope": "CONTROLLED_ACTUAL_PRODUCT_COLLECTOR_LIFECYCLE_REGRESSION",
+  "metricsInjected": false,
+  "fieldEvidence": false,
+  "productionSinkEvidence": false,
+  "cells": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "excluded": false,
+      "status": "RUNNING",
+      "browserVersion": "153.0.8010.53",
+      "exchanges": [
+        {
+          "measurement": {
+            "schemaVersion": 1,
+            "metric": {
+              "measurementKey": "720f0fe5-63cd-4278-a254-fea3a1837e2d",
+              "revision": 1,
+              "navigationType": "navigate",
+              "name": "LCP",
+              "value": 40
+            },
+            "context": {
+              "locale": "en",
+              "page": "home",
+              "viewport": "mobile",
+              "automation": "automated"
+            }
+          },
+          "status": 204,
+          "cookieAbsent": true,
+          "referrerAbsent": true,
+          "authorizationAbsent": true
+        },
+        {
+          "measurement": {
+            "schemaVersion": 1,
+            "metric": {
+              "measurementKey": "e26cd944-a162-4fcd-b826-b37a13b59b90",
+              "revision": 1,
+              "navigationType": "navigate",
+              "name": "INP",
+              "value": 16
+            },
+            "context": {
+              "locale": "en",
+              "page": "home",
+              "viewport": "mobile",
+              "automation": "automated"
+            }
+          },
+          "status": 204,
+          "cookieAbsent": true,
+          "referrerAbsent": true,
+          "authorizationAbsent": true
+        },
+        {
+          "measurement": {
+            "schemaVersion": 1,
+            "metric": {
+              "measurementKey": "ca9dffa6-f01d-42a4-8fdb-e406095e30b4",
+              "revision": 1,
+              "navigationType": "navigate",
+              "name": "CLS",
+              "value": 0
+            },
+            "context": {
+              "locale": "en",
+              "page": "home",
+              "viewport": "mobile",
+              "automation": "automated"
+            }
+          },
+          "status": 204,
+          "cookieAbsent": true,
+          "referrerAbsent": true,
+          "authorizationAbsent": true
+        }
+      ],
+      "errors": [
+        {
+          "kind": "RUM_REQUEST_FAILED"
+        },
+        {
+          "kind": "RUM_REQUEST_FAILED"
+        }
+      ],
+      "requests": [
+        {
+          "method": "POST",
+          "stage": "VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "LCP"
+        },
+        {
+          "method": "POST",
+          "stage": "VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "INP"
+        },
+        {
+          "method": "POST",
+          "stage": "VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "CLS"
+        }
+      ],
+      "actualViewport": {
+        "width": 390,
+        "height": 844
+      },
+      "lifecycle": {
+        "before": "visible",
+        "after": "hidden",
+        "sameDocument": true,
+        "sameUrl": true,
+        "sameTimeOrigin": true,
+        "events": [
+          {
+            "state": "hidden",
+            "trusted": true
+          }
+        ]
+      },
+      "postAttempts": 3
+    }
+  ],
+  "server": [
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "mobile",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "LCP",
+        "value": 40,
+        "measurementKey": "720f0fe5-63cd-4278-a254-fea3a1837e2d",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "mobile",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "INP",
+        "value": 16,
+        "measurementKey": "e26cd944-a162-4fcd-b826-b37a13b59b90",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "mobile",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "CLS",
+        "value": 0,
+        "measurementKey": "ca9dffa6-f01d-42a4-8fdb-e406095e30b4",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    }
+  ],
+  "errorName": "AssertionError"
+}

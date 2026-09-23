@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/performance_rum_audit",
+  "reviewScope": "Independent read-only performance tooling review; not author of reviewed files",
+  "generatedAt": "2026-09-23T19:53:39.770Z",
+  "nodeVersion": "v26.3.0",
+  "files": [
+    {
+      "path": "scripts/performance-plan.mjs",
+      "sha256": "960c1e6c46754c52c82f32d926fa9624764877dc5b3e7e92e6b731a5e736e09c"
+    },
+    {
+      "path": "scripts/performance-plan.test.mjs",
+      "sha256": "1c6745c6c9f648d7ba3a2f01c137c4e82553d57c73ee9817c4a6e25960d62900"
+    },
+    {
+      "path": "apps/api/scripts/performance-browser.mjs",
+      "sha256": "e9015f6afc31f9d5cd2cf45688f19a67593a8d7e5037cb9bfc83b1e04dc922fd"
+    },
+    {
+      "path": "apps/api/scripts/performance-content.mjs",
+      "sha256": "888576c26a70955c17a77f98b84df96ed0b02064eec27ddab974c6ce25de7b04"
+    },
+    {
+      "path": "apps/api/scripts/performance-content.test.mjs",
+      "sha256": "9309421b36bce5307624a2cdb4e3bb661bd4a3b148c794a1831a6f5d42e70ff9"
+    },
+    {
+      "path": "apps/api/scripts/performance-diagnostics.mjs",
+      "sha256": "db592361d0cca2831610f76b4026f209000126182ac26defb8f2257c421839dd"
+    },
+    {
+      "path": "apps/api/scripts/performance-owned.mjs",
+      "sha256": "c0ca5531980b486edc123aa372f01a8f28a3fe437f004b6b61b7b0579064660d"
+    },
+    {
+      "path": "apps/api/scripts/performance-resources.mjs",
+      "sha256": "4840cfe532037ccd4ba988dc7950a043b0d97b1f0fc6baaba35ce2fd4a9f73ac"
+    },
+    {
+      "path": "apps/api/scripts/performance-resources.test.mjs",
+      "sha256": "e32174aadcf1b623686cba2add35faf023acd7250d174c194bdfaf21373eac5e"
+    },
+    {
+      "path": "apps/api/scripts/storefront-acceptance-performance.mjs",
+      "sha256": "a5877261ea51566959eaffa59be510d0b4456bff0103d542400b9f4816a83b64"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance-legacy.mjs",
+      "sha256": "b29d3ee52fc367c22fb9636790f4430d644f2e4ec1be2b9bcf474d86b4b96fcc"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance-runner.mjs",
+      "sha256": "1b30d790909436774eb04d4c4bb2135ae1dd6b6eb703c4e7015caa7934b339c5"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance.mjs",
+      "sha256": "a9623dbdc449f094213372abc874a2c60a3a6a7ca9632dfb9d261ffe928620c9"
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance.test.mjs",
+      "sha256": "a16d5155daf20d76c98f942b294f1b792b84c1d63c47d8d35e02082bc0ae71e6"
+    },
+    {
+      "path": "apps/api/scripts/catalog-performance-daily-fixture.mjs",
+      "sha256": "46102b81bdac83f8331a5ad4d9280b2a9002c4985b640828473d5f3bb62c2d43"
+    },
+    {
+      "path": "apps/api/scripts/catalog-performance.mjs",
+      "sha256": "a557e05596eadf5b8d02ee31ba738b8a5beea5028fec20d48c5a2a2c40dcb3f0"
+    }
+  ]
+}

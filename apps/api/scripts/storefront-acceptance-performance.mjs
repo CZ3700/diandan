@@ -183,6 +183,7 @@ export async function verifyAcceptancePerformance({
   output,
   check,
   progress,
+  createLighthouseConfig = createAcceptanceLighthouseConfig,
 }) {
   const directory = path.join(output, "performance");
   await mkdir(directory, { recursive: true });
@@ -347,7 +348,7 @@ export async function verifyAcceptancePerformance({
               formFactor: "mobile",
               throttlingMethod: "simulate",
             },
-            createAcceptanceLighthouseConfig(target, origin + target.path),
+            createLighthouseConfig(target, origin + target.path),
           );
           check(Boolean(result), "Lighthouse produces a real report");
           await writeFile(

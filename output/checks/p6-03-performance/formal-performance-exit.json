@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "sourceHash": "acc7cc8514f123c5221d78e299185bd8a8da90e0176697685a12981e955c496c",
+  "command": "POSTGRES_TEST_BIN=<pinned native PG 18.6> mise exec node@24.20.0 -- node apps/api/scripts/performance-owned.mjs",
+  "sessionId": 37654,
+  "completionChunkId": "a1fa70",
+  "outerExitCode": 0,
+  "completedObservedAt": "2026-09-23T20:24:08.056782+00:00",
+  "log": "candidate-2-performance.txt",
+  "runtimeOutput": "/Users/mario/Desktop/.fan-support-regression/18cceb47-ced9-43f8-a19a-61fde7ecdaee/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-23T20-07-09-416Z",
+  "scope": "Full parent command exit after owned fixture PG and outer S3 cleanup; not only callback PASS"
+}

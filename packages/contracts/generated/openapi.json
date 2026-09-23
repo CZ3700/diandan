@@ -125947,6 +125947,207 @@
           "SUCCEEDED refunds have processedAmountMinor equal to requestedAmountMinor"
         ]
       },
+      "RumIntake": {
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "additionalProperties": false,
+            "properties": {
+              "automation": {
+                "enum": [
+                  "browser",
+                  "automated"
+                ],
+                "type": "string"
+              },
+              "locale": {
+                "enum": [
+                  "en",
+                  "zh-CN",
+                  "th",
+                  "vi",
+                  "ja",
+                  "es",
+                  "pt"
+                ],
+                "type": "string"
+              },
+              "page": {
+                "enum": [
+                  "home",
+                  "idols",
+                  "idol",
+                  "gifts",
+                  "gift",
+                  "cart",
+                  "checkout",
+                  "order",
+                  "policy"
+                ],
+                "type": "string"
+              },
+              "viewport": {
+                "enum": [
+                  "mobile",
+                  "desktop"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "locale",
+              "page",
+              "viewport",
+              "automation"
+            ],
+            "type": "object"
+          },
+          "metric": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "measurementKey": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$",
+                    "type": "string"
+                  },
+                  "name": {
+                    "const": "LCP",
+                    "type": "string"
+                  },
+                  "navigationType": {
+                    "enum": [
+                      "navigate",
+                      "reload",
+                      "back-forward",
+                      "back-forward-cache",
+                      "prerender",
+                      "restore"
+                    ],
+                    "type": "string"
+                  },
+                  "revision": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "value": {
+                    "maximum": 86400000,
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "measurementKey",
+                  "revision",
+                  "navigationType",
+                  "name",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "measurementKey": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$",
+                    "type": "string"
+                  },
+                  "name": {
+                    "const": "INP",
+                    "type": "string"
+                  },
+                  "navigationType": {
+                    "enum": [
+                      "navigate",
+                      "reload",
+                      "back-forward",
+                      "back-forward-cache",
+                      "prerender",
+                      "restore"
+                    ],
+                    "type": "string"
+                  },
+                  "revision": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "value": {
+                    "maximum": 86400000,
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "measurementKey",
+                  "revision",
+                  "navigationType",
+                  "name",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "measurementKey": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$",
+                    "type": "string"
+                  },
+                  "name": {
+                    "const": "CLS",
+                    "type": "string"
+                  },
+                  "navigationType": {
+                    "enum": [
+                      "navigate",
+                      "reload",
+                      "back-forward",
+                      "back-forward-cache",
+                      "prerender",
+                      "restore"
+                    ],
+                    "type": "string"
+                  },
+                  "revision": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "value": {
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "measurementKey",
+                  "revision",
+                  "navigationType",
+                  "name",
+                  "value"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "metric",
+          "context"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
       "StorefrontContextReadCommand": {
         "additionalProperties": false,
         "properties": {
@@ -141471,6 +141672,135 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/storefront/rum": {
+      "post": {
+        "description": "Disabled by default. Strict JSON body at most 2048 bytes, including streamed bodies. Origin must equal configured site origin and Sec-Fetch-Site must be same-origin. No cookie authorization, raw URL, visitor/business ID, DOM or performance entries. Server chooses source mode and receipt timestamp; no success is returned when the sink fails. All responses are private, no-store and empty. Browser automation is only self-reported.",
+        "operationId": "recordAnonymousWebVital",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Sec-Fetch-Site",
+            "required": true,
+            "schema": {
+              "const": "same-origin"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RumIntake"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Validated observation accepted by configured sink.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body or request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin check failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Collection disabled.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "POST required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body exceeds admission limit.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "JSON content type required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Bounded process admission capacity exceeded.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Configuration or sink unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Receive one anonymous document metric through the storefront origin"
+      }
+    },
     "/api/v1/admin-preview-media/read": {
       "post": {
         "description": "A preview credential appears only in the JSON body. It authorizes image resolution only for media references of its exact revision and locale. Issuer session, MFA, current permission, locale grant and revocation are checked before and after signing outside database transactions. Return short-lived derivative image URLs and opaque provider headers; no arbitrary asset selector, object key, source EXIF, audit identity or fallback. Deadlines never exceed the preview/session grant; less than the storage adapter's minimum signing window safely fails. Returned URLs remain usable until their short expiry.",

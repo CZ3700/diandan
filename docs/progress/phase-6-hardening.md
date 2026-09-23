@@ -1,8 +1,8 @@
 # Phase 6 — 质量、安全与韧性加固
 
-> 状态：ACTIVE（ADR-016，P6-01/02 本地已 ACCEPT；P6-03 有限本地 READY）
+> 状态：ACTIVE（ADR-016，P6-01/02/03 本地已 ACCEPT；P6-04 有限本地 READY）
 > 任务：6  
-> 正常解锁条件：Phase 5 退出门禁通过；按 ADR-016 逐项登记本地范围；P6-01/02 本地已验收但保留原外部门，现仅 P6-03 READY，P6-04 至 P6-06 仍 PENDING。
+> 正常解锁条件：Phase 5 退出门禁通过；按 ADR-016 逐项登记本地范围；P6-01/02/03 本地已验收但保留原外部门，现仅 P6-04 有限本地 READY；P6-05/06 仍 PENDING。
 
 ## 目标
 
@@ -14,8 +14,8 @@
 |:--|:--|:--|:--|:--|
 | P6-01 | IN_PROGRESS | —（本地 ACCEPT，Lane D 已释放） | P4-06、P5-07 | 5组/17命令/14路径本地通过；实际远端 CI 待补 |
 | P6-02 | IN_PROGRESS | —（本地反馈修复 ACCEPT，Lane D 已释放） | P3-06、P4-06、P5-02 | 七语28单元/196核心页通过；真人读屏与人工语言原门保留 |
-| P6-03 | READY | —（尚未领取） | P3-06、P4-06 | 本地七语六视口性能、字体/消息/图片/目录负载；真实 RUM 原门保留 |
-| P6-04 | PENDING | — | P5-06 | Scoped security checks |
+| P6-03 | IN_PROGRESS | —（本地 ACCEPT，Lane D 已释放） | P3-06、P4-06 | 当前七语六视口及RUM接线完整接受；真实用户p75/真机/正式环境原门保留 |
+| P6-04 | READY | —（尚未领取） | P5-06 | ADR-016：仅明确范围的自有本地TEST安全检查；原High/Critical=0门未执行 |
 | P6-05 | PENDING | — | P1-06、P4-06、P5-06 | Fault injection |
 | P6-06 | PENDING | — | P0-05、P1-04、P5-05、P5-08、P6-05 | Recovery/rollback drill |
 
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-P6-01 完整本地回归和 P6-02 本地自动验收已 ACCEPT，分别保留远端 CI、真人读屏/人工语言原门；P6-03 仅有限本地 READY。Phase 完整退出仍待全部原门。
+P6-01 完整本地回归和 P6-02 本地自动验收已 ACCEPT，分别保留远端 CI、真人读屏/人工语言原门；P6-03 本地完整范围已 ACCEPT，保留真实用户、真机与正式环境原门而仍 IN_PROGRESS，Lane D 已释放，仅 P6-04 有限本地 READY、尚未领取。Phase 完整退出仍待全部原门。
 
 ## P6-01 本地激活与执行登记（2026-09-23）
 
@@ -136,3 +136,31 @@ P6-01 完整本地回归和 P6-02 本地自动验收已 ACCEPT，分别保留远
 - 最新check:dev：原format/lint、64类型（59缓存）/64测试任务（60缓存）/36构建（33缓存）PASS；共享交互门92及非作者独立92通过，32公共导出、依赖边界、秘密扫描通过。独立新源码副本的原P2-03浏览器门13场景、15PNG、8axe与实际原生200%通过；保留1项moderate region/5条incomplete，不宣称零问题或真人辅助技术已完成。
 - 最终执行源`34e9e6c36b8a286501a1ae4de55b54e39ce07786b307c52ef957c03ef5a5df1c`，2784执行输入与共享验证副本一致；8457原未跟踪文件逐SHA保持，用户私有配置保持。构建后原持久实例已恢复4服务ready，重启后中文桌面smoke通过，未reset数据。自有共享验证服务/浏览器按原门清理。
 - 非作者实现与14矩阵证据ACCEPT，完整汇总及S.U.P.E.R十项见`output/checks/p6-02-language-menu-fix/final-verification.md`。P6-02仍IN_PROGRESS保留人工门，Lane D释放；P6-03仍READY/尚未领取；31 DONE/8 IN_PROGRESS/1 READY/9 PENDING不变，仅本地提交、不push。
+
+
+## P6-03 执行登记（2026-09-24）
+
+- Owner：Codex `/root`，Lane D 唯一 executor；开始 `2026-09-23T19:20:44.591643+00:00`；基线 `b7df3400`；分支 `codex/p6-03-performance`。原 READY 及 P3-06/P4-06 完整本地成果、最新 P6-01/P6-02 独立验收已核对；R-07、R-17，并按 R-02/R-09 约束性能监测隐私。
+- 范围：当前首页/目录与核心页面的七语六视口性能、按 locale 字体和消息分包、图片/缓存/脚本；12/48条大目录实际读取成本；可替换、可测试的 RUM 采集与本地聚合仪表板接线。保持已批准视觉、语言与市场分离和交易权威。
+- 验证：先锁定可重复测量和失败用例，再最小优化；独立 TEST 数据、冻结 production 编译和串行性能负载，固定网络/CPU/版本/缓存与全量原样本；受影响测试、真实PG/浏览器、format/lint/typecheck/build、非作者复核及S.U.P.E.R十项。旧未跟踪保护清单 `output/checks/p6-03-performance/protected-untracked-baseline.json`；原持久体验不reset。
+- 原门：真实用户p75/样本窗口、真机/真实网络、云staging及生产服务未采集时不计通过；P6-03保持IN_PROGRESS直至原完整验收。P6-04至P6-06仍PENDING、Phase7仍LOCKED；仅本地提交、不push/云apply/真实交易。当前31 DONE/9 IN_PROGRESS/0 READY/9 PENDING=49。
+
+
+## P6-03 本地最终接受与交接（2026-09-24）
+
+- 最终candidate-5执行源 `ea5371aa693c4c2d46c238ac393036b11770c15e267d69e90460c829fe26baab`，2915输入/2829执行输入；root与独立副本实际路径、SHA、mode完整一致。全仓format/lint、64类型（0缓存）/64测试任务（28缓存）/36构建（28缓存）、36工具、57设计与合同/边界/32公共导出通过。
+- 默认关闭的匿名Web Vitals、严格同源有界入口、可替换sink、revision/p75聚合和离线看板完成。七语双端14实际采集场景与14独立敏感文档，42完整204/实际服务器记录/CLI精确对应；真实可信hidden且原文档保持，敏感POST尝试0，46筛选/空窗口/6PNG通过。完整父命令exit0含PG/S3清理；不注入指标，不把本地数据作为field验收。
+- 最终生产编译TEST的原32461协议、84资源、63 LHR/21组三次中位和294六视口单元完整通过，158原件逐SHA归档。中位score0.98–1、LCP1654.4774–2254.2416ms、CLS0；本轮63单样本最大2261.9336ms，旧轮慢样本和全部失败仍保留。真实目录252样本完成成本测量，不擅自删校验或宣称已提速。
+- 初始JS151786–157079B，仍超过150000B SHOULD；图片建议门通过。默认collector包装相较基线多1042B gzip，独立vitals关闭不下载；启用首页再多3249B，其他8脚本不变。2352关闭/126启用实际脚本响应与编译逐SHA/gzip一致，不做HTTP/H2速度因果推断。
+- 84/294采样和63保存LHR network没有失败；viewer完整生命周期另有20个采样网络窗口之外的图片CLIENT_ABORTED（16个viewer记502、4个200 incomplete），不是源站502证据，具体截图/清理诱因未证明。保留完整记录，不扩大零失败声明。
+- 原RUM可见性观察、void fetch空204未消费、测试navigationId缺失与看板locator失败均保留。真实RED→GREEN及最终完整新轮关闭；没有用诊断拼接整链。非作者最终 `final-local-acceptance.json` / `final-aggregate-independent-review.md` ACCEPT，S.U.P.E.R本地十项通过；命令、范围、失败和风险见 `output/checks/p6-03-performance/final-verification.md`。
+- 原8457未跟踪文件、真实私有配置逐SHA保持，原instance/runId/PID相同、四服务ready，严格原TEST CA的GET200含艺人和直接礼物区，无cart cookie；未restart/reset。原规则秘密扫描在最终暂存后exit0；历史4日志和本轮2基线日志保留原件与manifest，并以相同字节的可扫描.txt镜像跟踪，恢复方法有记录。原始产物空白警告保留，源码/docs diff干净。
+- P6-03本地完整范围接受并释放Lane D；真实用户p75/窗口/分布、真机、真实内容/网络与正式环境等原验收仍未代签，因此保持IN_PROGRESS、不增加DONE。只本地提交，不push/云apply/真实资金。
+
+## P6-04 有限本地激活与 READY（尚未领取）
+
+依据ADR-016及本轮完整接受，仅激活P6-04自有本地TEST检查范围。原直接依赖仍为P5-06，不新增业务依赖；`p6-04-readiness-final-5.md/json` 再次核对69项相关源与当前候选完全一致，其中67项匹配原P5-06、2项由P6-01完整运营回归承接。本轮新增RUM入口也纳入后续当前源码安全检查。
+
+范围：按原任务检查越权、XSS、CSRF、SSRF、重放、token、secret、依赖与PII，限定本仓库及自有本地TEST服务；保留High/Critical=0、实际扫描报告、修复回归、完整适用质量/集成与非作者复核要求，不能预先宣布不存在漏洞。正式身份/MFA、真实商户、真实邮件/内容、云staging与Release Gate不因此通过。
+
+Owner无、尚未领取，Lane D空闲；后续执行者先完整读取入口、登记开始时间/范围/验证再改代码。全局31 DONE/9 IN_PROGRESS/1 READY/8 PENDING=49。P6-05/06仍PENDING、Phase7仍LOCKED；不自动执行后继或批准部署。

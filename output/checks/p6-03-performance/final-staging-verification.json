@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-23T22:13:21.245Z",
+  "status": "PASS",
+  "branch": "codex/p6-03-performance",
+  "baseCommit": "b7df340030dc6fff1912a4155f270b7765c7a9e6",
+  "stagedPathsAfterReceipt": 828,
+  "stagedPathSetSha256": "5628bd78753c133996f1efdcaec5c40537faec6de67b02fd25ca26b645cc722e",
+  "sourceDocsPaths": 71,
+  "executionInputsUnchanged": 2829,
+  "executionSourceHash": "ea5371aa693c4c2d46c238ac393036b11770c15e267d69e90460c829fe26baab",
+  "protectedOriginalPaths": 8457,
+  "protectedIntersection": [],
+  "unexpectedPaths": [],
+  "ownSourceDocsUnstaged": [],
+  "sourceDocsWhitespaceCheck": "PASS",
+  "rawArtifactWhitespace": "Preserved original output bytes; prior 393 warnings remain explicitly scoped in diff-check-scope.json.",
+  "secretScan": "Original full scan PASS: secrets-final-6-staged-exit.json. Subsequent changes are audit metadata and progress/handoff documentation only; no executable changes.",
+  "historicalRawLogsRetained": 4,
+  "ownRawLogsRetained": 2,
+  "finalHandoffReview": "final-handoff-document-review.md",
+  "scope": "Local commit only; no push, deployment, runtime restart/reset, or real funds."
+}

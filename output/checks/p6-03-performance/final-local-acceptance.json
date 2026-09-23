@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/performance_catalog_audit",
+  "checkedAt": "2026-09-23T22:04:48.187777+00:00",
+  "status": "ACCEPT_LOCAL_P6_03_SCOPE",
+  "task": "P6-03",
+  "sourceHash": "ea5371aa693c4c2d46c238ac393036b11770c15e267d69e90460c829fe26baab",
+  "selectedInputs": 2915,
+  "executionInputs": 2829,
+  "nonAuthorScope": "Reviewer did not author RUM product, RUM/performance matrix, browser harness or dashboard. Catalog tooling authored by reviewer is accepted via independent performance_rum_audit source and raw-results reviews.",
+  "accepted": [
+    "complete candidate5 source/quality and original contract/boundary/artifact gates",
+    "real PG catalog baseline with all 252 samples and preserved proof/rights scope via separate non-author acceptance",
+    "actual Next RUM full14 cells plus14 sensitive cells,42 matched browser/sink/CLI observations,46 dashboard filters and2 empty windows",
+    "63 Lighthouse/21 groups,84 original resource navigations and294 six-screen cells,unchanged budgets and settings",
+    "final full2829 actual execution path/SHA/mode identity in both trees",
+    "original8457 SHA unchanged and actual private config bytes unchanged",
+    "final original secret scan after six exact log mirrors,unchanged rules",
+    "S.U.P.E.R10 local architectural/contract/config/verification points with original external limits"
+  ],
+  "remainingLimits": [
+    "P6-03 stays IN_PROGRESS: field p75/real users/sample distribution and window,physical-device and production/real-content acceptance remain open",
+    "JS SHOULD150000B remains exceeded on84/84 original pages at151786–157079B;disabled net+1042B and measured enabled-home+3249B recorded",
+    "20 viewer-lifetime client-aborted image transfers preserved outside saved Lighthouse network windows;no blanket zero-transmission-failure claim",
+    "full raw-evidence diff retains393 whitespace warnings;source/docs71paths diff clean,raw bytes not rewritten",
+    "P6-04 activation is separate ADR016 documentation handoff after owner/LaneD release;this acceptance does not perform that task or alter49-task counts",
+    "No production deployment,push or real-money acceptance"
+  ],
+  "handoffDocumentation": "Pending root update and a final read-only cross-document check; current31DONE/9IN_PROGRESS/0READY/9PENDING remains correct before activation. Expected after qualified P6-04READY:31/9/1/8; P6-03 remains IN_PROGRESS.",
+  "evidence": [
+    {
+      "path": "candidate-5-source-final-independent.json",
+      "sha256": "a4abcdc09d40ae88f6805c8627fc1474ac3cb756d75ab83b1e3e8bc59e8f8d4e"
+    },
+    {
+      "path": "candidate-5-source-independent.json",
+      "sha256": "a1d889cd75d4970b96e1ab462087f3bf988c4a3b27fec14cdf23032afe36bb39"
+    },
+    {
+      "path": "rum-final-5-independent.json",
+      "sha256": "1ba3770c19e93e16abaa0dd725d621feecfdbc8328c78d8225ecefd642a6b273"
+    },
+    {
+      "path": "formal-performance-5-independent.json",
+      "sha256": "0c4c8546807a84f176f4248008362f56cdb64b98d6270748023f019f9fa74d39"
+    },
+    {
+      "path": "final-preservation-independent.json",
+      "sha256": "3381763ce253c8aa457140d37f3f4c5a188d128a68e76720c98820cd26f5755e"
+    },
+    {
+      "path": "catalog-results-independent.json",
+      "sha256": "f6904a3d252b7a6230784fabe6089264be9d0c03b0aeb521eef1f04c04f8ff45"
+    },
+    {
+      "path": "performance-tools-independent-review.md",
+      "sha256": "c84007be9585f9656987cbbfe2a0b298cf33d85982bd9d084804e6e6e79ae6e5"
+    },
+    {
+      "path": "rum-independent-review.md",
+      "sha256": "bd083b94394a8140ce1b4acb913b5a492b6ba9930337ea089567590de3f7ccac"
+    },
+    {
+      "path": "rum-lifecycle-independent-review.md",
+      "sha256": "f0d4bdf0936439d0fac87f0769d16cbc5360575398ff04ded2686ad11221ff0f"
+    },
+    {
+      "path": "rum-final-5-bundle-cost.json",
+      "sha256": "16e8127e735b52ff647a97eae8574192223533b615d444313c7bb0ef0c1b5779"
+    },
+    {
+      "path": "code-simplifier-review.md",
+      "sha256": "7ee55ce11c93e2b56ade6a91807e3e6685f535302fc3c810084bb3d69a4e9503"
+    },
+    {
+      "path": "secrets-final-6-staged-exit.json",
+      "sha256": "831f3ce5863d3652fc08a183d66a10649d49653fc4b8416083b3af9f1edc34a8"
+    },
+    {
+      "path": "diff-check-scope.json",
+      "sha256": "9084a5fc9e1266b09961c97db6cd7871fa8837b485498653ffca5e896b7dd758"
+    }
+  ]
+}

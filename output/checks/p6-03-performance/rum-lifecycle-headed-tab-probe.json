@@ -1,0 +1,56 @@
+{
+  "status": "FAIL",
+  "source": "ACTUAL_PRODUCT_START_BROWSER_RUM_AND_LOCKED_WEB_VITALS",
+  "callbacksInjected": false,
+  "server": [
+    {
+      "name": "LCP",
+      "value": 52
+    },
+    {
+      "name": "INP",
+      "value": 56
+    },
+    {
+      "name": "CLS",
+      "value": 0
+    }
+  ],
+  "pageResponses": [
+    {
+      "status": 204,
+      "name": "LCP",
+      "headersRead": true,
+      "originPresent": true,
+      "originExact": true,
+      "fetchSite": "same-origin",
+      "valid": true,
+      "earlyHeadersAvailable": true
+    }
+  ],
+  "contextResponses": [
+    {
+      "status": 204,
+      "name": "LCP",
+      "headersRead": true,
+      "originPresent": true,
+      "originExact": true,
+      "fetchSite": "same-origin",
+      "valid": true,
+      "earlyHeadersAvailable": true
+    }
+  ],
+  "requestHeaders": [
+    {
+      "name": "LCP",
+      "originPresent": true,
+      "originExact": true,
+      "fetchSite": "same-origin"
+    }
+  ],
+  "failures": [],
+  "pageErrors": [],
+  "visibilityState": "visible",
+  "visibilityTransitions": [],
+  "errorName": "Error"
+}

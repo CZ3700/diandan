@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "sourceHash": "ea5371aa693c4c2d46c238ac393036b11770c15e267d69e90460c829fe26baab",
+  "status": "PASS",
+  "checkDev": {
+    "session": 57531,
+    "completion": "43a540",
+    "outerExitCode": 0,
+    "typecheck": {
+      "passed": 64,
+      "cached": 0
+    },
+    "test": {
+      "passed": 64,
+      "cached": 28
+    },
+    "build": {
+      "passed": 36,
+      "cached": 28
+    }
+  },
+  "additional": [
+    {
+      "name": "contracts",
+      "session": 8649,
+      "completion": "7f440c",
+      "outerExitCode": 0
+    },
+    {
+      "name": "adapter-boundaries",
+      "session": 39342,
+      "completion": "115d94",
+      "outerExitCode": 0
+    },
+    {
+      "name": "artifacts",
+      "session": 40294,
+      "completion": "03b96f",
+      "outerExitCode": 0
+    },
+    {
+      "name": "tools",
+      "session": null,
+      "completion": "d12e3f",
+      "outerExitCode": 0
+    },
+    {
+      "name": "design-foundations",
+      "session": 79752,
+      "completion": "e7fe82",
+      "outerExitCode": 0
+    }
+  ],
+  "formalRuntimeEvidence": false
+}

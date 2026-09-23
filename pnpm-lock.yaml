@@ -226,6 +226,9 @@ importers:
       server-only:
         specifier: 0.0.1
         version: 0.0.1
+      web-vitals:
+        specifier: 6.2.2
+        version: 6.2.2
     devDependencies:
       '@types/react':
         specifier: 19.2.18
@@ -3648,6 +3651,9 @@ packages:
   web-features@3.37.0:
     resolution: {integrity: sha512-47x5zchtpsvvH/EEQ0h3d3E9kZyFxFyk6LkmYHXDZjLF0RAa3OV2s8dMRqphp/PTxxrd/iZwz37dte6xWgV7mQ==}
 
+  web-vitals@6.2.2:
+    resolution: {integrity: sha512-oto5x6dLEgrRqfcWed+pZEUb2q6ikbFmqF54CRDhI/QGbn+qxC49b4C4OkbH+kb9C3a8shpFD3SgR9kRcs80ZQ==}
+
   webdriver-bidi-protocol@0.4.3:
     resolution: {integrity: sha512-uuN0goWfxP22B7J/uAgBpOYNPttC+XVseYE+rSY5+rQ+YBeVz/VORw8WbmLVcqW78zNg5A4qnjNXYUWR3il2ig==}
 
@@ -6453,6 +6459,8 @@ snapshots:
       - yaml
 
   web-features@3.37.0: {}
+
+  web-vitals@6.2.2: {}
 
   webdriver-bidi-protocol@0.4.3: {}
 

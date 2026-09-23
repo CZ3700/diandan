@@ -302,6 +302,7 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
       )
       .sort(),
   ).toEqual([
+    "/api/storefront/rum",
     "/api/v1/admin-preview-media/read",
     "/api/v1/admin/catalog/history/read",
     "/api/v1/admin/catalog/idols/create",

@@ -147,7 +147,7 @@ P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字�
 
 ## Phase 6 — 加固与恢复（6）
 
-当前P6-01完整本地回归与P6-02本地自动验收均已ACCEPT（2026-09-24），分别保留远端CI、真人读屏/人工语言原门而保持IN_PROGRESS，Lane D释放；P6-03原P3-06/P4-06本地完整验收及本轮共享前台成果已独立复核，仅新增P6-03有限本地ACTIVE/READY、尚未领取；P6-04至P6-06仍PENDING。范围与验证计划见phase-6，ADR-016后继仍须逐项核对原直接依赖、登记再READY，六项按Lane D串行。真实读屏、RUM、恢复与完整Release Gate不以本地工具替代。
+当前P6-01/02/03完整本地范围均已ACCEPT（2026-09-24），分别保留远端CI、真人读屏/人工语言和真实用户p75等原门，仍IN_PROGRESS且Lane D已释放。P6-04原直接依赖P5-06及当前69项相关源再次独立核对后，仅自有本地TEST安全检查有限READY、无owner且尚未领取；P6-05/06仍PENDING、Phase7仍LOCKED。31 DONE/9 IN_PROGRESS/1 READY/8 PENDING=49。范围与验证计划见phase-6，ADR-016后继仍须逐项核对原直接依赖、登记再领取，六项按Lane D串行。真实读屏、RUM、恢复与完整Release Gate不以本地工具替代。
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|

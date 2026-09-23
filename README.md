@@ -57,6 +57,8 @@ mise exec node@24.20.0 -- corepack pnpm preview:verify
 
 ## Request / trace 排障
 
+公开页面的性能采集默认关闭。启用范围、匿名字段和独立看板见 [RUM 操作手册](docs/operations/rum.md)；实验室的固定预算、七语言六视口和真实用户证据边界见 [P6-03 性能验收计划](docs/plan/p6-03-performance.md)。`verify:performance` 与 `verify:rum` 使用自有 TEST 数据，不接受现有体验实例或外部站点。
+
 应用只输出字段 allowlist 约束的单行 JSON 日志。`x-request-id` 是请求关联标识，`traceparent` 是 W3C trace context；两者都只用于可观测关联，不参与认证、授权、幂等或业务状态。
 
 排障顺序：

@@ -1,0 +1,200 @@
+$ node ./scripts/check-development.mjs
+Development checks only; success is not formal acceptance. Use pnpm check and task-specific acceptance separately.
+Scope: all workspaces; consumers: all-workspaces.
+[check:dev] workspace
+Workspace validation passed: 4 apps, 32 packages, 36 units, no dependency cycles.
+[check:dev] domain-boundaries
+Domain boundary validation passed
+[check:dev] format
+$ prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts
+Checking formatting...
+All matched files use Prettier code style!
+[check:dev] lint
+$ eslint . --max-warnings=0
+[check:dev] typecheck
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/admin, @fan-support/api, @fan-support/application, @fan-support/cache-purge-cdn, @fan-support/cache-purge-port, @fan-support/cart, @fan-support/catalog, @fan-support/config, @fan-support/content, @fan-support/contracts, @fan-support/design-tokens, @fan-support/domain, @fan-support/i18n, @fan-support/identity-oidc, @fan-support/identity-port, @fan-support/inventory, @fan-support/key-management-kms, @fan-support/key-management-port, @fan-support/media-image, @fan-support/media-port, @fan-support/media-s3, @fan-support/notification-port, @fan-support/notification-provider, @fan-support/observability, @fan-support/orders, @fan-support/payment-fake, @fan-support/payment-gateway, @fan-support/payment-port, @fan-support/payment-routing, @fan-support/persistence-port, @fan-support/persistence-postgres, @fan-support/pricing, @fan-support/storefront, @fan-support/testing, @fan-support/ui, @fan-support/worker
+   • Running typecheck in 36 packages
+   • Remote caching disabled
+
+
+ Tasks:    64 successful, 64 total
+Cached:    0 cached, 64 total
+  Time:    44.595s 
+
+[check:dev] test
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/admin, @fan-support/api, @fan-support/application, @fan-support/cache-purge-cdn, @fan-support/cache-purge-port, @fan-support/cart, @fan-support/catalog, @fan-support/config, @fan-support/content, @fan-support/contracts, @fan-support/design-tokens, @fan-support/domain, @fan-support/i18n, @fan-support/identity-oidc, @fan-support/identity-port, @fan-support/inventory, @fan-support/key-management-kms, @fan-support/key-management-port, @fan-support/media-image, @fan-support/media-port, @fan-support/media-s3, @fan-support/notification-port, @fan-support/notification-provider, @fan-support/observability, @fan-support/orders, @fan-support/payment-fake, @fan-support/payment-gateway, @fan-support/payment-port, @fan-support/payment-routing, @fan-support/persistence-port, @fan-support/persistence-postgres, @fan-support/pricing, @fan-support/storefront, @fan-support/testing, @fan-support/ui, @fan-support/worker
+   • Running test in 36 packages
+   • Remote caching disabled
+
+@fan-support/contracts:test: cache miss, executing 6fdf8c68bee9f266
+@fan-support/contracts:test: 
+@fan-support/contracts:test: > @fan-support/contracts@0.0.0 test /Users/mario/Desktop/.fan-support-regression/eea0066d-eb29-4f1f-b8db-4ef3d3083296/workspace/packages/contracts
+@fan-support/contracts:test: > vitest run --config ../../vitest.config.ts --root . --maxWorkers=2
+@fan-support/contracts:test: 
+@fan-support/contracts:test: 
+@fan-support/contracts:test:  RUN  v4.1.11 /Users/mario/Desktop/.fan-support-regression/eea0066d-eb29-4f1f-b8db-4ef3d3083296/workspace/packages/contracts
+@fan-support/contracts:test: 
+@fan-support/contracts:test:  ✓ src/domain-rules.test.ts (38 tests) 29ms
+@fan-support/contracts:test:  ✓ src/reliable-event-persistence-contracts.test.ts (10 tests) 16ms
+@fan-support/contracts:test:  ✓ src/port-contracts.test.ts (44 tests) 19ms
+@fan-support/contracts:test:  ✓ src/content.test.ts (6 tests) 58ms
+@fan-support/contracts:test:  ✓ src/reliable-events.test.ts (12 tests) 11ms
+@fan-support/contracts:test:  ✓ src/gift-commerce.test.ts (28 tests) 16ms
+@fan-support/contracts:test:  ✓ src/commerce.test.ts (4 tests) 40ms
+@fan-support/contracts:test:  ✓ src/order-payment-application.test.ts (15 tests) 9ms
+@fan-support/contracts:test:  ✓ src/payment.test.ts (3 tests) 40ms
+@fan-support/contracts:test:  ✓ src/payment-runtime-internal.test.ts (9 tests) 10ms
+@fan-support/contracts:test:  ✓ src/content-drafts.test.ts (26 tests) 9ms
+@fan-support/contracts:test:  ✓ src/envelopes.test.ts (2 tests) 85ms
+@fan-support/contracts:test:  ✓ src/order.test.ts (2 tests) 66ms
+@fan-support/contracts:test:  ✓ src/content-authoring.test.ts (9 tests) 14ms
+@fan-support/contracts:test:  ✓ src/cart-runtime.test.ts (8 tests) 13ms
+@fan-support/contracts:test:  ✓ src/management-center.test.ts (15 tests) 12ms
+@fan-support/contracts:test:  ✓ src/presentation.test.ts (16 tests) 7ms
+@fan-support/contracts:test:  ✓ src/media-framing.test.ts (6 tests) 14ms
+@fan-support/contracts:test:  ✓ src/payment-stablecoin.test.ts (32 tests) 43ms
+@fan-support/contracts:test:  ✓ src/artifact-registry.test.ts (6 tests) 138ms
+@fan-support/contracts:test:  ✓ src/gift-details.test.ts (4 tests) 37ms
+@fan-support/contracts:test:  ✓ src/base-content.test.ts (5 tests) 8ms
+@fan-support/contracts:test:  ✓ src/admin-payment-configuration.test.ts (5 tests) 9ms
+@fan-support/contracts:test:  ❯ src/artifact-documents.test.ts (6 tests | 1 failed) 3071ms
+@fan-support/contracts:test:    ✓ renders deterministic JSON Schema and OpenAPI documents from one registry  1359ms
+@fan-support/contracts:test:    × documents the exact raw payment webhook HTTP boundary 367ms
+@fan-support/contracts:test:    ✓ marks every registered top-level contract with an explicit version policy  333ms
+@fan-support/contracts:test:    ✓ keeps committed contract artifacts byte-for-byte fresh  479ms
+@fan-support/contracts:test:    ✓ describes real public directory operations with explicit language and commerce context 262ms
+@fan-support/contracts:test:    ✓ maps the public idol query parameter to the internal gift recipient field 270ms
+@fan-support/contracts:test:  ✓ src/checkout-preflight.test.ts (7 tests) 46ms
+@fan-support/contracts:test:  ✓ src/cart-edit-internal.test.ts (3 tests) 9ms
+@fan-support/contracts:test:  ✓ src/identifiers.test.ts (4 tests) 3ms
+@fan-support/contracts:test:  ✓ src/publication-preflight.test.ts (7 tests) 7ms
+@fan-support/contracts:test:  ✓ src/admin-catalog.test.ts (7 tests) 5ms
+@fan-support/contracts:test:  ✓ src/admin-orders.test.ts (7 tests) 6ms
+@fan-support/contracts:test:  ✓ src/payment-runtime.test.ts (5 tests) 77ms
+@fan-support/contracts:test:  ✓ src/storefront-commerce.test.ts (4 tests) 6ms
+@fan-support/contracts:test:  ✓ src/admin-finance.test.ts (5 tests) 9ms
+@fan-support/contracts:test:  ✓ src/payment-health.test.ts (4 tests) 8ms
+@fan-support/contracts:test:  ✓ src/catalog.test.ts (1 test) 40ms
+@fan-support/contracts:test:  ✓ src/publication-runtime-openapi.test.ts (1 test) 7ms
+@fan-support/contracts:test:  ✓ src/published-content.test.ts (5 tests) 9ms
+@fan-support/contracts:test:  ✓ src/payment-connector.test.ts (15 tests) 7ms
+@fan-support/contracts:test:  ✓ src/admin-content.test.ts (5 tests) 6ms
+@fan-support/contracts:test:  ✓ src/publication-manifest.test.ts (5 tests) 9ms
+@fan-support/contracts:test:  ✓ src/admin-access.test.ts (5 tests) 6ms
+@fan-support/contracts:test:  ✓ src/fulfillment-notification.test.ts (1 test) 44ms
+@fan-support/contracts:test:  ✓ src/admin-exceptions.test.ts (5 tests) 5ms
+@fan-support/contracts:test:  ✓ src/locale.test.ts (3 tests) 30ms
+@fan-support/contracts:test:  ✓ src/media-processing.test.ts (3 tests) 5ms
+@fan-support/contracts:test:  ✓ src/order-access.test.ts (4 tests) 5ms
+@fan-support/contracts:test:  ✓ src/public-revalidation-openapi.test.ts (1 test) 12ms
+@fan-support/contracts:test:  ✓ src/gift-commerce-openapi.test.ts (3 tests) 11ms
+@fan-support/contracts:test:  ✓ src/resource-management.test.ts (3 tests) 5ms
+@fan-support/contracts:test:  ✓ src/catalog-directory.test.ts (3 tests) 5ms
+@fan-support/contracts:test:  ✓ src/translation-workspace.test.ts (2 tests) 52ms
+@fan-support/contracts:test:  ✓ src/publication-runtime.test.ts (3 tests) 6ms
+@fan-support/contracts:test:  ✓ src/admin-workspace-openapi.test.ts (3 tests) 864ms
+@fan-support/contracts:test:    ✓ admin workspace documents all scoped routes and keeps credentials out of body envelopes  313ms
+@fan-support/contracts:test:  ✓ src/catalog-discovery.test.ts (3 tests) 138ms
+@fan-support/contracts:test:  ✓ src/admin-session.test.ts (3 tests) 4ms
+@fan-support/contracts:test:  ✓ src/cart-edit.test.ts (2 tests) 5ms
+@fan-support/contracts:test:  ✓ src/storefront-seo.test.ts (2 tests) 67ms
+@fan-support/contracts:test:  ✓ src/payment-runtime-config.test.ts (3 tests) 53ms
+@fan-support/contracts:test:  ✓ src/payment-rollout.test.ts (2 tests) 4ms
+@fan-support/contracts:test:  ✓ src/admin-preview-media.test.ts (2 tests) 52ms
+@fan-support/contracts:test:  ✓ src/content-authoring-openapi.test.ts (1 test) 19ms
+@fan-support/contracts:test:  ✓ src/gift-browse.test.ts (2 tests) 54ms
+@fan-support/contracts:test:  ✓ src/order-notification.test.ts (2 tests) 9ms
+@fan-support/contracts:test:  ✓ src/content-provenance.test.ts (10 tests) 5ms
+@fan-support/contracts:test:  ✓ src/checkout-preflight-internal.test.ts (3 tests) 94ms
+@fan-support/contracts:test:  ✓ src/base-content-openapi.test.ts (1 test) 657ms
+@fan-support/contracts:test:    ✓ documents five base admin commands and an isolated token POST preview  655ms
+@fan-support/contracts:test:  ✓ src/compatibility.test.ts (7 tests) 12ms
+@fan-support/contracts:test:  ✓ src/resource-management-openapi.test.ts (1 test) 505ms
+@fan-support/contracts:test:    ✓ documents private resource commands with explicit permissions and no client authority  505ms
+@fan-support/contracts:test:  ✓ src/daily-publication.test.ts (3 tests) 6ms
+@fan-support/contracts:test:  ✓ src/catalog-directory-boundary.test.ts (3 tests) 32ms
+@fan-support/contracts:test:  ✓ src/daily-public-views.test.ts (3 tests) 5ms
+@fan-support/contracts:test:  ✓ src/locale-boundary.test.ts (6 tests) 13ms
+@fan-support/contracts:test:  ✓ src/admin-finance-openapi.test.ts (2 tests) 1539ms
+@fan-support/contracts:test:    ✓ finance exposes five authenticated commands and private durable recovery contracts  1082ms
+@fan-support/contracts:test:    ✓ refund OpenAPI excludes zero amounts in both totals and line allocations  455ms
+@fan-support/contracts:test:  ✓ src/payment-runtime-artifacts.test.ts (1 test) 321ms
+@fan-support/contracts:test:    ✓ publishes scoped payment requests while keeping internal configuration out of public OpenAPI  321ms
+@fan-support/contracts:test:  ✓ src/rum.test.ts (1 test) 133ms
+@fan-support/contracts:test:  ✓ src/published-gift-commerce.test.ts (2 tests) 6ms
+@fan-support/contracts:test:  ✓ src/admin-exceptions-openapi.test.ts (1 test) 691ms
+@fan-support/contracts:test:    ✓ exception routes require current session, CSRF and exact recovery identity  690ms
+@fan-support/contracts:test:  ✓ src/checkout-preflight-public.test.ts (2 tests) 79ms
+@fan-support/contracts:test:  ✓ src/checkout-preflight-artifacts.test.ts (1 test) 335ms
+@fan-support/contracts:test:    ✓ checkout operations expose exact private requests, idempotency and read-only historical status  335ms
+@fan-support/contracts:test:  ✓ src/storefront-seo-openapi.test.ts (1 test) 4ms
+@fan-support/contracts:test:  ✓ src/publication-preflight-openapi.test.ts (1 test) 504ms
+@fan-support/contracts:test:    ✓ documents the read-only publication preflight and its actual strict body  504ms
+@fan-support/contracts:test:  ✓ src/translation-transfer.test.ts (1 test) 55ms
+@fan-support/contracts:test:  ✓ src/admin-payment-configuration-openapi.test.ts (1 test) 1021ms
+@fan-support/contracts:test:    ✓ configuration operations bind session, CSRF, idempotency and reviewed publication  1020ms
+@fan-support/contracts:test:  ✓ src/management-center-openapi.test.ts (1 test) 4ms
+@fan-support/contracts:test:  ✓ src/storefront-homepage.test.ts (2 tests) 4ms
+@fan-support/contracts:test:  ✓ src/admin-orders-openapi.test.ts (1 test) 1065ms
+@fan-support/contracts:test:    ✓ admin orders exposes twelve exact, authenticated commands with isolated private responses  1065ms
+@fan-support/contracts:test:  ✓ src/cart-edit-artifacts.test.ts (1 test) 330ms
+@fan-support/contracts:test:    ✓ cart edit operations are documented with private response schemas and concurrency controls  329ms
+@fan-support/contracts:test:  ✓ src/storefront-commerce-openapi.test.ts (1 test) 3ms
+@fan-support/contracts:test:  ✓ src/gift-browse-openapi.test.ts (1 test) 5ms
+@fan-support/contracts:test:  ✓ src/index.test.ts (1 test) 2ms
+@fan-support/contracts:test:  ✓ src/admin-exceptions-persistence.test.ts (1 test) 4ms
+@fan-support/contracts:test:  ✓ src/admin-content-openapi.test.ts (1 test) 335ms
+@fan-support/contracts:test:    ✓ documents every secured admin content operation and token-body preview  334ms
+@fan-support/contracts:test:  ✓ src/storefront-homepage-openapi.test.ts (1 test) 2ms
+@fan-support/contracts:test:  ✓ src/rum-openapi.test.ts (1 test) 35ms
+@fan-support/contracts:test:  ✓ src/daily-directory.test.ts (1 test) 4ms
+@fan-support/contracts:test:  ✓ src/versioning.test.ts (1 test) 29ms
+@fan-support/contracts:test: 
+@fan-support/contracts:test: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+@fan-support/contracts:test: 
+@fan-support/contracts:test:  FAIL  src/artifact-documents.test.ts > documents the exact raw payment webhook HTTP boundary
+@fan-support/contracts:test: AssertionError: expected [ '/api/storefront/rum', …(113) ] to deeply equal [ …(113) ]
+@fan-support/contracts:test: 
+@fan-support/contracts:test: - Expected
+@fan-support/contracts:test: + Received
+@fan-support/contracts:test: 
+@fan-support/contracts:test: @@ -1,6 +1,7 @@
+@fan-support/contracts:test:   [
+@fan-support/contracts:test: +   "/api/storefront/rum",
+@fan-support/contracts:test:     "/api/v1/admin-preview-media/read",
+@fan-support/contracts:test:     "/api/v1/admin/catalog/history/read",
+@fan-support/contracts:test:     "/api/v1/admin/catalog/idols/create",
+@fan-support/contracts:test:     "/api/v1/admin/catalog/idols/rename",
+@fan-support/contracts:test:     "/api/v1/admin/catalog/idols/status",
+@fan-support/contracts:test: 
+@fan-support/contracts:test:  ❯ src/artifact-documents.test.ts:304:5
+@fan-support/contracts:test:     302|       )
+@fan-support/contracts:test:     303|       .sort(),
+@fan-support/contracts:test:     304|   ).toEqual([
+@fan-support/contracts:test:        |     ^
+@fan-support/contracts:test:     305|     "/api/v1/admin-preview-media/read",
+@fan-support/contracts:test:     306|     "/api/v1/admin/catalog/history/read",
+@fan-support/contracts:test: 
+@fan-support/contracts:test: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+@fan-support/contracts:test: 
+@fan-support/contracts:test: 
+@fan-support/contracts:test:  Test Files  1 failed | 95 passed (96)
+@fan-support/contracts:test:       Tests  1 failed | 521 passed (522)
+@fan-support/contracts:test:    Start at  02:59:43
+@fan-support/contracts:test:    Duration  14.46s (transform 939ms, setup 0ms, import 8.46s, tests 13.32s, environment 5ms)
+@fan-support/contracts:test: 
+@fan-support/contracts:test:  ELIFECYCLE  Test failed. See above for more details.
+@fan-support/contracts#test:  ERROR  command (/Users/mario/Desktop/.fan-support-regression/eea0066d-eb29-4f1f-b8db-4ef3d3083296/workspace/packages/contracts) /Users/mario/Library/pnpm/pnpm run test exited (1)
+
+ Tasks:    31 successful, 38 total
+Cached:    17 cached, 38 total
+  Time:    16.017s 
+Failed:    @fan-support/contracts#test
+
+ ERROR  run failed: command  exited (1)
+[check:dev] stopped at test (exit 1); later checks did not run.
+[ELIFECYCLE] Command failed with exit code 1.

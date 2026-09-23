@@ -1,0 +1,13 @@
+✔ query observation preserves calls and rejects overlapping measurement (1.156792ms)
+✔ version probe preserves the exact version expression and refuses unknown boundaries (0.160291ms)
+✔ failed queries remain counted with safe SQLSTATE and original error is available only to caller (0.3705ms)
+✔ summaries retain the slow sample and reject missing or failed observations (0.548833ms)
+✔ EXPLAIN isolates version subtree without counting parent cumulative times twice (0.170333ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33.9235

@@ -1,0 +1,14 @@
+✔ partial initialization closes its own listener even when another cleanup fails (7.989125ms)
+✔ successful verification awaits every owned close in reverse dependency order (0.091625ms)
+✔ cleanup failure cannot be reported as a successful verification (0.062458ms)
+✔ default fixture configuration does not enable RUM or change its environment (4.220625ms)
+✔ explicit local RUM is confined to the owned TEST runtime and uses full sampling (0.587333ms)
+✔ RUM fixture injection cannot target production, preview, or missing environment (0.316709ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 91.819625

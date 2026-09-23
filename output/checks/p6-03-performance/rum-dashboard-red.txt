@@ -1,0 +1,43 @@
+✖ dashboard explicitly marks empty windows and missing INP rather than passing (1.403125ms)
+✖ log reader filters ordinary logs, rejects malformed observations and bounds records (0.173292ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 64.899666
+
+✖ failing tests:
+
+test at scripts/render-rum-dashboard.test.mjs:7:1
+✖ dashboard explicitly marks empty windows and missing INP rather than passing (1.403125ms)
+  AssertionError [ERR_ASSERTION]: RUM offline dashboard implementation must exist
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/render-rum-dashboard.test.mjs:9:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/render-rum-dashboard.test.mjs:18:1
+✖ log reader filters ordinary logs, rejects malformed observations and bounds records (0.173292ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/mario/Desktop/下单/scripts/render-rum-dashboard.mjs' imported from /Users/mario/Desktop/下单/scripts/render-rum-dashboard.test.mjs
+      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)
+      at #resolve (node:internal/modules/esm/loader:686:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)
+      at onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:635:32)
+      at TracingChannel.tracePromise (node:diagnostics_channel:539:22) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/render-rum-dashboard.mjs'
+  }

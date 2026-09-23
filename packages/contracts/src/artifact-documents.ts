@@ -1,3 +1,4 @@
+import { rumPaths } from "./rum-openapi.js";
 import { adminPaymentConfigurationPaths } from "./admin-payment-configuration-openapi.js";
 import { adminExceptionsPaths } from "./admin-exceptions-openapi.js";
 import { adminFinancePaths } from "./admin-finance-openapi.js";
@@ -210,6 +211,7 @@ export function createContractArtifactDocuments(): Readonly<{
         version: "1.0.0",
       },
       paths: {
+        ...rumPaths(),
         ...cartRuntimePaths(),
         ...cartEditPaths(),
         ...checkoutPreflightPaths(),

@@ -65,6 +65,7 @@ export async function runAcceptanceFixture(
     serve = false,
     ui = false,
     performance = false,
+    localRum = false,
     verifyProtocol = async (context) =>
       (
         await import(
@@ -103,6 +104,7 @@ export async function runAcceptanceFixture(
       check,
       progress,
       diagnostics,
+      localRum,
       verify: async (context) => {
         await writeFile(
           path.join(output, "fixture-manifest.json"),

@@ -1,0 +1,10 @@
+- Local:         http://localhost:54609
+- Network:       http://localhost:54609
+▲ Next.js 16.3.4
+✓ Ready in 62ms
+✓ Running next.config.ts took 12ms
+⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+{"schemaVersion":1,"event":"performance.web_vital","mode":"local","receivedAt":"2026-09-23T20:26:46.960Z","samplePermille":1000,"measurement":{"schemaVersion":1,"metric":{"measurementKey":"5419a4b1-6291-43b6-8ea6-79528a6b496e","revision":1,"navigationType":"navigate","name":"LCP","value":672},"context":{"locale":"en","page":"home","viewport":"mobile","automation":"automated"}}}
+{"schemaVersion":1,"event":"performance.web_vital","mode":"local","receivedAt":"2026-09-23T20:26:50.156Z","samplePermille":1000,"measurement":{"schemaVersion":1,"metric":{"measurementKey":"87bf10fc-9f14-42fe-ad7a-56eae56d844a","revision":1,"navigationType":"navigate","name":"INP","value":32},"context":{"locale":"en","page":"home","viewport":"mobile","automation":"automated"}}}
+{"schemaVersion":1,"event":"performance.web_vital","mode":"local","receivedAt":"2026-09-23T20:26:50.159Z","samplePermille":1000,"measurement":{"schemaVersion":1,"metric":{"measurementKey":"2e8c0b64-3c20-4297-a858-9173f7051d74","revision":1,"navigationType":"navigate","name":"CLS","value":0},"context":{"locale":"en","page":"home","viewport":"mobile","automation":"automated"}}}
+{"schemaVersion":1,"timestamp":"2026-09-23T20:27:00.527Z","level":"info","service":"storefront","event":"runtime.stopped","outcome":"success"}

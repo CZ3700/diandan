@@ -1,0 +1,28 @@
+✔ current-content Lighthouse guard is additive and retains original metric configuration (1.53875ms)
+✔ missing or contradictory current content cannot pass the added audit (0.108375ms)
+✔ font, stylesheet, network and missing-body failures are never omitted (0.940042ms)
+✔ only same-origin scripts and the locale font hash allowlist pass (0.291666ms)
+✔ message probes use unique long locale strings and never report message bodies (0.7905ms)
+✔ resource collection retains a network-failed image even when a script response succeeds (1.521708ms)
+✔ content audit rejects incomplete or contradictory observations (0.097ms)
+✔ three-run aggregation retains worst run and reports median instead of selecting the best (0.180042ms)
+✔ incomplete or failed lighthouse runs cannot be hidden in an aggregate (0.81275ms)
+✔ an HTTP-successful Lighthouse error page cannot count as valid storefront content (0.142208ms)
+✔ completed collection with a failing median is a failed lab budget, with resource recommendations separate (0.116417ms)
+✔ resource budgets deduplicate loaded script URLs and distinguish hero from regular images (0.102ms)
+✔ query observation preserves calls and rejects overlapping measurement (2.396083ms)
+✔ version probe preserves the exact version expression and refuses unknown boundaries (0.232584ms)
+✔ failed queries remain counted with safe SQLSTATE and original error is available only to caller (1.077833ms)
+✔ summaries retain the slow sample and reject missing or failed observations (0.217167ms)
+✔ EXPLAIN isolates version subtree without counting parent cumulative times twice (0.221791ms)
+✔ formal plan retains 63 original mobile Lighthouse samples and 294 six-screen resource cells (1.317667ms)
+✔ diagnostic plan cannot satisfy a formal collection (0.820708ms)
+✔ missing, repeated, failed and mismatched viewport cells cannot pass coverage (4.516583ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 396.739334

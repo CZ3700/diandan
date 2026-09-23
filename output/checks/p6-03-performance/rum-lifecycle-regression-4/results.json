@@ -1,0 +1,449 @@
+{
+  "status": "PASS",
+  "scope": "CONTROLLED_ACTUAL_PRODUCT_COLLECTOR_LIFECYCLE_REGRESSION",
+  "metricsInjected": false,
+  "fieldEvidence": false,
+  "productionSinkEvidence": false,
+  "cells": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "excluded": false,
+      "status": "PASS",
+      "browserVersion": "153.0.8010.53",
+      "launch": {
+        "executableSelection": "INSTALLED_CHROME_DISCOVERY",
+        "chromeFlags": [
+          "--headless=new",
+          "--enable-automation",
+          "--no-proxy-server"
+        ],
+        "noDefaults": true,
+        "freshOwnedProfile": true,
+        "defaultContext": true
+      },
+      "exchanges": [
+        {
+          "measurement": {
+            "schemaVersion": 1,
+            "metric": {
+              "measurementKey": "a838b48f-7ef4-401c-9ab9-a95a0b237f78",
+              "revision": 1,
+              "navigationType": "navigate",
+              "name": "LCP",
+              "value": 40
+            },
+            "context": {
+              "locale": "en",
+              "page": "home",
+              "viewport": "mobile",
+              "automation": "automated"
+            }
+          },
+          "status": 204,
+          "cookieAbsent": true,
+          "referrerAbsent": true,
+          "authorizationAbsent": true
+        },
+        {
+          "measurement": {
+            "schemaVersion": 1,
+            "metric": {
+              "measurementKey": "f4977f7c-e80e-4aad-b449-7cd0e61092cf",
+              "revision": 1,
+              "navigationType": "navigate",
+              "name": "INP",
+              "value": 16
+            },
+            "context": {
+              "locale": "en",
+              "page": "home",
+              "viewport": "mobile",
+              "automation": "automated"
+            }
+          },
+          "status": 204,
+          "cookieAbsent": true,
+          "referrerAbsent": true,
+          "authorizationAbsent": true
+        },
+        {
+          "measurement": {
+            "schemaVersion": 1,
+            "metric": {
+              "measurementKey": "c1657942-ae82-4777-a03b-327be1a85bb6",
+              "revision": 1,
+              "navigationType": "navigate",
+              "name": "CLS",
+              "value": 0
+            },
+            "context": {
+              "locale": "en",
+              "page": "home",
+              "viewport": "mobile",
+              "automation": "automated"
+            }
+          },
+          "status": 204,
+          "cookieAbsent": true,
+          "referrerAbsent": true,
+          "authorizationAbsent": true
+        }
+      ],
+      "errors": [],
+      "requests": [
+        {
+          "method": "POST",
+          "stage": "VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "LCP"
+        },
+        {
+          "method": "POST",
+          "stage": "VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "INP"
+        },
+        {
+          "method": "POST",
+          "stage": "VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "CLS"
+        }
+      ],
+      "actualViewport": {
+        "width": 390,
+        "height": 844
+      },
+      "lifecycle": {
+        "before": "visible",
+        "after": "hidden",
+        "sameDocument": true,
+        "sameUrl": true,
+        "sameTimeOrigin": true,
+        "events": [
+          {
+            "state": "hidden",
+            "trusted": true
+          }
+        ]
+      },
+      "postAttempts": 3
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "excluded": true,
+      "status": "PASS",
+      "browserVersion": "153.0.8010.53",
+      "launch": {
+        "executableSelection": "INSTALLED_CHROME_DISCOVERY",
+        "chromeFlags": [
+          "--headless=new",
+          "--enable-automation",
+          "--no-proxy-server"
+        ],
+        "noDefaults": true,
+        "freshOwnedProfile": true,
+        "defaultContext": true
+      },
+      "exchanges": [],
+      "errors": [],
+      "requests": [],
+      "actualViewport": {
+        "width": 390,
+        "height": 844
+      },
+      "lifecycle": {
+        "before": "visible",
+        "after": "hidden",
+        "sameDocument": true,
+        "sameUrl": true,
+        "sameTimeOrigin": true,
+        "events": [
+          {
+            "state": "hidden",
+            "trusted": true
+          }
+        ]
+      },
+      "postAttempts": 0
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "excluded": false,
+      "status": "PASS",
+      "browserVersion": "153.0.8010.53",
+      "launch": {
+        "executableSelection": "INSTALLED_CHROME_DISCOVERY",
+        "chromeFlags": [
+          "--headless=new",
+          "--enable-automation",
+          "--no-proxy-server"
+        ],
+        "noDefaults": true,
+        "freshOwnedProfile": true,
+        "defaultContext": true
+      },
+      "exchanges": [
+        {
+          "measurement": {
+            "schemaVersion": 1,
+            "metric": {
+              "measurementKey": "b1166768-4176-48d6-8435-4a933b52683d",
+              "revision": 1,
+              "navigationType": "navigate",
+              "name": "LCP",
+              "value": 24
+            },
+            "context": {
+              "locale": "en",
+              "page": "home",
+              "viewport": "desktop",
+              "automation": "automated"
+            }
+          },
+          "status": 204,
+          "cookieAbsent": true,
+          "referrerAbsent": true,
+          "authorizationAbsent": true
+        },
+        {
+          "measurement": {
+            "schemaVersion": 1,
+            "metric": {
+              "measurementKey": "9eecc5ed-36b0-4999-aee8-ff88eba67b54",
+              "revision": 1,
+              "navigationType": "navigate",
+              "name": "INP",
+              "value": 16
+            },
+            "context": {
+              "locale": "en",
+              "page": "home",
+              "viewport": "desktop",
+              "automation": "automated"
+            }
+          },
+          "status": 204,
+          "cookieAbsent": true,
+          "referrerAbsent": true,
+          "authorizationAbsent": true
+        },
+        {
+          "measurement": {
+            "schemaVersion": 1,
+            "metric": {
+              "measurementKey": "072a71fc-431f-47b9-9a18-9a2da81c5da1",
+              "revision": 1,
+              "navigationType": "navigate",
+              "name": "CLS",
+              "value": 0
+            },
+            "context": {
+              "locale": "en",
+              "page": "home",
+              "viewport": "desktop",
+              "automation": "automated"
+            }
+          },
+          "status": 204,
+          "cookieAbsent": true,
+          "referrerAbsent": true,
+          "authorizationAbsent": true
+        }
+      ],
+      "errors": [],
+      "requests": [
+        {
+          "method": "POST",
+          "stage": "VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "LCP"
+        },
+        {
+          "method": "POST",
+          "stage": "VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "INP"
+        },
+        {
+          "method": "POST",
+          "stage": "VALIDATED",
+          "status": 204,
+          "requestHeadersRead": true,
+          "metric": "CLS"
+        }
+      ],
+      "actualViewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "lifecycle": {
+        "before": "visible",
+        "after": "hidden",
+        "sameDocument": true,
+        "sameUrl": true,
+        "sameTimeOrigin": true,
+        "events": [
+          {
+            "state": "hidden",
+            "trusted": true
+          }
+        ]
+      },
+      "postAttempts": 3
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "excluded": true,
+      "status": "PASS",
+      "browserVersion": "153.0.8010.53",
+      "launch": {
+        "executableSelection": "INSTALLED_CHROME_DISCOVERY",
+        "chromeFlags": [
+          "--headless=new",
+          "--enable-automation",
+          "--no-proxy-server"
+        ],
+        "noDefaults": true,
+        "freshOwnedProfile": true,
+        "defaultContext": true
+      },
+      "exchanges": [],
+      "errors": [],
+      "requests": [],
+      "actualViewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "lifecycle": {
+        "before": "visible",
+        "after": "hidden",
+        "sameDocument": true,
+        "sameUrl": true,
+        "sameTimeOrigin": true,
+        "events": [
+          {
+            "state": "hidden",
+            "trusted": true
+          }
+        ]
+      },
+      "postAttempts": 0
+    }
+  ],
+  "server": [
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "mobile",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "LCP",
+        "value": 40,
+        "measurementKey": "a838b48f-7ef4-401c-9ab9-a95a0b237f78",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "mobile",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "INP",
+        "value": 16,
+        "measurementKey": "f4977f7c-e80e-4aad-b449-7cd0e61092cf",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "mobile",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "CLS",
+        "value": 0,
+        "measurementKey": "c1657942-ae82-4777-a03b-327be1a85bb6",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "desktop",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "LCP",
+        "value": 24,
+        "measurementKey": "b1166768-4176-48d6-8435-4a933b52683d",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "desktop",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "INP",
+        "value": 16,
+        "measurementKey": "9eecc5ed-36b0-4999-aee8-ff88eba67b54",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "context": {
+        "locale": "en",
+        "page": "home",
+        "viewport": "desktop",
+        "automation": "automated"
+      },
+      "metric": {
+        "name": "CLS",
+        "value": 0,
+        "measurementKey": "072a71fc-431f-47b9-9a18-9a2da81c5da1",
+        "revision": 1,
+        "navigationType": "navigate"
+      }
+    }
+  ]
+}

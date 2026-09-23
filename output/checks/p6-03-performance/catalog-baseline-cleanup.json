@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "run": "catalog-baseline-2",
+  "checkedAt": "2026-09-23T19:54:14.748Z",
+  "commandExitCode": 0,
+  "harnessSummary": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "stages": [
+      "LEGACY_120",
+      "LEGACY_1200",
+      "DAILY_V3_120"
+    ],
+    "cleanup": "COMPLETED_NORMAL_EPHEMERAL_HARNESS",
+    "userInstanceAccessed": false
+  },
+  "ownedDirectoryExists": false,
+  "ownedPidsRemaining": [],
+  "userPidRemaining": true,
+  "s3Processes": [],
+  "sourceFiles": [
+    {
+      "path": "packages/persistence-postgres/src/gift-browse-sql.ts",
+      "expectedSha256": "583e17b277e2e8a30d7a24966417545e6a51e2ca77d4b91723b63cf2fa181fbc",
+      "unchanged": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/gift-browse-repository.ts",
+      "expectedSha256": "12720a769aee4c08ef79eb279ae6651901ab5de07ec85eb93f3ac4920108e56c",
+      "unchanged": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/catalog-publication-loader.ts",
+      "expectedSha256": "6200150c1c130d2904e982e707ce4eacea4012cf14f4fea150e93c4b81837dae",
+      "unchanged": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/published-content-repository.ts",
+      "expectedSha256": "b1ca1b11f15d787d8341807af9a9fc17f625d1d4dff39fcd46448a41cbb488ca",
+      "unchanged": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/daily-publication-read.ts",
+      "expectedSha256": "739b7b7b50198830afbb7c95e44e432269b866330017102135fa31f64fa4226d",
+      "unchanged": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/daily-publication-media.ts",
+      "expectedSha256": "6211f94db5fc79620889c66252c08c8160037e3dd30b468d00c09a6b8012416c",
+      "unchanged": true
+    },
+    {
+      "path": "packages/persistence-postgres/src/gift-commerce-pricing-current.ts",
+      "expectedSha256": "f3392bdc3dc61e636bc31eecd1d34458c941bef1c2ceed31cc0557375f4ba2c3",
+      "unchanged": true
+    },
+    {
+      "path": "packages/application/src/gift-browse.ts",
+      "expectedSha256": "403a6deea329ae00379356558a4d0e09310c07cab5a09650de85da62a5b6183e",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/scripts/catalog-performance-daily-fixture.mjs",
+      "expectedSha256": "46102b81bdac83f8331a5ad4d9280b2a9002c4985b640828473d5f3bb62c2d43",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/scripts/catalog-performance.mjs",
+      "expectedSha256": "a557e05596eadf5b8d02ee31ba738b8a5beea5028fec20d48c5a2a2c40dcb3f0",
+      "unchanged": true
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance-legacy.mjs",
+      "expectedSha256": "b29d3ee52fc367c22fb9636790f4430d644f2e4ec1be2b9bcf474d86b4b96fcc",
+      "unchanged": true
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance-runner.mjs",
+      "expectedSha256": "1b30d790909436774eb04d4c4bb2135ae1dd6b6eb703c4e7015caa7934b339c5",
+      "unchanged": true
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance.mjs",
+      "expectedSha256": "a9623dbdc449f094213372abc874a2c60a3a6a7ca9632dfb9d261ffe928620c9",
+      "unchanged": true
+    },
+    {
+      "path": "packages/persistence-postgres/scripts/catalog-performance.test.mjs",
+      "expectedSha256": "a16d5155daf20d76c98f942b294f1b792b84c1d63c47d8d35e02082bc0ae71e6",
+      "unchanged": true
+    }
+  ]
+}

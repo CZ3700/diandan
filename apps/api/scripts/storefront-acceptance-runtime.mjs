@@ -64,6 +64,7 @@ export async function withAcceptanceFixture({
   progress,
   verify,
   diagnostics,
+  localRum = false,
 }) {
   if (typeof verify !== "function")
     throw new TypeError("Acceptance verification callback is required");
@@ -228,6 +229,7 @@ export async function withAcceptanceFixture({
           output,
           production: true,
           readDiagnostics: Boolean(diagnostics),
+          localRum,
           check,
           secrets: [
             database.password,

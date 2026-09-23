@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/performance_catalog_audit",
+  "mode": "disabled",
+  "verifiedAt": "2026-09-23T20:32:21.154Z",
+  "file": "34ezpajeoo8oe.js",
+  "observed": {
+    "bodyBytes": 16659,
+    "gzipBytes": 4670,
+    "sha256": "6c8cad247553f6f330a840d9a481fef59e89c7e3e855b75a8283f168bd43c703"
+  },
+  "compiled": {
+    "bodyBytes": 16659,
+    "gzipBytes": 4670,
+    "sha256": "6c8cad247553f6f330a840d9a481fef59e89c7e3e855b75a8283f168bd43c703"
+  },
+  "containsCollectorBootstrap": true,
+  "formalViewerRumRequests": 0,
+  "diagnosticToCandidateByteComparison": [
+    {
+      "id": "zh-CN-home-390x844",
+      "baseline": 152393,
+      "candidate": 153402,
+      "delta": 1009
+    },
+    {
+      "id": "zh-CN-artist-390x844",
+      "baseline": 150744,
+      "candidate": 151753,
+      "delta": 1009
+    },
+    {
+      "id": "zh-CN-gift-390x844",
+      "baseline": 154012,
+      "candidate": 155021,
+      "delta": 1009
+    }
+  ],
+  "interpretation": "Disabled-mode client bootstrap still contributes initial JS. These are actual bytes, not controlled timing A/B. Actual enabled library chunk overhead pending; no inference of absent implementation solely from conditional source."
+}

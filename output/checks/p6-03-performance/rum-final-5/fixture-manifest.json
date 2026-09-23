@@ -1,0 +1,1200 @@
+{
+  "schemaVersion": 1,
+  "environment": "TEST",
+  "artistCount": 120,
+  "visibleGiftCount": 25,
+  "policyCount": 4,
+  "locales": [
+    "en",
+    "zh-CN",
+    "th",
+    "vi",
+    "ja",
+    "es",
+    "pt"
+  ],
+  "markets": [
+    {
+      "market": "GLOBAL",
+      "currency": "USD"
+    },
+    {
+      "market": "JAPAN",
+      "currency": "JPY"
+    }
+  ],
+  "homepage": {
+    "owner": {
+      "kind": "HOMEPAGE"
+    },
+    "revisionId": "37f22563-8398-43b7-bdd4-558f84d71ead",
+    "publicationId": "b8d0497e-a30f-4b56-91e4-693a49d53205"
+  },
+  "artists": [
+    {
+      "id": "bdc93fe6-25c6-47cb-9b52-27e883a10bc9",
+      "handle": "mira-vale",
+      "revisionId": "e2299b98-cf76-47bf-a681-ef3e23f69c3b",
+      "acceptingGifts": true
+    },
+    {
+      "id": "42f24773-f17a-471d-931d-00c5427b6d22",
+      "handle": "kai-ren",
+      "revisionId": "7cba780f-03a7-40db-9de9-3b57c17aa5d0",
+      "acceptingGifts": true
+    },
+    {
+      "id": "33cb8efc-0613-4f45-aff3-ef7b737cc822",
+      "handle": "studio-guest",
+      "revisionId": "8d157bfa-827b-4b39-bf18-33150ca19555",
+      "acceptingGifts": false
+    },
+    {
+      "id": "2a52f854-edd5-4ee0-b9f9-1e35bf5970a9",
+      "handle": "acceptance-artist-004",
+      "revisionId": "c5192778-4898-4528-867e-8cd965fd150b",
+      "acceptingGifts": true
+    },
+    {
+      "id": "fa4174c1-eafe-44fd-a96b-571f6f871fa6",
+      "handle": "acceptance-artist-005",
+      "revisionId": "4a43529e-d7ff-4300-bf37-4693c07e4a7b",
+      "acceptingGifts": true
+    },
+    {
+      "id": "1455dc38-adf0-4e1b-9eff-81de670a9471",
+      "handle": "acceptance-artist-006",
+      "revisionId": "ce9f7955-9600-4c97-bcfe-43a79b6bfcb8",
+      "acceptingGifts": true
+    },
+    {
+      "id": "c656e2b9-00ae-45b1-bda3-9ef58e14e4a1",
+      "handle": "acceptance-artist-007",
+      "revisionId": "1173abca-4d6d-4996-a65e-1d83c37551f8",
+      "acceptingGifts": true
+    },
+    {
+      "id": "4cbb7cbf-40a2-495b-8c15-23d23bc89414",
+      "handle": "acceptance-artist-008",
+      "revisionId": "03c11956-eca6-4fb2-b695-4b950b46e219",
+      "acceptingGifts": true
+    },
+    {
+      "id": "96ada802-c844-4519-a57c-c2ac682fad50",
+      "handle": "acceptance-artist-009",
+      "revisionId": "f3778e58-a3d7-41d6-bbef-77b7cda3d799",
+      "acceptingGifts": true
+    },
+    {
+      "id": "a4ab8efe-8fe7-42a7-bca6-d657e9033a0b",
+      "handle": "acceptance-artist-010",
+      "revisionId": "6fe32790-9ce4-4800-9ccc-41dc972ce101",
+      "acceptingGifts": true
+    },
+    {
+      "id": "adab3632-dce0-40ba-8030-ee6423b43ba5",
+      "handle": "acceptance-artist-011",
+      "revisionId": "cfd702d8-ba5f-4962-bb4d-8a530aa94e8a",
+      "acceptingGifts": true
+    },
+    {
+      "id": "3143b435-6212-49e1-96b1-db0d9d3ff3cc",
+      "handle": "acceptance-artist-012",
+      "revisionId": "553f4089-ebfa-429a-8a8c-8eb78936abdd",
+      "acceptingGifts": true
+    },
+    {
+      "id": "509abf82-ef25-4ae2-9dbf-6d4e66008779",
+      "handle": "acceptance-artist-013",
+      "revisionId": "dc124b96-27fe-4647-8414-7377b66dc5e3",
+      "acceptingGifts": true
+    },
+    {
+      "id": "e338b193-f102-4090-b73b-f81845801511",
+      "handle": "acceptance-artist-014",
+      "revisionId": "bb90a101-d3f7-4776-8e14-b04ddb388ff9",
+      "acceptingGifts": true
+    },
+    {
+      "id": "54b31f7b-2441-42f4-9ad0-7df74e934ba6",
+      "handle": "acceptance-artist-015",
+      "revisionId": "571f14dd-5c63-483e-86f8-3abb589b668d",
+      "acceptingGifts": true
+    },
+    {
+      "id": "ebd93480-104c-4f67-8dee-2b8b94928b07",
+      "handle": "acceptance-artist-016",
+      "revisionId": "6bd2f8dd-2e05-4f93-b164-ea9aea216a35",
+      "acceptingGifts": true
+    },
+    {
+      "id": "55af2871-003d-4a5a-9cfd-48ceef1235dd",
+      "handle": "acceptance-artist-017",
+      "revisionId": "7da69bc8-e0a9-48e5-be28-954c436dd809",
+      "acceptingGifts": true
+    },
+    {
+      "id": "fe4f2fb2-41f5-4abc-9f46-dbebc1f8edf8",
+      "handle": "acceptance-artist-018",
+      "revisionId": "92826ab2-9cda-470b-a92b-bf16ea24ede3",
+      "acceptingGifts": true
+    },
+    {
+      "id": "36b44caf-0de1-4a81-8c8c-edb4355b52af",
+      "handle": "acceptance-artist-019",
+      "revisionId": "9b8c1dde-3084-440f-a7fc-86273639808f",
+      "acceptingGifts": true
+    },
+    {
+      "id": "348b79ca-29fa-4b7e-b9d9-b6fc25c6955e",
+      "handle": "acceptance-artist-020",
+      "revisionId": "e81ece0b-1dbd-41be-8844-13c1e87dc592",
+      "acceptingGifts": true
+    },
+    {
+      "id": "14083c17-cbf2-4b23-803a-21ac2173829d",
+      "handle": "acceptance-artist-021",
+      "revisionId": "a2e596b8-a0e3-4a1a-8259-ef7f25bb028b",
+      "acceptingGifts": true
+    },
+    {
+      "id": "1db776ce-7349-4b38-b234-dce452f9c88d",
+      "handle": "acceptance-artist-022",
+      "revisionId": "86ee9ec9-ecf2-495a-89bb-de87ec84cc99",
+      "acceptingGifts": true
+    },
+    {
+      "id": "13ee8103-9d9f-4bb3-a818-9c0349a14aeb",
+      "handle": "acceptance-artist-023",
+      "revisionId": "c2e9550c-efa6-4353-87d1-601cb91139bc",
+      "acceptingGifts": true
+    },
+    {
+      "id": "4108cc28-efc2-4afe-be98-22af7deb6c6d",
+      "handle": "acceptance-artist-024",
+      "revisionId": "8e2a3b09-1a0d-4852-9df9-2c8537fbb7c2",
+      "acceptingGifts": true
+    },
+    {
+      "id": "694f3d53-918f-4bed-8873-4841202e06e5",
+      "handle": "acceptance-artist-025",
+      "revisionId": "7e117513-0f23-4e3f-b9cf-70418b034a49",
+      "acceptingGifts": true
+    },
+    {
+      "id": "e68daf1b-79df-41c7-aa9f-7d6922e7dfd6",
+      "handle": "acceptance-artist-026",
+      "revisionId": "ad8a1365-41d3-4e07-8e42-89ea981beb49",
+      "acceptingGifts": true
+    },
+    {
+      "id": "b39ed363-6138-4943-9f4d-1a9dfb1d11e0",
+      "handle": "acceptance-artist-027",
+      "revisionId": "0294c2df-7587-489d-8c15-84d0a4a5ffae",
+      "acceptingGifts": true
+    },
+    {
+      "id": "4b7ebbb4-1fa0-4804-b775-a794cb9e1532",
+      "handle": "acceptance-artist-028",
+      "revisionId": "a4e64904-4cac-41e8-941d-6f7d29513f42",
+      "acceptingGifts": true
+    },
+    {
+      "id": "678046ba-d026-4f64-91f9-a598990c3312",
+      "handle": "acceptance-artist-029",
+      "revisionId": "4f9d444d-f8f0-414d-a70f-f549f50a88ce",
+      "acceptingGifts": true
+    },
+    {
+      "id": "9f2fb386-2cf9-4d57-8386-ba2ccd956143",
+      "handle": "acceptance-artist-030",
+      "revisionId": "67d9947e-7738-4763-ba3f-f2225a5044ca",
+      "acceptingGifts": true
+    },
+    {
+      "id": "21d6daf6-8a9f-4b73-9dd6-d8d17c2e2ec1",
+      "handle": "acceptance-artist-031",
+      "revisionId": "734babfa-0be1-4e5b-b2e1-616a42c0b104",
+      "acceptingGifts": true
+    },
+    {
+      "id": "852763bc-3cf6-4ad7-a6f6-5c682e884df4",
+      "handle": "acceptance-artist-032",
+      "revisionId": "3e90d7af-8373-414e-8b86-1d28433d0eef",
+      "acceptingGifts": true
+    },
+    {
+      "id": "5202bd9f-b7cf-4df7-9b08-552805111cc3",
+      "handle": "acceptance-artist-033",
+      "revisionId": "3d8527c6-d5cb-43d1-ae88-c975d972cd5b",
+      "acceptingGifts": true
+    },
+    {
+      "id": "ee29f9d5-e5e3-4e90-8648-2dbef1b4ff21",
+      "handle": "acceptance-artist-034",
+      "revisionId": "75e5225c-94bc-4102-b2c5-eafb3e2f7167",
+      "acceptingGifts": true
+    },
+    {
+      "id": "fe1b2c42-9bbd-4136-98d4-e195b06d2d51",
+      "handle": "acceptance-artist-035",
+      "revisionId": "a5145811-e788-4773-9336-a62373e34065",
+      "acceptingGifts": true
+    },
+    {
+      "id": "ba76120d-0d8d-427f-aa97-06d18c22b4e3",
+      "handle": "acceptance-artist-036",
+      "revisionId": "46a2667f-0e60-4d38-8d9b-cc3c3ac7d2de",
+      "acceptingGifts": true
+    },
+    {
+      "id": "34f386e9-563b-4d89-b53f-4a93e0175a36",
+      "handle": "acceptance-artist-037",
+      "revisionId": "16fef850-360b-46fc-9b78-d550e865ecf0",
+      "acceptingGifts": true
+    },
+    {
+      "id": "ee2d7647-71a5-49c8-a0d2-264dc2534126",
+      "handle": "acceptance-artist-038",
+      "revisionId": "00d2486a-fd7f-4198-8986-4d2be3d60d30",
+      "acceptingGifts": true
+    },
+    {
+      "id": "c23b2527-4110-4beb-b97f-071b0a3cb442",
+      "handle": "acceptance-artist-039",
+      "revisionId": "a1a8e47d-e7ec-47ed-9a9a-6ae755aec102",
+      "acceptingGifts": true
+    },
+    {
+      "id": "da0629c7-b91a-4a16-a813-099f4aa95ec1",
+      "handle": "acceptance-artist-040",
+      "revisionId": "ed6c41ee-efe5-47b1-89c5-bca294f4912e",
+      "acceptingGifts": true
+    },
+    {
+      "id": "b60a4de6-427e-40df-a4bb-77b49057100b",
+      "handle": "acceptance-artist-041",
+      "revisionId": "8be44720-af1e-4e96-a506-44257d1dfec2",
+      "acceptingGifts": true
+    },
+    {
+      "id": "30902e9a-01ad-42f7-b095-ec7cfca86382",
+      "handle": "acceptance-artist-042",
+      "revisionId": "817bd6b4-5422-428f-8d51-beac7419a7b5",
+      "acceptingGifts": true
+    },
+    {
+      "id": "5041a9d9-5cba-44a4-9d95-dd6f55f474ac",
+      "handle": "acceptance-artist-043",
+      "revisionId": "1b0b2f83-ac73-47cb-b7bd-97db70f561cc",
+      "acceptingGifts": true
+    },
+    {
+      "id": "f544dc91-7fb4-45f2-a884-48f27745d37a",
+      "handle": "acceptance-artist-044",
+      "revisionId": "59eb9547-356b-4198-99b9-613c499c4726",
+      "acceptingGifts": true
+    },
+    {
+      "id": "29544446-a36a-4310-8762-ecdc7fa77b4e",
+      "handle": "acceptance-artist-045",
+      "revisionId": "fcc32f9b-76d8-41a2-813d-305d131656a8",
+      "acceptingGifts": true
+    },
+    {
+      "id": "35c62131-fc3d-4957-bca1-115ff23b22ac",
+      "handle": "acceptance-artist-046",
+      "revisionId": "cdecc8e7-ec03-46ae-9120-72d32e3a8ac4",
+      "acceptingGifts": true
+    },
+    {
+      "id": "211228e0-20fe-4242-8549-382e4b36ecd3",
+      "handle": "acceptance-artist-047",
+      "revisionId": "7d4a50d8-3a0c-4689-9487-5d4abe1758fe",
+      "acceptingGifts": true
+    },
+    {
+      "id": "d7bbdfb1-b1ec-471c-a6d7-b9d0a68ab3cc",
+      "handle": "acceptance-artist-048",
+      "revisionId": "e4965bd0-1588-4417-a3cd-e9535c0b0f2e",
+      "acceptingGifts": true
+    },
+    {
+      "id": "c6d92a04-e8e0-45dc-a957-45b67763b9bf",
+      "handle": "acceptance-artist-049",
+      "revisionId": "13f7a027-e07e-4b6c-8cd0-d03f85d372b1",
+      "acceptingGifts": true
+    },
+    {
+      "id": "f8f3e5b5-d6a3-4467-b637-b1c4f9425fae",
+      "handle": "acceptance-artist-050",
+      "revisionId": "b7ada8ec-a4b8-41c8-8a1c-74821c1c2b8f",
+      "acceptingGifts": true
+    },
+    {
+      "id": "599fe18d-a316-4a7f-baa5-05bde5c3fd7f",
+      "handle": "acceptance-artist-051",
+      "revisionId": "6550cc16-5c4d-4d7c-809e-104e616191cb",
+      "acceptingGifts": true
+    },
+    {
+      "id": "bb10877d-f95d-4b13-b748-d76e0bf8b10f",
+      "handle": "acceptance-artist-052",
+      "revisionId": "02c9275e-9f81-43ff-bd18-4c3011aa81f8",
+      "acceptingGifts": true
+    },
+    {
+      "id": "c7c11643-92b1-42c2-89be-28057322657b",
+      "handle": "acceptance-artist-053",
+      "revisionId": "2958da06-1739-40e5-b47b-077a18e1176c",
+      "acceptingGifts": true
+    },
+    {
+      "id": "f461c524-a456-4b1c-bf45-2f76d4586c00",
+      "handle": "acceptance-artist-054",
+      "revisionId": "75f74e94-e15e-43f9-883b-95cedc27c1bf",
+      "acceptingGifts": true
+    },
+    {
+      "id": "abfaee84-ba37-4aeb-997e-17b8cbf83276",
+      "handle": "acceptance-artist-055",
+      "revisionId": "7e77ad4f-dde3-4dfd-8a8c-3a0b7fd1a065",
+      "acceptingGifts": true
+    },
+    {
+      "id": "06792d7b-ab53-4407-bdeb-dd537a5efb10",
+      "handle": "acceptance-artist-056",
+      "revisionId": "6d835ada-4bfb-48af-8f96-7b51dcf04950",
+      "acceptingGifts": true
+    },
+    {
+      "id": "a3c96386-c9c3-4174-b0a3-49d9fe1dfdd7",
+      "handle": "acceptance-artist-057",
+      "revisionId": "7d57b602-485b-4ab1-8844-648312aea87b",
+      "acceptingGifts": true
+    },
+    {
+      "id": "2b4b9a22-c527-49f5-8b15-8fba293d4551",
+      "handle": "acceptance-artist-058",
+      "revisionId": "0b749105-45a5-4bb5-bcb8-47ff34e71d1f",
+      "acceptingGifts": true
+    },
+    {
+      "id": "524ed37a-a1da-4552-8736-12757a35ff8e",
+      "handle": "acceptance-artist-059",
+      "revisionId": "adaa19f6-a849-48c0-b518-6392bb167e0e",
+      "acceptingGifts": true
+    },
+    {
+      "id": "90b57fe3-d384-4d5a-b6b2-720ee62b55ba",
+      "handle": "acceptance-artist-060",
+      "revisionId": "aa273e80-6f58-4adc-8aa0-02c7697ae54d",
+      "acceptingGifts": true
+    },
+    {
+      "id": "96596126-ac23-49d1-83e3-f57a0c31568f",
+      "handle": "acceptance-artist-061",
+      "revisionId": "e8781473-8d3d-49a1-a555-0139cecda440",
+      "acceptingGifts": true
+    },
+    {
+      "id": "f7cc35d8-b388-4b10-b78b-fbec189aa865",
+      "handle": "acceptance-artist-062",
+      "revisionId": "c1aecebc-e0bd-4106-b8f8-e305988054ae",
+      "acceptingGifts": true
+    },
+    {
+      "id": "55d07198-d7a6-4303-b996-d18416fdbb79",
+      "handle": "acceptance-artist-063",
+      "revisionId": "f5bfae42-172b-4acb-a8b9-698483f610c6",
+      "acceptingGifts": true
+    },
+    {
+      "id": "08f5a4be-0eba-43bd-81e0-1605e850fdd2",
+      "handle": "acceptance-artist-064",
+      "revisionId": "b413ddf0-0660-49b7-99c3-839157d405c0",
+      "acceptingGifts": true
+    },
+    {
+      "id": "6fb84db3-c6a6-4d57-a053-5bf1ed9627d9",
+      "handle": "acceptance-artist-065",
+      "revisionId": "30a4189a-f370-4fb7-b287-4078d9b31cb2",
+      "acceptingGifts": true
+    },
+    {
+      "id": "d5abf662-616c-4304-b33e-502096f952fe",
+      "handle": "acceptance-artist-066",
+      "revisionId": "d61f4992-fb20-4d80-84a5-760a7d6d14ff",
+      "acceptingGifts": true
+    },
+    {
+      "id": "d70840fe-f7ea-42d8-ac67-d71ff0c8d97b",
+      "handle": "acceptance-artist-067",
+      "revisionId": "398a88b5-c698-437e-b1e1-506552ed2ff3",
+      "acceptingGifts": true
+    },
+    {
+      "id": "08369330-f919-495e-abf8-2d72c248cc29",
+      "handle": "acceptance-artist-068",
+      "revisionId": "e97354cf-b912-423f-80ed-2901ddf6c4c3",
+      "acceptingGifts": true
+    },
+    {
+      "id": "caae9fe5-a3af-4c8b-a083-f7a8b2ac5d49",
+      "handle": "acceptance-artist-069",
+      "revisionId": "cf8e9f1e-100b-45b5-9e29-3603a2879877",
+      "acceptingGifts": true
+    },
+    {
+      "id": "c527a50c-8946-4a34-8396-e43aa4203536",
+      "handle": "acceptance-artist-070",
+      "revisionId": "a8173749-1934-46af-9108-8e64feed764c",
+      "acceptingGifts": true
+    },
+    {
+      "id": "f8274b29-c939-4c2d-92fb-ab4b6229ee94",
+      "handle": "acceptance-artist-071",
+      "revisionId": "25bbac42-8aaf-47d2-8813-9303edea1d31",
+      "acceptingGifts": true
+    },
+    {
+      "id": "b62030ac-a4ef-48a8-a8db-19040be5d462",
+      "handle": "acceptance-artist-072",
+      "revisionId": "7f7646b9-d798-4226-a8ba-7856e4214d14",
+      "acceptingGifts": true
+    },
+    {
+      "id": "db27e333-87dc-4876-b896-d096aa93ecdf",
+      "handle": "acceptance-artist-073",
+      "revisionId": "0220bae3-50a9-44f2-911a-3d34a992b30d",
+      "acceptingGifts": true
+    },
+    {
+      "id": "dbcff8db-2350-4c77-8981-ede6a9c3d4ce",
+      "handle": "acceptance-artist-074",
+      "revisionId": "768ff753-bcdb-4b94-9718-a89b3584b3bc",
+      "acceptingGifts": true
+    },
+    {
+      "id": "37c81768-0af2-4b32-b575-9090c36babfa",
+      "handle": "acceptance-artist-075",
+      "revisionId": "25da3d45-1463-4f3b-96be-6005f92005c3",
+      "acceptingGifts": true
+    },
+    {
+      "id": "9abb235a-518b-4404-b05c-913f6f600eca",
+      "handle": "acceptance-artist-076",
+      "revisionId": "32046d35-5420-4733-952c-52cde6ce46d4",
+      "acceptingGifts": true
+    },
+    {
+      "id": "00934c67-95c4-46f1-a8cf-bef563166981",
+      "handle": "acceptance-artist-077",
+      "revisionId": "9c0778e3-eeab-4e72-ba41-0e0305c8e5d8",
+      "acceptingGifts": true
+    },
+    {
+      "id": "cfca6657-98be-4d5f-aedd-2353138709b2",
+      "handle": "acceptance-artist-078",
+      "revisionId": "fb13518d-ce8d-4f6a-a882-0e4fedefd1f5",
+      "acceptingGifts": true
+    },
+    {
+      "id": "8a55bf9d-5f35-4c1a-b008-ebbf23acfd65",
+      "handle": "acceptance-artist-079",
+      "revisionId": "740f11ba-e64e-4ab3-b572-cc73d5c67459",
+      "acceptingGifts": true
+    },
+    {
+      "id": "e80a9ede-b4a4-413a-8d76-bbb5d728f0eb",
+      "handle": "acceptance-artist-080",
+      "revisionId": "f6d36c1f-c7d9-4eba-91ac-95f5e2fea073",
+      "acceptingGifts": true
+    },
+    {
+      "id": "49caf31a-2984-40d8-ae18-4355dc5718de",
+      "handle": "acceptance-artist-081",
+      "revisionId": "44de59fc-241e-45bd-a0f3-7c53ed2c476b",
+      "acceptingGifts": true
+    },
+    {
+      "id": "04152a93-36e4-43e8-92f6-5bbf221b40f0",
+      "handle": "acceptance-artist-082",
+      "revisionId": "9ed1e5f8-5a59-4d64-843a-ff474350ec9c",
+      "acceptingGifts": true
+    },
+    {
+      "id": "268f792e-f121-4aa2-978a-0d027653aec7",
+      "handle": "acceptance-artist-083",
+      "revisionId": "55a7cca4-10e5-4b75-bc5f-def70c0eb28f",
+      "acceptingGifts": true
+    },
+    {
+      "id": "049e3549-6a5e-4ea3-81a5-15e910fe077d",
+      "handle": "acceptance-artist-084",
+      "revisionId": "13512b8d-74f4-4e1c-8a15-bb22920cc9ce",
+      "acceptingGifts": true
+    },
+    {
+      "id": "a6f01083-d382-46b3-979b-4c208403715e",
+      "handle": "acceptance-artist-085",
+      "revisionId": "e421828c-985f-4ec9-ac4c-374de3ffd958",
+      "acceptingGifts": true
+    },
+    {
+      "id": "e505e7dd-a64d-4a67-956b-608f3bf19645",
+      "handle": "acceptance-artist-086",
+      "revisionId": "dae5e152-c729-4b9f-a070-9c551843dec6",
+      "acceptingGifts": true
+    },
+    {
+      "id": "c532ad93-3cef-462d-8364-3b6155bb37b2",
+      "handle": "acceptance-artist-087",
+      "revisionId": "414e090c-71b7-43c2-9928-bb65bd1a5798",
+      "acceptingGifts": true
+    },
+    {
+      "id": "925c25d1-20bb-4da8-80c2-11724df43ba3",
+      "handle": "acceptance-artist-088",
+      "revisionId": "5dc288f5-1ffc-4891-985f-0106ad341db4",
+      "acceptingGifts": true
+    },
+    {
+      "id": "98621571-f02e-4339-8fc1-37bd1c2daf20",
+      "handle": "acceptance-artist-089",
+      "revisionId": "d793a2af-80ce-4213-89b3-ed2afd8d3fed",
+      "acceptingGifts": true
+    },
+    {
+      "id": "e5b2545e-ef82-4fb7-a701-82765e084136",
+      "handle": "acceptance-artist-090",
+      "revisionId": "ce232816-2877-4234-a080-31bf195b7787",
+      "acceptingGifts": true
+    },
+    {
+      "id": "f956ca9a-223e-45ff-916e-d792c38a8f77",
+      "handle": "acceptance-artist-091",
+      "revisionId": "fd221cd2-3a10-48b3-9920-50878e17321d",
+      "acceptingGifts": true
+    },
+    {
+      "id": "0f8e5601-8108-403a-b405-83e6e35e153b",
+      "handle": "acceptance-artist-092",
+      "revisionId": "a2d37ff2-9ffd-4697-869b-a76b76172c58",
+      "acceptingGifts": true
+    },
+    {
+      "id": "a2c4a49f-bc72-40a9-a476-ac8d1a48577b",
+      "handle": "acceptance-artist-093",
+      "revisionId": "cb0312b9-62d1-4043-9634-ca173c9ba156",
+      "acceptingGifts": true
+    },
+    {
+      "id": "1de41fb1-fbdd-4deb-931c-947541ba6359",
+      "handle": "acceptance-artist-094",
+      "revisionId": "3f8a3e19-a479-410c-828c-d65f60be4653",
+      "acceptingGifts": true
+    },
+    {
+      "id": "ba77d468-5c70-4f77-9b05-59b04a521f4a",
+      "handle": "acceptance-artist-095",
+      "revisionId": "7e41eeb2-b162-46fb-9074-371526232b11",
+      "acceptingGifts": true
+    },
+    {
+      "id": "a3199cc4-9bb3-43a1-9fe6-e94e2149bf16",
+      "handle": "acceptance-artist-096",
+      "revisionId": "27ddcdc2-61c7-4cab-859a-11b2e2dfe9dc",
+      "acceptingGifts": true
+    },
+    {
+      "id": "874727be-08cf-4438-9948-d63936d314fa",
+      "handle": "acceptance-artist-097",
+      "revisionId": "d11bdbce-59ef-4bbf-b333-cd961ea26f15",
+      "acceptingGifts": true
+    },
+    {
+      "id": "631d2815-09fd-4bcb-8f89-4e09d937d236",
+      "handle": "acceptance-artist-098",
+      "revisionId": "61dfe008-3d83-44e7-ba1d-1df4651572b2",
+      "acceptingGifts": true
+    },
+    {
+      "id": "b6142649-2f9a-44cd-bd30-54dc09f263fa",
+      "handle": "acceptance-artist-099",
+      "revisionId": "75b61676-3906-4d4e-9101-d2bcfc6cd042",
+      "acceptingGifts": true
+    },
+    {
+      "id": "e1961385-3524-4c43-8b44-2c1a3cd63b53",
+      "handle": "acceptance-artist-100",
+      "revisionId": "0df16687-81c4-442f-9ec0-6e2c0559db6f",
+      "acceptingGifts": true
+    },
+    {
+      "id": "11bb949b-e69c-43e9-bc78-d3a7f235f7ea",
+      "handle": "acceptance-artist-101",
+      "revisionId": "4b3e3416-4fb9-446d-82f5-6960ebb09573",
+      "acceptingGifts": true
+    },
+    {
+      "id": "2457aa4e-bf95-45d5-b479-50dcef9718ec",
+      "handle": "acceptance-artist-102",
+      "revisionId": "3f49bdd7-04a3-4fa0-b1dc-ca8335e8fc2d",
+      "acceptingGifts": true
+    },
+    {
+      "id": "285f628f-2ae0-4715-9d96-76eef9bf3d4c",
+      "handle": "acceptance-artist-103",
+      "revisionId": "eba984bf-aef2-4f59-8a7f-f7648040502e",
+      "acceptingGifts": true
+    },
+    {
+      "id": "417d3c20-e043-4019-a027-320b96c3352d",
+      "handle": "acceptance-artist-104",
+      "revisionId": "beb5cd45-6524-4454-b26c-63b11affc64d",
+      "acceptingGifts": true
+    },
+    {
+      "id": "ea8c27fb-1267-4348-9b4c-73e8a99d3e74",
+      "handle": "acceptance-artist-105",
+      "revisionId": "885654c2-2733-4373-bf78-defa461d1ef9",
+      "acceptingGifts": true
+    },
+    {
+      "id": "da6055a3-bf22-4b5b-844d-50504d4ed91f",
+      "handle": "acceptance-artist-106",
+      "revisionId": "879bcef2-0a53-4a95-88d7-77fac70fbdd7",
+      "acceptingGifts": true
+    },
+    {
+      "id": "cb29456f-7a7e-4435-ab58-fc21d29c1891",
+      "handle": "acceptance-artist-107",
+      "revisionId": "ba82fc9a-822d-47ce-a736-8fd9a95923dc",
+      "acceptingGifts": true
+    },
+    {
+      "id": "4fe9d15c-9b74-42af-93e6-6c6b0e520270",
+      "handle": "acceptance-artist-108",
+      "revisionId": "ac21134e-1cf4-4f15-8c51-fa5c7b815fe9",
+      "acceptingGifts": true
+    },
+    {
+      "id": "8a62de8f-66ab-4159-8d4a-190eab51ef6a",
+      "handle": "acceptance-artist-109",
+      "revisionId": "0099b57d-8c1b-4c42-a4d5-97aa2679fbbd",
+      "acceptingGifts": true
+    },
+    {
+      "id": "e5ccacea-5b0d-4e67-bade-4053567f7a0f",
+      "handle": "acceptance-artist-110",
+      "revisionId": "386be638-697a-4f3c-a5ab-47cd2510a6bd",
+      "acceptingGifts": true
+    },
+    {
+      "id": "f6b2646f-a8c7-4ed4-bf3f-a51f014b24d4",
+      "handle": "acceptance-artist-111",
+      "revisionId": "8c548e3d-7c20-4266-a7bf-7e188c19ac09",
+      "acceptingGifts": true
+    },
+    {
+      "id": "79a283d4-d390-4375-8a2f-000ea98ccf0e",
+      "handle": "acceptance-artist-112",
+      "revisionId": "f511cbd7-7332-4745-9f37-b46d8c0d3f34",
+      "acceptingGifts": true
+    },
+    {
+      "id": "b5d0ac8a-b2fa-4678-b5a0-96a94e3592c4",
+      "handle": "acceptance-artist-113",
+      "revisionId": "8f274ff5-61a8-42df-8acb-69c99c0b3232",
+      "acceptingGifts": true
+    },
+    {
+      "id": "696d07cc-36f1-4f65-8a03-89df35060d4d",
+      "handle": "acceptance-artist-114",
+      "revisionId": "9b559c29-d0f4-478d-a183-c90e9307d2f5",
+      "acceptingGifts": true
+    },
+    {
+      "id": "740c23c8-fd5c-46ba-86ae-917bf95845ef",
+      "handle": "acceptance-artist-115",
+      "revisionId": "855cb36e-348e-421a-b7ff-7874a364a553",
+      "acceptingGifts": true
+    },
+    {
+      "id": "e9a678dc-9798-4e5a-b3d8-63b77061bd99",
+      "handle": "acceptance-artist-116",
+      "revisionId": "57ff2b25-ecc7-4341-afc1-202968c94328",
+      "acceptingGifts": true
+    },
+    {
+      "id": "764f24ea-2cd6-48d6-96a4-1f27f59addb8",
+      "handle": "acceptance-artist-117",
+      "revisionId": "340660d0-d0f7-48ba-b208-84f5e08f3e48",
+      "acceptingGifts": true
+    },
+    {
+      "id": "b3071fcf-d6b7-4e83-9e2a-12aaa4eb76a3",
+      "handle": "acceptance-artist-118",
+      "revisionId": "e9d619ed-73ec-4a99-a80e-0d38bf8220cf",
+      "acceptingGifts": true
+    },
+    {
+      "id": "a4d60f68-1c6a-41db-825c-84806ee7d865",
+      "handle": "acceptance-artist-119",
+      "revisionId": "ed8bae39-6e74-4f2c-a670-a9a875116dfa",
+      "acceptingGifts": true
+    },
+    {
+      "id": "b4c8e304-3ad3-4ac4-9d39-a4966056640a",
+      "handle": "acceptance-artist-120",
+      "revisionId": "f7d9757f-fdcc-4b54-9833-8061f7445aa4",
+      "acceptingGifts": true
+    }
+  ],
+  "gifts": [
+    {
+      "id": "08daf7ec-ccb2-427e-b314-540057215e41",
+      "handle": "studio-gift-001",
+      "revisionId": "ce7386b0-0643-4c75-ac96-d83323b8db68",
+      "status": "active"
+    },
+    {
+      "id": "0a7f877c-8839-4b19-b202-c3e6f8fb862a",
+      "handle": "studio-gift-002",
+      "revisionId": "02fa199c-2031-477d-906a-3096e5fb9555",
+      "status": "active"
+    },
+    {
+      "id": "1d4b075b-465a-4ea1-a058-7ffb9ca7431b",
+      "handle": "studio-gift-003",
+      "revisionId": "8ab6f7d6-c801-452e-adaf-03b5c12e0566",
+      "status": "active"
+    },
+    {
+      "id": "6f53f118-bb31-454c-be95-250341678160",
+      "handle": "studio-gift-004",
+      "revisionId": "e886a9ce-df06-44f7-96cc-3dbeb20bce41",
+      "status": "active"
+    },
+    {
+      "id": "e602468c-b99a-4f10-86b2-c5eb9364f4f5",
+      "handle": "studio-gift-005",
+      "revisionId": "85f09c64-d6a3-4d8d-9da5-3b813bf12148",
+      "status": "active"
+    },
+    {
+      "id": "e35586a7-0d50-4e24-8149-34a5c61e4692",
+      "handle": "studio-gift-006",
+      "revisionId": "6fb0e850-bdd9-4cdc-8e3e-55ab70b61808",
+      "status": "active"
+    },
+    {
+      "id": "079e7435-4096-4d7f-bb24-b1ecfababdcc",
+      "handle": "studio-gift-007",
+      "revisionId": "22d83080-f70d-4407-a4ec-5916c1421b0d",
+      "status": "active"
+    },
+    {
+      "id": "88c3fb19-9b13-4cc7-91e2-39f9e091fa38",
+      "handle": "studio-gift-008",
+      "revisionId": "cabcffae-95ca-4eef-974f-d9d1034e0463",
+      "status": "active"
+    },
+    {
+      "id": "b7ce58ab-570e-4839-8b25-20e9b57549d9",
+      "handle": "studio-gift-009",
+      "revisionId": "d3f6b4b3-2943-4f5e-9b5e-41fafa865ef8",
+      "status": "active"
+    },
+    {
+      "id": "c3312f3a-1258-4cf8-967f-397e25fae4e5",
+      "handle": "studio-gift-010",
+      "revisionId": "96b33e23-b770-489e-aa97-96160f4cf78b",
+      "status": "active"
+    },
+    {
+      "id": "1b9a2337-c1ad-48e0-b2e3-3f7dff5e1703",
+      "handle": "studio-gift-011",
+      "revisionId": "033a27b2-c717-4e2e-98fc-baa337594294",
+      "status": "active"
+    },
+    {
+      "id": "dd850e51-7489-4581-8a57-53f136591c5b",
+      "handle": "studio-gift-012",
+      "revisionId": "9f5731ec-a029-4bf3-9d7f-16261e34c2de",
+      "status": "active"
+    },
+    {
+      "id": "7ee375ff-0c00-4316-8380-7627260e481d",
+      "handle": "studio-gift-013",
+      "revisionId": "57188123-4e74-4fdd-9771-c69da7866130",
+      "status": "active"
+    },
+    {
+      "id": "77a412be-c432-4eff-ad42-3902b60f7e97",
+      "handle": "studio-gift-014",
+      "revisionId": "91566edc-7f54-436f-9fcc-67a606f56be3",
+      "status": "active"
+    },
+    {
+      "id": "5412b0c2-5548-4d71-ba2a-7c6633414c9b",
+      "handle": "studio-gift-015",
+      "revisionId": "95842e03-22a1-4025-b7ab-5367bded61a5",
+      "status": "active"
+    },
+    {
+      "id": "d6735b49-99e6-4f2f-9a1a-8401cd50f282",
+      "handle": "studio-gift-016",
+      "revisionId": "84d8a029-83aa-4676-9c52-01933019ff31",
+      "status": "active"
+    },
+    {
+      "id": "f86eebe2-331a-43b0-8fc1-017ae98e8667",
+      "handle": "studio-gift-017",
+      "revisionId": "c0b1da02-0c8b-4dd8-90aa-2c8ea720d095",
+      "status": "active"
+    },
+    {
+      "id": "29111860-8ef2-4b50-bb70-74628950ba1c",
+      "handle": "studio-gift-018",
+      "revisionId": "b924a444-b006-4836-aa0a-212e8622fc0d",
+      "status": "active"
+    },
+    {
+      "id": "12301005-297a-4c78-b26e-eefc7d0c565b",
+      "handle": "studio-gift-019",
+      "revisionId": "43a5bae9-6463-44bb-928b-6e09df66e5dd",
+      "status": "active"
+    },
+    {
+      "id": "85afff97-28e1-42ad-9681-04ff3056b64a",
+      "handle": "studio-gift-020",
+      "revisionId": "53a1de61-75b8-40a6-8322-f7480d0786b0",
+      "status": "active"
+    },
+    {
+      "id": "d8745bff-0e0c-43b8-ba3f-406092aa9090",
+      "handle": "studio-gift-021",
+      "revisionId": "4af1d579-7e14-4c15-acdc-e4cf2c48d707",
+      "status": "active"
+    },
+    {
+      "id": "aa0c6748-7724-4983-ab1f-b6c3a55987e4",
+      "handle": "studio-gift-022",
+      "revisionId": "884faffb-1398-486c-9411-79313560ec49",
+      "status": "active"
+    },
+    {
+      "id": "1a7f988e-f367-4d80-bbc9-538ba85a5328",
+      "handle": "studio-gift-023",
+      "revisionId": "61ff966b-0768-4fd1-9084-3972f663e86f",
+      "status": "active"
+    },
+    {
+      "id": "8598e481-6955-4fc0-b290-d45eeca9da4c",
+      "handle": "studio-gift-024",
+      "revisionId": "3f43db45-cfee-4509-b145-241bbf1a19be",
+      "status": "active"
+    },
+    {
+      "id": "ac184902-32cc-4b37-b24e-6c23877e3169",
+      "handle": "studio-gift-025",
+      "revisionId": "c3c816da-3e14-4d9c-9b41-12bf13c5f5ee",
+      "status": "paused"
+    },
+    {
+      "id": "5eafa074-d1b9-4123-aa8f-295e2e595b48",
+      "handle": "studio-gift-026",
+      "revisionId": "ebaee77a-4a72-4f7e-81ec-0f4bfd80756f",
+      "status": "archived"
+    },
+    {
+      "id": "e5a69c2e-15f4-4b0e-bc70-12fad369f338",
+      "handle": "studio-gift-027",
+      "status": "draft"
+    }
+  ],
+  "policies": [
+    {
+      "policyKey": "terms",
+      "kind": "TERMS",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "terms"
+      },
+      "revisionId": "aed97d77-10db-4316-af6f-05546a11b480",
+      "publicationId": "4c4d105a-f17e-4257-8720-d79de6c78bc3"
+    },
+    {
+      "policyKey": "privacy",
+      "kind": "PRIVACY",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "privacy"
+      },
+      "revisionId": "0ef43b6a-1274-4b4e-8e53-53066bd73b8b",
+      "publicationId": "5444b4e5-5023-4ea5-864a-5e6eba5ec8ba"
+    },
+    {
+      "policyKey": "refund",
+      "kind": "REFUND",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "refund"
+      },
+      "revisionId": "b05b894c-6a5c-4631-9b62-be51659ca0b2",
+      "publicationId": "fdad0827-8809-4915-a732-f5a684ea7eab"
+    },
+    {
+      "policyKey": "delivery",
+      "kind": "DELIVERY",
+      "owner": {
+        "kind": "POLICY",
+        "policyKey": "delivery"
+      },
+      "revisionId": "181201cd-704e-4489-9791-87cd66fee735",
+      "publicationId": "012196e5-2d77-4966-9e46-38f5a09795da"
+    }
+  ],
+  "syntheticMediaCompositions": [
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-mobile.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "PORTRAIT",
+      "sourceSha256": "007cae3cc384ab0fba38dcdc8ad4df2f1b2241bc1cff902688809cee7c2074ee",
+      "composedSha256": "09ff605ad73e33046e49523be2bf8c47060191929cc802fd6b92a7e21e79d083",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1600,
+        "height": 2000
+      },
+      "placement": {
+        "left": 239,
+        "top": 299,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "embeddedPixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-desktop.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_DESKTOP",
+      "sourceSha256": "4612276bf7b2d8df770e1ed36e2ee4210ac70935f0f214d4493cc61a0180c82a",
+      "composedSha256": "9fdc2ba59aaba75dbeb3ed67049a4d14a22005662755d736c426a2e8399af1e8",
+      "sourceSize": {
+        "width": 1672,
+        "height": 941
+      },
+      "canvasSize": {
+        "width": 2400,
+        "height": 1350
+      },
+      "placement": {
+        "left": 364,
+        "top": 204,
+        "width": 1672,
+        "height": 941
+      },
+      "resampled": false,
+      "sourcePixelSha256": "9d1aeaf7a6f8493f7dc6d7267f07351f1441dd6f8f90bc46ecb256bfc8f4d255",
+      "embeddedPixelSha256": "9d1aeaf7a6f8493f7dc6d7267f07351f1441dd6f8f90bc46ecb256bfc8f4d255",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-mobile.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_MOBILE",
+      "sourceSha256": "007cae3cc384ab0fba38dcdc8ad4df2f1b2241bc1cff902688809cee7c2074ee",
+      "composedSha256": "4597c8d06473f1c0951eb4b972baf7673b963b6521f2347f461048270ea74f7d",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "embeddedPixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-mobile.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "PORTRAIT",
+      "sourceSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "composedSha256": "04f0dcf56e23bfabb3dd59e78e6127f8361c25df5b2e35fc8f0eb118706e5b31",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1600,
+        "height": 2000
+      },
+      "placement": {
+        "left": 239,
+        "top": 299,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "embeddedPixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-desktop.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_DESKTOP",
+      "sourceSha256": "8f4a8277040f631829cff1d76beab63ab0f4ff0fc88df7aa328faffa2c5c47c1",
+      "composedSha256": "df9d91a0a6544841b041b3d06b6f498be9f64020dd809a6c2e223ae927d471eb",
+      "sourceSize": {
+        "width": 1641,
+        "height": 958
+      },
+      "canvasSize": {
+        "width": 2400,
+        "height": 1350
+      },
+      "placement": {
+        "left": 379,
+        "top": 196,
+        "width": 1641,
+        "height": 958
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d1d5e81f51b31fde9b40a04251a1e12d183a92c96353aa8988468a78723770c2",
+      "embeddedPixelSha256": "d1d5e81f51b31fde9b40a04251a1e12d183a92c96353aa8988468a78723770c2",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-mobile.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_MOBILE",
+      "sourceSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "composedSha256": "1ae8cc2a6c52e13a1273608bfa853cf1f5623250bd65da6d8b9af9bfbe23393e",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "embeddedPixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-rose-palace.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "6baca198ca3a623b026a641269a1c68847f4eb053b3276e692b7539dbf33ffca",
+      "composedSha256": "f850973bff6e01223d6a0fdee9379601ae218105155a6e6a929f4608bcaaa9e1",
+      "sourceSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "canvasSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1254,
+        "height": 1254
+      },
+      "resampled": false,
+      "sourcePixelSha256": "86db5b29868053223e8570f13d6a1bf3b0e181d972cb2c47941015b52690f859",
+      "embeddedPixelSha256": "86db5b29868053223e8570f13d6a1bf3b0e181d972cb2c47941015b52690f859",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-blue-orbit.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "7a2d7ea94b921544b8628422b44f98e9b9732362e9c8dfeabd281709c933a448",
+      "composedSha256": "4a7f82dadbae16a68647b4cba144566f50559bde5083a037e09c574edfe416cc",
+      "sourceSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "canvasSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1254,
+        "height": 1254
+      },
+      "resampled": false,
+      "sourcePixelSha256": "29b11eae98b49b46f791e0d3f6d876f49a53d6af98373e37963a4a78f4741ad0",
+      "embeddedPixelSha256": "29b11eae98b49b46f791e0d3f6d876f49a53d6af98373e37963a4a78f4741ad0",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-ruby-bouquet.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "composedSha256": "429113554ac5599bf5d1ec8aa6a91d087ff2218c400e353585b8d5cc45488159",
+      "sourceSize": {
+        "width": 1024,
+        "height": 1024
+      },
+      "canvasSize": {
+        "width": 1200,
+        "height": 1200
+      },
+      "placement": {
+        "left": 88,
+        "top": 88,
+        "width": 1024,
+        "height": 1024
+      },
+      "resampled": false,
+      "sourcePixelSha256": "75b3c9c96194e6b8ec8c8c279f9c95962df20ba226344c19cf0f48f214a4e444",
+      "embeddedPixelSha256": "75b3c9c96194e6b8ec8c8c279f9c95962df20ba226344c19cf0f48f214a4e444",
+      "formalAssetApproval": false
+    }
+  ],
+  "formalAssetApproval": false,
+  "humanOperationsEvidence": false,
+  "physicalDeviceEvidence": false,
+  "productionReleaseEvidence": false
+}

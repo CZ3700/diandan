@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "run": "catalog-baseline-2",
+  "status": "PASS",
+  "nodeVersion": "v24.20.0",
+  "metricMeaning": "All 252 application samples retained; returned byte counts are UTF-8 JSON after PostgreSQL row decoding, not wire bytes; observer serialization is included in application time.",
+  "reports": [
+    {
+      "name": "legacy-120",
+      "status": "PASS",
+      "total": 120,
+      "samples": 84,
+      "proofVersions": [
+        1
+      ],
+      "runtime": {
+        "kind": "NATIVE_ISOLATED_TEST",
+        "configuredBy": "POSTGRES_TEST_BIN",
+        "serverVersion": "18.6"
+      },
+      "postgresVersion": "18.6 (Homebrew)",
+      "versionOnlyExecutionMs": [
+        6.76,
+        6.949,
+        6.842
+      ],
+      "discoveryExecutionMs": [
+        8.552,
+        7.369,
+        7.345
+      ],
+      "windows": [
+        {
+          "pageSize": 12,
+          "samples": 42,
+          "queryCounts": [
+            6
+          ],
+          "durationMs": {
+            "min": 17.053208000000268,
+            "median": 18.059312500000487,
+            "p95": 21.911333999999442,
+            "max": 39.891999999999825
+          },
+          "queryMs": {
+            "min": 12.164291999999477,
+            "median": 12.683416500000021,
+            "p95": 15.552458999998635,
+            "max": 17.408708000000843
+          },
+          "returnedRowJsonBytes": {
+            "min": 272273,
+            "median": 272338.5,
+            "p95": 272404,
+            "max": 272404
+          },
+          "publicResponseBytes": {
+            "min": 15320,
+            "median": 15418,
+            "p95": 15564,
+            "max": 15564
+          }
+        },
+        {
+          "pageSize": 48,
+          "samples": 42,
+          "queryCounts": [
+            6
+          ],
+          "durationMs": {
+            "min": 40.673665999999685,
+            "median": 42.368249500000275,
+            "p95": 45.59587499999998,
+            "max": 46.32008299999961
+          },
+          "queryMs": {
+            "min": 20.728124999999636,
+            "median": 21.857249499998943,
+            "p95": 24.85112400000162,
+            "max": 25.067708000000493
+          },
+          "returnedRowJsonBytes": {
+            "min": 1089113,
+            "median": 1089178.5,
+            "p95": 1089244,
+            "max": 1089244
+          },
+          "publicResponseBytes": {
+            "min": 60427,
+            "median": 60813,
+            "p95": 61391,
+            "max": 61391
+          }
+        }
+      ]
+    },
+    {
+      "name": "legacy-1200",
+      "status": "PASS",
+      "total": 1200,
+      "samples": 84,
+      "proofVersions": [
+        1
+      ],
+      "runtime": {
+        "kind": "NATIVE_ISOLATED_TEST",
+        "configuredBy": "POSTGRES_TEST_BIN",
+        "serverVersion": "18.6"
+      },
+      "postgresVersion": "18.6 (Homebrew)",
+      "versionOnlyExecutionMs": [
+        78.62,
+        85.899,
+        79.274
+      ],
+      "discoveryExecutionMs": [
+        82.692,
+        93.234,
+        78.064
+      ],
+      "windows": [
+        {
+          "pageSize": 12,
+          "samples": 42,
+          "queryCounts": [
+            6
+          ],
+          "durationMs": {
+            "min": 87.35558400000446,
+            "median": 93.78995849998319,
+            "p95": 116.98258299997542,
+            "max": 128.48929100000532
+          },
+          "queryMs": {
+            "min": 81.93520800000988,
+            "median": 88.03887499996927,
+            "p95": 108.81133399996907,
+            "max": 122.98179299989715
+          },
+          "returnedRowJsonBytes": {
+            "min": 272274,
+            "median": 272339.5,
+            "p95": 272405,
+            "max": 272405
+          },
+          "publicResponseBytes": {
+            "min": 15322,
+            "median": 15420,
+            "p95": 15566,
+            "max": 15566
+          }
+        },
+        {
+          "pageSize": 48,
+          "samples": 42,
+          "queryCounts": [
+            6
+          ],
+          "durationMs": {
+            "min": 112.74254100001417,
+            "median": 123.41997899999842,
+            "p95": 142.70562500000233,
+            "max": 149.85779199999524
+          },
+          "queryMs": {
+            "min": 91.3148350000265,
+            "median": 100.62683499997365,
+            "p95": 122.04295799991814,
+            "max": 128.2856669999892
+          },
+          "returnedRowJsonBytes": {
+            "min": 1089114,
+            "median": 1089179.5,
+            "p95": 1089245,
+            "max": 1089245
+          },
+          "publicResponseBytes": {
+            "min": 60429,
+            "median": 60815,
+            "p95": 61393,
+            "max": 61393
+          }
+        }
+      ]
+    },
+    {
+      "name": "modern-120",
+      "status": "PASS",
+      "total": 145,
+      "samples": 84,
+      "proofVersions": [
+        3
+      ],
+      "runtime": {
+        "kind": "NATIVE_ISOLATED_TEST",
+        "configuredBy": "POSTGRES_TEST_BIN",
+        "serverVersion": "18.6"
+      },
+      "postgresVersion": "18.6 (Homebrew)",
+      "versionOnlyExecutionMs": [
+        5.385,
+        5.354,
+        5.311
+      ],
+      "discoveryExecutionMs": [
+        6.209,
+        5.667,
+        5.661
+      ],
+      "windows": [
+        {
+          "pageSize": 12,
+          "samples": 42,
+          "queryCounts": [
+            162
+          ],
+          "durationMs": {
+            "min": 381.027291999897,
+            "median": 419.0251665000105,
+            "p95": 445.95483299996704,
+            "max": 460.02891600015573
+          },
+          "queryMs": {
+            "min": 68.82407499756664,
+            "median": 75.69421499990858,
+            "p95": 88.06928899977356,
+            "max": 93.04362799879164
+          },
+          "returnedRowJsonBytes": {
+            "min": 6019508,
+            "median": 6214034.5,
+            "p95": 6408561,
+            "max": 6408561
+          },
+          "publicResponseBytes": {
+            "min": 17892,
+            "median": 17893,
+            "p95": 17965,
+            "max": 17965
+          }
+        },
+        {
+          "pageSize": 48,
+          "samples": 42,
+          "queryCounts": [
+            630
+          ],
+          "durationMs": {
+            "min": 1077.036458000075,
+            "median": 1332.307520500035,
+            "p95": 1552.2854579999112,
+            "max": 1595.9096669999417
+          },
+          "queryMs": {
+            "min": 235.58016299991868,
+            "median": 257.96647650154773,
+            "p95": 272.11934400047176,
+            "max": 283.5102059978526
+          },
+          "returnedRowJsonBytes": {
+            "min": 17073893,
+            "median": 20186565.5,
+            "p95": 23299238,
+            "max": 23299238
+          },
+          "publicResponseBytes": {
+            "min": 70703,
+            "median": 70704,
+            "p95": 70992,
+            "max": 70992
+          }
+        }
+      ]
+    }
+  ]
+}

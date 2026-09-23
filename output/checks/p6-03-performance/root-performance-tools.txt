@@ -1,0 +1,30 @@
+$ node --test ./scripts/performance-*.test.mjs ./scripts/render-rum-dashboard.test.mjs ./apps/api/scripts/performance-*.test.mjs ./apps/api/scripts/rum-*.test.mjs ./apps/api/scripts/storefront-test-rum-config.test.mjs ./packages/persistence-postgres/scripts/catalog-performance.test.mjs
+✔ current-content Lighthouse guard is additive and retains original metric configuration (0.598667ms)
+✔ missing or contradictory current content cannot pass the added audit (0.078709ms)
+✔ font, stylesheet, network and missing-body failures are never omitted (0.559542ms)
+✔ only same-origin scripts and the locale font hash allowlist pass (0.2355ms)
+✔ message probes use unique long locale strings and never report message bodies (0.448875ms)
+✔ RUM exchange rejects headers or body that could disclose private context (8.461666ms)
+✔ server evidence excludes non-RUM logs and rejects malformed RUM observations (0.775958ms)
+✔ a partial browser matrix cannot count as RUM acceptance (0.114625ms)
+✔ default fixture configuration does not enable RUM or change its environment (0.806542ms)
+✔ explicit local RUM is confined to the owned TEST runtime and uses full sampling (0.670833ms)
+✔ RUM fixture injection cannot target production, preview, or missing environment (1.051667ms)
+✔ query observation preserves calls and rejects overlapping measurement (1.322083ms)
+✔ version probe preserves the exact version expression and refuses unknown boundaries (0.190291ms)
+✔ failed queries remain counted with safe SQLSTATE and original error is available only to caller (0.417541ms)
+✔ summaries retain the slow sample and reject missing or failed observations (0.681875ms)
+✔ EXPLAIN isolates version subtree without counting parent cumulative times twice (0.198375ms)
+✔ formal plan retains 63 original mobile Lighthouse samples and 294 six-screen resource cells (2.388417ms)
+✔ diagnostic plan cannot satisfy a formal collection (0.632416ms)
+✔ missing, repeated, failed and mismatched viewport cells cannot pass coverage (4.012459ms)
+✔ dashboard explicitly marks empty windows and missing INP rather than passing (27.073125ms)
+✔ log reader filters ordinary logs, rejects malformed observations and bounds records (5.781792ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 288.909
