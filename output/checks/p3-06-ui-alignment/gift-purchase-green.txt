@@ -1,0 +1,9 @@
+$ vitest run --config ../../vitest.config.ts --root . src/storefront/gift-purchase.test.tsx src/storefront/gift-offer-selection.test.ts src/storefront/gift-page-scheduling.test.tsx src/storefront/gift-content.test.tsx src/storefront/gift-selection.test.ts
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/storefront
+
+
+ Test Files  5 passed (5)
+      Tests  85 passed (85)
+   Start at  16:59:21
+   Duration  2.40s (transform 1.52s, setup 0ms, import 2.53s, tests 1.83s, environment 0ms)

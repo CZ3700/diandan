@@ -1,0 +1,1327 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "generatedAt": "2026-09-23T10:19:39.018Z",
+  "scope": "P3-05 actual public protocol and real browser matrix",
+  "environment": "Production-compiled Next artifact under isolated TEST runtime",
+  "assertions": 21898,
+  "setupApiRequests": 1902,
+  "durationMs": 107423,
+  "visibleGiftCount": 25,
+  "artistCount": 3,
+  "policyCount": 4,
+  "actualPostgres": true,
+  "actualTlsS3": true,
+  "actualImageWorker": true,
+  "browserEvidence": true,
+  "physicalDeviceEvidence": false,
+  "productionReleaseEvidence": false,
+  "formalAssetApproval": false,
+  "syntheticMediaCompositions": [
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-mobile.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "PORTRAIT",
+      "sourceSha256": "007cae3cc384ab0fba38dcdc8ad4df2f1b2241bc1cff902688809cee7c2074ee",
+      "composedSha256": "09ff605ad73e33046e49523be2bf8c47060191929cc802fd6b92a7e21e79d083",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1600,
+        "height": 2000
+      },
+      "placement": {
+        "left": 239,
+        "top": 299,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "embeddedPixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-desktop.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_DESKTOP",
+      "sourceSha256": "4612276bf7b2d8df770e1ed36e2ee4210ac70935f0f214d4493cc61a0180c82a",
+      "composedSha256": "9fdc2ba59aaba75dbeb3ed67049a4d14a22005662755d736c426a2e8399af1e8",
+      "sourceSize": {
+        "width": 1672,
+        "height": 941
+      },
+      "canvasSize": {
+        "width": 2400,
+        "height": 1350
+      },
+      "placement": {
+        "left": 364,
+        "top": 204,
+        "width": 1672,
+        "height": 941
+      },
+      "resampled": false,
+      "sourcePixelSha256": "9d1aeaf7a6f8493f7dc6d7267f07351f1441dd6f8f90bc46ecb256bfc8f4d255",
+      "embeddedPixelSha256": "9d1aeaf7a6f8493f7dc6d7267f07351f1441dd6f8f90bc46ecb256bfc8f4d255",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-composites/fictional-performer-hero-mobile.png",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_MOBILE",
+      "sourceSha256": "007cae3cc384ab0fba38dcdc8ad4df2f1b2241bc1cff902688809cee7c2074ee",
+      "composedSha256": "4597c8d06473f1c0951eb4b972baf7673b963b6521f2347f461048270ea74f7d",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "embeddedPixelSha256": "d6cd1a9a3225289dfae6d06f1e1ac0cb427e1feafd1be43c081b2372a1fc0f4f",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-mobile.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "PORTRAIT",
+      "sourceSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "composedSha256": "04f0dcf56e23bfabb3dd59e78e6127f8361c25df5b2e35fc8f0eb118706e5b31",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1600,
+        "height": 2000
+      },
+      "placement": {
+        "left": 239,
+        "top": 299,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "embeddedPixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-desktop.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_DESKTOP",
+      "sourceSha256": "8f4a8277040f631829cff1d76beab63ab0f4ff0fc88df7aa328faffa2c5c47c1",
+      "composedSha256": "df9d91a0a6544841b041b3d06b6f498be9f64020dd809a6c2e223ae927d471eb",
+      "sourceSize": {
+        "width": 1641,
+        "height": 958
+      },
+      "canvasSize": {
+        "width": 2400,
+        "height": 1350
+      },
+      "placement": {
+        "left": 379,
+        "top": 196,
+        "width": 1641,
+        "height": 958
+      },
+      "resampled": false,
+      "sourcePixelSha256": "d1d5e81f51b31fde9b40a04251a1e12d183a92c96353aa8988468a78723770c2",
+      "embeddedPixelSha256": "d1d5e81f51b31fde9b40a04251a1e12d183a92c96353aa8988468a78723770c2",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/performer-daylight-mobile.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "HERO_MOBILE",
+      "sourceSha256": "49f217f59e15aa4ab5029d1c55320b8c1a6dfa1d7f5a6a18d398f8af5f0d4358",
+      "composedSha256": "1ae8cc2a6c52e13a1273608bfa853cf1f5623250bd65da6d8b9af9bfbe23393e",
+      "sourceSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "canvasSize": {
+        "width": 1122,
+        "height": 1402
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1122,
+        "height": 1402
+      },
+      "resampled": false,
+      "sourcePixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "embeddedPixelSha256": "93dfda3e7b849a9ad4415083e6be9b5c2c1928b9e6ef4ae0eb8f68893b7cfffd",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-rose-palace.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "6baca198ca3a623b026a641269a1c68847f4eb053b3276e692b7539dbf33ffca",
+      "composedSha256": "f850973bff6e01223d6a0fdee9379601ae218105155a6e6a929f4608bcaaa9e1",
+      "sourceSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "canvasSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1254,
+        "height": 1254
+      },
+      "resampled": false,
+      "sourcePixelSha256": "86db5b29868053223e8570f13d6a1bf3b0e181d972cb2c47941015b52690f859",
+      "embeddedPixelSha256": "86db5b29868053223e8570f13d6a1bf3b0e181d972cb2c47941015b52690f859",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-blue-orbit.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "7a2d7ea94b921544b8628422b44f98e9b9732362e9c8dfeabd281709c933a448",
+      "composedSha256": "4a7f82dadbae16a68647b4cba144566f50559bde5083a037e09c574edfe416cc",
+      "sourceSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "canvasSize": {
+        "width": 1254,
+        "height": 1254
+      },
+      "placement": {
+        "left": 0,
+        "top": 0,
+        "width": 1254,
+        "height": 1254
+      },
+      "resampled": false,
+      "sourcePixelSha256": "29b11eae98b49b46f791e0d3f6d876f49a53d6af98373e37963a4a78f4741ad0",
+      "embeddedPixelSha256": "29b11eae98b49b46f791e0d3f6d876f49a53d6af98373e37963a4a78f4741ad0",
+      "formalAssetApproval": false
+    },
+    {
+      "sourcePath": "ui-brand/gift-ruby-bouquet.webp",
+      "schemaVersion": 1,
+      "kind": "SYNTHETIC_TEST_MATTE",
+      "role": "GIFT_PRIMARY",
+      "sourceSha256": "d30f3ab4da55876de2fe6494d96a58edebe258c69173438db98baa27b3529345",
+      "composedSha256": "429113554ac5599bf5d1ec8aa6a91d087ff2218c400e353585b8d5cc45488159",
+      "sourceSize": {
+        "width": 1024,
+        "height": 1024
+      },
+      "canvasSize": {
+        "width": 1200,
+        "height": 1200
+      },
+      "placement": {
+        "left": 88,
+        "top": 88,
+        "width": 1024,
+        "height": 1024
+      },
+      "resampled": false,
+      "sourcePixelSha256": "75b3c9c96194e6b8ec8c8c279f9c95962df20ba226344c19cf0f48f214a4e444",
+      "embeddedPixelSha256": "75b3c9c96194e6b8ec8c8c279f9c95962df20ba226344c19cf0f48f214a4e444",
+      "formalAssetApproval": false
+    }
+  ],
+  "servedDerivatives": [
+    {
+      "sha256": "9479f2038260ee6063832a827766dbe22d2439cf80618dcf93228aa29c6cf4fa",
+      "byteSize": 275756,
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "sha256": "bc9868d554127c86e28b160feb525bec2602423904dbb2999bebf5b0d955f213",
+      "byteSize": 50250,
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "sha256": "01a375f386b778c13d34ef522157f86355b11c381f00c1d41261a06a5489f6ad",
+      "byteSize": 146138,
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "sha256": "2b69ad15323b4da2d7dc6b638765ed0e8bc39412ecc8efabde1167e9f3a3dae8",
+      "byteSize": 68282,
+      "width": 1600,
+      "height": 2000
+    },
+    {
+      "sha256": "e31df8a0856b8353402cf01840f87ac7f7d4c53526ad6ca922d89173573a34f1",
+      "byteSize": 73066,
+      "width": 1600,
+      "height": 2000
+    }
+  ],
+  "protocol": {
+    "schemaVersion": 1,
+    "cases": [
+      {
+        "name": "published-content-prices-policies-en",
+        "pass": true
+      },
+      {
+        "name": "published-content-prices-policies-zh-CN",
+        "pass": true
+      },
+      {
+        "name": "published-content-prices-policies-th",
+        "pass": true
+      },
+      {
+        "name": "published-content-prices-policies-vi",
+        "pass": true
+      },
+      {
+        "name": "published-content-prices-policies-ja",
+        "pass": true
+      },
+      {
+        "name": "published-content-prices-policies-es",
+        "pass": true
+      },
+      {
+        "name": "published-content-prices-policies-pt",
+        "pass": true
+      },
+      {
+        "name": "actual-scope-pagination-sorts-prices-stock-eligibility-and-public-media",
+        "pass": true,
+        "downloadedPublishedMedia": 3
+      }
+    ]
+  },
+  "scopedProtocol": {
+    "schemaVersion": 1,
+    "cases": [
+      {
+        "name": "actual-context-two-markets-four-policies",
+        "pass": true
+      },
+      {
+        "name": "scoped-offers-recipients-prices-stock-en",
+        "pass": true
+      },
+      {
+        "name": "scoped-offers-recipients-prices-stock-zh-CN",
+        "pass": true
+      },
+      {
+        "name": "scoped-offers-recipients-prices-stock-th",
+        "pass": true
+      },
+      {
+        "name": "scoped-offers-recipients-prices-stock-vi",
+        "pass": true
+      },
+      {
+        "name": "scoped-offers-recipients-prices-stock-ja",
+        "pass": true
+      },
+      {
+        "name": "scoped-offers-recipients-prices-stock-es",
+        "pass": true
+      },
+      {
+        "name": "scoped-offers-recipients-prices-stock-pt",
+        "pass": true
+      },
+      {
+        "name": "missing-recipient-market-invalid-query-archived-draft",
+        "pass": true
+      }
+    ]
+  },
+  "browser": {
+    "schemaVersion": 1,
+    "status": "PASS",
+    "browserVersion": "153.0.8010.53",
+    "attempt": 1,
+    "cases": [
+      {
+        "name": "seven-locales-two-viewports-directory-detail-policy",
+        "pass": true
+      },
+      {
+        "name": "pagination-sort-precise-money-back-empty-range",
+        "pass": true
+      },
+      {
+        "name": "mobile-drawer-keyboard-ime-localized-price",
+        "pass": true
+      },
+      {
+        "name": "invalid-range-and-jpy-integer-price-input",
+        "pass": true
+      },
+      {
+        "name": "cross-gift-navigation-clears-foreign-variant",
+        "pass": true
+      },
+      {
+        "name": "recipient-variant-quantity-availability-market",
+        "pass": true
+      },
+      {
+        "name": "seven-language-context-preservation",
+        "pass": true
+      },
+      {
+        "name": "transport-image-failures-404-reflow-motion",
+        "pass": true
+      }
+    ],
+    "screenshots": [
+      "en-390-directory.png",
+      "en-390-detail.png",
+      "en-390-policy.png",
+      "en-1440-directory.png",
+      "en-1440-detail.png",
+      "en-1440-policy.png",
+      "zh-CN-390-directory.png",
+      "zh-CN-390-detail.png",
+      "zh-CN-390-policy.png",
+      "zh-CN-1440-directory.png",
+      "zh-CN-1440-detail.png",
+      "zh-CN-1440-policy.png",
+      "th-390-directory.png",
+      "th-390-detail.png",
+      "th-390-policy.png",
+      "th-1440-directory.png",
+      "th-1440-detail.png",
+      "th-1440-policy.png",
+      "vi-390-directory.png",
+      "vi-390-detail.png",
+      "vi-390-policy.png",
+      "vi-1440-directory.png",
+      "vi-1440-detail.png",
+      "vi-1440-policy.png",
+      "ja-390-directory.png",
+      "ja-390-detail.png",
+      "ja-390-policy.png",
+      "ja-1440-directory.png",
+      "ja-1440-detail.png",
+      "ja-1440-policy.png",
+      "es-390-directory.png",
+      "es-390-detail.png",
+      "es-390-policy.png",
+      "es-1440-directory.png",
+      "es-1440-detail.png",
+      "es-1440-policy.png",
+      "pt-390-directory.png",
+      "pt-390-detail.png",
+      "pt-390-policy.png",
+      "pt-1440-directory.png",
+      "pt-1440-detail.png",
+      "pt-1440-policy.png",
+      "en-page-out-of-range.png",
+      "en-filter-empty.png",
+      "pt-mobile-filter-applied.png",
+      "en-tracked-selected.png",
+      "en-ineligible-recipient.png",
+      "en-gift-state-2.png",
+      "en-gift-state-3.png",
+      "en-gift-state-4.png",
+      "en-gift-state-5.png",
+      "en-gift-state-25.png",
+      "en-gift-state-8.png",
+      "en-directory-transport-error.png",
+      "en-gift-image-error.png"
+    ],
+    "axe": [
+      {
+        "name": "en-390-directory",
+        "engineVersion": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "en-390-detail",
+        "engineVersion": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "en-390-policy",
+        "engineVersion": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "en-1440-directory",
+        "engineVersion": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "en-1440-detail",
+        "engineVersion": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "en-1440-policy",
+        "engineVersion": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "zh-CN-390-directory",
+        "engineVersion": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "th-390-directory",
+        "engineVersion": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "vi-390-directory",
+        "engineVersion": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "pt-390-directory",
+        "engineVersion": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      }
+    ],
+    "reflow": [
+      {
+        "name": "en-390-directory",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "en-390-detail",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "en-390-policy",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "en-1440-directory",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "en-1440-detail",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "en-1440-policy",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "zh-CN-390-directory",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "zh-CN-390-detail",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "zh-CN-390-policy",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "zh-CN-1440-directory",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "zh-CN-1440-detail",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "zh-CN-1440-policy",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "th-390-directory",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "th-390-detail",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "th-390-policy",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "th-1440-directory",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "th-1440-detail",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "th-1440-policy",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "vi-390-directory",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "vi-390-detail",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "vi-390-policy",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "vi-1440-directory",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "vi-1440-detail",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "vi-1440-policy",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "ja-390-directory",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "ja-390-detail",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "ja-390-policy",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "ja-1440-directory",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "ja-1440-detail",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "ja-1440-policy",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "es-390-directory",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "es-390-detail",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "es-390-policy",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "es-1440-directory",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "es-1440-detail",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "es-1440-policy",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "pt-390-directory",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "pt-390-detail",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "pt-390-policy",
+        "width": 390,
+        "scrollWidth": 390,
+        "bodyWidth": 390
+      },
+      {
+        "name": "pt-1440-directory",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "pt-1440-detail",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "pt-1440-policy",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440
+      },
+      {
+        "name": "narrow-320",
+        "width": 320,
+        "scrollWidth": 320,
+        "bodyWidth": 320
+      },
+      {
+        "name": "narrow-640",
+        "width": 640,
+        "scrollWidth": 640,
+        "bodyWidth": 640
+      }
+    ],
+    "metrics": [
+      {
+        "name": "smoke-directory",
+        "lcp": 600,
+        "cls": 0,
+        "imageTransferBytes": 15976
+      },
+      {
+        "name": "smoke-detail",
+        "lcp": 356,
+        "cls": 0,
+        "imageTransferBytes": 14623
+      },
+      {
+        "name": "en-390-directory",
+        "lcp": 512,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "en-390-detail",
+        "lcp": 264,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "en-1440-directory",
+        "lcp": 436,
+        "cls": 0,
+        "imageTransferBytes": 32955
+      },
+      {
+        "name": "en-1440-detail",
+        "lcp": 404,
+        "cls": 0,
+        "imageTransferBytes": 48184
+      },
+      {
+        "name": "zh-CN-390-directory",
+        "lcp": 476,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "zh-CN-390-detail",
+        "lcp": 276,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "zh-CN-1440-directory",
+        "lcp": 484,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "zh-CN-1440-detail",
+        "lcp": 256,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "th-390-directory",
+        "lcp": 492,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "th-390-detail",
+        "lcp": 268,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "th-1440-directory",
+        "lcp": 472,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "th-1440-detail",
+        "lcp": 256,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "vi-390-directory",
+        "lcp": 492,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "vi-390-detail",
+        "lcp": 248,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "vi-1440-directory",
+        "lcp": 500,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "vi-1440-detail",
+        "lcp": 292,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "ja-390-directory",
+        "lcp": 440,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "ja-390-detail",
+        "lcp": 268,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "ja-1440-directory",
+        "lcp": 484,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "ja-1440-detail",
+        "lcp": 288,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "es-390-directory",
+        "lcp": 500,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "es-390-detail",
+        "lcp": 276,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "es-1440-directory",
+        "lcp": 488,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "es-1440-detail",
+        "lcp": 232,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "pt-390-directory",
+        "lcp": 532,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "pt-390-detail",
+        "lcp": 284,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "pt-1440-directory",
+        "lcp": 452,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "pt-1440-detail",
+        "lcp": 268,
+        "cls": 0,
+        "imageTransferBytes": 0
+      },
+      {
+        "name": "normal-motion-detail",
+        "lcp": 300,
+        "cls": 0,
+        "imageTransferBytes": 0
+      }
+    ],
+    "pageErrors": [],
+    "filterFocus": [
+      {
+        "tab": 1,
+        "inside": true,
+        "guard": false,
+        "guardType": null
+      },
+      {
+        "tab": 2,
+        "inside": true,
+        "guard": false,
+        "guardType": null
+      },
+      {
+        "tab": 3,
+        "inside": true,
+        "guard": false,
+        "guardType": null
+      },
+      {
+        "tab": 4,
+        "inside": true,
+        "guard": false,
+        "guardType": null
+      },
+      {
+        "tab": 5,
+        "inside": true,
+        "guard": false,
+        "guardType": null
+      },
+      {
+        "tab": 6,
+        "inside": true,
+        "guard": false,
+        "guardType": null
+      },
+      {
+        "tab": 7,
+        "inside": true,
+        "guard": false,
+        "guardType": null
+      },
+      {
+        "tab": 8,
+        "inside": true,
+        "guard": false,
+        "guardType": null
+      },
+      {
+        "tab": 9,
+        "inside": false,
+        "guard": true,
+        "guardType": "inside"
+      },
+      {
+        "tab": 10,
+        "inside": true,
+        "guard": false,
+        "guardType": null
+      },
+      {
+        "tab": 11,
+        "inside": true,
+        "guard": false,
+        "guardType": null
+      },
+      {
+        "tab": 12,
+        "inside": true,
+        "guard": false,
+        "guardType": null
+      }
+    ],
+    "responsiveImages": {
+      "candidateCount": 33,
+      "decoded": [
+        {
+          "width": 256,
+          "height": 256,
+          "format": "heif",
+          "byteSize": 6887,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "format": "heif",
+          "byteSize": 2764,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "format": "heif",
+          "byteSize": 5425,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 640,
+          "height": 640,
+          "format": "heif",
+          "byteSize": 36018,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 384,
+          "height": 384,
+          "format": "heif",
+          "byteSize": 14323,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 640,
+          "height": 640,
+          "format": "heif",
+          "byteSize": 9990,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 640,
+          "height": 640,
+          "format": "heif",
+          "byteSize": 22365,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 828,
+          "height": 828,
+          "format": "heif",
+          "byteSize": 56383,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 750,
+          "height": 750,
+          "format": "heif",
+          "byteSize": 47884,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 32,
+          "height": 32,
+          "format": "heif",
+          "byteSize": 416,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "format": "heif",
+          "byteSize": 743,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "format": "heif",
+          "byteSize": 1367,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "format": "heif",
+          "byteSize": 2059,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 1080,
+          "height": 1080,
+          "format": "heif",
+          "byteSize": 86728,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 1200,
+          "height": 1200,
+          "format": "heif",
+          "byteSize": 115003,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 32,
+          "height": 32,
+          "format": "heif",
+          "byteSize": 504,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "format": "heif",
+          "byteSize": 545,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "format": "heif",
+          "byteSize": 813,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "format": "heif",
+          "byteSize": 942,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 384,
+          "height": 384,
+          "format": "heif",
+          "byteSize": 4933,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 750,
+          "height": 750,
+          "format": "heif",
+          "byteSize": 12748,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 828,
+          "height": 828,
+          "format": "heif",
+          "byteSize": 14615,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 1080,
+          "height": 1080,
+          "format": "heif",
+          "byteSize": 21154,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 1200,
+          "height": 1200,
+          "format": "heif",
+          "byteSize": 25572,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 32,
+          "height": 32,
+          "format": "heif",
+          "byteSize": 479,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "format": "heif",
+          "byteSize": 727,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "format": "heif",
+          "byteSize": 1313,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "format": "heif",
+          "byteSize": 1872,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 384,
+          "height": 384,
+          "format": "heif",
+          "byteSize": 9908,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 750,
+          "height": 750,
+          "format": "heif",
+          "byteSize": 29302,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 828,
+          "height": 828,
+          "format": "heif",
+          "byteSize": 33959,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 1080,
+          "height": 1080,
+          "format": "heif",
+          "byteSize": 49602,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        },
+        {
+          "width": 1200,
+          "height": 1200,
+          "format": "heif",
+          "byteSize": 63861,
+          "sourceWidth": 1200,
+          "sourceHeight": 1200
+        }
+      ]
+    },
+    "metricScope": "Local unthrottled observations; imageTransferBytes is sampled after eagerly decoding all DOM images, not a first-viewport budget. Formal performance budget remains P3-06."
+  },
+  "browserOutput": "/Users/mario/Desktop/下单/output/checks/p3-06-ui-alignment/isolated-gift-storefront/run-2026-09-23T10-19-39-018Z",
+  "temporaryPreview": null
+}

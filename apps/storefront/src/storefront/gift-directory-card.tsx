@@ -37,19 +37,13 @@ export function GiftDirectoryCard({
           <PublishedImage
             media={gift.primaryMedia}
             fallbackLabel={copy.mediaFallback}
-            sizes="(max-width: 48rem) 45vw, (max-width: 64rem) 29vw, 22vw"
+            sizes="(max-width: 48rem) 45vw, (max-width: 90rem) 30vw, 432px"
           />
         </div>
         <div className="gift-directory-card__body">
           <Heading lang={gift.localeContext.resolvedLocale}>
             {gift.title}
           </Heading>
-          <p
-            className="gift-directory-card__description"
-            lang={gift.localeContext.resolvedLocale}
-          >
-            {gift.shortDescription}
-          </p>
           {offer.priceMinor === null ? (
             <Status>{copy.giftNotAvailable}</Status>
           ) : (

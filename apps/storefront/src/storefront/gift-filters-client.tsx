@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type FormEvent,
+  type KeyboardEvent,
+} from "react";
 import { Button, Field } from "@fan-support/ui";
 import { LazyDrawer } from "./lazy-drawer";
 import type { GiftDiscoveryQuery } from "@fan-support/contracts";
@@ -19,6 +26,8 @@ export function GiftFiltersClient({
   resetHref,
   recoveryHref,
   hint,
+  sortOptions,
+  appliedFilters,
 }: GiftFilterClientProps) {
   const id = useId();
   const [open, setOpen] = useState(false);
@@ -31,6 +40,14 @@ export function GiftFiltersClient({
   const pending = useRef(false);
   const [applying, setApplying] = useState(false);
   const [failure, setFailure] = useState(false);
+  const disclosure = useRef<HTMLDetailsElement | null>(null);
+  const toolbarSort = useRef<HTMLSelectElement | null>(null);
+  const [sortAction = recoveryHref, sortQuery = ""] = (
+    sortOptions[0]?.href ?? recoveryHref
+  ).split("?");
+  const sortContext = [...new URLSearchParams(sortQuery)].filter(
+    ([name]) => name !== "sort",
+  );
   const cancelApply = () => {
     operation.current += 1;
     pending.current = false;
@@ -40,6 +57,30 @@ export function GiftFiltersClient({
   const updateDraft = (next: GiftFilterDraft) => {
     cancelApply();
     setDraft(next);
+  };
+  const resetDraft = () => {
+    cancelApply();
+    setDraft(initialDraft);
+    setErrors({});
+    composing.current = false;
+  };
+  const compositionHandlers = {
+    onCompositionStart: () => {
+      cancelApply();
+      composing.current = true;
+    },
+    onCompositionEnd: () => {
+      composing.current = false;
+    },
+    onKeyDown: (event: KeyboardEvent<HTMLFormElement>) => {
+      if (
+        event.key === "Enter" &&
+        (composing.current ||
+          event.nativeEvent.isComposing ||
+          event.nativeEvent.keyCode === 229)
+      )
+        event.preventDefault();
+    },
   };
   useEffect(
     () => () => {
@@ -64,6 +105,7 @@ export function GiftFiltersClient({
       frame = window.requestAnimationFrame(() => {
         frame = undefined;
         setDraft(initialDraft);
+        if (toolbarSort.current) toolbarSort.current.value = query.sort;
         setErrors({});
         setOpen(false);
         composing.current = false;
@@ -79,7 +121,7 @@ export function GiftFiltersClient({
       window.removeEventListener("pageshow", pageShow);
       if (frame !== undefined) window.cancelAnimationFrame(frame);
     };
-  }, [initialDraft]);
+  }, [initialDraft, query.sort]);
   async function apply(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (composing.current || pending.current) return;
@@ -112,6 +154,8 @@ export function GiftFiltersClient({
             : {}),
         };
         setErrors(nextErrors);
+        if (disclosure.current && form.dataset["giftFilters"] === "desktop")
+          disclosure.current.open = true;
         const input = form.elements.namedItem(
           nextErrors.minimum ? "priceMinimum" : "priceMaximum",
         );
@@ -139,42 +183,29 @@ export function GiftFiltersClient({
         onSubmit={(event) => {
           void apply(event);
         }}
-        onCompositionStart={() => {
-          cancelApply();
-          composing.current = true;
-        }}
-        onCompositionEnd={() => {
-          composing.current = false;
-        }}
-        onKeyDown={(event) => {
-          if (
-            event.key === "Enter" &&
-            (composing.current ||
-              event.nativeEvent.isComposing ||
-              event.nativeEvent.keyCode === 229)
-          )
-            event.preventDefault();
-        }}
+        {...compositionHandlers}
       >
         <div className="gift-filter-selects">
-          <label className="gift-filter-select" htmlFor={`${prefix}-sort`}>
-            <span>{copy.giftSortLabel}</span>
-            <select
-              id={`${prefix}-sort`}
-              data-gift-sort
-              value={draft.sort}
-              onChange={(event) =>
-                updateDraft({
-                  ...draft,
-                  sort: event.target.value as GiftDiscoveryQuery["sort"],
-                })
-              }
-            >
-              <option value="RECOMMENDED">{copy.giftSortRecommended}</option>
-              <option value="PRICE_ASC">{copy.giftSortPriceAsc}</option>
-              <option value="PRICE_DESC">{copy.giftSortPriceDesc}</option>
-            </select>
-          </label>
+          {surface === "mobile" && (
+            <label className="gift-filter-select" htmlFor={`${prefix}-sort`}>
+              <span>{copy.giftSortLabel}</span>
+              <select
+                id={`${prefix}-sort`}
+                data-gift-sort
+                value={draft.sort}
+                onChange={(event) =>
+                  updateDraft({
+                    ...draft,
+                    sort: event.target.value as GiftDiscoveryQuery["sort"],
+                  })
+                }
+              >
+                <option value="RECOMMENDED">{copy.giftSortRecommended}</option>
+                <option value="PRICE_ASC">{copy.giftSortPriceAsc}</option>
+                <option value="PRICE_DESC">{copy.giftSortPriceDesc}</option>
+              </select>
+            </label>
+          )}
           <label className="gift-filter-select" htmlFor={`${prefix}-category`}>
             <span>{copy.giftCategoryLabel}</span>
             <select
@@ -294,28 +325,140 @@ export function GiftFiltersClient({
 
   return (
     <div className="gift-filters">
-      <div className="gift-filters__desktop">{form("desktop")}</div>
-      <div className="gift-filters__mobile">
-        <LazyDrawer
-          loadingLabel={copy.loading}
-          errorLabel={copy.contentErrorBody}
-          retryLabel={copy.artistRetry}
-          title={copy.giftFilters}
-          description={copy.giftFiltersDescription}
-          triggerLabel={copy.giftFilters}
-          closeLabel={copy.close}
-          open={open}
-          onOpenChange={(nextOpen) => {
-            setOpen(nextOpen);
+      <div className="gift-filter-toolbar">
+        <form
+          className="gift-filter-sort-form"
+          data-gift-toolbar-form
+          action={sortAction}
+          method="get"
+          {...compositionHandlers}
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (composing.current) return;
+            const option = sortOptions.find(
+              (item) => item.value === toolbarSort.current?.value,
+            );
+            if (!option) return;
             cancelApply();
-            setDraft(initialDraft);
-            setErrors({});
-            composing.current = false;
+            window.location.assign(option.href);
           }}
         >
-          {form("mobile")}
-        </LazyDrawer>
+          {sortContext.map(([name, value], index) => (
+            <input
+              key={`${name}:${index}`}
+              type="hidden"
+              name={name}
+              value={value}
+            />
+          ))}
+          <label className="gift-filter-sort" htmlFor={`${id}-toolbar-sort`}>
+            <span>{copy.giftSortLabel}</span>
+            <select
+              id={`${id}-toolbar-sort`}
+              ref={toolbarSort}
+              name="sort"
+              data-gift-toolbar-sort
+              defaultValue={query.sort}
+              onChange={cancelApply}
+            >
+              {sortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <Button type="submit" variant="secondary" data-gift-toolbar-apply>
+            {copy.giftApplyFilters}
+          </Button>
+        </form>
+        <details
+          ref={disclosure}
+          className="gift-filters__desktop gift-filter-disclosure"
+          data-gift-filter-disclosure
+          onToggle={(event) => {
+            if (!event.currentTarget.open) resetDraft();
+          }}
+          onKeyDown={(event) => {
+            if (event.key !== "Escape" || !event.currentTarget.open) return;
+            event.preventDefault();
+            event.stopPropagation();
+            resetDraft();
+            event.currentTarget.open = false;
+            event.currentTarget.querySelector("summary")?.focus();
+          }}
+        >
+          <summary>
+            {copy.giftFilters}
+            <span data-gift-filter-count={appliedFilters.length}>
+              ({new Intl.NumberFormat(locale).format(appliedFilters.length)})
+            </span>
+            <span className="gift-filter-disclosure-icon" aria-hidden="true">
+              +
+            </span>
+          </summary>
+          {form("desktop")}
+        </details>
+        <div className="gift-filters__mobile">
+          <LazyDrawer
+            loadingLabel={copy.loading}
+            errorLabel={copy.contentErrorBody}
+            retryLabel={copy.artistRetry}
+            title={copy.giftFilters}
+            description={copy.giftFiltersDescription}
+            triggerLabel={
+              <>
+                {copy.giftFilters}
+                <span data-gift-filter-count={appliedFilters.length}>
+                  ({new Intl.NumberFormat(locale).format(appliedFilters.length)}
+                  )
+                </span>
+              </>
+            }
+            closeLabel={copy.close}
+            open={open}
+            onOpenChange={(nextOpen) => {
+              setOpen(nextOpen);
+              resetDraft();
+            }}
+          >
+            {form("mobile")}
+          </LazyDrawer>
+        </div>
       </div>
+      {(appliedFilters.length > 0 || query.sort !== "RECOMMENDED") && (
+        <div className="gift-filter-summary" data-gift-applied-filters>
+          {appliedFilters.length > 0 && (
+            <ul aria-label={copy.giftFilters}>
+              {appliedFilters.map((label) => (
+                <li key={label}>{label}</li>
+              ))}
+            </ul>
+          )}
+          <a
+            className="storefront-text-link"
+            href={resetHref}
+            onClick={cancelApply}
+            data-gift-reset
+          >
+            {copy.giftResetFilters}
+          </a>
+        </div>
+      )}
+      <noscript>
+        <nav className="gift-filter-sort-links" aria-label={copy.giftSortLabel}>
+          {sortOptions.map((option) => (
+            <a
+              key={option.value}
+              href={option.href}
+              data-gift-sort-link={option.value}
+              aria-current={query.sort === option.value ? "true" : undefined}
+            >
+              {option.label}
+            </a>
+          ))}
+        </nav>
+      </noscript>
     </div>
   );
 }

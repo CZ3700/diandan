@@ -1,6 +1,6 @@
 import { PassThrough } from "node:stream";
 import { isValidElement, type ReactElement } from "react";
-import { renderToPipeableStream } from "react-dom/server";
+import { renderToPipeableStream, renderToStaticMarkup } from "react-dom/server";
 import { beforeAll, beforeEach, expect, test, vi } from "vitest";
 import {
   SUPPORTED_LOCALES,
@@ -14,6 +14,8 @@ import {
   type PublishedContentResponse,
 } from "@fan-support/contracts";
 import { directoryFixturePage } from "./directory-fixture";
+import { HomeContent } from "./home-content";
+import { loadStorefrontCopy } from "@fan-support/i18n/storefront";
 
 const reads = vi.hoisted(() => ({
   catalog: vi.fn(),
@@ -134,6 +136,38 @@ function publishedHome(locale: (typeof SUPPORTED_LOCALES)[number]) {
     ],
   });
 }
+
+test("homepage offers one artist browsing path and retains featured links when the directory is absent", async () => {
+  const home = publishedHome("en");
+  if (home.outcome !== "SUCCESS") throw new Error("Missing test homepage");
+  const hero = home.slots[0];
+  if (hero?.status !== "AVAILABLE" || hero.kind !== "HERO_IDOL")
+    throw new Error("Missing test artist");
+  home.slots.push({ ...hero, kind: "FEATURED_IDOL", slotKey: "featured" });
+  const copy = await loadStorefrontCopy("en");
+  const href = `/en/idols/${hero.content.content.view.handle}?market=TEST_MARKET&currency=USD`;
+  const render = (directory?: ReactElement) =>
+    renderToStaticMarkup(
+      <HomeContent
+        data={home}
+        locale="en"
+        copy={copy}
+        contextQuery="market=TEST_MARKET&currency=USD"
+        directory={directory}
+      />,
+    )
+      .split('id="artists"')[1]
+      ?.split('id="gifts"')[0] ?? "";
+  const browsable = render(
+    <nav aria-label="Artist directory">
+      <a href={href}>{hero.content.content.view.displayName}</a>
+    </nav>,
+  );
+  const fallback = render();
+  const encodedHref = href.replaceAll("&", "&amp;");
+  expect(browsable.split(`href="${encodedHref}"`)).toHaveLength(2);
+  expect(fallback).toContain(`href="${encodedHref}"`);
+});
 
 function publishedArtist(locale: (typeof SUPPORTED_LOCALES)[number]) {
   const home = publishedHome(locale);

@@ -1,0 +1,43 @@
+{
+  "status": "FAIL",
+  "checks": 19,
+  "cases": [
+    {
+      "id": "en-home-1440",
+      "metrics": {
+        "hero": 767
+      }
+    },
+    {
+      "id": "en-gifts-1440",
+      "metrics": {
+        "firstProductY": 486.171875
+      }
+    },
+    {
+      "id": "en-detail-1440",
+      "metrics": {
+        "priceY": 353.53125
+      }
+    }
+  ],
+  "axe": [
+    {
+      "id": "en-home-1440",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "en-gifts-1440",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "en-detail-1440",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "pageErrors": [],
+  "failure": "expect(locator).toBeVisible() failed\n\nLocator:  locator('[data-gift-filters=\"desktop\"]')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n  - Expect \"to.be.visible\" with timeout 5000ms\n  - waiting for locator('[data-gift-filters=\"desktop\"]')\n    14 × locator resolved to <form data-gift-filters=\"desktop\" class=\"gift-filter-form gift-filter-form--desktop\">…</form>\n       - unexpected value \"hidden\"\n"
+}

@@ -6,6 +6,7 @@ import { chromium } from "@playwright/test";
 import {
   SUPPORTED_LOCALES,
   LOCALE_NATIVE_NAMES,
+  CART_RUNTIME_MAX_QUANTITY,
   giftDirectoryResponseSchema,
 } from "@fan-support/contracts";
 import { createStorefrontImageChecks } from "./storefront-image-checks.mjs";
@@ -217,6 +218,14 @@ export async function verifyGiftStorefrontBrowser({
     );
     return expected;
   }
+  async function openDesktopFilters() {
+    const disclosure = page.locator(".gift-filter-disclosure");
+    if ((await disclosure.getAttribute("open")) === null)
+      await disclosure.locator("summary").click();
+    await page.locator('[data-gift-filters="desktop"]').waitFor({
+      state: "visible",
+    });
+  }
   async function navigateBy(locator) {
     await Promise.all([
       page.waitForNavigation({ waitUntil: "networkidle" }),
@@ -254,8 +263,10 @@ export async function verifyGiftStorefrontBrowser({
       "detail exposes all three actually published variants",
     );
     check(
-      await page.locator("[data-checkout-unavailable]").isDisabled(),
-      "P3 browsing does not fabricate checkout availability",
+      (await page.locator("form[data-cart-add]").count()) === 0 &&
+        (await page.locator("[data-cart-add-state]").count()) === 0 &&
+        (await page.getByRole("spinbutton").count()) === 0,
+      "gift browsing without a valid recipient exposes no add form, submit action or quantity",
     );
     check(
       (await page.locator(".gift-description-blocks > *").count()) === 5 &&
@@ -350,13 +361,31 @@ export async function verifyGiftStorefrontBrowser({
       "native Back restores the previous SSR page",
     );
     const filters = page.locator('[data-gift-filters="desktop"]');
-    await filters.locator("[data-gift-sort]").selectOption("PRICE_DESC");
+    const toolbarSort = page.locator("[data-gift-toolbar-sort]");
+    const beforeSort = page.url();
+    await toolbarSort.selectOption("PRICE_DESC");
+    check(
+      page.url() === beforeSort,
+      "changing the desktop sort selection does not navigate before explicit submit",
+    );
+    await navigateBy(page.locator("[data-gift-toolbar-apply]"));
+    const sorted = new globalThis.URL(page.url());
+    check(
+      sorted.searchParams.get("sort") === "PRICE_DESC" &&
+        sorted.searchParams.get("page") === "1" &&
+        sorted.searchParams.get("market") === scope.market &&
+        sorted.searchParams.get("currency") === scope.currency,
+      "explicit desktop sort submit resets page and preserves the actual market and currency",
+    );
+    await cardsMatchUrl();
+    await openDesktopFilters();
     await filters.locator("[data-gift-price-min]").fill("10.00");
     await filters.locator("[data-gift-price-max]").fill("20.00");
     await navigateBy(filters.locator("[data-gift-apply]"));
     const applied = new globalThis.URL(page.url());
     check(
       applied.searchParams.get("page") === "1" &&
+        applied.searchParams.get("sort") === "PRICE_DESC" &&
         applied.searchParams.get("priceMinMinor") === "1000" &&
         applied.searchParams.get("priceMaxMinor") === "2000",
       "filter apply resets page and transports exact integer minor amounts",
@@ -365,11 +394,20 @@ export async function verifyGiftStorefrontBrowser({
     await page.goBack({ waitUntil: "networkidle" });
     await cardsMatchUrl();
     check(
-      (await filters.locator("[data-gift-sort]").inputValue()) ===
-        "PRICE_ASC" &&
-        (await filters.locator("[data-gift-price-min]").inputValue()) === "",
-      "native Back restores the URL's applied filter controls",
+      (await toolbarSort.inputValue()) === "PRICE_DESC" &&
+        (await filters.locator("[data-gift-price-min]").inputValue()) === "" &&
+        new globalThis.URL(page.url()).searchParams.get("page") === "1",
+      "native Back restores the directly sorted page before amount filters",
     );
+    await page.goBack({ waitUntil: "networkidle" });
+    await cardsMatchUrl();
+    check(
+      (await toolbarSort.inputValue()) === "PRICE_ASC" &&
+        (await filters.locator("[data-gift-price-min]").inputValue()) === "" &&
+        new globalThis.URL(page.url()).searchParams.get("page") === "2",
+      "native Back restores the URL's original page and applied filter controls",
+    );
+    await openDesktopFilters();
     const beforeInvalidRange = page.url();
     await filters.locator("[data-gift-price-min]").fill("30.00");
     await filters.locator("[data-gift-price-max]").fill("20.00");
@@ -490,6 +528,7 @@ export async function verifyGiftStorefrontBrowser({
     await goto(
       `/ja/gifts?${new globalThis.URLSearchParams(fixtures.markets[1])}`,
     );
+    await openDesktopFilters();
     const beforeFraction = page.url();
     await filters.locator("[data-gift-price-min]").fill("10.5");
     await filters.locator("[data-gift-apply]").click();
@@ -544,6 +583,15 @@ export async function verifyGiftStorefrontBrowser({
       page.locator(`[data-gift-variant="${fixtures.gifts[0].variants[1].id}"]`),
     );
     const quantity = page.getByRole("spinbutton");
+    const selectedAdd = page.locator("form[data-cart-add]");
+    check(
+      (await selectedAdd.count()) === 1 &&
+        (await selectedAdd
+          .locator('[data-cart-add-state][type="submit"]')
+          .count()) === 1 &&
+        (await selectedAdd.locator("[data-cart-add-state]").isEnabled()),
+      "choosing a valid recipient and available variant exposes the real enabled add form",
+    );
     check(
       (await quantity.getAttribute("aria-valuemax")) === "5",
       "TRACKED quantity bound equals actual available stock",
@@ -593,8 +641,10 @@ export async function verifyGiftStorefrontBrowser({
       (await page
         .locator("[data-gift-offer]")
         .getAttribute("data-availability")) === "UNAVAILABLE" &&
-        (await page.getByRole("spinbutton").count()) === 0,
-      "known but ineligible artist prevents this tracked variant",
+        (await page.getByRole("spinbutton").count()) === 0 &&
+        (await page.locator("form[data-cart-add]").count()) === 0 &&
+        (await page.locator("[data-cart-add-state]").count()) === 0,
+      "known but ineligible artist prevents this tracked variant and exposes no add submission",
     );
     await screenshot("en-ineligible-recipient");
     for (const [index, availability, policy, extra] of [
@@ -617,10 +667,25 @@ export async function verifyGiftStorefrontBrowser({
           (await offer.getAttribute("data-inventory-policy")) === policy,
         "detail preserves actual stock, procurement, preorder and paused semantics",
       );
-      check(
-        await page.locator("[data-checkout-unavailable]").isDisabled(),
-        "all stock modes keep checkout unavailable in this stage",
-      );
+      const addForm = offer.locator("form[data-cart-add]");
+      if (availability === "UNAVAILABLE") {
+        check(
+          (await addForm.count()) === 0 &&
+            (await page.locator("[data-cart-add-state]").count()) === 0 &&
+            (await page.getByRole("spinbutton").count()) === 0,
+          "unavailable stock, price or recipient exposes no add form, submit action or quantity",
+        );
+      } else {
+        check(
+          (await addForm.count()) === 1 &&
+            (await addForm
+              .locator('[data-cart-add-state][type="submit"]')
+              .count()) === 1 &&
+            (await addForm.locator("[data-cart-add-state]").isEnabled()) &&
+            (await addForm.getByRole("spinbutton").count()) === 1,
+          "available or preorder offers for a valid recipient expose the real enabled add form",
+        );
+      }
       if (index === 1)
         check(
           (await page.getByRole("spinbutton").getAttribute("aria-valuemax")) ===
@@ -630,9 +695,9 @@ export async function verifyGiftStorefrontBrowser({
       if (index === 4)
         check(
           (await page.getByRole("spinbutton").getAttribute("aria-valuemax")) ===
-            String(Number.MAX_SAFE_INTEGER) &&
+            String(CART_RUNTIME_MAX_QUANTITY) &&
             (await page.locator("[data-stock-remaining]").count()) === 0,
-          "on-demand has a safe input bound without claiming stock exists",
+          "on-demand enforces the canonical cart quantity limit without claiming stock exists",
         );
       await screenshot(`en-gift-state-${index + 1}`);
     }

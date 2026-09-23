@@ -144,6 +144,7 @@ test("renders bounded server pagination and real gift links carrying the complet
   expect(html).toContain('value="1234"');
   expect(html).toContain("$12.34");
   expect(html).toContain('loading="lazy"');
+  expect(html).not.toContain("A fictional gift</p>");
 });
 
 test("an unpriced record has an honest unavailable label and no fabricated price or cart action", async () => {

@@ -3,9 +3,9 @@
 > 最后更新：2026-09-23（Asia/Bangkok）
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-016，逐项本地研发）；Phase 6/7 仍 LOCKED
-> 当前任务：P5-08 有限本地范围验收通过，保留云端条件 IN_PROGRESS；Lane D 已释放、无 executor
-> 当前入口：持久本地 TEST 完整体验已交付；`docs/runbooks/local-experience.md`，后续按 ADR-016 核对加固与恢复候选
-> 当前检查点：P5-08 离线工具及持久体验本地 ACCEPT，FULL799+RESTART109/55axe通过。31 DONE /6 IN_PROGRESS /0 READY /12 PENDING；仅本地提交，无 push/云部署。
+> 当前任务：P3-06用户要求的视觉/交互修正已本地ACCEPT，Lane B/D释放；P3-06人工门与P5-08云条件保留
+> 当前入口：更新后的持久TEST已重新打开，可继续体验；后续回到`docs/plan/remaining-delivery.md`排期，仍逐项核对激活条件
+> 当前检查点：V2视觉对齐、本地礼物21898断言与七语581检查通过；7条焦点守卫incomplete及无JS流式页面边界保留。31 DONE /6 IN_PROGRESS /0 READY /12 PENDING；仅本地提交，无 push/云部署。
 
 ## 1. 开工入口
 

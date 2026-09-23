@@ -431,8 +431,7 @@
   }
   .storefront-hero-image {
     grid-row: 1;
-    block-size: auto;
-    aspect-ratio: var(--hero-mobile-aspect);
+    block-size: min(40svh, calc(var(--space-32) * 3));
   }
   .storefront-hero-image img {
     object-position: var(--hero-mobile-focus);

@@ -69,7 +69,9 @@ export async function verifyAcceptanceLazyValidation({
       JSON.stringify(report, null, 2) + "\n",
     );
   const scope = new globalThis.URLSearchParams(fixtures.markets[0]);
-  const giftUrl = `${origin}/en/gifts?${scope}`;
+  // Start with a real applied sort: the toolbar is submitted separately, while
+  // this suite isolates the advanced form's lazy validation and cancellation.
+  const giftUrl = `${origin}/en/gifts?${scope}&sort=PRICE_DESC`;
   await withAcceptanceBrowser({ gateway }, async (browser) => {
     report.browserVersion = browser.version();
     async function run(name, kind, verify, mobile = false) {
@@ -163,6 +165,9 @@ export async function verifyAcceptanceLazyValidation({
               .locator('.gift-filters__mobile [data-overlay-trigger="drawer"]')
               .click();
             await page.getByRole("dialog").waitFor();
+          } else {
+            await page.locator(".gift-filter-disclosure summary").click();
+            await form.waitFor({ state: "visible" });
           }
         } else await page.locator("[data-artist-search]").waitFor();
         await verify({
@@ -194,7 +199,14 @@ export async function verifyAcceptanceLazyValidation({
       }
     }
     async function applied(page, form, check) {
-      await form.locator("[data-gift-sort]").selectOption("PRICE_DESC");
+      if ((await form.getAttribute("data-gift-filters")) === "mobile")
+        await form.locator("[data-gift-sort]").selectOption("PRICE_DESC");
+      else {
+        const disclosure = page.locator(".gift-filter-disclosure");
+        if ((await disclosure.getAttribute("open")) === null)
+          await disclosure.locator("summary").click();
+        await form.waitFor({ state: "visible" });
+      }
       await form.locator("[data-gift-price-min]").fill("2");
       await form.locator("[data-gift-apply]").click();
       await page.waitForURL(
@@ -214,7 +226,9 @@ export async function verifyAcceptanceLazyValidation({
         `gift-delay-${cancel}`,
         "gift",
         async ({ page, form, check, pending, release, record }) => {
-          await form.locator("[data-gift-sort]").selectOption("PRICE_DESC");
+          if (cancel === "close")
+            await form.locator("[data-gift-sort]").selectOption("PRICE_DESC");
+          else await form.locator("[data-gift-price-min]").fill("1");
           await form.locator("[data-gift-apply]").click();
           await pending();
           check(

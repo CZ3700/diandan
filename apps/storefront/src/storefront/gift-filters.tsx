@@ -1,7 +1,11 @@
 import "server-only";
 import { minorAmountSchema } from "@fan-support/contracts";
 import { formatStorefrontMessage } from "./copy";
-import { formatGiftPriceInput, giftResetHref } from "./gift-query";
+import {
+  formatGiftPriceInput,
+  giftFilterHref,
+  giftResetHref,
+} from "./gift-query";
 import { GiftFiltersClient } from "./gift-filters-client";
 import type { GiftFilterProps } from "./gift-filter-types";
 import { storefrontHref } from "./navigation";
@@ -9,9 +13,53 @@ import { storefrontHref } from "./navigation";
 /** Prepare stable presentation once; only actual editing needs browser validation. */
 export function GiftFilters(props: GiftFilterProps) {
   const { query, locale, copy, basePath, contextQuery } = props;
+  const categories = {
+    FLOWERS: copy.giftCategoryFlowers,
+    FOOD: copy.giftCategoryFood,
+    BEAUTY: copy.giftCategoryBeauty,
+    ACCESSORY: copy.giftCategoryAccessory,
+    OTHER: copy.giftCategoryOther,
+  };
+  const appliedFilters: string[] = [];
+  if (query.category)
+    appliedFilters.push(
+      `${copy.giftCategoryLabel}: ${categories[query.category]}`,
+    );
+  if (query.availability !== "ALL") {
+    const availability =
+      query.availability === "PURCHASABLE"
+        ? copy.giftAvailabilityPurchasable
+        : copy.giftAvailabilityUnavailable;
+    appliedFilters.push(`${copy.giftAvailabilityLabel}: ${availability}`);
+  }
+  for (const [label, amount] of [
+    [copy.giftPriceMinimum, query.priceMinMinor],
+    [copy.giftPriceMaximum, query.priceMaxMinor],
+  ] as const)
+    if (amount !== undefined)
+      appliedFilters.push(
+        `${label}: ${formatGiftPriceInput(amount, locale, query.currency)} ${query.currency}`,
+      );
+  const sortLabels = [
+    ["RECOMMENDED", copy.giftSortRecommended],
+    ["PRICE_ASC", copy.giftSortPriceAsc],
+    ["PRICE_DESC", copy.giftSortPriceDesc],
+  ] as const;
   return (
     <GiftFiltersClient
       {...props}
+      appliedFilters={appliedFilters}
+      sortOptions={sortLabels.map(([value, label]) => ({
+        value,
+        label,
+        href: giftFilterHref(query, basePath, contextQuery, {
+          sort: value,
+          category: query.category,
+          availability: query.availability,
+          priceMinMinor: query.priceMinMinor,
+          priceMaxMinor: query.priceMaxMinor,
+        }),
+      }))}
       initialDraft={{
         sort: query.sort,
         category: query.category ?? "",

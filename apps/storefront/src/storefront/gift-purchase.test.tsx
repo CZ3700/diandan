@@ -125,6 +125,39 @@ function fixture(
   return parsed;
 }
 
+function multiVariantFixture() {
+  const gift = fixture();
+  const otherId = "2abc0000-0000-4000-8000-000000000002";
+  const parsed = storefrontGiftResponseSchema.parse({
+    ...gift,
+    content: {
+      ...gift.content,
+      view: {
+        ...gift.content.view,
+        variants: [
+          ...gift.content.view.variants,
+          {
+            ...gift.content.view.variants[0]!,
+            id: otherId,
+            label: "Second option",
+          },
+        ],
+      },
+    },
+    offers: [
+      ...gift.offers,
+      {
+        ...gift.offers[0]!,
+        giftVariantId: otherId,
+        price: { ...gift.offers[0]!.price!, unitAmountMinor: 2400 },
+      },
+    ],
+  });
+  if (parsed.outcome !== "SUCCESS")
+    throw new Error("Expected a valid multiple-variant fixture");
+  return parsed;
+}
+
 function render(gift: ReturnType<typeof fixture>, variant?: string) {
   const html = renderToStaticMarkup(
     <GiftPurchase
@@ -133,7 +166,9 @@ function render(gift: ReturnType<typeof fixture>, variant?: string) {
       copy={copy}
       contextQuery={`market=TEST&currency=USD&idol=${idolId}&cart=preserved`}
       {...(variant ? { variantId: variant } : {})}
-    />,
+    >
+      <section data-test-recipient>Recipient selection</section>
+    </GiftPurchase>,
   );
   expect(html).not.toContain("data-checkout-unavailable");
   expect(html).not.toContain(copy.giftCheckoutBody);
@@ -208,12 +243,36 @@ describe("gift purchase presentation against canonical offer contracts", () => {
       client.mockRestore();
     }
   });
-  it("exposes variant links as a named group", () => {
-    const html = render(fixture());
+  it("exposes multiple variant links as a named group", () => {
+    const html = render(multiVariantFixture());
     expect(html).toContain(
       `class="gift-variant-options" role="group" aria-label="${copy.giftVariant}"`,
     );
   });
+  it("places the selected offer price before recipient selection and purchase controls", () => {
+    const gift = multiVariantFixture();
+    const html = render(gift, gift.offers[1]!.giftVariantId);
+    const price = html.indexOf('class="gift-detail-price"');
+    const recipient = html.indexOf("data-test-recipient");
+    const variants = html.indexOf('class="gift-variant-options"');
+    const add = html.indexOf("data-cart-add");
+    expect(recipient).toBeGreaterThan(price);
+    expect(variants).toBeGreaterThan(recipient);
+    expect(add).toBeGreaterThan(variants);
+    expect(html).toContain("$24.00");
+    expect(html).not.toContain("$12.00");
+    expect(html.match(/class="gift-detail-price"/gu)).toHaveLength(1);
+  });
+
+  it("shows the sole selected variant without making users navigate to the same offer", () => {
+    const html = render(fixture());
+    expect(html).toContain("Fictional option");
+    expect(html).toContain(`data-gift-selected-variant="${variantId}"`);
+    expect(html).not.toContain(`variant=${variantId}`);
+    expect(html).not.toContain('role="group"');
+    expect(html).toContain("data-cart-add");
+  });
+
   it.each([
     ["TRACKED", copy.giftTracked, "AVAILABLE", 3],
     [
@@ -301,7 +360,7 @@ describe("gift purchase presentation against canonical offer contracts", () => {
     const gift = fixture();
     const html = render(gift, gift.offers[0]!.giftVariantId.toUpperCase());
     expect(html).toContain("data-gift-offer");
-    expect(html).toContain('aria-current="true"');
+    expect(html).toContain(`data-gift-selected-variant="${variantId}"`);
   });
 
   it("an incompatible recipient gets the specific explanation without a quantity selector", () => {

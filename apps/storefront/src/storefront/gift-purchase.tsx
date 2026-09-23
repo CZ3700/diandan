@@ -1,4 +1,5 @@
 import "server-only";
+import type { ReactNode } from "react";
 import type {
   StorefrontGiftOffer,
   StorefrontGiftResponse,
@@ -17,47 +18,30 @@ export function GiftPurchase({
   copy,
   contextQuery,
   variantId,
+  children,
 }: Readonly<{
   gift: Gift;
   locale: SupportedLocale;
   copy: StorefrontCopy;
   contextQuery: string;
   variantId?: string;
+  children?: ReactNode;
 }>) {
   const selected = selectGiftOffer(gift.offers, variantId);
+  const choices = (
+    <>
+      {children}
+      <VariantOptions
+        gift={gift}
+        selected={selected}
+        locale={locale}
+        copy={copy}
+        contextQuery={contextQuery}
+      />
+    </>
+  );
   return (
     <div className="gift-purchase" data-gift-purchase>
-      <div className="gift-option-heading">
-        <h2>{copy.giftVariant}</h2>
-        <p>
-          {gift.currency} · {gift.market}
-        </p>
-      </div>
-      <div
-        className="gift-variant-options"
-        role="group"
-        aria-label={copy.giftVariant}
-      >
-        {gift.content.view.variants.map((variant) => (
-          <a
-            key={variant.id}
-            data-gift-variant={variant.id}
-            href={giftSelectionHref(
-              locale,
-              `/gifts/${gift.content.view.handle}`,
-              contextQuery,
-              { variant: variant.id },
-            )}
-            aria-current={
-              selected?.giftVariantId === variant.id ? "true" : undefined
-            }
-          >
-            <span lang={gift.content.view.localeContext.resolvedLocale}>
-              {variant.label}
-            </span>
-          </a>
-        ))}
-      </div>
       {selected ? (
         <Offer
           key={`${selected.giftVariantId}:${selected.maxQuantity}:${gift.recipient.kind}`}
@@ -70,22 +54,94 @@ export function GiftPurchase({
           gift={gift}
           locale={locale}
           copy={copy}
-        />
+        >
+          {choices}
+        </Offer>
       ) : (
-        <p role="status">{copy.giftNotAvailable}</p>
+        <>
+          {choices}
+          <p role="status">{copy.giftNotAvailable}</p>
+        </>
       )}
     </div>
   );
 }
+
+function VariantOptions({
+  gift,
+  selected,
+  locale,
+  copy,
+  contextQuery,
+}: Readonly<{
+  gift: Gift;
+  selected: StorefrontGiftOffer | undefined;
+  locale: SupportedLocale;
+  copy: StorefrontCopy;
+  contextQuery: string;
+}>) {
+  const variants = gift.content.view.variants;
+  const soleVariant = variants.length === 1 ? variants[0] : undefined;
+  const soleSelected =
+    soleVariant && selected?.giftVariantId === soleVariant.id;
+  return (
+    <>
+      <div className="gift-option-heading">
+        <h2>{copy.giftVariant}</h2>
+        <p>
+          {gift.currency} · {gift.market}
+        </p>
+      </div>
+      {soleSelected ? (
+        <p
+          className="gift-single-variant"
+          data-gift-selected-variant={soleVariant.id}
+          lang={gift.content.view.localeContext.resolvedLocale}
+        >
+          {soleVariant.label}
+        </p>
+      ) : (
+        <div
+          className="gift-variant-options"
+          role="group"
+          aria-label={copy.giftVariant}
+        >
+          {variants.map((variant) => (
+            <a
+              key={variant.id}
+              data-gift-variant={variant.id}
+              href={giftSelectionHref(
+                locale,
+                `/gifts/${gift.content.view.handle}`,
+                contextQuery,
+                { variant: variant.id },
+              )}
+              aria-current={
+                selected?.giftVariantId === variant.id ? "true" : undefined
+              }
+            >
+              <span lang={gift.content.view.localeContext.resolvedLocale}>
+                {variant.label}
+              </span>
+            </a>
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
+
 function Offer({
   offer,
   startingPrice,
   gift,
   locale,
   copy,
+  children,
 }: Readonly<{
   offer: StorefrontGiftOffer;
   startingPrice: boolean;
+  children: ReactNode;
   gift: Gift;
   locale: SupportedLocale;
   copy: StorefrontCopy;
@@ -138,6 +194,7 @@ function Offer({
           />
         </div>
       ) : null}
+      {children}
       <p className="gift-stock-label">{label}</p>
       {availabilityMessage}
       {offer.requiresRecipient && (

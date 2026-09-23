@@ -1,0 +1,958 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "browserVersion": "153.0.8010.53",
+  "attempt": 1,
+  "cases": [
+    {
+      "name": "seven-locales-two-viewports-directory-detail-policy",
+      "pass": true
+    },
+    {
+      "name": "pagination-sort-precise-money-back-empty-range",
+      "pass": true
+    },
+    {
+      "name": "mobile-drawer-keyboard-ime-localized-price",
+      "pass": true
+    },
+    {
+      "name": "invalid-range-and-jpy-integer-price-input",
+      "pass": true
+    },
+    {
+      "name": "cross-gift-navigation-clears-foreign-variant",
+      "pass": true
+    },
+    {
+      "name": "recipient-variant-quantity-availability-market",
+      "pass": true
+    },
+    {
+      "name": "seven-language-context-preservation",
+      "pass": true
+    },
+    {
+      "name": "transport-image-failures-404-reflow-motion",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    "en-390-directory.png",
+    "en-390-detail.png",
+    "en-390-policy.png",
+    "en-1440-directory.png",
+    "en-1440-detail.png",
+    "en-1440-policy.png",
+    "zh-CN-390-directory.png",
+    "zh-CN-390-detail.png",
+    "zh-CN-390-policy.png",
+    "zh-CN-1440-directory.png",
+    "zh-CN-1440-detail.png",
+    "zh-CN-1440-policy.png",
+    "th-390-directory.png",
+    "th-390-detail.png",
+    "th-390-policy.png",
+    "th-1440-directory.png",
+    "th-1440-detail.png",
+    "th-1440-policy.png",
+    "vi-390-directory.png",
+    "vi-390-detail.png",
+    "vi-390-policy.png",
+    "vi-1440-directory.png",
+    "vi-1440-detail.png",
+    "vi-1440-policy.png",
+    "ja-390-directory.png",
+    "ja-390-detail.png",
+    "ja-390-policy.png",
+    "ja-1440-directory.png",
+    "ja-1440-detail.png",
+    "ja-1440-policy.png",
+    "es-390-directory.png",
+    "es-390-detail.png",
+    "es-390-policy.png",
+    "es-1440-directory.png",
+    "es-1440-detail.png",
+    "es-1440-policy.png",
+    "pt-390-directory.png",
+    "pt-390-detail.png",
+    "pt-390-policy.png",
+    "pt-1440-directory.png",
+    "pt-1440-detail.png",
+    "pt-1440-policy.png",
+    "en-page-out-of-range.png",
+    "en-filter-empty.png",
+    "pt-mobile-filter-applied.png",
+    "en-tracked-selected.png",
+    "en-ineligible-recipient.png",
+    "en-gift-state-2.png",
+    "en-gift-state-3.png",
+    "en-gift-state-4.png",
+    "en-gift-state-5.png",
+    "en-gift-state-25.png",
+    "en-gift-state-8.png",
+    "en-directory-transport-error.png",
+    "en-gift-image-error.png"
+  ],
+  "axe": [
+    {
+      "name": "en-390-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-detail",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-390-policy",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-detail",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "en-1440-policy",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "zh-CN-390-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "th-390-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "vi-390-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pt-390-directory",
+      "engineVersion": "4.13.0",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "reflow": [
+    {
+      "name": "en-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "en-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "en-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "en-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "en-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "en-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "zh-CN-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "zh-CN-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "zh-CN-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "zh-CN-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "zh-CN-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "zh-CN-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "th-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "th-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "th-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "th-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "th-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "th-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "vi-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "vi-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "vi-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "vi-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "vi-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "vi-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "ja-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "ja-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "ja-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "ja-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "ja-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "ja-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "es-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "es-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "es-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "es-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "es-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "es-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "pt-390-directory",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "pt-390-detail",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "pt-390-policy",
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "name": "pt-1440-directory",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "pt-1440-detail",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "pt-1440-policy",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440
+    },
+    {
+      "name": "narrow-320",
+      "width": 320,
+      "scrollWidth": 320,
+      "bodyWidth": 320
+    },
+    {
+      "name": "narrow-640",
+      "width": 640,
+      "scrollWidth": 640,
+      "bodyWidth": 640
+    }
+  ],
+  "metrics": [
+    {
+      "name": "smoke-directory",
+      "lcp": 600,
+      "cls": 0,
+      "imageTransferBytes": 15976
+    },
+    {
+      "name": "smoke-detail",
+      "lcp": 356,
+      "cls": 0,
+      "imageTransferBytes": 14623
+    },
+    {
+      "name": "en-390-directory",
+      "lcp": 512,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "en-390-detail",
+      "lcp": 264,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "en-1440-directory",
+      "lcp": 436,
+      "cls": 0,
+      "imageTransferBytes": 32955
+    },
+    {
+      "name": "en-1440-detail",
+      "lcp": 404,
+      "cls": 0,
+      "imageTransferBytes": 48184
+    },
+    {
+      "name": "zh-CN-390-directory",
+      "lcp": 476,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "zh-CN-390-detail",
+      "lcp": 276,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "zh-CN-1440-directory",
+      "lcp": 484,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "zh-CN-1440-detail",
+      "lcp": 256,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "th-390-directory",
+      "lcp": 492,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "th-390-detail",
+      "lcp": 268,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "th-1440-directory",
+      "lcp": 472,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "th-1440-detail",
+      "lcp": 256,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "vi-390-directory",
+      "lcp": 492,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "vi-390-detail",
+      "lcp": 248,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "vi-1440-directory",
+      "lcp": 500,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "vi-1440-detail",
+      "lcp": 292,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "ja-390-directory",
+      "lcp": 440,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "ja-390-detail",
+      "lcp": 268,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "ja-1440-directory",
+      "lcp": 484,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "ja-1440-detail",
+      "lcp": 288,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "es-390-directory",
+      "lcp": 500,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "es-390-detail",
+      "lcp": 276,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "es-1440-directory",
+      "lcp": 488,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "es-1440-detail",
+      "lcp": 232,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "pt-390-directory",
+      "lcp": 532,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "pt-390-detail",
+      "lcp": 284,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "pt-1440-directory",
+      "lcp": 452,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "pt-1440-detail",
+      "lcp": 268,
+      "cls": 0,
+      "imageTransferBytes": 0
+    },
+    {
+      "name": "normal-motion-detail",
+      "lcp": 300,
+      "cls": 0,
+      "imageTransferBytes": 0
+    }
+  ],
+  "pageErrors": [],
+  "filterFocus": [
+    {
+      "tab": 1,
+      "inside": true,
+      "guard": false,
+      "guardType": null
+    },
+    {
+      "tab": 2,
+      "inside": true,
+      "guard": false,
+      "guardType": null
+    },
+    {
+      "tab": 3,
+      "inside": true,
+      "guard": false,
+      "guardType": null
+    },
+    {
+      "tab": 4,
+      "inside": true,
+      "guard": false,
+      "guardType": null
+    },
+    {
+      "tab": 5,
+      "inside": true,
+      "guard": false,
+      "guardType": null
+    },
+    {
+      "tab": 6,
+      "inside": true,
+      "guard": false,
+      "guardType": null
+    },
+    {
+      "tab": 7,
+      "inside": true,
+      "guard": false,
+      "guardType": null
+    },
+    {
+      "tab": 8,
+      "inside": true,
+      "guard": false,
+      "guardType": null
+    },
+    {
+      "tab": 9,
+      "inside": false,
+      "guard": true,
+      "guardType": "inside"
+    },
+    {
+      "tab": 10,
+      "inside": true,
+      "guard": false,
+      "guardType": null
+    },
+    {
+      "tab": 11,
+      "inside": true,
+      "guard": false,
+      "guardType": null
+    },
+    {
+      "tab": 12,
+      "inside": true,
+      "guard": false,
+      "guardType": null
+    }
+  ],
+  "responsiveImages": {
+    "candidateCount": 33,
+    "decoded": [
+      {
+        "width": 256,
+        "height": 256,
+        "format": "heif",
+        "byteSize": 6887,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "format": "heif",
+        "byteSize": 2764,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "format": "heif",
+        "byteSize": 5425,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 640,
+        "height": 640,
+        "format": "heif",
+        "byteSize": 36018,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 384,
+        "height": 384,
+        "format": "heif",
+        "byteSize": 14323,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 640,
+        "height": 640,
+        "format": "heif",
+        "byteSize": 9990,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 640,
+        "height": 640,
+        "format": "heif",
+        "byteSize": 22365,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 828,
+        "height": 828,
+        "format": "heif",
+        "byteSize": 56383,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 750,
+        "height": 750,
+        "format": "heif",
+        "byteSize": 47884,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 32,
+        "height": 32,
+        "format": "heif",
+        "byteSize": 416,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "format": "heif",
+        "byteSize": 743,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 96,
+        "height": 96,
+        "format": "heif",
+        "byteSize": 1367,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 128,
+        "height": 128,
+        "format": "heif",
+        "byteSize": 2059,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 1080,
+        "height": 1080,
+        "format": "heif",
+        "byteSize": 86728,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 1200,
+        "height": 1200,
+        "format": "heif",
+        "byteSize": 115003,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 32,
+        "height": 32,
+        "format": "heif",
+        "byteSize": 504,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "format": "heif",
+        "byteSize": 545,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 96,
+        "height": 96,
+        "format": "heif",
+        "byteSize": 813,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 128,
+        "height": 128,
+        "format": "heif",
+        "byteSize": 942,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 384,
+        "height": 384,
+        "format": "heif",
+        "byteSize": 4933,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 750,
+        "height": 750,
+        "format": "heif",
+        "byteSize": 12748,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 828,
+        "height": 828,
+        "format": "heif",
+        "byteSize": 14615,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 1080,
+        "height": 1080,
+        "format": "heif",
+        "byteSize": 21154,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 1200,
+        "height": 1200,
+        "format": "heif",
+        "byteSize": 25572,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 32,
+        "height": 32,
+        "format": "heif",
+        "byteSize": 479,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "format": "heif",
+        "byteSize": 727,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 96,
+        "height": 96,
+        "format": "heif",
+        "byteSize": 1313,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 128,
+        "height": 128,
+        "format": "heif",
+        "byteSize": 1872,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 384,
+        "height": 384,
+        "format": "heif",
+        "byteSize": 9908,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 750,
+        "height": 750,
+        "format": "heif",
+        "byteSize": 29302,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 828,
+        "height": 828,
+        "format": "heif",
+        "byteSize": 33959,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 1080,
+        "height": 1080,
+        "format": "heif",
+        "byteSize": 49602,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      },
+      {
+        "width": 1200,
+        "height": 1200,
+        "format": "heif",
+        "byteSize": 63861,
+        "sourceWidth": 1200,
+        "sourceHeight": 1200
+      }
+    ]
+  },
+  "metricScope": "Local unthrottled observations; imageTransferBytes is sampled after eagerly decoding all DOM images, not a first-viewport budget. Formal performance budget remains P3-06."
+}

@@ -1,0 +1,64 @@
+$ vitest run --config ../../vitest.config.ts --root . src/storefront/gift-purchase.test.tsx
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/storefront
+
+ ❯ src/storefront/gift-purchase.test.tsx (17 tests | 3 failed) 35ms
+     × places the selected offer price before recipient selection and purchase controls 2ms
+     × shows the sole selected variant without making users navigate to the same offer 5ms
+     × selects a matching variant case-insensitively 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/storefront/gift-purchase.test.tsx > gift purchase presentation against canonical offer contracts > places the selected offer price before recipient selection and purchase controls
+AssertionError: expected -1 to be greater than 867
+ ❯ src/storefront/gift-purchase.test.tsx:245:23
+    243|     const variants = html.indexOf('class="gift-variant-options"');
+    244|     const add = html.indexOf("data-cart-add");
+    245|     expect(recipient).toBeGreaterThan(price);
+       |                       ^
+    246|     expect(variants).toBeGreaterThan(recipient);
+    247|     expect(add).toBeGreaterThan(variants);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/storefront/gift-purchase.test.tsx > gift purchase presentation against canonical offer contracts > shows the sole selected variant without making users navigate to the same offer
+AssertionError: expected '<div class="gift-purchase" data-gift-…' to contain 'data-gift-selected-variant="2abc0000-…'
+
+Expected: "data-gift-selected-variant="2abc0000-0000-4000-8000-000000000001""
+Received: "<div class="gift-purchase" data-gift-purchase="true"><div class="gift-option-heading"><h2>Options</h2><p>USD · TEST</p></div><div class="gift-variant-options" role="group" aria-label="Options"><a data-gift-variant="2abc0000-0000-4000-8000-000000000001" href="/en/gifts/fictional-gift?market=TEST&amp;currency=USD&amp;idol=30000000-0000-4000-8000-000000000001&amp;cart=preserved&amp;variant=2abc0000-0000-4000-8000-000000000001" aria-current="true"><span lang="en">Fictional option</span></a></div><div data-gift-offer="true" data-availability="AVAILABLE" data-inventory-policy="TRACKED"><div class="gift-detail-price"><data class="fs-price" data-currency="USD" lang="en" value="1200"><bdi>$12.00</bdi></data></div><p class="gift-stock-label">Prepared from available stock</p><p data-stock-remaining="true">3 available</p><form class="gift-add" data-cart-add="true"><div class="fs-quantity"><label for="_R_n_" class="fs-quantity__label">Quantity</label><div class="fs-quantity__controls" dir="ltr"><button aria-controls="_R_n_" aria-label="Decrease quantity" class="fs-quantity__button fs-quantity__button--decrease" data-quantity-action="decrease" disabled="" type="button"><svg aria-hidden="true" class="fs-icon" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14"></path></svg></button><input id="_R_n_" type="number" role="spinbutton" aria-valuemax="3" aria-valuemin="1" aria-valuenow="1" class="fs-quantity__input" data-quantity-input="true" max="3" min="1" step="1" value="1"/><button aria-controls="_R_n_" aria-label="Increase quantity" class="fs-quantity__button fs-quantity__button--increase" data-quantity-action="increase" type="button"><svg aria-hidden="true" class="fs-icon" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></button></div></div><fieldset class="cart-personalization" data-cart-personalization="true"><legend>Private message and name</legend><div class="cart-name-choice"><label><input type="radio" name="_R_5n_-display" checked=""/>Anonymous</label><label><input type="radio" name="_R_5n_-display"/>Use a nickname</label></div><div class="cart-field"><label for="_R_5n_-message">Private message</label><textarea id="_R_5n_-message" data-cart-message="true" rows="3" autoComplete="off" aria-describedby="_R_5n_-hint _R_5n_-count"></textarea><small id="_R_5n_-hint">Only the studio and the recipient can read your message.</small><small id="_R_5n_-count">Characters: 0/280</small></div><div class="cart-field"><label for="_R_5n_-locale">Message language</label><select id="_R_5n_-locale" data-cart-message-locale="true"><option value="und">Not specified</option><option value="en" lang="en" selected="">English</option><option value="zh-CN" lang="zh-CN">简体中文</option><option value="th" lang="th">ไทย</option><option value="vi" lang="vi">Tiếng Việt</option><option value="ja" lang="ja">日本語</option><option value="es" lang="es">Español</option><option value="pt" lang="pt">Português</option></select></div></fieldset><button class="storefront-primary cart-add-button" type="submit" aria-busy="false" data-cart-add-state="idle">Add to gift bag</button><div class="cart-feedback" role="status" aria-live="polite"></div></form></div></div>"
+
+ ❯ src/storefront/gift-purchase.test.tsx:256:18
+    254|     const html = render(fixture());
+    255|     expect(html).toContain("Fictional option");
+    256|     expect(html).toContain(`data-gift-selected-variant="${variantId}"`…
+       |                  ^
+    257|     expect(html).not.toContain(`variant=${variantId}`);
+    258|     expect(html).not.toContain('role="group"');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/storefront/gift-purchase.test.tsx > gift purchase presentation against canonical offer contracts > selects a matching variant case-insensitively
+AssertionError: expected '<div class="gift-purchase" data-gift-…' to contain 'data-gift-selected-variant="2abc0000-…'
+
+Expected: "data-gift-selected-variant="2abc0000-0000-4000-8000-000000000001""
+Received: "<div class="gift-purchase" data-gift-purchase="true"><div class="gift-option-heading"><h2>Options</h2><p>USD · TEST</p></div><div class="gift-variant-options" role="group" aria-label="Options"><a data-gift-variant="2abc0000-0000-4000-8000-000000000001" href="/en/gifts/fictional-gift?market=TEST&amp;currency=USD&amp;idol=30000000-0000-4000-8000-000000000001&amp;cart=preserved&amp;variant=2abc0000-0000-4000-8000-000000000001" aria-current="true"><span lang="en">Fictional option</span></a></div><div data-gift-offer="true" data-availability="AVAILABLE" data-inventory-policy="TRACKED"><div class="gift-detail-price"><data class="fs-price" data-currency="USD" lang="en" value="1200"><bdi>$12.00</bdi></data></div><p class="gift-stock-label">Prepared from available stock</p><p data-stock-remaining="true">3 available</p><form class="gift-add" data-cart-add="true"><div class="fs-quantity"><label for="_R_n_" class="fs-quantity__label">Quantity</label><div class="fs-quantity__controls" dir="ltr"><button aria-controls="_R_n_" aria-label="Decrease quantity" class="fs-quantity__button fs-quantity__button--decrease" data-quantity-action="decrease" disabled="" type="button"><svg aria-hidden="true" class="fs-icon" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14"></path></svg></button><input id="_R_n_" type="number" role="spinbutton" aria-valuemax="3" aria-valuemin="1" aria-valuenow="1" class="fs-quantity__input" data-quantity-input="true" max="3" min="1" step="1" value="1"/><button aria-controls="_R_n_" aria-label="Increase quantity" class="fs-quantity__button fs-quantity__button--increase" data-quantity-action="increase" type="button"><svg aria-hidden="true" class="fs-icon" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></button></div></div><fieldset class="cart-personalization" data-cart-personalization="true"><legend>Private message and name</legend><div class="cart-name-choice"><label><input type="radio" name="_R_5n_-display" checked=""/>Anonymous</label><label><input type="radio" name="_R_5n_-display"/>Use a nickname</label></div><div class="cart-field"><label for="_R_5n_-message">Private message</label><textarea id="_R_5n_-message" data-cart-message="true" rows="3" autoComplete="off" aria-describedby="_R_5n_-hint _R_5n_-count"></textarea><small id="_R_5n_-hint">Only the studio and the recipient can read your message.</small><small id="_R_5n_-count">Characters: 0/280</small></div><div class="cart-field"><label for="_R_5n_-locale">Message language</label><select id="_R_5n_-locale" data-cart-message-locale="true"><option value="und">Not specified</option><option value="en" lang="en" selected="">English</option><option value="zh-CN" lang="zh-CN">简体中文</option><option value="th" lang="th">ไทย</option><option value="vi" lang="vi">Tiếng Việt</option><option value="ja" lang="ja">日本語</option><option value="es" lang="es">Español</option><option value="pt" lang="pt">Português</option></select></div></fieldset><button class="storefront-primary cart-add-button" type="submit" aria-busy="false" data-cart-add-state="idle">Add to gift bag</button><div class="cart-feedback" role="status" aria-live="polite"></div></form></div></div>"
+
+ ❯ src/storefront/gift-purchase.test.tsx:349:18
+    347|     const html = render(gift, gift.offers[0]!.giftVariantId.toUpperCas…
+    348|     expect(html).toContain("data-gift-offer");
+    349|     expect(html).toContain(`data-gift-selected-variant="${variantId}"`…
+       |                  ^
+    350|   });
+    351|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 14 passed (17)
+   Start at  16:57:00
+   Duration  553ms (transform 304ms, setup 0ms, import 452ms, tests 35ms, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/storefront:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/storefront@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/storefront/gift-purchase.test.tsx`
+Exit status 1

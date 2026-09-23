@@ -1,0 +1,185 @@
+{
+  "reason": "Repository secret scanning forbids tracked .log files. Raw logs stay local and untracked; committed .txt differs only in CR/trailing whitespace/final blank lines.",
+  "files": [
+    {
+      "raw": "output/checks/p3-06-ui-alignment/keyboard-probe.log",
+      "sha256": "46b2f7a239850daa662ef74e30e24cb749853549921efab7bf51a56374be1ab3",
+      "normalized": "output/checks/p3-06-ui-alignment/keyboard-probe.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/isolated-gifts.log",
+      "sha256": "756956be9ec65aabee350c7d2aaf187f18a2ccbf325b96bc68fd85fb7c8ac110",
+      "normalized": "output/checks/p3-06-ui-alignment/isolated-gifts.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/browser-intermediate.log",
+      "sha256": "4ab9a37a0339fb0ca1173828b5a1de109c3b7ae5bcaac5e19a8cee1a34d267f7",
+      "normalized": "output/checks/p3-06-ui-alignment/browser-intermediate.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/local-stop.log",
+      "sha256": "86112e895d123641a286ed32648e530daf6a78f6ca78f7383a680f8d85cb966f",
+      "normalized": "output/checks/p3-06-ui-alignment/local-stop.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/candidate.log",
+      "sha256": "b82d74fe827f2c007c646c238d40bdf042111ddfa0bf2d8b915b016798ddf1be",
+      "normalized": "output/checks/p3-06-ui-alignment/candidate.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/browser-initial-selector-failure.log",
+      "sha256": "ff0b5c26ab485b210c176c6c506021356efb13fad5d35b01759461f6e4ccacd9",
+      "normalized": "output/checks/p3-06-ui-alignment/browser-initial-selector-failure.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/hero-green.log",
+      "sha256": "9b5783d4499b697671c5439935522248a9747e1e9637493032866fc1ba2582dc",
+      "normalized": "output/checks/p3-06-ui-alignment/hero-green.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/isolated-gifts-legacy-failure.log",
+      "sha256": "c8225d1355d3a53872c777de554191b3ed782d2737073b322dbda89aab480d9f",
+      "normalized": "output/checks/p3-06-ui-alignment/isolated-gifts-legacy-failure.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/local-start.log",
+      "sha256": "607cf98b992d5d36b53772d0d81038b9ff858b5ce74182038356d524a94a361e",
+      "normalized": "output/checks/p3-06-ui-alignment/local-start.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/browser-final.log",
+      "sha256": "4ab9a37a0339fb0ca1173828b5a1de109c3b7ae5bcaac5e19a8cee1a34d267f7",
+      "normalized": "output/checks/p3-06-ui-alignment/browser-final.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/check-dev.log",
+      "sha256": "e9a327fad2888a22e8f79beb38f8e1f3da3f6a4a9b9bdf75a527c3cc7cc60583",
+      "normalized": "output/checks/p3-06-ui-alignment/check-dev.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/no-js-probe.log",
+      "sha256": "0dc799bc0b22aa9c33bae0576b350f2380a93db2bb0cc101f0129d9de8ce9469",
+      "normalized": "output/checks/p3-06-ui-alignment/no-js-probe.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/browser-tool-diagnostics.log",
+      "sha256": "97dd32106935b898298bc6f4db0c1aac35233abda850a3d0a07763f7a03c037f",
+      "normalized": "output/checks/p3-06-ui-alignment/browser-tool-diagnostics.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/hero-red.log",
+      "sha256": "d2f20cec28156eb7c1a8dec0c851b66d89c42561a0cf958fbc9f1d3641cfa210",
+      "normalized": "output/checks/p3-06-ui-alignment/hero-red.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/home-red.log",
+      "sha256": "9c14b9132d7c2635463a12554f2a5926b8134e9b2303f065fdde9bf3e8098a76",
+      "normalized": "output/checks/p3-06-ui-alignment/home-red.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/check-dev-initial-lint-failure.log",
+      "sha256": "46779b7765f94f583bf6af81afb5472ff9b1f0b353db6ee1208205e6325f6560",
+      "normalized": "output/checks/p3-06-ui-alignment/check-dev-initial-lint-failure.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/check-dev-final.log",
+      "sha256": "a866b8bd661e627721729251d5e768515e6437e2bee09639660c179b5193c513",
+      "normalized": "output/checks/p3-06-ui-alignment/check-dev-final.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/tool-format.log",
+      "sha256": "b5b09d7129c25f771f0d5b9d9e01c75bf901ba7ad49e3ec899eb1adad5c7b91d",
+      "normalized": "output/checks/p3-06-ui-alignment/tool-format.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/root-affected.log",
+      "sha256": "61b16a8871505614307948bcf5b3fff89436d376b22df305e0ba08c39a696678",
+      "normalized": "output/checks/p3-06-ui-alignment/root-affected.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/adapter-boundaries.log",
+      "sha256": "360ebfcae9aea3200bb9c177b8cbe7aad839b167bcbdceb6cdb98cc49e9c89b2",
+      "normalized": "output/checks/p3-06-ui-alignment/adapter-boundaries.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/secrets-final.log",
+      "sha256": "97c21e0998e35d7de1d60151e2d6721f450456f3d01270a24f5e6f020a9f5de8",
+      "normalized": "output/checks/p3-06-ui-alignment/secrets-final.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/home-green.log",
+      "sha256": "64282c75048e03a308706566d82b0c5e816e54d2bbc56e19cd6b80d42c626397",
+      "normalized": "output/checks/p3-06-ui-alignment/home-green.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/build-artifacts.log",
+      "sha256": "3ea4930d8fccf6fbcd51b53d744119d247eef442e94ecaa858048c1597a26df7",
+      "normalized": "output/checks/p3-06-ui-alignment/build-artifacts.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/browser-early-focus-failure.log",
+      "sha256": "c651482fb7f2885d8c0ac43d601beda7d6a682847cdb1d3e4a6a93b0aa9f617a",
+      "normalized": "output/checks/p3-06-ui-alignment/browser-early-focus-failure.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/isolated-gift-storefront-legacy-failure/run-2026-09-23T10-14-32-812Z/next-runtime-1.log",
+      "sha256": "496d4097cd1fae46951ca9f3d48a854e1393b65e553f1334dbb52206061a8951",
+      "normalized": "output/checks/p3-06-ui-alignment/isolated-gift-storefront-legacy-failure/run-2026-09-23T10-14-32-812Z/next-runtime-1.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/isolated-gift-storefront-legacy-failure/run-2026-09-23T10-14-32-812Z/next-build-1.log",
+      "sha256": "ed8507236ac38bae8d8c54f9ace83a7247cf8cbbf3bd02649c9d4c3b17856d19",
+      "normalized": "output/checks/p3-06-ui-alignment/isolated-gift-storefront-legacy-failure/run-2026-09-23T10-14-32-812Z/next-build-1.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/isolated-gift-storefront/run-2026-09-23T10-19-39-018Z/next-runtime-1.log",
+      "sha256": "a6225197f7493a0d489884d02222fd3cd7225ce3183130944274627146af28b0",
+      "normalized": "output/checks/p3-06-ui-alignment/isolated-gift-storefront/run-2026-09-23T10-19-39-018Z/next-runtime-1.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/isolated-gift-storefront/run-2026-09-23T10-19-39-018Z/next-build-1.log",
+      "sha256": "73ecf5cba0c445d4dfc25d5459f90cdabe9eb37169203ab21ffbae56ef27c57d",
+      "normalized": "output/checks/p3-06-ui-alignment/isolated-gift-storefront/run-2026-09-23T10-19-39-018Z/next-build-1.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/gift-purchase-lint.raw.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalized": "output/checks/p3-06-ui-alignment/gift-purchase-lint.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/gift-filter-green.raw.log",
+      "sha256": "601f1f02b43882cf364ee76df24aabf4a56667e816b4626f7a396210def1c18a",
+      "normalized": "output/checks/p3-06-ui-alignment/gift-filter-green.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/gift-purchase-brand-types.raw.log",
+      "sha256": "361b54e2e41216cbd0c470f6734e46b0d1da547b5d4d39babd57ddaf05092b14",
+      "normalized": "output/checks/p3-06-ui-alignment/gift-purchase-brand-types.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/gift-tool-explicit-submit-lint.raw.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalized": "output/checks/p3-06-ui-alignment/gift-tool-explicit-submit-lint.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/gift-browser-current-commerce-lint.raw.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalized": "output/checks/p3-06-ui-alignment/gift-browser-current-commerce-lint.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/gift-purchase-green.raw.log",
+      "sha256": "832b52eec333dcf17ef0ddf6cc32a4c97debad04460ec89171544b3c2c4136a9",
+      "normalized": "output/checks/p3-06-ui-alignment/gift-purchase-green.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/gift-tool-lint.raw.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalized": "output/checks/p3-06-ui-alignment/gift-tool-lint.txt"
+    },
+    {
+      "raw": "output/checks/p3-06-ui-alignment/gift-filter-eslint.raw.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalized": "output/checks/p3-06-ui-alignment/gift-filter-eslint.txt"
+    }
+  ]
+}

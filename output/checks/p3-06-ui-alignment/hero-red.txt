@@ -1,0 +1,24 @@
+{"heroHeight":487.5,"maxApprovedHeight":384}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+ExpectError: expect(received).toBeLessThanOrEqual(expected)
+
+Expected: <= 384
+Received:    487.5
+    at captureRawStack (/Users/mario/Desktop/下单/node_modules/.pnpm/playwright-core@1.62.1/node_modules/playwright-core/lib/coreBundle.js:9681:17)
+    at callMatcherAsStep (/Users/mario/Desktop/下单/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/lib/matchers/expect.js:13310:57)
+    at Object.toBeLessThanOrEqual (/Users/mario/Desktop/下单/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/lib/matchers/expect.js:13300:23)
+    at /Users/mario/Desktop/下单/output/checks/p3-06-ui-alignment/hero-budget.mjs:16:17 {
+  matcherResult: {
+    message: 'expect(received).toBeLessThanOrEqual(expected)\n' +
+      '\n' +
+      'Expected: <= 384\n' +
+      'Received:    487.5',
+    pass: false,
+    name: 'toBeLessThanOrEqual'
+  }
+}
+
+Node.js v24.20.0

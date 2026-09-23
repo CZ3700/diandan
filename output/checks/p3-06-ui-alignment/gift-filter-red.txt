@@ -1,0 +1,102 @@
+$ vitest run --config ../../vitest.config.ts --root . src/storefront/gift-filter-presentation.test.tsx src/storefront/gift-filter-cancellation.test.tsx src/storefront/gift-directory.test.tsx
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/apps/storefront
+
+ ❯ src/storefront/gift-filter-presentation.test.tsx (9 tests | 2 failed) 22ms
+   × direct sorting preserves applied filters and repeated commerce context while returning to page one 2ms
+   × the server-rendered toolbar keeps advanced fields behind a native closed disclosure and retains sorting links without JavaScript 4ms
+ ❯ src/storefront/gift-directory.test.tsx (6 tests | 1 failed) 68ms
+   × renders bounded server pagination and real gift links carrying the complete navigation context 6ms
+ ❯ src/storefront/gift-filter-cancellation.test.tsx (5 tests | 2 failed) 299ms
+   × disclosure cancels a pending validator before animation frames or navigation complete 55ms
+   × sort cancels a pending validator before animation frames or navigation complete 55ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/storefront/gift-directory.test.tsx > renders bounded server pagination and real gift links carrying the complete navigation context
+AssertionError: expected '<section class="gift-directory" data-…' not to contain 'A fictional gift</p>'
+
+Expected: "A fictional gift</p>"
+Received: "<section class="gift-directory" data-gift-directory="true" data-outcome="success"><div class="gift-filters"><div class="gift-filters__desktop"><form class="gift-filter-form gift-filter-form--desktop" data-gift-filters="desktop"><div class="gift-filter-selects"><label class="gift-filter-select" for="_R_1_-desktop-sort"><span>Sort by</span><select id="_R_1_-desktop-sort" data-gift-sort="true"><option value="RECOMMENDED" selected="">Recommended</option><option value="PRICE_ASC">Price: low to high</option><option value="PRICE_DESC">Price: high to low</option></select></label><label class="gift-filter-select" for="_R_1_-desktop-category"><span>Category</span><select id="_R_1_-desktop-category" data-gift-category="true"><option value="" selected="">All categories</option><option value="FLOWERS">Flowers</option><option value="FOOD">Food</option><option value="BEAUTY">Beauty</option><option value="ACCESSORY">Accessories</option><option value="OTHER">Other gifts</option></select></label><label class="gift-filter-select" for="_R_1_-desktop-availability"><span>Availability</span><select id="_R_1_-desktop-availability" data-gift-availability="true"><option value="ALL" selected="">All gifts</option><option value="PURCHASABLE">Available</option><option value="UNAVAILABLE">Currently unavailable</option></select></label></div><fieldset class="gift-filter-prices"><legend>Price range <span>(USD)</span></legend><p class="gift-filter-hint" id="_R_1_-desktop-price-hint">Enter USD amounts, for example 12.34.</p><div class="gift-filter-price-inputs"><div class="fs-field"><label class="fs-field__label" for="_R_1_-desktop-minimum">Minimum price</label><input inputMode="decimal" autoComplete="off" data-gift-price-min="true" aria-describedby="_R_1_-desktop-price-hint" class="fs-field__input" id="_R_1_-desktop-minimum" type="text" name="priceMinimum" value=""/></div><div class="fs-field"><label class="fs-field__label" for="_R_1_-desktop-maximum">Maximum price</label><input inputMode="decimal" autoComplete="off" data-gift-price-max="true" aria-describedby="_R_1_-desktop-price-hint" class="fs-field__input" id="_R_1_-desktop-maximum" type="text" name="priceMaximum" value=""/></div></div></fieldset><div class="gift-filter-actions"><button data-gift-apply="true" class="fs-button fs-button--standard fs-button--primary" type="submit"><span class="fs-button__label">Apply filters</span></button><a class="storefront-text-link" href="/en/gifts?cart=one&amp;cart=two&amp;market=TEST&amp;currency=USD&amp;page=1&amp;pageSize=12&amp;sort=RECOMMENDED&amp;availability=ALL" data-gift-reset="true">Clear filters</a></div></form></div><div class="gift-filters__mobile"><button class="fs-overlay-trigger" data-overlay-trigger="drawer" data-drawer-load-state="idle" type="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false">Filter and sort</button></div></div><p class="gift-directory-count">25 gifts</p><ul class="gift-directory-grid"><li class="gift-directory-card" data-gift-card="10000000-0000-4000-8000-000000000001"><a href="/en/gifts/fictional-gift?market=TEST&amp;currency=USD&amp;cart=one&amp;cart=two&amp;page=2" data-gift-link="10000000-0000-4000-8000-000000000001"><div class="gift-directory-card__media"><div class="fs-media fs-media--cover" data-media-state="ready" style="aspect-ratio:1000 / 1000"><img alt="Fictional gift photograph" class="fs-media__image" decoding="async" fetchPriority="auto" height="1000" loading="lazy" sizes="(max-width: 48rem) 45vw, (max-width: 64rem) 29vw, 22vw" src="/_next/image?url=https%3A%2F%2Fmedia.example.test%2Fprocessed%2Fv1%2Fsource%2Fvariant.webp&amp;w=828&amp;q=75" srcSet="/_next/image?url=https%3A%2F%2Fmedia.example.test%2Fprocessed%2Fv1%2Fsource%2Fvariant.webp&amp;w=32&amp;q=75 32w, /_next/image?url=https%3A%2F%2Fmedia.example.test%2Fprocessed%2Fv1%2Fsource%2Fvariant.webp&amp;w=48&amp;q=75 48w, /_next/image?url=https%3A%2F%2Fmedia.example.test%2Fprocessed%2Fv1%2Fsource%2Fvariant.webp&amp;w=64&amp;q=75 64w, /_next/image?url=https%3A%2F%2Fmedia.example.test%2Fprocessed%2Fv1%2Fsource%2Fvariant.webp&amp;w=96&amp;q=75 96w, /_next/image?url=https%3A%2F%2Fmedia.example.test%2Fprocessed%2Fv1%2Fsource%2Fvariant.webp&amp;w=128&amp;q=75 128w, /_next/image?url=https%3A%2F%2Fmedia.example.test%2Fprocessed%2Fv1%2Fsource%2Fvariant.webp&amp;w=256&amp;q=75 256w, /_next/image?url=https%3A%2F%2Fmedia.example.test%2Fprocessed%2Fv1%2Fsource%2Fvariant.webp&amp;w=384&amp;q=75 384w, /_next/image?url=https%3A%2F%2Fmedia.example.test%2Fprocessed%2Fv1%2Fsource%2Fvariant.webp&amp;w=640&amp;q=75 640w, /_next/image?url=https%3A%2F%2Fmedia.example.test%2Fprocessed%2Fv1%2Fsource%2Fvariant.webp&amp;w=750&amp;q=75 750w, /_next/image?url=https%3A%2F%2Fmedia.example.test%2Fprocessed%2Fv1%2Fsource%2Fvariant.webp&amp;w=828&amp;q=75 828w" style="object-position:50% 50%" width="1000"/></div></div><div class="gift-directory-card__body"><h2 lang="en">Fictional gift</h2><p class="gift-directory-card__description" lang="en">A fictional gift</p><p class="gift-directory-card__price"><span>From</span> <data class="fs-price" data-currency="USD" lang="en" value="1234"><bdi>$12.34</bdi></data></p></div></a></li></ul><nav class="gift-pagination" aria-label="Gift pages" data-gift-pagination="true"><p class="gift-pagination__summary">Page 2 of 3</p><div class="gift-pagination__controls"><a href="/en/gifts?cart=one&amp;cart=two&amp;market=TEST&amp;currency=USD&amp;page=1&amp;pageSize=12&amp;sort=RECOMMENDED&amp;availability=ALL" data-gift-previous="true">Previous page</a><ol class="gift-pagination__pages"><li><a href="/en/gifts?cart=one&amp;cart=two&amp;market=TEST&amp;currency=USD&amp;page=1&amp;pageSize=12&amp;sort=RECOMMENDED&amp;availability=ALL" data-gift-page="1" aria-label="Go to page 1">1</a></li><li><a href="/en/gifts?cart=one&amp;cart=two&amp;market=TEST&amp;currency=USD&amp;page=2&amp;pageSize=12&amp;sort=RECOMMENDED&amp;availability=ALL" data-gift-page="2" aria-current="page" aria-label="Go to page 2">2</a></li><li><a href="/en/gifts?cart=one&amp;cart=two&amp;market=TEST&amp;currency=USD&amp;page=3&amp;pageSize=12&amp;sort=RECOMMENDED&amp;availability=ALL" data-gift-page="3" aria-label="Go to page 3">3</a></li></ol><a href="/en/gifts?cart=one&amp;cart=two&amp;market=TEST&amp;currency=USD&amp;page=3&amp;pageSize=12&amp;sort=RECOMMENDED&amp;availability=ALL" data-gift-next="true">Next page</a></div></nav></section>"
+
+ ❯ src/storefront/gift-directory.test.tsx:147:20
+    145|   expect(html).toContain("$12.34");
+    146|   expect(html).toContain('loading="lazy"');
+    147|   expect(html).not.toContain("A fictional gift</p>");
+       |                    ^
+    148| });
+    149|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/storefront/gift-filter-cancellation.test.tsx > disclosure cancels a pending validator before animation frames or navigation complete
+AssertionError: expected undefined to be defined
+ ❯ src/storefront/gift-filter-cancellation.test.tsx:123:26
+    121|     } else if (action === "disclosure") {
+    122|       const disclosure = propsFor(tree, "data-gift-filter-disclosure",…
+    123|       expect(disclosure).toBeDefined();
+       |                          ^
+    124|       (disclosure!["onToggle"] as (event: unknown) => void)({
+    125|         currentTarget: { open: false },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/storefront/gift-filter-cancellation.test.tsx > sort cancels a pending validator before animation frames or navigation complete
+AssertionError: expected undefined to be defined
+ ❯ src/storefront/gift-filter-cancellation.test.tsx:129:20
+    127|     } else if (action === "sort") {
+    128|       const sort = propsFor(tree, "data-gift-toolbar-sort", true);
+    129|       expect(sort).toBeDefined();
+       |                    ^
+    130|       (sort!["onChange"] as (event: unknown) => void)({
+    131|         target: { value: "PRICE_ASC" },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/storefront/gift-filter-presentation.test.tsx > direct sorting preserves applied filters and repeated commerce context while returning to page one
+AssertionError: expected undefined to deeply equal Any<Array>
+
+- Expected:
+Any<Array>
+
++ Received:
+undefined
+
+ ❯ src/storefront/gift-filter-presentation.test.tsx:77:38
+     75|     basePath: "/gifts",
+     76|   });
+     77|   expect(boundary.props.sortOptions).toEqual(expect.any(Array));
+       |                                      ^
+     78|   const sort = boundary.props.sortOptions.find(
+     79|     (option: { value: string }) => option.value === "PRICE_DESC",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/storefront/gift-filter-presentation.test.tsx > the server-rendered toolbar keeps advanced fields behind a native closed disclosure and retains sorting links without JavaScript
+AssertionError: expected '<div class="gift-filters"><div class=…' to match /<details[^>]*data-gift-filter-disclos…/
+
+- Expected:
+/<details[^>]*data-gift-filter-disclosure/
+
++ Received:
+"<div class=\"gift-filters\"><div class=\"gift-filters__desktop\"><form class=\"gift-filter-form gift-filter-form--desktop\" data-gift-filters=\"desktop\"><div class=\"gift-filter-selects\"><label class=\"gift-filter-select\" for=\"_R_0_-desktop-sort\"><span>Sort by</span><select id=\"_R_0_-desktop-sort\" data-gift-sort=\"true\"><option value=\"RECOMMENDED\" selected=\"\">Recommended</option><option value=\"PRICE_ASC\">Price: low to high</option><option value=\"PRICE_DESC\">Price: high to low</option></select></label><label class=\"gift-filter-select\" for=\"_R_0_-desktop-category\"><span>Category</span><select id=\"_R_0_-desktop-category\" data-gift-category=\"true\"><option value=\"\">All categories</option><option value=\"FLOWERS\" selected=\"\">Flowers</option><option value=\"FOOD\">Food</option><option value=\"BEAUTY\">Beauty</option><option value=\"ACCESSORY\">Accessories</option><option value=\"OTHER\">Other gifts</option></select></label><label class=\"gift-filter-select\" for=\"_R_0_-desktop-availability\"><span>Availability</span><select id=\"_R_0_-desktop-availability\" data-gift-availability=\"true\"><option value=\"ALL\" selected=\"\">All gifts</option><option value=\"PURCHASABLE\">Available</option><option value=\"UNAVAILABLE\">Currently unavailable</option></select></label></div><fieldset class=\"gift-filter-prices\"><legend>Price range <span>(USD)</span></legend><p class=\"gift-filter-hint\" id=\"_R_0_-desktop-price-hint\">Enter USD amounts, for example 12.34.</p><div class=\"gift-filter-price-inputs\"><div class=\"fs-field\"><label class=\"fs-field__label\" for=\"_R_0_-desktop-minimum\">Minimum price</label><input inputMode=\"decimal\" autoComplete=\"off\" data-gift-price-min=\"true\" aria-describedby=\"_R_0_-desktop-price-hint\" class=\"fs-field__input\" id=\"_R_0_-desktop-minimum\" type=\"text\" name=\"priceMinimum\" value=\"\"/></div><div class=\"fs-field\"><label class=\"fs-field__label\" for=\"_R_0_-desktop-maximum\">Maximum price</label><input inputMode=\"decimal\" autoComplete=\"off\" data-gift-price-max=\"true\" aria-describedby=\"_R_0_-desktop-price-hint\" class=\"fs-field__input\" id=\"_R_0_-desktop-maximum\" type=\"text\" name=\"priceMaximum\" value=\"\"/></div></div></fieldset><div class=\"gift-filter-actions\"><button data-gift-apply=\"true\" class=\"fs-button fs-button--standard fs-button--primary\" type=\"submit\"><span class=\"fs-button__label\">Apply filters</span></button><a class=\"storefront-text-link\" href=\"/en/gifts?cart=preserve&amp;market=TEST&amp;currency=USD&amp;page=1&amp;pageSize=12&amp;sort=RECOMMENDED&amp;availability=ALL\" data-gift-reset=\"true\">Clear filters</a></div></form></div><div class=\"gift-filters__mobile\"><button class=\"fs-overlay-trigger\" data-overlay-trigger=\"drawer\" data-drawer-load-state=\"idle\" type=\"button\" tabindex=\"0\" aria-haspopup=\"dialog\" aria-expanded=\"false\">Filter and sort</button></div></div>"
+
+ ❯ src/storefront/gift-filter-presentation.test.tsx:120:16
+    118|     }),
+    119|   );
+    120|   expect(html).toMatch(/<details[^>]*data-gift-filter-disclosure/);
+       |                ^
+    121|   expect(html).not.toMatch(/<details[^>]*\bopen(?:=|\s|>)/);
+    122|   expect(html).toContain(`>${copy.giftFilters}`);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  5 failed | 15 passed (20)
+   Start at  16:57:34
+   Duration  733ms (transform 799ms, setup 0ms, import 1.15s, tests 389ms, environment 0ms)
+
+/Users/mario/Desktop/下单/apps/storefront:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/storefront@0.0.0 test: `vitest run --config ../../vitest.config.ts --root . src/storefront/gift-filter-presentation.test.tsx src/storefront/gift-filter-cancellation.test.tsx src/storefront/gift-directory.test.tsx`
+Exit status 1

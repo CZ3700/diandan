@@ -2,13 +2,13 @@
   min-width: 0;
 }
 .gift-directory-count {
-  margin-block: var(--space-6);
+  padding-block: var(--space-6);
   color: var(--color-text-muted);
 }
 .gift-directory-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-8) var(--space-6);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-12) var(--space-6);
   list-style: none;
   padding: 0;
   margin: 0;
@@ -39,13 +39,9 @@
 }
 .gift-directory .gift-directory-card__body :is(h2, h3) {
   margin: 0 0 var(--space-2);
-  font-size: calc(var(--space-4) * 1.25);
+  font-size: var(--type-body-size);
+  font-weight: 500;
   line-height: var(--type-body-leading);
-  overflow-wrap: anywhere;
-}
-.gift-directory-card__description {
-  margin: 0 0 var(--space-3);
-  color: var(--color-text-muted);
   overflow-wrap: anywhere;
 }
 .gift-directory-card__price {
@@ -71,6 +67,108 @@
 .gift-directory-state p {
   color: var(--color-text-muted);
 }
+.gift-filter-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3) var(--space-6);
+  padding-block: var(--space-4);
+  border-block: var(--border-width) solid var(--color-border);
+}
+.gift-filter-sort {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  min-width: 0;
+  max-width: 100%;
+}
+.gift-filter-sort-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  max-width: 100%;
+}
+.gift-filter-sort > span {
+  color: var(--color-text-muted);
+}
+.gift-filter-sort select {
+  min-width: 0;
+  max-width: 100%;
+  min-height: var(--space-12);
+  padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+.gift-filter-disclosure {
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
+}
+.gift-filter-disclosure summary,
+.gift-filters__mobile .fs-overlay-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-height: var(--space-12);
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+.gift-filter-disclosure summary {
+  list-style: none;
+}
+.gift-filter-disclosure summary::-webkit-details-marker {
+  display: none;
+}
+.gift-filter-disclosure-icon {
+  color: var(--color-accent);
+}
+.gift-filter-disclosure[open] .gift-filter-disclosure-icon {
+  transform: rotate(45deg);
+}
+.gift-filter-disclosure > .gift-filter-form {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: calc(100% + var(--space-3));
+  z-index: var(--layer-raised);
+  width: min(calc(var(--space-4) * 38), calc(100vw - var(--layout-gutter) * 2));
+}
+.gift-filter-summary,
+.gift-filter-summary ul,
+.gift-filter-sort-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-6);
+}
+.gift-filter-summary {
+  padding-block-start: var(--space-3);
+}
+.gift-filter-summary ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: var(--color-text-muted);
+}
+.gift-filter-sort-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--space-12);
+  text-decoration: underline;
+}
 .gift-filter-form {
   padding: var(--space-6);
   border: var(--border-width) solid var(--color-border);
@@ -79,7 +177,7 @@
 }
 .gift-filter-selects {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-4);
 }
 .gift-filter-select {
@@ -183,14 +281,10 @@
   gap: var(--space-2);
 }
 .gift-directory a:focus-visible,
+.gift-filter-toolbar :is(select, summary, button):focus-visible,
 .gift-filter-form :is(a, button, select):focus-visible {
   outline: var(--focus-ring-width) solid var(--color-accent);
   outline-offset: var(--focus-ring-offset);
-}
-@media (max-width: 64rem) {
-  .gift-directory-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 @media (max-width: 48rem) {
   .gift-directory-grid {

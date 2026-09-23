@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_WITH_RECORDED_SCOPE_LIMITS",
+  "timestamp": "2026-09-23T10:27:48.785212+00:00",
+  "scope": "P3-06 user-requested UI correction, local only",
+  "development": {
+    "command": "mise exec node@24.20.0 -- corepack pnpm check:dev",
+    "exitCode": 0,
+    "typecheck": {
+      "passed": 64,
+      "cached": 63
+    },
+    "test": {
+      "passed": 64,
+      "cached": 63
+    },
+    "build": {
+      "passed": 36,
+      "cached": 35
+    },
+    "adapterBoundary": "PASS",
+    "exportsImported": 32
+  },
+  "isolatedGift": {
+    "status": "PASS",
+    "assertions": 21898,
+    "cases": 8,
+    "screenshots": 55,
+    "axe": 10,
+    "violations": 0,
+    "incomplete": 0,
+    "pageErrors": [],
+    "actualPostgresAndTlsS3": true,
+    "artifact": "production-compiled under TEST",
+    "actualCartMutation": false
+  },
+  "localUi": {
+    "status": "PASS",
+    "checks": 581,
+    "cases": 61,
+    "screenshots": 61,
+    "axe": 56,
+    "violations": 0,
+    "incomplete": 7,
+    "incompleteReview": "7 mobile aria-hidden-focus sentinel findings retained; 12 Tab and 12 Shift+Tab per locale plus Escape/focus return verified within 500ms; not human screen-reader approval",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "viewports": [
+      [
+        390,
+        844
+      ],
+      [
+        1440,
+        900
+      ]
+    ],
+    "reflowWidths": [
+      320
+    ],
+    "locales": [
+      "en",
+      "zh-CN",
+      "th",
+      "vi",
+      "ja",
+      "es",
+      "pt"
+    ]
+  },
+  "protection": {
+    "originalUntrackedCount": 6144,
+    "changedOriginalUntracked": [],
+    "frozenSourceFiles": 18,
+    "sourceDrift": []
+  },
+  "localInstance": {
+    "id": "acceptance-e143d720dd1a4357a3c3",
+    "restartedAndOpened": true,
+    "reset": false
+  },
+  "review": "ACCEPT by /root/ui_alignment_review; final browser outcomes verified by root",
+  "scopeLimits": [
+    "No full pnpm check was run in this UI correction; check:dev and actual affected integration/browser were run.",
+    "Exploratory JavaScript-disabled page probe shows content inside pre-existing hidden Next streamed container S:4. Native form markup does not imply complete no-JavaScript page usability.",
+    "No new physical-phone, human screen-reader, critical translation, Lighthouse/production performance or merchant/staging acceptance.",
+    "P3-06 remains IN_PROGRESS; Phase 6/7 remain LOCKED; counts unchanged."
+  ],
+  "secretScan": {
+    "status": "PASS",
+    "exitCode": 0,
+    "evidence": "secrets-final-rescan.txt",
+    "rawSha256": "c5de5c7294bce3c849ea5b4d2c4df1edc669c7858437ffd95fa7af48e078d2c1"
+  },
+  "stagedDiffCheck": "PASS"
+}

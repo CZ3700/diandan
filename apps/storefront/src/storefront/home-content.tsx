@@ -128,25 +128,27 @@ export function HomeContent({
             <Icon name="arrow-right" decorative />
           </a>
         </div>
-        <div className="storefront-featured-shortcuts">
-          {artists.map((slot) =>
-            slot.status === "AVAILABLE" &&
-            slot.content.content.kind === "IDOL" ? (
-              <a
-                key={slot.slotKey}
-                href={storefrontHref(
-                  locale,
-                  `/idols/${slot.content.content.view.handle}`,
-                  contextQuery,
-                )}
-                lang={slot.content.content.view.localeContext.resolvedLocale}
-              >
-                {slot.content.content.view.displayName}
-                <Icon name="arrow-right" decorative />
-              </a>
-            ) : null,
-          )}
-        </div>
+        {!directory && (
+          <div className="storefront-featured-shortcuts">
+            {artists.map((slot) =>
+              slot.status === "AVAILABLE" &&
+              slot.content.content.kind === "IDOL" ? (
+                <a
+                  key={slot.slotKey}
+                  href={storefrontHref(
+                    locale,
+                    `/idols/${slot.content.content.view.handle}`,
+                    contextQuery,
+                  )}
+                  lang={slot.content.content.view.localeContext.resolvedLocale}
+                >
+                  {slot.content.content.view.displayName}
+                  <Icon name="arrow-right" decorative />
+                </a>
+              ) : null,
+            )}
+          </div>
+        )}
         {directory}
       </section>
       <section

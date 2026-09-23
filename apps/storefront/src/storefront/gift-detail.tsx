@@ -51,6 +51,16 @@ export function GiftDetail({
   };
   const path = `/gifts/${gift.handle}`;
   const estimate = gift.deliveryEstimate;
+  const recipient = (
+    <GiftDetailRecipient
+      artists={artists}
+      {...(commerce ? { recipient: commerce.recipient } : {})}
+      locale={locale}
+      copy={copy}
+      contextQuery={contextQuery}
+      path={path}
+    />
+  );
   return (
     <article className="gift-detail" data-gift-detail={gift.id}>
       <div className="gift-breadcrumb">
@@ -108,14 +118,6 @@ export function GiftDetail({
               {gift.shortDescription}
             </p>
           )}
-          <GiftDetailRecipient
-            artists={artists}
-            {...(commerce ? { recipient: commerce.recipient } : {})}
-            locale={locale}
-            copy={copy}
-            contextQuery={contextQuery}
-            path={path}
-          />
           {commerce ? (
             <GiftPurchase
               gift={commerce}
@@ -123,9 +125,12 @@ export function GiftDetail({
               copy={copy}
               contextQuery={contextQuery}
               {...(variantId ? { variantId } : {})}
-            />
+            >
+              {recipient}
+            </GiftPurchase>
           ) : (
             <>
+              {recipient}
               {marketError && <p role="status">{copy.marketInvalid}</p>}
               <GiftDetailMarkets
                 context={context}

@@ -1,0 +1,9 @@
+$ node ./scripts/local-experience.mjs start --instance acceptance-e143d720dd1a4357a3c3 --open
+{
+  "ready": true,
+  "instance": "acceptance-e143d720dd1a4357a3c3",
+  "front": "https://storefront.example.invalid:53381/en",
+  "admin": "https://admin.example.invalid:53382",
+  "open": "pnpm local:open --instance acceptance-e143d720dd1a4357a3c3"
+}
+已打开前台、管理中心和本地测试收件箱。

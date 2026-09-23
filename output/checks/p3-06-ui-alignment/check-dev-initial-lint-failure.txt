@@ -1,0 +1,76 @@
+$ node ./scripts/check-development.mjs
+Development checks only; success is not formal acceptance. Use pnpm check and task-specific acceptance separately.
+Scope: all workspaces; consumers: all-workspaces.
+[check:dev] workspace
+Workspace validation passed: 4 apps, 32 packages, 36 units, no dependency cycles.
+[check:dev] domain-boundaries
+Domain boundary validation passed
+[check:dev] format
+$ prettier --check README.md .github .secretlintrc.json apps packages scripts provider-fixtures infra/compose.preview.yml database/migrations/manifest.json database/schema/expected-catalog.json eslint.config.mjs package.json pnpm-workspace.yaml tsconfig.base.json turbo.json vitest.config.ts
+Checking formatting...
+All matched files use Prettier code style!
+[check:dev] lint
+$ eslint . --max-warnings=0
+
+/Users/mario/Desktop/下单/output/checks/p3-06-ui-alignment/audit.mjs
+   9:193  error  'URL' is not defined              no-undef
+  14:19   error  'URLSearchParams' is not defined  no-undef
+  19:46   error  'document' is not defined         no-undef
+  19:125  error  'innerHeight' is not defined      no-undef
+  21:77   error  'document' is not defined         no-undef
+  21:114  error  'innerWidth' is not defined       no-undef
+  21:145  error  'document' is not defined         no-undef
+  21:252  error  'document' is not defined         no-undef
+  21:343  error  'document' is not defined         no-undef
+
+/Users/mario/Desktop/下单/output/checks/p3-06-ui-alignment/candidate.mjs
+   9:193  error  'URL' is not defined              no-undef
+  14:19   error  'URLSearchParams' is not defined  no-undef
+  19:46   error  'document' is not defined         no-undef
+  19:125  error  'innerHeight' is not defined      no-undef
+  21:77   error  'document' is not defined         no-undef
+  21:114  error  'innerWidth' is not defined       no-undef
+  21:145  error  'document' is not defined         no-undef
+  21:252  error  'document' is not defined         no-undef
+  21:343  error  'document' is not defined         no-undef
+
+/Users/mario/Desktop/下单/output/checks/p3-06-ui-alignment/hero-budget.mjs
+  1:27   error  'writeFile' is defined but never used       @typescript-eslint/no-unused-vars
+  6:7    error  'facts' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  9:193  error  'URL' is not defined                        no-undef
+
+/Users/mario/Desktop/下单/output/checks/p3-06-ui-alignment/keyboard-probe.mjs
+   1:27   error  'writeFile' is defined but never used   @typescript-eslint/no-unused-vars
+   3:20   error  'expect' is defined but never used      @typescript-eslint/no-unused-vars
+   4:8    error  'AxeBuilder' is defined but never used  @typescript-eslint/no-unused-vars
+  10:193  error  'URL' is not defined                    no-undef
+  13:18   error  'URLSearchParams' is not defined        no-undef
+  16:27   error  'window' is not defined                 no-undef
+  16:101  error  'document' is not defined               no-undef
+  16:136  error  'window' is not defined                 no-undef
+  16:197  error  'document' is not defined               no-undef
+  17:72   error  'document' is not defined               no-undef
+  18:116  error  'getComputedStyle' is not defined       no-undef
+  18:235  error  'window' is not defined                 no-undef
+  20:196  error  'URL' is not defined                    no-undef
+  20:382  error  'URL' is not defined                    no-undef
+
+/Users/mario/Desktop/下单/output/checks/p3-06-ui-alignment/verify.mjs
+  10:193  error  'URL' is not defined               no-undef
+  14:17   error  'URLSearchParams' is not defined   no-undef
+  29:29   error  'document' is not defined          no-undef
+  30:35   error  'document' is not defined          no-undef
+  30:73   error  'innerWidth' is not defined        no-undef
+  31:35   error  'matchMedia' is not defined        no-undef
+  39:72   error  'getComputedStyle' is not defined  no-undef
+  64:37   error  'document' is not defined          no-undef
+  64:103  error  'document' is not defined          no-undef
+  69:21   error  'URL' is not defined               no-undef
+  78:182  error  'document' is not defined          no-undef
+  78:220  error  'innerWidth' is not defined        no-undef
+
+✖ 47 problems (47 errors, 0 warnings)
+
+[ELIFECYCLE] Command failed with exit code 1.
+[check:dev] stopped at lint (exit 1); later checks did not run.
+[ELIFECYCLE] Command failed with exit code 1.

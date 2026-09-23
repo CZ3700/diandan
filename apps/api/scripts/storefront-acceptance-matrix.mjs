@@ -470,22 +470,53 @@ export async function verifyAcceptanceBrowser(input) {
         "real gift page two contains no page one duplicates",
       );
       const filters = page.locator('[data-gift-filters="desktop"]');
-      await filters.locator("[data-gift-sort]").selectOption("PRICE_DESC");
+      const toolbarSort = page.locator("[data-gift-toolbar-sort]");
+      const beforeSort = page.url();
+      await toolbarSort.selectOption("PRICE_DESC");
+      check(
+        page.url() === beforeSort,
+        "changing the desktop sort selection does not navigate before explicit submit",
+      );
+      await navigate(page.locator("[data-gift-toolbar-apply]"));
+      const sorted = new globalThis.URL(page.url());
+      check(
+        sorted.searchParams.get("sort") === "PRICE_DESC" &&
+          sorted.searchParams.get("page") === "1" &&
+          sorted.searchParams.get("market") === fixtures.markets[0].market &&
+          sorted.searchParams.get("currency") === fixtures.markets[0].currency,
+        "explicit desktop sort submit resets page and preserves the actual market and currency",
+      );
+      await page.locator(".gift-filter-disclosure summary").click();
+      await filters.waitFor({ state: "visible" });
       await filters.locator("[data-gift-price-min]").fill("10.00");
       await filters.locator("[data-gift-price-max]").fill("20.00");
       await navigate(filters.locator("[data-gift-apply]"));
       check(
         new globalThis.URL(page.url()).searchParams.get("priceMinMinor") ===
           "1000" &&
+          new globalThis.URL(page.url()).searchParams.get("priceMaxMinor") ===
+            "2000" &&
+          new globalThis.URL(page.url()).searchParams.get("sort") ===
+            "PRICE_DESC" &&
           new globalThis.URL(page.url()).searchParams.get("page") === "1",
-        "filter navigation preserves exact minor units and resets page",
+        "filter navigation preserves exact minor units and applied sort and resets page",
       );
       await page.goBack({ waitUntil: "networkidle" });
       await page.waitForFunction(
         () =>
-          globalThis.document.querySelector(
-            '[data-gift-filters="desktop"] [data-gift-sort]',
-          )?.value === "PRICE_ASC",
+          globalThis.document.querySelector("[data-gift-toolbar-sort]")
+            ?.value === "PRICE_DESC",
+      );
+      check(
+        (await filters.locator("[data-gift-price-min]").inputValue()) === "" &&
+          new globalThis.URL(page.url()).searchParams.get("page") === "1",
+        "native Back restores the directly sorted page before amount filters",
+      );
+      await page.goBack({ waitUntil: "networkidle" });
+      await page.waitForFunction(
+        () =>
+          globalThis.document.querySelector("[data-gift-toolbar-sort]")
+            ?.value === "PRICE_ASC",
       );
       check(
         (await filters.locator("[data-gift-price-min]").inputValue()) === "" &&

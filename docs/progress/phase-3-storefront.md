@@ -4,6 +4,31 @@
 > 任务：6  
 > 解锁条件：Phase 1 与 Phase 2 退出门禁均通过
 
+## P3-06 用户验收后的视觉与交互对齐（2026-09-23）
+
+- 用户已完成本地功能体验并反馈无误，明确要求优化与原批准方案差异较大的UI排版与交互。此项是当前ACTIVE P3-06的用户要求修正，恢复原任务执行，不领取Phase6/7或扩大业务范围；31 DONE/6 IN_PROGRESS/0 READY/12 PENDING保持。
+- Owner：Codex `/root`，开始 `2026-09-23T09:52:34.532960+00:00`，基线 `75c255fa`，分支 `codex/p3-06-ui-alignment`。root独占协调/真实浏览器/进度与Git；本次视觉实施占Lane B，验证占Lane D，子代理只执行有界委派，不另领Task。首个只读子任务visual_baseline_audit负责原V2设计与当前源码对比。
+- 目标：延续ADR-008已批准的中性炭黑、原色摄影与克制金色动作；先验证手机首屏图文/CTA、目录搜索筛选密度、礼物与购买层级、管理中心简单上传。仅修有实际页面或源对照证据的呈现问题；业务合同、数据库、价格/库存/支付状态、安全边界和用户测试数据不改。
+- 方法：先捕获当前本地真实页面并与用户指定的原V2目标截图对照，记录优先项；行为更改先失败测试。复用既有tokens、组件与消息目录，不另起样板替代产品。精确实施文件在审视完成后追加。
+- 验证：相关单测、format/lint/typecheck/build；实际七语言390×844及1440×900、键盘/错误/空/reduced-motion、必要320px/缩放；独立复核与S.U.P.E.R十项。浏览器连接不能访问带专用DNS/TLS的local profile时，沿项目用户指令使用既有Playwright测试方式，不改系统hosts/CA或放宽页面安全策略。证据集中`output/checks/p3-06-ui-alignment/`。
+- 保护：初始未跟踪SHA清单见上述目录，当前两份next-env由已运行本地Next生成，正常停止再构建；不删除/重置用户实例。仅本地提交，不push/云部署。设计优化不冒称“所有用户体验最优”、真人读屏或线上性能过门。
+- 实际审视：新截图before/手机首页、双端礼物目录/详情与管理中心已经捕获并目视。确认手机Hero比V2高约150px、桌面筛选大表单占约393px导致商品落到首屏底部、目录四列密度与V2三列不同、详情价格在收礼人及规格之后过深。管理中心简单导航和单个新增动作仍清晰，本轮不改变后台业务或无依据重排。
+- 精确实施所有权：root负责storefront.css、home-content.tsx（及其相关展示测试）恢复手机海报节奏/移除重复艺人捷径；visual_baseline_audit负责gift-directory.css、gift-directory-card.tsx、gift-filters*.tsx、gift-filter-types.ts及相关tests，紧凑筛选/三列目录与金额优先；gift_purchase_layout负责gift-detail.tsx、gift-purchase.tsx、gift-detail.css及对应tests，收敛详情价格/收礼人/购买层级。共享tokens、contracts、消息目录与生产交易控制器冻结。三个子范围属于同一修正任务，文件互斥，root统一集成验收。
+
+- 集成补充：root收回gift-detail.css微调桌面标题/价格的字号层级；gift_purchase_layout委派更新三个既有浏览器工具（gift-storefront-browser.mjs、storefront-acceptance-matrix.mjs、storefront-acceptance-lazy-validation.mjs），适配排序直接导航与details展开，原金额/历史/取消断言不弱化。ui_alignment_review只读独立复核。
+
+- 独立复核修正：初版排序onChange整页导航被P2评审否决，已按W3C F36改为原生GET排序表单+明确应用，先2个失败测试再63 tests绿色；高级金额仍原hydration边界。中间398断言/61场景/56axe零违规的结果保留，但不冒充最终排序结论。原未跟踪6144逐SHA仍不变、18个产品/工具输入冻结。完整check:dev已通过（typecheck/test64 tasks、build36；缓存62/62/34），独立实际PG/S3/生产编译浏览器及最终用户实例矩阵继续验收。
+
+### 本轮完成与边界
+
+- 视觉修正本地ACCEPT：手机Hero 487.5→337.594px，完整艺人目录移除重复捷径；礼物桌面三列/手机两列、可选高级筛选、明确排序提交/金额错误焦点/取消/历史恢复；详情真实价格前置、单规格静态、标题/金额/购买层级收紧。管理中心简单上传流程经目视维持。没有交易业务、API、数据库或消息目录变更。
+- 最终check:dev exit0：typecheck/test各64/64（各63 cached）、build36/36（35 cached）；adapter边界、32exports、精确新增工具lint/format通过。没有把它说成单条完整pnpm check。原P3礼物浏览器占位按钮和按需数量上限断言已按当前P4真实form/contract纠正；原失败保留，未为测试改产品。
+- 实际PG/TLS S3、生产编译TEST礼物回归21898断言/8场景/55PNG/10axe，违规/incomplete/pageerror均0；覆盖真实供给/收礼人/数量及异常，不冒充新的一次加购交易或真实支付。用户持久实例最终七语双基准尺寸+320px：581检查/61场景/61PNG/56axe，0违规/0页面错误/0控制台错误。7条移动焦点守卫incomplete保留，七语各12Tab+12ShiftTab及Escape回焦点通过；不冒充真人读屏。截图工具预先改loading导致的hydration警告已定位并以无属性修改的滚动/decode取代，失败诊断完整保留。
+- 探索性无JS页面检查发现既有Next流式内容处于hidden S:4，页面工厂未变；原生GET表单不等于整站无JS可用。该边界、真机/人工读屏/关键译审、正式性能与真实商户/staging不计为本轮通过；不扩大本任务改SSR架构。
+- 非作者复核两次ACCEPT、code-simplifier局部收敛及S.U.P.E.R十项按本轮范围PASS；证据 `output/checks/p3-06-ui-alignment/README.md` / `final-verification.json` / `final-review.md`。6144原未跟踪、18实现/工具SHA保护通过。原持久实例已启动并打开、未reset；只本地提交、无push。
+- root释放本次Lane B/D，P3-06保持IN_PROGRESS（外部门保留），全局31 DONE /6 IN_PROGRESS /0 READY /12 PENDING，Phase6/7仍LOCKED。后续回到既定剩余交付排期，并保留用户实际体验反馈入口。
+
+
 ## P3-06 七语言 H2 完整实验室矩阵（2026-09-21）
 
 - Owner：Codex `/root`，继续同一 ACTIVE P3-06、Lane D 唯一 executor；开始 `2026-09-21T16:33:17.693606+00:00`，基线 `bfe259a`。用户要求连续完成余下2+18项，先闭合已有技术缺口；未满足依赖的任务不冒领，29/2/18暂不变。

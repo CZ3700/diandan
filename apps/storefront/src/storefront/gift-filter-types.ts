@@ -26,4 +26,12 @@ export type GiftFilterClientProps = GiftFilterProps &
     resetHref: string;
     recoveryHref: string;
     hint: string;
+    sortOptions: ReadonlyArray<
+      Readonly<{
+        value: GiftDiscoveryQuery["sort"];
+        label: string;
+        href: string;
+      }>
+    >;
+    appliedFilters: ReadonlyArray<string>;
   }>;
