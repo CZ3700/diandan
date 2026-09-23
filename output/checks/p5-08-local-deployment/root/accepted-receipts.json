@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "instance": "acceptance-e143d720dd1a4357a3c3",
+  "scope": "read-only persisted platform and TEST provider receipts after the accepted restart",
+  "orders": [
+    {
+      "order_status": "CANCELED",
+      "payment_status": "UNPAID",
+      "fulfillment_status": "PENDING",
+      "count": 1
+    },
+    {
+      "order_status": "OPEN",
+      "payment_status": "REFUNDED",
+      "fulfillment_status": "DELIVERED",
+      "count": 1
+    }
+  ],
+  "providerCaptures": 1,
+  "providerRefunds": 1,
+  "signedDeliveryAcknowledgements": 2,
+  "verifiedInboxReceipts": 2,
+  "providerCalls": [
+    {
+      "operation": "CREATE_PAYMENT",
+      "count": 1
+    },
+    {
+      "operation": "GET_CAPABILITIES",
+      "count": 2
+    },
+    {
+      "operation": "RECONCILE_REFUND",
+      "count": 1
+    },
+    {
+      "operation": "REFUND_PAYMENT",
+      "count": 1
+    }
+  ],
+  "status": "PASS",
+  "assertions": 7
+}

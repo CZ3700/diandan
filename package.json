@@ -58,7 +58,14 @@
     "verify:admin-finance:browser": "corepack pnpm --filter @fan-support/api test:browser:admin-finance",
     "verify:admin-payment-configuration:browser": "corepack pnpm --filter @fan-support/api test:browser:admin-payment-configuration",
     "verify:admin-exceptions:browser": "corepack pnpm --filter @fan-support/api test:browser:admin-exceptions",
-    "verify:psp-onboarding": "node ./scripts/verify-psp-onboarding.mjs"
+    "verify:psp-onboarding": "node ./scripts/verify-psp-onboarding.mjs",
+    "local:start": "node ./scripts/local-experience.mjs start",
+    "local:stop": "node ./scripts/local-experience.mjs stop",
+    "local:status": "node ./scripts/local-experience.mjs status",
+    "local:open": "node ./scripts/local-experience.mjs open",
+    "local:reset": "node ./scripts/local-experience.mjs reset",
+    "check:infrastructure": "node ./scripts/check-infrastructure.mjs",
+    "verify:local-experience": "node ./scripts/verify-local-experience.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

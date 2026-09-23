@@ -19,7 +19,7 @@
 | P5-05 | IN_PROGRESS | —（本地完整验收，Lane C 已释放） | P5-01、P5-04 本地完整验收 | 草稿/审核/差异/发布回退与双进程传播已验收；正式商户能力/关键译审/实际配置保留 |
 | P5-06 | DONE | Codex `/root`（Lane D 已释放） | P5-01、P1-06、P5-03 本地完整验收 | 同一管理中心四类异常/安全重放、PG/HTTP/七语双端与独立复核通过 |
 | P5-07 | DONE | Codex `/root`（Lane D 已释放） | P5-04/05 本地完整验收、P5-06 DONE | 接入手册、完整 conformance/七阶段 TEST 演练、最终质量门及独立验收通过 |
-| P5-08 | READY | —（Lane D 空闲） | P0-05、P1-05、P3-06、P4-06、P5-05/06/07 | 仅有限本地；原依赖本地成果独立核对通过；离线 OpenTofu/部署工具与持久本地体验；云 staging 原门保留 |
+| P5-08 | IN_PROGRESS | —（有限本地范围 ACCEPT，Lane D 已释放） | P0-05、P1-05、P3-06、P4-06、P5-05/06/07 | 离线 OpenTofu/部署工具与完整持久本地体验已验收；真实云 staging/生产装配原门保留 |
 
 ## 必须证明
 
@@ -29,6 +29,31 @@
 - 新 PSP 需要代码部署和认证测试，运营不能上传代码。
 - 不支持/低置信度语言的留言进入人工队列而不自动批准；用户可见支付名称/提示七语言完整。
 - OpenTofu 可从干净环境重复建立 production-like staging；四镜像固定 digest，RDS/S3/CloudFront/WAF/KMS/IAM、预算与配额通过 smoke，production apply 仍受 Phase 7 灰度门控制。
+
+## P5-08 执行登记（2026-09-22）
+
+- Owner：Codex `/root`，Lane D 唯一 executor；开始 `2026-09-22T12:24:38.308166+00:00`，基线 `fb88492eba0b9ef4ec3144ea12c106224c1cc8a8`，分支 `codex/p5-08-local-deployment`。原七直接依赖已在 P5-07 `next-stage-readiness.md` 非作者验收，本轮基线2587源输入逐SHA一致；仅领取P5-08。
+- 输入/输出：复用四应用、已验收端口与业务/运营闭环；交付 ADR-007 OpenTofu 离线模块/校验、不可变镜像部署/回退工具，并组合持久PG/媒体、本地OIDC、前后台/Worker/TEST PSP的统一体验。停止默认保留数据，显式重置隔离数据；新上传艺人仅在TEST初始化合成履约资料，不放宽生产预检。
+- 计划：先审计部署与真实运行组合，冻结本地启动配置/文件归属；基础设施及持久组合独立实施；受影响失败测试、真实PG/媒体/HTTP及跨重启保持，再七语双端完整上传→选购→付款→安全查单→订单处理→退款，非作者规格/质量验收后本地提交。
+- 验证：OpenTofu fmt/validate/无AWS调用的测试plan；固定四镜像digest/网络/权限/缓存/预算与回退配置检查；启动/停止/失败清理/重复启动/重启数据保持；format/lint/typecheck/build、秘密扫描、原合同/74SQL/5993未跟踪保护、S.U.P.E.R10项与浏览器390×844/1440×900键盘/错误/reduced-motion。
+- 边界：不push/merge、无AWS apply、真实资金或正式内容发布；staging plan/apply/smoke/re-apply、实际IAM/KMS/WAF/预算触达等原完整验收保留，不能因离线通过把P5-08标DONE。Phase6/7仍LOCKED，31 DONE /6 IN_PROGRESS /0 READY /12 PENDING=49。完整本地体验验收通过才通知用户准备服务器。
+
+### P5-08 续接检查点（2026-09-23）
+
+- 继续原 P5-08 / Lane D 领取，未另领后继；上次中断时尚无本轮提交，原文件和测试实例均保留。
+- 已复核持久 `test-p508` 四应用健康；此前真实管理上传艺人/礼物、OIDC、支付配置独立七语复核→两次发布→回退已取得局部证据。局部模式统一 `PARTIAL_PASS`，不算完整体验交付。
+- 当前补齐首次首页严格媒体链路、Next HTTPS image optimizer 的 CA 参数、同实例完整购买/安全查单/履约/取消退款/重启证据与并发陈旧锁回收。云 apply、真实商户/资金、正式内容及 Phase6/7 门不变。
+
+### P5-08 本地最终验收（2026-09-23）
+
+- 统一入口 `mise exec node@24.20.0 -- corepack pnpm verify:local-experience --keep` 单条 exit0；全新 `acceptance-e143d720dd1a4357a3c3` 从空PG开始，FULL799断言/18场景，停止后重启RESTART109/1场景。55PNG/55axe零violations/incomplete、全部已监听页面0pageerror/0observer失败；不是把PARTIAL_PASS拼成完整PASS。
+- 真正本地OIDC→上传艺人/礼物/海报→七语390×844和1440×900→私密留言/结账→托管TEST付款→自动只读确认→邮件安全查单→审核/准备/送达→退款→第二未付款单取消→双人七语配置审批/两次发布/回退。原attempt首次REQUIRES_ACTION后SUCCEEDED，全程只发送一次create。真实持久库回执额外核对一次capture/一次退款、两条签名投递ACK/两条inbox。
+- 重启逐SHA核对私有配置、TLS/身份密钥和媒体字节（仅内存比较，不公开密钥hash），实际UI核对原退款ID/金额、原市场/币种、艺人/礼物/当前海报媒体指针、取消单与支付配置head。原暂停数据与失败证据均保留，未reset用户实例。
+- 单测57/57（含8进程/陈旧锁竞争、失败停止/所有权reset、首页Unicode边界）；原生PG首次中断恢复4断言，完整bootstrap26断言，独立TLS OIDC/PSP/加密邮件恢复通过。OpenTofu1.12.6/provider6.66.0三root六module共14命令、10个mock plan通过；没有AWS调用/真实cloud plan或apply。
+- `pnpm check:dev` 最终exit0：types64/64、tests64/64、build36/36（缓存63/63/35），format/lint/工作区和领域边界通过；合同生成件、adapter边界、32exports以及秘密扫描通过。原700合同roots/127paths/204components、74SQL/37迁移保持；5993原未跟踪文件逐SHA保护。生产源码只修有效PSP回跳时的有界只读轮询，27项相关tests及真实自动确认通过，不改付款权威。
+- 非作者最终`ACCEPT_LOCAL_SCOPE`、root对并发锁代码另行非作者审阅、S.U.P.E.R1–10 PASS（仅验收范围）。历史失败/诊断与开发模式提示按`root/failure-history.md`及`final-verification.md`保留，不冒称所有开发console输出为零。
+- 交付：`docs/runbooks/local-experience.md`；证据`output/checks/p5-08-local-deployment/final-verification.md`、`final-gates.json`、`acceptance/acceptance-e143d720dd1a4357a3c3/report.json`。本地体验已达到通知用户可准备线上测试云资源方案的条件。
+- 范围：仅本地提交，不push/merge。P5-08继续IN_PROGRESS且释放Lane D；真实staging plan/apply/smoke/re-apply、生产业务composition、正式身份/MFA/KMS/商户/邮件、IAM/S3/CDN/WAF/预算/配额与恢复/灰度仍待原门。Phase6/7仍LOCKED，未另领后继；31 DONE /6 IN_PROGRESS /0 READY /12 PENDING=49。
 
 ## P5-07 执行登记（2026-09-22）
 
@@ -98,7 +123,7 @@
 
 ## Phase 退出证据
 
-尚无完整 Phase 退出证据。ADR-016 下 P5-03/04/05 已完整本地验收并保留原外部门，均无 executor；P5-06/07 原定范围全部验收 DONE、Lane D 释放。P5-08 原七直接依赖的适用本地成果经当前源与非作者核对后，有限离线模块/部署工具及持久本地体验 READY，尚未领取；云 staging 原完整验收不变。Phase6/7仍LOCKED，真实商户/云/人工/发布门不变。
+尚无完整 Phase 退出证据。ADR-016 下 P5-03/04/05 已完整本地验收并保留原外部门，均无 executor；P5-06/07 原定范围全部验收 DONE、Lane D 释放。P5-08 有限离线模块/部署工具及持久本地体验已本地完整验收并非作者ACCEPT、Lane D释放，任务保留IN_PROGRESS；云 staging 与生产装配原完整验收不变。Phase6/7仍LOCKED，真实商户/云/人工/发布门不变。
 
 ## ADR-016 当前排期登记（2026-09-22）
 

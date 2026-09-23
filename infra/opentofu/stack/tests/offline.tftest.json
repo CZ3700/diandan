@@ -1,0 +1,395 @@
+{
+  "mock_provider": {
+    "aws": [
+      {
+        "mock_data": {
+          "aws_ec2_managed_prefix_list": {
+            "defaults": {
+              "id": "pl-0123456789abcdef0"
+            }
+          },
+          "aws_servicequotas_service_quota": {
+            "defaults": {
+              "value": 500
+            }
+          },
+          "aws_ecr_repository": {
+            "defaults": {
+              "arn": "arn:aws:ecr:us-east-1:000000000000:repository/offline-fixture",
+              "registry_id": "000000000000"
+            }
+          }
+        },
+        "mock_resource": {
+          "aws_kms_key": {
+            "defaults": {
+              "arn": "arn:aws:kms:us-east-1:000000000000:key/11111111-1111-1111-1111-111111111111",
+              "id": "11111111-1111-1111-1111-111111111111"
+            }
+          },
+          "aws_iam_role": {
+            "defaults": {
+              "arn": "arn:aws:iam::000000000000:role/offline-fixture"
+            }
+          },
+          "aws_sns_topic": {
+            "defaults": {
+              "arn": "arn:aws:sns:us-east-1:000000000000:offline-fixture"
+            }
+          },
+          "aws_ce_anomaly_monitor": {
+            "defaults": {
+              "arn": "arn:aws:ce::000000000000:anomalymonitor/11111111-1111-1111-1111-111111111111"
+            }
+          },
+          "aws_lb": {
+            "defaults": {
+              "arn": "arn:aws:elasticloadbalancing:us-east-1:000000000000:loadbalancer/app/offline-fixture/1111111111111111",
+              "arn_suffix": "app/offline-fixture/1111111111111111",
+              "dns_name": "internal-fixture.us-east-1.elb.amazonaws.com",
+              "zone_id": "Z0000000000000"
+            }
+          },
+          "aws_lb_target_group": {
+            "defaults": {
+              "arn": "arn:aws:elasticloadbalancing:us-east-1:000000000000:targetgroup/offline-fixture/1111111111111111",
+              "arn_suffix": "targetgroup/offline-fixture/1111111111111111"
+            }
+          },
+          "aws_lb_listener": {
+            "defaults": {
+              "arn": "arn:aws:elasticloadbalancing:us-east-1:000000000000:listener/app/offline-fixture/1111111111111111/2222222222222222"
+            }
+          },
+          "aws_ecs_cluster": {
+            "defaults": {
+              "arn": "arn:aws:ecs:us-east-1:000000000000:cluster/offline-fixture",
+              "id": "arn:aws:ecs:us-east-1:000000000000:cluster/offline-fixture"
+            }
+          },
+          "aws_ecs_task_definition": {
+            "defaults": {
+              "arn": "arn:aws:ecs:us-east-1:000000000000:task-definition/offline-fixture:1"
+            }
+          },
+          "aws_db_instance": {
+            "defaults": {
+              "arn": "arn:aws:rds:us-east-1:000000000000:db:offline-fixture",
+              "master_user_secret": [
+                {
+                  "secret_arn": "arn:aws:secretsmanager:us-east-1:000000000000:secret:rds-offline-abcDEF",
+                  "kms_key_id": "11111111-1111-1111-1111-111111111111",
+                  "secret_status": "active"
+                }
+              ]
+            }
+          },
+          "aws_cloudfront_distribution": {
+            "defaults": {
+              "arn": "arn:aws:cloudfront::000000000000:distribution/E0000000000000",
+              "id": "E0000000000000",
+              "domain_name": "d0000000000000.cloudfront.net",
+              "hosted_zone_id": "Z2FDTNDATAQYW2"
+            }
+          },
+          "aws_cloudfront_function": {
+            "defaults": {
+              "arn": "arn:aws:cloudfront::000000000000:function/offline-fixture"
+            }
+          },
+          "aws_wafv2_web_acl": {
+            "defaults": {
+              "arn": "arn:aws:wafv2:us-east-1:000000000000:global/webacl/offline-fixture/11111111-1111-1111-1111-111111111111"
+            }
+          },
+          "aws_acm_certificate": {
+            "defaults": {
+              "arn": "arn:aws:acm:us-east-1:000000000000:certificate/11111111-1111-1111-1111-111111111111",
+              "domain_validation_options": [
+                {
+                  "domain_name": "shop.example.invalid",
+                  "resource_record_name": "_fixture.shop.example.invalid",
+                  "resource_record_type": "CNAME",
+                  "resource_record_value": "_fixture.acm-validations.aws."
+                },
+                {
+                  "domain_name": "admin.example.invalid",
+                  "resource_record_name": "_fixture.admin.example.invalid",
+                  "resource_record_type": "CNAME",
+                  "resource_record_value": "_fixture.acm-validations.aws."
+                },
+                {
+                  "domain_name": "origin.example.invalid",
+                  "resource_record_name": "_fixture.origin.example.invalid",
+                  "resource_record_type": "CNAME",
+                  "resource_record_value": "_fixture.acm-validations.aws."
+                },
+                {
+                  "domain_name": "media.example.invalid",
+                  "resource_record_name": "_fixture.media.example.invalid",
+                  "resource_record_type": "CNAME",
+                  "resource_record_value": "_fixture.acm-validations.aws."
+                },
+                {
+                  "domain_name": "www.example.invalid",
+                  "resource_record_name": "_fixture.www.example.invalid",
+                  "resource_record_type": "CNAME",
+                  "resource_record_value": "_fixture.acm-validations.aws."
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "alias": "backup",
+        "mock_resource": {
+          "aws_kms_key": {
+            "defaults": {
+              "arn": "arn:aws:kms:us-west-2:000000000000:key/11111111-1111-1111-1111-111111111111",
+              "id": "11111111-1111-1111-1111-111111111111"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "variables": {
+    "name": "offline-fixture",
+    "environment_name": "staging",
+    "account_id": "000000000000",
+    "vpc_cidr": "10.80.0.0/16",
+    "zone_id": "Z0000000000000",
+    "domains": {
+      "storefront": "shop.example.invalid",
+      "admin": "admin.example.invalid",
+      "origin": "origin.example.invalid",
+      "media": "media.example.invalid"
+    },
+    "aliases": ["www.example.invalid"],
+    "release_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "images": {
+      "storefront": "000000000000.dkr.ecr.us-east-1.amazonaws.com/offline-fixture/storefront@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "admin": "000000000000.dkr.ecr.us-east-1.amazonaws.com/offline-fixture/admin@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "api": "000000000000.dkr.ecr.us-east-1.amazonaws.com/offline-fixture/api@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "worker": "000000000000.dkr.ecr.us-east-1.amazonaws.com/offline-fixture/worker@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "application_environment": {
+      "storefront": {},
+      "admin": {},
+      "api": {},
+      "worker": {}
+    },
+    "secret_references": {
+      "storefront": {},
+      "admin": {},
+      "api": {},
+      "worker": {}
+    },
+    "secret_kms_key_arns": {
+      "storefront": [],
+      "admin": [],
+      "api": [],
+      "worker": []
+    },
+    "application_kms_key_arns": {
+      "storefront": [],
+      "admin": [],
+      "api": [
+        "arn:aws:kms:us-east-1:000000000000:key/11111111-1111-1111-1111-111111111111"
+      ],
+      "worker": [
+        "arn:aws:kms:us-east-1:000000000000:key/11111111-1111-1111-1111-111111111111"
+      ]
+    },
+    "postgres_engine_version": "18.6",
+    "postgres_parameter_family": "postgres18",
+    "postgres_instance_class": "db.m7g.large",
+    "postgres_storage_gib": 100,
+    "final_snapshot_identifier": "offline-fixture-final-20260922",
+    "task_cpu": 512,
+    "task_memory": 1024,
+    "log_retention_days": 30,
+    "monthly_budget_usd": 1000,
+    "notification_emails": ["alerts@example.invalid"],
+    "waf_enforce": false,
+    "rate_limit": 2000,
+    "oidc_provider_arn": "arn:aws:iam::000000000000:oidc-provider/token.actions.githubusercontent.com",
+    "oidc_issuer": "token.actions.githubusercontent.com",
+    "oidc_subjects": ["repo:example/fixture:environment:staging"],
+    "availability_zone_ids": ["use1-az1", "use1-az2"],
+    "application_mac_key_arns": {
+      "storefront": [],
+      "admin": [],
+      "api": [
+        "arn:aws:kms:us-east-1:000000000000:key/22222222-2222-2222-2222-222222222222"
+      ],
+      "worker": [
+        "arn:aws:kms:us-east-1:000000000000:key/22222222-2222-2222-2222-222222222222"
+      ]
+    }
+  },
+  "run": {
+    "topology": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "assert": [
+        {
+          "condition": "${output.invariants.network.az_count == 2 && output.invariants.network.nat_per_az == 2 && output.invariants.network.isolated_database}",
+          "error_message": "Per-AZ private topology required."
+        },
+        {
+          "condition": "${output.invariants.data.multi_az && !output.invariants.data.public && output.invariants.data.encrypted && output.invariants.data.managed_password}",
+          "error_message": "Private Multi-AZ encrypted RDS with managed credentials required."
+        },
+        {
+          "condition": "${output.invariants.data.pitr_days == 35 && output.invariants.data.backup_days == 35 && output.invariants.data.final_snapshot}",
+          "error_message": "35-day local and cross-region recovery and final snapshots required."
+        },
+        {
+          "condition": "${output.invariants.media.private_buckets == 2 && output.invariants.media.versioned_buckets == 2 && output.invariants.media.encrypted_buckets == 2 && !output.invariants.media.source_cdn_access}",
+          "error_message": "Original and derivative media must be separately private/versioned/encrypted."
+        },
+        {
+          "condition": "${length(output.invariants.compute.services) == 4 && alltrue([for s in output.invariants.compute.services : s.desired_count == 2 && !s.public_ip]) && !output.invariants.compute.services.worker.ingress}",
+          "error_message": "Four private digest services each keep two tasks; Worker has no load balancer."
+        },
+        {
+          "condition": "${output.invariants.compute.internal_alb && output.invariants.compute.separate_roles == 4}",
+          "error_message": "Internal ALB and app IAM isolation required."
+        },
+        {
+          "condition": "${output.invariants.edge.dynamic_cache_ttl == 0 && output.invariants.edge.origin_protocol == \"https-only\" && output.invariants.edge.oac_signing == \"always\" && !output.invariants.edge.sampled_requests && output.invariants.edge.error_cache_ttl == 0}",
+          "error_message": "Private dynamic paths and error responses must not cache or log credentials; origin/OAC must use TLS."
+        },
+        {
+          "condition": "${output.invariants.operations.monthly_budget > 0 && output.invariants.operations.alarm_count == 14 && output.invariants.operations.deployment_uses_oidc}",
+          "error_message": "Budget, capacity alarms and scoped OIDC deployment role required."
+        },
+        {
+          "condition": "${output.deployment_manifest.schemaVersion == 1 && !output.deployment_manifest.cloudEvidence && output.deployment_manifest.images == tomap(var.images)}",
+          "error_message": "Manifest must preserve release identity without claiming cloud acceptance."
+        },
+        {
+          "condition": "${output.invariants.edge.managed_count && output.invariants.edge.rate_count}",
+          "error_message": "Unreviewed WAF rollout must remain observable count-before-block."
+        },
+        {
+          "condition": "${length(output.invariants.compute.backend_paths) == 1 && contains(output.invariants.compute.backend_paths, \"/api/v1/*\")}",
+          "error_message": "Nest ALB routing must preserve Next /api/admin/session and /api/cart BFFs."
+        },
+        {
+          "condition": "${contains(output.invariants.media.source_upload_headers, \"if-none-match\") && contains(output.invariants.media.source_upload_headers, \"x-amz-checksum-sha256\")}",
+          "error_message": "Source upload CORS must permit the immutable grant and checksum headers."
+        },
+        {
+          "condition": "${alltrue([for actions in output.invariants.compute.application_envelope_actions : contains(actions, \"kms:GenerateDataKeyWithoutPlaintext\") && contains(actions, \"kms:Decrypt\")])}",
+          "error_message": "Envelope IAM must support the actual support-intent KMS adapter."
+        },
+        {
+          "condition": "${length(output.invariants.compute.application_mac_actions) == 2 && alltrue([for actions in output.invariants.compute.application_mac_actions : length(actions) == 1 && contains(actions, \"kms:GenerateMac\")])}",
+          "error_message": "Blind-index HMAC permissions must use separate key references and only the actual GenerateMac operation."
+        }
+      ]
+    },
+    "reject_mutable_image": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "images": {
+          "storefront": "000000000000.dkr.ecr.us-east-1.amazonaws.com/offline-fixture/storefront@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "admin": "000000000000.dkr.ecr.us-east-1.amazonaws.com/offline-fixture/admin@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "api": "repo:latest",
+          "worker": "000000000000.dkr.ecr.us-east-1.amazonaws.com/offline-fixture/worker@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expect_failures": ["var.images"]
+    },
+    "reject_plaintext_secret": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "application_environment": {
+          "storefront": {},
+          "admin": {},
+          "api": {
+            "FAN_SUPPORT_DATABASE_URL": "forbidden-value"
+          },
+          "worker": {}
+        }
+      },
+      "expect_failures": ["var.application_environment"]
+    },
+    "reject_implicit_environment": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "environment_name": "development"
+      },
+      "expect_failures": ["var.environment_name"]
+    },
+    "reject_wildcard_deployment": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "oidc_subjects": ["repo:example/*"]
+      },
+      "expect_failures": ["var.oidc_subjects"]
+    },
+    "reject_unsupported_origin_zone": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "availability_zone_ids": ["use1-az1", "use1-az3"]
+      },
+      "expect_failures": ["var.availability_zone_ids"]
+    },
+    "production_same_baseline": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "environment_name": "production",
+        "waf_enforce": true
+      },
+      "assert": [
+        {
+          "condition": "${output.deployment_manifest.environment == \"production\" && alltrue([for service in output.invariants.compute.services : service.desired_count == 2 && !service.public_ip]) && output.invariants.edge.dynamic_cache_ttl == 0}",
+          "error_message": "Production must reuse the same private multi-AZ baseline and no-store policy."
+        },
+        {
+          "condition": "${!output.invariants.edge.managed_count && !output.invariants.edge.rate_count}",
+          "error_message": "Reviewed WAF enforcement must remove both count-only overrides."
+        }
+      ]
+    },
+    "reject_wildcard_key_grant": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "application_mac_key_arns": {
+          "storefront": [],
+          "admin": [],
+          "api": ["*"],
+          "worker": []
+        }
+      },
+      "expect_failures": ["var.application_mac_key_arns"]
+    }
+  }
+}

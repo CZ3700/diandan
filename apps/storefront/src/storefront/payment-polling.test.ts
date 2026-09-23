@@ -1,4 +1,26 @@
 import { afterEach, expect, it, vi } from "vitest";
+import { shouldPollPayment } from "./payment-polling";
+
+it("keeps querying a returned hosted payment while signed evidence is delayed", () => {
+  const attempt = { status: "REQUIRES_ACTION", recovery: "NONE" } as const;
+  expect(shouldPollPayment(attempt, false, true)).toBe(true);
+  expect(shouldPollPayment(attempt, false, false)).toBe(false);
+  expect(shouldPollPayment(attempt, true, true)).toBe(false);
+  expect(shouldPollPayment(null, false, true)).toBe(false);
+});
+it("stops return-page reads after authoritative completion and retains evidence-pending recovery", () => {
+  for (const status of ["SUCCEEDED", "FAILED", "CANCELED", "EXPIRED"] as const)
+    expect(shouldPollPayment({ status, recovery: "NONE" }, false, true)).toBe(
+      false,
+    );
+  expect(
+    shouldPollPayment(
+      { status: "SUCCEEDED", recovery: "EVIDENCE_PENDING" },
+      false,
+      true,
+    ),
+  ).toBe(true);
+});
 afterEach(() => {
   vi.useRealTimers();
   vi.unstubAllGlobals();

@@ -1,0 +1,13 @@
+✔ bootstrap state rejects unknown stages, missing ready prerequisites and changed identity bindings (91.086333ms)
+✔ reopening with persisted keys decrypts prior Unicode envelopes and retains credential indexes (103.257333ms)
+✔ local keys reject LIVE, malformed material and use after close (0.504166ms)
+✔ synthetic fulfillment provisioning refuses non-TEST and remote databases before acquiring resources (12.424416ms)
+✔ runtime passes only canonical service environment and retains the persistent secret identity (0.9265ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 146.558958

@@ -1,0 +1,17 @@
+$ node ./scripts/verify-local-experience.mjs --keep
+[local acceptance] build-runtime
+[local acceptance] unit
+[local acceptance] postgres-integration
+[local acceptance] services-integration
+[local acceptance] bootstrap-postgres
+[local acceptance] start
+{"instance":"acceptance-4eb815216d2646dd88c0","stage":"LOGIN"}
+{"instance":"acceptance-4eb815216d2646dd88c0","stage":"UPLOAD_ARTIST"}
+{"stage":"ARTIST_PUBLISHED","artistId":"0edaac6a-70a0-4660-bb07-9f5ee8e66ca8"}
+{"instance":"acceptance-4eb815216d2646dd88c0","stage":"UPLOAD_GIFT"}
+{"instance":"acceptance-4eb815216d2646dd88c0","stage":"WAIT_INITIAL_HOMEPAGE"}
+{"instance":"acceptance-4eb815216d2646dd88c0","stage":"UPLOAD_POSTER"}
+{"instance":"acceptance-4eb815216d2646dd88c0","stage":"SEVEN_LOCALE_MATRIX"}
+[local acceptance] stop
+{"status":"FAIL","instance":"acceptance-4eb815216d2646dd88c0","report":"/Users/mario/Desktop/下单/output/checks/p5-08-local-deployment/acceptance/acceptance-4eb815216d2646dd88c0/report.json"}
+[ELIFECYCLE] Command failed with exit code 1.

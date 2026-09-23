@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "source": "infra/opentofu/stack/.terraform",
+  "destination": "node_modules/.cache/p5-08-opentofu/initial-stack-provider",
+  "reason": "Generated 806 MB provider binary exceeded secretlint string limit; retained byte-identically under dependency cache. No scanner exceptions or source removal. Offline checker runs in its own cleaned temporary directory.",
+  "files": {
+    "modules/modules.json": "045f5cf46eb14142b7942971ab97256242b055520af03ebcc934e6edb9667a0c",
+    "providers/registry.opentofu.org/hashicorp/aws/6.66.0/darwin_arm64.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "providers/registry.opentofu.org/hashicorp/aws/6.66.0/darwin_arm64/LICENSE": "588768dc819dc773d6914c22df7de8932cc7899c24188f5b09b013d86457e115",
+    "providers/registry.opentofu.org/hashicorp/aws/6.66.0/darwin_arm64/CHANGELOG.md": "97540f0f6035d8e490c4437d9461105ec118e745c3f39c2315f8b7be1102c70c",
+    "providers/registry.opentofu.org/hashicorp/aws/6.66.0/darwin_arm64/README.md": "117be17073a2bca964916fa6438d45de7132ea5f6fee3584b6c523d2c976fed7",
+    "providers/registry.opentofu.org/hashicorp/aws/6.66.0/darwin_arm64/terraform-provider-aws": "8520a7fead2b0951ef55b2eff20aada3c6a5b2b684b2373dc57d519b26d0d137"
+  },
+  "status": "PASS"
+}

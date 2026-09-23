@@ -1,0 +1,18 @@
+✔ independent TEST homepage originals preserve matte pixels and cannot deduplicate into daily masters (238.227208ms)
+✔ one-time TEST poster upgrade preserves earlier identities and refuses unrecognized sources (0.969375ms)
+✔ first homepage uses only the actual artist, distinct current heroes and delivery policy in all seven locales (3.706583ms)
+✔ persisted homepage plan rejects unrelated content and inconsistent original artist identity (7.778959ms)
+✔ homepage polling drains an in-flight request, never overlaps, and stops after preservation or creation (0.165292ms)
+✔ homepage bootstrap refuses non-TEST context before any connection (0.501167ms)
+✔ an existing homepage is preserved without any authoring request (0.27975ms)
+✔ a concurrently published homepage stops bootstrap at the normal publication preflight without overwrite (0.560625ms)
+✔ validated homepage recovery publishes with version-zero CAS and never reauthors or rereviews (0.4825ms)
+✔ temporary homepage sessions are recorded before creation and revoked when HTTP work fails (0.769459ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 395.410958

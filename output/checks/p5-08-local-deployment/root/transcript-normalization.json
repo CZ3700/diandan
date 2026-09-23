@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "scope": "only CLI transcript trailing whitespace and extra empty EOF lines; no result or substantive line changed",
+  "records": [
+    {
+      "path": "output/checks/p5-08-local-deployment/acceptance/acceptance-4eb815216d2646dd88c0/1-build-runtime.txt",
+      "originalLocalArchive": "output/checks/p5-08-local-deployment/acceptance/acceptance-4eb815216d2646dd88c0/1-build-runtime.raw.log",
+      "originalSha256": "7b3769dc554d74204af994b86babdabe79aff9134681f4331227116a3ce9249c",
+      "normalizedSha256": "3867053d1d9b41b37562a2d8db14342f9e7d0d58afaa92b64bbf36f4a6840a4c"
+    },
+    {
+      "path": "output/checks/p5-08-local-deployment/acceptance/acceptance-60e60dfa0a79411cbc94/1-build-runtime.txt",
+      "originalLocalArchive": "output/checks/p5-08-local-deployment/acceptance/acceptance-60e60dfa0a79411cbc94/1-build-runtime.raw.log",
+      "originalSha256": "55b5de4c19aed93ef868e9091f541a6f74856d4ce68739eacb4c7ea941bc48a8",
+      "normalizedSha256": "8706f596a909ec0e6ba2945507541db969fb747cca04be6c6076aebf8c1fcf21"
+    },
+    {
+      "path": "output/checks/p5-08-local-deployment/acceptance/acceptance-90a4fd436ea943abbdb9/1-build-runtime.txt",
+      "originalLocalArchive": "output/checks/p5-08-local-deployment/acceptance/acceptance-90a4fd436ea943abbdb9/1-build-runtime.raw.log",
+      "originalSha256": "7b3769dc554d74204af994b86babdabe79aff9134681f4331227116a3ce9249c",
+      "normalizedSha256": "3867053d1d9b41b37562a2d8db14342f9e7d0d58afaa92b64bbf36f4a6840a4c"
+    },
+    {
+      "path": "output/checks/p5-08-local-deployment/acceptance/acceptance-e143d720dd1a4357a3c3/1-build-runtime.txt",
+      "originalLocalArchive": "output/checks/p5-08-local-deployment/acceptance/acceptance-e143d720dd1a4357a3c3/1-build-runtime.raw.log",
+      "originalSha256": "13b7162359efafdc59b77003d2053ab9590987f631a116485b40d9e40a168579",
+      "normalizedSha256": "b2a60b1f69b007fe7da65efb8fc419cf1587a4488b48ae4c4bc80036fcdd3b9e"
+    },
+    {
+      "path": "output/checks/p5-08-local-deployment/iac/fmt-initial.txt",
+      "originalLocalArchive": "output/checks/p5-08-local-deployment/iac/fmt-initial.raw.log",
+      "originalSha256": "5c3cd05e2987604cf9353cc0956a8357df6dc6b2acf6447f51504b20f4c8c97e",
+      "normalizedSha256": "e20b397af8a064943b9fbe92985d0ff9e0f9760fd4772bde0eb2a292743bbe05"
+    },
+    {
+      "path": "output/checks/p5-08-local-deployment/root/check-dev-accepted.txt",
+      "originalLocalArchive": "output/checks/p5-08-local-deployment/root/check-dev-accepted.raw.log",
+      "originalSha256": "03575308e4327313069c2b0fc372daa316aed594487703b98c7133b53b19a63d",
+      "normalizedSha256": "1d41d73a2bbf7392c4aaf0c9df509649bf4a45d79b1c90a40d57cd0656ed4177"
+    },
+    {
+      "path": "output/checks/p5-08-local-deployment/root/check-dev-final-2.txt",
+      "originalLocalArchive": "output/checks/p5-08-local-deployment/root/check-dev-final-2.raw.log",
+      "originalSha256": "0f58f206d42f83e93a86746535c81f203cf399e2919c0261cea896779faeadf5",
+      "normalizedSha256": "eafca634ed5900349b500290bc28ded4ed4d330d1093105e12f73c3a25aa8937"
+    },
+    {
+      "path": "output/checks/p5-08-local-deployment/root/check-dev-final-3.txt",
+      "originalLocalArchive": "output/checks/p5-08-local-deployment/root/check-dev-final-3.raw.log",
+      "originalSha256": "a13a40f7d316518250690cba566d3665049cabb0485aa604dc0b19c4f14c322b",
+      "normalizedSha256": "44cd8133915cc8c6fd4416c092028c3d81272ccd1e9789f7179845bb0d2fc2e1"
+    },
+    {
+      "path": "output/checks/p5-08-local-deployment/root/check-dev-final.txt",
+      "originalLocalArchive": "output/checks/p5-08-local-deployment/root/check-dev-final.raw.log",
+      "originalSha256": "c7c55930559483c0f3566fc7a038707022eb5fdcd823751f03a9196055ac31c6",
+      "normalizedSha256": "2e57423e290b71a6814ed1e94ab026c9432ad191cbcc6e6cb62f13a6be09604f"
+    },
+    {
+      "path": "output/checks/p5-08-local-deployment/root/check-dev.txt",
+      "originalLocalArchive": "output/checks/p5-08-local-deployment/root/check-dev.raw.log",
+      "originalSha256": "e199b0058682b3289c4637a079a1ec43832b4f2475ffb2967db27bb3862b029b",
+      "normalizedSha256": "80ad4ae356fa0cfb173f936409576d07f1c3fed472bffbb5fe1fb1a4669c26e6"
+    },
+    {
+      "path": "output/checks/p5-08-local-deployment/root/whitespace-initial.txt",
+      "originalLocalArchive": "output/checks/p5-08-local-deployment/root/whitespace-initial.raw.log",
+      "originalSha256": "0874d1dd2cc7dd9b653e9df509c5df5c91f42d655bd0e31ebcd615c9624db67e",
+      "normalizedSha256": "0be0b7b1984b37a7dc24c3d823acc93a29dfbd8ded03f507f0311aa3d43df59a"
+    }
+  ]
+}

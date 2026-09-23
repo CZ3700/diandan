@@ -1,11 +1,11 @@
 # Progress Master
 
-> 最后更新：2026-09-22（Asia/Bangkok）
+> 最后更新：2026-09-23（Asia/Bangkok）
 > 当前里程碑：M3 可浏览 Beta 验收待续；M4 购买闭环本地开发（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-016，逐项本地研发）；Phase 6/7 仍 LOCKED
-> 当前任务：P5-07 DONE；P5-08 有限本地 READY，Lane D 空闲，尚未领取；原外部待验收项无 executor
-> 当前入口：P5-08 离线基础设施/部署工具与持久本地体验环境；完整体验尚未交付
-> 当前检查点：P5-07完整统一演练、质量门与独立验收通过。31 DONE / 5 IN_PROGRESS / 1 READY / 12 PENDING；仅本地提交，无 push/部署。
+> 当前任务：P5-08 有限本地范围验收通过，保留云端条件 IN_PROGRESS；Lane D 已释放、无 executor
+> 当前入口：持久本地 TEST 完整体验已交付；`docs/runbooks/local-experience.md`，后续按 ADR-016 核对加固与恢复候选
+> 当前检查点：P5-08 离线工具及持久体验本地 ACCEPT，FULL799+RESTART109/55axe通过。31 DONE /6 IN_PROGRESS /0 READY /12 PENDING；仅本地提交，无 push/云部署。
 
 ## 1. 开工入口
 
@@ -17,15 +17,15 @@
 4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`
 
-只领取位于 `ACTIVE` Phase、依赖已完成（或满足 ADR-016 明确记录的本地完整验收与非作者复核条件）、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线，P3-01至P3-05及P4-01至P4-03已DONE；P4-05按ADR-014完成本地范围、P4-06也已DONE。P5-01/02 已按 ADR-015 完成本地验收，Lane C 已释放。P3-06 本地性能与无障碍补证通过后释放 Lane D，任务仍 IN_PROGRESS；P4-04 真实商户验收仍 IN_PROGRESS、无 executor。2026-09-22 用户以“那就继续按计划推进下一阶段”接受剩余20项本地排期，ADR-016 首先允许 P5-04；P5-04及接续P5-03现均完成本地完整验收，Lane A释放；P5-05原依赖与共享文件归属已核对后置READY。P5-05随后完成本地完整验收，Lane C释放；P5-06原直接依赖经复核后领取，现已完成四类异常/安全重放和全部本地验收DONE，Lane D释放；P5-07原P5-04/05/06本地成果独立核对后领取，现接入手册与完整演练验收DONE、Lane D释放；P5-08原七依赖的适用本地成果独立核对后仅有限离线模块/部署工具及持久本地体验READY，尚未领取。P5-01/P4-05 的当前可消费代码与 P4-04 本地接口已有独立就绪核对，见 `output/checks/p5-04-payment-health/next-stage-readiness.md` 和最终复核。后继依次核对原直接依赖的本地完整成果，不把局部切片当可消费实现；Phase 6/7 保持 LOCKED，到对应波次满足条件后才登记有限 ACTIVE 范围，无需重复请求本次授权。正式品牌资产、身份源/MFA恢复、邮件服务与译文的上线批准继续保留。
+只领取位于 `ACTIVE` Phase、依赖已完成（或满足 ADR-016 明确记录的本地完整验收与非作者复核条件）、状态为 `READY` 且对应 Lane 无 executor 的一个任务。用户已批准现有视觉作为开发基线，P3-01至P3-05及P4-01至P4-03已DONE；P4-05按ADR-014完成本地范围、P4-06也已DONE。P5-01/02 已按 ADR-015 完成本地验收，Lane C 已释放。P3-06 本地性能与无障碍补证通过后释放 Lane D，任务仍 IN_PROGRESS；P4-04 真实商户验收仍 IN_PROGRESS、无 executor。2026-09-22 用户以“那就继续按计划推进下一阶段”接受剩余20项本地排期，ADR-016 首先允许 P5-04；P5-04及接续P5-03现均完成本地完整验收，Lane A释放；P5-05原依赖与共享文件归属已核对后置READY。P5-05随后完成本地完整验收，Lane C释放；P5-06原直接依赖经复核后领取，现已完成四类异常/安全重放和全部本地验收DONE，Lane D释放；P5-07原P5-04/05/06本地成果独立核对后领取，现接入手册与完整演练验收DONE、Lane D释放；P5-08原七依赖的适用本地成果独立核对后，离线模块/部署工具及持久本地体验已完成完整本地验收和非作者复核，Lane D释放；任务保留云staging原门而保持IN_PROGRESS。P5-01/P4-05 的当前可消费代码与 P4-04 本地接口已有独立就绪核对，见 `output/checks/p5-04-payment-health/next-stage-readiness.md` 和最终复核。后继依次核对原直接依赖的本地完整成果，不把局部切片当可消费实现；Phase 6/7 保持 LOCKED，到对应波次满足条件后才登记有限 ACTIVE 范围，无需重复请求本次授权。正式品牌资产、身份源/MFA恢复、邮件服务与译文的上线批准继续保留。
 
 ## 2. 总体状态
 
 | 状态 | 数量 |
 |:--|--:|
 | PENDING | 12 |
-| READY | 1 |
-| IN_PROGRESS | 5 |
+| READY | 0 |
+| IN_PROGRESS | 6 |
 | BLOCKED | 0 |
 | REVIEW | 0 |
 | DONE | 31 |
@@ -55,7 +55,7 @@
 | Phase 0 | Phase 1、Phase 2 | Phase 0 |
 | Phase 1 与 Phase 2 | Phase 3 | Phase 1、Phase 2 |
 | Phase 3；或 ADR-013 已确认的本地开发例外 | Phase 4 | 正常路径关闭 Phase 3；例外保留未完验收 |
-| Phase 3 与 Phase 4；或已确认 ADR-015/016 的逐项本地条件 | Phase 5（ADR-016 当前 P5-06/07 DONE、P5-08 有限本地 READY；原外部门保留） | 正常路径关闭 Phase 3、Phase 4；例外保留未完验收 |
+| Phase 3 与 Phase 4；或已确认 ADR-015/016 的逐项本地条件 | Phase 5（ADR-016 当前 P5-06/07 DONE、P5-08 有限本地 IN_PROGRESS；原外部门保留） | 正常路径关闭 Phase 3、Phase 4；例外保留未完验收 |
 | Phase 5；或到 ADR-016 对应波次且候选原直接依赖本地完整验收/独立复核通过 | Phase 6（当前仍 LOCKED；例外须先登记有限本地 ACTIVE 范围） | 正常路径关闭 Phase 5；例外保留全部未完验收 |
 | Phase 6；或到 ADR-016 对应波次且候选原直接依赖本地完整验收/独立复核通过 | Phase 7（当前仍 LOCKED；例外仅文档/导入及 QA 工具准备） | 正常路径关闭 Phase 6；例外保留正式内容/交易/发布/观察门 |
 
@@ -79,6 +79,10 @@
 这些 OPEN 项不阻塞当前 Phase 3 的内部开发，但执行者不得自行把 sandbox 假设写成生产结论。
 
 ## 5. 最新证据
+
+2026-09-23 P5-08 有限本地范围验收通过：统一新实例入口 FULL799/18场景与同实例RESTART109/1场景全通过，55PNG/55axe零违规与incomplete，57本地工具测试、实际PG中断恢复4/初始化恢复26、TLS OIDC/持久TEST PSP/邮件均通过；签名付款原attempt自动确认、create恰1、原退款/取消/配置/内容与密钥媒体重启保持。离线OpenTofu14命令/10mock plans通过、cloudEvidence=false；全仓check:dev64/64/36及原合同/迁移/旧文件保护通过，非作者ACCEPT/S.U.P.E.R10项。完整本地TEST体验可交付，见`docs/runbooks/local-experience.md`和`output/checks/p5-08-local-deployment/final-verification.md`。仅本地提交；P5-08保持IN_PROGRESS、Lane D释放，云staging/生产composition/商户/正式内容等原门不变；Phase6/7仍LOCKED，下一按ADR-016逐项核验，31/6/0/12=49。
+
+2026-09-22 领取P5-08：root独占Lane D，基线fb88492e；原七依赖的本地完整验收及当前源已核对，实施离线OpenTofu/部署工具与持久本地体验。范围、起始时间、保护和验收计划见phase执行登记；31 DONE /6 IN_PROGRESS /0 READY /12 PENDING=49。Phase6/7及原外部门保持，不push/云apply/真实资金。
 
 2026-09-22 P5-07 DONE：接入手册/商户资格门、证据模板和统一四步演练全部通过；共享fake15cases、fake20+gateway106tests、入口8tests。最终实际PG/TLS OIDC/S3/独立TEST PSP/双API七阶段35259断言、4704能力GET、24同批checkout/七语，样本0/24/2/5/24/0/24；四双500象限、0阻新付、旧UNKNOWN原账户/键恢复且PSP1→1、106行历史及原永久回执/订单不变。双节点传播576.5–1034.6ms（TEST1秒轮询、默认10秒），内外资源cleanup通过；完整check:dev64/64/36（缓存63/63/35）、合同/边界/32exports/秘密扫描及非作者/S.U.P.E.R通过。无生产/UI/旧合同/74SQL改动，2587源码与5993原未跟踪保护。证据`output/checks/p5-07-psp-onboarding/final-verification.md`、`final-gates.json`、`next-stage-readiness.md`。P5-08原七依赖适用本地成果已独立核对，有限离线IaC与持久本地部署工具READY、尚未领取，Lane D释放；31 DONE /5 IN_PROGRESS /1 READY /12 PENDING=49。完整本地体验仍未交付，P5-08须验收上传至退款及重启保留后再通知准备服务器。Phase6/7仍LOCKED，商户/人工/云/发布门不变，仅本地提交，不push/部署。以下历史检查点保持当时时点。
 

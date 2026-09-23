@@ -1,0 +1,31 @@
+$ node ./scripts/verify-local-experience.mjs --keep
+[local acceptance] build-runtime
+[local acceptance] unit
+[local acceptance] postgres-integration
+[local acceptance] services-integration
+[local acceptance] bootstrap-postgres
+[local acceptance] start
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"LOGIN"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"UPLOAD_ARTIST"}
+{"stage":"ARTIST_PUBLISHED","artistId":"5903bcf0-7b69-461e-b3c1-9e527642dee4"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"UPLOAD_GIFT"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"WAIT_INITIAL_HOMEPAGE"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"UPLOAD_POSTER"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"SEVEN_LOCALE_MATRIX"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"GUEST_CHECKOUT"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"CREATE_CHECKOUT"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"TEST_PAYMENT"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"PAYMENT_RETURN"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"MAIL_ORDER_ACCESS"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"REVIEW_PREPARE_DELIVER"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"REFUND"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"CANCEL_UNPAID_ORDER"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"PAYMENT_CONFIGURATION"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"COMPLETE"}
+[local acceptance] stop
+[local acceptance] start
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"LOGIN"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"RESTART_READBACK"}
+{"instance":"acceptance-e143d720dd1a4357a3c3","stage":"COMPLETE"}
+[local acceptance] stop
+{"status":"PASS","instance":"acceptance-e143d720dd1a4357a3c3","report":"/Users/mario/Desktop/下单/output/checks/p5-08-local-deployment/acceptance/acceptance-e143d720dd1a4357a3c3/report.json"}

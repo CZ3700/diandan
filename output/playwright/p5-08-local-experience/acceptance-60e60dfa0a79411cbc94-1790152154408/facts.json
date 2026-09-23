@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "instanceId": "b88033df-41ce-45ba-af2d-75138b30ecc9",
+  "artistId": "b4fc9749-2791-466c-8fab-7eefe3571187",
+  "artistHandle": "idol-b4fc97492791466c8fab7eefe3571187",
+  "giftId": "185e9a99-4620-400c-86cf-6c232d527694",
+  "giftHandle": "gift-185e9a994620400c86cf6c232d527694",
+  "posterRevisionId": "cff7f0bb-ce9f-46ad-8669-5d853889b14e",
+  "publicOrderId": "1e052d2c-255f-42d7-8d1c-58e998fbd699",
+  "checkoutSessionId": "512f7d64-c38c-4150-a3fc-e15373cb9f55",
+  "paymentReadEvidence": {
+    "creates": 1,
+    "attemptId": "7095c472-3c2b-40b2-bc6b-ad4973415c8a",
+    "returnFirstStatus": "REQUIRES_ACTION",
+    "returnReadStatuses": [
+      {
+        "status": "REQUIRES_ACTION",
+        "recovery": "NONE"
+      },
+      {
+        "status": "SUCCEEDED",
+        "recovery": "NONE"
+      }
+    ]
+  },
+  "orderId": "e9e33e8d-a400-48a2-9e34-fe1eebf4f491",
+  "refundSnapshot": {
+    "schemaVersion": 1,
+    "orderId": "e9e33e8d-a400-48a2-9e34-fe1eebf4f491",
+    "publicOrderId": "1e052d2c-255f-42d7-8d1c-58e998fbd699",
+    "currency": "USD",
+    "capturedAmountMinor": 2400,
+    "refundedAmountMinor": 2400,
+    "refundId": "179404eb-2616-4e45-9960-cfc4917fb6cc",
+    "status": "SUCCEEDED"
+  }
+}

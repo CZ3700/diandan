@@ -1,0 +1,11 @@
+tests/offline.tftest.json... pass
+  run "topology"... pass
+  run "reject_mutable_image"... pass
+  run "reject_plaintext_secret"... pass
+  run "reject_implicit_environment"... pass
+  run "reject_wildcard_deployment"... pass
+  run "reject_unsupported_origin_zone"... pass
+  run "production_same_baseline"... pass
+  run "reject_wildcard_key_grant"... pass
+
+Success! 8 passed, 0 failed.

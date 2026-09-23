@@ -1,3 +1,20 @@
+import type { PaymentRuntimeAttemptView } from "@fan-support/contracts";
+
+/** Returning from a hosted page is a reason to query, never proof of payment. */
+export function shouldPollPayment(
+  attempt: Pick<PaymentRuntimeAttemptView, "status" | "recovery"> | null,
+  uncertain: boolean,
+  returning: boolean,
+) {
+  return (
+    !!attempt &&
+    !uncertain &&
+    (attempt.recovery === "EVIDENCE_PENDING" ||
+      ["CREATED", "PROCESSING", "UNKNOWN"].includes(attempt.status) ||
+      (returning && attempt.status === "REQUIRES_ACTION"))
+  );
+}
+
 /** Read-only, non-overlapping polling. Leaving or hiding the page never starts a payment command. */
 export function startPaymentPolling(
   read: () => Promise<unknown>,

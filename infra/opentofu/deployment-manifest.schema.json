@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Offline deployment identity",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "environment",
+    "region",
+    "backupRegion",
+    "releaseCommit",
+    "images",
+    "cloudEvidence"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "environment": {
+      "enum": ["staging", "production"]
+    },
+    "region": {
+      "const": "us-east-1"
+    },
+    "backupRegion": {
+      "const": "us-west-2"
+    },
+    "releaseCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "cloudEvidence": {
+      "const": false
+    },
+    "images": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["storefront", "admin", "api", "worker"],
+      "properties": {
+        "storefront": {
+          "type": "string",
+          "pattern": "^[0-9]{12}\\.dkr\\.ecr\\.us-east-1\\.amazonaws\\.com/[a-z0-9-]+/storefront@sha256:[a-f0-9]{64}$"
+        },
+        "admin": {
+          "type": "string",
+          "pattern": "^[0-9]{12}\\.dkr\\.ecr\\.us-east-1\\.amazonaws\\.com/[a-z0-9-]+/admin@sha256:[a-f0-9]{64}$"
+        },
+        "api": {
+          "type": "string",
+          "pattern": "^[0-9]{12}\\.dkr\\.ecr\\.us-east-1\\.amazonaws\\.com/[a-z0-9-]+/api@sha256:[a-f0-9]{64}$"
+        },
+        "worker": {
+          "type": "string",
+          "pattern": "^[0-9]{12}\\.dkr\\.ecr\\.us-east-1\\.amazonaws\\.com/[a-z0-9-]+/worker@sha256:[a-f0-9]{64}$"
+        }
+      }
+    }
+  }
+}

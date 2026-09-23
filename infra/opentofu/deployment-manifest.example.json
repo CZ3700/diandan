@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "environment": "staging",
+  "region": "us-east-1",
+  "backupRegion": "us-west-2",
+  "releaseCommit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "images": {
+    "storefront": "000000000000.dkr.ecr.us-east-1.amazonaws.com/offline-fixture/storefront@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "admin": "000000000000.dkr.ecr.us-east-1.amazonaws.com/offline-fixture/admin@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "api": "000000000000.dkr.ecr.us-east-1.amazonaws.com/offline-fixture/api@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "worker": "000000000000.dkr.ecr.us-east-1.amazonaws.com/offline-fixture/worker@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "cloudEvidence": false
+}

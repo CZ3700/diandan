@@ -1,0 +1,840 @@
+{
+  "schemaVersion": 1,
+  "mode": "RESTART",
+  "status": "FAIL",
+  "contentSource": "PERSISTED_RESTART_FACTS",
+  "instance": "acceptance-90a4fd436ea943abbdb9",
+  "stage": "RESTART_READBACK",
+  "screenshots": [],
+  "accessibility": [],
+  "cases": [],
+  "pageErrors": [],
+  "observations": [],
+  "network": [
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1lb8t2m._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_next-devtools_index_07602s8.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_react-dom_1bfwj20._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_react-server-dom-turbopack_0cdx7cd._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_0-f_5-n._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_client_0b084x3._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_0obo_34._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0zix_%40swc_helpers_cjs_0hi-e47._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_1anvha4._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/turbopack-apps_admin_14djg7o._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_0h-ror4._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_0q_5f30._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/packages_contracts_dist_domain-rules_151j6j3.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/packages_contracts_dist_19cbzyn._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/packages_1xsqdpc._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_workspace_15_jyx7._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_management-center_1wsilew._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_management-exceptions_0fsgabd._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_management-payments_15zr0l9._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_management-orders_1h09er9._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_management-finance_0i8caw6._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_0yjphhk._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/09ge_zod_v4_classic_1pv--5j._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/09ge_zod_v4_core_0570rwe._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/09ge_zod_v4_locales_0h8gkg1._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/node_modules__pnpm_0-6h86h._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_app_global-error_tsx_1hfr2xb._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1mojsay._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/session",
+      "state": "failed",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/session",
+      "state": "response",
+      "status": 401
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/auth/begin",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/auth/callback",
+      "state": "response",
+      "status": 303
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1lb8t2m._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_next-devtools_index_07602s8.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_react-dom_1bfwj20._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_react-server-dom-turbopack_0cdx7cd._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_0-f_5-n._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_client_0b084x3._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_0obo_34._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0zix_%40swc_helpers_cjs_0hi-e47._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_1anvha4._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/turbopack-apps_admin_14djg7o._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_0h-ror4._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_dist_0q_5f30._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/packages_contracts_dist_domain-rules_151j6j3.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/packages_contracts_dist_19cbzyn._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/packages_1xsqdpc._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_workspace_15_jyx7._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_management-center_1wsilew._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_management-exceptions_0fsgabd._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_management-payments_15zr0l9._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_management-orders_1h09er9._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_management-finance_0i8caw6._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/0747_next_0yjphhk._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/09ge_zod_v4_classic_1pv--5j._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/09ge_zod_v4_core_0570rwe._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/09ge_zod_v4_locales_0h8gkg1._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/node_modules__pnpm_0-6h86h._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/apps_admin_src_app_global-error_tsx_1hfr2xb._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1mojsay._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/session",
+      "state": "failed",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/session",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/management-context",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/orders-context",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/payment-config-read",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/exceptions-context",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/management-context",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/orders-context",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/payment-config-read",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/exceptions-context",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/management-context",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/management-list",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/management-context",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "LOGIN",
+      "path": "/api/admin/management-list",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "RESTART_READBACK",
+      "path": "/api/admin/orders-list",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "RESTART_READBACK",
+      "path": "/api/admin/orders-list",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "RESTART_READBACK",
+      "path": "/api/admin/orders-list",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "RESTART_READBACK",
+      "path": "/api/admin/orders-detail",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "RESTART_READBACK",
+      "path": "/api/admin/finance-detail",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "RESTART_READBACK",
+      "path": "/api/admin/finance-detail",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "admin",
+      "stage": "RESTART_READBACK",
+      "path": "/api/admin/finance-detail",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1lb8t2m._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_next-devtools_index_07602s8.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_react-dom_1bfwj20._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_react-server-dom-turbopack_0cdx7cd._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/0747_next_dist_compiled_0-f_5-n._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/0747_next_dist_client_0b084x3._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/0747_next_dist_0obo_34._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/0zix_%40swc_helpers_cjs_0hi-e47._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/apps_storefront_1anvha4._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/turbopack-apps_storefront_14djg7o._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/apps_storefront_1t82bcv._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/0747_next_dist_0q_5f30._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/apps_storefront_src_app_global-error_tsx_0zrtegl._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/apps_storefront_src_storefront_182e0xw._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/_0gbai0i._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/node_modules__pnpm_00mliv_._.js",
+      "state": "response",
+      "status": 200
+    },
+    {
+      "surface": "storefront",
+      "stage": "RESTART_READBACK",
+      "path": "/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1mojsay._.js",
+      "state": "response",
+      "status": 200
+    }
+  ],
+  "paymentCreates": [],
+  "paymentReads": [],
+  "orderQueries": [
+    {
+      "stage": "RESTART_READBACK",
+      "query": "",
+      "outcome": "SUCCESS",
+      "items": [
+        {
+          "orderId": "9f95f0f6-1d14-4e7a-bfba-832b70dc9381",
+          "publicOrderId": "c6d88ea0-e571-4404-a1fa-b8b1391ed842"
+        },
+        {
+          "orderId": "71ad40e2-cd2a-48fb-88a3-f5ce5438f441",
+          "publicOrderId": "e339443e-6fe2-452b-b3bc-8f742f1e66f4"
+        }
+      ]
+    },
+    {
+      "stage": "RESTART_READBACK",
+      "query": "e339443e-6fe2-452b-b3bc-8f742f1e66f4",
+      "outcome": "SUCCESS",
+      "items": [
+        {
+          "orderId": "71ad40e2-cd2a-48fb-88a3-f5ce5438f441",
+          "publicOrderId": "e339443e-6fe2-452b-b3bc-8f742f1e66f4"
+        }
+      ]
+    }
+  ],
+  "consoleErrors": [
+    {
+      "surface": "admin",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    }
+  ],
+  "assertions": 32,
+  "facts": {
+    "schemaVersion": 1,
+    "instanceId": "fbc167a9-956f-456c-b95d-98429956c9bf",
+    "artistId": "73b813ea-73f1-4ebf-8d3d-81816e584af1",
+    "artistHandle": "idol-73b813ea73f14ebf8d3d81816e584af1",
+    "giftId": "ea7bdc8a-4b3c-4d50-a5b7-eef3dcdc64e1",
+    "giftHandle": "gift-ea7bdc8a4b3c4d50a5b7eef3dcdc64e1",
+    "posterRevisionId": "5e972a37-1c4a-43ee-8cdf-898372bcd4d9",
+    "publicOrderId": "e339443e-6fe2-452b-b3bc-8f742f1e66f4",
+    "checkoutSessionId": "ea891cf7-f985-4e20-a179-7446c40c0577",
+    "paymentReadEvidence": {
+      "creates": 1,
+      "attemptId": "2f0674fb-1425-48b5-9e38-008a7dd2f3e4",
+      "returnFirstStatus": "REQUIRES_ACTION",
+      "returnReadStatuses": [
+        {
+          "status": "REQUIRES_ACTION",
+          "recovery": "NONE"
+        },
+        {
+          "status": "SUCCEEDED",
+          "recovery": "NONE"
+        }
+      ]
+    },
+    "orderId": "71ad40e2-cd2a-48fb-88a3-f5ce5438f441",
+    "refundSnapshot": {
+      "schemaVersion": 1,
+      "orderId": "71ad40e2-cd2a-48fb-88a3-f5ce5438f441",
+      "publicOrderId": "e339443e-6fe2-452b-b3bc-8f742f1e66f4",
+      "currency": "USD",
+      "capturedAmountMinor": 2400,
+      "refundedAmountMinor": 2400,
+      "refundId": "9d6ce50f-1c8c-4afc-a7a1-c166eb5e7481",
+      "status": "SUCCEEDED"
+    },
+    "canceledOrder": {
+      "publicOrderId": "c6d88ea0-e571-4404-a1fa-b8b1391ed842",
+      "orderId": "9f95f0f6-1d14-4e7a-bfba-832b70dc9381",
+      "orderStatus": "CANCELED"
+    },
+    "paymentConfiguration": {
+      "schemaVersion": 1,
+      "currentRevisionId": "847d6cec-639d-4e9e-af3a-f18ebeac5518",
+      "currentPublicationId": "25b21d4b-4fd0-4238-80b6-bea31e2504d1",
+      "generation": 4,
+      "configurationHash": "7c5bd42643b806c05c7fd51968ca0b6a04f44f398a866e733b182acdd79ba661"
+    },
+    "contentSnapshot": {
+      "ARTISTS": "df3877874e7bdbe64e4e1dd843d63f1a13fc467f159e0a4a4ef838a22acb37eb",
+      "GIFTS": "246d79030b375bf7ef31875479e0ce062ac848a0ff26ea006eb6900280601172",
+      "POSTERS": "f347d312fc08548b46b90a0a41317295d22405730fe3e7a436f0132908d2808c"
+    }
+  },
+  "failure": {
+    "name": "TimeoutError",
+    "timeout": true,
+    "assertion": false,
+    "sourceLine": "762",
+    "adminPath": "/en",
+    "storefrontPath": "/en/gifts/gift-ea7bdc8a4b3c4d50a5b7eef3dcdc64e1",
+    "controls": [
+      {
+        "tag": "BUTTON",
+        "section": "ARTISTS",
+        "list": null,
+        "status": null
+      },
+      {
+        "tag": "BUTTON",
+        "section": "GIFTS",
+        "list": null,
+        "status": null
+      },
+      {
+        "tag": "BUTTON",
+        "section": "POSTERS",
+        "list": null,
+        "status": null
+      },
+      {
+        "tag": "BUTTON",
+        "section": "ORDERS",
+        "list": null,
+        "status": null
+      },
+      {
+        "tag": "BUTTON",
+        "section": "PAYMENTS",
+        "list": null,
+        "status": null
+      },
+      {
+        "tag": "BUTTON",
+        "section": "EXCEPTIONS",
+        "list": null,
+        "status": null
+      }
+    ],
+    "operations": []
+  }
+}

@@ -1,0 +1,61 @@
+infra/opentofu/modules/data/main.tf
+infra/opentofu/stack/main.tf
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mArgument definition required[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on infra/opentofu/modules/compute/main.tf line 150, in resource "aws_lb_listener_rule" "api":
+[31m│[0m [0m 150:   condition { [4mpath_pattern {[0m values = ["/api/*"] } }[0m
+[31m│[0m [0m
+[31m│[0m [0mA single-line block definition can contain only a single argument. If you
+[31m│[0m [0mmeant to define argument "path_pattern", use an equals sign to assign it a
+[31m│[0m [0mvalue. To define a nested block, place it on a line of its own within its
+[31m│[0m [0mparent block.
+[31m╵[0m[0m
+
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mArgument definition required[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on infra/opentofu/modules/compute/main.tf line 161, in resource "aws_lb_listener_rule" "api":
+[31m│[0m [0m 161:   condition { [4mhost_header {[0m values = [var.domains[each.key]] } }[0m
+[31m│[0m [0m
+[31m│[0m [0mA single-line block definition can contain only a single argument. If you
+[31m│[0m [0mmeant to define argument "host_header", use an equals sign to assign it a
+[31m│[0m [0mvalue. To define a nested block, place it on a line of its own within its
+[31m│[0m [0mparent block.
+[31m╵[0m[0m
+
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mArgument definition required[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on infra/opentofu/modules/edge/main.tf line 137, in resource "aws_wafv2_web_acl" "this":
+[31m│[0m [0m 137:   default_action { [4mallow {[0m} }[0m
+[31m│[0m [0m
+[31m│[0m [0mA single-line block definition can contain only a single argument. If you
+[31m│[0m [0mmeant to define argument "allow", use an equals sign to assign it a value.
+[31m│[0m [0mTo define a nested block, place it on a line of its own within its parent
+[31m│[0m [0mblock.
+[31m╵[0m[0m
+
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mArgument definition required[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on infra/opentofu/modules/edge/main.tf line 232, in resource "aws_wafv2_web_acl" "this":
+[31m│[0m [0m 232:   restrictions { [4mgeo_restriction {[0m restriction_type = "none" } }[0m
+[31m│[0m [0m
+[31m│[0m [0mA single-line block definition can contain only a single argument. If you
+[31m│[0m [0mmeant to define argument "geo_restriction", use an equals sign to assign it
+[31m│[0m [0ma value. To define a nested block, place it on a line of its own within its
+[31m│[0m [0mparent block.
+[31m╵[0m[0m
+
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mArgument definition required[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on infra/opentofu/modules/edge/main.tf line 259, in resource "aws_wafv2_web_acl" "this":
+[31m│[0m [0m 259:   restrictions { [4mgeo_restriction {[0m restriction_type = "none" } }[0m
+[31m│[0m [0m
+[31m│[0m [0mA single-line block definition can contain only a single argument. If you
+[31m│[0m [0mmeant to define argument "geo_restriction", use an equals sign to assign it
+[31m│[0m [0ma value. To define a nested block, place it on a line of its own within its
+[31m│[0m [0mparent block.
+[31m╵[0m[0m

@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "instance": "acceptance-60e60dfa0a79411cbc94",
+  "status": "FAIL",
+  "commands": [
+    {
+      "label": "build-runtime",
+      "executable": "corepack",
+      "args": [
+        "pnpm",
+        "exec",
+        "turbo",
+        "run",
+        "build",
+        "--filter=@fan-support/api...",
+        "--filter=@fan-support/worker...",
+        "--filter=@fan-support/admin^...",
+        "--filter=@fan-support/storefront^...",
+        "--output-logs=errors-only"
+      ],
+      "code": 0,
+      "signal": null,
+      "evidence": "1-build-runtime.txt"
+    },
+    {
+      "label": "unit",
+      "executable": "node",
+      "args": [
+        "--test",
+        "apps/api/scripts/local-experience-bootstrap-state.test.mjs",
+        "apps/api/scripts/local-experience-control.test.mjs",
+        "apps/api/scripts/local-experience-health.test.mjs",
+        "apps/api/scripts/local-experience-homepage-originals.test.mjs",
+        "apps/api/scripts/local-experience-homepage.test.mjs",
+        "apps/api/scripts/local-experience-infrastructure.test.mjs",
+        "apps/api/scripts/local-experience-kms.test.mjs",
+        "apps/api/scripts/local-experience-lifecycle.test.mjs",
+        "apps/api/scripts/local-experience-provisioning.test.mjs",
+        "apps/api/scripts/local-experience-runtime-config.test.mjs",
+        "apps/api/scripts/local-experience-services-oidc.test.mjs",
+        "apps/api/scripts/local-experience-services.test.mjs",
+        "apps/api/scripts/local-experience-storage-reset.test.mjs",
+        "apps/api/scripts/local-experience-tls.test.mjs",
+        "apps/api/scripts/local-experience-web-config.test.mjs",
+        "scripts/local-experience-acceptance.test.mjs",
+        "scripts/local-experience-browser-launcher.test.mjs",
+        "scripts/local-experience-lock.test.mjs",
+        "scripts/local-experience-reset.test.mjs",
+        "scripts/local-experience-state.test.mjs",
+        "scripts/local-experience-stop-result.test.mjs"
+      ],
+      "code": 0,
+      "signal": null,
+      "evidence": "2-unit.txt"
+    },
+    {
+      "label": "postgres-integration",
+      "executable": "node",
+      "args": [
+        "apps/api/scripts/local-experience-postgres-integration.mjs"
+      ],
+      "code": 0,
+      "signal": null,
+      "evidence": "3-postgres-integration.txt"
+    },
+    {
+      "label": "services-integration",
+      "executable": "node",
+      "args": [
+        "apps/api/scripts/local-experience-services-integration.mjs"
+      ],
+      "code": 0,
+      "signal": null,
+      "evidence": "4-services-integration.txt"
+    },
+    {
+      "label": "bootstrap-postgres",
+      "executable": "node",
+      "args": [
+        "apps/api/scripts/local-experience-bootstrap-postgres.mjs"
+      ],
+      "code": 0,
+      "signal": null,
+      "evidence": "5-bootstrap-postgres.txt"
+    },
+    {
+      "label": "start",
+      "executable": "node",
+      "args": [
+        "scripts/local-experience.mjs",
+        "start",
+        "--instance",
+        "acceptance-60e60dfa0a79411cbc94",
+        "--skip-build"
+      ],
+      "code": 0,
+      "signal": null,
+      "evidence": "6-start.txt"
+    },
+    {
+      "label": "stop",
+      "executable": "node",
+      "args": [
+        "scripts/local-experience.mjs",
+        "stop",
+        "--instance",
+        "acceptance-60e60dfa0a79411cbc94"
+      ],
+      "code": 0,
+      "signal": null,
+      "evidence": "7-stop.txt"
+    }
+  ],
+  "acceptance": null,
+  "failure": {
+    "name": "Error",
+    "stage": "stop",
+    "dataPreserved": true
+  }
+}

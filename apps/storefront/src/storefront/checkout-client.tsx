@@ -10,7 +10,7 @@ import {
   canOpenOrderResult,
 } from "./checkout-order-result";
 import { PaymentStatus } from "./payment-status";
-import { startPaymentPolling } from "./payment-polling";
+import { shouldPollPayment, startPaymentPolling } from "./payment-polling";
 import { storefrontHref } from "./navigation";
 import { prepareCheckoutStepFocus } from "./checkout-focus";
 function errorText(code: string, copy: StorefrontCopy) {
@@ -97,11 +97,11 @@ export function CheckoutClient({
     if (state.checkout) setEmail("");
   }, [state.checkout]);
   const attempt = state.attempt;
-  const shouldPoll =
-    !!attempt &&
-    !state.uncertain &&
-    (attempt.recovery === "EVIDENCE_PENDING" ||
-      ["CREATED", "PROCESSING", "UNKNOWN"].includes(attempt.status));
+  const shouldPoll = shouldPollPayment(
+    attempt,
+    state.uncertain,
+    !invalid && !!sessionId && !!attemptId,
+  );
   useEffect(() => {
     if (!shouldPoll) return;
     return startPaymentPolling(

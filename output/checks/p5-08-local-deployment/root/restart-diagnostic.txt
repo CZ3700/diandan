@@ -1,0 +1,13 @@
+{"instance":"acceptance-90a4fd436ea943abbdb9","stage":"LOGIN"}
+{"instance":"acceptance-90a4fd436ea943abbdb9","stage":"RESTART_READBACK"}
+file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/local-experience-browser.mjs:1212
+    throw new Error(
+          ^
+
+Error: Local experience browser failed at RESTART_READBACK; see safe report /Users/mario/Desktop/下单/output/playwright/p5-08-local-experience/acceptance-90a4fd436ea943abbdb9-1790153374549
+    at verifyLocalExperienceBrowser (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/local-experience-browser.mjs:1212:11)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:541:9)
+    at async file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/local-experience-browser.mjs:1254:7
+
+Node.js v24.20.0

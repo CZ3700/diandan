@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "scope": "P5-08 IaC authored files only",
+  "createdAt": "2026-09-22T13:02:26.252998+00:00",
+  "files": [
+    {
+      "path": "docs/runbooks/infrastructure-offline.md",
+      "sha256": "aa4e44102cad1ee4891f2062ef92a62f9c09f98d5e2dba300baa586025b5a721"
+    },
+    {
+      "path": "infra/opentofu/.gitignore",
+      "sha256": "82bd215c8dfad4783bcdd7813ecbde591588fa98b7d0ea106a6087de248e4e95"
+    },
+    {
+      "path": "infra/opentofu/README.md",
+      "sha256": "fa54fbfc19bf76c03097260b3c9c1424a692899a77b8598d3fc8883c5f5ad750"
+    },
+    {
+      "path": "infra/opentofu/bootstrap/.terraform.lock.hcl",
+      "sha256": "7576380b719748af089262066847a1e6c5faa35791398a4bf228b39eccab8a12"
+    },
+    {
+      "path": "infra/opentofu/bootstrap/main.tf",
+      "sha256": "72df1e325715dd93bb14c2c1801eaae1d289df5080d7edc035895f144886f060"
+    },
+    {
+      "path": "infra/opentofu/bootstrap/tests/offline.tftest.json",
+      "sha256": "2991a804d5fcaa55f8de3efa14f0a206c4c7f1e859a20120843804a33ca3ad8d"
+    },
+    {
+      "path": "infra/opentofu/deployment-manifest.example.json",
+      "sha256": "131623ee339fb9c74de08710598a34f481986d13672b1d6fa9f2ce3255f33973"
+    },
+    {
+      "path": "infra/opentofu/deployment-manifest.schema.json",
+      "sha256": "cd736aba2a86558132a0dc5045c89c1b9f30a6b089551007074be098327554f0"
+    },
+    {
+      "path": "infra/opentofu/modules/compute/main.tf",
+      "sha256": "b5b4290521dd93fdbc7b3ba0eab3dcb9f4370a0ac6cf6e015b4ac65a2fef78e9"
+    },
+    {
+      "path": "infra/opentofu/modules/data/main.tf",
+      "sha256": "673131461bc8a006fea40d872eeac933e3829ba9ba46cc3f4db8d0f0278388f9"
+    },
+    {
+      "path": "infra/opentofu/modules/edge/main.tf",
+      "sha256": "68c3eac546b7f94eecbc188ce314bdd37d966b8dd876a4ccc03742daba2a7886"
+    },
+    {
+      "path": "infra/opentofu/modules/media/main.tf",
+      "sha256": "80d58459d42cbf8ee475b47956371bc46a79e7bc019774978c7532c2bff65cb3"
+    },
+    {
+      "path": "infra/opentofu/modules/network/main.tf",
+      "sha256": "2f60603bf73231b37cd14309a2e67106db02ea3deb0461c35df12d5c698b135c"
+    },
+    {
+      "path": "infra/opentofu/modules/operations/main.tf",
+      "sha256": "861190cc32a012b1fa09e04d82632821eb3f7042385071d7fcef2e303ec94e55"
+    },
+    {
+      "path": "infra/opentofu/registry/.terraform.lock.hcl",
+      "sha256": "7576380b719748af089262066847a1e6c5faa35791398a4bf228b39eccab8a12"
+    },
+    {
+      "path": "infra/opentofu/registry/main.tf",
+      "sha256": "ab8fe758bf51a79fc97972ddb46d935a830337120bc575253f81e210bad8f3f0"
+    },
+    {
+      "path": "infra/opentofu/registry/tests/offline.tftest.json",
+      "sha256": "58e87cf01ffc4e36d5a9d8fc30c56bee20c15d22f171646bafcf30b6923349bc"
+    },
+    {
+      "path": "infra/opentofu/stack/.terraform.lock.hcl",
+      "sha256": "7576380b719748af089262066847a1e6c5faa35791398a4bf228b39eccab8a12"
+    },
+    {
+      "path": "infra/opentofu/stack/main.tf",
+      "sha256": "2f025e028eb4f175d5fd190006716cc7f9131e00a088de353607cb98f4ebc1a1"
+    },
+    {
+      "path": "infra/opentofu/stack/outputs.tf",
+      "sha256": "f874f02aea921ed82e626d9e21ca0ad7720a5be5e66d6408d665b98d4aac506d"
+    },
+    {
+      "path": "infra/opentofu/stack/tests/offline.tftest.json",
+      "sha256": "b05536878d8ea16fbdb30b1619da92e1e1b152740adfcac1c4f2460b30961fa2"
+    },
+    {
+      "path": "infra/opentofu/stack/variables.tf",
+      "sha256": "d932ee2f92fdaef1b7dd6c1d479c381c3366c61f55227d3ede9821d7cd067d95"
+    },
+    {
+      "path": "infra/opentofu/stack/versions.tf",
+      "sha256": "1a3c3e56a5512c25247e0bf2fd79261ef285a179f70eed7248d03195a81d35fc"
+    },
+    {
+      "path": "infra/opentofu/toolchain.json",
+      "sha256": "70c6378682353244c8bdf68bb3af61d4488aafc4fcdf012e40e52d4473996465"
+    },
+    {
+      "path": "scripts/check-infrastructure.mjs",
+      "sha256": "1fab9f531b78466236f35a35431aa8ccc31cbfddcfff2ce3715415d88bf357a9"
+    },
+    {
+      "path": "scripts/check-infrastructure.test.mjs",
+      "sha256": "d03a1588006e4b7b2665fdce6dcf87872a81e21f41da3ca49dc769e404d42cc8"
+    }
+  ]
+}
